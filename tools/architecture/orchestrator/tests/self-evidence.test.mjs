@@ -127,6 +127,33 @@ const inventoryEvidence = newestEvidence(root, "generate-package-inventory");
 assertRequiredFields(inventoryEvidence, requiredToolFields, "generate-package-inventory");
 assert.equal(inventoryEvidence.toolName, "generate-package-inventory");
 
+const sourceImports = run(root, [
+  "tools/architecture/validate-source-imports/src/index.mjs",
+  "--root", root,
+  "--format", "json",
+  "--check",
+  "apps",
+  "packages"
+]);
+assert.equal(sourceImports.status, 0, sourceImports.stderr || sourceImports.stdout);
+const sourceImportsEvidence = newestEvidence(root, "validate-source-imports");
+assertRequiredFields(sourceImportsEvidence, requiredToolFields, "validate-source-imports");
+assert.equal(sourceImportsEvidence.toolName, "validate-source-imports");
+
+const lifecycleReports = run(root, [
+  "tools/architecture/generate-lifecycle-reports/src/index.mjs",
+  "--root", root,
+  "--write",
+  "--format", "json",
+  "apps",
+  "packages",
+  "tools/architecture"
+]);
+assert.equal(lifecycleReports.status, 0, lifecycleReports.stderr || lifecycleReports.stdout);
+const lifecycleReportsEvidence = newestEvidence(root, "generate-lifecycle-reports");
+assertRequiredFields(lifecycleReportsEvidence, requiredToolFields, "generate-lifecycle-reports");
+assert.equal(lifecycleReportsEvidence.toolName, "generate-lifecycle-reports");
+
 const lifecycle = run(root, [
   "tools/architecture/validate-lifecycle-evidence/src/index.mjs",
   "--root", root,
@@ -172,6 +199,25 @@ const noReports = [
   ]],
   ["generate-package-inventory", [
     "tools/architecture/generate-package-inventory/src/index.mjs",
+    "--root", noReportsRoot,
+    "--write",
+    "--no-reports",
+    "--format", "json",
+    "apps",
+    "packages",
+    "tools/architecture"
+  ]],
+  ["validate-source-imports", [
+    "tools/architecture/validate-source-imports/src/index.mjs",
+    "--root", noReportsRoot,
+    "--check",
+    "--no-reports",
+    "--format", "json",
+    "apps",
+    "packages"
+  ]],
+  ["generate-lifecycle-reports", [
+    "tools/architecture/generate-lifecycle-reports/src/index.mjs",
     "--root", noReportsRoot,
     "--write",
     "--no-reports",

@@ -1,0 +1,17 @@
+{
+  "name": "@fixture/deprecated-feature",
+  "version": "0.9.0",
+  "private": true,
+  "description": "Fixture: deprecated feature package",
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": { "type": "library", "name": "deprecated-feature", "system": "platform", "domain": "experience", "boundedContext": "workflow", "owner": "team-app" },
+    "lifecycle": { "stage": "deprecated", "role": "feature", "class": "deprecated.feature", "catalogLifecycle": "deprecated", "visibility": "deprecated", "supportLevel": "deprecated", "reviewCadence": "monthly" },
+    "governance": { "decisionRefs": ["ADR-0009"], "semverPolicy": "deprecated", "changeControl": "deprecation-review", "promotionEligible": false },
+    "runtime": { "production": false, "testOnly": false, "serviceName": "deprecated-feature", "serviceNamespace": "experience", "deploymentEnvironments": [] },
+    "boundaries": { "publicExportsOnly": true, "deepImportsAllowed": false, "allowedConsumers": [], "forbiddenConsumers": [] },
+    "relations": { "dependsOn": [], "providesApis": [], "consumesApis": [] },
+    "tags": { "scope": "experience", "type": "library", "stage": "deprecated", "role": "feature", "layer": "feature" },
+    "readme": { "generated": true, "summary": "Deprecated feature fixture.", "responsibilities": [], "nonResponsibilities": [], "usage": [], "operationalNotes": [] }
+  }
+}

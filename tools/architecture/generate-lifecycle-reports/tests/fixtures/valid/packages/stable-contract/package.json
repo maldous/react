@@ -1,0 +1,17 @@
+{
+  "name": "@fixture/stable-contract",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Fixture: stable contract package",
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": { "type": "api", "name": "stable-contract", "system": "platform", "domain": "integration", "boundedContext": "graphql-contracts", "owner": "team-api" },
+    "lifecycle": { "stage": "stable", "role": "contract", "class": "stable.contract", "catalogLifecycle": "production", "visibility": "internal", "supportLevel": "standard", "reviewCadence": "annually" },
+    "governance": { "decisionRefs": ["ADR-0009"], "semverPolicy": "semver-required", "changeControl": "architecture-review", "promotionEligible": false },
+    "runtime": { "production": true, "testOnly": false, "serviceName": "stable-contract", "serviceNamespace": "integration", "deploymentEnvironments": ["production"] },
+    "boundaries": { "publicExportsOnly": true, "deepImportsAllowed": false, "allowedConsumers": ["feature", "application"], "forbiddenConsumers": [] },
+    "relations": { "dependsOn": [], "providesApis": ["graphql-schema"], "consumesApis": [] },
+    "tags": { "scope": "integration", "type": "api", "stage": "stable", "role": "contract", "layer": "contract" },
+    "readme": { "generated": true, "summary": "Stable contract fixture.", "responsibilities": [], "nonResponsibilities": [], "usage": [], "operationalNotes": [] }
+  }
+}

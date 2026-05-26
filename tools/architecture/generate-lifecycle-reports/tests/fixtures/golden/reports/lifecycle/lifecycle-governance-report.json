@@ -1,0 +1,92 @@
+{
+  "generatedAt": "2026-05-26T00:00:00.000Z",
+  "source": "package.json architecture metadata",
+  "totalPackages": 5,
+  "promotionEligiblePackages": [
+    {
+      "name": "@fixture/active-platform",
+      "class": "active.platform",
+      "owner": "team-core",
+      "changeControl": "owner-review"
+    }
+  ],
+  "maintenancePackages": [
+    {
+      "name": "@fixture/maintenance-domain",
+      "class": "maintenance.platform",
+      "owner": "team-core"
+    }
+  ],
+  "deprecatedPackages": [
+    {
+      "name": "@fixture/deprecated-feature",
+      "class": "deprecated.feature",
+      "owner": "team-app"
+    }
+  ],
+  "externalPackages": [
+    {
+      "name": "@fixture/external-adapter",
+      "class": "external.adapter",
+      "owner": "team-infra"
+    }
+  ],
+  "byDomain": {
+    "core": [
+      {
+        "name": "@fixture/active-platform",
+        "class": "active.platform"
+      },
+      {
+        "name": "@fixture/maintenance-domain",
+        "class": "maintenance.platform"
+      }
+    ],
+    "experience": [
+      {
+        "name": "@fixture/deprecated-feature",
+        "class": "deprecated.feature"
+      }
+    ],
+    "integration": [
+      {
+        "name": "@fixture/external-adapter",
+        "class": "external.adapter"
+      },
+      {
+        "name": "@fixture/stable-contract",
+        "class": "stable.contract"
+      }
+    ]
+  },
+  "byOwner": {
+    "team-api": [
+      {
+        "name": "@fixture/stable-contract",
+        "class": "stable.contract"
+      }
+    ],
+    "team-app": [
+      {
+        "name": "@fixture/deprecated-feature",
+        "class": "deprecated.feature"
+      }
+    ],
+    "team-core": [
+      {
+        "name": "@fixture/active-platform",
+        "class": "active.platform"
+      },
+      {
+        "name": "@fixture/maintenance-domain",
+        "class": "maintenance.platform"
+      }
+    ],
+    "team-infra": [
+      {
+        "name": "@fixture/external-adapter",
+        "class": "external.adapter"
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "@fixture/external-adapter",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Fixture: external adapter package",
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": { "type": "library", "name": "external-adapter", "system": "platform", "domain": "integration", "boundedContext": "postgres-runtime", "owner": "team-infra" },
+    "lifecycle": { "stage": "external", "role": "adapter", "class": "external.adapter", "catalogLifecycle": "production", "visibility": "external", "supportLevel": "standard", "reviewCadence": "annually" },
+    "governance": { "decisionRefs": ["ADR-0009"], "semverPolicy": "external-governed", "changeControl": "release-review", "promotionEligible": false },
+    "runtime": { "production": true, "testOnly": false, "serviceName": "external-adapter", "serviceNamespace": "integration", "deploymentEnvironments": ["production"] },
+    "boundaries": { "publicExportsOnly": true, "deepImportsAllowed": false, "allowedConsumers": ["adapter", "tooling"], "forbiddenConsumers": [] },
+    "relations": { "dependsOn": [], "providesApis": [], "consumesApis": [] },
+    "tags": { "scope": "integration", "type": "library", "stage": "external", "role": "adapter", "layer": "adapter" },
+    "readme": { "generated": true, "summary": "External adapter fixture.", "responsibilities": [], "nonResponsibilities": [], "usage": [], "operationalNotes": [] }
+  }
+}

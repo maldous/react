@@ -1,0 +1,17 @@
+{
+  "name": "@fixture/maintenance-domain",
+  "version": "1.2.0",
+  "private": true,
+  "description": "Fixture: maintenance domain package",
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": { "type": "library", "name": "maintenance-domain", "system": "platform", "domain": "core", "boundedContext": "domain-core", "owner": "team-core" },
+    "lifecycle": { "stage": "maintenance", "role": "platform", "class": "maintenance.platform", "catalogLifecycle": "production", "visibility": "internal", "supportLevel": "standard", "reviewCadence": "quarterly" },
+    "governance": { "decisionRefs": ["ADR-0009"], "semverPolicy": "internal-traceable", "changeControl": "owner-review", "promotionEligible": false },
+    "runtime": { "production": true, "testOnly": false, "serviceName": "maintenance-domain", "serviceNamespace": "core", "deploymentEnvironments": ["production"] },
+    "boundaries": { "publicExportsOnly": true, "deepImportsAllowed": false, "allowedConsumers": ["feature"], "forbiddenConsumers": [] },
+    "relations": { "dependsOn": [], "providesApis": [], "consumesApis": [] },
+    "tags": { "scope": "core", "type": "library", "stage": "maintenance", "role": "platform", "layer": "domain" },
+    "readme": { "generated": true, "summary": "Maintenance domain fixture.", "responsibilities": [], "nonResponsibilities": [], "usage": [], "operationalNotes": [] }
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "name": "@architecture/generate-lifecycle-reports",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Generate lifecycle governance reports from package.json architecture metadata.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "generate": "node src/index.mjs --write",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "tool",
+      "name": "generate-lifecycle-reports",
+      "system": "architecture-governance",
+      "domain": "architecture",
+      "boundedContext": "architecture-governance",
+      "owner": "architecture"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "tooling",
+      "class": "active.tooling",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0006",
+        "ADR-0007",
+        "ADR-0009",
+        "ADR-0011",
+        "ADR-0012"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "generate-lifecycle-reports",
+      "serviceNamespace": "architecture-governance",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "external"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@architecture/generate-package-inventory"
+      ],
+      "providesApis": [],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "architecture",
+      "type": "tooling",
+      "stage": "active",
+      "role": "tooling",
+      "layer": "tooling"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Generates lifecycle governance reports showing promotion candidates, deprecated/maintenance/external packages, and per-domain lifecycle distribution.",
+      "responsibilities": [
+        "Read package architecture metadata from apps, packages, and tools directories",
+        "Generate lifecycle-governance-report.json and .md under reports/lifecycle/",
+        "List promotion-eligible, deprecated, maintenance, and external packages for governance review",
+        "Group packages by domain and owner for ownership visibility",
+        "Support --check (detect staleness) and --write (regenerate) modes per ADR-0011"
+      ],
+      "nonResponsibilities": [
+        "Does not validate package metadata — use validate-package-metadata for that",
+        "Does not generate the lifecycle summary counts — use generate-package-inventory for that",
+        "Does not validate lifecycle transition evidence bundles"
+      ],
+      "usage": [
+        "Run from repository root with node tools/architecture/generate-lifecycle-reports/src/index.mjs --write",
+        "Use --check to verify reports are up to date without writing",
+        "Use --root <path>, --format text|json, --no-reports per ADR-0011"
+      ],
+      "operationalNotes": [
+        "Reports are written to reports/lifecycle/ which is gitignored",
+        "Self-evidence is written under reports/tooling/generate-lifecycle-reports unless --no-reports is supplied",
+        "Run generate-package-inventory first so that upstream outputs are available"
+      ]
+    }
+  }
+}
