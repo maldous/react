@@ -1,0 +1,109 @@
+{
+  "name": "@architecture/validate-source-imports",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Validate source-code import boundaries across apps and packages.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "validate": "node src/index.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "tool",
+      "name": "validate-source-imports",
+      "system": "architecture-governance",
+      "domain": "architecture",
+      "boundedContext": "architecture-governance",
+      "owner": "architecture"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "tooling",
+      "class": "active.tooling",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0007",
+        "ADR-0011",
+        "ADR-0012"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "validate-source-imports",
+      "serviceNamespace": "architecture-governance",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "external"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@architecture/validate-package-metadata"
+      ],
+      "providesApis": [],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "architecture",
+      "type": "tooling",
+      "stage": "active",
+      "role": "tooling",
+      "layer": "tooling"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Validates that TypeScript/JS source files only import from permitted packages per the architecture import-boundary rules.",
+      "responsibilities": [
+        "Walk apps/ and packages/ source files",
+        "Extract static, re-export, and dynamic import specifiers via regex",
+        "Enforce universal rules: no deep imports, no test-support in production files",
+        "Enforce per-package boundary rules derived from import-boundary-rules.md",
+        "Write JSON and Markdown validation reports",
+        "Write committed governance evidence with --write"
+      ],
+      "nonResponsibilities": [
+        "Does not perform TypeScript type-checking or compiler integration",
+        "Does not analyse circular dependencies",
+        "Does not validate runtime node_modules resolution",
+        "Does not validate relative within-package imports"
+      ],
+      "usage": [
+        "Run from repository root with node tools/architecture/validate-source-imports/src/index.mjs",
+        "Use --root <path>, --format text|json, --no-reports, --check (default), --write per ADR-0011",
+        "Positional arguments are scan root directories relative to --root; defaults to apps packages"
+      ],
+      "operationalNotes": [
+        "Validation reports are written under reports/validation unless --no-reports is supplied",
+        "Self-evidence is written under reports/tooling/validate-source-imports unless --no-reports is supplied",
+        "Committed governance evidence is written to docs/evidence/import-boundaries/ with --write"
+      ]
+    }
+  }
+}

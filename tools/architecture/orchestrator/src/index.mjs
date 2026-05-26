@@ -105,6 +105,7 @@ function planFor(command) {
   ]);
 
   const plannedOnly = {
+    "validate-source-imports": step("validate-source-imports", "tools/architecture/validate-source-imports", ["--check", "--format", "json", ...(OPTIONS.noReports ? ["--no-reports"] : [])], true),
     "generate-package-readmes": step("generate-package-readmes", "tools/architecture/generate-package-readmes", ["--check", "--format", "json", ...(OPTIONS.noReports ? ["--no-reports"] : [])], true),
     "generate-package-inventory": step("generate-package-inventory", "tools/architecture/generate-package-inventory", ["--check", "--format", "json", ...(OPTIONS.noReports ? ["--no-reports"] : [])], true),
     "generate-lifecycle-reports": step("generate-lifecycle-reports", "tools/architecture/generate-lifecycle-reports", ["--check"], false),
@@ -119,6 +120,7 @@ function planFor(command) {
   if (command === "all") {
     return [
       metadata,
+      plannedOnly["validate-source-imports"],
       plannedOnly["generate-package-readmes"],
       plannedOnly["generate-package-inventory"],
       plannedOnly["generate-lifecycle-reports"],
@@ -139,7 +141,7 @@ function planFor(command) {
   }
 
   if (command === "validate-evidence") {
-    return [metadata, plannedOnly["generate-package-readmes"], plannedOnly["generate-package-inventory"], plannedOnly["generate-lifecycle-reports"], plannedOnly["validate-lifecycle-evidence"]];
+    return [metadata, plannedOnly["validate-source-imports"], plannedOnly["generate-package-readmes"], plannedOnly["generate-package-inventory"], plannedOnly["generate-lifecycle-reports"], plannedOnly["validate-lifecycle-evidence"]];
   }
 
   if (command === "generate-lifecycle-evidence") {
@@ -150,7 +152,7 @@ function planFor(command) {
         required: true
       }];
     }
-    return [metadata, plannedOnly["generate-package-readmes"], plannedOnly["generate-package-inventory"], plannedOnly["generate-lifecycle-reports"], plannedOnly["generate-lifecycle-evidence"], plannedOnly["validate-lifecycle-evidence"]];
+    return [metadata, plannedOnly["validate-source-imports"], plannedOnly["generate-package-readmes"], plannedOnly["generate-package-inventory"], plannedOnly["generate-lifecycle-reports"], plannedOnly["generate-lifecycle-evidence"], plannedOnly["validate-lifecycle-evidence"]];
   }
 
   throw new Error(`Unsupported command: ${command}`);

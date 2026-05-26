@@ -16,6 +16,7 @@ const payload = JSON.parse(result.stdout);
 
 assert.deepEqual(payload.dependencyOrder, [
   "validate-package-metadata",
+  "validate-source-imports",
   "generate-package-readmes",
   "generate-package-inventory",
   "generate-lifecycle-reports",
