@@ -1,0 +1,105 @@
+{
+  "name": "@representative/feature-enrolment",
+  "version": "1.0.0",
+  "private": true,
+  "description": "React feature workflow package for enrolment screens and user interaction composition.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "feature",
+      "system": "representative-enterprise-react",
+      "domain": "experience",
+      "boundedContext": "enrolment",
+      "owner": "team-feature"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "feature",
+      "class": "active.feature",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0005",
+        "ADR-0008",
+        "ADR-0012"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "feature",
+      "serviceNamespace": "representative-enterprise-react",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application",
+        "feature",
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "external"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@representative/domain-student",
+        "@representative/contracts-graphql"
+      ],
+      "providesApis": [
+        "enrolment-feature-entry"
+      ],
+      "consumesApis": [
+        "student-domain",
+        "enrolment-query"
+      ]
+    },
+    "tags": {
+      "scope": "representative",
+      "type": "library",
+      "stage": "active",
+      "role": "feature",
+      "layer": "feature"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "React feature workflow package for enrolment screens and user interaction composition.",
+      "responsibilities": [
+        "Own enrolment workflow composition and feature-level React state",
+        "Consume domain rules and GraphQL contract operations through public exports",
+        "Expose feature entry points for application routing"
+      ],
+      "nonResponsibilities": [
+        "Does not own transport, cache client creation, or generated GraphQL schema files",
+        "Does not contain reusable design-system primitives",
+        "Does not own cross-context domain policy"
+      ],
+      "usage": [
+        "Import from the React app shell through public feature exports",
+        "Use contract and domain packages as dependencies",
+        "Keep adapter integration at the edge of the feature boundary"
+      ],
+      "operationalNotes": [
+        "Feature packages prove workflow ownership without taking adapter or domain ownership"
+      ]
+    }
+  }
+}

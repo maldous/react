@@ -1,0 +1,83 @@
+{
+  "name": "@fixture/invalid-enum",
+  "version": "1.0.0",
+  "description": "Valid architecture metadata fixture.",
+  "private": true,
+  "type": "module",
+  "exports": {},
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "nonsense",
+      "name": "fixture",
+      "system": "architecture-governance",
+      "domain": "architecture",
+      "boundedContext": "architecture-governance",
+      "owner": "architecture"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "tooling",
+      "class": "active.tooling",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0005"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "fixture",
+      "serviceNamespace": "architecture-governance",
+      "deploymentEnvironments": [
+        "local"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "external"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "architecture",
+      "type": "tooling",
+      "stage": "active",
+      "role": "tooling",
+      "layer": "tooling"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Fixture package.",
+      "responsibilities": [
+        "Validate fixture behaviour"
+      ],
+      "nonResponsibilities": [
+        "Production runtime"
+      ],
+      "usage": [
+        "Used in tests"
+      ],
+      "operationalNotes": [
+        "Local fixture"
+      ]
+    }
+  }
+}

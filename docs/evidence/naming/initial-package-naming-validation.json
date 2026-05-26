@@ -1,0 +1,143 @@
+{
+  "ruleSet": "docs/architecture/package-module-naming-conventions.md",
+  "totalPackages": 15,
+  "passed": 15,
+  "failed": 0,
+  "results": [
+    {
+      "path": "apps/react-enterprise-app",
+      "name": "@platform/react-enterprise-app",
+      "lifecycleClass": "active.feature",
+      "domain": "experience",
+      "boundedContext": "app-shell",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "packages/access-control",
+      "name": "@platform/access-control",
+      "lifecycleClass": "stable.platform",
+      "domain": "core",
+      "boundedContext": "access-control",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "packages/adapters-clickhouse",
+      "name": "@platform/adapters-clickhouse",
+      "lifecycleClass": "active.adapter",
+      "domain": "analytics",
+      "boundedContext": "clickhouse-runtime",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "packages/adapters-graphql",
+      "name": "@platform/adapters-graphql",
+      "lifecycleClass": "active.adapter",
+      "domain": "integration",
+      "boundedContext": "graphql-runtime",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "packages/adapters-ingestion",
+      "name": "@platform/adapters-ingestion",
+      "lifecycleClass": "active.adapter",
+      "domain": "integration",
+      "boundedContext": "external-ingestion-runtime",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "packages/adapters-postgres",
+      "name": "@platform/adapters-postgres",
+      "lifecycleClass": "active.adapter",
+      "domain": "persistence",
+      "boundedContext": "postgres-runtime",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "packages/contracts-analytics",
+      "name": "@platform/contracts-analytics",
+      "lifecycleClass": "active.contract",
+      "domain": "analytics",
+      "boundedContext": "analytics-contracts",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "packages/contracts-graphql",
+      "name": "@platform/contracts-graphql",
+      "lifecycleClass": "active.contract",
+      "domain": "core",
+      "boundedContext": "graphql-contracts",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "packages/contracts-ingestion",
+      "name": "@platform/contracts-ingestion",
+      "lifecycleClass": "active.contract",
+      "domain": "integration",
+      "boundedContext": "external-ingestion-contracts",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "packages/domain-core",
+      "name": "@platform/domain-core",
+      "lifecycleClass": "stable.platform",
+      "domain": "core",
+      "boundedContext": "domain-core",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "packages/feature-workflow",
+      "name": "@platform/feature-workflow",
+      "lifecycleClass": "active.feature",
+      "domain": "experience",
+      "boundedContext": "workflow",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "packages/profile-configuration",
+      "name": "@platform/profile-configuration",
+      "lifecycleClass": "stable.platform",
+      "domain": "core",
+      "boundedContext": "profile-configuration",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "packages/test-support",
+      "name": "@platform/test-support",
+      "lifecycleClass": "active.test",
+      "domain": "quality",
+      "boundedContext": "test-support",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "packages/tooling-codegen",
+      "name": "@platform/tooling-codegen",
+      "lifecycleClass": "active.tooling",
+      "domain": "architecture",
+      "boundedContext": "codegen",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "packages/ui-design-system",
+      "name": "@platform/ui-design-system",
+      "lifecycleClass": "active.platform",
+      "domain": "experience",
+      "boundedContext": "design-system",
+      "valid": true,
+      "errors": []
+    }
+  ]
+}

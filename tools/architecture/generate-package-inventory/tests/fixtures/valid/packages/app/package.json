@@ -1,0 +1,90 @@
+{
+  "name": "@fixture/app",
+  "version": "1.0.0",
+  "description": "app inventory fixture.",
+  "private": true,
+  "type": "module",
+  "exports": {},
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "application",
+      "name": "app",
+      "system": "fixture-system",
+      "domain": "experience",
+      "boundedContext": "checkout",
+      "owner": "team-app"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "feature",
+      "class": "active.feature",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0009"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "app",
+      "serviceNamespace": "fixture-system",
+      "deploymentEnvironments": [
+        "local",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "external"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@fixture/feature"
+      ],
+      "providesApis": [
+        "checkout-ui"
+      ],
+      "consumesApis": [
+        "checkout-command"
+      ]
+    },
+    "tags": {
+      "scope": "fixture",
+      "type": "application",
+      "stage": "active",
+      "role": "feature",
+      "layer": "app"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "app fixture.",
+      "responsibilities": [
+        "Support inventory report testing"
+      ],
+      "nonResponsibilities": [
+        "Production runtime"
+      ],
+      "usage": [
+        "Used in tests"
+      ],
+      "operationalNotes": [
+        "Fixture only"
+      ]
+    }
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "name": "@platform/react-enterprise-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Generic React 19 TypeScript enterprise application shell using generated GraphQL contracts through approved adapters.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "application",
+      "name": "react-enterprise-app",
+      "system": "enterprise-react-platform",
+      "domain": "experience",
+      "boundedContext": "app-shell",
+      "owner": "team-app"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "feature",
+      "class": "active.feature",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005",
+        "ADR-0007",
+        "ADR-0008"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": true,
+      "testOnly": false,
+      "serviceName": "react-enterprise-app",
+      "serviceNamespace": "enterprise-react-platform",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test",
+        "staging",
+        "production"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "browser-runtime",
+        "e2e-tests"
+      ],
+      "forbiddenConsumers": [
+        "domain",
+        "contract",
+        "adapter-deep-imports"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@platform/feature-workflow",
+        "@platform/access-control",
+        "@platform/adapters-graphql"
+      ],
+      "providesApis": [],
+      "consumesApis": [
+        "workflow-query",
+        "auth-session",
+        "access-policy"
+      ]
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "application",
+      "stage": "active",
+      "role": "feature",
+      "layer": "app"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Generic React 19 TypeScript enterprise application shell using generated GraphQL contracts through approved adapters.",
+      "responsibilities": [
+        "Own the browser application shell, routing surface, runtime bootstrapping, and application-level composition",
+        "Compose feature packages through public exports",
+        "Consume data operations only through approved contract and adapter package boundaries",
+        "Compose role-aware application surfaces for admin, staff, and user experiences"
+      ],
+      "nonResponsibilities": [
+        "Does not own product-specific domain policy",
+        "Does not define GraphQL schema or operation ownership",
+        "Does not bypass package public exports or call vendor transport directly",
+        "Does not own role policy definitions or permission evaluation"
+      ],
+      "usage": [
+        "Use as the generic enterprise React application entry package",
+        "Import feature packages through their public exports",
+        "Use generated GraphQL TypedDocumentNode operations through approved adapter packages"
+      ],
+      "operationalNotes": [
+        "Representative stack: React 19, TypeScript, Vite, GraphQL Code Generator, and TanStack Query or Apollo Client",
+        "No business-domain end state is assumed by this package"
+      ]
+    }
+  }
+}

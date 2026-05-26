@@ -1,0 +1,100 @@
+{
+  "name": "@representative/domain-student",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pure TypeScript domain package for student policy, validation, and state transitions.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "domain",
+      "system": "representative-enterprise-react",
+      "domain": "core",
+      "boundedContext": "student",
+      "owner": "team-domain"
+    },
+    "lifecycle": {
+      "stage": "stable",
+      "role": "platform",
+      "class": "stable.platform",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0005",
+        "ADR-0008",
+        "ADR-0012"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "domain",
+      "serviceNamespace": "representative-enterprise-react",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "feature",
+        "adapter",
+        "test"
+      ],
+      "forbiddenConsumers": [
+        "react-runtime",
+        "graphql-client",
+        "browser-api"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "student-domain"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "representative",
+      "type": "library",
+      "stage": "stable",
+      "role": "platform",
+      "layer": "domain"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Pure TypeScript domain package for student policy, validation, and state transitions.",
+      "responsibilities": [
+        "Own student domain model, validation, and policy logic",
+        "Expose pure TypeScript APIs",
+        "Remain independent from React, GraphQL transport, and browser runtime concerns"
+      ],
+      "nonResponsibilities": [
+        "Does not render React components",
+        "Does not execute GraphQL operations",
+        "Does not depend on application or adapter packages"
+      ],
+      "usage": [
+        "Import from feature and adapter mapping packages through public exports",
+        "Use in tests without browser runtime"
+      ],
+      "operationalNotes": [
+        "Domain package proves clean separation from React and GraphQL runtime transport"
+      ]
+    }
+  }
+}

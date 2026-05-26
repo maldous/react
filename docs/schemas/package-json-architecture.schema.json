@@ -1,0 +1,673 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/package-json/architecture.schema.json",
+  "title": "Package architecture metadata",
+  "description": "Project-specific package.json architecture metadata schema governed by ADR-0005 and ADR-0006.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "name",
+    "version",
+    "description",
+    "private",
+    "type",
+    "exports",
+    "architecture"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "private": {
+      "type": "boolean"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "module",
+        "commonjs"
+      ]
+    },
+    "exports": {
+      "description": "Standard package public exports. Kept intentionally broad because package.json supports several valid shapes.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "minProperties": 1
+        },
+        {
+          "type": "array",
+          "minItems": 1
+        }
+      ]
+    },
+    "architecture": {
+      "$ref": "#/$defs/architecture"
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stringList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "uniqueItems": true
+    },
+    "reviewCadence": {
+      "type": "string",
+      "enum": [
+        "none",
+        "monthly",
+        "quarterly",
+        "six-monthly",
+        "annual",
+        "on-change"
+      ]
+    },
+    "architecture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "component",
+        "lifecycle",
+        "governance",
+        "runtime",
+        "boundaries",
+        "relations",
+        "tags",
+        "readme"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "type": "string",
+          "const": "1.0"
+        },
+        "component": {
+          "$ref": "#/$defs/component"
+        },
+        "lifecycle": {
+          "$ref": "#/$defs/lifecycle"
+        },
+        "governance": {
+          "$ref": "#/$defs/governance"
+        },
+        "runtime": {
+          "$ref": "#/$defs/runtime"
+        },
+        "boundaries": {
+          "$ref": "#/$defs/boundaries"
+        },
+        "relations": {
+          "$ref": "#/$defs/relations"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        },
+        "readme": {
+          "$ref": "#/$defs/readme"
+        },
+        "security": {
+          "$ref": "#/$defs/futureGroup"
+        },
+        "data": {
+          "$ref": "#/$defs/futureGroup"
+        },
+        "operations": {
+          "$ref": "#/$defs/futureGroup"
+        },
+        "compliance": {
+          "$ref": "#/$defs/futureGroup"
+        },
+        "supplyChain": {
+          "$ref": "#/$defs/futureGroup"
+        },
+        "observability": {
+          "$ref": "#/$defs/futureGroup"
+        },
+        "deployment": {
+          "$ref": "#/$defs/futureGroup"
+        }
+      }
+    },
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "name",
+        "system",
+        "domain",
+        "boundedContext",
+        "owner"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "application",
+            "library",
+            "service",
+            "api",
+            "worker",
+            "tool",
+            "test",
+            "documentation"
+          ]
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "system": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "domain": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "boundedContext": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "owner": {
+          "type": "string",
+          "pattern": "^(group:team/[A-Za-z0-9._-]+|[A-Za-z0-9._-]+)$"
+        }
+      }
+    },
+    "lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stage",
+        "role",
+        "class",
+        "catalogLifecycle",
+        "visibility",
+        "supportLevel",
+        "reviewCadence"
+      ],
+      "properties": {
+        "stage": {
+          "type": "string",
+          "enum": [
+            "experimental",
+            "candidate",
+            "active",
+            "stable",
+            "maintenance",
+            "external",
+            "deprecated"
+          ]
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "feature",
+            "platform",
+            "contract",
+            "adapter",
+            "tooling",
+            "test"
+          ]
+        },
+        "class": {
+          "type": "string",
+          "pattern": "^(experimental|candidate|active|stable|maintenance|external|deprecated)\\.(feature|platform|contract|adapter|tooling|test)$"
+        },
+        "catalogLifecycle": {
+          "type": "string",
+          "enum": [
+            "experimental",
+            "production",
+            "deprecated"
+          ]
+        },
+        "visibility": {
+          "type": "string",
+          "enum": [
+            "internal",
+            "releaseable",
+            "external",
+            "deprecated"
+          ]
+        },
+        "supportLevel": {
+          "type": "string",
+          "enum": [
+            "experimental",
+            "standard",
+            "enhanced",
+            "maintenance",
+            "deprecated",
+            "unsupported"
+          ]
+        },
+        "reviewCadence": {
+          "$ref": "#/$defs/reviewCadence"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "const": "experimental"
+              }
+            },
+            "required": [
+              "stage"
+            ]
+          },
+          "then": {
+            "properties": {
+              "catalogLifecycle": {
+                "const": "experimental"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "enum": [
+                  "candidate"
+                ]
+              }
+            },
+            "required": [
+              "stage"
+            ]
+          },
+          "then": {
+            "properties": {
+              "catalogLifecycle": {
+                "const": "experimental"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "enum": [
+                  "active",
+                  "stable",
+                  "maintenance",
+                  "external"
+                ]
+              }
+            },
+            "required": [
+              "stage"
+            ]
+          },
+          "then": {
+            "properties": {
+              "catalogLifecycle": {
+                "const": "production"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "const": "deprecated"
+              }
+            },
+            "required": [
+              "stage"
+            ]
+          },
+          "then": {
+            "properties": {
+              "catalogLifecycle": {
+                "const": "deprecated"
+              },
+              "visibility": {
+                "const": "deprecated"
+              },
+              "supportLevel": {
+                "enum": [
+                  "deprecated",
+                  "unsupported"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "const": "external"
+              }
+            },
+            "required": [
+              "stage"
+            ]
+          },
+          "then": {
+            "properties": {
+              "visibility": {
+                "const": "external"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decisionRefs",
+        "semverPolicy",
+        "changeControl",
+        "promotionEligible"
+      ],
+      "properties": {
+        "decisionRefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^ADR-[0-9]{4}$"
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "semverPolicy": {
+          "type": "string",
+          "enum": [
+            "none",
+            "internal-traceable",
+            "compatibility-reviewed",
+            "semver-required",
+            "external-governed",
+            "deprecated"
+          ]
+        },
+        "changeControl": {
+          "type": "string",
+          "enum": [
+            "none",
+            "owner-review",
+            "architecture-review",
+            "security-review",
+            "release-review",
+            "deprecation-review"
+          ]
+        },
+        "promotionEligible": {
+          "type": "boolean"
+        }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "production",
+        "testOnly",
+        "serviceName",
+        "serviceNamespace",
+        "deploymentEnvironments"
+      ],
+      "properties": {
+        "production": {
+          "type": "boolean"
+        },
+        "testOnly": {
+          "type": "boolean"
+        },
+        "serviceName": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "serviceNamespace": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "deploymentEnvironments": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "local",
+              "development",
+              "test",
+              "staging",
+              "production"
+            ]
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "testOnly": {
+                "const": true
+              }
+            },
+            "required": [
+              "testOnly"
+            ]
+          },
+          "then": {
+            "properties": {
+              "production": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "publicExportsOnly",
+        "deepImportsAllowed",
+        "allowedConsumers",
+        "forbiddenConsumers"
+      ],
+      "properties": {
+        "publicExportsOnly": {
+          "type": "boolean"
+        },
+        "deepImportsAllowed": {
+          "type": "boolean"
+        },
+        "allowedConsumers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/consumer"
+          },
+          "uniqueItems": true
+        },
+        "forbiddenConsumers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/consumer"
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "publicExportsOnly": {
+                "const": true
+              }
+            },
+            "required": [
+              "publicExportsOnly"
+            ]
+          },
+          "then": {
+            "properties": {
+              "deepImportsAllowed": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "consumer": {
+      "type": "string",
+      "enum": [
+        "same-package",
+        "same-domain",
+        "cross-domain",
+        "application-layer",
+        "adapter-layer",
+        "ui-layer",
+        "tooling",
+        "test-only",
+        "external"
+      ]
+    },
+    "relations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dependsOn",
+        "providesApis",
+        "consumesApis"
+      ],
+      "properties": {
+        "dependsOn": {
+          "$ref": "#/$defs/stringList"
+        },
+        "providesApis": {
+          "$ref": "#/$defs/stringList"
+        },
+        "consumesApis": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "tags": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "type",
+        "stage",
+        "role",
+        "layer"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "feature",
+            "platform",
+            "contract",
+            "adapter",
+            "tooling",
+            "test"
+          ]
+        },
+        "stage": {
+          "type": "string",
+          "enum": [
+            "experimental",
+            "candidate",
+            "active",
+            "stable",
+            "maintenance",
+            "external",
+            "deprecated"
+          ]
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "feature",
+            "platform",
+            "contract",
+            "adapter",
+            "tooling",
+            "test"
+          ]
+        },
+        "layer": {
+          "type": "string",
+          "enum": [
+            "domain",
+            "application",
+            "adapter",
+            "ui",
+            "infrastructure",
+            "tooling",
+            "test",
+            "documentation"
+          ]
+        }
+      }
+    },
+    "readme": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generated",
+        "summary",
+        "responsibilities",
+        "nonResponsibilities",
+        "usage",
+        "operationalNotes"
+      ],
+      "properties": {
+        "generated": {
+          "type": "boolean",
+          "const": true
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "responsibilities": {
+          "$ref": "#/$defs/stringList"
+        },
+        "nonResponsibilities": {
+          "$ref": "#/$defs/stringList"
+        },
+        "usage": {
+          "$ref": "#/$defs/stringList"
+        },
+        "operationalNotes": {
+          "$ref": "#/$defs/stringList"
+        }
+      }
+    },
+    "futureGroup": {
+      "type": "object",
+      "description": "Reserved extension group. Specific fields require a later ADR or implementation decision before use.",
+      "additionalProperties": true
+    }
+  }
+}

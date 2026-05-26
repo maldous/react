@@ -1,0 +1,88 @@
+{
+  "name": "@fixture/adapter",
+  "version": "1.0.0",
+  "description": "adapter inventory fixture.",
+  "private": true,
+  "type": "module",
+  "exports": {},
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "adapter",
+      "system": "fixture-system",
+      "domain": "integration",
+      "boundedContext": "vendor",
+      "owner": "team-adapter"
+    },
+    "lifecycle": {
+      "stage": "external",
+      "role": "adapter",
+      "class": "external.adapter",
+      "catalogLifecycle": "production",
+      "visibility": "external",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0009"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": false
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "adapter",
+      "serviceNamespace": "fixture-system",
+      "deploymentEnvironments": [
+        "local",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "external"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@fixture/contract"
+      ],
+      "providesApis": [],
+      "consumesApis": [
+        "customer-contract"
+      ]
+    },
+    "tags": {
+      "scope": "fixture",
+      "type": "library",
+      "stage": "external",
+      "role": "adapter",
+      "layer": "adapter"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "adapter fixture.",
+      "responsibilities": [
+        "Support inventory report testing"
+      ],
+      "nonResponsibilities": [
+        "Production runtime"
+      ],
+      "usage": [
+        "Used in tests"
+      ],
+      "operationalNotes": [
+        "Fixture only"
+      ]
+    }
+  }
+}

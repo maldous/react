@@ -1,0 +1,111 @@
+{
+  "name": "@platform/adapters-graphql",
+  "version": "0.1.0",
+  "private": true,
+  "description": "GraphQL adapter package that binds generated contract documents to approved runtime transport and cache policy.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "adapters-graphql",
+      "system": "enterprise-react-platform",
+      "domain": "integration",
+      "boundedContext": "graphql-runtime",
+      "owner": "team-adapter"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "adapter",
+      "class": "active.adapter",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005",
+        "ADR-0007",
+        "ADR-0008"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "adapters-graphql",
+      "serviceNamespace": "enterprise-react-platform",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application",
+        "feature"
+      ],
+      "forbiddenConsumers": [
+        "domain",
+        "ui"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@platform/contracts-graphql",
+        "@platform/adapters-postgres",
+        "@platform/adapters-clickhouse"
+      ],
+      "providesApis": [
+        "graphql-runtime-adapter"
+      ],
+      "consumesApis": [
+        "TypedDocumentNode",
+        "auth-session",
+        "postgres-transactional-adapter",
+        "clickhouse-analytics-adapter"
+      ]
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "library",
+      "stage": "active",
+      "role": "adapter",
+      "layer": "adapter"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "GraphQL adapter package that binds generated contract documents to approved runtime transport and cache policy.",
+      "responsibilities": [
+        "Own GraphQL runtime fetcher and client binding",
+        "Integrate generated TypedDocumentNode operations with TanStack Query or Apollo Client",
+        "Handle transport errors, auth headers, cache policy, and retry boundaries",
+        "Coordinate GraphQL runtime access to PostgreSQL transactional adapters and ClickHouse analytical adapters without leaking storage details to React packages"
+      ],
+      "nonResponsibilities": [
+        "Does not define GraphQL schema contracts",
+        "Does not own feature workflow composition",
+        "Does not contain product-specific domain policy logic"
+      ],
+      "usage": [
+        "Imported by app or feature edge packages where runtime GraphQL transport is allowed",
+        "Consume generated contract documents from the contract package"
+      ],
+      "operationalNotes": [
+        "Adapter package proves transport ownership remains separate from schema and operation ownership"
+      ]
+    }
+  }
+}

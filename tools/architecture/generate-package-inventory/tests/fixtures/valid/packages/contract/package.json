@@ -1,0 +1,86 @@
+{
+  "name": "@fixture/contract",
+  "version": "1.0.0",
+  "description": "contract inventory fixture.",
+  "private": true,
+  "type": "module",
+  "exports": {},
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "api",
+      "name": "contract",
+      "system": "fixture-system",
+      "domain": "core",
+      "boundedContext": "integration",
+      "owner": "team-contract"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "contract",
+      "class": "active.contract",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0009"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "contract",
+      "serviceNamespace": "fixture-system",
+      "deploymentEnvironments": [
+        "local",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "external"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "customer-contract"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "fixture",
+      "type": "api",
+      "stage": "active",
+      "role": "contract",
+      "layer": "contract"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "contract fixture.",
+      "responsibilities": [
+        "Support inventory report testing"
+      ],
+      "nonResponsibilities": [
+        "Production runtime"
+      ],
+      "usage": [
+        "Used in tests"
+      ],
+      "operationalNotes": [
+        "Fixture only"
+      ]
+    }
+  }
+}

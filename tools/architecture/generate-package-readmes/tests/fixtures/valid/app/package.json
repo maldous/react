@@ -1,0 +1,91 @@
+{
+  "name": "@fixture/readme-app",
+  "version": "1.0.0",
+  "description": "Fixture app for README generation.",
+  "private": true,
+  "type": "module",
+  "exports": {},
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "application",
+      "name": "readme-app",
+      "system": "fixture-system",
+      "domain": "fixture-domain",
+      "boundedContext": "fixture-context",
+      "owner": "architecture"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "feature",
+      "class": "active.feature",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0008"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": true,
+      "serviceName": "readme-app",
+      "serviceNamespace": "fixture-system",
+      "deploymentEnvironments": [
+        "local",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "external"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@fixture/domain"
+      ],
+      "providesApis": [
+        "fixture-read-api"
+      ],
+      "consumesApis": [
+        "fixture-contract-api"
+      ]
+    },
+    "tags": {
+      "scope": "fixture",
+      "type": "application",
+      "stage": "active",
+      "role": "feature",
+      "layer": "app"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Fixture package used to validate generated README output.",
+      "responsibilities": [
+        "Render stable README output",
+        "Exercise metadata sections"
+      ],
+      "nonResponsibilities": [
+        "Production runtime"
+      ],
+      "usage": [
+        "Run generator tests"
+      ],
+      "operationalNotes": [
+        "Fixture only"
+      ]
+    }
+  }
+}

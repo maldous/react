@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+coverage/
+
+# Caches and temporary files
+.tmp/
+.cache/
+.next/
+.vite/
+.turbo/
+.nx/cache/
+
+# Generated operational reports
+reports/**
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# OS/editor noise
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+# Local generated artifact workspaces
+/adr-work-*/
+
+# Generated handoff artifacts
+/adr-artifacts-*.zip
+/adr-*-report-*.md
+
+# Generated tool self-evidence accidentally emitted inside test fixtures
+/tools/architecture/**/tests/fixtures/**/reports/tooling/**

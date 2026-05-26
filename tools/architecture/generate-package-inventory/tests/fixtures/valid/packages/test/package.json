@@ -1,0 +1,88 @@
+{
+  "name": "@fixture/test",
+  "version": "1.0.0",
+  "description": "test inventory fixture.",
+  "private": true,
+  "type": "module",
+  "exports": {},
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "test",
+      "name": "test",
+      "system": "fixture-system",
+      "domain": "quality",
+      "boundedContext": "e2e",
+      "owner": "team-quality"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "test",
+      "class": "active.test",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0009"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": false
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": true,
+      "serviceName": "test",
+      "serviceNamespace": "fixture-system",
+      "deploymentEnvironments": [
+        "local",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "external"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@fixture/app"
+      ],
+      "providesApis": [],
+      "consumesApis": [
+        "checkout-ui"
+      ]
+    },
+    "tags": {
+      "scope": "fixture",
+      "type": "test",
+      "stage": "active",
+      "role": "test",
+      "layer": "test"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "test fixture.",
+      "responsibilities": [
+        "Support inventory report testing"
+      ],
+      "nonResponsibilities": [
+        "Production runtime"
+      ],
+      "usage": [
+        "Used in tests"
+      ],
+      "operationalNotes": [
+        "Fixture only"
+      ]
+    }
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "name": "@architecture/orchestrator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Dependency-managing orchestrator for architecture governance tooling.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "validate": "node src/index.mjs validate",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "tool",
+      "name": "orchestrator",
+      "system": "architecture-governance",
+      "domain": "architecture",
+      "boundedContext": "architecture-governance",
+      "owner": "architecture"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "tooling",
+      "class": "active.tooling",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0011",
+        "ADR-0012"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "architecture-orchestrator",
+      "serviceNamespace": "architecture-governance",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "external"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@architecture/validate-package-metadata"
+      ],
+      "providesApis": [],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "architecture",
+      "type": "tooling",
+      "stage": "active",
+      "role": "tooling",
+      "layer": "tooling"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Runs architecture tooling in governed dependency order and emits self-evidence.",
+      "responsibilities": [
+        "Coordinate architecture tooling commands",
+        "Preserve dependency ordering",
+        "Stop on failed required dependencies",
+        "Emit orchestrator self-evidence"
+      ],
+      "nonResponsibilities": [
+        "Does not replace individual tool validation rules",
+        "Does not write package metadata",
+        "Does not generate governance evidence by default"
+      ],
+      "usage": [
+        "Run from repository root with node tools/architecture/orchestrator/src/index.mjs validate"
+      ],
+      "operationalNotes": [
+        "Self-evidence is written under reports/tooling/orchestrator unless --no-reports is used"
+      ]
+    }
+  }
+}

@@ -1,0 +1,451 @@
+{
+  "generatedAt": "2026-05-26T00:00:00.000Z",
+  "source": "package.json architecture metadata",
+  "totalPackages": 8,
+  "packages": [
+    {
+      "name": "@fixture/adapter",
+      "version": "1.0.0",
+      "path": "packages/adapter/package.json",
+      "component": {
+        "name": "adapter",
+        "type": "library",
+        "system": "fixture-system",
+        "domain": "integration",
+        "boundedContext": "vendor",
+        "owner": "team-adapter"
+      },
+      "lifecycle": {
+        "stage": "external",
+        "role": "adapter",
+        "class": "external.adapter",
+        "catalogLifecycle": "production",
+        "visibility": "external",
+        "supportLevel": "standard",
+        "reviewCadence": "quarterly"
+      },
+      "governance": {
+        "decisionRefs": [
+          "ADR-0009"
+        ],
+        "semverPolicy": "internal-traceable",
+        "changeControl": "owner-review",
+        "promotionEligible": false
+      },
+      "runtime": {
+        "production": false,
+        "testOnly": false,
+        "serviceName": "adapter",
+        "serviceNamespace": "fixture-system",
+        "deploymentEnvironments": [
+          "local",
+          "test"
+        ]
+      },
+      "relations": {
+        "dependsOn": [
+          "@fixture/contract"
+        ],
+        "providesApis": [],
+        "consumesApis": [
+          "customer-contract"
+        ]
+      },
+      "tags": {
+        "scope": "fixture",
+        "type": "library",
+        "stage": "external",
+        "role": "adapter",
+        "layer": "adapter"
+      }
+    },
+    {
+      "name": "@fixture/app",
+      "version": "1.0.0",
+      "path": "packages/app/package.json",
+      "component": {
+        "name": "app",
+        "type": "application",
+        "system": "fixture-system",
+        "domain": "experience",
+        "boundedContext": "checkout",
+        "owner": "team-app"
+      },
+      "lifecycle": {
+        "stage": "active",
+        "role": "feature",
+        "class": "active.feature",
+        "catalogLifecycle": "production",
+        "visibility": "internal",
+        "supportLevel": "standard",
+        "reviewCadence": "quarterly"
+      },
+      "governance": {
+        "decisionRefs": [
+          "ADR-0009"
+        ],
+        "semverPolicy": "internal-traceable",
+        "changeControl": "owner-review",
+        "promotionEligible": true
+      },
+      "runtime": {
+        "production": false,
+        "testOnly": false,
+        "serviceName": "app",
+        "serviceNamespace": "fixture-system",
+        "deploymentEnvironments": [
+          "local",
+          "test"
+        ]
+      },
+      "relations": {
+        "dependsOn": [
+          "@fixture/feature"
+        ],
+        "providesApis": [
+          "checkout-ui"
+        ],
+        "consumesApis": [
+          "checkout-command"
+        ]
+      },
+      "tags": {
+        "scope": "fixture",
+        "type": "application",
+        "stage": "active",
+        "role": "feature",
+        "layer": "app"
+      }
+    },
+    {
+      "name": "@fixture/contract",
+      "version": "1.0.0",
+      "path": "packages/contract/package.json",
+      "component": {
+        "name": "contract",
+        "type": "api",
+        "system": "fixture-system",
+        "domain": "core",
+        "boundedContext": "integration",
+        "owner": "team-contract"
+      },
+      "lifecycle": {
+        "stage": "active",
+        "role": "contract",
+        "class": "active.contract",
+        "catalogLifecycle": "production",
+        "visibility": "internal",
+        "supportLevel": "standard",
+        "reviewCadence": "quarterly"
+      },
+      "governance": {
+        "decisionRefs": [
+          "ADR-0009"
+        ],
+        "semverPolicy": "internal-traceable",
+        "changeControl": "owner-review",
+        "promotionEligible": true
+      },
+      "runtime": {
+        "production": false,
+        "testOnly": false,
+        "serviceName": "contract",
+        "serviceNamespace": "fixture-system",
+        "deploymentEnvironments": [
+          "local",
+          "test"
+        ]
+      },
+      "relations": {
+        "dependsOn": [],
+        "providesApis": [
+          "customer-contract"
+        ],
+        "consumesApis": []
+      },
+      "tags": {
+        "scope": "fixture",
+        "type": "api",
+        "stage": "active",
+        "role": "contract",
+        "layer": "contract"
+      }
+    },
+    {
+      "name": "@fixture/domain",
+      "version": "1.0.0",
+      "path": "packages/domain/package.json",
+      "component": {
+        "name": "domain",
+        "type": "library",
+        "system": "fixture-system",
+        "domain": "core",
+        "boundedContext": "customer",
+        "owner": "team-domain"
+      },
+      "lifecycle": {
+        "stage": "stable",
+        "role": "platform",
+        "class": "stable.platform",
+        "catalogLifecycle": "production",
+        "visibility": "internal",
+        "supportLevel": "standard",
+        "reviewCadence": "quarterly"
+      },
+      "governance": {
+        "decisionRefs": [
+          "ADR-0009"
+        ],
+        "semverPolicy": "internal-traceable",
+        "changeControl": "owner-review",
+        "promotionEligible": true
+      },
+      "runtime": {
+        "production": false,
+        "testOnly": false,
+        "serviceName": "domain",
+        "serviceNamespace": "fixture-system",
+        "deploymentEnvironments": [
+          "local",
+          "test"
+        ]
+      },
+      "relations": {
+        "dependsOn": [],
+        "providesApis": [
+          "customer-domain"
+        ],
+        "consumesApis": []
+      },
+      "tags": {
+        "scope": "fixture",
+        "type": "library",
+        "stage": "stable",
+        "role": "platform",
+        "layer": "domain"
+      }
+    },
+    {
+      "name": "@fixture/feature",
+      "version": "1.0.0",
+      "path": "packages/feature/package.json",
+      "component": {
+        "name": "feature",
+        "type": "library",
+        "system": "fixture-system",
+        "domain": "experience",
+        "boundedContext": "checkout",
+        "owner": "team-feature"
+      },
+      "lifecycle": {
+        "stage": "active",
+        "role": "feature",
+        "class": "active.feature",
+        "catalogLifecycle": "production",
+        "visibility": "internal",
+        "supportLevel": "standard",
+        "reviewCadence": "quarterly"
+      },
+      "governance": {
+        "decisionRefs": [
+          "ADR-0009"
+        ],
+        "semverPolicy": "internal-traceable",
+        "changeControl": "owner-review",
+        "promotionEligible": true
+      },
+      "runtime": {
+        "production": false,
+        "testOnly": false,
+        "serviceName": "feature",
+        "serviceNamespace": "fixture-system",
+        "deploymentEnvironments": [
+          "local",
+          "test"
+        ]
+      },
+      "relations": {
+        "dependsOn": [
+          "@fixture/domain"
+        ],
+        "providesApis": [
+          "checkout-command"
+        ],
+        "consumesApis": [
+          "customer-domain"
+        ]
+      },
+      "tags": {
+        "scope": "fixture",
+        "type": "library",
+        "stage": "active",
+        "role": "feature",
+        "layer": "feature"
+      }
+    },
+    {
+      "name": "@fixture/test",
+      "version": "1.0.0",
+      "path": "packages/test/package.json",
+      "component": {
+        "name": "test",
+        "type": "test",
+        "system": "fixture-system",
+        "domain": "quality",
+        "boundedContext": "e2e",
+        "owner": "team-quality"
+      },
+      "lifecycle": {
+        "stage": "active",
+        "role": "test",
+        "class": "active.test",
+        "catalogLifecycle": "production",
+        "visibility": "internal",
+        "supportLevel": "standard",
+        "reviewCadence": "quarterly"
+      },
+      "governance": {
+        "decisionRefs": [
+          "ADR-0009"
+        ],
+        "semverPolicy": "internal-traceable",
+        "changeControl": "owner-review",
+        "promotionEligible": false
+      },
+      "runtime": {
+        "production": false,
+        "testOnly": true,
+        "serviceName": "test",
+        "serviceNamespace": "fixture-system",
+        "deploymentEnvironments": [
+          "local",
+          "test"
+        ]
+      },
+      "relations": {
+        "dependsOn": [
+          "@fixture/app"
+        ],
+        "providesApis": [],
+        "consumesApis": [
+          "checkout-ui"
+        ]
+      },
+      "tags": {
+        "scope": "fixture",
+        "type": "test",
+        "stage": "active",
+        "role": "test",
+        "layer": "test"
+      }
+    },
+    {
+      "name": "@fixture/tooling",
+      "version": "1.0.0",
+      "path": "packages/tooling/package.json",
+      "component": {
+        "name": "tooling",
+        "type": "tool",
+        "system": "fixture-system",
+        "domain": "architecture",
+        "boundedContext": "governance",
+        "owner": "team-architecture"
+      },
+      "lifecycle": {
+        "stage": "active",
+        "role": "tooling",
+        "class": "active.tooling",
+        "catalogLifecycle": "production",
+        "visibility": "internal",
+        "supportLevel": "standard",
+        "reviewCadence": "quarterly"
+      },
+      "governance": {
+        "decisionRefs": [
+          "ADR-0009"
+        ],
+        "semverPolicy": "internal-traceable",
+        "changeControl": "owner-review",
+        "promotionEligible": true
+      },
+      "runtime": {
+        "production": false,
+        "testOnly": false,
+        "serviceName": "tooling",
+        "serviceNamespace": "fixture-system",
+        "deploymentEnvironments": [
+          "local",
+          "test"
+        ]
+      },
+      "relations": {
+        "dependsOn": [
+          "@fixture/contract"
+        ],
+        "providesApis": [],
+        "consumesApis": []
+      },
+      "tags": {
+        "scope": "fixture",
+        "type": "tool",
+        "stage": "active",
+        "role": "tooling",
+        "layer": "tooling"
+      }
+    },
+    {
+      "name": "@fixture/ui",
+      "version": "1.0.0",
+      "path": "packages/ui/package.json",
+      "component": {
+        "name": "ui",
+        "type": "library",
+        "system": "fixture-system",
+        "domain": "experience",
+        "boundedContext": "shared-ui",
+        "owner": "team-ui"
+      },
+      "lifecycle": {
+        "stage": "active",
+        "role": "platform",
+        "class": "active.platform",
+        "catalogLifecycle": "production",
+        "visibility": "internal",
+        "supportLevel": "standard",
+        "reviewCadence": "quarterly"
+      },
+      "governance": {
+        "decisionRefs": [
+          "ADR-0009"
+        ],
+        "semverPolicy": "internal-traceable",
+        "changeControl": "owner-review",
+        "promotionEligible": true
+      },
+      "runtime": {
+        "production": false,
+        "testOnly": false,
+        "serviceName": "ui",
+        "serviceNamespace": "fixture-system",
+        "deploymentEnvironments": [
+          "local",
+          "test"
+        ]
+      },
+      "relations": {
+        "dependsOn": [],
+        "providesApis": [
+          "design-system"
+        ],
+        "consumesApis": []
+      },
+      "tags": {
+        "scope": "fixture",
+        "type": "library",
+        "stage": "active",
+        "role": "platform",
+        "layer": "ui"
+      }
+    }
+  ]
+}

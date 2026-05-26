@@ -1,0 +1,105 @@
+{
+  "name": "@platform/domain-core",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Generic pure TypeScript domain-core package for enterprise policy, validation, and state-transition examples.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "domain-core",
+      "system": "enterprise-react-platform",
+      "domain": "core",
+      "boundedContext": "domain-core",
+      "owner": "team-domain"
+    },
+    "lifecycle": {
+      "stage": "stable",
+      "role": "platform",
+      "class": "stable.platform",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005",
+        "ADR-0007",
+        "ADR-0008"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "domain-core",
+      "serviceNamespace": "enterprise-react-platform",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "feature",
+        "adapter",
+        "test"
+      ],
+      "forbiddenConsumers": [
+        "react-runtime",
+        "graphql-client",
+        "browser-api"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "domain-core"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "library",
+      "stage": "stable",
+      "role": "platform",
+      "layer": "domain"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Generic pure TypeScript domain-core package for enterprise policy, validation, and state-transition examples.",
+      "responsibilities": [
+        "Own generic domain-core model, validation, and policy examples",
+        "Expose pure TypeScript APIs",
+        "Remain independent from React, GraphQL transport, and browser runtime concerns",
+        "Define generic entity and policy primitives shared by profile, access, ingestion, and analytics packages"
+      ],
+      "nonResponsibilities": [
+        "Does not render React components",
+        "Does not execute GraphQL operations",
+        "Does not encode a specific product-domain end state",
+        "Does not own PostgreSQL persistence, ClickHouse analytics, or identity-provider integration"
+      ],
+      "usage": [
+        "Import from feature and adapter mapping packages through public exports",
+        "Use in tests without browser runtime"
+      ],
+      "operationalNotes": [
+        "Domain-core proves architectural separation without assuming business purpose"
+      ]
+    }
+  }
+}

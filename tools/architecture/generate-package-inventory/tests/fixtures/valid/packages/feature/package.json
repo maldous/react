@@ -1,0 +1,90 @@
+{
+  "name": "@fixture/feature",
+  "version": "1.0.0",
+  "description": "feature inventory fixture.",
+  "private": true,
+  "type": "module",
+  "exports": {},
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "feature",
+      "system": "fixture-system",
+      "domain": "experience",
+      "boundedContext": "checkout",
+      "owner": "team-feature"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "feature",
+      "class": "active.feature",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0009"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "feature",
+      "serviceNamespace": "fixture-system",
+      "deploymentEnvironments": [
+        "local",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "external"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@fixture/domain"
+      ],
+      "providesApis": [
+        "checkout-command"
+      ],
+      "consumesApis": [
+        "customer-domain"
+      ]
+    },
+    "tags": {
+      "scope": "fixture",
+      "type": "library",
+      "stage": "active",
+      "role": "feature",
+      "layer": "feature"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "feature fixture.",
+      "responsibilities": [
+        "Support inventory report testing"
+      ],
+      "nonResponsibilities": [
+        "Production runtime"
+      ],
+      "usage": [
+        "Used in tests"
+      ],
+      "operationalNotes": [
+        "Fixture only"
+      ]
+    }
+  }
+}

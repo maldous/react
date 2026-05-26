@@ -1,0 +1,107 @@
+{
+  "name": "@architecture/validate-package-metadata",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Validate package.json architecture metadata against the architecture schema.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "validate": "node src/index.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "tool",
+      "name": "validate-package-metadata",
+      "system": "architecture-governance",
+      "domain": "architecture",
+      "boundedContext": "architecture-governance",
+      "owner": "architecture"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "tooling",
+      "class": "active.tooling",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0005",
+        "ADR-0006",
+        "ADR-0007",
+        "ADR-0011",
+        "ADR-0012"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "validate-package-metadata",
+      "serviceNamespace": "architecture-governance",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "external"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "architecture",
+      "type": "tooling",
+      "stage": "active",
+      "role": "tooling",
+      "layer": "tooling"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Validates package architecture metadata against the governed JSON Schema.",
+      "responsibilities": [
+        "Load package architecture metadata schema",
+        "Find package.json files under apps, packages, and architecture tooling",
+        "Validate package metadata shape and selected cross-field rules",
+        "Write JSON and Markdown validation reports"
+      ],
+      "nonResponsibilities": [
+        "Does not generate package README files",
+        "Does not validate cross-package dependency graphs",
+        "Does not perform lifecycle transition approval"
+      ],
+      "usage": [
+        "Run from repository root with node tools/architecture/validate-package-metadata/src/index.mjs --check",
+        "Use --root <path>, --format text|json, and --no-reports as required by ADR-0011 and ADR-0012",
+        "Use --allow-missing-ajv only for bootstrap environments where dependencies have not been installed yet"
+      ],
+      "operationalNotes": [
+        "Validation reports are written under reports/validation unless --no-reports is supplied",
+        "Self-evidence is written under reports/tooling/validate-package-metadata unless --no-reports is supplied",
+        "Ajv performs JSON Schema validation; semantic repository rules remain implemented in this tool"
+      ]
+    }
+  },
+  "dependencies": {
+    "ajv": "^8.17.1"
+  }
+}

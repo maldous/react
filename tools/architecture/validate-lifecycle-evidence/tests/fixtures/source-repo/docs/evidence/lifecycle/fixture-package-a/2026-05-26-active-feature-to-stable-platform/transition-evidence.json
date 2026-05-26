@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "1.0",
+  "bundle": {
+    "id": "@fixture/package-a:active.feature->stable.platform:2026-05-26T00:00:00.000Z",
+    "createdAt": "2026-05-26T00:00:00.000Z",
+    "createdBy": "architecture-tooling",
+    "status": "draft"
+  },
+  "package": {
+    "name": "@fixture/package-a",
+    "path": "packages/package-a/package.json",
+    "owner": "team-a"
+  },
+  "transition": {
+    "fromClass": "active.feature",
+    "toClass": "stable.platform",
+    "reason": "Ready for stable platform promotion",
+    "requestedAt": "2026-05-26T00:00:00.000Z"
+  },
+  "governance": {
+    "decisionRefs": [
+      "ADR-0010"
+    ],
+    "reviewers": [
+      {
+        "name": "architecture-reviewer",
+        "role": "reviewer",
+        "reviewedAt": "2026-05-26T00:00:00.000Z",
+        "evidenceRef": "generated draft"
+      }
+    ],
+    "approvers": [
+      {
+        "name": "architecture-approver",
+        "role": "approver",
+        "reviewedAt": "2026-05-26T00:00:00.000Z",
+        "evidenceRef": "generated draft"
+      }
+    ]
+  },
+  "risk": {
+    "level": "medium",
+    "assessment": "Generated draft requires human review before approval.",
+    "mitigations": [
+      "Review package consumers",
+      "Confirm tests and rollback plan before approval"
+    ]
+  },
+  "testing": {
+    "summary": "Generated draft. Attach concrete test evidence before approval.",
+    "evidence": [
+      {
+        "path": "reports/lifecycle/package-lifecycle-summary.json",
+        "description": "Lifecycle report reference"
+      }
+    ]
+  },
+  "impact": {
+    "runtimeImpact": "Generated draft. Confirm runtime impact before approval.",
+    "consumerImpact": "Generated draft. Confirm consumer impact before approval."
+  },
+  "rollback": {
+    "strategy": "Revert lifecycle metadata change and regenerate reports.",
+    "notes": "Generated draft."
+  },
+  "sourceMetadataSnapshot": {
+    "packageJsonPath": "packages/package-a/package.json",
+    "architecture": {
+      "schemaVersion": "1.0",
+      "component": {
+        "type": "library",
+        "name": "package-a",
+        "system": "fixture",
+        "domain": "fixture",
+        "boundedContext": "fixture",
+        "owner": "team-a"
+      },
+      "lifecycle": {
+        "stage": "active",
+        "role": "feature",
+        "class": "active.feature",
+        "catalogLifecycle": "production",
+        "visibility": "internal",
+        "supportLevel": "standard",
+        "reviewCadence": "quarterly"
+      },
+      "governance": {
+        "decisionRefs": [
+          "ADR-0010"
+        ],
+        "semverPolicy": "internal-traceable",
+        "changeControl": "owner-review",
+        "promotionEligible": true
+      },
+      "runtime": {
+        "production": false,
+        "testOnly": false,
+        "serviceName": "package-a",
+        "serviceNamespace": "fixture",
+        "deploymentEnvironments": [
+          "local"
+        ]
+      },
+      "boundaries": {
+        "publicExportsOnly": true,
+        "deepImportsAllowed": false,
+        "allowedConsumers": [
+          "tooling"
+        ],
+        "forbiddenConsumers": [
+          "external"
+        ]
+      },
+      "relations": {
+        "dependsOn": [],
+        "providesApis": [],
+        "consumesApis": []
+      },
+      "tags": {
+        "scope": "fixture",
+        "type": "library",
+        "stage": "active",
+        "role": "feature",
+        "layer": "fixture"
+      },
+      "readme": {
+        "generated": true,
+        "summary": "Package A.",
+        "responsibilities": [
+          "Fixture"
+        ],
+        "nonResponsibilities": [
+          "Production"
+        ],
+        "usage": [
+          "Tests"
+        ],
+        "operationalNotes": [
+          "Fixture"
+        ]
+      }
+    }
+  },
+  "reportReferences": [
+    {
+      "path": "reports/package-inventory/package-inventory.json",
+      "description": "Package inventory report"
+    },
+    {
+      "path": "reports/lifecycle/package-lifecycle-summary.json",
+      "description": "Lifecycle summary report"
+    }
+  ]
+}

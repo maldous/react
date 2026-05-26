@@ -1,0 +1,107 @@
+{
+  "name": "@platform/profile-configuration",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Generic user profile and configuration domain package for preferences, settings, entitlements, and runtime configuration models.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "profile-configuration",
+      "system": "enterprise-react-platform",
+      "domain": "core",
+      "boundedContext": "profile-configuration",
+      "owner": "team-domain"
+    },
+    "lifecycle": {
+      "stage": "stable",
+      "role": "platform",
+      "class": "stable.platform",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005",
+        "ADR-0007",
+        "ADR-0008"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "profile-configuration",
+      "serviceNamespace": "enterprise-react-platform",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "feature",
+        "adapter",
+        "test"
+      ],
+      "forbiddenConsumers": [
+        "react-runtime",
+        "clickhouse-writes",
+        "direct-postgres-client"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@platform/domain-core"
+      ],
+      "providesApis": [
+        "profile-configuration"
+      ],
+      "consumesApis": [
+        "domain-core"
+      ]
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "library",
+      "stage": "stable",
+      "role": "platform",
+      "layer": "domain"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Generic user profile and configuration domain package for preferences, settings, entitlements, and runtime configuration models.",
+      "responsibilities": [
+        "Own profile and configuration domain models",
+        "Define validation and policy rules for user-scoped and organisation-scoped configuration",
+        "Expose pure TypeScript APIs for profile/configuration reads and updates"
+      ],
+      "nonResponsibilities": [
+        "Does not connect directly to PostgreSQL",
+        "Does not own analytical event storage",
+        "Does not evaluate access-control role policy"
+      ],
+      "usage": [
+        "Consumed by workflow, access-control, GraphQL contract, and persistence adapter packages through public exports",
+        "Used to define storage-independent profile/configuration rules"
+      ],
+      "operationalNotes": [
+        "Transactional profile/configuration storage is expected to be PostgreSQL-backed through the PostgreSQL adapter package"
+      ]
+    }
+  }
+}

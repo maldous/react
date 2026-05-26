@@ -1,0 +1,105 @@
+{
+  "name": "@architecture/generate-package-readmes",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Generate deterministic package-local README files from package.json architecture metadata.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "generate": "node src/index.mjs --write",
+    "check": "node src/index.mjs --check",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "tool",
+      "name": "generate-package-readmes",
+      "system": "architecture-governance",
+      "domain": "architecture",
+      "boundedContext": "architecture-governance",
+      "owner": "architecture"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "tooling",
+      "class": "active.tooling",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0005",
+        "ADR-0008",
+        "ADR-0011",
+        "ADR-0012"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "generate-package-readmes",
+      "serviceNamespace": "architecture-governance",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "external"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@architecture/validate-package-metadata"
+      ],
+      "providesApis": [],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "architecture",
+      "type": "tooling",
+      "stage": "active",
+      "role": "tooling",
+      "layer": "tooling"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Generates package-local README files from governed package.json architecture metadata.",
+      "responsibilities": [
+        "Read package architecture metadata",
+        "Render deterministic package README content",
+        "Check generated README freshness",
+        "Write README files only when --write is supplied",
+        "Emit generated self-evidence"
+      ],
+      "nonResponsibilities": [
+        "Does not validate package metadata schema",
+        "Does not generate inventory reports",
+        "Does not create governance evidence"
+      ],
+      "usage": [
+        "Run from repository root with node tools/architecture/generate-package-readmes/src/index.mjs --check",
+        "Use --write to update generated README files"
+      ],
+      "operationalNotes": [
+        "Self-evidence is written under reports/tooling/generate-package-readmes unless --no-reports is supplied",
+        "Generated README files are package-local"
+      ]
+    }
+  }
+}

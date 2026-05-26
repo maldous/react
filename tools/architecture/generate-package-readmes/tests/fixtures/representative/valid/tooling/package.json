@@ -1,0 +1,99 @@
+{
+  "name": "@representative/tooling-codegen",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tooling package for GraphQL Code Generator and architecture-safe generated artifact workflows.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "tool",
+      "name": "tooling",
+      "system": "representative-enterprise-react",
+      "domain": "architecture",
+      "boundedContext": "codegen",
+      "owner": "team-architecture"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "tooling",
+      "class": "active.tooling",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0005",
+        "ADR-0008",
+        "ADR-0012"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "tooling",
+      "serviceNamespace": "representative-enterprise-react",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "ci"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "developer-workflow",
+        "ci"
+      ],
+      "forbiddenConsumers": [
+        "browser-runtime"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@representative/contracts-graphql"
+      ],
+      "providesApis": [
+        "graphql-codegen-command"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "representative",
+      "type": "tool",
+      "stage": "active",
+      "role": "tooling",
+      "layer": "tooling"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Tooling package for GraphQL Code Generator and architecture-safe generated artifact workflows.",
+      "responsibilities": [
+        "Own GraphQL Code Generator configuration",
+        "Define schema loading and generated artifact paths",
+        "Produce contract artifacts without becoming runtime application code"
+      ],
+      "nonResponsibilities": [
+        "Does not run in browser production runtime",
+        "Does not own application routes",
+        "Does not bypass governance evidence for generated artifacts"
+      ],
+      "usage": [
+        "Run during development or CI to generate typed GraphQL contract artifacts",
+        "Emit generated files into documented contract package paths"
+      ],
+      "operationalNotes": [
+        "Tooling package demonstrates generation responsibility and evidence boundaries"
+      ]
+    }
+  }
+}

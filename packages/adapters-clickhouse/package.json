@@ -1,0 +1,111 @@
+{
+  "name": "@platform/adapters-clickhouse",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ClickHouse adapter package for analytical event ingestion, analytical queries, and high-volume reporting workloads.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "adapters-clickhouse",
+      "system": "enterprise-react-platform",
+      "domain": "analytics",
+      "boundedContext": "clickhouse-runtime",
+      "owner": "team-data"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "adapter",
+      "class": "active.adapter",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005",
+        "ADR-0007",
+        "ADR-0008"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": true,
+      "testOnly": false,
+      "serviceName": "adapters-clickhouse",
+      "serviceNamespace": "enterprise-react-platform",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test",
+        "staging",
+        "production"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "adapter",
+        "worker-runtime",
+        "api-runtime"
+      ],
+      "forbiddenConsumers": [
+        "react-runtime",
+        "transactional-profile-store"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@platform/contracts-analytics",
+        "@platform/contracts-ingestion"
+      ],
+      "providesApis": [
+        "clickhouse-analytics-adapter",
+        "analytics-event-store"
+      ],
+      "consumesApis": [
+        "analytics-query",
+        "normalized-ingestion-event"
+      ]
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "library",
+      "stage": "active",
+      "role": "adapter",
+      "layer": "adapter"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "ClickHouse adapter package for analytical event ingestion, analytical queries, and high-volume reporting workloads.",
+      "responsibilities": [
+        "Own ClickHouse runtime adapter boundaries",
+        "Write analytical events and normalized ingestion events to ClickHouse",
+        "Execute analytical queries through governed analytical contracts"
+      ],
+      "nonResponsibilities": [
+        "Does not persist transactional user profile configuration",
+        "Does not own profile or access-control policy",
+        "Does not render React components"
+      ],
+      "usage": [
+        "Consumed by ingestion, analytics, and reporting edges",
+        "Used for analytical workloads distinct from PostgreSQL transactional persistence"
+      ],
+      "operationalNotes": [
+        "ClickHouse is the expected analytical store for external data ingestion events, high-volume event data, and reporting queries"
+      ]
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "name": "@fixture/domain",
+  "version": "1.0.0",
+  "description": "domain inventory fixture.",
+  "private": true,
+  "type": "module",
+  "exports": {},
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "domain",
+      "system": "fixture-system",
+      "domain": "core",
+      "boundedContext": "customer",
+      "owner": "team-domain"
+    },
+    "lifecycle": {
+      "stage": "stable",
+      "role": "platform",
+      "class": "stable.platform",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0009"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "domain",
+      "serviceNamespace": "fixture-system",
+      "deploymentEnvironments": [
+        "local",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "external"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "customer-domain"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "fixture",
+      "type": "library",
+      "stage": "stable",
+      "role": "platform",
+      "layer": "domain"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "domain fixture.",
+      "responsibilities": [
+        "Support inventory report testing"
+      ],
+      "nonResponsibilities": [
+        "Production runtime"
+      ],
+      "usage": [
+        "Used in tests"
+      ],
+      "operationalNotes": [
+        "Fixture only"
+      ]
+    }
+  }
+}

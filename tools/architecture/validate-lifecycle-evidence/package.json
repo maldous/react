@@ -1,0 +1,106 @@
+{
+  "name": "@architecture/validate-lifecycle-evidence",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Validate and generate lifecycle transition evidence bundles.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "validate": "node src/index.mjs --check",
+    "generate": "node src/index.mjs --write",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "tool",
+      "name": "validate-lifecycle-evidence",
+      "system": "architecture-governance",
+      "domain": "architecture",
+      "boundedContext": "architecture-governance",
+      "owner": "architecture"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "tooling",
+      "class": "active.tooling",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0010",
+        "ADR-0011",
+        "ADR-0012"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "validate-lifecycle-evidence",
+      "serviceNamespace": "architecture-governance",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "external"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@architecture/validate-package-metadata",
+        "@architecture/generate-package-inventory"
+      ],
+      "providesApis": [],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "architecture",
+      "type": "tooling",
+      "stage": "active",
+      "role": "tooling",
+      "layer": "tooling"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Validates and generates lifecycle transition evidence bundles.",
+      "responsibilities": [
+        "Validate lifecycle evidence bundles against governed schema",
+        "Generate lifecycle evidence bundle skeletons from package metadata",
+        "Emit self-evidence for validation and generation runs"
+      ],
+      "nonResponsibilities": [
+        "Does not approve lifecycle transitions",
+        "Does not modify package metadata",
+        "Does not replace human review"
+      ],
+      "usage": [
+        "Run from repository root with node tools/architecture/validate-lifecycle-evidence/src/index.mjs --check",
+        "Use --write with --package, --from-class, --to-class, and --reason to generate a bundle"
+      ],
+      "operationalNotes": [
+        "Lifecycle evidence is written under docs/evidence/lifecycle",
+        "Self-evidence is written under reports/tooling/validate-lifecycle-evidence unless --no-reports is supplied"
+      ]
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "name": "@platform/contracts-ingestion",
+  "version": "0.1.0",
+  "private": true,
+  "description": "External data ingestion contract package for source payload schemas, normalization contracts, and ingestion event envelopes.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "api",
+      "name": "contracts-ingestion",
+      "system": "enterprise-react-platform",
+      "domain": "integration",
+      "boundedContext": "external-ingestion-contracts",
+      "owner": "team-data"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "contract",
+      "class": "active.contract",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005",
+        "ADR-0007",
+        "ADR-0008"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "contracts-ingestion",
+      "serviceNamespace": "enterprise-react-platform",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "adapter",
+        "tooling",
+        "test"
+      ],
+      "forbiddenConsumers": [
+        "browser-runtime",
+        "direct-storage"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "external-source-payload",
+        "normalized-ingestion-event"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "api",
+      "stage": "active",
+      "role": "contract",
+      "layer": "contract"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "External data ingestion contract package for source payload schemas, normalization contracts, and ingestion event envelopes.",
+      "responsibilities": [
+        "Own external source payload contracts and normalized ingestion event envelopes",
+        "Define compatibility expectations for external data ingestion",
+        "Separate ingestion contracts from runtime transport and analytical storage"
+      ],
+      "nonResponsibilities": [
+        "Does not call external source systems",
+        "Does not write to PostgreSQL or ClickHouse",
+        "Does not own product-specific interpretation of ingested data"
+      ],
+      "usage": [
+        "Consumed by ingestion adapters and tests",
+        "Used to validate external data before mapping to transactional or analytical packages"
+      ],
+      "operationalNotes": [
+        "External data ingestion is a first-class boundary because external source contracts are not controlled by the application"
+      ]
+    }
+  }
+}

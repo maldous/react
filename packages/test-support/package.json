@@ -1,0 +1,111 @@
+{
+  "name": "@platform/test-support",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Test-support package for MSW GraphQL handlers, React Testing Library helpers, and Playwright fixtures.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "test",
+      "name": "test-support",
+      "system": "enterprise-react-platform",
+      "domain": "quality",
+      "boundedContext": "test-support",
+      "owner": "team-quality"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "test",
+      "class": "active.test",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005",
+        "ADR-0007",
+        "ADR-0008"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": false
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": true,
+      "serviceName": "test-support",
+      "serviceNamespace": "enterprise-react-platform",
+      "deploymentEnvironments": [
+        "local",
+        "test",
+        "ci"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tests",
+        "ci"
+      ],
+      "forbiddenConsumers": [
+        "production-runtime",
+        "application-runtime"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@platform/contracts-graphql",
+        "@platform/contracts-ingestion",
+        "@platform/contracts-analytics",
+        "@platform/ui-design-system"
+      ],
+      "providesApis": [
+        "msw-graphql-handlers",
+        "ingestion-fixtures",
+        "analytics-fixtures",
+        "rtl-render",
+        "playwright-fixtures"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "test",
+      "stage": "active",
+      "role": "test",
+      "layer": "test"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Test-support package for MSW GraphQL handlers, React Testing Library helpers, and Playwright fixtures.",
+      "responsibilities": [
+        "Own MSW GraphQL handlers and test-only data fixtures",
+        "Provide React Testing Library helper wrappers",
+        "Provide Playwright fixture utilities for vertical-slice validation",
+        "Provide generic admin, staff, and user role fixtures for role-aware testing"
+      ],
+      "nonResponsibilities": [
+        "Does not ship to production runtime",
+        "Does not own domain policy or production GraphQL transport",
+        "Does not become an application dependency"
+      ],
+      "usage": [
+        "Import from tests only",
+        "Use to validate React and GraphQL boundaries without production services"
+      ],
+      "operationalNotes": [
+        "Test role packages must not be imported by production packages"
+      ]
+    }
+  }
+}

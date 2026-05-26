@@ -1,0 +1,83 @@
+{
+  "name": "@fixture/package-a",
+  "version": "1.0.0",
+  "description": "Lifecycle evidence source package.",
+  "private": true,
+  "type": "module",
+  "exports": {},
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "package-a",
+      "system": "fixture",
+      "domain": "fixture",
+      "boundedContext": "fixture",
+      "owner": "team-a"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "feature",
+      "class": "active.feature",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0010"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "package-a",
+      "serviceNamespace": "fixture",
+      "deploymentEnvironments": [
+        "local"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "external"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "fixture",
+      "type": "library",
+      "stage": "active",
+      "role": "feature",
+      "layer": "fixture"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Package A.",
+      "responsibilities": [
+        "Fixture"
+      ],
+      "nonResponsibilities": [
+        "Production"
+      ],
+      "usage": [
+        "Tests"
+      ],
+      "operationalNotes": [
+        "Fixture"
+      ]
+    }
+  }
+}

@@ -1,0 +1,160 @@
+{
+  "generatedAt": "2026-05-26T00:00:00.000Z",
+  "source": "package.json architecture metadata",
+  "totalPackages": 8,
+  "byStage": {
+    "active": 6,
+    "external": 1,
+    "stable": 1
+  },
+  "byRole": {
+    "adapter": 1,
+    "contract": 1,
+    "feature": 2,
+    "platform": 2,
+    "test": 1,
+    "tooling": 1
+  },
+  "byClass": {
+    "active.contract": 1,
+    "active.feature": 2,
+    "active.platform": 1,
+    "active.test": 1,
+    "active.tooling": 1,
+    "external.adapter": 1,
+    "stable.platform": 1
+  },
+  "bySupportLevel": {
+    "standard": 8
+  },
+  "packages": [
+    {
+      "name": "@fixture/adapter",
+      "path": "packages/adapter/package.json",
+      "lifecycle": {
+        "stage": "external",
+        "role": "adapter",
+        "class": "external.adapter",
+        "catalogLifecycle": "production",
+        "visibility": "external",
+        "supportLevel": "standard",
+        "reviewCadence": "quarterly"
+      },
+      "owner": "team-adapter",
+      "changeControl": "owner-review",
+      "promotionEligible": false
+    },
+    {
+      "name": "@fixture/app",
+      "path": "packages/app/package.json",
+      "lifecycle": {
+        "stage": "active",
+        "role": "feature",
+        "class": "active.feature",
+        "catalogLifecycle": "production",
+        "visibility": "internal",
+        "supportLevel": "standard",
+        "reviewCadence": "quarterly"
+      },
+      "owner": "team-app",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    {
+      "name": "@fixture/contract",
+      "path": "packages/contract/package.json",
+      "lifecycle": {
+        "stage": "active",
+        "role": "contract",
+        "class": "active.contract",
+        "catalogLifecycle": "production",
+        "visibility": "internal",
+        "supportLevel": "standard",
+        "reviewCadence": "quarterly"
+      },
+      "owner": "team-contract",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    {
+      "name": "@fixture/domain",
+      "path": "packages/domain/package.json",
+      "lifecycle": {
+        "stage": "stable",
+        "role": "platform",
+        "class": "stable.platform",
+        "catalogLifecycle": "production",
+        "visibility": "internal",
+        "supportLevel": "standard",
+        "reviewCadence": "quarterly"
+      },
+      "owner": "team-domain",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    {
+      "name": "@fixture/feature",
+      "path": "packages/feature/package.json",
+      "lifecycle": {
+        "stage": "active",
+        "role": "feature",
+        "class": "active.feature",
+        "catalogLifecycle": "production",
+        "visibility": "internal",
+        "supportLevel": "standard",
+        "reviewCadence": "quarterly"
+      },
+      "owner": "team-feature",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    {
+      "name": "@fixture/test",
+      "path": "packages/test/package.json",
+      "lifecycle": {
+        "stage": "active",
+        "role": "test",
+        "class": "active.test",
+        "catalogLifecycle": "production",
+        "visibility": "internal",
+        "supportLevel": "standard",
+        "reviewCadence": "quarterly"
+      },
+      "owner": "team-quality",
+      "changeControl": "owner-review",
+      "promotionEligible": false
+    },
+    {
+      "name": "@fixture/tooling",
+      "path": "packages/tooling/package.json",
+      "lifecycle": {
+        "stage": "active",
+        "role": "tooling",
+        "class": "active.tooling",
+        "catalogLifecycle": "production",
+        "visibility": "internal",
+        "supportLevel": "standard",
+        "reviewCadence": "quarterly"
+      },
+      "owner": "team-architecture",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    {
+      "name": "@fixture/ui",
+      "path": "packages/ui/package.json",
+      "lifecycle": {
+        "stage": "active",
+        "role": "platform",
+        "class": "active.platform",
+        "catalogLifecycle": "production",
+        "visibility": "internal",
+        "supportLevel": "standard",
+        "reviewCadence": "quarterly"
+      },
+      "owner": "team-ui",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    }
+  ]
+}

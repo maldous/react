@@ -1,0 +1,110 @@
+{
+  "name": "@platform/adapters-ingestion",
+  "version": "0.1.0",
+  "private": true,
+  "description": "External data ingestion adapter package for receiving, validating, and normalizing external data.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "adapters-ingestion",
+      "system": "enterprise-react-platform",
+      "domain": "integration",
+      "boundedContext": "external-ingestion-runtime",
+      "owner": "team-data"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "adapter",
+      "class": "active.adapter",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005",
+        "ADR-0007",
+        "ADR-0008"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": true,
+      "testOnly": false,
+      "serviceName": "adapters-ingestion",
+      "serviceNamespace": "enterprise-react-platform",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test",
+        "staging",
+        "production"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "worker-runtime",
+        "test"
+      ],
+      "forbiddenConsumers": [
+        "browser-runtime",
+        "ui"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@platform/contracts-ingestion",
+        "@platform/adapters-postgres",
+        "@platform/adapters-clickhouse"
+      ],
+      "providesApis": [
+        "external-ingestion-runtime"
+      ],
+      "consumesApis": [
+        "external-source-payload",
+        "normalized-ingestion-event"
+      ]
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "library",
+      "stage": "active",
+      "role": "adapter",
+      "layer": "adapter"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "External data ingestion adapter package for receiving, validating, and normalizing external data.",
+      "responsibilities": [
+        "Own external ingestion runtime adapters",
+        "Validate external data against ingestion contracts",
+        "Normalize external data into governed transactional and analytical write boundaries"
+      ],
+      "nonResponsibilities": [
+        "Does not own external source contract definitions",
+        "Does not bypass profile/configuration or analytical contract packages",
+        "Does not render React components"
+      ],
+      "usage": [
+        "Used by backend/runtime ingestion workers",
+        "Consumes ingestion contracts and emits normalized writes through storage adapters"
+      ],
+      "operationalNotes": [
+        "This package is generic and does not assume the external data provider or business domain"
+      ]
+    }
+  }
+}

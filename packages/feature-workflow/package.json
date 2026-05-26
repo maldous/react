@@ -1,0 +1,116 @@
+{
+  "name": "@platform/feature-workflow",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Generic React feature workflow package for enterprise user-flow composition.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "feature-workflow",
+      "system": "enterprise-react-platform",
+      "domain": "experience",
+      "boundedContext": "workflow",
+      "owner": "team-feature"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "feature",
+      "class": "active.feature",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005",
+        "ADR-0007",
+        "ADR-0008"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "feature-workflow",
+      "serviceNamespace": "enterprise-react-platform",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application",
+        "feature",
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "external"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@platform/domain-core",
+        "@platform/profile-configuration",
+        "@platform/access-control",
+        "@platform/contracts-graphql",
+        "@platform/contracts-analytics"
+      ],
+      "providesApis": [
+        "workflow-feature-entry"
+      ],
+      "consumesApis": [
+        "domain-core",
+        "profile-configuration",
+        "access-policy",
+        "workflow-query",
+        "analytics-query"
+      ]
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "library",
+      "stage": "active",
+      "role": "feature",
+      "layer": "feature"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Generic React feature workflow package for enterprise user-flow composition.",
+      "responsibilities": [
+        "Own a representative enterprise workflow composition boundary",
+        "Compose UI, domain-core rules, and generated GraphQL contracts through public exports",
+        "Expose feature entry points for application routing without assuming a product domain",
+        "Consume access-control decisions for admin, staff, and user role-aware workflow composition"
+      ],
+      "nonResponsibilities": [
+        "Does not own transport, cache client creation, or generated GraphQL schema files",
+        "Does not contain reusable design-system primitives",
+        "Does not own a specific business-domain model",
+        "Does not persist profile configuration or evaluate role policy directly"
+      ],
+      "usage": [
+        "Import from the React app shell through public feature exports",
+        "Use domain-core and contract packages as dependencies",
+        "Keep adapter integration at the edge of the feature boundary"
+      ],
+      "operationalNotes": [
+        "This package is intentionally generic and can represent any enterprise workflow"
+      ]
+    }
+  }
+}

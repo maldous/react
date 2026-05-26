@@ -1,0 +1,269 @@
+{
+  "ruleSet": "docs/architecture/import-boundary-rules.md",
+  "totalPackages": 15,
+  "passed": 15,
+  "failed": 0,
+  "results": [
+    {
+      "package": "@platform/access-control",
+      "path": "packages/access-control",
+      "lifecycleClass": "stable.platform",
+      "domain": "core",
+      "boundedContext": "access-control",
+      "declaredDependsOn": [
+        "@platform/domain-core",
+        "@platform/profile-configuration"
+      ],
+      "allowedDependsOn": [
+        "@platform/domain-core",
+        "@platform/profile-configuration"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/adapters-clickhouse",
+      "path": "packages/adapters-clickhouse",
+      "lifecycleClass": "active.adapter",
+      "domain": "analytics",
+      "boundedContext": "clickhouse-runtime",
+      "declaredDependsOn": [
+        "@platform/contracts-analytics",
+        "@platform/contracts-ingestion"
+      ],
+      "allowedDependsOn": [
+        "@platform/contracts-analytics",
+        "@platform/contracts-ingestion"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/adapters-graphql",
+      "path": "packages/adapters-graphql",
+      "lifecycleClass": "active.adapter",
+      "domain": "integration",
+      "boundedContext": "graphql-runtime",
+      "declaredDependsOn": [
+        "@platform/adapters-clickhouse",
+        "@platform/adapters-postgres",
+        "@platform/contracts-graphql"
+      ],
+      "allowedDependsOn": [
+        "@platform/adapters-clickhouse",
+        "@platform/adapters-postgres",
+        "@platform/contracts-graphql"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/adapters-ingestion",
+      "path": "packages/adapters-ingestion",
+      "lifecycleClass": "active.adapter",
+      "domain": "integration",
+      "boundedContext": "external-ingestion-runtime",
+      "declaredDependsOn": [
+        "@platform/adapters-clickhouse",
+        "@platform/adapters-postgres",
+        "@platform/contracts-ingestion"
+      ],
+      "allowedDependsOn": [
+        "@platform/adapters-clickhouse",
+        "@platform/adapters-postgres",
+        "@platform/contracts-ingestion"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/adapters-postgres",
+      "path": "packages/adapters-postgres",
+      "lifecycleClass": "active.adapter",
+      "domain": "persistence",
+      "boundedContext": "postgres-runtime",
+      "declaredDependsOn": [
+        "@platform/access-control",
+        "@platform/profile-configuration"
+      ],
+      "allowedDependsOn": [
+        "@platform/access-control",
+        "@platform/profile-configuration"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/contracts-analytics",
+      "path": "packages/contracts-analytics",
+      "lifecycleClass": "active.contract",
+      "domain": "analytics",
+      "boundedContext": "analytics-contracts",
+      "declaredDependsOn": [],
+      "allowedDependsOn": [],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/contracts-graphql",
+      "path": "packages/contracts-graphql",
+      "lifecycleClass": "active.contract",
+      "domain": "core",
+      "boundedContext": "graphql-contracts",
+      "declaredDependsOn": [
+        "@platform/access-control",
+        "@platform/contracts-analytics",
+        "@platform/profile-configuration"
+      ],
+      "allowedDependsOn": [
+        "@platform/access-control",
+        "@platform/contracts-analytics",
+        "@platform/profile-configuration"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/contracts-ingestion",
+      "path": "packages/contracts-ingestion",
+      "lifecycleClass": "active.contract",
+      "domain": "integration",
+      "boundedContext": "external-ingestion-contracts",
+      "declaredDependsOn": [],
+      "allowedDependsOn": [],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/domain-core",
+      "path": "packages/domain-core",
+      "lifecycleClass": "stable.platform",
+      "domain": "core",
+      "boundedContext": "domain-core",
+      "declaredDependsOn": [],
+      "allowedDependsOn": [],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/feature-workflow",
+      "path": "packages/feature-workflow",
+      "lifecycleClass": "active.feature",
+      "domain": "experience",
+      "boundedContext": "workflow",
+      "declaredDependsOn": [
+        "@platform/access-control",
+        "@platform/contracts-analytics",
+        "@platform/contracts-graphql",
+        "@platform/domain-core",
+        "@platform/profile-configuration"
+      ],
+      "allowedDependsOn": [
+        "@platform/access-control",
+        "@platform/contracts-analytics",
+        "@platform/contracts-graphql",
+        "@platform/domain-core",
+        "@platform/profile-configuration",
+        "@platform/ui-design-system"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/profile-configuration",
+      "path": "packages/profile-configuration",
+      "lifecycleClass": "stable.platform",
+      "domain": "core",
+      "boundedContext": "profile-configuration",
+      "declaredDependsOn": [
+        "@platform/domain-core"
+      ],
+      "allowedDependsOn": [
+        "@platform/domain-core"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/react-enterprise-app",
+      "path": "apps/react-enterprise-app",
+      "lifecycleClass": "active.feature",
+      "domain": "experience",
+      "boundedContext": "app-shell",
+      "declaredDependsOn": [
+        "@platform/access-control",
+        "@platform/adapters-graphql",
+        "@platform/feature-workflow"
+      ],
+      "allowedDependsOn": [
+        "@platform/access-control",
+        "@platform/adapters-graphql",
+        "@platform/feature-workflow"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/test-support",
+      "path": "packages/test-support",
+      "lifecycleClass": "active.test",
+      "domain": "quality",
+      "boundedContext": "test-support",
+      "declaredDependsOn": [
+        "@platform/contracts-analytics",
+        "@platform/contracts-graphql",
+        "@platform/contracts-ingestion",
+        "@platform/ui-design-system"
+      ],
+      "allowedDependsOn": [
+        "@platform/contracts-analytics",
+        "@platform/contracts-graphql",
+        "@platform/contracts-ingestion",
+        "@platform/ui-design-system"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/tooling-codegen",
+      "path": "packages/tooling-codegen",
+      "lifecycleClass": "active.tooling",
+      "domain": "architecture",
+      "boundedContext": "codegen",
+      "declaredDependsOn": [
+        "@platform/contracts-graphql"
+      ],
+      "allowedDependsOn": [
+        "@platform/contracts-graphql"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/ui-design-system",
+      "path": "packages/ui-design-system",
+      "lifecycleClass": "active.platform",
+      "domain": "experience",
+      "boundedContext": "design-system",
+      "declaredDependsOn": [],
+      "allowedDependsOn": [],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    }
+  ]
+}

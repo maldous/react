@@ -1,0 +1,106 @@
+{
+  "name": "@architecture/generate-package-inventory",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Generate package inventory and lifecycle summary reports from package.json architecture metadata.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "generate": "node src/index.mjs --write",
+    "check": "node src/index.mjs --check",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "tool",
+      "name": "generate-package-inventory",
+      "system": "architecture-governance",
+      "domain": "architecture",
+      "boundedContext": "architecture-governance",
+      "owner": "architecture"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "tooling",
+      "class": "active.tooling",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0005",
+        "ADR-0009",
+        "ADR-0011",
+        "ADR-0012"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "generate-package-inventory",
+      "serviceNamespace": "architecture-governance",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "external"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@architecture/validate-package-metadata",
+        "@architecture/generate-package-readmes"
+      ],
+      "providesApis": [],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "architecture",
+      "type": "tooling",
+      "stage": "active",
+      "role": "tooling",
+      "layer": "tooling"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Generates package inventory and lifecycle summary reports from governed package metadata.",
+      "responsibilities": [
+        "Read package architecture metadata",
+        "Generate package inventory JSON and Markdown reports",
+        "Generate lifecycle summary JSON and Markdown reports",
+        "Check generated report freshness",
+        "Emit generated self-evidence"
+      ],
+      "nonResponsibilities": [
+        "Does not validate package metadata schema",
+        "Does not generate package README files",
+        "Does not create lifecycle transition evidence"
+      ],
+      "usage": [
+        "Run from repository root with node tools/architecture/generate-package-inventory/src/index.mjs --check",
+        "Use --write to update generated reports under reports/"
+      ],
+      "operationalNotes": [
+        "Reports are generated under reports/package-inventory and reports/lifecycle",
+        "Self-evidence is written under reports/tooling/generate-package-inventory unless --no-reports is supplied"
+      ]
+    }
+  }
+}
