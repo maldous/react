@@ -8,7 +8,7 @@ An architecture baseline and package skeleton for a modular enterprise React pla
 
 - Product packages (`apps/`, `packages/`) with governed metadata
 - Architecture governance tooling (`tools/architecture/`)
-- Architecture decision records, schemas, and committed evidence (`docs/`)
+- Architecture decision records, schemas, committed evidence, and implementation design specs (`docs/`)
 
 There is no root `package.json` workspace. Tools run directly with `node`.
 
@@ -72,6 +72,7 @@ The platform is structured as modular hexagonal architecture around bounded cont
 | `docs/schemas/` | — | Governed JSON schemas |
 | `docs/architecture/` | — | Context map, glossary, import rules, naming conventions |
 | `docs/evidence/` | — | Committed lifecycle transition evidence bundles |
+| `docs/specs/` | — | Implementation design specs (platform-agnostic, date-prefixed) |
 | `reports/` | — | Generated reports (gitignored) |
 
 ### Package lifecycle classes (ADR-0004)
