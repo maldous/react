@@ -1,0 +1,191 @@
+# ADR Action Register
+
+This register coordinates material follow-up actions created by ADRs.
+
+It is the single source of truth for ADR-driven follow-up work.
+
+Every action must include a `Source ADR` value.
+
+It is not an ADR.
+
+It does not consume an ADR number.
+
+It is the architecture-facing index of ADR-driven work.
+
+ADRs remain the decision history.
+
+This register tracks the work required to validate, implement, supersede, or operationalise those decisions.
+
+## Status values
+
+```text
+Open
+In Progress
+Blocked
+Done
+Deferred
+Superseded
+```
+
+## Source ADR values
+
+Use an accepted or proposed ADR identifier for decision-created work.
+
+Examples:
+
+```text
+ADR-0001
+ADR-0002
+ADR-0003
+ADR-0004
+ADR process
+```
+
+Use `ADR process` only for actions that maintain the ADR system itself, such as the README, template, or action register.
+
+## Action types
+
+```text
+ADR
+Implementation
+Validation
+Documentation
+Governance
+Tooling
+CI
+Review
+```
+
+## Current decision sequence
+
+The current decision sequence is:
+
+```text
+1. ADR-ACT-0022: Define package lifecycle classes. Done as ADR-0004.
+2. ADR-ACT-0026: Define package.json architecture metadata vocabulary and format. Done as ADR-0005.
+3. ADR-ACT-0029: Define lifecycle transition rules. Done as ADR-0006.
+4. ADR-ACT-0023: Define package promotion criteria and review process.
+5. ADR-ACT-0024: Define affected-package CI workflow.
+6. ADR-ACT-0019: Decide build/test orchestration tooling.
+7. ADR-ACT-0014: Create the import-boundary enforcement ADR.
+8. ADR-ACT-0004: Create the client-facing API boundary ADR.
+9. ADR-ACT-0005: Create the transactional data ownership ADR.
+10. ADR-ACT-0006: Create the analytical data ownership ADR.
+```
+
+Rationale:
+
+```text
+Package lifecycle classes and package metadata vocabulary/format are defined. Lifecycle transition rules are defined by ADR-0006.
+
+Lifecycle transition rules are required before promotion criteria can be reliable.
+
+Package promotion rules come before affected CI and import enforcement.
+
+CI and import enforcement come before relying on the modular monorepo at scale.
+
+API and data ownership decisions should follow once the structural/package governance baseline is clearer.
+```
+
+Non-ADR prerequisites:
+
+```text
+ADR-ACT-0010: Create an initial context map, including allowed package domain values.
+ADR-ACT-0011: Create a domain glossary, including definitions for package domain metadata.
+ADR-ACT-0013: Define package/module naming conventions for contexts.
+ADR-ACT-0033: Create JSON Schema for package.json architecture metadata.
+ADR-ACT-0049: Define architecture artifact and repository directory layout. Done as ADR-0007.
+ADR-ACT-0034: Create package.json architecture metadata validation script.
+ADR-ACT-0035: Create generated package README template from package.json architecture metadata.
+ADR-ACT-0037: Validate package metadata vocabulary against standard reference language.
+```
+
+
+## Register
+
+| ID | Source ADR | Action | Type | Status | Priority | Depends on | Owner | Target / Review | Evidence |
+|---|---|---|---|---|---|---|---|---|---|
+| ADR-ACT-0001 | ADR-0001 | Define the initial module and package structure. | Implementation | Done | High | ADR-0001, ADR-0002, ADR-0003, ADR-ACT-0010, ADR-ACT-0011, ADR-ACT-0021 | Architecture owner / technical lead | Complete | Initial module and package structure created under apps/ and packages/ with governed package metadata and generated READMEs |
+| ADR-ACT-0002 | ADR-0001 | Create an ADR for bounded contexts. | ADR | Done | High | ADR-0001 | Architecture owner / technical lead | Complete | ADR-0002 |
+| ADR-ACT-0003 | ADR-0001 | Create an ADR for monorepo structure. | ADR | Done | High | ADR-0001, ADR-0002 | Architecture owner / technical lead | Complete | ADR-0003 |
+| ADR-ACT-0004 | ADR-0001 | Create an ADR for the client-facing API boundary. | ADR | Open | High | ADR-0002, ADR-0003 | Architecture owner / technical lead | Before API implementation |  |
+| ADR-ACT-0005 | ADR-0001 | Create an ADR for transactional data ownership. | ADR | Open | High | ADR-0002, ADR-0003 | Architecture owner / technical lead | Before persistence implementation |  |
+| ADR-ACT-0006 | ADR-0001 | Create an ADR for analytical data ownership. | ADR | Open | High | ADR-0002, ADR-0003 | Architecture owner / technical lead | Before analytics implementation |  |
+| ADR-ACT-0007 | ADR-0001 | Define import-boundary enforcement rules. | Tooling | In Progress | High | ADR-0002, ADR-0003, ADR-ACT-0013, ADR-ACT-0025 | Architecture owner / technical lead | In implementation | Import-boundary rules are documented and validated against metadata; source-code import scanning remains future enforcement work |
+| ADR-ACT-0008 | ADR-0001 | Validate the architecture with the first vertical slice. | Validation | Open | High | ADR-ACT-0001, ADR-ACT-0004, ADR-ACT-0005, ADR-ACT-0006, ADR-ACT-0007, ADR-ACT-0020 | Architecture owner / technical lead | First vertical slice |  |
+| ADR-ACT-0009 | ADR-0001 | Add architecture boundary checks to CI. | CI | Open | Medium | ADR-ACT-0007, ADR-ACT-0024 | Engineering team | Before production-grade CI baseline |  |
+| ADR-ACT-0010 | ADR-0002 | Create an initial context map, including allowed package domain values. | Documentation | Done | High | ADR-0002 | Architecture owner / technical lead | Complete | Initial context map created at docs/architecture/context-map.md |
+| ADR-ACT-0011 | ADR-0002 | Create a domain glossary, including definitions for package domain metadata. | Documentation | Done | High | ADR-0002 | Product + architecture owner | Complete | Domain glossary created at docs/architecture/domain-glossary.md |
+| ADR-ACT-0012 | ADR-0002 | Validate the proposed contexts with the first vertical slice. | Validation | Open | High | ADR-ACT-0010, ADR-ACT-0011, ADR-ACT-0008 | Architecture owner / technical lead | First vertical slice |  |
+| ADR-ACT-0013 | ADR-0002 | Define package/module naming conventions for contexts. | Implementation | Done | High | ADR-ACT-0010, ADR-ACT-0011, ADR-0003 | Architecture owner / technical lead | Complete | Package/module naming conventions defined in docs/architecture/package-module-naming-conventions.md and validated by docs/evidence/naming/initial-package-naming-validation.* |
+| ADR-ACT-0014 | ADR-0002 | Create an ADR for import-boundary enforcement, including public export and no-deep-import rules. | ADR | Done | High | ADR-0003, ADR-ACT-0013, ADR-ACT-0022, ADR-ACT-0023 | Architecture owner / technical lead | Complete | Import-boundary rules documented in docs/architecture/import-boundary-rules.md and validated by docs/evidence/import-boundaries/initial-import-boundary-validation.* |
+| ADR-ACT-0015 | ADR-0002 | Create an ADR for GraphQL schema boundary management. | ADR | Open | Medium | ADR-ACT-0004, ADR-ACT-0010 | Architecture owner / technical lead | Before GraphQL schema growth |  |
+| ADR-ACT-0016 | ADR-0002 | Review context names after the first five vertical slices. | Review | Open | Medium | Five completed vertical slices | Architecture owner / product owner | After five vertical slices |  |
+| ADR-ACT-0017 | ADR process | Keep `docs/adr/ACTION-REGISTER.md` as the coordination point for ADR follow-up actions without creating a numbered ADR for it. | Governance | Done | High | ADR README | Architecture owner / technical lead | Complete | README updated |
+| ADR-ACT-0018 | ADR process | Review the action register after the first five accepted ADRs. | Review | Done | Medium | Five accepted ADRs | Architecture owner / technical lead | Complete | Action register reviewed after accepted ADR set; remaining work classified in audit report |
+| ADR-ACT-0019 | ADR-0003 | Decide build/test orchestration tooling. | ADR | Done | High | ADR-0003, ADR-ACT-0022, ADR-ACT-0024 | Architecture owner / technical lead | Complete | Build/test orchestration tooling decided by ADR-0011 and implemented through tools/architecture/orchestrator |
+| ADR-ACT-0020 | ADR-0003 | Validate modular monorepo layout with the first vertical slice. | Validation | Open | High | ADR-ACT-0001, ADR-ACT-0008, ADR-0003 | Architecture owner / technical lead | First vertical slice |  |
+| ADR-ACT-0021 | ADR-0003 | Confirm package names after context map and glossary are created. | Review | Done | High | ADR-ACT-0010, ADR-ACT-0011, ADR-0003 | Architecture owner / technical lead | Complete | Initial package naming confirmed at docs/architecture/package-naming.md |
+| ADR-ACT-0022 | ADR-0003 | Define package lifecycle classes. | ADR | Done | High | ADR-0003 | Architecture owner / technical lead | Complete | ADR-0004 |
+| ADR-ACT-0023 | ADR-0003 | Define package promotion criteria and review process for external distribution or polyrepo extraction. | ADR | Done | High | ADR-0003, ADR-ACT-0022, ADR-ACT-0026, ADR-ACT-0029 | Architecture owner / technical lead | Complete | Package promotion criteria and review process defined by ADR-0006 lifecycle transition governance |
+| ADR-ACT-0024 | ADR-0003 | Define affected-package CI workflow to avoid unnecessary full CI for isolated changes. | ADR | Open | High | ADR-0003, ADR-ACT-0022, ADR-ACT-0026 | Architecture owner / technical lead | Before CI baseline |  |
+| ADR-ACT-0025 | ADR-0003 | Capture public export and no-deep-import rules inside the import-boundary enforcement ADR. | Review | Superseded | High | ADR-ACT-0014 | Architecture owner / technical lead | Superseded by ADR-ACT-0014 | Public export and no-deep-import rules are now explicit scope of ADR-ACT-0014 |
+| ADR-ACT-0026 | ADR-0004 | Define package.json architecture metadata vocabulary and format, including standard vocabulary alignment, domain source, owner, lifecycle, package role, semver expectations, generated README fields, and future generated output concepts. | ADR | Done | High | ADR-0002, ADR-0004, ADR-ACT-0010, ADR-ACT-0011 | Architecture owner / technical lead | Complete | ADR-0005 |
+| ADR-ACT-0027 | ADR-0004 | Assign lifecycle classes, domains, and owners to the initial package structure. | Implementation | Done | High | ADR-ACT-0001, ADR-ACT-0013, ADR-ACT-0026 | Architecture owner / technical lead | Complete | Lifecycle classes, domains, and owners assigned to initial package structure |
+| ADR-ACT-0028 | ADR-0004 | Validate package lifecycle classes during the first vertical slice. | Validation | Open | High | ADR-ACT-0027, ADR-ACT-0008 | Architecture owner / technical lead | First vertical slice |  |
+| ADR-ACT-0029 | ADR-0004 | Define full lifecycle transition governance, including allowed transitions, gated evidence bundles, AI/tool-assisted review, and rules for when new ADRs are required. | ADR | Done | High | ADR-0004, ADR-0005 | Architecture owner / technical lead | Complete | ADR-0006 |
+| ADR-ACT-0030 | ADR-0004 | Define dormant, deprecated, and unowned package review cadence and ownership rules. | Governance | Done | Medium | ADR-0004 | Architecture owner / technical lead | Complete | Dormant, deprecated, and ownership review cadence captured in lifecycle metadata and ADR-0006 governance |
+| ADR-ACT-0031 | ADR-0004 | Ensure production packages cannot depend on test-role packages. | Tooling | Open | High | ADR-0004, ADR-ACT-0014 | Architecture owner / technical lead | Before import-boundary enforcement |  |
+| ADR-ACT-0032 | ADR-0004 | Define third-party stakeholder explanation for lifecycle stage, package role, and semver expectations. | Documentation | Open | Medium | ADR-0004, ADR-ACT-0026 | Architecture owner / technical lead | Before releaseable package publication |  |
+| ADR-ACT-0033 | ADR-0005 | Create JSON Schema for package.json architecture metadata. | Implementation | Done | High | ADR-0005, ADR-0007 | Architecture owner / technical lead | Complete | docs/schemas/package-json-architecture.schema.json; path governed by ADR-0007 |
+| ADR-ACT-0034 | ADR-0005 | Create package.json architecture metadata validation script. | Tooling | Done | High | ADR-0005, ADR-ACT-0033 | Architecture owner / technical lead | Complete | tools/architecture/validate-package-metadata; reports/validation/package-metadata-validation.md |
+| ADR-ACT-0035 | ADR-0005 | Define generated package README structure and required sections from package.json architecture metadata. | ADR | Done | High | ADR-0005, ADR-0007, ADR-ACT-0034 | Architecture owner / technical lead | Complete | ADR-0008 |
+| ADR-ACT-0036 | ADR-0005 | Create sample package.json architecture metadata for initial packages. | Implementation | Done | High | ADR-ACT-0001, ADR-ACT-0013, ADR-ACT-0027, ADR-0005 | Architecture owner / technical lead | Complete | Sample package.json architecture metadata now exists across architecture tools and representative fixtures |
+| ADR-ACT-0037 | ADR-0005 | Validate package metadata vocabulary against Backstage, DDD, C4, Nx, OpenTelemetry, JSON Schema, Kubernetes, and SPDX reference language. | Validation | Open | High | ADR-0005 | Architecture owner / technical lead | Before accepting ADR-0005 |  |
+| ADR-ACT-0038 | ADR-0005 | Define generated outputs from package.json architecture metadata for README, Backstage catalog, Nx tags, C4 inventory, and runtime/deployment metadata where needed. | ADR | Open | Medium | ADR-0005, ADR-ACT-0033, ADR-ACT-0034 | Architecture owner / technical lead | Before generated-output tooling |  |
+| ADR-ACT-0039 | ADR-0005 | Add cross-ADR vocabulary consistency checks to the ADR review process. | Governance | Open | Medium | ADR-0001, ADR-0005 | Architecture owner / technical lead | Before accepting future vocabulary-affecting ADRs |  |
+| ADR-ACT-0040 | ADR-0005 | Review ADR-0001 through ADR-0004 terminology for compliance with ADR-0005 package metadata vocabulary and standard vocabulary alignment. | Review | Done | High | ADR-0001, ADR-0002, ADR-0003, ADR-0004, ADR-0005 | Architecture owner / technical lead | Complete | Updated ADR-0001 through ADR-0004 vocabulary clarification blocks |
+| ADR-ACT-0041 | ADR-0005 | Perform exhaustive cross-ADR relationship, vocabulary, schema, naming, intent, and action-register compliance review across ADR-0001 through ADR-0005. | Review | Done | High | ADR-0001, ADR-0002, ADR-0003, ADR-0004, ADR-0005, ADR-ACT-0040 | Architecture owner / technical lead | Complete | Updated ADR-0003 and ADR-0004 stale package metadata references after ADR-0005 acceptance |
+| ADR-ACT-0042 | ADR-0006 | Create lifecycle transition evidence-bundle examples for each stage and role combination that needs special handling. | Documentation | Done | High | ADR-0006 | Architecture owner / technical lead | Complete | Lifecycle transition evidence examples added for stable, external, deprecated, contract, adapter, tooling, and test transitions |
+| ADR-ACT-0043 | ADR-0006 | Add lifecycle transition and evidence-bundle validation rules to package metadata validation tooling. | Tooling | Open | High | ADR-0006, ADR-ACT-0033, ADR-ACT-0034 | Architecture owner / technical lead | Before package lifecycle enforcement |  |
+| ADR-ACT-0044 | ADR-0006 | Generate package lifecycle inventory and transition report from package.json architecture metadata. | Tooling | Done | Medium | ADR-0006, ADR-ACT-0034 | Architecture owner / technical lead | Complete | Package inventory and lifecycle summary reports generated by tools/architecture/generate-package-inventory |
+| ADR-ACT-0045 | ADR-0006 | Validate lifecycle transition governance and evidence-bundle rules against first vertical slice package changes. | Validation | Open | High | ADR-0006, ADR-ACT-0008, ADR-ACT-0028 | Architecture owner / technical lead | First vertical slice |  |
+| ADR-ACT-0046 | ADR-0005 | Replace placeholder JSON Schema $id with project-owned canonical URI when repository/package namespace is final. | Documentation | Open | Low | ADR-0005, ADR-ACT-0033 | Architecture owner / technical lead | Before publishing schema externally |  |
+| ADR-ACT-0047 | ADR-0005 | Validate the package architecture metadata JSON Schema against sample package.json files for each lifecycle stage and role. | Validation | Done | High | ADR-0005, ADR-0006, ADR-ACT-0033 | Architecture owner / technical lead | Complete | Package architecture metadata schema validated against architecture tools and representative inventory fixtures |
+| ADR-ACT-0048 | ADR-0005 | Extend package metadata validation tooling with cross-package checks not expressible in local JSON Schema. | Tooling | Done | High | ADR-0005, ADR-0006, ADR-ACT-0033, ADR-ACT-0034 | Architecture owner / technical lead | Complete | Cross-field semantic checks implemented in validate-package-metadata; broader cross-package CI checks remain separate |
+| ADR-ACT-0049 | ADR-0007 | Define architecture artifact and repository directory layout, including ADRs, schemas, root-level reports, tooling, apps, packages, package skeletons, React application skeleton, and package-local metadata. | ADR | Done | High | ADR-0003, ADR-0005, ADR-0006, ADR-ACT-0033 | Architecture owner / technical lead | Complete | ADR-0007 |
+| ADR-ACT-0050 | ADR-0007 | Validate directory layout against first vertical slice and adjust through ADR amendment if needed. | Validation | Open | Medium | ADR-0007, ADR-ACT-0008 | Architecture owner / technical lead | First vertical slice |  |
+| ADR-ACT-0051 | ADR-0007 | Ensure future root-level reports and later generated outputs include generated-file notices and are not treated as sources of truth. | Governance | Open | Medium | ADR-0005, ADR-0006, ADR-0007 | Architecture owner / technical lead | Before generated-output tooling |  |
+| ADR-ACT-0052 | ADR-0007 | Validate package and modern React application skeleton against the first vertical slice. | Validation | Open | High | ADR-0003, ADR-0005, ADR-0006, ADR-0007, ADR-ACT-0008 | Architecture owner / technical lead | First vertical slice |  |
+| ADR-ACT-0053 | ADR-0005 | Integrate package metadata validation into CI and developer workflow. | Tooling | Open | High | ADR-0005, ADR-0007, ADR-ACT-0034 | Architecture owner / technical lead | Before first vertical slice acceptance |  |
+| ADR-ACT-0054 | ADR-0008 | Implement package README generator using package.json architecture metadata. | Tooling | Done | High | ADR-0005, ADR-0007, ADR-0008, ADR-ACT-0034, ADR-ACT-0035 | Architecture owner / technical lead | Complete | generate-package-readmes implemented |
+| ADR-ACT-0055 | ADR-0008 | Validate generated package README output against representative React app, feature, UI, domain, contract, adapter, tooling, and test packages. | Validation | Done | High | ADR-0008, ADR-ACT-0054 | Architecture owner / technical lead | Complete | Generated package README output validated against representative React app, feature, UI, domain, GraphQL contract, GraphQL adapter, tooling, and test packages |
+| ADR-ACT-0056 | ADR-0008 | Extend package metadata validation or README generation checks to detect manual edits outside approved extension markers. | Tooling | Done | Medium | ADR-0008, ADR-ACT-0054 | Architecture owner / technical lead | Complete | Generated README checks detect manual edits outside extension markers and preserve approved manual extension content on write |
+| ADR-ACT-0057 | ADR-0009 | Define generated package inventory and lifecycle report structure from package.json architecture metadata. | ADR | Done | High | ADR-0005, ADR-0006, ADR-0007, ADR-0008, ADR-ACT-0034 | Architecture owner / technical lead | Complete | ADR-0009 |
+| ADR-ACT-0058 | ADR-0009 | Implement package inventory and lifecycle report generator. | Tooling | Done | High | ADR-0005, ADR-0006, ADR-0007, ADR-0009, ADR-ACT-0034 | Architecture owner / technical lead | Complete | Package inventory and lifecycle report generator implemented |
+| ADR-ACT-0059 | ADR-0009 | Validate package inventory and lifecycle reports against representative app, feature, UI, domain, contract, adapter, tooling, and test packages. | Validation | Done | High | ADR-0009, ADR-ACT-0058 | Architecture owner / technical lead | Complete | Inventory and lifecycle report fixtures cover representative app, feature, UI, domain, contract, adapter, tooling, and test packages |
+| ADR-ACT-0060 | ADR-0010 | Define lifecycle transition evidence bundle format for governed package lifecycle transitions. | ADR | Done | High | ADR-0004, ADR-0005, ADR-0006, ADR-0007, ADR-0008, ADR-0009 | Architecture owner / technical lead | Complete | ADR-0010 |
+| ADR-ACT-0061 | ADR-0010 | Create JSON Schema for lifecycle transition evidence bundles. | Tooling | Done | High | ADR-0010 | Architecture owner / technical lead | Complete | Lifecycle transition evidence JSON Schema created |
+| ADR-ACT-0062 | ADR-0010 | Implement lifecycle transition evidence generator or validator. | Tooling | Done | High | ADR-0010, ADR-ACT-0061, ADR-ACT-0034, ADR-ACT-0054, ADR-ACT-0058 | Architecture owner / technical lead | Complete | Lifecycle transition evidence validator and generator implemented |
+| ADR-ACT-0063 | ADR-0010 | Validate lifecycle transition evidence bundles against representative stable, external, deprecated, contract, adapter, tooling, and test transitions. | Validation | Done | High | ADR-0010, ADR-ACT-0062 | Architecture owner / technical lead | Complete | Lifecycle evidence fixtures validate stable, external, deprecated, contract, adapter, tooling, and test transitions plus invalid rule cases |
+| ADR-ACT-0064 | ADR-0007 | Amend architecture artifact layout with docs/evidence taxonomy and version-control requirements for committed and ignored artifacts. | ADR | Done | High | ADR-0007, ADR-0010 | Architecture owner / technical lead | Complete | ADR-0007 amendment |
+| ADR-ACT-0065 | ADR-0011 | Define architecture tooling execution model, command contract, mutation rules, output classes, and failure behaviour. | ADR | Done | High | ADR-0005, ADR-0007, ADR-0008, ADR-0009, ADR-0010 | Architecture owner / technical lead | Complete | ADR-0011 |
+| ADR-ACT-0066 | ADR-0011 | Align existing package metadata validator with architecture tooling execution model flags and failure output. | Tooling | Done | High | ADR-0011, ADR-ACT-0034 | Architecture owner / technical lead | Complete | Existing validator aligned with root/format/no-reports command contract and self-evidence |
+| ADR-ACT-0067 | ADR-0011 | Implement required architecture orchestrator for dependency-managed architecture tooling runs. | Tooling | Done | High | ADR-0011, ADR-ACT-0054, ADR-ACT-0058, ADR-ACT-0061, ADR-ACT-0062 | Architecture owner / technical lead | Complete | Required orchestrator implemented |
+| ADR-ACT-0068 | ADR-0011 | Define orchestrator run dependency tests under tools/architecture/orchestrator/tests/ covering validation, generation, reports, and evidence workflows. | Validation | Done | High | ADR-0011, ADR-0012, ADR-ACT-0067 | Architecture owner / technical lead | Complete | Orchestrator dependency tests added |
+| ADR-ACT-0069 | ADR-0012 | Define architecture tooling test, validation, TUI, quality-gate, and self-evidence strategy. | ADR | Done | High | ADR-0007, ADR-0011 | Architecture owner / technical lead | Complete | ADR-0012 |
+| ADR-ACT-0070 | ADR-0012 | Align package metadata validator tests with architecture tooling test strategy and fixture model. | Validation | Done | High | ADR-0012, ADR-ACT-0066 | Architecture owner / technical lead | Complete | Validator tests aligned with command contract |
+| ADR-ACT-0071 | ADR-0012 | Add golden-output tests for generated package READMEs, package inventory reports, lifecycle reports, and lifecycle evidence outputs. | Validation | Done | High | ADR-0012, ADR-ACT-0054, ADR-ACT-0058, ADR-ACT-0062 | Architecture owner / technical lead | Complete | Golden-output tests cover generated READMEs, inventory reports, lifecycle reports, and lifecycle evidence JSON/Markdown |
+| ADR-ACT-0072 | ADR-0012 | Add tool self-evidence JSON output for validator, generators, evidence tools, and orchestrator runs. | Tooling | Done | High | ADR-0012, ADR-0011 | Architecture owner / technical lead | Complete | Self-evidence coverage verifies required fields for all architecture tools and orchestrator plus --no-reports suppression |
+| ADR-ACT-0073 | ADR-0012 | Add third-party JSON Schema validation through Ajv or equivalent while preserving repository semantic validation rules. | Tooling | Done | High | ADR-0012, ADR-0005, ADR-ACT-0066 | Architecture owner / technical lead | Complete | Ajv dependency declared; schema validation integrated with semantic validation |
+| ADR-ACT-0074 | ADR-0012 | Add Markdown structure validation for generated package README output. | Validation | Done | Medium | ADR-0012, ADR-0008, ADR-ACT-0054 | Architecture owner / technical lead | Complete | Markdown structure validation added to README generator |
+| ADR-ACT-0075 | ADR-0012 | If a TUI is implemented, add parity tests proving each TUI action maps to an orchestrator command and evidence output. | Validation | Open | Medium | ADR-0012, ADR-0011, ADR-ACT-0067 | Architecture owner / technical lead | Before TUI review |  |
+| ADR-ACT-0076 | ADR-0007 | Amend ADR-0007 directory layout to include `docs/specs/` as a governed location for forward-looking design specs and as-built tool specs. | Documentation | Done | Medium | ADR-0007 | Architecture owner / technical lead | Complete | ADR-0007 amended; docs/specs/ added to directory layout, canonical source table, version-control commit list, and git treatment summary |
+
+## Notes
+
+Actions may later link to tickets, pull requests, issues, or delivery-board items.
+
+When an action is completed, update the status and evidence column.
+
+If an ADR is superseded, review all open actions sourced from that ADR.

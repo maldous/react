@@ -57,8 +57,11 @@ node tools/architecture/validate-lifecycle-evidence/src/index.mjs \
 | `--created-by <id>` | Identity of the evidence creator. Default: `"architecture-tooling"`. |
 | `--reviewer <id>` | Identity of the reviewer. Default: `"architecture-reviewer"`. |
 | `--approver <id>` | Identity of the approver. Default: `"architecture-approver"`. |
+| positional args | Evidence search roots (check mode). Default: `docs/evidence/lifecycle`. |
 
 **Exit codes:** `0` = all evidence bundles valid (check) or bundle generated (write). `1` = any invalid bundle or generation failure.
+
+**Environment variable:** `ARCHITECTURE_EVIDENCE_CREATED_AT` — if set, overrides `bundle.createdAt` and `transition.requestedAt` timestamps in generated bundles. Used in tests for deterministic golden-file comparison.
 
 ---
 
@@ -72,9 +75,25 @@ docs/evidence/lifecycle/<package-name>/<YYYY-MM-DD-from-class-to-to-class>/
   transition-evidence.md
 ```
 
-The JSON schema at `docs/schemas/lifecycle-transition-evidence.schema.json` governs required fields including: `packageName`, `fromClass`, `toClass`, `reason`, `createdAt`, `createdBy`, `reviewer`, `approver`, `evidenceType`, `approved`.
+The JSON schema at `docs/schemas/lifecycle-transition-evidence.schema.json` governs the nested structure:
 
-The Markdown file is a human-readable summary rendered from the JSON fields.
+```json
+{
+  "schemaVersion": "1.0",
+  "bundle":   { "id", "createdAt", "createdBy", "status" },
+  "package":  { "name", "path", "owner" },
+  "transition": { "fromClass", "toClass", "reason", "requestedAt" },
+  "governance": { "decisionRefs": ["ADR-NNNN"], "reviewers": [{"name","role","reviewedAt","evidenceRef"}], "approvers": [...] },
+  "risk":     { "level", "assessment", "mitigations": [] },
+  "testing":  { "summary", "evidence": [{"path","description"}] },
+  "impact":   { "runtimeImpact", "consumerImpact" },
+  "rollback": { "strategy", "notes" },
+  "sourceMetadataSnapshot": { "packageJsonPath", "architecture": { ... } },
+  "reportReferences": [{"path","description"}]
+}
+```
+
+There is no `evidenceType` or `approved` field. The Markdown file is a human-readable summary rendered from the JSON fields.
 
 ---
 
@@ -89,11 +108,11 @@ The Markdown file is a human-readable summary rendered from the JSON fields.
 
 ## Generation (--write mode)
 
-1. Reads the target package's `package.json` to confirm the current lifecycle class matches `--from-class`
-2. Constructs the evidence bundle JSON from provided arguments + current timestamp
-3. Renders the Markdown summary
-4. Writes both files to the correct path under `docs/evidence/lifecycle/`
-5. Fails if the evidence directory already exists (prevents accidental overwrite)
+1. Locates the target package's `package.json` by scanning `apps/`, `packages/`, and `tools/architecture/` for a `name` field matching `--package`
+2. Constructs the evidence bundle JSON from provided arguments + current timestamp (overridable via `ARCHITECTURE_EVIDENCE_CREATED_AT` for deterministic tests)
+3. Reads `package.json` architecture metadata only to populate `sourceMetadataSnapshot.architecture` and `package.owner` — does **not** validate that the current lifecycle class matches `--from-class`
+4. Renders the Markdown summary
+5. Creates the evidence directory (`docs/evidence/lifecycle/<pkg-slug>/<date-from-to>/`) and writes both files; overwrites silently if the directory already exists
 
 ---
 
@@ -121,7 +140,7 @@ Run `--write` against `fixtures/source-repo/` with fixed arguments; compare outp
 
 ### Transition class coverage
 
-Fixtures cover: `stable`, `external`, `deprecated`, `contract`, `adapter`, `tooling`, and `test` role transitions plus cases that should fail.
+`fixtures/coverage/` contains separate fixture bundles for each of the seven lifecycle role transitions: `stable`, `external`, `deprecated`, `contract`, `adapter`, `tooling`, and `test`. Each fixture is a minimal valid `transition-evidence.json` and matching schema. Invalid variants (e.g., missing `governance.approvers`) are co-located and asserted to produce exit 1 with a field-level error message.
 
 ### Self-evidence suppression
 

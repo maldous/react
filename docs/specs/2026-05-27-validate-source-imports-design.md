@@ -78,7 +78,6 @@ node tools/architecture/validate-source-imports/src/index.mjs \
   [--format text|json] \
   [--no-reports] \
   [--check | --write] \
-  [--write-evidence] \
   [apps] [packages] [...]
 ```
 
@@ -87,9 +86,8 @@ node tools/architecture/validate-source-imports/src/index.mjs \
 | `--root <path>` | Repository root. Defaults to cwd or nearest ancestor with `docs/schemas/package-json-architecture.schema.json`. |
 | `--format text\|json` | Console output format. Default: `text`. |
 | `--no-reports` | Skip writing report files. Self-evidence is also suppressed. |
-| `--check` | Validate without writing (default for named scan runs). |
-| `--write` | Reserved; no write operations for this tool beyond reports. |
-| `--write-evidence` | Write committed governance evidence to `docs/evidence/import-boundaries/source-import-boundary-validation.*`. Independent of `--no-reports` — evidence is committed source, not a generated report. |
+| `--check` | Validate without writing committed evidence (default). |
+| `--write` | Write committed governance evidence to `docs/evidence/import-boundaries/source-import-boundary-validation.*`. Consistent with `--write` semantics in other governance tools where the flag produces committed output (cf. `validate-lifecycle-evidence --write`). |
 | positional args | Directories to scan, relative to `--root`. Defaults to `apps packages`. |
 
 **Exit codes:** `0` = all files pass. `1` = any violation found or unrecoverable error.
@@ -202,7 +200,7 @@ Required fields: `toolName`, `toolVersion`, `command`, `mode`, `root`, `startedA
 
 ### Committed governance evidence
 
-Written only with `--write-evidence`:
+Written with `--write`:
 
 ```
 docs/evidence/import-boundaries/source-import-boundary-validation.json
@@ -240,6 +238,8 @@ One fixture per rule being enforced. Each is a single-package directory with a s
 | `invalid/feature-imports-postgres/` | feature-workflow imports `@platform/adapters-postgres` |
 | `invalid/feature-imports-clickhouse/` | feature-workflow imports `@platform/adapters-clickhouse` |
 | `invalid/contract-imports-adapter/` | `@platform/contracts-graphql` imports `@platform/adapters-graphql` |
+| `invalid/contracts-ingestion-imports-adapter/` | `@platform/contracts-ingestion` imports `@platform/adapters-ingestion` |
+| `invalid/contracts-analytics-imports-adapter/` | `@platform/contracts-analytics` imports `@platform/adapters-clickhouse` |
 | `invalid/ui-imports-domain/` | ui-design-system imports `@platform/domain-core` |
 | `invalid/access-imports-react/` | access-control imports `react` |
 | `invalid/profile-imports-postgres/` | profile-configuration imports `@platform/adapters-postgres` |
@@ -288,7 +288,7 @@ Evidence column for ADR-ACT-0007: `Source import boundary scanning implemented i
 ## Non-goals and constraints
 
 - Do not parse TypeScript types — specifiers only
-- Do not validate third-party dependency boundaries (only `@platform/*` package graph)
+- Do not validate third-party dependency boundaries beyond universal rules: non-`@platform/*` specifiers are checked only for universal rules (`no-deep-import`, `no-test-support-in-prod`); no attempt is made to enforce allowed/forbidden third-party packages at the per-package level
 - Do not add any runtime dependencies — regex only, zero `node_modules`
 - Do not alter `validate-package-metadata` — it remains metadata-only
 - Do not generate a new ADR — all rules derive from existing accepted ADRs
