@@ -75,9 +75,9 @@ Pros:
 
 Cons:
 
-- ADR-0003 established a Vite SPA shell with a separate BFF. Next.js would replace the BFF pattern with Next.js API routes, creating an undecided architecture split.
+- ADR-0003 established a Vite SPA shell with a separate BFF. Next.js would replace the BFF pattern with Next.js API routes, creating an architectural split in the platform model.
 - SSR changes caching, hydration, and adapter boundary patterns.
-- Deferred to a future ADR if SSR/ISR is required.
+- Adoption requires superseding ADR-0003 (modular monorepo + BFF) and ADR-0013 (API boundary); it is not a simple library addition. Not deferred — architecturally incompatible with the current model until those ADRs are revisited.
 
 ### Option C: TanStack ecosystem + React Aria + open-code UI (chosen)
 
@@ -232,7 +232,7 @@ Rules:
 - Upstream component patterns (from shadcn/ui or React Aria examples) may be copied and adapted; final code is owned by `packages/ui`.
 - Component APIs must be stable, typed with TypeScript, and documented in JSDoc.
 - Every interactive component must implement accessibility states (disabled, focused, invalid).
-- Do NOT adopt Material UI or Ant Design as the baseline design system. They may be introduced later only by ADR if a specific product requirement outweighs design-system ownership concerns.
+- Do NOT adopt Material UI or Ant Design as the **baseline design system** for `packages/ui`. They are baseline-prohibited: the open-code model takes precedence. A targeted ADR may approve adopting a specific MUI or Ant Design component for a feature with a clear product requirement (e.g., a complex date picker or complex data visualisation widget not covered by the component set) — this is an exception, not a direction change.
 
 ---
 
@@ -473,8 +473,11 @@ Option C (TanStack ecosystem + React Aria + open-code UI) is chosen because:
 **Neutral / operational:**
 
 - The DataTable shell delegates column/row decisions to feature packages — features are responsible for defining their data representations.
-- AG Grid is explicitly not adopted initially; if enterprise grid requirements emerge (Excel editing, large-scale pivoting), a dedicated ADR is required.
-- Next.js and TanStack Start are not adopted for ADR-ACT-0008; SSR/edge rendering requires a separate ADR.
+- AG Grid is not adopted initially. Adoption criteria: Excel-like cell editing, column pivoting, multi-level grouping, server-side row model for >100K rows, or enterprise licensing acceptance. Requires dedicated ADR.
+- Next.js and TanStack Start are architecturally incompatible with the current platform model (ADR-0003 Vite SPA + BFF). Adoption requires superseding ADR-0003 and ADR-0013; they are not a deferral candidate.
+- XState is not adopted initially. For complex UI state machines (multi-step wizards, multi-stage form flows, complex approval workflows), XState is the preferred choice over ad-hoc Zustand reducers. Introduce per-feature without requiring a formal ADR once the test harness (ADR-ACT-0097) is in place.
+- Storybook is not adopted initially. Recommended for `packages/ui` component documentation and visual regression once the primitive set (ADR-ACT-0095) is established.
+- Playwright is not adopted initially. E2E testing is out of scope for ADR-ACT-0097 (frontend unit/component/integration). Introduce after the first vertical slice proves the MSW-mocked integration pattern.
 
 ## AI-assistance record
 
@@ -549,6 +552,13 @@ ADR-0018 is reserved for a separate architectural decision. ADR-0019 is the fron
 
 The `shadcn/ui` project is referenced as a component pattern source (open-code model, React Aria integration examples) but is not imported as a package dependency. Components are authored directly in `packages/ui`.
 
-AG Grid is explicitly deferred. If enterprise data grid requirements exceed TanStack Table capabilities (Excel-like editing, server-side pivoting, grouping at very large scale), a dedicated ADR must be created before AG Grid is introduced.
+AG Grid is not adopted initially. Specific criteria that justify introducing it (each requires a dedicated ADR):
+
+- Excel-like cell editing with formula support
+- Column pivoting and grouping at enterprise scale
+- Server-side row model for >100K rows with deferred loading
+- Enterprise licensing acceptance by the organisation
+
+TanStack Table covers the initial use case (server-side pagination/sorting/filtering via search params, headless rendering). AG Grid is the upgrade path if TanStack Table reaches its limits.
 
 The full `packages/ui` primitive set (Button through DataTable) must be stubbed or implemented before ADR-ACT-0008 begins. See ADR-ACT-0095.

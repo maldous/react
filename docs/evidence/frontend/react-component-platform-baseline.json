@@ -2,61 +2,139 @@
   "schemaVersion": "1.0",
   "evidenceType": "frontend-platform-baseline",
   "adrRef": "ADR-0019",
-  "adrActRefs": ["ADR-ACT-0094"],
+  "adrActRefs": [
+    "ADR-ACT-0094"
+  ],
   "committedAt": "2026-05-28",
   "selectedLibraries": {
-    "routing": [{ "package": "@tanstack/react-router", "binding": true, "replaces": "React Router" }],
-    "serverState": [{ "package": "@tanstack/react-query", "binding": true }],
+    "routing": [
+      {
+        "package": "@tanstack/react-router",
+        "binding": true,
+        "replaces": "React Router"
+      }
+    ],
+    "serverState": [
+      {
+        "package": "@tanstack/react-query",
+        "binding": true
+      }
+    ],
     "localState": [
-      { "package": "zustand", "binding": true, "scope": "cross-component UI state only" },
-      { "package": "React useState/useReducer", "binding": true, "scope": "component-local state" }
+      {
+        "package": "zustand",
+        "binding": true,
+        "scope": "cross-component UI state only"
+      },
+      {
+        "package": "React useState/useReducer",
+        "binding": true,
+        "scope": "component-local state"
+      }
     ],
     "forms": [
-      { "package": "react-hook-form", "binding": true },
-      { "package": "zod", "binding": true },
-      { "package": "@hookform/resolvers", "binding": true }
+      {
+        "package": "react-hook-form",
+        "binding": true
+      },
+      {
+        "package": "zod",
+        "binding": true
+      },
+      {
+        "package": "@hookform/resolvers",
+        "binding": true
+      }
     ],
     "uiFoundation": [
-      { "package": "react-aria-components", "binding": true, "role": "accessible interaction primitives" },
-      { "package": "tailwindcss", "binding": true },
-      { "package": "class-variance-authority", "binding": true },
-      { "package": "tailwind-merge", "binding": true },
-      { "package": "clsx", "binding": true },
-      { "package": "lucide-react", "binding": true }
+      {
+        "package": "react-aria-components",
+        "binding": true,
+        "role": "accessible interaction primitives"
+      },
+      {
+        "package": "tailwindcss",
+        "binding": true
+      },
+      {
+        "package": "class-variance-authority",
+        "binding": true
+      },
+      {
+        "package": "tailwind-merge",
+        "binding": true
+      },
+      {
+        "package": "clsx",
+        "binding": true
+      },
+      {
+        "package": "lucide-react",
+        "binding": true
+      }
     ],
     "dataTable": [
-      { "package": "@tanstack/react-table", "binding": true },
-      { "package": "@tanstack/react-virtual", "binding": true }
+      {
+        "package": "@tanstack/react-table",
+        "binding": true
+      },
+      {
+        "package": "@tanstack/react-virtual",
+        "binding": true
+      }
     ],
     "supplementary": [
-      { "package": "sonner", "binding": true, "role": "toast notifications" },
-      { "package": "cmdk", "binding": true, "role": "command palette" },
-      { "package": "recharts", "binding": true, "role": "basic charts" },
-      { "package": "date-fns", "binding": true, "role": "date utilities" },
-      { "package": "framer-motion", "binding": true, "scope": "sparingly — transitions and polish only" }
+      {
+        "package": "sonner",
+        "binding": true,
+        "role": "toast notifications"
+      },
+      {
+        "package": "cmdk",
+        "binding": true,
+        "role": "command palette"
+      },
+      {
+        "package": "recharts",
+        "binding": true,
+        "role": "basic charts"
+      },
+      {
+        "package": "date-fns",
+        "binding": true,
+        "role": "date utilities"
+      },
+      {
+        "package": "framer-motion",
+        "binding": true,
+        "scope": "sparingly \u2014 transitions and polish only"
+      }
     ],
     "testing": [
-      { "package": "vitest", "binding": true },
-      { "package": "@testing-library/react", "binding": true },
-      { "package": "@testing-library/user-event", "binding": true },
-      { "package": "msw", "binding": true },
-      { "package": "axe/vitest-axe", "binding": true, "note": "added with test harness (ADR-ACT-0097)" }
+      {
+        "package": "vitest",
+        "binding": true
+      },
+      {
+        "package": "@testing-library/react",
+        "binding": true
+      },
+      {
+        "package": "@testing-library/user-event",
+        "binding": true
+      },
+      {
+        "package": "msw",
+        "binding": true
+      },
+      {
+        "package": "axe/vitest-axe",
+        "binding": true,
+        "note": "added with test harness (ADR-ACT-0097)"
+      }
     ]
   },
-  "deferredLibraries": ["echarts", "ag-grid", "tanstack-start", "next.js", "global-command-palette"],
-  "rejectedLibraries": [
-    {
-      "package": "@mui/material",
-      "reason": "third-party design system ownership; no open-code control"
-    },
-    { "package": "antd", "reason": "same as MUI; visual identity constraints" },
-    { "package": "redux", "reason": "over-engineered; TanStack Query + Zustand preferred" },
-    {
-      "package": "react-router",
-      "reason": "insufficient type safety for params/search; TanStack Router preferred"
-    }
-  ],
-  "componentModel": "open-code (shadcn/ui-style) — source owned by packages/ui",
+  "componentModel": "open-code (shadcn/ui-style) \u2014 source owned by packages/ui",
   "uiPrimitivesRequired": [
     "Button",
     "Input",
@@ -84,10 +162,73 @@
     "DataTable"
   ],
   "openActions": [
-    "ADR-ACT-0095 — packages/ui minimal primitives and styling utilities",
-    "ADR-ACT-0096 — React app shell providers (router, query client, theme, toast)",
-    "ADR-ACT-0097 — frontend test harness (Vitest, RTL, MSW, axe)",
-    "ADR-ACT-0098 — DataTable shell (TanStack Table + TanStack Virtual)"
+    "ADR-ACT-0095 \u2014 packages/ui minimal primitives and styling utilities",
+    "ADR-ACT-0096 \u2014 React app shell providers (router, query client, theme, toast)",
+    "ADR-ACT-0097 \u2014 frontend test harness (Vitest, RTL, MSW, axe)",
+    "ADR-ACT-0098 \u2014 DataTable shell (TanStack Table + TanStack Virtual)"
   ],
-  "adrActZeroZeroEightStatus": "NOT started"
+  "adrActZeroZeroEightStatus": "NOT started",
+  "libraryClassification": {
+    "deferredNoAdr": [
+      {
+        "package": "echarts",
+        "baseline": "recharts",
+        "trigger": "Charting requirements exceed Recharts (complex transforms, financial charts, large dataset server rendering)"
+      },
+      {
+        "package": "xstate",
+        "baseline": "zustand",
+        "trigger": "Complex UI state machines needed: multi-step wizards, approval workflows, state-machine-driven form flows. Introduce per-feature after ADR-ACT-0097."
+      },
+      {
+        "package": "storybook",
+        "baseline": "inline-docs",
+        "trigger": "packages/ui component documentation and visual regression; introduce after ADR-ACT-0095."
+      }
+    ],
+    "deferredRequiresAdr": [
+      {
+        "package": "ag-grid",
+        "baseline": "@tanstack/react-table",
+        "criteria": "Excel cell editing, column pivoting, server-side row model >100K rows, enterprise licensing"
+      },
+      {
+        "package": "playwright",
+        "baseline": "vitest+msw",
+        "criteria": "E2E test harness after first vertical slice validates MSW-mocked integration pattern"
+      }
+    ],
+    "baselineProhibited": [
+      {
+        "package": "@mui/material",
+        "reason": "Design system ownership; exception path: targeted ADR for specific component with clear product need"
+      },
+      {
+        "package": "antd",
+        "reason": "Same as MUI; exception path: same"
+      }
+    ],
+    "notSelectedAsBaseline": [
+      {
+        "package": "react-router",
+        "reason": "TanStack Router superior for type-safe params/search; valid fallback if TanStack Router has critical limitations"
+      }
+    ],
+    "rejected": [
+      {
+        "package": "redux",
+        "reason": "Server state owned by TanStack Query; UI state owned by Zustand; global domain store violates ADR-0001 hexagonal boundaries"
+      }
+    ],
+    "architecturallyIncompatible": [
+      {
+        "package": "next.js",
+        "reason": "SSR model; conflicts with ADR-0003 (Vite SPA + BFF) and ADR-0013; requires superseding those ADRs"
+      },
+      {
+        "package": "tanstack-start",
+        "reason": "Same \u2014 SSR file-based routing; conflicts with ADR-0003"
+      }
+    ]
+  }
 }

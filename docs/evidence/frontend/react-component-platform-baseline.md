@@ -28,7 +28,7 @@ Ratified frontend platform stack before the first vertical slice (ADR-ACT-0008).
 
 | Library | Role | Binding |
 | --- | --- | --- |
-| `@tanstack/react-router` | Type-safe SPA routing | Yes — do not use React Router |
+| `@tanstack/react-router` | Type-safe SPA routing | Yes — do not use React Router as baseline |
 
 ### Server and cache state
 
@@ -77,7 +77,7 @@ Ratified frontend platform stack before the first vertical slice (ADR-ACT-0008).
 | `cmdk` | Command palette / searchable menus | Yes |
 | `recharts` | Basic charts | Yes |
 | `date-fns` | Date arithmetic and formatting | Yes |
-| `framer-motion` | Sparingly — page transitions, polish | Yes (limited scope) |
+| `framer-motion` | Page transitions and polish | Yes (limited scope; reduced-motion required) |
 
 ### Testing
 
@@ -87,27 +87,64 @@ Ratified frontend platform stack before the first vertical slice (ADR-ACT-0008).
 | `@testing-library/react` | Component testing | Yes |
 | `@testing-library/user-event` | User interaction simulation | Yes |
 | `msw` | API mocking (test + browser) | Yes |
-| axe/vitest-axe | Accessibility checks | Yes — added with test harness |
+| axe/vitest-axe | Accessibility checks | Yes — added with test harness (ADR-ACT-0097) |
 
-## Deferred libraries
+## Library classification — deferred and conditional
 
-| Library | Reason for deferral |
+Libraries in this section have a defined introduction path. "Deferred" means the baseline choice is sufficient; introduction requires the stated criteria to be met.
+
+### Deferred — introduce per-feature without formal ADR barrier
+
+These are natural progression options once baseline requirements are exceeded:
+
+| Library | Current baseline | Trigger for introduction |
+| --- | --- | --- |
+| ECharts | Recharts | Charting requirements exceed Recharts capabilities (complex transforms, server-side rendering of large datasets, candlestick/financial charts) |
+| XState | Zustand | Complex UI state machines needed: multi-step wizards, multi-stage approval workflows, state-machine-driven form flows. No formal ADR required — introduce per-feature once ADR-ACT-0097 test harness is in place |
+| Storybook | Inline docs | packages/ui component documentation and visual regression testing; introduce after ADR-ACT-0095 establishes the primitive set |
+
+### Deferred — formal ADR required before adoption
+
+These require architectural review before introduction:
+
+| Library | Current baseline | Criteria requiring ADR |
+| --- | --- | --- |
+| AG Grid | `@tanstack/react-table` | Excel-like cell editing, column pivoting, server-side row model for >100K rows, or enterprise licensing acceptance |
+| Playwright | Vitest + MSW | E2E test harness; introduce after first vertical slice proves the MSW-mocked integration pattern |
+
+### Baseline-prohibited — ADR required for targeted exception
+
+These are not adopted as baseline design systems. A targeted ADR may approve a specific component from these libraries for a feature with a clear product requirement (e.g., a complex data visualisation widget not covered by `packages/ui`). This is an exception path, not a direction change.
+
+| Library | Reason baseline is prohibited | Exception path |
+| --- | --- | --- |
+| Material UI (`@mui/material`) | Design system ownership moves to third party; visual identity is externally controlled | Targeted ADR approving a specific component for a specific product need |
+| Ant Design (`antd`) | Same as MUI | Same |
+
+### Not selected as baseline — valid alternative
+
+These are valid libraries that were not chosen as the baseline. They remain candidates if the chosen baseline has critical limitations.
+
+| Library | Why not selected | Conditions for reconsideration |
+| --- | --- | --- |
+| React Router | TanStack Router provides stronger type safety for params and search; TanStack Router was the superior fit | If TanStack Router has critical bugs, breaking API changes, or inadequate community support that cannot be resolved; requires team decision |
+
+### Rejected — incorrect fit for this architecture
+
+These are incompatible with the chosen state/domain model and must not be introduced without a clear architectural reason:
+
+| Library | Why rejected |
 | --- | --- |
-| ECharts | Deferred until complex dashboard requirements established |
-| AG Grid | Deferred until Excel-like editing / large-scale pivoting needed; requires ADR |
-| Command palette (global) | cmdk selected; global implementation deferred post-first-slice |
-| TanStack Start | SSR model; requires separate ADR |
-| Next.js | SSR model; not for ADR-ACT-0008 |
-| Framer Motion (full) | Allowed sparingly; full adoption requires architectural review |
+| Redux / Redux Toolkit | Server/cache state is owned by TanStack Query; cross-component UI state is owned by Zustand; global domain store would violate ADR-0001 hexagonal boundaries. No legitimate use case remains. |
 
-## Rejected libraries
+### Architecturally incompatible — requires superseding foundational ADRs
 
-| Library | Reason for rejection |
+These are not "deferred" — they represent a different architectural model. Adoption requires revising ADR-0003 (Vite SPA + BFF) and ADR-0013 (API boundary), not just a library decision:
+
+| Library | Why incompatible |
 | --- | --- |
-| Material UI | Transfers design-system ownership to third party; constrained visual identity |
-| Ant Design | Same as MUI; no open-code ownership |
-| Redux / Redux Toolkit | Over-engineered for feature-scoped state; TanStack Query + Zustand preferred |
-| React Router | Lacks full type safety for params and search; TanStack Router preferred |
+| Next.js | SSR/file-based routing model; replaces BFF pattern with co-located API routes; conflicts with ADR-0003 |
+| TanStack Start | Same — SSR model with file-based routing; conflicts with ADR-0003 |
 
 ## Component layer table
 
@@ -146,9 +183,7 @@ To be implemented in `packages/ui` (ADR-ACT-0095):
 
 **Data:** DataTable shell
 
-## First-slice expectations
-
-The first vertical slice (ADR-ACT-0008) must include:
+## First-slice expectations (ADR-ACT-0008)
 
 1. At least one component test using Vitest + React Testing Library
 2. At least one API-mocked feature test using MSW
@@ -163,23 +198,24 @@ The first vertical slice (ADR-ACT-0008) must include:
 | Risk | Mitigation |
 | --- | --- |
 | TanStack Router v1 API changes | Pin major version; subscribe to changelogs; bounded to `apps/` |
-| open-code component maintenance | Maintainer ownership of `packages/ui`; no bulk third-party updates |
+| Open-code component maintenance | Maintainer ownership of `packages/ui`; no bulk third-party updates |
 | Accessibility regressions | axe integration in test harness (ADR-ACT-0097); mandatory before merge |
 | Form/contract schema divergence | Use `z.extend` / `z.merge` to compose, not duplicate |
-| AG Grid creep | Explicit ADR required before introduction; TanStack Table covers initial needs |
+| AG Grid creep | Explicit ADR required before introduction; criteria documented |
+| Complex state machine ad-hoc solutions | XState is the approved choice when state machine complexity is needed |
 
 ## Validation commands run
 
 ```text
-npm run format:check    → All matched files use Prettier code style!
-npm run lint:md         → 0 errors
-npm run lint            → 0 problems
-npm run tsc:check       → 0 errors
-npm run test:coverage   → 180 tests, 0 failures
-npm run sonar:clean     → Quality gate OK
-npm run audit:deps      → 0 vulnerabilities
-npm run audit:osv       → 0 issues
-npm run compose:config  → valid
+npm run format:check      → All matched files use Prettier code style!
+npm run lint:md           → 0 errors
+npm run lint              → 0 problems
+npm run tsc:check         → 0 errors
+npm run test:coverage     → 180 tests, 0 failures
+npm run sonar:clean       → Quality gate OK
+npm run audit:deps        → 0 vulnerabilities
+npm run audit:osv         → 0 issues
+npm run compose:config    → valid
 npm run compose:config:all → valid (all profiles)
 node orchestrator all --strict → 6/6 passed
 ```
