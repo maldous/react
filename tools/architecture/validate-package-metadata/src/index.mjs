@@ -4,7 +4,7 @@ import path from "node:path";
 import process from "node:process";
 import { pathToFileURL } from "node:url";
 
-function parseArgs(argv) {
+export function parseArgs(argv) {
   const options = {
     root: null,
     format: "text",
@@ -49,20 +49,7 @@ function parseArgs(argv) {
   return options;
 }
 
-const OPTIONS = parseArgs(process.argv.slice(2));
-const REPO_ROOT = findRepoRoot(OPTIONS.root ? path.resolve(OPTIONS.root) : process.cwd());
-const SCHEMA_PATH = path.join(
-  REPO_ROOT,
-  "docs",
-  "schemas",
-  "package-json-architecture.schema.json"
-);
-const REPORT_DIR = path.join(REPO_ROOT, "reports", "validation");
-const TOOLING_REPORT_DIR = path.join(REPO_ROOT, "reports", "tooling", "validate-package-metadata");
-const JSON_REPORT = path.join(REPORT_DIR, "package-metadata-validation.json");
-const MARKDOWN_REPORT = path.join(REPORT_DIR, "package-metadata-validation.md");
-
-function findRepoRoot(startDir) {
+export function findRepoRoot(startDir) {
   let dir = path.resolve(startDir);
   while (true) {
     if (fs.existsSync(path.join(dir, "docs", "schemas", "package-json-architecture.schema.json"))) {
@@ -80,17 +67,17 @@ function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
 
-function isObject(value) {
+export function isObject(value) {
   return value !== null && typeof value === "object" && !Array.isArray(value);
 }
 
-async function loadAjv() {
+async function loadAjv(repoRoot) {
   // Draft-2020-12 requires Ajv2020, not the default Ajv class
   const candidates = [
     () => import("ajv/dist/2020"),
     () => {
       const local = path.join(
-        REPO_ROOT,
+        repoRoot,
         "tools",
         "architecture",
         "validate-package-metadata",
@@ -134,13 +121,13 @@ function walkMetadata(current, results, ignored, explicitFixtureScan) {
   }
 }
 
-function listPackageJsonFiles(searchRoots) {
+export function listPackageJsonFiles(searchRoots, repoRoot) {
   const ignored = new Set(["node_modules", ".git", "dist", "build", "coverage", "reports"]);
   const results = [];
   const explicitFixtureScan = searchRoots.some((root) => root.split(/[\\/]/).includes("fixtures"));
 
   for (const root of searchRoots) {
-    const absoluteRoot = path.resolve(REPO_ROOT, root);
+    const absoluteRoot = path.resolve(repoRoot, root);
     if (!fs.existsSync(absoluteRoot)) {
       continue;
     }
@@ -173,7 +160,7 @@ const REQUIRED_PACKAGE_FIELDS = [
   "exports",
   "architecture",
 ];
-const REQUIRED_ARCHITECTURE_GROUPS = [
+export const REQUIRED_ARCHITECTURE_GROUPS = [
   "schemaVersion",
   "component",
   "lifecycle",
@@ -185,7 +172,13 @@ const REQUIRED_ARCHITECTURE_GROUPS = [
   "readme",
 ];
 
-function applySchemaValidation(packageJson, schemaValidator, errors, warnings) {
+export function applySchemaValidation(
+  packageJson,
+  schemaValidator,
+  errors,
+  warnings,
+  allowMissingAjv
+) {
   if (schemaValidator?.validate) {
     const schemaValid = schemaValidator.validate(packageJson);
     if (!schemaValid) {
@@ -195,7 +188,7 @@ function applySchemaValidation(packageJson, schemaValidator, errors, warnings) {
     }
   } else if (schemaValidator?.missingAjv) {
     const message = "Ajv JSON Schema validation dependency is unavailable";
-    if (OPTIONS.allowMissingAjv) {
+    if (allowMissingAjv) {
       warnings.push(message);
     } else {
       errors.push(message);
@@ -203,7 +196,7 @@ function applySchemaValidation(packageJson, schemaValidator, errors, warnings) {
   }
 }
 
-function validateArchitectureGroups(architecture, errors) {
+export function validateArchitectureGroups(architecture, errors) {
   for (const group of REQUIRED_ARCHITECTURE_GROUPS) {
     if (!(group in architecture)) {
       errors.push(`Missing architecture.${group}`);
@@ -214,11 +207,16 @@ function validateArchitectureGroups(architecture, errors) {
   }
 }
 
-function validatePackage(packageJson, packagePath, schemaValidator) {
+export function validatePackage(
+  packageJson,
+  packagePath,
+  schemaValidator,
+  allowMissingAjv = false
+) {
   const errors = [];
   const warnings = [];
 
-  applySchemaValidation(packageJson, schemaValidator, errors, warnings);
+  applySchemaValidation(packageJson, schemaValidator, errors, warnings, allowMissingAjv);
 
   for (const field of REQUIRED_PACKAGE_FIELDS) {
     if (!(field in packageJson)) {
@@ -258,7 +256,7 @@ function validatePackage(packageJson, packagePath, schemaValidator) {
   };
 }
 
-function validateLifecycleGovernanceConsistency(lifecycle, governance, errors) {
+export function validateLifecycleGovernanceConsistency(lifecycle, governance, errors) {
   if (!isObject(lifecycle) || !isObject(governance)) return;
 
   if (lifecycle.stage === "deprecated") {
@@ -288,7 +286,7 @@ function validateLifecycleGovernanceConsistency(lifecycle, governance, errors) {
   }
 }
 
-function validateComponent(component, errors) {
+export function validateComponent(component, errors) {
   if (!isObject(component)) {
     errors.push("architecture.component must be an object");
     return;
@@ -313,7 +311,7 @@ function validateComponent(component, errors) {
   if (typeError) errors.push(typeError);
 }
 
-function validateLifecycle(lifecycle, errors) {
+export function validateLifecycle(lifecycle, errors) {
   if (!isObject(lifecycle)) {
     errors.push("architecture.lifecycle must be an object");
     return;
@@ -374,7 +372,7 @@ function validateLifecycle(lifecycle, errors) {
   }
 }
 
-function validateGovernance(governance, errors) {
+export function validateGovernance(governance, errors) {
   if (!isObject(governance)) {
     errors.push("architecture.governance must be an object");
     return;
@@ -419,7 +417,7 @@ function validateGovernance(governance, errors) {
   }
 }
 
-function validateRuntime(runtime, errors) {
+export function validateRuntime(runtime, errors) {
   if (!isObject(runtime)) {
     errors.push("architecture.runtime must be an object");
     return;
@@ -442,7 +440,7 @@ function validateRuntime(runtime, errors) {
   }
 }
 
-function validateBoundaries(boundaries, errors) {
+export function validateBoundaries(boundaries, errors) {
   if (!isObject(boundaries)) {
     errors.push("architecture.boundaries must be an object");
     return;
@@ -461,7 +459,7 @@ function validateBoundaries(boundaries, errors) {
   }
 }
 
-function validateRelations(relations, errors) {
+export function validateRelations(relations, errors) {
   if (!isObject(relations)) {
     errors.push("architecture.relations must be an object");
     return;
@@ -474,7 +472,7 @@ function validateRelations(relations, errors) {
   }
 }
 
-function validateTags(tags, errors) {
+export function validateTags(tags, errors) {
   if (!isObject(tags)) {
     errors.push("architecture.tags must be an object");
     return;
@@ -487,7 +485,7 @@ function validateTags(tags, errors) {
   }
 }
 
-function validateReadme(readme, errors) {
+export function validateReadme(readme, errors) {
   if (!isObject(readme)) {
     errors.push("architecture.readme must be an object");
     return;
@@ -508,8 +506,8 @@ function validateReadme(readme, errors) {
   }
 }
 
-async function createSchemaValidator(schema) {
-  const Ajv = await loadAjv();
+async function createSchemaValidator(schema, repoRoot) {
+  const Ajv = await loadAjv(repoRoot);
   if (!Ajv) {
     return {
       missingAjv: true,
@@ -531,24 +529,32 @@ async function createSchemaValidator(schema) {
   };
 }
 
-function buildReports(results, startedAt, finishedAt, schemaValidator) {
+function buildReports(
+  results,
+  startedAt,
+  finishedAt,
+  schemaValidator,
+  repoRoot,
+  schemaPath,
+  allowMissingAjv
+) {
   const passed = results.filter((result) => result.valid).length;
   const failed = results.length - passed;
 
   const jsonReport = {
     generatedAt: finishedAt,
-    schemaPath: path.relative(REPO_ROOT, SCHEMA_PATH),
+    schemaPath: path.relative(repoRoot, schemaPath),
     schemaValidator: {
       name: schemaValidator.validatorName,
       available: schemaValidator.validatorAvailable,
-      missingAllowed: OPTIONS.allowMissingAjv,
+      missingAllowed: allowMissingAjv,
     },
     totalPackages: results.length,
     passed,
     failed,
     results: results.map((result) => ({
       ...result,
-      packagePath: path.relative(REPO_ROOT, result.packagePath),
+      packagePath: path.relative(repoRoot, result.packagePath),
     })),
   };
 
@@ -609,11 +615,11 @@ function buildReports(results, startedAt, finishedAt, schemaValidator) {
   };
 }
 
-function writeReports(report) {
-  fs.mkdirSync(REPORT_DIR, { recursive: true });
-  fs.writeFileSync(JSON_REPORT, `${JSON.stringify(report.jsonReport, null, 2)}\n`, "utf8");
-  fs.writeFileSync(MARKDOWN_REPORT, report.markdownReport, "utf8");
-  return { jsonReportPath: JSON_REPORT, markdownReportPath: MARKDOWN_REPORT };
+function writeReports(report, reportDir, jsonReportPath, markdownReportPath) {
+  fs.mkdirSync(reportDir, { recursive: true });
+  fs.writeFileSync(jsonReportPath, `${JSON.stringify(report.jsonReport, null, 2)}\n`, "utf8");
+  fs.writeFileSync(markdownReportPath, report.markdownReport, "utf8");
+  return { jsonReportPath, markdownReportPath };
 }
 
 function writeSelfEvidence({
@@ -624,23 +630,26 @@ function writeSelfEvidence({
   roots,
   outputPaths,
   exitCode,
+  options,
+  repoRoot,
+  toolingReportDir,
 }) {
-  if (OPTIONS.noReports) {
+  if (options.noReports) {
     return null;
   }
 
-  fs.mkdirSync(TOOLING_REPORT_DIR, { recursive: true });
+  fs.mkdirSync(toolingReportDir, { recursive: true });
   const safeTimestamp = finishedAt.replace(/[:.]/g, "-");
-  const evidencePath = path.join(TOOLING_REPORT_DIR, `${safeTimestamp}-run.json`);
+  const evidencePath = path.join(toolingReportDir, `${safeTimestamp}-run.json`);
   const evidence = {
     toolName: "validate-package-metadata",
     toolVersion:
       readJson(
-        path.join(REPO_ROOT, "tools", "architecture", "validate-package-metadata", "package.json")
+        path.join(repoRoot, "tools", "architecture", "validate-package-metadata", "package.json")
       ).version ?? "0.0.0",
     command,
     mode: "check",
-    root: REPO_ROOT,
+    root: repoRoot,
     startedAt,
     finishedAt,
     durationMs: new Date(finishedAt).getTime() - new Date(startedAt).getTime(),
@@ -684,40 +693,55 @@ function writeSelfEvidence({
   return evidencePath;
 }
 
-function printTextSummary(report, outputPaths, selfEvidencePath) {
+function printTextSummary(report, outputPaths, selfEvidencePath, repoRoot) {
   console.log(`Validated ${report.jsonReport.totalPackages} package.json file(s).`);
   console.log(`Passed: ${report.passed}`);
   console.log(`Failed: ${report.failed}`);
   console.log(`Schema validator: ${report.jsonReport.schemaValidator.name}`);
   console.log(`Schema validator available: ${report.jsonReport.schemaValidator.available}`);
   for (const outputPath of outputPaths) {
-    console.log(`${outputPath.label}: ${path.relative(REPO_ROOT, outputPath.path)}`);
+    console.log(`${outputPath.label}: ${path.relative(repoRoot, outputPath.path)}`);
   }
   if (selfEvidencePath) {
-    console.log(`Self-evidence: ${path.relative(REPO_ROOT, selfEvidencePath)}`);
+    console.log(`Self-evidence: ${path.relative(repoRoot, selfEvidencePath)}`);
   }
 }
 
 async function main() {
+  const options = parseArgs(process.argv.slice(2));
+  const repoRoot = findRepoRoot(options.root ? path.resolve(options.root) : process.cwd());
+  const schemaPath = path.join(
+    repoRoot,
+    "docs",
+    "schemas",
+    "package-json-architecture.schema.json"
+  );
+  const reportDir = path.join(repoRoot, "reports", "validation");
+  const toolingReportDir = path.join(repoRoot, "reports", "tooling", "validate-package-metadata");
+  const jsonReportPath = path.join(reportDir, "package-metadata-validation.json");
+  const markdownReportPath = path.join(reportDir, "package-metadata-validation.md");
+
   const startedAt = new Date().toISOString();
 
-  if (!fs.existsSync(SCHEMA_PATH)) {
-    console.error(`Schema not found: ${SCHEMA_PATH}`);
+  if (!fs.existsSync(schemaPath)) {
+    console.error(`Schema not found: ${schemaPath}`);
     process.exit(1);
   }
 
-  const schema = readJson(SCHEMA_PATH);
-  const schemaValidator = await createSchemaValidator(schema);
+  const schema = readJson(schemaPath);
+  const schemaValidator = await createSchemaValidator(schema, repoRoot);
 
   const roots =
-    OPTIONS.roots.length > 0 ? OPTIONS.roots : ["apps", "packages", "tools/architecture"];
-  const packageFiles = listPackageJsonFiles(roots);
+    options.roots.length > 0 ? options.roots : ["apps", "packages", "tools/architecture"];
+  const packageFiles = listPackageJsonFiles(roots, repoRoot);
   const results = [];
 
   for (const packageFile of packageFiles) {
     try {
       const packageJson = readJson(packageFile);
-      results.push(validatePackage(packageJson, packageFile, schemaValidator));
+      results.push(
+        validatePackage(packageJson, packageFile, schemaValidator, options.allowMissingAjv)
+      );
     } catch (error) {
       results.push({
         packagePath: packageFile,
@@ -730,12 +754,20 @@ async function main() {
   }
 
   const finishedAt = new Date().toISOString();
-  const report = buildReports(results, startedAt, finishedAt, schemaValidator);
+  const report = buildReports(
+    results,
+    startedAt,
+    finishedAt,
+    schemaValidator,
+    repoRoot,
+    schemaPath,
+    options.allowMissingAjv
+  );
   const exitCode = report.failed === 0 ? 0 : 1;
   const outputPaths = [];
 
-  if (!OPTIONS.noReports) {
-    const written = writeReports(report);
+  if (!options.noReports) {
+    const written = writeReports(report, reportDir, jsonReportPath, markdownReportPath);
     outputPaths.push({ label: "JSON report", path: written.jsonReportPath });
     outputPaths.push({ label: "Markdown report", path: written.markdownReportPath });
   }
@@ -750,11 +782,14 @@ async function main() {
       ...process.argv.slice(2),
     ],
     roots,
-    outputPaths: outputPaths.map((outputPath) => path.relative(REPO_ROOT, outputPath.path)),
+    outputPaths: outputPaths.map((outputPath) => path.relative(repoRoot, outputPath.path)),
     exitCode,
+    options,
+    repoRoot,
+    toolingReportDir,
   });
 
-  if (OPTIONS.format === "json") {
+  if (options.format === "json") {
     console.log(
       JSON.stringify(
         {
@@ -763,8 +798,8 @@ async function main() {
           passed: report.passed,
           failed: report.failed,
           schemaValidator: report.jsonReport.schemaValidator,
-          outputPaths: outputPaths.map((outputPath) => path.relative(REPO_ROOT, outputPath.path)),
-          selfEvidencePath: selfEvidencePath ? path.relative(REPO_ROOT, selfEvidencePath) : null,
+          outputPaths: outputPaths.map((outputPath) => path.relative(repoRoot, outputPath.path)),
+          selfEvidencePath: selfEvidencePath ? path.relative(repoRoot, selfEvidencePath) : null,
           exitCode,
         },
         null,
@@ -772,25 +807,27 @@ async function main() {
       )
     );
   } else {
-    printTextSummary(report, outputPaths, selfEvidencePath);
+    printTextSummary(report, outputPaths, selfEvidencePath, repoRoot);
   }
 
   process.exit(exitCode);
 }
 
-try {
-  await main();
-} catch (error) {
-  if (OPTIONS.format === "json") {
-    console.log(
-      JSON.stringify(
-        { toolName: "validate-package-metadata", error: error.message, exitCode: 1 },
-        null,
-        2
-      )
-    );
-  } else {
-    console.error(error.message);
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  try {
+    await main();
+  } catch (error) {
+    if (process.env.__FORMAT === "json") {
+      console.log(
+        JSON.stringify(
+          { toolName: "validate-package-metadata", error: error.message, exitCode: 1 },
+          null,
+          2
+        )
+      );
+    } else {
+      console.error(error.message);
+    }
+    process.exit(1);
   }
-  process.exit(1);
 }

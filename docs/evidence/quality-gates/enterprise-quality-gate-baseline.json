@@ -5,9 +5,18 @@
   "adrActRefs": [
     "ADR-ACT-0084",
     "ADR-ACT-0085",
-    "ADR-ACT-0091"
+    "ADR-ACT-0091",
+    "ADR-ACT-0093"
   ],
-  "committedAt": "2026-05-27",
+  "committedAt": "2026-05-28",
+  "coverageTool": "Node.js built-in V8 (--experimental-test-coverage)",
+  "lcovPath": "coverage/lcov.info",
+  "lcovScope": "tools/architecture/*/src/**/*.mjs",
+  "testFiles": {
+    "integration": 6,
+    "unit": 4,
+    "total": 10
+  },
   "tier1ArchitectureGates": [
     {
       "tool": "validate-package-metadata",
@@ -27,9 +36,9 @@
     },
     {
       "tool": "architecture-tests",
-      "command": "node --test",
+      "command": "npm run test:architecture",
       "result": "passed",
-      "count": 6
+      "count": 180
     }
   ],
   "tier2HardGates": [
@@ -68,121 +77,59 @@
       "tool": "osv-scanner",
       "version": "1.9.0",
       "command": "npm run audit:osv",
-      "ciAction": "google/osv-scanner-action/osv-scanner-action@v2",
       "result": "passed",
       "issues": 0
     },
     {
       "tool": "gitleaks",
       "version": "action@v2",
-      "command": "gitleaks/gitleaks-action@v2",
       "environment": "ci-only"
     },
     {
       "tool": "codeql",
       "language": "javascript-typescript",
-      "queries": "security-extended",
       "workflow": ".github/workflows/codeql.yml",
       "environment": "ci-only"
     },
     {
       "tool": "sonarqube",
-      "version": "lts-community (9.9.8.100196)",
+      "version": "lts-community 9.9.8.100196",
       "command": "npm run sonar:clean",
       "environment": "local pre-slice gate",
       "serverUrl": "http://localhost:9003",
       "projectKey": "maldous-react",
       "qualityGate": "Governance Tooling",
+      "scanTimestamp": "2026-05-28T00:26Z",
       "result": "OK",
-      "scanTimestamp": "2026-05-27T13:49Z",
       "bugs": 0,
       "vulnerabilities": 0,
       "securityHotspots": 0,
       "codeSmells": 0,
       "totalIssues": 0,
-      "gateConditions": [
-        {
-          "metric": "bugs",
-          "operator": "GT",
-          "threshold": "0",
-          "actual": "0",
-          "status": "OK"
-        },
-        {
-          "metric": "vulnerabilities",
-          "operator": "GT",
-          "threshold": "0",
-          "actual": "0",
-          "status": "OK"
-        },
-        {
-          "metric": "security_hotspots_reviewed",
-          "operator": "LT",
-          "threshold": "100",
-          "actual": "0 hotspots",
-          "status": "OK"
-        },
-        {
-          "metric": "new_reliability_rating",
-          "operator": "GT",
-          "threshold": "1",
-          "actual": "1",
-          "status": "OK"
-        },
-        {
-          "metric": "new_security_rating",
-          "operator": "GT",
-          "threshold": "1",
-          "actual": "1",
-          "status": "OK"
-        },
-        {
-          "metric": "new_maintainability_rating",
-          "operator": "GT",
-          "threshold": "1",
-          "actual": "1",
-          "status": "OK"
-        }
-      ],
-      "exclusionsFromGate": [
-        {
-          "metric": "new_coverage",
-          "reason": "architecture tooling uses node --test without LCOV; coverage tooling tracked in ADR-ACT-0092"
-        },
-        {
-          "metric": "new_duplicated_lines_density",
-          "reason": "similar argument-parsing patterns across tools are intentional (shared architecture convention)"
-        }
-      ],
-      "issuesFixed": {
-        "S2310": 23,
-        "S3776": 20,
-        "S3358": 2,
-        "S4624": 2,
-        "S5850": 1,
-        "S1874": 1,
-        "total": 49
-      },
-      "note": "Sonar is a local pre-slice hard gate. CI wiring tracked in ADR-ACT-0092."
+      "coverage": {
+        "overall": 83.1,
+        "line": 83.7,
+        "branch": 80.1,
+        "linesToCover": 4413,
+        "uncoveredLines": 721,
+        "thresholdPolicy": "advisory until ADR-ACT-0008 (first vertical slice)"
+      }
     }
   ],
   "tier3AdvisoryGates": [
     {
       "tool": "knip",
       "version": "6.14.2",
-      "command": "npm run knip",
       "result": "config-hints-only"
     },
     {
       "tool": "dependency-cruiser",
       "version": "17.4.2",
-      "command": "npm run depcruise",
       "result": "clean"
     },
     {
       "tool": "cyclonedx-npm",
       "version": "4.2.1",
-      "command": "npm run sbom:generate",
       "result": "passed",
       "components": 381
     },
@@ -192,19 +139,10 @@
       "note": "ADR-ACT-0090"
     }
   ],
-  "ciGatesNote": "Sonar is local-only until SONAR_TOKEN and SONAR_HOST_URL are available as CI secrets (ADR-ACT-0092). CodeQL covers cloud security analysis in CI.",
-  "configFiles": [
-    "package.json",
-    ".prettierrc.json",
-    ".prettierignore",
-    ".markdownlint-cli2.jsonc",
-    "eslint.config.mjs",
-    "tsconfig.base.json",
-    "knip.json",
-    ".dependency-cruiser.cjs",
-    "sonar-project.properties",
-    "tools/quality/sonar-quality-gate.mjs",
-    ".github/workflows/codeql.yml",
-    ".github/pull_request_template.md"
+  "openActions": [
+    "ADR-ACT-0092 \u2014 Sonar CI wiring after SONAR_TOKEN secret available",
+    "ADR-ACT-0089 \u2014 Sentry profile validation",
+    "ADR-ACT-0090 \u2014 Automated license scanner",
+    "Coverage hard threshold \u2014 post ADR-ACT-0008"
   ]
 }

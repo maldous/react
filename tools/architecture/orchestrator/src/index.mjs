@@ -4,7 +4,7 @@ import path from "node:path";
 import process from "node:process";
 import { spawnSync } from "node:child_process";
 
-function parseArgs(argv) {
+export function parseArgs(argv) {
   const options = {
     command: "validate",
     root: process.cwd(),
@@ -66,11 +66,7 @@ function parseArgs(argv) {
   return options;
 }
 
-const OPTIONS = parseArgs(process.argv.slice(2));
-const REPO_ROOT = findRepoRoot(path.resolve(OPTIONS.root));
-const TOOLING_REPORT_DIR = path.join(REPO_ROOT, "reports", "tooling", "orchestrator");
-
-function findRepoRoot(startDir) {
+export function findRepoRoot(startDir) {
   let dir = path.resolve(startDir);
   while (true) {
     if (fs.existsSync(path.join(dir, "docs", "schemas", "package-json-architecture.schema.json"))) {
@@ -84,81 +80,86 @@ function findRepoRoot(startDir) {
   }
 }
 
-function rel(filePath) {
-  return path.relative(REPO_ROOT, filePath);
+function rel(filePath, repoRoot) {
+  return path.relative(repoRoot, filePath);
 }
 
-function step(name, toolPath, args, required = true) {
+function step(name, toolPath, args, repoRoot, required = true) {
   return {
     name,
     toolPath,
-    scriptPath: path.join(REPO_ROOT, toolPath, "src", "index.mjs"),
+    scriptPath: path.join(repoRoot, toolPath, "src", "index.mjs"),
     args,
     required,
   };
 }
 
-function buildStepCatalog() {
-  const noReportsFlag = OPTIONS.noReports ? ["--no-reports"] : [];
-  const allowMissingAjvFlag = OPTIONS.allowMissingAjv ? ["--allow-missing-ajv"] : [];
-  const strictFlag = OPTIONS.strict ? ["--strict"] : [];
+export function buildStepCatalog(options, repoRoot) {
+  const noReportsFlag = options.noReports ? ["--no-reports"] : [];
+  const allowMissingAjvFlag = options.allowMissingAjv ? ["--allow-missing-ajv"] : [];
+  const strictFlag = options.strict ? ["--strict"] : [];
 
   return {
-    metadata: step("validate-package-metadata", "tools/architecture/validate-package-metadata", [
-      "--root",
-      REPO_ROOT,
-      "--format",
-      "json",
-      ...noReportsFlag,
-      ...allowMissingAjvFlag,
-    ]),
+    metadata: step(
+      "validate-package-metadata",
+      "tools/architecture/validate-package-metadata",
+      ["--root", repoRoot, "--format", "json", ...noReportsFlag, ...allowMissingAjvFlag],
+      repoRoot
+    ),
     sourceImports: step(
       "validate-source-imports",
       "tools/architecture/validate-source-imports",
       ["--check", "--format", "json", ...noReportsFlag, ...strictFlag],
+      repoRoot,
       true
     ),
     readmesCheck: step(
       "generate-package-readmes",
       "tools/architecture/generate-package-readmes",
       ["--check", "--format", "json", ...noReportsFlag],
+      repoRoot,
       true
     ),
     readmesWrite: step(
       "generate-package-readmes",
       "tools/architecture/generate-package-readmes",
       ["--write", "--format", "json", ...noReportsFlag],
+      repoRoot,
       true
     ),
     inventoryWrite: step(
       "generate-package-inventory",
       "tools/architecture/generate-package-inventory",
       ["--write", "--format", "json", ...noReportsFlag],
+      repoRoot,
       true
     ),
     lifecycleReportsWrite: step(
       "generate-lifecycle-reports",
       "tools/architecture/generate-lifecycle-reports",
       ["--write"],
+      repoRoot,
       false
     ),
     evidenceCheck: step(
       "validate-lifecycle-evidence",
       "tools/architecture/validate-lifecycle-evidence",
       ["--check", "--format", "json", ...noReportsFlag, ...allowMissingAjvFlag],
+      repoRoot,
       true
     ),
     evidenceWrite: step(
       "generate-lifecycle-evidence",
       "tools/architecture/validate-lifecycle-evidence",
       ["--write", "--format", "json", ...noReportsFlag, ...allowMissingAjvFlag],
+      repoRoot,
       true
     ),
   };
 }
 
-function planFor(command) {
-  const s = buildStepCatalog();
+export function planFor(command, options, repoRoot) {
+  const s = buildStepCatalog(options, repoRoot);
 
   if (command === "validate") {
     return [s.metadata];
@@ -199,7 +200,7 @@ function planFor(command) {
   }
 
   if (command === "generate-lifecycle-evidence") {
-    if (!OPTIONS.evidenceGenerationRequested) {
+    if (!options.evidenceGenerationRequested) {
       return [
         {
           name: "generate-lifecycle-evidence",
@@ -222,7 +223,7 @@ function planFor(command) {
   throw new Error(`Unsupported command: ${command}`);
 }
 
-function runStep(stepItem) {
+function runStep(stepItem, options, repoRoot) {
   if (stepItem.error) {
     return {
       name: stepItem.name,
@@ -244,11 +245,11 @@ function runStep(stepItem) {
       stdout: "",
       stderr: "",
       reason: "tool-not-implemented",
-      scriptPath: rel(stepItem.scriptPath),
+      scriptPath: rel(stepItem.scriptPath, repoRoot),
     };
   }
 
-  if (OPTIONS.planOnly) {
+  if (options.planOnly) {
     return {
       name: stepItem.name,
       status: "planned",
@@ -257,12 +258,12 @@ function runStep(stepItem) {
       stdout: "",
       stderr: "",
       reason: "plan-only",
-      scriptPath: rel(stepItem.scriptPath),
+      scriptPath: rel(stepItem.scriptPath, repoRoot),
     };
   }
 
   const result = spawnSync(process.execPath, [stepItem.scriptPath, ...stepItem.args], {
-    cwd: REPO_ROOT,
+    cwd: repoRoot,
     encoding: "utf8",
   });
 
@@ -273,11 +274,11 @@ function runStep(stepItem) {
     exitCode: result.status ?? 1,
     stdout: result.stdout,
     stderr: result.stderr,
-    scriptPath: rel(stepItem.scriptPath),
+    scriptPath: rel(stepItem.scriptPath, repoRoot),
   };
 }
 
-function executePlan(plan) {
+function executePlan(plan, options, repoRoot) {
   const results = [];
   let failedStep = null;
 
@@ -293,7 +294,7 @@ function executePlan(plan) {
       continue;
     }
 
-    const result = runStep(item);
+    const result = runStep(item, options, repoRoot);
     results.push(result);
 
     if (result.status === "failed" && result.required) {
@@ -304,27 +305,37 @@ function executePlan(plan) {
   return { results, failedStep };
 }
 
-function writeSelfEvidence({ startedAt, finishedAt, plan, results, failedStep, exitCode }) {
-  if (OPTIONS.noReports) {
+function writeSelfEvidence({
+  startedAt,
+  finishedAt,
+  plan,
+  results,
+  failedStep,
+  exitCode,
+  options,
+  repoRoot,
+  toolingReportDir,
+}) {
+  if (options.noReports) {
     return null;
   }
 
-  fs.mkdirSync(TOOLING_REPORT_DIR, { recursive: true });
+  fs.mkdirSync(toolingReportDir, { recursive: true });
   const safeTimestamp = finishedAt.replace(/[:.]/g, "-");
-  const evidencePath = path.join(TOOLING_REPORT_DIR, `${safeTimestamp}-run.json`);
+  const evidencePath = path.join(toolingReportDir, `${safeTimestamp}-run.json`);
 
   const evidence = {
     toolName: "orchestrator",
     toolVersion:
       JSON.parse(
         fs.readFileSync(
-          path.join(REPO_ROOT, "tools", "architecture", "orchestrator", "package.json"),
+          path.join(repoRoot, "tools", "architecture", "orchestrator", "package.json"),
           "utf8"
         )
       ).version ?? "0.0.0",
-    command: ["node", "tools/architecture/orchestrator/src/index.mjs", OPTIONS.command],
-    mode: OPTIONS.command,
-    root: REPO_ROOT,
+    command: ["node", "tools/architecture/orchestrator/src/index.mjs", options.command],
+    mode: options.command,
+    root: repoRoot,
     startedAt,
     finishedAt,
     durationMs: new Date(finishedAt).getTime() - new Date(startedAt).getTime(),
@@ -371,7 +382,7 @@ function writeSelfEvidence({ startedAt, finishedAt, plan, results, failedStep, e
       .map((result) => result.name),
     failedStep: failedStep?.name ?? null,
     stopReason: failedStep ? `${failedStep.name} failed` : null,
-    evidenceGenerationRequested: OPTIONS.evidenceGenerationRequested,
+    evidenceGenerationRequested: options.evidenceGenerationRequested,
     evidenceGenerated: false,
   };
 
@@ -379,8 +390,16 @@ function writeSelfEvidence({ startedAt, finishedAt, plan, results, failedStep, e
   return evidencePath;
 }
 
-function printText({ plan, results, failedStep: _failedStep, evidencePath, exitCode }) {
-  console.log(`Architecture tooling orchestrator: ${OPTIONS.command}`);
+function printText({
+  plan,
+  results,
+  failedStep: _failedStep,
+  evidencePath,
+  exitCode,
+  options,
+  repoRoot,
+}) {
+  console.log(`Architecture tooling orchestrator: ${options.command}`);
   console.log("");
   console.log("Dependency order:");
   for (const item of plan) {
@@ -394,16 +413,20 @@ function printText({ plan, results, failedStep: _failedStep, evidencePath, exitC
   }
   if (evidencePath) {
     console.log("");
-    console.log(`Self-evidence: ${rel(evidencePath)}`);
+    console.log(`Self-evidence: ${rel(evidencePath, repoRoot)}`);
   }
   console.log("");
   console.log(`Exit code: ${exitCode}`);
 }
 
 function main() {
+  const options = parseArgs(process.argv.slice(2));
+  const repoRoot = findRepoRoot(path.resolve(options.root));
+  const toolingReportDir = path.join(repoRoot, "reports", "tooling", "orchestrator");
+
   const startedAt = new Date().toISOString();
-  const plan = planFor(OPTIONS.command);
-  const { results, failedStep } = executePlan(plan);
+  const plan = planFor(options.command, options, repoRoot);
+  const { results, failedStep } = executePlan(plan, options, repoRoot);
   const exitCode = failedStep ? 1 : 0;
   const finishedAt = new Date().toISOString();
   const evidencePath = writeSelfEvidence({
@@ -413,17 +436,20 @@ function main() {
     results,
     failedStep,
     exitCode,
+    options,
+    repoRoot,
+    toolingReportDir,
   });
 
-  if (OPTIONS.format === "json") {
+  if (options.format === "json") {
     console.log(
       JSON.stringify(
         {
-          command: OPTIONS.command,
+          command: options.command,
           dependencyOrder: plan.map((item) => item.name),
           results,
           failedStep: failedStep?.name ?? null,
-          evidencePath: evidencePath ? rel(evidencePath) : null,
+          evidencePath: evidencePath ? rel(evidencePath, repoRoot) : null,
           exitCode,
         },
         null,
@@ -431,19 +457,29 @@ function main() {
       )
     );
   } else {
-    printText({ plan, results, failedStep, evidencePath, exitCode });
+    printText({ plan, results, failedStep, evidencePath, exitCode, options, repoRoot });
   }
 
   process.exit(exitCode);
 }
 
-try {
-  main();
-} catch (error) {
-  if (OPTIONS.format === "json") {
-    console.log(JSON.stringify({ error: error.message, exitCode: 1 }, null, 2));
-  } else {
-    console.error(error.message);
+import { pathToFileURL } from "node:url";
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  try {
+    main();
+  } catch (error) {
+    const options = { format: "text" };
+    try {
+      const parsed = parseArgs(process.argv.slice(2));
+      options.format = parsed.format;
+    } catch {
+      // ignore parse error in error handler
+    }
+    if (options.format === "json") {
+      console.log(JSON.stringify({ error: error.message, exitCode: 1 }, null, 2));
+    } else {
+      console.error(error.message);
+    }
+    process.exit(1);
   }
-  process.exit(1);
 }

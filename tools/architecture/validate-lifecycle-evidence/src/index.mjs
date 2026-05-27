@@ -5,7 +5,7 @@ import process from "node:process";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 // Options that consume the next argument as their value
-const VALUE_OPTS = new Map([
+export const VALUE_OPTS = new Map([
   ["--root", "root"],
   ["--format", "format"],
   ["--package", "packageName"],
@@ -18,14 +18,14 @@ const VALUE_OPTS = new Map([
 ]);
 
 // Options that are boolean flags
-const FLAG_OPTS = new Map([
+export const FLAG_OPTS = new Map([
   ["--no-reports", ["noReports", true]],
   ["--write", ["write", true]],
   ["--check", ["write", false]],
   ["--allow-missing-ajv", ["allowMissingAjv", true]],
 ]);
 
-function parseArgs(argv) {
+export function parseArgs(argv) {
   const options = {
     root: null,
     format: "text",
@@ -64,24 +64,7 @@ function parseArgs(argv) {
   return options;
 }
 
-const OPTIONS = parseArgs(process.argv.slice(2));
-const REPO_ROOT = findRepoRoot(OPTIONS.root ? path.resolve(OPTIONS.root) : process.cwd());
-const TOOL_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const TOOL_PACKAGE_PATH = path.join(TOOL_ROOT, "package.json");
-const SCHEMA_PATH = path.join(
-  REPO_ROOT,
-  "docs",
-  "schemas",
-  "lifecycle-transition-evidence.schema.json"
-);
-const TOOLING_REPORT_DIR = path.join(
-  REPO_ROOT,
-  "reports",
-  "tooling",
-  "validate-lifecycle-evidence"
-);
-
-function findRepoRoot(startDir) {
+export function findRepoRoot(startDir) {
   let dir = path.resolve(startDir);
   while (true) {
     if (fs.existsSync(path.join(dir, "docs", "schemas"))) return dir;
@@ -95,12 +78,12 @@ function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
 
-async function loadAjv() {
+async function loadAjv(toolRoot) {
   // Draft-2020-12 requires Ajv2020, not the default Ajv class
   const candidates = [
     () => import("ajv/dist/2020"),
     () => {
-      const local = path.join(TOOL_ROOT, "node_modules", "ajv", "dist", "2020.js");
+      const local = path.join(toolRoot, "node_modules", "ajv", "dist", "2020.js");
       return fs.existsSync(local) ? import(pathToFileURL(local).href) : Promise.reject();
     },
   ];
@@ -115,13 +98,13 @@ async function loadAjv() {
   return null;
 }
 
-async function createSchemaValidator(schema) {
-  const Ajv = await loadAjv();
+async function createSchemaValidator(schema, toolRoot, allowMissingAjv) {
+  const Ajv = await loadAjv(toolRoot);
   if (!Ajv) {
     return {
       validatorAvailable: false,
       validate(bundle) {
-        return OPTIONS.allowMissingAjv
+        return allowMissingAjv
           ? fallbackValidate(bundle)
           : {
               valid: false,
@@ -166,14 +149,14 @@ const REQUIRED_BUNDLE_FIELDS = [
   "reportReferences",
 ];
 
-function validateBundleTopLevelFields(bundle, errors) {
+export function validateBundleTopLevelFields(bundle, errors) {
   for (const field of REQUIRED_BUNDLE_FIELDS) {
     if (!(field in bundle)) errors.push(`Missing required field: ${field}`);
   }
   if (bundle.schemaVersion !== "1.0") errors.push("schemaVersion must be 1.0");
 }
 
-function validateBundleTransition(bundle, errors) {
+export function validateBundleTransition(bundle, errors) {
   const lifecycleClassPattern = /^[a-z]+\.[a-z]+$/;
   if (!lifecycleClassPattern.test(bundle.transition?.fromClass ?? ""))
     errors.push("transition.fromClass must use <stage>.<role> format");
@@ -181,7 +164,7 @@ function validateBundleTransition(bundle, errors) {
     errors.push("transition.toClass must use <stage>.<role> format");
 }
 
-function validateBundleGovernance(bundle, errors) {
+export function validateBundleGovernance(bundle, errors) {
   if (
     !Array.isArray(bundle.governance?.decisionRefs) ||
     bundle.governance.decisionRefs.length === 0
@@ -200,16 +183,16 @@ function validateBundleGovernance(bundle, errors) {
     errors.push("governance.approvers must be non-empty");
 }
 
-function validateBundleTesting(bundle, errors) {
+export function validateBundleTesting(bundle, errors) {
   if (!Array.isArray(bundle.testing?.evidence) || bundle.testing.evidence.length === 0)
     errors.push("testing.evidence must be non-empty");
 }
 
-function validateBundleRollback(bundle, errors) {
+export function validateBundleRollback(bundle, errors) {
   if (!bundle.rollback?.strategy) errors.push("rollback.strategy must be present");
 }
 
-function validateBundleSnapshot(bundle, errors) {
+export function validateBundleSnapshot(bundle, errors) {
   if (
     !bundle.sourceMetadataSnapshot?.packageJsonPath ||
     !bundle.sourceMetadataSnapshot?.architecture
@@ -217,7 +200,7 @@ function validateBundleSnapshot(bundle, errors) {
     errors.push("sourceMetadataSnapshot must include packageJsonPath and architecture");
 }
 
-function fallbackValidate(bundle) {
+export function fallbackValidate(bundle) {
   const errors = [];
   validateBundleTopLevelFields(bundle, errors);
   validateBundleTransition(bundle, errors);
@@ -228,10 +211,10 @@ function fallbackValidate(bundle) {
   return { valid: errors.length === 0, errors };
 }
 
-function listEvidenceFiles(searchRoots) {
+function listEvidenceFiles(searchRoots, repoRoot) {
   const results = [];
   for (const root of searchRoots) {
-    const absoluteRoot = path.resolve(REPO_ROOT, root);
+    const absoluteRoot = path.resolve(repoRoot, root);
     if (!fs.existsSync(absoluteRoot)) continue;
     walk(absoluteRoot);
   }
@@ -247,12 +230,12 @@ function listEvidenceFiles(searchRoots) {
   }
 }
 
-function listPackageJsonFiles() {
+function listPackageJsonFiles(repoRoot) {
   const roots = ["apps", "packages", "tools/architecture"];
   const ignored = new Set(["node_modules", ".git", "dist", "build", "coverage", "reports"]);
   const results = [];
   for (const root of roots) {
-    const absoluteRoot = path.resolve(REPO_ROOT, root);
+    const absoluteRoot = path.resolve(repoRoot, root);
     if (!fs.existsSync(absoluteRoot)) continue;
     walk(absoluteRoot);
   }
@@ -269,8 +252,8 @@ function listPackageJsonFiles() {
   }
 }
 
-function findPackage(packageName) {
-  for (const packageFile of listPackageJsonFiles()) {
+function findPackage(packageName, repoRoot) {
+  for (const packageFile of listPackageJsonFiles(repoRoot)) {
     const packageJson = readJson(packageFile);
     if (packageJson.name === packageName) return { packageFile, packageJson };
   }
@@ -290,9 +273,9 @@ function transitionSlug(packageName, fromClass, toClass, createdAt) {
   };
 }
 
-function buildBundle({ packageFile, packageJson }) {
+function buildBundle({ packageFile, packageJson }, options, repoRoot) {
   for (const field of ["packageName", "fromClass", "toClass", "reason"]) {
-    if (!OPTIONS[field]) {
+    if (!options[field]) {
       const flagName = field.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase());
       throw new Error(`Missing required option for --write: --${flagName}`);
     }
@@ -303,27 +286,27 @@ function buildBundle({ packageFile, packageJson }) {
   return {
     schemaVersion: "1.0",
     bundle: {
-      id: `${packageJson.name}:${OPTIONS.fromClass}->${OPTIONS.toClass}:${createdAt}`,
+      id: `${packageJson.name}:${options.fromClass}->${options.toClass}:${createdAt}`,
       createdAt,
-      createdBy: OPTIONS.createdBy,
+      createdBy: options.createdBy,
       status: "draft",
     },
     package: {
       name: packageJson.name,
-      path: path.relative(REPO_ROOT, packageFile),
+      path: path.relative(repoRoot, packageFile),
       owner: a.component.owner,
     },
     transition: {
-      fromClass: OPTIONS.fromClass,
-      toClass: OPTIONS.toClass,
-      reason: OPTIONS.reason,
+      fromClass: options.fromClass,
+      toClass: options.toClass,
+      reason: options.reason,
       requestedAt: createdAt,
     },
     governance: {
       decisionRefs: ["ADR-0010"],
       reviewers: [
         {
-          name: OPTIONS.reviewer,
+          name: options.reviewer,
           role: "reviewer",
           reviewedAt: createdAt,
           evidenceRef: "generated draft",
@@ -331,7 +314,7 @@ function buildBundle({ packageFile, packageJson }) {
       ],
       approvers: [
         {
-          name: OPTIONS.approver,
+          name: options.approver,
           role: "approver",
           reviewedAt: createdAt,
           evidenceRef: "generated draft",
@@ -361,7 +344,7 @@ function buildBundle({ packageFile, packageJson }) {
       notes: "Generated draft.",
     },
     sourceMetadataSnapshot: {
-      packageJsonPath: path.relative(REPO_ROOT, packageFile),
+      packageJsonPath: path.relative(repoRoot, packageFile),
       architecture: a,
     },
     reportReferences: [
@@ -428,14 +411,14 @@ ${bundle.rollback.strategy}
 `;
 }
 
-function writeGeneratedBundle(bundle) {
+function writeGeneratedBundle(bundle, repoRoot) {
   const { packageSlug, dirSlug } = transitionSlug(
     bundle.package.name,
     bundle.transition.fromClass,
     bundle.transition.toClass,
     bundle.bundle.createdAt
   );
-  const dir = path.join(REPO_ROOT, "docs", "evidence", "lifecycle", packageSlug, dirSlug);
+  const dir = path.join(repoRoot, "docs", "evidence", "lifecycle", packageSlug, dirSlug);
   fs.mkdirSync(dir, { recursive: true });
   const jsonPath = path.join(dir, "transition-evidence.json");
   const mdPath = path.join(dir, "transition-evidence.md");
@@ -444,21 +427,21 @@ function writeGeneratedBundle(bundle) {
   return [jsonPath, mdPath];
 }
 
-async function validateFiles(files) {
-  const schema = readJson(SCHEMA_PATH);
-  const validator = await createSchemaValidator(schema);
+async function validateFiles(files, repoRoot, schemaPath, toolRoot, allowMissingAjv) {
+  const schema = readJson(schemaPath);
+  const validator = await createSchemaValidator(schema, toolRoot, allowMissingAjv);
   const results = [];
   for (const file of files) {
     try {
       const bundle = readJson(file);
       const validation = validator.validate(bundle);
       results.push({
-        path: path.relative(REPO_ROOT, file),
+        path: path.relative(repoRoot, file),
         valid: validation.valid,
         errors: validation.errors,
       });
     } catch (error) {
-      results.push({ path: path.relative(REPO_ROOT, file), valid: false, errors: [error.message] });
+      results.push({ path: path.relative(repoRoot, file), valid: false, errors: [error.message] });
     }
   }
   return { results, validatorAvailable: validator.validatorAvailable };
@@ -472,21 +455,25 @@ function writeSelfEvidence({
   outputPaths,
   exitCode,
   validatorAvailable,
+  options,
+  repoRoot,
+  toolPackagePath,
+  toolingReportDir,
 }) {
-  if (OPTIONS.noReports) return null;
-  fs.mkdirSync(TOOLING_REPORT_DIR, { recursive: true });
+  if (options.noReports) return null;
+  fs.mkdirSync(toolingReportDir, { recursive: true });
   const safeTimestamp = finishedAt.replace(/[:.]/g, "-");
-  const evidencePath = path.join(TOOLING_REPORT_DIR, `${safeTimestamp}-run.json`);
+  const evidencePath = path.join(toolingReportDir, `${safeTimestamp}-run.json`);
   const evidence = {
     toolName: "validate-lifecycle-evidence",
-    toolVersion: readJson(TOOL_PACKAGE_PATH).version ?? "0.0.0",
+    toolVersion: readJson(toolPackagePath).version ?? "0.0.0",
     command: [
       "node",
       "tools/architecture/validate-lifecycle-evidence/src/index.mjs",
       ...process.argv.slice(2),
     ],
-    mode: OPTIONS.write ? "write" : "check",
-    root: REPO_ROOT,
+    mode: options.write ? "write" : "check",
+    root: repoRoot,
     startedAt,
     finishedAt,
     durationMs: new Date(finishedAt).getTime() - new Date(startedAt).getTime(),
@@ -504,7 +491,7 @@ function writeSelfEvidence({
     schemaValidator: {
       name: "ajv",
       available: validatorAvailable,
-      missingAllowed: OPTIONS.allowMissingAjv,
+      missingAllowed: options.allowMissingAjv,
     },
     gitTreatment: "docs/evidence/** committed; reports/** ignored by default",
     exitCode,
@@ -514,23 +501,43 @@ function writeSelfEvidence({
 }
 
 async function main() {
-  const startedAt = new Date().toISOString();
-  let roots = OPTIONS.roots.length > 0 ? OPTIONS.roots : ["docs/evidence/lifecycle"];
-  let outputPaths = [];
-  let files = listEvidenceFiles(roots);
+  const options = parseArgs(process.argv.slice(2));
+  const repoRoot = findRepoRoot(options.root ? path.resolve(options.root) : process.cwd());
+  const toolRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+  const toolPackagePath = path.join(toolRoot, "package.json");
+  const schemaPath = path.join(
+    repoRoot,
+    "docs",
+    "schemas",
+    "lifecycle-transition-evidence.schema.json"
+  );
+  const toolingReportDir = path.join(repoRoot, "reports", "tooling", "validate-lifecycle-evidence");
 
-  if (OPTIONS.write) {
-    const found = findPackage(OPTIONS.packageName);
-    if (!found) throw new Error(`Package not found: ${OPTIONS.packageName}`);
-    const bundle = buildBundle(found);
-    outputPaths = writeGeneratedBundle(bundle).map((file) => path.relative(REPO_ROOT, file));
+  const startedAt = new Date().toISOString();
+  let roots = options.roots.length > 0 ? options.roots : ["docs/evidence/lifecycle"];
+  let outputPaths = [];
+  let files = listEvidenceFiles(roots, repoRoot);
+
+  if (options.write) {
+    const found = findPackage(options.packageName, repoRoot);
+    if (!found) throw new Error(`Package not found: ${options.packageName}`);
+    const bundle = buildBundle(found, options, repoRoot);
+    outputPaths = writeGeneratedBundle(bundle, repoRoot).map((file) =>
+      path.relative(repoRoot, file)
+    );
     files = outputPaths
       .filter((file) => file.endsWith(".json"))
-      .map((file) => path.join(REPO_ROOT, file));
+      .map((file) => path.join(repoRoot, file));
     roots = ["docs/evidence/lifecycle"];
   }
 
-  const { results, validatorAvailable } = await validateFiles(files);
+  const { results, validatorAvailable } = await validateFiles(
+    files,
+    repoRoot,
+    schemaPath,
+    toolRoot,
+    options.allowMissingAjv
+  );
   const failed = results.filter((result) => !result.valid).length;
   const exitCode = failed === 0 ? 0 : 1;
   const finishedAt = new Date().toISOString();
@@ -542,42 +549,48 @@ async function main() {
     outputPaths,
     exitCode,
     validatorAvailable,
+    options,
+    repoRoot,
+    toolPackagePath,
+    toolingReportDir,
   });
   const summary = {
     toolName: "validate-lifecycle-evidence",
-    mode: OPTIONS.write ? "write" : "check",
+    mode: options.write ? "write" : "check",
     totalEvidenceFiles: results.length,
     passed: results.filter((r) => r.valid).length,
     failed,
     results,
     outputPaths,
-    selfEvidencePath: selfEvidencePath ? path.relative(REPO_ROOT, selfEvidencePath) : null,
+    selfEvidencePath: selfEvidencePath ? path.relative(repoRoot, selfEvidencePath) : null,
     exitCode,
   };
 
-  if (OPTIONS.format === "json") console.log(JSON.stringify(summary, null, 2));
+  if (options.format === "json") console.log(JSON.stringify(summary, null, 2));
   else {
-    console.log(`Lifecycle evidence ${OPTIONS.write ? "generation" : "validation"}`);
+    console.log(`Lifecycle evidence ${options.write ? "generation" : "validation"}`);
     console.log(`Evidence files: ${summary.totalEvidenceFiles}`);
     console.log(`Passed: ${summary.passed}`);
     console.log(`Failed: ${summary.failed}`);
     if (selfEvidencePath)
-      console.log(`Self-evidence: ${path.relative(REPO_ROOT, selfEvidencePath)}`);
+      console.log(`Self-evidence: ${path.relative(repoRoot, selfEvidencePath)}`);
   }
   process.exit(exitCode);
 }
 
-try {
-  await main();
-} catch (error) {
-  if (OPTIONS.format === "json")
-    console.log(
-      JSON.stringify(
-        { toolName: "validate-lifecycle-evidence", error: error.message, exitCode: 1 },
-        null,
-        2
-      )
-    );
-  else console.error(error.message);
-  process.exit(1);
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  try {
+    await main();
+  } catch (error) {
+    if (process.argv.includes("--format=json") || process.argv.includes("json")) {
+      console.log(
+        JSON.stringify(
+          { toolName: "validate-lifecycle-evidence", error: error.message, exitCode: 1 },
+          null,
+          2
+        )
+      );
+    } else console.error(error.message);
+    process.exit(1);
+  }
 }

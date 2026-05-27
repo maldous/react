@@ -10,7 +10,7 @@
     "audit:deps": "npm audit --audit-level=high",
     "audit:osv": "osv-scanner scan --recursive .",
     "secrets:scan": "command -v gitleaks >/dev/null 2>&1 && gitleaks detect --source . --no-git || echo 'gitleaks not found on PATH — install from https://github.com/gitleaks/gitleaks/releases or use the gitleaks-action in CI'",
-    "sonar:scan": "SONAR_HOST_URL=http://localhost:9003 sonar-scanner",
+    "sonar:scan": "npm run test:coverage && SONAR_HOST_URL=http://localhost:9003 sonar-scanner",
     "sbom:generate": "cyclonedx-npm --output-format JSON --output-file docs/evidence/security/sbom-baseline.json --package-lock-only",
     "compose:config": "docker compose config",
     "compose:up": "docker compose up -d",
@@ -28,7 +28,9 @@
     "compose:up:default": "docker compose up -d postgres redis clickhouse minio mailpit otel-collector",
     "compose:down:volumes": "docker compose down --volumes",
     "sonar:quality-gate": "SONAR_HOST_URL=http://localhost:9003 node tools/quality/sonar-quality-gate.mjs",
-    "sonar:clean": "npm run sonar:scan && npm run sonar:quality-gate"
+    "sonar:clean": "npm run test:coverage && SONAR_HOST_URL=http://localhost:9003 sonar-scanner && npm run sonar:quality-gate",
+    "test:architecture": "node --test tools/architecture/validate-package-metadata/tests/validate-package-metadata.test.mjs tools/architecture/validate-package-metadata/tests/validate-package-metadata-unit.test.mjs tools/architecture/validate-source-imports/tests/validate-source-imports.test.mjs tools/architecture/validate-source-imports/tests/validate-source-imports-unit.test.mjs tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs tools/architecture/generate-package-inventory/tests/generate-package-inventory.test.mjs tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence.test.mjs tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence-unit.test.mjs tools/architecture/orchestrator/tests/self-evidence.test.mjs tools/architecture/orchestrator/tests/orchestrator-unit.test.mjs",
+    "test:coverage": "mkdir -p coverage && node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=coverage/lcov.info --test-reporter=spec --test-reporter-destination=stdout tools/architecture/validate-package-metadata/tests/validate-package-metadata.test.mjs tools/architecture/validate-package-metadata/tests/validate-package-metadata-unit.test.mjs tools/architecture/validate-source-imports/tests/validate-source-imports.test.mjs tools/architecture/validate-source-imports/tests/validate-source-imports-unit.test.mjs tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs tools/architecture/generate-package-inventory/tests/generate-package-inventory.test.mjs tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence.test.mjs tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence-unit.test.mjs tools/architecture/orchestrator/tests/self-evidence.test.mjs tools/architecture/orchestrator/tests/orchestrator-unit.test.mjs"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "3.1054.0",
