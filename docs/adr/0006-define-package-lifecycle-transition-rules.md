@@ -571,6 +571,8 @@ migration path documented
 target removal review date set
 supportLevel is deprecated
 semverPolicy is deprecated
+changeControl is deprecation-review
+promotionEligible is false
 new usage blocked where practical
 generated README explains deprecation
 ```
