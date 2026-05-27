@@ -5,15 +5,7 @@
   "description": "Project-specific package.json architecture metadata schema governed by ADR-0005 and ADR-0006.",
   "type": "object",
   "additionalProperties": true,
-  "required": [
-    "name",
-    "version",
-    "description",
-    "private",
-    "type",
-    "exports",
-    "architecture"
-  ],
+  "required": ["name", "version", "description", "private", "type", "exports", "architecture"],
   "properties": {
     "name": {
       "type": "string",
@@ -32,10 +24,7 @@
     },
     "type": {
       "type": "string",
-      "enum": [
-        "module",
-        "commonjs"
-      ]
+      "enum": ["module", "commonjs"]
     },
     "exports": {
       "description": "Standard package public exports. Kept intentionally broad because package.json supports several valid shapes.",
@@ -71,14 +60,7 @@
     },
     "reviewCadence": {
       "type": "string",
-      "enum": [
-        "none",
-        "monthly",
-        "quarterly",
-        "six-monthly",
-        "annual",
-        "on-change"
-      ]
+      "enum": ["none", "monthly", "quarterly", "six-monthly", "annual", "on-change"]
     },
     "architecture": {
       "type": "object",
@@ -149,14 +131,7 @@
     "component": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "type",
-        "name",
-        "system",
-        "domain",
-        "boundedContext",
-        "owner"
-      ],
+      "required": ["type", "name", "system", "domain", "boundedContext", "owner"],
       "properties": {
         "type": {
           "type": "string",
@@ -216,14 +191,7 @@
         },
         "role": {
           "type": "string",
-          "enum": [
-            "feature",
-            "platform",
-            "contract",
-            "adapter",
-            "tooling",
-            "test"
-          ]
+          "enum": ["feature", "platform", "contract", "adapter", "tooling", "test"]
         },
         "class": {
           "type": "string",
@@ -231,20 +199,11 @@
         },
         "catalogLifecycle": {
           "type": "string",
-          "enum": [
-            "experimental",
-            "production",
-            "deprecated"
-          ]
+          "enum": ["experimental", "production", "deprecated"]
         },
         "visibility": {
           "type": "string",
-          "enum": [
-            "internal",
-            "releaseable",
-            "external",
-            "deprecated"
-          ]
+          "enum": ["internal", "releaseable", "external", "deprecated"]
         },
         "supportLevel": {
           "type": "string",
@@ -269,9 +228,7 @@
                 "const": "experimental"
               }
             },
-            "required": [
-              "stage"
-            ]
+            "required": ["stage"]
           },
           "then": {
             "properties": {
@@ -285,14 +242,10 @@
           "if": {
             "properties": {
               "stage": {
-                "enum": [
-                  "candidate"
-                ]
+                "enum": ["candidate"]
               }
             },
-            "required": [
-              "stage"
-            ]
+            "required": ["stage"]
           },
           "then": {
             "properties": {
@@ -306,17 +259,10 @@
           "if": {
             "properties": {
               "stage": {
-                "enum": [
-                  "active",
-                  "stable",
-                  "maintenance",
-                  "external"
-                ]
+                "enum": ["active", "stable", "maintenance", "external"]
               }
             },
-            "required": [
-              "stage"
-            ]
+            "required": ["stage"]
           },
           "then": {
             "properties": {
@@ -333,9 +279,7 @@
                 "const": "deprecated"
               }
             },
-            "required": [
-              "stage"
-            ]
+            "required": ["stage"]
           },
           "then": {
             "properties": {
@@ -346,10 +290,7 @@
                 "const": "deprecated"
               },
               "supportLevel": {
-                "enum": [
-                  "deprecated",
-                  "unsupported"
-                ]
+                "enum": ["deprecated", "unsupported"]
               }
             }
           }
@@ -361,9 +302,7 @@
                 "const": "external"
               }
             },
-            "required": [
-              "stage"
-            ]
+            "required": ["stage"]
           },
           "then": {
             "properties": {
@@ -378,12 +317,7 @@
     "governance": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "decisionRefs",
-        "semverPolicy",
-        "changeControl",
-        "promotionEligible"
-      ],
+      "required": ["decisionRefs", "semverPolicy", "changeControl", "promotionEligible"],
       "properties": {
         "decisionRefs": {
           "type": "array",
@@ -448,14 +382,7 @@
           "type": "array",
           "items": {
             "type": "string",
-            "enum": [
-              "local",
-              "development",
-              "test",
-              "ci",
-              "staging",
-              "production"
-            ]
+            "enum": ["local", "development", "test", "ci", "staging", "production"]
           },
           "uniqueItems": true
         }
@@ -468,9 +395,7 @@
                 "const": true
               }
             },
-            "required": [
-              "testOnly"
-            ]
+            "required": ["testOnly"]
           },
           "then": {
             "properties": {
@@ -521,9 +446,7 @@
                 "const": true
               }
             },
-            "required": [
-              "publicExportsOnly"
-            ]
+            "required": ["publicExportsOnly"]
           },
           "then": {
             "properties": {
@@ -542,11 +465,7 @@
     "relations": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "dependsOn",
-        "providesApis",
-        "consumesApis"
-      ],
+      "required": ["dependsOn", "providesApis", "consumesApis"],
       "properties": {
         "dependsOn": {
           "$ref": "#/$defs/stringList"
@@ -562,13 +481,7 @@
     "tags": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "scope",
-        "type",
-        "stage",
-        "role",
-        "layer"
-      ],
+      "required": ["scope", "type", "stage", "role", "layer"],
       "properties": {
         "scope": {
           "$ref": "#/$defs/nonEmptyString"
@@ -601,14 +514,7 @@
         },
         "role": {
           "type": "string",
-          "enum": [
-            "feature",
-            "platform",
-            "contract",
-            "adapter",
-            "tooling",
-            "test"
-          ]
+          "enum": ["feature", "platform", "contract", "adapter", "tooling", "test"]
         },
         "layer": {
           "type": "string",

@@ -25,7 +25,7 @@ const requiredToolFields = [
   "errors",
   "dependencySteps",
   "gitTreatment",
-  "exitCode"
+  "exitCode",
 ];
 
 const requiredOrchestratorFields = [
@@ -35,7 +35,7 @@ const requiredOrchestratorFields = [
   "failedStep",
   "stopReason",
   "evidenceGenerationRequested",
-  "evidenceGenerated"
+  "evidenceGenerated",
 ];
 
 function copyDir(source, target) {
@@ -63,15 +63,18 @@ function run(root, args, env = {}) {
       ...process.env,
       ARCHITECTURE_REPORT_GENERATED_AT: "2026-05-26T00:00:00.000Z",
       ARCHITECTURE_EVIDENCE_CREATED_AT: "2026-05-26T00:00:00.000Z",
-      ...env
-    }
+      ...env,
+    },
   });
 }
 
 function newestEvidence(root, toolName) {
   const dir = path.join(root, "reports", "tooling", toolName);
   assert.equal(fs.existsSync(dir), true, `${toolName} evidence dir should exist`);
-  const files = fs.readdirSync(dir).filter((file) => file.endsWith("-run.json")).sort();
+  const files = fs
+    .readdirSync(dir)
+    .filter((file) => file.endsWith("-run.json"))
+    .sort();
   assert.ok(files.length > 0, `${toolName} should emit evidence`);
   return JSON.parse(fs.readFileSync(path.join(dir, files.at(-1)), "utf8"));
 }
@@ -84,17 +87,23 @@ function assertRequiredFields(evidence, fields, label) {
 
 function assertNoEvidence(root, toolName) {
   const dir = path.join(root, "reports", "tooling", toolName);
-  assert.equal(fs.existsSync(dir), false, `${toolName} should not emit self-evidence with --no-reports`);
+  assert.equal(
+    fs.existsSync(dir),
+    false,
+    `${toolName} should not emit self-evidence with --no-reports`
+  );
 }
 
 const root = makeRepo();
 
 const validator = run(root, [
   "tools/architecture/validate-package-metadata/src/index.mjs",
-  "--root", root,
+  "--root",
+  root,
   "--allow-missing-ajv",
-  "--format", "json",
-  "tools/architecture"
+  "--format",
+  "json",
+  "tools/architecture",
 ]);
 assert.equal(validator.status, 0, validator.stderr || validator.stdout);
 const validatorEvidence = newestEvidence(root, "validate-package-metadata");
@@ -103,10 +112,12 @@ assert.equal(validatorEvidence.toolName, "validate-package-metadata");
 
 const readmes = run(root, [
   "tools/architecture/generate-package-readmes/src/index.mjs",
-  "--root", root,
+  "--root",
+  root,
   "--check",
-  "--format", "json",
-  "tools/architecture"
+  "--format",
+  "json",
+  "tools/architecture",
 ]);
 assert.equal(readmes.status, 0, readmes.stderr || readmes.stdout);
 const readmesEvidence = newestEvidence(root, "generate-package-readmes");
@@ -115,12 +126,14 @@ assert.equal(readmesEvidence.toolName, "generate-package-readmes");
 
 const inventoryWrite = run(root, [
   "tools/architecture/generate-package-inventory/src/index.mjs",
-  "--root", root,
+  "--root",
+  root,
   "--write",
-  "--format", "json",
+  "--format",
+  "json",
   "apps",
   "packages",
-  "tools/architecture"
+  "tools/architecture",
 ]);
 assert.equal(inventoryWrite.status, 0, inventoryWrite.stderr || inventoryWrite.stdout);
 const inventoryEvidence = newestEvidence(root, "generate-package-inventory");
@@ -129,11 +142,13 @@ assert.equal(inventoryEvidence.toolName, "generate-package-inventory");
 
 const sourceImports = run(root, [
   "tools/architecture/validate-source-imports/src/index.mjs",
-  "--root", root,
-  "--format", "json",
+  "--root",
+  root,
+  "--format",
+  "json",
   "--check",
   "apps",
-  "packages"
+  "packages",
 ]);
 assert.equal(sourceImports.status, 0, sourceImports.stderr || sourceImports.stdout);
 const sourceImportsEvidence = newestEvidence(root, "validate-source-imports");
@@ -142,12 +157,14 @@ assert.equal(sourceImportsEvidence.toolName, "validate-source-imports");
 
 const lifecycleReports = run(root, [
   "tools/architecture/generate-lifecycle-reports/src/index.mjs",
-  "--root", root,
+  "--root",
+  root,
   "--write",
-  "--format", "json",
+  "--format",
+  "json",
   "apps",
   "packages",
-  "tools/architecture"
+  "tools/architecture",
 ]);
 assert.equal(lifecycleReports.status, 0, lifecycleReports.stderr || lifecycleReports.stdout);
 const lifecycleReportsEvidence = newestEvidence(root, "generate-lifecycle-reports");
@@ -156,9 +173,11 @@ assert.equal(lifecycleReportsEvidence.toolName, "generate-lifecycle-reports");
 
 const lifecycle = run(root, [
   "tools/architecture/validate-lifecycle-evidence/src/index.mjs",
-  "--root", root,
+  "--root",
+  root,
   "--allow-missing-ajv",
-  "--format", "json"
+  "--format",
+  "json",
 ]);
 assert.equal(lifecycle.status, 0, lifecycle.stderr || lifecycle.stdout);
 const lifecycleEvidence = newestEvidence(root, "validate-lifecycle-evidence");
@@ -168,9 +187,11 @@ assert.equal(lifecycleEvidence.toolName, "validate-lifecycle-evidence");
 const orchestrator = run(root, [
   "tools/architecture/orchestrator/src/index.mjs",
   "all",
-  "--root", root,
+  "--root",
+  root,
   "--allow-missing-ajv",
-  "--format", "json"
+  "--format",
+  "json",
 ]);
 assert.equal(orchestrator.status, 0, orchestrator.stderr || orchestrator.stdout);
 const orchestratorEvidence = newestEvidence(root, "orchestrator");
@@ -181,72 +202,111 @@ assert.equal(orchestratorEvidence.evidenceGenerationRequested, false);
 
 const noReportsRoot = makeRepo();
 const noReports = [
-  ["validate-package-metadata", [
-    "tools/architecture/validate-package-metadata/src/index.mjs",
-    "--root", noReportsRoot,
-    "--allow-missing-ajv",
-    "--no-reports",
-    "--format", "json",
-    "tools/architecture"
-  ]],
-  ["generate-package-readmes", [
-    "tools/architecture/generate-package-readmes/src/index.mjs",
-    "--root", noReportsRoot,
-    "--check",
-    "--no-reports",
-    "--format", "json",
-    "tools/architecture"
-  ]],
-  ["generate-package-inventory", [
-    "tools/architecture/generate-package-inventory/src/index.mjs",
-    "--root", noReportsRoot,
-    "--write",
-    "--no-reports",
-    "--format", "json",
-    "apps",
-    "packages",
-    "tools/architecture"
-  ]],
-  ["validate-source-imports", [
-    "tools/architecture/validate-source-imports/src/index.mjs",
-    "--root", noReportsRoot,
-    "--check",
-    "--no-reports",
-    "--format", "json",
-    "apps",
-    "packages"
-  ]],
-  ["generate-lifecycle-reports", [
-    "tools/architecture/generate-lifecycle-reports/src/index.mjs",
-    "--root", noReportsRoot,
-    "--write",
-    "--no-reports",
-    "--format", "json",
-    "apps",
-    "packages",
-    "tools/architecture"
-  ]],
-  ["validate-lifecycle-evidence", [
-    "tools/architecture/validate-lifecycle-evidence/src/index.mjs",
-    "--root", noReportsRoot,
-    "--allow-missing-ajv",
-    "--no-reports",
-    "--format", "json"
-  ]],
-  ["orchestrator", [
-    "tools/architecture/orchestrator/src/index.mjs",
-    "all",
-    "--root", noReportsRoot,
-    "--allow-missing-ajv",
-    "--plan-only",
-    "--no-reports",
-    "--format", "json"
-  ]]
+  [
+    "validate-package-metadata",
+    [
+      "tools/architecture/validate-package-metadata/src/index.mjs",
+      "--root",
+      noReportsRoot,
+      "--allow-missing-ajv",
+      "--no-reports",
+      "--format",
+      "json",
+      "tools/architecture",
+    ],
+  ],
+  [
+    "generate-package-readmes",
+    [
+      "tools/architecture/generate-package-readmes/src/index.mjs",
+      "--root",
+      noReportsRoot,
+      "--check",
+      "--no-reports",
+      "--format",
+      "json",
+      "tools/architecture",
+    ],
+  ],
+  [
+    "generate-package-inventory",
+    [
+      "tools/architecture/generate-package-inventory/src/index.mjs",
+      "--root",
+      noReportsRoot,
+      "--write",
+      "--no-reports",
+      "--format",
+      "json",
+      "apps",
+      "packages",
+      "tools/architecture",
+    ],
+  ],
+  [
+    "validate-source-imports",
+    [
+      "tools/architecture/validate-source-imports/src/index.mjs",
+      "--root",
+      noReportsRoot,
+      "--check",
+      "--no-reports",
+      "--format",
+      "json",
+      "apps",
+      "packages",
+    ],
+  ],
+  [
+    "generate-lifecycle-reports",
+    [
+      "tools/architecture/generate-lifecycle-reports/src/index.mjs",
+      "--root",
+      noReportsRoot,
+      "--write",
+      "--no-reports",
+      "--format",
+      "json",
+      "apps",
+      "packages",
+      "tools/architecture",
+    ],
+  ],
+  [
+    "validate-lifecycle-evidence",
+    [
+      "tools/architecture/validate-lifecycle-evidence/src/index.mjs",
+      "--root",
+      noReportsRoot,
+      "--allow-missing-ajv",
+      "--no-reports",
+      "--format",
+      "json",
+    ],
+  ],
+  [
+    "orchestrator",
+    [
+      "tools/architecture/orchestrator/src/index.mjs",
+      "all",
+      "--root",
+      noReportsRoot,
+      "--allow-missing-ajv",
+      "--plan-only",
+      "--no-reports",
+      "--format",
+      "json",
+    ],
+  ],
 ];
 
 for (const [toolName, args] of noReports) {
   const result = run(noReportsRoot, args);
-  assert.equal(result.status, 0, `${toolName} --no-reports should pass\n${result.stdout}\n${result.stderr}`);
+  assert.equal(
+    result.status,
+    0,
+    `${toolName} --no-reports should pass\n${result.stdout}\n${result.stderr}`
+  );
   assertNoEvidence(noReportsRoot, toolName);
 }
 

@@ -12,7 +12,7 @@ export function buildJsonReport({
   tsconfigPath,
   compilerOptionsSummary,
   edgeStats,
-  packageGraph
+  packageGraph,
 }) {
   const fileSet = new Set(violations.map((v) => v.file));
   const {
@@ -22,7 +22,7 @@ export function buildJsonReport({
     totalInternalEdges,
     totalExternalEdges,
     totalTypeOnlyEdges,
-    totalDynamicImports
+    totalDynamicImports,
   } = edgeStats ?? {};
 
   const packageGraphObj = {};
@@ -57,8 +57,8 @@ export function buildJsonReport({
       rule: v.rule,
       message: v.message,
       resolvedFile: v.resolvedFile ? path.relative(repoRoot, v.resolvedFile) : null,
-      resolvedPackage: v.resolvedPackage ?? null
-    }))
+      resolvedPackage: v.resolvedPackage ?? null,
+    })),
   };
 }
 
@@ -75,7 +75,7 @@ export function buildMarkdownReport(jsonReport) {
     `Total imports checked: ${jsonReport.totalImports}`,
     `Passed: ${jsonReport.passed}`,
     `Failed: ${jsonReport.failed}`,
-    "```"
+    "```",
   ];
 
   if (jsonReport.violations.length > 0) {
@@ -114,7 +114,7 @@ export function writeCommittedEvidence(jsonReport, repoRoot, toolVersion, scanRo
     toolVersion,
     ruleSet: "ADR-0001, ADR-0002, ADR-0013, ADR-0014, ADR-0015, import-boundary-rules.md",
     scanMethod: "typescript-ast+typescript-module-resolution",
-    scanRoots
+    scanRoots,
   };
 
   const jsonPath = path.join(evidenceDir, "source-import-boundary-validation.json");
@@ -153,7 +153,7 @@ export function writeCommittedEvidence(jsonReport, repoRoot, toolVersion, scanRo
     `Package graph packages:  ${pkgGraphCount}`,
     `Passed: ${jsonReport.passed}`,
     `Failed: ${jsonReport.failed}`,
-    "```"
+    "```",
   ];
 
   if (jsonReport.violations.length === 0) {
@@ -185,7 +185,7 @@ export function writeSelfEvidence({
   checksFailed,
   warnings,
   exitCode,
-  toolingReportDir
+  toolingReportDir,
 }) {
   fs.mkdirSync(toolingReportDir, { recursive: true });
   const safeTimestamp = finishedAt.replace(/[:.]/g, "-");
@@ -225,7 +225,7 @@ export function writeSelfEvidence({
       "no-unresolved-platform-import",
       "no-package-cycle",
       "no-unresolved-relative-import",
-      "no-unresolved-alias"
+      "no-unresolved-alias",
     ],
     checksPassed,
     checksFailed,
@@ -235,11 +235,11 @@ export function writeSelfEvidence({
       package: v.packageName,
       specifier: v.specifier,
       rule: v.rule,
-      message: v.message
+      message: v.message,
     })),
     dependencySteps: [],
     gitTreatment: "reports/** ignored by default",
-    exitCode
+    exitCode,
   };
 
   fs.writeFileSync(evidencePath, `${JSON.stringify(evidence, null, 2)}\n`, "utf8");

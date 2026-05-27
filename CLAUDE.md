@@ -64,32 +64,32 @@ cd tools/architecture/validate-package-metadata && npm ci
 
 The platform is structured as modular hexagonal architecture around bounded contexts. The key domains are:
 
-| Domain | Bounded contexts |
-|---|---|
-| `experience` | app-shell, workflow, design-system |
-| `core` | domain-core, profile-configuration, access-control, graphql-contracts |
-| `integration` | external-ingestion-contracts, external-ingestion-runtime, graphql-runtime |
-| `persistence` | postgres-runtime |
-| `analytics` | analytics-contracts, clickhouse-runtime |
-| `operations` | api-server, graphql-server, worker-server, config-service, session-service, auth-gateway, audit-service, observability-core, queue-service, storage-service, email-service, notification-service, search-service, auth-keycloak, cache-queue-redis, error-monitoring, telemetry, object-storage, email-brevo |
-| `delivery` | dev-local, container-build, terraform-workflow, ci-pipeline, aws-infra, cloudflare-infra |
-| `architecture` | architecture-governance |
+| Domain         | Bounded contexts                                                                                                                                                                                                                                                                                             |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `experience`   | app-shell, workflow, design-system                                                                                                                                                                                                                                                                           |
+| `core`         | domain-core, profile-configuration, access-control, graphql-contracts                                                                                                                                                                                                                                        |
+| `integration`  | external-ingestion-contracts, external-ingestion-runtime, graphql-runtime                                                                                                                                                                                                                                    |
+| `persistence`  | postgres-runtime                                                                                                                                                                                                                                                                                             |
+| `analytics`    | analytics-contracts, clickhouse-runtime                                                                                                                                                                                                                                                                      |
+| `operations`   | api-server, graphql-server, worker-server, config-service, session-service, auth-gateway, audit-service, observability-core, queue-service, storage-service, email-service, notification-service, search-service, auth-keycloak, cache-queue-redis, error-monitoring, telemetry, object-storage, email-brevo |
+| `delivery`     | dev-local, container-build, terraform-workflow, ci-pipeline, aws-infra, cloudflare-infra                                                                                                                                                                                                                     |
+| `architecture` | architecture-governance                                                                                                                                                                                                                                                                                      |
 
 Owner teams: `team-platform` owns most operations and delivery packages; `team-security` owns auth-gateway, session-service, audit-service, and auth-keycloak.
 
 ### Package namespace and layout
 
-| Location | npm scope | Purpose |
-|---|---|---|
-| `apps/` | `@platform/` | Deployable application surfaces |
-| `packages/` | `@platform/` | Shared domain, contract, adapter, feature, UI, and test packages |
-| `tools/architecture/` | `@architecture/` | Governance-only tooling; never a product runtime dependency |
-| `docs/adr/` | — | Architecture decision records (source of truth for decisions) |
-| `docs/schemas/` | — | Governed JSON schemas |
-| `docs/architecture/` | — | Context map, glossary, import rules, naming conventions |
-| `docs/evidence/` | — | Committed lifecycle transition evidence bundles |
-| `docs/specs/` | — | Implementation design specs (platform-agnostic, date-prefixed) |
-| `reports/` | — | Generated reports (gitignored) |
+| Location              | npm scope        | Purpose                                                          |
+| --------------------- | ---------------- | ---------------------------------------------------------------- |
+| `apps/`               | `@platform/`     | Deployable application surfaces                                  |
+| `packages/`           | `@platform/`     | Shared domain, contract, adapter, feature, UI, and test packages |
+| `tools/architecture/` | `@architecture/` | Governance-only tooling; never a product runtime dependency      |
+| `docs/adr/`           | —                | Architecture decision records (source of truth for decisions)    |
+| `docs/schemas/`       | —                | Governed JSON schemas                                            |
+| `docs/architecture/`  | —                | Context map, glossary, import rules, naming conventions          |
+| `docs/evidence/`      | —                | Committed lifecycle transition evidence bundles                  |
+| `docs/specs/`         | —                | Implementation design specs (platform-agnostic, date-prefixed)   |
+| `reports/`            | —                | Generated reports (gitignored)                                   |
 
 ### Package lifecycle classes (ADR-0004)
 

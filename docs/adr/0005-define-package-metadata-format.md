@@ -341,12 +341,7 @@ Initial example:
       "reviewCadence": "quarterly"
     },
     "governance": {
-      "decisionRefs": [
-        "ADR-0002",
-        "ADR-0003",
-        "ADR-0004",
-        "ADR-0005"
-      ],
+      "decisionRefs": ["ADR-0002", "ADR-0003", "ADR-0004", "ADR-0005"],
       "semverPolicy": "internal-traceable",
       "changeControl": "owner-review",
       "promotionEligible": false
@@ -356,23 +351,13 @@ Initial example:
       "testOnly": false,
       "serviceName": "market-data-pricing",
       "serviceNamespace": "market-data",
-      "deploymentEnvironments": [
-        "local",
-        "test",
-        "staging",
-        "production"
-      ]
+      "deploymentEnvironments": ["local", "test", "staging", "production"]
     },
     "boundaries": {
       "publicExportsOnly": true,
       "deepImportsAllowed": false,
-      "allowedConsumers": [
-        "feature",
-        "application"
-      ],
-      "forbiddenConsumers": [
-        "external"
-      ]
+      "allowedConsumers": ["feature", "application"],
+      "forbiddenConsumers": ["external"]
     },
     "relations": {
       "dependsOn": [],
@@ -394,16 +379,9 @@ Initial example:
         "Expose supported public exports",
         "Avoid infrastructure coupling"
       ],
-      "nonResponsibilities": [
-        "Do not own persistence adapters",
-        "Do not own UI rendering"
-      ],
-      "usage": [
-        "Import only through package public exports."
-      ],
-      "operationalNotes": [
-        "Review quarterly while active."
-      ]
+      "nonResponsibilities": ["Do not own persistence adapters", "Do not own UI rendering"],
+      "usage": ["Import only through package public exports."],
+      "operationalNotes": ["Review quarterly while active."]
     }
   }
 }
@@ -448,19 +426,19 @@ architecture.deployment
 
 The initial vocabulary alignment is:
 
-| Field group | Vocabulary source | Intent |
-|---|---|---|
-| package.json standard fields | npm / Node.js package manifest | Package identity, version, description, module type, exports, dependencies |
-| architecture.component | Backstage + C4 + ADR-0002 | Component, system, domain, bounded context, owner |
-| architecture.lifecycle | ADR-0004 + Backstage projection | Source lifecycle model plus catalog-compatible lifecycle projection |
-| architecture.governance | ADR process + package promotion governance | Decision references, semver policy, change control, promotion eligibility |
-| architecture.runtime | OpenTelemetry-style runtime vocabulary | Runtime classification and service naming hints |
-| architecture.boundaries | ADR-0001 + ADR-0003 + Nx-style enforcement | Public exports, deep imports, allowed consumers, forbidden consumers |
-| architecture.relations | Backstage relationship vocabulary | dependsOn, providesApis, consumesApis |
-| architecture.tags | Nx-style tag vocabulary | Generated enforcement tags and dependency constraints |
-| architecture.readme | Generated documentation projection | Human-readable package documentation from metadata |
-| architecture.deployment | Kubernetes-compatible vocabulary, future | Deployment label and workload projection |
-| architecture.supplyChain | SPDX-compatible vocabulary, future | SBOM, licence, provenance, and supply-chain projection |
+| Field group                  | Vocabulary source                          | Intent                                                                     |
+| ---------------------------- | ------------------------------------------ | -------------------------------------------------------------------------- |
+| package.json standard fields | npm / Node.js package manifest             | Package identity, version, description, module type, exports, dependencies |
+| architecture.component       | Backstage + C4 + ADR-0002                  | Component, system, domain, bounded context, owner                          |
+| architecture.lifecycle       | ADR-0004 + Backstage projection            | Source lifecycle model plus catalog-compatible lifecycle projection        |
+| architecture.governance      | ADR process + package promotion governance | Decision references, semver policy, change control, promotion eligibility  |
+| architecture.runtime         | OpenTelemetry-style runtime vocabulary     | Runtime classification and service naming hints                            |
+| architecture.boundaries      | ADR-0001 + ADR-0003 + Nx-style enforcement | Public exports, deep imports, allowed consumers, forbidden consumers       |
+| architecture.relations       | Backstage relationship vocabulary          | dependsOn, providesApis, consumesApis                                      |
+| architecture.tags            | Nx-style tag vocabulary                    | Generated enforcement tags and dependency constraints                      |
+| architecture.readme          | Generated documentation projection         | Human-readable package documentation from metadata                         |
+| architecture.deployment      | Kubernetes-compatible vocabulary, future   | Deployment label and workload projection                                   |
+| architecture.supplyChain     | SPDX-compatible vocabulary, future         | SBOM, licence, provenance, and supply-chain projection                     |
 
 Allowed `architecture.component.type` values should initially include:
 

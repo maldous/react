@@ -23,11 +23,7 @@ function parseTsConfigFile(configPath) {
   if (readResult.error) {
     return { compilerOptions: {}, rawPaths: {}, configPath: null };
   }
-  const parsed = ts.parseJsonConfigFileContent(
-    readResult.config,
-    ts.sys,
-    path.dirname(configPath)
-  );
+  const parsed = ts.parseJsonConfigFileContent(readResult.config, ts.sys, path.dirname(configPath));
   const rawPaths = readResult.config?.compilerOptions?.paths ?? {};
   return { compilerOptions: parsed.options, rawPaths, configPath };
 }

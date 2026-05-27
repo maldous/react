@@ -41,7 +41,6 @@ For external compatibility, ADR-0005 may define projections from `experimental`,
 
 Those projections must not replace ADR-0004's source lifecycle model.
 
-
 Vocabulary clarification:
 
 ```text
@@ -64,8 +63,6 @@ visibility
 ADR-0004 lifecycle stages are the source vocabulary.
 
 ADR-0005 may define generated catalog lifecycle or visibility projections, but those projections must not replace the ADR-0004 lifecycle model.
-
-
 
 The platform needs clear package lifecycle classes that define how packages are owned, changed, tested, versioned, supported, and promoted over time.
 

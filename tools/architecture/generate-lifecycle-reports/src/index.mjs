@@ -10,7 +10,7 @@ function parseArgs(argv) {
     format: "text",
     noReports: false,
     write: false,
-    roots: []
+    roots: [],
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -59,8 +59,18 @@ const OPTIONS = parseArgs(process.argv.slice(2));
 const REPO_ROOT = findRepoRoot(OPTIONS.root ? path.resolve(OPTIONS.root) : process.cwd());
 const TOOL_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const TOOL_PACKAGE_PATH = path.join(TOOL_ROOT, "package.json");
-const GOVERNANCE_JSON = path.join(REPO_ROOT, "reports", "lifecycle", "lifecycle-governance-report.json");
-const GOVERNANCE_MD = path.join(REPO_ROOT, "reports", "lifecycle", "lifecycle-governance-report.md");
+const GOVERNANCE_JSON = path.join(
+  REPO_ROOT,
+  "reports",
+  "lifecycle",
+  "lifecycle-governance-report.json"
+);
+const GOVERNANCE_MD = path.join(
+  REPO_ROOT,
+  "reports",
+  "lifecycle",
+  "lifecycle-governance-report.md"
+);
 const TOOLING_REPORT_DIR = path.join(REPO_ROOT, "reports", "tooling", "generate-lifecycle-reports");
 
 function findRepoRoot(startDir) {
@@ -133,7 +143,7 @@ function packageRecord(packageFile) {
     class: a.lifecycle?.class ?? "(missing)",
     reviewCadence: a.lifecycle?.reviewCadence ?? "(missing)",
     promotionEligible: a.governance?.promotionEligible ?? false,
-    changeControl: a.governance?.changeControl ?? "(missing)"
+    changeControl: a.governance?.changeControl ?? "(missing)",
   };
 }
 
@@ -161,16 +171,27 @@ function buildGovernanceReport(records, generatedAt) {
     totalPackages: records.length,
     promotionEligiblePackages: records
       .filter((r) => r.promotionEligible)
-      .map((r) => ({ name: r.name, class: r.class, owner: r.owner, changeControl: r.changeControl })),
+      .map((r) => ({
+        name: r.name,
+        class: r.class,
+        owner: r.owner,
+        changeControl: r.changeControl,
+      })),
     maintenancePackages: records.filter((r) => r.stage === "maintenance").map(miniRecord),
     deprecatedPackages: records.filter((r) => r.stage === "deprecated").map(miniRecord),
     externalPackages: records.filter((r) => r.stage === "external").map(miniRecord),
     byDomain: Object.fromEntries(
-      Object.entries(byDomainRaw).map(([domain, recs]) => [domain, recs.map((r) => ({ name: r.name, class: r.class }))])
+      Object.entries(byDomainRaw).map(([domain, recs]) => [
+        domain,
+        recs.map((r) => ({ name: r.name, class: r.class })),
+      ])
     ),
     byOwner: Object.fromEntries(
-      Object.entries(byOwnerRaw).map(([owner, recs]) => [owner, recs.map((r) => ({ name: r.name, class: r.class }))])
-    )
+      Object.entries(byOwnerRaw).map(([owner, recs]) => [
+        owner,
+        recs.map((r) => ({ name: r.name, class: r.class })),
+      ])
+    ),
   };
 }
 
@@ -200,15 +221,14 @@ function renderGovernanceMarkdown(report) {
     `Maintenance: ${report.maintenancePackages.length}`,
     `Deprecated: ${report.deprecatedPackages.length}`,
     `External: ${report.externalPackages.length}`,
-    "```"
+    "```",
   ];
 
   if (report.promotionEligiblePackages.length > 0) {
     lines.push("", "## Promotion eligible packages", "");
-    lines.push(table(
-      report.promotionEligiblePackages,
-      ["name", "class", "owner", "changeControl"]
-    ));
+    lines.push(
+      table(report.promotionEligiblePackages, ["name", "class", "owner", "changeControl"])
+    );
   }
 
   if (report.maintenancePackages.length > 0) {
@@ -247,7 +267,7 @@ function buildOutputs(records, generatedAt) {
   const report = buildGovernanceReport(records, generatedAt);
   return {
     [GOVERNANCE_JSON]: `${JSON.stringify(report, null, 2)}\n`,
-    [GOVERNANCE_MD]: renderGovernanceMarkdown(report)
+    [GOVERNANCE_MD]: renderGovernanceMarkdown(report),
   };
 }
 
@@ -257,7 +277,7 @@ function compareOutputs(outputs) {
     return {
       path: path.relative(REPO_ROOT, filePath),
       status: current === expected ? "fresh" : "stale",
-      changed: current !== expected
+      changed: current !== expected,
     };
   });
 }
@@ -287,7 +307,11 @@ function writeSelfEvidence({ startedAt, finishedAt, roots, results, exitCode }) 
   const evidence = {
     toolName: "generate-lifecycle-reports",
     toolVersion: readJson(TOOL_PACKAGE_PATH).version ?? "0.0.0",
-    command: ["node", "tools/architecture/generate-lifecycle-reports/src/index.mjs", ...process.argv.slice(2)],
+    command: [
+      "node",
+      "tools/architecture/generate-lifecycle-reports/src/index.mjs",
+      ...process.argv.slice(2),
+    ],
     mode: OPTIONS.write ? "write" : "check",
     root: REPO_ROOT,
     startedAt,
@@ -299,15 +323,19 @@ function writeSelfEvidence({ startedAt, finishedAt, roots, results, exitCode }) 
       "lifecycle governance report JSON output",
       "lifecycle governance report Markdown output",
       "check mode reports stale reports without writing",
-      "write mode writes only reports/lifecycle/lifecycle-governance-report.*"
+      "write mode writes only reports/lifecycle/lifecycle-governance-report.*",
     ],
     checksPassed: results.filter((r) => r.status === "fresh" || OPTIONS.write).length,
     checksFailed: OPTIONS.write ? 0 : results.filter((r) => r.status === "stale").length,
     warnings: [],
-    errors: OPTIONS.write ? [] : results.filter((r) => r.status === "stale").map((r) => ({ path: r.path, message: "generated report is stale or missing" })),
+    errors: OPTIONS.write
+      ? []
+      : results
+          .filter((r) => r.status === "stale")
+          .map((r) => ({ path: r.path, message: "generated report is stale or missing" })),
     dependencySteps: [],
     gitTreatment: "reports/** ignored by default",
-    exitCode
+    exitCode,
   };
 
   fs.writeFileSync(evidencePath, `${JSON.stringify(evidence, null, 2)}\n`, "utf8");
@@ -316,11 +344,13 @@ function writeSelfEvidence({ startedAt, finishedAt, roots, results, exitCode }) 
 
 function main() {
   const startedAt = new Date().toISOString();
-  const generatedAt = process.env.ARCHITECTURE_REPORT_GENERATED_AT ??
+  const generatedAt =
+    process.env.ARCHITECTURE_REPORT_GENERATED_AT ??
     (OPTIONS.write ? new Date().toISOString() : existingGeneratedAt()) ??
     new Date().toISOString();
 
-  const roots = OPTIONS.roots.length > 0 ? OPTIONS.roots : ["apps", "packages", "tools/architecture"];
+  const roots =
+    OPTIONS.roots.length > 0 ? OPTIONS.roots : ["apps", "packages", "tools/architecture"];
   const packageFiles = listPackageJsonFiles(roots);
   const records = packageFiles.map(packageRecord).filter(Boolean);
   const outputs = buildOutputs(records, generatedAt);
@@ -343,7 +373,7 @@ function main() {
     stale,
     written: OPTIONS.write ? Object.keys(outputs).length : 0,
     selfEvidencePath: selfEvidencePath ? path.relative(REPO_ROOT, selfEvidencePath) : null,
-    exitCode
+    exitCode,
   };
 
   if (OPTIONS.format === "json") {
@@ -365,7 +395,13 @@ try {
   main();
 } catch (error) {
   if (OPTIONS.format === "json") {
-    console.log(JSON.stringify({ toolName: "generate-lifecycle-reports", error: error.message, exitCode: 1 }, null, 2));
+    console.log(
+      JSON.stringify(
+        { toolName: "generate-lifecycle-reports", error: error.message, exitCode: 1 },
+        null,
+        2
+      )
+    );
   } else {
     console.error(error.message);
   }

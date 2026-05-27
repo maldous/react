@@ -13,7 +13,7 @@ import {
   buildMarkdownReport,
   writeReports,
   writeCommittedEvidence,
-  writeSelfEvidence
+  writeSelfEvidence,
 } from "./reporter.mjs";
 
 function parseArgs(argv) {
@@ -24,7 +24,7 @@ function parseArgs(argv) {
     write: false,
     strict: false,
     tsconfig: null,
-    roots: []
+    roots: [],
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -79,7 +79,6 @@ function parseArgs(argv) {
   return options;
 }
 
-
 function findRepoRoot(startDir) {
   let dir = path.resolve(startDir);
   while (true) {
@@ -96,10 +95,12 @@ function findRepoRoot(startDir) {
 
 function readToolVersion(repoRoot) {
   try {
-    const pkg = JSON.parse(fs.readFileSync(
-      path.join(repoRoot, "tools", "architecture", "validate-source-imports", "package.json"),
-      "utf8"
-    ));
+    const pkg = JSON.parse(
+      fs.readFileSync(
+        path.join(repoRoot, "tools", "architecture", "validate-source-imports", "package.json"),
+        "utf8"
+      )
+    );
     return pkg.version ?? "0.0.0";
   } catch {
     return "0.0.0";
@@ -165,7 +166,9 @@ function buildPackageGraph(files) {
 }
 
 function detectCycles(graph) {
-  const WHITE = 0, GRAY = 1, BLACK = 2;
+  const WHITE = 0,
+    GRAY = 1,
+    BLACK = 2;
   const color = new Map();
   for (const node of graph.keys()) color.set(node, WHITE);
   const cycles = [];
@@ -173,7 +176,7 @@ function detectCycles(graph) {
   function dfs(node, stack) {
     color.set(node, GRAY);
     stack.push(node);
-    for (const dep of (graph.get(node) ?? new Set())) {
+    for (const dep of graph.get(node) ?? new Set()) {
       if (!graph.has(dep)) continue;
       const c = color.get(dep) ?? WHITE;
       if (c === GRAY) {
@@ -205,7 +208,7 @@ function checkCycleViolations(files, packageGraph) {
       rule: "no-package-cycle",
       message: `Package cycle detected: ${cycle.join(" → ")}`,
       resolvedFile: null,
-      resolvedPackage: null
+      resolvedPackage: null,
     };
   });
 }
@@ -225,7 +228,7 @@ function checkViolations(files, { strict = false, packageMap = null, resolver = 
           rule: "no-computed-dynamic-import",
           message: `${fileInfo.packageName}: computed dynamic import at line ${ci.line} cannot be statically verified`,
           resolvedFile: null,
-          resolvedPackage: null
+          resolvedPackage: null,
         });
       }
     }
@@ -249,7 +252,7 @@ function checkViolations(files, { strict = false, packageMap = null, resolver = 
             rule: rule.id,
             message: rule.message(fileInfo.packageName, specifier),
             resolvedFile: edge?.resolvedFile ?? null,
-            resolvedPackage: edge?.resolvedPackage ?? null
+            resolvedPackage: edge?.resolvedPackage ?? null,
           });
         }
       }
@@ -265,14 +268,17 @@ function checkViolations(files, { strict = false, packageMap = null, resolver = 
               rule: rule.id,
               message: rule.message(fileInfo.packageName, specifier),
               resolvedFile: edge?.resolvedFile ?? null,
-              resolvedPackage: edge?.resolvedPackage ?? null
+              resolvedPackage: edge?.resolvedPackage ?? null,
             });
           }
         }
       }
 
       // no-unexported-subpath-import: @platform/x/subpath not in package exports
-      if (specifier.startsWith("@platform/") && specifier.slice("@platform/".length).includes("/")) {
+      if (
+        specifier.startsWith("@platform/") &&
+        specifier.slice("@platform/".length).includes("/")
+      ) {
         const pkgName = "@platform/" + specifier.slice("@platform/".length).split("/")[0];
         const subpath = "." + specifier.slice(pkgName.length);
         const pkgInfo = packageMap?.get(pkgName);
@@ -286,7 +292,7 @@ function checkViolations(files, { strict = false, packageMap = null, resolver = 
               rule: "no-unexported-subpath-import",
               message: `${fileInfo.packageName} imports unexported subpath ${specifier} (not in ${pkgName} exports)`,
               resolvedFile: edge?.resolvedFile ?? null,
-              resolvedPackage: edge?.resolvedPackage ?? null
+              resolvedPackage: edge?.resolvedPackage ?? null,
             });
           }
         }
@@ -294,11 +300,17 @@ function checkViolations(files, { strict = false, packageMap = null, resolver = 
 
       // no-unexported-package-entry: bare @platform/* or @architecture/* that exists in packageMap
       // but the resolver cannot find its entry point (null entryPoint in packageMap)
-      const isBareInternal = (
-        (specifier.startsWith("@platform/") && !specifier.slice("@platform/".length).includes("/")) ||
-        (specifier.startsWith("@architecture/") && !specifier.slice("@architecture/".length).includes("/"))
-      );
-      if (isBareInternal && packageMap !== null && packageMap.has(specifier) && edge?.resolutionStatus === "unresolved") {
+      const isBareInternal =
+        (specifier.startsWith("@platform/") &&
+          !specifier.slice("@platform/".length).includes("/")) ||
+        (specifier.startsWith("@architecture/") &&
+          !specifier.slice("@architecture/".length).includes("/"));
+      if (
+        isBareInternal &&
+        packageMap !== null &&
+        packageMap.has(specifier) &&
+        edge?.resolutionStatus === "unresolved"
+      ) {
         violations.push({
           file: fileInfo.file,
           packageName: fileInfo.packageName,
@@ -306,7 +318,7 @@ function checkViolations(files, { strict = false, packageMap = null, resolver = 
           rule: "no-unexported-package-entry",
           message: `${fileInfo.packageName} imports ${specifier} which has no resolvable package entry point`,
           resolvedFile: null,
-          resolvedPackage: null
+          resolvedPackage: null,
         });
       }
 
@@ -315,7 +327,8 @@ function checkViolations(files, { strict = false, packageMap = null, resolver = 
       // For alias imports that resolve to a @platform/* package: use resolvedPackage.
       {
         let targetPackage = null;
-        const isBarePlatform = specifier.startsWith("@platform/") && !specifier.slice("@platform/".length).includes("/");
+        const isBarePlatform =
+          specifier.startsWith("@platform/") && !specifier.slice("@platform/".length).includes("/");
         if (isBarePlatform) {
           targetPackage = edge?.resolvedPackage ?? specifier;
         } else if (
@@ -338,7 +351,7 @@ function checkViolations(files, { strict = false, packageMap = null, resolver = 
             rule: "no-unlisted-platform-import",
             message: `${fileInfo.packageName} must not import ${targetPackage} (not in architecture.relations.dependsOn)`,
             resolvedFile: edge?.resolvedFile ?? null,
-            resolvedPackage: edge?.resolvedPackage ?? null
+            resolvedPackage: edge?.resolvedPackage ?? null,
           });
         }
       }
@@ -346,8 +359,7 @@ function checkViolations(files, { strict = false, packageMap = null, resolver = 
       // Strict: @platform/* and @architecture/* bare imports must resolve to a known package
       if (strict && packageMap !== null) {
         const isPlatform =
-          specifier.startsWith("@platform/") &&
-          !specifier.slice("@platform/".length).includes("/");
+          specifier.startsWith("@platform/") && !specifier.slice("@platform/".length).includes("/");
         const isArchitecture =
           specifier.startsWith("@architecture/") &&
           !specifier.slice("@architecture/".length).includes("/");
@@ -359,7 +371,7 @@ function checkViolations(files, { strict = false, packageMap = null, resolver = 
             rule: "no-unresolved-platform-import",
             message: `${fileInfo.packageName} imports ${specifier} which does not exist in the repository`,
             resolvedFile: null,
-            resolvedPackage: null
+            resolvedPackage: null,
           });
         }
       }
@@ -381,7 +393,7 @@ function checkViolations(files, { strict = false, packageMap = null, resolver = 
             rule: "no-unresolved-alias",
             message: `${fileInfo.packageName}: tsconfig path alias ${specifier} does not resolve to an existing file`,
             resolvedFile: null,
-            resolvedPackage: null
+            resolvedPackage: null,
           });
         }
       }
@@ -399,7 +411,7 @@ function checkViolations(files, { strict = false, packageMap = null, resolver = 
           rule: "no-unresolved-relative-import",
           message: `${fileInfo.packageName}: relative import ${specifier} does not resolve to an existing file`,
           resolvedFile: null,
-          resolvedPackage: null
+          resolvedPackage: null,
         });
       }
     }
@@ -439,7 +451,7 @@ function computeEdgeStats(files) {
     totalInternalEdges,
     totalExternalEdges,
     totalTypeOnlyEdges,
-    totalDynamicImports
+    totalDynamicImports,
   };
 }
 
@@ -492,7 +504,7 @@ function main() {
   const edgeStats = computeEdgeStats(files);
   const compilerOptionsSummary = {
     moduleResolution: "Bundler",
-    pathAliasCount: resolver.tsConfigPaths.length
+    pathAliasCount: resolver.tsConfigPaths.length,
   };
 
   const jsonReport = buildJsonReport({
@@ -506,7 +518,7 @@ function main() {
     tsconfigPath: tsConfig.configPath ?? null,
     compilerOptionsSummary,
     edgeStats,
-    packageGraph
+    packageGraph,
   });
   const markdownReport = buildMarkdownReport(jsonReport);
 
@@ -519,7 +531,12 @@ function main() {
   }
 
   if (OPTIONS.write) {
-    const { jsonPath, mdPath } = writeCommittedEvidence(jsonReport, REPO_ROOT, toolVersion, scanRootArgs);
+    const { jsonPath, mdPath } = writeCommittedEvidence(
+      jsonReport,
+      REPO_ROOT,
+      toolVersion,
+      scanRootArgs
+    );
     outputPaths.push({ label: "Evidence JSON", filePath: jsonPath });
     outputPaths.push({ label: "Evidence Markdown", filePath: mdPath });
   }
@@ -529,7 +546,11 @@ function main() {
     selfEvidencePath = writeSelfEvidence({
       toolName: "validate-source-imports",
       toolVersion,
-      command: ["node", "tools/architecture/validate-source-imports/src/index.mjs", ...process.argv.slice(2)],
+      command: [
+        "node",
+        "tools/architecture/validate-source-imports/src/index.mjs",
+        ...process.argv.slice(2),
+      ],
       mode: OPTIONS.write ? "write" : "check",
       repoRoot: REPO_ROOT,
       startedAt,
@@ -541,22 +562,28 @@ function main() {
       checksFailed: jsonReport.failed,
       warnings,
       exitCode,
-      toolingReportDir: TOOLING_REPORT_DIR
+      toolingReportDir: TOOLING_REPORT_DIR,
     });
   }
 
   if (OPTIONS.format === "json") {
-    console.log(JSON.stringify({
-      toolName: "validate-source-imports",
-      totalFiles: jsonReport.totalFiles,
-      totalImports: jsonReport.totalImports,
-      passed: jsonReport.passed,
-      failed: jsonReport.failed,
-      violations: jsonReport.violations,
-      outputPaths: outputPaths.map((o) => path.relative(REPO_ROOT, o.filePath)),
-      selfEvidencePath: selfEvidencePath ? path.relative(REPO_ROOT, selfEvidencePath) : null,
-      exitCode
-    }, null, 2));
+    console.log(
+      JSON.stringify(
+        {
+          toolName: "validate-source-imports",
+          totalFiles: jsonReport.totalFiles,
+          totalImports: jsonReport.totalImports,
+          passed: jsonReport.passed,
+          failed: jsonReport.failed,
+          violations: jsonReport.violations,
+          outputPaths: outputPaths.map((o) => path.relative(REPO_ROOT, o.filePath)),
+          selfEvidencePath: selfEvidencePath ? path.relative(REPO_ROOT, selfEvidencePath) : null,
+          exitCode,
+        },
+        null,
+        2
+      )
+    );
   } else {
     printText(jsonReport, outputPaths, selfEvidencePath, REPO_ROOT);
   }
@@ -567,8 +594,17 @@ function main() {
 try {
   main();
 } catch (error) {
-  if (process.argv.includes("--format") && process.argv[process.argv.indexOf("--format") + 1] === "json") {
-    console.log(JSON.stringify({ toolName: "validate-source-imports", error: error.message, exitCode: 1 }, null, 2));
+  if (
+    process.argv.includes("--format") &&
+    process.argv[process.argv.indexOf("--format") + 1] === "json"
+  ) {
+    console.log(
+      JSON.stringify(
+        { toolName: "validate-source-imports", error: error.message, exitCode: 1 },
+        null,
+        2
+      )
+    );
   } else {
     console.error(error.message);
   }

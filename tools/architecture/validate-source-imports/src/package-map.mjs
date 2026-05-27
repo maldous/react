@@ -41,7 +41,12 @@ export function buildPackageMap(repoRoot) {
 
         // Resolve entry point
         let entryPoint = null;
-        for (const candidate of ["src/index.ts", "src/index.tsx", "src/index.js", "src/index.jsx"]) {
+        for (const candidate of [
+          "src/index.ts",
+          "src/index.tsx",
+          "src/index.js",
+          "src/index.jsx",
+        ]) {
           const full = path.join(packagePath, candidate);
           if (fs.existsSync(full)) {
             entryPoint = full;

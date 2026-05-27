@@ -94,10 +94,7 @@
       "id": "no-adapters-in-access-control",
       "appliesTo": ["@platform/access-control"],
       "forbiddenPrefixes": [],
-      "forbiddenExact": [
-        "@platform/adapters-postgres",
-        "@platform/adapters-clickhouse"
-      ],
+      "forbiddenExact": ["@platform/adapters-postgres", "@platform/adapters-clickhouse"],
       "rationale": "Access-control does not own authentication integration or storage runtime."
     },
     {
@@ -159,10 +156,7 @@
       "id": "no-adapters-in-feature",
       "appliesTo": ["@platform/feature-workflow"],
       "forbiddenPrefixes": [],
-      "forbiddenExact": [
-        "@platform/adapters-postgres",
-        "@platform/adapters-clickhouse"
-      ],
+      "forbiddenExact": ["@platform/adapters-postgres", "@platform/adapters-clickhouse"],
       "rationale": "Feature packages compose workflows; they do not own persistence."
     },
     {

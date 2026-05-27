@@ -758,7 +758,6 @@ This projection must update automatically when `architecture.lifecycle.stage` ch
 
 The catalog lifecycle projection must not replace ADR-0004 lifecycle stages.
 
-
 ## Lifecycle evidence bundle
 
 Each transition must produce a lifecycle evidence bundle.

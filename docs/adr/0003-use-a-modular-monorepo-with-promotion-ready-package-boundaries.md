@@ -62,7 +62,6 @@ This does not make Backstage, C4, Nx, or any package manager the source of truth
 
 It means the package model should be easy to project into those ecosystems without translation-heavy naming.
 
-
 Vocabulary clarification:
 
 ```text
@@ -91,8 +90,6 @@ deep import
 ADR-0003 uses `package` when describing source-control and package-manager boundaries.
 
 ADR-0003 uses `module` only for internal implementation structure.
-
-
 
 The main risk is scattering related code across separate repositories too early or placing everything in one unstructured application folder.
 
@@ -315,7 +312,6 @@ docs/
 
 The exact package names may change after context mapping and the first vertical slice.
 
-
 ## Rationale
 
 A modular monorepo with promotion-ready package boundaries best supports the chosen modular hexagonal architecture and bounded-context model.
@@ -341,7 +337,6 @@ Promote only after stability is proven.
 Use tooling to prevent monorepo coupling.
 Use versioning discipline for packages that behave like external products.
 ```
-
 
 ## Consequences
 
@@ -385,7 +380,6 @@ Future consequences:
 - Some packages may be published as external distributions.
 - Some packages may be extracted into polyrepos if team ownership, deployment, security, or lifecycle needs justify it.
 - Promotion should be a deliberate decision, not an accidental consequence of repository growth.
-
 
 ## AI-assistance record
 
@@ -476,7 +470,6 @@ docs/adr/ACTION-REGISTER.md
 ```
 
 This avoids duplicate sources of truth for action status.
-
 
 ## Review date
 

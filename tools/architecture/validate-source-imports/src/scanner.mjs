@@ -41,12 +41,16 @@ function isTestFile(filePath, packageRoot) {
 function getScriptKind(filePath) {
   const ext = path.extname(filePath);
   switch (ext) {
-    case ".ts": return ts.ScriptKind.TS;
-    case ".tsx": return ts.ScriptKind.TSX;
+    case ".ts":
+      return ts.ScriptKind.TS;
+    case ".tsx":
+      return ts.ScriptKind.TSX;
     case ".js":
     case ".mjs":
-    case ".cjs": return ts.ScriptKind.JS;
-    default: return ts.ScriptKind.Unknown;
+    case ".cjs":
+      return ts.ScriptKind.JS;
+    default:
+      return ts.ScriptKind.Unknown;
   }
 }
 
@@ -111,8 +115,7 @@ function extractImports(source, filePath) {
     // import("specifier") dynamic import and require("specifier")
     else if (ts.isCallExpression(node)) {
       const isImport = node.expression.kind === ts.SyntaxKind.ImportKeyword;
-      const isRequire =
-        ts.isIdentifier(node.expression) && node.expression.text === "require";
+      const isRequire = ts.isIdentifier(node.expression) && node.expression.text === "require";
       if ((isImport || isRequire) && node.arguments.length >= 1) {
         const arg = node.arguments[0];
         if (ts.isStringLiteral(arg)) {
@@ -132,7 +135,7 @@ function extractImports(source, filePath) {
   return {
     imports: [...seen],
     importEdges,
-    computedImports
+    computedImports,
   };
 }
 
@@ -200,7 +203,7 @@ export function scanRoots(roots, repoRoot) {
       isTestFile: isTest,
       imports,
       importEdges,
-      computedImports
+      computedImports,
     });
   }
 }

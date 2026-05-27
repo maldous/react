@@ -31,11 +31,7 @@ export function buildModuleResolver({ repoRoot, packageMap, tsConfig }) {
     paths: mergedPaths,
   };
 
-  const resolutionCache = ts.createModuleResolutionCache(
-    repoRoot,
-    (x) => x,
-    compilerOptions
-  );
+  const resolutionCache = ts.createModuleResolutionCache(repoRoot, (x) => x, compilerOptions);
 
   const tsConfigPaths = Object.keys(tsConfig.rawPaths);
 

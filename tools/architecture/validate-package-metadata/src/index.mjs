@@ -11,7 +11,7 @@ function parseArgs(argv) {
     noReports: false,
     strict: false,
     allowMissingAjv: false,
-    roots: []
+    roots: [],
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -66,7 +66,12 @@ function parseArgs(argv) {
 
 const OPTIONS = parseArgs(process.argv.slice(2));
 const REPO_ROOT = findRepoRoot(OPTIONS.root ? path.resolve(OPTIONS.root) : process.cwd());
-const SCHEMA_PATH = path.join(REPO_ROOT, "docs", "schemas", "package-json-architecture.schema.json");
+const SCHEMA_PATH = path.join(
+  REPO_ROOT,
+  "docs",
+  "schemas",
+  "package-json-architecture.schema.json"
+);
 const REPORT_DIR = path.join(REPO_ROOT, "reports", "validation");
 const TOOLING_REPORT_DIR = path.join(REPO_ROOT, "reports", "tooling", "validate-package-metadata");
 const JSON_REPORT = path.join(REPORT_DIR, "package-metadata-validation.json");
@@ -99,9 +104,18 @@ async function loadAjv() {
   const candidates = [
     () => import("ajv/dist/2020"),
     () => {
-      const local = path.join(REPO_ROOT, "tools", "architecture", "validate-package-metadata", "node_modules", "ajv", "dist", "2020.js");
+      const local = path.join(
+        REPO_ROOT,
+        "tools",
+        "architecture",
+        "validate-package-metadata",
+        "node_modules",
+        "ajv",
+        "dist",
+        "2020.js"
+      );
       return fs.existsSync(local) ? import(pathToFileURL(local).href) : Promise.reject();
-    }
+    },
   ];
   for (const load of candidates) {
     try {
@@ -164,7 +178,9 @@ function enumError(pathLabel, value, allowed) {
 }
 
 function formatAjvError(error) {
-  const pathLabel = error.instancePath ? error.instancePath.replaceAll("/", ".").replace(/^\./, "") : "(root)";
+  const pathLabel = error.instancePath
+    ? error.instancePath.replaceAll("/", ".").replace(/^\./, "")
+    : "(root)";
   return `schema:${pathLabel} ${error.message}`;
 }
 
@@ -188,7 +204,15 @@ function validatePackage(packageJson, packagePath, schemaValidator) {
     }
   }
 
-  for (const field of ["name", "version", "description", "private", "type", "exports", "architecture"]) {
+  for (const field of [
+    "name",
+    "version",
+    "description",
+    "private",
+    "type",
+    "exports",
+    "architecture",
+  ]) {
     if (!(field in packageJson)) {
       errors.push(`Missing required package field: ${field}`);
     }
@@ -197,10 +221,26 @@ function validatePackage(packageJson, packagePath, schemaValidator) {
   const architecture = packageJson.architecture;
   if (!isObject(architecture)) {
     errors.push("Missing or invalid architecture object");
-    return { packagePath, packageName: packageJson.name ?? "(unknown)", valid: false, errors, warnings };
+    return {
+      packagePath,
+      packageName: packageJson.name ?? "(unknown)",
+      valid: false,
+      errors,
+      warnings,
+    };
   }
 
-  for (const group of ["schemaVersion", "component", "lifecycle", "governance", "runtime", "boundaries", "relations", "tags", "readme"]) {
+  for (const group of [
+    "schemaVersion",
+    "component",
+    "lifecycle",
+    "governance",
+    "runtime",
+    "boundaries",
+    "relations",
+    "tags",
+    "readme",
+  ]) {
     if (!(group in architecture)) {
       errors.push(`Missing architecture.${group}`);
     }
@@ -225,7 +265,7 @@ function validatePackage(packageJson, packagePath, schemaValidator) {
     packageName: packageJson.name ?? "(unknown)",
     valid: errors.length === 0,
     errors,
-    warnings
+    warnings,
   };
 }
 
@@ -234,19 +274,27 @@ function validateLifecycleGovernanceConsistency(lifecycle, governance, errors) {
 
   if (lifecycle.stage === "deprecated") {
     if (governance.promotionEligible === true) {
-      errors.push("architecture.governance.promotionEligible must be false for deprecated lifecycle stage");
+      errors.push(
+        "architecture.governance.promotionEligible must be false for deprecated lifecycle stage"
+      );
     }
     if (governance.changeControl !== "deprecation-review") {
-      errors.push("architecture.governance.changeControl must be deprecation-review for deprecated lifecycle stage");
+      errors.push(
+        "architecture.governance.changeControl must be deprecation-review for deprecated lifecycle stage"
+      );
     }
     if (governance.semverPolicy !== "deprecated") {
-      errors.push("architecture.governance.semverPolicy must be deprecated for deprecated lifecycle stage");
+      errors.push(
+        "architecture.governance.semverPolicy must be deprecated for deprecated lifecycle stage"
+      );
     }
   }
 
   if (lifecycle.stage === "external") {
     if (!["semver-required", "external-governed"].includes(governance.semverPolicy)) {
-      errors.push("architecture.governance.semverPolicy must be semver-required or external-governed for external lifecycle stage");
+      errors.push(
+        "architecture.governance.semverPolicy must be semver-required or external-governed for external lifecycle stage"
+      );
     }
   }
 }
@@ -264,7 +312,14 @@ function validateComponent(component, errors) {
   }
 
   const typeError = enumError("architecture.component.type", component.type, [
-    "application", "library", "service", "api", "worker", "tool", "test", "documentation"
+    "application",
+    "library",
+    "service",
+    "api",
+    "worker",
+    "tool",
+    "test",
+    "documentation",
   ]);
   if (typeError) errors.push(typeError);
 }
@@ -275,7 +330,15 @@ function validateLifecycle(lifecycle, errors) {
     return;
   }
 
-  const stages = ["experimental", "candidate", "active", "stable", "maintenance", "external", "deprecated"];
+  const stages = [
+    "experimental",
+    "candidate",
+    "active",
+    "stable",
+    "maintenance",
+    "external",
+    "deprecated",
+  ];
   const roles = ["feature", "platform", "contract", "adapter", "tooling", "test"];
 
   const stageError = enumError("architecture.lifecycle.stage", lifecycle.stage, stages);
@@ -296,7 +359,9 @@ function validateLifecycle(lifecycle, errors) {
       : "production";
 
   if (lifecycle.catalogLifecycle !== expectedCatalogLifecycle) {
-    errors.push(`architecture.lifecycle.catalogLifecycle must equal ${expectedCatalogLifecycle} for stage ${lifecycle.stage}`);
+    errors.push(
+      `architecture.lifecycle.catalogLifecycle must equal ${expectedCatalogLifecycle} for stage ${lifecycle.stage}`
+    );
   }
 
   if (lifecycle.stage === "external" && lifecycle.visibility !== "external") {
@@ -305,10 +370,14 @@ function validateLifecycle(lifecycle, errors) {
 
   if (lifecycle.stage === "deprecated") {
     if (lifecycle.visibility !== "deprecated") {
-      errors.push("architecture.lifecycle.visibility must be deprecated for deprecated lifecycle stage");
+      errors.push(
+        "architecture.lifecycle.visibility must be deprecated for deprecated lifecycle stage"
+      );
     }
     if (!["deprecated", "unsupported"].includes(lifecycle.supportLevel)) {
-      errors.push("architecture.lifecycle.supportLevel must be deprecated or unsupported for deprecated lifecycle stage");
+      errors.push(
+        "architecture.lifecycle.supportLevel must be deprecated or unsupported for deprecated lifecycle stage"
+      );
     }
   }
 }
@@ -330,13 +399,27 @@ function validateGovernance(governance, errors) {
   }
 
   const semverError = enumError("architecture.governance.semverPolicy", governance.semverPolicy, [
-    "none", "internal-traceable", "compatibility-reviewed", "semver-required", "external-governed", "deprecated"
+    "none",
+    "internal-traceable",
+    "compatibility-reviewed",
+    "semver-required",
+    "external-governed",
+    "deprecated",
   ]);
   if (semverError) errors.push(semverError);
 
-  const changeControlError = enumError("architecture.governance.changeControl", governance.changeControl, [
-    "none", "owner-review", "architecture-review", "security-review", "release-review", "deprecation-review"
-  ]);
+  const changeControlError = enumError(
+    "architecture.governance.changeControl",
+    governance.changeControl,
+    [
+      "none",
+      "owner-review",
+      "architecture-review",
+      "security-review",
+      "release-review",
+      "deprecation-review",
+    ]
+  );
   if (changeControlError) errors.push(changeControlError);
 
   if (typeof governance.promotionEligible !== "boolean") {
@@ -351,7 +434,9 @@ function validateRuntime(runtime, errors) {
   }
 
   if (runtime.production === true && runtime.testOnly === true) {
-    errors.push("architecture.runtime.production and architecture.runtime.testOnly cannot both be true");
+    errors.push(
+      "architecture.runtime.production and architecture.runtime.testOnly cannot both be true"
+    );
   }
 
   for (const field of ["serviceName", "serviceNamespace"]) {
@@ -372,7 +457,9 @@ function validateBoundaries(boundaries, errors) {
   }
 
   if (boundaries.publicExportsOnly === true && boundaries.deepImportsAllowed === true) {
-    errors.push("architecture.boundaries.deepImportsAllowed must be false when publicExportsOnly is true");
+    errors.push(
+      "architecture.boundaries.deepImportsAllowed must be false when publicExportsOnly is true"
+    );
   }
 
   for (const field of ["allowedConsumers", "forbiddenConsumers"]) {
@@ -435,20 +522,20 @@ async function createSchemaValidator(schema) {
     return {
       missingAjv: true,
       validatorName: "ajv",
-      validatorAvailable: false
+      validatorAvailable: false,
     };
   }
 
   const ajv = new Ajv({
     allErrors: true,
-    strict: false
+    strict: false,
   });
 
   return {
     missingAjv: false,
     validatorName: "ajv",
     validatorAvailable: true,
-    validate: ajv.compile(schema)
+    validate: ajv.compile(schema),
   };
 }
 
@@ -462,15 +549,15 @@ function buildReports(results, startedAt, finishedAt, schemaValidator) {
     schemaValidator: {
       name: schemaValidator.validatorName,
       available: schemaValidator.validatorAvailable,
-      missingAllowed: OPTIONS.allowMissingAjv
+      missingAllowed: OPTIONS.allowMissingAjv,
     },
     totalPackages: results.length,
     passed,
     failed,
     results: results.map((result) => ({
       ...result,
-      packagePath: path.relative(REPO_ROOT, result.packagePath)
-    }))
+      packagePath: path.relative(REPO_ROOT, result.packagePath),
+    })),
   };
 
   const lines = [
@@ -489,7 +576,7 @@ function buildReports(results, startedAt, finishedAt, schemaValidator) {
     "```",
     "",
     "## Results",
-    ""
+    "",
   ];
 
   for (const result of jsonReport.results) {
@@ -526,7 +613,7 @@ function buildReports(results, startedAt, finishedAt, schemaValidator) {
     jsonReport,
     markdownReport: `${lines.join("\n")}\n`,
     startedAt,
-    finishedAt
+    finishedAt,
   };
 }
 
@@ -537,7 +624,15 @@ function writeReports(report) {
   return { jsonReportPath: JSON_REPORT, markdownReportPath: MARKDOWN_REPORT };
 }
 
-function writeSelfEvidence({ report, startedAt, finishedAt, command, roots, outputPaths, exitCode }) {
+function writeSelfEvidence({
+  report,
+  startedAt,
+  finishedAt,
+  command,
+  roots,
+  outputPaths,
+  exitCode,
+}) {
   if (OPTIONS.noReports) {
     return null;
   }
@@ -547,7 +642,10 @@ function writeSelfEvidence({ report, startedAt, finishedAt, command, roots, outp
   const evidencePath = path.join(TOOLING_REPORT_DIR, `${safeTimestamp}-run.json`);
   const evidence = {
     toolName: "validate-package-metadata",
-    toolVersion: readJson(path.join(REPO_ROOT, "tools", "architecture", "validate-package-metadata", "package.json")).version ?? "0.0.0",
+    toolVersion:
+      readJson(
+        path.join(REPO_ROOT, "tools", "architecture", "validate-package-metadata", "package.json")
+      ).version ?? "0.0.0",
     command,
     mode: "check",
     root: REPO_ROOT,
@@ -567,24 +665,28 @@ function writeSelfEvidence({ report, startedAt, finishedAt, command, roots, outp
       "runtime production/testOnly semantic rule",
       "boundary deep import semantic rule",
       "relations array rules",
-      "readme metadata rules"
+      "readme metadata rules",
     ],
     checksPassed: report.passed,
     checksFailed: report.failed,
-    warnings: report.jsonReport.results.flatMap((result) => result.warnings.map((message) => ({
-      packageName: result.packageName,
-      packagePath: result.packagePath,
-      message
-    }))),
-    errors: report.jsonReport.results.flatMap((result) => result.errors.map((message) => ({
-      packageName: result.packageName,
-      packagePath: result.packagePath,
-      message
-    }))),
+    warnings: report.jsonReport.results.flatMap((result) =>
+      result.warnings.map((message) => ({
+        packageName: result.packageName,
+        packagePath: result.packagePath,
+        message,
+      }))
+    ),
+    errors: report.jsonReport.results.flatMap((result) =>
+      result.errors.map((message) => ({
+        packageName: result.packageName,
+        packagePath: result.packagePath,
+        message,
+      }))
+    ),
     dependencySteps: [],
     schemaValidator: report.jsonReport.schemaValidator,
     gitTreatment: "reports/** ignored by default",
-    exitCode
+    exitCode,
   };
   fs.writeFileSync(evidencePath, `${JSON.stringify(evidence, null, 2)}\n`, "utf8");
   return evidencePath;
@@ -615,7 +717,8 @@ async function main() {
   const schema = readJson(SCHEMA_PATH);
   const schemaValidator = await createSchemaValidator(schema);
 
-  const roots = OPTIONS.roots.length > 0 ? OPTIONS.roots : ["apps", "packages", "tools/architecture"];
+  const roots =
+    OPTIONS.roots.length > 0 ? OPTIONS.roots : ["apps", "packages", "tools/architecture"];
   const packageFiles = listPackageJsonFiles(roots);
   const results = [];
 
@@ -629,7 +732,7 @@ async function main() {
         packageName: "(unreadable)",
         valid: false,
         errors: [error.message],
-        warnings: []
+        warnings: [],
       });
     }
   }
@@ -649,23 +752,33 @@ async function main() {
     report,
     startedAt,
     finishedAt,
-    command: ["node", "tools/architecture/validate-package-metadata/src/index.mjs", ...process.argv.slice(2)],
+    command: [
+      "node",
+      "tools/architecture/validate-package-metadata/src/index.mjs",
+      ...process.argv.slice(2),
+    ],
     roots,
     outputPaths: outputPaths.map((outputPath) => path.relative(REPO_ROOT, outputPath.path)),
-    exitCode
+    exitCode,
   });
 
   if (OPTIONS.format === "json") {
-    console.log(JSON.stringify({
-      toolName: "validate-package-metadata",
-      totalPackages: report.jsonReport.totalPackages,
-      passed: report.passed,
-      failed: report.failed,
-      schemaValidator: report.jsonReport.schemaValidator,
-      outputPaths: outputPaths.map((outputPath) => path.relative(REPO_ROOT, outputPath.path)),
-      selfEvidencePath: selfEvidencePath ? path.relative(REPO_ROOT, selfEvidencePath) : null,
-      exitCode
-    }, null, 2));
+    console.log(
+      JSON.stringify(
+        {
+          toolName: "validate-package-metadata",
+          totalPackages: report.jsonReport.totalPackages,
+          passed: report.passed,
+          failed: report.failed,
+          schemaValidator: report.jsonReport.schemaValidator,
+          outputPaths: outputPaths.map((outputPath) => path.relative(REPO_ROOT, outputPath.path)),
+          selfEvidencePath: selfEvidencePath ? path.relative(REPO_ROOT, selfEvidencePath) : null,
+          exitCode,
+        },
+        null,
+        2
+      )
+    );
   } else {
     printTextSummary(report, outputPaths, selfEvidencePath);
   }
@@ -677,7 +790,13 @@ try {
   await main();
 } catch (error) {
   if (OPTIONS.format === "json") {
-    console.log(JSON.stringify({ toolName: "validate-package-metadata", error: error.message, exitCode: 1 }, null, 2));
+    console.log(
+      JSON.stringify(
+        { toolName: "validate-package-metadata", error: error.message, exitCode: 1 },
+        null,
+        2
+      )
+    );
   } else {
     console.error(error.message);
   }

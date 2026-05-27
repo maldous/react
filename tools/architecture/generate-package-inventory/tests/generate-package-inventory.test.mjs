@@ -6,9 +6,32 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 
 const repoRoot = path.resolve(path.dirname(new URL(import.meta.url).pathname), "../../../..");
-const script = path.join(repoRoot, "tools", "architecture", "generate-package-inventory", "src", "index.mjs");
-const fixtureRoot = path.join(repoRoot, "tools", "architecture", "generate-package-inventory", "tests", "fixtures", "valid");
-const goldenRoot = path.join(repoRoot, "tools", "architecture", "generate-package-inventory", "tests", "fixtures", "golden");
+const script = path.join(
+  repoRoot,
+  "tools",
+  "architecture",
+  "generate-package-inventory",
+  "src",
+  "index.mjs"
+);
+const fixtureRoot = path.join(
+  repoRoot,
+  "tools",
+  "architecture",
+  "generate-package-inventory",
+  "tests",
+  "fixtures",
+  "valid"
+);
+const goldenRoot = path.join(
+  repoRoot,
+  "tools",
+  "architecture",
+  "generate-package-inventory",
+  "tests",
+  "fixtures",
+  "golden"
+);
 
 function copyDir(source, target) {
   fs.mkdirSync(target, { recursive: true });
@@ -30,14 +53,18 @@ function makeFixtureRepo() {
 }
 
 function run(root, args) {
-  return spawnSync(process.execPath, [script, "--root", root, "--no-reports", "--format", "json", ...args], {
-    cwd: repoRoot,
-    encoding: "utf8",
-    env: {
-      ...process.env,
-      ARCHITECTURE_REPORT_GENERATED_AT: "2026-05-26T00:00:00.000Z"
+  return spawnSync(
+    process.execPath,
+    [script, "--root", root, "--no-reports", "--format", "json", ...args],
+    {
+      cwd: repoRoot,
+      encoding: "utf8",
+      env: {
+        ...process.env,
+        ARCHITECTURE_REPORT_GENERATED_AT: "2026-05-26T00:00:00.000Z",
+      },
     }
-  });
+  );
 }
 
 function assertFileEquals(actual, expected) {
@@ -74,8 +101,18 @@ assertFileEquals(
   path.join(goldenRoot, "reports", "lifecycle", "package-lifecycle-summary.md")
 );
 
-const inventoryJson = JSON.parse(fs.readFileSync(path.join(writeRoot, "reports", "package-inventory", "package-inventory.json"), "utf8"));
-const lifecycleJson = JSON.parse(fs.readFileSync(path.join(writeRoot, "reports", "lifecycle", "package-lifecycle-summary.json"), "utf8"));
+const inventoryJson = JSON.parse(
+  fs.readFileSync(
+    path.join(writeRoot, "reports", "package-inventory", "package-inventory.json"),
+    "utf8"
+  )
+);
+const lifecycleJson = JSON.parse(
+  fs.readFileSync(
+    path.join(writeRoot, "reports", "lifecycle", "package-lifecycle-summary.json"),
+    "utf8"
+  )
+);
 
 assert.equal(inventoryJson.totalPackages, 8);
 assert.deepEqual(Object.keys(lifecycleJson.byClass).sort(), [
@@ -85,7 +122,7 @@ assert.deepEqual(Object.keys(lifecycleJson.byClass).sort(), [
   "active.test",
   "active.tooling",
   "external.adapter",
-  "stable.platform"
+  "stable.platform",
 ]);
 assert.equal(lifecycleJson.byClass["active.feature"], 2);
 assert.equal(lifecycleJson.byRole.adapter, 1);
@@ -112,23 +149,29 @@ assert.equal(byName["@fixture/adapter"].governance.promotionEligible, false);
 assert.deepEqual(byName["@fixture/adapter"].relations.dependsOn, ["@fixture/contract"]);
 assert.deepEqual(byName["@fixture/test"].runtime.testOnly, true);
 
-
 const freshResult = run(writeRoot, ["--check", "packages"]);
 assert.equal(freshResult.status, 0, freshResult.stderr || freshResult.stdout);
 assert.equal(JSON.parse(freshResult.stdout).stale, 0);
 
 const evidenceRoot = makeFixtureRepo();
-const evidenceResult = spawnSync(process.execPath, [script, "--root", evidenceRoot, "--write", "--format", "json", "packages"], {
-  cwd: repoRoot,
-  encoding: "utf8",
-  env: {
-    ...process.env,
-    ARCHITECTURE_REPORT_GENERATED_AT: "2026-05-26T00:00:00.000Z"
+const evidenceResult = spawnSync(
+  process.execPath,
+  [script, "--root", evidenceRoot, "--write", "--format", "json", "packages"],
+  {
+    cwd: repoRoot,
+    encoding: "utf8",
+    env: {
+      ...process.env,
+      ARCHITECTURE_REPORT_GENERATED_AT: "2026-05-26T00:00:00.000Z",
+    },
   }
-});
+);
 assert.equal(evidenceResult.status, 0, evidenceResult.stderr || evidenceResult.stdout);
 const evidencePayload = JSON.parse(evidenceResult.stdout);
-assert.match(evidencePayload.selfEvidencePath, /^reports\/tooling\/generate-package-inventory\/.+-run\.json$/);
+assert.match(
+  evidencePayload.selfEvidencePath,
+  /^reports\/tooling\/generate-package-inventory\/.+-run\.json$/
+);
 assert.equal(fs.existsSync(path.join(evidenceRoot, evidencePayload.selfEvidencePath)), true);
 
 console.log("generate-package-inventory test passed");

@@ -337,48 +337,48 @@ delivery packages carry production: false in runtime metadata
 
 ## Initial allowed dependency matrix
 
-| Package | May depend on |
-|---|---|
-| @platform/react-enterprise-app | feature-workflow, access-control, adapters-graphql |
-| @platform/feature-workflow | ui-design-system, domain-core, profile-configuration, access-control, contracts-graphql, contracts-analytics, queue-runtime, storage-runtime, audit-events, email-runtime, notification-runtime, search-runtime |
-| @platform/ui-design-system | none of the runtime/domain packages |
-| @platform/domain-core | none of the platform runtime packages |
-| @platform/profile-configuration | domain-core |
-| @platform/access-control | domain-core, profile-configuration |
-| @platform/contracts-graphql | profile-configuration, access-control, contracts-analytics |
-| @platform/contracts-ingestion | none of the runtime adapter packages |
-| @platform/contracts-analytics | none of the runtime adapter packages |
-| @platform/adapters-graphql | contracts-graphql, adapters-postgres, adapters-clickhouse |
-| @platform/adapters-ingestion | contracts-ingestion, adapters-postgres, adapters-clickhouse |
-| @platform/adapters-postgres | profile-configuration, access-control |
-| @platform/adapters-clickhouse | contracts-analytics, contracts-ingestion |
-| @platform/tooling-codegen | contracts-graphql |
-| @platform/test-support | contracts-graphql, contracts-ingestion, contracts-analytics, ui-design-system |
-| @platform/config-runtime | none |
-| @platform/observability | none |
-| @platform/security-auth | none |
-| @platform/audit-events | none |
-| @platform/queue-runtime | none |
-| @platform/storage-runtime | none |
-| @platform/email-runtime | none |
-| @platform/notification-runtime | none |
-| @platform/search-runtime | none |
-| @platform/api-runtime | config-runtime, security-auth, observability, audit-events |
-| @platform/graphql-api-runtime | api-runtime, contracts-graphql, adapters-postgres, adapters-clickhouse, observability |
-| @platform/worker-runtime | queue-runtime, config-runtime, observability, audit-events |
-| @platform/session-runtime | security-auth, adapters-redis |
-| @platform/adapters-keycloak | security-auth, config-runtime |
-| @platform/adapters-redis | config-runtime, queue-runtime |
-| @platform/adapters-sentry | observability, config-runtime |
-| @platform/adapters-opentelemetry | observability, config-runtime |
-| @platform/adapters-object-storage | storage-runtime, config-runtime |
-| @platform/adapters-brevo | email-runtime, config-runtime |
-| @platform/dev-services | none |
-| @platform/tooling-docker | none |
-| @platform/tooling-terraform | none |
-| @platform/tooling-ci | none |
-| @platform/infra-aws | none |
-| @platform/infra-cloudflare | none |
+| Package                           | May depend on                                                                                                                                                                                                   |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| @platform/react-enterprise-app    | feature-workflow, access-control, adapters-graphql                                                                                                                                                              |
+| @platform/feature-workflow        | ui-design-system, domain-core, profile-configuration, access-control, contracts-graphql, contracts-analytics, queue-runtime, storage-runtime, audit-events, email-runtime, notification-runtime, search-runtime |
+| @platform/ui-design-system        | none of the runtime/domain packages                                                                                                                                                                             |
+| @platform/domain-core             | none of the platform runtime packages                                                                                                                                                                           |
+| @platform/profile-configuration   | domain-core                                                                                                                                                                                                     |
+| @platform/access-control          | domain-core, profile-configuration                                                                                                                                                                              |
+| @platform/contracts-graphql       | profile-configuration, access-control, contracts-analytics                                                                                                                                                      |
+| @platform/contracts-ingestion     | none of the runtime adapter packages                                                                                                                                                                            |
+| @platform/contracts-analytics     | none of the runtime adapter packages                                                                                                                                                                            |
+| @platform/adapters-graphql        | contracts-graphql, adapters-postgres, adapters-clickhouse                                                                                                                                                       |
+| @platform/adapters-ingestion      | contracts-ingestion, adapters-postgres, adapters-clickhouse                                                                                                                                                     |
+| @platform/adapters-postgres       | profile-configuration, access-control                                                                                                                                                                           |
+| @platform/adapters-clickhouse     | contracts-analytics, contracts-ingestion                                                                                                                                                                        |
+| @platform/tooling-codegen         | contracts-graphql                                                                                                                                                                                               |
+| @platform/test-support            | contracts-graphql, contracts-ingestion, contracts-analytics, ui-design-system                                                                                                                                   |
+| @platform/config-runtime          | none                                                                                                                                                                                                            |
+| @platform/observability           | none                                                                                                                                                                                                            |
+| @platform/security-auth           | none                                                                                                                                                                                                            |
+| @platform/audit-events            | none                                                                                                                                                                                                            |
+| @platform/queue-runtime           | none                                                                                                                                                                                                            |
+| @platform/storage-runtime         | none                                                                                                                                                                                                            |
+| @platform/email-runtime           | none                                                                                                                                                                                                            |
+| @platform/notification-runtime    | none                                                                                                                                                                                                            |
+| @platform/search-runtime          | none                                                                                                                                                                                                            |
+| @platform/api-runtime             | config-runtime, security-auth, observability, audit-events                                                                                                                                                      |
+| @platform/graphql-api-runtime     | api-runtime, contracts-graphql, adapters-postgres, adapters-clickhouse, observability                                                                                                                           |
+| @platform/worker-runtime          | queue-runtime, config-runtime, observability, audit-events                                                                                                                                                      |
+| @platform/session-runtime         | security-auth, adapters-redis                                                                                                                                                                                   |
+| @platform/adapters-keycloak       | security-auth, config-runtime                                                                                                                                                                                   |
+| @platform/adapters-redis          | config-runtime, queue-runtime                                                                                                                                                                                   |
+| @platform/adapters-sentry         | observability, config-runtime                                                                                                                                                                                   |
+| @platform/adapters-opentelemetry  | observability, config-runtime                                                                                                                                                                                   |
+| @platform/adapters-object-storage | storage-runtime, config-runtime                                                                                                                                                                                 |
+| @platform/adapters-brevo          | email-runtime, config-runtime                                                                                                                                                                                   |
+| @platform/dev-services            | none                                                                                                                                                                                                            |
+| @platform/tooling-docker          | none                                                                                                                                                                                                            |
+| @platform/tooling-terraform       | none                                                                                                                                                                                                            |
+| @platform/tooling-ci              | none                                                                                                                                                                                                            |
+| @platform/infra-aws               | none                                                                                                                                                                                                            |
+| @platform/infra-cloudflare        | none                                                                                                                                                                                                            |
 
 ## Enforcement status
 

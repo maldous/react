@@ -10,7 +10,7 @@ function parseArgs(argv) {
     format: "text",
     noReports: false,
     write: false,
-    roots: []
+    roots: [],
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -60,9 +60,19 @@ const REPO_ROOT = findRepoRoot(OPTIONS.root ? path.resolve(OPTIONS.root) : proce
 const TOOL_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const TOOL_PACKAGE_PATH = path.join(TOOL_ROOT, "package.json");
 
-const INVENTORY_JSON = path.join(REPO_ROOT, "reports", "package-inventory", "package-inventory.json");
+const INVENTORY_JSON = path.join(
+  REPO_ROOT,
+  "reports",
+  "package-inventory",
+  "package-inventory.json"
+);
 const INVENTORY_MD = path.join(REPO_ROOT, "reports", "package-inventory", "package-inventory.md");
-const LIFECYCLE_JSON = path.join(REPO_ROOT, "reports", "lifecycle", "package-lifecycle-summary.json");
+const LIFECYCLE_JSON = path.join(
+  REPO_ROOT,
+  "reports",
+  "lifecycle",
+  "package-lifecycle-summary.json"
+);
 const LIFECYCLE_MD = path.join(REPO_ROOT, "reports", "lifecycle", "package-lifecycle-summary.md");
 const TOOLING_REPORT_DIR = path.join(REPO_ROOT, "reports", "tooling", "generate-package-inventory");
 
@@ -141,7 +151,7 @@ function packageRecord(packageFile) {
       system: a.component?.system,
       domain: a.component?.domain,
       boundedContext: a.component?.boundedContext,
-      owner: a.component?.owner
+      owner: a.component?.owner,
     },
     lifecycle: {
       stage: a.lifecycle?.stage,
@@ -150,27 +160,27 @@ function packageRecord(packageFile) {
       catalogLifecycle: a.lifecycle?.catalogLifecycle,
       visibility: a.lifecycle?.visibility,
       supportLevel: a.lifecycle?.supportLevel,
-      reviewCadence: a.lifecycle?.reviewCadence
+      reviewCadence: a.lifecycle?.reviewCadence,
     },
     governance: {
       decisionRefs: a.governance?.decisionRefs ?? [],
       semverPolicy: a.governance?.semverPolicy,
       changeControl: a.governance?.changeControl,
-      promotionEligible: a.governance?.promotionEligible
+      promotionEligible: a.governance?.promotionEligible,
     },
     runtime: {
       production: a.runtime?.production,
       testOnly: a.runtime?.testOnly,
       serviceName: a.runtime?.serviceName,
       serviceNamespace: a.runtime?.serviceNamespace,
-      deploymentEnvironments: a.runtime?.deploymentEnvironments ?? []
+      deploymentEnvironments: a.runtime?.deploymentEnvironments ?? [],
     },
     relations: {
       dependsOn: a.relations?.dependsOn ?? [],
       providesApis: a.relations?.providesApis ?? [],
-      consumesApis: a.relations?.consumesApis ?? []
+      consumesApis: a.relations?.consumesApis ?? [],
     },
-    tags: a.tags ?? {}
+    tags: a.tags ?? {},
   };
 }
 
@@ -179,7 +189,7 @@ function buildInventory(records, generatedAt) {
     generatedAt,
     source: "package.json architecture metadata",
     totalPackages: records.length,
-    packages: records
+    packages: records,
   };
 }
 
@@ -207,8 +217,8 @@ function buildLifecycleSummary(records, generatedAt) {
       lifecycle: record.lifecycle,
       owner: record.component.owner,
       changeControl: record.governance.changeControl,
-      promotionEligible: record.governance.promotionEligible
-    }))
+      promotionEligible: record.governance.promotionEligible,
+    })),
   };
 }
 
@@ -230,7 +240,7 @@ function renderInventoryMarkdown(inventory) {
     Context: record.component.boundedContext,
     Lifecycle: record.lifecycle.class,
     Owner: record.component.owner,
-    Path: record.path
+    Path: record.path,
   }));
 
   return `# Package inventory report
@@ -262,7 +272,7 @@ function renderLifecycleMarkdown(summary) {
     Class: record.lifecycle.class,
     Support: record.lifecycle.supportLevel,
     Owner: record.owner,
-    Path: record.path
+    Path: record.path,
   }));
 
   return `# Package lifecycle summary report
@@ -302,7 +312,7 @@ function buildOutputs(records, generatedAt) {
     [INVENTORY_JSON]: `${JSON.stringify(inventory, null, 2)}\n`,
     [INVENTORY_MD]: renderInventoryMarkdown(inventory),
     [LIFECYCLE_JSON]: `${JSON.stringify(lifecycle, null, 2)}\n`,
-    [LIFECYCLE_MD]: renderLifecycleMarkdown(lifecycle)
+    [LIFECYCLE_MD]: renderLifecycleMarkdown(lifecycle),
   };
 }
 
@@ -312,7 +322,7 @@ function compareOutputs(outputs) {
     return {
       path: path.relative(REPO_ROOT, filePath),
       status: current === expected ? "fresh" : "stale",
-      changed: current !== expected
+      changed: current !== expected,
     };
   });
 }
@@ -333,7 +343,11 @@ function writeSelfEvidence({ startedAt, finishedAt, roots, results, exitCode }) 
   const evidence = {
     toolName: "generate-package-inventory",
     toolVersion: readJson(TOOL_PACKAGE_PATH).version ?? "0.0.0",
-    command: ["node", "tools/architecture/generate-package-inventory/src/index.mjs", ...process.argv.slice(2)],
+    command: [
+      "node",
+      "tools/architecture/generate-package-inventory/src/index.mjs",
+      ...process.argv.slice(2),
+    ],
     mode: OPTIONS.write ? "write" : "check",
     root: REPO_ROOT,
     startedAt,
@@ -347,20 +361,23 @@ function writeSelfEvidence({ startedAt, finishedAt, roots, results, exitCode }) 
       "lifecycle summary JSON output",
       "lifecycle summary Markdown output",
       "check mode reports stale reports without writing",
-      "write mode writes only reports/package-inventory and reports/lifecycle"
+      "write mode writes only reports/package-inventory and reports/lifecycle",
     ],
     checksPassed: results.filter((r) => r.status === "fresh" || OPTIONS.write).length,
     checksFailed: OPTIONS.write ? 0 : results.filter((r) => r.status === "stale").length,
     warnings: [],
-    errors: OPTIONS.write ? [] : results.filter((r) => r.status === "stale").map((r) => ({ path: r.path, message: "generated report is stale or missing" })),
+    errors: OPTIONS.write
+      ? []
+      : results
+          .filter((r) => r.status === "stale")
+          .map((r) => ({ path: r.path, message: "generated report is stale or missing" })),
     dependencySteps: [],
     gitTreatment: "reports/** ignored by default",
-    exitCode
+    exitCode,
   };
   fs.writeFileSync(evidencePath, `${JSON.stringify(evidence, null, 2)}\n`, "utf8");
   return evidencePath;
 }
-
 
 function existingGeneratedAt() {
   if (!fs.existsSync(INVENTORY_JSON)) {
@@ -377,8 +394,12 @@ function existingGeneratedAt() {
 
 function main() {
   const startedAt = new Date().toISOString();
-  const generatedAt = process.env.ARCHITECTURE_REPORT_GENERATED_AT ?? (OPTIONS.write ? new Date().toISOString() : existingGeneratedAt()) ?? new Date().toISOString();
-  const roots = OPTIONS.roots.length > 0 ? OPTIONS.roots : ["apps", "packages", "tools/architecture"];
+  const generatedAt =
+    process.env.ARCHITECTURE_REPORT_GENERATED_AT ??
+    (OPTIONS.write ? new Date().toISOString() : existingGeneratedAt()) ??
+    new Date().toISOString();
+  const roots =
+    OPTIONS.roots.length > 0 ? OPTIONS.roots : ["apps", "packages", "tools/architecture"];
   const packageFiles = listPackageJsonFiles(roots);
   const records = packageFiles.map(packageRecord).filter(Boolean);
   const outputs = buildOutputs(records, generatedAt);
@@ -401,7 +422,7 @@ function main() {
     stale,
     written: OPTIONS.write ? results.filter((r) => r.changed).length : 0,
     selfEvidencePath: selfEvidencePath ? path.relative(REPO_ROOT, selfEvidencePath) : null,
-    exitCode
+    exitCode,
   };
 
   if (OPTIONS.format === "json") {
@@ -411,7 +432,8 @@ function main() {
     console.log(`Packages: ${records.length}`);
     console.log(`Stale: ${stale}`);
     console.log(`Written: ${summary.written}`);
-    if (selfEvidencePath) console.log(`Self-evidence: ${path.relative(REPO_ROOT, selfEvidencePath)}`);
+    if (selfEvidencePath)
+      console.log(`Self-evidence: ${path.relative(REPO_ROOT, selfEvidencePath)}`);
   }
 
   process.exit(exitCode);
@@ -421,7 +443,13 @@ try {
   main();
 } catch (error) {
   if (OPTIONS.format === "json") {
-    console.log(JSON.stringify({ toolName: "generate-package-inventory", error: error.message, exitCode: 1 }, null, 2));
+    console.log(
+      JSON.stringify(
+        { toolName: "generate-package-inventory", error: error.message, exitCode: 1 },
+        null,
+        2
+      )
+    );
   } else {
     console.error(error.message);
   }

@@ -255,7 +255,6 @@ Generated reports may be regenerated and may be excluded from source control dep
 
 Lifecycle transition evidence should be retained in the repository because it records an approved governance event.
 
-
 The evidence bundle is committed governance evidence. It may be produced with tooling, but it is reviewed and retained as an architecture governance artifact.
 
 The evidence bundle must not be treated as the source of truth for current package metadata.

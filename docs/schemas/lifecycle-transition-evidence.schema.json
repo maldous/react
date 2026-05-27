@@ -25,12 +25,7 @@
     "bundle": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "id",
-        "createdAt",
-        "createdBy",
-        "status"
-      ],
+      "required": ["id", "createdAt", "createdBy", "status"],
       "properties": {
         "id": {
           "type": "string",
@@ -45,23 +40,14 @@
           "minLength": 1
         },
         "status": {
-          "enum": [
-            "draft",
-            "reviewed",
-            "approved",
-            "rejected"
-          ]
+          "enum": ["draft", "reviewed", "approved", "rejected"]
         }
       }
     },
     "package": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "name",
-        "path",
-        "owner"
-      ],
+      "required": ["name", "path", "owner"],
       "properties": {
         "name": {
           "type": "string",
@@ -80,12 +66,7 @@
     "transition": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "fromClass",
-        "toClass",
-        "reason",
-        "requestedAt"
-      ],
+      "required": ["fromClass", "toClass", "reason", "requestedAt"],
       "properties": {
         "fromClass": {
           "type": "string",
@@ -108,11 +89,7 @@
     "governance": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "decisionRefs",
-        "reviewers",
-        "approvers"
-      ],
+      "required": ["decisionRefs", "reviewers", "approvers"],
       "properties": {
         "decisionRefs": {
           "type": "array",
@@ -141,19 +118,10 @@
     "risk": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "level",
-        "assessment",
-        "mitigations"
-      ],
+      "required": ["level", "assessment", "mitigations"],
       "properties": {
         "level": {
-          "enum": [
-            "low",
-            "medium",
-            "high",
-            "critical"
-          ]
+          "enum": ["low", "medium", "high", "critical"]
         },
         "assessment": {
           "type": "string",
@@ -170,10 +138,7 @@
     "testing": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "summary",
-        "evidence"
-      ],
+      "required": ["summary", "evidence"],
       "properties": {
         "summary": {
           "type": "string",
@@ -191,10 +156,7 @@
     "impact": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "runtimeImpact",
-        "consumerImpact"
-      ],
+      "required": ["runtimeImpact", "consumerImpact"],
       "properties": {
         "runtimeImpact": {
           "type": "string"
@@ -207,10 +169,7 @@
     "rollback": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "strategy",
-        "notes"
-      ],
+      "required": ["strategy", "notes"],
       "properties": {
         "strategy": {
           "type": "string",
@@ -224,10 +183,7 @@
     "sourceMetadataSnapshot": {
       "type": "object",
       "additionalProperties": true,
-      "required": [
-        "packageJsonPath",
-        "architecture"
-      ],
+      "required": ["packageJsonPath", "architecture"],
       "properties": {
         "packageJsonPath": {
           "type": "string",
@@ -249,11 +205,7 @@
     "personEvidence": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "name",
-        "role",
-        "reviewedAt"
-      ],
+      "required": ["name", "role", "reviewedAt"],
       "properties": {
         "name": {
           "type": "string",
@@ -275,10 +227,7 @@
     "fileReference": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "path",
-        "description"
-      ],
+      "required": ["path", "description"],
       "properties": {
         "path": {
           "type": "string",
