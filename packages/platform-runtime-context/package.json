@@ -1,0 +1,99 @@
+{
+  "name": "@platform/platform-runtime-context",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Typed runtime context carrier (requestId, traceId, spanId, actorId, tenantId). Zero @platform dependencies. Flows BFF -> use case -> adapter.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {},
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "platform-runtime-context",
+      "system": "enterprise-react-platform",
+      "domain": "operations",
+      "boundedContext": "observability-core",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "experimental",
+      "role": "platform",
+      "class": "experimental.platform",
+      "catalogLifecycle": "experimental",
+      "visibility": "internal",
+      "supportLevel": "experimental",
+      "reviewCadence": "on-change"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005",
+        "ADR-0020"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": true,
+      "testOnly": false,
+      "serviceName": "platform-runtime-context",
+      "serviceNamespace": "operations",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test",
+        "staging",
+        "production"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application",
+        "platform",
+        "feature",
+        "adapter"
+      ],
+      "forbiddenConsumers": []
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "library",
+      "stage": "experimental",
+      "role": "platform",
+      "layer": "platform"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Typed runtime context carrier (requestId, traceId, spanId, actorId, tenantId). Zero @platform dependencies. Flows BFF -> use case -> adapter.",
+      "responsibilities": [
+        "Define RuntimeContext interface with requestId, traceId, spanId, actorId, tenantId, correlationId, featureName, operationName",
+        "Provide createContext and createRequestContext factory helpers",
+        "Export types importable by React feature packages for requestId propagation"
+      ],
+      "nonResponsibilities": [
+        "Does not import or wrap any @platform package",
+        "Does not implement tracing or logging",
+        "Does not expose HTTP request objects"
+      ],
+      "usage": [
+        "Import from @platform/platform-runtime-context — public exports only"
+      ],
+      "operationalNotes": [
+        "ADR-0020 governs this package. See docs/evidence/observability/."
+      ]
+    }
+  }
+}

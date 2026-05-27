@@ -248,6 +248,85 @@
       "forbiddenPrefixes": ["@platform/"],
       "forbiddenExact": [],
       "rationale": "search-runtime is a leaf interface node with zero @platform/* dependencies."
+    },
+    {
+      "id": "no-raw-observability-in-domain",
+      "appliesTo": [
+        "@platform/domain-core",
+        "@platform/profile-configuration",
+        "@platform/access-control"
+      ],
+      "forbiddenPrefixes": [
+        "@opentelemetry/",
+        "@sentry/",
+        "@platform/platform-logging",
+        "@platform/platform-observability",
+        "@platform/adapters-opentelemetry",
+        "@platform/adapters-sentry"
+      ],
+      "forbiddenExact": ["pino"],
+      "rationale": "Domain packages must not depend on logging, observability, or error-monitoring SDKs. ADR-0020: observability flows through platform abstractions in adapter/use-case layers only. Domain may receive RuntimeContext types but must not import the logging or tracing implementations."
+    },
+    {
+      "id": "no-raw-observability-in-feature",
+      "appliesTo": ["@platform/feature-workflow"],
+      "forbiddenPrefixes": [
+        "@opentelemetry/sdk-",
+        "@sentry/",
+        "@platform/platform-logging",
+        "@platform/platform-observability",
+        "@platform/adapters-opentelemetry",
+        "@platform/adapters-sentry"
+      ],
+      "forbiddenExact": ["pino"],
+      "rationale": "Feature packages must not import pino, Sentry, OTel SDK, or platform logging/observability packages directly. ADR-0020: features may import @platform/platform-errors (safe client types) and @platform/platform-runtime-context (requestId types only)."
+    },
+    {
+      "id": "no-observability-in-ui",
+      "appliesTo": ["@platform/ui-design-system"],
+      "forbiddenPrefixes": [
+        "@platform/platform-logging",
+        "@platform/platform-observability",
+        "@platform/platform-runtime-context",
+        "@platform/adapters-opentelemetry",
+        "@platform/adapters-sentry",
+        "@opentelemetry/",
+        "@sentry/"
+      ],
+      "forbiddenExact": ["pino"],
+      "rationale": "UI packages must not import logging, observability, or runtime context packages. ADR-0020: UI components handle display only. Error display uses UI-safe ErrorState primitives, not platform-errors directly."
+    },
+    {
+      "id": "no-raw-observability-in-contracts",
+      "appliesTo": [
+        "@platform/contracts-graphql",
+        "@platform/contracts-analytics",
+        "@platform/contracts-ingestion"
+      ],
+      "forbiddenPrefixes": [
+        "@opentelemetry/sdk-",
+        "@sentry/",
+        "@platform/platform-logging",
+        "@platform/platform-observability",
+        "@platform/adapters-opentelemetry",
+        "@platform/adapters-sentry"
+      ],
+      "forbiddenExact": ["pino"],
+      "rationale": "Contract packages define data shapes only. ADR-0020: contracts must not depend on concrete logging or observability implementations."
+    },
+    {
+      "id": "no-platform-deps-in-platform-runtime-context",
+      "appliesTo": ["@platform/platform-runtime-context"],
+      "forbiddenPrefixes": ["@platform/"],
+      "forbiddenExact": [],
+      "rationale": "ADR-0020: platform-runtime-context has zero @platform dependencies. It exports types only and must not create any circular or transitive @platform dependency chains."
+    },
+    {
+      "id": "no-platform-deps-in-platform-errors",
+      "appliesTo": ["@platform/platform-errors"],
+      "forbiddenPrefixes": ["@platform/"],
+      "forbiddenExact": [],
+      "rationale": "ADR-0020: platform-errors has zero @platform dependencies. It must be importable by React feature packages for safe client-side error type checks without pulling in any server-side @platform packages."
     }
   ]
 }

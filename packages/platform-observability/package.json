@@ -1,0 +1,108 @@
+{
+  "name": "@platform/platform-observability",
+  "version": "0.1.0",
+  "private": true,
+  "description": "OpenTelemetry API wrapper for trace span creation, metrics recording, and active context access. Uses @opentelemetry/api only — SDK wiring stays in adapters-opentelemetry.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@platform/platform-runtime-context": "workspace:*"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "platform-observability",
+      "system": "enterprise-react-platform",
+      "domain": "operations",
+      "boundedContext": "observability-core",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "experimental",
+      "role": "platform",
+      "class": "experimental.platform",
+      "catalogLifecycle": "experimental",
+      "visibility": "internal",
+      "supportLevel": "experimental",
+      "reviewCadence": "on-change"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005",
+        "ADR-0020"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": true,
+      "testOnly": false,
+      "serviceName": "platform-observability",
+      "serviceNamespace": "operations",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test",
+        "staging",
+        "production"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application",
+        "platform",
+        "adapter"
+      ],
+      "forbiddenConsumers": [
+        "feature",
+        "domain",
+        "ui",
+        "contract"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@platform/platform-runtime-context"
+      ],
+      "providesApis": [],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "library",
+      "stage": "experimental",
+      "role": "platform",
+      "layer": "platform"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "OpenTelemetry API wrapper for trace span creation, metrics recording, and active context access. Uses @opentelemetry/api only — SDK wiring stays in adapters-opentelemetry.",
+      "responsibilities": [
+        "Wrap @opentelemetry/api for createTracer, startSpan, recordMetric, getActiveContext",
+        "Provide span helpers for BFF request spans, use-case child spans, and adapter I/O spans",
+        "Define metric recording helpers using OTel semantic conventions",
+        "Export vendor-neutral observability abstractions consumable by use-case and adapter packages"
+      ],
+      "nonResponsibilities": [
+        "Does not import @opentelemetry/sdk-* (SDK is wired by adapters-opentelemetry at startup)",
+        "Does not configure OTLP exporters",
+        "Does not import Sentry or logging packages"
+      ],
+      "usage": [
+        "Import from @platform/platform-observability — public exports only"
+      ],
+      "operationalNotes": [
+        "ADR-0020 governs this package. See docs/evidence/observability/."
+      ]
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "name": "@platform/platform-logging",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Pino-backed structured JSON logger for Node runtime with browser-safe wrapper, redaction config, and request/context logger helpers.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@platform/platform-runtime-context": "workspace:*"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "platform-logging",
+      "system": "enterprise-react-platform",
+      "domain": "operations",
+      "boundedContext": "observability-core",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "experimental",
+      "role": "platform",
+      "class": "experimental.platform",
+      "catalogLifecycle": "experimental",
+      "visibility": "internal",
+      "supportLevel": "experimental",
+      "reviewCadence": "on-change"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005",
+        "ADR-0020"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": true,
+      "testOnly": false,
+      "serviceName": "platform-logging",
+      "serviceNamespace": "operations",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test",
+        "staging",
+        "production"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application",
+        "platform",
+        "adapter"
+      ],
+      "forbiddenConsumers": [
+        "feature",
+        "domain",
+        "ui",
+        "contract"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@platform/platform-runtime-context"
+      ],
+      "providesApis": [],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "library",
+      "stage": "experimental",
+      "role": "platform",
+      "layer": "platform"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Pino-backed structured JSON logger for Node runtime with browser-safe wrapper, redaction config, and request/context logger helpers.",
+      "responsibilities": [
+        "Provide createLogger, createChildLogger, createRequestLogger for Node runtime",
+        "Provide createBrowserLogger as a safe console-based wrapper for browser",
+        "Enforce redaction config for credentials, tokens, cookies, DSNs, connection strings",
+        "Export safeErrorMeta and safeContextMeta serialisation helpers"
+      ],
+      "nonResponsibilities": [
+        "Does not perform tracing — spans are managed by platform-observability",
+        "Does not import adapters or domain packages",
+        "Browser logger does not use Node pino directly"
+      ],
+      "usage": [
+        "Import from @platform/platform-logging — public exports only"
+      ],
+      "operationalNotes": [
+        "ADR-0020 governs this package. See docs/evidence/observability/."
+      ]
+    }
+  }
+}

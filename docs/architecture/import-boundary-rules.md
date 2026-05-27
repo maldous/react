@@ -383,3 +383,105 @@ delivery packages carry production: false in runtime metadata
 ## Enforcement status
 
 These rules are validated against package metadata declarations and enforced by source-code import scanning via `tools/architecture/validate-source-imports`.
+
+## Observability, logging, and error primitive boundaries (ADR-0020)
+
+### Domain packages — no raw observability
+
+Domain packages (`domain-core`, `profile-configuration`, `access-control`) must not import:
+
+```text
+pino
+@opentelemetry/api or @opentelemetry/sdk-*
+@sentry/*
+@platform/platform-logging
+@platform/platform-observability
+@platform/adapters-opentelemetry
+@platform/adapters-sentry
+```
+
+Domain may import `@platform/platform-runtime-context` for typed context fields (requestId, traceId)
+and `@platform/platform-errors` for typed error class checks.
+
+### Feature packages — no logging/tracing SDKs
+
+Feature packages (`feature-workflow` and all future `@platform/feature-*` packages) must not import:
+
+```text
+pino
+@opentelemetry/sdk-*
+@sentry/*
+@platform/platform-logging
+@platform/platform-observability
+@platform/adapters-opentelemetry
+@platform/adapters-sentry
+```
+
+Features may import:
+
+- `@platform/platform-errors` — safe client error types and instanceof checks
+- `@platform/platform-runtime-context` — requestId types (via contract client helpers only)
+
+### UI packages — no observability
+
+UI packages (`ui-design-system`) must not import:
+
+```text
+pino
+@opentelemetry/*
+@sentry/*
+@platform/platform-logging
+@platform/platform-observability
+@platform/platform-runtime-context
+@platform/adapters-opentelemetry
+@platform/adapters-sentry
+```
+
+UI components handle display only. Error display uses UI-safe `ErrorState` primitives, not
+`platform-errors` directly.
+
+### Contract packages — no concrete observability
+
+Contract packages (`contracts-graphql`, `contracts-analytics`, `contracts-ingestion`) must not import:
+
+```text
+pino
+@opentelemetry/sdk-*
+@sentry/*
+@platform/platform-logging
+@platform/platform-observability
+@platform/adapters-opentelemetry
+@platform/adapters-sentry
+```
+
+Contract packages define data shapes and DTO schemas only.
+
+### platform-runtime-context — zero @platform dependencies
+
+`@platform/platform-runtime-context` must not import any `@platform/*` package.
+It exports typed interfaces and factory helpers only.
+
+### platform-errors — zero @platform dependencies
+
+`@platform/platform-errors` must not import any `@platform/*` package.
+It must remain importable by React feature packages without pulling in server-side dependencies.
+
+### Allowed import paths for new platform packages
+
+```text
+packages/platform-logging:
+  May import: pino (Node), platform-runtime-context (types)
+  Must not import: adapters, features, domain, contracts, ui
+
+packages/platform-observability:
+  May import: @opentelemetry/api (only), platform-runtime-context (types)
+  Must not import: @opentelemetry/sdk-*, adapters, features, domain, contracts, ui, platform-logging
+
+packages/platform-runtime-context:
+  May import: nothing @platform
+  Has zero @platform dependencies
+
+packages/platform-errors:
+  May import: nothing @platform
+  Has zero @platform dependencies
+```

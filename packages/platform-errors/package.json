@@ -1,0 +1,100 @@
+{
+  "name": "@platform/platform-errors",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Typed error class hierarchy: AppError, ValidationError, NotFoundError, ConflictError, UnauthorizedError, ForbiddenError, InfrastructureError, UnexpectedError. Zero @platform dependencies.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {},
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "platform-errors",
+      "system": "enterprise-react-platform",
+      "domain": "operations",
+      "boundedContext": "api-server",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "experimental",
+      "role": "platform",
+      "class": "experimental.platform",
+      "catalogLifecycle": "experimental",
+      "visibility": "internal",
+      "supportLevel": "experimental",
+      "reviewCadence": "on-change"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005",
+        "ADR-0020"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": true,
+      "testOnly": false,
+      "serviceName": "platform-errors",
+      "serviceNamespace": "operations",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test",
+        "staging",
+        "production"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application",
+        "platform",
+        "feature",
+        "adapter"
+      ],
+      "forbiddenConsumers": []
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "library",
+      "stage": "experimental",
+      "role": "platform",
+      "layer": "platform"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Typed error class hierarchy: AppError, ValidationError, NotFoundError, ConflictError, UnauthorizedError, ForbiddenError, InfrastructureError, UnexpectedError. Zero @platform dependencies.",
+      "responsibilities": [
+        "Define AppError base class with code, safeMessage, httpStatus, retryable, safeDetails, internalDetails",
+        "Define typed error subclasses for all expected failure categories",
+        "Provide HTTP status mapping per error type",
+        "Provide safe API response serialisation shape"
+      ],
+      "nonResponsibilities": [
+        "Does not depend on HTTP frameworks (httpStatus is data, not express/fastify)",
+        "Does not import or wrap any @platform package",
+        "Does not log — logging is handled by the adapter/BFF layer"
+      ],
+      "usage": [
+        "Import from @platform/platform-errors — public exports only"
+      ],
+      "operationalNotes": [
+        "ADR-0020 governs this package. See docs/evidence/observability/."
+      ]
+    }
+  }
+}
