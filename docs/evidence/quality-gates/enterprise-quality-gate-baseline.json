@@ -4,18 +4,66 @@
   "adrActRef": "ADR-ACT-0084",
   "committedAt": "2026-05-27",
   "hardGates": [
-    { "tool": "prettier", "version": "3.8.3", "command": "npm run format:check", "result": "passed" },
-    { "tool": "markdownlint-cli2", "version": "0.22.1", "command": "npm run lint:md", "result": "passed" },
-    { "tool": "eslint", "version": "10.4.0", "command": "npm run lint", "result": "passed" },
-    { "tool": "npm-audit", "version": "bundled", "command": "npm run audit:deps", "result": "passed", "vulnerabilities": 0 },
-    { "tool": "gitleaks-action", "version": "v2", "command": "gitleaks/gitleaks-action@v2", "environment": "ci-only" }
+    {
+      "tool": "prettier",
+      "version": "3.8.3",
+      "command": "npm run format:check",
+      "result": "passed"
+    },
+    {
+      "tool": "markdownlint-cli2",
+      "version": "0.22.1",
+      "command": "npm run lint:md",
+      "result": "passed"
+    },
+    {
+      "tool": "eslint",
+      "version": "10.4.0",
+      "command": "npm run lint",
+      "result": "passed"
+    },
+    {
+      "tool": "npm-audit",
+      "version": "bundled",
+      "command": "npm run audit:deps",
+      "result": "passed",
+      "vulnerabilities": 0
+    },
+    {
+      "tool": "osv-scanner",
+      "version": "1.9.0",
+      "command": "npm run audit:osv",
+      "ciAction": "google/osv-scanner-action/osv-scanner-action@v2",
+      "result": "passed",
+      "vulnerabilities": 0
+    },
+    {
+      "tool": "gitleaks-action",
+      "version": "v2",
+      "command": "gitleaks/gitleaks-action@v2",
+      "environment": "ci-only"
+    }
   ],
   "reportOnlyGates": [
-    { "tool": "knip", "version": "6.14.2", "command": "npm run knip", "note": "skeleton packages produce expected unused-export output" },
-    { "tool": "dependency-cruiser", "version": "17.4.2", "command": "npm run depcruise" }
+    {
+      "tool": "knip",
+      "version": "6.14.2",
+      "command": "npm run knip",
+      "note": "skeleton packages produce expected unused-export output"
+    },
+    {
+      "tool": "dependency-cruiser",
+      "version": "17.4.2",
+      "command": "npm run depcruise"
+    }
   ],
   "securityScans": [
-    { "tool": "codeql", "language": "javascript-typescript", "queries": "security-extended", "workflow": ".github/workflows/codeql.yml" }
+    {
+      "tool": "codeql",
+      "language": "javascript-typescript",
+      "queries": "security-extended",
+      "workflow": ".github/workflows/codeql.yml"
+    }
   ],
   "bugsFixed": [
     "validate-lifecycle-evidence: Ajv draft-2020-12 regression (used Ajv instead of Ajv2020)",

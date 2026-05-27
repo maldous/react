@@ -35,6 +35,13 @@ jobs:
       - name: Dependency audit (npm audit --audit-level=high)
         run: npm run audit:deps
 
+      - name: OSV vulnerability scan
+        uses: google/osv-scanner-action/osv-scanner-action@v2
+        with:
+          scan-args: |-
+            --recursive
+            .
+
       - name: Secret scan (gitleaks)
         uses: gitleaks/gitleaks-action@v2
         env:

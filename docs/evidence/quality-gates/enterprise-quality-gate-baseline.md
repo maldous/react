@@ -18,6 +18,7 @@ Added external quality, security, and documentation tooling before the first ver
 | ESLint (flat config) | 10.4.0 | Hard | `npm run lint` |
 | npm audit | bundled | Hard | `npm run audit:deps` |
 | gitleaks | action@v2 | Hard (CI only) | `gitleaks/gitleaks-action@v2` |
+| osv-scanner | 1.9.0 (snap) | Hard | `npm run audit:osv` (local), `google/osv-scanner-action@v2` (CI) |
 | Knip | 6.14.2 | Report-only | `npm run knip` |
 | dependency-cruiser | 17.4.2 | Report-only | `npm run depcruise` |
 | CodeQL | action@v3 | Security scan | `.github/workflows/codeql.yml` |
@@ -34,7 +35,8 @@ These checks must pass on every PR and push to main:
    - Rules: `no-unused-vars` (underscore exception), `no-unreachable`, `no-duplicate-imports`
    - Does NOT encode ADR import boundaries (validate-source-imports owns that)
 4. **audit:deps** — `npm audit --audit-level=high`; fails on high/critical CVEs.
-5. **secrets:scan** — `gitleaks/gitleaks-action@v2` in CI; detects committed secrets.
+5. **audit:osv** — `osv-scanner scan --recursive .`; scans all lock files against the OSV database.
+6. **secrets:scan** — `gitleaks/gitleaks-action@v2` in CI; detects committed secrets.
 
 ## Report-only gates
 
@@ -82,7 +84,6 @@ node --test (6 test files)    → 6 pass, 0 fail
 
 ## What was deferred
 
-- `audit:osv` — `osv-scanner` is not in devDependencies; script exists but requires the binary on PATH. Deferred until a Node-installable variant or GitHub Action is identified.
 - `secrets:scan` script (local) — graceful no-op if gitleaks binary not on PATH. Hard gate runs via GitHub Action in CI only.
 - Knip configuration tuning — skeleton packages produce expected false positives; promote to hard gate after first vertical slice ships real exports.
 - dependency-cruiser configuration tuning — promote to hard gate after first vertical slice defines real module graph.
