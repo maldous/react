@@ -1,0 +1,259 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0",
+  "description": "Machine-readable per-package import boundary rules. Loaded by tools/architecture/validate-source-imports. Human-readable companion: import-boundary-rules.md.",
+  "packageRules": [
+    {
+      "id": "no-react-in-domain",
+      "appliesTo": ["@platform/domain-core"],
+      "forbiddenPrefixes": [],
+      "forbiddenExact": ["react", "react-dom"],
+      "rationale": "Domain packages must remain pure TypeScript policy/model packages with no React runtime dependency."
+    },
+    {
+      "id": "no-graphql-in-domain",
+      "appliesTo": ["@platform/domain-core"],
+      "forbiddenPrefixes": ["@apollo/", "@graphql-codegen/"],
+      "forbiddenExact": ["graphql"],
+      "rationale": "Domain packages must not import GraphQL client or runtime packages."
+    },
+    {
+      "id": "no-adapters-in-domain",
+      "appliesTo": ["@platform/domain-core"],
+      "forbiddenPrefixes": ["@platform/adapters-"],
+      "forbiddenExact": ["@platform/react-enterprise-app", "@platform/feature-workflow"],
+      "rationale": "Domain packages must not import adapters, application packages, or feature packages."
+    },
+    {
+      "id": "no-operations-in-domain",
+      "appliesTo": ["@platform/domain-core"],
+      "forbiddenPrefixes": [
+        "@platform/api-runtime",
+        "@platform/graphql-api-runtime",
+        "@platform/worker-runtime"
+      ],
+      "forbiddenExact": [
+        "@platform/session-runtime",
+        "@platform/security-auth",
+        "@platform/audit-events",
+        "@platform/observability",
+        "@platform/queue-runtime",
+        "@platform/storage-runtime",
+        "@platform/config-runtime"
+      ],
+      "rationale": "Domain packages must not import any operations or delivery packages."
+    },
+    {
+      "id": "no-domain-in-ui",
+      "appliesTo": ["@platform/ui-design-system"],
+      "forbiddenPrefixes": ["@platform/adapters-", "@platform/contracts-"],
+      "forbiddenExact": [
+        "@platform/domain-core",
+        "@platform/profile-configuration",
+        "@platform/access-control"
+      ],
+      "rationale": "UI packages are presentational and data-source agnostic; they must not import domain, contract, or adapter packages."
+    },
+    {
+      "id": "no-adapters-in-profile",
+      "appliesTo": ["@platform/profile-configuration"],
+      "forbiddenPrefixes": [],
+      "forbiddenExact": [
+        "@platform/adapters-postgres",
+        "@platform/adapters-clickhouse",
+        "@platform/adapters-graphql",
+        "react",
+        "react-dom"
+      ],
+      "rationale": "Profile/configuration policy is storage-independent. PostgreSQL persistence belongs to adapters-postgres."
+    },
+    {
+      "id": "no-operations-in-profile",
+      "appliesTo": ["@platform/profile-configuration"],
+      "forbiddenPrefixes": [
+        "@platform/api-runtime",
+        "@platform/graphql-api-runtime",
+        "@platform/worker-runtime",
+        "@platform/adapters-keycloak",
+        "@platform/adapters-redis",
+        "@platform/adapters-sentry",
+        "@platform/adapters-opentelemetry",
+        "@platform/adapters-object-storage"
+      ],
+      "forbiddenExact": [
+        "@platform/session-runtime",
+        "@platform/security-auth",
+        "@platform/observability",
+        "@platform/queue-runtime",
+        "@platform/storage-runtime",
+        "@platform/config-runtime"
+      ],
+      "rationale": "Profile/configuration must not import operations or delivery packages."
+    },
+    {
+      "id": "no-adapters-in-access-control",
+      "appliesTo": ["@platform/access-control"],
+      "forbiddenPrefixes": [],
+      "forbiddenExact": [
+        "@platform/adapters-postgres",
+        "@platform/adapters-clickhouse"
+      ],
+      "rationale": "Access-control does not own authentication integration or storage runtime."
+    },
+    {
+      "id": "no-react-in-access-control",
+      "appliesTo": ["@platform/access-control"],
+      "forbiddenPrefixes": [],
+      "forbiddenExact": ["react", "react-dom"],
+      "rationale": "Access-control is a pure policy package with no React runtime dependency."
+    },
+    {
+      "id": "no-operations-in-access-control",
+      "appliesTo": ["@platform/access-control"],
+      "forbiddenPrefixes": [
+        "@platform/api-runtime",
+        "@platform/graphql-api-runtime",
+        "@platform/worker-runtime",
+        "@platform/adapters-keycloak",
+        "@platform/adapters-redis",
+        "@platform/adapters-sentry",
+        "@platform/adapters-opentelemetry",
+        "@platform/adapters-object-storage"
+      ],
+      "forbiddenExact": [
+        "@platform/session-runtime",
+        "@platform/security-auth",
+        "@platform/observability",
+        "@platform/queue-runtime",
+        "@platform/storage-runtime",
+        "@platform/config-runtime"
+      ],
+      "rationale": "Access-control must not import any operations or delivery packages."
+    },
+    {
+      "id": "no-adapters-in-contracts-graphql",
+      "appliesTo": ["@platform/contracts-graphql"],
+      "forbiddenPrefixes": [],
+      "forbiddenExact": ["@platform/adapters-graphql"],
+      "rationale": "Contract packages must remain runtime-free; adapters-graphql is the runtime binding."
+    },
+    {
+      "id": "no-adapters-in-contracts-ingestion",
+      "appliesTo": ["@platform/contracts-ingestion"],
+      "forbiddenPrefixes": [],
+      "forbiddenExact": [
+        "@platform/adapters-ingestion",
+        "@platform/adapters-postgres",
+        "@platform/adapters-clickhouse"
+      ],
+      "rationale": "Contract packages must remain runtime-free."
+    },
+    {
+      "id": "no-adapters-in-contracts-analytics",
+      "appliesTo": ["@platform/contracts-analytics"],
+      "forbiddenPrefixes": [],
+      "forbiddenExact": ["@platform/adapters-clickhouse"],
+      "rationale": "Contract packages must remain runtime-free; adapters-clickhouse is the analytical persistence runtime."
+    },
+    {
+      "id": "no-adapters-in-feature",
+      "appliesTo": ["@platform/feature-workflow"],
+      "forbiddenPrefixes": [],
+      "forbiddenExact": [
+        "@platform/adapters-postgres",
+        "@platform/adapters-clickhouse"
+      ],
+      "rationale": "Feature packages compose workflows; they do not own persistence."
+    },
+    {
+      "id": "no-operations-adapters-in-feature",
+      "appliesTo": ["@platform/feature-workflow"],
+      "forbiddenPrefixes": [],
+      "forbiddenExact": [
+        "@platform/adapters-keycloak",
+        "@platform/adapters-redis",
+        "@platform/adapters-sentry",
+        "@platform/adapters-opentelemetry",
+        "@platform/adapters-object-storage",
+        "@platform/adapters-brevo"
+      ],
+      "rationale": "Feature packages must not import operations adapter packages."
+    },
+    {
+      "id": "no-server-runtime-in-feature",
+      "appliesTo": ["@platform/feature-workflow"],
+      "forbiddenPrefixes": [],
+      "forbiddenExact": [
+        "@platform/api-runtime",
+        "@platform/graphql-api-runtime",
+        "@platform/worker-runtime",
+        "@platform/session-runtime",
+        "@platform/security-auth"
+      ],
+      "rationale": "Feature packages must not import server-side platform runtime packages."
+    },
+    {
+      "id": "no-platform-deps-in-security-auth",
+      "appliesTo": ["@platform/security-auth"],
+      "forbiddenPrefixes": ["@platform/"],
+      "forbiddenExact": [],
+      "rationale": "security-auth is a leaf interface node with zero @platform/* dependencies."
+    },
+    {
+      "id": "no-platform-deps-in-observability",
+      "appliesTo": ["@platform/observability"],
+      "forbiddenPrefixes": ["@platform/"],
+      "forbiddenExact": [],
+      "rationale": "observability is a leaf interface node with zero @platform/* dependencies."
+    },
+    {
+      "id": "no-platform-deps-in-queue-runtime",
+      "appliesTo": ["@platform/queue-runtime"],
+      "forbiddenPrefixes": ["@platform/"],
+      "forbiddenExact": [],
+      "rationale": "queue-runtime is a leaf interface node with zero @platform/* dependencies."
+    },
+    {
+      "id": "no-platform-deps-in-storage-runtime",
+      "appliesTo": ["@platform/storage-runtime"],
+      "forbiddenPrefixes": ["@platform/"],
+      "forbiddenExact": [],
+      "rationale": "storage-runtime is a leaf interface node with zero @platform/* dependencies."
+    },
+    {
+      "id": "no-platform-deps-in-audit-events",
+      "appliesTo": ["@platform/audit-events"],
+      "forbiddenPrefixes": ["@platform/"],
+      "forbiddenExact": [],
+      "rationale": "audit-events is a leaf interface node with zero @platform/* dependencies."
+    },
+    {
+      "id": "no-platform-deps-in-config-runtime",
+      "appliesTo": ["@platform/config-runtime"],
+      "forbiddenPrefixes": ["@platform/"],
+      "forbiddenExact": [],
+      "rationale": "config-runtime is a leaf interface node with zero @platform/* dependencies."
+    },
+    {
+      "id": "no-platform-deps-in-email-runtime",
+      "appliesTo": ["@platform/email-runtime"],
+      "forbiddenPrefixes": ["@platform/"],
+      "forbiddenExact": [],
+      "rationale": "email-runtime is a leaf interface node with zero @platform/* dependencies."
+    },
+    {
+      "id": "no-platform-deps-in-notification-runtime",
+      "appliesTo": ["@platform/notification-runtime"],
+      "forbiddenPrefixes": ["@platform/"],
+      "forbiddenExact": [],
+      "rationale": "notification-runtime is a leaf interface node with zero @platform/* dependencies."
+    },
+    {
+      "id": "no-platform-deps-in-search-runtime",
+      "appliesTo": ["@platform/search-runtime"],
+      "forbiddenPrefixes": ["@platform/"],
+      "forbiddenExact": [],
+      "rationale": "search-runtime is a leaf interface node with zero @platform/* dependencies."
+    }
+  ]
+}

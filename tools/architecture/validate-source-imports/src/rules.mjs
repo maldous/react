@@ -1,17 +1,33 @@
+import fs from "node:fs";
 import path from "node:path";
 import { findPackageRoot } from "./scanner.mjs";
 
-function pkgRule(id, forbiddenPrefixes, forbiddenExact) {
-  return {
-    id,
-    match(specifier) {
-      if (forbiddenExact.includes(specifier)) return true;
-      return forbiddenPrefixes.some((p) => specifier.startsWith(p));
-    },
-    message(pkg, specifier) {
-      return `${pkg} must not import ${specifier}`;
+const RULES_JSON_PATH = path.resolve(
+  path.dirname(new URL(import.meta.url).pathname),
+  "../../../../docs/architecture/import-boundary-rules.json"
+);
+
+function loadPackageRules() {
+  const { packageRules } = JSON.parse(fs.readFileSync(RULES_JSON_PATH, "utf8"));
+
+  const result = {};
+  for (const rule of packageRules) {
+    const { id, appliesTo, forbiddenPrefixes, forbiddenExact } = rule;
+    for (const pkg of appliesTo) {
+      if (!result[pkg]) result[pkg] = [];
+      result[pkg].push({
+        id,
+        match(specifier) {
+          if (forbiddenExact.includes(specifier)) return true;
+          return forbiddenPrefixes.some((p) => specifier.startsWith(p));
+        },
+        message(packageName, specifier) {
+          return `${packageName} must not import ${specifier}`;
+        }
+      });
     }
-  };
+  }
+  return result;
 }
 
 export const UNIVERSAL_RULES = [
@@ -52,64 +68,4 @@ export const UNIVERSAL_RULES = [
   }
 ];
 
-export const PACKAGE_RULES = {
-  "@platform/domain-core": [
-    pkgRule("no-react-in-domain", [], ["react", "react-dom"]),
-    pkgRule("no-graphql-in-domain", ["@apollo/", "@graphql-codegen/"], ["graphql"]),
-    pkgRule("no-adapters-in-domain", ["@platform/adapters-"], ["@platform/react-enterprise-app", "@platform/feature-workflow"]),
-    pkgRule("no-operations-in-domain", ["@platform/api-runtime", "@platform/graphql-api-runtime", "@platform/worker-runtime"], ["@platform/session-runtime", "@platform/security-auth", "@platform/audit-events", "@platform/observability", "@platform/queue-runtime", "@platform/storage-runtime", "@platform/config-runtime"])
-  ],
-  "@platform/ui-design-system": [
-    pkgRule("no-domain-in-ui", ["@platform/adapters-", "@platform/contracts-"], ["@platform/domain-core", "@platform/profile-configuration", "@platform/access-control"])
-  ],
-  "@platform/profile-configuration": [
-    pkgRule("no-adapters-in-profile", [], ["@platform/adapters-postgres", "@platform/adapters-clickhouse", "@platform/adapters-graphql", "react", "react-dom"]),
-    pkgRule("no-operations-in-profile", ["@platform/api-runtime", "@platform/graphql-api-runtime", "@platform/worker-runtime", "@platform/adapters-keycloak", "@platform/adapters-redis", "@platform/adapters-sentry", "@platform/adapters-opentelemetry", "@platform/adapters-object-storage"], ["@platform/session-runtime", "@platform/security-auth", "@platform/observability", "@platform/queue-runtime", "@platform/storage-runtime", "@platform/config-runtime"])
-  ],
-  "@platform/access-control": [
-    pkgRule("no-adapters-in-access-control", [], ["@platform/adapters-postgres", "@platform/adapters-clickhouse"]),
-    pkgRule("no-react-in-access-control", [], ["react", "react-dom"]),
-    pkgRule("no-operations-in-access-control", ["@platform/api-runtime", "@platform/graphql-api-runtime", "@platform/worker-runtime", "@platform/adapters-keycloak", "@platform/adapters-redis", "@platform/adapters-sentry", "@platform/adapters-opentelemetry", "@platform/adapters-object-storage"], ["@platform/session-runtime", "@platform/security-auth", "@platform/observability", "@platform/queue-runtime", "@platform/storage-runtime", "@platform/config-runtime"])
-  ],
-  "@platform/contracts-graphql": [
-    pkgRule("no-adapters-in-contracts-graphql", [], ["@platform/adapters-graphql"])
-  ],
-  "@platform/contracts-ingestion": [
-    pkgRule("no-adapters-in-contracts-ingestion", [], ["@platform/adapters-ingestion", "@platform/adapters-postgres", "@platform/adapters-clickhouse"])
-  ],
-  "@platform/contracts-analytics": [
-    pkgRule("no-adapters-in-contracts-analytics", [], ["@platform/adapters-clickhouse"])
-  ],
-  "@platform/feature-workflow": [
-    pkgRule("no-adapters-in-feature", [], ["@platform/adapters-postgres", "@platform/adapters-clickhouse"]),
-    pkgRule("no-operations-adapters-in-feature", [], ["@platform/adapters-keycloak", "@platform/adapters-redis", "@platform/adapters-sentry", "@platform/adapters-opentelemetry", "@platform/adapters-object-storage", "@platform/adapters-brevo"]),
-    pkgRule("no-server-runtime-in-feature", [], ["@platform/api-runtime", "@platform/graphql-api-runtime", "@platform/worker-runtime", "@platform/session-runtime", "@platform/security-auth"])
-  ],
-  "@platform/security-auth": [
-    pkgRule("no-platform-deps-in-security-auth", ["@platform/"], [])
-  ],
-  "@platform/observability": [
-    pkgRule("no-platform-deps-in-observability", ["@platform/"], [])
-  ],
-  "@platform/queue-runtime": [
-    pkgRule("no-platform-deps-in-queue-runtime", ["@platform/"], [])
-  ],
-  "@platform/storage-runtime": [
-    pkgRule("no-platform-deps-in-storage-runtime", ["@platform/"], [])
-  ],
-  "@platform/audit-events": [
-    pkgRule("no-platform-deps-in-audit-events", ["@platform/"], [])
-  ],
-  "@platform/config-runtime": [
-    pkgRule("no-platform-deps-in-config-runtime", ["@platform/"], [])
-  ],
-  "@platform/email-runtime": [
-    pkgRule("no-platform-deps-in-email-runtime", ["@platform/"], [])
-  ],
-  "@platform/notification-runtime": [
-    pkgRule("no-platform-deps-in-notification-runtime", ["@platform/"], [])
-  ],
-  "@platform/search-runtime": [
-    pkgRule("no-platform-deps-in-search-runtime", ["@platform/"], [])
-  ]
-};
+export const PACKAGE_RULES = loadPackageRules();
