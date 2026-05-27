@@ -55,6 +55,14 @@ const semantic = run(["tools/architecture/validate-package-metadata/tests/fixtur
 assert.equal(semantic.status, 1, semantic.stderr || semantic.stdout);
 assert.equal(parse(semantic).failed, 1);
 
+const deprecatedIneligible = run(["tools/architecture/validate-package-metadata/tests/fixtures/invalid/lifecycle-deprecated-ineligible"]);
+assert.equal(deprecatedIneligible.status, 1, deprecatedIneligible.stderr || deprecatedIneligible.stdout);
+assert.equal(parse(deprecatedIneligible).failed, 1);
+
+const externalPolicy = run(["tools/architecture/validate-package-metadata/tests/fixtures/invalid/lifecycle-external-policy"]);
+assert.equal(externalPolicy.status, 1, externalPolicy.stderr || externalPolicy.stdout);
+assert.equal(parse(externalPolicy).failed, 1);
+
 const noReportsResult = run(["tools/architecture/validate-package-metadata"]);
 assert.equal(noReportsResult.status, 0, noReportsResult.stderr || noReportsResult.stdout);
 const noReportsPayload = parse(noReportsResult);

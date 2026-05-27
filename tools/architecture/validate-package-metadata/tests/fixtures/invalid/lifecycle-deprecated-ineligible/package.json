@@ -1,0 +1,79 @@
+{
+  "name": "@fixture/lifecycle-deprecated-ineligible",
+  "version": "1.0.0",
+  "description": "Invalid fixture: deprecated package with promotionEligible true and wrong changeControl.",
+  "private": true,
+  "type": "module",
+  "exports": {},
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "fixture",
+      "system": "enterprise-react-platform",
+      "domain": "core",
+      "boundedContext": "domain-core",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "deprecated",
+      "role": "feature",
+      "class": "deprecated.feature",
+      "catalogLifecycle": "deprecated",
+      "visibility": "deprecated",
+      "supportLevel": "deprecated",
+      "reviewCadence": "on-change"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001"
+      ],
+      "semverPolicy": "deprecated",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "fixture",
+      "serviceNamespace": "core",
+      "deploymentEnvironments": []
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [],
+      "forbiddenConsumers": [
+        "external"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "core",
+      "type": "library",
+      "stage": "deprecated",
+      "role": "feature",
+      "layer": "domain"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Fixture for deprecated lifecycle governance validation.",
+      "responsibilities": [
+        "Test fixture only"
+      ],
+      "nonResponsibilities": [
+        "Production runtime"
+      ],
+      "usage": [
+        "Used in tests"
+      ],
+      "operationalNotes": [
+        "Local fixture"
+      ]
+    }
+  }
+}

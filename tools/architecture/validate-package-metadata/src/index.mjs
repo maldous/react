@@ -213,6 +213,7 @@ function validatePackage(packageJson, packagePath, schemaValidator) {
   validateComponent(architecture.component, errors);
   validateLifecycle(architecture.lifecycle, errors);
   validateGovernance(architecture.governance, errors);
+  validateLifecycleGovernanceConsistency(architecture.lifecycle, architecture.governance, errors);
   validateRuntime(architecture.runtime, errors);
   validateBoundaries(architecture.boundaries, errors);
   validateRelations(architecture.relations, errors);
@@ -226,6 +227,28 @@ function validatePackage(packageJson, packagePath, schemaValidator) {
     errors,
     warnings
   };
+}
+
+function validateLifecycleGovernanceConsistency(lifecycle, governance, errors) {
+  if (!isObject(lifecycle) || !isObject(governance)) return;
+
+  if (lifecycle.stage === "deprecated") {
+    if (governance.promotionEligible === true) {
+      errors.push("architecture.governance.promotionEligible must be false for deprecated lifecycle stage");
+    }
+    if (governance.changeControl !== "deprecation-review") {
+      errors.push("architecture.governance.changeControl must be deprecation-review for deprecated lifecycle stage");
+    }
+    if (governance.semverPolicy !== "deprecated") {
+      errors.push("architecture.governance.semverPolicy must be deprecated for deprecated lifecycle stage");
+    }
+  }
+
+  if (lifecycle.stage === "external") {
+    if (governance.semverPolicy !== "external-governed") {
+      errors.push("architecture.governance.semverPolicy must be external-governed for external lifecycle stage");
+    }
+  }
 }
 
 function validateComponent(component, errors) {
@@ -539,6 +562,7 @@ function writeSelfEvidence({ report, startedAt, finishedAt, command, roots, outp
       "architecture metadata groups",
       "lifecycle enum rules",
       "lifecycle class semantic rule",
+      "lifecycle-governance consistency rules (skeleton-phase exception: initial packages are exempt from transition evidence requirements per ADR-ACT-0077)",
       "governance ADR reference format",
       "runtime production/testOnly semantic rule",
       "boundary deep import semantic rule",

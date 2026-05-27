@@ -1,0 +1,79 @@
+{
+  "name": "@fixture/lifecycle-external-policy",
+  "version": "1.0.0",
+  "description": "Invalid fixture: external package with wrong semverPolicy.",
+  "private": true,
+  "type": "module",
+  "exports": {},
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "fixture",
+      "system": "enterprise-react-platform",
+      "domain": "integration",
+      "boundedContext": "external-ingestion-contracts",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "external",
+      "role": "contract",
+      "class": "external.contract",
+      "catalogLifecycle": "production",
+      "visibility": "external",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "architecture-review",
+      "promotionEligible": false
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "fixture",
+      "serviceNamespace": "integration",
+      "deploymentEnvironments": []
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "external"
+      ],
+      "forbiddenConsumers": []
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "integration",
+      "type": "library",
+      "stage": "external",
+      "role": "contract",
+      "layer": "contract"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Fixture for external lifecycle governance validation.",
+      "responsibilities": [
+        "Test fixture only"
+      ],
+      "nonResponsibilities": [
+        "Production runtime"
+      ],
+      "usage": [
+        "Used in tests"
+      ],
+      "operationalNotes": [
+        "Local fixture"
+      ]
+    }
+  }
+}

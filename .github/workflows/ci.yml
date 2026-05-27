@@ -1,0 +1,26 @@
+name: Architecture governance
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  architecture-checks:
+    name: Architecture governance checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install validate-package-metadata dependencies
+        run: npm ci
+        working-directory: tools/architecture/validate-package-metadata
+
+      - name: Run architecture governance checks
+        run: node tools/architecture/orchestrator/src/index.mjs all --no-reports
