@@ -219,11 +219,9 @@ The package inventory JSON report must include:
 
 ```text
 generatedAt
-schemaVersion
-sourceRoots
-packageCount
+source
+totalPackages
 packages[]
-summary
 ```
 
 Each package record must include:
@@ -232,59 +230,21 @@ Each package record must include:
 name
 path
 version
-private
-description
-component.type
-component.system
-component.domain
-component.boundedContext
-component.owner
-lifecycle.stage
-lifecycle.role
-lifecycle.class
-lifecycle.catalogLifecycle
-lifecycle.visibility
-lifecycle.supportLevel
-lifecycle.reviewCadence
-governance.decisionRefs
-governance.semverPolicy
-governance.changeControl
-governance.promotionEligible
-runtime.production
-runtime.testOnly
-runtime.serviceName
-runtime.serviceNamespace
-runtime.deploymentEnvironments
-boundaries.publicExportsOnly
-boundaries.deepImportsAllowed
-boundaries.allowedConsumers
-boundaries.forbiddenConsumers
-relations.dependsOn
-relations.providesApis
-relations.consumesApis
-tags
-readme.generated
-validation.status
-validation.errors
+component (nested object: name, type, system, domain, boundedContext, owner)
+lifecycle (nested object: stage, role, class, catalogLifecycle, visibility, supportLevel, reviewCadence)
+governance (nested object: decisionRefs, semverPolicy, changeControl, promotionEligible)
+runtime (nested object: production, testOnly, serviceName, serviceNamespace, deploymentEnvironments)
+relations (nested object: dependsOn, providesApis, consumesApis)
+tags (nested object: scope, type, stage, role, layer)
 ```
 
-The package inventory summary must include counts by:
+The lifecycle summary groups packages by:
 
 ```text
-domain
-boundedContext
-owner
-component.type
 lifecycle.stage
 lifecycle.role
 lifecycle.class
-catalogLifecycle
-visibility
-supportLevel
-runtime.production
-runtime.testOnly
-governance.promotionEligible
-validation.status
+lifecycle.supportLevel
 ```
 
 The Markdown inventory report must include:
@@ -327,16 +287,13 @@ The lifecycle summary JSON report must include:
 
 ```text
 generatedAt
-packageCount
-stageCounts
-roleCounts
-classCounts
-promotionEligiblePackages
-deprecatedPackages
-externalPackages
-maintenancePackages
-unreviewedPackages
-validationFailurePackages
+source
+totalPackages
+byStage (counts by lifecycle stage)
+byRole (counts by lifecycle role)
+byClass (counts by lifecycle class)
+bySupportLevel (counts by support level)
+packages[] (list of package lifecycle records)
 ```
 
 The lifecycle summary Markdown report must include:

@@ -25,7 +25,7 @@ Role: tooling
 Class: active.tooling
 Catalog lifecycle: production
 Visibility: internal
-Support level: best-effort
+Support level: experimental
 Review cadence: annual
 ```
 
