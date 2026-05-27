@@ -71,7 +71,7 @@ export function writeCommittedEvidence(jsonReport, repoRoot, toolVersion, scanRo
     ...jsonReport,
     toolVersion,
     ruleSet: "ADR-0001, ADR-0002, ADR-0013, ADR-0014, ADR-0015, import-boundary-rules.md",
-    scanMethod: "regex+path-resolution",
+    scanMethod: "typescript-ast",
     scanRoots
   };
 
@@ -83,7 +83,7 @@ export function writeCommittedEvidence(jsonReport, repoRoot, toolVersion, scanRo
     "",
     `Generated at: ${jsonReport.generatedAt}`,
     `Tool version: ${toolVersion}`,
-    `Scan method: regex+path-resolution`,
+    `Scan method: typescript-ast`,
     `Rule set: ${evidenceJson.ruleSet}`,
     "",
     "## Result",
@@ -159,7 +159,9 @@ export function writeSelfEvidence({
       "no-adapters-in-contracts-analytics",
       "no-adapters-in-feature",
       "no-computed-dynamic-import",
-      "no-unresolved-platform-import"
+      "no-unresolved-platform-import",
+      "no-package-cycle",
+      "no-unresolved-relative-import"
     ],
     checksPassed,
     checksFailed,

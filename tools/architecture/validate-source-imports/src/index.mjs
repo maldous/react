@@ -116,6 +116,74 @@ function readToolVersion(repoRoot) {
   }
 }
 
+function resolveRelativeSpecifier(fileInfo, specifier) {
+  const extensions = [".ts", ".tsx", ".js", ".mjs", ".cjs", "/index.ts", "/index.tsx", "/index.js"];
+  const base = path.resolve(path.dirname(fileInfo.file), specifier);
+  if (fs.existsSync(base)) return true;
+  for (const ext of extensions) {
+    if (fs.existsSync(base + ext)) return true;
+  }
+  return false;
+}
+
+function buildPackageGraph(files) {
+  const graph = new Map();
+  for (const fileInfo of files) {
+    if (!graph.has(fileInfo.packageName)) graph.set(fileInfo.packageName, new Set());
+    for (const specifier of fileInfo.imports) {
+      if (specifier.startsWith("@platform/") && !specifier.slice("@platform/".length).includes("/")) {
+        graph.get(fileInfo.packageName).add(specifier);
+      }
+    }
+  }
+  return graph;
+}
+
+function detectCycles(graph) {
+  const WHITE = 0, GRAY = 1, BLACK = 2;
+  const color = new Map();
+  for (const node of graph.keys()) color.set(node, WHITE);
+  const cycles = [];
+
+  function dfs(node, stack) {
+    color.set(node, GRAY);
+    stack.push(node);
+    for (const dep of (graph.get(node) ?? new Set())) {
+      if (!graph.has(dep)) continue;
+      const c = color.get(dep) ?? WHITE;
+      if (c === GRAY) {
+        const cycleStart = stack.indexOf(dep);
+        cycles.push([...stack.slice(cycleStart), dep]);
+      } else if (c === WHITE) {
+        dfs(dep, stack);
+      }
+    }
+    stack.pop();
+    color.set(node, BLACK);
+  }
+
+  for (const node of graph.keys()) {
+    if ((color.get(node) ?? WHITE) === WHITE) dfs(node, []);
+  }
+  return cycles;
+}
+
+function checkCycleViolations(files) {
+  const graph = buildPackageGraph(files);
+  const cycles = detectCycles(graph);
+  return cycles.map((cycle) => {
+    const packageName = cycle[0];
+    const rep = files.find((f) => f.packageName === packageName);
+    return {
+      file: rep?.file ?? packageName,
+      packageName,
+      specifier: cycle[cycle.length - 1],
+      rule: "no-package-cycle",
+      message: `Package cycle detected: ${cycle.join(" → ")}`
+    };
+  });
+}
+
 function checkViolations(files, { strict = false, knownPackages = null } = {}) {
   const violations = [];
 
@@ -193,6 +261,21 @@ function checkViolations(files, { strict = false, knownPackages = null } = {}) {
           message: `${fileInfo.packageName} imports ${specifier} which does not exist in the repository`
         });
       }
+
+      // Strict: relative imports must resolve to an existing file
+      if (
+        strict &&
+        (specifier.startsWith("./") || specifier.startsWith("../")) &&
+        !resolveRelativeSpecifier(fileInfo, specifier)
+      ) {
+        violations.push({
+          file: fileInfo.file,
+          packageName: fileInfo.packageName,
+          specifier,
+          rule: "no-unresolved-relative-import",
+          message: `${fileInfo.packageName}: relative import ${specifier} does not resolve to an existing file`
+        });
+      }
     }
   }
 
@@ -233,6 +316,7 @@ function main() {
   const { files, warnings } = scanRoots(scanRootArgs, REPO_ROOT);
   const knownPackages = OPTIONS.strict ? discoverKnownPackages(REPO_ROOT) : null;
   const violations = checkViolations(files, { strict: OPTIONS.strict, knownPackages });
+  if (OPTIONS.strict) violations.push(...checkCycleViolations(files));
 
   const finishedAt = new Date().toISOString();
   const exitCode = violations.length > 0 ? 1 : 0;

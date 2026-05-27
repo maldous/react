@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 
@@ -59,7 +61,8 @@ const invalidFixtures = [
   { name: "relative-cross-package-import", dir: "invalid/relative-cross-package-import/packages", rule: "no-relative-cross-package-import" },
   { name: "adapter-imports-unlisted", dir: "invalid/adapter-imports-unlisted", rule: "no-unlisted-platform-import" },
   { name: "empty-dep-list-imports-platform", dir: "invalid/empty-dep-list-imports-platform", rule: "no-unlisted-platform-import" },
-  { name: "type-only-boundary-violation", dir: "invalid/type-only-boundary-violation", rule: "no-react-in-domain" }
+  { name: "type-only-boundary-violation", dir: "invalid/type-only-boundary-violation", rule: "no-react-in-domain" },
+  { name: "import-type-node-boundary-violation", dir: "invalid/import-type-node-boundary-violation", rule: "no-react-in-domain" }
 ];
 
 for (const fixture of invalidFixtures) {
@@ -76,7 +79,9 @@ for (const fixture of invalidFixtures) {
 // Strict-mode fixtures — each needs --strict to trigger the violation
 const strictFixtures = [
   { name: "computed-dynamic-import", dir: "invalid/computed-dynamic-import", rule: "no-computed-dynamic-import" },
-  { name: "unresolved-platform-import", dir: "invalid/unresolved-platform-import", rule: "no-unresolved-platform-import" }
+  { name: "unresolved-platform-import", dir: "invalid/unresolved-platform-import", rule: "no-unresolved-platform-import" },
+  { name: "package-cycle", dir: "invalid/package-cycle/packages", rule: "no-package-cycle" },
+  { name: "unresolved-relative-import", dir: "invalid/unresolved-relative-import", rule: "no-unresolved-relative-import" }
 ];
 
 for (const fixture of strictFixtures) {
@@ -105,14 +110,28 @@ assert.equal(strictRepoResult.status, 0, `real repo strict scan should pass\n${s
 assert.equal(strictRepoPayload?.violations?.length ?? 0, 0, "real repo should have no violations in strict mode");
 console.log("✓ real repo strict scan: no violations");
 
-// Test --write emits committed evidence
-const writeResult = run(["apps", "packages"], ["--write"]);
-assert.equal(writeResult.status, 0, `--write should pass\n${writeResult.stdout}\n${writeResult.stderr}`);
-const writePayload = parseOutput(writeResult);
-assert.ok(
-  writePayload?.outputPaths?.some((p) => p.includes("source-import-boundary-validation.json")),
-  "--write should emit committed evidence JSON"
-);
-console.log("✓ --write emits committed evidence");
+// Test --write emits committed evidence (isolated temp dir to avoid dirtying committed evidence)
+{
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "validate-imports-write-"));
+  try {
+    fs.mkdirSync(path.join(tmpDir, "docs", "schemas"), { recursive: true });
+    fs.writeFileSync(
+      path.join(tmpDir, "docs", "schemas", "package-json-architecture.schema.json"),
+      "{}"
+    );
+    fs.mkdirSync(path.join(tmpDir, "apps"), { recursive: true });
+    const writeArgs = [toolScript, "--root", tmpDir, "--format", "json", "--no-reports", "--write", "apps"];
+    const writeResult = spawnSync(process.execPath, writeArgs, { cwd: tmpDir, encoding: "utf8" });
+    assert.equal(writeResult.status, 0, `--write should pass\n${writeResult.stdout}\n${writeResult.stderr}`);
+    const writePayload = parseOutput(writeResult);
+    assert.ok(
+      writePayload?.outputPaths?.some((p) => p.includes("source-import-boundary-validation.json")),
+      "--write should emit committed evidence JSON"
+    );
+    console.log("✓ --write emits committed evidence");
+  } finally {
+    fs.rmSync(tmpDir, { recursive: true, force: true });
+  }
+}
 
 console.log("validate-source-imports test passed");

@@ -102,6 +102,12 @@ function extractImports(source, filePath) {
         addEdge(ref.expression.text, false, false, node.getStart());
       }
     }
+    // type X = import("specifier").Type  (ImportTypeNode)
+    else if (ts.isImportTypeNode(node)) {
+      if (ts.isLiteralTypeNode(node.argument) && ts.isStringLiteral(node.argument.literal)) {
+        addEdge(node.argument.literal.text, true, false, node.getStart());
+      }
+    }
     // import("specifier") dynamic import and require("specifier")
     else if (ts.isCallExpression(node)) {
       const isImport = node.expression.kind === ts.SyntaxKind.ImportKeyword;

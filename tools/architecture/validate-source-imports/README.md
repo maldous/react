@@ -41,18 +41,19 @@ Semver policy: internal-traceable
 ## Responsibilities
 
 - Walk apps/ and packages/ source files
-- Extract static, re-export, and dynamic import specifiers via regex
-- Enforce universal rules: no deep imports, no test-support in production files
-- Enforce per-package boundary rules derived from import-boundary-rules.md
+- Extract static imports, re-exports, dynamic imports, and import-type nodes via the TypeScript compiler API
+- Enforce universal rules: no deep imports, no test-support in production files, no relative cross-package imports
+- Enforce per-package boundary rules derived from import-boundary-rules.json
+- Detect package import cycles in strict mode
+- Detect unresolved relative and @platform/* imports in strict mode
 - Write JSON and Markdown validation reports
 - Write committed governance evidence with --write
 
 ## Non-responsibilities
 
-- Does not perform TypeScript type-checking or compiler integration
-- Does not analyse circular dependencies
-- Does not validate runtime node_modules resolution
-- Does not validate relative within-package imports
+- Does not perform full TypeScript type-checking or compiler module resolution
+- Does not validate runtime node_modules installation
+- Does not validate path aliases or tsconfig path mappings
 
 ## Public exports and usage
 
