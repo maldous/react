@@ -58,7 +58,8 @@ const invalidFixtures = [
   { name: "profile-imports-postgres", dir: "invalid/profile-imports-postgres", rule: "no-adapters-in-profile" },
   { name: "relative-cross-package-import", dir: "invalid/relative-cross-package-import/packages", rule: "no-relative-cross-package-import" },
   { name: "adapter-imports-unlisted", dir: "invalid/adapter-imports-unlisted", rule: "no-unlisted-platform-import" },
-  { name: "empty-dep-list-imports-platform", dir: "invalid/empty-dep-list-imports-platform", rule: "no-unlisted-platform-import" }
+  { name: "empty-dep-list-imports-platform", dir: "invalid/empty-dep-list-imports-platform", rule: "no-unlisted-platform-import" },
+  { name: "type-only-boundary-violation", dir: "invalid/type-only-boundary-violation", rule: "no-react-in-domain" }
 ];
 
 for (const fixture of invalidFixtures) {
@@ -72,6 +73,23 @@ for (const fixture of invalidFixtures) {
   console.log(`✓ invalid: ${fixture.name} (rule: ${fixture.rule})`);
 }
 
+// Strict-mode fixtures — each needs --strict to trigger the violation
+const strictFixtures = [
+  { name: "computed-dynamic-import", dir: "invalid/computed-dynamic-import", rule: "no-computed-dynamic-import" },
+  { name: "unresolved-platform-import", dir: "invalid/unresolved-platform-import", rule: "no-unresolved-platform-import" }
+];
+
+for (const fixture of strictFixtures) {
+  const fixturePath = path.join(fixturesDir, fixture.dir);
+  const result = run([rel(fixturePath)], ["--strict"]);
+  const payload = parseOutput(result);
+  assert.equal(result.status, 1, `${fixture.name}: expected exit 1\n${result.stdout}\n${result.stderr}`);
+  assert.ok(payload?.violations?.length > 0, `${fixture.name}: expected violations`);
+  const ruleIds = payload.violations.map((v) => v.rule);
+  assert.ok(ruleIds.includes(fixture.rule), `${fixture.name}: expected rule ${fixture.rule}, got ${ruleIds.join(", ")}`);
+  console.log(`✓ strict: ${fixture.name} (rule: ${fixture.rule})`);
+}
+
 // Test that --no-reports suppresses report file writing (already using --no-reports above)
 // Test that tool exits 0 on real repo (apps + packages have no violations)
 const repoResult = run(["apps", "packages"]);
@@ -79,6 +97,13 @@ const repoPayload = parseOutput(repoResult);
 assert.equal(repoResult.status, 0, `real repo scan should pass\n${repoResult.stdout}\n${repoResult.stderr}`);
 assert.equal(repoPayload?.violations?.length ?? 0, 0, "real repo should have no violations");
 console.log("✓ real repo scan: no violations");
+
+// Test that real repo passes with --strict too
+const strictRepoResult = run(["apps", "packages"], ["--strict"]);
+const strictRepoPayload = parseOutput(strictRepoResult);
+assert.equal(strictRepoResult.status, 0, `real repo strict scan should pass\n${strictRepoResult.stdout}\n${strictRepoResult.stderr}`);
+assert.equal(strictRepoPayload?.violations?.length ?? 0, 0, "real repo should have no violations in strict mode");
+console.log("✓ real repo strict scan: no violations");
 
 // Test --write emits committed evidence
 const writeResult = run(["apps", "packages"], ["--write"]);

@@ -50,6 +50,18 @@ function getScriptKind(filePath) {
   }
 }
 
+function lineOf(sourceFile, pos) {
+  return ts.getLineAndCharacterOfPosition(sourceFile, pos).line + 1;
+}
+
+/**
+ * @typedef {{ specifier: string, isTypeOnly: boolean, isDynamic: boolean, line: number }} ImportEdge
+ * @typedef {{ line: number }} ComputedImport
+ */
+
+/**
+ * @returns {{ imports: string[], importEdges: ImportEdge[], computedImports: ComputedImport[] }}
+ */
 function extractImports(source, filePath) {
   const sourceFile = ts.createSourceFile(
     filePath,
@@ -59,26 +71,35 @@ function extractImports(source, filePath) {
     getScriptKind(filePath)
   );
 
-  const specifiers = new Set();
+  const seen = new Set();
+  /** @type {ImportEdge[]} */
+  const importEdges = [];
+  /** @type {ComputedImport[]} */
+  const computedImports = [];
+
+  function addEdge(specifier, isTypeOnly, isDynamic, pos) {
+    importEdges.push({ specifier, isTypeOnly, isDynamic, line: lineOf(sourceFile, pos) });
+    seen.add(specifier);
+  }
 
   function visit(node) {
     // import ... from "specifier"  (including import type ...)
     if (ts.isImportDeclaration(node)) {
       if (ts.isStringLiteral(node.moduleSpecifier)) {
-        specifiers.add(node.moduleSpecifier.text);
+        addEdge(node.moduleSpecifier.text, !!node.importClause?.isTypeOnly, false, node.getStart());
       }
     }
     // export ... from "specifier"  (including export type ...)
     else if (ts.isExportDeclaration(node)) {
       if (node.moduleSpecifier && ts.isStringLiteral(node.moduleSpecifier)) {
-        specifiers.add(node.moduleSpecifier.text);
+        addEdge(node.moduleSpecifier.text, !!node.isTypeOnly, false, node.getStart());
       }
     }
     // import foo = require("specifier")
     else if (ts.isImportEqualsDeclaration(node)) {
       const ref = node.moduleReference;
       if (ts.isExternalModuleReference(ref) && ts.isStringLiteral(ref.expression)) {
-        specifiers.add(ref.expression.text);
+        addEdge(ref.expression.text, false, false, node.getStart());
       }
     }
     // import("specifier") dynamic import and require("specifier")
@@ -89,7 +110,10 @@ function extractImports(source, filePath) {
       if ((isImport || isRequire) && node.arguments.length >= 1) {
         const arg = node.arguments[0];
         if (ts.isStringLiteral(arg)) {
-          specifiers.add(arg.text);
+          addEdge(arg.text, false, true, node.getStart());
+        } else {
+          // computed dynamic import — specifier cannot be statically determined
+          computedImports.push({ line: lineOf(sourceFile, node.getStart()) });
         }
       }
     }
@@ -98,7 +122,12 @@ function extractImports(source, filePath) {
   }
 
   visit(sourceFile);
-  return [...specifiers];
+
+  return {
+    imports: [...seen],
+    importEdges,
+    computedImports
+  };
 }
 
 export function scanRoots(roots, repoRoot) {
@@ -156,14 +185,16 @@ export function scanRoots(roots, repoRoot) {
       return;
     }
 
-    const imports = extractImports(source, filePath);
+    const { imports, importEdges, computedImports } = extractImports(source, filePath);
     files.push({
       file: filePath,
       packageName,
       packageRoot,
       allowedPlatformDeps,
       isTestFile: isTest,
-      imports
+      imports,
+      importEdges,
+      computedImports
     });
   }
 }

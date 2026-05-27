@@ -19,6 +19,7 @@ function parseArgs(argv) {
     format: "text",
     noReports: false,
     write: false,
+    strict: false,
     roots: []
   };
 
@@ -50,6 +51,11 @@ function parseArgs(argv) {
       continue;
     }
 
+    if (arg === "--strict") {
+      options.strict = true;
+      continue;
+    }
+
     if (arg.startsWith("--")) {
       throw new Error(`Unknown option: ${arg}`);
     }
@@ -62,6 +68,26 @@ function parseArgs(argv) {
   }
 
   return options;
+}
+
+function discoverKnownPackages(repoRoot) {
+  const known = new Set();
+  for (const dir of ["apps", "packages"]) {
+    const root = path.join(repoRoot, dir);
+    if (!fs.existsSync(root)) continue;
+    for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
+      if (!entry.isDirectory()) continue;
+      const pkgPath = path.join(root, entry.name, "package.json");
+      if (!fs.existsSync(pkgPath)) continue;
+      try {
+        const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
+        if (pkg.name) known.add(pkg.name);
+      } catch {
+        // skip
+      }
+    }
+  }
+  return known;
 }
 
 function findRepoRoot(startDir) {
@@ -90,10 +116,23 @@ function readToolVersion(repoRoot) {
   }
 }
 
-function checkViolations(files) {
+function checkViolations(files, { strict = false, knownPackages = null } = {}) {
   const violations = [];
 
   for (const fileInfo of files) {
+    // Strict: computed dynamic imports cannot be statically analyzed
+    if (strict && fileInfo.computedImports?.length > 0) {
+      for (const ci of fileInfo.computedImports) {
+        violations.push({
+          file: fileInfo.file,
+          packageName: fileInfo.packageName,
+          specifier: "<computed>",
+          rule: "no-computed-dynamic-import",
+          message: `${fileInfo.packageName}: computed dynamic import at line ${ci.line} cannot be statically verified`
+        });
+      }
+    }
+
     for (const specifier of fileInfo.imports) {
       for (const rule of UNIVERSAL_RULES) {
         if (rule.productionOnly && fileInfo.isTestFile) continue;
@@ -137,6 +176,23 @@ function checkViolations(files) {
           message: `${fileInfo.packageName} must not import ${specifier} (not in architecture.relations.dependsOn)`
         });
       }
+
+      // Strict: @platform/* imports must resolve to a package that exists in the repo
+      if (
+        strict &&
+        knownPackages !== null &&
+        specifier.startsWith("@platform/") &&
+        !specifier.slice("@platform/".length).includes("/") &&
+        !knownPackages.has(specifier)
+      ) {
+        violations.push({
+          file: fileInfo.file,
+          packageName: fileInfo.packageName,
+          specifier,
+          rule: "no-unresolved-platform-import",
+          message: `${fileInfo.packageName} imports ${specifier} which does not exist in the repository`
+        });
+      }
     }
   }
 
@@ -175,7 +231,8 @@ function main() {
 
   const scanRootArgs = OPTIONS.roots.length > 0 ? OPTIONS.roots : ["apps", "packages"];
   const { files, warnings } = scanRoots(scanRootArgs, REPO_ROOT);
-  const violations = checkViolations(files);
+  const knownPackages = OPTIONS.strict ? discoverKnownPackages(REPO_ROOT) : null;
+  const violations = checkViolations(files, { strict: OPTIONS.strict, knownPackages });
 
   const finishedAt = new Date().toISOString();
   const exitCode = violations.length > 0 ? 1 : 0;
