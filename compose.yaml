@@ -1,0 +1,355 @@
+name: react-platform
+
+# Profile guide:
+#   (none)        — default: postgres, redis, clickhouse, minio, mailpit, otel-collector
+#   quality       — sonarqube + sonar-postgres
+#   identity      — keycloak + keycloak-postgres
+#   cloud-mocks   — localstack
+#   sentry        — sentry-web + sentry-worker + sentry-cron + sentry-postgres + sentry-redis
+#
+# Port map (host):
+#   5433  postgres (5432 used by manicode-db-1)    6379  redis
+#   8124  clickhouse-http (8123 used by homeassistant)   9002  clickhouse-native
+#   9000  minio-api        9001  minio-console
+#   1025  mailpit-smtp     8025  mailpit-ui    1026  mailhog-smtp   8026  mailhog-ui
+#   4317  otlp-grpc        4318  otlp-http     9003  sonarqube-ui
+#   8080  keycloak         4566  localstack    9010  sentry-web
+
+services:
+  # ---------------------------------------------------------------------------
+  # DEFAULT PROFILE — no profile selector; started by `docker compose up -d`
+  # ---------------------------------------------------------------------------
+
+  postgres:
+    image: postgres:16.6-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-platform}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-platformpassword}
+      POSTGRES_DB: ${POSTGRES_DB:-platform}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-platform} -d ${POSTGRES_DB:-platform}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.4.2-alpine
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.12
+    ports:
+      - "8124:8123" # HTTP interface (8123 used by homeassistant container)
+      - "9002:9000" # Native protocol (mapped to 9002; 9000 used by minio)
+    volumes:
+      - clickhouse-data:/var/lib/clickhouse
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8123/ping || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
+  minio:
+    image: minio/minio:RELEASE.2024-12-18T13-15-44Z
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-miniopassword}
+    ports:
+      - "9000:9000" # S3-compatible API
+      - "9001:9001" # MinIO console
+    volumes:
+      - minio-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9000/minio/health/live || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  mailpit:
+    image: axllent/mailpit:v1.21.0
+    ports:
+      - "1025:1025" # SMTP
+      - "8025:8025" # Web UI
+    restart: unless-stopped
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.114.0
+    command: ["--config=/etc/otelcol-contrib/config.yaml"]
+    volumes:
+      - ./docker/otel/otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml:ro
+    ports:
+      - "4317:4317" # OTLP gRPC
+      - "4318:4318" # OTLP HTTP
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # QUALITY PROFILE — `docker compose --profile quality up -d sonarqube`
+  # ---------------------------------------------------------------------------
+
+  sonar-postgres:
+    image: postgres:16.6-alpine
+    profiles: [quality]
+    environment:
+      POSTGRES_USER: ${SONAR_DB_USER:-sonar}
+      POSTGRES_PASSWORD: ${SONAR_DB_PASSWORD:-sonarpassword}
+      POSTGRES_DB: ${SONAR_DB_NAME:-sonar}
+    volumes:
+      - sonar-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${SONAR_DB_USER:-sonar} -d ${SONAR_DB_NAME:-sonar}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    restart: unless-stopped
+
+  sonarqube:
+    image: sonarqube:lts-community
+    profiles: [quality]
+    depends_on:
+      sonar-postgres:
+        condition: service_healthy
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://sonar-postgres:5432/${SONAR_DB_NAME:-sonar}
+      SONAR_JDBC_USERNAME: ${SONAR_DB_USER:-sonar}
+      SONAR_JDBC_PASSWORD: ${SONAR_DB_PASSWORD:-sonarpassword}
+      # Disable ES bootstrap checks (required without vm.max_map_count sysctl)
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+      # Default credentials: admin / admin — change on first login; do not commit tokens
+    ports:
+      - "9003:9000"
+    volumes:
+      - sonarqube-data:/opt/sonarqube/data
+      - sonarqube-extensions:/opt/sonarqube/extensions
+      - sonarqube-logs:/opt/sonarqube/logs
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'wget -qO- http://localhost:9000/api/system/status | grep -q ''"status":"UP"'' || exit 1',
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # IDENTITY PROFILE — `docker compose --profile identity up -d keycloak`
+  # ---------------------------------------------------------------------------
+
+  keycloak-postgres:
+    image: postgres:16.6-alpine
+    profiles: [identity]
+    environment:
+      POSTGRES_USER: ${KEYCLOAK_DB_USER:-keycloak}
+      POSTGRES_PASSWORD: ${KEYCLOAK_DB_PASSWORD:-keycloakpassword}
+      POSTGRES_DB: ${KEYCLOAK_DB_NAME:-keycloak}
+    volumes:
+      - keycloak-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${KEYCLOAK_DB_USER:-keycloak} -d ${KEYCLOAK_DB_NAME:-keycloak}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    restart: unless-stopped
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.2
+    profiles: [identity]
+    command: start-dev
+    depends_on:
+      keycloak-postgres:
+        condition: service_healthy
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://keycloak-postgres:5432/${KEYCLOAK_DB_NAME:-keycloak}
+      KC_DB_USERNAME: ${KEYCLOAK_DB_USER:-keycloak}
+      KC_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD:-keycloakpassword}
+      KC_HOSTNAME_STRICT: "false"
+      KC_HTTP_ENABLED: "true"
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN_USER:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health/ready || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # CLOUD-MOCKS PROFILE — `docker compose --profile cloud-mocks up -d localstack`
+  # ---------------------------------------------------------------------------
+
+  localstack:
+    image: localstack/localstack:4.0.4
+    profiles: [cloud-mocks]
+    environment:
+      SERVICES: ${LOCALSTACK_SERVICES:-s3,sqs,sns,secretsmanager}
+      DEBUG: ${LOCALSTACK_DEBUG:-0}
+      DOCKER_HOST: unix:///var/run/docker.sock
+    ports:
+      - "4566:4566"
+    volumes:
+      - localstack-data:/var/lib/localstack
+      - /var/run/docker.sock:/var/run/docker.sock
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:4566/_localstack/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # SENTRY PROFILE — `docker compose --profile sentry up -d`
+  # ---------------------------------------------------------------------------
+
+  sentry-postgres:
+    image: postgres:16.6-alpine
+    profiles: [sentry]
+    environment:
+      POSTGRES_USER: ${SENTRY_DB_USER:-sentry}
+      POSTGRES_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
+      POSTGRES_DB: ${SENTRY_DB_NAME:-sentry}
+    volumes:
+      - sentry-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${SENTRY_DB_USER:-sentry} -d ${SENTRY_DB_NAME:-sentry}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    restart: unless-stopped
+
+  sentry-redis:
+    image: redis:7.4.2-alpine
+    profiles: [sentry]
+    volumes:
+      - sentry-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  sentry-web:
+    image: sentry:24.12.0
+    profiles: [sentry]
+    command: /bin/sh -c "sentry upgrade --noinput && exec sentry run web"
+    depends_on:
+      sentry-postgres:
+        condition: service_healthy
+      sentry-redis:
+        condition: service_healthy
+    environment:
+      SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY:-change-this-secret-key-in-dot-env}
+      SENTRY_POSTGRES_HOST: sentry-postgres
+      SENTRY_DB_USER: ${SENTRY_DB_USER:-sentry}
+      SENTRY_DB_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
+      SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
+      SENTRY_REDIS_HOST: sentry-redis
+      SENTRY_REDIS_PORT: "6379"
+      SENTRY_SINGLE_ORGANIZATION: "true"
+    ports:
+      - "9010:9000"
+    volumes:
+      - sentry-data:/var/lib/sentry/files
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9000/_health/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 15
+      start_period: 120s
+    restart: unless-stopped
+
+  sentry-worker:
+    image: sentry:24.12.0
+    profiles: [sentry]
+    command: sentry run worker
+    depends_on:
+      sentry-web:
+        condition: service_healthy
+    environment:
+      SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY:-change-this-secret-key-in-dot-env}
+      SENTRY_POSTGRES_HOST: sentry-postgres
+      SENTRY_DB_USER: ${SENTRY_DB_USER:-sentry}
+      SENTRY_DB_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
+      SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
+      SENTRY_REDIS_HOST: sentry-redis
+      SENTRY_REDIS_PORT: "6379"
+    volumes:
+      - sentry-data:/var/lib/sentry/files
+    restart: unless-stopped
+
+  sentry-cron:
+    image: sentry:24.12.0
+    profiles: [sentry]
+    command: sentry run cron
+    depends_on:
+      sentry-web:
+        condition: service_healthy
+    environment:
+      SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY:-change-this-secret-key-in-dot-env}
+      SENTRY_POSTGRES_HOST: sentry-postgres
+      SENTRY_DB_USER: ${SENTRY_DB_USER:-sentry}
+      SENTRY_DB_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
+      SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
+      SENTRY_REDIS_HOST: sentry-redis
+      SENTRY_REDIS_PORT: "6379"
+    volumes:
+      - sentry-data:/var/lib/sentry/files
+    restart: unless-stopped
+
+# ---------------------------------------------------------------------------
+# VOLUMES — all named; no anonymous volumes
+# ---------------------------------------------------------------------------
+
+volumes:
+  postgres-data:
+  redis-data:
+  clickhouse-data:
+  minio-data:
+  sonar-postgres-data:
+  sonarqube-data:
+  sonarqube-extensions:
+  sonarqube-logs:
+  keycloak-postgres-data:
+  localstack-data:
+  sentry-postgres-data:
+  sentry-redis-data:
+  sentry-data:

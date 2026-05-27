@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "1.0",
+  "evidenceType": "compose-baseline",
+  "adrRef": "ADR-0017",
+  "adrActRef": "ADR-ACT-0087",
+  "committedAt": "2026-05-27",
+  "defaultServices": [
+    {
+      "name": "postgres",
+      "image": "postgres:16.6-alpine",
+      "hostPort": 5433,
+      "containerPort": 5432,
+      "status": "healthy",
+      "adapter": "@platform/adapters-postgres",
+      "note": "5433 used; 5432 taken by manicode-db-1"
+    },
+    {
+      "name": "redis",
+      "image": "redis:7.4.2-alpine",
+      "hostPort": 6379,
+      "containerPort": 6379,
+      "status": "healthy",
+      "adapter": "@platform/adapters-redis"
+    },
+    {
+      "name": "clickhouse",
+      "image": "clickhouse/clickhouse-server:24.12",
+      "hostPorts": [
+        { "host": 8124, "container": 8123, "protocol": "HTTP" },
+        { "host": 9002, "container": 9000, "protocol": "native" }
+      ],
+      "status": "healthy",
+      "adapter": "@platform/adapters-clickhouse",
+      "note": "8124 used; 8123 taken by homeassistant container"
+    },
+    {
+      "name": "minio",
+      "image": "minio/minio:RELEASE.2024-12-18T13-15-44Z",
+      "hostPorts": [
+        { "host": 9000, "container": 9000, "protocol": "S3 API" },
+        { "host": 9001, "container": 9001, "protocol": "console" }
+      ],
+      "status": "healthy",
+      "adapter": "@platform/adapters-object-storage"
+    },
+    {
+      "name": "mailpit",
+      "image": "axllent/mailpit:v1.21.0",
+      "hostPorts": [
+        { "host": 1025, "container": 1025, "protocol": "SMTP" },
+        { "host": 8025, "container": 8025, "protocol": "HTTP UI" }
+      ],
+      "status": "healthy",
+      "adapter": "@platform/adapters-brevo"
+    },
+    {
+      "name": "otel-collector",
+      "image": "otel/opentelemetry-collector-contrib:0.114.0",
+      "hostPorts": [
+        { "host": 4317, "container": 4317, "protocol": "OTLP gRPC" },
+        { "host": 4318, "container": 4318, "protocol": "OTLP HTTP" }
+      ],
+      "status": "running",
+      "adapter": "@platform/adapters-opentelemetry",
+      "note": "0.116.0 exec failure; downgraded to 0.114.0"
+    }
+  ],
+  "profiledServices": {
+    "quality": ["sonar-postgres", "sonarqube"],
+    "identity": ["keycloak-postgres", "keycloak"],
+    "cloud-mocks": ["localstack"],
+    "sentry": [
+      "sentry-postgres",
+      "sentry-redis",
+      "sentry-web",
+      "sentry-worker",
+      "sentry-cron"
+    ]
+  },
+  "systemServicesDisabled": ["postgresql", "redis-server", "mailhog"],
+  "configFiles": [
+    "compose.yaml",
+    ".env.example",
+    "docker/otel/otel-collector-config.yaml"
+  ],
+  "composeConfigResult": "valid",
+  "defaultServicesStarted": 6,
+  "defaultServicesHealthy": 5,
+  "defaultServicesRunning": 1
+}
