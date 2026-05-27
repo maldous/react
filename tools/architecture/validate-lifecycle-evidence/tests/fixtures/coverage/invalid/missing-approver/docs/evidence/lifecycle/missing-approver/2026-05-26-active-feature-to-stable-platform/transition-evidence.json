@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "1.0",
+  "bundle": {
+    "id": "fixture:active.feature->stable.platform:2026-05-26T00:00:00.000Z",
+    "createdAt": "2026-05-26T00:00:00.000Z",
+    "createdBy": "test",
+    "status": "draft"
+  },
+  "package": {
+    "name": "@fixture/missing-approver",
+    "path": "packages/missing-approver/package.json",
+    "owner": "team-a"
+  },
+  "transition": {
+    "fromClass": "active.feature",
+    "toClass": "stable.platform",
+    "reason": "Representative transition",
+    "requestedAt": "2026-05-26T00:00:00.000Z"
+  },
+  "governance": {
+    "decisionRefs": [
+      "ADR-0010"
+    ],
+    "reviewers": [
+      {
+        "name": "Reviewer",
+        "role": "reviewer",
+        "reviewedAt": "2026-05-26T00:00:00.000Z"
+      }
+    ],
+    "approvers": []
+  },
+  "risk": {
+    "level": "medium",
+    "assessment": "Low implementation risk after review.",
+    "mitigations": [
+      "Run tests"
+    ]
+  },
+  "testing": {
+    "summary": "Fixture test evidence.",
+    "evidence": [
+      {
+        "path": "reports/testing/example.json",
+        "description": "Example test evidence"
+      }
+    ]
+  },
+  "impact": {
+    "runtimeImpact": "None expected.",
+    "consumerImpact": "Consumers reviewed."
+  },
+  "rollback": {
+    "strategy": "Revert lifecycle metadata.",
+    "notes": "Fixture rollback."
+  },
+  "sourceMetadataSnapshot": {
+    "packageJsonPath": "packages/missing-approver/package.json",
+    "architecture": {
+      "lifecycle": {
+        "class": "active.feature"
+      }
+    }
+  },
+  "reportReferences": [
+    {
+      "path": "reports/lifecycle/package-lifecycle-summary.json",
+      "description": "Lifecycle report"
+    }
+  ]
+}

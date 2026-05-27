@@ -1,6 +1,6 @@
 # Source import boundary validation evidence
 
-Generated at: 2026-05-27T00:54:36.469Z
+Generated at: 2026-05-27T01:00:18.466Z
 Tool version: 0.1.0
 Scan method: regex
 Rule set: ADR-0001, ADR-0002, import-boundary-rules.md
