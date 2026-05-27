@@ -1,6 +1,28 @@
 import fs from "node:fs";
 import path from "node:path";
 
+function buildPackageGraphObj(packageGraph) {
+  const obj = {};
+  if (packageGraph) {
+    for (const [pkg, deps] of packageGraph) {
+      obj[pkg] = [...deps].sort();
+    }
+  }
+  return obj;
+}
+
+function mapViolation(v, repoRoot) {
+  return {
+    file: path.relative(repoRoot, v.file),
+    package: v.packageName,
+    specifier: v.specifier,
+    rule: v.rule,
+    message: v.message,
+    resolvedFile: v.resolvedFile ? path.relative(repoRoot, v.resolvedFile) : null,
+    resolvedPackage: v.resolvedPackage ?? null,
+  };
+}
+
 export function buildJsonReport({
   generatedAt,
   files,
@@ -25,13 +47,6 @@ export function buildJsonReport({
     totalDynamicImports,
   } = edgeStats ?? {};
 
-  const packageGraphObj = {};
-  if (packageGraph) {
-    for (const [pkg, deps] of packageGraph) {
-      packageGraphObj[pkg] = [...deps].sort();
-    }
-  }
-
   return {
     generatedAt,
     toolVersion: toolVersion ?? null,
@@ -49,16 +64,8 @@ export function buildJsonReport({
     totalDynamicImports: totalDynamicImports ?? null,
     passed: files.length - fileSet.size,
     failed: fileSet.size,
-    packageGraph: packageGraphObj,
-    violations: violations.map((v) => ({
-      file: path.relative(repoRoot, v.file),
-      package: v.packageName,
-      specifier: v.specifier,
-      rule: v.rule,
-      message: v.message,
-      resolvedFile: v.resolvedFile ? path.relative(repoRoot, v.resolvedFile) : null,
-      resolvedPackage: v.resolvedPackage ?? null,
-    })),
+    packageGraph: buildPackageGraphObj(packageGraph),
+    violations: violations.map((v) => mapViolation(v, repoRoot)),
   };
 }
 

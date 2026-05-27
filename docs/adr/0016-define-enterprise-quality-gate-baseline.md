@@ -137,29 +137,32 @@ validate-source-imports is the sole authoritative gate for ADR import boundaries
 
 These run on every push and PR. Failure blocks merge:
 
-| Gate                   | Tool               | Version   | Command                        |
-| ---------------------- | ------------------ | --------- | ------------------------------ |
-| Formatting             | Prettier           | 3.8.3     | `npm run format:check`         |
-| Markdown lint          | markdownlint-cli2  | 0.22.1    | `npm run lint:md`              |
-| Code lint              | ESLint flat config | 10.4.0    | `npm run lint`                 |
-| Dependency audit       | npm audit          | bundled   | `npm run audit:deps`           |
-| OSV vulnerability scan | osv-scanner        | 1.9.0     | `npm run audit:osv`            |
-| Secret detection       | gitleaks           | action@v2 | CI only (gitleaks-action)      |
-| Security analysis      | CodeQL             | action@v3 | `.github/workflows/codeql.yml` |
+| Gate                   | Tool               | Version               | Command                                 |
+| ---------------------- | ------------------ | --------------------- | --------------------------------------- |
+| Formatting             | Prettier           | 3.8.3                 | `npm run format:check`                  |
+| Markdown lint          | markdownlint-cli2  | 0.22.1                | `npm run lint:md`                       |
+| Code lint              | ESLint flat config | 10.4.0                | `npm run lint`                          |
+| Dependency audit       | npm audit          | bundled               | `npm run audit:deps`                    |
+| OSV vulnerability scan | osv-scanner        | 1.9.0                 | `npm run audit:osv`                     |
+| Secret detection       | gitleaks           | action@v2             | CI only (gitleaks-action)               |
+| Security analysis      | CodeQL             | action@v3             | `.github/workflows/codeql.yml`          |
+| Code quality baseline  | SonarQube          | lts-community (local) | `npm run sonar:clean` (local pre-slice) |
+
+SonarQube is required locally as a pre-slice hard gate using a custom "Governance Tooling" quality gate (bugs=0, vulnerabilities=0, security_hotspots_reviewed=100%, reliability_rating=A, security_rating=A, maintainability_rating=A, code_smells=0). Coverage and duplication thresholds are not enforced because: (1) architecture tooling uses `node --test` without LCOV generation, and (2) similar argument-parsing patterns across tools are intentional and architecturally consistent. Coverage tooling (ADR-ACT-0092) and Sonar CI wiring (ADR-ACT-0092) are tracked separately.
 
 ESLint is configured with two buckets (Node.js tooling; TypeScript packages and apps). It must not encode ADR import-boundary rules — validate-source-imports owns that logic exclusively.
 
 ### Tier 3 — Advisory / report-only gates
 
-These run in CI but never fail the build. They become hard after the first vertical slice:
+Most run in CI but never fail the build. SonarQube is a **pre-slice hard baseline gate** — see Tier 2 addition below. Other advisory gates become hard after the first vertical slice:
 
-| Gate                       | Tool               | Promotion trigger                        |
-| -------------------------- | ------------------ | ---------------------------------------- |
-| Unused exports/deps        | Knip               | First slice exports real symbols         |
-| Dependency graph           | dependency-cruiser | First slice defines real import graph    |
-| Code quality               | SonarQube          | First slice provides meaningful coverage |
-| Software bill of materials | CycloneDX npm      | Before production readiness review       |
-| License compliance         | license-checker    | Before production readiness review       |
+| Gate                       | Tool               | Promotion trigger                                                              |
+| -------------------------- | ------------------ | ------------------------------------------------------------------------------ |
+| Unused exports/deps        | Knip               | First slice exports real symbols                                               |
+| Dependency graph           | dependency-cruiser | First slice defines real import graph                                          |
+| Code quality — pre-slice   | SonarQube          | **Pre-slice hard baseline** — zero bugs, vulns, hotspots, code smells required |
+| Software bill of materials | CycloneDX npm      | Before production readiness review                                             |
+| License compliance         | license-checker    | Before production readiness review                                             |
 
 ### Ignored paths (all tools)
 
@@ -208,6 +211,7 @@ Option C is chosen because:
 
 - CI becomes stricter before feature delivery begins.
 - Advisory tools must be explicitly promoted; this requires ongoing discipline post-first-slice.
+- SonarQube is a required local gate before slicing; CI wiring requires SONAR_TOKEN secret (tracked in ADR-ACT-0092).
 
 **Neutral / operational:**
 

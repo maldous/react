@@ -13,39 +13,30 @@ function parseArgs(argv) {
     roots: [],
   };
 
-  for (let index = 0; index < argv.length; index += 1) {
-    const arg = argv[index];
-
+  let i = 0;
+  while (i < argv.length) {
+    const arg = argv[i];
     if (arg === "--root") {
-      options.root = argv[++index];
-      continue;
-    }
-
-    if (arg === "--format") {
-      options.format = argv[++index] ?? "text";
-      continue;
-    }
-
-    if (arg === "--no-reports") {
+      options.root = argv[i + 1];
+      i += 2;
+    } else if (arg === "--format") {
+      options.format = argv[i + 1] ?? "text";
+      i += 2;
+    } else if (arg === "--no-reports") {
       options.noReports = true;
-      continue;
-    }
-
-    if (arg === "--write") {
+      i += 1;
+    } else if (arg === "--write") {
       options.write = true;
-      continue;
-    }
-
-    if (arg === "--check") {
+      i += 1;
+    } else if (arg === "--check") {
       options.write = false;
-      continue;
-    }
-
-    if (arg.startsWith("--")) {
+      i += 1;
+    } else if (arg.startsWith("--")) {
       throw new Error(`Unknown option: ${arg}`);
+    } else {
+      options.roots.push(arg);
+      i += 1;
     }
-
-    options.roots.push(arg);
   }
 
   if (!["text", "json"].includes(options.format)) {
@@ -94,6 +85,27 @@ function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
 
+function isInventoryFixtureDirectory(directoryPath) {
+  const relativeParts = path.relative(REPO_ROOT, directoryPath).split(path.sep);
+  return relativeParts.includes("tests") && relativeParts.includes("fixtures");
+}
+
+function walkInventory(current, results, ignored, explicitFixtureScan) {
+  const stat = fs.statSync(current);
+  if (stat.isDirectory()) {
+    const base = path.basename(current);
+    if (ignored.has(base)) return;
+    if (!explicitFixtureScan && isInventoryFixtureDirectory(current)) return;
+    for (const entry of fs.readdirSync(current)) {
+      walkInventory(path.join(current, entry), results, ignored, explicitFixtureScan);
+    }
+    return;
+  }
+  if (path.basename(current) === "package.json") {
+    results.push(current);
+  }
+}
+
 function listPackageJsonFiles(searchRoots) {
   const ignored = new Set(["node_modules", ".git", "dist", "build", "coverage", "reports"]);
   const results = [];
@@ -104,36 +116,10 @@ function listPackageJsonFiles(searchRoots) {
     if (!fs.existsSync(absoluteRoot)) {
       continue;
     }
-    walk(absoluteRoot);
+    walkInventory(absoluteRoot, results, ignored, explicitFixtureScan);
   }
 
   return [...new Set(results)].sort();
-
-  function isTestFixtureDirectory(directoryPath) {
-    const relativeParts = path.relative(REPO_ROOT, directoryPath).split(path.sep);
-    return relativeParts.includes("tests") && relativeParts.includes("fixtures");
-  }
-
-  function walk(current) {
-    const stat = fs.statSync(current);
-    if (stat.isDirectory()) {
-      const base = path.basename(current);
-      if (ignored.has(base)) {
-        return;
-      }
-      if (!explicitFixtureScan && isTestFixtureDirectory(current)) {
-        return;
-      }
-      for (const entry of fs.readdirSync(current)) {
-        walk(path.join(current, entry));
-      }
-      return;
-    }
-
-    if (path.basename(current) === "package.json") {
-      results.push(current);
-    }
-  }
 }
 
 function packageRecord(packageFile) {

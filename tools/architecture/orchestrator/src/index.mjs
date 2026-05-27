@@ -30,45 +30,33 @@ function parseArgs(argv) {
     options.command = argv.shift();
   }
 
-  for (let index = 0; index < argv.length; index += 1) {
-    const arg = argv[index];
-
+  let i = 0;
+  while (i < argv.length) {
+    const arg = argv[i];
     if (arg === "--root") {
-      options.root = argv[++index];
-      continue;
-    }
-
-    if (arg === "--format") {
-      options.format = argv[++index] ?? "text";
-      continue;
-    }
-
-    if (arg === "--no-reports") {
+      options.root = argv[i + 1];
+      i += 2;
+    } else if (arg === "--format") {
+      options.format = argv[i + 1] ?? "text";
+      i += 2;
+    } else if (arg === "--no-reports") {
       options.noReports = true;
-      continue;
-    }
-
-    if (arg === "--plan-only") {
+      i += 1;
+    } else if (arg === "--plan-only") {
       options.planOnly = true;
-      continue;
-    }
-
-    if (arg === "--allow-missing-ajv") {
+      i += 1;
+    } else if (arg === "--allow-missing-ajv") {
       options.allowMissingAjv = true;
-      continue;
-    }
-
-    if (arg === "--evidence-generation-requested") {
+      i += 1;
+    } else if (arg === "--evidence-generation-requested") {
       options.evidenceGenerationRequested = true;
-      continue;
-    }
-
-    if (arg === "--strict") {
+      i += 1;
+    } else if (arg === "--strict") {
       options.strict = true;
-      continue;
+      i += 1;
+    } else {
+      throw new Error(`Unknown option: ${arg}`);
     }
-
-    throw new Error(`Unknown option: ${arg}`);
   }
 
   if (!["text", "json"].includes(options.format)) {
@@ -110,130 +98,103 @@ function step(name, toolPath, args, required = true) {
   };
 }
 
-function planFor(command) {
-  const metadata = step(
-    "validate-package-metadata",
-    "tools/architecture/validate-package-metadata",
-    [
+function buildStepCatalog() {
+  const noReportsFlag = OPTIONS.noReports ? ["--no-reports"] : [];
+  const allowMissingAjvFlag = OPTIONS.allowMissingAjv ? ["--allow-missing-ajv"] : [];
+  const strictFlag = OPTIONS.strict ? ["--strict"] : [];
+
+  return {
+    metadata: step("validate-package-metadata", "tools/architecture/validate-package-metadata", [
       "--root",
       REPO_ROOT,
       "--format",
       "json",
-      ...(OPTIONS.noReports ? ["--no-reports"] : []),
-      ...(OPTIONS.allowMissingAjv ? ["--allow-missing-ajv"] : []),
-    ]
-  );
-
-  const plannedOnly = {
-    "validate-source-imports": step(
+      ...noReportsFlag,
+      ...allowMissingAjvFlag,
+    ]),
+    sourceImports: step(
       "validate-source-imports",
       "tools/architecture/validate-source-imports",
-      [
-        "--check",
-        "--format",
-        "json",
-        ...(OPTIONS.noReports ? ["--no-reports"] : []),
-        ...(OPTIONS.strict ? ["--strict"] : []),
-      ],
+      ["--check", "--format", "json", ...noReportsFlag, ...strictFlag],
       true
     ),
-    "generate-package-readmes": step(
+    readmesCheck: step(
       "generate-package-readmes",
       "tools/architecture/generate-package-readmes",
-      ["--check", "--format", "json", ...(OPTIONS.noReports ? ["--no-reports"] : [])],
+      ["--check", "--format", "json", ...noReportsFlag],
       true
     ),
-    "generate-package-inventory": step(
+    readmesWrite: step(
+      "generate-package-readmes",
+      "tools/architecture/generate-package-readmes",
+      ["--write", "--format", "json", ...noReportsFlag],
+      true
+    ),
+    inventoryWrite: step(
       "generate-package-inventory",
       "tools/architecture/generate-package-inventory",
-      ["--write", "--format", "json", ...(OPTIONS.noReports ? ["--no-reports"] : [])],
+      ["--write", "--format", "json", ...noReportsFlag],
       true
     ),
-    "generate-lifecycle-reports": step(
+    lifecycleReportsWrite: step(
       "generate-lifecycle-reports",
       "tools/architecture/generate-lifecycle-reports",
       ["--write"],
       false
     ),
-    "validate-lifecycle-evidence": step(
+    evidenceCheck: step(
       "validate-lifecycle-evidence",
       "tools/architecture/validate-lifecycle-evidence",
-      [
-        "--check",
-        "--format",
-        "json",
-        ...(OPTIONS.noReports ? ["--no-reports"] : []),
-        ...(OPTIONS.allowMissingAjv ? ["--allow-missing-ajv"] : []),
-      ],
+      ["--check", "--format", "json", ...noReportsFlag, ...allowMissingAjvFlag],
       true
     ),
-    "generate-lifecycle-evidence": step(
+    evidenceWrite: step(
       "generate-lifecycle-evidence",
       "tools/architecture/validate-lifecycle-evidence",
-      [
-        "--write",
-        "--format",
-        "json",
-        ...(OPTIONS.noReports ? ["--no-reports"] : []),
-        ...(OPTIONS.allowMissingAjv ? ["--allow-missing-ajv"] : []),
-      ],
+      ["--write", "--format", "json", ...noReportsFlag, ...allowMissingAjvFlag],
       true
     ),
   };
+}
+
+function planFor(command) {
+  const s = buildStepCatalog();
 
   if (command === "validate") {
-    return [metadata];
+    return [s.metadata];
   }
 
   if (command === "all") {
     return [
-      metadata,
-      plannedOnly["validate-source-imports"],
-      plannedOnly["generate-package-readmes"],
-      plannedOnly["generate-package-inventory"],
-      plannedOnly["generate-lifecycle-reports"],
-      plannedOnly["validate-lifecycle-evidence"],
+      s.metadata,
+      s.sourceImports,
+      s.readmesCheck,
+      s.inventoryWrite,
+      s.lifecycleReportsWrite,
+      s.evidenceCheck,
     ];
   }
 
   if (command === "generate-readmes") {
-    return [
-      metadata,
-      {
-        ...plannedOnly["generate-package-readmes"],
-        args: ["--write", "--format", "json", ...(OPTIONS.noReports ? ["--no-reports"] : [])],
-      },
-    ];
+    return [s.metadata, s.readmesWrite];
   }
 
   if (command === "generate-inventory") {
-    return [
-      metadata,
-      plannedOnly["generate-package-readmes"],
-      {
-        ...plannedOnly["generate-package-inventory"],
-        args: ["--write", "--format", "json", ...(OPTIONS.noReports ? ["--no-reports"] : [])],
-      },
-    ];
+    return [s.metadata, s.readmesCheck, s.inventoryWrite];
   }
 
   if (command === "generate-lifecycle-reports") {
-    return [
-      metadata,
-      plannedOnly["generate-package-readmes"],
-      plannedOnly["generate-package-inventory"],
-      { ...plannedOnly["generate-lifecycle-reports"], args: ["--write"] },
-    ];
+    return [s.metadata, s.readmesCheck, s.inventoryWrite, s.lifecycleReportsWrite];
   }
 
   if (command === "validate-evidence") {
     return [
-      metadata,
-      plannedOnly["validate-source-imports"],
-      plannedOnly["generate-package-readmes"],
-      plannedOnly["generate-package-inventory"],
-      plannedOnly["generate-lifecycle-reports"],
-      plannedOnly["validate-lifecycle-evidence"],
+      s.metadata,
+      s.sourceImports,
+      s.readmesCheck,
+      s.inventoryWrite,
+      s.lifecycleReportsWrite,
+      s.evidenceCheck,
     ];
   }
 
@@ -248,13 +209,13 @@ function planFor(command) {
       ];
     }
     return [
-      metadata,
-      plannedOnly["validate-source-imports"],
-      plannedOnly["generate-package-readmes"],
-      plannedOnly["generate-package-inventory"],
-      plannedOnly["generate-lifecycle-reports"],
-      plannedOnly["generate-lifecycle-evidence"],
-      plannedOnly["validate-lifecycle-evidence"],
+      s.metadata,
+      s.sourceImports,
+      s.readmesCheck,
+      s.inventoryWrite,
+      s.lifecycleReportsWrite,
+      s.evidenceWrite,
+      s.evidenceCheck,
     ];
   }
 
@@ -428,7 +389,8 @@ function printText({ plan, results, failedStep: _failedStep, evidencePath, exitC
   console.log("");
   console.log("Results:");
   for (const result of results) {
-    console.log(`- ${result.name}: ${result.status}${result.reason ? ` (${result.reason})` : ""}`);
+    const reasonSuffix = result.reason ? ` (${result.reason})` : "";
+    console.log(`- ${result.name}: ${result.status}${reasonSuffix}`);
   }
   if (evidencePath) {
     console.log("");

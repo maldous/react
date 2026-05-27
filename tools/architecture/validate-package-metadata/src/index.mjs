@@ -14,47 +14,32 @@ function parseArgs(argv) {
     roots: [],
   };
 
-  for (let index = 0; index < argv.length; index += 1) {
-    const arg = argv[index];
-
+  let i = 0;
+  while (i < argv.length) {
+    const arg = argv[i];
     if (arg === "--root") {
-      options.root = argv[++index];
-      continue;
-    }
-
-    if (arg === "--format") {
-      options.format = argv[++index] ?? "text";
-      continue;
-    }
-
-    if (arg === "--no-reports") {
+      options.root = argv[i + 1];
+      i += 2;
+    } else if (arg === "--format") {
+      options.format = argv[i + 1] ?? "text";
+      i += 2;
+    } else if (arg === "--no-reports") {
       options.noReports = true;
-      continue;
-    }
-
-    if (arg === "--strict") {
+      i += 1;
+    } else if (arg === "--strict") {
       options.strict = true;
-      continue;
-    }
-
-    if (arg === "--allow-missing-ajv") {
+      i += 1;
+    } else if (arg === "--allow-missing-ajv") {
       options.allowMissingAjv = true;
-      continue;
-    }
-
-    if (arg === "--check") {
-      continue;
-    }
-
-    if (arg === "--write") {
-      continue;
-    }
-
-    if (arg.startsWith("--")) {
+      i += 1;
+    } else if (arg === "--check" || arg === "--write") {
+      i += 1;
+    } else if (arg.startsWith("--")) {
       throw new Error(`Unknown option: ${arg}`);
+    } else {
+      options.roots.push(arg);
+      i += 1;
     }
-
-    options.roots.push(arg);
   }
 
   if (!["text", "json"].includes(options.format)) {
@@ -128,6 +113,27 @@ async function loadAjv() {
   return null;
 }
 
+function isMetadataFixtureDirectory(directoryPath) {
+  const parts = directoryPath.split(path.sep);
+  return parts.includes("tests") && parts.includes("fixtures");
+}
+
+function walkMetadata(current, results, ignored, explicitFixtureScan) {
+  const stat = fs.statSync(current);
+  if (stat.isDirectory()) {
+    const base = path.basename(current);
+    if (ignored.has(base)) return;
+    if (!explicitFixtureScan && isMetadataFixtureDirectory(current)) return;
+    for (const entry of fs.readdirSync(current)) {
+      walkMetadata(path.join(current, entry), results, ignored, explicitFixtureScan);
+    }
+    return;
+  }
+  if (path.basename(current) === "package.json") {
+    results.push(current);
+  }
+}
+
 function listPackageJsonFiles(searchRoots) {
   const ignored = new Set(["node_modules", ".git", "dist", "build", "coverage", "reports"]);
   const results = [];
@@ -138,36 +144,10 @@ function listPackageJsonFiles(searchRoots) {
     if (!fs.existsSync(absoluteRoot)) {
       continue;
     }
-    walk(absoluteRoot);
+    walkMetadata(absoluteRoot, results, ignored, explicitFixtureScan);
   }
 
   return [...new Set(results)].sort();
-
-  function isTestFixtureDirectory(directoryPath) {
-    const parts = directoryPath.split(path.sep);
-    return parts.includes("tests") && parts.includes("fixtures");
-  }
-
-  function walk(current) {
-    const stat = fs.statSync(current);
-    if (stat.isDirectory()) {
-      const base = path.basename(current);
-      if (ignored.has(base)) {
-        return;
-      }
-      if (!explicitFixtureScan && isTestFixtureDirectory(current)) {
-        return;
-      }
-      for (const entry of fs.readdirSync(current)) {
-        walk(path.join(current, entry));
-      }
-      return;
-    }
-
-    if (path.basename(current) === "package.json") {
-      results.push(current);
-    }
-  }
 }
 
 function enumError(pathLabel, value, allowed) {
@@ -184,10 +164,28 @@ function formatAjvError(error) {
   return `schema:${pathLabel} ${error.message}`;
 }
 
-function validatePackage(packageJson, packagePath, schemaValidator) {
-  const errors = [];
-  const warnings = [];
+const REQUIRED_PACKAGE_FIELDS = [
+  "name",
+  "version",
+  "description",
+  "private",
+  "type",
+  "exports",
+  "architecture",
+];
+const REQUIRED_ARCHITECTURE_GROUPS = [
+  "schemaVersion",
+  "component",
+  "lifecycle",
+  "governance",
+  "runtime",
+  "boundaries",
+  "relations",
+  "tags",
+  "readme",
+];
 
+function applySchemaValidation(packageJson, schemaValidator, errors, warnings) {
   if (schemaValidator?.validate) {
     const schemaValid = schemaValidator.validate(packageJson);
     if (!schemaValid) {
@@ -203,16 +201,26 @@ function validatePackage(packageJson, packagePath, schemaValidator) {
       errors.push(message);
     }
   }
+}
 
-  for (const field of [
-    "name",
-    "version",
-    "description",
-    "private",
-    "type",
-    "exports",
-    "architecture",
-  ]) {
+function validateArchitectureGroups(architecture, errors) {
+  for (const group of REQUIRED_ARCHITECTURE_GROUPS) {
+    if (!(group in architecture)) {
+      errors.push(`Missing architecture.${group}`);
+    }
+  }
+  if (architecture.schemaVersion !== "1.0") {
+    errors.push("architecture.schemaVersion must be 1.0");
+  }
+}
+
+function validatePackage(packageJson, packagePath, schemaValidator) {
+  const errors = [];
+  const warnings = [];
+
+  applySchemaValidation(packageJson, schemaValidator, errors, warnings);
+
+  for (const field of REQUIRED_PACKAGE_FIELDS) {
     if (!(field in packageJson)) {
       errors.push(`Missing required package field: ${field}`);
     }
@@ -230,26 +238,7 @@ function validatePackage(packageJson, packagePath, schemaValidator) {
     };
   }
 
-  for (const group of [
-    "schemaVersion",
-    "component",
-    "lifecycle",
-    "governance",
-    "runtime",
-    "boundaries",
-    "relations",
-    "tags",
-    "readme",
-  ]) {
-    if (!(group in architecture)) {
-      errors.push(`Missing architecture.${group}`);
-    }
-  }
-
-  if (architecture.schemaVersion !== "1.0") {
-    errors.push("architecture.schemaVersion must be 1.0");
-  }
-
+  validateArchitectureGroups(architecture, errors);
   validateComponent(architecture.component, errors);
   validateLifecycle(architecture.lifecycle, errors);
   validateGovernance(architecture.governance, errors);
@@ -352,11 +341,14 @@ function validateLifecycle(lifecycle, errors) {
     errors.push(`architecture.lifecycle.class must equal ${expectedClass}`);
   }
 
-  const expectedCatalogLifecycle = ["experimental", "candidate"].includes(lifecycle.stage)
-    ? "experimental"
-    : lifecycle.stage === "deprecated"
-      ? "deprecated"
-      : "production";
+  let expectedCatalogLifecycle;
+  if (["experimental", "candidate"].includes(lifecycle.stage)) {
+    expectedCatalogLifecycle = "experimental";
+  } else if (lifecycle.stage === "deprecated") {
+    expectedCatalogLifecycle = "deprecated";
+  } else {
+    expectedCatalogLifecycle = "production";
+  }
 
   if (lifecycle.catalogLifecycle !== expectedCatalogLifecycle) {
     errors.push(

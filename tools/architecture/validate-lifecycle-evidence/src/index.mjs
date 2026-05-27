@@ -4,6 +4,27 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
+// Options that consume the next argument as their value
+const VALUE_OPTS = new Map([
+  ["--root", "root"],
+  ["--format", "format"],
+  ["--package", "packageName"],
+  ["--from-class", "fromClass"],
+  ["--to-class", "toClass"],
+  ["--reason", "reason"],
+  ["--created-by", "createdBy"],
+  ["--reviewer", "reviewer"],
+  ["--approver", "approver"],
+]);
+
+// Options that are boolean flags
+const FLAG_OPTS = new Map([
+  ["--no-reports", ["noReports", true]],
+  ["--write", ["write", true]],
+  ["--check", ["write", false]],
+  ["--allow-missing-ajv", ["allowMissingAjv", true]],
+]);
+
 function parseArgs(argv) {
   const options = {
     root: null,
@@ -21,24 +42,22 @@ function parseArgs(argv) {
     roots: [],
   };
 
-  for (let index = 0; index < argv.length; index += 1) {
-    const arg = argv[index];
-
-    if (arg === "--root") options.root = argv[++index];
-    else if (arg === "--format") options.format = argv[++index] ?? "text";
-    else if (arg === "--no-reports") options.noReports = true;
-    else if (arg === "--write") options.write = true;
-    else if (arg === "--check") options.write = false;
-    else if (arg === "--allow-missing-ajv") options.allowMissingAjv = true;
-    else if (arg === "--package") options.packageName = argv[++index];
-    else if (arg === "--from-class") options.fromClass = argv[++index];
-    else if (arg === "--to-class") options.toClass = argv[++index];
-    else if (arg === "--reason") options.reason = argv[++index];
-    else if (arg === "--created-by") options.createdBy = argv[++index];
-    else if (arg === "--reviewer") options.reviewer = argv[++index];
-    else if (arg === "--approver") options.approver = argv[++index];
-    else if (arg.startsWith("--")) throw new Error(`Unknown option: ${arg}`);
-    else options.roots.push(arg);
+  let i = 0;
+  while (i < argv.length) {
+    const arg = argv[i];
+    if (VALUE_OPTS.has(arg)) {
+      options[VALUE_OPTS.get(arg)] = argv[i + 1] ?? null;
+      i += 2;
+    } else if (FLAG_OPTS.has(arg)) {
+      const [key, val] = FLAG_OPTS.get(arg);
+      options[key] = val;
+      i += 1;
+    } else if (arg.startsWith("--")) {
+      throw new Error(`Unknown option: ${arg}`);
+    } else {
+      options.roots.push(arg);
+      i += 1;
+    }
   }
 
   if (!["text", "json"].includes(options.format)) throw new Error("--format must be text or json");
@@ -133,31 +152,36 @@ async function createSchemaValidator(schema) {
   };
 }
 
-function fallbackValidate(bundle) {
-  const errors = [];
-  for (const field of [
-    "schemaVersion",
-    "bundle",
-    "package",
-    "transition",
-    "governance",
-    "risk",
-    "testing",
-    "impact",
-    "rollback",
-    "sourceMetadataSnapshot",
-    "reportReferences",
-  ]) {
+const REQUIRED_BUNDLE_FIELDS = [
+  "schemaVersion",
+  "bundle",
+  "package",
+  "transition",
+  "governance",
+  "risk",
+  "testing",
+  "impact",
+  "rollback",
+  "sourceMetadataSnapshot",
+  "reportReferences",
+];
+
+function validateBundleTopLevelFields(bundle, errors) {
+  for (const field of REQUIRED_BUNDLE_FIELDS) {
     if (!(field in bundle)) errors.push(`Missing required field: ${field}`);
   }
   if (bundle.schemaVersion !== "1.0") errors.push("schemaVersion must be 1.0");
+}
 
+function validateBundleTransition(bundle, errors) {
   const lifecycleClassPattern = /^[a-z]+\.[a-z]+$/;
   if (!lifecycleClassPattern.test(bundle.transition?.fromClass ?? ""))
     errors.push("transition.fromClass must use <stage>.<role> format");
   if (!lifecycleClassPattern.test(bundle.transition?.toClass ?? ""))
     errors.push("transition.toClass must use <stage>.<role> format");
+}
 
+function validateBundleGovernance(bundle, errors) {
   if (
     !Array.isArray(bundle.governance?.decisionRefs) ||
     bundle.governance.decisionRefs.length === 0
@@ -170,19 +194,37 @@ function fallbackValidate(bundle) {
       }
     }
   }
-
   if (!Array.isArray(bundle.governance?.reviewers) || bundle.governance.reviewers.length === 0)
     errors.push("governance.reviewers must be non-empty");
   if (!Array.isArray(bundle.governance?.approvers) || bundle.governance.approvers.length === 0)
     errors.push("governance.approvers must be non-empty");
+}
+
+function validateBundleTesting(bundle, errors) {
   if (!Array.isArray(bundle.testing?.evidence) || bundle.testing.evidence.length === 0)
     errors.push("testing.evidence must be non-empty");
+}
+
+function validateBundleRollback(bundle, errors) {
   if (!bundle.rollback?.strategy) errors.push("rollback.strategy must be present");
+}
+
+function validateBundleSnapshot(bundle, errors) {
   if (
     !bundle.sourceMetadataSnapshot?.packageJsonPath ||
     !bundle.sourceMetadataSnapshot?.architecture
   )
     errors.push("sourceMetadataSnapshot must include packageJsonPath and architecture");
+}
+
+function fallbackValidate(bundle) {
+  const errors = [];
+  validateBundleTopLevelFields(bundle, errors);
+  validateBundleTransition(bundle, errors);
+  validateBundleGovernance(bundle, errors);
+  validateBundleTesting(bundle, errors);
+  validateBundleRollback(bundle, errors);
+  validateBundleSnapshot(bundle, errors);
   return { valid: errors.length === 0, errors };
 }
 
@@ -239,7 +281,7 @@ function transitionSlug(packageName, fromClass, toClass, createdAt) {
   const packageSlug = packageName
     .replace(/^@/, "")
     .replace(/[^a-zA-Z0-9]+/g, "-")
-    .replace(/^-|-$/g, "")
+    .replace(/(^-)|(-$)/g, "")
     .toLowerCase();
   const date = createdAt.slice(0, 10);
   return {
@@ -250,10 +292,10 @@ function transitionSlug(packageName, fromClass, toClass, createdAt) {
 
 function buildBundle({ packageFile, packageJson }) {
   for (const field of ["packageName", "fromClass", "toClass", "reason"]) {
-    if (!OPTIONS[field])
-      throw new Error(
-        `Missing required option for --write: --${field.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}`
-      );
+    if (!OPTIONS[field]) {
+      const flagName = field.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase());
+      throw new Error(`Missing required option for --write: --${flagName}`);
+    }
   }
 
   const createdAt = process.env.ARCHITECTURE_EVIDENCE_CREATED_AT ?? new Date().toISOString();

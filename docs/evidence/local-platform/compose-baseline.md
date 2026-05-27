@@ -86,6 +86,16 @@ The `sentry` profile is for SDK smoke testing of `@platform/adapters-sentry` con
 
 `otel/opentelemetry-collector-contrib:0.114.0` is a distroless image with no shell, wget, or curl. The in-container healthcheck uses a process-liveness proxy (`/otelcol-contrib help`). The real readiness endpoint (health_check extension HTTP API) is externally accessible at `localhost:${OTEL_HEALTH_PORT:-13133}`.
 
+## SonarQube (quality profile) — scan executed
+
+- Docker Compose quality profile started: sonarqube + sonar-postgres
+- SonarQube healthy at <http://localhost:9003>
+- Token generated locally via API (not committed)
+- Scan executed: `npm run sonar:clean`
+- Quality gate: **OK** — zero bugs, vulnerabilities, hotspots, code smells
+- 49 issues fixed in tools/architecture/ before clean scan achieved
+- See: docs/evidence/quality-gates/enterprise-quality-gate-baseline.md
+
 ## What is deferred
 
 | Item | Status | Tracking |
