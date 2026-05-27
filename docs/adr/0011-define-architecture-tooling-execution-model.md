@@ -222,12 +222,16 @@ The initial tool names are:
 
 ```text
 validate-package-metadata
+validate-source-imports
 generate-package-readmes
 generate-package-inventory
 generate-lifecycle-reports
 validate-lifecycle-evidence
-generate-lifecycle-evidence
 ```
+
+`validate-source-imports` scans TypeScript and JavaScript source files under `apps/` and `packages/` and checks that all cross-package imports respect the import boundary rules defined in `docs/architecture/import-boundary-rules.md`.
+
+Note: `generate-lifecycle-evidence` was listed as a planned tool but is not implemented as a standalone tool. The `orchestrator generate-lifecycle-evidence` subcommand invokes `validate-lifecycle-evidence --write` to scaffold evidence bundles.
 
 A required orchestrator is defined at:
 
@@ -471,6 +475,7 @@ The minimum dependency graph is:
 
 ```text
 validate-package-metadata
+  -> validate-source-imports --check
   -> generate-package-readmes --check
   -> generate-package-inventory --check
   -> generate-lifecycle-reports --check
@@ -527,6 +532,7 @@ Composition order for `all` should be:
 
 ```text
 validate package metadata
+validate source imports
 generate or check package READMEs
 generate or check package inventory
 generate or check lifecycle reports

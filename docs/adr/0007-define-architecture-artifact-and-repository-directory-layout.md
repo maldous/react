@@ -268,6 +268,9 @@ docs/
     testing/
     release/
     exceptions/
+    import-boundaries/
+    naming/
+    platform-scope/
 
 reports/
   package-inventory/
@@ -277,9 +280,12 @@ reports/
 tools/
   architecture/
     validate-package-metadata/
+    validate-source-imports/
     generate-package-readmes/
     generate-package-inventory/
-    validate-lifecycle-transitions/
+    generate-lifecycle-reports/
+    validate-lifecycle-evidence/
+    orchestrator/
 
 apps/
   web/
@@ -486,6 +492,9 @@ Canonical source locations:
 | Architecture-level test evidence | `docs/evidence/testing/` | Committed governance evidence |
 | Release or promotion evidence | `docs/evidence/release/` | Committed governance evidence |
 | Accepted exceptions | `docs/evidence/exceptions/` | Committed governance evidence |
+| Import boundary validation evidence | `docs/evidence/import-boundaries/` | Committed governance evidence |
+| Package naming validation evidence | `docs/evidence/naming/` | Committed governance evidence |
+| Platform scope validation evidence | `docs/evidence/platform-scope/` | Committed governance evidence |
 | Package metadata schema | `docs/schemas/package-json-architecture.schema.json` | ADR-0005 and ADR-0006 implemented as schema |
 | Package metadata | package-local `package.json` | `package.json` architecture object |
 | Package README | package-local `README.md` | Generated from `package.json` metadata |
@@ -531,6 +540,15 @@ docs/evidence/release/
 
 docs/evidence/exceptions/
   Accepted deviations, temporary waivers, and risk acceptances.
+
+docs/evidence/import-boundaries/
+  Import boundary scan results committed as governance evidence.
+
+docs/evidence/naming/
+  Package naming validation results committed as governance evidence.
+
+docs/evidence/platform-scope/
+  Platform scope validation results committed as governance evidence.
 ```
 
 Reports may reference evidence.
@@ -716,7 +734,7 @@ Future consequences:
 - First vertical slice should validate the React app and package skeleton.
 - ADR-ACT-0034 should create validation tooling under `tools/architecture/validate-package-metadata/`.
 - ADR-ACT-0035 should define package README generation paths using this layout.
-- ADR-ACT-0043 should implement lifecycle transition validation under `tools/architecture/validate-lifecycle-transitions/`.
+- ADR-ACT-0043 should implement lifecycle transition validation under `tools/architecture/validate-lifecycle-evidence/`.
 - Future generated-output tooling should define an output path when the output is actually implemented.
 - Future reports should write under root-level `reports/`.
 - Future governance evidence should write under `docs/evidence/`.
@@ -847,6 +865,9 @@ Examples:
   - docs/evidence/testing/
   - docs/evidence/release/
   - docs/evidence/exceptions/
+  - docs/evidence/import-boundaries/
+  - docs/evidence/naming/
+  - docs/evidence/platform-scope/
 
 - Schema artifact:
   - docs/schemas/package-json-architecture.schema.json

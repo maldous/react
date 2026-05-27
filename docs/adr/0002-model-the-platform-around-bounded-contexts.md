@@ -253,20 +253,20 @@ Contexts will initially be modular boundaries within the same repository and run
 
 Each context should own its language, use cases, domain rules, and data responsibilities where practical.
 
-Initial context candidates are:
+Initial context candidates were refined during the skeleton development phase into the following domain/bounded-context model, documented in `docs/architecture/context-map.md`:
 
-- identity-and-access
-- customer-and-account
-- portfolio
-- market-data
-- asset-modelling
-- simulation
-- analytics
-- reporting
-- integration
-- operations
+Domains:
+- `experience` (bounded contexts: app-shell, workflow, design-system)
+- `core` (bounded contexts: domain-core, profile-configuration, access-control, graphql-contracts)
+- `integration` (bounded contexts: external-ingestion-contracts, external-ingestion-runtime, graphql-runtime)
+- `persistence` (bounded contexts: postgres-runtime)
+- `analytics` (bounded contexts: analytics-contracts, clickhouse-runtime)
+- `operations` (bounded contexts: api-server, graphql-server, worker-server, config-service, session-service, auth-gateway, audit-service, observability-core, queue-service, storage-service, email-service, notification-service, search-service, auth-keycloak, cache-queue-redis, error-monitoring, telemetry, object-storage, email-brevo)
+- `delivery` (bounded contexts: dev-local, container-build, terraform-workflow, ci-pipeline, aws-infra, cloudflare-infra)
+- `architecture` (bounded contexts: codegen)
+- `quality` (bounded contexts: test-support)
 
-These names are starting points and must be validated through early vertical slices.
+The authoritative bounded context map and domain glossary are maintained in `docs/architecture/context-map.md`.
 
 The bounded context map and domain glossary are the source of truth for package `domain` metadata.
 

@@ -41,11 +41,11 @@ Implementation work is expected for:
 
 ```text
 validate-package-metadata
+validate-source-imports
 generate-package-readmes
 generate-package-inventory
 generate-lifecycle-reports
 validate-lifecycle-evidence
-generate-lifecycle-evidence
 orchestrator
 ```
 
@@ -237,23 +237,22 @@ tools/architecture/<tool-name>/
     *.test.mjs
 ```
 
+Generator tools (`generate-package-readmes`, `generate-package-inventory`, `generate-lifecycle-reports`) additionally require a `golden/` fixture directory for output stability tests. The `invalid/` directory for generator tools contains packages with missing or malformed architecture metadata to test error handling paths. Validator tools (`validate-package-metadata`, `validate-source-imports`, `validate-lifecycle-evidence`) must have both `valid/` and `invalid/` fixture directories.
+
 The required orchestrator must use this test layout:
 
 ```text
 tools/architecture/orchestrator/
   tests/
-    fixtures/
-      valid/
-      invalid/
-      dependency-order/
-      failure-stop/
-      evidence-generation/
     dependency-order.test.mjs
     failure-stop.test.mjs
     no-default-evidence-generation.test.mjs
     check-mode.test.mjs
     write-mode.test.mjs
+    self-evidence.test.mjs
 ```
+
+Orchestrator tests run against the live repository root via `spawnSync` rather than self-contained fixture directories. This ensures the orchestrator is exercised against real package metadata and avoids maintaining a parallel mini-repository fixture. The live repo serves as the orchestrator's integration fixture.
 
 The orchestrator test path must contain `orchestrator`.
 

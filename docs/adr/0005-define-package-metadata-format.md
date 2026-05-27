@@ -367,11 +367,11 @@ Initial example:
       "publicExportsOnly": true,
       "deepImportsAllowed": false,
       "allowedConsumers": [
-        "same-domain",
-        "application-layer"
+        "feature",
+        "application"
       ],
       "forbiddenConsumers": [
-        "test-only"
+        "external"
       ]
     },
     "relations": {
@@ -568,19 +568,25 @@ release-review
 deprecation-review
 ```
 
-Allowed consumer values:
+Consumer values are free-form non-empty strings.
+
+They should describe consumer roles or component types, not structural import locations. Using role/component-type labels (such as `application`, `feature`, `platform`, `domain`, `adapter`, `ui`, `tooling`, `test`, `external`) keeps consumer declarations aligned with ADR-0004 lifecycle roles and the `architecture.component.type` vocabulary. This makes consumer constraints machine-readable against the same vocabulary used elsewhere in package metadata.
+
+Example consumer labels:
 
 ```text
-same-package
-same-domain
-cross-domain
-application-layer
-adapter-layer
-ui-layer
+application
+feature
+platform
+domain
+adapter
+ui
 tooling
-test-only
+test
 external
 ```
+
+Package authors may use other role labels where the role is not captured by the above list. Consumer values must be non-empty strings. The constraint is validated by schema; the vocabulary is governed by this ADR and the team's import boundary rules.
 
 Generated package README output must include:
 

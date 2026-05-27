@@ -458,9 +458,9 @@ Extension sections must be explicitly marked.
 Recommended markers:
 
 ```text
-<!-- architecture-readme:extension:start -->
+<!-- BEGIN MANUAL EXTENSION -->
 Manual extension notes.
-<!-- architecture-readme:extension:end -->
+<!-- END MANUAL EXTENSION -->
 ```
 
 If the generator does not support preserving extension sections, this section must be generated as:
