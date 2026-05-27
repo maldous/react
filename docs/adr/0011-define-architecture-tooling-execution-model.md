@@ -408,6 +408,11 @@ Recommended command flags:
 
 --strict
   Treat warnings as failures.
+
+--tsconfig <path>
+  Provide an explicit tsconfig.json path for TypeScript module resolution.
+  When omitted, the tool auto-discovers tsconfig.json from scan roots.
+  Applies to tools that perform TypeScript compiler-based import resolution.
 ```
 
 Default behaviour:

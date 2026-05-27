@@ -584,6 +584,7 @@ docs/specs/**
 docs/evidence/**
 tools/architecture/**
 apps/**/package.json
+apps/**/package-lock.json
 packages/**/package.json
 apps/**/src/**
 packages/**/src/**
@@ -659,6 +660,7 @@ Version-control rule summary:
 | Governance evidence | `docs/evidence/**` | Commit |
 | Architecture tooling | `tools/architecture/**` | Commit |
 | Package metadata | `apps/**/package.json`, `packages/**/package.json` | Commit |
+| App lock files | `apps/**/package-lock.json` | Commit |
 | Package source/tests | `apps/**/src/**`, `packages/**/src/**`, `apps/**/tests/**`, `packages/**/tests/**` | Commit |
 | Package-local generated README | `apps/**/README.md`, `packages/**/README.md`, `tools/architecture/**/README.md` | Commit only if repository policy requires generated package READMEs in source |
 | Generated reports | `reports/**` | Ignore by default |
