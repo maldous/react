@@ -1,0 +1,18 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": [
+    "apps/*/src/index.ts",
+    "apps/*/src/main.tsx",
+    "packages/*/src/index.ts",
+    "tools/architecture/*/src/index.mjs"
+  ],
+  "project": ["apps/**/*.{ts,tsx}", "packages/**/*.{ts,tsx}", "tools/architecture/**/*.mjs"],
+  "ignore": [
+    "tools/architecture/*/tests/**",
+    "tools/architecture/*/node_modules/**",
+    "apps/*/node_modules/**",
+    "packages/*/node_modules/**",
+    "reports/**"
+  ],
+  "ignoreExportsUsedInFile": true
+}

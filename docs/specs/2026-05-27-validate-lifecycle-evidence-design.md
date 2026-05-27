@@ -15,7 +15,7 @@ Validates and generates lifecycle transition evidence bundles. Every governed pa
 
 ## Location
 
-```
+```text
 tools/architecture/validate-lifecycle-evidence/
   package.json     # @architecture/validate-lifecycle-evidence
   src/index.mjs
@@ -42,22 +42,22 @@ node tools/architecture/validate-lifecycle-evidence/src/index.mjs \
   [--reason <text>] [--created-by <id>] [--reviewer <id>] [--approver <id>]
 ```
 
-| Flag | Behaviour |
-|---|---|
-| `--root <path>` | Repository root. Default: nearest ancestor with `docs/schemas/`. |
-| `--format text\|json` | Console output format. |
-| `--no-reports` | Skip self-evidence. |
-| `--check` | Validate all evidence bundles under `docs/evidence/lifecycle/`. Default. |
-| `--write` | Generate a new evidence bundle for the specified transition. Requires `--package`, `--from-class`, `--to-class`. |
-| `--allow-missing-ajv` | Treat missing Ajv as a warning. |
-| `--package <name>` | Package npm name for generation. |
-| `--from-class <class>` | Source lifecycle class (e.g., `active.feature`). |
-| `--to-class <class>` | Target lifecycle class (e.g., `stable.platform`). |
-| `--reason <text>` | Human-readable transition reason. |
-| `--created-by <id>` | Identity of the evidence creator. Default: `"architecture-tooling"`. |
-| `--reviewer <id>` | Identity of the reviewer. Default: `"architecture-reviewer"`. |
-| `--approver <id>` | Identity of the approver. Default: `"architecture-approver"`. |
-| positional args | Evidence search roots (check mode). Default: `docs/evidence/lifecycle`. |
+| Flag                   | Behaviour                                                                                                        |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `--root <path>`        | Repository root. Default: nearest ancestor with `docs/schemas/`.                                                 |
+| `--format text\|json`  | Console output format.                                                                                           |
+| `--no-reports`         | Skip self-evidence.                                                                                              |
+| `--check`              | Validate all evidence bundles under `docs/evidence/lifecycle/`. Default.                                         |
+| `--write`              | Generate a new evidence bundle for the specified transition. Requires `--package`, `--from-class`, `--to-class`. |
+| `--allow-missing-ajv`  | Treat missing Ajv as a warning.                                                                                  |
+| `--package <name>`     | Package npm name for generation.                                                                                 |
+| `--from-class <class>` | Source lifecycle class (e.g., `active.feature`).                                                                 |
+| `--to-class <class>`   | Target lifecycle class (e.g., `stable.platform`).                                                                |
+| `--reason <text>`      | Human-readable transition reason.                                                                                |
+| `--created-by <id>`    | Identity of the evidence creator. Default: `"architecture-tooling"`.                                             |
+| `--reviewer <id>`      | Identity of the reviewer. Default: `"architecture-reviewer"`.                                                    |
+| `--approver <id>`      | Identity of the approver. Default: `"architecture-approver"`.                                                    |
+| positional args        | Evidence search roots (check mode). Default: `docs/evidence/lifecycle`.                                          |
 
 **Exit codes:** `0` = all evidence bundles valid (check) or bundle generated (write). `1` = any invalid bundle or generation failure.
 
@@ -69,7 +69,7 @@ node tools/architecture/validate-lifecycle-evidence/src/index.mjs \
 
 Evidence bundles are stored at:
 
-```
+```text
 docs/evidence/lifecycle/<package-name>/<YYYY-MM-DD-from-class-to-to-class>/
   transition-evidence.json
   transition-evidence.md

@@ -23,7 +23,7 @@ function loadPackageRules() {
         },
         message(packageName, specifier) {
           return `${packageName} must not import ${specifier}`;
-        }
+        },
       });
     }
   }
@@ -40,7 +40,7 @@ export const UNIVERSAL_RULES = [
     },
     message(pkg, specifier) {
       return `${pkg} must not use deep import: ${specifier}`;
-    }
+    },
   },
   {
     id: "no-test-support-in-prod",
@@ -48,9 +48,9 @@ export const UNIVERSAL_RULES = [
     match(specifier) {
       return specifier === "@platform/test-support";
     },
-    message(pkg, specifier) {
+    message(pkg, _specifier) {
       return `${pkg}: production files must not import @platform/test-support`;
-    }
+    },
   },
   {
     id: "no-relative-cross-package-import",
@@ -64,21 +64,20 @@ export const UNIVERSAL_RULES = [
     },
     message(pkg, specifier) {
       return `${pkg} must not use relative cross-package import: ${specifier}`;
-    }
+    },
   },
   {
     id: "no-architecture-in-product",
     productionOnly: false,
     match(specifier, fileInfo) {
       return (
-        fileInfo.packageName.startsWith("@platform/") &&
-        specifier.startsWith("@architecture/")
+        fileInfo.packageName.startsWith("@platform/") && specifier.startsWith("@architecture/")
       );
     },
     message(pkg, specifier) {
       return `${pkg} must not import architecture tooling: ${specifier}`;
-    }
-  }
+    },
+  },
 ];
 
 export const PACKAGE_RULES = loadPackageRules();

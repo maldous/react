@@ -15,7 +15,7 @@ Generates or validates `README.md` files for every package in `apps/`, `packages
 
 ## Location
 
-```
+```text
 tools/architecture/generate-package-readmes/
   package.json     # @architecture/generate-package-readmes
   src/index.mjs
@@ -39,15 +39,15 @@ node tools/architecture/generate-package-readmes/src/index.mjs \
   [apps] [packages] [tools/architecture] [...]
 ```
 
-| Flag | Behaviour |
-|---|---|
-| `--root <path>` | Repository root. |
-| `--format text\|json` | Console output format. Default: `text`. |
-| `--no-reports` | Skip self-evidence output. |
-| `--check` | Validate existing READMEs against expected output without writing. Exit 1 if any are stale or missing. Default. |
-| `--write` | Write or update package-local `README.md` files. Preserves manual extension content. |
-| `--package <name>` | Limit to one package by npm name. |
-| positional args | Scan roots. Default: `apps packages tools/architecture`. |
+| Flag                  | Behaviour                                                                                                       |
+| --------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `--root <path>`       | Repository root.                                                                                                |
+| `--format text\|json` | Console output format. Default: `text`.                                                                         |
+| `--no-reports`        | Skip self-evidence output.                                                                                      |
+| `--check`             | Validate existing READMEs against expected output without writing. Exit 1 if any are stale or missing. Default. |
+| `--write`             | Write or update package-local `README.md` files. Preserves manual extension content.                            |
+| `--package <name>`    | Limit to one package by npm name.                                                                               |
+| positional args       | Scan roots. Default: `apps packages tools/architecture`.                                                        |
 
 **Exit codes:** `0` = all READMEs fresh (check) or all writes succeeded. `1` = any README stale/missing (check mode).
 
@@ -111,7 +111,7 @@ Required fields match ADR-0011 self-evidence contract. `mode` is `"check"` or `"
 
 After rendering, the expected output is validated to contain all required headings and both extension markers in correct order. This catches template regressions before they reach disk.
 
-Required headings: `# `, `## Package identity`, `## Lifecycle`, `## Ownership`, `## Responsibilities`, `## Non-responsibilities`, `## Public exports and usage`, `## Boundaries`, `## Runtime and environments`, `## Relations`, `## Operational notes`, `## Governance`, `## Validation`, `## Extension notes`.
+Required headings: `#`, `## Package identity`, `## Lifecycle`, `## Ownership`, `## Responsibilities`, `## Non-responsibilities`, `## Public exports and usage`, `## Boundaries`, `## Runtime and environments`, `## Relations`, `## Operational notes`, `## Governance`, `## Validation`, `## Extension notes`.
 
 ---
 

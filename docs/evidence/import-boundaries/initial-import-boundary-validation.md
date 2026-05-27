@@ -8,7 +8,7 @@ Failed: 0
 ```
 
 | Package | Lifecycle | Domain | Context | Result |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | @platform/access-control | stable.platform | core | access-control | PASS |
 | @platform/adapters-brevo | active.adapter | operations | email-brevo | PASS |
 | @platform/adapters-clickhouse | active.adapter | analytics | clickhouse-runtime | PASS |

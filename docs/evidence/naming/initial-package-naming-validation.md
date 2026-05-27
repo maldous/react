@@ -8,7 +8,7 @@ Failed: 0
 ```
 
 | Package | Name | Lifecycle | Domain | Context | Result |
-|---|---|---|---|---|---|
+| --- | --- | --- | --- | --- | --- |
 | apps/react-enterprise-app | @platform/react-enterprise-app | active.feature | experience | app-shell | PASS |
 | packages/access-control | @platform/access-control | stable.platform | core | access-control | PASS |
 | packages/adapters-clickhouse | @platform/adapters-clickhouse | active.adapter | analytics | clickhouse-runtime | PASS |

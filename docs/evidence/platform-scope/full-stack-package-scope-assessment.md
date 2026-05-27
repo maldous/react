@@ -38,7 +38,7 @@ Round 2 added 5 previously-deferred packages after the boundary rationale was va
 ### Operations domain — server-side runtime
 
 | Package | Owner | Class | Rationale |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | @platform/api-runtime | team-platform | active.platform | HTTP server lifecycle with distinct auth/middleware concerns; separate from GraphQL server and domain logic |
 | @platform/graphql-api-runtime | team-platform | active.platform | GraphQL schema stitching, DataLoader, persisted-query enforcement — distinct from generic HTTP runtime |
 | @platform/worker-runtime | team-platform | active.platform | Separate process, different lifecycle (drain on shutdown), different queue-broker dependencies |
@@ -48,7 +48,7 @@ Round 2 added 5 previously-deferred packages after the boundary rationale was va
 ### Operations domain — cross-cutting platform abstractions
 
 | Package | Owner | Class | Rationale |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | @platform/security-auth | team-security | active.platform | Pure interface with no @platform deps; enables provider swap without touching platform code |
 | @platform/audit-events | team-security | active.platform | Distinct compliance ownership, durable delivery requirements, schema versioning governance |
 | @platform/observability | team-platform | active.platform | No @platform deps; consumed by every runtime and adapter; vendor decoupling is a platform-wide concern |
@@ -58,7 +58,7 @@ Round 2 added 5 previously-deferred packages after the boundary rationale was va
 ### Operations domain — concrete adapters
 
 | Package | Owner | Class | Rationale |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | @platform/adapters-keycloak | team-security | active.adapter | Concrete auth provider; limits Keycloak SDK exposure to one package; enables provider swap |
 | @platform/adapters-redis | team-adapter | active.adapter | Serves both cache (sessions) and queue (BullMQ); both consumers are platform packages |
 | @platform/adapters-sentry | team-platform | active.adapter | Implements observability error interface; vendor separation enables monitoring provider change |
@@ -68,7 +68,7 @@ Round 2 added 5 previously-deferred packages after the boundary rationale was va
 ### Delivery domain — CI/CD and infrastructure
 
 | Package | Owner | Class | Rationale |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | @platform/dev-services | team-platform | active.tooling | Local-only scope; Docker Compose + seeds; must never be a production dependency |
 | @platform/tooling-docker | team-platform | active.tooling | Container image definitions; distinct from CI workflow and infrastructure |
 | @platform/tooling-terraform | team-platform | active.tooling | Terraform module patterns and provider locks; shared across environments |
@@ -82,7 +82,7 @@ Round 2 added 5 previously-deferred packages after the boundary rationale was va
 These packages were initially deferred and subsequently added after boundary rationale was validated.
 
 | Package | Owner | Class | Rationale |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | @platform/email-runtime | team-platform | active.platform | Email send interface is a stable abstraction consumed by multiple feature packages; provider swap (e.g. Brevo → SES) requires only a new adapter. |
 | @platform/adapters-brevo | team-platform | active.adapter | Brevo free-tier transactional email (300/day free); concrete implementation of email-runtime registered at application startup only. |
 | @platform/notification-runtime | team-platform | active.platform | Push and in-app notification delivery is a distinct cross-cutting concern with a channel registry pattern separating interface from provider SDKs. |
@@ -102,7 +102,7 @@ None. All previously-deferred packages were resolved in round 2 or moved to omit
 These candidates were assessed and explicitly rejected.
 
 | Candidate | Reason |
-|---|---|
+| --- | --- |
 | feature-flags (standalone) | Feature flag reads belong in config-runtime. Insufficient boundary separation. |
 | data-migrations (standalone) | Migrations are tightly coupled to adapters-postgres schema ownership. Should be a sub-module, not a package. |
 | @platform/adapters-stripe | Payment processing is product-domain specific; omitted in favour of free-tier services only. |
@@ -112,6 +112,7 @@ These candidates were assessed and explicitly rejected.
 ## Architecture notes
 
 **Interface/adapter split:** Each cross-cutting concern (auth, observability, queue, storage, audit) is split into an interface package (no @platform deps) and one or more adapter packages. This means:
+
 - Platform code imports the interface — never the adapter
 - Adapter packages are registered at application startup only
 - Swapping vendors requires only a new adapter package

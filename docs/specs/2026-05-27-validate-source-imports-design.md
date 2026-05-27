@@ -18,6 +18,7 @@ This closes the remaining "future enforcement work" noted in ADR-ACT-0007 and th
 ## Scope
 
 **In scope:**
+
 - New standalone governance tool `tools/architecture/validate-source-imports`
 - Regex-based import extraction from `.ts`, `.tsx`, `.js`, `.mjs` source files
 - Enforcement of all rules in the initial allowed dependency matrix
@@ -30,6 +31,7 @@ This closes the remaining "future enforcement work" noted in ADR-ACT-0007 and th
 - ADR-ACT-0007 and ADR-ACT-0031 status updates in ACTION-REGISTER
 
 **Out of scope:**
+
 - TypeScript type-checking or compiler integration
 - Circular dependency analysis
 - Runtime resolution or `node_modules` scanning
@@ -42,7 +44,7 @@ This closes the remaining "future enforcement work" noted in ADR-ACT-0007 and th
 
 ### Tool location
 
-```
+```text
 tools/architecture/validate-source-imports/
   package.json
   src/
@@ -61,12 +63,12 @@ tools/architecture/validate-source-imports/
 
 ### Module responsibilities
 
-| Module | Responsibility |
-|---|---|
-| `index.mjs` | CLI entry, arg parsing, orchestration of scan → validate → report cycle, ADR-0011 contract |
-| `rules.mjs` | Encodes the full boundary rule matrix from `import-boundary-rules.md` |
-| `scanner.mjs` | File walker + regex import extractor, package identification by nearest `package.json` |
-| `reporter.mjs` | JSON/Markdown report construction, self-evidence emission |
+| Module         | Responsibility                                                                             |
+| -------------- | ------------------------------------------------------------------------------------------ |
+| `index.mjs`    | CLI entry, arg parsing, orchestration of scan → validate → report cycle, ADR-0011 contract |
+| `rules.mjs`    | Encodes the full boundary rule matrix from `import-boundary-rules.md`                      |
+| `scanner.mjs`  | File walker + regex import extractor, package identification by nearest `package.json`     |
+| `reporter.mjs` | JSON/Markdown report construction, self-evidence emission                                  |
 
 ---
 
@@ -81,14 +83,14 @@ node tools/architecture/validate-source-imports/src/index.mjs \
   [apps] [packages] [...]
 ```
 
-| Flag | Behaviour |
-|---|---|
-| `--root <path>` | Repository root. Defaults to cwd or nearest ancestor with `docs/schemas/package-json-architecture.schema.json`. |
-| `--format text\|json` | Console output format. Default: `text`. |
-| `--no-reports` | Skip writing report files. Self-evidence is also suppressed. |
-| `--check` | Validate without writing committed evidence (default). |
-| `--write` | Write committed governance evidence to `docs/evidence/import-boundaries/source-import-boundary-validation.*`. Consistent with `--write` semantics in other governance tools where the flag produces committed output (cf. `validate-lifecycle-evidence --write`). |
-| positional args | Directories to scan, relative to `--root`. Defaults to `apps packages`. |
+| Flag                  | Behaviour                                                                                                                                                                                                                                                         |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--root <path>`       | Repository root. Defaults to cwd or nearest ancestor with `docs/schemas/package-json-architecture.schema.json`.                                                                                                                                                   |
+| `--format text\|json` | Console output format. Default: `text`.                                                                                                                                                                                                                           |
+| `--no-reports`        | Skip writing report files. Self-evidence is also suppressed.                                                                                                                                                                                                      |
+| `--check`             | Validate without writing committed evidence (default).                                                                                                                                                                                                            |
+| `--write`             | Write committed governance evidence to `docs/evidence/import-boundaries/source-import-boundary-validation.*`. Consistent with `--write` semantics in other governance tools where the flag produces committed output (cf. `validate-lifecycle-evidence --write`). |
+| positional args       | Directories to scan, relative to `--root`. Defaults to `apps packages`.                                                                                                                                                                                           |
 
 **Exit codes:** `0` = all files pass. `1` = any violation found or unrecoverable error.
 
@@ -103,23 +105,23 @@ Rules are expressed as a plain object keyed by package name (or `"*"` for univer
 
 Universal rules (applied to every package):
 
-| Rule ID | Description |
-|---|---|
-| `no-deep-import` | No `@platform/<x>/<anything>` — only bare package import allowed |
-| `no-test-support-in-prod` | Non-test source files must not import `@platform/test-support` |
+| Rule ID                   | Description                                                      |
+| ------------------------- | ---------------------------------------------------------------- |
+| `no-deep-import`          | No `@platform/<x>/<anything>` — only bare package import allowed |
+| `no-test-support-in-prod` | Non-test source files must not import `@platform/test-support`   |
 
 Per-package rules (subset shown; full set in `rules.mjs`):
 
-| Package | Forbidden imports |
-|---|---|
-| `@platform/domain-core` | `react`, `react-dom`, `graphql`, `@apollo/`, `@graphql-codegen/`, `@platform/adapters-`, `@platform/react-enterprise-app`, `@platform/feature-workflow` |
-| `@platform/ui-design-system` | `@platform/adapters-`, `@platform/contracts-`, `@platform/domain-core`, `@platform/profile-configuration`, `@platform/access-control` |
-| `@platform/profile-configuration` | `@platform/adapters-postgres`, `@platform/adapters-clickhouse`, `@platform/adapters-graphql`, `react`, `react-dom` |
-| `@platform/access-control` | `@platform/adapters-postgres`, `@platform/adapters-clickhouse`, `react`, `react-dom` |
-| `@platform/contracts-graphql` | `@platform/adapters-graphql` |
-| `@platform/contracts-ingestion` | `@platform/adapters-ingestion`, `@platform/adapters-postgres`, `@platform/adapters-clickhouse` |
-| `@platform/contracts-analytics` | `@platform/adapters-clickhouse` |
-| `@platform/feature-workflow` | `@platform/adapters-postgres`, `@platform/adapters-clickhouse` |
+| Package                           | Forbidden imports                                                                                                                                       |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@platform/domain-core`           | `react`, `react-dom`, `graphql`, `@apollo/`, `@graphql-codegen/`, `@platform/adapters-`, `@platform/react-enterprise-app`, `@platform/feature-workflow` |
+| `@platform/ui-design-system`      | `@platform/adapters-`, `@platform/contracts-`, `@platform/domain-core`, `@platform/profile-configuration`, `@platform/access-control`                   |
+| `@platform/profile-configuration` | `@platform/adapters-postgres`, `@platform/adapters-clickhouse`, `@platform/adapters-graphql`, `react`, `react-dom`                                      |
+| `@platform/access-control`        | `@platform/adapters-postgres`, `@platform/adapters-clickhouse`, `react`, `react-dom`                                                                    |
+| `@platform/contracts-graphql`     | `@platform/adapters-graphql`                                                                                                                            |
+| `@platform/contracts-ingestion`   | `@platform/adapters-ingestion`, `@platform/adapters-postgres`, `@platform/adapters-clickhouse`                                                          |
+| `@platform/contracts-analytics`   | `@platform/adapters-clickhouse`                                                                                                                         |
+| `@platform/feature-workflow`      | `@platform/adapters-postgres`, `@platform/adapters-clickhouse`                                                                                          |
 
 ---
 
@@ -167,12 +169,13 @@ Test files are excluded from the `no-test-support-in-prod` rule only. All other 
 
 ### Reports (gitignored)
 
-```
+```text
 reports/validation/source-import-validation.json
 reports/validation/source-import-validation.md
 ```
 
 JSON structure:
+
 ```json
 {
   "generatedAt": "<ISO>",
@@ -202,7 +205,7 @@ Required fields: `toolName`, `toolVersion`, `command`, `mode`, `root`, `startedA
 
 Written with `--write`:
 
-```
+```text
 docs/evidence/import-boundaries/source-import-boundary-validation.json
 docs/evidence/import-boundaries/source-import-boundary-validation.md
 ```
@@ -217,32 +220,32 @@ The JSON structure mirrors the report but adds `ruleSet`, `scanMethod`, and `too
 
 Each valid fixture is a directory containing a `package.json` (minimal: `name`, `architecture.lifecycle.role`) and one or more `.ts` source files with imports that satisfy all boundary rules for that package.
 
-| Fixture | What it validates |
-|---|---|
-| `valid/domain-core/` | domain-core with zero imports — passes all rules |
-| `valid/feature-workflow/` | feature-workflow importing `@platform/ui-design-system` and `@platform/domain-core` — permitted |
-| `valid/access-control/` | access-control importing `@platform/domain-core` and `@platform/profile-configuration` — permitted |
-| `valid/contracts-graphql/` | contracts-graphql with no adapter imports — permitted |
+| Fixture                    | What it validates                                                                                  |
+| -------------------------- | -------------------------------------------------------------------------------------------------- |
+| `valid/domain-core/`       | domain-core with zero imports — passes all rules                                                   |
+| `valid/feature-workflow/`  | feature-workflow importing `@platform/ui-design-system` and `@platform/domain-core` — permitted    |
+| `valid/access-control/`    | access-control importing `@platform/domain-core` and `@platform/profile-configuration` — permitted |
+| `valid/contracts-graphql/` | contracts-graphql with no adapter imports — permitted                                              |
 
 ### Invalid fixtures
 
 One fixture per rule being enforced. Each is a single-package directory with a source file containing the offending import.
 
-| Fixture | Rule violated |
-|---|---|
-| `invalid/deep-import/` | `no-deep-import`: imports `@platform/domain-core/src/internal` |
-| `invalid/test-support-in-prod/` | `no-test-support-in-prod`: production file imports `@platform/test-support` |
-| `invalid/domain-imports-react/` | domain-core imports `react` |
-| `invalid/domain-imports-graphql/` | domain-core imports `graphql` |
-| `invalid/domain-imports-adapter/` | domain-core imports `@platform/adapters-postgres` |
-| `invalid/feature-imports-postgres/` | feature-workflow imports `@platform/adapters-postgres` |
-| `invalid/feature-imports-clickhouse/` | feature-workflow imports `@platform/adapters-clickhouse` |
-| `invalid/contract-imports-adapter/` | `@platform/contracts-graphql` imports `@platform/adapters-graphql` |
-| `invalid/contracts-ingestion-imports-adapter/` | `@platform/contracts-ingestion` imports `@platform/adapters-ingestion` |
-| `invalid/contracts-analytics-imports-adapter/` | `@platform/contracts-analytics` imports `@platform/adapters-clickhouse` |
-| `invalid/ui-imports-domain/` | ui-design-system imports `@platform/domain-core` |
-| `invalid/access-imports-react/` | access-control imports `react` |
-| `invalid/profile-imports-postgres/` | profile-configuration imports `@platform/adapters-postgres` |
+| Fixture                                        | Rule violated                                                               |
+| ---------------------------------------------- | --------------------------------------------------------------------------- |
+| `invalid/deep-import/`                         | `no-deep-import`: imports `@platform/domain-core/src/internal`              |
+| `invalid/test-support-in-prod/`                | `no-test-support-in-prod`: production file imports `@platform/test-support` |
+| `invalid/domain-imports-react/`                | domain-core imports `react`                                                 |
+| `invalid/domain-imports-graphql/`              | domain-core imports `graphql`                                               |
+| `invalid/domain-imports-adapter/`              | domain-core imports `@platform/adapters-postgres`                           |
+| `invalid/feature-imports-postgres/`            | feature-workflow imports `@platform/adapters-postgres`                      |
+| `invalid/feature-imports-clickhouse/`          | feature-workflow imports `@platform/adapters-clickhouse`                    |
+| `invalid/contract-imports-adapter/`            | `@platform/contracts-graphql` imports `@platform/adapters-graphql`          |
+| `invalid/contracts-ingestion-imports-adapter/` | `@platform/contracts-ingestion` imports `@platform/adapters-ingestion`      |
+| `invalid/contracts-analytics-imports-adapter/` | `@platform/contracts-analytics` imports `@platform/adapters-clickhouse`     |
+| `invalid/ui-imports-domain/`                   | ui-design-system imports `@platform/domain-core`                            |
+| `invalid/access-imports-react/`                | access-control imports `react`                                              |
+| `invalid/profile-imports-postgres/`            | profile-configuration imports `@platform/adapters-postgres`                 |
 
 ---
 
@@ -250,7 +253,7 @@ One fixture per rule being enforced. Each is a single-package directory with a s
 
 The orchestrator's `all` command plan is updated to include `validate-source-imports` after `validate-package-metadata`:
 
-```
+```text
 validate-package-metadata
   → validate-source-imports    ← new, required
   → generate-package-readmes   (--check, optional)
@@ -267,10 +270,10 @@ Orchestrator `package.json` `dependsOn` is updated to include `@architecture/val
 
 ## Action register updates
 
-| Action | From | To |
-|---|---|---|
-| ADR-ACT-0007 | In Progress | Done |
-| ADR-ACT-0031 | Open | Done (test-support production check closes this) |
+| Action       | From        | To                                               |
+| ------------ | ----------- | ------------------------------------------------ |
+| ADR-ACT-0007 | In Progress | Done                                             |
+| ADR-ACT-0031 | Open        | Done (test-support production check closes this) |
 
 Evidence column for ADR-ACT-0007: `Source import boundary scanning implemented in tools/architecture/validate-source-imports; evidence at docs/evidence/import-boundaries/source-import-boundary-validation.*`
 

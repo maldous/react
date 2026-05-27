@@ -15,7 +15,7 @@ Generates a machine-readable package inventory and a human-readable lifecycle su
 
 ## Location
 
-```
+```text
 tools/architecture/generate-package-inventory/
   package.json     # @architecture/generate-package-inventory
   src/index.mjs
@@ -39,14 +39,14 @@ node tools/architecture/generate-package-inventory/src/index.mjs \
   [apps] [packages] [tools/architecture] [...]
 ```
 
-| Flag | Behaviour |
-|---|---|
-| `--root <path>` | Repository root. |
-| `--format text\|json` | Console output format. Default: `text`. |
-| `--no-reports` | Skip report writing and self-evidence. |
-| `--check` | Compare expected output against existing reports. Exit 1 if stale or missing. Default. |
-| `--write` | Generate and write all four report files. |
-| positional args | Scan roots. Default: `apps packages tools/architecture`. |
+| Flag                  | Behaviour                                                                              |
+| --------------------- | -------------------------------------------------------------------------------------- |
+| `--root <path>`       | Repository root.                                                                       |
+| `--format text\|json` | Console output format. Default: `text`.                                                |
+| `--no-reports`        | Skip report writing and self-evidence.                                                 |
+| `--check`             | Compare expected output against existing reports. Exit 1 if stale or missing. Default. |
+| `--write`             | Generate and write all four report files.                                              |
+| positional args       | Scan roots. Default: `apps packages tools/architecture`.                               |
 
 **Exit codes:** `0` = all reports fresh (check) or all written successfully. `1` = any report stale/missing in check mode.
 
@@ -58,12 +58,12 @@ node tools/architecture/generate-package-inventory/src/index.mjs \
 
 All four outputs are gitignored under `reports/**`:
 
-| File | Description |
-|---|---|
-| `reports/package-inventory/package-inventory.json` | Full package record array with all architecture metadata fields |
-| `reports/package-inventory/package-inventory.md` | Markdown table: Package, Type, Domain, Context, Lifecycle, Owner, Path |
+| File                                               | Description                                                                       |
+| -------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `reports/package-inventory/package-inventory.json` | Full package record array with all architecture metadata fields                   |
+| `reports/package-inventory/package-inventory.md`   | Markdown table: Package, Type, Domain, Context, Lifecycle, Owner, Path            |
 | `reports/lifecycle/package-lifecycle-summary.json` | Aggregate counts by stage/role/class/supportLevel plus per-package lifecycle rows |
-| `reports/lifecycle/package-lifecycle-summary.md` | Markdown tables for by-stage, by-role, by-class breakdowns plus full package list |
+| `reports/lifecycle/package-lifecycle-summary.md`   | Markdown tables for by-stage, by-role, by-class breakdowns plus full package list |
 
 ### Package record structure (JSON inventory)
 

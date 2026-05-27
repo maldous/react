@@ -15,7 +15,7 @@ Runs all architecture governance tools in a governed dependency order. Provides 
 
 ## Location
 
-```
+```text
 tools/architecture/orchestrator/
   package.json     # @architecture/orchestrator
   src/index.mjs
@@ -39,14 +39,14 @@ node tools/architecture/orchestrator/src/index.mjs \
   [--plan-only] [--allow-missing-ajv] [--evidence-generation-requested]
 ```
 
-| Flag | Behaviour |
-|---|---|
-| `--root <path>` | Repository root. Default: cwd. |
-| `--format text\|json` | Console output format. |
-| `--no-reports` | Pass `--no-reports` to all child tools; suppress orchestrator self-evidence. |
-| `--plan-only` | Print the execution plan as JSON without running any tools. |
-| `--allow-missing-ajv` | Pass `--allow-missing-ajv` to tools that support it. |
-| `--evidence-generation-requested` | Guard flag required for `generate-lifecycle-evidence` command. |
+| Flag                              | Behaviour                                                                    |
+| --------------------------------- | ---------------------------------------------------------------------------- |
+| `--root <path>`                   | Repository root. Default: cwd.                                               |
+| `--format text\|json`             | Console output format.                                                       |
+| `--no-reports`                    | Pass `--no-reports` to all child tools; suppress orchestrator self-evidence. |
+| `--plan-only`                     | Print the execution plan as JSON without running any tools.                  |
+| `--allow-missing-ajv`             | Pass `--allow-missing-ajv` to tools that support it.                         |
+| `--evidence-generation-requested` | Guard flag required for `generate-lifecycle-evidence` command.               |
 
 **Exit codes:** `0` = all executed steps passed. `1` = any required step failed or unrecoverable error.
 
@@ -54,14 +54,14 @@ node tools/architecture/orchestrator/src/index.mjs \
 
 ## Commands
 
-| Command | Steps executed |
-|---|---|
-| `validate` (default) | `validate-package-metadata` |
-| `all` | `validate-package-metadata` → `generate-package-readmes` (--check) → `generate-package-inventory` (--check) → `generate-lifecycle-reports` (--check, optional) → `validate-lifecycle-evidence` |
-| `generate-readmes` | `validate-package-metadata` → `generate-package-readmes` (--write) |
-| `generate-inventory` | `validate-package-metadata` → `generate-package-readmes` (--check) → `generate-package-inventory` (--write) |
-| `generate-lifecycle-reports` | `validate-package-metadata` → `generate-package-readmes` (--check) → `generate-package-inventory` (--check) → `generate-lifecycle-reports` (--write) |
-| `validate-evidence` | `validate-package-metadata` → `generate-package-readmes` (--check) → `generate-package-inventory` (--check) → `generate-lifecycle-reports` (--check) → `validate-lifecycle-evidence` |
+| Command                       | Steps executed                                                                                                                                                                                                                 |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `validate` (default)          | `validate-package-metadata`                                                                                                                                                                                                    |
+| `all`                         | `validate-package-metadata` → `generate-package-readmes` (--check) → `generate-package-inventory` (--check) → `generate-lifecycle-reports` (--check, optional) → `validate-lifecycle-evidence`                                 |
+| `generate-readmes`            | `validate-package-metadata` → `generate-package-readmes` (--write)                                                                                                                                                             |
+| `generate-inventory`          | `validate-package-metadata` → `generate-package-readmes` (--check) → `generate-package-inventory` (--write)                                                                                                                    |
+| `generate-lifecycle-reports`  | `validate-package-metadata` → `generate-package-readmes` (--check) → `generate-package-inventory` (--check) → `generate-lifecycle-reports` (--write)                                                                           |
+| `validate-evidence`           | `validate-package-metadata` → `generate-package-readmes` (--check) → `generate-package-inventory` (--check) → `generate-lifecycle-reports` (--check) → `validate-lifecycle-evidence`                                           |
 | `generate-lifecycle-evidence` | `validate-package-metadata` → `generate-package-readmes` (--check) → `generate-package-inventory` (--check) → `generate-lifecycle-reports` (--check) → `generate-lifecycle-evidence` (--write) → `validate-lifecycle-evidence` |
 
 ---
@@ -112,11 +112,11 @@ The orchestrator resolves the repo root by walking up from `--root` (defaulting 
 
 All orchestrator tests use `spawnSync` against the tool script with `--plan-only` or full execution against the real repo root.
 
-| Test file | What it covers |
-|---|---|
-| `dependency-order.test.mjs` | `all` command plan has the correct dependency sequence |
-| `check-mode.test.mjs` | All check-mode commands exit 0 on a valid repo |
-| `write-mode.test.mjs` | Write commands produce expected outputs |
-| `failure-stop.test.mjs` | A failing required step halts subsequent steps |
+| Test file                                 | What it covers                                                              |
+| ----------------------------------------- | --------------------------------------------------------------------------- |
+| `dependency-order.test.mjs`               | `all` command plan has the correct dependency sequence                      |
+| `check-mode.test.mjs`                     | All check-mode commands exit 0 on a valid repo                              |
+| `write-mode.test.mjs`                     | Write commands produce expected outputs                                     |
+| `failure-stop.test.mjs`                   | A failing required step halts subsequent steps                              |
 | `no-default-evidence-generation.test.mjs` | `all` and `validate-evidence` do not generate lifecycle evidence by default |
-| `self-evidence.test.mjs` | Self-evidence JSON contains required fields; `--no-reports` suppresses it |
+| `self-evidence.test.mjs`                  | Self-evidence JSON contains required fields; `--no-reports` suppresses it   |

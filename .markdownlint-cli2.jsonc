@@ -1,0 +1,26 @@
+{
+  // Rule overrides
+  "config": {
+    // MD013: line-length — disabled; long lines are common in ADRs and tables
+    "MD013": false,
+    // MD024: no-duplicate-heading — disabled; ADR templates reuse headings across files
+    "MD024": false,
+    // MD033: no-inline-html — disabled; generated READMEs may include HTML badges
+    "MD033": false,
+  },
+  // Paths to ignore
+  "ignores": [
+    // Generated reports
+    "reports/**",
+    // All node_modules
+    "**/node_modules/**",
+    // Test fixtures contain intentionally malformed markdown
+    "tools/architecture/**/tests/fixtures/**",
+    // Generated package READMEs (owned by generate-package-readmes)
+    "apps/**/README.md",
+    "packages/**/README.md",
+    "tools/architecture/**/README.md",
+    // Auto-generated session memory notes (tool scratch area, gitignored)
+    ".remember/**",
+  ],
+}

@@ -1,4 +1,4 @@
-name: Architecture governance
+name: Architecture governance and quality gates
 
 on:
   push:
@@ -6,6 +6,48 @@ on:
   pull_request:
 
 jobs:
+  quality-gates:
+    name: Quality gates (format · lint · audit · secrets)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install root devDependencies
+        run: npm ci
+
+      # --- Hard gates (fail fast) ---
+
+      - name: Format check (Prettier)
+        run: npm run format:check
+
+      - name: Markdown lint (markdownlint-cli2)
+        run: npm run lint:md
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: Dependency audit (npm audit --audit-level=high)
+        run: npm run audit:deps
+
+      - name: Secret scan (gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # --- Report-only gates (never fail the build) ---
+
+      - name: Knip — unused exports/deps (report only)
+        run: npm run knip || true
+
+      - name: Dependency cruiser — graph smoke test (report only)
+        run: npm run depcruise || true
+
   architecture-checks:
     name: Architecture governance checks
     runs-on: ubuntu-latest

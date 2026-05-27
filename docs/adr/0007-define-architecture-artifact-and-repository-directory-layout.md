@@ -314,7 +314,6 @@ packages/
       tests/
 ```
 
-
 ## Package and React application skeleton
 
 The baseline package skeleton is metadata-first:
@@ -477,35 +476,35 @@ Domain or application packages should avoid React-specific folders unless they e
 
 The React skeleton is a supported layout, not a universal package requirement.
 
-
 Canonical source locations:
 
-| Concern | Source location | Source of truth |
-|---|---|---|
-| Architecture decisions | `docs/adr/` | ADR files |
-| ADR action tracking | `docs/adr/ACTION-REGISTER.md` | Action register |
-| Design specs (pre-implementation and as-built) | `docs/specs/` | Design spec files |
-| Lifecycle transition evidence | `docs/evidence/lifecycle/` | Committed governance evidence |
-| Architecture review evidence | `docs/evidence/architecture/` | Committed governance evidence |
-| Security review evidence | `docs/evidence/security/` | Committed governance evidence |
-| Operations readiness evidence | `docs/evidence/operations/` | Committed governance evidence |
-| Architecture-level test evidence | `docs/evidence/testing/` | Committed governance evidence |
-| Release or promotion evidence | `docs/evidence/release/` | Committed governance evidence |
-| Accepted exceptions | `docs/evidence/exceptions/` | Committed governance evidence |
-| Import boundary validation evidence | `docs/evidence/import-boundaries/` | Committed governance evidence |
-| Package naming validation evidence | `docs/evidence/naming/` | Committed governance evidence |
-| Platform scope validation evidence | `docs/evidence/platform-scope/` | Committed governance evidence |
-| Package metadata schema | `docs/schemas/package-json-architecture.schema.json` | ADR-0005 and ADR-0006 implemented as schema |
-| Package metadata | package-local `package.json` | `package.json` architecture object |
-| Package README | package-local `README.md` | Generated from `package.json` metadata |
-| Package README outputs | package-local `README.md` | Generated output only |
-| Package inventory reports | `reports/package-inventory/` | Generated output only |
-| Lifecycle reports | `reports/lifecycle/` | Generated output only |
-| Validation reports | `reports/validation/` | Generated output only |
-| Backstage/C4/Nx/OpenTelemetry/Kubernetes/SPDX outputs | No reserved path | Future generated output only; no directory reserved by this ADR |
-| Architecture tooling | `tools/architecture/` | Implementation tooling, not decision source |
-| React application implementation | `apps/web/` or later app-specific path | Application source, package-local metadata, generated README |
-| Package implementation | `apps/` and `packages/` | Source code and package-local metadata |
+| Concern                                               | Source location                                      | Source of truth                                                 |
+| ----------------------------------------------------- | ---------------------------------------------------- | --------------------------------------------------------------- |
+| Architecture decisions                                | `docs/adr/`                                          | ADR files                                                       |
+| ADR action tracking                                   | `docs/adr/ACTION-REGISTER.md`                        | Action register                                                 |
+| Design specs (pre-implementation and as-built)        | `docs/specs/`                                        | Design spec files                                               |
+| Lifecycle transition evidence                         | `docs/evidence/lifecycle/`                           | Committed governance evidence                                   |
+| Architecture review evidence                          | `docs/evidence/architecture/`                        | Committed governance evidence                                   |
+| Security review evidence                              | `docs/evidence/security/`                            | Committed governance evidence                                   |
+| Operations readiness evidence                         | `docs/evidence/operations/`                          | Committed governance evidence                                   |
+| Architecture-level test evidence                      | `docs/evidence/testing/`                             | Committed governance evidence                                   |
+| Release or promotion evidence                         | `docs/evidence/release/`                             | Committed governance evidence                                   |
+| Accepted exceptions                                   | `docs/evidence/exceptions/`                          | Committed governance evidence                                   |
+| Import boundary validation evidence                   | `docs/evidence/import-boundaries/`                   | Committed governance evidence                                   |
+| Package naming validation evidence                    | `docs/evidence/naming/`                              | Committed governance evidence                                   |
+| Platform scope validation evidence                    | `docs/evidence/platform-scope/`                      | Committed governance evidence                                   |
+| Quality gate baseline evidence                        | `docs/evidence/quality-gates/`                       | Committed governance evidence                                   |
+| Package metadata schema                               | `docs/schemas/package-json-architecture.schema.json` | ADR-0005 and ADR-0006 implemented as schema                     |
+| Package metadata                                      | package-local `package.json`                         | `package.json` architecture object                              |
+| Package README                                        | package-local `README.md`                            | Generated from `package.json` metadata                          |
+| Package README outputs                                | package-local `README.md`                            | Generated output only                                           |
+| Package inventory reports                             | `reports/package-inventory/`                         | Generated output only                                           |
+| Lifecycle reports                                     | `reports/lifecycle/`                                 | Generated output only                                           |
+| Validation reports                                    | `reports/validation/`                                | Generated output only                                           |
+| Backstage/C4/Nx/OpenTelemetry/Kubernetes/SPDX outputs | No reserved path                                     | Future generated output only; no directory reserved by this ADR |
+| Architecture tooling                                  | `tools/architecture/`                                | Implementation tooling, not decision source                     |
+| React application implementation                      | `apps/web/` or later app-specific path               | Application source, package-local metadata, generated README    |
+| Package implementation                                | `apps/` and `packages/`                              | Source code and package-local metadata                          |
 
 `docs/schemas/package-json-architecture.schema.json` is the canonical schema path.
 
@@ -549,6 +548,9 @@ docs/evidence/naming/
 
 docs/evidence/platform-scope/
   Platform scope validation results committed as governance evidence.
+
+docs/evidence/quality-gates/
+  Quality gate baseline evidence: tooling configured, gate types, ignored paths, validation results.
 ```
 
 Reports may reference evidence.
@@ -571,13 +573,14 @@ The repository may use `apps/` and `packages/` as the initial implementation lay
 
 A later ADR may refine application/package layout if the first vertical slice shows a better structure.
 
-
 ## Version control requirements
 
 Commit these source-of-truth and governance files:
 
 ```text
 README.md
+package.json
+package-lock.json
 docs/adr/**
 docs/schemas/**
 docs/specs/**
@@ -651,20 +654,21 @@ docs/evidence/exceptions/**
 
 Version-control rule summary:
 
-| Artifact class | Path | Git treatment |
-|---|---|---|
-| ADRs | `docs/adr/**` | Commit |
-| Action register | `docs/adr/ACTION-REGISTER.md` | Commit |
-| Schemas | `docs/schemas/**` | Commit |
-| Design specs | `docs/specs/**` | Commit |
-| Governance evidence | `docs/evidence/**` | Commit |
-| Architecture tooling | `tools/architecture/**` | Commit |
-| Package metadata | `apps/**/package.json`, `packages/**/package.json` | Commit |
-| App lock files | `apps/**/package-lock.json` | Commit |
-| Package source/tests | `apps/**/src/**`, `packages/**/src/**`, `apps/**/tests/**`, `packages/**/tests/**` | Commit |
-| Package-local generated README | `apps/**/README.md`, `packages/**/README.md`, `tools/architecture/**/README.md` | Commit only if repository policy requires generated package READMEs in source |
-| Generated reports | `reports/**` | Ignore by default |
-| Build/dependency/cache outputs | `node_modules/`, `dist/`, `build/`, `coverage/`, `.cache/`, `.tmp/` | Ignore |
+| Artifact class                 | Path                                                                               | Git treatment                                                                 |
+| ------------------------------ | ---------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| ADRs                           | `docs/adr/**`                                                                      | Commit                                                                        |
+| Action register                | `docs/adr/ACTION-REGISTER.md`                                                      | Commit                                                                        |
+| Schemas                        | `docs/schemas/**`                                                                  | Commit                                                                        |
+| Design specs                   | `docs/specs/**`                                                                    | Commit                                                                        |
+| Governance evidence            | `docs/evidence/**`                                                                 | Commit                                                                        |
+| Architecture tooling           | `tools/architecture/**`                                                            | Commit                                                                        |
+| Package metadata               | `apps/**/package.json`, `packages/**/package.json`                                 | Commit                                                                        |
+| Root lock file                 | `package-lock.json`                                                                | Commit                                                                        |
+| App lock files                 | `apps/**/package-lock.json`                                                        | Commit                                                                        |
+| Package source/tests           | `apps/**/src/**`, `packages/**/src/**`, `apps/**/tests/**`, `packages/**/tests/**` | Commit                                                                        |
+| Package-local generated README | `apps/**/README.md`, `packages/**/README.md`, `tools/architecture/**/README.md`    | Commit only if repository policy requires generated package READMEs in source |
+| Generated reports              | `reports/**`                                                                       | Ignore by default                                                             |
+| Build/dependency/cache outputs | `node_modules/`, `dist/`, `build/`, `coverage/`, `.cache/`, `.tmp/`                | Ignore                                                                        |
 
 ## Rationale
 
@@ -686,7 +690,6 @@ The layout supports ADR-0006 by giving lifecycle evidence, validation, reports, 
 
 The layout allows future generated outputs for Backstage, C4, Nx, OpenTelemetry, Kubernetes, and SPDX if implementation work later requires them.
 
-
 The package skeleton is intentionally minimal.
 
 It requires enough structure to enforce metadata, README generation, public exports, tests, and lifecycle evidence.
@@ -698,7 +701,6 @@ The React application skeleton is included because the intended solution include
 React app folders are kept under `apps/` so UI composition does not leak into domain, contract, or adapter packages.
 
 Shared UI packages and feature packages may use React folders when their package role requires UI behaviour.
-
 
 ## Consequences
 

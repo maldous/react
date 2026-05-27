@@ -61,7 +61,6 @@ This does not mean ADR-0002 adopts Backstage catalog descriptors as a source of 
 
 It means ADR-0002 provides domain values that can later be projected into Backstage-compatible catalog views without translation.
 
-
 Vocabulary clarification:
 
 ```text
@@ -80,8 +79,6 @@ package
 component/system/owner
   Backstage-compatible catalog projection terms, not separate sources of truth
 ```
-
-
 
 ## Stakeholder concerns
 
@@ -256,6 +253,7 @@ Each context should own its language, use cases, domain rules, and data responsi
 Initial context candidates were refined during the skeleton development phase into the following domain/bounded-context model, documented in `docs/architecture/context-map.md`:
 
 Domains:
+
 - `experience` (bounded contexts: app-shell, workflow, design-system)
 - `core` (bounded contexts: domain-core, profile-configuration, access-control, graphql-contracts)
 - `integration` (bounded contexts: external-ingestion-contracts, external-ingestion-runtime, graphql-runtime)
@@ -406,7 +404,6 @@ docs/adr/ACTION-REGISTER.md
 
 This avoids duplicate sources of truth for action status.
 
-
 ## Review date
 
 2026-06-26
@@ -432,7 +429,7 @@ Examples:
 - Domain-Driven Design bounded contexts:
   - Eric Evans, Domain-Driven Design.
   - Martin Fowler, Bounded Context.
-  - https://martinfowler.com/bliki/BoundedContext.html
+  - <https://martinfowler.com/bliki/BoundedContext.html>
 
 - Architecture decision process:
   - docs/adr/README.md

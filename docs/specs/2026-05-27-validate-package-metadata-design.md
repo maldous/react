@@ -15,7 +15,7 @@ Validates that every `package.json` in `apps/`, `packages/`, and `tools/architec
 
 ## Location
 
-```
+```text
 tools/architecture/validate-package-metadata/
   package.json     # @architecture/validate-package-metadata
   src/index.mjs
@@ -39,15 +39,15 @@ node tools/architecture/validate-package-metadata/src/index.mjs \
   [apps] [packages] [tools/architecture] [...]
 ```
 
-| Flag | Behaviour |
-|---|---|
-| `--root <path>` | Repository root. Default: nearest ancestor with `docs/schemas/package-json-architecture.schema.json`. |
-| `--format text\|json` | Console output format. Default: `text`. |
-| `--no-reports` | Skip writing `reports/validation/` and self-evidence. |
+| Flag                  | Behaviour                                                                                                    |
+| --------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `--root <path>`       | Repository root. Default: nearest ancestor with `docs/schemas/package-json-architecture.schema.json`.        |
+| `--format text\|json` | Console output format. Default: `text`.                                                                      |
+| `--no-reports`        | Skip writing `reports/validation/` and self-evidence.                                                        |
 | `--allow-missing-ajv` | Treat missing Ajv as a warning instead of a hard error. Used in environments without installed dependencies. |
-| `--strict` | Reserved; currently a no-op pass-through. |
-| `--check` / `--write` | Accepted and ignored — this tool is always read-only. |
-| positional args | Directories to scan relative to `--root`. Default: `apps packages tools/architecture`. |
+| `--strict`            | Reserved; currently a no-op pass-through.                                                                    |
+| `--check` / `--write` | Accepted and ignored — this tool is always read-only.                                                        |
+| positional args       | Directories to scan relative to `--root`. Default: `apps packages tools/architecture`.                       |
 
 **Exit codes:** `0` = all packages valid. `1` = any package invalid or unrecoverable error.
 
@@ -71,15 +71,15 @@ Checks that `architecture` contains all required groups: `schemaVersion`, `compo
 
 Rules not expressible in JSON Schema alone:
 
-| Rule | Constraint |
-|---|---|
-| `lifecycle.class` | Must equal `${stage}.${role}` |
-| `lifecycle.catalogLifecycle` | Must be `experimental` for experimental/candidate, `deprecated` for deprecated, `production` otherwise |
-| `lifecycle.stage === "external"` | `visibility` must be `"external"` |
-| `lifecycle.stage === "deprecated"` | `visibility` must be `"deprecated"`, `supportLevel` must be `"deprecated"` or `"unsupported"` |
-| `runtime.production` + `runtime.testOnly` | Cannot both be `true` |
-| `boundaries.publicExportsOnly` + `boundaries.deepImportsAllowed` | Cannot both be `true` |
-| `governance.decisionRefs` | Each entry must match `/^ADR-\d{4}$/` |
+| Rule                                                             | Constraint                                                                                             |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `lifecycle.class`                                                | Must equal `${stage}.${role}`                                                                          |
+| `lifecycle.catalogLifecycle`                                     | Must be `experimental` for experimental/candidate, `deprecated` for deprecated, `production` otherwise |
+| `lifecycle.stage === "external"`                                 | `visibility` must be `"external"`                                                                      |
+| `lifecycle.stage === "deprecated"`                               | `visibility` must be `"deprecated"`, `supportLevel` must be `"deprecated"` or `"unsupported"`          |
+| `runtime.production` + `runtime.testOnly`                        | Cannot both be `true`                                                                                  |
+| `boundaries.publicExportsOnly` + `boundaries.deepImportsAllowed` | Cannot both be `true`                                                                                  |
+| `governance.decisionRefs`                                        | Each entry must match `/^ADR-\d{4}$/`                                                                  |
 
 ---
 
@@ -87,7 +87,7 @@ Rules not expressible in JSON Schema alone:
 
 ### Reports (gitignored)
 
-```
+```text
 reports/validation/package-metadata-validation.json
 reports/validation/package-metadata-validation.md
 ```
@@ -112,13 +112,13 @@ Collects all files named `package.json`, deduplicates, sorts.
 
 Tests use `spawnSync` against the tool script with `--root`, `--allow-missing-ajv`, `--no-reports`, `--format json`. Each test asserts `result.status` and parses JSON output.
 
-| Test case | Assertion |
-|---|---|
-| `fixtures/valid/schema-valid/` | Exit 0, `failed === 0` |
-| `fixtures/invalid/missing-architecture/` | Exit 1, `failed === 1` |
-| `fixtures/invalid/invalid-enum/` | Exit 1, `failed === 1` |
-| `fixtures/invalid/semantic-lifecycle-class/` | Exit 1, `failed === 1` |
-| `--no-reports` flag | `selfEvidencePath === null` in JSON output |
-| Without `--allow-missing-ajv` when Ajv absent | Exit 1 if Ajv unavailable |
-| Text output mode | Stdout matches expected patterns |
-| Reports written | Report files exist on disk after non-`--no-reports` run |
+| Test case                                     | Assertion                                               |
+| --------------------------------------------- | ------------------------------------------------------- |
+| `fixtures/valid/schema-valid/`                | Exit 0, `failed === 0`                                  |
+| `fixtures/invalid/missing-architecture/`      | Exit 1, `failed === 1`                                  |
+| `fixtures/invalid/invalid-enum/`              | Exit 1, `failed === 1`                                  |
+| `fixtures/invalid/semantic-lifecycle-class/`  | Exit 1, `failed === 1`                                  |
+| `--no-reports` flag                           | `selfEvidencePath === null` in JSON output              |
+| Without `--allow-missing-ajv` when Ajv absent | Exit 1 if Ajv unavailable                               |
+| Text output mode                              | Stdout matches expected patterns                        |
+| Reports written                               | Report files exist on disk after non-`--no-reports` run |

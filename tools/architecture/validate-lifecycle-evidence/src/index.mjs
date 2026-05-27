@@ -18,7 +18,7 @@ function parseArgs(argv) {
     createdBy: "architecture-tooling",
     reviewer: "architecture-reviewer",
     approver: "architecture-approver",
-    roots: []
+    roots: [],
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -49,8 +49,18 @@ const OPTIONS = parseArgs(process.argv.slice(2));
 const REPO_ROOT = findRepoRoot(OPTIONS.root ? path.resolve(OPTIONS.root) : process.cwd());
 const TOOL_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const TOOL_PACKAGE_PATH = path.join(TOOL_ROOT, "package.json");
-const SCHEMA_PATH = path.join(REPO_ROOT, "docs", "schemas", "lifecycle-transition-evidence.schema.json");
-const TOOLING_REPORT_DIR = path.join(REPO_ROOT, "reports", "tooling", "validate-lifecycle-evidence");
+const SCHEMA_PATH = path.join(
+  REPO_ROOT,
+  "docs",
+  "schemas",
+  "lifecycle-transition-evidence.schema.json"
+);
+const TOOLING_REPORT_DIR = path.join(
+  REPO_ROOT,
+  "reports",
+  "tooling",
+  "validate-lifecycle-evidence"
+);
 
 function findRepoRoot(startDir) {
   let dir = path.resolve(startDir);
@@ -67,17 +77,23 @@ function readJson(filePath) {
 }
 
 async function loadAjv() {
-  try {
-    const module = await import("ajv");
-    return module.default ?? module;
-  } catch {
-    const localCandidate = path.join(TOOL_ROOT, "node_modules", "ajv", "dist", "ajv.js");
-    if (fs.existsSync(localCandidate)) {
-      const module = await import(pathToFileURL(localCandidate).href);
+  // Draft-2020-12 requires Ajv2020, not the default Ajv class
+  const candidates = [
+    () => import("ajv/dist/2020"),
+    () => {
+      const local = path.join(TOOL_ROOT, "node_modules", "ajv", "dist", "2020.js");
+      return fs.existsSync(local) ? import(pathToFileURL(local).href) : Promise.reject();
+    },
+  ];
+  for (const load of candidates) {
+    try {
+      const module = await load();
       return module.default ?? module;
+    } catch {
+      // try next candidate
     }
-    return null;
   }
+  return null;
 }
 
 async function createSchemaValidator(schema) {
@@ -86,11 +102,13 @@ async function createSchemaValidator(schema) {
     return {
       validatorAvailable: false,
       validate(bundle) {
-        return OPTIONS.allowMissingAjv ? fallbackValidate(bundle) : {
-          valid: false,
-          errors: ["Ajv JSON Schema validation dependency is unavailable"]
-        };
-      }
+        return OPTIONS.allowMissingAjv
+          ? fallbackValidate(bundle)
+          : {
+              valid: false,
+              errors: ["Ajv JSON Schema validation dependency is unavailable"],
+            };
+      },
     };
   }
 
@@ -102,27 +120,48 @@ async function createSchemaValidator(schema) {
       const valid = validate(bundle);
       return {
         valid,
-        errors: valid ? [] : (validate.errors ?? []).map((error) => {
-          const pathLabel = error.instancePath ? error.instancePath.replaceAll("/", ".").replace(/^\./, "") : "(root)";
-          return `schema:${pathLabel} ${error.message}`;
-        })
+        errors: valid
+          ? []
+          : (validate.errors ?? []).map((error) => {
+              const pathLabel = error.instancePath
+                ? error.instancePath.replaceAll("/", ".").replace(/^\./, "")
+                : "(root)";
+              return `schema:${pathLabel} ${error.message}`;
+            }),
       };
-    }
+    },
   };
 }
 
 function fallbackValidate(bundle) {
   const errors = [];
-  for (const field of ["schemaVersion", "bundle", "package", "transition", "governance", "risk", "testing", "impact", "rollback", "sourceMetadataSnapshot", "reportReferences"]) {
+  for (const field of [
+    "schemaVersion",
+    "bundle",
+    "package",
+    "transition",
+    "governance",
+    "risk",
+    "testing",
+    "impact",
+    "rollback",
+    "sourceMetadataSnapshot",
+    "reportReferences",
+  ]) {
     if (!(field in bundle)) errors.push(`Missing required field: ${field}`);
   }
   if (bundle.schemaVersion !== "1.0") errors.push("schemaVersion must be 1.0");
 
   const lifecycleClassPattern = /^[a-z]+\.[a-z]+$/;
-  if (!lifecycleClassPattern.test(bundle.transition?.fromClass ?? "")) errors.push("transition.fromClass must use <stage>.<role> format");
-  if (!lifecycleClassPattern.test(bundle.transition?.toClass ?? "")) errors.push("transition.toClass must use <stage>.<role> format");
+  if (!lifecycleClassPattern.test(bundle.transition?.fromClass ?? ""))
+    errors.push("transition.fromClass must use <stage>.<role> format");
+  if (!lifecycleClassPattern.test(bundle.transition?.toClass ?? ""))
+    errors.push("transition.toClass must use <stage>.<role> format");
 
-  if (!Array.isArray(bundle.governance?.decisionRefs) || bundle.governance.decisionRefs.length === 0) {
+  if (
+    !Array.isArray(bundle.governance?.decisionRefs) ||
+    bundle.governance.decisionRefs.length === 0
+  ) {
     errors.push("governance.decisionRefs must be non-empty");
   } else {
     for (const decisionRef of bundle.governance.decisionRefs) {
@@ -132,11 +171,18 @@ function fallbackValidate(bundle) {
     }
   }
 
-  if (!Array.isArray(bundle.governance?.reviewers) || bundle.governance.reviewers.length === 0) errors.push("governance.reviewers must be non-empty");
-  if (!Array.isArray(bundle.governance?.approvers) || bundle.governance.approvers.length === 0) errors.push("governance.approvers must be non-empty");
-  if (!Array.isArray(bundle.testing?.evidence) || bundle.testing.evidence.length === 0) errors.push("testing.evidence must be non-empty");
+  if (!Array.isArray(bundle.governance?.reviewers) || bundle.governance.reviewers.length === 0)
+    errors.push("governance.reviewers must be non-empty");
+  if (!Array.isArray(bundle.governance?.approvers) || bundle.governance.approvers.length === 0)
+    errors.push("governance.approvers must be non-empty");
+  if (!Array.isArray(bundle.testing?.evidence) || bundle.testing.evidence.length === 0)
+    errors.push("testing.evidence must be non-empty");
   if (!bundle.rollback?.strategy) errors.push("rollback.strategy must be present");
-  if (!bundle.sourceMetadataSnapshot?.packageJsonPath || !bundle.sourceMetadataSnapshot?.architecture) errors.push("sourceMetadataSnapshot must include packageJsonPath and architecture");
+  if (
+    !bundle.sourceMetadataSnapshot?.packageJsonPath ||
+    !bundle.sourceMetadataSnapshot?.architecture
+  )
+    errors.push("sourceMetadataSnapshot must include packageJsonPath and architecture");
   return { valid: errors.length === 0, errors };
 }
 
@@ -190,14 +236,24 @@ function findPackage(packageName) {
 }
 
 function transitionSlug(packageName, fromClass, toClass, createdAt) {
-  const packageSlug = packageName.replace(/^@/, "").replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-|-$/g, "").toLowerCase();
+  const packageSlug = packageName
+    .replace(/^@/, "")
+    .replace(/[^a-zA-Z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .toLowerCase();
   const date = createdAt.slice(0, 10);
-  return { packageSlug, dirSlug: `${date}-${fromClass.replace(".", "-")}-to-${toClass.replace(".", "-")}` };
+  return {
+    packageSlug,
+    dirSlug: `${date}-${fromClass.replace(".", "-")}-to-${toClass.replace(".", "-")}`,
+  };
 }
 
 function buildBundle({ packageFile, packageJson }) {
   for (const field of ["packageName", "fromClass", "toClass", "reason"]) {
-    if (!OPTIONS[field]) throw new Error(`Missing required option for --write: --${field.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}`);
+    if (!OPTIONS[field])
+      throw new Error(
+        `Missing required option for --write: --${field.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}`
+      );
   }
 
   const createdAt = process.env.ARCHITECTURE_EVIDENCE_CREATED_AT ?? new Date().toISOString();
@@ -208,49 +264,74 @@ function buildBundle({ packageFile, packageJson }) {
       id: `${packageJson.name}:${OPTIONS.fromClass}->${OPTIONS.toClass}:${createdAt}`,
       createdAt,
       createdBy: OPTIONS.createdBy,
-      status: "draft"
+      status: "draft",
     },
     package: {
       name: packageJson.name,
       path: path.relative(REPO_ROOT, packageFile),
-      owner: a.component.owner
+      owner: a.component.owner,
     },
     transition: {
       fromClass: OPTIONS.fromClass,
       toClass: OPTIONS.toClass,
       reason: OPTIONS.reason,
-      requestedAt: createdAt
+      requestedAt: createdAt,
     },
     governance: {
       decisionRefs: ["ADR-0010"],
-      reviewers: [{ name: OPTIONS.reviewer, role: "reviewer", reviewedAt: createdAt, evidenceRef: "generated draft" }],
-      approvers: [{ name: OPTIONS.approver, role: "approver", reviewedAt: createdAt, evidenceRef: "generated draft" }]
+      reviewers: [
+        {
+          name: OPTIONS.reviewer,
+          role: "reviewer",
+          reviewedAt: createdAt,
+          evidenceRef: "generated draft",
+        },
+      ],
+      approvers: [
+        {
+          name: OPTIONS.approver,
+          role: "approver",
+          reviewedAt: createdAt,
+          evidenceRef: "generated draft",
+        },
+      ],
     },
     risk: {
       level: "medium",
       assessment: "Generated draft requires human review before approval.",
-      mitigations: ["Review package consumers", "Confirm tests and rollback plan before approval"]
+      mitigations: ["Review package consumers", "Confirm tests and rollback plan before approval"],
     },
     testing: {
       summary: "Generated draft. Attach concrete test evidence before approval.",
-      evidence: [{ path: "reports/lifecycle/package-lifecycle-summary.json", description: "Lifecycle report reference" }]
+      evidence: [
+        {
+          path: "reports/lifecycle/package-lifecycle-summary.json",
+          description: "Lifecycle report reference",
+        },
+      ],
     },
     impact: {
       runtimeImpact: "Generated draft. Confirm runtime impact before approval.",
-      consumerImpact: "Generated draft. Confirm consumer impact before approval."
+      consumerImpact: "Generated draft. Confirm consumer impact before approval.",
     },
     rollback: {
       strategy: "Revert lifecycle metadata change and regenerate reports.",
-      notes: "Generated draft."
+      notes: "Generated draft.",
     },
     sourceMetadataSnapshot: {
       packageJsonPath: path.relative(REPO_ROOT, packageFile),
-      architecture: a
+      architecture: a,
     },
     reportReferences: [
-      { path: "reports/package-inventory/package-inventory.json", description: "Package inventory report" },
-      { path: "reports/lifecycle/package-lifecycle-summary.json", description: "Lifecycle summary report" }
-    ]
+      {
+        path: "reports/package-inventory/package-inventory.json",
+        description: "Package inventory report",
+      },
+      {
+        path: "reports/lifecycle/package-lifecycle-summary.json",
+        description: "Lifecycle summary report",
+      },
+    ],
   };
 }
 
@@ -306,7 +387,12 @@ ${bundle.rollback.strategy}
 }
 
 function writeGeneratedBundle(bundle) {
-  const { packageSlug, dirSlug } = transitionSlug(bundle.package.name, bundle.transition.fromClass, bundle.transition.toClass, bundle.bundle.createdAt);
+  const { packageSlug, dirSlug } = transitionSlug(
+    bundle.package.name,
+    bundle.transition.fromClass,
+    bundle.transition.toClass,
+    bundle.bundle.createdAt
+  );
   const dir = path.join(REPO_ROOT, "docs", "evidence", "lifecycle", packageSlug, dirSlug);
   fs.mkdirSync(dir, { recursive: true });
   const jsonPath = path.join(dir, "transition-evidence.json");
@@ -327,7 +413,7 @@ async function validateFiles(files) {
       results.push({
         path: path.relative(REPO_ROOT, file),
         valid: validation.valid,
-        errors: validation.errors
+        errors: validation.errors,
       });
     } catch (error) {
       results.push({ path: path.relative(REPO_ROOT, file), valid: false, errors: [error.message] });
@@ -336,7 +422,15 @@ async function validateFiles(files) {
   return { results, validatorAvailable: validator.validatorAvailable };
 }
 
-function writeSelfEvidence({ startedAt, finishedAt, roots, results, outputPaths, exitCode, validatorAvailable }) {
+function writeSelfEvidence({
+  startedAt,
+  finishedAt,
+  roots,
+  results,
+  outputPaths,
+  exitCode,
+  validatorAvailable,
+}) {
   if (OPTIONS.noReports) return null;
   fs.mkdirSync(TOOLING_REPORT_DIR, { recursive: true });
   const safeTimestamp = finishedAt.replace(/[:.]/g, "-");
@@ -344,7 +438,11 @@ function writeSelfEvidence({ startedAt, finishedAt, roots, results, outputPaths,
   const evidence = {
     toolName: "validate-lifecycle-evidence",
     toolVersion: readJson(TOOL_PACKAGE_PATH).version ?? "0.0.0",
-    command: ["node", "tools/architecture/validate-lifecycle-evidence/src/index.mjs", ...process.argv.slice(2)],
+    command: [
+      "node",
+      "tools/architecture/validate-lifecycle-evidence/src/index.mjs",
+      ...process.argv.slice(2),
+    ],
     mode: OPTIONS.write ? "write" : "check",
     root: REPO_ROOT,
     startedAt,
@@ -352,15 +450,22 @@ function writeSelfEvidence({ startedAt, finishedAt, roots, results, outputPaths,
     durationMs: new Date(finishedAt).getTime() - new Date(startedAt).getTime(),
     inputRoots: roots,
     outputPaths,
-    rulesEvaluated: ["lifecycle transition evidence schema validation", "lifecycle evidence generation"],
+    rulesEvaluated: [
+      "lifecycle transition evidence schema validation",
+      "lifecycle evidence generation",
+    ],
     checksPassed: results.filter((r) => r.valid).length,
     checksFailed: results.filter((r) => !r.valid).length,
     warnings: [],
     errors: results.flatMap((r) => r.errors.map((message) => ({ path: r.path, message }))),
     dependencySteps: [],
-    schemaValidator: { name: "ajv", available: validatorAvailable, missingAllowed: OPTIONS.allowMissingAjv },
+    schemaValidator: {
+      name: "ajv",
+      available: validatorAvailable,
+      missingAllowed: OPTIONS.allowMissingAjv,
+    },
     gitTreatment: "docs/evidence/** committed; reports/** ignored by default",
-    exitCode
+    exitCode,
   };
   fs.writeFileSync(evidencePath, `${JSON.stringify(evidence, null, 2)}\n`, "utf8");
   return evidencePath;
@@ -377,7 +482,9 @@ async function main() {
     if (!found) throw new Error(`Package not found: ${OPTIONS.packageName}`);
     const bundle = buildBundle(found);
     outputPaths = writeGeneratedBundle(bundle).map((file) => path.relative(REPO_ROOT, file));
-    files = outputPaths.filter((file) => file.endsWith(".json")).map((file) => path.join(REPO_ROOT, file));
+    files = outputPaths
+      .filter((file) => file.endsWith(".json"))
+      .map((file) => path.join(REPO_ROOT, file));
     roots = ["docs/evidence/lifecycle"];
   }
 
@@ -385,7 +492,15 @@ async function main() {
   const failed = results.filter((result) => !result.valid).length;
   const exitCode = failed === 0 ? 0 : 1;
   const finishedAt = new Date().toISOString();
-  const selfEvidencePath = writeSelfEvidence({ startedAt, finishedAt, roots, results, outputPaths, exitCode, validatorAvailable });
+  const selfEvidencePath = writeSelfEvidence({
+    startedAt,
+    finishedAt,
+    roots,
+    results,
+    outputPaths,
+    exitCode,
+    validatorAvailable,
+  });
   const summary = {
     toolName: "validate-lifecycle-evidence",
     mode: OPTIONS.write ? "write" : "check",
@@ -395,7 +510,7 @@ async function main() {
     results,
     outputPaths,
     selfEvidencePath: selfEvidencePath ? path.relative(REPO_ROOT, selfEvidencePath) : null,
-    exitCode
+    exitCode,
   };
 
   if (OPTIONS.format === "json") console.log(JSON.stringify(summary, null, 2));
@@ -404,7 +519,8 @@ async function main() {
     console.log(`Evidence files: ${summary.totalEvidenceFiles}`);
     console.log(`Passed: ${summary.passed}`);
     console.log(`Failed: ${summary.failed}`);
-    if (selfEvidencePath) console.log(`Self-evidence: ${path.relative(REPO_ROOT, selfEvidencePath)}`);
+    if (selfEvidencePath)
+      console.log(`Self-evidence: ${path.relative(REPO_ROOT, selfEvidencePath)}`);
   }
   process.exit(exitCode);
 }
@@ -412,7 +528,14 @@ async function main() {
 try {
   await main();
 } catch (error) {
-  if (OPTIONS.format === "json") console.log(JSON.stringify({ toolName: "validate-lifecycle-evidence", error: error.message, exitCode: 1 }, null, 2));
+  if (OPTIONS.format === "json")
+    console.log(
+      JSON.stringify(
+        { toolName: "validate-lifecycle-evidence", error: error.message, exitCode: 1 },
+        null,
+        2
+      )
+    );
   else console.error(error.message);
   process.exit(1);
 }

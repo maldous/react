@@ -48,28 +48,28 @@ References:
 
 - Michael Nygard, `Documenting Architecture Decisions`, 2011.
   - Establishes the lightweight ADR pattern centred on title, status, context, decision, and consequences.
-  - Reference: https://www.cognitect.com/blog/2011/11/15/documenting-architecture-decisions
+  - Reference: <https://www.cognitect.com/blog/2011/11/15/documenting-architecture-decisions>
 
 - Martin Fowler, `Architecture Decision Record`.
   - Describes ADRs as lightweight records focused on decision, context, and consequences.
-  - Reference: https://martinfowler.com/bliki/ArchitectureDecisionRecord.html
+  - Reference: <https://martinfowler.com/bliki/ArchitectureDecisionRecord.html>
 
 - ADR GitHub organisation.
   - Defines architecture decisions as justified design choices addressing architecturally significant requirements.
-  - Reference: https://adr.github.io/
+  - Reference: <https://adr.github.io/>
 
 - MADR, Markdown Architectural Decision Records.
   - Provides a structured Markdown ADR format with context, options, decision outcome, and consequences.
-  - Reference: https://adr.github.io/madr/
+  - Reference: <https://adr.github.io/madr/>
 
 - ISO/IEC/IEEE 42010 architecture description concepts.
   - Defines architecture description concepts including stakeholders, concerns, rationale, architecture decisions, alternatives, trade-offs, and consequences.
-  - Reference: https://www.iso-architecture.org/42010/
-  - Reference: https://www.iso.org/standard/74393.html
+  - Reference: <https://www.iso-architecture.org/42010/>
+  - Reference: <https://www.iso.org/standard/74393.html>
 
 - Microsoft Azure Well-Architected Framework, `Maintain an architecture decision record`.
   - Recommends documenting key architecturally significant decisions, alternatives ruled out, context, justifications, and implications.
-  - Reference: https://learn.microsoft.com/en-us/azure/well-architected/architect-role/architecture-decision-record
+  - Reference: <https://learn.microsoft.com/en-us/azure/well-architected/architect-role/architecture-decision-record>
 
 ## When to create an ADR
 

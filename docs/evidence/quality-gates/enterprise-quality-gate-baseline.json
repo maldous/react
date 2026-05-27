@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "1.0",
+  "evidenceType": "quality-gate-baseline",
+  "adrActRef": "ADR-ACT-0084",
+  "committedAt": "2026-05-27",
+  "hardGates": [
+    { "tool": "prettier", "version": "3.8.3", "command": "npm run format:check", "result": "passed" },
+    { "tool": "markdownlint-cli2", "version": "0.22.1", "command": "npm run lint:md", "result": "passed" },
+    { "tool": "eslint", "version": "10.4.0", "command": "npm run lint", "result": "passed" },
+    { "tool": "npm-audit", "version": "bundled", "command": "npm run audit:deps", "result": "passed", "vulnerabilities": 0 },
+    { "tool": "gitleaks-action", "version": "v2", "command": "gitleaks/gitleaks-action@v2", "environment": "ci-only" }
+  ],
+  "reportOnlyGates": [
+    { "tool": "knip", "version": "6.14.2", "command": "npm run knip", "note": "skeleton packages produce expected unused-export output" },
+    { "tool": "dependency-cruiser", "version": "17.4.2", "command": "npm run depcruise" }
+  ],
+  "securityScans": [
+    { "tool": "codeql", "language": "javascript-typescript", "queries": "security-extended", "workflow": ".github/workflows/codeql.yml" }
+  ],
+  "bugsFixed": [
+    "validate-lifecycle-evidence: Ajv draft-2020-12 regression (used Ajv instead of Ajv2020)",
+    "orchestrator: unused destructured parameter failedStep",
+    "validate-source-imports/rules.mjs: unused specifier in message()"
+  ],
+  "ciFile": ".github/workflows/ci.yml",
+  "configFiles": [
+    "package.json",
+    ".prettierrc.json",
+    ".prettierignore",
+    ".markdownlint-cli2.jsonc",
+    "eslint.config.mjs",
+    "knip.json",
+    ".dependency-cruiser.cjs",
+    ".github/workflows/codeql.yml"
+  ]
+}

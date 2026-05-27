@@ -53,7 +53,6 @@ External schemas must not be adopted wholesale unless an ADR explicitly accepts 
 
 Later ADRs may specialise vocabulary for bounded contexts, package metadata, lifecycle classes, APIs, data ownership, CI, runtime concerns, and operations.
 
-
 For ADR-0001, the term `module` is used generically for an architectural unit inside the hexagonal architecture.
 
 Later ADRs specialise this vocabulary:
@@ -71,8 +70,6 @@ component
 container
   C4 architecture term for an application or data store that runs as a unit, not necessarily a Docker container
 ```
-
-
 
 ## Stakeholder concerns
 
@@ -390,7 +387,6 @@ docs/adr/ACTION-REGISTER.md
 
 This avoids duplicate sources of truth for action status.
 
-
 ## Review date
 
 2026-06-26
@@ -411,7 +407,7 @@ Examples:
 
 - Hexagonal architecture / ports and adapters:
   - Alistair Cockburn, Hexagonal Architecture.
-  - https://alistair.cockburn.us/hexagonal-architecture/
+  - <https://alistair.cockburn.us/hexagonal-architecture/>
 
 - Architecture decision process:
   - docs/adr/README.md
