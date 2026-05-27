@@ -1,9 +1,37 @@
 {
   "schemaVersion": "1.0",
   "evidenceType": "quality-gate-baseline",
-  "adrActRef": "ADR-ACT-0084",
+  "adrRef": "ADR-0016",
+  "adrActRefs": [
+    "ADR-ACT-0084",
+    "ADR-ACT-0085"
+  ],
   "committedAt": "2026-05-27",
-  "hardGates": [
+  "tier1ArchitectureGates": [
+    {
+      "tool": "validate-package-metadata",
+      "command": "orchestrator",
+      "result": "passed"
+    },
+    {
+      "tool": "validate-source-imports",
+      "command": "orchestrator",
+      "result": "passed",
+      "note": "sole authoritative ADR import-boundary gate"
+    },
+    {
+      "tool": "validate-lifecycle-evidence",
+      "command": "orchestrator",
+      "result": "passed"
+    },
+    {
+      "tool": "architecture-tests",
+      "command": "node --test",
+      "result": "passed",
+      "count": 6
+    }
+  ],
+  "tier2HardGates": [
     {
       "tool": "prettier",
       "version": "3.8.3",
@@ -14,7 +42,8 @@
       "tool": "markdownlint-cli2",
       "version": "0.22.1",
       "command": "npm run lint:md",
-      "result": "passed"
+      "result": "passed",
+      "filesLinted": 48
     },
     {
       "tool": "eslint",
@@ -35,39 +64,64 @@
       "command": "npm run audit:osv",
       "ciAction": "google/osv-scanner-action/osv-scanner-action@v2",
       "result": "passed",
-      "vulnerabilities": 0
+      "lockFilesScanned": 5,
+      "issues": 0
     },
     {
-      "tool": "gitleaks-action",
-      "version": "v2",
+      "tool": "gitleaks",
+      "version": "action@v2",
       "command": "gitleaks/gitleaks-action@v2",
       "environment": "ci-only"
-    }
-  ],
-  "reportOnlyGates": [
-    {
-      "tool": "knip",
-      "version": "6.14.2",
-      "command": "npm run knip",
-      "note": "skeleton packages produce expected unused-export output"
     },
-    {
-      "tool": "dependency-cruiser",
-      "version": "17.4.2",
-      "command": "npm run depcruise"
-    }
-  ],
-  "securityScans": [
     {
       "tool": "codeql",
       "language": "javascript-typescript",
       "queries": "security-extended",
-      "workflow": ".github/workflows/codeql.yml"
+      "workflow": ".github/workflows/codeql.yml",
+      "environment": "ci-only"
+    }
+  ],
+  "tier3AdvisoryGates": [
+    {
+      "tool": "sonarqube",
+      "version": "7.3",
+      "command": "npm run sonar:scan",
+      "result": "passed",
+      "filesAnalyzed": 67,
+      "dashboard": "http://localhost:9000/dashboard?id=maldous-react"
+    },
+    {
+      "tool": "cyclonedx-npm",
+      "version": "4.2.1",
+      "command": "npm run sbom:generate",
+      "result": "passed",
+      "outputFile": "docs/evidence/security/sbom-baseline.json",
+      "format": "CycloneDX 1.6",
+      "components": 381
+    },
+    {
+      "tool": "license-checker",
+      "status": "deferred",
+      "note": "ADR-ACT-0086 \u2014 no stable CLI tool yet",
+      "policyFile": "docs/security/license-policy.md"
+    },
+    {
+      "tool": "knip",
+      "version": "6.14.2",
+      "command": "npm run knip",
+      "result": "config-hints-only",
+      "note": "skeleton state \u2014 expected"
+    },
+    {
+      "tool": "dependency-cruiser",
+      "version": "17.4.2",
+      "command": "npm run depcruise",
+      "result": "clean"
     }
   ],
   "bugsFixed": [
-    "validate-lifecycle-evidence: Ajv draft-2020-12 regression (used Ajv instead of Ajv2020)",
-    "orchestrator: unused destructured parameter failedStep",
+    "validate-lifecycle-evidence: Ajv draft-2020-12 regression",
+    "orchestrator: unused failedStep destructure",
     "validate-source-imports/rules.mjs: unused specifier in message()"
   ],
   "ciFile": ".github/workflows/ci.yml",
@@ -79,6 +133,13 @@
     "eslint.config.mjs",
     "knip.json",
     ".dependency-cruiser.cjs",
-    ".github/workflows/codeql.yml"
+    "sonar-project.properties",
+    ".github/workflows/codeql.yml",
+    ".github/pull_request_template.md"
+  ],
+  "governanceFiles": [
+    "docs/adr/0016-define-enterprise-quality-gate-baseline.md",
+    "docs/security/license-policy.md",
+    "docs/evidence/security/sbom-baseline.json"
   ]
 }

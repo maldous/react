@@ -9,9 +9,13 @@
     "depcruise": "depcruise --config .dependency-cruiser.cjs apps packages tools/architecture --output-type text",
     "audit:deps": "npm audit --audit-level=high",
     "audit:osv": "osv-scanner scan --recursive .",
-    "secrets:scan": "command -v gitleaks >/dev/null 2>&1 && gitleaks detect --source . --no-git || echo 'gitleaks not found on PATH — install from https://github.com/gitleaks/gitleaks/releases or use the gitleaks-action in CI'"
+    "secrets:scan": "command -v gitleaks >/dev/null 2>&1 && gitleaks detect --source . --no-git || echo 'gitleaks not found on PATH — install from https://github.com/gitleaks/gitleaks/releases or use the gitleaks-action in CI'",
+    "sonar:scan": "sonar-scanner",
+    "sbom:generate": "cyclonedx-npm --output-format JSON --output-file docs/evidence/security/sbom-baseline.json --package-lock-only",
+    "license:check": "echo 'license:check: no tool configured — see docs/security/license-policy.md and ADR-ACT-0086'"
   },
   "devDependencies": {
+    "@cyclonedx/cyclonedx-npm": "4.2.1",
     "@eslint/js": "10.0.1",
     "dependency-cruiser": "17.4.2",
     "eslint": "10.4.0",
