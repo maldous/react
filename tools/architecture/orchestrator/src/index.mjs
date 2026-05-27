@@ -107,8 +107,8 @@ function planFor(command) {
   const plannedOnly = {
     "validate-source-imports": step("validate-source-imports", "tools/architecture/validate-source-imports", ["--check", "--format", "json", ...(OPTIONS.noReports ? ["--no-reports"] : [])], true),
     "generate-package-readmes": step("generate-package-readmes", "tools/architecture/generate-package-readmes", ["--check", "--format", "json", ...(OPTIONS.noReports ? ["--no-reports"] : [])], true),
-    "generate-package-inventory": step("generate-package-inventory", "tools/architecture/generate-package-inventory", ["--check", "--format", "json", ...(OPTIONS.noReports ? ["--no-reports"] : [])], true),
-    "generate-lifecycle-reports": step("generate-lifecycle-reports", "tools/architecture/generate-lifecycle-reports", ["--check"], false),
+    "generate-package-inventory": step("generate-package-inventory", "tools/architecture/generate-package-inventory", ["--write", "--format", "json", ...(OPTIONS.noReports ? ["--no-reports"] : [])], true),
+    "generate-lifecycle-reports": step("generate-lifecycle-reports", "tools/architecture/generate-lifecycle-reports", ["--write"], false),
     "validate-lifecycle-evidence": step("validate-lifecycle-evidence", "tools/architecture/validate-lifecycle-evidence", ["--check", "--format", "json", ...(OPTIONS.noReports ? ["--no-reports"] : []), ...(OPTIONS.allowMissingAjv ? ["--allow-missing-ajv"] : [])], true),
     "generate-lifecycle-evidence": step("generate-lifecycle-evidence", "tools/architecture/validate-lifecycle-evidence", ["--write", "--format", "json", ...(OPTIONS.noReports ? ["--no-reports"] : []), ...(OPTIONS.allowMissingAjv ? ["--allow-missing-ajv"] : [])], true)
   };
