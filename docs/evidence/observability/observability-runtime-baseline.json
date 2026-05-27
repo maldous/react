@@ -1,0 +1,146 @@
+{
+  "schemaVersion": "1.0",
+  "evidenceType": "observability-runtime-baseline",
+  "adrRef": "ADR-0020",
+  "adrActRefs": ["ADR-ACT-0099"],
+  "committedAt": "2026-05-28",
+  "selectedStack": {
+    "tracing": {
+      "api": "@opentelemetry/api",
+      "propagation": "W3C traceparent/tracestate",
+      "localExporter": "OTLP -> Compose otel-collector (ADR-0017)",
+      "nodeSdk": "@opentelemetry/sdk-node (via adapters-opentelemetry only)"
+    },
+    "logging": {
+      "nodeLogger": "pino",
+      "browserLogger": "platform abstraction over console (pino is Node-only)",
+      "platformPackage": "packages/platform-logging"
+    },
+    "runtimeContext": {
+      "package": "packages/platform-runtime-context",
+      "fields": [
+        "requestId",
+        "traceId",
+        "spanId",
+        "actorId",
+        "tenantId",
+        "organisationId",
+        "correlationId",
+        "featureName",
+        "operationName"
+      ]
+    },
+    "errors": {
+      "package": "packages/platform-errors",
+      "classes": [
+        "AppError",
+        "ValidationError",
+        "NotFoundError",
+        "ConflictError",
+        "UnauthorizedError",
+        "ForbiddenError",
+        "InfrastructureError",
+        "UnexpectedError"
+      ],
+      "apiResponseShape": "{ code, message, details? }",
+      "internalDetailsPolicy": "log-only after redaction; never in API response"
+    }
+  },
+  "redactedFields": [
+    "password",
+    "passwordHash",
+    "secret",
+    "token",
+    "accessToken",
+    "refreshToken",
+    "idToken",
+    "apiKey",
+    "apiSecret",
+    "clientSecret",
+    "cookie",
+    "cookies",
+    "authorization",
+    "x-api-key",
+    "x-auth-token",
+    "x-forwarded-authorization",
+    "dsn",
+    "connectionString",
+    "databaseUrl",
+    "DATABASE_URL",
+    "SENTRY_DSN",
+    "*.password",
+    "*.secret",
+    "*.token",
+    "*.apiKey",
+    "req.headers.authorization",
+    "req.headers.cookie",
+    "res.headers[set-cookie]"
+  ],
+  "platformPackages": [
+    {
+      "name": "packages/platform-logging",
+      "status": "ADR-ACT-0100 (Open)",
+      "exports": [
+        "createLogger",
+        "createChildLogger",
+        "createRequestLogger",
+        "createBrowserLogger",
+        "redactionConfig",
+        "safeErrorMeta",
+        "safeContextMeta"
+      ]
+    },
+    {
+      "name": "packages/platform-runtime-context",
+      "status": "ADR-ACT-0101 (Open)",
+      "exports": ["RuntimeContext interface", "createContext", "createRequestContext"]
+    },
+    {
+      "name": "packages/platform-errors",
+      "status": "ADR-ACT-0102 (Open)",
+      "exports": [
+        "AppError",
+        "ValidationError",
+        "NotFoundError",
+        "ConflictError",
+        "UnauthorizedError",
+        "ForbiddenError",
+        "InfrastructureError",
+        "UnexpectedError"
+      ]
+    },
+    {
+      "name": "packages/platform-observability",
+      "status": "ADR-ACT-0103 (Open)",
+      "exports": ["createTracer", "startSpan", "recordMetric", "getActiveContext"]
+    }
+  ],
+  "healthEndpoints": {
+    "healthz": { "path": "/healthz", "auth": false, "response": "{ status: 'ok' }" },
+    "readyz": {
+      "path": "/readyz",
+      "auth": false,
+      "response": "{ status: 'ready'|'not-ready', dependencies: Record<string, 'ok'|'failed'> }"
+    },
+    "version": {
+      "path": "/version",
+      "auth": false,
+      "response": "{ version, gitSha, buildTime, environment }"
+    }
+  },
+  "sentryPolicy": "behind adapters-sentry only; features and domain must not import Sentry directly; Compose sentry profile remains experimental (ADR-ACT-0089)",
+  "deferred": [
+    "Prometheus scrape endpoint",
+    "Browser full OTel SDK",
+    "Sentry production wiring (ADR-ACT-0089)",
+    "OTel baggage propagation"
+  ],
+  "openActions": [
+    "ADR-ACT-0100 — Create platform-logging",
+    "ADR-ACT-0101 — Create platform-runtime-context",
+    "ADR-ACT-0102 — Create platform-errors",
+    "ADR-ACT-0103 — Create platform-observability",
+    "ADR-ACT-0104 — BFF health/readiness/version endpoint contract"
+  ],
+  "adrActZeroZeroEightStatus": "NOT started"
+}
