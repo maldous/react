@@ -1,0 +1,9 @@
+{
+  "name": "@platform/adapters-postgres",
+  "architecture": {
+    "lifecycle": { "role": "adapter" },
+    "relations": {
+      "dependsOn": ["@platform/domain-core"]
+    }
+  }
+}

@@ -10,7 +10,7 @@ const IMPORT_PATTERNS = [
   /import\s*\(\s*['"]([^'"]+)['"]\s*\)/dg
 ];
 
-function findPackageRoot(filePath) {
+export function findPackageRoot(filePath) {
   let dir = path.dirname(filePath);
   while (true) {
     const candidate = path.join(dir, "package.json");
@@ -18,7 +18,9 @@ function findPackageRoot(filePath) {
       try {
         const pkg = JSON.parse(fs.readFileSync(candidate, "utf8"));
         if (pkg.name) {
-          return { packageRoot: dir, packageName: pkg.name };
+          const deps = pkg.architecture?.relations?.dependsOn;
+          const allowedPlatformDeps = Array.isArray(deps) && deps.length > 0 ? deps : null;
+          return { packageRoot: dir, packageName: pkg.name, allowedPlatformDeps };
         }
       } catch {
         // skip unreadable or nameless package.json
@@ -100,7 +102,7 @@ export function scanRoots(roots, repoRoot) {
     const packageInfo = findPackageRoot(filePath);
     if (!packageInfo) return;
 
-    const { packageRoot, packageName } = packageInfo;
+    const { packageRoot, packageName, allowedPlatformDeps } = packageInfo;
     const isTest = isTestFile(filePath, packageRoot);
 
     let source;
@@ -116,6 +118,7 @@ export function scanRoots(roots, repoRoot) {
       file: filePath,
       packageName,
       packageRoot,
+      allowedPlatformDeps,
       isTestFile: isTest,
       imports
     });

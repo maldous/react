@@ -1,3 +1,6 @@
+import path from "node:path";
+import { findPackageRoot } from "./scanner.mjs";
+
 function pkgRule(id, forbiddenPrefixes, forbiddenExact) {
   return {
     id,
@@ -31,6 +34,20 @@ export const UNIVERSAL_RULES = [
     },
     message(pkg, specifier) {
       return `${pkg}: production files must not import @platform/test-support`;
+    }
+  },
+  {
+    id: "no-relative-cross-package-import",
+    productionOnly: false,
+    match(specifier, fileInfo) {
+      if (!specifier.startsWith("./") && !specifier.startsWith("../")) return false;
+      const resolved = path.resolve(path.dirname(fileInfo.file), specifier);
+      const importedPkg = findPackageRoot(resolved);
+      if (!importedPkg) return false;
+      return importedPkg.packageRoot !== fileInfo.packageRoot;
+    },
+    message(pkg, specifier) {
+      return `${pkg} must not use relative cross-package import: ${specifier}`;
     }
   }
 ];

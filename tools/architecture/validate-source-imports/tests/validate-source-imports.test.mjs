@@ -55,7 +55,9 @@ const invalidFixtures = [
   { name: "contracts-analytics-imports-adapter", dir: "invalid/contracts-analytics-imports-adapter", rule: "no-adapters-in-contracts-analytics" },
   { name: "ui-imports-domain", dir: "invalid/ui-imports-domain", rule: "no-domain-in-ui" },
   { name: "access-imports-react", dir: "invalid/access-imports-react", rule: "no-react-in-access-control" },
-  { name: "profile-imports-postgres", dir: "invalid/profile-imports-postgres", rule: "no-adapters-in-profile" }
+  { name: "profile-imports-postgres", dir: "invalid/profile-imports-postgres", rule: "no-adapters-in-profile" },
+  { name: "relative-cross-package-import", dir: "invalid/relative-cross-package-import/packages", rule: "no-relative-cross-package-import" },
+  { name: "adapter-imports-unlisted", dir: "invalid/adapter-imports-unlisted", rule: "no-unlisted-platform-import" }
 ];
 
 for (const fixture of invalidFixtures) {

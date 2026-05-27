@@ -70,8 +70,8 @@ export function writeCommittedEvidence(jsonReport, repoRoot, toolVersion, scanRo
   const evidenceJson = {
     ...jsonReport,
     toolVersion,
-    ruleSet: "ADR-0001, ADR-0002, import-boundary-rules.md",
-    scanMethod: "regex",
+    ruleSet: "ADR-0001, ADR-0002, ADR-0013, ADR-0014, ADR-0015, import-boundary-rules.md",
+    scanMethod: "regex+path-resolution",
     scanRoots
   };
 
@@ -83,7 +83,7 @@ export function writeCommittedEvidence(jsonReport, repoRoot, toolVersion, scanRo
     "",
     `Generated at: ${jsonReport.generatedAt}`,
     `Tool version: ${toolVersion}`,
-    `Scan method: regex`,
+    `Scan method: regex+path-resolution`,
     `Rule set: ${evidenceJson.ruleSet}`,
     "",
     "## Result",
@@ -145,6 +145,8 @@ export function writeSelfEvidence({
     rulesEvaluated: [
       "no-deep-import",
       "no-test-support-in-prod",
+      "no-relative-cross-package-import",
+      "no-unlisted-platform-import",
       "no-react-in-domain",
       "no-graphql-in-domain",
       "no-adapters-in-domain",

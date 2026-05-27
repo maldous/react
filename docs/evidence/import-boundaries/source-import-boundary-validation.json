@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-05-27T02:55:18.154Z",
+  "generatedAt": "2026-05-27T04:45:50.233Z",
   "totalFiles": 41,
   "totalImports": 2,
   "passed": 41,
   "failed": 0,
   "violations": [],
   "toolVersion": "0.1.0",
-  "ruleSet": "ADR-0001, ADR-0002, import-boundary-rules.md",
-  "scanMethod": "regex",
+  "ruleSet": "ADR-0001, ADR-0002, ADR-0013, ADR-0014, ADR-0015, import-boundary-rules.md",
+  "scanMethod": "regex+path-resolution",
   "scanRoots": [
     "apps",
     "packages"

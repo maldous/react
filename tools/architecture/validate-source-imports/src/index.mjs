@@ -97,7 +97,7 @@ function checkViolations(files) {
     for (const specifier of fileInfo.imports) {
       for (const rule of UNIVERSAL_RULES) {
         if (rule.productionOnly && fileInfo.isTestFile) continue;
-        if (rule.match(specifier)) {
+        if (rule.match(specifier, fileInfo)) {
           violations.push({
             file: fileInfo.file,
             packageName: fileInfo.packageName,
@@ -121,6 +121,21 @@ function checkViolations(files) {
             });
           }
         }
+      }
+
+      if (
+        specifier.startsWith("@platform/") &&
+        !specifier.slice("@platform/".length).includes("/") &&
+        fileInfo.allowedPlatformDeps !== null &&
+        !fileInfo.allowedPlatformDeps.includes(specifier)
+      ) {
+        violations.push({
+          file: fileInfo.file,
+          packageName: fileInfo.packageName,
+          specifier,
+          rule: "no-unlisted-platform-import",
+          message: `${fileInfo.packageName} must not import ${specifier} (not in architecture.relations.dependsOn)`
+        });
       }
     }
   }
