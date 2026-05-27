@@ -27,7 +27,7 @@ jobs:
         working-directory: tools/architecture/validate-source-imports
 
       - name: Run architecture governance checks
-        run: node tools/architecture/orchestrator/src/index.mjs all --no-reports
+        run: node tools/architecture/orchestrator/src/index.mjs all --no-reports --strict
 
       - name: Run architecture tooling tests
         run: |

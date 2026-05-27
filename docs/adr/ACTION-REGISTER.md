@@ -101,6 +101,7 @@ ADR-ACT-0006: Done as ADR-0015.
 ADR-ACT-0019: Done as ADR-0011.
 ADR-ACT-0009: Done — CI baseline in .github/workflows/ci.yml.
 ADR-ACT-0053: Done — ci.yml runs orchestrator all --no-reports.
+ADR-ACT-0080: Done — TypeScript AST scanner; --strict mode; import-boundary-rules.json; CI runs --strict.
 ```
 
 
@@ -187,6 +188,7 @@ ADR-ACT-0053: Done — ci.yml runs orchestrator all --no-reports.
 | ADR-ACT-0077 | ADR-0006 | Document skeleton-phase lifecycle evidence exception: initial skeleton packages have no lifecycle transition evidence because they were created directly in their current lifecycle class and have never undergone a governed transition. Evidence bundles under docs/evidence/lifecycle/ are required only when a package transitions between lifecycle classes after the skeleton baseline. | Governance | Done | Medium | ADR-0006, ADR-ACT-0043, ADR-ACT-0045 | Architecture owner / technical lead | Complete | Accepted as skeleton-phase exception. Evidence bundles will be required from the first vertical slice lifecycle transitions onward. |
 | ADR-ACT-0078 | ADR-0011 | Document validate-source-imports as an implemented architecture tool: scans TypeScript/JavaScript source imports across apps/ and packages/ and validates cross-package imports against docs/architecture/import-boundary-rules.md. Update ADR-0011 tool list and run dependency model accordingly. | Documentation | Done | Medium | ADR-0011 | Architecture owner / technical lead | Complete | ADR-0011 updated; validate-source-imports added to tool list and run dependency model |
 | ADR-ACT-0079 | ADR-0006 | Amend ADR-0006 deprecated-stage transition requirements to explicitly mandate changeControl: deprecation-review and promotionEligible: false, formalising the constraints already enforced by validate-package-metadata lifecycle-governance consistency rules. | Governance | Done | Medium | ADR-0006, ADR-ACT-0043 | Architecture owner / technical lead | Complete | ADR-0006 active/stable-to-deprecated requirements amended; changeControl and promotionEligible constraints now match the tooling rules |
+| ADR-ACT-0080 | ADR-0012 | Replace regex-based import extraction in validate-source-imports with TypeScript compiler API (ts.createSourceFile per file). Adds import metadata (isTypeOnly, isDynamic, line), --strict mode with no-computed-dynamic-import and no-unresolved-platform-import rules, machine-readable import-boundary-rules.json as single source of truth for PACKAGE_RULES, and orchestrator/CI --strict propagation. | Tooling | Done | High | ADR-ACT-0007, ADR-ACT-0014 | Architecture owner / technical lead | Complete | TypeScript AST scanner committed; 26 fixture tests pass; real repo passes default and --strict; docs/architecture/import-boundary-rules.json created |
 
 ## Notes
 

@@ -12,7 +12,8 @@ function parseArgs(argv) {
     noReports: false,
     planOnly: false,
     allowMissingAjv: false,
-    evidenceGenerationRequested: false
+    evidenceGenerationRequested: false,
+    strict: false
   };
 
   const commands = new Set(["validate", "all", "generate-readmes", "generate-inventory", "generate-lifecycle-reports", "validate-evidence", "generate-lifecycle-evidence"]);
@@ -51,6 +52,11 @@ function parseArgs(argv) {
 
     if (arg === "--evidence-generation-requested") {
       options.evidenceGenerationRequested = true;
+      continue;
+    }
+
+    if (arg === "--strict") {
+      options.strict = true;
       continue;
     }
 
@@ -105,7 +111,7 @@ function planFor(command) {
   ]);
 
   const plannedOnly = {
-    "validate-source-imports": step("validate-source-imports", "tools/architecture/validate-source-imports", ["--check", "--format", "json", ...(OPTIONS.noReports ? ["--no-reports"] : [])], true),
+    "validate-source-imports": step("validate-source-imports", "tools/architecture/validate-source-imports", ["--check", "--format", "json", ...(OPTIONS.noReports ? ["--no-reports"] : []), ...(OPTIONS.strict ? ["--strict"] : [])], true),
     "generate-package-readmes": step("generate-package-readmes", "tools/architecture/generate-package-readmes", ["--check", "--format", "json", ...(OPTIONS.noReports ? ["--no-reports"] : [])], true),
     "generate-package-inventory": step("generate-package-inventory", "tools/architecture/generate-package-inventory", ["--write", "--format", "json", ...(OPTIONS.noReports ? ["--no-reports"] : [])], true),
     "generate-lifecycle-reports": step("generate-lifecycle-reports", "tools/architecture/generate-lifecycle-reports", ["--write"], false),
