@@ -65,6 +65,19 @@ export const UNIVERSAL_RULES = [
     message(pkg, specifier) {
       return `${pkg} must not use relative cross-package import: ${specifier}`;
     }
+  },
+  {
+    id: "no-architecture-in-product",
+    productionOnly: false,
+    match(specifier, fileInfo) {
+      return (
+        fileInfo.packageName.startsWith("@platform/") &&
+        specifier.startsWith("@architecture/")
+      );
+    },
+    message(pkg, specifier) {
+      return `${pkg} must not import architecture tooling: ${specifier}`;
+    }
   }
 ];
 

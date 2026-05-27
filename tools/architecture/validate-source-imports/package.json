@@ -1,6 +1,6 @@
 {
   "name": "@architecture/validate-source-imports",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "Validate source-code import boundaries across apps and packages.",
   "type": "module",
@@ -86,7 +86,7 @@
       "responsibilities": [
         "Walk apps/ and packages/ source files",
         "Extract static imports, re-exports, dynamic imports, and import-type nodes via the TypeScript compiler API",
-        "Enforce universal rules: no deep imports, no test-support in production files, no relative cross-package imports",
+        "Enforce universal rules: no deep imports, no test-support in production files, no relative cross-package imports, no architecture tooling imports in product packages",
         "Enforce per-package boundary rules derived from import-boundary-rules.json",
         "Detect package import cycles in strict mode",
         "Detect unresolved relative and @platform/* imports in strict mode",

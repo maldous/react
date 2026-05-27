@@ -8,7 +8,7 @@ Validates that TypeScript/JS source files only import from permitted packages pe
 
 ```text
 Name: @architecture/validate-source-imports
-Version: 0.1.0
+Version: 0.2.0
 Component: validate-source-imports
 Type: tool
 System: architecture-governance
@@ -42,7 +42,7 @@ Semver policy: internal-traceable
 
 - Walk apps/ and packages/ source files
 - Extract static imports, re-exports, dynamic imports, and import-type nodes via the TypeScript compiler API
-- Enforce universal rules: no deep imports, no test-support in production files, no relative cross-package imports
+- Enforce universal rules: no deep imports, no test-support in production files, no relative cross-package imports, no architecture tooling imports in product packages
 - Enforce per-package boundary rules derived from import-boundary-rules.json
 - Detect package import cycles in strict mode
 - Detect unresolved relative and @platform/* imports in strict mode

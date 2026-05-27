@@ -62,7 +62,8 @@ const invalidFixtures = [
   { name: "adapter-imports-unlisted", dir: "invalid/adapter-imports-unlisted", rule: "no-unlisted-platform-import" },
   { name: "empty-dep-list-imports-platform", dir: "invalid/empty-dep-list-imports-platform", rule: "no-unlisted-platform-import" },
   { name: "type-only-boundary-violation", dir: "invalid/type-only-boundary-violation", rule: "no-react-in-domain" },
-  { name: "import-type-node-boundary-violation", dir: "invalid/import-type-node-boundary-violation", rule: "no-react-in-domain" }
+  { name: "import-type-node-boundary-violation", dir: "invalid/import-type-node-boundary-violation", rule: "no-react-in-domain" },
+  { name: "product-imports-architecture", dir: "invalid/product-imports-architecture", rule: "no-architecture-in-product" }
 ];
 
 for (const fixture of invalidFixtures) {

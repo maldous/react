@@ -5,6 +5,7 @@ import process from "node:process";
 
 import { UNIVERSAL_RULES, PACKAGE_RULES } from "./rules.mjs";
 import { scanRoots } from "./scanner.mjs";
+import { buildPackageMap } from "./package-map.mjs";
 import {
   buildJsonReport,
   buildMarkdownReport,
@@ -70,25 +71,6 @@ function parseArgs(argv) {
   return options;
 }
 
-function discoverKnownPackages(repoRoot) {
-  const known = new Set();
-  for (const dir of ["apps", "packages"]) {
-    const root = path.join(repoRoot, dir);
-    if (!fs.existsSync(root)) continue;
-    for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
-      if (!entry.isDirectory()) continue;
-      const pkgPath = path.join(root, entry.name, "package.json");
-      if (!fs.existsSync(pkgPath)) continue;
-      try {
-        const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
-        if (pkg.name) known.add(pkg.name);
-      } catch {
-        // skip
-      }
-    }
-  }
-  return known;
-}
 
 function findRepoRoot(startDir) {
   let dir = path.resolve(startDir);
@@ -184,7 +166,7 @@ function checkCycleViolations(files) {
   });
 }
 
-function checkViolations(files, { strict = false, knownPackages = null } = {}) {
+function checkViolations(files, { strict = false, packageMap = null } = {}) {
   const violations = [];
 
   for (const fileInfo of files) {
@@ -248,10 +230,10 @@ function checkViolations(files, { strict = false, knownPackages = null } = {}) {
       // Strict: @platform/* imports must resolve to a package that exists in the repo
       if (
         strict &&
-        knownPackages !== null &&
+        packageMap !== null &&
         specifier.startsWith("@platform/") &&
         !specifier.slice("@platform/".length).includes("/") &&
-        !knownPackages.has(specifier)
+        !packageMap.has(specifier)
       ) {
         violations.push({
           file: fileInfo.file,
@@ -314,8 +296,8 @@ function main() {
 
   const scanRootArgs = OPTIONS.roots.length > 0 ? OPTIONS.roots : ["apps", "packages"];
   const { files, warnings } = scanRoots(scanRootArgs, REPO_ROOT);
-  const knownPackages = OPTIONS.strict ? discoverKnownPackages(REPO_ROOT) : null;
-  const violations = checkViolations(files, { strict: OPTIONS.strict, knownPackages });
+  const packageMap = buildPackageMap(REPO_ROOT);
+  const violations = checkViolations(files, { strict: OPTIONS.strict, packageMap });
   if (OPTIONS.strict) violations.push(...checkCycleViolations(files));
 
   const finishedAt = new Date().toISOString();

@@ -158,6 +158,7 @@ export function writeSelfEvidence({
       "no-adapters-in-contracts-ingestion",
       "no-adapters-in-contracts-analytics",
       "no-adapters-in-feature",
+      "no-architecture-in-product",
       "no-computed-dynamic-import",
       "no-unresolved-platform-import",
       "no-package-cycle",
