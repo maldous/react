@@ -95,17 +95,23 @@ function isObject(value) {
 }
 
 async function loadAjv() {
-  try {
-    const module = await import("ajv");
-    return module.default ?? module;
-  } catch {
-    const localCandidate = path.join(REPO_ROOT, "tools", "architecture", "validate-package-metadata", "node_modules", "ajv", "dist", "ajv.js");
-    if (fs.existsSync(localCandidate)) {
-      const module = await import(pathToFileURL(localCandidate).href);
-      return module.default ?? module;
+  // Draft-2020-12 requires Ajv2020, not the default Ajv class
+  const candidates = [
+    () => import("ajv/dist/2020"),
+    () => {
+      const local = path.join(REPO_ROOT, "tools", "architecture", "validate-package-metadata", "node_modules", "ajv", "dist", "2020.js");
+      return fs.existsSync(local) ? import(pathToFileURL(local).href) : Promise.reject();
     }
-    return null;
+  ];
+  for (const load of candidates) {
+    try {
+      const module = await load();
+      return module.default ?? module;
+    } catch {
+      // try next candidate
+    }
   }
+  return null;
 }
 
 function listPackageJsonFiles(searchRoots) {

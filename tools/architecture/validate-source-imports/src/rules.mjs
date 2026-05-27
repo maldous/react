@@ -65,7 +65,7 @@ export const PACKAGE_RULES = {
   ],
   "@platform/feature-workflow": [
     pkgRule("no-adapters-in-feature", [], ["@platform/adapters-postgres", "@platform/adapters-clickhouse"]),
-    pkgRule("no-operations-adapters-in-feature", [], ["@platform/adapters-keycloak", "@platform/adapters-redis", "@platform/adapters-sentry", "@platform/adapters-opentelemetry", "@platform/adapters-object-storage"]),
+    pkgRule("no-operations-adapters-in-feature", [], ["@platform/adapters-keycloak", "@platform/adapters-redis", "@platform/adapters-sentry", "@platform/adapters-opentelemetry", "@platform/adapters-object-storage", "@platform/adapters-brevo"]),
     pkgRule("no-server-runtime-in-feature", [], ["@platform/api-runtime", "@platform/graphql-api-runtime", "@platform/worker-runtime", "@platform/session-runtime", "@platform/security-auth"])
   ],
   "@platform/security-auth": [

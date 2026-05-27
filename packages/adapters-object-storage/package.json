@@ -53,12 +53,12 @@
       "publicExportsOnly": true,
       "deepImportsAllowed": false,
       "allowedConsumers": [
-        "application",
-        "feature"
+        "application"
       ],
       "forbiddenConsumers": [
         "domain",
         "contract",
+        "feature",
         "ui"
       ]
     },

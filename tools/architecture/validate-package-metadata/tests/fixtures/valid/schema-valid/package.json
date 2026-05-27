@@ -4,7 +4,9 @@
   "description": "Valid architecture metadata fixture.",
   "private": true,
   "type": "module",
-  "exports": {},
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "architecture": {
     "schemaVersion": "1.0",
     "component": {

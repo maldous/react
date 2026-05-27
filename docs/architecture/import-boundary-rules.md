@@ -64,9 +64,12 @@ UI packages are presentational and data-source agnostic.
   @platform/access-control
   @platform/contracts-graphql
   @platform/contracts-analytics
-  @platform/queue-runtime       (to enqueue jobs)
-  @platform/storage-runtime     (to request presigned URLs)
-  @platform/audit-events        (to emit domain-level audit events)
+  @platform/queue-runtime           (to enqueue jobs)
+  @platform/storage-runtime         (to request presigned URLs)
+  @platform/audit-events            (to emit domain-level audit events)
+  @platform/email-runtime           (to send transactional email)
+  @platform/notification-runtime    (to send push/in-app notifications)
+  @platform/search-runtime          (to perform search queries)
 
 @platform/feature-workflow may not import:
   @platform/adapters-postgres
@@ -81,6 +84,7 @@ UI packages are presentational and data-source agnostic.
   @platform/adapters-sentry
   @platform/adapters-opentelemetry
   @platform/adapters-object-storage
+  @platform/adapters-brevo
   direct database clients
   @platform/test-support in production source
 ```
@@ -336,7 +340,7 @@ delivery packages carry production: false in runtime metadata
 | Package | May depend on |
 |---|---|
 | @platform/react-enterprise-app | feature-workflow, access-control, adapters-graphql |
-| @platform/feature-workflow | ui-design-system, domain-core, profile-configuration, access-control, contracts-graphql, contracts-analytics, queue-runtime, storage-runtime, audit-events |
+| @platform/feature-workflow | ui-design-system, domain-core, profile-configuration, access-control, contracts-graphql, contracts-analytics, queue-runtime, storage-runtime, audit-events, email-runtime, notification-runtime, search-runtime |
 | @platform/ui-design-system | none of the runtime/domain packages |
 | @platform/domain-core | none of the platform runtime packages |
 | @platform/profile-configuration | domain-core |

@@ -250,6 +250,7 @@
           "type": "string",
           "enum": [
             "experimental",
+            "best-effort",
             "standard",
             "enhanced",
             "maintenance",
@@ -452,6 +453,7 @@
               "local",
               "development",
               "test",
+              "ci",
               "staging",
               "production"
             ]
@@ -536,17 +538,7 @@
     },
     "consumer": {
       "type": "string",
-      "enum": [
-        "same-package",
-        "same-domain",
-        "cross-domain",
-        "application-layer",
-        "adapter-layer",
-        "ui-layer",
-        "tooling",
-        "test-only",
-        "external"
-      ]
+      "minLength": 1
     },
     "relations": {
       "type": "object",
@@ -585,12 +577,15 @@
         "type": {
           "type": "string",
           "enum": [
-            "feature",
-            "platform",
-            "contract",
-            "adapter",
+            "application",
+            "library",
+            "service",
+            "api",
+            "worker",
+            "tool",
             "tooling",
-            "test"
+            "test",
+            "documentation"
           ]
         },
         "stage": {
@@ -621,12 +616,17 @@
           "enum": [
             "domain",
             "application",
+            "app",
             "adapter",
             "ui",
             "infrastructure",
             "tooling",
             "test",
-            "documentation"
+            "documentation",
+            "contract",
+            "feature",
+            "platform",
+            "runtime"
           ]
         }
       }

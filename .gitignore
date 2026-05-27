@@ -28,6 +28,9 @@ reports/**
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+
+# Session memory buffer (tool-local, not project state)
+.remember/
 # Local generated artifact workspaces
 /adr-work-*/
 

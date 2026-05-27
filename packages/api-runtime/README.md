@@ -67,7 +67,7 @@ Deep imports allowed: false
 
 ```text
 application
-feature
+platform
 ```
 
 ### Forbidden consumers
@@ -75,6 +75,7 @@ feature
 ```text
 domain
 contract
+feature
 ui
 ```
 
