@@ -76,7 +76,9 @@ docker compose --profile quality ps
 npm run sonar:scan
 ```
 
-## Sentry setup (sentry profile)
+## Sentry setup (sentry profile — experimental)
+
+> **Experimental:** SDK smoke testing only. Not a full self-hosted Sentry stack. `sentry-worker` and `sentry-cron` are included but unvalidated. Do not depend on this profile for adapter validation until ADR-ACT-0089 is resolved.
 
 ```bash
 npm run compose:sentry
@@ -99,29 +101,39 @@ ClickHouse native protocol (port 9000) conflicts with MinIO's API port (9000). T
 - ClickHouse HTTP: `localhost:8124` (most client libraries use this)
 - ClickHouse native: `localhost:9002`
 
-## System service conflicts
+## Port conflicts and overrides
 
-System-level `postgresql` and `redis-server` services have been disabled.
-
-Port remappings due to other running Docker containers:
-
-- postgres: host port **5433** (5432 used by manicode-db-1)
-- clickhouse HTTP: host port **8124** (8123 used by homeassistant container) If you need to re-enable them:
+Host ports are configurable via `.env`. Override any default to avoid conflicts with other services:
 
 ```bash
-sudo systemctl enable --now postgresql redis-server
+# .env — override any defaults
+POSTGRES_PORT=5434       # default: 5433
+REDIS_PORT=6380          # default: 6379
+CLICKHOUSE_HTTP_PORT=8125  # default: 8124
+# ...see .env.example for all port vars
 ```
+
+All port variables and defaults are documented in `.env.example`.
+
+> **Validation host note:** During initial evidence collection, system `postgresql`, `redis-server`, and `mailhog` were stopped to free the default ports. This was a local environment choice, not a repository requirement. Use `.env` port overrides as the preferred conflict resolution approach.
+
+## LocalStack Docker socket
+
+> **Security:** The `cloud-mocks` profile mounts `/var/run/docker.sock` for LocalStack Lambda/ECS emulation. This is a local-dev exception — profile-gated, never starts by default, and must not run in CI or on shared hosts without explicit approval.
 
 ## npm scripts
 
-| Script                     | Action                                             |
-| -------------------------- | -------------------------------------------------- |
-| `npm run compose:config`   | Validate compose.yaml syntax (no services started) |
-| `npm run compose:up`       | Start default services                             |
-| `npm run compose:down`     | Stop all services                                  |
-| `npm run compose:logs`     | Follow all service logs                            |
-| `npm run compose:ps`       | Show service status                                |
-| `npm run compose:quality`  | Start SonarQube                                    |
-| `npm run compose:identity` | Start Keycloak                                     |
-| `npm run compose:cloud`    | Start LocalStack                                   |
-| `npm run compose:sentry`   | Start Sentry                                       |
+| Script                         | Action                                         |
+| ------------------------------ | ---------------------------------------------- |
+| `npm run compose:config`       | Validate compose.yaml syntax (default profile) |
+| `npm run compose:config:all`   | Validate compose.yaml syntax (all profiles)    |
+| `npm run compose:up:default`   | Start exactly the 6 default services           |
+| `npm run compose:down:volumes` | Stop all services and remove volumes           |
+| `npm run compose:up`           | Start default services                         |
+| `npm run compose:down`         | Stop all services                              |
+| `npm run compose:logs`         | Follow all service logs                        |
+| `npm run compose:ps`           | Show service status                            |
+| `npm run compose:quality`      | Start SonarQube                                |
+| `npm run compose:identity`     | Start Keycloak                                 |
+| `npm run compose:cloud`        | Start LocalStack                               |
+| `npm run compose:sentry`       | Start Sentry                                   |

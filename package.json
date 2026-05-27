@@ -12,7 +12,6 @@
     "secrets:scan": "command -v gitleaks >/dev/null 2>&1 && gitleaks detect --source . --no-git || echo 'gitleaks not found on PATH — install from https://github.com/gitleaks/gitleaks/releases or use the gitleaks-action in CI'",
     "sonar:scan": "sonar-scanner -Dsonar.host.url=http://localhost:9003",
     "sbom:generate": "cyclonedx-npm --output-format JSON --output-file docs/evidence/security/sbom-baseline.json --package-lock-only",
-    "license:check": "echo 'license:check: no tool configured — see docs/security/license-policy.md and ADR-ACT-0086'",
     "compose:config": "docker compose config",
     "compose:up": "docker compose up -d",
     "compose:down": "docker compose down",
@@ -23,7 +22,11 @@
     "compose:cloud": "docker compose --profile cloud-mocks up -d localstack",
     "compose:sentry": "docker compose --profile sentry up -d",
     "tsc:check": "tsc --noEmit -p apps/react-enterprise-app/tsconfig.json",
-    "test:compose": "node --test tests/integration/compose-smoke.test.mjs"
+    "test:compose": "node --test tests/integration/compose-smoke.test.mjs",
+    "license:policy": "echo \"License policy: see docs/security/license-policy.md. Automated scanning tracked in ADR-ACT-0090.\"",
+    "compose:config:all": "docker compose --profile quality --profile identity --profile cloud-mocks --profile sentry config",
+    "compose:up:default": "docker compose up -d postgres redis clickhouse minio mailpit otel-collector",
+    "compose:down:volumes": "docker compose down --volumes"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "3.1054.0",

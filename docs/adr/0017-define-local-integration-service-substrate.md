@@ -162,10 +162,14 @@ Option C is chosen because:
 - Developers need Docker installed.
 - Heavy profiles (Sentry, quality, identity) consume significant memory when active.
 
+**Security / LocalStack:**
+
+The `cloud-mocks` profile mounts the Docker socket (`/var/run/docker.sock`). This is a local-development security exception required for Lambda/ECS emulation in LocalStack. It is profile-gated, never starts by default, and must not run in CI unless separately reviewed and approved. Do not run the `cloud-mocks` profile on shared or multi-user hosts without evaluating the socket exposure risk.
+
 **Neutral / operational:**
 
-- System-level `postgresql` and `redis-server` services are disabled to free ports 5432 and 6379.
-- `docker compose config` is added to the CI `quality-gates` job as a syntax check.
+- `docker compose config` (default profile) and `docker compose config --profile quality --profile identity --profile cloud-mocks --profile sentry` (all-profiles) are added to the CI `quality-gates` job as syntax gates. No services start in CI.
+- On the validation host, system `postgresql`, `redis-server`, and `mailhog` were stopped to free ports during evidence collection. This is a description of the validation environment, not a repository requirement. Developers may instead set `POSTGRES_PORT`, `REDIS_PORT`, etc. in `.env` to use non-conflicting host ports.
 - Adding a new adapter package should be accompanied by a matching service in `compose.yaml`.
 
 ## AI-assistance record
@@ -219,6 +223,10 @@ None.
 - Docker Compose profiles: <https://docs.docker.com/compose/profiles/>
 
 ## Notes
+
+**Sentry profile is experimental and for SDK smoke testing only.** The `sentry` profile provides a minimal single-image Sentry setup for testing `@platform/adapters-sentry` SDK connectivity. It is not a full self-hosted Sentry stack, does not replace external Sentry or Grafana Cloud, and must not be used as the primary observability target. The `sentry-worker` and `sentry-cron` services are included but unvalidated — they use process-only liveness rather than HTTP healthchecks. See ADR-ACT-0089 for validation tracking.
+
+**Host port overrides.** All compose host ports are configurable via `.env` environment variables (e.g. `POSTGRES_PORT=5434`). The defaults in `compose.yaml` reflect the validation host environment and may conflict on other machines. Override in `.env` rather than editing `compose.yaml`.
 
 **Distroless image healthcheck constraint:** The `otel/opentelemetry-collector-contrib` image is a distroless binary image with no shell, wget, or curl. The in-container healthcheck uses a process-liveness proxy (`/otelcol-contrib help`) rather than a readiness probe. The real readiness endpoint (health_check extension HTTP API) is externally accessible at host port 13133 for external monitoring. If a true readiness probe is required, switch to a base image that includes health probing tools, or add a sidecar.
 

@@ -50,8 +50,11 @@ jobs:
       - name: TypeScript strict check
         run: npm run tsc:check
 
-      - name: Docker Compose syntax check
+      - name: Docker Compose syntax check (default profile)
         run: npm run compose:config
+
+      - name: Docker Compose syntax check (all profiles)
+        run: npm run compose:config:all
 
       # --- Report-only gates (never fail the build) ---
 

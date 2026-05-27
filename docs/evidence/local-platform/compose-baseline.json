@@ -2,22 +2,42 @@
   "schemaVersion": "1.0",
   "evidenceType": "compose-baseline",
   "adrRef": "ADR-0017",
-  "adrActRef": "ADR-ACT-0087",
-  "committedAt": "2026-05-27",
+  "adrActRefs": [
+    "ADR-ACT-0087",
+    "ADR-ACT-0088"
+  ],
+  "hardenedAt": "2026-05-27",
+  "validationCommands": {
+    "composeConfig": "passed",
+    "composeConfigAll": "passed",
+    "defaultServicesStarted": 6,
+    "defaultServicesHealthy": 6,
+    "defaultServicesShutdown": "clean"
+  },
+  "qualityGates": {
+    "formatCheck": "passed",
+    "lintMd": "passed (52 files, 0 errors)",
+    "lint": "passed (0 problems)",
+    "auditDeps": "passed (0 vulnerabilities)",
+    "auditOsv": "passed (0 issues)",
+    "orchestratorStrict": "passed (6/6)",
+    "archTests": "passed (6/6)"
+  },
   "defaultServices": [
     {
       "name": "postgres",
       "image": "postgres:16.6-alpine",
-      "hostPort": 5433,
+      "portEnv": "POSTGRES_PORT",
+      "defaultPort": 5433,
       "containerPort": 5432,
       "status": "healthy",
-      "adapter": "@platform/adapters-postgres",
-      "note": "5433 used; 5432 taken by manicode-db-1"
+      "adapter": "@platform/adapters-postgres"
     },
     {
       "name": "redis",
       "image": "redis:7.4.2-alpine",
-      "hostPort": 6379,
+      "portEnv": "REDIS_PORT",
+      "defaultPort": 6379,
       "containerPort": 6379,
       "status": "healthy",
       "adapter": "@platform/adapters-redis"
@@ -25,20 +45,27 @@
     {
       "name": "clickhouse",
       "image": "clickhouse/clickhouse-server:24.12",
-      "hostPorts": [
-        { "host": 8124, "container": 8123, "protocol": "HTTP" },
-        { "host": 9002, "container": 9000, "protocol": "native" }
+      "portEnvs": [
+        "CLICKHOUSE_HTTP_PORT",
+        "CLICKHOUSE_NATIVE_PORT"
+      ],
+      "defaultPorts": [
+        8124,
+        9002
       ],
       "status": "healthy",
-      "adapter": "@platform/adapters-clickhouse",
-      "note": "8124 used; 8123 taken by homeassistant container"
+      "adapter": "@platform/adapters-clickhouse"
     },
     {
       "name": "minio",
       "image": "minio/minio:RELEASE.2024-12-18T13-15-44Z",
-      "hostPorts": [
-        { "host": 9000, "container": 9000, "protocol": "S3 API" },
-        { "host": 9001, "container": 9001, "protocol": "console" }
+      "portEnvs": [
+        "MINIO_API_PORT",
+        "MINIO_CONSOLE_PORT"
+      ],
+      "defaultPorts": [
+        9000,
+        9001
       ],
       "status": "healthy",
       "adapter": "@platform/adapters-object-storage"
@@ -46,9 +73,13 @@
     {
       "name": "mailpit",
       "image": "axllent/mailpit:v1.21.0",
-      "hostPorts": [
-        { "host": 1025, "container": 1025, "protocol": "SMTP" },
-        { "host": 8025, "container": 8025, "protocol": "HTTP UI" }
+      "portEnvs": [
+        "MAILPIT_SMTP_PORT",
+        "MAILPIT_UI_PORT"
+      ],
+      "defaultPorts": [
+        1025,
+        8025
       ],
       "status": "healthy",
       "adapter": "@platform/adapters-brevo"
@@ -56,35 +87,79 @@
     {
       "name": "otel-collector",
       "image": "otel/opentelemetry-collector-contrib:0.114.0",
-      "hostPorts": [
-        { "host": 4317, "container": 4317, "protocol": "OTLP gRPC" },
-        { "host": 4318, "container": 4318, "protocol": "OTLP HTTP" }
+      "portEnvs": [
+        "OTEL_GRPC_PORT",
+        "OTEL_HTTP_PORT",
+        "OTEL_HEALTH_PORT"
       ],
-      "status": "running",
+      "defaultPorts": [
+        4317,
+        4318,
+        13133
+      ],
+      "status": "healthy (process-liveness)",
       "adapter": "@platform/adapters-opentelemetry",
-      "note": "0.116.0 exec failure; downgraded to 0.114.0"
+      "note": "distroless \u2014 process-liveness proxy healthcheck"
     }
   ],
   "profiledServices": {
-    "quality": ["sonar-postgres", "sonarqube"],
-    "identity": ["keycloak-postgres", "keycloak"],
-    "cloud-mocks": ["localstack"],
-    "sentry": [
-      "sentry-postgres",
-      "sentry-redis",
-      "sentry-web",
-      "sentry-worker",
-      "sentry-cron"
-    ]
+    "quality": {
+      "services": [
+        "sonarqube",
+        "sonar-postgres"
+      ],
+      "portEnv": "SONAR_PORT",
+      "defaultPort": 9003
+    },
+    "identity": {
+      "services": [
+        "keycloak",
+        "keycloak-postgres"
+      ],
+      "portEnv": "KEYCLOAK_PORT",
+      "defaultPort": 8080
+    },
+    "cloud-mocks": {
+      "services": [
+        "localstack"
+      ],
+      "portEnv": "LOCALSTACK_PORT",
+      "defaultPort": 4566,
+      "securityNote": "mounts /var/run/docker.sock \u2014 profile-gated, local-dev only"
+    },
+    "sentry": {
+      "services": [
+        "sentry-web",
+        "sentry-worker",
+        "sentry-cron",
+        "sentry-postgres",
+        "sentry-redis"
+      ],
+      "portEnv": "SENTRY_PORT",
+      "defaultPort": 9010,
+      "status": "experimental \u2014 ADR-ACT-0089"
+    }
   },
-  "systemServicesDisabled": ["postgresql", "redis-server", "mailhog"],
-  "configFiles": [
-    "compose.yaml",
-    ".env.example",
-    "docker/otel/otel-collector-config.yaml"
+  "portEnvVars": [
+    "POSTGRES_PORT",
+    "REDIS_PORT",
+    "CLICKHOUSE_HTTP_PORT",
+    "CLICKHOUSE_NATIVE_PORT",
+    "MINIO_API_PORT",
+    "MINIO_CONSOLE_PORT",
+    "MAILPIT_SMTP_PORT",
+    "MAILPIT_UI_PORT",
+    "OTEL_GRPC_PORT",
+    "OTEL_HTTP_PORT",
+    "OTEL_HEALTH_PORT",
+    "SONAR_PORT",
+    "KEYCLOAK_PORT",
+    "LOCALSTACK_PORT",
+    "SENTRY_PORT"
   ],
-  "composeConfigResult": "valid",
-  "defaultServicesStarted": 6,
-  "defaultServicesHealthy": 5,
-  "defaultServicesRunning": 1
+  "systemServiceNote": "System postgresql, redis-server, mailhog were stopped on the validation host. This is a validation-environment description, not a repository requirement. Override host ports in .env instead.",
+  "openActions": [
+    "ADR-ACT-0089 \u2014 Validate or replace Sentry profile before adapter-sentry first use",
+    "ADR-ACT-0090 \u2014 Automated license policy scanner after dependency baseline stabilises"
+  ]
 }

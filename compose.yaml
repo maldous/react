@@ -7,13 +7,14 @@ name: react-platform
 #   cloud-mocks   — localstack
 #   sentry        — sentry-web + sentry-worker + sentry-cron + sentry-postgres + sentry-redis
 #
-# Port map (host):
-#   5433  postgres (5432 used by manicode-db-1)    6379  redis
-#   8124  clickhouse-http (8123 used by homeassistant)   9002  clickhouse-native
-#   9000  minio-api        9001  minio-console
-#   1025  mailpit-smtp     8025  mailpit-ui    1026  mailhog-smtp   8026  mailhog-ui
-#   4317  otlp-grpc        4318  otlp-http     13133 otel-health
-#   9003  sonarqube-ui     8080  keycloak      4566  localstack    9010  sentry-web
+# Port map — defaults shown; override any via .env (e.g. POSTGRES_PORT=5434):
+#   POSTGRES_PORT=5433          REDIS_PORT=6379
+#   CLICKHOUSE_HTTP_PORT=8124   CLICKHOUSE_NATIVE_PORT=9002
+#   MINIO_API_PORT=9000         MINIO_CONSOLE_PORT=9001
+#   MAILPIT_SMTP_PORT=1025      MAILPIT_UI_PORT=8025
+#   OTEL_GRPC_PORT=4317         OTEL_HTTP_PORT=4318    OTEL_HEALTH_PORT=13133
+#   SONAR_PORT=9003             KEYCLOAK_PORT=8080
+#   LOCALSTACK_PORT=4566        SENTRY_PORT=9010
 
 services:
   # ---------------------------------------------------------------------------
@@ -27,7 +28,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-platformpassword}
       POSTGRES_DB: ${POSTGRES_DB:-platform}
     ports:
-      - "5433:5432"
+      - "${POSTGRES_PORT:-5433}:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
     healthcheck:
@@ -42,7 +43,7 @@ services:
     image: redis:7.4.2-alpine
     command: redis-server --appendonly yes
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT:-6379}:6379"
     volumes:
       - redis-data:/data
     healthcheck:
@@ -59,8 +60,8 @@ services:
       CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:-clickhousepassword}
       CLICKHOUSE_DB: ${CLICKHOUSE_DB:-platform}
     ports:
-      - "8124:8123" # HTTP interface (8123 used by homeassistant container)
-      - "9002:9000" # Native protocol (mapped to 9002; 9000 used by minio)
+      - "${CLICKHOUSE_HTTP_PORT:-8124}:8123" # HTTP interface
+      - "${CLICKHOUSE_NATIVE_PORT:-9002}:9000" # Native protocol
     volumes:
       - clickhouse-data:/var/lib/clickhouse
     ulimits:
@@ -82,8 +83,8 @@ services:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-miniopassword}
     ports:
-      - "9000:9000" # S3-compatible API
-      - "9001:9001" # MinIO console
+      - "${MINIO_API_PORT:-9000}:9000" # S3-compatible API
+      - "${MINIO_CONSOLE_PORT:-9001}:9001" # MinIO console
     volumes:
       - minio-data:/data
     healthcheck:
@@ -97,8 +98,8 @@ services:
   mailpit:
     image: axllent/mailpit:v1.21.0
     ports:
-      - "1025:1025" # SMTP
-      - "8025:8025" # Web UI
+      - "${MAILPIT_SMTP_PORT:-1025}:1025" # SMTP
+      - "${MAILPIT_UI_PORT:-8025}:8025" # Web UI
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:8025/api/v1/info >/dev/null 2>&1 || exit 1"]
       interval: 10s
@@ -113,9 +114,9 @@ services:
     volumes:
       - ./docker/otel/otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml:ro
     ports:
-      - "4317:4317" # OTLP gRPC
-      - "4318:4318" # OTLP HTTP
-      - "13133:13133" # health_check extension
+      - "${OTEL_GRPC_PORT:-4317}:4317" # OTLP gRPC
+      - "${OTEL_HTTP_PORT:-4318}:4318" # OTLP HTTP
+      - "${OTEL_HEALTH_PORT:-13133}:13133" # health_check extension
     healthcheck:
       # otel/opentelemetry-collector-contrib:0.114.0 is a distroless image with
       # no shell, wget, or curl. Process-liveness check via binary exit code is
@@ -163,7 +164,7 @@ services:
       SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
       # Default credentials: admin / admin — change on first login; do not commit tokens
     ports:
-      - "9003:9000"
+      - "${SONAR_PORT:-9003}:9000"
     volumes:
       - sonarqube-data:/opt/sonarqube/data
       - sonarqube-extensions:/opt/sonarqube/extensions
@@ -222,7 +223,7 @@ services:
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN_USER:-admin}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
     ports:
-      - "8080:8080"
+      - "${KEYCLOAK_PORT:-8080}:8080"
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080/health/ready || exit 1"]
       interval: 30s
@@ -236,6 +237,10 @@ services:
   # ---------------------------------------------------------------------------
 
   localstack:
+    # SECURITY NOTE: This service mounts the Docker socket (/var/run/docker.sock).
+    # This is a local-dev exception required by LocalStack for Lambda/ECS emulation.
+    # It is profile-gated (cloud-mocks), never starts by default, and must not run
+    # in CI unless separately reviewed and approved. Do not expose on shared hosts.
     image: localstack/localstack:4.0.4
     profiles: [cloud-mocks]
     environment:
@@ -243,7 +248,7 @@ services:
       DEBUG: ${LOCALSTACK_DEBUG:-0}
       DOCKER_HOST: unix:///var/run/docker.sock
     ports:
-      - "4566:4566"
+      - "${LOCALSTACK_PORT:-4566}:4566"
     volumes:
       - localstack-data:/var/lib/localstack
       - /var/run/docker.sock:/var/run/docker.sock
@@ -258,6 +263,10 @@ services:
   # ---------------------------------------------------------------------------
   # SENTRY PROFILE — `docker compose --profile sentry up -d`
   # ---------------------------------------------------------------------------
+  # EXPERIMENTAL — SDK smoke testing only. Not a full self-hosted Sentry stack.
+  # Does not replace external Sentry or Grafana Cloud observability.
+  # Adapter validation must not depend on this profile until proven stable.
+  # See ADR-ACT-0089 for validation/replacement tracking.
 
   sentry-postgres:
     image: postgres:16.6-alpine
@@ -307,7 +316,7 @@ services:
       SENTRY_REDIS_PORT: "6379"
       SENTRY_SINGLE_ORGANIZATION: "true"
     ports:
-      - "9010:9000"
+      - "${SENTRY_PORT:-9010}:9000"
     volumes:
       - sentry-data:/var/lib/sentry/files
     healthcheck:
@@ -319,6 +328,8 @@ services:
     restart: unless-stopped
 
   sentry-worker:
+    # Unvalidated long-running background worker. Process-only liveness (no
+    # HTTP health endpoint). Profile-only; not started by default. ADR-ACT-0089.
     image: sentry:24.12.0
     profiles: [sentry]
     command: sentry run worker
@@ -338,6 +349,8 @@ services:
     restart: unless-stopped
 
   sentry-cron:
+    # Unvalidated long-running cron process. Process-only liveness (no
+    # HTTP health endpoint). Profile-only; not started by default. ADR-ACT-0089.
     image: sentry:24.12.0
     profiles: [sentry]
     command: sentry run cron
