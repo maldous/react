@@ -8,7 +8,7 @@ Validates that TypeScript/JS source files only import from permitted packages pe
 
 ```text
 Name: @architecture/validate-source-imports
-Version: 0.2.0
+Version: 0.3.1
 Component: validate-source-imports
 Type: tool
 System: architecture-governance
@@ -45,7 +45,8 @@ Semver policy: internal-traceable
 - Enforce universal rules: no deep imports, no test-support in production files, no relative cross-package imports, no architecture tooling imports in product packages
 - Enforce per-package boundary rules derived from import-boundary-rules.json
 - Detect package import cycles in strict mode
-- Detect unresolved relative and @platform/* imports in strict mode
+- Detect unresolved relative, @platform/*, @architecture/* imports in strict mode
+- Resolve tsconfig path aliases via TypeScript module resolution (ts.resolveModuleName, Bundler mode) and fail unresolved aliases in strict mode
 - Write JSON and Markdown validation reports
 - Write committed governance evidence with --write
 
@@ -64,6 +65,7 @@ Deep imports allowed: false
 
 - Run from repository root with node tools/architecture/validate-source-imports/src/index.mjs
 - Use --root <path>, --format text|json, --no-reports, --check (default), --write per ADR-0011
+- Use --tsconfig <path> to supply a tsconfig.json for path-alias resolution; auto-discovered from scan root dirs when not supplied
 - Positional arguments are scan root directories relative to --root; defaults to apps packages
 
 ## Boundaries

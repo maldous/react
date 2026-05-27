@@ -106,23 +106,58 @@ function readToolVersion(repoRoot) {
   }
 }
 
-function resolveRelativeSpecifier(fileInfo, specifier) {
-  const extensions = [".ts", ".tsx", ".js", ".mjs", ".cjs", "/index.ts", "/index.tsx", "/index.js"];
-  const base = path.resolve(path.dirname(fileInfo.file), specifier);
-  if (fs.existsSync(base)) return true;
-  for (const ext of extensions) {
-    if (fs.existsSync(base + ext)) return true;
+function matchesTsConfigPath(specifier, tsConfigPaths) {
+  for (const pattern of tsConfigPaths) {
+    if (pattern.endsWith("/*")) {
+      if (specifier.startsWith(pattern.slice(0, -1))) return true;
+    } else if (specifier === pattern) {
+      return true;
+    }
   }
   return false;
+}
+
+function classifySpecifier(specifier, tsConfigPaths) {
+  if (specifier.startsWith("./") || specifier.startsWith("../")) return "relative";
+  if (specifier.startsWith("@platform/")) return "platform";
+  if (specifier.startsWith("@architecture/")) return "architecture";
+  if (specifier.startsWith("node:")) return "node-builtin";
+  if (tsConfigPaths.length > 0 && matchesTsConfigPath(specifier, tsConfigPaths)) return "alias";
+  return "external";
+}
+
+function enrichEdges(files, resolver) {
+  const tsConfigPaths = resolver.tsConfigPaths;
+  for (const fileInfo of files) {
+    for (const edge of fileInfo.importEdges) {
+      const resolution = resolver.resolve(edge.specifier, fileInfo.file);
+      edge.resolvedFile = resolution.resolvedFile;
+      edge.resolvedPackage = resolution.resolvedPackage;
+      edge.isExternal = resolution.isExternal;
+      edge.resolutionStatus = resolution.resolvedFile ? "resolved" : "unresolved";
+      edge.resolutionKind = classifySpecifier(edge.specifier, tsConfigPaths);
+    }
+  }
 }
 
 function buildPackageGraph(files) {
   const graph = new Map();
   for (const fileInfo of files) {
     if (!graph.has(fileInfo.packageName)) graph.set(fileInfo.packageName, new Set());
-    for (const specifier of fileInfo.imports) {
-      if (specifier.startsWith("@platform/") && !specifier.slice("@platform/".length).includes("/")) {
-        graph.get(fileInfo.packageName).add(specifier);
+    for (const edge of fileInfo.importEdges) {
+      let target = null;
+      if (edge.resolvedPackage && !edge.isExternal) {
+        target = edge.resolvedPackage;
+      } else if (
+        edge.specifier.startsWith("@platform/") &&
+        !edge.specifier.slice("@platform/".length).includes("/") &&
+        !edge.resolvedPackage
+      ) {
+        // raw fallback: keep unresolvable bare @platform/* imports for cycle detection
+        target = edge.specifier;
+      }
+      if (target && target !== fileInfo.packageName) {
+        graph.get(fileInfo.packageName).add(target);
       }
     }
   }
@@ -158,9 +193,8 @@ function detectCycles(graph) {
   return cycles;
 }
 
-function checkCycleViolations(files) {
-  const graph = buildPackageGraph(files);
-  const cycles = detectCycles(graph);
+function checkCycleViolations(files, packageGraph) {
+  const cycles = detectCycles(packageGraph);
   return cycles.map((cycle) => {
     const packageName = cycle[0];
     const rep = files.find((f) => f.packageName === packageName);
@@ -169,20 +203,11 @@ function checkCycleViolations(files) {
       packageName,
       specifier: cycle[cycle.length - 1],
       rule: "no-package-cycle",
-      message: `Package cycle detected: ${cycle.join(" → ")}`
+      message: `Package cycle detected: ${cycle.join(" → ")}`,
+      resolvedFile: null,
+      resolvedPackage: null
     };
   });
-}
-
-function matchesTsConfigPath(specifier, tsConfigPaths) {
-  for (const pattern of tsConfigPaths) {
-    if (pattern.endsWith("/*")) {
-      if (specifier.startsWith(pattern.slice(0, -1))) return true;
-    } else if (specifier === pattern) {
-      return true;
-    }
-  }
-  return false;
 }
 
 function checkViolations(files, { strict = false, packageMap = null, resolver = null } = {}) {
@@ -198,12 +223,22 @@ function checkViolations(files, { strict = false, packageMap = null, resolver = 
           packageName: fileInfo.packageName,
           specifier: "<computed>",
           rule: "no-computed-dynamic-import",
-          message: `${fileInfo.packageName}: computed dynamic import at line ${ci.line} cannot be statically verified`
+          message: `${fileInfo.packageName}: computed dynamic import at line ${ci.line} cannot be statically verified`,
+          resolvedFile: null,
+          resolvedPackage: null
         });
       }
     }
 
+    // Build edgeMap: specifier → first edge (carries resolved metadata from enrichEdges)
+    const edgeMap = new Map();
+    for (const edge of fileInfo.importEdges) {
+      if (!edgeMap.has(edge.specifier)) edgeMap.set(edge.specifier, edge);
+    }
+
     for (const specifier of fileInfo.imports) {
+      const edge = edgeMap.get(specifier);
+
       for (const rule of UNIVERSAL_RULES) {
         if (rule.productionOnly && fileInfo.isTestFile) continue;
         if (rule.match(specifier, fileInfo)) {
@@ -212,7 +247,9 @@ function checkViolations(files, { strict = false, packageMap = null, resolver = 
             packageName: fileInfo.packageName,
             specifier,
             rule: rule.id,
-            message: rule.message(fileInfo.packageName, specifier)
+            message: rule.message(fileInfo.packageName, specifier),
+            resolvedFile: edge?.resolvedFile ?? null,
+            resolvedPackage: edge?.resolvedPackage ?? null
           });
         }
       }
@@ -226,28 +263,87 @@ function checkViolations(files, { strict = false, packageMap = null, resolver = 
               packageName: fileInfo.packageName,
               specifier,
               rule: rule.id,
-              message: rule.message(fileInfo.packageName, specifier)
+              message: rule.message(fileInfo.packageName, specifier),
+              resolvedFile: edge?.resolvedFile ?? null,
+              resolvedPackage: edge?.resolvedPackage ?? null
             });
           }
         }
       }
 
-      if (
-        specifier.startsWith("@platform/") &&
-        !specifier.slice("@platform/".length).includes("/") &&
-        fileInfo.allowedPlatformDeps !== null &&
-        !fileInfo.allowedPlatformDeps.includes(specifier)
-      ) {
+      // no-unexported-subpath-import: @platform/x/subpath not in package exports
+      if (specifier.startsWith("@platform/") && specifier.slice("@platform/".length).includes("/")) {
+        const pkgName = "@platform/" + specifier.slice("@platform/".length).split("/")[0];
+        const subpath = "." + specifier.slice(pkgName.length);
+        const pkgInfo = packageMap?.get(pkgName);
+        if (pkgInfo) {
+          const pkgExports = pkgInfo.exports;
+          if (!pkgExports || !pkgExports[subpath]) {
+            violations.push({
+              file: fileInfo.file,
+              packageName: fileInfo.packageName,
+              specifier,
+              rule: "no-unexported-subpath-import",
+              message: `${fileInfo.packageName} imports unexported subpath ${specifier} (not in ${pkgName} exports)`,
+              resolvedFile: edge?.resolvedFile ?? null,
+              resolvedPackage: edge?.resolvedPackage ?? null
+            });
+          }
+        }
+      }
+
+      // no-unexported-package-entry: bare @platform/* or @architecture/* that exists in packageMap
+      // but the resolver cannot find its entry point (null entryPoint in packageMap)
+      const isBareInternal = (
+        (specifier.startsWith("@platform/") && !specifier.slice("@platform/".length).includes("/")) ||
+        (specifier.startsWith("@architecture/") && !specifier.slice("@architecture/".length).includes("/"))
+      );
+      if (isBareInternal && packageMap !== null && packageMap.has(specifier) && edge?.resolutionStatus === "unresolved") {
         violations.push({
           file: fileInfo.file,
           packageName: fileInfo.packageName,
           specifier,
-          rule: "no-unlisted-platform-import",
-          message: `${fileInfo.packageName} must not import ${specifier} (not in architecture.relations.dependsOn)`
+          rule: "no-unexported-package-entry",
+          message: `${fileInfo.packageName} imports ${specifier} which has no resolvable package entry point`,
+          resolvedFile: null,
+          resolvedPackage: null
         });
       }
 
-      // Strict: @platform/* and @architecture/* imports must resolve to a known package
+      // no-unlisted-platform-import: any import resolving to a @platform/* package not in dependsOn.
+      // For bare @platform/* imports: use resolvedPackage if available, else raw specifier.
+      // For alias imports that resolve to a @platform/* package: use resolvedPackage.
+      {
+        let targetPackage = null;
+        const isBarePlatform = specifier.startsWith("@platform/") && !specifier.slice("@platform/".length).includes("/");
+        if (isBarePlatform) {
+          targetPackage = edge?.resolvedPackage ?? specifier;
+        } else if (
+          edge?.resolvedPackage?.startsWith("@platform/") &&
+          !edge.resolvedPackage.slice("@platform/".length).includes("/")
+        ) {
+          targetPackage = edge.resolvedPackage;
+        }
+
+        if (
+          targetPackage &&
+          targetPackage !== fileInfo.packageName &&
+          fileInfo.allowedPlatformDeps !== null &&
+          !fileInfo.allowedPlatformDeps.includes(targetPackage)
+        ) {
+          violations.push({
+            file: fileInfo.file,
+            packageName: fileInfo.packageName,
+            specifier,
+            rule: "no-unlisted-platform-import",
+            message: `${fileInfo.packageName} must not import ${targetPackage} (not in architecture.relations.dependsOn)`,
+            resolvedFile: edge?.resolvedFile ?? null,
+            resolvedPackage: edge?.resolvedPackage ?? null
+          });
+        }
+      }
+
+      // Strict: @platform/* and @architecture/* bare imports must resolve to a known package
       if (strict && packageMap !== null) {
         const isPlatform =
           specifier.startsWith("@platform/") &&
@@ -261,7 +357,9 @@ function checkViolations(files, { strict = false, packageMap = null, resolver = 
             packageName: fileInfo.packageName,
             specifier,
             rule: "no-unresolved-platform-import",
-            message: `${fileInfo.packageName} imports ${specifier} which does not exist in the repository`
+            message: `${fileInfo.packageName} imports ${specifier} which does not exist in the repository`,
+            resolvedFile: null,
+            resolvedPackage: null
           });
         }
       }
@@ -275,36 +373,74 @@ function checkViolations(files, { strict = false, packageMap = null, resolver = 
         !specifier.startsWith("@architecture/") &&
         matchesTsConfigPath(specifier, tsConfigPaths)
       ) {
-        const { resolvedFile } = resolver.resolve(specifier, fileInfo.file);
-        if (!resolvedFile) {
+        if (edge?.resolutionStatus === "unresolved") {
           violations.push({
             file: fileInfo.file,
             packageName: fileInfo.packageName,
             specifier,
             rule: "no-unresolved-alias",
-            message: `${fileInfo.packageName}: tsconfig path alias ${specifier} does not resolve to an existing file`
+            message: `${fileInfo.packageName}: tsconfig path alias ${specifier} does not resolve to an existing file`,
+            resolvedFile: null,
+            resolvedPackage: null
           });
         }
       }
 
-      // Strict: relative imports must resolve to an existing file
+      // Strict: relative imports must resolve to an existing file (via TypeScript resolver)
       if (
         strict &&
         (specifier.startsWith("./") || specifier.startsWith("../")) &&
-        !resolveRelativeSpecifier(fileInfo, specifier)
+        edge?.resolutionStatus === "unresolved"
       ) {
         violations.push({
           file: fileInfo.file,
           packageName: fileInfo.packageName,
           specifier,
           rule: "no-unresolved-relative-import",
-          message: `${fileInfo.packageName}: relative import ${specifier} does not resolve to an existing file`
+          message: `${fileInfo.packageName}: relative import ${specifier} does not resolve to an existing file`,
+          resolvedFile: null,
+          resolvedPackage: null
         });
       }
     }
   }
 
   return violations;
+}
+
+function computeEdgeStats(files) {
+  let totalImports = 0;
+  let totalResolvedImports = 0;
+  let totalUnresolvedImports = 0;
+  let totalInternalEdges = 0;
+  let totalExternalEdges = 0;
+  let totalTypeOnlyEdges = 0;
+  let totalDynamicImports = 0;
+
+  for (const fileInfo of files) {
+    for (const edge of fileInfo.importEdges) {
+      totalImports++;
+      if (edge.resolutionStatus === "resolved") {
+        totalResolvedImports++;
+        if (!edge.isExternal) totalInternalEdges++;
+        else totalExternalEdges++;
+      } else {
+        totalUnresolvedImports++;
+      }
+      if (edge.isTypeOnly) totalTypeOnlyEdges++;
+      if (edge.isDynamic) totalDynamicImports++;
+    }
+  }
+
+  return {
+    totalImports,
+    totalResolvedImports,
+    totalUnresolvedImports,
+    totalInternalEdges,
+    totalExternalEdges,
+    totalTypeOnlyEdges,
+    totalDynamicImports
+  };
 }
 
 function printText(jsonReport, outputPaths, selfEvidencePath, repoRoot) {
@@ -342,13 +478,36 @@ function main() {
   const packageMap = buildPackageMap(REPO_ROOT);
   const tsConfig = loadTsConfig(OPTIONS.tsconfig, scanRootArgs, REPO_ROOT);
   const resolver = buildModuleResolver({ repoRoot: REPO_ROOT, packageMap, tsConfig });
+
+  // Enrich every import edge with resolution metadata (resolvedFile, resolvedPackage, etc.)
+  enrichEdges(files, resolver);
+
+  const packageGraph = buildPackageGraph(files);
   const violations = checkViolations(files, { strict: OPTIONS.strict, packageMap, resolver });
-  if (OPTIONS.strict) violations.push(...checkCycleViolations(files));
+  if (OPTIONS.strict) violations.push(...checkCycleViolations(files, packageGraph));
 
   const finishedAt = new Date().toISOString();
   const exitCode = violations.length > 0 ? 1 : 0;
 
-  const jsonReport = buildJsonReport({ generatedAt: finishedAt, files, violations, repoRoot: REPO_ROOT });
+  const edgeStats = computeEdgeStats(files);
+  const compilerOptionsSummary = {
+    moduleResolution: "Bundler",
+    pathAliasCount: resolver.tsConfigPaths.length
+  };
+
+  const jsonReport = buildJsonReport({
+    generatedAt: finishedAt,
+    files,
+    violations,
+    repoRoot: REPO_ROOT,
+    toolVersion,
+    scanMethod: "typescript-ast+typescript-module-resolution",
+    strictMode: OPTIONS.strict,
+    tsconfigPath: tsConfig.configPath ?? null,
+    compilerOptionsSummary,
+    edgeStats,
+    packageGraph
+  });
   const markdownReport = buildMarkdownReport(jsonReport);
 
   const outputPaths = [];

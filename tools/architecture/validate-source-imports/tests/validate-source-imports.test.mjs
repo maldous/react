@@ -31,7 +31,10 @@ const validFixtures = [
   { name: "domain-core (no imports)", dir: "valid/domain-core" },
   { name: "feature-workflow (permitted imports)", dir: "valid/feature-workflow" },
   { name: "access-control (permitted imports)", dir: "valid/access-control" },
-  { name: "contracts-graphql (no adapter imports)", dir: "valid/contracts-graphql" }
+  { name: "contracts-graphql (no adapter imports)", dir: "valid/contracts-graphql" },
+  { name: "tsconfig-alias-valid (alias resolves within same package)", dir: "valid/tsconfig-alias-valid" },
+  { name: "resolved-relative-extensionless-valid (extensionless relative import)", dir: "valid/resolved-relative-extensionless-valid" },
+  { name: "package-export-bare-import-valid (bare platform import in dependsOn)", dir: "valid/package-export-bare-import-valid" }
 ];
 
 for (const fixture of validFixtures) {
@@ -63,7 +66,11 @@ const invalidFixtures = [
   { name: "empty-dep-list-imports-platform", dir: "invalid/empty-dep-list-imports-platform", rule: "no-unlisted-platform-import" },
   { name: "type-only-boundary-violation", dir: "invalid/type-only-boundary-violation", rule: "no-react-in-domain" },
   { name: "import-type-node-boundary-violation", dir: "invalid/import-type-node-boundary-violation", rule: "no-react-in-domain" },
-  { name: "product-imports-architecture", dir: "invalid/product-imports-architecture", rule: "no-architecture-in-product" }
+  { name: "product-imports-architecture", dir: "invalid/product-imports-architecture", rule: "no-architecture-in-product" },
+  { name: "package-subpath-not-exported", dir: "invalid/package-subpath-not-exported-invalid", rule: "no-unexported-subpath-import" },
+  { name: "package-deep-src-import", dir: "invalid/package-deep-src-import-invalid", rule: "no-unexported-subpath-import" },
+  { name: "resolved-alias-cross-boundary", dir: "invalid/resolved-alias-cross-boundary-invalid", rule: "no-unlisted-platform-import" },
+  { name: "platform-package-resolves-outside-package", dir: "invalid/platform-package-resolves-outside-package-invalid", rule: "no-unexported-package-entry" }
 ];
 
 for (const fixture of invalidFixtures) {
@@ -83,7 +90,8 @@ const strictFixtures = [
   { name: "unresolved-platform-import", dir: "invalid/unresolved-platform-import", rule: "no-unresolved-platform-import" },
   { name: "package-cycle", dir: "invalid/package-cycle/packages", rule: "no-package-cycle" },
   { name: "unresolved-relative-import", dir: "invalid/unresolved-relative-import", rule: "no-unresolved-relative-import" },
-  { name: "tsconfig-alias-unresolved", dir: "invalid/tsconfig-alias-unresolved", rule: "no-unresolved-alias" }
+  { name: "tsconfig-alias-unresolved", dir: "invalid/tsconfig-alias-unresolved", rule: "no-unresolved-alias" },
+  { name: "unresolved-relative-via-ts-resolver", dir: "invalid/unresolved-relative-via-ts-resolver", rule: "no-unresolved-relative-import" }
 ];
 
 for (const fixture of strictFixtures) {

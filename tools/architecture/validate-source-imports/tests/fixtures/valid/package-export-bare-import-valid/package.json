@@ -1,0 +1,7 @@
+{
+  "name": "@platform/feature-workflow",
+  "architecture": {
+    "lifecycle": { "role": "feature" },
+    "relations": { "dependsOn": ["@platform/domain-core"] }
+  }
+}

@@ -1,21 +1,63 @@
 import fs from "node:fs";
 import path from "node:path";
 
-export function buildJsonReport({ generatedAt, files, violations, repoRoot }) {
+export function buildJsonReport({
+  generatedAt,
+  files,
+  violations,
+  repoRoot,
+  toolVersion,
+  scanMethod,
+  strictMode,
+  tsconfigPath,
+  compilerOptionsSummary,
+  edgeStats,
+  packageGraph
+}) {
   const fileSet = new Set(violations.map((v) => v.file));
-  const totalImports = files.reduce((sum, f) => sum + f.imports.length, 0);
+  const {
+    totalImports,
+    totalResolvedImports,
+    totalUnresolvedImports,
+    totalInternalEdges,
+    totalExternalEdges,
+    totalTypeOnlyEdges,
+    totalDynamicImports
+  } = edgeStats ?? {};
+
+  const packageGraphObj = {};
+  if (packageGraph) {
+    for (const [pkg, deps] of packageGraph) {
+      packageGraphObj[pkg] = [...deps].sort();
+    }
+  }
+
   return {
     generatedAt,
+    toolVersion: toolVersion ?? null,
+    scanMethod: scanMethod ?? null,
+    strictMode: strictMode ?? false,
+    tsconfigPath: tsconfigPath ?? null,
+    compilerOptionsSummary: compilerOptionsSummary ?? null,
     totalFiles: files.length,
-    totalImports,
+    totalImports: totalImports ?? files.reduce((sum, f) => sum + f.imports.length, 0),
+    totalResolvedImports: totalResolvedImports ?? null,
+    totalUnresolvedImports: totalUnresolvedImports ?? null,
+    totalInternalEdges: totalInternalEdges ?? null,
+    totalExternalEdges: totalExternalEdges ?? null,
+    totalTypeOnlyEdges: totalTypeOnlyEdges ?? null,
+    totalDynamicImports: totalDynamicImports ?? null,
     passed: files.length - fileSet.size,
     failed: fileSet.size,
+    packageGraph: packageGraphObj,
     violations: violations.map((v) => ({
       file: path.relative(repoRoot, v.file),
       package: v.packageName,
       specifier: v.specifier,
       rule: v.rule,
-      message: v.message
+      message: v.message,
+      resolvedFile: v.resolvedFile ? path.relative(repoRoot, v.resolvedFile) : null,
+      resolvedPackage: v.resolvedPackage ?? null
     }))
   };
 }
@@ -83,7 +125,7 @@ export function writeCommittedEvidence(jsonReport, repoRoot, toolVersion, scanRo
     "",
     `Generated at: ${jsonReport.generatedAt}`,
     `Tool version: ${toolVersion}`,
-    `Scan method: typescript-ast`,
+    `Scan method: typescript-ast+typescript-module-resolution`,
     `Rule set: ${evidenceJson.ruleSet}`,
     "",
     "## Result",
@@ -147,6 +189,8 @@ export function writeSelfEvidence({
       "no-test-support-in-prod",
       "no-relative-cross-package-import",
       "no-unlisted-platform-import",
+      "no-unexported-subpath-import",
+      "no-unexported-package-entry",
       "no-react-in-domain",
       "no-graphql-in-domain",
       "no-adapters-in-domain",
