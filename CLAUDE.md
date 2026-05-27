@@ -38,12 +38,22 @@ Common flags: `--check` (validate without writing), `--write` (write outputs), `
 
 ### Tests (per tool, from repo root)
 
+`node --test` does not expand globs when given relative paths — pass explicit file paths:
+
 ```bash
-node --test tools/architecture/orchestrator/tests/*.test.mjs
-node --test tools/architecture/validate-package-metadata/tests/*.test.mjs
-node --test tools/architecture/generate-package-readmes/tests/*.test.mjs
-node --test tools/architecture/generate-package-inventory/tests/*.test.mjs
-node --test tools/architecture/validate-lifecycle-evidence/tests/*.test.mjs
+node --test \
+  tools/architecture/validate-package-metadata/tests/validate-package-metadata.test.mjs \
+  tools/architecture/validate-source-imports/tests/validate-source-imports.test.mjs \
+  tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs \
+  tools/architecture/generate-package-inventory/tests/generate-package-inventory.test.mjs \
+  tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence.test.mjs \
+  tools/architecture/orchestrator/tests/self-evidence.test.mjs
+```
+
+`validate-package-metadata` requires `ajv` to be installed. After `git clean` or a fresh clone, run:
+
+```bash
+cd tools/architecture/validate-package-metadata && npm ci
 ```
 
 ## Architecture
@@ -59,7 +69,11 @@ The platform is structured as modular hexagonal architecture around bounded cont
 | `integration` | external-ingestion-contracts, external-ingestion-runtime, graphql-runtime |
 | `persistence` | postgres-runtime |
 | `analytics` | analytics-contracts, clickhouse-runtime |
+| `operations` | api-server, graphql-server, worker-server, config-service, session-service, auth-gateway, audit-service, observability-core, queue-service, storage-service, email-service, notification-service, search-service, auth-keycloak, cache-queue-redis, error-monitoring, telemetry, object-storage, email-brevo |
+| `delivery` | dev-local, container-build, terraform-workflow, ci-pipeline, aws-infra, cloudflare-infra |
 | `architecture` | architecture-governance |
+
+Owner teams: `team-platform` owns most operations and delivery packages; `team-security` owns auth-gateway, session-service, audit-service, and auth-keycloak.
 
 ### Package namespace and layout
 
@@ -100,7 +114,16 @@ All packages must have an `architecture` block in `package.json`. Required top-l
 }
 ```
 
-Schema lives at `docs/schemas/package-json-architecture.schema.json`.
+Schema lives at `docs/schemas/package-json-architecture.schema.json`. Validated by ajv (draft-2020-12 via `Ajv2020`) inside `validate-package-metadata`. Key enum constraints to know when writing package.json:
+
+- `component.type`: `application | library | service | api | worker | tool | test | documentation`
+- `lifecycle.stage`: `experimental | candidate | active | stable | maintenance | external | deprecated`
+- `lifecycle.role`: `feature | platform | contract | adapter | tooling | test`
+- `lifecycle.supportLevel`: includes `best-effort` (used by delivery/tooling packages)
+- `runtime.deploymentEnvironments` items: `local | development | test | ci | staging | production`
+- `tags.type`: same enum as `component.type`
+- `tags.layer`: `domain | application | app | adapter | ui | infrastructure | tooling | test | documentation | contract | feature | platform | runtime`
+- `boundaries.allowedConsumers` / `forbiddenConsumers`: **free-form strings** — use semantic role labels (`application`, `feature`, `platform`, `adapter`, `domain`, `ui`, `tooling`, `test`, etc.).
 
 ### Import boundary rules (enforced by architecture tooling)
 
@@ -110,9 +133,12 @@ Key rules — full matrix is in `docs/architecture/import-boundary-rules.md`:
 - **Domain packages** (`domain-core`, `profile-configuration`, `access-control`) must not import React, adapters, or framework clients.
 - **Contract packages** must not import adapter or runtime packages.
 - **UI** (`ui-design-system`) must remain data-source and adapter agnostic.
-- **Feature packages** compose UI + domain + contracts; they do not own persistence.
+- **Feature packages** compose UI + domain + contracts; they do not own persistence. They may use the interface packages (`queue-runtime`, `storage-runtime`, `audit-events`, `email-runtime`, `notification-runtime`, `search-runtime`) but must never import their concrete adapters.
 - **`test-support`** must not be a production dependency.
 - **Adapters** own the runtime layer; contracts remain runtime-free.
+- **Operations interface packages** (`config-runtime`, `observability`, `security-auth`, `audit-events`, `queue-runtime`, `storage-runtime`, `email-runtime`, `notification-runtime`, `search-runtime`) are leaf nodes with **zero `@platform/*` dependencies**. They define interfaces only; adapters implement them.
+- **Operations adapter packages** (`adapters-keycloak`, `adapters-redis`, `adapters-sentry`, `adapters-opentelemetry`, `adapters-object-storage`, `adapters-brevo`) must not be imported by domain, contract, feature, or UI packages.
+- **Delivery packages** (`dev-services`, `tooling-docker`, `tooling-terraform`, `tooling-ci`, `infra-aws`, `infra-cloudflare`) must not be imported by any other package. They carry `production: false` in runtime metadata.
 
 ### Generated READMEs
 
