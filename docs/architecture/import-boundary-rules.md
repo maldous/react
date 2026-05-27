@@ -468,15 +468,44 @@ It exports typed interfaces and factory helpers only.
 `@platform/platform-errors` must not import any `@platform/*` package.
 It must remain importable by React feature packages without pulling in server-side dependencies.
 
-### Allowed import paths for new platform packages
+### Inbound constraints on platform-logging and platform-observability
+
+These rules prevent the two wrapping packages from accidentally pulling in SDK-level dependencies.
+
+**`@platform/platform-logging`** must not import:
+
+```text
+@opentelemetry/*      (tracing is separate — platform-observability owns it)
+@sentry/*             (error monitoring is adapter-only)
+@platform/adapters-*  (no adapter imports)
+@platform/platform-observability  (no circular observability dependency)
+pino is the only allowed third-party logger; browser wrapper uses console only
+```
+
+**`@platform/platform-observability`** must not import:
+
+```text
+@opentelemetry/sdk-*                 (SDK wired by adapters-opentelemetry at startup only)
+@opentelemetry/auto-instrumentations-*
+@opentelemetry/exporter-*
+@opentelemetry/instrumentation-*
+@sentry/*
+@platform/adapters-*
+@platform/platform-logging
+pino, features, domain, ui, contracts
+```
+
+Only `@opentelemetry/api` and `@platform/platform-runtime-context` are allowed in `platform-observability`.
+
+### Allowed import paths (summary)
 
 ```text
 packages/platform-logging:
-  May import: pino (Node), platform-runtime-context (types)
-  Must not import: adapters, features, domain, contracts, ui
+  May import: pino (Node), @platform/platform-runtime-context (types only)
+  Must not import: @opentelemetry/*, @sentry/*, adapters, features, domain, contracts, ui
 
 packages/platform-observability:
-  May import: @opentelemetry/api (only), platform-runtime-context (types)
+  May import: @opentelemetry/api (only), @platform/platform-runtime-context (types only)
   Must not import: @opentelemetry/sdk-*, adapters, features, domain, contracts, ui, platform-logging
 
 packages/platform-runtime-context:

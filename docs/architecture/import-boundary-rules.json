@@ -327,6 +327,49 @@
       "forbiddenPrefixes": ["@platform/"],
       "forbiddenExact": [],
       "rationale": "ADR-0020: platform-errors has zero @platform dependencies. It must be importable by React feature packages for safe client-side error type checks without pulling in any server-side @platform packages."
+    },
+    {
+      "id": "no-sdk-in-platform-observability",
+      "appliesTo": ["@platform/platform-observability"],
+      "forbiddenPrefixes": [
+        "@opentelemetry/sdk-",
+        "@opentelemetry/auto-instrumentations-",
+        "@opentelemetry/exporter-",
+        "@opentelemetry/instrumentation-",
+        "@sentry/",
+        "@platform/adapters-",
+        "@platform/platform-logging"
+      ],
+      "forbiddenExact": [
+        "pino",
+        "@platform/feature-workflow",
+        "@platform/ui-design-system",
+        "@platform/domain-core",
+        "@platform/profile-configuration",
+        "@platform/access-control"
+      ],
+      "rationale": "ADR-0020 \u00a710: platform-observability wraps @opentelemetry/api only \u2014 the SDK (sdk-node, auto-instrumentations, exporters, instrumentation-*) is wired exclusively by packages/adapters-opentelemetry at application startup. platform-observability must not import Sentry, platform-logging, adapters, features, domain, or UI."
+    },
+    {
+      "id": "no-disallowed-in-platform-logging",
+      "appliesTo": ["@platform/platform-logging"],
+      "forbiddenPrefixes": [
+        "@opentelemetry/",
+        "@sentry/",
+        "@platform/adapters-",
+        "@platform/platform-observability"
+      ],
+      "forbiddenExact": [
+        "@platform/feature-workflow",
+        "@platform/ui-design-system",
+        "@platform/domain-core",
+        "@platform/profile-configuration",
+        "@platform/access-control",
+        "@platform/contracts-graphql",
+        "@platform/contracts-analytics",
+        "@platform/contracts-ingestion"
+      ],
+      "rationale": "ADR-0020 \u00a710: platform-logging wraps pino (Node runtime) and a browser-safe console wrapper only. It must not import OpenTelemetry (tracing is separate), Sentry (adapter-only), other adapters, features, domain, contracts, or UI packages."
     }
   ]
 }
