@@ -82,7 +82,8 @@ const strictFixtures = [
   { name: "computed-dynamic-import", dir: "invalid/computed-dynamic-import", rule: "no-computed-dynamic-import" },
   { name: "unresolved-platform-import", dir: "invalid/unresolved-platform-import", rule: "no-unresolved-platform-import" },
   { name: "package-cycle", dir: "invalid/package-cycle/packages", rule: "no-package-cycle" },
-  { name: "unresolved-relative-import", dir: "invalid/unresolved-relative-import", rule: "no-unresolved-relative-import" }
+  { name: "unresolved-relative-import", dir: "invalid/unresolved-relative-import", rule: "no-unresolved-relative-import" },
+  { name: "tsconfig-alias-unresolved", dir: "invalid/tsconfig-alias-unresolved", rule: "no-unresolved-alias" }
 ];
 
 for (const fixture of strictFixtures) {

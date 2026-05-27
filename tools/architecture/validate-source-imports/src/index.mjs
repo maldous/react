@@ -6,6 +6,8 @@ import process from "node:process";
 import { UNIVERSAL_RULES, PACKAGE_RULES } from "./rules.mjs";
 import { scanRoots } from "./scanner.mjs";
 import { buildPackageMap } from "./package-map.mjs";
+import { loadTsConfig } from "./tsconfig-loader.mjs";
+import { buildModuleResolver } from "./module-resolver.mjs";
 import {
   buildJsonReport,
   buildMarkdownReport,
@@ -21,6 +23,7 @@ function parseArgs(argv) {
     noReports: false,
     write: false,
     strict: false,
+    tsconfig: null,
     roots: []
   };
 
@@ -54,6 +57,11 @@ function parseArgs(argv) {
 
     if (arg === "--strict") {
       options.strict = true;
+      continue;
+    }
+
+    if (arg === "--tsconfig") {
+      options.tsconfig = argv[++index];
       continue;
     }
 
@@ -166,7 +174,19 @@ function checkCycleViolations(files) {
   });
 }
 
-function checkViolations(files, { strict = false, packageMap = null } = {}) {
+function matchesTsConfigPath(specifier, tsConfigPaths) {
+  for (const pattern of tsConfigPaths) {
+    if (pattern.endsWith("/*")) {
+      if (specifier.startsWith(pattern.slice(0, -1))) return true;
+    } else if (specifier === pattern) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function checkViolations(files, { strict = false, packageMap = null, resolver = null } = {}) {
+  const tsConfigPaths = resolver?.tsConfigPaths ?? [];
   const violations = [];
 
   for (const fileInfo of files) {
@@ -227,21 +247,44 @@ function checkViolations(files, { strict = false, packageMap = null } = {}) {
         });
       }
 
-      // Strict: @platform/* imports must resolve to a package that exists in the repo
+      // Strict: @platform/* and @architecture/* imports must resolve to a known package
+      if (strict && packageMap !== null) {
+        const isPlatform =
+          specifier.startsWith("@platform/") &&
+          !specifier.slice("@platform/".length).includes("/");
+        const isArchitecture =
+          specifier.startsWith("@architecture/") &&
+          !specifier.slice("@architecture/".length).includes("/");
+        if ((isPlatform || isArchitecture) && !packageMap.has(specifier)) {
+          violations.push({
+            file: fileInfo.file,
+            packageName: fileInfo.packageName,
+            specifier,
+            rule: "no-unresolved-platform-import",
+            message: `${fileInfo.packageName} imports ${specifier} which does not exist in the repository`
+          });
+        }
+      }
+
+      // Strict: tsconfig path aliases must resolve to an existing file
       if (
         strict &&
-        packageMap !== null &&
-        specifier.startsWith("@platform/") &&
-        !specifier.slice("@platform/".length).includes("/") &&
-        !packageMap.has(specifier)
+        resolver !== null &&
+        tsConfigPaths.length > 0 &&
+        !specifier.startsWith("@platform/") &&
+        !specifier.startsWith("@architecture/") &&
+        matchesTsConfigPath(specifier, tsConfigPaths)
       ) {
-        violations.push({
-          file: fileInfo.file,
-          packageName: fileInfo.packageName,
-          specifier,
-          rule: "no-unresolved-platform-import",
-          message: `${fileInfo.packageName} imports ${specifier} which does not exist in the repository`
-        });
+        const { resolvedFile } = resolver.resolve(specifier, fileInfo.file);
+        if (!resolvedFile) {
+          violations.push({
+            file: fileInfo.file,
+            packageName: fileInfo.packageName,
+            specifier,
+            rule: "no-unresolved-alias",
+            message: `${fileInfo.packageName}: tsconfig path alias ${specifier} does not resolve to an existing file`
+          });
+        }
       }
 
       // Strict: relative imports must resolve to an existing file
@@ -297,7 +340,9 @@ function main() {
   const scanRootArgs = OPTIONS.roots.length > 0 ? OPTIONS.roots : ["apps", "packages"];
   const { files, warnings } = scanRoots(scanRootArgs, REPO_ROOT);
   const packageMap = buildPackageMap(REPO_ROOT);
-  const violations = checkViolations(files, { strict: OPTIONS.strict, packageMap });
+  const tsConfig = loadTsConfig(OPTIONS.tsconfig, scanRootArgs, REPO_ROOT);
+  const resolver = buildModuleResolver({ repoRoot: REPO_ROOT, packageMap, tsConfig });
+  const violations = checkViolations(files, { strict: OPTIONS.strict, packageMap, resolver });
   if (OPTIONS.strict) violations.push(...checkCycleViolations(files));
 
   const finishedAt = new Date().toISOString();

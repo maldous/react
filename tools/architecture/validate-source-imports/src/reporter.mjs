@@ -71,7 +71,7 @@ export function writeCommittedEvidence(jsonReport, repoRoot, toolVersion, scanRo
     ...jsonReport,
     toolVersion,
     ruleSet: "ADR-0001, ADR-0002, ADR-0013, ADR-0014, ADR-0015, import-boundary-rules.md",
-    scanMethod: "typescript-ast",
+    scanMethod: "typescript-ast+typescript-module-resolution",
     scanRoots
   };
 
@@ -162,7 +162,8 @@ export function writeSelfEvidence({
       "no-computed-dynamic-import",
       "no-unresolved-platform-import",
       "no-package-cycle",
-      "no-unresolved-relative-import"
+      "no-unresolved-relative-import",
+      "no-unresolved-alias"
     ],
     checksPassed,
     checksFailed,
