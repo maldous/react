@@ -120,19 +120,37 @@ export function writeCommittedEvidence(jsonReport, repoRoot, toolVersion, scanRo
   const jsonPath = path.join(evidenceDir, "source-import-boundary-validation.json");
   const mdPath = path.join(evidenceDir, "source-import-boundary-validation.md");
 
+  const pkgGraphCount = Object.keys(jsonReport.packageGraph ?? {}).length;
+  const co = jsonReport.compilerOptionsSummary ?? {};
+
   const mdLines = [
     "# Source import boundary validation evidence",
     "",
-    `Generated at: ${jsonReport.generatedAt}`,
-    `Tool version: ${toolVersion}`,
-    `Scan method: typescript-ast+typescript-module-resolution`,
-    `Rule set: ${evidenceJson.ruleSet}`,
+    "## Tool",
+    "",
+    "```text",
+    `Tool version:   ${toolVersion}`,
+    `Scan method:    typescript-ast+typescript-module-resolution`,
+    `Strict mode:    ${jsonReport.strictMode ?? false}`,
+    `tsconfig path:  ${jsonReport.tsconfigPath ?? "(none — synthetic paths only)"}`,
+    `Module resolution: Bundler`,
+    `Path alias count:  ${co.pathAliasCount ?? 0}`,
+    `Rule set:       ${evidenceJson.ruleSet}`,
+    `Generated at:   ${jsonReport.generatedAt}`,
+    "```",
     "",
     "## Result",
     "",
     "```text",
-    `Total files scanned: ${jsonReport.totalFiles}`,
-    `Total imports checked: ${jsonReport.totalImports}`,
+    `Total files scanned:     ${jsonReport.totalFiles}`,
+    `Total imports checked:   ${jsonReport.totalImports}`,
+    `  Resolved:              ${jsonReport.totalResolvedImports ?? "—"}`,
+    `  Unresolved:            ${jsonReport.totalUnresolvedImports ?? "—"}`,
+    `  Internal edges:        ${jsonReport.totalInternalEdges ?? "—"}`,
+    `  External edges:        ${jsonReport.totalExternalEdges ?? "—"}`,
+    `  Type-only:             ${jsonReport.totalTypeOnlyEdges ?? "—"}`,
+    `  Dynamic imports:       ${jsonReport.totalDynamicImports ?? "—"}`,
+    `Package graph packages:  ${pkgGraphCount}`,
     `Passed: ${jsonReport.passed}`,
     `Failed: ${jsonReport.failed}`,
     "```"
