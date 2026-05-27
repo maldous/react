@@ -21,13 +21,15 @@ A package is added only when it passes at least 4 of 5 tests:
 
 ```text
 Total candidates evaluated: 28
-Added now:                  20
-Deferred:                    6
-Omitted:                     2
+Added now:                  25
+Deferred:                    0
+Omitted:                     3
 ```
 
 Two new domains added: `operations`, `delivery`.
 Two new teams added: `team-platform`, `team-security`.
+
+Round 2 added 5 previously-deferred packages after the boundary rationale was validated.
 
 ---
 
@@ -75,18 +77,23 @@ Two new teams added: `team-platform`, `team-security`.
 
 ---
 
+## Packages added (round 2)
+
+These packages were initially deferred and subsequently added after boundary rationale was validated.
+
+| Package | Owner | Class | Rationale |
+|---|---|---|---|
+| @platform/email-runtime | team-platform | active.platform | Email send interface is a stable abstraction consumed by multiple feature packages; provider swap (e.g. Brevo → SES) requires only a new adapter. |
+| @platform/adapters-brevo | team-platform | active.adapter | Brevo free-tier transactional email (300/day free); concrete implementation of email-runtime registered at application startup only. |
+| @platform/notification-runtime | team-platform | active.platform | Push and in-app notification delivery is a distinct cross-cutting concern with a channel registry pattern separating interface from provider SDKs. |
+| @platform/search-runtime | team-platform | active.platform | Search has distinct eventual-consistency semantics, index management lifecycle, and provider-swap requirements that justify a dedicated interface. |
+| @platform/infra-cloudflare | team-platform | active.tooling | Cloudflare free tier (CDN, R2 storage) complements infra-aws and eliminates AWS data egress costs for static assets. |
+
+---
+
 ## Packages deferred
 
-These packages did not pass enough 5-test criteria to justify adding now.
-
-| Package | Reason |
-|---|---|
-| @platform/email-runtime | Narrow use case; can live as an adapter initially. Revisit when multiple teams need it independently. |
-| @platform/notification-runtime | Push/in-app notifications require product-domain decisions about delivery targets. |
-| @platform/search-runtime | Search infrastructure is product-specific. Deferred until boundary is needed by more than one feature. |
-| @platform/infra-cloudflare | Multi-cloud CDN/edge is premature. Start AWS-only. Add when genuinely needed. |
-| @platform/adapters-stripe | Payment processing is product-domain specific — not appropriate for a generic platform skeleton. |
-| @platform/adapters-sendgrid | Email provider adapter is product-specific. Deferred alongside email-runtime. |
+None. All previously-deferred packages were resolved in round 2 or moved to omitted.
 
 ---
 
@@ -98,6 +105,7 @@ These candidates were assessed and explicitly rejected.
 |---|---|
 | feature-flags (standalone) | Feature flag reads belong in config-runtime. Insufficient boundary separation. |
 | data-migrations (standalone) | Migrations are tightly coupled to adapters-postgres schema ownership. Should be a sub-module, not a package. |
+| @platform/adapters-stripe | Payment processing is product-domain specific; omitted in favour of free-tier services only. |
 
 ---
 

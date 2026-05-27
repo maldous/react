@@ -58,46 +58,49 @@ Review
 
 ## Current decision sequence
 
-The current decision sequence is:
+The governance baseline (ADRs 0001–0015) is complete. The current sequence tracks what comes next.
 
 ```text
-1. ADR-ACT-0022: Define package lifecycle classes. Done as ADR-0004.
-2. ADR-ACT-0026: Define package.json architecture metadata vocabulary and format. Done as ADR-0005.
-3. ADR-ACT-0029: Define lifecycle transition rules. Done as ADR-0006.
-4. ADR-ACT-0023: Define package promotion criteria and review process.
-5. ADR-ACT-0024: Define affected-package CI workflow.
-6. ADR-ACT-0019: Decide build/test orchestration tooling.
-7. ADR-ACT-0014: Create the import-boundary enforcement ADR.
-8. ADR-ACT-0004: Create the client-facing API boundary ADR.
-9. ADR-ACT-0005: Create the transactional data ownership ADR.
-10. ADR-ACT-0006: Create the analytical data ownership ADR.
+1. ADR-ACT-0015: Create an ADR for GraphQL schema boundary management. Open — before GraphQL schema growth.
+2. ADR-ACT-0008: Validate the architecture with the first vertical slice. Open — first vertical slice.
+3. ADR-ACT-0037: Validate package metadata vocabulary against standard reference language. Open — before accepting ADR-0005.
+4. ADR-ACT-0023: Define package promotion criteria and review process. Done as ADR-0006.
+5. ADR-ACT-0024: Define affected-package CI workflow. Deferred — future optimisation after package graph grows.
 ```
 
 Rationale:
 
 ```text
-Package lifecycle classes and package metadata vocabulary/format are defined. Lifecycle transition rules are defined by ADR-0006.
+The governance baseline (ADRs 0001–0015) is established. All structural, metadata, lifecycle, tooling, and data-ownership ADRs are Accepted.
 
-Lifecycle transition rules are required before promotion criteria can be reliable.
+ADR-0013 defines the GraphQL API boundary. ADR-ACT-0015 (GraphQL schema boundary management) is the next open ADR action.
 
-Package promotion rules come before affected CI and import enforcement.
+First vertical slice validation gates many open Validation items (ADR-ACT-0008, 0012, 0020, 0028, 0045, 0050, 0052).
 
-CI and import enforcement come before relying on the modular monorepo at scale.
+Metadata vocabulary alignment (ADR-ACT-0037) is a prerequisite for formally accepting ADR-0005.
 
-API and data ownership decisions should follow once the structural/package governance baseline is clearer.
+Affected-package CI remains deferred until the package graph is large enough for selective CI to be worthwhile.
 ```
 
-Non-ADR prerequisites:
+Completed sequence items (governance baseline):
 
 ```text
-ADR-ACT-0010: Create an initial context map, including allowed package domain values.
-ADR-ACT-0011: Create a domain glossary, including definitions for package domain metadata.
-ADR-ACT-0013: Define package/module naming conventions for contexts.
-ADR-ACT-0033: Create JSON Schema for package.json architecture metadata.
-ADR-ACT-0049: Define architecture artifact and repository directory layout. Done as ADR-0007.
-ADR-ACT-0034: Create package.json architecture metadata validation script.
-ADR-ACT-0035: Create generated package README template from package.json architecture metadata.
-ADR-ACT-0037: Validate package metadata vocabulary against standard reference language.
+ADR-ACT-0022: Done as ADR-0004.
+ADR-ACT-0026: Done as ADR-0005.
+ADR-ACT-0029: Done as ADR-0006.
+ADR-ACT-0049: Done as ADR-0007.
+ADR-ACT-0035: Done as ADR-0008.
+ADR-ACT-0057: Done as ADR-0009.
+ADR-ACT-0060: Done as ADR-0010.
+ADR-ACT-0065: Done as ADR-0011.
+ADR-ACT-0069: Done as ADR-0012.
+ADR-ACT-0014: Done — import-boundary rules documented and enforced.
+ADR-ACT-0004: Done as ADR-0013.
+ADR-ACT-0005: Done as ADR-0014.
+ADR-ACT-0006: Done as ADR-0015.
+ADR-ACT-0019: Done as ADR-0011.
+ADR-ACT-0009: Done — CI baseline in .github/workflows/ci.yml.
+ADR-ACT-0053: Done — ci.yml runs orchestrator all --no-reports.
 ```
 
 
