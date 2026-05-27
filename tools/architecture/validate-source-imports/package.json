@@ -11,6 +11,9 @@
     "validate": "node src/index.mjs",
     "test": "node --test tests/*.test.mjs"
   },
+  "dependencies": {
+    "typescript": "^5.7.0"
+  },
   "architecture": {
     "schemaVersion": "1.0",
     "component": {

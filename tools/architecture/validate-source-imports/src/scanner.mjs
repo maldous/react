@@ -1,14 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
+import { createRequire } from "node:module";
+
+const require = createRequire(import.meta.url);
+const ts = require("typescript");
 
 const SKIP_DIRS = new Set(["node_modules", "dist", "build", ".git", "coverage"]);
 const SOURCE_EXTENSIONS = new Set([".ts", ".tsx", ".js", ".mjs", ".cjs"]);
-
-const IMPORT_PATTERNS = [
-  /import\s+(?:.*?\s+from\s+)?['"]([^'"]+)['"]/dg,
-  /export\s+(?:\*|\{[^}]*\})\s+from\s+['"]([^'"]+)['"]/dg,
-  /import\s*\(\s*['"]([^'"]+)['"]\s*\)/dg
-];
 
 export function findPackageRoot(filePath) {
   let dir = path.dirname(filePath);
@@ -40,21 +38,66 @@ function isTestFile(filePath, packageRoot) {
   return /\.(test|spec)\.(ts|tsx|js|mjs|cjs)$/.test(basename);
 }
 
-function stripComments(source) {
-  return source
-    .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "))
-    .replace(/\/\/.*/g, "");
+function getScriptKind(filePath) {
+  const ext = path.extname(filePath);
+  switch (ext) {
+    case ".ts": return ts.ScriptKind.TS;
+    case ".tsx": return ts.ScriptKind.TSX;
+    case ".js":
+    case ".mjs":
+    case ".cjs": return ts.ScriptKind.JS;
+    default: return ts.ScriptKind.Unknown;
+  }
 }
 
-function extractImports(source) {
-  const stripped = stripComments(source);
+function extractImports(source, filePath) {
+  const sourceFile = ts.createSourceFile(
+    filePath,
+    source,
+    ts.ScriptTarget.Latest,
+    /* setParentNodes */ true,
+    getScriptKind(filePath)
+  );
+
   const specifiers = new Set();
-  for (const pattern of IMPORT_PATTERNS) {
-    pattern.lastIndex = 0;
-    for (const match of stripped.matchAll(pattern)) {
-      specifiers.add(match[1]);
+
+  function visit(node) {
+    // import ... from "specifier"  (including import type ...)
+    if (ts.isImportDeclaration(node)) {
+      if (ts.isStringLiteral(node.moduleSpecifier)) {
+        specifiers.add(node.moduleSpecifier.text);
+      }
     }
+    // export ... from "specifier"  (including export type ...)
+    else if (ts.isExportDeclaration(node)) {
+      if (node.moduleSpecifier && ts.isStringLiteral(node.moduleSpecifier)) {
+        specifiers.add(node.moduleSpecifier.text);
+      }
+    }
+    // import foo = require("specifier")
+    else if (ts.isImportEqualsDeclaration(node)) {
+      const ref = node.moduleReference;
+      if (ts.isExternalModuleReference(ref) && ts.isStringLiteral(ref.expression)) {
+        specifiers.add(ref.expression.text);
+      }
+    }
+    // import("specifier") dynamic import and require("specifier")
+    else if (ts.isCallExpression(node)) {
+      const isImport = node.expression.kind === ts.SyntaxKind.ImportKeyword;
+      const isRequire =
+        ts.isIdentifier(node.expression) && node.expression.text === "require";
+      if ((isImport || isRequire) && node.arguments.length >= 1) {
+        const arg = node.arguments[0];
+        if (ts.isStringLiteral(arg)) {
+          specifiers.add(arg.text);
+        }
+      }
+    }
+
+    ts.forEachChild(node, visit);
   }
+
+  visit(sourceFile);
   return [...specifiers];
 }
 
@@ -113,7 +156,7 @@ export function scanRoots(roots, repoRoot) {
       return;
     }
 
-    const imports = extractImports(source);
+    const imports = extractImports(source, filePath);
     files.push({
       file: filePath,
       packageName,
