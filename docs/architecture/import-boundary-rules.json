@@ -293,8 +293,8 @@
         "@opentelemetry/",
         "@sentry/"
       ],
-      "forbiddenExact": ["pino"],
-      "rationale": "UI packages must not import logging, observability, or runtime context packages. ADR-0020: UI components handle display only. Error display uses UI-safe ErrorState primitives, not platform-errors directly."
+      "forbiddenExact": ["pino", "@platform/platform-errors"],
+      "rationale": "UI packages must not import logging, observability, runtime context, or error packages. ADR-0020 \u00a710: UI components handle display only. Error display uses UI-safe ErrorState primitives, not @platform/platform-errors directly. The @platform/platform-errors prohibition will be revisited once ErrorState is a separately exported type."
     },
     {
       "id": "no-raw-observability-in-contracts",

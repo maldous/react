@@ -44,12 +44,14 @@ Semver policy: internal-traceable
 - Provide createBrowserLogger as a safe console-based wrapper for browser
 - Enforce redaction config for credentials, tokens, cookies, DSNs, connection strings
 - Export safeErrorMeta and safeContextMeta serialisation helpers
+- Allowed consumers: platform packages and adapters only (not use-case/application packages — logging enters through BFF/API layer)
 
 ## Non-responsibilities
 
 - Does not perform tracing — spans are managed by platform-observability
 - Does not import adapters or domain packages
 - Browser logger does not use Node pino directly
+- Use-case and application packages must not import platform-logging directly (ADR-0020 §10)
 
 ## Public exports and usage
 
@@ -65,7 +67,6 @@ Deep imports allowed: false
 ### Allowed consumers
 
 ```text
-application
 platform
 adapter
 ```

@@ -422,7 +422,7 @@ Features may import:
 - `@platform/platform-errors` — safe client error types and instanceof checks
 - `@platform/platform-runtime-context` — requestId types (via contract client helpers only)
 
-### UI packages — no observability
+### UI packages — no observability or error primitives
 
 UI packages (`ui-design-system`) must not import:
 
@@ -433,12 +433,14 @@ pino
 @platform/platform-logging
 @platform/platform-observability
 @platform/platform-runtime-context
+@platform/platform-errors
 @platform/adapters-opentelemetry
 @platform/adapters-sentry
 ```
 
-UI components handle display only. Error display uses UI-safe `ErrorState` primitives, not
-`platform-errors` directly.
+UI components handle display only. Error display uses UI-safe `ErrorState` primitives
+(to be defined in `packages/ui` as part of ADR-ACT-0095). The `@platform/platform-errors`
+prohibition may be revisited once `ErrorState` exposes a separately exported safe display type.
 
 ### Contract packages — no concrete observability
 
