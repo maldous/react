@@ -1,0 +1,104 @@
+{
+  "name": "@platform/infra-aws",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AWS infrastructure definitions: ECS/EKS workloads, RDS, ElastiCache, S3, IAM, and network topology.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "infra-aws",
+      "system": "enterprise-react-platform",
+      "domain": "delivery",
+      "boundedContext": "aws-infra",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "tooling",
+      "class": "active.tooling",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": false
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "infra-aws",
+      "serviceNamespace": "delivery",
+      "deploymentEnvironments": [
+        "local",
+        "development"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "application",
+        "feature",
+        "domain",
+        "contract",
+        "adapter",
+        "platform",
+        "ui"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "aws-infrastructure-definitions"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "delivery",
+      "type": "library",
+      "stage": "active",
+      "role": "tooling",
+      "layer": "tooling"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "AWS infrastructure definitions: ECS/EKS workloads, RDS, ElastiCache, S3, IAM, and network topology.",
+      "responsibilities": [
+        "Define Terraform configurations for all AWS resources used by the platform",
+        "Manage network topology (VPC, subnets, security groups) per environment",
+        "Provision compute workloads (ECS tasks or EKS deployments) for application services",
+        "Define IAM roles, policies, and instance profiles following least-privilege principle"
+      ],
+      "nonResponsibilities": [
+        "Does not own Terraform workflow tooling or module patterns (tooling-terraform)",
+        "Does not define application container images (tooling-docker)",
+        "Does not manage DNS or CDN configuration"
+      ],
+      "usage": [
+        "Applied via tooling-terraform scripts as part of the infrastructure pipeline in tooling-ci",
+        "Per-environment workspaces isolate state between development, staging, and production"
+      ],
+      "operationalNotes": [
+        "All resources must be tagged with environment, service, and owner for cost allocation",
+        "Production applies require manual approval step in the CI pipeline"
+      ]
+    }
+  }
+}

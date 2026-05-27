@@ -1,0 +1,109 @@
+{
+  "name": "@platform/observability",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Observability abstraction: structured logging, metrics emission, distributed tracing spans, and health check interface.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "observability",
+      "system": "enterprise-react-platform",
+      "domain": "operations",
+      "boundedContext": "observability-core",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "platform",
+      "class": "active.platform",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": true,
+      "testOnly": false,
+      "serviceName": "observability",
+      "serviceNamespace": "operations",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "staging",
+        "production"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application",
+        "platform",
+        "feature",
+        "adapter"
+      ],
+      "forbiddenConsumers": [
+        "domain",
+        "contract",
+        "ui"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "observability-core",
+        "structured-logger",
+        "metrics-emitter",
+        "tracer",
+        "health-check-interface"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "operations",
+      "type": "library",
+      "stage": "active",
+      "role": "platform",
+      "layer": "platform"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Observability abstraction: structured logging, metrics emission, distributed tracing spans, and health check interface.",
+      "responsibilities": [
+        "Define the canonical structured logger, metrics emitter, and tracer interfaces",
+        "Provide a health check registration interface for runtime processes",
+        "Decouple all platform packages from specific observability vendors",
+        "Serve as the single import point for logs, metrics, and traces across the platform"
+      ],
+      "nonResponsibilities": [
+        "Does not implement a specific observability backend (owned by adapters-sentry, adapters-opentelemetry)",
+        "Does not own alerting rules or dashboards",
+        "Does not collect business metrics — only platform-level signals"
+      ],
+      "usage": [
+        "Imported by all runtime and adapter packages needing logs, metrics, or traces",
+        "Concrete adapters (adapters-opentelemetry, adapters-sentry) implement the interfaces defined here"
+      ],
+      "operationalNotes": [
+        "Replace the no-op default implementations with concrete adapters before deploying to staging or production",
+        "All structured log fields must follow the platform log schema to ensure queryability"
+      ]
+    }
+  }
+}

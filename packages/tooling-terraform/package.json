@@ -1,0 +1,104 @@
+{
+  "name": "@platform/tooling-terraform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Terraform workflow tooling: module patterns, provider version locks, and workspace management scripts.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "tooling-terraform",
+      "system": "enterprise-react-platform",
+      "domain": "delivery",
+      "boundedContext": "terraform-workflow",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "tooling",
+      "class": "active.tooling",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "annual"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": false
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "tooling-terraform",
+      "serviceNamespace": "delivery",
+      "deploymentEnvironments": [
+        "local",
+        "development"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "application",
+        "feature",
+        "domain",
+        "contract",
+        "adapter",
+        "platform",
+        "ui"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "terraform-workflow-scripts"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "delivery",
+      "type": "library",
+      "stage": "active",
+      "role": "tooling",
+      "layer": "tooling"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Terraform workflow tooling: module patterns, provider version locks, and workspace management scripts.",
+      "responsibilities": [
+        "Define reusable Terraform module patterns for the platform's infrastructure primitives",
+        "Maintain provider version locks across all Terraform configurations",
+        "Provide workspace management scripts for environment-specific state isolation",
+        "Enforce Terraform formatting and validation in pre-commit and CI"
+      ],
+      "nonResponsibilities": [
+        "Does not define the AWS resource topology (owned by infra-aws)",
+        "Does not manage Terraform Cloud or remote state backend configuration",
+        "Does not own secrets or credential management for Terraform runs"
+      ],
+      "usage": [
+        "Terraform modules defined here are consumed by infra-aws configurations",
+        "Workflow scripts are invoked by tooling-ci as part of the infrastructure apply pipeline"
+      ],
+      "operationalNotes": [
+        "Provider version locks must be updated deliberately — patch without review is not allowed",
+        "All Terraform modules must pass tflint and tfsec before merge"
+      ]
+    }
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "name": "@platform/adapters-sentry",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sentry adapter: error capture, performance tracing, and error monitoring implementation for the observability interface.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "adapters-sentry",
+      "system": "enterprise-react-platform",
+      "domain": "operations",
+      "boundedContext": "error-monitoring",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "adapter",
+      "class": "active.adapter",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": true,
+      "testOnly": false,
+      "serviceName": "adapters-sentry",
+      "serviceNamespace": "operations",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "staging",
+        "production"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application"
+      ],
+      "forbiddenConsumers": [
+        "domain",
+        "contract",
+        "ui",
+        "feature"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@platform/observability",
+        "@platform/config-runtime"
+      ],
+      "providesApis": [
+        "sentry-error-monitor"
+      ],
+      "consumesApis": [
+        "observability-core",
+        "config-service",
+        "Sentry SDK"
+      ]
+    },
+    "tags": {
+      "scope": "operations",
+      "type": "library",
+      "stage": "active",
+      "role": "adapter",
+      "layer": "adapter"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Sentry adapter: error capture, performance tracing, and error monitoring implementation for the observability interface.",
+      "responsibilities": [
+        "Implement the observability error capture interface using the Sentry SDK",
+        "Initialize Sentry with DSN, environment, and release metadata from config-runtime",
+        "Attach structured context (user, request, trace ID) to error captures",
+        "Configure sampling rates for performance monitoring per environment"
+      ],
+      "nonResponsibilities": [
+        "Does not define the observability interface (owned by observability)",
+        "Does not implement distributed tracing spans (owned by adapters-opentelemetry)",
+        "Does not own alerting rules or Sentry project configuration"
+      ],
+      "usage": [
+        "Initialized once at application startup to wire Sentry into the observability layer",
+        "Never imported by feature or domain packages"
+      ],
+      "operationalNotes": [
+        "DSN is resolved from config-runtime — never committed to source control",
+        "Sentry source maps must be uploaded as part of the CI build pipeline"
+      ]
+    }
+  }
+}

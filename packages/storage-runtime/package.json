@@ -1,0 +1,107 @@
+{
+  "name": "@platform/storage-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Object storage abstraction: file upload interface, presigned URL contracts, and storage bucket policy definitions.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "storage-runtime",
+      "system": "enterprise-react-platform",
+      "domain": "operations",
+      "boundedContext": "storage-service",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "platform",
+      "class": "active.platform",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": true,
+      "testOnly": false,
+      "serviceName": "storage-runtime",
+      "serviceNamespace": "operations",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "staging",
+        "production"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application",
+        "platform",
+        "feature",
+        "adapter"
+      ],
+      "forbiddenConsumers": [
+        "domain",
+        "contract",
+        "ui"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "storage-service",
+        "file-upload-interface",
+        "presigned-url-contract"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "operations",
+      "type": "library",
+      "stage": "active",
+      "role": "platform",
+      "layer": "platform"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Object storage abstraction: file upload interface, presigned URL contracts, and storage bucket policy definitions.",
+      "responsibilities": [
+        "Define the typed file upload and retrieval interface",
+        "Declare presigned URL generation contracts for client-direct upload flows",
+        "Specify bucket policy and access control semantics",
+        "Decouple all platform and feature packages from specific cloud storage providers"
+      ],
+      "nonResponsibilities": [
+        "Does not implement cloud storage SDK calls (owned by adapters-object-storage)",
+        "Does not own content delivery or CDN configuration",
+        "Does not validate file content or enforce virus scanning"
+      ],
+      "usage": [
+        "Imported by feature packages to request presigned upload URLs",
+        "adapters-object-storage implements the upload interface against AWS S3 or equivalent"
+      ],
+      "operationalNotes": [
+        "Presigned URLs must have short TTLs — configure per-bucket maximums in the adapter",
+        "Bucket naming must follow the platform naming convention to enable IAM policy automation"
+      ]
+    }
+  }
+}

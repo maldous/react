@@ -1,0 +1,102 @@
+{
+  "name": "@platform/tooling-ci",
+  "version": "0.1.0",
+  "private": true,
+  "description": "CI/CD pipeline definitions: workflow files, build scripts, security scanning, and deployment orchestration.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "tooling-ci",
+      "system": "enterprise-react-platform",
+      "domain": "delivery",
+      "boundedContext": "ci-pipeline",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "tooling",
+      "class": "active.tooling",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": false
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "tooling-ci",
+      "serviceNamespace": "delivery",
+      "deploymentEnvironments": [
+        "local",
+        "development"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [],
+      "forbiddenConsumers": [
+        "application",
+        "feature",
+        "domain",
+        "contract",
+        "adapter",
+        "platform",
+        "ui"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "ci-pipeline-definitions"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "delivery",
+      "type": "library",
+      "stage": "active",
+      "role": "tooling",
+      "layer": "tooling"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "CI/CD pipeline definitions: workflow files, build scripts, security scanning, and deployment orchestration.",
+      "responsibilities": [
+        "Define CI workflow files (GitHub Actions, GitLab CI, or equivalent) for build, test, and deploy",
+        "Run architecture governance checks as a required CI gate",
+        "Invoke container image builds via tooling-docker and infrastructure applies via tooling-terraform",
+        "Run SAST, dependency scanning, and container image scanning as CI steps"
+      ],
+      "nonResponsibilities": [
+        "Does not define what gets built (owned by individual packages)",
+        "Does not own deployment targets or runtime infrastructure (owned by infra-aws)",
+        "Does not own secret management for CI runners"
+      ],
+      "usage": [
+        "CI workflow files are picked up automatically by the CI platform on push",
+        "Local scripts can be run to validate workflow syntax before push"
+      ],
+      "operationalNotes": [
+        "Architecture governance (`orchestrator all`) must pass as a required check before merge",
+        "All secrets used in CI must be stored in the CI platform secret store, never in workflow files"
+      ]
+    }
+  }
+}

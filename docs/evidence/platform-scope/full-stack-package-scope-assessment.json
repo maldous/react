@@ -1,0 +1,359 @@
+{
+  "assessmentId": "platform-scope-full-stack-2026-05-27",
+  "assessmentDate": "2026-05-27",
+  "assessedBy": "architecture-governance",
+  "purpose": "Evaluate the full set of packages required for a complete, generic, enterprise-grade full-stack platform and determine which to add now, defer, or omit.",
+  "evaluationCriteria": [
+    "Stable ownership boundary: a single team or role owns it unambiguously",
+    "Different dependency rules: it has forbidden consumers or dependencies distinct from neighboring packages",
+    "Different runtime/deployment concerns: it runs in a different process, environment, or has separate lifecycle",
+    "Different validation/evidence needs: it requires its own compliance or governance checks",
+    "Likely reuse: multiple other packages or teams will depend on it"
+  ],
+  "domainsAdded": ["operations", "delivery"],
+  "teamsAdded": ["team-platform", "team-security"],
+  "summary": {
+    "totalCandidatesEvaluated": 28,
+    "addedNow": 20,
+    "deferred": 6,
+    "omitted": 2
+  },
+  "packagesAdded": [
+    {
+      "name": "@platform/api-runtime",
+      "domain": "operations",
+      "boundedContext": "api-server",
+      "lifecycleClass": "active.platform",
+      "owner": "team-platform",
+      "rationale": "HTTP server runtime is a distinct deployment unit with its own auth, middleware, and observability concerns. Separates API serving from domain logic and GraphQL server.",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": true,
+        "differentValidationNeeds": true,
+        "likelyReuse": true
+      }
+    },
+    {
+      "name": "@platform/graphql-api-runtime",
+      "domain": "operations",
+      "boundedContext": "graphql-server",
+      "lifecycleClass": "active.platform",
+      "owner": "team-platform",
+      "rationale": "GraphQL server has distinct dependencies (schema stitching, DataLoader, persisted queries) and is consumed only by application packages — separate from the generic HTTP runtime.",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": true,
+        "differentValidationNeeds": true,
+        "likelyReuse": true
+      }
+    },
+    {
+      "name": "@platform/worker-runtime",
+      "domain": "operations",
+      "boundedContext": "worker-server",
+      "lifecycleClass": "active.platform",
+      "owner": "team-platform",
+      "rationale": "Background workers run in a separate process with different lifecycle (drain on shutdown), different dependencies (queue broker), and different operational concerns from HTTP servers.",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": true,
+        "differentValidationNeeds": true,
+        "likelyReuse": true
+      }
+    },
+    {
+      "name": "@platform/config-runtime",
+      "domain": "operations",
+      "boundedContext": "config-service",
+      "lifecycleClass": "active.platform",
+      "owner": "team-platform",
+      "rationale": "Configuration is a leaf node with no @platform dependencies, consumed by every adapter and runtime package. Its typed-schema-at-startup pattern is distinct from any other package.",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": false,
+        "differentValidationNeeds": true,
+        "likelyReuse": true
+      }
+    },
+    {
+      "name": "@platform/session-runtime",
+      "domain": "operations",
+      "boundedContext": "session-service",
+      "lifecycleClass": "active.platform",
+      "owner": "team-security",
+      "rationale": "Session management crosses auth, Redis, and request context — distinct from security-auth (which defines the interface) and adapters-redis (which owns the connection). Security team ownership.",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": true,
+        "differentValidationNeeds": true,
+        "likelyReuse": true
+      }
+    },
+    {
+      "name": "@platform/security-auth",
+      "domain": "operations",
+      "boundedContext": "auth-gateway",
+      "lifecycleClass": "active.platform",
+      "owner": "team-security",
+      "rationale": "Authentication abstraction is a pure interface with no @platform dependencies. Separating the interface from the provider (adapters-keycloak) enables provider swap without touching platform code.",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": false,
+        "differentValidationNeeds": true,
+        "likelyReuse": true
+      }
+    },
+    {
+      "name": "@platform/audit-events",
+      "domain": "operations",
+      "boundedContext": "audit-service",
+      "lifecycleClass": "active.platform",
+      "owner": "team-security",
+      "rationale": "Audit event schema and emitter have distinct compliance ownership (security team), durable delivery requirements, and schema versioning governance separate from domain events.",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": false,
+        "differentValidationNeeds": true,
+        "likelyReuse": true
+      }
+    },
+    {
+      "name": "@platform/observability",
+      "domain": "operations",
+      "boundedContext": "observability-core",
+      "lifecycleClass": "active.platform",
+      "owner": "team-platform",
+      "rationale": "Observability interface (logs, metrics, traces) has no @platform dependencies and is consumed by every runtime and adapter package. Decoupling from vendors is a platform-wide concern.",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": false,
+        "differentValidationNeeds": true,
+        "likelyReuse": true
+      }
+    },
+    {
+      "name": "@platform/queue-runtime",
+      "domain": "operations",
+      "boundedContext": "queue-service",
+      "lifecycleClass": "active.platform",
+      "owner": "team-platform",
+      "rationale": "Queue topology contracts and enqueue interface must be a stable dependency point shared between producers (feature packages) and consumers (worker-runtime, adapters-redis).",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": false,
+        "differentValidationNeeds": true,
+        "likelyReuse": true
+      }
+    },
+    {
+      "name": "@platform/storage-runtime",
+      "domain": "operations",
+      "boundedContext": "storage-service",
+      "lifecycleClass": "active.platform",
+      "owner": "team-platform",
+      "rationale": "Object storage abstraction has no @platform dependencies and decouples feature packages from the S3 SDK. Presigned URL flow is a distinct pattern from other runtime concerns.",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": false,
+        "differentValidationNeeds": false,
+        "likelyReuse": true
+      }
+    },
+    {
+      "name": "@platform/adapters-keycloak",
+      "domain": "operations",
+      "boundedContext": "auth-keycloak",
+      "lifecycleClass": "active.adapter",
+      "owner": "team-security",
+      "rationale": "Keycloak OIDC implementation is the concrete auth provider. Separating it from security-auth enables provider swaps and limits Keycloak SDK exposure to one package.",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": true,
+        "differentValidationNeeds": true,
+        "likelyReuse": false
+      }
+    },
+    {
+      "name": "@platform/adapters-redis",
+      "domain": "operations",
+      "boundedContext": "cache-queue-redis",
+      "lifecycleClass": "active.adapter",
+      "owner": "team-adapter",
+      "rationale": "Redis serves both cache (sessions) and queue (BullMQ) concerns. Consolidating both into one adapter is justified — both consumers are platform packages, not feature packages.",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": true,
+        "differentValidationNeeds": false,
+        "likelyReuse": true
+      }
+    },
+    {
+      "name": "@platform/adapters-sentry",
+      "domain": "operations",
+      "boundedContext": "error-monitoring",
+      "lifecycleClass": "active.adapter",
+      "owner": "team-platform",
+      "rationale": "Sentry implements the observability error interface. Separating vendor SDK from the interface means error monitoring vendor can change without touching any other package.",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": false,
+        "differentValidationNeeds": false,
+        "likelyReuse": false
+      }
+    },
+    {
+      "name": "@platform/adapters-opentelemetry",
+      "domain": "operations",
+      "boundedContext": "telemetry",
+      "lifecycleClass": "active.adapter",
+      "owner": "team-platform",
+      "rationale": "OpenTelemetry must be initialized before all other imports for auto-instrumentation — that startup concern is distinct from Sentry's error capture and warrants separation.",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": true,
+        "differentValidationNeeds": false,
+        "likelyReuse": false
+      }
+    },
+    {
+      "name": "@platform/adapters-object-storage",
+      "domain": "operations",
+      "boundedContext": "object-storage",
+      "lifecycleClass": "active.adapter",
+      "owner": "team-adapter",
+      "rationale": "AWS S3 SDK encapsulation belongs in a dedicated adapter. Presigned URL generation, multipart upload, and bucket policy are distinct from both config and storage-runtime concerns.",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": false,
+        "differentValidationNeeds": false,
+        "likelyReuse": true
+      }
+    },
+    {
+      "name": "@platform/dev-services",
+      "domain": "delivery",
+      "boundedContext": "dev-local",
+      "lifecycleClass": "active.tooling",
+      "owner": "team-platform",
+      "rationale": "Local development environment setup (Docker Compose, seeds) has local-only deployment scope and must never be a production dependency. Distinct from CI and infrastructure concerns.",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": true,
+        "differentValidationNeeds": false,
+        "likelyReuse": false
+      }
+    },
+    {
+      "name": "@platform/tooling-docker",
+      "domain": "delivery",
+      "boundedContext": "container-build",
+      "lifecycleClass": "active.tooling",
+      "owner": "team-platform",
+      "rationale": "Container image definitions are a delivery concern with distinct ownership from infrastructure definitions (infra-aws) and CI workflow (tooling-ci).",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": true,
+        "differentValidationNeeds": false,
+        "likelyReuse": true
+      }
+    },
+    {
+      "name": "@platform/tooling-terraform",
+      "domain": "delivery",
+      "boundedContext": "terraform-workflow",
+      "lifecycleClass": "active.tooling",
+      "owner": "team-platform",
+      "rationale": "Terraform workflow tooling (modules, provider locks, workspace scripts) is distinct from the actual infrastructure definitions (infra-aws). Shared module patterns are reused across environments.",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": true,
+        "differentValidationNeeds": false,
+        "likelyReuse": true
+      }
+    },
+    {
+      "name": "@platform/tooling-ci",
+      "domain": "delivery",
+      "boundedContext": "ci-pipeline",
+      "lifecycleClass": "active.tooling",
+      "owner": "team-platform",
+      "rationale": "CI/CD pipeline definitions are the top-level delivery orchestrator — they invoke Docker builds, Terraform applies, and architecture governance checks. Distinct ownership from infrastructure.",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": true,
+        "differentValidationNeeds": false,
+        "likelyReuse": false
+      }
+    },
+    {
+      "name": "@platform/infra-aws",
+      "domain": "delivery",
+      "boundedContext": "aws-infra",
+      "lifecycleClass": "active.tooling",
+      "owner": "team-platform",
+      "rationale": "AWS infrastructure definitions (ECS, RDS, ElastiCache, S3, IAM, VPC) are a delivery concern that changes on a different cadence from application code. Distinct from Terraform workflow tooling.",
+      "fiveTestResults": {
+        "stableOwnership": true,
+        "differentDependencyRules": true,
+        "differentRuntimeConcerns": true,
+        "differentValidationNeeds": true,
+        "likelyReuse": false
+      }
+    }
+  ],
+  "packagesDeferred": [
+    {
+      "name": "@platform/email-runtime",
+      "reason": "Email sending is a narrow use case; can be an adapter within api-runtime or a thin wrapper initially. Revisit when multiple teams need it independently."
+    },
+    {
+      "name": "@platform/notification-runtime",
+      "reason": "Push/in-app notifications require product-domain decisions about delivery targets. Premature to define generically before product requirements are known."
+    },
+    {
+      "name": "@platform/search-runtime",
+      "reason": "Search infrastructure (Elasticsearch/OpenSearch) is product-specific. Deferred until search boundary is needed by more than one feature."
+    },
+    {
+      "name": "@platform/infra-cloudflare",
+      "reason": "Multi-cloud CDN/edge is premature. Start with AWS-only (CloudFront). Add when the platform genuinely needs provider-level separation."
+    },
+    {
+      "name": "@platform/adapters-stripe",
+      "reason": "Payment processing is product-domain specific. Not appropriate for a generic platform skeleton."
+    },
+    {
+      "name": "@platform/adapters-sendgrid",
+      "reason": "Email provider adapter is product-specific. Deferred alongside email-runtime."
+    }
+  ],
+  "packagesOmitted": [
+    {
+      "name": "feature-flags (as standalone package)",
+      "reason": "Feature flag reads belong in config-runtime. Insufficient boundary separation to justify a separate package at this scale."
+    },
+    {
+      "name": "data-migrations (as standalone package)",
+      "reason": "Database migrations are tightly coupled to adapters-postgres schema ownership. Should live as a sub-module of adapters-postgres, not a standalone package."
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "name": "@platform/worker-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Background worker runtime: job queue consumption, retry policy, concurrency control, and worker lifecycle management.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "worker-runtime",
+      "system": "enterprise-react-platform",
+      "domain": "operations",
+      "boundedContext": "worker-server",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "platform",
+      "class": "active.platform",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": true,
+      "testOnly": false,
+      "serviceName": "worker-runtime",
+      "serviceNamespace": "operations",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "staging",
+        "production"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application"
+      ],
+      "forbiddenConsumers": [
+        "domain",
+        "contract",
+        "ui",
+        "feature"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@platform/queue-runtime",
+        "@platform/config-runtime",
+        "@platform/observability",
+        "@platform/audit-events"
+      ],
+      "providesApis": [
+        "worker-server",
+        "job-processor-registry",
+        "worker-context"
+      ],
+      "consumesApis": [
+        "queue-service",
+        "config-service",
+        "observability-core",
+        "audit-service"
+      ]
+    },
+    "tags": {
+      "scope": "operations",
+      "type": "library",
+      "stage": "active",
+      "role": "platform",
+      "layer": "runtime"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Background worker runtime: job queue consumption, retry policy, concurrency control, and worker lifecycle management.",
+      "responsibilities": [
+        "Own the background worker process lifecycle (start, drain, shutdown)",
+        "Register and dispatch job processors by queue name",
+        "Apply retry, backoff, and dead-letter policy per job type",
+        "Emit observability signals and audit events for job execution"
+      ],
+      "nonResponsibilities": [
+        "Does not define domain logic executed inside jobs",
+        "Does not own queue topology or broker configuration (queue-runtime)",
+        "Does not interact with HTTP request/response cycle"
+      ],
+      "usage": [
+        "Imported by application packages to start background worker processes",
+        "Job processor functions are registered from feature or domain packages"
+      ],
+      "operationalNotes": [
+        "Graceful shutdown drains in-flight jobs before exiting",
+        "Dead-letter queues require monitoring alerts wired via observability package"
+      ]
+    }
+  }
+}

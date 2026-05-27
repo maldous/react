@@ -64,15 +64,28 @@ UI packages are presentational and data-source agnostic.
   @platform/access-control
   @platform/contracts-graphql
   @platform/contracts-analytics
+  @platform/queue-runtime       (to enqueue jobs)
+  @platform/storage-runtime     (to request presigned URLs)
+  @platform/audit-events        (to emit domain-level audit events)
 
 @platform/feature-workflow may not import:
   @platform/adapters-postgres
   @platform/adapters-clickhouse
+  @platform/api-runtime
+  @platform/graphql-api-runtime
+  @platform/worker-runtime
+  @platform/session-runtime
+  @platform/security-auth
+  @platform/adapters-keycloak
+  @platform/adapters-redis
+  @platform/adapters-sentry
+  @platform/adapters-opentelemetry
+  @platform/adapters-object-storage
   direct database clients
   @platform/test-support in production source
 ```
 
-Feature packages compose workflows. They do not own persistence or analytics runtime.
+Feature packages compose workflows. They do not own persistence, analytics runtime, or server-side platform runtime.
 
 ## Domain boundaries
 
@@ -85,6 +98,7 @@ Feature packages compose workflows. They do not own persistence or analytics run
   browser-only APIs
   application packages
   feature packages
+  any operations or delivery packages
 ```
 
 Domain packages must remain pure TypeScript policy/model packages.
@@ -101,6 +115,7 @@ Domain packages must remain pure TypeScript policy/model packages.
   @platform/adapters-graphql
   React runtime
   identity provider runtime clients
+  any operations or delivery packages
 ```
 
 Profile/configuration policy is storage-independent. PostgreSQL persistence belongs to `@platform/adapters-postgres`.
@@ -117,6 +132,7 @@ Profile/configuration policy is storage-independent. PostgreSQL persistence belo
   PostgreSQL adapters
   ClickHouse adapters
   React runtime
+  any operations or delivery packages
 ```
 
 Access-control owns generic admin, staff, user, service, and support role policy. It does not own authentication integration or storage runtime.
@@ -136,6 +152,7 @@ contract packages may not import:
   database clients
   React components
   feature workflow packages
+  any operations or delivery packages
 ```
 
 Specific rules:
@@ -201,6 +218,94 @@ Specific rules:
 
 Ingestion runtime may depend on storage adapters through governed boundaries. Contracts must remain runtime-free.
 
+## Operations platform package boundaries
+
+Operations platform packages define interfaces that adapters implement. They have no dependencies on other platform packages except where stated.
+
+```text
+@platform/config-runtime:
+  no dependencies (leaf node)
+  consumed by: adapters, runtime packages, application packages
+
+@platform/observability:
+  no dependencies (interface definition only)
+  consumed by: api-runtime, graphql-api-runtime, worker-runtime, adapters-sentry, adapters-opentelemetry
+
+@platform/security-auth:
+  no dependencies (interface definition only)
+  consumed by: api-runtime, session-runtime, adapters-keycloak, application packages
+
+@platform/audit-events:
+  no dependencies (interface definition only)
+  consumed by: api-runtime, worker-runtime, feature packages
+
+@platform/queue-runtime:
+  no dependencies (interface definition only)
+  consumed by: worker-runtime, adapters-redis, feature packages
+
+@platform/storage-runtime:
+  no dependencies (interface definition only)
+  consumed by: adapters-object-storage, feature packages
+
+@platform/api-runtime may import:
+  @platform/config-runtime
+  @platform/security-auth
+  @platform/observability
+  @platform/audit-events
+
+@platform/graphql-api-runtime may import:
+  @platform/api-runtime
+  @platform/contracts-graphql
+  @platform/adapters-postgres
+  @platform/adapters-clickhouse
+  @platform/observability
+
+@platform/worker-runtime may import:
+  @platform/queue-runtime
+  @platform/config-runtime
+  @platform/observability
+  @platform/audit-events
+
+@platform/session-runtime may import:
+  @platform/security-auth
+  @platform/adapters-redis
+```
+
+## Operations adapter boundaries
+
+Operations adapters implement interfaces from operations platform packages. They must not be imported by feature, domain, or contract packages.
+
+```text
+@platform/adapters-keycloak may import:
+  @platform/security-auth
+  @platform/config-runtime
+
+@platform/adapters-redis may import:
+  @platform/config-runtime
+  @platform/queue-runtime
+
+@platform/adapters-sentry may import:
+  @platform/observability
+  @platform/config-runtime
+
+@platform/adapters-opentelemetry may import:
+  @platform/observability
+  @platform/config-runtime
+
+@platform/adapters-object-storage may import:
+  @platform/storage-runtime
+  @platform/config-runtime
+```
+
+Operations adapters must not be imported by:
+
+```text
+domain packages
+contract packages
+feature packages
+UI packages
+```
+
 ## Application boundary
 
 ```text
@@ -215,6 +320,15 @@ Ingestion runtime may depend on storage adapters through governed boundaries. Co
   contract internals
   package internals
   test-support in production source
+  operations runtime or adapter packages
+```
+
+## Delivery package boundaries
+
+```text
+delivery packages (dev-services, tooling-docker, tooling-terraform, tooling-ci, infra-aws) must not be imported by any other package
+delivery packages may only be consumed by the CI/CD pipeline or local developer tooling
+delivery packages carry production: false in runtime metadata
 ```
 
 ## Initial allowed dependency matrix
@@ -222,7 +336,7 @@ Ingestion runtime may depend on storage adapters through governed boundaries. Co
 | Package | May depend on |
 |---|---|
 | @platform/react-enterprise-app | feature-workflow, access-control, adapters-graphql |
-| @platform/feature-workflow | ui-design-system, domain-core, profile-configuration, access-control, contracts-graphql, contracts-analytics |
+| @platform/feature-workflow | ui-design-system, domain-core, profile-configuration, access-control, contracts-graphql, contracts-analytics, queue-runtime, storage-runtime, audit-events |
 | @platform/ui-design-system | none of the runtime/domain packages |
 | @platform/domain-core | none of the platform runtime packages |
 | @platform/profile-configuration | domain-core |
@@ -236,10 +350,27 @@ Ingestion runtime may depend on storage adapters through governed boundaries. Co
 | @platform/adapters-clickhouse | contracts-analytics, contracts-ingestion |
 | @platform/tooling-codegen | contracts-graphql |
 | @platform/test-support | contracts-graphql, contracts-ingestion, contracts-analytics, ui-design-system |
-```
+| @platform/config-runtime | none |
+| @platform/observability | none |
+| @platform/security-auth | none |
+| @platform/audit-events | none |
+| @platform/queue-runtime | none |
+| @platform/storage-runtime | none |
+| @platform/api-runtime | config-runtime, security-auth, observability, audit-events |
+| @platform/graphql-api-runtime | api-runtime, contracts-graphql, adapters-postgres, adapters-clickhouse, observability |
+| @platform/worker-runtime | queue-runtime, config-runtime, observability, audit-events |
+| @platform/session-runtime | security-auth, adapters-redis |
+| @platform/adapters-keycloak | security-auth, config-runtime |
+| @platform/adapters-redis | config-runtime, queue-runtime |
+| @platform/adapters-sentry | observability, config-runtime |
+| @platform/adapters-opentelemetry | observability, config-runtime |
+| @platform/adapters-object-storage | storage-runtime, config-runtime |
+| @platform/dev-services | none |
+| @platform/tooling-docker | none |
+| @platform/tooling-terraform | none |
+| @platform/tooling-ci | none |
+| @platform/infra-aws | none |
 
 ## Enforcement status
 
-These rules are currently validated against package metadata declarations.
-
-Future source-code import scanning should enforce the same rules against actual TypeScript import statements.
+These rules are validated against package metadata declarations and enforced by source-code import scanning via `tools/architecture/validate-source-imports`.

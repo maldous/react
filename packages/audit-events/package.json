@@ -1,0 +1,106 @@
+{
+  "name": "@platform/audit-events",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Audit event bus: structured event emission, schema-validated audit records, and durable delivery contracts.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "audit-events",
+      "system": "enterprise-react-platform",
+      "domain": "operations",
+      "boundedContext": "audit-service",
+      "owner": "team-security"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "platform",
+      "class": "active.platform",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": true,
+      "testOnly": false,
+      "serviceName": "audit-events",
+      "serviceNamespace": "operations",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "staging",
+        "production"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application",
+        "platform",
+        "feature"
+      ],
+      "forbiddenConsumers": [
+        "domain",
+        "contract",
+        "ui"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "audit-service",
+        "audit-event-emitter",
+        "audit-event-schema"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "operations",
+      "type": "library",
+      "stage": "active",
+      "role": "platform",
+      "layer": "platform"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Audit event bus: structured event emission, schema-validated audit records, and durable delivery contracts.",
+      "responsibilities": [
+        "Define the canonical audit event schema and typed event emitter interface",
+        "Emit structured audit records for security-relevant actions (auth, data access, mutations)",
+        "Guarantee at-least-once delivery semantics for durable audit trails",
+        "Remain decoupled from any specific storage or transport implementation"
+      ],
+      "nonResponsibilities": [
+        "Does not store audit records directly (delegated to adapter or queue)",
+        "Does not implement compliance reporting or dashboards",
+        "Does not own business event schemas for domain workflows"
+      ],
+      "usage": [
+        "Imported by api-runtime and worker-runtime to emit audit events at operation boundaries",
+        "Feature packages may emit domain-level audit events via the typed emitter"
+      ],
+      "operationalNotes": [
+        "Audit events must not be dropped — configure durable delivery in production",
+        "Schema versioning must be incremented on any audit field addition"
+      ]
+    }
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "name": "@platform/api-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "description": "HTTP API server runtime: request routing, middleware pipeline, auth enforcement, and response envelope.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "api-runtime",
+      "system": "enterprise-react-platform",
+      "domain": "operations",
+      "boundedContext": "api-server",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "platform",
+      "class": "active.platform",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": true,
+      "testOnly": false,
+      "serviceName": "api-runtime",
+      "serviceNamespace": "operations",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "staging",
+        "production"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application",
+        "feature"
+      ],
+      "forbiddenConsumers": [
+        "domain",
+        "contract",
+        "ui"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@platform/config-runtime",
+        "@platform/security-auth",
+        "@platform/observability",
+        "@platform/audit-events"
+      ],
+      "providesApis": [
+        "http-api-server",
+        "middleware-pipeline",
+        "request-context"
+      ],
+      "consumesApis": [
+        "config-service",
+        "auth-gateway",
+        "observability-core",
+        "audit-service"
+      ]
+    },
+    "tags": {
+      "scope": "operations",
+      "type": "library",
+      "stage": "active",
+      "role": "platform",
+      "layer": "runtime"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "HTTP API server runtime: request routing, middleware pipeline, auth enforcement, and response envelope.",
+      "responsibilities": [
+        "Own the HTTP server lifecycle and request routing foundation",
+        "Provide middleware pipeline for auth, logging, tracing, and rate-limiting",
+        "Enforce authentication and authorization at the API boundary",
+        "Emit structured audit events and observability signals per request"
+      ],
+      "nonResponsibilities": [
+        "Does not define domain logic or business rules",
+        "Does not own GraphQL schema or resolver implementation",
+        "Does not manage persistent storage directly"
+      ],
+      "usage": [
+        "Imported by application packages to construct and start the HTTP server",
+        "Feature packages compose domain logic behind API handlers registered here"
+      ],
+      "operationalNotes": [
+        "All inbound requests pass through the auth middleware before reaching handlers",
+        "Structured request logs are emitted via observability package"
+      ]
+    }
+  }
+}

@@ -179,6 +179,11 @@ packages/adapters-graphql
 packages/adapters-ingestion
 packages/adapters-postgres
 packages/adapters-clickhouse
+packages/adapters-keycloak
+packages/adapters-redis
+packages/adapters-sentry
+packages/adapters-opentelemetry
+packages/adapters-object-storage
 ```
 
 Rules:
@@ -190,6 +195,45 @@ PostgreSQL appears only in transactional persistence adapter naming
 ClickHouse appears only in analytical adapter naming
 external ingestion runtime appears only in ingestion adapter naming
 adapters must not define contract ownership
+operations adapters (keycloak, redis, sentry, opentelemetry, object-storage) implement interfaces defined by operations platform packages
+operations adapters must not be imported directly by feature or domain packages
+```
+
+## Operations runtime package naming
+
+```text
+packages/<capability>-runtime
+@platform/<capability>-runtime
+```
+
+Packages:
+
+```text
+packages/api-runtime          HTTP API server runtime
+packages/graphql-api-runtime  GraphQL server runtime
+packages/worker-runtime       Background worker runtime
+packages/config-runtime       Configuration service
+packages/session-runtime      Session service
+packages/queue-runtime        Queue abstraction
+packages/storage-runtime      Object storage abstraction
+```
+
+And standalone platform packages:
+
+```text
+packages/security-auth        Authentication abstraction and RBAC
+packages/audit-events         Audit event bus
+packages/observability        Observability abstraction (logs, metrics, traces)
+```
+
+Rules:
+
+```text
+operations runtime packages own server-side process lifecycle and cross-cutting platform concerns
+operations platform packages (security-auth, observability, queue-runtime, storage-runtime, audit-events, config-runtime) define interfaces — adapters implement them
+operations runtime packages must not be imported by domain or contract packages
+feature packages may import queue-runtime and storage-runtime to enqueue jobs or request presigned URLs
+feature packages must not import session-runtime, security-auth, api-runtime, graphql-api-runtime, or worker-runtime
 ```
 
 ## Tooling package naming
@@ -199,11 +243,13 @@ packages/tooling-<capability>
 @platform/tooling-<capability>
 ```
 
-Initial package:
+Initial packages:
 
 ```text
-packages/tooling-codegen
-@platform/tooling-codegen
+packages/tooling-codegen      GraphQL codegen and artifact workflows
+packages/tooling-docker       Container build tooling
+packages/tooling-terraform    Terraform workflow tooling
+packages/tooling-ci           CI/CD pipeline definitions
 ```
 
 Rules:
@@ -211,6 +257,32 @@ Rules:
 ```text
 tooling packages support developer workflow or CI
 tooling packages must not become application runtime dependencies
+```
+
+## Delivery infrastructure package naming
+
+```text
+packages/infra-<provider>
+@platform/infra-<provider>
+
+packages/dev-<capability>
+@platform/dev-<capability>
+```
+
+Packages:
+
+```text
+packages/infra-aws            AWS infrastructure definitions
+packages/dev-services         Local development Docker Compose and seed scripts
+```
+
+Rules:
+
+```text
+delivery packages are non-production and must carry production: false in runtime metadata
+delivery packages must not be imported by any platform, feature, domain, contract, adapter, or application package
+infra packages contain provider-specific infrastructure definitions (Terraform, CDK, CloudFormation)
+dev packages contain local-only service definitions and seed data
 ```
 
 ## Test package naming
@@ -263,6 +335,26 @@ packages/adapters-graphql
 packages/adapters-postgres
 packages/contracts-analytics
 packages/adapters-clickhouse
+packages/api-runtime
+packages/graphql-api-runtime
+packages/worker-runtime
+packages/config-runtime
+packages/session-runtime
+packages/security-auth
+packages/audit-events
+packages/observability
+packages/queue-runtime
+packages/storage-runtime
+packages/adapters-keycloak
+packages/adapters-redis
+packages/adapters-sentry
+packages/adapters-opentelemetry
+packages/adapters-object-storage
+packages/dev-services
+packages/tooling-docker
+packages/tooling-terraform
+packages/tooling-ci
+packages/infra-aws
 packages/tooling-codegen
 packages/test-support
 ```

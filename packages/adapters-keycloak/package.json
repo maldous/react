@@ -1,0 +1,110 @@
+{
+  "name": "@platform/adapters-keycloak",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Keycloak adapter: OIDC token validation, realm configuration, and auth provider implementation for security-auth.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "adapters-keycloak",
+      "system": "enterprise-react-platform",
+      "domain": "operations",
+      "boundedContext": "auth-keycloak",
+      "owner": "team-security"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "adapter",
+      "class": "active.adapter",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": true,
+      "testOnly": false,
+      "serviceName": "adapters-keycloak",
+      "serviceNamespace": "operations",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "staging",
+        "production"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application"
+      ],
+      "forbiddenConsumers": [
+        "domain",
+        "contract",
+        "ui",
+        "feature"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@platform/security-auth",
+        "@platform/config-runtime"
+      ],
+      "providesApis": [
+        "auth-keycloak-provider"
+      ],
+      "consumesApis": [
+        "auth-gateway",
+        "config-service",
+        "Keycloak OIDC endpoints"
+      ]
+    },
+    "tags": {
+      "scope": "operations",
+      "type": "library",
+      "stage": "active",
+      "role": "adapter",
+      "layer": "adapter"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Keycloak adapter: OIDC token validation, realm configuration, and auth provider implementation for security-auth.",
+      "responsibilities": [
+        "Implement the security-auth provider interface backed by Keycloak OIDC",
+        "Validate JWT access tokens against Keycloak realm public keys",
+        "Extract and type identity claims from Keycloak token payloads",
+        "Manage JWKS key rotation and caching"
+      ],
+      "nonResponsibilities": [
+        "Does not define the auth provider interface (owned by security-auth)",
+        "Does not manage Keycloak realm configuration or client registration",
+        "Does not own session storage or session lifecycle"
+      ],
+      "usage": [
+        "Registered at application startup as the concrete auth provider implementation",
+        "Only imported by application entrypoints — never by feature or domain packages"
+      ],
+      "operationalNotes": [
+        "JWKS cache TTL must be shorter than Keycloak key rotation interval",
+        "Realm and client IDs are resolved via config-runtime — never hardcoded"
+      ]
+    }
+  }
+}

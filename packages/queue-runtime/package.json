@@ -1,0 +1,108 @@
+{
+  "name": "@platform/queue-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Queue abstraction: job enqueue interface, queue topology contracts, and delivery guarantee definitions.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "queue-runtime",
+      "system": "enterprise-react-platform",
+      "domain": "operations",
+      "boundedContext": "queue-service",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "platform",
+      "class": "active.platform",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": true,
+      "testOnly": false,
+      "serviceName": "queue-runtime",
+      "serviceNamespace": "operations",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "staging",
+        "production"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application",
+        "platform",
+        "feature",
+        "adapter"
+      ],
+      "forbiddenConsumers": [
+        "domain",
+        "contract",
+        "ui"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "queue-service",
+        "job-enqueue-interface",
+        "queue-topology-contracts"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "operations",
+      "type": "library",
+      "stage": "active",
+      "role": "platform",
+      "layer": "platform"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Queue abstraction: job enqueue interface, queue topology contracts, and delivery guarantee definitions.",
+      "responsibilities": [
+        "Define the typed job enqueue interface and job payload schemas",
+        "Declare queue topology contracts (queue names, job types, priority levels)",
+        "Specify delivery guarantee semantics (at-least-once, exactly-once) per queue",
+        "Decouple producers and consumers from the specific queue broker"
+      ],
+      "nonResponsibilities": [
+        "Does not implement the queue broker connection (owned by adapters-redis/BullMQ)",
+        "Does not own worker job processors (owned by worker-runtime and feature packages)",
+        "Does not manage dead-letter queue reprocessing"
+      ],
+      "usage": [
+        "Imported by feature packages to enqueue jobs without coupling to the broker",
+        "worker-runtime imports topology contracts to register consumers",
+        "adapters-redis implements the enqueue interface against BullMQ"
+      ],
+      "operationalNotes": [
+        "Queue name changes require coordinated migration — names are part of the topology contract",
+        "Exactly-once delivery is not guaranteed by default — idempotent job processors are required"
+      ]
+    }
+  }
+}

@@ -46,6 +46,54 @@ A package that owns GraphQL operations, fragments, generated operation types, an
 
 A package that binds generated GraphQL contract documents to runtime transport, cache policy, PostgreSQL transactional adapters, and ClickHouse analytical adapters.
 
+## API runtime
+
+The HTTP server lifecycle package that owns request routing, middleware pipeline (auth, logging, tracing, rate-limiting), and structured response envelope. All inbound requests pass through this boundary before reaching domain logic.
+
+## GraphQL API runtime
+
+The GraphQL server runtime package that mounts a GraphQL endpoint on the HTTP API server, stitches schema from contract packages, and provides DataLoader-scoped resolver context.
+
+## worker runtime
+
+The background worker process lifecycle package that owns job queue consumption, retry and backoff policy, concurrency control, and graceful shutdown. Job processor functions are registered from feature or domain packages.
+
+## config runtime
+
+The configuration service package that loads environment variables at process start, validates them against a typed schema, and provides readonly typed config accessors to other platform packages.
+
+## session runtime
+
+The server-side session service package that stores and retrieves session state (backed by Redis), binds authentication tokens to session records, and propagates user claims through the request context.
+
+## security auth
+
+The authentication abstraction package that defines the auth provider interface, typed identity and claims contracts, and RBAC primitives. Concrete providers (adapters-keycloak) implement this interface.
+
+## audit events
+
+The audit event bus package that defines the canonical audit event schema and emitter interface. It guarantees durable delivery of structured audit records for security-relevant actions.
+
+## observability
+
+The observability abstraction package that defines the structured logger, metrics emitter, tracer, and health check interfaces. Concrete adapters (adapters-sentry, adapters-opentelemetry) implement these interfaces.
+
+## queue runtime
+
+The queue abstraction package that defines the typed job enqueue interface, queue topology contracts, and delivery guarantee semantics. The concrete broker (adapters-redis/BullMQ) implements this interface.
+
+## storage runtime
+
+The object storage abstraction package that defines the file upload interface, presigned URL contracts, and bucket policy semantics. The concrete provider (adapters-object-storage) implements this interface.
+
+## operations adapter
+
+An adapter package in the operations domain that implements a platform interface against a specific technology (Keycloak, Redis, Sentry, OpenTelemetry, S3). Operations adapters must not be imported directly by feature or domain packages.
+
+## delivery package
+
+A non-production package that supports the software delivery pipeline. Delivery packages own Docker container definitions, Terraform infrastructure configurations, CI/CD workflow definitions, and local development environment setup. They are never imported by platform code at runtime.
+
 ## tooling package
 
 A development or CI package that owns generation commands, validation utilities, and artifact workflows.

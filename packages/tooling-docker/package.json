@@ -1,0 +1,104 @@
+{
+  "name": "@platform/tooling-docker",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Container build tooling: Dockerfiles, multi-stage build patterns, and image publishing scripts.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "tooling-docker",
+      "system": "enterprise-react-platform",
+      "domain": "delivery",
+      "boundedContext": "container-build",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "tooling",
+      "class": "active.tooling",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "annual"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": false
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "tooling-docker",
+      "serviceNamespace": "delivery",
+      "deploymentEnvironments": [
+        "local",
+        "development"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "application",
+        "feature",
+        "domain",
+        "contract",
+        "adapter",
+        "platform",
+        "ui"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "container-build-patterns"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "delivery",
+      "type": "library",
+      "stage": "active",
+      "role": "tooling",
+      "layer": "tooling"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Container build tooling: Dockerfiles, multi-stage build patterns, and image publishing scripts.",
+      "responsibilities": [
+        "Maintain canonical Dockerfiles for each deployable application surface",
+        "Define multi-stage build patterns to minimize production image size",
+        "Provide image tagging and publishing scripts for CI integration",
+        "Enforce base image version pinning and security update cadence"
+      ],
+      "nonResponsibilities": [
+        "Does not own container orchestration or runtime (infra-aws)",
+        "Does not define CI pipeline stages (tooling-ci)",
+        "Does not manage container registry configuration"
+      ],
+      "usage": [
+        "Dockerfiles are consumed by tooling-ci to build and push images in CI",
+        "Build scripts can be run locally for development image builds"
+      ],
+      "operationalNotes": [
+        "Base images must be pinned to digests in production Dockerfiles",
+        "Non-root user must be configured in all production-stage images"
+      ]
+    }
+  }
+}

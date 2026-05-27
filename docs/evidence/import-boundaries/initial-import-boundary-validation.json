@@ -1,7 +1,7 @@
 {
   "ruleSet": "docs/architecture/import-boundary-rules.md",
-  "totalPackages": 15,
-  "passed": 15,
+  "totalPackages": 35,
+  "passed": 35,
   "failed": 0,
   "results": [
     {
@@ -81,6 +81,60 @@
       "warnings": []
     },
     {
+      "package": "@platform/adapters-keycloak",
+      "path": "packages/adapters-keycloak",
+      "lifecycleClass": "active.adapter",
+      "domain": "operations",
+      "boundedContext": "auth-keycloak",
+      "declaredDependsOn": [
+        "@platform/config-runtime",
+        "@platform/security-auth"
+      ],
+      "allowedDependsOn": [
+        "@platform/config-runtime",
+        "@platform/security-auth"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/adapters-object-storage",
+      "path": "packages/adapters-object-storage",
+      "lifecycleClass": "active.adapter",
+      "domain": "operations",
+      "boundedContext": "object-storage",
+      "declaredDependsOn": [
+        "@platform/config-runtime",
+        "@platform/storage-runtime"
+      ],
+      "allowedDependsOn": [
+        "@platform/config-runtime",
+        "@platform/storage-runtime"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/adapters-opentelemetry",
+      "path": "packages/adapters-opentelemetry",
+      "lifecycleClass": "active.adapter",
+      "domain": "operations",
+      "boundedContext": "telemetry",
+      "declaredDependsOn": [
+        "@platform/config-runtime",
+        "@platform/observability"
+      ],
+      "allowedDependsOn": [
+        "@platform/config-runtime",
+        "@platform/observability"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
       "package": "@platform/adapters-postgres",
       "path": "packages/adapters-postgres",
       "lifecycleClass": "active.adapter",
@@ -94,6 +148,88 @@
         "@platform/access-control",
         "@platform/profile-configuration"
       ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/adapters-redis",
+      "path": "packages/adapters-redis",
+      "lifecycleClass": "active.adapter",
+      "domain": "operations",
+      "boundedContext": "cache-queue-redis",
+      "declaredDependsOn": [
+        "@platform/config-runtime",
+        "@platform/queue-runtime"
+      ],
+      "allowedDependsOn": [
+        "@platform/config-runtime",
+        "@platform/queue-runtime"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/adapters-sentry",
+      "path": "packages/adapters-sentry",
+      "lifecycleClass": "active.adapter",
+      "domain": "operations",
+      "boundedContext": "error-monitoring",
+      "declaredDependsOn": [
+        "@platform/config-runtime",
+        "@platform/observability"
+      ],
+      "allowedDependsOn": [
+        "@platform/config-runtime",
+        "@platform/observability"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/api-runtime",
+      "path": "packages/api-runtime",
+      "lifecycleClass": "active.platform",
+      "domain": "operations",
+      "boundedContext": "api-server",
+      "declaredDependsOn": [
+        "@platform/audit-events",
+        "@platform/config-runtime",
+        "@platform/observability",
+        "@platform/security-auth"
+      ],
+      "allowedDependsOn": [
+        "@platform/audit-events",
+        "@platform/config-runtime",
+        "@platform/observability",
+        "@platform/security-auth"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/audit-events",
+      "path": "packages/audit-events",
+      "lifecycleClass": "active.platform",
+      "domain": "operations",
+      "boundedContext": "audit-service",
+      "declaredDependsOn": [],
+      "allowedDependsOn": [],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/config-runtime",
+      "path": "packages/config-runtime",
+      "lifecycleClass": "active.platform",
+      "domain": "operations",
+      "boundedContext": "config-service",
+      "declaredDependsOn": [],
+      "allowedDependsOn": [],
       "valid": true,
       "errors": [],
       "warnings": []
@@ -143,6 +279,18 @@
       "warnings": []
     },
     {
+      "package": "@platform/dev-services",
+      "path": "packages/dev-services",
+      "lifecycleClass": "active.tooling",
+      "domain": "delivery",
+      "boundedContext": "dev-local",
+      "declaredDependsOn": [],
+      "allowedDependsOn": [],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
       "package": "@platform/domain-core",
       "path": "packages/domain-core",
       "lifecycleClass": "stable.platform",
@@ -169,12 +317,63 @@
       ],
       "allowedDependsOn": [
         "@platform/access-control",
+        "@platform/audit-events",
         "@platform/contracts-analytics",
         "@platform/contracts-graphql",
         "@platform/domain-core",
         "@platform/profile-configuration",
+        "@platform/queue-runtime",
+        "@platform/storage-runtime",
         "@platform/ui-design-system"
       ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/graphql-api-runtime",
+      "path": "packages/graphql-api-runtime",
+      "lifecycleClass": "active.platform",
+      "domain": "operations",
+      "boundedContext": "graphql-server",
+      "declaredDependsOn": [
+        "@platform/adapters-clickhouse",
+        "@platform/adapters-postgres",
+        "@platform/api-runtime",
+        "@platform/contracts-graphql",
+        "@platform/observability"
+      ],
+      "allowedDependsOn": [
+        "@platform/adapters-clickhouse",
+        "@platform/adapters-postgres",
+        "@platform/api-runtime",
+        "@platform/contracts-graphql",
+        "@platform/observability"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/infra-aws",
+      "path": "packages/infra-aws",
+      "lifecycleClass": "active.tooling",
+      "domain": "delivery",
+      "boundedContext": "aws-infra",
+      "declaredDependsOn": [],
+      "allowedDependsOn": [],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/observability",
+      "path": "packages/observability",
+      "lifecycleClass": "active.platform",
+      "domain": "operations",
+      "boundedContext": "observability-core",
+      "declaredDependsOn": [],
+      "allowedDependsOn": [],
       "valid": true,
       "errors": [],
       "warnings": []
@@ -196,6 +395,18 @@
       "warnings": []
     },
     {
+      "package": "@platform/queue-runtime",
+      "path": "packages/queue-runtime",
+      "lifecycleClass": "active.platform",
+      "domain": "operations",
+      "boundedContext": "queue-service",
+      "declaredDependsOn": [],
+      "allowedDependsOn": [],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
       "package": "@platform/react-enterprise-app",
       "path": "apps/react-enterprise-app",
       "lifecycleClass": "active.feature",
@@ -211,6 +422,48 @@
         "@platform/adapters-graphql",
         "@platform/feature-workflow"
       ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/security-auth",
+      "path": "packages/security-auth",
+      "lifecycleClass": "active.platform",
+      "domain": "operations",
+      "boundedContext": "auth-gateway",
+      "declaredDependsOn": [],
+      "allowedDependsOn": [],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/session-runtime",
+      "path": "packages/session-runtime",
+      "lifecycleClass": "active.platform",
+      "domain": "operations",
+      "boundedContext": "session-service",
+      "declaredDependsOn": [
+        "@platform/adapters-redis",
+        "@platform/security-auth"
+      ],
+      "allowedDependsOn": [
+        "@platform/adapters-redis",
+        "@platform/security-auth"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/storage-runtime",
+      "path": "packages/storage-runtime",
+      "lifecycleClass": "active.platform",
+      "domain": "operations",
+      "boundedContext": "storage-service",
+      "declaredDependsOn": [],
+      "allowedDependsOn": [],
       "valid": true,
       "errors": [],
       "warnings": []
@@ -238,6 +491,18 @@
       "warnings": []
     },
     {
+      "package": "@platform/tooling-ci",
+      "path": "packages/tooling-ci",
+      "lifecycleClass": "active.tooling",
+      "domain": "delivery",
+      "boundedContext": "ci-pipeline",
+      "declaredDependsOn": [],
+      "allowedDependsOn": [],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
       "package": "@platform/tooling-codegen",
       "path": "packages/tooling-codegen",
       "lifecycleClass": "active.tooling",
@@ -254,6 +519,30 @@
       "warnings": []
     },
     {
+      "package": "@platform/tooling-docker",
+      "path": "packages/tooling-docker",
+      "lifecycleClass": "active.tooling",
+      "domain": "delivery",
+      "boundedContext": "container-build",
+      "declaredDependsOn": [],
+      "allowedDependsOn": [],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/tooling-terraform",
+      "path": "packages/tooling-terraform",
+      "lifecycleClass": "active.tooling",
+      "domain": "delivery",
+      "boundedContext": "terraform-workflow",
+      "declaredDependsOn": [],
+      "allowedDependsOn": [],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
       "package": "@platform/ui-design-system",
       "path": "packages/ui-design-system",
       "lifecycleClass": "active.platform",
@@ -261,6 +550,28 @@
       "boundedContext": "design-system",
       "declaredDependsOn": [],
       "allowedDependsOn": [],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/worker-runtime",
+      "path": "packages/worker-runtime",
+      "lifecycleClass": "active.platform",
+      "domain": "operations",
+      "boundedContext": "worker-server",
+      "declaredDependsOn": [
+        "@platform/audit-events",
+        "@platform/config-runtime",
+        "@platform/observability",
+        "@platform/queue-runtime"
+      ],
+      "allowedDependsOn": [
+        "@platform/audit-events",
+        "@platform/config-runtime",
+        "@platform/observability",
+        "@platform/queue-runtime"
+      ],
       "valid": true,
       "errors": [],
       "warnings": []
