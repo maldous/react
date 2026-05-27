@@ -494,6 +494,7 @@ Canonical source locations:
 | Package naming validation evidence                    | `docs/evidence/naming/`                              | Committed governance evidence                                   |
 | Platform scope validation evidence                    | `docs/evidence/platform-scope/`                      | Committed governance evidence                                   |
 | Quality gate baseline evidence                        | `docs/evidence/quality-gates/`                       | Committed governance evidence                                   |
+| Frontend platform baseline evidence                   | `docs/evidence/frontend/`                            | Committed governance evidence                                   |
 | Compose integration smoke tests                       | `tests/integration/`                                 | Live-service tests; not run in CI; requires compose up          |
 | Root TypeScript strict base config                    | `tsconfig.base.json`                                 | Extended by `apps/**/tsconfig.json`; governs strict mode        |
 | App TypeScript configs                                | `apps/**/tsconfig.json`                              | App-level TypeScript project config; extends tsconfig.base.json |
@@ -555,6 +556,9 @@ docs/evidence/platform-scope/
 
 docs/evidence/quality-gates/
   Quality gate baseline evidence: tooling configured, gate types, ignored paths, validation results.
+
+docs/evidence/frontend/
+  Frontend platform baseline evidence: selected libraries, package boundary rules, component layer.
 ```
 
 Reports may reference evidence.
