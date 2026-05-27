@@ -184,6 +184,7 @@ packages/adapters-redis
 packages/adapters-sentry
 packages/adapters-opentelemetry
 packages/adapters-object-storage
+packages/adapters-brevo
 ```
 
 Rules:
@@ -209,13 +210,16 @@ packages/<capability>-runtime
 Packages:
 
 ```text
-packages/api-runtime          HTTP API server runtime
-packages/graphql-api-runtime  GraphQL server runtime
-packages/worker-runtime       Background worker runtime
-packages/config-runtime       Configuration service
-packages/session-runtime      Session service
-packages/queue-runtime        Queue abstraction
-packages/storage-runtime      Object storage abstraction
+packages/api-runtime            HTTP API server runtime
+packages/graphql-api-runtime    GraphQL server runtime
+packages/worker-runtime         Background worker runtime
+packages/config-runtime         Configuration service
+packages/session-runtime        Session service
+packages/queue-runtime          Queue abstraction
+packages/storage-runtime        Object storage abstraction
+packages/email-runtime          Email send abstraction
+packages/notification-runtime   Push/in-app notification abstraction
+packages/search-runtime         Full-text search abstraction
 ```
 
 And standalone platform packages:
@@ -350,11 +354,16 @@ packages/adapters-redis
 packages/adapters-sentry
 packages/adapters-opentelemetry
 packages/adapters-object-storage
+packages/adapters-brevo
+packages/email-runtime
+packages/notification-runtime
+packages/search-runtime
 packages/dev-services
 packages/tooling-docker
 packages/tooling-terraform
 packages/tooling-ci
 packages/infra-aws
+packages/infra-cloudflare
 packages/tooling-codegen
 packages/test-support
 ```

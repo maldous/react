@@ -40,11 +40,16 @@ Names are generic. They describe architectural responsibility rather than produc
 | packages/adapters-sentry | @platform/adapters-sentry | active.adapter | operations | error-monitoring |
 | packages/adapters-opentelemetry | @platform/adapters-opentelemetry | active.adapter | operations | telemetry |
 | packages/adapters-object-storage | @platform/adapters-object-storage | active.adapter | operations | object-storage |
+| packages/email-runtime | @platform/email-runtime | active.platform | operations | email-service |
+| packages/adapters-brevo | @platform/adapters-brevo | active.adapter | operations | email-brevo |
+| packages/notification-runtime | @platform/notification-runtime | active.platform | operations | notification-service |
+| packages/search-runtime | @platform/search-runtime | active.platform | operations | search-service |
 | packages/dev-services | @platform/dev-services | active.tooling | delivery | dev-local |
 | packages/tooling-docker | @platform/tooling-docker | active.tooling | delivery | container-build |
 | packages/tooling-terraform | @platform/tooling-terraform | active.tooling | delivery | terraform-workflow |
 | packages/tooling-ci | @platform/tooling-ci | active.tooling | delivery | ci-pipeline |
 | packages/infra-aws | @platform/infra-aws | active.tooling | delivery | aws-infra |
+| packages/infra-cloudflare | @platform/infra-cloudflare | active.tooling | delivery | cloudflare-infra |
 | packages/tooling-codegen | @platform/tooling-codegen | active.tooling | architecture | codegen |
 | packages/test-support | @platform/test-support | active.test | quality | test-support |
 

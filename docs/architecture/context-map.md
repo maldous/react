@@ -50,11 +50,16 @@ quality
 | operations | error-monitoring | Sentry error capture and performance tracing implementation | @platform/adapters-sentry |
 | operations | telemetry | OpenTelemetry distributed tracing and metrics export implementation | @platform/adapters-opentelemetry |
 | operations | object-storage | AWS S3 client, presigned URL generation, and storage interface implementation | @platform/adapters-object-storage |
+| operations | email-service | Email send interface, template contracts, and delivery provider abstraction | @platform/email-runtime |
+| operations | email-brevo | Brevo transactional email delivery implementation | @platform/adapters-brevo |
+| operations | notification-service | Push, in-app, and browser notification channel interface and delivery contracts | @platform/notification-runtime |
+| operations | search-service | Full-text search query interface, index management contracts, and search provider interface | @platform/search-runtime |
 | delivery | dev-local | Docker Compose service definitions, seed scripts, and local environment bootstrap | @platform/dev-services |
 | delivery | container-build | Dockerfiles, multi-stage build patterns, and image publishing scripts | @platform/tooling-docker |
 | delivery | terraform-workflow | Terraform module patterns, provider version locks, and workspace management | @platform/tooling-terraform |
 | delivery | ci-pipeline | CI/CD workflow definitions, build scripts, and security scanning | @platform/tooling-ci |
 | delivery | aws-infra | AWS ECS/EKS workloads, RDS, ElastiCache, S3, IAM, and network topology | @platform/infra-aws |
+| delivery | cloudflare-infra | Cloudflare CDN, R2 object storage, Pages deployment, DNS, and WAF configuration | @platform/infra-cloudflare |
 | architecture | codegen | GraphQL Code Generator and architecture-safe generated artifact workflows | @platform/tooling-codegen |
 | quality | test-support | Test-only MSW GraphQL handlers, React Testing Library helpers, Playwright fixtures, and generic role fixtures | @platform/test-support |
 
@@ -71,8 +76,8 @@ external ingestion contracts must remain separate from ingestion runtime adapter
 GraphQL contracts must remain separate from GraphQL runtime adapters
 quality test packages must not be imported by production packages
 
-operations packages own server-side runtime concerns: API serving, workers, config, sessions, auth, queues, and storage
-operations platform packages (security-auth, observability, queue-runtime, storage-runtime, audit-events, config-runtime) define interfaces; adapters implement them
+operations packages own server-side runtime concerns: API serving, workers, config, sessions, auth, queues, storage, email, notifications, and search
+operations platform packages (security-auth, observability, queue-runtime, storage-runtime, audit-events, config-runtime, email-runtime, notification-runtime, search-runtime) define interfaces; adapters implement them
 operations adapter packages (adapters-keycloak, adapters-redis, adapters-sentry, adapters-opentelemetry, adapters-object-storage) must not be imported by feature or domain packages
 session-runtime and security-auth must not be imported by feature packages — only by runtime (api-runtime) and application packages
 

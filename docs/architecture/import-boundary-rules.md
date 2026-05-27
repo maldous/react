@@ -356,6 +356,9 @@ delivery packages carry production: false in runtime metadata
 | @platform/audit-events | none |
 | @platform/queue-runtime | none |
 | @platform/storage-runtime | none |
+| @platform/email-runtime | none |
+| @platform/notification-runtime | none |
+| @platform/search-runtime | none |
 | @platform/api-runtime | config-runtime, security-auth, observability, audit-events |
 | @platform/graphql-api-runtime | api-runtime, contracts-graphql, adapters-postgres, adapters-clickhouse, observability |
 | @platform/worker-runtime | queue-runtime, config-runtime, observability, audit-events |
@@ -365,11 +368,13 @@ delivery packages carry production: false in runtime metadata
 | @platform/adapters-sentry | observability, config-runtime |
 | @platform/adapters-opentelemetry | observability, config-runtime |
 | @platform/adapters-object-storage | storage-runtime, config-runtime |
+| @platform/adapters-brevo | email-runtime, config-runtime |
 | @platform/dev-services | none |
 | @platform/tooling-docker | none |
 | @platform/tooling-terraform | none |
 | @platform/tooling-ci | none |
 | @platform/infra-aws | none |
+| @platform/infra-cloudflare | none |
 
 ## Enforcement status
 

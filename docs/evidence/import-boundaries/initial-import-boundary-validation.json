@@ -1,7 +1,7 @@
 {
   "ruleSet": "docs/architecture/import-boundary-rules.md",
-  "totalPackages": 35,
-  "passed": 35,
+  "totalPackages": 40,
+  "passed": 40,
   "failed": 0,
   "results": [
     {
@@ -279,11 +279,41 @@
       "warnings": []
     },
     {
+      "package": "@platform/adapters-brevo",
+      "path": "packages/adapters-brevo",
+      "lifecycleClass": "active.adapter",
+      "domain": "operations",
+      "boundedContext": "email-brevo",
+      "declaredDependsOn": [
+        "@platform/config-runtime",
+        "@platform/email-runtime"
+      ],
+      "allowedDependsOn": [
+        "@platform/config-runtime",
+        "@platform/email-runtime"
+      ],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
       "package": "@platform/dev-services",
       "path": "packages/dev-services",
       "lifecycleClass": "active.tooling",
       "domain": "delivery",
       "boundedContext": "dev-local",
+      "declaredDependsOn": [],
+      "allowedDependsOn": [],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/email-runtime",
+      "path": "packages/email-runtime",
+      "lifecycleClass": "active.platform",
+      "domain": "operations",
+      "boundedContext": "email-service",
       "declaredDependsOn": [],
       "allowedDependsOn": [],
       "valid": true,
@@ -367,6 +397,30 @@
       "warnings": []
     },
     {
+      "package": "@platform/infra-cloudflare",
+      "path": "packages/infra-cloudflare",
+      "lifecycleClass": "active.tooling",
+      "domain": "delivery",
+      "boundedContext": "cloudflare-infra",
+      "declaredDependsOn": [],
+      "allowedDependsOn": [],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/notification-runtime",
+      "path": "packages/notification-runtime",
+      "lifecycleClass": "active.platform",
+      "domain": "operations",
+      "boundedContext": "notification-service",
+      "declaredDependsOn": [],
+      "allowedDependsOn": [],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
       "package": "@platform/observability",
       "path": "packages/observability",
       "lifecycleClass": "active.platform",
@@ -432,6 +486,18 @@
       "lifecycleClass": "active.platform",
       "domain": "operations",
       "boundedContext": "auth-gateway",
+      "declaredDependsOn": [],
+      "allowedDependsOn": [],
+      "valid": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "package": "@platform/search-runtime",
+      "path": "packages/search-runtime",
+      "lifecycleClass": "active.platform",
+      "domain": "operations",
+      "boundedContext": "search-service",
       "declaredDependsOn": [],
       "allowedDependsOn": [],
       "valid": true,

@@ -14,9 +14,9 @@
   "teamsAdded": ["team-platform", "team-security"],
   "summary": {
     "totalCandidatesEvaluated": 28,
-    "addedNow": 20,
-    "deferred": 6,
-    "omitted": 2
+    "addedNow": 25,
+    "deferred": 0,
+    "omitted": 3
   },
   "packagesAdded": [
     {
@@ -320,32 +320,54 @@
       }
     }
   ],
-  "packagesDeferred": [
+  "packagesAddedRound2": [
     {
       "name": "@platform/email-runtime",
-      "reason": "Email sending is a narrow use case; can be an adapter within api-runtime or a thin wrapper initially. Revisit when multiple teams need it independently."
+      "domain": "operations",
+      "boundedContext": "email-service",
+      "lifecycleClass": "active.platform",
+      "owner": "team-platform",
+      "rationale": "Email send interface is a stable abstraction point consumed by multiple feature packages. Provider swap (e.g. Brevo → SES) requires only a new adapter — zero feature package changes.",
+      "fiveTestResults": { "stableOwnership": true, "differentDependencyRules": true, "differentRuntimeConcerns": false, "differentValidationNeeds": false, "likelyReuse": true }
+    },
+    {
+      "name": "@platform/adapters-brevo",
+      "domain": "operations",
+      "boundedContext": "email-brevo",
+      "lifecycleClass": "active.adapter",
+      "owner": "team-platform",
+      "rationale": "Brevo (formerly Sendinblue) is a free-tier transactional email provider (300 emails/day free). Concrete implementation of email-runtime registered at application startup only.",
+      "fiveTestResults": { "stableOwnership": true, "differentDependencyRules": true, "differentRuntimeConcerns": false, "differentValidationNeeds": false, "likelyReuse": false }
     },
     {
       "name": "@platform/notification-runtime",
-      "reason": "Push/in-app notifications require product-domain decisions about delivery targets. Premature to define generically before product requirements are known."
+      "domain": "operations",
+      "boundedContext": "notification-service",
+      "lifecycleClass": "active.platform",
+      "owner": "team-platform",
+      "rationale": "Push and in-app notification delivery is a distinct cross-cutting concern with a channel registry pattern separating the interface from provider-specific SDKs (FCM, Web Push).",
+      "fiveTestResults": { "stableOwnership": true, "differentDependencyRules": true, "differentRuntimeConcerns": true, "differentValidationNeeds": false, "likelyReuse": true }
     },
     {
       "name": "@platform/search-runtime",
-      "reason": "Search infrastructure (Elasticsearch/OpenSearch) is product-specific. Deferred until search boundary is needed by more than one feature."
+      "domain": "operations",
+      "boundedContext": "search-service",
+      "lifecycleClass": "active.platform",
+      "owner": "team-platform",
+      "rationale": "Search has distinct eventual-consistency semantics, index management lifecycle, and provider-swap requirements that justify a dedicated interface separate from the transactional store.",
+      "fiveTestResults": { "stableOwnership": true, "differentDependencyRules": true, "differentRuntimeConcerns": true, "differentValidationNeeds": true, "likelyReuse": true }
     },
     {
       "name": "@platform/infra-cloudflare",
-      "reason": "Multi-cloud CDN/edge is premature. Start with AWS-only (CloudFront). Add when the platform genuinely needs provider-level separation."
-    },
-    {
-      "name": "@platform/adapters-stripe",
-      "reason": "Payment processing is product-domain specific. Not appropriate for a generic platform skeleton."
-    },
-    {
-      "name": "@platform/adapters-sendgrid",
-      "reason": "Email provider adapter is product-specific. Deferred alongside email-runtime."
+      "domain": "delivery",
+      "boundedContext": "cloudflare-infra",
+      "lifecycleClass": "active.tooling",
+      "owner": "team-platform",
+      "rationale": "Cloudflare free tier (CDN, R2 storage 10GB/1M ops free, Pages) complements infra-aws and eliminates AWS data egress costs for static assets. Distinct delivery concern from AWS compute.",
+      "fiveTestResults": { "stableOwnership": true, "differentDependencyRules": true, "differentRuntimeConcerns": true, "differentValidationNeeds": false, "likelyReuse": false }
     }
   ],
+  "packagesDeferred": [],
   "packagesOmitted": [
     {
       "name": "feature-flags (as standalone package)",
@@ -354,6 +376,10 @@
     {
       "name": "data-migrations (as standalone package)",
       "reason": "Database migrations are tightly coupled to adapters-postgres schema ownership. Should live as a sub-module of adapters-postgres, not a standalone package."
+    },
+    {
+      "name": "@platform/adapters-stripe",
+      "reason": "Payment processing is a paid service with product-domain specificity. Omitted in favour of free-tier services only."
     }
   ]
 }

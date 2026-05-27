@@ -85,5 +85,14 @@ export const PACKAGE_RULES = {
   ],
   "@platform/config-runtime": [
     pkgRule("no-platform-deps-in-config-runtime", ["@platform/"], [])
+  ],
+  "@platform/email-runtime": [
+    pkgRule("no-platform-deps-in-email-runtime", ["@platform/"], [])
+  ],
+  "@platform/notification-runtime": [
+    pkgRule("no-platform-deps-in-notification-runtime", ["@platform/"], [])
+  ],
+  "@platform/search-runtime": [
+    pkgRule("no-platform-deps-in-search-runtime", ["@platform/"], [])
   ]
 };

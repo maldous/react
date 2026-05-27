@@ -2,14 +2,15 @@
 
 ```text
 Rule set: docs/architecture/import-boundary-rules.md
-Total packages: 35
-Passed: 35
+Total packages: 40
+Passed: 40
 Failed: 0
 ```
 
 | Package | Lifecycle | Domain | Context | Result |
 |---|---|---|---|---|
 | @platform/access-control | stable.platform | core | access-control | PASS |
+| @platform/adapters-brevo | active.adapter | operations | email-brevo | PASS |
 | @platform/adapters-clickhouse | active.adapter | analytics | clickhouse-runtime | PASS |
 | @platform/adapters-graphql | active.adapter | integration | graphql-runtime | PASS |
 | @platform/adapters-ingestion | active.adapter | integration | external-ingestion-runtime | PASS |
@@ -26,15 +27,19 @@ Failed: 0
 | @platform/contracts-graphql | active.contract | core | graphql-contracts | PASS |
 | @platform/contracts-ingestion | active.contract | integration | external-ingestion-contracts | PASS |
 | @platform/dev-services | active.tooling | delivery | dev-local | PASS |
+| @platform/email-runtime | active.platform | operations | email-service | PASS |
 | @platform/domain-core | stable.platform | core | domain-core | PASS |
 | @platform/feature-workflow | active.feature | experience | workflow | PASS |
 | @platform/graphql-api-runtime | active.platform | operations | graphql-server | PASS |
 | @platform/infra-aws | active.tooling | delivery | aws-infra | PASS |
+| @platform/infra-cloudflare | active.tooling | delivery | cloudflare-infra | PASS |
+| @platform/notification-runtime | active.platform | operations | notification-service | PASS |
 | @platform/observability | active.platform | operations | observability-core | PASS |
 | @platform/profile-configuration | stable.platform | core | profile-configuration | PASS |
 | @platform/queue-runtime | active.platform | operations | queue-service | PASS |
 | @platform/react-enterprise-app | active.feature | experience | app-shell | PASS |
 | @platform/security-auth | active.platform | operations | auth-gateway | PASS |
+| @platform/search-runtime | active.platform | operations | search-service | PASS |
 | @platform/session-runtime | active.platform | operations | session-service | PASS |
 | @platform/storage-runtime | active.platform | operations | storage-service | PASS |
 | @platform/test-support | active.test | quality | test-support | PASS |

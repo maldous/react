@@ -1,0 +1,107 @@
+{
+  "name": "@platform/email-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Email service abstraction: send interface, template contracts, and delivery provider interface.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "email-runtime",
+      "system": "enterprise-react-platform",
+      "domain": "operations",
+      "boundedContext": "email-service",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "platform",
+      "class": "active.platform",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": true,
+      "testOnly": false,
+      "serviceName": "email-runtime",
+      "serviceNamespace": "operations",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "staging",
+        "production"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application",
+        "feature",
+        "platform",
+        "adapter"
+      ],
+      "forbiddenConsumers": [
+        "domain",
+        "contract",
+        "ui"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "email-service",
+        "email-send-interface",
+        "email-template-contract"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "operations",
+      "type": "library",
+      "stage": "active",
+      "role": "platform",
+      "layer": "platform"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Email service abstraction: send interface, template contracts, and delivery provider interface.",
+      "responsibilities": [
+        "Define the typed email send interface and message payload schema",
+        "Declare template contract types for transactional and marketing emails",
+        "Specify delivery provider interface that concrete adapters must implement",
+        "Decouple all platform and feature packages from specific email providers"
+      ],
+      "nonResponsibilities": [
+        "Does not implement email delivery (owned by adapters-brevo)",
+        "Does not manage unsubscribe lists or email preference state",
+        "Does not define email template markup or rendering"
+      ],
+      "usage": [
+        "Imported by feature packages to trigger transactional emails",
+        "adapters-brevo implements the provider interface defined here"
+      ],
+      "operationalNotes": [
+        "Provider interface decouples the platform from a specific email vendor — swapping requires only a new adapter",
+        "Template IDs should be treated as stable contracts — verify before renaming"
+      ]
+    }
+  }
+}

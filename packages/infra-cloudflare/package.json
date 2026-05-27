@@ -1,0 +1,105 @@
+{
+  "name": "@platform/infra-cloudflare",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cloudflare infrastructure definitions: CDN, R2 object storage, Pages deployment, and DNS/WAF configuration.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "infra-cloudflare",
+      "system": "enterprise-react-platform",
+      "domain": "delivery",
+      "boundedContext": "cloudflare-infra",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "tooling",
+      "class": "active.tooling",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": false
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "infra-cloudflare",
+      "serviceNamespace": "delivery",
+      "deploymentEnvironments": [
+        "local",
+        "development"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "application",
+        "feature",
+        "domain",
+        "contract",
+        "adapter",
+        "platform",
+        "ui"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "cloudflare-infrastructure-definitions"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "delivery",
+      "type": "library",
+      "stage": "active",
+      "role": "tooling",
+      "layer": "tooling"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Cloudflare infrastructure definitions: CDN, R2 object storage, Pages deployment, and DNS/WAF configuration.",
+      "responsibilities": [
+        "Define Terraform configurations for Cloudflare CDN, WAF rules, and DNS records",
+        "Configure Cloudflare R2 buckets as a free-tier alternative to S3 for static assets and media",
+        "Manage Cloudflare Pages deployment configuration for the front-end application shell",
+        "Define Cache rules, Page rules, and rate-limiting policies"
+      ],
+      "nonResponsibilities": [
+        "Does not own AWS infrastructure definitions (infra-aws)",
+        "Does not define Terraform workflow tooling or module patterns (tooling-terraform)",
+        "Does not manage Cloudflare Workers or edge compute — kept out of scope initially"
+      ],
+      "usage": [
+        "Applied via tooling-terraform scripts as part of the front-end delivery pipeline in tooling-ci",
+        "Complements infra-aws: Cloudflare handles CDN/edge layer, AWS handles compute and data"
+      ],
+      "operationalNotes": [
+        "Cloudflare free tier covers CDN, R2 (10GB storage, 1M operations/month), and Pages — monitor usage before upgrading",
+        "R2 egress is free; use for static assets and media to avoid AWS data transfer costs",
+        "WAF rules must be reviewed quarterly for emerging threat patterns"
+      ]
+    }
+  }
+}
