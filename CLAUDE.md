@@ -34,7 +34,9 @@ node tools/architecture/orchestrator/src/index.mjs generate-lifecycle-evidence
 node tools/architecture/orchestrator/src/index.mjs validate-evidence
 ```
 
-Common flags: `--check` (validate without writing), `--write` (write outputs), `--no-reports` (skip report files), `--format text|json`, `--root <path>`, `--plan-only` (print plan without executing).
+Orchestrator flags: `--root <path>`, `--format text|json`, `--no-reports`, `--plan-only` (print plan without executing).
+
+Individual tool flags (pass directly to a tool, not via orchestrator): `--check` (validate without writing), `--write` (write outputs).
 
 ### Tests (per tool, from repo root)
 
