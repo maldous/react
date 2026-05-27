@@ -495,6 +495,9 @@ Canonical source locations:
 | Platform scope validation evidence                    | `docs/evidence/platform-scope/`                      | Committed governance evidence                                   |
 | Quality gate baseline evidence                        | `docs/evidence/quality-gates/`                       | Committed governance evidence                                   |
 | Compose integration smoke tests                       | `tests/integration/`                                 | Live-service tests; not run in CI; requires compose up          |
+| Root TypeScript strict base config                    | `tsconfig.base.json`                                 | Extended by `apps/**/tsconfig.json`; governs strict mode        |
+| App TypeScript configs                                | `apps/**/tsconfig.json`                              | App-level TypeScript project config; extends tsconfig.base.json |
+| Docker service configuration files                    | `docker/<service>/`                                  | Config files mounted into compose services (OTel, etc.)         |
 | Package metadata schema                               | `docs/schemas/package-json-architecture.schema.json` | ADR-0005 and ADR-0006 implemented as schema                     |
 | Package metadata                                      | package-local `package.json`                         | `package.json` architecture object                              |
 | Package README                                        | package-local `README.md`                            | Generated from `package.json` metadata                          |
@@ -587,6 +590,9 @@ docs/schemas/**
 docs/specs/**
 docs/evidence/**
 tools/architecture/**
+tsconfig.base.json
+apps/**/tsconfig.json
+docker/**
 tests/integration/**
 apps/**/package.json
 apps/**/package-lock.json
@@ -665,6 +671,8 @@ Version-control rule summary:
 | Governance evidence            | `docs/evidence/**`                                                                 | Commit                                                                        |
 | Architecture tooling           | `tools/architecture/**`                                                            | Commit                                                                        |
 | Package metadata               | `apps/**/package.json`, `packages/**/package.json`                                 | Commit                                                                        |
+| TypeScript configs             | `tsconfig.base.json`, `apps/**/tsconfig.json`                                      | Commit                                                                        |
+| Docker service configs         | `docker/**`                                                                        | Commit                                                                        |
 | Root lock file                 | `package-lock.json`                                                                | Commit                                                                        |
 | App lock files                 | `apps/**/package-lock.json`                                                        | Commit                                                                        |
 | Package source/tests           | `apps/**/src/**`, `packages/**/src/**`, `apps/**/tests/**`, `packages/**/tests/**` | Commit                                                                        |

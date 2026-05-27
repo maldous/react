@@ -220,6 +220,8 @@ None.
 
 ## Notes
 
+**Distroless image healthcheck constraint:** The `otel/opentelemetry-collector-contrib` image is a distroless binary image with no shell, wget, or curl. The in-container healthcheck uses a process-liveness proxy (`/otelcol-contrib help`) rather than a readiness probe. The real readiness endpoint (health_check extension HTTP API) is externally accessible at host port 13133 for external monitoring. If a true readiness probe is required, switch to a base image that includes health probing tools, or add a sidecar.
+
 Sentry self-hosted is included in the `sentry` profile. The Sentry `sentry:24.12.0` image handles DB initialisation via `sentry upgrade --noinput` on first start. Admin user creation requires a manual step: `docker exec -it react-platform-sentry-web-1 sentry createuser`.
 
 The `SENTRY_SECRET_KEY` must be generated before starting the sentry profile. Generate with: `python3 -c "import secrets; print(secrets.token_hex(32))"`.

@@ -27,18 +27,18 @@ docker compose logs -f
 
 ## Services and ports
 
-| Service        | Profile     | Host port(s)               | Package/adapter                                         |
-| -------------- | ----------- | -------------------------- | ------------------------------------------------------- |
-| postgres       | default     | 5433                       | `@platform/adapters-postgres`                           |
-| redis          | default     | 6379                       | `@platform/adapters-redis`                              |
-| clickhouse     | default     | 8124 (HTTP), 9002 (native) | `@platform/adapters-clickhouse`                         |
-| minio          | default     | 9000 (API), 9001 (console) | `@platform/adapters-object-storage`                     |
-| mailpit        | default     | 1025 (SMTP), 8025 (UI)     | `@platform/adapters-brevo` (SMTP transport)             |
-| otel-collector | default     | 4317 (gRPC), 4318 (HTTP)   | `@platform/adapters-opentelemetry`                      |
-| sonarqube      | quality     | 9003                       | code quality analysis                                   |
-| keycloak       | identity    | 8080                       | `@platform/adapters-keycloak`                           |
-| localstack     | cloud-mocks | 4566                       | `@platform/adapters-object-storage` (S3), queue testing |
-| sentry-web     | sentry      | 9010                       | `@platform/adapters-sentry`                             |
+| Service        | Profile     | Host port(s)                                 | Package/adapter                                         |
+| -------------- | ----------- | -------------------------------------------- | ------------------------------------------------------- |
+| postgres       | default     | 5433                                         | `@platform/adapters-postgres`                           |
+| redis          | default     | 6379                                         | `@platform/adapters-redis`                              |
+| clickhouse     | default     | 8124 (HTTP), 9002 (native)                   | `@platform/adapters-clickhouse`                         |
+| minio          | default     | 9000 (API), 9001 (console)                   | `@platform/adapters-object-storage`                     |
+| mailpit        | default     | 1025 (SMTP), 8025 (UI)                       | `@platform/adapters-brevo` (SMTP transport)             |
+| otel-collector | default     | 4317 (gRPC), 4318 (HTTP), 13133 (health API) | `@platform/adapters-opentelemetry`                      |
+| sonarqube      | quality     | 9003                                         | code quality analysis                                   |
+| keycloak       | identity    | 8080                                         | `@platform/adapters-keycloak`                           |
+| localstack     | cloud-mocks | 4566                                         | `@platform/adapters-object-storage` (S3), queue testing |
+| sentry-web     | sentry      | 9010                                         | `@platform/adapters-sentry`                             |
 
 ## Web UIs
 
