@@ -47,6 +47,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: TypeScript strict check
+        run: npm run tsc:check
+
       - name: Docker Compose syntax check
         run: npm run compose:config
 

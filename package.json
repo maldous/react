@@ -10,7 +10,7 @@
     "audit:deps": "npm audit --audit-level=high",
     "audit:osv": "osv-scanner scan --recursive .",
     "secrets:scan": "command -v gitleaks >/dev/null 2>&1 && gitleaks detect --source . --no-git || echo 'gitleaks not found on PATH — install from https://github.com/gitleaks/gitleaks/releases or use the gitleaks-action in CI'",
-    "sonar:scan": "sonar-scanner",
+    "sonar:scan": "sonar-scanner -Dsonar.host.url=http://localhost:9003",
     "sbom:generate": "cyclonedx-npm --output-format JSON --output-file docs/evidence/security/sbom-baseline.json --package-lock-only",
     "license:check": "echo 'license:check: no tool configured — see docs/security/license-policy.md and ADR-ACT-0086'",
     "compose:config": "docker compose config",
@@ -21,9 +21,12 @@
     "compose:quality": "docker compose --profile quality up -d sonarqube",
     "compose:identity": "docker compose --profile identity up -d keycloak",
     "compose:cloud": "docker compose --profile cloud-mocks up -d localstack",
-    "compose:sentry": "docker compose --profile sentry up -d"
+    "compose:sentry": "docker compose --profile sentry up -d",
+    "tsc:check": "tsc --noEmit -p apps/react-enterprise-app/tsconfig.json",
+    "test:compose": "node --test tests/integration/compose-smoke.test.mjs"
   },
   "devDependencies": {
+    "@aws-sdk/client-s3": "3.1054.0",
     "@cyclonedx/cyclonedx-npm": "4.2.1",
     "@eslint/js": "10.0.1",
     "dependency-cruiser": "17.4.2",
@@ -31,7 +34,11 @@
     "globals": "17.6.0",
     "knip": "6.14.2",
     "markdownlint-cli2": "0.22.1",
+    "nodemailer": "8.0.9",
+    "pg": "8.14.1",
     "prettier": "3.8.3",
+    "redis": "4.7.0",
+    "typescript": "6.0.3",
     "typescript-eslint": "8.60.0"
   }
 }

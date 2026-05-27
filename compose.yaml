@@ -54,6 +54,10 @@ services:
 
   clickhouse:
     image: clickhouse/clickhouse-server:24.12
+    environment:
+      CLICKHOUSE_USER: ${CLICKHOUSE_USER:-platform}
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:-clickhousepassword}
+      CLICKHOUSE_DB: ${CLICKHOUSE_DB:-platform}
     ports:
       - "8124:8123" # HTTP interface (8123 used by homeassistant container)
       - "9002:9000" # Native protocol (mapped to 9002; 9000 used by minio)

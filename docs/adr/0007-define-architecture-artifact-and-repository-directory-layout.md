@@ -494,6 +494,7 @@ Canonical source locations:
 | Package naming validation evidence                    | `docs/evidence/naming/`                              | Committed governance evidence                                   |
 | Platform scope validation evidence                    | `docs/evidence/platform-scope/`                      | Committed governance evidence                                   |
 | Quality gate baseline evidence                        | `docs/evidence/quality-gates/`                       | Committed governance evidence                                   |
+| Compose integration smoke tests                       | `tests/integration/`                                 | Live-service tests; not run in CI; requires compose up          |
 | Package metadata schema                               | `docs/schemas/package-json-architecture.schema.json` | ADR-0005 and ADR-0006 implemented as schema                     |
 | Package metadata                                      | package-local `package.json`                         | `package.json` architecture object                              |
 | Package README                                        | package-local `README.md`                            | Generated from `package.json` metadata                          |
@@ -586,6 +587,7 @@ docs/schemas/**
 docs/specs/**
 docs/evidence/**
 tools/architecture/**
+tests/integration/**
 apps/**/package.json
 apps/**/package-lock.json
 packages/**/package.json
