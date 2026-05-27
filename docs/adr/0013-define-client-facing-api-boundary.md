@@ -299,7 +299,9 @@ None.
   - docs/adr/0001-use-modular-hexagonal-architecture.md
   - docs/adr/0002-model-the-platform-around-bounded-contexts.md
   - docs/adr/0003-use-a-modular-monorepo-with-promotion-ready-package-boundaries.md
+  - docs/adr/0004-define-package-lifecycle-classes.md
   - docs/adr/0005-define-package-metadata-format.md
+  - docs/adr/0006-define-package-lifecycle-transition-rules.md
 
 - Architecture documentation:
   - docs/architecture/import-boundary-rules.md

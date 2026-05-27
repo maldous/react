@@ -245,8 +245,8 @@ function validateLifecycleGovernanceConsistency(lifecycle, governance, errors) {
   }
 
   if (lifecycle.stage === "external") {
-    if (governance.semverPolicy !== "external-governed") {
-      errors.push("architecture.governance.semverPolicy must be external-governed for external lifecycle stage");
+    if (!["semver-required", "external-governed"].includes(governance.semverPolicy)) {
+      errors.push("architecture.governance.semverPolicy must be semver-required or external-governed for external lifecycle stage");
     }
   }
 }

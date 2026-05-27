@@ -24,3 +24,13 @@ jobs:
 
       - name: Run architecture governance checks
         run: node tools/architecture/orchestrator/src/index.mjs all --no-reports
+
+      - name: Run architecture tooling tests
+        run: |
+          node --test \
+            tools/architecture/validate-package-metadata/tests/validate-package-metadata.test.mjs \
+            tools/architecture/validate-source-imports/tests/validate-source-imports.test.mjs \
+            tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs \
+            tools/architecture/generate-package-inventory/tests/generate-package-inventory.test.mjs \
+            tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence.test.mjs \
+            tools/architecture/orchestrator/tests/self-evidence.test.mjs
