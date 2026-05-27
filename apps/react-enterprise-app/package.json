@@ -4,6 +4,14 @@
   "private": true,
   "description": "Generic React 19 TypeScript enterprise application shell using generated GraphQL contracts through approved adapters.",
   "type": "module",
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0"
+  },
   "exports": {
     ".": "./src/index.ts"
   },
