@@ -19,7 +19,7 @@ export function findPackageRoot(filePath) {
         const pkg = JSON.parse(fs.readFileSync(candidate, "utf8"));
         if (pkg.name) {
           const deps = pkg.architecture?.relations?.dependsOn;
-          const allowedPlatformDeps = Array.isArray(deps) && deps.length > 0 ? deps : null;
+          const allowedPlatformDeps = Array.isArray(deps) ? deps : null;
           return { packageRoot: dir, packageName: pkg.name, allowedPlatformDeps };
         }
       } catch {
