@@ -256,31 +256,7 @@ Generated-file notice
 
 ## Summary
 
-## Packages by domain
-
-## Packages by lifecycle stage
-
-## Packages by role
-
-## Packages by owner
-
-## Runtime packages
-
-## Test-only packages
-
-## Tooling packages
-
-## External packages
-
-## Deprecated packages
-
-## Validation failures
-
-## Promotion candidates
-
-## Review cadence
-
-## Full package list
+## Packages
 ```
 
 The lifecycle summary JSON report must include:
@@ -299,27 +275,19 @@ packages[] (list of package lifecycle records)
 The lifecycle summary Markdown report must include:
 
 ```text
-# Package lifecycle summary
+# Package lifecycle summary report
 
 Generated-file notice
 
 ## Summary
 
-## Lifecycle stage counts
+## By stage
 
-## Lifecycle class counts
+## By role
 
-## Promotion eligible packages
+## By class
 
-## Maintenance packages
-
-## Deprecated packages
-
-## External packages
-
-## Packages needing review
-
-## Packages with validation failures
+## Packages
 ```
 
 Generated reports must include a generated-file notice.

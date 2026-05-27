@@ -251,6 +251,7 @@ node tools/architecture/orchestrator/src/index.mjs generate-readmes
 node tools/architecture/orchestrator/src/index.mjs generate-inventory
 node tools/architecture/orchestrator/src/index.mjs generate-lifecycle-reports
 node tools/architecture/orchestrator/src/index.mjs validate-evidence
+node tools/architecture/orchestrator/src/index.mjs generate-lifecycle-evidence
 node tools/architecture/orchestrator/src/index.mjs all
 ```
 
