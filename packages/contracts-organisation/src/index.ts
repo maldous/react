@@ -11,12 +11,19 @@ export const OrganisationProfileSchema = z.object({
 });
 export type OrganisationProfile = z.infer<typeof OrganisationProfileSchema>;
 
-export const UpdateOrganisationProfileRequestSchema = z.object({
-  displayName: z
-    .string()
-    .min(1, "Display name is required")
-    .max(100, "Display name must be 100 characters or less"),
-});
+/**
+ * Update request bounds mirror the domain rules enforced by
+ * apps/platform-api `normaliseOrganisationDisplayName`. Keep them in lock-step
+ * so the contract validates exactly what the domain accepts.
+ */
+export const UpdateOrganisationProfileRequestSchema = z
+  .object({
+    displayName: z
+      .string()
+      .min(2, "Display name must be at least 2 characters")
+      .max(120, "Display name must be 120 characters or less"),
+  })
+  .strict();
 export type UpdateOrganisationProfileRequest = z.infer<
   typeof UpdateOrganisationProfileRequestSchema
 >;

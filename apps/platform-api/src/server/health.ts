@@ -1,4 +1,3 @@
-import pg from "pg";
 import {
   createHealthResponse,
   createReadinessResponse,
@@ -7,6 +6,8 @@ import {
   type ReadinessResponse,
   type VersionResponse,
 } from "@platform/api-runtime";
+import { PostgresReadinessAdapter } from "../adapters/postgres-readiness-adapter.ts";
+import { getPostgresReadinessAdapter } from "./dependencies.ts";
 
 export { type HealthResponse, type ReadinessResponse, type VersionResponse };
 
@@ -14,22 +15,18 @@ export function getHealth(): HealthResponse {
   return createHealthResponse();
 }
 
+/**
+ * Readiness probe.
+ *
+ * SQL is owned by the PostgresReadinessAdapter — server/ contains no raw SQL.
+ * `postgresUrl` may be passed in by tests; production uses the shared
+ * composition root in dependencies.ts.
+ */
 export async function getReadiness(postgresUrl?: string): Promise<ReadinessResponse> {
-  const dbUrl =
-    postgresUrl ??
-    process.env["POSTGRES_URL"] ??
-    "postgresql://platform:platformpassword@localhost:5433/platform";
-  let dbStatus: "ok" | "failed" = "failed";
-  const client = new pg.Client(dbUrl);
-  try {
-    await client.connect();
-    await client.query("SELECT 1");
-    dbStatus = "ok";
-  } catch {
-    dbStatus = "failed";
-  } finally {
-    await client.end().catch(() => undefined);
-  }
+  const adapter = postgresUrl
+    ? new PostgresReadinessAdapter(postgresUrl)
+    : getPostgresReadinessAdapter();
+  const dbStatus = await adapter.ping();
   return createReadinessResponse({ database: dbStatus });
 }
 

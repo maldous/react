@@ -4,9 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-A fully governed enterprise React platform. Architecture decisions come first — every structural choice is recorded in an ADR before code is written. The repo is pre-slice: 51 packages, 20 accepted ADRs, all quality gates passing, Docker Compose services running, platform packages implemented. The first feature (ADR-ACT-0008) has not started.
-
-**Do not begin ADR-ACT-0008 unless explicitly instructed.**
+A fully governed enterprise React platform. Architecture decisions come first — every structural choice is recorded in an ADR before code is written. The repo has 25 accepted ADRs, all quality gates passing, Docker Compose services running, and all platform packages implemented. The first vertical slice (ADR-ACT-0008 — authenticated organisation profile) is **Done** in canonical hexagonal architecture.
 
 ---
 
@@ -264,8 +262,13 @@ Package READMEs are generated from `architecture.readme` metadata. Do not edit g
 | 0017      | Define local integration service substrate                              |
 | 0019      | Define React component platform and frontend integration stack          |
 | 0020      | Define observability, diagnostics, and runtime introspection primitives |
+| 0021      | Define identity, tenancy, roles, and permissions model                  |
+| 0022      | Define authentication, session, and SSO integration boundary            |
+| 0023      | Define declarative infrastructure provisioning model                    |
+| 0024      | Define slice readiness and dependency gate model                        |
+| 0025      | Define Playwright end-to-end testing strategy                           |
 
-ADR-0018 is reserved. Next ADR: **0021**. Next ACTION-REGISTER entry: **ADR-ACT-0105**.
+ADR-0018 is reserved. Next ADR: **0026**. Next ACTION-REGISTER entry: **ADR-ACT-0119**.
 
 ---
 

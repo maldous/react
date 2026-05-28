@@ -1,11 +1,18 @@
 import type { OrganisationProfile } from "@platform/contracts-organisation";
 import { NotFoundError, ValidationError } from "@platform/platform-errors";
-import { createLogger } from "@platform/platform-logging";
-import { createTracer, withSpan } from "@platform/platform-observability";
 import type { OrganisationRepository } from "../ports/organisation-repository.ts";
 
-const logger = createLogger({ name: "organisation-usecase" });
-const tracer = createTracer("@platform/platform-api", "0.1.0");
+/**
+ * Use cases in the canonical first-slice pattern (ADR-ACT-0008) are pure:
+ *  - depend only on injected ports (no module-level singletons)
+ *  - never read environment variables
+ *  - never construct adapters
+ *  - never resolve sessions
+ *  - never know SQL
+ *
+ * Logging and tracing are owned by the API pipeline / handler layer so the
+ * use case stays testable as plain TypeScript with a fake repository.
+ */
 
 const CONTROL_CHAR_RE = /[\x00-\x1F\x7F]/;
 
@@ -26,41 +33,29 @@ export function normaliseOrganisationDisplayName(value: string): string {
   return trimmed;
 }
 
+export interface OrganisationUseCaseDeps {
+  organisations: OrganisationRepository;
+}
+
 export async function getOrganisationProfile(
   input: { organisationId: string },
-  deps: { organisations: OrganisationRepository }
+  deps: OrganisationUseCaseDeps
 ): Promise<OrganisationProfile> {
-  const { organisationId } = input;
-  return withSpan(tracer, "organisation.profile.get", async (span) => {
-    span.setAttribute("organisationId", organisationId);
-    const opLogger = logger.child({ organisationId, operation: "organisation.profile.get" });
-    opLogger.info("fetching organisation profile");
-    const profile = await deps.organisations.getById(organisationId);
-    if (!profile) {
-      opLogger.warn("organisation not found");
-      throw new NotFoundError("Organisation not found");
-    }
-    opLogger.info("organisation profile fetched");
-    return profile;
-  });
+  const profile = await deps.organisations.getById(input.organisationId);
+  if (!profile) {
+    throw new NotFoundError("Organisation not found");
+  }
+  return profile;
 }
 
 export async function updateOrganisationDisplayName(
   input: { organisationId: string; displayName: string },
-  deps: { organisations: OrganisationRepository }
+  deps: OrganisationUseCaseDeps
 ): Promise<OrganisationProfile> {
-  const { organisationId } = input;
   const displayName = normaliseOrganisationDisplayName(input.displayName);
-  return withSpan(tracer, "organisation.profile.update", async (span) => {
-    span.setAttribute("organisationId", organisationId);
-    const opLogger = logger.child({ organisationId, operation: "organisation.profile.update" });
-    opLogger.info("updating organisation display name");
-    const profile = await deps.organisations.updateDisplayName(organisationId, displayName);
-    if (!profile) {
-      opLogger.warn("organisation not found during update");
-      throw new NotFoundError("Organisation not found");
-    }
-    opLogger.info("organisation display name updated");
-    return profile;
-  });
+  const profile = await deps.organisations.updateDisplayName(input.organisationId, displayName);
+  if (!profile) {
+    throw new NotFoundError("Organisation not found");
+  }
+  return profile;
 }

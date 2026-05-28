@@ -7,6 +7,7 @@
   "status": "done",
   "hardened": true,
   "hardenedVia": "ADR-ACT-0118",
+  "finalAuditPass": "2026-05-28",
   "adrRef": "ADR-0024",
   "sliceManifest": "docs/slices/ADR-ACT-0008.json",
   "summary": "First vertical slice: React protected route (organisation.read) → useSession → TanStack Query → contract client → platform-api permission guard → use case (DI, no pg) → repository port → Postgres adapter → structured logs/traces. Hardened to canonical hexagonal architecture via ADR-ACT-0118.",
@@ -27,6 +28,13 @@
     "Operation name was raw path string — explicit operationName field on Route",
     "No domain validation for displayName — normaliseOrganisationDisplayName() trims, validates length/chars"
   ],
+  "finalAuditHardening": [
+    "Use case held module-level createLogger/createTracer globals — removed; use case is now purely repo orchestration + business validation. Logging/tracing owned by the pipeline layer.",
+    "Both handlers duplicated POSTGRES_URL + PostgresOrganisationRepository wiring — added apps/platform-api/src/server/dependencies.ts as a minimal composition root (getPostgresUrl, getOrganisationRepository, createOrganisationDependencies).",
+    "Adapter opened a fresh pg.Client per method call — adapter now owns a shared pg.Pool (max=10) constructed once per process.",
+    "apps/platform-api/src/server/health.ts contained raw SELECT 1 — extracted to adapters/postgres-readiness-adapter.ts (PostgresReadinessAdapter.ping); server/ now contains zero raw SQL.",
+    "contracts-organisation UpdateOrganisationProfileRequestSchema bounds (min 1 / max 100) disagreed with domain rules (min 2 / max 120) — aligned to min 2 / max 120 and made .strict() so unknown fields (slug, id, tenantId) are rejected at the contract boundary with 400 instead of being silently dropped."
+  ],
   "packages": [
     {
       "name": "@platform/contracts-organisation",
@@ -39,6 +47,8 @@
     "contract": "packages/contracts-organisation/src/index.ts",
     "repositoryPort": "apps/platform-api/src/ports/organisation-repository.ts",
     "postgresAdapter": "apps/platform-api/src/adapters/postgres-organisation-repository.ts",
+    "postgresReadinessAdapter": "apps/platform-api/src/adapters/postgres-readiness-adapter.ts",
+    "compositionRoot": "apps/platform-api/src/server/dependencies.ts",
     "routeList": "apps/platform-api/src/server/routes.ts",
     "usecase": "apps/platform-api/src/usecases/organisation.ts",
     "routeHandler": "apps/platform-api/src/server/organisation.ts",
@@ -84,13 +94,18 @@
     "noPgInUsecases": true,
     "noRawSqlInServerOrUsecases": true,
     "noServerRuntimeInSpa": true,
+    "contractsOrganisationZeroPlatformDeps": true,
     "validateSourceImportsStrict": true
   },
   "constraints": [
     "React app does not import pg, platform-api, or server-side packages",
     "contracts-organisation has zero @platform/* dependencies",
     "Fixture session used — no real Keycloak (ADR-ACT-0110 remains Open)",
-    "Use case has zero pg imports — all SQL owned by PostgresOrganisationRepository adapter"
+    "Use case has zero pg imports — all SQL owned by PostgresOrganisationRepository adapter",
+    "Use case has zero module-level globals — logger/tracer not constructed inside usecases/organisation.ts",
+    "server/ contains zero raw SQL — readiness probe owned by PostgresReadinessAdapter",
+    "Contract bounds and domain validation rules are intentionally identical (min 2 / max 120)",
+    "Update request schema is .strict() — slug/id/tenantId in body are rejected with 400"
   ],
   "scanTimestamp": "2026-05-28T12:00:00.000Z"
 }

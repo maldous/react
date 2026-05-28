@@ -1,7 +1,7 @@
 # Evidence: ADR-ACT-0008 — Authenticated Organisation Profile Slice
 
 **Date:** 2026-05-28
-**Status:** Done (hardened via ADR-ACT-0118)
+**Status:** Done (hardened via ADR-ACT-0118; final audit pass 2026-05-28)
 **Action:** ADR-ACT-0008
 **ADR Ref:** ADR-0024
 
@@ -35,6 +35,16 @@ via ADR-ACT-0118 before treating it as the canonical pattern for future slices.
 | Operation name was raw path string | Explicit `operationName` field on `Route` |
 | No domain validation for displayName | `normaliseOrganisationDisplayName()` trims, validates length/chars |
 
+## Final audit hardening (2026-05-28)
+
+| Shortcut | Fixed |
+| -------- | ----- |
+| Use case held module-level `createLogger`/`createTracer` globals | Use case is now pure: only repo orchestration + business validation; logging/tracing owned by pipeline layer |
+| Both handlers duplicated `POSTGRES_URL` + `new PostgresOrganisationRepository(...)` wiring | New `apps/platform-api/src/server/dependencies.ts` centralises `getPostgresUrl()`, `getOrganisationRepository()`, `createOrganisationDependencies()` |
+| Adapter opened a fresh `pg.Client` per call | Adapter now owns a shared `pg.Pool` (max 10) constructed once per process |
+| `apps/platform-api/src/server/health.ts` contained raw `SELECT 1` | Extracted to `adapters/postgres-readiness-adapter.ts` (`PostgresReadinessAdapter.ping()`); `server/` contains zero raw SQL |
+| Contract `min(1).max(100)` disagreed with domain `min(2).max(120)` | `UpdateOrganisationProfileRequestSchema` aligned to `min(2).max(120)`, made `.strict()` so unknown fields (slug, id, tenantId) are rejected at the contract boundary with 400 instead of silently dropped |
+
 ## New package
 
 | Package | Path | Lifecycle |
@@ -52,6 +62,13 @@ via ADR-ACT-0118 before treating it as the canonical pattern for future slices.
 | `apps/platform-api/tests/unit/organisation-usecase.test.ts` | Use case unit tests with fake repo (11 tests) |
 | `apps/platform-api/tests/substrate/postgres-organisation-repository.test.ts` | Adapter integration tests (7 tests) |
 
+## New files (final audit hardening)
+
+| File | Purpose |
+| ---- | ------- |
+| `apps/platform-api/src/server/dependencies.ts` | Composition root: POSTGRES_URL + shared adapter singletons |
+| `apps/platform-api/src/adapters/postgres-readiness-adapter.ts` | Owns readiness `SELECT 1` SQL |
+
 ## Fixture roles
 
 | Role | GET | PATCH | Semantics |
@@ -64,8 +81,9 @@ via ADR-ACT-0118 before treating it as the canonical pattern for future slices.
 ## Boundary checks passed
 
 - No `pg` import in usecases, React SPA, UI, or features ✓
-- No raw SQL in server handlers or usecases ✓
+- No raw SQL in `apps/platform-api/src/server` or `apps/platform-api/src/usecases` (readiness probe lives in `adapters/postgres-readiness-adapter.ts`) ✓
 - No server runtime imports in React SPA/UI/features ✓
+- `contracts-organisation` has zero `@platform/*` dependencies ✓
 - `validate-source-imports --strict`: 0 violations ✓
 
 ## Test counts

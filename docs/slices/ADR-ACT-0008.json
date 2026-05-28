@@ -19,5 +19,5 @@
   "forbiddenDependencies": ["live-keycloak"],
   "status": "done",
   "adrRef": "ADR-0024",
-  "notes": "Canonical architecture achieved via ADR-ACT-0118. Use case uses DI repository port (no pg import). PostgresOrganisationRepository adapter owns SQL. Production routes exported from server/routes.ts (shared by http.ts and tests). Domain validation in normaliseOrganisationDisplayName. no-membership fixture replaces no-permissions. Real Keycloak login (ADR-ACT-0110) is NOT required for this slice."
+  "notes": "Canonical hexagonal first slice. Final hardening: pure use case (no module-level logger/tracer; pure repo orchestration + business validation), apps/platform-api/src/server/dependencies.ts composition helper centralises POSTGRES_URL + repository wiring, PostgresOrganisationRepository backed by shared pg.Pool, PostgresReadinessAdapter owns the readiness SELECT 1 so server/ contains zero raw SQL, contracts-organisation request schema is .strict() with bounds (min 2 / max 120) aligned to normaliseOrganisationDisplayName domain rules. Real Keycloak login (ADR-ACT-0110) remains blocked."
 }

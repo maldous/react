@@ -249,23 +249,29 @@ describe("organisation profile: PATCH /api/organisation/profile", () => {
     assert.equal(((await res.json()) as { code: string }).code, "VALIDATION_ERROR");
   });
 
-  it("extra fields in body are ignored (slug and id unchanged)", async () => {
+  it("extra fields in body are rejected (strict schema): 400 — slug/id/tenantId cannot be sent", async () => {
     setFixtureRole("tenant-admin");
     const res = await fetch(`${url}/api/organisation/profile`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ displayName: "Slice Test Org", slug: "should-be-ignored", id: "bad" }),
+      body: JSON.stringify({
+        displayName: "Should Not Apply",
+        slug: "hostile",
+        id: "bad",
+        tenantId: "hostile-tenant",
+      }),
     });
-    assert.equal(res.status, 200);
-    const body = (await res.json()) as { displayName: string; slug: string; id: string };
-    assert.equal(body.displayName, "Slice Test Org");
-    assert.equal(body.slug, "fixture-org");
-    assert.equal(body.id, "00000000-0000-0000-0000-000000000001");
-    // Restore
-    await fetch(`${url}/api/organisation/profile`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ displayName: "Fixture Organisation" }),
-    });
+    assert.equal(res.status, 400);
+    const body = (await res.json()) as { code: string };
+    assert.equal(body.code, "VALIDATION_ERROR");
+
+    // Confirm the underlying record is untouched.
+    setFixtureRole("tenant-admin");
+    const verify = await fetch(`${url}/api/organisation/profile`);
+    assert.equal(verify.status, 200);
+    const profile = (await verify.json()) as { id: string; slug: string; displayName: string };
+    assert.equal(profile.id, "00000000-0000-0000-0000-000000000001");
+    assert.equal(profile.slug, "fixture-org");
+    assert.notEqual(profile.displayName, "Should Not Apply");
   });
 });
