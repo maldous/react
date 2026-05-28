@@ -105,6 +105,7 @@ production
 @platform/access-control
 @platform/adapters-graphql
 @platform/contracts-auth
+@platform/contracts-organisation
 @platform/platform-errors
 ```
 

@@ -106,6 +106,7 @@ production
 @platform/platform-runtime-context
 @platform/platform-errors
 @platform/contracts-auth
+@platform/contracts-organisation
 @platform/domain-identity
 @platform/session-runtime
 ```
@@ -117,6 +118,7 @@ healthz
 readyz
 version
 session-fixture
+organisation-profile
 ```
 
 ### Consumes APIs

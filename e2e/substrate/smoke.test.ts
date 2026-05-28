@@ -66,7 +66,7 @@ test.describe("React SPA substrate", () => {
     await expect(page.getByTestId("protected-content")).toBeVisible({ timeout: 10000 });
   });
 
-  test("unauthenticated: 401 session redirects to /auth/login", async ({ page }) => {
+  test("unauthenticated: 401 session redirects to /auth/login (e2e-harness)", async ({ page }) => {
     // Intercept /api/session at the browser level to simulate unauthenticated state.
     // Must be set before navigation so useSession() fetch is captured.
     await page.route("**/api/session", (route) =>
@@ -79,5 +79,65 @@ test.describe("React SPA substrate", () => {
     await page.goto("/e2e-harness");
     // ProtectedRoute detects unauthenticated (isAuthenticated=false) and redirects
     await expect(page).toHaveURL(/\/auth\/login/, { timeout: 10000 });
+  });
+});
+
+test.describe("organisation profile slice", () => {
+  test("tenant-admin can view /organisation/profile", async ({ page }) => {
+    await page.goto("/organisation/profile");
+    await expect(page.getByTestId("organisation-profile")).toBeVisible({ timeout: 10000 });
+    await expect(page.getByTestId("display-name-input")).toBeVisible();
+    await expect(page.getByTestId("save-button")).toBeVisible();
+  });
+
+  test("tenant-admin can update display name", async ({ page }) => {
+    await page.goto("/organisation/profile");
+    const input = page.getByTestId("display-name-input");
+    await expect(input).toBeVisible({ timeout: 10000 });
+    await input.fill("E2E Updated Name");
+    await page.getByTestId("save-button").click();
+    await expect(page.getByTestId("success-message")).toBeVisible({ timeout: 5000 });
+    // Restore original name
+    await input.fill("Fixture Organisation");
+    await page.getByTestId("save-button").click();
+    await expect(page.getByTestId("success-message")).toBeVisible({ timeout: 5000 });
+  });
+
+  test("viewer sees read-only profile", async ({ page }) => {
+    await page.route("**/api/session", async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({
+          userId: "00000000-0000-0000-0000-000000000003",
+          tenantId: "00000000-0000-0000-0000-000000000001",
+          organisationId: "00000000-0000-0000-0000-000000000001",
+          roles: ["viewer"],
+          permissions: [
+            "organisation.read",
+            "member.read",
+            "profile.read_self",
+            "profile.update_self",
+          ],
+          displayName: "Fixture Viewer",
+        }),
+      });
+    });
+    await page.goto("/organisation/profile");
+    await expect(page.getByTestId("profile-read-only")).toBeVisible({ timeout: 10000 });
+    await expect(page.getByTestId("display-name-value")).toBeVisible();
+    await expect(page.getByTestId("profile-edit-form")).not.toBeVisible();
+  });
+
+  test("unauthenticated redirects to /auth/login", async ({ page }) => {
+    await page.route("**/api/session", (route) =>
+      route.fulfill({
+        status: 401,
+        contentType: "application/json",
+        body: JSON.stringify({ code: "UNAUTHENTICATED" }),
+      })
+    );
+    await page.goto("/organisation/profile");
+    await expect(page).toHaveURL(/\/auth\/login/, { timeout: 5000 });
   });
 });

@@ -16,6 +16,7 @@ import process from "node:process";
 import { createRouter } from "./pipeline.ts";
 import { getHealth, getReadiness, getVersion } from "./health.ts";
 import { getFixtureSession } from "./session.ts";
+import { handleGetOrganisationProfile, handlePatchOrganisationProfile } from "./organisation.ts";
 
 const PORT = Number(process.env["PLATFORM_API_PORT"] ?? 3001);
 
@@ -46,6 +47,20 @@ const router = createRouter([
       if (actor) res.json(200, actor);
       else res.json(401, { code: "UNAUTHENTICATED", message: "No session" });
     },
+  },
+  {
+    method: "GET",
+    path: "/api/organisation/profile",
+    requiresAuth: true,
+    requiredPermission: "organisation.read",
+    handler: handleGetOrganisationProfile,
+  },
+  {
+    method: "PATCH",
+    path: "/api/organisation/profile",
+    requiresAuth: true,
+    requiredPermission: "organisation.update",
+    handler: handlePatchOrganisationProfile,
   },
 ]);
 

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "evidenceType": "vertical-slice",
+  "actionId": "ADR-ACT-0008",
+  "name": "Authenticated organisation profile slice",
+  "date": "2026-05-28",
+  "status": "done",
+  "adrRef": "ADR-0024",
+  "sliceManifest": "docs/slices/ADR-ACT-0008.json",
+  "summary": "First vertical slice: React protected route (organisation.read) → useSession → TanStack Query → contract client → platform-api permission guard → use case → Postgres → structured logs/traces.",
+  "packages": [
+    {
+      "name": "@platform/contracts-organisation",
+      "path": "packages/contracts-organisation",
+      "lifecycle": "experimental.contract",
+      "addedBy": "ADR-ACT-0008"
+    }
+  ],
+  "files": {
+    "contract": "packages/contracts-organisation/src/index.ts",
+    "usecase": "apps/platform-api/src/usecases/organisation.ts",
+    "routeHandler": "apps/platform-api/src/server/organisation.ts",
+    "httpWiring": "apps/platform-api/src/server/http.ts",
+    "sessionFixture": "apps/platform-api/src/server/session.ts",
+    "frontendClient": "apps/react-enterprise-app/src/features/organisation/organisation-client.ts",
+    "queryHook": "apps/react-enterprise-app/src/features/organisation/use-organisation-profile.ts",
+    "mutationHook": "apps/react-enterprise-app/src/features/organisation/use-update-organisation-profile.ts",
+    "pageComponent": "apps/react-enterprise-app/src/features/organisation/OrganisationProfilePage.tsx",
+    "route": "apps/react-enterprise-app/src/routes/organisation/profile.tsx",
+    "routeTree": "apps/react-enterprise-app/src/routeTree.gen.ts"
+  },
+  "tests": {
+    "platformApiTests": "apps/platform-api/tests/substrate/organisation-profile.test.ts",
+    "frontendTests": "apps/react-enterprise-app/src/tests/organisation/organisation-profile.test.tsx",
+    "e2eTests": "e2e/substrate/smoke.test.ts",
+    "composeSmokeTests": "tests/integration/compose-smoke.test.mjs"
+  },
+  "fixtureRolesValidated": [
+    "tenant-admin (GET 200, PATCH 200)",
+    "viewer (GET 200, PATCH 403)",
+    "no-permissions (GET 403)",
+    "unauthenticated (GET 401, PATCH 401)"
+  ],
+  "permissionsValidated": [
+    "organisation.read (GET guard)",
+    "organisation.update (PATCH guard)"
+  ],
+  "constraints": [
+    "React app does not import pg, platform-api, or server-side packages",
+    "contracts-organisation has zero @platform/* dependencies",
+    "Fixture session used — no real Keycloak (ADR-ACT-0110 remains Open)"
+  ]
+}

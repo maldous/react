@@ -1,7 +1,7 @@
 import { type SessionActor } from "@platform/contracts-auth";
 import { FIXTURE } from "../db/seed.ts";
 
-export type FixtureRole = "tenant-admin" | "viewer" | "unauthenticated";
+export type FixtureRole = "tenant-admin" | "viewer" | "no-permissions" | "unauthenticated";
 
 const ROLE_PERMISSIONS: Record<"tenant-admin" | "viewer", string[]> = {
   "tenant-admin": [
@@ -34,6 +34,16 @@ export function createFixtureSessionActor(role: "tenant-admin" | "viewer"): Sess
 export function getFixtureSession(): SessionActor | null {
   const role = process.env["LOCAL_FIXTURE_SESSION"] as FixtureRole | undefined;
   if (!role || role === "unauthenticated") return null;
+  if (role === "no-permissions") {
+    return {
+      userId: FIXTURE.FORBIDDEN_ID,
+      tenantId: FIXTURE.ORG_ID,
+      organisationId: FIXTURE.ORG_ID,
+      roles: [],
+      permissions: [],
+      displayName: "Forbidden Fixture",
+    };
+  }
   if (role !== "tenant-admin" && role !== "viewer") return null;
   return createFixtureSessionActor(role);
 }

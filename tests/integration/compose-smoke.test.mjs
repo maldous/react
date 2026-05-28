@@ -25,6 +25,10 @@ import { runMigrations, isMigrated } from "../../apps/platform-api/src/db/migrat
 import { seedFixtures, FIXTURE } from "../../apps/platform-api/src/db/seed.ts";
 import { resetDatabase } from "../../apps/platform-api/src/db/reset.ts";
 import {
+  getOrganisationProfile,
+  updateOrganisationDisplayName,
+} from "../../apps/platform-api/src/usecases/organisation.ts";
+import {
   S3Client,
   CreateBucketCommand,
   PutObjectCommand,
@@ -375,6 +379,32 @@ test("mailpit: nodemailer SMTP send and retrieve via API", async () => {
 test("otel-collector: container is running", () => {
   const status = dockerInspect("react-platform-otel-collector-1", "{{.State.Status}}");
   assert.equal(status, "running");
+});
+
+// ---------------------------------------------------------------------------
+// Organisation use cases (getOrganisationProfile, updateOrganisationDisplayName)
+// ---------------------------------------------------------------------------
+
+test("organisation: getOrganisationProfile returns fixture org", async () => {
+  await resetDatabase();
+  await runMigrations();
+  await seedFixtures();
+  const profile = await getOrganisationProfile(FIXTURE.ORG_ID);
+  assert.equal(profile.slug, FIXTURE.ORG_SLUG);
+  assert.equal(profile.id, FIXTURE.ORG_ID);
+  assert.equal(typeof profile.displayName, "string");
+  assert.ok(profile.displayName.length > 0);
+});
+
+test("organisation: updateOrganisationDisplayName updates and returns updated record", async () => {
+  await resetDatabase();
+  await runMigrations();
+  await seedFixtures();
+  const updated = await updateOrganisationDisplayName(FIXTURE.ORG_ID, "Test Display Name");
+  assert.equal(updated.displayName, "Test Display Name");
+  assert.equal(updated.id, FIXTURE.ORG_ID);
+  // Restore original display name
+  await updateOrganisationDisplayName(FIXTURE.ORG_ID, "Fixture Organisation");
 });
 
 test("otel-collector: OTLP/HTTP POST /v1/traces returns 200", async () => {

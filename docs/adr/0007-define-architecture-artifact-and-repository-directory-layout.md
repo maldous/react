@@ -503,6 +503,7 @@ Canonical source locations:
 | Identity and access control baseline evidence         | `docs/evidence/identity/`                            | Committed governance evidence                                                 |
 | Infrastructure provisioning baseline evidence         | `docs/evidence/infrastructure/`                      | Committed governance evidence                                                 |
 | E2E test substrate evidence                           | `docs/evidence/e2e/`                                 | Committed governance evidence                                                 |
+| Vertical slice delivery evidence                      | `docs/evidence/vertical-slices/`                     | Committed governance evidence for completed vertical slices                   |
 | Slice readiness manifests                             | `docs/slices/`                                       | Slice dependency declarations; governed by ADR-0024                           |
 | Playwright E2E configuration                          | `playwright.config.ts`                               | Committed E2E configuration; gitignores playwright-report/ and e2e-results/   |
 | Playwright E2E tests                                  | `e2e/`                                               | Committed E2E test source; artifacts (traces/videos) gitignored               |
@@ -585,6 +586,9 @@ docs/evidence/infrastructure/
 
 docs/evidence/e2e/
   End-to-end test substrate evidence: Playwright config, fixture session mode, E2E test summary, known deferrals.
+
+docs/evidence/vertical-slices/
+  Vertical slice delivery evidence: completed slice summaries, packages created, test counts, fixture roles validated, and constraint compliance.
 ```
 
 Reports may reference evidence.

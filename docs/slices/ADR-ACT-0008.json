@@ -17,7 +17,7 @@
   "blockedBy": [],
   "allowedFixtureModes": ["fixture-session"],
   "forbiddenDependencies": ["live-keycloak"],
-  "status": "not-started",
+  "status": "done",
   "adrRef": "ADR-0024",
   "notes": "Real Keycloak login (ADR-ACT-0110) is NOT required for this slice. Use fixture SessionActor via LOCAL_FIXTURE_SESSION env var. Real SSO login is blocked until ADR-ACT-0110 is Done."
 }

@@ -20,6 +20,10 @@ export default defineConfig({
         __dirname,
         "../../packages/platform-errors/src/index.ts"
       ),
+      "@platform/contracts-organisation": path.resolve(
+        __dirname,
+        "../../packages/contracts-organisation/src/index.ts"
+      ),
     },
   },
   server: {

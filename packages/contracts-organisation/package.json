@@ -1,0 +1,103 @@
+{
+  "name": "@platform/contracts-organisation",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Organisation profile contract package: OrganisationProfile schema, update request/response shapes.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "api",
+      "name": "contracts-organisation",
+      "system": "enterprise-react-platform",
+      "domain": "experience",
+      "boundedContext": "app-shell",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "experimental",
+      "role": "contract",
+      "class": "experimental.contract",
+      "catalogLifecycle": "experimental",
+      "visibility": "internal",
+      "supportLevel": "experimental",
+      "reviewCadence": "on-change"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": false
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "contracts-organisation",
+      "serviceNamespace": "enterprise-react-platform",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application",
+        "platform",
+        "adapter"
+      ],
+      "forbiddenConsumers": [
+        "domain",
+        "ui"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "organisation-profile",
+        "update-organisation-profile-request"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "api",
+      "stage": "experimental",
+      "role": "contract",
+      "layer": "contract"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Organisation profile contract package: OrganisationProfile schema, update request/response shapes.",
+      "responsibilities": [
+        "Own OrganisationProfile Zod schema and TypeScript type",
+        "Define UpdateOrganisationProfileRequest schema with validation constraints",
+        "Export GetOrganisationProfileResponse and UpdateOrganisationProfileResponse type aliases"
+      ],
+      "nonResponsibilities": [
+        "Does not implement organisation data access or persistence",
+        "Does not import React or any framework-specific packages",
+        "Does not own session or authentication logic",
+        "Does not import @platform/* packages"
+      ],
+      "usage": [
+        "Imported by application and platform packages that need organisation contract types",
+        "Used in API boundaries to validate and type organisation profile data"
+      ],
+      "operationalNotes": [
+        "All schemas use Zod for runtime validation",
+        "Zero @platform/* dependencies — this is a pure contract package"
+      ]
+    }
+  }
+}
