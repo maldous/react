@@ -6,7 +6,7 @@
 import { describe, it, before, after } from "node:test";
 import assert from "node:assert/strict";
 import http from "node:http";
-import { createRouter, type Route } from "../../src/server/pipeline.ts";
+import { createRouter, type Route, type PipelineRequest } from "../../src/server/pipeline.ts";
 
 // Helper: create a test server with given routes, return {server, url}
 function makeServer(routes: Route[]): Promise<{ server: http.Server; url: string }> {
@@ -293,6 +293,216 @@ describe("api pipeline: X-Request-Id header", () => {
       requestId,
       /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i,
       "X-Request-Id should be a UUID"
+    );
+  });
+});
+
+// ── 9. Authenticated route receives actor in pipelineReq ─────────────────
+describe("api pipeline: authenticated route receives actor", () => {
+  let server: http.Server;
+  let url: string;
+  let savedEnv: string | undefined;
+  let captured: PipelineRequest | undefined;
+
+  before(async () => {
+    savedEnv = process.env["LOCAL_FIXTURE_SESSION"];
+    process.env["LOCAL_FIXTURE_SESSION"] = "tenant-admin";
+
+    const s = await makeServer([
+      {
+        method: "GET",
+        path: "/actor-check",
+        requiresAuth: true,
+        handler: async (req, res) => {
+          captured = req;
+          res.json(200, { ok: true });
+        },
+      },
+    ]);
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    if (savedEnv !== undefined) {
+      process.env["LOCAL_FIXTURE_SESSION"] = savedEnv;
+    } else {
+      delete process.env["LOCAL_FIXTURE_SESSION"];
+    }
+    await closeServer(server);
+  });
+
+  it("authenticated route receives actor in pipelineReq", async () => {
+    const res = await fetch(`${url}/actor-check`);
+    assert.equal(res.status, 200);
+    assert.ok(captured, "handler should have been called");
+    assert.ok(captured.actor !== null, "actor should not be null for authenticated route");
+    assert.ok(captured.actor!.userId, "actor should have userId");
+  });
+});
+
+// ── 10. Authenticated route receives tenantId and permissions in context ──
+describe("api pipeline: actor context propagated", () => {
+  let server: http.Server;
+  let url: string;
+  let savedEnv: string | undefined;
+  let captured: PipelineRequest | undefined;
+
+  before(async () => {
+    savedEnv = process.env["LOCAL_FIXTURE_SESSION"];
+    process.env["LOCAL_FIXTURE_SESSION"] = "tenant-admin";
+
+    const s = await makeServer([
+      {
+        method: "GET",
+        path: "/context-check",
+        requiresAuth: true,
+        handler: async (req, res) => {
+          captured = req;
+          res.json(200, { ok: true });
+        },
+      },
+    ]);
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    if (savedEnv !== undefined) {
+      process.env["LOCAL_FIXTURE_SESSION"] = savedEnv;
+    } else {
+      delete process.env["LOCAL_FIXTURE_SESSION"];
+    }
+    await closeServer(server);
+  });
+
+  it("authenticated route receives tenantId in context and permissions on actor", async () => {
+    const res = await fetch(`${url}/context-check`);
+    assert.equal(res.status, 200);
+    assert.ok(captured, "handler should have been called");
+    assert.ok(captured.context.tenantId, "context should have tenantId");
+    assert.ok(
+      Array.isArray(captured.actor!.permissions) && captured.actor!.permissions.length > 0,
+      "actor should have non-empty permissions"
+    );
+  });
+});
+
+// ── 11. Permission guard: handler can read permission from req.actor ──────
+describe("api pipeline: handler reads permission from req.actor", () => {
+  let server: http.Server;
+  let url: string;
+  let savedEnv: string | undefined;
+  let capturedHasPermission = false;
+
+  before(async () => {
+    savedEnv = process.env["LOCAL_FIXTURE_SESSION"];
+    process.env["LOCAL_FIXTURE_SESSION"] = "tenant-admin";
+
+    const s = await makeServer([
+      {
+        method: "GET",
+        path: "/perm-guard",
+        requiresAuth: true,
+        requiredPermission: "organisation.read",
+        handler: async (req, res) => {
+          // Handler can verify the permission directly from req.actor without re-calling getFixtureSession()
+          capturedHasPermission =
+            req.actor !== null && req.actor.permissions.includes("organisation.read");
+          res.json(200, { ok: true });
+        },
+      },
+    ]);
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    if (savedEnv !== undefined) {
+      process.env["LOCAL_FIXTURE_SESSION"] = savedEnv;
+    } else {
+      delete process.env["LOCAL_FIXTURE_SESSION"];
+    }
+    await closeServer(server);
+  });
+
+  it("permission guard does not require handler to call getFixtureSession again", async () => {
+    const res = await fetch(`${url}/perm-guard`);
+    assert.equal(res.status, 200);
+    assert.ok(capturedHasPermission, "actor in req has the required permission directly");
+  });
+});
+
+// ── 12. 405 response includes X-Request-Id header ────────────────────────
+describe("api pipeline: 405 includes X-Request-Id", () => {
+  let server: http.Server;
+  let url: string;
+
+  before(async () => {
+    const s = await makeServer([
+      {
+        method: "GET",
+        path: "/get-only-405",
+        handler: async (_req, res) => res.json(200, { ok: true }),
+      },
+    ]);
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    await closeServer(server);
+  });
+
+  it("405 response includes X-Request-Id header", async () => {
+    const res = await fetch(`${url}/get-only-405`, { method: "POST" });
+    assert.equal(res.status, 405);
+    const requestId = res.headers.get("x-request-id");
+    assert.ok(requestId, "X-Request-Id header should be present on 405 response");
+    assert.match(
+      requestId,
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i,
+      "X-Request-Id should be a UUID"
+    );
+  });
+});
+
+// ── 13. 500 response includes X-Request-Id and safe body only ────────────
+describe("api pipeline: 500 with UnexpectedError does not leak internalDetails", () => {
+  let server: http.Server;
+  let url: string;
+
+  before(async () => {
+    const s = await makeServer([
+      {
+        method: "GET",
+        path: "/unexpected-error",
+        handler: async () => {
+          const { UnexpectedError } = await import("@platform/platform-errors");
+          throw new UnexpectedError("Something went wrong", {
+            internalDetails: { secret: "do-not-expose-this" },
+          });
+        },
+      },
+    ]);
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    await closeServer(server);
+  });
+
+  it("500 response includes X-Request-Id and internalDetails is not in body", async () => {
+    const res = await fetch(`${url}/unexpected-error`);
+    assert.equal(res.status, 500);
+    const requestId = res.headers.get("x-request-id");
+    assert.ok(requestId, "X-Request-Id header should be present on 500 response");
+    const body = await res.json();
+    assert.equal(body.code, "UNEXPECTED_ERROR");
+    assert.ok(
+      !JSON.stringify(body).includes("do-not-expose-this"),
+      "internalDetails must not be leaked in 500 response body"
     );
   });
 });

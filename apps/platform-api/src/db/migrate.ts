@@ -47,8 +47,17 @@ export async function runMigrations(): Promise<{ applied: string[]; skipped: str
       );
 
       if (existing.rows.length > 0) {
-        skipped.push(name);
-        continue;
+        const storedChecksum = existing.rows[0].checksum;
+        if (storedChecksum === checksum) {
+          skipped.push(name);
+          continue;
+        } else {
+          throw new Error(
+            `Migration checksum mismatch for ${name}: ` +
+              `stored=${storedChecksum}, computed=${checksum}. ` +
+              `Do not modify committed migration files.`
+          );
+        }
       }
 
       // Apply in a transaction

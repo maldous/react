@@ -205,6 +205,32 @@ test("database: seed requires migrated schema", async () => {
   );
 });
 
+test("database: migration fails if committed file has changed checksum", async () => {
+  await resetDatabase();
+  await runMigrations();
+
+  // Corrupt the stored checksum for the first migration file
+  await pgClient.query(
+    "UPDATE schema_migrations SET checksum = 'different_value' WHERE name = '001-identity-schema.sql'"
+  );
+
+  // Re-running migrations must now throw due to the mismatch
+  await assert.rejects(
+    () => runMigrations(),
+    (err) => {
+      assert.ok(
+        err.message.includes("checksum mismatch"),
+        `Expected 'checksum mismatch' in: ${err.message}`
+      );
+      return true;
+    },
+    "migration should fail on checksum mismatch"
+  );
+
+  // Leave schema clean for subsequent tests
+  await resetDatabase();
+});
+
 // ---------------------------------------------------------------------------
 // Redis (redis npm client → localhost:6379)
 // ---------------------------------------------------------------------------

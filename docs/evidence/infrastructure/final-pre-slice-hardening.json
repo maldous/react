@@ -1,0 +1,92 @@
+{
+  "evidenceType": "infrastructure-baseline",
+  "date": "2026-05-28",
+  "adrRefs": ["ADR-ACT-0117", "ADR-ACT-0116", "ADR-0011", "ADR-0012", "ADR-0013", "ADR-0024"],
+  "component": "final-pre-slice-hardening",
+  "capabilities": [
+    "pipeline-actor-propagation",
+    "pipeline-runtime-context-propagation",
+    "request-id-in-all-error-responses",
+    "migration-checksum-mismatch-enforcement",
+    "slice-readiness-action-register-governance",
+    "stale-done-blocker-detection"
+  ],
+  "changes": {
+    "pipelineTs": {
+      "file": "apps/platform-api/src/server/pipeline.ts",
+      "added": [
+        "PipelineRequest.actor: SessionActor | null",
+        "PipelineRequest.context: RuntimeContext",
+        "createRequestContext() called after auth resolution",
+        "enrichedLogger enriched with actorId/tenantId for authenticated routes",
+        "405 now uses jsonResponse() — X-Request-Id present in all error responses",
+        "route matched and request complete log lines"
+      ]
+    },
+    "migrateTs": {
+      "file": "apps/platform-api/src/db/migrate.ts",
+      "added": [
+        "Checksum comparison on already-applied migrations",
+        "Throws with 'checksum mismatch' message if stored != computed"
+      ]
+    },
+    "validateSliceReadiness": {
+      "file": "tools/architecture/validate-slice-readiness/src/index.mjs",
+      "added": [
+        "readActionRegisterStatuses() parses ACTION-REGISTER.md pipe table",
+        "validateBlockerGovernance() fails on stale done blockers",
+        "validateManifest() accepts actionStatuses third parameter (default empty Map)",
+        "main() reads ACTION-REGISTER before validation loop"
+      ]
+    },
+    "adrAct0008Manifest": {
+      "file": "docs/slices/ADR-ACT-0008.json",
+      "changes": [
+        "blockedBy: [ADR-ACT-0112, ADR-ACT-0113] → blockedBy: []  (both are Done)",
+        "requiredCapabilities: added migration-runner"
+      ]
+    }
+  },
+  "testCounts": {
+    "pipelineTests": {
+      "previous": 8,
+      "added": 5,
+      "total": 13,
+      "newTests": [
+        "authenticated route receives actor in pipelineReq",
+        "authenticated route receives tenantId in context and permissions on actor",
+        "permission guard does not require handler to call getFixtureSession again",
+        "405 response includes X-Request-Id header",
+        "500 response includes X-Request-Id and internalDetails is not in body"
+      ]
+    },
+    "sliceReadinessTests": {
+      "previous": 7,
+      "added": 5,
+      "total": 12,
+      "newTests": [
+        "stale done blocker in blockedBy fails",
+        "unknown blocker not in action register fails",
+        "valid manifest with empty blockedBy passes",
+        "unknown capability magic-unicorn fails validation",
+        "open blocker in blockedBy is valid"
+      ]
+    },
+    "composeSmokeTests": {
+      "previous": 22,
+      "added": 1,
+      "total": 23,
+      "newTests": ["database: migration fails if committed file has changed checksum"]
+    },
+    "fullSuiteTotal": 381
+  },
+  "gateResults": {
+    "tscCheck": "PASS",
+    "lint": "PASS — 0 ESLint problems",
+    "formatCheck": "PASS",
+    "orchestratorAllNoReportsStrict": "PASS — 7/7 steps",
+    "testCoverage": "PASS — 381/381 tests",
+    "validateSlices": "PASS",
+    "testE2e": "PASS — 8/8 tests"
+  }
+}

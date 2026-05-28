@@ -7,6 +7,8 @@ import {
   ValidationError,
   toSafeResponse,
 } from "@platform/platform-errors";
+import { type SessionActor } from "@platform/contracts-auth";
+import { createRequestContext, type RuntimeContext } from "@platform/platform-runtime-context";
 import { getFixtureSession } from "./session.ts";
 
 // Types
@@ -15,6 +17,8 @@ export interface PipelineRequest {
   path: string;
   requestId: string;
   body: unknown;
+  actor: SessionActor | null;
+  context: RuntimeContext;
   raw: http.IncomingMessage;
 }
 
@@ -118,19 +122,20 @@ export function createRouter(
     }
     if (!matchingRoute) {
       const allowed = matchingMethod.map((r) => r.method).join(", ");
-      res.writeHead(405, { Allow: allowed, "Content-Type": "application/json" });
-      res.end(
-        JSON.stringify({
-          code: "METHOD_NOT_ALLOWED",
-          message: `Method ${method} not allowed for ${path}`,
-        })
+      res.setHeader("Allow", allowed);
+      jsonResponse(
+        res,
+        405,
+        { code: "METHOD_NOT_ALLOWED", message: `Method ${method} not allowed for ${path}` },
+        requestId
       );
       return;
     }
 
-    // Auth check
+    // Auth check — resolve actor (null when unauthenticated)
+    let actor: SessionActor | null = null;
     if (matchingRoute.requiresAuth) {
-      const actor = getFixtureSession();
+      actor = getFixtureSession();
       if (!actor) {
         const err = new UnauthorizedError("Authentication required");
         jsonResponse(res, 401, toSafeResponse(err), requestId);
@@ -146,12 +151,31 @@ export function createRouter(
       }
     }
 
+    // Build RuntimeContext after auth resolution
+    const context = createRequestContext(requestId, {
+      ...(actor
+        ? {
+            actorId: actor.userId,
+            tenantId: actor.tenantId,
+            organisationId: actor.organisationId,
+            operationName: path,
+          }
+        : { operationName: path }),
+    });
+
+    // Enrich logger with actor metadata if available
+    const enrichedLogger = actor
+      ? reqLogger.child({ actorId: actor.userId, tenantId: actor.tenantId })
+      : reqLogger;
+
     // Build pipeline request/response
     const pipelineReq: PipelineRequest = {
       method,
       path,
       requestId,
       body: bodyResult.body,
+      actor,
+      context,
       raw: req,
     };
     const pipelineRes: PipelineResponse = {
@@ -160,9 +184,11 @@ export function createRouter(
     };
 
     try {
+      enrichedLogger.info({ status: "processing" }, "route matched");
       await matchingRoute.handler(pipelineReq, pipelineRes);
+      enrichedLogger.info({ status: 200 }, "request complete");
     } catch (err) {
-      reqLogger.error({ err }, "unhandled error in route handler");
+      enrichedLogger.error({ err }, "unhandled error in route handler");
       const safe = toSafeResponse(err);
       jsonResponse(res, 500, safe, requestId);
     }

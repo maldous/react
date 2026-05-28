@@ -11,9 +11,10 @@
     "fixture-session",
     "playwright-e2e",
     "structured-logging",
-    "permission-guards"
+    "permission-guards",
+    "migration-runner"
   ],
-  "blockedBy": ["ADR-ACT-0112", "ADR-ACT-0113"],
+  "blockedBy": [],
   "allowedFixtureModes": ["fixture-session"],
   "forbiddenDependencies": ["live-keycloak"],
   "status": "not-started",

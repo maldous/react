@@ -48,6 +48,22 @@ export function findRepoRoot(startDir) {
   }
 }
 
+export function readActionRegisterStatuses(repoRoot) {
+  const arPath = path.join(repoRoot, "docs", "adr", "ACTION-REGISTER.md");
+  if (!fs.existsSync(arPath)) return new Map();
+  const content = fs.readFileSync(arPath, "utf8");
+  const statuses = new Map();
+  for (const line of content.split("\n")) {
+    const m = line.match(
+      /^\s*\|\s*(ADR-ACT-\d{4})\s*\|[^|]+\|[^|]+\|[^|]+\|\s*(Done|Open|Blocked|In Progress|Not Started)\s*\|/i
+    );
+    if (m) {
+      statuses.set(m[1], m[2].trim().toLowerCase().replace(" ", "-"));
+    }
+  }
+  return statuses;
+}
+
 const VALID_STATUSES = ["not-started", "in-progress", "done", "blocked"];
 
 function validateRequiredFields(manifest, fail) {
@@ -104,7 +120,27 @@ function validateStatus(manifest, fail) {
   }
 }
 
-export function validateManifest(manifest, _filePath) {
+function validateBlockerGovernance(manifest, actionStatuses, fail) {
+  const blockers = manifest.blockedBy ?? [];
+  if (!Array.isArray(blockers) || blockers.length === 0) return;
+
+  for (const blocker of blockers) {
+    if (!ADR_ACT_PATTERN.test(blocker)) continue; // format already checked by validateBlockers
+
+    const status = actionStatuses.get(blocker);
+    if (!status) {
+      fail(`Blocker ${blocker} not found in ACTION-REGISTER`);
+      continue;
+    }
+
+    // A blocker that is already Done should be removed from blockedBy
+    if (status === "done") {
+      fail(`Blocker ${blocker} is Done — remove it from blockedBy`);
+    }
+  }
+}
+
+export function validateManifest(manifest, _filePath, actionStatuses = new Map()) {
   const errors = [];
   const warn = (msg) => errors.push(`WARN: ${msg}`);
   const fail = (msg) => errors.push(`ERROR: ${msg}`);
@@ -115,6 +151,7 @@ export function validateManifest(manifest, _filePath) {
   validateBlockers(manifest, fail);
   validateForbiddenDeps(manifest, fail, warn);
   validateStatus(manifest, fail);
+  validateBlockerGovernance(manifest, actionStatuses, fail);
 
   return errors;
 }
@@ -135,6 +172,8 @@ function main() {
     process.exit(0);
   }
 
+  const actionStatuses = readActionRegisterStatuses(repoRoot);
+
   let totalErrors = 0;
   let totalWarnings = 0;
   const results = [];
@@ -150,7 +189,7 @@ function main() {
       continue;
     }
 
-    const issues = validateManifest(manifest, filePath);
+    const issues = validateManifest(manifest, filePath, actionStatuses);
     const errors = issues.filter((i) => i.startsWith("ERROR:"));
     const warnings = issues.filter((i) => i.startsWith("WARN:"));
     totalErrors += errors.length;
