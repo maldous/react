@@ -496,6 +496,7 @@ Canonical source locations:
 | Quality gate baseline evidence                        | `docs/evidence/quality-gates/`                       | Committed governance evidence                                   |
 | Frontend platform baseline evidence                   | `docs/evidence/frontend/`                            | Committed governance evidence                                   |
 | Observability and runtime baseline evidence           | `docs/evidence/observability/`                       | Committed governance evidence                                   |
+| Identity and access control baseline evidence         | `docs/evidence/identity/`                            | Committed governance evidence                                   |
 | Compose integration smoke tests                       | `tests/integration/`                                 | Live-service tests; not run in CI; requires compose up          |
 | Root TypeScript strict base config                    | `tsconfig.base.json`                                 | Extended by `apps/**/tsconfig.json`; governs strict mode        |
 | App TypeScript configs                                | `apps/**/tsconfig.json`                              | App-level TypeScript project config; extends tsconfig.base.json |
@@ -563,6 +564,9 @@ docs/evidence/frontend/
 
 docs/evidence/observability/
   Observability and runtime diagnostics evidence: logging stack, trace propagation, error types, redaction policy.
+
+docs/evidence/identity/
+  Identity and access control evidence: identity model, role model, permission list, SSO boundary, session model.
 ```
 
 Reports may reference evidence.

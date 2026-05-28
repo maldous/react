@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "1.0",
+  "evidenceType": "identity-access-baseline",
+  "adrRefs": ["ADR-0021", "ADR-0022"],
+  "adrActRefs": ["ADR-ACT-0105", "ADR-ACT-0106", "ADR-ACT-0107", "ADR-ACT-0108"],
+  "committedAt": "2026-05-28",
+  "identityEntities": [
+    "User",
+    "ExternalIdentity",
+    "Organisation",
+    "Membership",
+    "Role",
+    "Permission",
+    "SessionActor"
+  ],
+  "roles": {
+    "global": ["system-admin"],
+    "tenantScoped": ["tenant-admin", "manager", "member", "viewer"]
+  },
+  "permissions": [
+    "organisation.read",
+    "organisation.update",
+    "member.read",
+    "member.invite",
+    "member.update_role",
+    "profile.read_self",
+    "profile.update_self",
+    "admin.access",
+    "audit.read"
+  ],
+  "rolePermissionMatrix": {
+    "system-admin": [
+      "organisation.read",
+      "organisation.update",
+      "member.read",
+      "member.invite",
+      "member.update_role",
+      "profile.read_self",
+      "profile.update_self",
+      "admin.access",
+      "audit.read"
+    ],
+    "tenant-admin": [
+      "organisation.read",
+      "organisation.update",
+      "member.read",
+      "member.invite",
+      "member.update_role",
+      "profile.read_self",
+      "profile.update_self",
+      "admin.access",
+      "audit.read"
+    ],
+    "manager": [
+      "organisation.read",
+      "member.read",
+      "member.invite",
+      "profile.read_self",
+      "profile.update_self"
+    ],
+    "member": ["organisation.read", "member.read", "profile.read_self", "profile.update_self"],
+    "viewer": ["organisation.read", "member.read", "profile.read_self", "profile.update_self"]
+  },
+  "ssoModel": {
+    "provider": "keycloak (adapter only)",
+    "keycloakPackage": "packages/adapters-keycloak",
+    "leaksToReact": false,
+    "leaksToDomain": false,
+    "externalIdentityMapping": "provider + providerSubject → User + ExternalIdentity"
+  },
+  "sessionModel": {
+    "storage": "Redis (packages/adapters-redis)",
+    "cookiePolicy": "HttpOnly; Secure; SameSite=Strict",
+    "tokenInBrowser": false,
+    "runtimeContextFields": [
+      "requestId",
+      "traceId",
+      "actorId",
+      "tenantId",
+      "organisationId",
+      "permissions"
+    ]
+  },
+  "firstSliceSpec": {
+    "route": "/organisation/profile",
+    "requiredPermissionToRead": "organisation.read",
+    "requiredPermissionToEdit": "organisation.update",
+    "testCases": [
+      "authenticated tenant-admin: can read and edit → 200",
+      "authenticated viewer: can read, edit controls hidden → 200",
+      "authenticated but no membership: forbidden → 403",
+      "unauthenticated: redirect to /auth/login → 401"
+    ]
+  },
+  "openActions": [
+    "ADR-ACT-0105 — identity/access-control contracts and domain primitives",
+    "ADR-ACT-0106 — platform-auth/session boundary primitives",
+    "ADR-ACT-0107 — protected route and API guard primitives",
+    "ADR-ACT-0108 — Keycloak adapter skeleton"
+  ],
+  "adrActZeroZeroEightStatus": "NOT started"
+}
