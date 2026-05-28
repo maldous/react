@@ -28,6 +28,7 @@ import {
   getOrganisationProfile,
   updateOrganisationDisplayName,
 } from "../../apps/platform-api/src/usecases/organisation.ts";
+import { PostgresOrganisationRepository } from "../../apps/platform-api/src/adapters/postgres-organisation-repository.ts";
 import {
   S3Client,
   CreateBucketCommand,
@@ -70,6 +71,7 @@ function dockerInspect(container, format) {
 // ---------------------------------------------------------------------------
 
 const pgClient = new pg.Client(POSTGRES_URL);
+const organisationRepo = new PostgresOrganisationRepository(POSTGRES_URL);
 const redisClient = createRedisClient({ url: REDIS_URL });
 const s3 = new S3Client({
   endpoint: MINIO_ENDPOINT,
@@ -389,7 +391,10 @@ test("organisation: getOrganisationProfile returns fixture org", async () => {
   await resetDatabase();
   await runMigrations();
   await seedFixtures();
-  const profile = await getOrganisationProfile(FIXTURE.ORG_ID);
+  const profile = await getOrganisationProfile(
+    { organisationId: FIXTURE.ORG_ID },
+    { organisations: organisationRepo }
+  );
   assert.equal(profile.slug, FIXTURE.ORG_SLUG);
   assert.equal(profile.id, FIXTURE.ORG_ID);
   assert.equal(typeof profile.displayName, "string");
@@ -400,11 +405,17 @@ test("organisation: updateOrganisationDisplayName updates and returns updated re
   await resetDatabase();
   await runMigrations();
   await seedFixtures();
-  const updated = await updateOrganisationDisplayName(FIXTURE.ORG_ID, "Test Display Name");
+  const updated = await updateOrganisationDisplayName(
+    { organisationId: FIXTURE.ORG_ID, displayName: "Test Display Name" },
+    { organisations: organisationRepo }
+  );
   assert.equal(updated.displayName, "Test Display Name");
   assert.equal(updated.id, FIXTURE.ORG_ID);
   // Restore original display name
-  await updateOrganisationDisplayName(FIXTURE.ORG_ID, "Fixture Organisation");
+  await updateOrganisationDisplayName(
+    { organisationId: FIXTURE.ORG_ID, displayName: "Fixture Organisation" },
+    { organisations: organisationRepo }
+  );
 });
 
 test("otel-collector: OTLP/HTTP POST /v1/traces returns 200", async () => {

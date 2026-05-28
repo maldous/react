@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:1fd5772e-fae9-4744-8bc0-00373d533fb2",
+  "serialNumber": "urn:uuid:2335ae47-d8fd-45ab-a422-84c88e692193",
   "metadata": {
-    "timestamp": "2026-05-28T06:48:15.470Z",
+    "timestamp": "2026-05-28T12:35:35.815Z",
     "tools": {
       "components": [
         {
@@ -448,6 +448,45 @@
     },
     {
       "type": "library",
+      "name": "test",
+      "group": "@playwright",
+      "version": "1.60.0",
+      "bom-ref": "react|@playwright/test@1.60.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40playwright/test@1.60.0",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/@playwright/test/-/test-1.60.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "3bbd726486c087f3f10cc3469ecdfb1870487eb564115ca7f805f221ae5d3937dbe3fc4dbd1595f95bff34c6cd0ad38307fa4eeef2e517639398c54b866afb02"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@playwright/test"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "name": "vite",
       "group": "@tailwindcss",
       "version": "4.1.8",
@@ -833,6 +872,45 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@testing-library/user-event"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "pg",
+      "group": "@types",
+      "version": "8.20.0",
+      "bom-ref": "react|@types/pg@8.20.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40types/pg@8.20.0",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/@types/pg/-/pg-8.20.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "6c43c539a3001d310fd44ce9bc74db9b047c52c1721d22ac462b0b20754c5e7a4d79f49b180d5b0fa095cbea8a8c64aa999a8da810d5d9acce068f13824715a3"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@types/pg"
         }
       ]
     },
@@ -3692,6 +3770,85 @@
     },
     {
       "type": "library",
+      "name": "playwright",
+      "version": "1.60.0",
+      "bom-ref": "react|playwright@1.60.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/playwright@1.60.0",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/playwright/-/playwright-1.60.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "86178776890cf1c76a09bd25704decfb34f8b785bebef8e91b1b199439e291aaf3c7cb52ccc79b87752216d82ac05c274e78d841cb32305f1e8b69823bfb6978"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/playwright"
+        }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "fsevents",
+          "version": "2.3.2",
+          "bom-ref": "react|playwright@1.60.0|fsevents@2.3.2",
+          "scope": "optional",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/fsevents@2.3.2",
+          "externalReferences": [
+            {
+              "url": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "c62a8c411e3101e1d3b81f6e5a6f9f1517083a02813223813fe7978b24fb8ec8150aad5b915ca0b74d28012a3007b11db6938769a3e02adf35d8ff5a6fe0c328"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/playwright/node_modules/fsevents"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "library",
       "name": "node",
       "group": "@tailwindcss",
       "version": "4.1.8",
@@ -4382,6 +4539,121 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@testing-library/dom"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "node",
+      "group": "@types",
+      "version": "25.9.1",
+      "bom-ref": "react|@types/node@25.9.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40types/node@25.9.1",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/@types/node/-/node-25.9.1.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "c5fae563b503e6b30993765524ff013734b6f09dfa60983ec69f8b3d75754dd5b1afcb8c1f903ceb440dc580c641eff29434a08f1139d90f559ceee9ef9b49c6"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@types/node"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "pg-protocol",
+      "version": "1.14.0",
+      "bom-ref": "react|pg-protocol@1.14.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/pg-protocol@1.14.0",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/pg-protocol/-/pg-protocol-1.14.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "9f9b5a67590edecf678034d5c6c1339cea82c93a13833d052ee3ead01df708ecb9a4fa6e589a58dffda84415444ee3a0cdda915df5a933d1c8869d8b0414f504"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/pg-protocol"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "pg-types",
+      "version": "2.2.0",
+      "bom-ref": "react|pg-types@2.2.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/pg-types@2.2.0",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/pg-types/-/pg-types-2.2.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "a9300096b12c97cb383a211063af700ef70c21d40deb0773e688d088ecba61132eca7c5e9ce3743b9a02a4923a96c85ceac720018f2abc9d8e9ffa7e09763418"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/pg-types"
         }
       ]
     },
@@ -9330,82 +9602,6 @@
     },
     {
       "type": "library",
-      "name": "pg-protocol",
-      "version": "1.14.0",
-      "bom-ref": "react|pg-protocol@1.14.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/pg-protocol@1.14.0",
-      "externalReferences": [
-        {
-          "url": "https://registry.npmjs.org/pg-protocol/-/pg-protocol-1.14.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "9f9b5a67590edecf678034d5c6c1339cea82c93a13833d052ee3ead01df708ecb9a4fa6e589a58dffda84415444ee3a0cdda915df5a933d1c8869d8b0414f504"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/pg-protocol"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "pg-types",
-      "version": "2.2.0",
-      "bom-ref": "react|pg-types@2.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/pg-types@2.2.0",
-      "externalReferences": [
-        {
-          "url": "https://registry.npmjs.org/pg-types/-/pg-types-2.2.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "a9300096b12c97cb383a211063af700ef70c21d40deb0773e688d088ecba61132eca7c5e9ce3743b9a02a4923a96c85ceac720018f2abc9d8e9ffa7e09763418"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/pg-types"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "pgpass",
       "version": "1.0.5",
       "bom-ref": "react|pgpass@1.0.5",
@@ -10751,45 +10947,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@typescript-eslint/utils"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "node",
-      "group": "@types",
-      "version": "25.9.1",
-      "bom-ref": "react|@types/node@25.9.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40types/node@25.9.1",
-      "externalReferences": [
-        {
-          "url": "https://registry.npmjs.org/@types/node/-/node-25.9.1.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "c5fae563b503e6b30993765524ff013734b6f09dfa60983ec69f8b3d75754dd5b1afcb8c1f903ceb440dc580c641eff29434a08f1139d90f559ceee9ef9b49c6"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@types/node"
         }
       ]
     },
@@ -13274,6 +13431,44 @@
     },
     {
       "type": "library",
+      "name": "playwright-core",
+      "version": "1.60.0",
+      "bom-ref": "react|playwright-core@1.60.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/playwright-core@1.60.0",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/playwright-core/-/playwright-core-1.60.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "f5b5bacef5ff9b49446e04ca27a629a4e2b1f07dd538f04c382161da2ad714e4f805b1e0af1e613e3c0960b4f8d0bbbee2ab43dfaa8a73f1e7e7a4ad516e7b20"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/playwright-core"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "name": "remapping",
       "group": "@ampproject",
       "version": "2.3.0",
@@ -14553,6 +14748,234 @@
               "value": "node_modules/pretty-format/node_modules/ansi-styles"
             }
           ]
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "undici-types",
+      "version": "7.24.6",
+      "bom-ref": "react|undici-types@7.24.6",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/undici-types@7.24.6",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/undici-types/-/undici-types-7.24.6.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "591356fac2608f9381378ff42691c5aadab38696e75741ae07e3a8cc0f6008bedaf7ddd2994fb5241642ccb37162c6cc7c87832fe953b29843e6337937e9f4ce"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/undici-types"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "pg-int8",
+      "version": "1.0.1",
+      "bom-ref": "react|pg-int8@1.0.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "ISC",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/pg-int8@1.0.1",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/pg-int8/-/pg-int8-1.0.1.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "582b5a6d2eadddcf129290c15256f59233acee5ebac6c19d2a920f66c838c11f81dfebbd500ba6da8752b05f6d9efc60f348786712d6332e294633ac148a90a7"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/pg-int8"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "postgres-array",
+      "version": "2.0.0",
+      "bom-ref": "react|postgres-array@2.0.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/postgres-array@2.0.0",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/postgres-array/-/postgres-array-2.0.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "56966b52a53903af5e4325b6739080d63b4b79c0ac37653f6c3e958a5ac50d6ab9fb95081153bb9dacd2dd311c1dfd73b8f60efeca86bd4bd6eb683ce915d9b8"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/postgres-array"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "postgres-bytea",
+      "version": "1.0.1",
+      "bom-ref": "react|postgres-bytea@1.0.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/postgres-bytea@1.0.1",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/postgres-bytea/-/postgres-bytea-1.0.1.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "e7ee47a979ec64f13ae4825948c919b544404597a57a5da85d410ef2b1fcdd54bf8711f9befd6e1eab8f839c19b3cc8c01f76ff7bd4853e91c3d47338bb35505"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/postgres-bytea"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "postgres-date",
+      "version": "1.0.7",
+      "bom-ref": "react|postgres-date@1.0.7",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/postgres-date@1.0.7",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/postgres-date/-/postgres-date-1.0.7.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "b2e0e68cb55083bf2730ad94678e788401be3805be1d03d9ea7fbe4cd0d45fe2f4fae5252f2c27a3124a0e8bb9d599becd30a3ac297436ae89f42e613fdbcafd"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/postgres-date"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "postgres-interval",
+      "version": "1.2.0",
+      "bom-ref": "react|postgres-interval@1.2.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/postgres-interval@1.2.0",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/postgres-interval/-/postgres-interval-1.2.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "f5985728cfebc37e74375a2fb961db1b19c687f48d278727c4788cd2bc44e15378d70b20f0ff335a7f61bff6ee2b4d113f85af94ecabfd10438a9b72c556e465"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/postgres-interval"
         }
       ]
     },
@@ -20541,196 +20964,6 @@
     },
     {
       "type": "library",
-      "name": "pg-int8",
-      "version": "1.0.1",
-      "bom-ref": "react|pg-int8@1.0.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/pg-int8@1.0.1",
-      "externalReferences": [
-        {
-          "url": "https://registry.npmjs.org/pg-int8/-/pg-int8-1.0.1.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "582b5a6d2eadddcf129290c15256f59233acee5ebac6c19d2a920f66c838c11f81dfebbd500ba6da8752b05f6d9efc60f348786712d6332e294633ac148a90a7"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/pg-int8"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "postgres-array",
-      "version": "2.0.0",
-      "bom-ref": "react|postgres-array@2.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/postgres-array@2.0.0",
-      "externalReferences": [
-        {
-          "url": "https://registry.npmjs.org/postgres-array/-/postgres-array-2.0.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "56966b52a53903af5e4325b6739080d63b4b79c0ac37653f6c3e958a5ac50d6ab9fb95081153bb9dacd2dd311c1dfd73b8f60efeca86bd4bd6eb683ce915d9b8"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/postgres-array"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "postgres-bytea",
-      "version": "1.0.1",
-      "bom-ref": "react|postgres-bytea@1.0.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/postgres-bytea@1.0.1",
-      "externalReferences": [
-        {
-          "url": "https://registry.npmjs.org/postgres-bytea/-/postgres-bytea-1.0.1.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "e7ee47a979ec64f13ae4825948c919b544404597a57a5da85d410ef2b1fcdd54bf8711f9befd6e1eab8f839c19b3cc8c01f76ff7bd4853e91c3d47338bb35505"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/postgres-bytea"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "postgres-date",
-      "version": "1.0.7",
-      "bom-ref": "react|postgres-date@1.0.7",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/postgres-date@1.0.7",
-      "externalReferences": [
-        {
-          "url": "https://registry.npmjs.org/postgres-date/-/postgres-date-1.0.7.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "b2e0e68cb55083bf2730ad94678e788401be3805be1d03d9ea7fbe4cd0d45fe2f4fae5252f2c27a3124a0e8bb9d599becd30a3ac297436ae89f42e613fdbcafd"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/postgres-date"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "postgres-interval",
-      "version": "1.2.0",
-      "bom-ref": "react|postgres-interval@1.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/postgres-interval@1.2.0",
-      "externalReferences": [
-        {
-          "url": "https://registry.npmjs.org/postgres-interval/-/postgres-interval-1.2.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "f5985728cfebc37e74375a2fb961db1b19c687f48d278727c4788cd2bc44e15378d70b20f0ff335a7f61bff6ee2b4d113f85af94ecabfd10438a9b72c556e465"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/postgres-interval"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "split2",
       "version": "4.2.0",
       "bom-ref": "react|split2@4.2.0",
@@ -21921,44 +22154,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@typescript-eslint/tsconfig-utils"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "undici-types",
-      "version": "7.24.6",
-      "bom-ref": "react|undici-types@7.24.6",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/undici-types@7.24.6",
-      "externalReferences": [
-        {
-          "url": "https://registry.npmjs.org/undici-types/-/undici-types-7.24.6.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "591356fac2608f9381378ff42691c5aadab38696e75741ae07e3a8cc0f6008bedaf7ddd2994fb5241642ccb37162c6cc7c87832fe953b29843e6337937e9f4ce"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/undici-types"
         }
       ]
     },
@@ -26611,6 +26806,44 @@
     },
     {
       "type": "library",
+      "name": "xtend",
+      "version": "4.0.2",
+      "bom-ref": "react|xtend@4.0.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/xtend@4.0.2",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/xtend/-/xtend-4.0.2.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "2ca614d620172575200179fd5118e2bbe3168725171ecbdfa7b99cb989bd75250a2b4fc28edad4c050310fcdbf98259bb4bb068c521a774c08b28778ceb4c011"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/xtend"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "name": "jsesc",
       "version": "3.1.0",
       "bom-ref": "react|jsesc@3.1.0",
@@ -29362,44 +29595,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/is-fullwidth-code-point"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "xtend",
-      "version": "4.0.2",
-      "bom-ref": "react|xtend@4.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/xtend@4.0.2",
-      "externalReferences": [
-        {
-          "url": "https://registry.npmjs.org/xtend/-/xtend-4.0.2.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "2ca614d620172575200179fd5118e2bbe3168725171ecbdfa7b99cb989bd75250a2b4fc28edad4c050310fcdbf98259bb4bb068c521a774c08b28778ceb4c011"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/xtend"
         }
       ]
     },
@@ -34464,6 +34659,7 @@
         "react|@hookform/resolvers@3.10.0",
         "react|@internationalized/date@3.8.2",
         "react|@opentelemetry/api@1.9.1",
+        "react|@playwright/test@1.60.0",
         "react|@tailwindcss/vite@4.1.8",
         "react|@tanstack/react-query@5.100.14",
         "react|@tanstack/react-router@1.170.8",
@@ -34472,6 +34668,7 @@
         "react|@testing-library/jest-dom@6.6.3",
         "react|@testing-library/react@16.3.2",
         "react|@testing-library/user-event@14.6.1",
+        "react|@types/pg@8.20.0",
         "react|@types/react-dom@19.2.3",
         "react|@types/react@19.2.15",
         "react|@vitejs/plugin-react@4.5.1",
@@ -34593,6 +34790,12 @@
       "ref": "react|@opentelemetry/api@1.9.1"
     },
     {
+      "ref": "react|@playwright/test@1.60.0",
+      "dependsOn": [
+        "react|playwright@1.60.0"
+      ]
+    },
+    {
       "ref": "react|@tailwindcss/vite@4.1.8",
       "dependsOn": [
         "react|@tailwindcss/node@4.1.8",
@@ -34672,6 +34875,14 @@
       "ref": "react|@testing-library/user-event@14.6.1",
       "dependsOn": [
         "react|@testing-library/dom@10.4.1"
+      ]
+    },
+    {
+      "ref": "react|@types/pg@8.20.0",
+      "dependsOn": [
+        "react|@types/node@25.9.1",
+        "react|pg-protocol@1.14.0",
+        "react|pg-types@2.2.0"
       ]
     },
     {
@@ -35339,6 +35550,16 @@
       ]
     },
     {
+      "ref": "react|playwright@1.60.0",
+      "dependsOn": [
+        "react|playwright@1.60.0|fsevents@2.3.2",
+        "react|playwright-core@1.60.0"
+      ]
+    },
+    {
+      "ref": "react|playwright@1.60.0|fsevents@2.3.2"
+    },
+    {
       "ref": "react|@tailwindcss/node@4.1.8",
       "dependsOn": [
         "react|@ampproject/remapping@2.3.0",
@@ -35448,6 +35669,25 @@
         "react|lz-string@1.5.0",
         "react|picocolors@1.1.1",
         "react|pretty-format@27.5.1"
+      ]
+    },
+    {
+      "ref": "react|@types/node@25.9.1",
+      "dependsOn": [
+        "react|undici-types@7.24.6"
+      ]
+    },
+    {
+      "ref": "react|pg-protocol@1.14.0"
+    },
+    {
+      "ref": "react|pg-types@2.2.0",
+      "dependsOn": [
+        "react|pg-int8@1.0.1",
+        "react|postgres-array@2.0.0",
+        "react|postgres-bytea@1.0.1",
+        "react|postgres-date@1.0.7",
+        "react|postgres-interval@1.2.0"
       ]
     },
     {
@@ -36203,19 +36443,6 @@
       ]
     },
     {
-      "ref": "react|pg-protocol@1.14.0"
-    },
-    {
-      "ref": "react|pg-types@2.2.0",
-      "dependsOn": [
-        "react|pg-int8@1.0.1",
-        "react|postgres-array@2.0.0",
-        "react|postgres-bytea@1.0.1",
-        "react|postgres-date@1.0.7",
-        "react|postgres-interval@1.2.0"
-      ]
-    },
-    {
       "ref": "react|pgpass@1.0.5",
       "dependsOn": [
         "react|split2@4.2.0"
@@ -36449,12 +36676,6 @@
         "react|@typescript-eslint/typescript-estree@8.60.0",
         "react|eslint@10.4.0",
         "react|typescript@6.0.3"
-      ]
-    },
-    {
-      "ref": "react|@types/node@25.9.1",
-      "dependsOn": [
-        "react|undici-types@7.24.6"
       ]
     },
     {
@@ -36927,6 +37148,9 @@
       "ref": "react|@oozcitak/util@10.0.0"
     },
     {
+      "ref": "react|playwright-core@1.60.0"
+    },
+    {
       "ref": "react|@ampproject/remapping@2.3.0",
       "dependsOn": [
         "react|@jridgewell/gen-mapping@0.3.13",
@@ -37065,6 +37289,27 @@
     },
     {
       "ref": "react|pretty-format@27.5.1|ansi-styles@5.2.0"
+    },
+    {
+      "ref": "react|undici-types@7.24.6"
+    },
+    {
+      "ref": "react|pg-int8@1.0.1"
+    },
+    {
+      "ref": "react|postgres-array@2.0.0"
+    },
+    {
+      "ref": "react|postgres-bytea@1.0.1"
+    },
+    {
+      "ref": "react|postgres-date@1.0.7"
+    },
+    {
+      "ref": "react|postgres-interval@1.2.0",
+      "dependsOn": [
+        "react|xtend@4.0.2"
+      ]
     },
     {
       "ref": "react|@babel/generator@7.29.7",
@@ -37893,24 +38138,6 @@
       "ref": "react|yargs-parser@21.1.1"
     },
     {
-      "ref": "react|pg-int8@1.0.1"
-    },
-    {
-      "ref": "react|postgres-array@2.0.0"
-    },
-    {
-      "ref": "react|postgres-bytea@1.0.1"
-    },
-    {
-      "ref": "react|postgres-date@1.0.7"
-    },
-    {
-      "ref": "react|postgres-interval@1.2.0",
-      "dependsOn": [
-        "react|xtend@4.0.2"
-      ]
-    },
-    {
       "ref": "react|split2@4.2.0"
     },
     {
@@ -38078,9 +38305,6 @@
       "dependsOn": [
         "react|typescript@6.0.3"
       ]
-    },
-    {
-      "ref": "react|undici-types@7.24.6"
     },
     {
       "ref": "react|@esbuild/aix-ppc64@0.25.12"
@@ -38581,6 +38805,9 @@
       "ref": "react|react-is@17.0.2"
     },
     {
+      "ref": "react|xtend@4.0.2"
+    },
+    {
       "ref": "react|jsesc@3.1.0"
     },
     {
@@ -38962,9 +39189,6 @@
     },
     {
       "ref": "react|is-fullwidth-code-point@3.0.0"
-    },
-    {
-      "ref": "react|xtend@4.0.2"
     },
     {
       "ref": "react|loose-envify@1.4.0",

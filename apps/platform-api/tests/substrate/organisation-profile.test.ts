@@ -1,69 +1,15 @@
 /**
  * Organisation profile endpoint tests.
  * Tests GET /api/organisation/profile and PATCH /api/organisation/profile
- * using a real HTTP server (port 0) and real Postgres.
+ * using the PRODUCTION route list from server/routes.ts and a real HTTP server + real Postgres.
  *
  * Requires: Postgres running at POSTGRES_URL (default: localhost:5433).
- * Run: npm run test:platform-api (includes this file).
  */
 import { describe, it, before, after } from "node:test";
 import assert from "node:assert/strict";
 import http from "node:http";
 import { createRouter } from "../../src/server/pipeline.ts";
-import {
-  handleGetOrganisationProfile,
-  handlePatchOrganisationProfile,
-} from "../../src/server/organisation.ts";
-import { getHealth, getReadiness, getVersion } from "../../src/server/health.ts";
-import { getFixtureSession } from "../../src/server/session.ts";
-
-// --- Server helpers ---
-
-const routes = [
-  {
-    method: "GET",
-    path: "/healthz",
-    handler: async (_req: unknown, res: { json: (s: number, b: unknown) => void }) =>
-      res.json(200, getHealth()),
-  },
-  {
-    method: "GET",
-    path: "/readyz",
-    handler: async (_req: unknown, res: { json: (s: number, b: unknown) => void }) => {
-      const result = await getReadiness();
-      res.json(result.status === "ready" ? 200 : 503, result);
-    },
-  },
-  {
-    method: "GET",
-    path: "/version",
-    handler: async (_req: unknown, res: { json: (s: number, b: unknown) => void }) =>
-      res.json(200, getVersion()),
-  },
-  {
-    method: "GET",
-    path: "/api/session",
-    handler: async (_req: unknown, res: { json: (s: number, b: unknown) => void }) => {
-      const actor = getFixtureSession();
-      if (actor) res.json(200, actor);
-      else res.json(401, { code: "UNAUTHENTICATED", message: "No session" });
-    },
-  },
-  {
-    method: "GET",
-    path: "/api/organisation/profile",
-    requiresAuth: true as const,
-    requiredPermission: "organisation.read",
-    handler: handleGetOrganisationProfile,
-  },
-  {
-    method: "PATCH",
-    path: "/api/organisation/profile",
-    requiresAuth: true as const,
-    requiredPermission: "organisation.update",
-    handler: handlePatchOrganisationProfile,
-  },
-];
+import { routes } from "../../src/server/routes.ts";
 
 function makeServer(): Promise<{ server: http.Server; url: string }> {
   return new Promise((resolve, reject) => {
@@ -90,16 +36,13 @@ function closeServer(server: http.Server): Promise<void> {
   });
 }
 
-// Helpers for env management
-function setFixtureRole(role: string | undefined) {
+function setFixtureRole(role: string | undefined): void {
   if (role === undefined) {
     delete process.env["LOCAL_FIXTURE_SESSION"];
   } else {
     process.env["LOCAL_FIXTURE_SESSION"] = role;
   }
 }
-
-// --- Test suite ---
 
 describe("organisation profile: GET /api/organisation/profile", () => {
   let server: http.Server;
@@ -156,8 +99,8 @@ describe("organisation profile: GET /api/organisation/profile", () => {
     assert.equal(body.code, "UNAUTHORIZED");
   });
 
-  it("no-permissions: 403", async () => {
-    setFixtureRole("no-permissions");
+  it("no-membership: 403 (no organisation.read permission)", async () => {
+    setFixtureRole("no-membership");
     const res = await fetch(`${url}/api/organisation/profile`);
     assert.equal(res.status, 403);
     const body = (await res.json()) as { code: string };
@@ -177,8 +120,7 @@ describe("organisation profile: GET /api/organisation/profile", () => {
     setFixtureRole(undefined);
     const res = await fetch(`${url}/api/organisation/profile`);
     assert.equal(res.status, 401);
-    const requestId = res.headers.get("x-request-id");
-    assert.ok(requestId, "X-Request-Id header should be present on error");
+    assert.ok(res.headers.get("x-request-id"), "X-Request-Id should be present on error");
   });
 });
 
@@ -214,14 +156,31 @@ describe("organisation profile: PATCH /api/organisation/profile", () => {
     const body = (await res.json()) as { displayName: string; id: string; slug: string };
     assert.equal(body.displayName, "Updated Fixture Org");
     assert.equal(body.id, "00000000-0000-0000-0000-000000000001");
-
-    // Restore original display name
+    // Restore
     const restore = await fetch(`${url}/api/organisation/profile`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ displayName: "Fixture Organisation" }),
     });
     assert.equal(restore.status, 200);
+  });
+
+  it("tenant-admin: trims whitespace from display name", async () => {
+    setFixtureRole("tenant-admin");
+    const res = await fetch(`${url}/api/organisation/profile`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ displayName: "  Trimmed Name  " }),
+    });
+    assert.equal(res.status, 200);
+    const body = (await res.json()) as { displayName: string };
+    assert.equal(body.displayName, "Trimmed Name");
+    // Restore
+    await fetch(`${url}/api/organisation/profile`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ displayName: "Fixture Organisation" }),
+    });
   });
 
   it("viewer: 403 (lacks organisation.update)", async () => {
@@ -232,8 +191,7 @@ describe("organisation profile: PATCH /api/organisation/profile", () => {
       body: JSON.stringify({ displayName: "Should Not Update" }),
     });
     assert.equal(res.status, 403);
-    const body = (await res.json()) as { code: string };
-    assert.equal(body.code, "FORBIDDEN");
+    assert.equal(((await res.json()) as { code: string }).code, "FORBIDDEN");
   });
 
   it("unauthenticated: 401", async () => {
@@ -244,8 +202,18 @@ describe("organisation profile: PATCH /api/organisation/profile", () => {
       body: JSON.stringify({ displayName: "Should Not Update" }),
     });
     assert.equal(res.status, 401);
-    const body = (await res.json()) as { code: string };
-    assert.equal(body.code, "UNAUTHORIZED");
+    assert.equal(((await res.json()) as { code: string }).code, "UNAUTHORIZED");
+  });
+
+  it("no-membership: 403", async () => {
+    setFixtureRole("no-membership");
+    const res = await fetch(`${url}/api/organisation/profile`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ displayName: "Should Not Update" }),
+    });
+    assert.equal(res.status, 403);
+    assert.equal(((await res.json()) as { code: string }).code, "FORBIDDEN");
   });
 
   it("empty display name: 400 validation error", async () => {
@@ -256,29 +224,48 @@ describe("organisation profile: PATCH /api/organisation/profile", () => {
       body: JSON.stringify({ displayName: "" }),
     });
     assert.equal(res.status, 400);
-    const body = (await res.json()) as { code: string };
-    assert.equal(body.code, "VALIDATION_ERROR");
+    assert.equal(((await res.json()) as { code: string }).code, "VALIDATION_ERROR");
   });
 
-  it("extra fields in body are ignored (only displayName changes)", async () => {
+  it("display name too short (1 char): 400", async () => {
     setFixtureRole("tenant-admin");
     const res = await fetch(`${url}/api/organisation/profile`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ displayName: "Slice Test Org", slug: "should-be-ignored" }),
+      body: JSON.stringify({ displayName: "X" }),
+    });
+    assert.equal(res.status, 400);
+    assert.equal(((await res.json()) as { code: string }).code, "VALIDATION_ERROR");
+  });
+
+  it("display name too long (121 chars): 400", async () => {
+    setFixtureRole("tenant-admin");
+    const res = await fetch(`${url}/api/organisation/profile`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ displayName: "A".repeat(121) }),
+    });
+    assert.equal(res.status, 400);
+    assert.equal(((await res.json()) as { code: string }).code, "VALIDATION_ERROR");
+  });
+
+  it("extra fields in body are ignored (slug and id unchanged)", async () => {
+    setFixtureRole("tenant-admin");
+    const res = await fetch(`${url}/api/organisation/profile`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ displayName: "Slice Test Org", slug: "should-be-ignored", id: "bad" }),
     });
     assert.equal(res.status, 200);
-    const body = (await res.json()) as { displayName: string; slug: string };
+    const body = (await res.json()) as { displayName: string; slug: string; id: string };
     assert.equal(body.displayName, "Slice Test Org");
-    // slug should remain unchanged (fixture-org)
     assert.equal(body.slug, "fixture-org");
-
-    // Restore original display name
-    const restore = await fetch(`${url}/api/organisation/profile`, {
+    assert.equal(body.id, "00000000-0000-0000-0000-000000000001");
+    // Restore
+    await fetch(`${url}/api/organisation/profile`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ displayName: "Fixture Organisation" }),
     });
-    assert.equal(restore.status, 200);
   });
 });

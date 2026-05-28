@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "actionId": "ADR-ACT-0008",
   "name": "Authenticated organisation profile slice",
-  "description": "First vertical slice proving React protected route → session → TanStack Query → contract client → platform-api → permission guard → use case → domain → Postgres → structured logs/traces",
+  "description": "First vertical slice proving React protected route → session → TanStack Query → contract client → platform-api → permission guard → use case → repository port → Postgres adapter → local Postgres",
   "requiredReadinessTier": 1,
   "requiredCapabilities": [
     "local-postgres",
@@ -19,5 +19,5 @@
   "forbiddenDependencies": ["live-keycloak"],
   "status": "done",
   "adrRef": "ADR-0024",
-  "notes": "Real Keycloak login (ADR-ACT-0110) is NOT required for this slice. Use fixture SessionActor via LOCAL_FIXTURE_SESSION env var. Real SSO login is blocked until ADR-ACT-0110 is Done."
+  "notes": "Canonical architecture achieved via ADR-ACT-0118. Use case uses DI repository port (no pg import). PostgresOrganisationRepository adapter owns SQL. Production routes exported from server/routes.ts (shared by http.ts and tests). Domain validation in normaliseOrganisationDisplayName. no-membership fixture replaces no-permissions. Real Keycloak login (ADR-ACT-0110) is NOT required for this slice."
 }

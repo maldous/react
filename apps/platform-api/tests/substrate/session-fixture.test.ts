@@ -39,16 +39,15 @@ describe("fixture session", () => {
     assert.equal(getFixtureSession(), null);
   });
 
-  it("getFixtureSession returns actor with empty permissions when role is no-permissions", () => {
-    process.env["LOCAL_FIXTURE_SESSION"] = "no-permissions";
+  it("getFixtureSession returns actor with empty permissions when role is no-membership", () => {
+    process.env["LOCAL_FIXTURE_SESSION"] = "no-membership";
     const actor = getFixtureSession();
     assert.notEqual(actor, null);
-    assert.ok(
-      actor?.permissions.length === 0,
-      "no-permissions actor should have empty permissions"
-    );
-    assert.ok(actor?.roles.length === 0, "no-permissions actor should have empty roles");
-    assert.ok(actor?.userId, "no-permissions actor should have a userId");
+    assert.ok(actor?.permissions.length === 0, "no-membership actor should have empty permissions");
+    assert.ok(actor?.roles.length === 0, "no-membership actor should have empty roles");
+    assert.ok(actor?.userId, "no-membership actor should have a userId");
+    assert.equal(actor?.tenantId, "", "no-membership actor should have empty tenantId");
+    assert.equal(actor?.organisationId, "", "no-membership actor should have empty organisationId");
     delete process.env["LOCAL_FIXTURE_SESSION"];
   });
 });

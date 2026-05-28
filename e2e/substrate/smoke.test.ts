@@ -140,4 +140,27 @@ test.describe("organisation profile slice", () => {
     await page.goto("/organisation/profile");
     await expect(page).toHaveURL(/\/auth\/login/, { timeout: 5000 });
   });
+
+  test("no-membership fixture: profile page shows access denied (no permissions)", async ({
+    page,
+  }) => {
+    await page.route("**/api/session", async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({
+          userId: "00000000-0000-0000-0000-000000000004",
+          tenantId: "",
+          organisationId: "",
+          roles: [],
+          permissions: [],
+          displayName: "No Membership Fixture",
+        }),
+      });
+    });
+    await page.goto("/organisation/profile");
+    // Actor has no permissions → ProtectedRoute (checking organisation.read) renders ForbiddenState
+    await expect(page.getByRole("alert")).toBeVisible({ timeout: 5000 });
+    await expect(page.getByRole("heading", { name: /access denied/i })).toBeVisible();
+  });
 });

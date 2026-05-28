@@ -1,7 +1,7 @@
 import { type SessionActor } from "@platform/contracts-auth";
 import { FIXTURE } from "../db/seed.ts";
 
-export type FixtureRole = "tenant-admin" | "viewer" | "no-permissions" | "unauthenticated";
+export type FixtureRole = "tenant-admin" | "viewer" | "no-membership" | "unauthenticated";
 
 const ROLE_PERMISSIONS: Record<"tenant-admin" | "viewer", string[]> = {
   "tenant-admin": [
@@ -34,14 +34,17 @@ export function createFixtureSessionActor(role: "tenant-admin" | "viewer"): Sess
 export function getFixtureSession(): SessionActor | null {
   const role = process.env["LOCAL_FIXTURE_SESSION"] as FixtureRole | undefined;
   if (!role || role === "unauthenticated") return null;
-  if (role === "no-permissions") {
+  if (role === "no-membership") {
+    // Authenticated user who has no active organisation membership.
+    // Empty strings represent absence of tenantId/organisationId context.
+    // The pipeline rejects with 403 (no permissions) before the handler runs.
     return {
       userId: FIXTURE.FORBIDDEN_ID,
-      tenantId: FIXTURE.ORG_ID,
-      organisationId: FIXTURE.ORG_ID,
+      tenantId: "",
+      organisationId: "",
       roles: [],
       permissions: [],
-      displayName: "Forbidden Fixture",
+      displayName: "No Membership Fixture",
     };
   }
   if (role !== "tenant-admin" && role !== "viewer") return null;

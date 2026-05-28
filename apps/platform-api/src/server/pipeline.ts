@@ -32,6 +32,7 @@ export type PipelineHandler = (req: PipelineRequest, res: PipelineResponse) => P
 export interface Route {
   method: string;
   path: string;
+  operationName?: string;
   handler: PipelineHandler;
   requiresAuth?: boolean;
   requiredPermission?: string;
@@ -158,9 +159,9 @@ export function createRouter(
             actorId: actor.userId,
             tenantId: actor.tenantId,
             organisationId: actor.organisationId,
-            operationName: path,
+            operationName: matchingRoute.operationName ?? path,
           }
-        : { operationName: path }),
+        : { operationName: matchingRoute.operationName ?? path }),
     });
 
     // Enrich logger with actor metadata if available

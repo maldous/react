@@ -1,7 +1,11 @@
 import { NotFoundError, ValidationError, toSafeResponse } from "@platform/platform-errors";
 import { UpdateOrganisationProfileRequestSchema } from "@platform/contracts-organisation";
 import { getOrganisationProfile, updateOrganisationDisplayName } from "../usecases/organisation.ts";
+import { PostgresOrganisationRepository } from "../adapters/postgres-organisation-repository.ts";
 import type { PipelineHandler } from "./pipeline.ts";
+
+const POSTGRES_URL =
+  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
 
 export const handleGetOrganisationProfile: PipelineHandler = async (req, res) => {
   const organisationId = req.context.organisationId;
@@ -10,7 +14,8 @@ export const handleGetOrganisationProfile: PipelineHandler = async (req, res) =>
     return;
   }
   try {
-    const profile = await getOrganisationProfile(organisationId);
+    const repo = new PostgresOrganisationRepository(POSTGRES_URL);
+    const profile = await getOrganisationProfile({ organisationId }, { organisations: repo });
     res.json(200, profile);
   } catch (err) {
     if (err instanceof NotFoundError) {
@@ -34,11 +39,17 @@ export const handlePatchOrganisationProfile: PipelineHandler = async (req, res) 
     return;
   }
   try {
-    const profile = await updateOrganisationDisplayName(organisationId, parsed.data.displayName);
+    const repo = new PostgresOrganisationRepository(POSTGRES_URL);
+    const profile = await updateOrganisationDisplayName(
+      { organisationId, displayName: parsed.data.displayName },
+      { organisations: repo }
+    );
     res.json(200, profile);
   } catch (err) {
     if (err instanceof NotFoundError) {
       res.json(404, toSafeResponse(err));
+    } else if (err instanceof ValidationError) {
+      res.json(400, toSafeResponse(err));
     } else {
       throw err;
     }

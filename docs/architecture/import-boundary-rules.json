@@ -458,7 +458,7 @@
         "@platform/platform-api"
       ],
       "forbiddenExact": ["pg", "pino"],
-      "rationale": "ADR-0022: apps/react-enterprise-app is a browser-only Vite SPA. It must not import Node-only packages, server runtime packages, or database clients. Server/BFF logic belongs in apps/platform-api. Allowed exceptions: @platform/platform-errors (browser-safe typed errors), @platform/contracts-auth (Zod schemas), @platform/ui-design-system."
+      "rationale": "ADR-0022: apps/react-enterprise-app is a browser-only Vite SPA. It must not import Node-only packages, server runtime packages, or database clients. Server/BFF logic belongs in apps/platform-api. Allowed exceptions: @platform/platform-errors (browser-safe typed errors), @platform/contracts-auth (Zod schemas), @platform/contracts-organisation (Zod schemas), @platform/ui-design-system."
     }
   ]
 }

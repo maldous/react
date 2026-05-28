@@ -5,9 +5,28 @@
   "name": "Authenticated organisation profile slice",
   "date": "2026-05-28",
   "status": "done",
+  "hardened": true,
+  "hardenedVia": "ADR-ACT-0118",
   "adrRef": "ADR-0024",
   "sliceManifest": "docs/slices/ADR-ACT-0008.json",
-  "summary": "First vertical slice: React protected route (organisation.read) → useSession → TanStack Query → contract client → platform-api permission guard → use case → Postgres → structured logs/traces.",
+  "summary": "First vertical slice: React protected route (organisation.read) → useSession → TanStack Query → contract client → platform-api permission guard → use case (DI, no pg) → repository port → Postgres adapter → structured logs/traces. Hardened to canonical hexagonal architecture via ADR-ACT-0118.",
+  "architectureShape": {
+    "reactProtectedRoute": "apps/react-enterprise-app/src/routes/organisation/profile.tsx",
+    "tanstackQuery": "apps/react-enterprise-app/src/features/organisation/use-organisation-profile.ts",
+    "contractClient": "apps/react-enterprise-app/src/features/organisation/organisation-client.ts",
+    "routesExtracted": "apps/platform-api/src/server/routes.ts",
+    "handler": "apps/platform-api/src/server/organisation.ts",
+    "usecase": "apps/platform-api/src/usecases/organisation.ts",
+    "repositoryPort": "apps/platform-api/src/ports/organisation-repository.ts",
+    "postgresAdapter": "apps/platform-api/src/adapters/postgres-organisation-repository.ts"
+  },
+  "shortcutsFixed": [
+    "usecases/organisation.ts imported pg directly — removed, DI via OrganisationRepository port",
+    "Routes duplicated in tests — server/routes.ts exported and shared by http.ts and tests",
+    "no-permissions fixture had organisationId — replaced with no-membership (empty tenantId/organisationId)",
+    "Operation name was raw path string — explicit operationName field on Route",
+    "No domain validation for displayName — normaliseOrganisationDisplayName() trims, validates length/chars"
+  ],
   "packages": [
     {
       "name": "@platform/contracts-organisation",
@@ -18,6 +37,9 @@
   ],
   "files": {
     "contract": "packages/contracts-organisation/src/index.ts",
+    "repositoryPort": "apps/platform-api/src/ports/organisation-repository.ts",
+    "postgresAdapter": "apps/platform-api/src/adapters/postgres-organisation-repository.ts",
+    "routeList": "apps/platform-api/src/server/routes.ts",
     "usecase": "apps/platform-api/src/usecases/organisation.ts",
     "routeHandler": "apps/platform-api/src/server/organisation.ts",
     "httpWiring": "apps/platform-api/src/server/http.ts",
@@ -30,24 +52,45 @@
     "routeTree": "apps/react-enterprise-app/src/routeTree.gen.ts"
   },
   "tests": {
-    "platformApiTests": "apps/platform-api/tests/substrate/organisation-profile.test.ts",
+    "validationUnit": "apps/platform-api/tests/unit/organisation-validation.test.ts",
+    "usecaseUnit": "apps/platform-api/tests/unit/organisation-usecase.test.ts",
+    "postgresAdapterSubstrate": "apps/platform-api/tests/substrate/postgres-organisation-repository.test.ts",
+    "platformApiSubstrate": "apps/platform-api/tests/substrate/organisation-profile.test.ts",
     "frontendTests": "apps/react-enterprise-app/src/tests/organisation/organisation-profile.test.tsx",
     "e2eTests": "e2e/substrate/smoke.test.ts",
     "composeSmokeTests": "tests/integration/compose-smoke.test.mjs"
   },
+  "testCounts": {
+    "unitOrganisationValidation": 11,
+    "unitOrganisationUsecase": 11,
+    "substratePostgresRepository": 7,
+    "substrateOrganisationProfile": 15,
+    "frontend": 6,
+    "composeSmokeOrganisation": 2,
+    "e2e": 13,
+    "platformApiTotal": 77
+  },
   "fixtureRolesValidated": [
     "tenant-admin (GET 200, PATCH 200)",
     "viewer (GET 200, PATCH 403)",
-    "no-permissions (GET 403)",
+    "no-membership (GET 403, PATCH 403)",
     "unauthenticated (GET 401, PATCH 401)"
   ],
   "permissionsValidated": [
     "organisation.read (GET guard)",
     "organisation.update (PATCH guard)"
   ],
+  "boundaryChecks": {
+    "noPgInUsecases": true,
+    "noRawSqlInServerOrUsecases": true,
+    "noServerRuntimeInSpa": true,
+    "validateSourceImportsStrict": true
+  },
   "constraints": [
     "React app does not import pg, platform-api, or server-side packages",
     "contracts-organisation has zero @platform/* dependencies",
-    "Fixture session used — no real Keycloak (ADR-ACT-0110 remains Open)"
-  ]
+    "Fixture session used — no real Keycloak (ADR-ACT-0110 remains Open)",
+    "Use case has zero pg imports — all SQL owned by PostgresOrganisationRepository adapter"
+  ],
+  "scanTimestamp": "2026-05-28T12:00:00.000Z"
 }

@@ -12,8 +12,8 @@ Version: 0.1.0
 Component: contracts-organisation
 Type: api
 System: enterprise-react-platform
-Domain: experience
-Bounded context: app-shell
+Domain: core
+Bounded context: profile-configuration
 Owner: team-platform
 ```
 
@@ -125,6 +125,9 @@ ADR-0001
 ADR-0002
 ADR-0003
 ADR-0005
+ADR-0014
+ADR-0021
+ADR-0022
 ```
 
 ## Validation

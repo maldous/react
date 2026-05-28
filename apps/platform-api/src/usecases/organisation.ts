@@ -1,53 +1,66 @@
-import pg from "pg";
 import type { OrganisationProfile } from "@platform/contracts-organisation";
-import { NotFoundError } from "@platform/platform-errors";
+import { NotFoundError, ValidationError } from "@platform/platform-errors";
+import { createLogger } from "@platform/platform-logging";
+import { createTracer, withSpan } from "@platform/platform-observability";
+import type { OrganisationRepository } from "../ports/organisation-repository.ts";
 
-const POSTGRES_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
+const logger = createLogger({ name: "organisation-usecase" });
+const tracer = createTracer("@platform/platform-api", "0.1.0");
 
-export async function getOrganisationProfile(organisationId: string): Promise<OrganisationProfile> {
-  const client = new pg.Client(POSTGRES_URL);
-  await client.connect();
-  try {
-    const { rows } = await client.query(
-      "SELECT id, slug, display_name, created_at, updated_at FROM organisations WHERE id = $1",
-      [organisationId]
-    );
-    if (!rows.length) throw new NotFoundError("Organisation not found");
-    const row = rows[0];
-    return {
-      id: row.id as string,
-      slug: row.slug as string,
-      displayName: row.display_name as string,
-      createdAt: (row.created_at as Date).toISOString(),
-      updatedAt: (row.updated_at as Date).toISOString(),
-    };
-  } finally {
-    await client.end();
+const CONTROL_CHAR_RE = /[\x00-\x1F\x7F]/;
+
+export function normaliseOrganisationDisplayName(value: string): string {
+  const trimmed = value.trim();
+  if (trimmed.length === 0) {
+    throw new ValidationError("Display name is required");
   }
+  if (trimmed.length < 2) {
+    throw new ValidationError("Display name must be at least 2 characters");
+  }
+  if (trimmed.length > 120) {
+    throw new ValidationError("Display name must be 120 characters or less");
+  }
+  if (CONTROL_CHAR_RE.test(trimmed)) {
+    throw new ValidationError("Display name must not contain control characters");
+  }
+  return trimmed;
+}
+
+export async function getOrganisationProfile(
+  input: { organisationId: string },
+  deps: { organisations: OrganisationRepository }
+): Promise<OrganisationProfile> {
+  const { organisationId } = input;
+  return withSpan(tracer, "organisation.profile.get", async (span) => {
+    span.setAttribute("organisationId", organisationId);
+    const opLogger = logger.child({ organisationId, operation: "organisation.profile.get" });
+    opLogger.info("fetching organisation profile");
+    const profile = await deps.organisations.getById(organisationId);
+    if (!profile) {
+      opLogger.warn("organisation not found");
+      throw new NotFoundError("Organisation not found");
+    }
+    opLogger.info("organisation profile fetched");
+    return profile;
+  });
 }
 
 export async function updateOrganisationDisplayName(
-  organisationId: string,
-  displayName: string
+  input: { organisationId: string; displayName: string },
+  deps: { organisations: OrganisationRepository }
 ): Promise<OrganisationProfile> {
-  const client = new pg.Client(POSTGRES_URL);
-  await client.connect();
-  try {
-    const { rows } = await client.query(
-      "UPDATE organisations SET display_name = $1, updated_at = now() WHERE id = $2 RETURNING id, slug, display_name, created_at, updated_at",
-      [displayName, organisationId]
-    );
-    if (!rows.length) throw new NotFoundError("Organisation not found");
-    const row = rows[0];
-    return {
-      id: row.id as string,
-      slug: row.slug as string,
-      displayName: row.display_name as string,
-      createdAt: (row.created_at as Date).toISOString(),
-      updatedAt: (row.updated_at as Date).toISOString(),
-    };
-  } finally {
-    await client.end();
-  }
+  const { organisationId } = input;
+  const displayName = normaliseOrganisationDisplayName(input.displayName);
+  return withSpan(tracer, "organisation.profile.update", async (span) => {
+    span.setAttribute("organisationId", organisationId);
+    const opLogger = logger.child({ organisationId, operation: "organisation.profile.update" });
+    opLogger.info("updating organisation display name");
+    const profile = await deps.organisations.updateDisplayName(organisationId, displayName);
+    if (!profile) {
+      opLogger.warn("organisation not found during update");
+      throw new NotFoundError("Organisation not found");
+    }
+    opLogger.info("organisation display name updated");
+    return profile;
+  });
 }
