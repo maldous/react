@@ -258,7 +258,9 @@ Rules:
 - Do not throw raw `Error` for validation failures, not-found cases, or conflict conditions.
 - API responses must expose `{ code, message, details? }` using `safeMessage` and `safeDetails` only.
 - Logs may include `internalDetails` after redaction.
-- Domain errors must not depend on HTTP — `httpStatus` is resolved at the API boundary.
+- Domain packages must not import HTTP frameworks or response objects. Throwing `new ValidationError("…")` is permitted in domain/use-case code — it uses a _semantic error category_, not an HTTP concept.
+- `httpStatus` on `AppError` subclasses is **metadata for the API boundary**, not a domain concept. Domain code never reads `httpStatus`; the API boundary reads it once to set the HTTP response status code.
+- The API boundary owns the final HTTP response mapping — it reads `err.httpStatus`, constructs `{ code, message, details? }`, and sets the status. Nothing else does this.
 - `UnexpectedError` wraps unknown errors; the wrapped cause is log-only.
 
 ---

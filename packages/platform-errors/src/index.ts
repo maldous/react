@@ -6,8 +6,19 @@ export type SafeResponse = {
   details?: Record<string, unknown>;
 };
 
+/**
+ * Base class for all typed platform errors.
+ *
+ * Design note — `httpStatus` as metadata, not HTTP coupling (ADR-0020 §5):
+ *   Domain and use-case packages may throw typed AppError subclasses
+ *   (e.g. `new ValidationError(…)`) without knowing anything about HTTP.
+ *   `httpStatus` is a numeric hint stored on the error for the API boundary
+ *   to read when constructing an HTTP response. Domain code never reads it.
+ *   The API boundary is the only layer that maps httpStatus → HTTP response.
+ */
 export abstract class AppError extends Error {
   abstract readonly code: string;
+  /** Numeric HTTP status hint. Read only by the API boundary — never by domain code. */
   abstract readonly httpStatus: number;
   abstract readonly retryable: boolean;
 
