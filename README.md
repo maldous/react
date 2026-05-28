@@ -113,12 +113,13 @@ Done:
 - Playwright E2E substrate
 - Authenticated organisation profile vertical slice
 - Local Keycloak provisioning baseline
+- Real OAuth 2.0 Authorization Code + PKCE login through platform-api BFF
 
 Next:
 
-- Wire real Keycloak browser login through the BFF callback flow
-- Move from fixture sessions to real cookie-backed sessions for Tier 2 readiness
-- Build the next product slice on the proven foundation
+- Live Keycloak browser E2E (requires `KEYCLOAK_CLIENT_SECRET` env var + running identity profile)
+- Keycloak global logout (end-session endpoint)
+- Second product slice
 
 ## Commands
 

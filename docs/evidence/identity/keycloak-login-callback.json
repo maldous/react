@@ -5,12 +5,15 @@
   "name": "Real Keycloak login callback through platform-api session boundary",
   "date": "2026-05-29",
   "status": "done",
-  "adrRefs": ["ADR-0021", "ADR-0022"],
+  "adrRefs": [
+    "ADR-0021",
+    "ADR-0022"
+  ],
   "flow": {
-    "loginPath": "GET /auth/login → PKCE state in Redis → 302 → Keycloak /authorize",
-    "callbackPath": "GET /auth/callback → state validated → code exchanged → /userinfo → identity resolved → Redis session → HTTP-only cookie → 302 → React app",
-    "sessionPath": "GET /api/session → fixture (priority) or Redis cookie → safe SessionActor JSON",
-    "logoutPath": "POST /auth/logout → Redis session destroyed → cookie cleared (Max-Age=0)"
+    "loginPath": "GET /auth/login \u2192 PKCE state in Redis \u2192 302 \u2192 Keycloak /authorize",
+    "callbackPath": "GET /auth/callback \u2192 state validated \u2192 code exchanged \u2192 /userinfo \u2192 identity resolved \u2192 Redis session \u2192 HTTP-only cookie \u2192 302 \u2192 React app",
+    "sessionPath": "GET /api/session \u2192 fixture (priority) or Redis cookie \u2192 safe SessionActor JSON",
+    "logoutPath": "POST /auth/logout \u2192 Redis session destroyed \u2192 cookie cleared (Max-Age=0)"
   },
   "securityDecisions": {
     "noTokensInSession": true,
@@ -20,7 +23,11 @@
     "stateConsumeOnce": "getDel (atomic)",
     "returnToSanitised": "relative paths only",
     "noJwtVerification": "userinfo trusted by provenance (server-to-server confidential client exchange)",
-    "keycloakSdkBoundary": "adapters-keycloak only"
+    "keycloakSdkBoundary": "adapters-keycloak only",
+    "noEmailOnlyIdentityMerging": "EMAIL_ALREADY_REGISTERED thrown if email conflicts; no ON CONFLICT DO UPDATE",
+    "emailVerifiedRequired": "mapKeycloakClaims returns null if email absent or email_verified !== true",
+    "preferredUsernameNotUsedForEmail": "preferred_username is user-controlled; used only for displayName",
+    "preAuthNonceCookie": "HttpOnly SameSite=Lax auth_state_token cookie binds login flow to user-agent; verified in callback"
   },
   "filesAdded": [
     "packages/domain-identity/src/index.ts (resolvePermissions)",
@@ -40,7 +47,8 @@
     "adaptersKeycloak": 15,
     "postgresIdentityRepository": 6,
     "authUsecase": 8,
-    "authRoutes": 12
+    "authRoutes": 13,
+    "platformApiTotal": 105
   },
   "fixtureSessionPreservation": {
     "LOCAL_FIXTURE_SESSION": "Takes precedence over real cookie in both /api/session and pipeline auth resolution",
@@ -48,9 +56,9 @@
     "adtAct0008Status": "accepted and unchanged"
   },
   "deferrals": [
-    "Keycloak global logout (end_session) — cookie cleared, full SSO logout is a follow-up",
-    "Full E2E with real Keycloak — requires live Keycloak + KEYCLOAK_CLIENT_SECRET env var",
-    "Staging/production Keycloak provisioning — blocked until AWS infra"
+    "Keycloak global logout (end_session) \u2014 cookie cleared, full SSO logout is a follow-up",
+    "Full E2E with real Keycloak \u2014 requires live Keycloak + KEYCLOAK_CLIENT_SECRET env var",
+    "Staging/production Keycloak provisioning \u2014 blocked until AWS infra"
   ],
   "envVars": [
     "KEYCLOAK_URL (default: http://localhost:8080)",
@@ -68,8 +76,18 @@
     "makePreSliceGate": "passed",
     "validateSlices": "passed",
     "orchestratorStrict": "0 violations",
-    "testPlatformApi": "103 tests pass",
+    "testPlatformApi": "105 tests pass",
     "testFrontend": "26 tests pass",
-    "fixtureSessionRegression": "verified — LOCAL_FIXTURE_SESSION=tenant-admin returns correct actor"
-  }
+    "fixtureSessionRegression": "verified \u2014 LOCAL_FIXTURE_SESSION=tenant-admin returns correct actor",
+    "securityBoundaryChecks": "CLEAN \u2014 no Keycloak SDK outside adapters-keycloak, no raw tokens in session"
+  },
+  "securityHardening": {
+    "appliedAfterInitialImplementation": true,
+    "findings": [
+      "CRITICAL: identity federation / account takeover via email-only linking \u2014 fixed (ON CONFLICT DO NOTHING + EMAIL_ALREADY_REGISTERED error)",
+      "HIGH: OAuth CSRF / session fixation \u2014 fixed (pre-auth nonce cookie, SameSite=Lax, verified in callback)",
+      "HIGH: identity spoofing via unverified email \u2014 fixed (email_verified required, preferred_username not used for email)"
+    ]
+  },
+  "scanTimestamp": "2026-05-29T10:00:00.000Z"
 }

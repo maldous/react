@@ -59,6 +59,19 @@ React app → GET /api/session → safe SessionActor JSON
 | returnTo sanitisation | Only relative paths (`/...`) accepted; absolute URLs silently fall back to `/` |
 | No JWT verification | Token exchange is server-to-server with confidential client — userinfo response trusted by provenance |
 | Keycloak SDK boundary | All Keycloak types remain in `packages/adapters-keycloak`; no SDK in domain/feature/UI |
+| Pre-auth nonce cookie | `auth_state_token` HttpOnly SameSite=Lax cookie binds login flow to initiating user-agent; verified in callback |
+| No email-only account merge | `createUserAndExternalIdentity` uses `ON CONFLICT (email) DO NOTHING`; throws `EMAIL_ALREADY_REGISTERED` if email taken — no silent account hijack |
+| `email_verified` required | `mapKeycloakClaims` returns null if `email` absent or `email_verified !== true`; callback responds 401 |
+
+## Security hardening (post-implementation)
+
+Applied after initial implementation following automated security review:
+
+| Severity | Finding | Fix |
+| -------- | ------- | --- |
+| CRITICAL | Identity federation / account takeover via email-only linking | `ON CONFLICT (email) DO NOTHING` + `EMAIL_ALREADY_REGISTERED` error |
+| HIGH | OAuth CSRF / session fixation | Pre-auth nonce in `auth_state_token` cookie (SameSite=Lax), verified in callback, cleared after use |
+| HIGH | Identity spoofing via unverified / absent email | `mapKeycloakClaims` returns null if `email_verified !== true`; `preferred_username` not used for email |
 
 ## Fixture session preservation (ADR-ACT-0008)
 

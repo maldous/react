@@ -251,7 +251,7 @@ Package READMEs are generated from `architecture.readme` metadata. Do not edit g
 | 0024      | Define slice readiness and dependency gate model                        |
 | 0025      | Define Playwright end-to-end testing strategy                           |
 
-ADR-0018 is reserved. Next ADR: **0026**. Next ACTION-REGISTER entry: **ADR-ACT-0119**.
+ADR-0018 is reserved. Next ADR: **0026**. Next ACTION-REGISTER entry: **ADR-ACT-0120**.
 
 ---
 
