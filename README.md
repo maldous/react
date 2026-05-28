@@ -3,17 +3,17 @@
 A production-grade, governed React monorepo built from first principles — architecture decisions first, code second.
 
 [![Quality Gate](https://img.shields.io/badge/Sonar-passing-brightgreen)](docs/evidence/quality-gates/)
-[![Tests](https://img.shields.io/badge/tests-271%20passing-brightgreen)](docs/evidence/quality-gates/)
-[![Coverage](https://img.shields.io/badge/coverage-83%25-green)](docs/evidence/quality-gates/)
-[![ADRs](https://img.shields.io/badge/ADRs-20%20accepted-blue)](docs/adr/)
-[![Packages](https://img.shields.io/badge/packages-51-blue)](packages/)
+[![Tests](https://img.shields.io/badge/tests-426%20passing-brightgreen)](docs/evidence/quality-gates/)
+[![Coverage](https://img.shields.io/badge/coverage-76%25-green)](docs/evidence/quality-gates/)
+[![ADRs](https://img.shields.io/badge/ADRs-25%20accepted-blue)](docs/adr/)
+[![Packages](https://img.shields.io/badge/packages-46-blue)](packages/)
 ![License](https://img.shields.io/badge/license-private-lightgrey)
 
 ---
 
 ## What this is
 
-A fully governed enterprise React platform skeleton — complete with architecture decisions, quality gates, observability primitives, a local service substrate, and a component stack — ready for the first vertical slice of product code.
+A fully governed enterprise React platform — complete with architecture decisions, quality gates, observability primitives, a local service substrate, an identity model, and a component stack. The first vertical slice (authenticated organisation profile) is **Done** in canonical hexagonal architecture.
 
 Every technical choice is recorded in an Architecture Decision Record (ADR). Nothing is accidental. Nothing is undocumented.
 
@@ -33,8 +33,10 @@ This platform was built in layers, each layer ratified before the next began:
 | **Frontend stack**    | TanStack Router, TanStack Query, React Aria Components, Tailwind CSS, open-code component model, Vitest + MSW (ADR-0019)                                  |
 | **Observability**     | OpenTelemetry tracing, Pino structured logging, typed error hierarchy, runtime context propagation, health endpoint contracts (ADR-0020)                  |
 | **Platform packages** | `platform-runtime-context`, `platform-errors`, `platform-logging`, `platform-observability` — fully implemented with tests                                |
-
-The first vertical slice (ADR-ACT-0008) begins from a clean, validated baseline.
+| **Identity & auth**   | Identity model (User, Organisation, Membership, SessionActor, 5 roles, 9 permissions), auth/session boundary, Keycloak adapter skeleton (ADR-0021–0022)   |
+| **Infrastructure**    | Declarative provisioning model (Terraform/OpenTofu), `infra/` layout, Keycloak module scaffold (ADR-0023)                                                 |
+| **Slice governance**  | Slice readiness gate model (`docs/slices/`), Playwright E2E strategy with fixture session mode (ADR-0024–0025)                                            |
+| **First slice ✓**     | Authenticated organisation profile (ADR-ACT-0008) — canonical hexagonal architecture, repository port, Postgres adapter, DI use case, 426 tests passing   |
 
 ---
 
@@ -60,25 +62,30 @@ This starts PostgreSQL, Redis, ClickHouse, MinIO, Mailpit, and the OTel Collecto
 
 ## Architecture decisions
 
-Twenty accepted ADRs govern every structural choice:
+Twenty-five accepted ADRs govern every structural choice:
 
-| ADR                                                                                            | Decision                                                                     |
-| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [0001](docs/adr/0001-use-modular-hexagonal-architecture.md)                                    | Hexagonal architecture — domain logic independent from frameworks            |
-| [0002](docs/adr/0002-model-the-platform-around-bounded-contexts.md)                            | Bounded contexts as the primary product boundary                             |
-| [0003](docs/adr/0003-use-a-modular-monorepo-with-promotion-ready-package-boundaries.md)        | Modular monorepo, `@platform/` scope, no root workspace                      |
-| [0004](docs/adr/0004-define-package-lifecycle-classes.md)                                      | Package lifecycle classes (`stage.role`)                                     |
-| [0005](docs/adr/0005-define-package-metadata-format.md)                                        | `package.json` architecture block as single source of truth                  |
-| [0006](docs/adr/0006-define-package-lifecycle-transition-rules.md)                             | Governed lifecycle transitions with evidence bundles                         |
-| [0007](docs/adr/0007-define-architecture-artifact-and-repository-directory-layout.md)          | Canonical directory layout                                                   |
-| [0008–0012](docs/adr/)                                                                         | Generated READMEs, inventory, evidence bundles, tooling model, test strategy |
-| [0013](docs/adr/0013-define-client-facing-api-boundary.md)                                     | GraphQL API boundary via typed contracts                                     |
-| [0014](docs/adr/0014-define-transactional-data-ownership.md)                                   | Transactional data owned by domain packages                                  |
-| [0015](docs/adr/0015-define-analytical-data-ownership.md)                                      | Analytical events via ClickHouse adapters                                    |
-| [0016](docs/adr/0016-define-enterprise-quality-gate-baseline.md)                               | Three-tier quality gates: hard / advisory / architectural                    |
-| [0017](docs/adr/0017-define-local-integration-service-substrate.md)                            | Docker Compose substrate with profile-gated services                         |
-| [0019](docs/adr/0019-define-react-component-platform-and-frontend-integration-stack.md)        | React component platform — TanStack, React Aria, open-code UI                |
-| [0020](docs/adr/0020-define-observability-diagnostics-and-runtime-introspection-primitives.md) | OpenTelemetry, Pino, typed errors, runtime context                           |
+| ADR                                                                                            | Decision                                                                      |
+| ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| [0001](docs/adr/0001-use-modular-hexagonal-architecture.md)                                    | Hexagonal architecture — domain logic independent from frameworks             |
+| [0002](docs/adr/0002-model-the-platform-around-bounded-contexts.md)                            | Bounded contexts as the primary product boundary                              |
+| [0003](docs/adr/0003-use-a-modular-monorepo-with-promotion-ready-package-boundaries.md)        | Modular monorepo, `@platform/` scope, no root workspace                       |
+| [0004](docs/adr/0004-define-package-lifecycle-classes.md)                                      | Package lifecycle classes (`stage.role`)                                      |
+| [0005](docs/adr/0005-define-package-metadata-format.md)                                        | `package.json` architecture block as single source of truth                   |
+| [0006](docs/adr/0006-define-package-lifecycle-transition-rules.md)                             | Governed lifecycle transitions with evidence bundles                          |
+| [0007](docs/adr/0007-define-architecture-artifact-and-repository-directory-layout.md)          | Canonical directory layout                                                    |
+| [0008–0012](docs/adr/)                                                                         | Generated READMEs, inventory, evidence bundles, tooling model, test strategy  |
+| [0013](docs/adr/0013-define-client-facing-api-boundary.md)                                     | GraphQL API boundary via typed contracts                                      |
+| [0014](docs/adr/0014-define-transactional-data-ownership.md)                                   | Transactional data owned by domain packages                                   |
+| [0015](docs/adr/0015-define-analytical-data-ownership.md)                                      | Analytical events via ClickHouse adapters                                     |
+| [0016](docs/adr/0016-define-enterprise-quality-gate-baseline.md)                               | Three-tier quality gates: hard / advisory / architectural                     |
+| [0017](docs/adr/0017-define-local-integration-service-substrate.md)                            | Docker Compose substrate with profile-gated services                          |
+| [0019](docs/adr/0019-define-react-component-platform-and-frontend-integration-stack.md)        | React component platform — TanStack, React Aria, open-code UI                 |
+| [0020](docs/adr/0020-define-observability-diagnostics-and-runtime-introspection-primitives.md) | OpenTelemetry, Pino, typed errors, runtime context                            |
+| [0021](docs/adr/0021-define-identity-tenancy-roles-and-permissions-model.md)                   | Identity model — User, Organisation, SessionActor, 5 roles, 9 permissions     |
+| [0022](docs/adr/0022-define-authentication-session-and-sso-integration-boundary.md)            | BFF session cookie model, Keycloak adapter boundary, no raw tokens in browser |
+| [0023](docs/adr/0023-define-declarative-infrastructure-provisioning-model.md)                  | Terraform/OpenTofu provisioning — `infra/` layout, env scaffolds              |
+| [0024](docs/adr/0024-define-slice-readiness-and-dependency-gate-model.md)                      | Slice readiness gate model — `docs/slices/` manifests, Tier 1 E2E gate        |
+| [0025](docs/adr/0025-define-playwright-end-to-end-testing-strategy.md)                         | Playwright E2E strategy — fixture session mode, no Keycloak required          |
 
 All decisions are tracked in [`docs/adr/ACTION-REGISTER.md`](docs/adr/ACTION-REGISTER.md).
 
@@ -129,7 +136,7 @@ All ports are configurable via `.env`. See [`docs/local-development/compose-serv
 
 ## Package structure
 
-51 packages across 8 domains, all governed by ADR-0005 metadata.
+46 packages across 8 domains, all governed by ADR-0005 metadata.
 
 **Platform packages** — the cross-cutting foundation:
 
@@ -143,9 +150,10 @@ All ports are configurable via `.env`. See [`docs/local-development/compose-serv
 **Product packages:**
 
 - `apps/react-enterprise-app` — React 19 SPA shell (Vite, TanStack Router)
-- `packages/domain-core`, `access-control`, `profile-configuration` — Business logic, no framework dependencies
-- `packages/contracts-graphql`, `contracts-analytics`, `contracts-ingestion` — Zod DTO schemas
+- `packages/domain-core`, `access-control`, `profile-configuration`, `domain-identity` — Business logic, no framework dependencies
+- `packages/contracts-graphql`, `contracts-analytics`, `contracts-ingestion`, `contracts-auth`, `contracts-organisation` — Zod DTO schemas
 - `packages/feature-workflow` — First feature package (experience domain)
+- `packages/session-runtime` — BFF session management primitives
 - `packages/ui-design-system` — Accessible UI components (React Aria + Tailwind)
 - `packages/adapters-postgres`, `adapters-redis`, `adapters-clickhouse`, `adapters-opentelemetry`, `adapters-sentry`, and more
 - `packages/observability`, `security-auth`, `api-runtime`, and 15 more operations-domain packages
@@ -163,15 +171,18 @@ All ports are configurable via `.env`. See [`docs/local-development/compose-serv
 ## Testing
 
 ```sh
-make test          # 271 tests + LCOV coverage
-make test-compose  # 17 compose service smoke tests (starts services automatically)
+make test              # 426 tests + LCOV coverage
+make test-compose      # 25 compose service smoke tests (requires services running)
+npm run test:e2e       # 13 Playwright E2E tests (requires services + Playwright browsers)
 ```
 
-| Suite                              | Tests | Coverage              |
-| ---------------------------------- | ----- | --------------------- |
-| Architecture tooling (integration) | 180   | —                     |
-| Architecture tooling (unit)        | 91    | 83% line / 80% branch |
-| Compose service smoke tests        | 17    | —                     |
+| Suite                                    | Tests | Runner     |
+| ---------------------------------------- | ----- | ---------- |
+| Architecture tooling + platform packages | 298   | node:test  |
+| Platform API substrate (organisation)    | 77    | node:test  |
+| Frontend components (Vitest)             | 26    | vitest     |
+| Compose service smoke tests              | 25    | node:test  |
+| Playwright E2E                           | 13    | playwright |
 
 Compose smoke tests verify actual roundtrips: PostgreSQL, Redis, ClickHouse, MinIO, Mailpit, and OTel Collector — using npm clients (`pg`, `redis`, `@aws-sdk/client-s3`, `nodemailer`) rather than shell commands.
 
@@ -252,7 +263,8 @@ All architectural decisions are backed by committed evidence:
 | Import boundaries | [`docs/evidence/import-boundaries/`](docs/evidence/import-boundaries/) |
 | Package scope     | [`docs/evidence/platform-scope/`](docs/evidence/platform-scope/)       |
 | Security SBOM     | [`docs/evidence/security/`](docs/evidence/security/)                   |
+| Vertical slices   | [`docs/evidence/vertical-slices/`](docs/evidence/vertical-slices/)     |
 
 ---
 
-> **Status:** Pre-slice baseline complete. ADR-ACT-0008 (first vertical slice) has not started.
+> **Status:** First vertical slice Done. ADR-ACT-0008 (authenticated organisation profile) is complete in canonical hexagonal architecture. Next: second vertical slice.

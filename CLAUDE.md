@@ -14,7 +14,7 @@ A fully governed enterprise React platform. Architecture decisions come first �
 make all
 ```
 
-Runs everything in order: install → format → lint → typecheck → test (271 tests + coverage) → test-compose (17 smoke tests) → audit → security → compose → architecture → sonar → advisory → sbom → license. This is the single source of truth for a complete quality check.
+Runs everything in order: install → format → lint → typecheck → test (426 tests + coverage) → test-compose (25 smoke tests) → audit → security → compose → architecture → sonar → advisory → sbom → license. This is the single source of truth for a complete quality check.
 
 Other useful make targets:
 
@@ -57,31 +57,14 @@ npm run tsc:check:packages  # Platform packages only (packages/tsconfig.packages
 ### Tests
 
 ```bash
-npm run test:architecture   # 271 tests — all architecture tool + platform package tests
+npm run test:architecture   # 426 tests — architecture tools, platform packages, platform-api substrate
 npm run test:coverage       # Same + generates coverage/lcov.info (V8 LCOV)
-npm run test:compose        # 17 compose smoke tests (requires services running)
+npm run test:platform-api   # 77 platform-api tests (requires Postgres running)
+npm run test:compose        # 25 compose smoke tests (requires services running)
+npm run test:e2e            # 13 Playwright E2E tests (requires services + Vite dev server)
 ```
 
-`node --test` does **not** expand globs — pass explicit file paths. Full list:
-
-```bash
-node --test \
-  tools/architecture/validate-package-metadata/tests/validate-package-metadata.test.mjs \
-  tools/architecture/validate-package-metadata/tests/validate-package-metadata-unit.test.mjs \
-  tools/architecture/validate-source-imports/tests/validate-source-imports.test.mjs \
-  tools/architecture/validate-source-imports/tests/validate-source-imports-unit.test.mjs \
-  tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs \
-  tools/architecture/generate-package-inventory/tests/generate-package-inventory.test.mjs \
-  tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence.test.mjs \
-  tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence-unit.test.mjs \
-  tools/architecture/orchestrator/tests/self-evidence.test.mjs \
-  tools/architecture/orchestrator/tests/orchestrator-unit.test.mjs \
-  packages/platform-runtime-context/tests/platform-runtime-context.test.ts \
-  packages/platform-errors/tests/platform-errors.test.ts \
-  packages/platform-logging/tests/platform-logging.test.ts \
-  packages/platform-observability/tests/platform-observability.test.ts \
-  packages/api-runtime/tests/health-contract.test.ts
-```
+`node --test` does **not** expand globs — use `npm run test:architecture` or `npm run test:platform-api`. For the full explicit file list, see the `package.json` `scripts` section.
 
 After `git clean` or fresh clone, install tool dependencies:
 
