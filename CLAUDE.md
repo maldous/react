@@ -4,65 +4,166 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-An architecture baseline and package skeleton for a modular enterprise React platform. It contains:
+A fully governed enterprise React platform. Architecture decisions come first — every structural choice is recorded in an ADR before code is written. The repo is pre-slice: 51 packages, 20 accepted ADRs, all quality gates passing, Docker Compose services running, platform packages implemented. The first feature (ADR-ACT-0008) has not started.
 
-- Product packages (`apps/`, `packages/`) with governed metadata
-- Architecture governance tooling (`tools/architecture/`)
-- Architecture decision records, schemas, committed evidence, and implementation design specs (`docs/`)
+**Do not begin ADR-ACT-0008 unless explicitly instructed.**
 
-There is no root `package.json` workspace. Tools run directly with `node`.
+---
+
+## Primary command
+
+```bash
+make all
+```
+
+Runs everything in order: install → format → lint → typecheck → test (271 tests + coverage) → test-compose (17 smoke tests) → audit → security → compose → architecture → sonar → advisory → sbom → license. This is the single source of truth for a complete quality check.
+
+Other useful make targets:
+
+```bash
+make check          # Fast: format/lint/typecheck/audit/compose/architecture
+make ci             # CI-safe: no sonar, no compose smoke tests
+make fix            # Auto-fix formatting (format:write)
+make clean          # Remove coverage/ reports/ .scannerwork/
+make compose-up-default   # Start postgres redis clickhouse minio mailpit otel-collector
+make compose-ps     # Check service health
+make readmes        # Regenerate package READMEs from metadata
+make help           # Show all targets
+```
+
+---
 
 ## Commands
 
-### Architecture governance (run from repo root)
+### Format
 
 ```bash
-# Validate package metadata against the JSON Schema
-node tools/architecture/validate-package-metadata/src/index.mjs
-
-# Validate via orchestrator (preferred — runs tools in dependency order)
-node tools/architecture/orchestrator/src/index.mjs validate
-
-# Run all checks (metadata + readmes + inventory + lifecycle reports + evidence)
-node tools/architecture/orchestrator/src/index.mjs all
-
-# Generate / write outputs
-node tools/architecture/orchestrator/src/index.mjs generate-readmes
-node tools/architecture/orchestrator/src/index.mjs generate-inventory
-node tools/architecture/orchestrator/src/index.mjs generate-lifecycle-reports
-node tools/architecture/orchestrator/src/index.mjs generate-lifecycle-evidence
-node tools/architecture/orchestrator/src/index.mjs validate-evidence
+npm run format:write        # Fix formatting (run before format:check)
+npm run format:check        # Verify — fails if any file is unformatted
 ```
 
-Orchestrator flags: `--root <path>`, `--format text|json`, `--no-reports`, `--plan-only` (print plan without executing).
+### Lint
 
-Individual tool flags (pass directly to a tool, not via orchestrator): `--check` (validate without writing), `--write` (write outputs).
+```bash
+npm run lint:md             # markdownlint-cli2
+npm run lint                # ESLint flat config (2-bucket: Node tools / TS packages+apps)
+```
 
-### Tests (per tool, from repo root)
+### TypeScript
 
-`node --test` does not expand globs when given relative paths — pass explicit file paths:
+```bash
+npm run tsc:check           # App + all platform packages (runs tsc:check:packages)
+npm run tsc:check:packages  # Platform packages only (packages/tsconfig.packages.json)
+```
+
+### Tests
+
+```bash
+npm run test:architecture   # 271 tests — all architecture tool + platform package tests
+npm run test:coverage       # Same + generates coverage/lcov.info (V8 LCOV)
+npm run test:compose        # 17 compose smoke tests (requires services running)
+```
+
+`node --test` does **not** expand globs — pass explicit file paths. Full list:
 
 ```bash
 node --test \
   tools/architecture/validate-package-metadata/tests/validate-package-metadata.test.mjs \
+  tools/architecture/validate-package-metadata/tests/validate-package-metadata-unit.test.mjs \
   tools/architecture/validate-source-imports/tests/validate-source-imports.test.mjs \
+  tools/architecture/validate-source-imports/tests/validate-source-imports-unit.test.mjs \
   tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs \
   tools/architecture/generate-package-inventory/tests/generate-package-inventory.test.mjs \
   tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence.test.mjs \
-  tools/architecture/orchestrator/tests/self-evidence.test.mjs
+  tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence-unit.test.mjs \
+  tools/architecture/orchestrator/tests/self-evidence.test.mjs \
+  tools/architecture/orchestrator/tests/orchestrator-unit.test.mjs \
+  packages/platform-runtime-context/tests/platform-runtime-context.test.ts \
+  packages/platform-errors/tests/platform-errors.test.ts \
+  packages/platform-logging/tests/platform-logging.test.ts \
+  packages/platform-observability/tests/platform-observability.test.ts \
+  packages/api-runtime/tests/health-contract.test.ts
 ```
 
-`validate-package-metadata` requires `ajv` to be installed. After `git clean` or a fresh clone, run:
+After `git clean` or fresh clone, install tool dependencies:
 
 ```bash
 cd tools/architecture/validate-package-metadata && npm ci
+cd tools/architecture/validate-source-imports && npm ci
+cd tools/architecture/validate-lifecycle-evidence && npm ci
 ```
+
+### Architecture governance
+
+```bash
+# Preferred: runs all tools in dependency order
+node tools/architecture/orchestrator/src/index.mjs all --no-reports --strict
+
+# Individual tools
+node tools/architecture/orchestrator/src/index.mjs validate
+node tools/architecture/orchestrator/src/index.mjs generate-readmes
+node tools/architecture/orchestrator/src/index.mjs generate-inventory
+node tools/architecture/orchestrator/src/index.mjs generate-lifecycle-reports
+node tools/architecture/orchestrator/src/index.mjs validate-evidence
+```
+
+Flags: `--root <path>`, `--format text|json`, `--no-reports`, `--strict`, `--plan-only`.
+
+### Security and audit
+
+```bash
+npm run audit:deps          # npm audit --audit-level=high
+npm run audit:osv           # osv-scanner scan --recursive .
+npm run secrets:scan        # gitleaks (binary must be on PATH; hard gate in CI via action)
+```
+
+### Sonar
+
+```bash
+# Requires SONAR_TOKEN in .env or environment
+npm run sonar:clean         # test:coverage + scan + quality gate check
+npm run sonar:scan          # Scanner only (host URL baked in as http://localhost:9003)
+npm run sonar:quality-gate  # API gate check only
+```
+
+SonarQube uses the "Governance Tooling" custom gate: bugs=0, vulnerabilities=0, hotspots reviewed, all ratings=A. Start SonarQube first:
+
+```bash
+make compose-up-quality
+# or: docker compose --profile quality up -d sonarqube
+```
+
+### Compose services
+
+```bash
+npm run compose:config          # Validate compose.yaml (default profile)
+npm run compose:config:all      # Validate all 5 profiles
+npm run compose:up:default      # Start 6 default services explicitly
+npm run compose:up              # Start default services
+npm run compose:down            # Stop all
+npm run compose:down:volumes    # Stop + remove volumes
+npm run compose:ps              # Status
+npm run compose:logs            # Follow logs
+npm run compose:quality         # Start SonarQube
+npm run compose:identity        # Start Keycloak
+npm run compose:cloud           # Start LocalStack
+npm run compose:sentry          # Start Sentry (experimental)
+```
+
+### Advisory (report-only)
+
+```bash
+npm run knip                # Unused exports/deps
+npm run depcruise           # Dependency graph smoke tests
+npm run sbom:generate       # CycloneDX SBOM → docs/evidence/security/sbom-baseline.json
+npm run license:policy      # License policy status (documentation-only)
+```
+
+---
 
 ## Architecture
 
-### Hexagonal + bounded-context model (ADRs 0001–0003)
-
-The platform is structured as modular hexagonal architecture around bounded contexts. The key domains are:
+### Hexagonal + bounded-context model (ADR-0001–0003)
 
 | Domain         | Bounded contexts                                                                                                                                                                                                                                                                                             |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -75,77 +176,141 @@ The platform is structured as modular hexagonal architecture around bounded cont
 | `delivery`     | dev-local, container-build, terraform-workflow, ci-pipeline, aws-infra, cloudflare-infra                                                                                                                                                                                                                     |
 | `architecture` | architecture-governance                                                                                                                                                                                                                                                                                      |
 
-Owner teams: `team-platform` owns most operations and delivery packages; `team-security` owns auth-gateway, session-service, audit-service, and auth-keycloak.
+`team-platform` owns most operations and delivery. `team-security` owns auth-gateway, session-service, audit-service, auth-keycloak.
 
 ### Package namespace and layout
 
-| Location              | npm scope        | Purpose                                                          |
-| --------------------- | ---------------- | ---------------------------------------------------------------- |
-| `apps/`               | `@platform/`     | Deployable application surfaces                                  |
-| `packages/`           | `@platform/`     | Shared domain, contract, adapter, feature, UI, and test packages |
-| `tools/architecture/` | `@architecture/` | Governance-only tooling; never a product runtime dependency      |
-| `docs/adr/`           | —                | Architecture decision records (source of truth for decisions)    |
-| `docs/schemas/`       | —                | Governed JSON schemas                                            |
-| `docs/architecture/`  | —                | Context map, glossary, import rules, naming conventions          |
-| `docs/evidence/`      | —                | Committed lifecycle transition evidence bundles                  |
-| `docs/specs/`         | —                | Implementation design specs (platform-agnostic, date-prefixed)   |
-| `reports/`            | —                | Generated reports (gitignored)                                   |
+| Location              | npm scope        | Purpose                                                       |
+| --------------------- | ---------------- | ------------------------------------------------------------- |
+| `apps/`               | `@platform/`     | Deployable application surfaces                               |
+| `packages/`           | `@platform/`     | Domain, contract, adapter, feature, UI, and platform packages |
+| `tools/architecture/` | `@architecture/` | Governance tooling — never a product runtime dependency       |
+| `docs/adr/`           | —                | ADRs + ACTION-REGISTER                                        |
+| `docs/schemas/`       | —                | Governed JSON Schemas                                         |
+| `docs/architecture/`  | —                | Import boundary rules, context map, naming conventions        |
+| `docs/evidence/`      | —                | Committed governance evidence                                 |
+| `docs/specs/`         | —                | Pre-implementation design specs                               |
 
 ### Package lifecycle classes (ADR-0004)
 
-Every package has a lifecycle class in the form `<stage>.<role>`.
+Format: `<stage>.<role>`
 
-Stages: `experimental`, `candidate`, `active`, `stable`, `maintenance`, `external`, `deprecated`  
+Stages: `experimental`, `candidate`, `active`, `stable`, `maintenance`, `external`, `deprecated`
 Roles: `feature`, `platform`, `contract`, `adapter`, `tooling`, `test`
 
 ### Package metadata (ADR-0005)
 
-All packages must have an `architecture` block in `package.json`. Required top-level keys:
+All packages have an `architecture` block in `package.json`. Required top-level keys: `schemaVersion`, `component`, `lifecycle`, `governance`, `runtime`, `boundaries`, `relations`, `tags`, `readme`. Schema at `docs/schemas/package-json-architecture.schema.json`.
 
-```json
-"architecture": {
-  "schemaVersion": "1.0",
-  "component": { "type", "name", "system", "domain", "boundedContext", "owner" },
-  "lifecycle": { "stage", "role", "class", "catalogLifecycle", "visibility", "supportLevel", "reviewCadence" },
-  "governance": { "decisionRefs", "semverPolicy", "changeControl", "promotionEligible" },
-  "runtime": { "production", "testOnly", "serviceName", "serviceNamespace", "deploymentEnvironments" },
-  "boundaries": { "publicExportsOnly", "deepImportsAllowed", "allowedConsumers", "forbiddenConsumers" },
-  "relations": { "dependsOn", "providesApis", "consumesApis" },
-  "tags": { "scope", "type", "stage", "role", "layer" },
-  "readme": { "generated", "summary", "responsibilities", "nonResponsibilities", "usage", "operationalNotes" }
-}
-```
-
-Schema lives at `docs/schemas/package-json-architecture.schema.json`. Validated by ajv (draft-2020-12 via `Ajv2020`) inside `validate-package-metadata`. Key enum constraints to know when writing package.json:
+Key enum values:
 
 - `component.type`: `application | library | service | api | worker | tool | test | documentation`
-- `lifecycle.stage`: `experimental | candidate | active | stable | maintenance | external | deprecated`
-- `lifecycle.role`: `feature | platform | contract | adapter | tooling | test`
-- `lifecycle.supportLevel`: includes `best-effort` (used by delivery/tooling packages)
-- `runtime.deploymentEnvironments` items: `local | development | test | ci | staging | production`
-- `tags.type`: same enum as `component.type`
+- `lifecycle.supportLevel`: `experimental | standard | enhanced | maintenance | deprecated | unsupported`
+- `lifecycle.reviewCadence`: `none | monthly | quarterly | six-monthly | annual | on-change`
+- `lifecycle.catalogLifecycle`: `experimental | production | deprecated`
 - `tags.layer`: `domain | application | app | adapter | ui | infrastructure | tooling | test | documentation | contract | feature | platform | runtime`
-- `boundaries.allowedConsumers` / `forbiddenConsumers`: **free-form strings** — use semantic role labels (`application`, `feature`, `platform`, `adapter`, `domain`, `ui`, `tooling`, `test`, etc.).
+- `boundaries.allowedConsumers` / `forbiddenConsumers`: free-form semantic role labels
 
-### Import boundary rules (enforced by architecture tooling)
+### Generated READMEs (ADR-0008)
 
-Key rules — full matrix is in `docs/architecture/import-boundary-rules.md`:
+Package READMEs are generated from `architecture.readme` metadata. Do not edit generated sections — only `<!-- BEGIN MANUAL EXTENSION -->` / `<!-- END MANUAL EXTENSION -->` blocks may be edited manually. Run `make readmes` after changing metadata.
 
-- **Public exports only**: `import from "@platform/pkg"` — never from internal paths.
-- **Domain packages** (`domain-core`, `profile-configuration`, `access-control`) must not import React, adapters, or framework clients.
-- **Contract packages** must not import adapter or runtime packages.
-- **UI** (`ui-design-system`) must remain data-source and adapter agnostic.
-- **Feature packages** compose UI + domain + contracts; they do not own persistence. They may use the interface packages (`queue-runtime`, `storage-runtime`, `audit-events`, `email-runtime`, `notification-runtime`, `search-runtime`) but must never import their concrete adapters.
-- **`test-support`** must not be a production dependency.
-- **Adapters** own the runtime layer; contracts remain runtime-free.
-- **Operations interface packages** (`config-runtime`, `observability`, `security-auth`, `audit-events`, `queue-runtime`, `storage-runtime`, `email-runtime`, `notification-runtime`, `search-runtime`) are leaf nodes with **zero `@platform/*` dependencies**. They define interfaces only; adapters implement them.
-- **Operations adapter packages** (`adapters-keycloak`, `adapters-redis`, `adapters-sentry`, `adapters-opentelemetry`, `adapters-object-storage`, `adapters-brevo`) must not be imported by domain, contract, feature, or UI packages.
-- **Delivery packages** (`dev-services`, `tooling-docker`, `tooling-terraform`, `tooling-ci`, `infra-aws`, `infra-cloudflare`) must not be imported by any other package. They carry `production: false` in runtime metadata.
+### Import boundary rules (ADR-0001–0003 + ADR-0020)
 
-### Generated READMEs
+33 rules enforced by `validate-source-imports` reading `docs/architecture/import-boundary-rules.json`. Key constraints:
 
-Package READMEs are generated from `package.json` `architecture.readme` metadata by `tools/architecture/generate-package-readmes`. Do not edit generated sections — only the `<!-- BEGIN MANUAL EXTENSION -->` / `<!-- END MANUAL EXTENSION -->` block may be edited manually.
+- No deep imports (`@platform/pkg/src/internal`)
+- **Domain packages**: no React, GraphQL clients, adapters, pino, OTel SDK, Sentry, platform-logging, platform-observability
+- **Feature packages**: no adapters, pino, Sentry, OTel SDK, platform-logging
+- **UI packages**: no domain, adapters, platform-logging, platform-observability, platform-errors, platform-runtime-context
+- **Contract packages**: no adapters, React UI, pino, OTel SDK, Sentry
+- **platform-runtime-context**: zero `@platform/` dependencies
+- **platform-errors**: zero `@platform/` dependencies
+- **platform-observability**: only `@opentelemetry/api` — never SDK packages
+- **platform-logging**: only pino + platform-runtime-context — no OTel, no Sentry, no adapters
 
-### Architecture tooling test strategy (ADR-0012)
+---
 
-Tools use Node.js built-in test runner (`node --test`). Tests spawn tools via `spawnSync` against real fixture directories. Golden-file tests compare generated output against committed golden files in `tests/fixtures/`.
+## Platform packages (ADR-0020)
+
+| Package                              | Key exports                                                                                                                                                                                                                                           |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@platform/platform-runtime-context` | `RuntimeContext`, `createRequestContext`, `withOperation`, `withFeature`, `withActor`, `withTenant`, `withTrace`, `safeClientContext`                                                                                                                 |
+| `@platform/platform-errors`          | `AppError` (abstract base), `ValidationError` (400), `NotFoundError` (404), `ConflictError` (409), `UnauthorizedError` (401), `ForbiddenError` (403), `InfrastructureError` (502, retryable), `UnexpectedError` (500), `isAppError`, `toSafeResponse` |
+| `@platform/platform-logging`         | `createLogger`, `createChildLogger`, `createRequestLogger`, `createBrowserLogger`, `safeErrorMeta`, `safeContextMeta`, `redactionPaths`                                                                                                               |
+| `@platform/platform-observability`   | `createTracer`, `withSpan`, `withSpanSync`, `getTraceContext`, `recordException`, `setSpanAttributes`                                                                                                                                                 |
+| `@platform/api-runtime`              | `HealthResponse`, `ReadinessResponse`, `VersionResponse`, `createHealthResponse`, `createReadinessResponse`, `createVersionResponse`                                                                                                                  |
+
+`platform-runtime-context` and `platform-errors` have zero `@platform` dependencies. The others may only depend on `platform-runtime-context` (not adapters, features, domain, or UI).
+
+---
+
+## Active ADRs (reference)
+
+| ADR       | Title                                                                   |
+| --------- | ----------------------------------------------------------------------- |
+| 0001      | Use modular hexagonal architecture                                      |
+| 0002      | Model the platform around bounded contexts                              |
+| 0003      | Use a modular monorepo with promotion-ready package boundaries          |
+| 0004      | Define package lifecycle classes                                        |
+| 0005      | Define package metadata vocabulary and format                           |
+| 0006      | Define package lifecycle transition rules                               |
+| 0007      | Define architecture artifact and repository directory layout            |
+| 0008–0012 | README structure, inventory, evidence, tooling execution, test strategy |
+| 0013      | Define client-facing API boundary                                       |
+| 0014      | Define transactional data ownership                                     |
+| 0015      | Define analytical data ownership                                        |
+| 0016      | Define enterprise quality gate and security baseline                    |
+| 0017      | Define local integration service substrate                              |
+| 0019      | Define React component platform and frontend integration stack          |
+| 0020      | Define observability, diagnostics, and runtime introspection primitives |
+
+ADR-0018 is reserved. Next ADR: **0021**. Next ACTION-REGISTER entry: **ADR-ACT-0105**.
+
+---
+
+## Key files by task
+
+| Task                        | Files                                                                           |
+| --------------------------- | ------------------------------------------------------------------------------- |
+| Add/change package metadata | `packages/<name>/package.json` → run `make readmes`                             |
+| Add import boundary rule    | `docs/architecture/import-boundary-rules.json` + `import-boundary-rules.md`     |
+| Create ADR                  | `docs/adr/NNNN-<slug>.md` + ACTION-REGISTER + ADR-0007 (if new evidence dir)    |
+| Add evidence category       | `docs/adr/0007-define-architecture-artifact-and-repository-directory-layout.md` |
+| Add architecture tool tests | `tools/architecture/<tool>/tests/<name>.test.mjs`                               |
+| Add platform package tests  | `packages/<name>/tests/<name>.test.ts` (Node 25 runs .ts natively)              |
+| Compose changes             | `compose.yaml` + `.env.example` + `docs/local-development/compose-services.md`  |
+| Sonar quality gate          | `tools/quality/sonar-quality-gate.mjs`                                          |
+| Frontend platform           | See ADR-0019 + `docs/evidence/frontend/`                                        |
+| Observability               | See ADR-0020 + `docs/evidence/observability/`                                   |
+
+---
+
+## CI
+
+`.github/workflows/ci.yml` — two jobs:
+
+**quality-gates**: format:check, lint:md, lint, tsc:check, audit:deps, OSV scanner (action), gitleaks (action), compose:config, compose:config:all, knip (report-only), depcruise (report-only)
+
+**architecture-checks**: install tool deps, orchestrator all --strict, all 15 test files
+
+**codeql.yml**: CodeQL javascript-typescript, security-extended queries (on push, PR, weekly)
+
+Sonar is **local-only** until `SONAR_TOKEN` and `SONAR_HOST_URL` are available as repository secrets (ADR-ACT-0092).
+
+---
+
+## Critical constraints
+
+Never violate these without an explicit ADR amendment:
+
+1. **Do not start ADR-ACT-0008** (first vertical slice) unless explicitly instructed.
+2. **No `console.log`/`console.error`** in app runtime, BFF, or adapter code — use `platform-logging`.
+3. **No raw `Error` throws** for expected failure paths — use typed errors from `platform-errors`.
+4. **No OTel SDK imports** in `platform-observability` — SDK stays in `adapters-opentelemetry`.
+5. **No pino imports** in domain, feature, UI, or contract packages.
+6. **No adapter imports** in domain, feature, UI, or contract packages.
+7. **Run `make all`** (or at minimum `make check`) after governance changes.
+8. **Run `make readmes`** after changing `package.json` `architecture` metadata.
+9. **Update ACTION-REGISTER** when any action is opened, progressed, or closed.
+10. **Update ADR-0007** when creating a new `docs/evidence/` subdirectory.
