@@ -9,8 +9,11 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "4.1.8",
     "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0"
+    "@types/react-dom": "^19.0.0",
+    "tailwindcss": "4.1.8",
+    "vite": "6.4.2"
   },
   "exports": {
     ".": "./src/index.ts"
@@ -75,6 +78,7 @@
     },
     "relations": {
       "dependsOn": [
+        "@platform/ui-design-system",
         "@platform/feature-workflow",
         "@platform/access-control",
         "@platform/adapters-graphql"

@@ -100,6 +100,7 @@ production
 ### Depends on
 
 ```text
+@platform/ui-design-system
 @platform/feature-workflow
 @platform/access-control
 @platform/adapters-graphql
