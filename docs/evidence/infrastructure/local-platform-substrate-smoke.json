@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "1.0",
+  "evidenceType": "local-platform-substrate-smoke",
+  "adrRefs": ["ADR-0017", "ADR-0021", "ADR-0022", "ADR-0023"],
+  "adrActRefs": ["ADR-ACT-0111"],
+  "hardenedAt": "2026-05-28",
+  "nodeVersion": "25.8.0",
+  "typescriptVersion": "6.0.3",
+  "migration": {
+    "file": "apps/react-enterprise-app/src/db/migrations/001-identity-schema.sql",
+    "runner": "apps/react-enterprise-app/src/db/migrate.ts",
+    "tables": ["users", "organisations", "memberships", "external_identities"],
+    "status": "passed"
+  },
+  "seed": {
+    "file": "apps/react-enterprise-app/src/db/seed.ts",
+    "fixtures": {
+      "orgId": "00000000-0000-0000-0000-000000000001",
+      "orgSlug": "fixture-org",
+      "adminId": "00000000-0000-0000-0000-000000000002",
+      "viewerId": "00000000-0000-0000-0000-000000000003",
+      "forbiddenId": "00000000-0000-0000-0000-000000000004"
+    },
+    "status": "passed"
+  },
+  "bffHandlers": {
+    "file": "apps/react-enterprise-app/src/server/health.ts",
+    "handlers": ["getHealth", "getReadiness", "getVersion"],
+    "status": "passed"
+  },
+  "sessionFixture": {
+    "file": "apps/react-enterprise-app/src/server/session.ts",
+    "handlers": ["createFixtureSessionActor", "getFixtureSession"],
+    "roles": ["tenant-admin", "viewer"],
+    "status": "passed"
+  },
+  "composeSmoke": {
+    "command": "npm run test:compose",
+    "tests": 19,
+    "pass": 19,
+    "fail": 0,
+    "newTests": 2,
+    "status": "passed"
+  },
+  "frontendVitest": {
+    "command": "npm run test:frontend:run",
+    "testFiles": 8,
+    "tests": 39,
+    "pass": 39,
+    "fail": 0,
+    "newTests": 25,
+    "status": "passed"
+  },
+  "architectureGovernance": {
+    "command": "node tools/architecture/orchestrator/src/index.mjs all --no-reports --strict",
+    "results": {
+      "validatePackageMetadata": "passed",
+      "validateSourceImports": "passed",
+      "generatePackageReadmes": "passed",
+      "generatePackageInventory": "passed",
+      "generateLifecycleReports": "passed",
+      "validateLifecycleEvidence": "passed"
+    },
+    "total": "6/6",
+    "status": "passed"
+  },
+  "architectureTests": {
+    "command": "npm run test:coverage",
+    "tests": 337,
+    "pass": 337,
+    "fail": 0,
+    "status": "passed"
+  },
+  "qualityGates": {
+    "lint": "passed",
+    "formatCheck": "passed",
+    "tscCheck": "passed",
+    "lintMd": "passed"
+  },
+  "deferrals": [
+    {
+      "item": "Real Keycloak SSO login",
+      "status": "Open",
+      "adrActRef": "ADR-ACT-0110"
+    },
+    {
+      "item": "Cloud infra (AWS/Cloudflare)",
+      "status": "Open",
+      "adrActRef": "ADR-ACT-0109"
+    },
+    {
+      "item": "Sonar CI secrets",
+      "status": "Open",
+      "adrActRef": "ADR-ACT-0092"
+    },
+    {
+      "item": "Sentry profile validation",
+      "status": "Open",
+      "adrActRef": "ADR-ACT-0089"
+    }
+  ],
+  "adrAct0008ReadinessStatement": "Pre-slice substrate smoke gate passes. All local services healthy. Identity schema migrated. Fixture actors seeded. BFF health/readiness/version handlers implemented and tested. Session fixture handler implemented and tested. ProtectedRoute smoke tests pass. Observability primitive integration smoke passes. Architecture governance 6/6. All 337 architecture tests pass. All 39 frontend tests pass. All 19 compose smoke tests pass. ADR-ACT-0008 first vertical slice may now begin."
+}

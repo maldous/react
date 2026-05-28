@@ -50,7 +50,7 @@ ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
         compose-up compose-up-default compose-up-quality \
         compose-up-identity compose-up-cloud compose-up-sentry \
         compose-down compose-down-volumes compose-ps compose-logs \
-        readmes generate infra-check
+        readmes generate infra-check pre-slice-gate
 
 # =============================================================================
 ## all — Run the complete quality baseline (everything)
@@ -309,3 +309,27 @@ readmes:
 ## generate — Regenerate READMEs + inventory + lifecycle reports
 generate:
 	$(ORCHESTRATOR) all --strict
+
+## pre-slice-gate — Required gate before ADR-ACT-0008 first vertical slice
+pre-slice-gate: compose format lint typecheck test test-compose audit security architecture
+	$(call STEP,pre-slice-gate: database substrate)
+	npm run db:migrate
+	npm run db:seed
+	$(call STEP,pre-slice-gate: frontend/BFF smoke)
+	npm run test:frontend:run
+	$(call STEP,pre-slice-gate: Sonar)
+	@if [ -z "$$SONAR_TOKEN" ]; then \
+		printf '$(YELLOW)⚠ SONAR_TOKEN not set.\n'; \
+		printf '  Sonar must be verified externally before ADR-ACT-0008.\n'; \
+		printf '  Run: SONAR_TOKEN=<token> make sonar\n$(RESET)'; \
+	else \
+		$(MAKE) sonar; \
+	fi
+	@echo ""
+	@printf '$(BOLD)$(GREEN)'
+	@printf '  ╔══════════════════════════════════════════════════╗\n'
+	@printf '  ║  pre-slice-gate PASSED                           ║\n'
+	@printf '  ║  ADR-ACT-0008 first slice may now begin.         ║\n'
+	@printf '  ║  Real Keycloak login blocked until ADR-ACT-0110. ║\n'
+	@printf '  ╚══════════════════════════════════════════════════╝\n'
+	@printf '$(RESET)'

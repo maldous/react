@@ -3,11 +3,17 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "types": ["node"],
     "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
       "@platform/ui-design-system": ["../../packages/ui-design-system/src/index.ts"],
-      "@platform/contracts-auth": ["../../packages/contracts-auth/src/index.ts"]
+      "@platform/contracts-auth": ["../../packages/contracts-auth/src/index.ts"],
+      "@platform/api-runtime": ["../../packages/api-runtime/src/index.ts"],
+      "@platform/platform-logging": ["../../packages/platform-logging/src/index.ts"],
+      "@platform/platform-observability": ["../../packages/platform-observability/src/index.ts"],
+      "@platform/platform-errors": ["../../packages/platform-errors/src/index.ts"],
+      "@platform/platform-runtime-context": ["../../packages/platform-runtime-context/src/index.ts"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],

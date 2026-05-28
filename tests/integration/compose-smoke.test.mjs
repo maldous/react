@@ -19,6 +19,11 @@ import { spawnSync } from "node:child_process";
 // npm clients
 import pg from "pg";
 import { createClient as createRedisClient } from "redis";
+
+// DB substrate — TypeScript modules (Node 25.8 strips types natively)
+import { runMigrations } from "../../apps/react-enterprise-app/src/db/migrate.ts";
+import { seedFixtures, FIXTURE } from "../../apps/react-enterprise-app/src/db/seed.ts";
+import { resetDatabase } from "../../apps/react-enterprise-app/src/db/reset.ts";
 import {
   S3Client,
   CreateBucketCommand,
@@ -121,6 +126,53 @@ test("postgres: write/read/delete roundtrip", async () => {
   assert.equal(rows[0]?.v, "ok");
   await pgClient.query("DELETE FROM _smoke_test WHERE k = $1", [smokeKey]);
   await pgClient.query("DROP TABLE IF EXISTS _smoke_test");
+});
+
+// ---------------------------------------------------------------------------
+// Database substrate — migration and seed
+// ---------------------------------------------------------------------------
+
+test("database: migration creates identity schema tables", async () => {
+  await runMigrations();
+  const { rows } = await pgClient.query(`
+    SELECT table_name FROM information_schema.tables
+    WHERE table_schema = 'public' AND table_name IN ('users','organisations','memberships','external_identities')
+    ORDER BY table_name
+  `);
+  const names = rows.map((r) => r.table_name);
+  assert.ok(names.includes("users"), "users table created");
+  assert.ok(names.includes("organisations"), "organisations table created");
+  assert.ok(names.includes("memberships"), "memberships table created");
+  assert.ok(names.includes("external_identities"), "external_identities table created");
+});
+
+test("database: seed creates fixture actors and organisation", async () => {
+  await resetDatabase();
+  await runMigrations();
+  await seedFixtures();
+
+  const orgResult = await pgClient.query("SELECT id, slug FROM organisations WHERE id = $1", [
+    FIXTURE.ORG_ID,
+  ]);
+  assert.equal(orgResult.rows.length, 1, "fixture org exists");
+  assert.equal(orgResult.rows[0].slug, FIXTURE.ORG_SLUG);
+
+  const adminResult = await pgClient.query(
+    "SELECT role FROM memberships WHERE user_id = $1 AND organisation_id = $2",
+    [FIXTURE.ADMIN_ID, FIXTURE.ORG_ID]
+  );
+  assert.equal(adminResult.rows[0]?.role, "tenant-admin", "admin has correct role");
+
+  const viewerResult = await pgClient.query(
+    "SELECT role FROM memberships WHERE user_id = $1 AND organisation_id = $2",
+    [FIXTURE.VIEWER_ID, FIXTURE.ORG_ID]
+  );
+  assert.equal(viewerResult.rows[0]?.role, "viewer", "viewer has correct role");
+
+  const forbiddenResult = await pgClient.query("SELECT id FROM memberships WHERE user_id = $1", [
+    FIXTURE.FORBIDDEN_ID,
+  ]);
+  assert.equal(forbiddenResult.rows.length, 0, "forbidden actor has no membership");
 });
 
 // ---------------------------------------------------------------------------
