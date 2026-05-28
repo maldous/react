@@ -47,7 +47,7 @@ function parse(result) {
 }
 
 const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
-assert.equal(packageJson.dependencies.ajv, "^8.17.1");
+assert.equal(packageJson.dependencies.ajv, "^8.20.0");
 
 const strictMissingAjv = spawnSync(
   process.execPath,
@@ -145,5 +145,58 @@ assert.ok(
   fs.existsSync(path.join(repoRoot, "reports", "validation", "package-metadata-validation.md"))
 );
 assert.match(reportResult.stdout, /Self-evidence:/);
+
+// ---------------------------------------------------------------------------
+// Global npm alignment check
+//
+// Ensures that tool sub-packages stay in sync with the root package.json
+// for shared dependencies (e.g. ajv, typescript). Catches drift where a
+// tool pins an older major while the root has advanced.
+// ---------------------------------------------------------------------------
+{
+  const rootPkg = JSON.parse(fs.readFileSync(path.join(repoRoot, "package.json"), "utf8"));
+
+  const toolPkgPaths = [
+    "tools/architecture/validate-package-metadata/package.json",
+    "tools/architecture/validate-lifecycle-evidence/package.json",
+    "tools/architecture/validate-source-imports/package.json",
+  ];
+
+  // Shared dependencies that must stay aligned across all tool packages
+  // and the root. Value is the expected version string in the sub-package.
+  const alignedDeps = {
+    ajv: "^8.20.0",
+    typescript: "^6.0.3",
+  };
+
+  for (const relPath of toolPkgPaths) {
+    const pkgPath = path.join(repoRoot, relPath);
+    if (!fs.existsSync(pkgPath)) continue;
+    const toolPkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
+    const allDeps = { ...toolPkg.dependencies, ...toolPkg.devDependencies };
+
+    for (const [dep, expectedVersion] of Object.entries(alignedDeps)) {
+      if (dep in allDeps) {
+        assert.equal(
+          allDeps[dep],
+          expectedVersion,
+          `${relPath}: "${dep}" should be "${expectedVersion}" (got "${allDeps[dep]}")`
+        );
+      }
+    }
+  }
+
+  // Root pinned versions should be exact (no ^ on non-type packages)
+  const rootDeps = { ...rootPkg.dependencies, ...rootPkg.devDependencies };
+  const shouldBeExact = ["zod", "vite", "@vitejs/plugin-react", "redis", "@hookform/resolvers"];
+  for (const pkg of shouldBeExact) {
+    if (pkg in rootDeps) {
+      assert.ok(
+        !rootDeps[pkg].startsWith("^") && !rootDeps[pkg].startsWith("~"),
+        `root package.json: "${pkg}" should be pinned exactly (got "${rootDeps[pkg]}")`
+      );
+    }
+  }
+}
 
 console.log("validate-package-metadata self-test passed");

@@ -33,7 +33,7 @@ export const handlePatchOrganisationProfile: PipelineHandler = async (req, res) 
   }
   const parsed = UpdateOrganisationProfileRequestSchema.safeParse(req.body);
   if (!parsed.success) {
-    const msg = parsed.error.errors[0]?.message ?? "Invalid request body";
+    const msg = parsed.error.issues[0]?.message ?? "Invalid request body";
     res.json(400, toSafeResponse(new ValidationError(msg)));
     return;
   }
