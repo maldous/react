@@ -104,6 +104,7 @@ production
 @platform/feature-workflow
 @platform/access-control
 @platform/adapters-graphql
+@platform/contracts-auth
 ```
 
 ### Provides APIs

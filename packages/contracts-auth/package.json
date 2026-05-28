@@ -1,0 +1,107 @@
+{
+  "name": "@platform/contracts-auth",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Authentication and session contract package: SessionActor schema, auth request/response shapes, and AuthError subtypes.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "api",
+      "name": "contracts-auth",
+      "system": "enterprise-react-platform",
+      "domain": "operations",
+      "boundedContext": "auth-gateway",
+      "owner": "team-security"
+    },
+    "lifecycle": {
+      "stage": "experimental",
+      "role": "contract",
+      "class": "experimental.contract",
+      "catalogLifecycle": "experimental",
+      "visibility": "internal",
+      "supportLevel": "experimental",
+      "reviewCadence": "monthly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005",
+        "ADR-0021",
+        "ADR-0022"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": false
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "contracts-auth",
+      "serviceNamespace": "enterprise-react-platform",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application",
+        "platform",
+        "adapter"
+      ],
+      "forbiddenConsumers": [
+        "domain",
+        "ui"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "session-actor",
+        "auth-request-response",
+        "auth-error-codes"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "api",
+      "stage": "experimental",
+      "role": "contract",
+      "layer": "contract"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Authentication and session contract package: SessionActor schema, auth request/response shapes, and AuthError subtypes.",
+      "responsibilities": [
+        "Own SessionActor Zod schema and TypeScript type for authenticated actor context",
+        "Define auth request and response shapes (LoginRequest, LogoutRequest, SessionResponse)",
+        "Export AuthErrorCode enum for auth-layer error classification",
+        "Define baseline role and permission union types (BaseRole, TenantScopedRole, GlobalRole, Permission)"
+      ],
+      "nonResponsibilities": [
+        "Does not implement authentication logic",
+        "Does not import Keycloak SDK or any adapter packages",
+        "Does not own session storage or session lifecycle",
+        "Does not import domain packages or React"
+      ],
+      "usage": [
+        "Imported by application, platform, and adapter packages that need auth contract types",
+        "Used in API boundaries to validate and type session actor context"
+      ],
+      "operationalNotes": [
+        "All schemas use Zod for runtime validation",
+        "Zero @platform/* dependencies — this is a pure contract package"
+      ]
+    }
+  }
+}

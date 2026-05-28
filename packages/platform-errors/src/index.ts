@@ -94,6 +94,27 @@ export class UnexpectedError extends AppError {
   readonly retryable = false;
 }
 
+// API guard helper — throws ForbiddenError if the permission is missing
+export function assertPermission(
+  permissions: string[],
+  required: string,
+  context?: { requestId?: string; actorId?: string }
+): void {
+  if (!permissions.includes(required)) {
+    throw new ForbiddenError(`Permission required: ${required}`, {
+      safeDetails: { required },
+      internalDetails: context,
+    });
+  }
+}
+
+// Auth guard helper — throws UnauthorizedError if no actor context
+export function assertAuthenticated(actor: { userId?: string } | null | undefined): void {
+  if (!actor?.userId) {
+    throw new UnauthorizedError("Authentication required");
+  }
+}
+
 export function isAppError(err: unknown): err is AppError {
   return err instanceof AppError;
 }

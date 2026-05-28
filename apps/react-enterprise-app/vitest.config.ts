@@ -10,6 +10,10 @@ export default defineConfig({
         __dirname,
         "../../packages/ui-design-system/src/index.ts"
       ),
+      "@platform/contracts-auth": path.resolve(
+        __dirname,
+        "../../packages/contracts-auth/src/index.ts"
+      ),
     },
   },
   test: {

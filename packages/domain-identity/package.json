@@ -1,0 +1,105 @@
+{
+  "name": "@platform/domain-identity",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Identity domain package: User, Organisation, Membership, ExternalIdentity value types and business rules.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "domain-identity",
+      "system": "enterprise-react-platform",
+      "domain": "core",
+      "boundedContext": "domain-core",
+      "owner": "team-security"
+    },
+    "lifecycle": {
+      "stage": "experimental",
+      "role": "platform",
+      "class": "experimental.platform",
+      "catalogLifecycle": "experimental",
+      "visibility": "internal",
+      "supportLevel": "experimental",
+      "reviewCadence": "monthly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005",
+        "ADR-0021"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": false
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "domain-identity",
+      "serviceNamespace": "enterprise-react-platform",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application",
+        "platform",
+        "use-case"
+      ],
+      "forbiddenConsumers": [
+        "adapter",
+        "ui",
+        "feature"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "domain-identity"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "library",
+      "stage": "experimental",
+      "role": "platform",
+      "layer": "domain"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Identity domain package: User, Organisation, Membership, ExternalIdentity value types and business rules.",
+      "responsibilities": [
+        "Own identity domain value types: User, Organisation, Membership, ExternalIdentity",
+        "Define role types: TenantRole, GlobalRole, AnyRole",
+        "Expose pure TypeScript business rule functions: canInviteMembers, canUpdateOrganisation, canUpdateMemberRole, canAccessAdmin",
+        "Validate membership and organisation slug invariants"
+      ],
+      "nonResponsibilities": [
+        "Does not import adapters, HTTP frameworks, logging SDKs, observability SDKs, or React",
+        "Does not import Keycloak SDK or any @platform/* packages",
+        "Does not own persistence or session management",
+        "Does not use Zod — domain uses plain TypeScript types"
+      ],
+      "usage": [
+        "Imported by use-case and platform packages that need identity domain types and rules",
+        "Use in tests without browser runtime"
+      ],
+      "operationalNotes": [
+        "domain-identity is a pure domain package with zero external runtime dependencies",
+        "Forbidden consumers: adapter, ui, feature packages must not import this package"
+      ]
+    }
+  }
+}

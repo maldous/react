@@ -516,3 +516,51 @@ packages/platform-errors:
   May import: nothing @platform
   Has zero @platform dependencies
 ```
+
+## Identity and authentication boundary rules (ADR-0021 + ADR-0022)
+
+### Keycloak SDK — forbidden everywhere except adapters-keycloak
+
+`keycloak-js` and `@keycloak/*` packages are forbidden in all packages except `@platform/adapters-keycloak`:
+
+```text
+Forbidden in: domain packages, feature packages, contract packages, UI packages
+Reason: ADR-0022 — Keycloak is an adapter. Only adapters-keycloak imports Keycloak SDK.
+Note: @platform/adapters-keycloak is already forbidden by existing domain/feature rules.
+```
+
+### adapters-keycloak — must not import React or features
+
+`@platform/adapters-keycloak` must not import:
+
+```text
+react, react-dom
+@platform/ui-design-system
+@platform/feature-* packages
+```
+
+The Keycloak adapter is a server-side integration only. React-side auth flows, if ever needed, require a separate browser-side adapter with its own ADR.
+
+### domain-identity — pure domain rules
+
+`@platform/domain-identity` follows the same zero-infrastructure-dependency pattern as other domain packages. It must not import:
+
+```text
+adapters, API runtime, session runtime, pino, OTel, Sentry, React, UI
+```
+
+It may import `@platform/platform-runtime-context` for typed value objects if needed.
+
+### contracts-auth — Zod schemas only
+
+`@platform/contracts-auth` must not import:
+
+```text
+Any @platform/adapters-* package
+Any @platform/domain-* package
+Session runtime, logging, observability
+keycloak-js, @keycloak/*
+react, react-dom
+```
+
+It exports SessionActor, auth request/response Zod schemas, and AuthError subtypes only.

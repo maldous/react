@@ -370,6 +370,81 @@
         "@platform/contracts-ingestion"
       ],
       "rationale": "ADR-0020 \u00a710: platform-logging wraps pino (Node runtime) and a browser-safe console wrapper only. It must not import OpenTelemetry (tracing is separate), Sentry (adapter-only), other adapters, features, domain, contracts, or UI packages."
+    },
+    {
+      "id": "no-keycloak-sdk-in-domain",
+      "appliesTo": [
+        "@platform/domain-core",
+        "@platform/profile-configuration",
+        "@platform/access-control",
+        "@platform/domain-identity"
+      ],
+      "forbiddenPrefixes": ["@keycloak/"],
+      "forbiddenExact": ["keycloak-js"],
+      "rationale": "ADR-0022: Domain packages must not import Keycloak SDK. Keycloak integration is owned exclusively by packages/adapters-keycloak. Note: @platform/adapters-keycloak is already forbidden by no-adapters-in-domain."
+    },
+    {
+      "id": "no-keycloak-sdk-in-features",
+      "appliesTo": ["@platform/feature-workflow"],
+      "forbiddenPrefixes": ["@keycloak/"],
+      "forbiddenExact": ["keycloak-js"],
+      "rationale": "ADR-0022: Feature packages must not import Keycloak SDK. Note: @platform/adapters-keycloak is already forbidden by no-operations-adapters-in-feature."
+    },
+    {
+      "id": "no-keycloak-sdk-in-contracts",
+      "appliesTo": [
+        "@platform/contracts-graphql",
+        "@platform/contracts-analytics",
+        "@platform/contracts-ingestion",
+        "@platform/contracts-auth"
+      ],
+      "forbiddenPrefixes": ["@keycloak/"],
+      "forbiddenExact": ["keycloak-js", "@platform/adapters-keycloak"],
+      "rationale": "ADR-0022: Contract packages define data shapes and DTO schemas only. Keycloak SDK types must not appear in contracts. contracts-auth uses internal session types (SessionActor) not Keycloak claim types."
+    },
+    {
+      "id": "no-react-in-adapters-keycloak",
+      "appliesTo": ["@platform/adapters-keycloak"],
+      "forbiddenPrefixes": ["@platform/feature-", "@platform/ui-"],
+      "forbiddenExact": [
+        "react",
+        "react-dom",
+        "@platform/ui-design-system",
+        "@platform/feature-workflow"
+      ],
+      "rationale": "ADR-0022: The Keycloak adapter must not import React, UI components, or feature packages. It is a server-side adapter only. All Keycloak-React wiring (if ever needed) must go through a separate browser-side adapter, not this package."
+    },
+    {
+      "id": "no-platform-deps-in-domain-identity",
+      "appliesTo": ["@platform/domain-identity"],
+      "forbiddenPrefixes": [
+        "@platform/adapters-",
+        "@platform/api-runtime",
+        "@platform/graphql-api-runtime",
+        "@platform/worker-runtime",
+        "@platform/session-runtime",
+        "@platform/platform-logging",
+        "@platform/platform-observability",
+        "@opentelemetry/",
+        "@sentry/"
+      ],
+      "forbiddenExact": ["react", "react-dom", "pino", "@platform/ui-design-system"],
+      "rationale": "ADR-0021: domain-identity is a pure domain package. It must not depend on adapters, HTTP frameworks, logging SDKs, observability SDKs, or React. It receives only typed value objects from platform-runtime-context if needed."
+    },
+    {
+      "id": "no-platform-deps-in-contracts-auth",
+      "appliesTo": ["@platform/contracts-auth"],
+      "forbiddenPrefixes": [
+        "@platform/adapters-",
+        "@platform/domain-",
+        "@platform/api-runtime",
+        "@platform/session-runtime",
+        "@platform/platform-logging",
+        "@platform/platform-observability",
+        "@keycloak/"
+      ],
+      "forbiddenExact": ["keycloak-js", "pino", "react", "react-dom"],
+      "rationale": "ADR-0022: contracts-auth is a pure contract package (Zod schemas only). It must not import adapters, domain packages, session runtime, logging, or Keycloak SDK. It exports SessionActor, auth request/response shapes, and AuthError subtypes only."
     }
   ]
 }

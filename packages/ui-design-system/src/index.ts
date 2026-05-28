@@ -75,3 +75,6 @@ export type { EmptyStateProps } from "./components/EmptyState";
 
 export { DataTable } from "./components/DataTable";
 export type { DataTableProps } from "./components/DataTable";
+
+export { ForbiddenState } from "./components/ForbiddenState";
+export type { ForbiddenStateProps } from "./components/ForbiddenState";
