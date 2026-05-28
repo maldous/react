@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import { ValidationError, toSafeResponse } from "@platform/platform-errors";
+import { ConflictError, ValidationError, toSafeResponse } from "@platform/platform-errors";
 import {
   buildAuthorizationUrl,
   exchangeCodeForTokens,
@@ -204,14 +204,27 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
 
   // Resolve or create platform session
   const ttlSeconds = parseInt(process.env["SESSION_TTL_SECONDS"] ?? "1800", 10);
-  const session = await resolveSessionFromIdentity(
-    identity,
-    {
-      identities: getIdentityRepository(),
-      sessions: getSessionStore(),
-    },
-    ttlSeconds
-  );
+  let session;
+  try {
+    session = await resolveSessionFromIdentity(
+      identity,
+      {
+        identities: getIdentityRepository(),
+        sessions: getSessionStore(),
+      },
+      ttlSeconds
+    );
+  } catch (err) {
+    if (err instanceof ConflictError) {
+      // Email already registered under a different identity — 409 Conflict.
+      // The raw ConflictError from the identity adapter reaches here because the
+      // pipeline's unhandled-error branch always emits 500; catching it here
+      // gives the user-agent the semantically correct HTTP status.
+      res.json(409, toSafeResponse(err));
+      return;
+    }
+    throw err;
+  }
 
   // Set session cookie, clear pre-auth cookie, redirect to React app
   res.raw.writeHead(302, {

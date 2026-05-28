@@ -1,5 +1,6 @@
 import pg from "pg";
 import type { User, ExternalIdentity, Membership, TenantRole } from "@platform/domain-identity";
+import { ConflictError } from "@platform/platform-errors";
 import type { IdentityRepository } from "../ports/identity-repository.ts";
 
 function rowToUser(row: Record<string, unknown>): User {
@@ -103,9 +104,12 @@ export class PostgresIdentityRepository implements IdentityRepository {
       );
       if (!userResult.rows.length) {
         await client.query("ROLLBACK");
-        throw new Error(
-          `EMAIL_ALREADY_REGISTERED: An account with this email exists but is not linked ` +
-            `to this identity provider. Contact an administrator to link accounts.`
+        // ConflictError (HTTP 409) — email taken by a different account.
+        // Never merge external-IdP identities by email alone (security: identity federation).
+        throw new ConflictError(
+          "An account with this email exists but is not linked to this identity provider. " +
+            "Contact an administrator to link accounts.",
+          { safeDetails: { provider: input.provider } }
         );
       }
       const user = rowToUser(userResult.rows[0] as Record<string, unknown>);

@@ -5,6 +5,7 @@
 import { describe, it, before, after } from "node:test";
 import assert from "node:assert/strict";
 import pg from "pg";
+import { ConflictError } from "@platform/platform-errors";
 import { PostgresIdentityRepository } from "../../src/adapters/postgres-identity-repository.ts";
 
 const POSTGRES_URL =
@@ -14,7 +15,7 @@ const FIXTURE_ORG_ID = "00000000-0000-0000-0000-000000000001";
 const FIXTURE_ADMIN_ID = "00000000-0000-0000-0000-000000000002";
 
 // Generate per-test unique email/subject. Each call returns a fresh pair so
-// tests never share state. EMAIL_ALREADY_REGISTERED is correct behaviour,
+// tests never share state. ConflictError on email collision is correct behaviour,
 // not a test bug — isolation prevents it from appearing unexpectedly.
 let _seq = 0;
 const _createdEmails: string[] = [];
@@ -112,11 +113,8 @@ describe("PostgresIdentityRepository", () => {
             providerSubject: diffSubject,
           }),
         (err: unknown) => {
-          assert.ok(err instanceof Error);
-          assert.ok(
-            err.message.includes("EMAIL_ALREADY_REGISTERED"),
-            `Expected EMAIL_ALREADY_REGISTERED, got: ${err.message}`
-          );
+          assert.ok(err instanceof ConflictError, `Expected ConflictError, got: ${String(err)}`);
+          assert.equal(err.code, "CONFLICT");
           return true;
         }
       );

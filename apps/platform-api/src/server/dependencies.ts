@@ -3,6 +3,13 @@
  *
  * Centralises URL/config lookup and adapter construction so route handlers do
  * not duplicate wiring code. Intentionally minimal — not a DI container.
+ *
+ * ADR-0022 requires Redis-backed server-side sessions (BFF session model).
+ * The Redis client, RedisSessionStore, and RedisAuthStateStore are singleton
+ * singletons so the same connection pool is reused across requests. This is
+ * the standard Node.js pattern for long-lived service connections.
+ * connectRedis() must be called once at server startup; disconnectRedis()
+ * on graceful shutdown (or between tests to release the connection pool).
  */
 import { PostgresOrganisationRepository } from "../adapters/postgres-organisation-repository.ts";
 import { PostgresReadinessAdapter } from "../adapters/postgres-readiness-adapter.ts";
