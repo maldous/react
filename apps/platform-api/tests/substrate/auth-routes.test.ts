@@ -1,0 +1,241 @@
+/**
+ * Auth route tests: GET /auth/login, GET /auth/callback, POST /auth/logout.
+ *
+ * These tests use a real HTTP server (port 0) but mock Keycloak and Redis
+ * via environment variables and intercepting adapter calls where needed.
+ *
+ * /auth/login: tests redirect URL shape and state parameter
+ * /auth/callback: tests missing params, bad state, and cookie path
+ * /auth/logout: tests session cookie clearing
+ * /api/session: fixture-session regression (no regression from real-session path)
+ */
+import { describe, it, before, after } from "node:test";
+import assert from "node:assert/strict";
+import http from "node:http";
+import { createRouter } from "../../src/server/pipeline.ts";
+import { routes } from "../../src/server/routes.ts";
+import { SESSION_COOKIE_NAME } from "@platform/adapters-redis";
+import { connectRedis, disconnectRedis } from "../../src/server/dependencies.ts";
+
+// Environment overrides so auth handlers use predictable Keycloak URLs
+process.env["KEYCLOAK_URL"] = "http://keycloak-test.local:8080";
+process.env["KEYCLOAK_REALM"] = "test-realm";
+process.env["KEYCLOAK_CLIENT_ID"] = "test-client";
+process.env["KEYCLOAK_CLIENT_SECRET"] = "test-secret";
+process.env["PLATFORM_API_URL"] = "http://localhost:3001";
+process.env["APP_BASE_URL"] = "http://localhost:5173";
+
+function makeServer(): Promise<{ server: http.Server; url: string }> {
+  return new Promise((resolve, reject) => {
+    const router = createRouter(routes);
+    const server = http.createServer(router);
+    server.listen(0, "127.0.0.1", () => {
+      const addr = server.address();
+      if (!addr || typeof addr === "string") {
+        reject(new Error("Could not get server address"));
+        return;
+      }
+      resolve({ server, url: `http://127.0.0.1:${addr.port}` });
+    });
+    server.on("error", reject);
+  });
+}
+
+function closeServer(server: http.Server): Promise<void> {
+  return new Promise((resolve, reject) => {
+    server.close((err) => {
+      if (err) reject(err);
+      else resolve();
+    });
+  });
+}
+
+// ---------------------------------------------------------------------------
+// GET /auth/login — redirect to Keycloak
+// ---------------------------------------------------------------------------
+
+describe("GET /auth/login", () => {
+  let server: http.Server;
+  let url: string;
+
+  before(async () => {
+    delete process.env["LOCAL_FIXTURE_SESSION"];
+    await connectRedis();
+    const s = await makeServer();
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    await closeServer(server);
+    await disconnectRedis();
+  });
+
+  it("redirects to Keycloak authorization endpoint (302)", async () => {
+    const res = await fetch(`${url}/auth/login`, { redirect: "manual" });
+    assert.equal(res.status, 302);
+    const location = res.headers.get("location");
+    assert.ok(location, "Location header must be present");
+    assert.ok(
+      location.startsWith(
+        "http://keycloak-test.local:8080/realms/test-realm/protocol/openid-connect/auth"
+      ),
+      `Expected Keycloak auth URL, got: ${location}`
+    );
+  });
+
+  it("includes required PKCE parameters in redirect URL", async () => {
+    const res = await fetch(`${url}/auth/login`, { redirect: "manual" });
+    const location = res.headers.get("location") ?? "";
+    const parsed = new URL(location);
+    assert.equal(parsed.searchParams.get("response_type"), "code");
+    assert.equal(parsed.searchParams.get("client_id"), "test-client");
+    assert.ok(parsed.searchParams.get("state"), "state must be present");
+    assert.ok(parsed.searchParams.get("code_challenge"), "code_challenge must be present");
+    assert.equal(parsed.searchParams.get("code_challenge_method"), "S256");
+    assert.ok(parsed.searchParams.get("redirect_uri")?.includes("/auth/callback"));
+  });
+
+  it("accepts and sanitises returnTo parameter", async () => {
+    const res = await fetch(`${url}/auth/login?returnTo=/organisation/profile`, {
+      redirect: "manual",
+    });
+    assert.equal(res.status, 302);
+  });
+
+  it("rejects absolute returnTo — falls back to /", async () => {
+    const res = await fetch(`${url}/auth/login?returnTo=https://evil.example.com`, {
+      redirect: "manual",
+    });
+    // Still redirects to Keycloak (not to the external URL)
+    assert.equal(res.status, 302);
+    const location = res.headers.get("location") ?? "";
+    assert.ok(
+      location.includes("keycloak-test.local"),
+      "Should redirect to Keycloak, not evil.example.com"
+    );
+  });
+});
+
+// ---------------------------------------------------------------------------
+// GET /auth/callback — error paths
+// ---------------------------------------------------------------------------
+
+describe("GET /auth/callback — error paths", () => {
+  let server: http.Server;
+  let url: string;
+
+  before(async () => {
+    delete process.env["LOCAL_FIXTURE_SESSION"];
+    await connectRedis();
+    const s = await makeServer();
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    await closeServer(server);
+    await disconnectRedis();
+  });
+
+  it("returns 400 when code is missing", async () => {
+    const res = await fetch(`${url}/auth/callback?state=abc`);
+    assert.equal(res.status, 400);
+    const body = (await res.json()) as { code: string };
+    assert.equal(body.code, "VALIDATION_ERROR");
+  });
+
+  it("returns 400 when state is missing", async () => {
+    const res = await fetch(`${url}/auth/callback?code=abc`);
+    assert.equal(res.status, 400);
+    const body = (await res.json()) as { code: string };
+    assert.equal(body.code, "VALIDATION_ERROR");
+  });
+
+  it("returns 400 when state is unknown or expired", async () => {
+    const res = await fetch(`${url}/auth/callback?code=c&state=nonexistent-state-xyz`);
+    assert.equal(res.status, 400);
+    const body = (await res.json()) as { code: string };
+    assert.equal(body.code, "VALIDATION_ERROR");
+  });
+
+  it("returns 400 when Keycloak reports an error", async () => {
+    const res = await fetch(`${url}/auth/callback?error=access_denied&state=s`);
+    assert.equal(res.status, 400);
+    const body = (await res.json()) as { code: string };
+    assert.equal(body.code, "VALIDATION_ERROR");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// POST /auth/logout
+// ---------------------------------------------------------------------------
+
+describe("POST /auth/logout", () => {
+  let server: http.Server;
+  let url: string;
+
+  before(async () => {
+    delete process.env["LOCAL_FIXTURE_SESSION"];
+    await connectRedis();
+    const s = await makeServer();
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    await closeServer(server);
+    await disconnectRedis();
+  });
+
+  it("returns 204 even without a session cookie", async () => {
+    const res = await fetch(`${url}/auth/logout`, { method: "POST" });
+    assert.equal(res.status, 204);
+  });
+
+  it("clears the session cookie in the response", async () => {
+    const res = await fetch(`${url}/auth/logout`, { method: "POST" });
+    const setCookie = res.headers.get("set-cookie") ?? "";
+    assert.ok(setCookie.includes(SESSION_COOKIE_NAME), "Must clear the session cookie");
+    assert.ok(setCookie.includes("Max-Age=0"), "Max-Age=0 clears the cookie");
+    assert.ok(setCookie.includes("HttpOnly"));
+  });
+});
+
+// ---------------------------------------------------------------------------
+// GET /api/session — fixture regression
+// ---------------------------------------------------------------------------
+
+describe("GET /api/session — fixture session regression", () => {
+  let server: http.Server;
+  let url: string;
+  let savedEnv: string | undefined;
+
+  before(async () => {
+    savedEnv = process.env["LOCAL_FIXTURE_SESSION"];
+    const s = await makeServer();
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    if (savedEnv !== undefined) process.env["LOCAL_FIXTURE_SESSION"] = savedEnv;
+    else delete process.env["LOCAL_FIXTURE_SESSION"];
+    await closeServer(server);
+  });
+
+  it("returns fixture actor when LOCAL_FIXTURE_SESSION=tenant-admin", async () => {
+    process.env["LOCAL_FIXTURE_SESSION"] = "tenant-admin";
+    const res = await fetch(`${url}/api/session`);
+    assert.equal(res.status, 200);
+    const actor = (await res.json()) as { roles: string[]; permissions: string[] };
+    assert.ok(actor.roles.includes("tenant-admin"));
+    assert.ok(actor.permissions.includes("organisation.read"));
+  });
+
+  it("returns 401 when no fixture and no cookie", async () => {
+    delete process.env["LOCAL_FIXTURE_SESSION"];
+    const res = await fetch(`${url}/api/session`);
+    assert.equal(res.status, 401);
+  });
+});

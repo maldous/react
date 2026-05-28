@@ -10,6 +10,8 @@ import {
 import { type SessionActor } from "@platform/contracts-auth";
 import { createRequestContext, type RuntimeContext } from "@platform/platform-runtime-context";
 import { getFixtureSession } from "./session.ts";
+import { parseSessionCookie } from "./auth.ts";
+import { getSessionStore } from "./dependencies.ts";
 
 // Types
 export interface PipelineRequest {
@@ -134,9 +136,35 @@ export function createRouter(
     }
 
     // Auth check — resolve actor (null when unauthenticated)
+    //
+    // Precedence (Tier 1 fixture always wins for deterministic E2E tests):
+    //   1. LOCAL_FIXTURE_SESSION env var → fixture actor (no Redis/DB)
+    //   2. session cookie → real Redis-backed session actor
+    //   3. neither → unauthenticated (null)
     let actor: SessionActor | null = null;
     if (matchingRoute.requiresAuth) {
       actor = getFixtureSession();
+      if (!actor) {
+        // Real session: read the HTTP-only cookie
+        const sessionId = parseSessionCookie(req.headers["cookie"]);
+        if (sessionId) {
+          try {
+            const record = await getSessionStore().find(sessionId);
+            if (record) {
+              actor = {
+                userId: record.userId,
+                tenantId: record.tenantId,
+                organisationId: record.organisationId,
+                roles: record.roles,
+                permissions: record.permissions,
+                displayName: record.displayName,
+              };
+            }
+          } catch {
+            // Redis unavailable — treat as unauthenticated (do not crash)
+          }
+        }
+      }
       if (!actor) {
         const err = new UnauthorizedError("Authentication required");
         jsonResponse(res, 401, toSafeResponse(err), requestId);
