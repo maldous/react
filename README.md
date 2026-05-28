@@ -8,13 +8,15 @@ This repository takes the opposite path.
 
 It starts with decisions. Those decisions are written down as Architecture Decision Records, tested through tooling, and then used as the ground that later decisions stand on. The result is not just a React app. It is a small enterprise platform built to show how frontend, backend, infrastructure, testing, and governance can grow together without turning into a pile of exceptions.
 
+![Platform overview](docs/images/platform-overview.svg)
+
 ## What this project is
 
 This is a governed React 19 monorepo built around a Vite SPA, a separate Node BFF/API runtime, domain packages, adapter packages, infrastructure definitions, and architecture tools that enforce the rules.
 
 The first real vertical slice is complete: an authenticated organisation profile flow from React protected route to API guard, use case, domain validation, Postgres adapter, structured logs, trace context, and Playwright E2E coverage.
 
-The repo is intentionally more than a demo UI. It is a demonstration of how I approach application architecture when the goal is to build something that will survive more than the first feature.
+The repo is intentionally more than a demo UI. It is a practical example of application architecture designed to survive more than the first feature.
 
 ## Why it was built this way
 
@@ -49,27 +51,15 @@ Identity came next: users, organisations, memberships, roles, permissions, sessi
 
 Finally, the first vertical slice proved the architecture under pressure. A pragmatic implementation was then hardened into a cleaner hexagonal shape: repository port, Postgres adapter, dependency-injected use case, strict request contracts, safe error handling, runtime context propagation, and end-to-end tests.
 
+![Governance loop](docs/images/governance-loop.svg)
+
 ## What the first slice proves
 
 The organisation profile slice is deliberately small. The point was not feature volume. The point was proof.
 
-It proves this path works:
+It proves that the same path works from the browser down to persistence and back again.
 
-```text
-React protected route
-  -> useSession()
-  -> TanStack Query feature hook
-  -> contract client
-  -> Node BFF/API route
-  -> session + permission guard
-  -> use case
-  -> domain validation
-  -> repository port
-  -> Postgres adapter
-  -> local Postgres
-  -> structured logs + trace context
-  -> Playwright E2E coverage
-```
+![Vertical slice flow](docs/images/vertical-slice-flow.svg)
 
 That slice includes read, update, forbidden, unauthenticated, fixture-session, API, repository, frontend, compose, and browser-level tests.
 
@@ -98,6 +88,8 @@ PostgreSQL  Redis  ClickHouse  MinIO  Mailpit  OpenTelemetry Collector
 ```
 
 Optional profiles add Keycloak, LocalStack, SonarQube, and Sentry. Terraform/OpenTofu is used for declarative infrastructure provisioning where infrastructure configuration matters, especially identity and later cloud environments.
+
+![Readiness tiers](docs/images/readiness-tiers.svg)
 
 ## Current status
 
@@ -153,4 +145,4 @@ Makefile              main developer workflow
 
 This repo is what happens when React work is treated as application architecture, not just page construction.
 
-It shows how I think through trade-offs, how I prevent shortcuts from becoming standards, and how I turn design decisions into enforceable code. It is intentionally compact enough to read, but complete enough to discuss in a technical interview: frontend state, routing, forms, accessibility, BFF boundaries, auth, domain modelling, infrastructure, CI, testing, observability, and architecture governance all have a place here.
+It shows how trade-offs become decisions, how shortcuts are kept from becoming standards, and how design decisions are turned into enforceable code. Frontend state, routing, forms, accessibility, BFF boundaries, auth, domain modelling, infrastructure, CI, testing, observability, and architecture governance all have a place here.
