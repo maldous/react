@@ -1,0 +1,56 @@
+{
+  "evidenceType": "slice-readiness-model",
+  "date": "2026-05-28",
+  "adrRefs": ["ADR-0024", "ADR-ACT-0113"],
+  "tiers": {
+    "tier0": {
+      "name": "Local substrate",
+      "status": "passed",
+      "evidence": "ADR-ACT-0111 complete. Database migrated. Fixture seeded. Platform-api substrate tests pass. Vitest frontend tests pass. Architecture gates pass."
+    },
+    "tier1": {
+      "name": "Local vertical slice test substrate",
+      "status": "established",
+      "evidence": "ADR-ACT-0112 complete. platform-api HTTP server created. Vite proxy configured. Playwright E2E substrate (8 tests). make e2e-check target established.",
+      "gateCommand": "make e2e-check"
+    },
+    "tier2": {
+      "name": "Real identity substrate",
+      "status": "blocked",
+      "blockedBy": "ADR-ACT-0110",
+      "terraformRequired": "Keycloak realm, clients, scopes, mappers, roles"
+    },
+    "tier3": {
+      "name": "Cloud deployment substrate",
+      "status": "blocked",
+      "blockedBy": "cloud Terraform/OpenTofu modules not yet defined",
+      "terraformRequired": "cloud networking, database, cache, storage, DNS, TLS, OIDC deploy role"
+    },
+    "tier4": {
+      "name": "Production readiness",
+      "status": "blocked",
+      "blockedBy": "Tier 3"
+    }
+  },
+  "sliceManifests": {
+    "ADR-ACT-0008": {
+      "path": "docs/slices/ADR-ACT-0008.json",
+      "requiredReadinessTier": 1,
+      "blockedBy": ["ADR-ACT-0112", "ADR-ACT-0113"],
+      "allowedFixtureModes": ["fixture-session"],
+      "forbiddenDependencies": ["live-keycloak"],
+      "status": "ready-to-start"
+    }
+  },
+  "terraformBoundary": {
+    "mustNot": [
+      "Create application tables (owned by app migrations)",
+      "Seed application fixture data (owned by seed scripts)"
+    ],
+    "must": [
+      "Provision durable infrastructure for the required tier",
+      "Keycloak realm/clients/mappers for Tier 2",
+      "Cloud infrastructure for Tier 3"
+    ]
+  }
+}

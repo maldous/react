@@ -271,6 +271,10 @@ docs/
     import-boundaries/
     naming/
     platform-scope/
+    e2e/
+
+  slices/
+    <action-id>.json
 
 reports/
   package-inventory/
@@ -498,6 +502,10 @@ Canonical source locations:
 | Observability and runtime baseline evidence           | `docs/evidence/observability/`                       | Committed governance evidence                                                 |
 | Identity and access control baseline evidence         | `docs/evidence/identity/`                            | Committed governance evidence                                                 |
 | Infrastructure provisioning baseline evidence         | `docs/evidence/infrastructure/`                      | Committed governance evidence                                                 |
+| E2E test substrate evidence                           | `docs/evidence/e2e/`                                 | Committed governance evidence                                                 |
+| Slice readiness manifests                             | `docs/slices/`                                       | Slice dependency declarations; governed by ADR-0024                           |
+| Playwright E2E configuration                          | `playwright.config.ts`                               | Committed E2E configuration; gitignores playwright-report/ and e2e-results/   |
+| Playwright E2E tests                                  | `e2e/`                                               | Committed E2E test source; artifacts (traces/videos) gitignored               |
 | Compose integration smoke tests                       | `tests/integration/`                                 | Live-service tests; not run in CI; requires compose up                        |
 | Root TypeScript strict base config                    | `tsconfig.base.json`                                 | Extended by `apps/**/tsconfig.json`; governs strict mode                      |
 | App TypeScript configs                                | `apps/**/tsconfig.json`                              | App-level TypeScript project config; extends tsconfig.base.json               |
@@ -574,6 +582,9 @@ docs/evidence/identity/
 
 docs/evidence/infrastructure/
   Infrastructure provisioning evidence: provisioning tool policy, ownership model, environment model, secrets policy.
+
+docs/evidence/e2e/
+  End-to-end test substrate evidence: Playwright config, fixture session mode, E2E test summary, known deferrals.
 ```
 
 Reports may reference evidence.

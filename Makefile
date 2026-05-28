@@ -50,7 +50,8 @@ ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
         compose-up compose-up-default compose-up-quality \
         compose-up-identity compose-up-cloud compose-up-sentry \
         compose-down compose-down-volumes compose-ps compose-logs \
-        readmes generate infra-check pre-slice-gate local-substrate-check
+        readmes generate infra-check pre-slice-gate local-substrate-check \
+        e2e-check
 
 # =============================================================================
 ## all — Run the complete quality baseline (everything)
@@ -319,6 +320,8 @@ pre-slice-gate: compose format lint typecheck test test-compose audit security a
 	npm run test:platform-api
 	$(call STEP,pre-slice-gate: frontend smoke)
 	npm run test:frontend:run
+	$(call STEP,pre-slice-gate: E2E substrate \(Tier 1 gate\))
+	$(MAKE) e2e-check
 	$(call STEP,pre-slice-gate: Sonar quality gate)
 	@if [ -z "$$SONAR_TOKEN" ]; then \
 		printf '$(RED)✗ SONAR_TOKEN not set. pre-slice-gate requires Sonar.\n'; \
@@ -328,12 +331,23 @@ pre-slice-gate: compose format lint typecheck test test-compose audit security a
 	$(MAKE) sonar
 	@echo ""
 	@printf '$(BOLD)$(GREEN)'
-	@printf '  ╔══════════════════════════════════════════════════╗\n'
-	@printf '  ║  pre-slice-gate PASSED                           ║\n'
-	@printf '  ║  ADR-ACT-0008 first slice may now begin.         ║\n'
-	@printf '  ║  Real Keycloak login blocked until ADR-ACT-0110. ║\n'
-	@printf '  ╚══════════════════════════════════════════════════╝\n'
+	@printf '  ╔══════════════════════════════════════════════════════╗\n'
+	@printf '  ║  pre-slice-gate PASSED                               ║\n'
+	@printf '  ║  ADR-ACT-0008 first slice may now begin (Tier 1).    ║\n'
+	@printf '  ║  E2E substrate: PASSED                               ║\n'
+	@printf '  ║  Real Keycloak login blocked until ADR-ACT-0110.     ║\n'
+	@printf '  ╚══════════════════════════════════════════════════════╝\n'
 	@printf '$(RESET)'
+
+## e2e-check — Run Playwright E2E substrate tests (Tier 1 gate — requires services running)
+e2e-check:
+	$(call STEP,e2e:check)
+	@if ! npx playwright --version > /dev/null 2>&1; then \
+		printf '$(RED)✗ Playwright not found. Run: npx playwright install chromium --with-deps$(RESET)\n'; \
+		exit 1; \
+	fi
+	npm run test:e2e
+	$(call OK,E2E substrate tests passed)
 
 ## local-substrate-check — Local developer quick-check (NOT sufficient to begin ADR-ACT-0008)
 local-substrate-check: compose format lint typecheck test test-compose audit architecture

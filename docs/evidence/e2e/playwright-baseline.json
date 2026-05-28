@@ -1,0 +1,67 @@
+{
+  "evidenceType": "e2e-substrate-baseline",
+  "date": "2026-05-28",
+  "adrRefs": ["ADR-0025", "ADR-ACT-0112", "ADR-ACT-0114", "ADR-ACT-0115"],
+  "playwrightVersion": "1.52.0",
+  "browser": "chromium",
+  "configFile": "playwright.config.ts",
+  "testDirectory": "e2e/",
+  "apiPort": 3001,
+  "appPort": 5173,
+  "fixtureSessionMode": "LOCAL_FIXTURE_SESSION=tenant-admin",
+  "webServerConfig": {
+    "platformApi": {
+      "command": "node --loader apps/platform-api/loader.mjs apps/platform-api/src/server/http.ts",
+      "healthUrl": "http://localhost:3001/healthz",
+      "timeoutMs": 20000,
+      "reuseExistingServer": true
+    },
+    "viteDevServer": {
+      "command": "cd apps/react-enterprise-app && npx vite --port 5173",
+      "healthUrl": "http://localhost:5173",
+      "timeoutMs": 30000,
+      "reuseExistingServer": true
+    }
+  },
+  "tests": {
+    "total": 8,
+    "suites": [
+      {
+        "name": "platform-api health substrate",
+        "tests": [
+          "GET /healthz returns ok",
+          "GET /version returns version metadata",
+          "GET /api/session returns tenant-admin fixture actor"
+        ]
+      },
+      {
+        "name": "React SPA substrate",
+        "tests": [
+          "index page loads",
+          "/auth/login renders sign in heading",
+          "Vite proxy: /api/session proxies to platform-api",
+          "fixture session: tenant-admin can access /protected-test",
+          "unauthenticated: 401 session redirects to /auth/login"
+        ]
+      }
+    ]
+  },
+  "gitignored": ["playwright-report/", "e2e-results/"],
+  "deferrals": [
+    {
+      "item": "Real Keycloak OIDC login tests",
+      "blockedBy": "ADR-ACT-0110"
+    },
+    {
+      "item": "Firefox/WebKit browsers",
+      "blockedBy": "cross-browser product requirement"
+    }
+  ],
+  "adRCompliance": {
+    "ADR-0025": "Playwright is E2E standard. MSW scoped to Vitest.",
+    "ADR-0024": "Tier 1 gate established. Fixture session active.",
+    "ADR-ACT-0112": "E2E substrate gate implemented.",
+    "ADR-ACT-0114": "Local app/API runtime start scripts configured.",
+    "ADR-ACT-0115": "Fixture session mode implemented."
+  }
+}

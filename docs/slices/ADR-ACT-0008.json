@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "actionId": "ADR-ACT-0008",
+  "name": "Authenticated organisation profile slice",
+  "description": "First vertical slice proving React protected route → session → TanStack Query → contract client → platform-api → permission guard → use case → domain → Postgres → structured logs/traces",
+  "requiredReadinessTier": 1,
+  "requiredCapabilities": [
+    "local-postgres",
+    "platform-api",
+    "react-spa",
+    "fixture-session",
+    "playwright-e2e",
+    "structured-logging",
+    "permission-guards"
+  ],
+  "blockedBy": ["ADR-ACT-0112", "ADR-ACT-0113"],
+  "allowedFixtureModes": ["fixture-session"],
+  "forbiddenDependencies": ["live-keycloak"],
+  "status": "not-started",
+  "adrRef": "ADR-0024",
+  "notes": "Real Keycloak login (ADR-ACT-0110) is NOT required for this slice. Use fixture SessionActor via LOCAL_FIXTURE_SESSION env var. Real SSO login is blocked until ADR-ACT-0110 is Done."
+}
