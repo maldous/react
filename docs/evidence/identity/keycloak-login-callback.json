@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "evidenceType": "authentication-implementation",
+  "actionId": "ADR-ACT-0119",
+  "name": "Real Keycloak login callback through platform-api session boundary",
+  "date": "2026-05-29",
+  "status": "done",
+  "adrRefs": ["ADR-0021", "ADR-0022"],
+  "flow": {
+    "loginPath": "GET /auth/login → PKCE state in Redis → 302 → Keycloak /authorize",
+    "callbackPath": "GET /auth/callback → state validated → code exchanged → /userinfo → identity resolved → Redis session → HTTP-only cookie → 302 → React app",
+    "sessionPath": "GET /api/session → fixture (priority) or Redis cookie → safe SessionActor JSON",
+    "logoutPath": "POST /auth/logout → Redis session destroyed → cookie cleared (Max-Age=0)"
+  },
+  "securityDecisions": {
+    "noTokensInSession": true,
+    "httpOnlyCookie": true,
+    "secureFlagEnvOverride": "SESSION_COOKIE_SECURE=true in production",
+    "pkceMethod": "S256",
+    "stateConsumeOnce": "getDel (atomic)",
+    "returnToSanitised": "relative paths only",
+    "noJwtVerification": "userinfo trusted by provenance (server-to-server confidential client exchange)",
+    "keycloakSdkBoundary": "adapters-keycloak only"
+  },
+  "filesAdded": [
+    "packages/domain-identity/src/index.ts (resolvePermissions)",
+    "packages/adapters-redis/src/index.ts (RedisSessionStore, RedisAuthStateStore)",
+    "packages/adapters-keycloak/src/index.ts (exchangeCodeForTokens, getUserInfo, buildAuthorizationUrl)",
+    "apps/platform-api/src/ports/identity-repository.ts",
+    "apps/platform-api/src/adapters/postgres-identity-repository.ts",
+    "apps/platform-api/src/usecases/auth.ts",
+    "apps/platform-api/src/server/auth.ts",
+    "apps/platform-api/src/server/routes.ts (auth routes + real /api/session)",
+    "apps/platform-api/src/server/pipeline.ts (real cookie session resolution)",
+    "apps/platform-api/src/server/dependencies.ts (Redis + Keycloak wiring)"
+  ],
+  "testCounts": {
+    "domainIdentityResolvePermissions": 6,
+    "adaptersRedis": 11,
+    "adaptersKeycloak": 15,
+    "postgresIdentityRepository": 6,
+    "authUsecase": 8,
+    "authRoutes": 12
+  },
+  "fixtureSessionPreservation": {
+    "LOCAL_FIXTURE_SESSION": "Takes precedence over real cookie in both /api/session and pipeline auth resolution",
+    "tier1E2eUnaffected": true,
+    "adtAct0008Status": "accepted and unchanged"
+  },
+  "deferrals": [
+    "Keycloak global logout (end_session) — cookie cleared, full SSO logout is a follow-up",
+    "Full E2E with real Keycloak — requires live Keycloak + KEYCLOAK_CLIENT_SECRET env var",
+    "Staging/production Keycloak provisioning — blocked until AWS infra"
+  ],
+  "envVars": [
+    "KEYCLOAK_URL (default: http://localhost:8080)",
+    "KEYCLOAK_REALM (default: platform)",
+    "KEYCLOAK_CLIENT_ID (default: platform-api)",
+    "KEYCLOAK_CLIENT_SECRET (required; never committed)",
+    "REDIS_URL (default: redis://localhost:6379)",
+    "PLATFORM_API_URL (default: http://localhost:3001)",
+    "APP_BASE_URL (default: http://localhost:5173)",
+    "SESSION_TTL_SECONDS (default: 1800)",
+    "SESSION_COOKIE_SECURE (default: false; set true in production)"
+  ],
+  "gateResults": {
+    "makeCheck": "passed",
+    "makePreSliceGate": "passed",
+    "validateSlices": "passed",
+    "orchestratorStrict": "0 violations",
+    "testPlatformApi": "103 tests pass",
+    "testFrontend": "26 tests pass",
+    "fixtureSessionRegression": "verified — LOCAL_FIXTURE_SESSION=tenant-admin returns correct actor"
+  }
+}
