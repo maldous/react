@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="620" viewBox="0 0 1120 620" role="img" aria-labelledby="title desc">
+  <title id="title">Progressive readiness tiers</title>
+  <desc id="desc">Five readiness tiers from local substrate to production readiness.</desc>
+  <style>
+    .bg { fill: #f8fafc; }
+    .tier { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 16; }
+    .done { fill: #f0fdf4; stroke: #475569; stroke-width: 2; rx: 16; }
+    .next { fill: #eef2ff; stroke: #475569; stroke-width: 2; rx: 16; }
+    .future { fill: #fefce8; stroke: #475569; stroke-width: 2; rx: 16; }
+    .text { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+    .title { font-size: 28px; font-weight: 700; }
+    .label { font-size: 18px; font-weight: 700; }
+    .small { font-size: 14px; }
+    .tiny { font-size: 12px; }
+    .line { stroke: #475569; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#475569" />
+    </marker>
+  </defs>
+  <rect class="bg" width="1120" height="620" />
+  <text class="text title" x="48" y="54">Readiness tiers</text>
+  <text class="text small" x="48" y="82">A slice declares the tier it needs. Local work stays fast, while real identity, cloud, and production gates remain explicit.</text>
+
+  <rect class="done" x="60" y="160" width="180" height="210" />
+  <text class="text label" x="102" y="198">Tier 0</text>
+  <text class="text small" x="94" y="226">Local substrate</text>
+  <text class="text tiny" x="86" y="266">Compose config</text>
+  <text class="text tiny" x="86" y="288">services healthy</text>
+  <text class="text tiny" x="86" y="310">migrations + seed</text>
+  <text class="text tiny" x="86" y="332">architecture gates</text>
+
+  <rect class="done" x="270" y="160" width="180" height="210" />
+  <text class="text label" x="312" y="198">Tier 1</text>
+  <text class="text small" x="300" y="226">Local slice</text>
+  <text class="text tiny" x="296" y="266">Vite + API</text>
+  <text class="text tiny" x="296" y="288">fixture session</text>
+  <text class="text tiny" x="296" y="310">Playwright E2E</text>
+  <text class="text tiny" x="296" y="332">slice manifest</text>
+
+  <rect class="next" x="480" y="160" width="180" height="210" />
+  <text class="text label" x="522" y="198">Tier 2</text>
+  <text class="text small" x="514" y="226">Real identity</text>
+  <text class="text tiny" x="506" y="266">Keycloak TF</text>
+  <text class="text tiny" x="506" y="288">auth callback</text>
+  <text class="text tiny" x="506" y="310">HTTP-only session</text>
+  <text class="text tiny" x="506" y="332">no fixture shortcut</text>
+
+  <rect class="future" x="690" y="160" width="180" height="210" />
+  <text class="text label" x="732" y="198">Tier 3</text>
+  <text class="text small" x="720" y="226">Cloud deploy</text>
+  <text class="text tiny" x="716" y="266">remote state</text>
+  <text class="text tiny" x="716" y="288">OIDC deploy role</text>
+  <text class="text tiny" x="716" y="310">managed data</text>
+  <text class="text tiny" x="716" y="332">DNS + TLS</text>
+
+  <rect class="future" x="900" y="160" width="180" height="210" />
+  <text class="text label" x="942" y="198">Tier 4</text>
+  <text class="text small" x="922" y="226">Production</text>
+  <text class="text tiny" x="926" y="266">secrets manager</text>
+  <text class="text tiny" x="926" y="288">backup evidence</text>
+  <text class="text tiny" x="926" y="310">alerting</text>
+  <text class="text tiny" x="926" y="332">rollback + approval</text>
+
+  <path class="line" d="M240 265 H260" />
+  <path class="line" d="M450 265 H470" />
+  <path class="line" d="M660 265 H680" />
+  <path class="line" d="M870 265 H890" />
+
+  <text class="text small" x="80" y="440">Current proof: Tier 1 is proven by the first vertical slice.</text>
+  <text class="text small" x="80" y="470">Next step: Tier 2, real Keycloak login through the BFF session boundary.</text>
+  <text class="text small" x="80" y="500">Later: cloud and production gates require their own infrastructure and operational evidence.</text>
+</svg>
