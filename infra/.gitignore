@@ -8,9 +8,10 @@ crash.log
 crash.*.log
 
 # Variable files with real values — use .tfvars.example for committed templates
+# *.tfvars broadly covers local.tfvars, development.tfvars, staging.tfvars, etc.
+# Only *.tfvars.example files are committed (placeholder values, no real secrets).
+*.tfvars
 *.auto.tfvars
-terraform.tfvars
-tofu.tfvars
 
 # Override files — local machine overrides only
 override.tf
@@ -18,12 +19,11 @@ override.tf.json
 *_override.tf
 *_override.tf.json
 
-# Lock file — commit this when using a shared registry, skip for local dev
-# .terraform.lock.hcl
+# Lock file — COMMITTED (do not add to .gitignore)
+# .terraform.lock.hcl pins provider versions for reproducible provisioning (ADR-0023).
+# Commit it alongside module changes so all contributors use the same provider versions.
+# Regenerate with: infra/bin/tf -chdir=infra/env/<env> providers lock
 
 # Plan output files
 *.tfplan
 tfplan
-
-# Provider binaries (downloaded by init)
-.terraform.lock.hcl
