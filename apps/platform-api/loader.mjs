@@ -30,6 +30,8 @@ const PLATFORM_MAP = {
   "@platform/contracts-auth": resolvePath(repoRoot, "packages/contracts-auth/src/index.ts"),
   "@platform/domain-identity": resolvePath(repoRoot, "packages/domain-identity/src/index.ts"),
   "@platform/session-runtime": resolvePath(repoRoot, "packages/session-runtime/src/index.ts"),
+  "@platform/adapters-keycloak": resolvePath(repoRoot, "packages/adapters-keycloak/src/index.ts"),
+  "@platform/adapters-redis": resolvePath(repoRoot, "packages/adapters-redis/src/index.ts"),
   "@platform/contracts-organisation": resolvePath(
     repoRoot,
     "packages/contracts-organisation/src/index.ts"

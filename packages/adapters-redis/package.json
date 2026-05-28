@@ -54,30 +54,26 @@
       "deepImportsAllowed": false,
       "allowedConsumers": [
         "platform",
-        "adapter"
+        "adapter",
+        "application"
       ],
       "forbiddenConsumers": [
         "domain",
         "contract",
         "ui",
-        "feature",
-        "application"
+        "feature"
       ]
     },
     "relations": {
       "dependsOn": [
-        "@platform/config-runtime",
-        "@platform/queue-runtime"
+        "@platform/session-runtime"
       ],
       "providesApis": [
-        "cache-queue-redis",
-        "redis-connection",
-        "bullmq-queue-broker"
+        "session-store",
+        "auth-state-store",
+        "redis-connection"
       ],
-      "consumesApis": [
-        "config-service",
-        "queue-service"
-      ]
+      "consumesApis": []
     },
     "tags": {
       "scope": "operations",

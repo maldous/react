@@ -68,6 +68,7 @@ Deep imports allowed: false
 ```text
 platform
 adapter
+application
 ```
 
 ### Forbidden consumers
@@ -77,7 +78,6 @@ domain
 contract
 ui
 feature
-application
 ```
 
 ## Runtime and environments
@@ -99,23 +99,21 @@ production
 ### Depends on
 
 ```text
-@platform/config-runtime
-@platform/queue-runtime
+@platform/session-runtime
 ```
 
 ### Provides APIs
 
 ```text
-cache-queue-redis
+session-store
+auth-state-store
 redis-connection
-bullmq-queue-broker
 ```
 
 ### Consumes APIs
 
 ```text
-config-service
-queue-service
+None
 ```
 
 ## Operational notes
