@@ -44,14 +44,30 @@ Governed by [ADR-0023](../docs/adr/0023-define-declarative-infrastructure-provis
 
 ## Implementation status
 
-| Module                       | Status                   |
-| ---------------------------- | ------------------------ |
-| `modules/keycloak/`          | Planned — ADR-ACT-0110   |
-| `modules/aws-network/`       | Planned — pre-production |
-| `modules/aws-database/`      | Planned — pre-production |
-| `modules/aws-observability/` | Planned — pre-production |
-| `modules/ci-oidc/`           | Planned — pre-CI setup   |
-| `env/local/`                 | Scaffold — ADR-ACT-0109  |
-| `env/development/`           | Planned — ADR-ACT-0109   |
-| `env/staging/`               | Planned — pre-production |
-| `env/production/`            | Planned — pre-production |
+| Module                       | Status                                                 |
+| ---------------------------- | ------------------------------------------------------ |
+| `modules/keycloak/`          | Done — ADR-ACT-0110 (mrparkers/keycloak v4.4.0)        |
+| `modules/aws-network/`       | Planned — pre-production                               |
+| `modules/aws-database/`      | Planned — pre-production                               |
+| `modules/aws-observability/` | Planned — pre-production                               |
+| `modules/ci-oidc/`           | Planned — pre-CI setup                                 |
+| `env/local/`                 | Done — ADR-ACT-0110 (calls keycloak module, validated) |
+| `env/development/`           | Planned — ADR-ACT-0109                                 |
+| `env/staging/`               | Planned — pre-production                               |
+| `env/production/`            | Planned — pre-production                               |
+
+## Validation commands
+
+```sh
+# Format + init + validate — offline, no Keycloak required
+make infra-check
+
+# Plan local Keycloak provisioning — requires Keycloak running
+docker compose --profile identity up -d keycloak
+make keycloak-plan-local
+
+# Apply (when ready)
+cp infra/env/local/local.tfvars.example infra/env/local/local.tfvars
+# Edit local.tfvars with real local credentials
+infra/bin/tf -chdir=infra/env/local apply -var-file=local.tfvars
+```

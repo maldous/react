@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "evidenceType": "infrastructure-provisioning",
+  "actionId": "ADR-ACT-0110",
+  "name": "Keycloak Terraform/OpenTofu provisioning baseline",
+  "date": "2026-05-29",
+  "status": "done",
+  "adrRefs": ["ADR-0021", "ADR-0022", "ADR-0023"],
+  "provider": {
+    "name": "mrparkers/keycloak",
+    "versionConstraint": "~> 4.4",
+    "versionResolved": "4.4.0",
+    "keycloakVersionTested": "26.2.5",
+    "lockFile": "infra/env/local/.terraform.lock.hcl"
+  },
+  "realm": {
+    "name": "platform",
+    "displayName": "Enterprise Platform (local)",
+    "accessTokenLifespan": "15m",
+    "ssoSessionIdle": "30m",
+    "ssoSessionMax": "10h"
+  },
+  "clients": [
+    {
+      "clientId": "platform-spa",
+      "name": "Platform SPA",
+      "accessType": "PUBLIC",
+      "pkce": "S256",
+      "standardFlow": true,
+      "localRedirectUris": ["http://localhost:5173/*", "http://localhost:5173/auth/callback"],
+      "localWebOrigins": ["http://localhost:5173"],
+      "note": "Provisioned for future direct-SPA flows. Not used by current ADR-ACT-0008 fixture-session slice."
+    },
+    {
+      "clientId": "platform-api",
+      "name": "Platform BFF/API",
+      "accessType": "CONFIDENTIAL",
+      "pkce": "S256",
+      "standardFlow": true,
+      "serviceAccounts": false,
+      "localRedirectUris": ["http://localhost:3001/auth/callback", "http://localhost:3001/*"],
+      "webOrigins": [],
+      "clientSecret": "variable — gitignored .tfvars only",
+      "note": "Handles full OAuth callback flow per ADR-0022."
+    }
+  ],
+  "clientScopes": [
+    {
+      "name": "platform-claims",
+      "type": "optional",
+      "mappers": [
+        {
+          "name": "organisation-id-mapper",
+          "type": "keycloak_openid_user_attribute_protocol_mapper",
+          "userAttribute": "organisationId",
+          "claimName": "organisationId",
+          "addToIdToken": true,
+          "addToAccessToken": true,
+          "addToUserinfo": true
+        }
+      ]
+    }
+  ],
+  "roles": [
+    { "name": "system-admin", "type": "global", "semantics": "Full access across all tenants. Not assignable via product UI." },
+    { "name": "tenant-admin", "type": "tenant-scoped", "semantics": "Full control within the organisation." },
+    { "name": "manager", "type": "tenant-scoped", "semantics": "Manages members below their level." },
+    { "name": "member", "type": "tenant-scoped", "semantics": "Standard access to product features." },
+    { "name": "viewer", "type": "tenant-scoped", "semantics": "Read-only access." }
+  ],
+  "fixtureUsers": {
+    "policy": "local/dev only; gated by provision_fixture_users = true; never for staging/production",
+    "users": [
+      {
+        "username": "admin@fixture.local",
+        "role": "tenant-admin",
+        "organisationIdAttr": "00000000-0000-0000-0000-000000000001",
+        "matchesSeedTs": true
+      },
+      {
+        "username": "viewer@fixture.local",
+        "role": "viewer",
+        "organisationIdAttr": "00000000-0000-0000-0000-000000000001",
+        "matchesSeedTs": true
+      },
+      {
+        "username": "forbidden@fixture.local",
+        "role": "(none)",
+        "organisationIdAttr": "(none)",
+        "note": "No-membership actor",
+        "matchesSeedTs": true
+      }
+    ],
+    "passwords": "gitignored local.tfvars; placeholder in local.tfvars.example"
+  },
+  "secretsPolicy": {
+    "noBff_client_secretCommitted": true,
+    "noFixturePasswordCommitted": true,
+    "tfvarsGitignored": true,
+    "tfvarsExamplePlaceholdersOnly": true
+  },
+  "validationResults": {
+    "terraformFmtCheck": "EXIT 0 — format clean",
+    "terraformInit": "mrparkers/keycloak v4.4.0 installed, lock file generated",
+    "terraformValidate": "Success! The configuration is valid.",
+    "terraformPlan": "Plan: 15 to add, 0 to change, 0 to destroy.",
+    "planKeycloakVersion": "26.2.5",
+    "planNote": "Plan run on port 8090 (port 8080 occupied in test environment). Standard local port is 8080."
+  },
+  "makefileTargets": [
+    { "target": "make infra-check", "requires": "network for first init (provider download); offline after lock file committed" },
+    { "target": "make keycloak-plan-local", "requires": "Keycloak running at http://localhost:8080 (docker compose --profile identity up -d keycloak)" }
+  ],
+  "deferrals": [
+    "Real browser login flow not wired — tracked in ADR-ACT-0119",
+    "Cloud/staging/production identity environments blocked until AWS infra exists",
+    "Secrets management for non-local environments not implemented",
+    "apply automation in CI not implemented"
+  ],
+  "adtAct0008Status": "accepted — unchanged; still uses fixture sessions; make pre-slice-gate passes",
+  "realLoginFlowStatus": "NOT complete — ADR-ACT-0110 provisions identity substrate only; login UI/callback wiring tracked in ADR-ACT-0119"
+}

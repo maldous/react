@@ -295,13 +295,42 @@ compose-logs:
 # GOVERNANCE HELPERS
 # =============================================================================
 
-## infra-check — Validate Terraform/OpenTofu syntax and format (no cloud credentials needed)
+## infra-check — Validate Terraform/OpenTofu syntax, format, init, and validate (no cloud credentials needed)
 infra-check:
 	$(call STEP,infra:check)
 	@chmod +x infra/bin/tf
-	@infra/bin/tf fmt -check -recursive infra/ && echo "$(GREEN)✓ terraform format clean$(RESET)" || echo "$(YELLOW)⚠ run: infra/bin/tf fmt -recursive infra/$(RESET)"
-	@infra/bin/tf -chdir=infra/env/local init -backend=false -input=false > /dev/null 2>&1 && echo "$(GREEN)✓ infra/env/local init ok$(RESET)" || echo "$(YELLOW)⚠ init failed — check provider availability$(RESET)"
+	@infra/bin/tf fmt -check -recursive infra/ \
+		&& printf '$(GREEN)✓ terraform format clean$(RESET)\n' \
+		|| { printf '$(YELLOW)⚠ run: infra/bin/tf fmt -recursive infra/$(RESET)\n'; exit 1; }
+	@infra/bin/tf -chdir=infra/env/local init -backend=false -input=false > /dev/null 2>&1 \
+		&& printf '$(GREEN)✓ infra/env/local init ok$(RESET)\n' \
+		|| { printf '$(YELLOW)⚠ init failed — check provider availability (requires internet for first run)$(RESET)\n'; exit 1; }
+	@infra/bin/tf -chdir=infra/env/local validate -no-color \
+		&& printf '$(GREEN)✓ infra/env/local validate ok$(RESET)\n' \
+		|| { printf '$(RED)✗ infra/env/local validate failed$(RESET)\n'; exit 1; }
 	$(call OK,infra check complete)
+
+## keycloak-plan-local — Plan Keycloak provisioning against local Compose Keycloak
+##   Requires: docker compose --profile identity up -d keycloak (localhost:8080)
+##   Uses: infra/env/local/local.tfvars.example (placeholder secrets — safe to plan)
+keycloak-plan-local:
+	$(call STEP,keycloak:plan:local)
+	@chmod +x infra/bin/tf
+	@printf '$(BOLD)Requires: docker compose --profile identity up -d keycloak$(RESET)\n'
+	@curl -sf http://localhost:8080/realms/master > /dev/null 2>&1 \
+		|| { printf '$(RED)✗ Keycloak not reachable at http://localhost:8080\n  Run: docker compose --profile identity up -d keycloak$(RESET)\n'; exit 1; }
+	@printf '$(GREEN)✓ Keycloak reachable at http://localhost:8080$(RESET)\n'
+	@infra/bin/tf -chdir=infra/env/local init -backend=false -input=false > /dev/null 2>&1 \
+		&& printf '$(GREEN)✓ init ok$(RESET)\n' \
+		|| { printf '$(RED)✗ init failed$(RESET)\n'; exit 1; }
+	@infra/bin/tf -chdir=infra/env/local validate -no-color \
+		&& printf '$(GREEN)✓ validate ok$(RESET)\n' \
+		|| { printf '$(RED)✗ validate failed$(RESET)\n'; exit 1; }
+	@infra/bin/tf -chdir=infra/env/local plan \
+		-var-file=local.tfvars.example \
+		-input=false \
+		-no-color
+	$(call OK,keycloak plan complete — review above before running apply)
 
 ## readmes — Regenerate all package READMEs from metadata
 readmes:

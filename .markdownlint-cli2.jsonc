@@ -22,5 +22,7 @@
     "tools/architecture/**/README.md",
     // Auto-generated session memory notes (tool scratch area, gitignored)
     ".remember/**",
+    // Terraform provider cache — downloaded vendor files, not authored by this repo
+    "infra/**/.terraform/**",
   ],
 }
