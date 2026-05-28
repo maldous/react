@@ -201,15 +201,15 @@ test("planFor: validate returns just metadata step", () => {
   assert.equal(plan[0].name, "validate-package-metadata");
 });
 
-test("planFor: all returns 6 steps in dependency order", () => {
+test("planFor: all returns 7 steps in dependency order", () => {
   const opts = defaultOptions({ command: "all" });
   const plan = planFor("all", opts, repoRoot);
-  assert.equal(plan.length, 6);
+  assert.equal(plan.length, 7);
   const names = plan.map((s) => s.name);
   // metadata must come first
   assert.equal(names[0], "validate-package-metadata");
-  // evidence check comes last
-  assert.equal(names[names.length - 1], "validate-lifecycle-evidence");
+  // slice readiness comes last
+  assert.equal(names[names.length - 1], "validate-slice-readiness");
 });
 
 test("planFor: generate-readmes returns metadata + readmesWrite", () => {
@@ -236,13 +236,14 @@ test("planFor: generate-lifecycle-reports has 4 steps", () => {
   assert.equal(plan.length, 4);
 });
 
-test("planFor: validate-evidence has 6 steps", () => {
+test("planFor: validate-evidence has 7 steps", () => {
   const opts = defaultOptions({ command: "validate-evidence" });
   const plan = planFor("validate-evidence", opts, repoRoot);
-  assert.equal(plan.length, 6);
+  assert.equal(plan.length, 7);
   const names = plan.map((s) => s.name);
   assert.ok(names.includes("validate-source-imports"));
   assert.ok(names.includes("validate-lifecycle-evidence"));
+  assert.ok(names.includes("validate-slice-readiness"));
 });
 
 test("planFor: generate-lifecycle-evidence without evidenceGenerationRequested returns error step", () => {

@@ -155,6 +155,13 @@ export function buildStepCatalog(options, repoRoot) {
       repoRoot,
       true
     ),
+    sliceReadiness: step(
+      "validate-slice-readiness",
+      "tools/architecture/validate-slice-readiness",
+      [],
+      repoRoot,
+      true
+    ),
   };
 }
 
@@ -173,6 +180,7 @@ export function planFor(command, options, repoRoot) {
       s.inventoryWrite,
       s.lifecycleReportsWrite,
       s.evidenceCheck,
+      s.sliceReadiness,
     ];
   }
 
@@ -196,6 +204,7 @@ export function planFor(command, options, repoRoot) {
       s.inventoryWrite,
       s.lifecycleReportsWrite,
       s.evidenceCheck,
+      s.sliceReadiness,
     ];
   }
 

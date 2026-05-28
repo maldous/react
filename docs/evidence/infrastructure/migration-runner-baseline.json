@@ -1,0 +1,32 @@
+{
+  "evidenceType": "infrastructure-baseline",
+  "date": "2026-05-28",
+  "adrRefs": ["ADR-ACT-0116", "ADR-0014", "ADR-0017"],
+  "component": "migration-runner",
+  "sourceFile": "apps/platform-api/src/db/migrate.ts",
+  "capabilities": [
+    "schema-migrations-tracking-table",
+    "sha256-checksum-per-migration",
+    "idempotent-skip-applied",
+    "transaction-per-migration",
+    "rollback-on-failure",
+    "isMigrated-export",
+    "seed-requires-migrated"
+  ],
+  "apiChange": {
+    "runMigrations": "now returns { applied: string[]; skipped: string[] } instead of void"
+  },
+  "tests": {
+    "file": "tests/integration/compose-smoke.test.mjs",
+    "added": 3,
+    "cases": [
+      "database: migration runner creates schema_migrations table",
+      "database: migration is idempotent (skips already applied)",
+      "database: seed requires migrated schema"
+    ]
+  },
+  "adRCompliance": {
+    "ADR-0014": "schema ownership enforced via migration tracking table",
+    "ADR-0017": "local substrate migration idempotency for compose dev workflow"
+  }
+}

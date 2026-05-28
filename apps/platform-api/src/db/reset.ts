@@ -13,7 +13,7 @@ export async function resetDatabase(): Promise<void> {
   await client.connect();
   try {
     await client.query(
-      "DROP TABLE IF EXISTS memberships, external_identities, users, organisations CASCADE"
+      "DROP TABLE IF EXISTS memberships, external_identities, users, organisations, schema_migrations CASCADE"
     );
   } finally {
     await client.end();

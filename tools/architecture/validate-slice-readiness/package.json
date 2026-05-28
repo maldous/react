@@ -1,0 +1,94 @@
+{
+  "name": "@architecture/validate-slice-readiness",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Validates slice readiness manifests in docs/slices/",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "tool",
+      "name": "validate-slice-readiness",
+      "system": "architecture-governance",
+      "domain": "architecture",
+      "boundedContext": "architecture-governance",
+      "owner": "architecture"
+    },
+    "lifecycle": {
+      "stage": "experimental",
+      "role": "tooling",
+      "class": "experimental.tooling",
+      "catalogLifecycle": "experimental",
+      "visibility": "internal",
+      "supportLevel": "experimental",
+      "reviewCadence": "on-change"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0024",
+        "ADR-0011",
+        "ADR-0012"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "validate-slice-readiness",
+      "serviceNamespace": "architecture",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "ci"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "feature",
+        "domain",
+        "ui",
+        "application"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "tool",
+      "stage": "experimental",
+      "role": "tooling",
+      "layer": "tooling"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Validates slice readiness manifests in docs/slices/ against ADR-0024 readiness tier model.",
+      "responsibilities": [
+        "Validate docs/slices/*.json against known capabilities and tier rules",
+        "Enforce blocker resolution before marking slices Done"
+      ],
+      "nonResponsibilities": [
+        "Does not implement slice features",
+        "Does not manage Terraform"
+      ],
+      "usage": [
+        "node tools/architecture/validate-slice-readiness/src/index.mjs"
+      ],
+      "operationalNotes": [
+        "Run as part of architecture governance via orchestrator"
+      ]
+    }
+  }
+}

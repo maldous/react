@@ -313,6 +313,8 @@ generate:
 
 ## pre-slice-gate — Required gate before ADR-ACT-0008 first vertical slice (requires SONAR_TOKEN)
 pre-slice-gate: compose format lint typecheck test test-compose audit security architecture
+	$(call STEP,pre-slice-gate: validate slice readiness)
+	npm run validate:slices
 	$(call STEP,pre-slice-gate: database substrate)
 	npm run db:migrate
 	npm run db:seed

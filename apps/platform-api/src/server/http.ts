@@ -13,53 +13,43 @@
  */
 import http from "node:http";
 import process from "node:process";
+import { createRouter } from "./pipeline.ts";
 import { getHealth, getReadiness, getVersion } from "./health.ts";
 import { getFixtureSession } from "./session.ts";
 
 const PORT = Number(process.env["PLATFORM_API_PORT"] ?? 3001);
 
-function jsonResponse(res: http.ServerResponse, status: number, body: unknown): void {
-  res.writeHead(status, {
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-  });
-  res.end(JSON.stringify(body));
-}
-
-const server = http.createServer(async (req, res) => {
-  if (req.method === "OPTIONS") {
-    res.writeHead(204, {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,OPTIONS",
-    });
-    res.end();
-    return;
-  }
-
-  const url = new URL(req.url ?? "/", `http://localhost:${PORT}`);
-
-  try {
-    if (url.pathname === "/healthz") {
-      jsonResponse(res, 200, getHealth());
-    } else if (url.pathname === "/readyz") {
+const router = createRouter([
+  {
+    method: "GET",
+    path: "/healthz",
+    handler: async (_req, res) => res.json(200, getHealth()),
+  },
+  {
+    method: "GET",
+    path: "/readyz",
+    handler: async (_req, res) => {
       const result = await getReadiness();
-      jsonResponse(res, result.status === "ready" ? 200 : 503, result);
-    } else if (url.pathname === "/version") {
-      jsonResponse(res, 200, getVersion());
-    } else if (url.pathname === "/api/session") {
+      res.json(result.status === "ready" ? 200 : 503, result);
+    },
+  },
+  {
+    method: "GET",
+    path: "/version",
+    handler: async (_req, res) => res.json(200, getVersion()),
+  },
+  {
+    method: "GET",
+    path: "/api/session",
+    handler: async (_req, res) => {
       const actor = getFixtureSession();
-      if (actor) {
-        jsonResponse(res, 200, actor);
-      } else {
-        jsonResponse(res, 401, { code: "UNAUTHENTICATED", message: "No session" });
-      }
-    } else {
-      jsonResponse(res, 404, { code: "NOT_FOUND", message: `${url.pathname} not found` });
-    }
-  } catch {
-    jsonResponse(res, 500, { code: "UNEXPECTED_ERROR", message: "Internal error" });
-  }
-});
+      if (actor) res.json(200, actor);
+      else res.json(401, { code: "UNAUTHENTICATED", message: "No session" });
+    },
+  },
+]);
+
+const server = http.createServer(router);
 
 server.listen(PORT, () => {
   process.stdout.write(`platform-api listening on http://localhost:${PORT}\n`);

@@ -1,8 +1,8 @@
 import { Route as RootRoute } from "./routes/__root";
 import { Route as IndexRoute } from "./routes/index";
 import { Route as AuthLoginRoute } from "./routes/auth/login";
-import { Route as ProtectedTestRoute } from "./routes/protected-test";
+import { Route as E2EHarnessRoute } from "./routes/e2e-harness";
 
-const routeTree = RootRoute.addChildren([IndexRoute, AuthLoginRoute, ProtectedTestRoute]);
+const routeTree = RootRoute.addChildren([IndexRoute, AuthLoginRoute, E2EHarnessRoute]);
 
 export { routeTree };

@@ -63,8 +63,8 @@ Location: `e2e/substrate/smoke.test.ts`
 | index page loads | / | heading "Platform" visible |
 | /auth/login renders sign in heading | /auth/login | heading "Sign in" visible |
 | Vite proxy: /api/session proxies to platform-api | /api/session (via Vite proxy) | status=200, actor.roles contains tenant-admin |
-| fixture session: tenant-admin can access /protected-test | /protected-test | data-testid="protected-content" visible |
-| unauthenticated: 401 session redirects to /auth/login | /protected-test (with 401 intercept) | URL redirects to /auth/login |
+| fixture session: tenant-admin can access /e2e-harness | /e2e-harness | data-testid="protected-content" visible |
+| unauthenticated: 401 session redirects to /auth/login | /e2e-harness (with 401 intercept) | URL redirects to /auth/login |
 
 Total E2E tests: 8
 

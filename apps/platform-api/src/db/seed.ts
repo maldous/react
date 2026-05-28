@@ -1,4 +1,5 @@
 import pg from "pg";
+import { isMigrated } from "./migrate.ts";
 
 const POSTGRES_URL =
   process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
@@ -12,6 +13,10 @@ export const FIXTURE = {
 } as const;
 
 export async function seedFixtures(): Promise<void> {
+  if (!(await isMigrated())) {
+    throw new Error("Database is not migrated. Run npm run db:migrate first.");
+  }
+
   const client = new pg.Client(POSTGRES_URL);
   await client.connect();
   try {

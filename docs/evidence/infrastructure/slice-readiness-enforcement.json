@@ -1,0 +1,48 @@
+{
+  "evidenceType": "infrastructure-baseline",
+  "date": "2026-05-28",
+  "adrRefs": ["ADR-ACT-0116", "ADR-0024", "ADR-0011", "ADR-0012"],
+  "component": "validate-slice-readiness",
+  "sourceFiles": [
+    "tools/architecture/validate-slice-readiness/package.json",
+    "tools/architecture/validate-slice-readiness/src/index.mjs",
+    "tools/architecture/validate-slice-readiness/README.md",
+    "tools/architecture/validate-slice-readiness/tests/validate-slice-readiness.test.mjs"
+  ],
+  "validationRules": [
+    { "rule": "actionId present", "severity": "ERROR" },
+    { "rule": "name present", "severity": "ERROR" },
+    { "rule": "status present and valid", "severity": "ERROR" },
+    { "rule": "requiredReadinessTier 0-4", "severity": "ERROR" },
+    { "rule": "requiredCapabilities known IDs only", "severity": "ERROR" },
+    { "rule": "blockedBy ADR-ACT-NNNN format", "severity": "ERROR" },
+    { "rule": "forbiddenDependencies unrecognised values", "severity": "WARN" }
+  ],
+  "orchestratorIntegration": {
+    "step": "validate-slice-readiness",
+    "includedIn": ["all", "validate-evidence"],
+    "position": "after validate-lifecycle-evidence"
+  },
+  "gateUpdates": {
+    "packageJson": "validate:slices script added",
+    "makefile": "pre-slice-gate calls npm run validate:slices"
+  },
+  "tests": {
+    "file": "tools/architecture/validate-slice-readiness/tests/validate-slice-readiness.test.mjs",
+    "count": 7,
+    "cases": [
+      "valid ADR-ACT-0008 manifest passes",
+      "missing requiredReadinessTier fails",
+      "invalid tier 5 fails",
+      "unknown capability fails",
+      "invalid blocker format fails",
+      "missing status fails",
+      "unrecognised forbidden dependency warns"
+    ]
+  },
+  "adRCompliance": {
+    "ADR-0024": "slice readiness tier model enforced by tooling",
+    "ADR-0011": "orchestrator execution model followed",
+    "ADR-0012": "node:test, tool runs via spawn in self-evidence test"
+  }
+}

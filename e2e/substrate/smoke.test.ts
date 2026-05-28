@@ -59,8 +59,8 @@ test.describe("React SPA substrate", () => {
     expect(actor.roles).toContain("tenant-admin");
   });
 
-  test("fixture session: tenant-admin can access /protected-test", async ({ page }) => {
-    await page.goto("/protected-test");
+  test("fixture session: tenant-admin can access /e2e-harness", async ({ page }) => {
+    await page.goto("/e2e-harness");
     // With fixture session (tenant-admin), /api/session returns actor with organisation.read
     // ProtectedRoute should render the protected content
     await expect(page.getByTestId("protected-content")).toBeVisible({ timeout: 10000 });
@@ -76,7 +76,7 @@ test.describe("React SPA substrate", () => {
         body: JSON.stringify({ code: "UNAUTHENTICATED", message: "No session" }),
       })
     );
-    await page.goto("/protected-test");
+    await page.goto("/e2e-harness");
     // ProtectedRoute detects unauthenticated (isAuthenticated=false) and redirects
     await expect(page).toHaveURL(/\/auth\/login/, { timeout: 10000 });
   });

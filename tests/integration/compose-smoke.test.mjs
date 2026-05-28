@@ -21,7 +21,7 @@ import pg from "pg";
 import { createClient as createRedisClient } from "redis";
 
 // DB substrate — TypeScript modules (Node 25.8 strips types natively)
-import { runMigrations } from "../../apps/platform-api/src/db/migrate.ts";
+import { runMigrations, isMigrated } from "../../apps/platform-api/src/db/migrate.ts";
 import { seedFixtures, FIXTURE } from "../../apps/platform-api/src/db/seed.ts";
 import { resetDatabase } from "../../apps/platform-api/src/db/reset.ts";
 import {
@@ -173,6 +173,36 @@ test("database: seed creates fixture actors and organisation", async () => {
     FIXTURE.FORBIDDEN_ID,
   ]);
   assert.equal(forbiddenResult.rows.length, 0, "forbidden actor has no membership");
+});
+
+test("database: migration runner creates schema_migrations table", async () => {
+  await resetDatabase();
+  await runMigrations();
+  const { rows } = await pgClient.query(
+    "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'schema_migrations'"
+  );
+  assert.equal(rows.length, 1, "schema_migrations table created");
+});
+
+test("database: migration is idempotent (skips already applied)", async () => {
+  await resetDatabase();
+  const first = await runMigrations();
+  const second = await runMigrations();
+  assert.ok(first.applied.length > 0, "first run applies migrations");
+  assert.equal(second.applied.length, 0, "second run skips all");
+  assert.ok(second.skipped.length > 0, "second run reports skipped");
+});
+
+test("database: seed requires migrated schema", async () => {
+  await resetDatabase();
+  await assert.rejects(
+    () => seedFixtures(),
+    (err) => {
+      assert.ok(err.message.includes("not migrated"), `Expected 'not migrated' in: ${err.message}`);
+      return true;
+    },
+    "seed should fail on unmigrated DB"
+  );
 });
 
 // ---------------------------------------------------------------------------

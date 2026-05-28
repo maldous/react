@@ -1,0 +1,36 @@
+{
+  "evidenceType": "infrastructure-baseline",
+  "date": "2026-05-28",
+  "adrRefs": ["ADR-ACT-0116", "ADR-0011", "ADR-0013"],
+  "component": "platform-api-pipeline",
+  "sourceFile": "apps/platform-api/src/server/pipeline.ts",
+  "capabilities": [
+    "request-id-generation",
+    "json-body-parsing",
+    "route-matching-404-405",
+    "auth-guard-401",
+    "permission-guard-403",
+    "safe-error-serialisation",
+    "cors-headers",
+    "structured-logging"
+  ],
+  "tests": {
+    "file": "apps/platform-api/tests/substrate/api-pipeline.test.ts",
+    "count": 8,
+    "cases": [
+      "404 for unknown path",
+      "405 for wrong method",
+      "malformed JSON body → 400",
+      "requiresAuth without session → 401",
+      "requiresAuth with insufficient permission → 403",
+      "successful handler → 200",
+      "handler throws → 500 safe error",
+      "X-Request-Id header present"
+    ]
+  },
+  "adRCompliance": {
+    "ADR-0011": "node:test, self-contained, no framework",
+    "ADR-0012": "real http.createServer port-0 approach",
+    "ADR-0013": "auth/permission checks at API boundary before handlers"
+  }
+}
