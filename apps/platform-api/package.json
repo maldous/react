@@ -79,14 +79,19 @@
         "@platform/contracts-auth",
         "@platform/contracts-organisation",
         "@platform/domain-identity",
-        "@platform/session-runtime"
+        "@platform/session-runtime",
+        "@platform/adapters-keycloak",
+        "@platform/adapters-redis"
       ],
       "providesApis": [
         "healthz",
         "readyz",
         "version",
         "session-fixture",
-        "organisation-profile"
+        "organisation-profile",
+        "auth-login",
+        "auth-callback",
+        "auth-logout"
       ],
       "consumesApis": []
     },

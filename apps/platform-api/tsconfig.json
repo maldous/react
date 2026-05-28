@@ -15,7 +15,9 @@
       "@platform/contracts-auth": ["../../packages/contracts-auth/src/index.ts"],
       "@platform/domain-identity": ["../../packages/domain-identity/src/index.ts"],
       "@platform/session-runtime": ["../../packages/session-runtime/src/index.ts"],
-      "@platform/contracts-organisation": ["../../packages/contracts-organisation/src/index.ts"]
+      "@platform/contracts-organisation": ["../../packages/contracts-organisation/src/index.ts"],
+      "@platform/adapters-keycloak": ["../../packages/adapters-keycloak/src/index.ts"],
+      "@platform/adapters-redis": ["../../packages/adapters-redis/src/index.ts"]
     }
   },
   "include": ["src/**/*.ts"],

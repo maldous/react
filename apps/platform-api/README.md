@@ -109,6 +109,8 @@ production
 @platform/contracts-organisation
 @platform/domain-identity
 @platform/session-runtime
+@platform/adapters-keycloak
+@platform/adapters-redis
 ```
 
 ### Provides APIs
@@ -119,6 +121,9 @@ readyz
 version
 session-fixture
 organisation-profile
+auth-login
+auth-callback
+auth-logout
 ```
 
 ### Consumes APIs
