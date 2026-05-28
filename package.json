@@ -11,7 +11,7 @@
     "audit:osv": "osv-scanner scan --recursive .",
     "secrets:scan": "command -v gitleaks >/dev/null 2>&1 && gitleaks detect --source . --no-git || echo 'gitleaks not found on PATH — install from https://github.com/gitleaks/gitleaks/releases or use the gitleaks-action in CI'",
     "sonar:scan": "npm run test:coverage && SONAR_HOST_URL=http://localhost:9003 sonar-scanner",
-    "sbom:generate": "cyclonedx-npm --output-format JSON --output-file docs/evidence/security/sbom-baseline.json --package-lock-only",
+    "sbom:generate": "cyclonedx-npm --output-format JSON --output-file docs/evidence/security/sbom-baseline.json --package-lock-only --ignore-npm-errors",
     "compose:config": "docker compose config",
     "compose:up": "docker compose up -d",
     "compose:down": "docker compose down",
