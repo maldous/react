@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Runtime data flow</title>
+  <desc id="desc">Shows how a user reads and updates organisation profile data through the React app, BFF API, permission checks, use case, repository adapter, and database.</desc>
+  <style>
+    .bg { fill: #fff7ed; }
+    .lane { fill: rgba(255,255,255,.72); stroke: #fed7aa; stroke-width: 2; rx: 28; }
+    .step { fill: #ffffff; stroke: #431407; stroke-width: 2; rx: 20; }
+    .guard { fill: #fef3c7; stroke: #92400e; stroke-width: 2; rx: 20; }
+    .logic { fill: #dcfce7; stroke: #166534; stroke-width: 2; rx: 20; }
+    .store { fill: #fae8ff; stroke: #86198f; stroke-width: 2; rx: 20; }
+    .obs { fill: #e0f2fe; stroke: #075985; stroke-width: 2; rx: 20; }
+    .text { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #1c1917; }
+    .title { font-size: 30px; font-weight: 850; }
+    .laneTitle { font-size: 13px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; fill: #9a3412; }
+    .num { font-size: 26px; font-weight: 900; fill: #9a3412; }
+    .label { font-size: 17px; font-weight: 800; }
+    .small { font-size: 13px; fill: #44403c; }
+    .line { stroke: #9a3412; stroke-width: 2.6; fill: none; marker-end: url(#arrow); }
+    .trace { stroke: #0284c7; stroke-width: 2.2; fill: none; stroke-dasharray: 8 7; marker-end: url(#arrowBlue); }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#9a3412"/></marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#0284c7"/></marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="10" stdDeviation="9" flood-color="#7c2d12" flood-opacity="0.14"/></filter>
+  </defs>
+  <rect class="bg" width="1280" height="720" />
+  <text class="text title" x="56" y="58">Runtime data flow</text>
+  <text class="text small" x="56" y="88">A profile read or update is a controlled path: browser state, API guard, pure use case, adapter-owned SQL, and safe response.</text>
+
+  <rect class="lane" x="46" y="128" width="1188" height="118" />
+  <text class="text laneTitle" x="74" y="158">Browser</text>
+  <rect class="step" x="90" y="178" width="190" height="50" filter="url(#shadow)" />
+  <text class="text num" x="110" y="213">1</text><text class="text label" x="150" y="208">Route renders</text>
+  <rect class="step" x="390" y="178" width="220" height="50" filter="url(#shadow)" />
+  <text class="text num" x="410" y="213">2</text><text class="text label" x="450" y="208">Query or mutation</text>
+  <rect class="step" x="720" y="178" width="235" height="50" filter="url(#shadow)" />
+  <text class="text num" x="740" y="213">3</text><text class="text label" x="780" y="208">Fetch with cookie</text>
+
+  <rect class="lane" x="46" y="286" width="1188" height="118" />
+  <text class="text laneTitle" x="74" y="316">BFF / API</text>
+  <rect class="guard" x="90" y="336" width="235" height="50" filter="url(#shadow)" />
+  <text class="text num" x="110" y="371">4</text><text class="text label" x="150" y="366">Session resolved</text>
+  <rect class="guard" x="440" y="336" width="240" height="50" filter="url(#shadow)" />
+  <text class="text num" x="460" y="371">5</text><text class="text label" x="500" y="366">Permission checked</text>
+  <rect class="step" x="800" y="336" width="260" height="50" filter="url(#shadow)" />
+  <text class="text num" x="820" y="371">6</text><text class="text label" x="860" y="366">Request validated</text>
+
+  <rect class="lane" x="46" y="444" width="1188" height="118" />
+  <text class="text laneTitle" x="74" y="474">Application core</text>
+  <rect class="logic" x="90" y="494" width="240" height="50" filter="url(#shadow)" />
+  <text class="text num" x="110" y="529">7</text><text class="text label" x="150" y="524">Use case runs</text>
+  <rect class="logic" x="440" y="494" width="250" height="50" filter="url(#shadow)" />
+  <text class="text num" x="460" y="529">8</text><text class="text label" x="500" y="524">Domain validates</text>
+  <rect class="store" x="800" y="494" width="260" height="50" filter="url(#shadow)" />
+  <text class="text num" x="820" y="529">9</text><text class="text label" x="860" y="524">Adapter maps rows</text>
+
+  <rect class="store" x="90" y="610" width="250" height="56" filter="url(#shadow)" />
+  <text class="text label" x="130" y="644">Postgres data</text>
+  <rect class="obs" x="760" y="610" width="330" height="56" filter="url(#shadow)" />
+  <text class="text label" x="806" y="644">Logs, trace context, safe errors</text>
+
+  <path class="line" d="M280 203 H380" />
+  <path class="line" d="M610 203 H710" />
+  <path class="line" d="M838 228 C838 270 208 270 208 326" />
+  <path class="line" d="M325 361 H430" />
+  <path class="line" d="M680 361 H790" />
+  <path class="line" d="M930 386 C930 430 210 430 210 484" />
+  <path class="line" d="M330 519 H430" />
+  <path class="line" d="M690 519 H790" />
+  <path class="line" d="M930 544 C930 608 340 570 250 608" />
+  <path class="trace" d="M210 386 C420 430 625 570 840 610" />
+  <path class="trace" d="M930 386 C1000 445 1010 550 970 610" />
+</svg>
