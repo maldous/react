@@ -18,6 +18,14 @@ The first real vertical slice is complete: an authenticated organisation profile
 
 The repo is intentionally more than a demo UI. It is a practical example of application architecture designed to survive more than the first feature.
 
+## How the application is designed
+
+The current application behaviour is small but complete. A user opens the organisation profile page, the React feature asks the BFF for `/api/organisation/profile`, the API resolves session context, checks permissions, validates the request, calls a pure use case, and reaches Postgres only through a repository port and adapter.
+
+That shape matters because every dependency has a reason to exist. The UI depends on feature hooks and contracts. The API depends on guards, runtime context, use cases, and safe error mapping. The use case depends on a port, not Postgres. The adapter owns SQL, row mapping, and connection pooling. Data never leaks backwards into the React app.
+
+![Application dependency map](docs/images/application-dependency-map.svg)
+
 ## Why it was built this way
 
 The early decision was not "which component library should I use?" It was "what kinds of mistakes should the codebase make difficult?"
@@ -26,7 +34,7 @@ A few examples:
 
 - The React app is browser-only. It does not own database access, migrations, sessions, or identity exchange.
 - The API layer owns security enforcement. Protected routes improve UX, but API guards decide access.
-- Domain packages stay free of framework, HTTP, database, React, Keycloak, and observability SDK concerns.
+- Domain and use-case code stays free of framework, HTTP, database, React, Keycloak, and observability SDK concerns.
 - Adapters own external systems such as Postgres, Redis, Keycloak, OpenTelemetry, Sentry, object storage, email, and cloud services.
 - Contracts use Zod so request and response shapes are explicit and testable.
 - Package metadata, lifecycle rules, import boundaries, generated READMEs, and evidence bundles are validated by tools, not memory.
@@ -59,7 +67,7 @@ The organisation profile slice is deliberately small. The point was not feature 
 
 It proves that the same path works from the browser down to persistence and back again.
 
-![Vertical slice flow](docs/images/vertical-slice-flow.svg)
+![Runtime data flow](docs/images/runtime-data-flow.svg)
 
 That slice includes read, update, forbidden, unauthenticated, fixture-session, API, repository, frontend, compose, and browser-level tests.
 
