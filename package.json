@@ -21,7 +21,8 @@
     "compose:identity": "docker compose --profile identity up -d keycloak",
     "compose:cloud": "docker compose --profile cloud-mocks up -d localstack",
     "compose:sentry": "docker compose --profile sentry up -d",
-    "tsc:check": "tsc --noEmit -p apps/react-enterprise-app/tsconfig.json",
+    "tsc:check": "tsc --noEmit -p apps/react-enterprise-app/tsconfig.json && npm run tsc:check:packages",
+    "tsc:check:packages": "tsc --noEmit -p packages/tsconfig.packages.json",
     "test:compose": "node --test tests/integration/compose-smoke.test.mjs",
     "license:policy": "echo \"License policy: see docs/security/license-policy.md. Automated scanning tracked in ADR-ACT-0090.\"",
     "compose:config:all": "docker compose --profile quality --profile identity --profile cloud-mocks --profile sentry config",
@@ -29,11 +30,12 @@
     "compose:down:volumes": "docker compose down --volumes",
     "sonar:quality-gate": "SONAR_HOST_URL=http://localhost:9003 node tools/quality/sonar-quality-gate.mjs",
     "sonar:clean": "npm run test:coverage && SONAR_HOST_URL=http://localhost:9003 sonar-scanner && npm run sonar:quality-gate",
-    "test:architecture": "node --test tools/architecture/validate-package-metadata/tests/validate-package-metadata.test.mjs tools/architecture/validate-package-metadata/tests/validate-package-metadata-unit.test.mjs tools/architecture/validate-source-imports/tests/validate-source-imports.test.mjs tools/architecture/validate-source-imports/tests/validate-source-imports-unit.test.mjs tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs tools/architecture/generate-package-inventory/tests/generate-package-inventory.test.mjs tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence.test.mjs tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence-unit.test.mjs tools/architecture/orchestrator/tests/self-evidence.test.mjs tools/architecture/orchestrator/tests/orchestrator-unit.test.mjs",
-    "test:coverage": "mkdir -p coverage && node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=coverage/lcov.info --test-reporter=spec --test-reporter-destination=stdout tools/architecture/validate-package-metadata/tests/validate-package-metadata.test.mjs tools/architecture/validate-package-metadata/tests/validate-package-metadata-unit.test.mjs tools/architecture/validate-source-imports/tests/validate-source-imports.test.mjs tools/architecture/validate-source-imports/tests/validate-source-imports-unit.test.mjs tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs tools/architecture/generate-package-inventory/tests/generate-package-inventory.test.mjs tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence.test.mjs tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence-unit.test.mjs tools/architecture/orchestrator/tests/self-evidence.test.mjs tools/architecture/orchestrator/tests/orchestrator-unit.test.mjs"
+    "test:architecture": "node --test tools/architecture/validate-package-metadata/tests/validate-package-metadata.test.mjs tools/architecture/validate-package-metadata/tests/validate-package-metadata-unit.test.mjs tools/architecture/validate-source-imports/tests/validate-source-imports.test.mjs tools/architecture/validate-source-imports/tests/validate-source-imports-unit.test.mjs tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs tools/architecture/generate-package-inventory/tests/generate-package-inventory.test.mjs tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence.test.mjs tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence-unit.test.mjs tools/architecture/orchestrator/tests/self-evidence.test.mjs tools/architecture/orchestrator/tests/orchestrator-unit.test.mjs packages/platform-runtime-context/tests/platform-runtime-context.test.ts packages/platform-errors/tests/platform-errors.test.ts packages/platform-logging/tests/platform-logging.test.ts packages/platform-observability/tests/platform-observability.test.ts packages/api-runtime/tests/health-contract.test.ts",
+    "test:coverage": "mkdir -p coverage && node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=coverage/lcov.info --test-reporter=spec --test-reporter-destination=stdout tools/architecture/validate-package-metadata/tests/validate-package-metadata.test.mjs tools/architecture/validate-package-metadata/tests/validate-package-metadata-unit.test.mjs tools/architecture/validate-source-imports/tests/validate-source-imports.test.mjs tools/architecture/validate-source-imports/tests/validate-source-imports-unit.test.mjs tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs tools/architecture/generate-package-inventory/tests/generate-package-inventory.test.mjs tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence.test.mjs tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence-unit.test.mjs tools/architecture/orchestrator/tests/self-evidence.test.mjs tools/architecture/orchestrator/tests/orchestrator-unit.test.mjs packages/platform-runtime-context/tests/platform-runtime-context.test.ts packages/platform-errors/tests/platform-errors.test.ts packages/platform-logging/tests/platform-logging.test.ts packages/platform-observability/tests/platform-observability.test.ts packages/api-runtime/tests/health-contract.test.ts"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "3.1054.0",
+    "@opentelemetry/api": "1.9.1",
     "@cyclonedx/cyclonedx-npm": "4.2.1",
     "@eslint/js": "10.0.1",
     "dependency-cruiser": "17.4.2",
@@ -46,6 +48,7 @@
     "prettier": "3.8.3",
     "redis": "4.7.0",
     "typescript": "6.0.3",
+    "pino": "10.3.1",
     "typescript-eslint": "8.60.0"
   }
 }
