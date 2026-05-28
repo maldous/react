@@ -317,14 +317,46 @@ UI packages
   feature packages
   GraphQL/runtime adapters
   access-control package for role-aware composition
+  @platform/platform-errors (browser-safe typed errors)
+  @platform/contracts-auth (Zod schemas)
+  @platform/ui-design-system
 
 @platform/react-enterprise-app may not import:
-  direct PostgreSQL clients
+  direct PostgreSQL clients (pg)
+  pino (Node-only logger)
   direct ClickHouse clients
   contract internals
   package internals
   test-support in production source
   operations runtime or adapter packages
+  @platform/api-runtime (server-only)
+  @platform/platform-logging (server-only)
+  @platform/platform-observability (server-only)
+  @platform/platform-runtime-context (server-only)
+  @platform/adapters-* (adapter packages)
+  @platform/platform-api (BFF/API app — not a browser dependency)
+```
+
+Server/BFF logic (database migrations, seed, health/readiness/version handlers, fixture session provider)
+belongs in `apps/platform-api`. See rule `no-server-packages-in-react-spa` (ADR-0022).
+
+```text
+@platform/platform-api may import:
+  @platform/api-runtime
+  @platform/platform-logging
+  @platform/platform-observability
+  @platform/platform-runtime-context
+  @platform/platform-errors
+  @platform/contracts-auth
+  @platform/domain-identity
+  @platform/session-runtime
+  pg (PostgreSQL client for migrations, health checks)
+
+@platform/platform-api must not be imported by:
+  ui packages
+  feature packages
+  domain packages
+  contract packages
 ```
 
 ## Delivery package boundaries
@@ -339,7 +371,8 @@ delivery packages carry production: false in runtime metadata
 
 | Package                           | May depend on                                                                                                                                                                                                   |
 | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| @platform/react-enterprise-app    | feature-workflow, access-control, adapters-graphql                                                                                                                                                              |
+| @platform/react-enterprise-app    | feature-workflow, access-control, adapters-graphql, contracts-auth, platform-errors, ui-design-system                                                                                                           |
+| @platform/platform-api            | api-runtime, platform-logging, platform-observability, platform-runtime-context, platform-errors, contracts-auth, domain-identity, session-runtime                                                              |
 | @platform/feature-workflow        | ui-design-system, domain-core, profile-configuration, access-control, contracts-graphql, contracts-analytics, queue-runtime, storage-runtime, audit-events, email-runtime, notification-runtime, search-runtime |
 | @platform/ui-design-system        | none of the runtime/domain packages                                                                                                                                                                             |
 | @platform/domain-core             | none of the platform runtime packages                                                                                                                                                                           |

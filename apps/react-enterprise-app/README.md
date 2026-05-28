@@ -105,11 +105,7 @@ production
 @platform/access-control
 @platform/adapters-graphql
 @platform/contracts-auth
-@platform/api-runtime
-@platform/platform-logging
-@platform/platform-observability
 @platform/platform-errors
-@platform/platform-runtime-context
 ```
 
 ### Provides APIs

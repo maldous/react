@@ -21,9 +21,9 @@ import pg from "pg";
 import { createClient as createRedisClient } from "redis";
 
 // DB substrate — TypeScript modules (Node 25.8 strips types natively)
-import { runMigrations } from "../../apps/react-enterprise-app/src/db/migrate.ts";
-import { seedFixtures, FIXTURE } from "../../apps/react-enterprise-app/src/db/seed.ts";
-import { resetDatabase } from "../../apps/react-enterprise-app/src/db/reset.ts";
+import { runMigrations } from "../../apps/platform-api/src/db/migrate.ts";
+import { seedFixtures, FIXTURE } from "../../apps/platform-api/src/db/seed.ts";
+import { resetDatabase } from "../../apps/platform-api/src/db/reset.ts";
 import {
   S3Client,
   CreateBucketCommand,

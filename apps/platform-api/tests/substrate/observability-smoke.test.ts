@@ -1,4 +1,5 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, mock } from "node:test";
+import assert from "node:assert/strict";
 import {
   createLogger,
   createRequestLogger,
@@ -18,19 +19,17 @@ import { createRequestContext, withOperation } from "@platform/platform-runtime-
 
 describe("observability smoke — platform primitives integration", () => {
   it("platform-logging: createRequestLogger binds requestId to log output", () => {
-    const messages: Record<string, unknown>[] = [];
     const logger = createLogger({ name: "test-service" });
     const reqLogger = createRequestLogger(logger, {
       requestId: "req-smoke-001",
       traceId: "trace-abc123",
     });
-    const spy = vi.spyOn(reqLogger, "info").mockImplementation((obj: unknown, msg?: string) => {
-      messages.push({ ...(typeof obj === "object" ? (obj as Record<string, unknown>) : {}), msg });
+    const spy = mock.method(reqLogger, "info", function () {
       return reqLogger;
     });
     reqLogger.info("smoke test log");
-    expect(spy).toHaveBeenCalledOnce();
-    spy.mockRestore();
+    assert.equal(spy.mock.callCount(), 1);
+    spy.mock.restore();
   });
 
   it("platform-runtime-context: createRequestContext includes requestId", () => {
@@ -38,16 +37,16 @@ describe("observability smoke — platform primitives integration", () => {
       traceId: "trace-xyz",
       operationName: "smoke-test",
     });
-    expect(ctx.requestId).toBe("req-123");
-    expect(ctx.traceId).toBe("trace-xyz");
-    expect(ctx.operationName).toBe("smoke-test");
+    assert.equal(ctx.requestId, "req-123");
+    assert.equal(ctx.traceId, "trace-xyz");
+    assert.equal(ctx.operationName, "smoke-test");
   });
 
   it("platform-runtime-context: withOperation returns context with operationName", () => {
     const ctx = createRequestContext("req-456");
     const ctx2 = withOperation(ctx, "getOrganisationProfile");
-    expect(ctx2.operationName).toBe("getOrganisationProfile");
-    expect(ctx2.requestId).toBe("req-456");
+    assert.equal(ctx2.operationName, "getOrganisationProfile");
+    assert.equal(ctx2.requestId, "req-456");
   });
 
   it("platform-errors: ValidationError serializes to safe response shape", () => {
@@ -55,19 +54,20 @@ describe("observability smoke — platform primitives integration", () => {
       safeDetails: { field: "displayName" },
     });
     const safe = toSafeResponse(err);
-    expect(safe.code).toBe("VALIDATION_ERROR");
-    expect(safe.message).toBe("Name is required");
-    expect(safe.details).toEqual({ field: "displayName" });
+    assert.equal(safe.code, "VALIDATION_ERROR");
+    assert.equal(safe.message, "Name is required");
+    assert.deepEqual(safe.details, { field: "displayName" });
   });
 
   it("platform-errors: assertPermission throws ForbiddenError when missing", () => {
-    expect(() => assertPermission(["organisation.read"], "organisation.update")).toThrow(
+    assert.throws(
+      () => assertPermission(["organisation.read"], "organisation.update"),
       ForbiddenError
     );
   });
 
   it("platform-errors: assertAuthenticated throws UnauthorizedError when null", () => {
-    expect(() => assertAuthenticated(null)).toThrow(UnauthorizedError);
+    assert.throws(() => assertAuthenticated(null), UnauthorizedError);
   });
 
   it("platform-errors: internalDetails are NOT in toSafeResponse", () => {
@@ -76,37 +76,37 @@ describe("observability smoke — platform primitives integration", () => {
       internalDetails: { sql: "DROP TABLE users" },
     });
     const safe = toSafeResponse(err);
-    expect(JSON.stringify(safe)).not.toContain("DROP TABLE");
-    expect(JSON.stringify(safe)).not.toContain("internalDetails");
+    assert.ok(!JSON.stringify(safe).includes("DROP TABLE"));
+    assert.ok(!JSON.stringify(safe).includes("internalDetails"));
   });
 
   it("platform-logging: redactionPaths includes password and authorization", () => {
-    expect(redactionPaths).toContain("password");
-    expect(redactionPaths.some((p: string) => p.includes("authorization"))).toBe(true);
+    assert.ok(redactionPaths.includes("password"));
+    assert.ok(redactionPaths.some((p: string) => p.includes("authorization")));
   });
 
   it("platform-logging: safeErrorMeta does not expose stack trace", () => {
     const err = new Error("something went wrong");
     const meta = safeErrorMeta(err);
-    expect(meta).not.toHaveProperty("stack");
-    expect(meta).toHaveProperty("errMessage");
+    assert.ok(!("stack" in meta));
+    assert.ok("errMessage" in meta);
   });
 
   it("platform-observability: createTracer returns a Tracer", () => {
     const tracer = createTracer("substrate-smoke");
-    expect(tracer).toBeTruthy();
-    expect(typeof tracer.startSpan).toBe("function");
+    assert.ok(tracer);
+    assert.equal(typeof tracer.startSpan, "function");
   });
 
   it("platform-observability: withSpan executes callback", async () => {
     const tracer = createTracer("substrate-smoke");
     const result = await withSpan(tracer, "smoke-operation", async () => "span-result");
-    expect(result).toBe("span-result");
+    assert.equal(result, "span-result");
   });
 
   it("platform-observability: getTraceContext returns object with traceId/spanId", () => {
     const ctx = getTraceContext();
-    expect(ctx).toHaveProperty("traceId");
-    expect(ctx).toHaveProperty("spanId");
+    assert.ok("traceId" in ctx);
+    assert.ok("spanId" in ctx);
   });
 });

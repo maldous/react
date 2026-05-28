@@ -1,0 +1,122 @@
+{
+  "name": "@platform/platform-api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Node BFF/API runtime. Owns database migrations, seed fixtures, health/readiness/version endpoints, fixture session provider, and server-side observability usage.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "application",
+      "name": "platform-api",
+      "system": "enterprise-react-platform",
+      "domain": "operations",
+      "boundedContext": "api-server",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "experimental",
+      "role": "platform",
+      "class": "experimental.platform",
+      "catalogLifecycle": "experimental",
+      "visibility": "internal",
+      "supportLevel": "experimental",
+      "reviewCadence": "on-change"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005",
+        "ADR-0017",
+        "ADR-0020",
+        "ADR-0021",
+        "ADR-0022",
+        "ADR-0023"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": true,
+      "testOnly": false,
+      "serviceName": "platform-api",
+      "serviceNamespace": "operations",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test",
+        "staging",
+        "production"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "adapter",
+        "platform"
+      ],
+      "forbiddenConsumers": [
+        "ui",
+        "feature",
+        "domain",
+        "contract"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@platform/api-runtime",
+        "@platform/platform-logging",
+        "@platform/platform-observability",
+        "@platform/platform-runtime-context",
+        "@platform/platform-errors",
+        "@platform/contracts-auth",
+        "@platform/domain-identity",
+        "@platform/session-runtime"
+      ],
+      "providesApis": [
+        "healthz",
+        "readyz",
+        "version",
+        "session-fixture"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "application",
+      "stage": "experimental",
+      "role": "platform",
+      "layer": "runtime"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Node BFF/API runtime. Owns server substrate: migrations, seed, health/readiness/version, fixture session provider.",
+      "responsibilities": [
+        "Own database migrations and schema (identity tables)",
+        "Own fixture seed and reset for local/test environments",
+        "Expose health/readiness/version endpoint handlers",
+        "Provide fixture SessionActor for pre-Keycloak local testing",
+        "Use platform-logging, platform-observability, platform-errors correctly at the API layer"
+      ],
+      "nonResponsibilities": [
+        "Does not own React SPA or browser code",
+        "Does not implement real Keycloak login (blocked until ADR-ACT-0110)",
+        "Does not create application schema via Terraform",
+        "Does not run in browser"
+      ],
+      "usage": [
+        "Start with: docker compose up -d postgres && npm run db:migrate && npm run db:seed"
+      ],
+      "operationalNotes": [
+        "ADR-0020, ADR-0021, ADR-0022, ADR-0023 govern this package"
+      ]
+    }
+  }
+}

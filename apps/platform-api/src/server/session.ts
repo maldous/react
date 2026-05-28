@@ -1,5 +1,5 @@
 import { type SessionActor } from "@platform/contracts-auth";
-import { FIXTURE } from "../db/seed.js";
+import { FIXTURE } from "../db/seed.ts";
 
 export type FixtureRole = "tenant-admin" | "viewer" | "unauthenticated";
 

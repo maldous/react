@@ -478,42 +478,44 @@ The React skeleton is a supported layout, not a universal package requirement.
 
 Canonical source locations:
 
-| Concern                                               | Source location                                      | Source of truth                                                     |
-| ----------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------- |
-| Architecture decisions                                | `docs/adr/`                                          | ADR files                                                           |
-| ADR action tracking                                   | `docs/adr/ACTION-REGISTER.md`                        | Action register                                                     |
-| Design specs (pre-implementation and as-built)        | `docs/specs/`                                        | Design spec files                                                   |
-| Lifecycle transition evidence                         | `docs/evidence/lifecycle/`                           | Committed governance evidence                                       |
-| Architecture review evidence                          | `docs/evidence/architecture/`                        | Committed governance evidence                                       |
-| Security review evidence                              | `docs/evidence/security/`                            | Committed governance evidence                                       |
-| Operations readiness evidence                         | `docs/evidence/operations/`                          | Committed governance evidence                                       |
-| Architecture-level test evidence                      | `docs/evidence/testing/`                             | Committed governance evidence                                       |
-| Release or promotion evidence                         | `docs/evidence/release/`                             | Committed governance evidence                                       |
-| Accepted exceptions                                   | `docs/evidence/exceptions/`                          | Committed governance evidence                                       |
-| Import boundary validation evidence                   | `docs/evidence/import-boundaries/`                   | Committed governance evidence                                       |
-| Package naming validation evidence                    | `docs/evidence/naming/`                              | Committed governance evidence                                       |
-| Platform scope validation evidence                    | `docs/evidence/platform-scope/`                      | Committed governance evidence                                       |
-| Quality gate baseline evidence                        | `docs/evidence/quality-gates/`                       | Committed governance evidence                                       |
-| Frontend platform baseline evidence                   | `docs/evidence/frontend/`                            | Committed governance evidence                                       |
-| Observability and runtime baseline evidence           | `docs/evidence/observability/`                       | Committed governance evidence                                       |
-| Identity and access control baseline evidence         | `docs/evidence/identity/`                            | Committed governance evidence                                       |
-| Infrastructure provisioning baseline evidence         | `docs/evidence/infrastructure/`                      | Committed governance evidence                                       |
-| Compose integration smoke tests                       | `tests/integration/`                                 | Live-service tests; not run in CI; requires compose up              |
-| Root TypeScript strict base config                    | `tsconfig.base.json`                                 | Extended by `apps/**/tsconfig.json`; governs strict mode            |
-| App TypeScript configs                                | `apps/**/tsconfig.json`                              | App-level TypeScript project config; extends tsconfig.base.json     |
-| Docker service configuration files                    | `docker/<service>/`                                  | Config files mounted into compose services (OTel, etc.)             |
-| Declarative infrastructure provisioning               | `infra/`                                             | Terraform/OpenTofu modules, env configs, and bin wrapper (ADR-0023) |
-| Package metadata schema                               | `docs/schemas/package-json-architecture.schema.json` | ADR-0005 and ADR-0006 implemented as schema                         |
-| Package metadata                                      | package-local `package.json`                         | `package.json` architecture object                                  |
-| Package README                                        | package-local `README.md`                            | Generated from `package.json` metadata                              |
-| Package README outputs                                | package-local `README.md`                            | Generated output only                                               |
-| Package inventory reports                             | `reports/package-inventory/`                         | Generated output only                                               |
-| Lifecycle reports                                     | `reports/lifecycle/`                                 | Generated output only                                               |
-| Validation reports                                    | `reports/validation/`                                | Generated output only                                               |
-| Backstage/C4/Nx/OpenTelemetry/Kubernetes/SPDX outputs | No reserved path                                     | Future generated output only; no directory reserved by this ADR     |
-| Architecture tooling                                  | `tools/architecture/`                                | Implementation tooling, not decision source                         |
-| React application implementation                      | `apps/web/` or later app-specific path               | Application source, package-local metadata, generated README        |
-| Package implementation                                | `apps/` and `packages/`                              | Source code and package-local metadata                              |
+| Concern                                               | Source location                                      | Source of truth                                                               |
+| ----------------------------------------------------- | ---------------------------------------------------- | ----------------------------------------------------------------------------- |
+| Architecture decisions                                | `docs/adr/`                                          | ADR files                                                                     |
+| ADR action tracking                                   | `docs/adr/ACTION-REGISTER.md`                        | Action register                                                               |
+| Design specs (pre-implementation and as-built)        | `docs/specs/`                                        | Design spec files                                                             |
+| Lifecycle transition evidence                         | `docs/evidence/lifecycle/`                           | Committed governance evidence                                                 |
+| Architecture review evidence                          | `docs/evidence/architecture/`                        | Committed governance evidence                                                 |
+| Security review evidence                              | `docs/evidence/security/`                            | Committed governance evidence                                                 |
+| Operations readiness evidence                         | `docs/evidence/operations/`                          | Committed governance evidence                                                 |
+| Architecture-level test evidence                      | `docs/evidence/testing/`                             | Committed governance evidence                                                 |
+| Release or promotion evidence                         | `docs/evidence/release/`                             | Committed governance evidence                                                 |
+| Accepted exceptions                                   | `docs/evidence/exceptions/`                          | Committed governance evidence                                                 |
+| Import boundary validation evidence                   | `docs/evidence/import-boundaries/`                   | Committed governance evidence                                                 |
+| Package naming validation evidence                    | `docs/evidence/naming/`                              | Committed governance evidence                                                 |
+| Platform scope validation evidence                    | `docs/evidence/platform-scope/`                      | Committed governance evidence                                                 |
+| Quality gate baseline evidence                        | `docs/evidence/quality-gates/`                       | Committed governance evidence                                                 |
+| Frontend platform baseline evidence                   | `docs/evidence/frontend/`                            | Committed governance evidence                                                 |
+| Observability and runtime baseline evidence           | `docs/evidence/observability/`                       | Committed governance evidence                                                 |
+| Identity and access control baseline evidence         | `docs/evidence/identity/`                            | Committed governance evidence                                                 |
+| Infrastructure provisioning baseline evidence         | `docs/evidence/infrastructure/`                      | Committed governance evidence                                                 |
+| Compose integration smoke tests                       | `tests/integration/`                                 | Live-service tests; not run in CI; requires compose up                        |
+| Root TypeScript strict base config                    | `tsconfig.base.json`                                 | Extended by `apps/**/tsconfig.json`; governs strict mode                      |
+| App TypeScript configs                                | `apps/**/tsconfig.json`                              | App-level TypeScript project config; extends tsconfig.base.json               |
+| Docker service configuration files                    | `docker/<service>/`                                  | Config files mounted into compose services (OTel, etc.)                       |
+| Declarative infrastructure provisioning               | `infra/`                                             | Terraform/OpenTofu modules, env configs, and bin wrapper (ADR-0023)           |
+| Package metadata schema                               | `docs/schemas/package-json-architecture.schema.json` | ADR-0005 and ADR-0006 implemented as schema                                   |
+| Package metadata                                      | package-local `package.json`                         | `package.json` architecture object                                            |
+| Package README                                        | package-local `README.md`                            | Generated from `package.json` metadata                                        |
+| Package README outputs                                | package-local `README.md`                            | Generated output only                                                         |
+| Package inventory reports                             | `reports/package-inventory/`                         | Generated output only                                                         |
+| Lifecycle reports                                     | `reports/lifecycle/`                                 | Generated output only                                                         |
+| Validation reports                                    | `reports/validation/`                                | Generated output only                                                         |
+| Backstage/C4/Nx/OpenTelemetry/Kubernetes/SPDX outputs | No reserved path                                     | Future generated output only; no directory reserved by this ADR               |
+| Architecture tooling                                  | `tools/architecture/`                                | Implementation tooling, not decision source                                   |
+| React SPA application implementation                  | `apps/react-enterprise-app/`                         | Browser-only Vite SPA; no server/BFF code                                     |
+| Node BFF/API application implementation               | `apps/platform-api/`                                 | Server substrate: migrations, seed, health/readiness/version, session fixture |
+| React application implementation (generic)            | `apps/web/` or later app-specific path               | Application source, package-local metadata, generated README                  |
+| Package implementation                                | `apps/` and `packages/`                              | Source code and package-local metadata                                        |
 
 `docs/schemas/package-json-architecture.schema.json` is the canonical schema path.
 

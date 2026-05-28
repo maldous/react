@@ -50,7 +50,7 @@ ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
         compose-up compose-up-default compose-up-quality \
         compose-up-identity compose-up-cloud compose-up-sentry \
         compose-down compose-down-volumes compose-ps compose-logs \
-        readmes generate infra-check pre-slice-gate
+        readmes generate infra-check pre-slice-gate local-substrate-check
 
 # =============================================================================
 ## all — Run the complete quality baseline (everything)
@@ -310,21 +310,22 @@ readmes:
 generate:
 	$(ORCHESTRATOR) all --strict
 
-## pre-slice-gate — Required gate before ADR-ACT-0008 first vertical slice
+## pre-slice-gate — Required gate before ADR-ACT-0008 first vertical slice (requires SONAR_TOKEN)
 pre-slice-gate: compose format lint typecheck test test-compose audit security architecture
 	$(call STEP,pre-slice-gate: database substrate)
 	npm run db:migrate
 	npm run db:seed
-	$(call STEP,pre-slice-gate: frontend/BFF smoke)
+	$(call STEP,pre-slice-gate: platform-api tests)
+	npm run test:platform-api
+	$(call STEP,pre-slice-gate: frontend smoke)
 	npm run test:frontend:run
-	$(call STEP,pre-slice-gate: Sonar)
+	$(call STEP,pre-slice-gate: Sonar quality gate)
 	@if [ -z "$$SONAR_TOKEN" ]; then \
-		printf '$(YELLOW)⚠ SONAR_TOKEN not set.\n'; \
-		printf '  Sonar must be verified externally before ADR-ACT-0008.\n'; \
-		printf '  Run: SONAR_TOKEN=<token> make sonar\n$(RESET)'; \
-	else \
-		$(MAKE) sonar; \
+		printf '$(RED)✗ SONAR_TOKEN not set. pre-slice-gate requires Sonar.\n'; \
+		printf '  Set SONAR_TOKEN in .env or environment, then re-run.\n$(RESET)'; \
+		exit 1; \
 	fi
+	$(MAKE) sonar
 	@echo ""
 	@printf '$(BOLD)$(GREEN)'
 	@printf '  ╔══════════════════════════════════════════════════╗\n'
@@ -333,3 +334,16 @@ pre-slice-gate: compose format lint typecheck test test-compose audit security a
 	@printf '  ║  Real Keycloak login blocked until ADR-ACT-0110. ║\n'
 	@printf '  ╚══════════════════════════════════════════════════╝\n'
 	@printf '$(RESET)'
+
+## local-substrate-check — Local developer quick-check (NOT sufficient to begin ADR-ACT-0008)
+local-substrate-check: compose format lint typecheck test test-compose audit architecture
+	$(call STEP,local-substrate-check: database substrate)
+	npm run db:migrate
+	npm run db:seed
+	$(call STEP,local-substrate-check: platform-api tests)
+	npm run test:platform-api
+	$(call STEP,local-substrate-check: frontend smoke)
+	npm run test:frontend:run
+	$(call OK,local-substrate-check complete)
+	@printf '$(YELLOW)⚠ Sonar not run — this check is NOT sufficient to begin ADR-ACT-0008.\n'
+	@printf '  Run: SONAR_TOKEN=<token> make pre-slice-gate$(RESET)\n'

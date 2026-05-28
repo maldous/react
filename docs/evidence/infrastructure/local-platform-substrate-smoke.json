@@ -4,16 +4,22 @@
   "adrRefs": ["ADR-0017", "ADR-0021", "ADR-0022", "ADR-0023"],
   "adrActRefs": ["ADR-ACT-0111"],
   "hardenedAt": "2026-05-28",
+  "boundaryFixAt": "2026-05-28",
   "nodeVersion": "25.8.0",
   "typescriptVersion": "6.0.3",
+  "boundaryFix": {
+    "description": "DB migration/seed/reset and BFF health/session handlers moved from apps/react-enterprise-app (browser SPA) to apps/platform-api (Node BFF/API). apps/react-enterprise-app is now browser-only.",
+    "newBoundaryRule": "no-server-packages-in-react-spa",
+    "ruleFile": "docs/architecture/import-boundary-rules.json"
+  },
   "migration": {
-    "file": "apps/react-enterprise-app/src/db/migrations/001-identity-schema.sql",
-    "runner": "apps/react-enterprise-app/src/db/migrate.ts",
+    "file": "apps/platform-api/src/db/migrations/001-identity-schema.sql",
+    "runner": "apps/platform-api/src/db/migrate.ts",
     "tables": ["users", "organisations", "memberships", "external_identities"],
     "status": "passed"
   },
   "seed": {
-    "file": "apps/react-enterprise-app/src/db/seed.ts",
+    "file": "apps/platform-api/src/db/seed.ts",
     "fixtures": {
       "orgId": "00000000-0000-0000-0000-000000000001",
       "orgSlug": "fixture-org",
@@ -24,12 +30,12 @@
     "status": "passed"
   },
   "bffHandlers": {
-    "file": "apps/react-enterprise-app/src/server/health.ts",
+    "file": "apps/platform-api/src/server/health.ts",
     "handlers": ["getHealth", "getReadiness", "getVersion"],
     "status": "passed"
   },
   "sessionFixture": {
-    "file": "apps/react-enterprise-app/src/server/session.ts",
+    "file": "apps/platform-api/src/server/session.ts",
     "handlers": ["createFixtureSessionActor", "getFixtureSession"],
     "roles": ["tenant-admin", "viewer"],
     "status": "passed"
@@ -39,16 +45,20 @@
     "tests": 19,
     "pass": 19,
     "fail": 0,
-    "newTests": 2,
+    "status": "passed"
+  },
+  "platformApiSubstrateTests": {
+    "command": "npm run test:platform-api",
+    "testFiles": 3,
+    "tests": 19,
+    "pass": 19,
+    "fail": 0,
+    "runner": "node:test",
     "status": "passed"
   },
   "frontendVitest": {
     "command": "npm run test:frontend:run",
-    "testFiles": 8,
-    "tests": 39,
-    "pass": 39,
-    "fail": 0,
-    "newTests": 25,
+    "note": "After boundary fix: substrate tests removed. Browser-only tests remain (use-session, protected-route).",
     "status": "passed"
   },
   "architectureGovernance": {
@@ -66,9 +76,7 @@
   },
   "architectureTests": {
     "command": "npm run test:coverage",
-    "tests": 337,
-    "pass": 337,
-    "fail": 0,
+    "note": "Count includes platform-api substrate tests added to the runner.",
     "status": "passed"
   },
   "qualityGates": {
@@ -99,5 +107,5 @@
       "adrActRef": "ADR-ACT-0089"
     }
   ],
-  "adrAct0008ReadinessStatement": "Pre-slice substrate smoke gate passes. All local services healthy. Identity schema migrated. Fixture actors seeded. BFF health/readiness/version handlers implemented and tested. Session fixture handler implemented and tested. ProtectedRoute smoke tests pass. Observability primitive integration smoke passes. Architecture governance 6/6. All 337 architecture tests pass. All 39 frontend tests pass. All 19 compose smoke tests pass. ADR-ACT-0008 first vertical slice may now begin."
+  "adrAct0008ReadinessStatement": "Pre-slice substrate smoke gate passes after boundary fix. apps/react-enterprise-app is browser-only. Server substrate (migrations, seed, health/session handlers) is in apps/platform-api. All local services healthy. Identity schema migrated. Fixture actors seeded. BFF health/readiness/version handlers implemented and tested. Session fixture handler implemented and tested. ProtectedRoute smoke tests pass. Observability primitive integration smoke passes. Architecture governance 6/6. All architecture tests pass. All 19 compose smoke tests pass. Boundary rule no-server-packages-in-react-spa enforced. ADR-ACT-0008 first vertical slice may now begin."
 }

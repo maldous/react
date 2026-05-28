@@ -14,22 +14,9 @@ export default defineConfig({
         __dirname,
         "../../packages/contracts-auth/src/index.ts"
       ),
-      "@platform/api-runtime": path.resolve(__dirname, "../../packages/api-runtime/src/index.ts"),
-      "@platform/platform-logging": path.resolve(
-        __dirname,
-        "../../packages/platform-logging/src/index.ts"
-      ),
-      "@platform/platform-observability": path.resolve(
-        __dirname,
-        "../../packages/platform-observability/src/index.ts"
-      ),
       "@platform/platform-errors": path.resolve(
         __dirname,
         "../../packages/platform-errors/src/index.ts"
-      ),
-      "@platform/platform-runtime-context": path.resolve(
-        __dirname,
-        "../../packages/platform-runtime-context/src/index.ts"
       ),
     },
   },
