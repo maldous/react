@@ -25,6 +25,8 @@ make fix            # Auto-fix formatting (format:write)
 make clean          # Remove coverage/ reports/ .scannerwork/
 make compose-up-default   # Start postgres redis clickhouse minio mailpit otel-collector
 make compose-ps     # Check service health
+# Public web demo (builds containers, serves on :80 — stop system Caddy first):
+docker compose --profile web up -d --build
 make readmes        # Regenerate package READMEs from metadata
 make help           # Show all targets
 ```

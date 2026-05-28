@@ -48,7 +48,7 @@ ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
         sonar advisory sbom license \
         check ci full fix clean \
         compose-up compose-up-default compose-up-quality \
-        compose-up-identity compose-up-cloud compose-up-sentry \
+        compose-up-identity compose-up-cloud compose-up-sentry compose-up-web \
         compose-down compose-down-volumes compose-ps compose-logs \
         readmes generate infra-check pre-slice-gate local-substrate-check \
         e2e-check
@@ -274,6 +274,18 @@ compose-up-cloud:
 ## compose-up-sentry — Start Sentry stack (sentry profile — experimental)
 compose-up-sentry:
 	docker compose --profile sentry up -d
+
+## compose-up-web — Build and start the web profile (platform-api + react SPA on :80)
+## Requires: default services running; system service on :80 must be stopped first.
+compose-up-web:
+	$(call STEP,web:up)
+	@printf '$(BOLD)Building and starting web profile (platform-api + react-app)$(RESET)\n'
+	docker compose --profile web up -d --build
+	$(call OK,web profile started — check http://localhost for the SPA)
+
+## compose-down-web — Stop and remove web profile containers
+compose-down-web:
+	docker compose --profile web down
 
 ## compose-down — Stop all running compose services
 compose-down:

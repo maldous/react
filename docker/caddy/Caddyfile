@@ -1,0 +1,39 @@
+# docker/caddy/Caddyfile — web profile reverse proxy
+#
+# Serves the React SPA (static files) and proxies BFF/API routes to
+# the platform-api container. Designed for Cloudflare-terminated TLS:
+# Cloudflare handles HTTPS; Caddy listens on :80 inside the container
+# (mapped to the host port via Compose).
+#
+# ADR-0022: The BFF owns session exchange and auth routes.
+# ADR-0019: The React SPA uses client-side routing — all paths fall back to index.html.
+
+:80 {
+  # BFF/API routes — forward to platform-api service (Docker DNS)
+  handle /api/* {
+    reverse_proxy platform-api:3001
+  }
+
+  handle /auth/* {
+    reverse_proxy platform-api:3001
+  }
+
+  handle /healthz {
+    reverse_proxy platform-api:3001
+  }
+
+  handle /readyz {
+    reverse_proxy platform-api:3001
+  }
+
+  handle /version {
+    reverse_proxy platform-api:3001
+  }
+
+  # React SPA — serve static files with client-side routing fallback
+  handle {
+    root * /srv
+    try_files {path} /index.html
+    file_server
+  }
+}

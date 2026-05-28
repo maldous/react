@@ -1,0 +1,20 @@
+# Build context exclusions — keep Docker build context lean
+node_modules
+coverage
+reports
+playwright-report
+e2e-results
+.terraform
+*.tfstate
+*.tfstate.backup
+*.tfvars
+infra/env/*/terraform.tfstate*
+infra/**/.terraform/
+dist
+.env
+.env.*
+!.env.example
+*.log
+.git
+.github
+docs/superpowers
