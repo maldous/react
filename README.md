@@ -2,11 +2,11 @@
 
 A production-grade, governed React monorepo built from first principles — architecture decisions first, code second.
 
-[![Quality Gate](https://img.shields.io/badge/Sonar-passing-brightgreen)](http://localhost:9003/dashboard?id=maldous-react)
-[![Tests](https://img.shields.io/badge/tests-271%20passing-brightgreen)](#testing)
-[![Coverage](https://img.shields.io/badge/coverage-83%25-green)](#testing)
+[![Quality Gate](https://img.shields.io/badge/Sonar-passing-brightgreen)](docs/evidence/quality-gates/)
+[![Tests](https://img.shields.io/badge/tests-271%20passing-brightgreen)](docs/evidence/quality-gates/)
+[![Coverage](https://img.shields.io/badge/coverage-83%25-green)](docs/evidence/quality-gates/)
 [![ADRs](https://img.shields.io/badge/ADRs-20%20accepted-blue)](docs/adr/)
-[![Packages](https://img.shields.io/badge/packages-51-blue)](#package-structure)
+[![Packages](https://img.shields.io/badge/packages-51-blue)](packages/)
 ![License](https://img.shields.io/badge/license-private-lightgrey)
 
 ---
@@ -40,21 +40,21 @@ The first vertical slice (ADR-ACT-0008) begins from a clean, validated baseline.
 
 ## Quick start
 
-````bash
-# Clone and install
+```sh
 git clone https://github.com/maldous/react.git
 cd react
 npm ci
-
-# Copy environment config
-cp .env.example .env    # fill in SONAR_TOKEN if using Sonar locally
-
-# Run everything (format, lint, test, audit, compose, architecture, sonar)
+cp .env.example .env
 make all
+```
 
-# Or — start local services and develop
-make compose-up-default   # postgres, redis, clickhouse, minio, mailpit, otel-collector
-```text
+To start local development services:
+
+```sh
+make compose-up-default
+```
+
+This starts PostgreSQL, Redis, ClickHouse, MinIO, Mailpit, and the OTel Collector. See [Local services](#local-services) below.
 
 ---
 
@@ -68,7 +68,7 @@ Twenty accepted ADRs govern every structural choice:
 | [0002](docs/adr/0002-model-the-platform-around-bounded-contexts.md)                            | Bounded contexts as the primary product boundary                             |
 | [0003](docs/adr/0003-use-a-modular-monorepo-with-promotion-ready-package-boundaries.md)        | Modular monorepo, `@platform/` scope, no root workspace                      |
 | [0004](docs/adr/0004-define-package-lifecycle-classes.md)                                      | Package lifecycle classes (`stage.role`)                                     |
-| [0005](docs/adr/0005-define-package-metadata-format.md)                                        | `package.json` `architecture` block as single source of truth                |
+| [0005](docs/adr/0005-define-package-metadata-format.md)                                        | `package.json` architecture block as single source of truth                  |
 | [0006](docs/adr/0006-define-package-lifecycle-transition-rules.md)                             | Governed lifecycle transitions with evidence bundles                         |
 | [0007](docs/adr/0007-define-architecture-artifact-and-repository-directory-layout.md)          | Canonical directory layout                                                   |
 | [0008–0012](docs/adr/)                                                                         | Generated READMEs, inventory, evidence bundles, tooling model, test strategy |
@@ -93,7 +93,7 @@ All decisions are tracked in [`docs/adr/ACTION-REGISTER.md`](docs/adr/ACTION-REG
 | Formatting         | Prettier 3.8.3                        | Hard                   |
 | Markdown lint      | markdownlint-cli2                     | Hard                   |
 | Code lint          | ESLint flat config                    | Hard                   |
-| TypeScript strict  | tsc (6.0.3)                           | Hard                   |
+| TypeScript strict  | tsc 6.0.3                             | Hard                   |
 | Dependency audit   | npm audit                             | Hard                   |
 | Vulnerability scan | osv-scanner 1.9.0                     | Hard                   |
 | Secret detection   | gitleaks                              | Hard (CI)              |
@@ -108,11 +108,9 @@ All decisions are tracked in [`docs/adr/ACTION-REGISTER.md`](docs/adr/ACTION-REG
 
 ## Local services
 
-Start the full development stack with a single command:
-
-```bash
+```sh
 make compose-up-default
-````
+```
 
 | Service        | Host                  | Purpose                        |
 | -------------- | --------------------- | ------------------------------ |
@@ -123,7 +121,7 @@ make compose-up-default
 | Mailpit        | `localhost:8025`      | Email capture (UI)             |
 | OTel Collector | `localhost:4317/4318` | Telemetry ingestion            |
 
-Additional profiles: `quality` (SonarQube), `identity` (Keycloak), `cloud-mocks` (LocalStack), `sentry` (experimental).
+Additional profiles: `quality` (SonarQube on `:9003`), `identity` (Keycloak), `cloud-mocks` (LocalStack), `sentry` (experimental).
 
 All ports are configurable via `.env`. See [`docs/local-development/compose-services.md`](docs/local-development/compose-services.md).
 
@@ -131,59 +129,43 @@ All ports are configurable via `.env`. See [`docs/local-development/compose-serv
 
 ## Package structure
 
-51 packages across 8 domains, all governed by ADR-0005 metadata:
+51 packages across 8 domains, all governed by ADR-0005 metadata.
 
-```text
-apps/
-  react-enterprise-app    React 19 SPA shell (Vite, TanStack Router)
+**Platform packages** — the cross-cutting foundation:
 
-packages/
-  platform-runtime-context  RuntimeContext carrier — zero @platform deps
-  platform-errors           Typed error hierarchy (ValidationError, NotFoundError…)
-  platform-logging          Pino-backed logger + browser-safe wrapper + redaction
-  platform-observability    OpenTelemetry API wrapper (createTracer, withSpan…)
+| Package                              | Purpose                                                                |
+| ------------------------------------ | ---------------------------------------------------------------------- |
+| `@platform/platform-runtime-context` | Typed RuntimeContext carrier — zero `@platform` dependencies           |
+| `@platform/platform-errors`          | Typed error hierarchy (ValidationError, NotFoundError, ConflictError…) |
+| `@platform/platform-logging`         | Pino-backed Node logger + browser-safe wrapper + 29-path redaction     |
+| `@platform/platform-observability`   | OpenTelemetry API wrapper (createTracer, withSpan, getTraceContext)    |
 
-  domain-core               Business logic — no framework dependencies
-  access-control            Role-based access policy
-  profile-configuration     User preferences and profile
+**Product packages:**
 
-  contracts-graphql         GraphQL DTO schemas (Zod)
-  contracts-analytics       Analytics event schemas
-  contracts-ingestion       External ingestion contracts
+- `apps/react-enterprise-app` — React 19 SPA shell (Vite, TanStack Router)
+- `packages/domain-core`, `access-control`, `profile-configuration` — Business logic, no framework dependencies
+- `packages/contracts-graphql`, `contracts-analytics`, `contracts-ingestion` — Zod DTO schemas
+- `packages/feature-workflow` — First feature package (experience domain)
+- `packages/ui-design-system` — Accessible UI components (React Aria + Tailwind)
+- `packages/adapters-postgres`, `adapters-redis`, `adapters-clickhouse`, `adapters-opentelemetry`, `adapters-sentry`, and more
+- `packages/observability`, `security-auth`, `api-runtime`, and 15 more operations-domain packages
 
-  feature-workflow          First feature package (experience domain)
-  ui-design-system          Accessible UI components (React Aria + Tailwind)
+**Governance tooling** (`tools/architecture/`):
 
-  adapters-postgres         PostgreSQL via pg
-  adapters-redis            Redis/BullMQ
-  adapters-clickhouse       ClickHouse analytics
-  adapters-opentelemetry    OpenTelemetry SDK init + OTLP exporter
-  adapters-sentry           Sentry error monitoring (experimental)
-  adapters-*                (brevo, keycloak, object-storage, graphql, ingestion)
-
-  observability             Operations interface — zero @platform deps
-  security-auth             Auth interface — zero @platform deps
-  api-runtime               BFF lifecycle + health/readiness/version contracts
-  …                         (queue, storage, audit, config, notification, search…)
-
-tools/architecture/
-  orchestrator              Runs all governance tools in dependency order
-  validate-package-metadata JSON schema validation + lifecycle rules
-  validate-source-imports   Import boundary enforcement (ADR-0001–0015)
-  generate-package-readmes  README generation from package.json metadata
-  generate-package-inventory Inventory and lifecycle reports
-  validate-lifecycle-evidence Evidence bundle schema validation
-  generate-lifecycle-reports  Lifecycle state reports
-```
+- `orchestrator` — runs all tools in dependency order
+- `validate-package-metadata` — JSON schema + lifecycle rules
+- `validate-source-imports` — import boundary enforcement
+- `generate-package-readmes` — README generation from metadata
+- `generate-package-inventory`, `validate-lifecycle-evidence`, `generate-lifecycle-reports`
 
 ---
 
 ## Testing
 
-````bash
-make test                # 271 tests + LCOV coverage
-make test-compose        # Compose service smoke tests (17 tests)
-```text
+```sh
+make test          # 271 tests + LCOV coverage
+make test-compose  # 17 compose service smoke tests (starts services automatically)
+```
 
 | Suite                              | Tests | Coverage              |
 | ---------------------------------- | ----- | --------------------- |
@@ -191,13 +173,13 @@ make test-compose        # Compose service smoke tests (17 tests)
 | Architecture tooling (unit)        | 91    | 83% line / 80% branch |
 | Compose service smoke tests        | 17    | —                     |
 
-Compose smoke tests verify actual roundtrips against running services: PostgreSQL (pg), Redis (redis npm), ClickHouse (HTTP), MinIO (@aws-sdk/client-s3), Mailpit (nodemailer + API), OTel Collector (OTLP/HTTP).
+Compose smoke tests verify actual roundtrips: PostgreSQL, Redis, ClickHouse, MinIO, Mailpit, and OTel Collector — using npm clients (`pg`, `redis`, `@aws-sdk/client-s3`, `nodemailer`) rather than shell commands.
 
 ---
 
 ## Frontend stack
 
-Chosen in ADR-0019 — binding before the first slice:
+Chosen in [ADR-0019](docs/adr/0019-define-react-component-platform-and-frontend-integration-stack.md) — binding before the first slice:
 
 | Concern        | Choice                                           |
 | -------------- | ------------------------------------------------ |
@@ -212,51 +194,48 @@ Chosen in ADR-0019 — binding before the first slice:
 | Charts         | Recharts                                         |
 | Dates          | date-fns + React Aria date components            |
 
-See [`docs/evidence/frontend/react-component-platform-baseline.md`](docs/evidence/frontend/react-component-platform-baseline.md).
-
 ---
 
 ## Observability
 
-Every request traceable from browser to adapter via W3C `traceparent`:
-
-````
-
-Browser → [traceparent header] → BFF (platform-logging + platform-observability)
-→ use case (RuntimeContext) → adapter (child span + structured log)
-→ OTel Collector → any backend (Jaeger / Grafana Tempo / Datadog)
+Every request is traceable from browser to adapter via W3C `traceparent`:
 
 ```text
+Browser ──traceparent──► BFF ──► use case ──► adapter
+                          │                       │
+                     platform-logging       child span
+                     platform-observability structured log
+                          │
+                     OTel Collector
+                          │
+                    any backend (Jaeger / Grafana Tempo / Datadog)
+```
 
-All logs are structured JSON with `requestId`, `traceId`, `packageName`. Redaction is enforced at the logger level (29 credential/secret paths).
-
-See [`docs/evidence/observability/observability-runtime-baseline.md`](docs/evidence/observability/observability-runtime-baseline.md).
+All Node logs are structured JSON with `requestId`, `traceId`, and `packageName`. Redaction is enforced at the logger level — 29 credential, token, and secret paths are never emitted. See [ADR-0020](docs/adr/0020-define-observability-diagnostics-and-runtime-introspection-primitives.md).
 
 ---
 
 ## Repository layout
 
-```
-
-docs/
-adr/ Architecture decision records + ACTION-REGISTER
-architecture/ Import boundary rules, naming conventions, context map
-evidence/ Committed governance evidence (quality, observability, frontend…)
-schemas/ JSON Schemas (package metadata, lifecycle evidence)
-security/ License policy
-specs/ Pre-implementation design documents
-local-development/ Compose service guide
-
-packages/ @platform/\* product and platform packages
-apps/ Deployable application surfaces
-tools/architecture/ Governance tooling
-docker/ Docker service configuration files
-
-Makefile make all — runs everything
-compose.yaml Docker Compose service definitions
-.env.example Environment variable reference
-
 ```text
+docs/
+  adr/               Architecture decisions + ACTION-REGISTER
+  architecture/      Import boundary rules, context map, naming conventions
+  evidence/          Committed governance evidence (quality, observability, frontend…)
+  schemas/           JSON Schemas (package metadata, lifecycle evidence)
+  security/          License policy
+  specs/             Pre-implementation design documents
+  local-development/ Compose service guide
+
+packages/            @platform/* product and platform packages
+apps/                Deployable application surfaces
+tools/architecture/  Governance tooling
+docker/              Docker service configuration files
+
+Makefile             make all — runs everything
+compose.yaml         Docker Compose service definitions
+.env.example         Environment variable reference
+```
 
 ---
 
@@ -277,4 +256,3 @@ All architectural decisions are backed by committed evidence:
 ---
 
 > **Status:** Pre-slice baseline complete. ADR-ACT-0008 (first vertical slice) has not started.
-```
