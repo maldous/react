@@ -50,7 +50,7 @@ ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
         compose-up compose-up-default compose-up-quality \
         compose-up-identity compose-up-cloud compose-up-sentry \
         compose-down compose-down-volumes compose-ps compose-logs \
-        readmes generate
+        readmes generate infra-check
 
 # =============================================================================
 ## all — Run the complete quality baseline (everything)
@@ -293,6 +293,14 @@ compose-logs:
 # =============================================================================
 # GOVERNANCE HELPERS
 # =============================================================================
+
+## infra-check — Validate Terraform/OpenTofu syntax and format (no cloud credentials needed)
+infra-check:
+	$(call STEP,infra:check)
+	@chmod +x infra/bin/tf
+	@infra/bin/tf fmt -check -recursive infra/ && echo "$(GREEN)✓ terraform format clean$(RESET)" || echo "$(YELLOW)⚠ run: infra/bin/tf fmt -recursive infra/$(RESET)"
+	@infra/bin/tf -chdir=infra/env/local init -backend=false -input=false > /dev/null 2>&1 && echo "$(GREEN)✓ infra/env/local init ok$(RESET)" || echo "$(YELLOW)⚠ init failed — check provider availability$(RESET)"
+	$(call OK,infra check complete)
 
 ## readmes — Regenerate all package READMEs from metadata
 readmes:

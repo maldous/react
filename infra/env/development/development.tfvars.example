@@ -1,0 +1,14 @@
+# development.tfvars.example — placeholder values only
+# Copy to development.tfvars and fill in real values (gitignored).
+# Do not commit real secrets.
+
+keycloak_url      = "http://localhost:8080"
+keycloak_realm    = "platform-development"
+keycloak_client   = "platform-spa-development"
+
+# Environment-specific redirect URIs
+redirect_uris  = ["http://localhost:5173/*"]
+web_origins    = ["http://localhost:5173"]
+
+# Set to true only for local/development to provision fixture users
+provision_fixture_users = false

@@ -1,0 +1,70 @@
+{
+  "schemaVersion": "1.0",
+  "evidenceType": "infrastructure-provisioning-baseline",
+  "adrRef": "ADR-0023",
+  "adrActRefs": ["ADR-ACT-0109", "ADR-ACT-0110"],
+  "committedAt": "2026-05-28",
+  "provisioningTool": {
+    "syntax": "Terraform/OpenTofu HCL",
+    "primaryCli": "terraform (v1.13.4 via tfenv)",
+    "preferredCli": "tofu (install when available)",
+    "wrapper": "infra/bin/tf",
+    "keycloakProvider": "mrparkers/keycloak"
+  },
+  "ownershipModel": {
+    "terraformOwned": [
+      "keycloak-realm",
+      "keycloak-clients",
+      "keycloak-scopes",
+      "keycloak-mappers",
+      "keycloak-roles",
+      "keycloak-redirect-uris",
+      "keycloak-fixture-users (local/dev only)",
+      "vpc-subnets-security-groups",
+      "eks-ecs-fargate-runtime",
+      "rds-postgres-instance",
+      "elasticache-redis",
+      "s3-buckets",
+      "iam-roles-policies",
+      "kms-keys",
+      "secrets-manager-references",
+      "cloudwatch-log-groups",
+      "dns-records",
+      "tls-certificates",
+      "load-balancers",
+      "github-actions-oidc-trust",
+      "deployment-roles"
+    ],
+    "composeOwned": [
+      "local-postgres-container",
+      "local-redis-container",
+      "local-clickhouse-container",
+      "local-minio-container",
+      "local-mailpit-container",
+      "local-otel-collector-container",
+      "local-sonarqube-container",
+      "local-keycloak-container (lifecycle only)"
+    ],
+    "migrationOwned": [
+      "database-schema",
+      "tables-indexes-constraints",
+      "migration-history"
+    ],
+    "seedOwned": ["fixture-users", "test-organisations", "test-memberships"]
+  },
+  "secretsPolicy": {
+    "noSecretsCommitted": true,
+    "tfvarsExamplePlaceholdersOnly": true,
+    "productionSecretsVia": "Secrets Manager / Parameter Store references",
+    "gitignoreCoversStateTfvars": true
+  },
+  "environments": ["local", "development", "test", "staging", "production"],
+  "fixtureUsersProvisionedIn": ["local", "development"],
+  "infraLayoutCreated": true,
+  "keycloakModuleStatus": "scaffold — ADR-ACT-0110",
+  "adrAct0008": {
+    "canProceedWith": "deterministic test SessionActor fixtures",
+    "blockedOn": "real Keycloak login requires ADR-ACT-0110",
+    "status": "NOT started"
+  }
+}

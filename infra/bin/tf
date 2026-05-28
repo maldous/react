@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# infra/bin/tf — OpenTofu/Terraform wrapper
+# Resolves to `tofu` if available on PATH, falls back to `terraform`.
+# Use this wrapper in all Makefile targets, CI pipelines, and documentation.
+set -euo pipefail
+
+if command -v tofu &>/dev/null; then
+  exec tofu "$@"
+elif command -v terraform &>/dev/null; then
+  exec terraform "$@"
+else
+  echo "ERROR: Neither 'tofu' nor 'terraform' found on PATH." >&2
+  echo "  Install OpenTofu: https://opentofu.org/docs/intro/install/" >&2
+  echo "  Or Terraform:     https://developer.hashicorp.com/terraform/install" >&2
+  exit 1
+fi

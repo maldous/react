@@ -1,0 +1,29 @@
+# Terraform/OpenTofu generated files — never commit these
+.terraform/
+.terraform.tfstate
+*.tfstate
+*.tfstate.backup
+*.tfstate.*.backup
+crash.log
+crash.*.log
+
+# Variable files with real values — use .tfvars.example for committed templates
+*.auto.tfvars
+terraform.tfvars
+tofu.tfvars
+
+# Override files — local machine overrides only
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Lock file — commit this when using a shared registry, skip for local dev
+# .terraform.lock.hcl
+
+# Plan output files
+*.tfplan
+tfplan
+
+# Provider binaries (downloaded by init)
+.terraform.lock.hcl
