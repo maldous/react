@@ -35,9 +35,13 @@ export function getFixtureSession(): SessionActor | null {
   const role = process.env["LOCAL_FIXTURE_SESSION"] as FixtureRole | undefined;
   if (!role || role === "unauthenticated") return null;
   if (role === "no-membership") {
-    // Authenticated user who has no active organisation membership.
-    // Empty strings represent absence of tenantId/organisationId context.
-    // The pipeline rejects with 403 (no permissions) before the handler runs.
+    // Test-only fixture — not production identity semantics.
+    // Represents an authenticated user with no active organisation membership.
+    // SessionActorSchema requires non-null strings; empty strings signal the
+    // absence of membership context without violating the schema contract.
+    // The pipeline rejects with 403 (permission check) before the handler or
+    // RuntimeContext ever reads tenantId/organisationId, so the empty strings
+    // never propagate to business logic.
     return {
       userId: FIXTURE.FORBIDDEN_ID,
       tenantId: "",

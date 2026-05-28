@@ -1,7 +1,7 @@
 # Evidence: ADR-ACT-0008 — Authenticated Organisation Profile Slice
 
 **Date:** 2026-05-28
-**Status:** Done (hardened via ADR-ACT-0118; final audit pass 2026-05-28)
+**Status:** Done (hardened via ADR-ACT-0118; Claude acceptance review 2026-05-28)
 **Action:** ADR-ACT-0008
 **ADR Ref:** ADR-0024
 
@@ -98,6 +98,36 @@ via ADR-ACT-0118 before treating it as the canonical pattern for future slices.
 | Frontend (Vitest) | 6 | vitest |
 | Compose smoke | 2 | node:test (organisation tests within 25-test suite) |
 | E2E (Playwright) | 13 | playwright |
+
+## E2E idempotency
+
+The `tenant-admin can update display name` test restores the fixture display name ("Fixture Organisation")
+in the same test run before exiting. Viewer, unauthenticated, and no-membership tests mock `/api/session`
+at the browser level and do not mutate Postgres data — they are order-independent. Repeated `npm run test:e2e`
+runs produce identical results.
+
+## no-membership fixture semantics
+
+`no-membership` uses `tenantId: ""` / `organisationId: ""`. `SessionActorSchema` uses `z.string()` (no
+`min(1)`), so empty strings are schema-valid. The pipeline's 403 permission check fires before the handler
+or `RuntimeContext` ever reads these fields, so the empty strings never reach business logic. This is a
+test-only convention, not a production identity pattern. Documented in `session.ts` and asserted in
+`session-fixture.test.ts`.
+
+## Acceptance review (Claude, 2026-05-28)
+
+Codebuff hardening (ADR-ACT-0118) reviewed against canonical slice architecture. All acceptance criteria passed:
+
+- Canonical architecture shape confirmed (React route → feature hook → contract → pipeline guard → use case → repo port → Postgres adapter → local Postgres) ✓
+- Use case purity confirmed (no pg, no SQL, no env reads, no getFixtureSession, DI, owns validation) ✓
+- Composition root (`dependencies.ts`) centralises wiring without framework complexity ✓
+- no-membership fixture semantics: empty strings documented as test-only, not production identity ✓
+- /e2e-harness: test-only comment present, not linked from product navigation ✓
+- contracts-organisation: strict schema, zero @platform/* imports ✓
+- Frontend: ProtectedRoute, TanStack Query read+mutation, cache invalidation, forbidden state ✓
+- E2E idempotency: fixture data restored in-test ✓
+- All boundary checks: CLEAN ✓
+- pre-slice-gate: PASSED ✓
 
 ## Constraints honoured
 

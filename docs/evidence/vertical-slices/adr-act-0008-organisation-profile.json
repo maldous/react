@@ -7,7 +7,7 @@
   "status": "done",
   "hardened": true,
   "hardenedVia": "ADR-ACT-0118",
-  "finalAuditPass": "2026-05-28",
+  "claudeAcceptanceReview": "2026-05-28",
   "adrRef": "ADR-0024",
   "sliceManifest": "docs/slices/ADR-ACT-0008.json",
   "summary": "First vertical slice: React protected route (organisation.read) → useSession → TanStack Query → contract client → platform-api permission guard → use case (DI, no pg) → repository port → Postgres adapter → structured logs/traces. Hardened to canonical hexagonal architecture via ADR-ACT-0118.",
@@ -97,6 +97,20 @@
     "contractsOrganisationZeroPlatformDeps": true,
     "validateSourceImportsStrict": true
   },
+  "noMembershipFixture": {
+    "tenantId": "empty string (test-only, not production identity semantics)",
+    "organisationId": "empty string (test-only, not production identity semantics)",
+    "rationale": "SessionActorSchema uses z.string() (no min(1)); empty strings are schema-valid and signal absent membership context. Pipeline 403 fires before RuntimeContext reads these fields.",
+    "documentedIn": "apps/platform-api/src/server/session.ts",
+    "assertedIn": "apps/platform-api/tests/substrate/session-fixture.test.ts"
+  },
+  "e2eIdempotency": {
+    "tenantAdminUpdateTest": "Restores fixture display name ('Fixture Organisation') within the same test. No teardown required.",
+    "viewerTest": "Mocks /api/session at browser level — no Postgres mutation, order-independent.",
+    "noMembershipTest": "Mocks /api/session at browser level — no Postgres mutation, order-independent.",
+    "unauthenticatedTest": "Mocks /api/session at browser level — no Postgres mutation, order-independent.",
+    "result": "Repeated test:e2e runs produce identical results."
+  },
   "constraints": [
     "React app does not import pg, platform-api, or server-side packages",
     "contracts-organisation has zero @platform/* dependencies",
@@ -105,7 +119,21 @@
     "Use case has zero module-level globals — logger/tracer not constructed inside usecases/organisation.ts",
     "server/ contains zero raw SQL — readiness probe owned by PostgresReadinessAdapter",
     "Contract bounds and domain validation rules are intentionally identical (min 2 / max 120)",
-    "Update request schema is .strict() — slug/id/tenantId in body are rejected with 400"
+    "Update request schema is .strict() — slug/id/tenantId in body are rejected with 400",
+    "no-membership fixture uses empty strings for test-only semantics; documented as not production identity"
+  ],
+  "acceptanceCriteriaPassed": [
+    "Canonical slice architecture shape confirmed",
+    "Use case purity confirmed (no pg, no SQL, no env reads, no getFixtureSession, DI, owns validation)",
+    "Composition root centralises wiring without framework complexity",
+    "no-membership semantics documented as test-only",
+    "/e2e-harness clearly test-only, not in product navigation",
+    "contracts-organisation: strict schema, zero @platform/* imports",
+    "Frontend: ProtectedRoute, TanStack Query, cache invalidation, forbidden state",
+    "E2E idempotency: fixture data restored in-test",
+    "All boundary checks CLEAN",
+    "pre-slice-gate PASSED",
+    "Real Keycloak login remains blocked until ADR-ACT-0110"
   ],
   "scanTimestamp": "2026-05-28T12:00:00.000Z"
 }
