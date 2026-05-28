@@ -10,6 +10,7 @@ import {
   canAccessAdmin,
   validateMembership,
   validateOrganisationSlug,
+  resolvePermissions,
   type Membership,
 } from "../src/index.ts";
 
@@ -190,5 +191,53 @@ describe("validateOrganisationSlug", () => {
   it("returns error for slug with special characters", () => {
     const errors = validateOrganisationSlug("my_org");
     assert.ok(errors.some((e) => e.includes("lowercase letters, digits, and hyphens")));
+  });
+});
+
+describe("resolvePermissions", () => {
+  it("system-admin has all 9 permissions", () => {
+    const perms = resolvePermissions("system-admin");
+    assert.ok(perms.includes("organisation.read"));
+    assert.ok(perms.includes("organisation.update"));
+    assert.ok(perms.includes("admin.access"));
+    assert.ok(perms.includes("audit.read"));
+    assert.equal(perms.length, 9);
+  });
+
+  it("tenant-admin has all 9 permissions", () => {
+    const perms = resolvePermissions("tenant-admin");
+    assert.equal(perms.length, 9);
+    assert.ok(perms.includes("organisation.update"));
+  });
+
+  it("manager can manage members but not org settings", () => {
+    const perms = resolvePermissions("manager");
+    assert.ok(perms.includes("member.invite"));
+    assert.ok(perms.includes("member.update_role"));
+    assert.ok(!perms.includes("organisation.update"));
+    assert.ok(!perms.includes("admin.access"));
+  });
+
+  it("member has standard access", () => {
+    const perms = resolvePermissions("member");
+    assert.ok(perms.includes("organisation.read"));
+    assert.ok(perms.includes("profile.read_self"));
+    assert.ok(!perms.includes("organisation.update"));
+    assert.ok(!perms.includes("member.invite"));
+  });
+
+  it("viewer has read-only access", () => {
+    const perms = resolvePermissions("viewer");
+    assert.ok(perms.includes("organisation.read"));
+    assert.ok(!perms.includes("organisation.update"));
+    assert.ok(!perms.includes("member.invite"));
+  });
+
+  it("fixture tenant-admin permissions match resolvePermissions output", () => {
+    // Guards that session.ts fixtures stay in sync with domain-identity
+    const resolved = resolvePermissions("tenant-admin");
+    assert.ok(resolved.includes("organisation.read"));
+    assert.ok(resolved.includes("organisation.update"));
+    assert.ok(resolved.includes("admin.access"));
   });
 });

@@ -1,22 +1,8 @@
 import { type SessionActor } from "@platform/contracts-auth";
+import { resolvePermissions } from "@platform/domain-identity";
 import { FIXTURE } from "../db/seed.ts";
 
 export type FixtureRole = "tenant-admin" | "viewer" | "no-membership" | "unauthenticated";
-
-const ROLE_PERMISSIONS: Record<"tenant-admin" | "viewer", string[]> = {
-  "tenant-admin": [
-    "organisation.read",
-    "organisation.update",
-    "member.read",
-    "member.invite",
-    "member.update_role",
-    "profile.read_self",
-    "profile.update_self",
-    "admin.access",
-    "audit.read",
-  ],
-  viewer: ["organisation.read", "member.read", "profile.read_self", "profile.update_self"],
-};
 
 export function createFixtureSessionActor(role: "tenant-admin" | "viewer"): SessionActor {
   const userId = role === "tenant-admin" ? FIXTURE.ADMIN_ID : FIXTURE.VIEWER_ID;
@@ -25,7 +11,7 @@ export function createFixtureSessionActor(role: "tenant-admin" | "viewer"): Sess
     tenantId: FIXTURE.ORG_ID,
     organisationId: FIXTURE.ORG_ID,
     roles: [role],
-    permissions: ROLE_PERMISSIONS[role],
+    permissions: resolvePermissions(role),
     displayName: role === "tenant-admin" ? "Fixture Admin" : "Fixture Viewer",
   };
 }

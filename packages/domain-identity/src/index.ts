@@ -77,6 +77,58 @@ export function validateMembership(membership: Partial<Membership>): string[] {
   return errors;
 }
 
+// ---------------------------------------------------------------------------
+// Permission resolution — ADR-0021
+//
+// Permissions are the authoritative enforcement primitive. Roles are
+// convenience bundles that map to a fixed permission set. This function is
+// the single source of truth for that mapping so that both fixture sessions
+// (session.ts) and real login (auth callback) use identical permission sets.
+// ---------------------------------------------------------------------------
+
+const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
+  "system-admin": [
+    "organisation.read",
+    "organisation.update",
+    "member.read",
+    "member.invite",
+    "member.update_role",
+    "profile.read_self",
+    "profile.update_self",
+    "admin.access",
+    "audit.read",
+  ],
+  "tenant-admin": [
+    "organisation.read",
+    "organisation.update",
+    "member.read",
+    "member.invite",
+    "member.update_role",
+    "profile.read_self",
+    "profile.update_self",
+    "admin.access",
+    "audit.read",
+  ],
+  manager: [
+    "organisation.read",
+    "member.read",
+    "member.invite",
+    "member.update_role",
+    "profile.read_self",
+    "profile.update_self",
+  ],
+  member: ["organisation.read", "member.read", "profile.read_self", "profile.update_self"],
+  viewer: ["organisation.read", "member.read", "profile.read_self", "profile.update_self"],
+};
+
+/**
+ * Returns the resolved permission strings for a given role (ADR-0021).
+ * Permissions are the authoritative enforcement primitive; roles are bundles.
+ */
+export function resolvePermissions(role: AnyRole): string[] {
+  return ROLE_PERMISSION_MAP[role] ?? [];
+}
+
 // Validates that an Organisation slug is well-formed
 export function validateOrganisationSlug(slug: string): string[] {
   const errors: string[] = [];
