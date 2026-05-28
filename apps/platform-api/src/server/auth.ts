@@ -60,11 +60,45 @@ function buildClearCookieHeader(): string {
   return parts.join("; ");
 }
 
+const PRE_AUTH_COOKIE = "auth_state_token";
+
+/**
+ * Pre-auth nonce cookie bound to the initiating user-agent.
+ * SameSite=Lax (not Strict) so it is included on the top-level
+ * GET redirect back from Keycloak.
+ */
+function buildPreAuthCookieHeader(nonce: string): string {
+  const parts = [
+    `${PRE_AUTH_COOKIE}=${nonce}`,
+    "HttpOnly",
+    "SameSite=Lax",
+    "Path=/auth",
+    "Max-Age=300",
+  ];
+  if (isSecureCookie()) parts.push("Secure");
+  return parts.join("; ");
+}
+
+function buildClearPreAuthCookieHeader(): string {
+  const parts = [`${PRE_AUTH_COOKIE}=`, "HttpOnly", "SameSite=Lax", "Path=/auth", "Max-Age=0"];
+  if (isSecureCookie()) parts.push("Secure");
+  return parts.join("; ");
+}
+
 function parseSessionCookie(rawCookieHeader: string | undefined): string | null {
   if (!rawCookieHeader) return null;
   for (const part of rawCookieHeader.split(";")) {
     const [name, ...rest] = part.trim().split("=");
     if (name?.trim() === SESSION_COOKIE_NAME) return rest.join("=").trim();
+  }
+  return null;
+}
+
+function parsePreAuthCookie(rawCookieHeader: string | undefined): string | null {
+  if (!rawCookieHeader) return null;
+  for (const part of rawCookieHeader.split(";")) {
+    const [name, ...rest] = part.trim().split("=");
+    if (name?.trim() === PRE_AUTH_COOKIE) return rest.join("=").trim();
   }
   return null;
 }
@@ -80,21 +114,27 @@ export const handleAuthLogin: PipelineHandler = async (req, res) => {
   const url = new URL(req.raw.url ?? "/", "http://localhost");
   const rawReturnTo = url.searchParams.get("returnTo") ?? "/";
 
-  // Sanitise returnTo: only relative paths are allowed
+  // Sanitise returnTo: only relative paths are allowed (open-redirect protection)
   const returnTo = rawReturnTo.startsWith("/") ? rawReturnTo : "/";
 
   const state = crypto.randomUUID();
+  const nonce = crypto.randomUUID(); // bound to this user-agent via pre-auth cookie
   const codeVerifier = generateCodeVerifier();
   const codeChallenge = await generateCodeChallenge(codeVerifier);
 
-  await getAuthStateStore().put(state, { codeVerifier, returnTo });
+  await getAuthStateStore().put(state, { codeVerifier, returnTo, nonce });
 
   const authUrl = buildAuthorizationUrl(
     { state, codeChallenge, redirectUri: getAuthCallbackUrl() },
     getKeycloakConfig()
   );
 
-  res.raw.writeHead(302, { Location: authUrl });
+  // Set a short-lived HttpOnly pre-auth cookie so /auth/callback can verify
+  // the request came from the same user-agent that initiated the flow.
+  res.raw.writeHead(302, {
+    Location: authUrl,
+    "Set-Cookie": buildPreAuthCookieHeader(nonce),
+  });
   res.raw.end();
 };
 
@@ -121,10 +161,23 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
     return;
   }
 
+  // Verify pre-auth nonce cookie (user-agent binding)
+  const preAuthNonce = parsePreAuthCookie(req.raw.headers["cookie"]);
+  if (!preAuthNonce) {
+    res.json(400, toSafeResponse(new ValidationError("Missing pre-auth cookie")));
+    return;
+  }
+
   // Consume auth state (one-time use — prevents replay)
   const authState = await getAuthStateStore().take(state);
   if (!authState) {
     res.json(400, toSafeResponse(new ValidationError("Invalid or expired state parameter")));
+    return;
+  }
+
+  // Verify the pre-auth nonce matches the one bound at login time
+  if (preAuthNonce !== authState.nonce) {
+    res.json(400, toSafeResponse(new ValidationError("Auth flow binding mismatch")));
     return;
   }
 
@@ -141,7 +194,11 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
   // Get user identity from Keycloak /userinfo
   const identity = await getUserInfo(tokens.accessToken, getKeycloakConfig());
   if (!identity) {
-    res.json(502, toSafeResponse(new ValidationError("Failed to retrieve user info")));
+    // null means email absent or email_verified !== true (Fix 3)
+    res.json(
+      401,
+      toSafeResponse(new ValidationError("Unverified or missing email — login refused"))
+    );
     return;
   }
 
@@ -156,9 +213,9 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
     ttlSeconds
   );
 
-  // Set HTTP-only session cookie and redirect to React app
+  // Set session cookie, clear pre-auth cookie, redirect to React app
   res.raw.writeHead(302, {
-    "Set-Cookie": buildSetCookieHeader(session.sessionId),
+    "Set-Cookie": [buildSetCookieHeader(session.sessionId), buildClearPreAuthCookieHeader()],
     Location: `${getAppBaseUrl()}${authState.returnTo}`,
   });
   res.raw.end();

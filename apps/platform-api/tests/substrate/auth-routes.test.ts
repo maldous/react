@@ -84,6 +84,18 @@ describe("GET /auth/login", () => {
     );
   });
 
+  it("sets pre-auth nonce cookie for user-agent binding", async () => {
+    const res = await fetch(`${url}/auth/login`, { redirect: "manual" });
+    assert.equal(res.status, 302);
+    const setCookie = res.headers.get("set-cookie") ?? "";
+    assert.ok(setCookie.includes("auth_state_token="), "pre-auth cookie must be set");
+    assert.ok(setCookie.includes("HttpOnly"), "pre-auth cookie must be HttpOnly");
+    assert.ok(
+      setCookie.includes("SameSite=Lax"),
+      "pre-auth cookie must be SameSite=Lax for cross-site redirect"
+    );
+  });
+
   it("includes required PKCE parameters in redirect URL", async () => {
     const res = await fetch(`${url}/auth/login`, { redirect: "manual" });
     const location = res.headers.get("location") ?? "";
@@ -138,29 +150,45 @@ describe("GET /auth/callback — error paths", () => {
     await disconnectRedis();
   });
 
+  it("returns 400 when pre-auth cookie is missing (no user-agent binding)", async () => {
+    // Without the pre-auth cookie the callback must reject the request
+    const res = await fetch(`${url}/auth/callback?code=c&state=s`);
+    assert.equal(res.status, 400);
+    const body = (await res.json()) as { code: string };
+    assert.equal(body.code, "VALIDATION_ERROR");
+  });
+
   it("returns 400 when code is missing", async () => {
-    const res = await fetch(`${url}/auth/callback?state=abc`);
+    const res = await fetch(`${url}/auth/callback?state=abc`, {
+      headers: { Cookie: "auth_state_token=nonce" },
+    });
     assert.equal(res.status, 400);
     const body = (await res.json()) as { code: string };
     assert.equal(body.code, "VALIDATION_ERROR");
   });
 
   it("returns 400 when state is missing", async () => {
-    const res = await fetch(`${url}/auth/callback?code=abc`);
+    const res = await fetch(`${url}/auth/callback?code=abc`, {
+      headers: { Cookie: "auth_state_token=nonce" },
+    });
     assert.equal(res.status, 400);
     const body = (await res.json()) as { code: string };
     assert.equal(body.code, "VALIDATION_ERROR");
   });
 
   it("returns 400 when state is unknown or expired", async () => {
-    const res = await fetch(`${url}/auth/callback?code=c&state=nonexistent-state-xyz`);
+    const res = await fetch(`${url}/auth/callback?code=c&state=nonexistent-state-xyz`, {
+      headers: { Cookie: "auth_state_token=nonce" },
+    });
     assert.equal(res.status, 400);
     const body = (await res.json()) as { code: string };
     assert.equal(body.code, "VALIDATION_ERROR");
   });
 
   it("returns 400 when Keycloak reports an error", async () => {
-    const res = await fetch(`${url}/auth/callback?error=access_denied&state=s`);
+    const res = await fetch(`${url}/auth/callback?error=access_denied&state=s`, {
+      headers: { Cookie: "auth_state_token=nonce" },
+    });
     assert.equal(res.status, 400);
     const body = (await res.json()) as { code: string };
     assert.equal(body.code, "VALIDATION_ERROR");

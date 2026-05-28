@@ -143,7 +143,11 @@ describe("RedisAuthStateStore", () => {
   it("put stores the state and take retrieves it", async () => {
     const redis = makeFakeRedis();
     const store = new RedisAuthStateStore(redis as never);
-    await store.put("state-abc", { codeVerifier: "verifier123", returnTo: "/dashboard" });
+    await store.put("state-abc", {
+      codeVerifier: "verifier123",
+      returnTo: "/dashboard",
+      nonce: "nonce-abc",
+    });
     const result = await store.take("state-abc");
     assert.ok(result !== null);
     assert.equal(result.codeVerifier, "verifier123");
@@ -153,7 +157,7 @@ describe("RedisAuthStateStore", () => {
   it("take is consume-once: second take returns null", async () => {
     const redis = makeFakeRedis();
     const store = new RedisAuthStateStore(redis as never);
-    await store.put("state-xyz", { codeVerifier: "v", returnTo: "/" });
+    await store.put("state-xyz", { codeVerifier: "v", returnTo: "/", nonce: "n1" });
     await store.take("state-xyz");
     const second = await store.take("state-xyz");
     assert.equal(second, null);
@@ -169,7 +173,7 @@ describe("RedisAuthStateStore", () => {
   it("uses key prefix for isolation from sessions", async () => {
     const redis = makeFakeRedis();
     const store = new RedisAuthStateStore(redis as never, "auth_state:");
-    await store.put("s1", { codeVerifier: "cv", returnTo: "/" });
+    await store.put("s1", { codeVerifier: "cv", returnTo: "/", nonce: "n2" });
     assert.ok(redis.store.has("auth_state:s1"));
     assert.ok(!redis.store.has("session:s1"));
   });

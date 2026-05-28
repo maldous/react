@@ -42,13 +42,15 @@ function jsonResponse(data: unknown, status = 200): Response {
 // ---------------------------------------------------------------------------
 
 describe("mapKeycloakClaims", () => {
-  it("maps sub, preferred_username, email, and realm_access.roles", () => {
+  it("maps verified email, preferred_username, and realm_access.roles", () => {
     const result = mapKeycloakClaims({
       sub: "kc-user-1",
       preferred_username: "admin@fixture.local",
       email: "admin@fixture.local",
+      email_verified: true,
       realm_access: { roles: ["tenant-admin"] },
     });
+    assert.ok(result !== null, "Should return a result for a verified email");
     assert.equal(result.providerSubject, "kc-user-1");
     assert.equal(result.provider, "keycloak");
     assert.equal(result.email, "admin@fixture.local");
@@ -56,14 +58,45 @@ describe("mapKeycloakClaims", () => {
     assert.deepEqual(result.realmRoles, ["tenant-admin"]);
   });
 
-  it("falls back to preferred_username when email is absent", () => {
-    const result = mapKeycloakClaims({ sub: "s", preferred_username: "u" });
-    assert.equal(result.email, "u");
-    assert.equal(result.displayName, "u");
+  it("returns null when email is absent — no preferred_username fallback for email", () => {
+    // preferred_username is user-controlled and unverified; it must never become the email
+    const result = mapKeycloakClaims({ sub: "s", preferred_username: "u", email_verified: true });
+    assert.equal(result, null, "Should return null when email claim is absent");
+  });
+
+  it("returns null when email_verified is false", () => {
+    const result = mapKeycloakClaims({
+      sub: "s",
+      email: "user@example.com",
+      email_verified: false,
+    });
+    assert.equal(result, null, "Should return null for unverified email");
+  });
+
+  it("returns null when email_verified is absent", () => {
+    const result = mapKeycloakClaims({ sub: "s", email: "user@example.com" });
+    assert.equal(result, null, "Should return null when email_verified is missing");
+  });
+
+  it("uses preferred_username for displayName (not email)", () => {
+    const result = mapKeycloakClaims({
+      sub: "s",
+      email: "actual@example.com",
+      email_verified: true,
+      preferred_username: "display-handle",
+    });
+    assert.ok(result !== null);
+    assert.equal(result.email, "actual@example.com");
+    assert.equal(result.displayName, "display-handle");
   });
 
   it("returns empty realmRoles when realm_access is absent", () => {
-    const result = mapKeycloakClaims({ sub: "s", preferred_username: "u" });
+    const result = mapKeycloakClaims({
+      sub: "s",
+      email: "u@example.com",
+      email_verified: true,
+    });
+    assert.ok(result !== null);
     assert.deepEqual(result.realmRoles, []);
   });
 });
@@ -173,12 +206,13 @@ describe("getUserInfo", () => {
   });
   afterEach(() => restore());
 
-  it("returns mapped identity on success", async () => {
+  it("returns mapped identity on success (verified email)", async () => {
     restore = mockFetch(async () =>
       jsonResponse({
         sub: "kc-sub-1",
         preferred_username: "admin@fixture.local",
         email: "admin@fixture.local",
+        email_verified: true,
         realm_access: { roles: ["tenant-admin"] },
       })
     );
@@ -189,11 +223,19 @@ describe("getUserInfo", () => {
     assert.deepEqual(result.realmRoles, ["tenant-admin"]);
   });
 
+  it("returns null when userinfo has unverified email", async () => {
+    restore = mockFetch(async () =>
+      jsonResponse({ sub: "s", email: "u@example.com", email_verified: false })
+    );
+    const result = await getUserInfo("valid-token", CONFIG);
+    assert.equal(result, null);
+  });
+
   it("sends Authorization Bearer header", async () => {
     let capturedHeader = "";
     restore = mockFetch(async (_, init) => {
       capturedHeader = (init?.headers as Record<string, string>)?.["Authorization"] ?? "";
-      return jsonResponse({ sub: "s", preferred_username: "u" });
+      return jsonResponse({ sub: "s", email: "u@example.com", email_verified: true });
     });
     await getUserInfo("my-token", CONFIG);
     assert.equal(capturedHeader, "Bearer my-token");

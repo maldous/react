@@ -90,36 +90,35 @@ export class PostgresIdentityRepository implements IdentityRepository {
     try {
       await client.query("BEGIN");
 
+      // Security: never merge external-IdP accounts with existing users on email match.
+      // If an account with this email already exists but has no external identity for
+      // (provider, providerSubject), this is a separate account — refuse silently.
+      // Account linking requires explicit admin action, not automatic email-based merging.
       const userResult = await client.query(
         `INSERT INTO users (email, display_name)
          VALUES ($1, $2)
-         ON CONFLICT (email) DO UPDATE SET display_name = EXCLUDED.display_name, updated_at = now()
+         ON CONFLICT (email) DO NOTHING
          RETURNING id, email, display_name, created_at, updated_at`,
         [input.email, input.displayName]
       );
+      if (!userResult.rows.length) {
+        await client.query("ROLLBACK");
+        throw new Error(
+          `EMAIL_ALREADY_REGISTERED: An account with this email exists but is not linked ` +
+            `to this identity provider. Contact an administrator to link accounts.`
+        );
+      }
       const user = rowToUser(userResult.rows[0] as Record<string, unknown>);
 
       const eiResult = await client.query(
         `INSERT INTO external_identities (user_id, provider, provider_subject)
          VALUES ($1, $2, $3)
-         ON CONFLICT (provider, provider_subject) DO NOTHING
          RETURNING id, user_id, provider, provider_subject, created_at`,
         [user.id, input.provider, input.providerSubject]
       );
       await client.query("COMMIT");
 
-      // If the external identity already existed (conflict), fetch it
-      let externalIdentity: ExternalIdentity;
-      if (eiResult.rows.length > 0) {
-        externalIdentity = rowToExternalIdentity(eiResult.rows[0] as Record<string, unknown>);
-      } else {
-        const existing = await this.pool.query(
-          "SELECT id, user_id, provider, provider_subject, created_at FROM external_identities WHERE provider = $1 AND provider_subject = $2",
-          [input.provider, input.providerSubject]
-        );
-        externalIdentity = rowToExternalIdentity(existing.rows[0] as Record<string, unknown>);
-      }
-
+      const externalIdentity = rowToExternalIdentity(eiResult.rows[0] as Record<string, unknown>);
       return { user, externalIdentity };
     } catch (err) {
       await client.query("ROLLBACK");

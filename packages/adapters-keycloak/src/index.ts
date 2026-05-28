@@ -3,8 +3,9 @@ export const packageName = "@platform/adapters-keycloak";
 // Internal Keycloak claim types — NEVER exported to domain or React packages
 interface KeycloakTokenClaims {
   sub: string;
-  preferred_username: string;
+  preferred_username?: string;
   email?: string;
+  email_verified?: boolean;
   realm_access?: { roles: string[] };
   [key: string]: unknown;
 }
@@ -30,17 +31,27 @@ export interface KeycloakClientConfig {
 }
 
 /**
- * Maps Keycloak JWT claims to internal identity fields.
- * This is the ONLY place where Keycloak claim names appear.
- * All other packages use the mapped result.
+ * Maps Keycloak userinfo claims to internal identity fields.
+ *
+ * Security rules:
+ * - Returns null (refuses login) if `email` is absent or `email_verified !== true`.
+ *   An unverified email could belong to someone else; provisioning on it enables
+ *   account takeover via email-squatting.
+ * - `preferred_username` is user-controlled and NOT used for the email field.
+ *   It is used only for the display name where accuracy is not security-critical.
+ * - `sub` is the authoritative stable identifier; it never changes for a given user.
  */
-export function mapKeycloakClaims(claims: Record<string, unknown>): KeycloakIdentityResult {
+export function mapKeycloakClaims(claims: Record<string, unknown>): KeycloakIdentityResult | null {
   const kc = claims as KeycloakTokenClaims;
+
+  if (!kc.email) return null;
+  if (kc.email_verified !== true) return null;
+
   return {
     providerSubject: kc.sub,
     provider: "keycloak",
-    email: (kc.email ?? kc.preferred_username) as string,
-    displayName: (kc.preferred_username ?? kc.email ?? kc.sub) as string,
+    email: kc.email,
+    displayName: (kc.preferred_username ?? kc.email) as string,
     realmRoles: kc.realm_access?.roles ?? [],
   };
 }
@@ -124,7 +135,7 @@ export async function getUserInfo(
   if (!res.ok) return null;
 
   const claims = (await res.json()) as Record<string, unknown>;
-  return mapKeycloakClaims(claims);
+  return mapKeycloakClaims(claims); // null if email absent or email_verified !== true
 }
 
 /**

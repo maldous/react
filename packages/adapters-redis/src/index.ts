@@ -93,6 +93,9 @@ export class RedisSessionStore implements SessionStore {
 export interface AuthStatePayload {
   codeVerifier: string;
   returnTo: string;
+  /** Pre-auth nonce: matches the auth_state_token cookie set in /auth/login.
+   *  Verified in /auth/callback to bind the flow to the initiating user-agent. */
+  nonce: string;
 }
 
 export class RedisAuthStateStore {
