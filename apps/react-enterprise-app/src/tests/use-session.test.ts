@@ -4,7 +4,8 @@ import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createElement, type ReactNode } from "react";
-import { useSession } from "../hooks/use-session";
+import { useSession, SessionFetchError } from "../hooks/use-session";
+import { AUTH_ERROR_CODE } from "@platform/contracts-auth";
 
 const server = setupServer();
 
@@ -85,5 +86,19 @@ describe("useSession", () => {
 
     expect(result.current.hasPermission("profile.read_self")).toBe(true);
     expect(result.current.hasPermission("organisation.update")).toBe(false);
+  });
+
+  it("throws SessionFetchError with AuthErrorCode when session fetch fails with non-401", async () => {
+    server.use(http.get("/api/session", () => new HttpResponse(null, { status: 503 })));
+
+    const { result } = renderHook(() => useSession(), {
+      wrapper: createWrapper(),
+    });
+
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+    expect(result.current.error).toBeInstanceOf(SessionFetchError);
+    expect(result.current.error?.status).toBe(503);
+    expect(result.current.error?.code).toBe(AUTH_ERROR_CODE.PROVIDER_ERROR);
   });
 });

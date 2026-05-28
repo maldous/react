@@ -25,6 +25,14 @@ export type Permission =
 
 export type AuthErrorCode = "UNAUTHENTICATED" | "FORBIDDEN" | "SESSION_EXPIRED" | "PROVIDER_ERROR";
 
+/** Const object for use as values (alongside the AuthErrorCode type). */
+export const AUTH_ERROR_CODE = {
+  UNAUTHENTICATED: "UNAUTHENTICATED",
+  FORBIDDEN: "FORBIDDEN",
+  SESSION_EXPIRED: "SESSION_EXPIRED",
+  PROVIDER_ERROR: "PROVIDER_ERROR",
+} as const satisfies Record<AuthErrorCode, AuthErrorCode>;
+
 // --- SessionActor schema ---
 
 export const SessionActorSchema = z.object({

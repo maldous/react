@@ -8,15 +8,12 @@ interface ProtectedRouteProps {
   children: ReactNode;
 }
 
-// The /auth/login route will be added in ADR-ACT-0008.
-// Cast to string to allow forward-reference before the route is defined in routeTree.gen.ts.
-const AUTH_LOGIN_ROUTE = "/auth/login" as unknown as "/";
-
 export function ProtectedRoute({ permission, children }: ProtectedRouteProps) {
   const { actor, isLoading, isAuthenticated, hasPermission } = useSession();
 
   if (isLoading) return <LoadingState message="Checking authentication..." />;
-  if (!isAuthenticated) return <Navigate to={AUTH_LOGIN_ROUTE} />;
+  // "/auth/login" is registered in routeTree.gen.ts — type-safe, no cast needed
+  if (!isAuthenticated) return <Navigate to="/auth/login" />;
   if (permission && !hasPermission(permission)) {
     return (
       <ForbiddenState
@@ -25,7 +22,6 @@ export function ProtectedRoute({ permission, children }: ProtectedRouteProps) {
       />
     );
   }
-  // actor is available here — used for type narrowing in downstream consumers
   void actor;
   return <>{children}</>;
 }
