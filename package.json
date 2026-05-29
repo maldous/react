@@ -27,7 +27,7 @@
     "tsc:check:packages": "tsc --noEmit -p packages/tsconfig.packages.json",
     "test:compose": "node --loader ./apps/platform-api/loader.mjs --test tests/integration/compose-smoke.test.mjs",
     "license:policy": "echo \"License policy: see docs/security/license-policy.md. Automated scanning tracked in ADR-ACT-0090.\"",
-    "compose:config:all": "docker compose --profile quality --profile identity --profile cloud-mocks --profile sentry config",
+    "compose:config:all": "docker compose --profile quality --profile identity --profile cloud-mocks --profile sentry --profile web --profile external-mocks config",
     "compose:up:default": "docker compose up -d postgres redis clickhouse minio mailpit otel-collector",
     "compose:down:volumes": "docker compose down --volumes",
     "sonar:quality-gate": "SONAR_HOST_URL=http://localhost:9003 node tools/quality/sonar-quality-gate.mjs",

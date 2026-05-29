@@ -397,7 +397,9 @@ services:
       # Fixture session for demo mode (tenant-admin by default).
       # Set to empty string to require real Keycloak login (ADR-ACT-0119).
       LOCAL_FIXTURE_SESSION: ${LOCAL_FIXTURE_SESSION:-tenant-admin}
-      SESSION_COOKIE_SECURE: "true"
+      # SESSION_COOKIE_SECURE defaults false for local HTTP Compose.
+      # Set SESSION_COOKIE_SECURE=true in .env when behind HTTPS/Cloudflare.
+      SESSION_COOKIE_SECURE: ${SESSION_COOKIE_SECURE:-false}
       APP_BASE_URL: ${APP_BASE_URL:-http://localhost}
       PLATFORM_API_URL: ${PLATFORM_API_URL:-http://localhost}
     depends_on:
