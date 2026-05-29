@@ -123,7 +123,7 @@ function IndexPage() {
             >
               ⬡
             </span>
-            <span className="text-lg font-semibold text-gray-900">{t("platform.name")}</span>
+            <h1 className="text-lg font-semibold text-gray-900">{t("platform.name")}</h1>
           </div>
           <div className="flex items-center gap-4">
             <span className="text-sm text-gray-600" data-testid="actor-display">
