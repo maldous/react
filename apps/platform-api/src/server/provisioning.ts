@@ -18,7 +18,11 @@
 import crypto from "node:crypto";
 import pg from "pg";
 import { z } from "zod";
-import { createTenantSchema, withSystemAdmin } from "@platform/adapters-postgres";
+import {
+  createTenantSchema,
+  withSystemAdmin,
+  tenantSchemaIdentifier,
+} from "@platform/adapters-postgres";
 import { KeycloakProvisioningAdapter } from "@platform/adapters-keycloak";
 import { createRedisAdminClient, RedisProvisioningAdapter } from "@platform/adapters-redis";
 import { S3ProvisioningAdapter } from "@platform/adapters-object-storage";
@@ -122,22 +126,42 @@ export async function provisionTenant(input: CreateTenantRequest): Promise<Provi
 
   log.info({ slug: input.slug, organisationId, resources }, "provisioning.start");
 
-  // Guard: slug must be unique
-  const existing = await pool.query("SELECT id FROM public.organisations WHERE slug = $1", [
-    input.slug,
-  ]);
-  if (existing.rows.length > 0) {
-    throw new ConflictError(`Tenant slug "${input.slug}" is already taken`);
-  }
+  // All public-schema writes run under withSystemAdmin so they function
+  // correctly regardless of whether the app DB user is a superuser or a
+  // non-superuser with RLS enforced (ADR-0031 §PostgreSQL privilege analysis).
+  // Each withSystemAdmin block is adjacent to an audit emission.
+  await withSystemAdmin(pool, async (client) => {
+    // Audit: provisioning attempt
+    await auditPort.emit(
+      createAuditEvent({
+        actorId: "system",
+        tenantId: "platform",
+        action: AuditAction.OrganisationUpdated,
+        resource: "organisation",
+        resourceId: organisationId,
+        metadata: { event: "provisioning.attempt", slug: input.slug },
+      })
+    );
 
-  // Step 1: create organisation record
-  await pool.query(
-    "INSERT INTO public.organisations (id, slug, display_name) VALUES ($1, $2, $3)",
-    [organisationId, input.slug, input.displayName]
-  );
+    // Guard: slug must be unique (idempotency check)
+    const existing = await client.query("SELECT id FROM public.organisations WHERE slug = $1", [
+      input.slug,
+    ]);
+    if (existing.rows.length > 0) {
+      throw new ConflictError(`Tenant slug "${input.slug}" is already taken`);
+    }
 
-  // Step 2: save resource config (before provisioning so cleanup can read it)
-  await saveResourceConfig(pool, organisationId, resources);
+    // Step 1: create organisation record
+    await client.query(
+      "INSERT INTO public.organisations (id, slug, display_name) VALUES ($1, $2, $3)",
+      [organisationId, input.slug, input.displayName]
+    );
+  });
+
+  // Step 2: save resource config under system admin context
+  await withSystemAdmin(pool, async (client) => {
+    await saveResourceConfigClient(client, organisationId, resources);
+  });
 
   const cleanupSteps: Array<() => Promise<void>> = [];
 
@@ -190,10 +214,10 @@ export async function provisionTenant(input: CreateTenantRequest): Promise<Provi
         log.error({ err: String(e) }, "provisioning.cleanup.failed");
       });
     }
-    // Remove org record on failure
-    await pool
-      .query("DELETE FROM public.organisations WHERE id = $1", [organisationId])
-      .catch(() => undefined);
+    // Remove org record on failure — also under system admin context
+    await withSystemAdmin(pool, async (client) => {
+      await client.query("DELETE FROM public.organisations WHERE id = $1", [organisationId]);
+    }).catch(() => undefined);
     throw err;
   }
 }
@@ -202,13 +226,14 @@ export async function provisionTenant(input: CreateTenantRequest): Promise<Provi
 // Resource config persistence
 // ---------------------------------------------------------------------------
 
-async function saveResourceConfig(
-  pool: pg.Pool,
+// Client-accepting version called within a withSystemAdmin block
+async function saveResourceConfigClient(
+  client: pg.PoolClient,
   organisationId: string,
   resources: TenantResourceConfig
 ): Promise<void> {
   // Redact sensitive fields before storing (store tier + non-sensitive config only)
-  await pool.query(
+  await client.query(
     `INSERT INTO public.tenant_resource_config
        (organisation_id, database_tier, database_config,
         identity_tier, identity_config,
@@ -251,16 +276,19 @@ export async function getTenantResourceConfig(
   pool: pg.Pool,
   organisationId: string
 ): Promise<TenantResourceConfig | null> {
-  const { rows } = await pool.query<{
-    database_tier: string;
-    database_config: Record<string, string>;
-    identity_tier: string;
-    identity_config: Record<string, string>;
-    cache_tier: string;
-    cache_config: Record<string, string>;
-    storage_tier: string;
-    storage_config: Record<string, string>;
-  }>("SELECT * FROM public.tenant_resource_config WHERE organisation_id = $1", [organisationId]);
+  const rows = await withSystemAdmin(pool, async (client) => {
+    const result = await client.query<{
+      database_tier: string;
+      database_config: Record<string, string>;
+      identity_tier: string;
+      identity_config: Record<string, string>;
+      cache_tier: string;
+      cache_config: Record<string, string>;
+      storage_tier: string;
+      storage_config: Record<string, string>;
+    }>("SELECT * FROM public.tenant_resource_config WHERE organisation_id = $1", [organisationId]);
+    return result.rows;
+  });
   if (!rows.length) return null;
   const r = rows[0]!;
   return {
@@ -450,11 +478,18 @@ async function createInitialMembership(
   organisationId: string,
   adminEmail: string
 ): Promise<void> {
+  // Use withTenant to set both search_path and app.current_tenant_id via
+  // the shared tenantSchemaIdentifier helper — no manual schema interpolation.
+  // bypassRls is inherited from the surrounding withSystemAdmin if present;
+  // here we use withTenant since the membership INSERT is tenant-scoped.
+  // withSystemAdmin bypasses RLS on public tables (users lookup).
+  // tenantSchemaIdentifier from adapters-postgres provides the safe, validated
+  // schema name — no manual string construction here.
   await withSystemAdmin(pool, async (client) => {
-    // Set search_path to the new tenant schema
-    const schema = client.escapeIdentifier(`tenant_${organisationId.replaceAll("-", "_")}`);
+    const schema = tenantSchemaIdentifier(client, organisationId);
     await client.query(`SET LOCAL search_path = ${schema}, public`);
-    // Look up the user in public.users (they may not exist yet — JIT provisioning on first login)
+    await client.query("SET LOCAL app.current_tenant_id = $1", [organisationId]);
+    // Look up the user in public.users (they may not exist yet — JIT on first login)
     const { rows } = await client.query<{ id: string }>(
       "SELECT id FROM public.users WHERE email = $1",
       [adminEmail]
