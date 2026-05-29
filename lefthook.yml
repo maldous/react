@@ -1,0 +1,37 @@
+# lefthook.yml — git hook runner
+# https://lefthook.dev/configuration/
+#
+# Runs the same gates CI runs before every commit and push so failures are
+# caught locally before they reach the remote.
+#
+# Install hooks once after cloning:
+#   npx lefthook install
+#
+# Skip hooks when needed (use sparingly):
+#   LEFTHOOK=0 git commit -m "..."
+#
+# ADR-0016: enterprise quality gate baseline.
+
+pre-commit:
+  parallel: false
+  jobs:
+    - name: format
+      run: npm run format:check
+
+    - name: lint
+      run: npm run lint
+
+    - name: typecheck
+      run: npm run tsc:check
+
+    - name: architecture
+      run: node tools/architecture/orchestrator/src/index.mjs all --no-reports --strict
+
+pre-push:
+  parallel: false
+  jobs:
+    - name: platform-api-tests
+      run: npm run test:platform-api
+
+    - name: frontend-tests
+      run: npm run test:frontend:run
