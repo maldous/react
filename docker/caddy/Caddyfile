@@ -31,11 +31,12 @@
 }
 
 # ---------------------------------------------------------------------------
-# Super-global admin — aldous.info
+# Super-global admin — aldous.info (and localhost for local E2E without /etc/hosts)
 # Hosts the platform admin SPA, all developer tooling, and operational UIs.
-# Access governed by the platform realm (system-admin role or delegated).
+# http://localhost allows make all to run e2e-web-smoke without /etc/hosts.
+# http://aldous.info handles production (via Cloudflare) and dev with /etc/hosts.
 # ---------------------------------------------------------------------------
-http://aldous.info {
+http://aldous.info http://localhost {
 	# Keycloak — all realms accessible (super-admin console + tenant realm access)
 	handle /kc/* {
 		import forward_auth_check admin:keycloak read

@@ -51,7 +51,7 @@ ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
         compose-up-identity compose-up-cloud compose-up-sentry compose-up-external-mocks compose-up-web \
         compose-down compose-down-volumes compose-ps compose-logs \
         readmes generate infra-check pre-slice-gate local-substrate-check \
-        e2e-check e2e-local e2e-build-prod e2e-web-smoke e2e-real-auth \
+        e2e-check e2e-local e2e-build-prod e2e-web-smoke e2e-real-auth e2e-prod \
         reset-local seed-demo db-migrate db-shell redis-flush-local
 
 # =============================================================================
@@ -483,23 +483,39 @@ e2e-build-prod:
 	LOCAL_FIXTURE_SESSION=tenant-admin npm run test:e2e:prod
 	$(call OK,production build E2E passed)
 
-## e2e-web-smoke — Tier 5: Smoke tests against web profile (Caddy + platform-api)
-## Requires: compose-up-web already running, 127.0.0.1 aldous.info in /etc/hosts.
-## Uses fixture session (LOCAL_FIXTURE_SESSION=tenant-admin in compose).
+## e2e-web-smoke — Tier 5: Smoke tests against web Compose profile via localhost
+## No /etc/hosts required — Caddy serves http://localhost via :80 (same content as aldous.info).
+## Requires: compose-up-web already running; LOCAL_FIXTURE_SESSION=tenant-admin active in compose.
 e2e-web-smoke:
-	$(call STEP,e2e:web-smoke \(aldous.info smoke via Caddy\))
+	$(call STEP,e2e:web-smoke \(localhost → Caddy web profile\))
 	@if ! npx playwright --version > /dev/null 2>&1; then \
 		printf '$(RED)✗ Playwright not found. Run: npx playwright install chromium --with-deps$(RESET)\n'; \
 		exit 1; \
 	fi
-	@if ! curl -fsS --max-time 5 http://aldous.info/healthz > /dev/null 2>&1; then \
-		printf '$(RED)✗ aldous.info not reachable. Check:\n'; \
-		printf '  1. make compose-up-web is running\n'; \
-		printf '  2. /etc/hosts has: 127.0.0.1 aldous.info\n$(RESET)'; \
+	@if ! curl -fsS --max-time 5 http://localhost/healthz > /dev/null 2>&1; then \
+		printf '$(RED)✗ Web profile not reachable at http://localhost. Run: make compose-up-web$(RESET)\n'; \
 		exit 1; \
 	fi
-	@printf '$(YELLOW)ℹ Smoke tests use aldous.info via /etc/hosts → Caddy web profile$(RESET)\n'
-	ALDOUS_BASE_URL=http://aldous.info npx playwright test --config playwright.aldous.config.ts --reporter=list
+	ALDOUS_BASE_URL=http://localhost npx playwright test --config playwright.aldous.config.ts --reporter=list
+	$(call OK,web smoke tests passed)
+
+## e2e-prod — Production smoke against live https://aldous.info via Cloudflare
+## NOT part of make all — run separately after a real deployment.
+## Tests as a real user (no fixture session). Skipped if site not reachable.
+## Requires KEYCLOAK_TEST_USERNAME and KEYCLOAK_TEST_PASSWORD for real-auth tests.
+e2e-prod:
+	$(call STEP,e2e:prod \(https://aldous.info via Cloudflare — real user\))
+	@if ! npx playwright --version > /dev/null 2>&1; then \
+		printf '$(RED)✗ Playwright not found. Run: npx playwright install chromium --with-deps$(RESET)\n'; \
+		exit 1; \
+	fi
+	@if ! curl -fsS --max-time 10 https://aldous.info/healthz > /dev/null 2>&1; then \
+		$(call WARN,Production https://aldous.info not reachable — skipping); \
+		exit 0; \
+	fi
+	@printf '$(YELLOW)ℹ Testing production site as real user (no fixture session)$(RESET)\n'
+	ALDOUS_BASE_URL=https://aldous.info npx playwright test --config playwright.aldous.config.ts --reporter=list
+	$(call OK,production smoke tests passed)
 	$(call OK,web smoke tests passed)
 
 ## e2e-real-auth — Tier 6: Real Keycloak browser login E2E (gracefully skipped if not provisioned)
