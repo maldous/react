@@ -249,7 +249,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "exec 3<>/dev/tcp/localhost/9000 && printf 'GET /health/ready HTTP/1.0\\r\\nHost: localhost\\r\\n\\r\\n' >&3 && grep -q '200 OK' <&3",
+          "exec 3<>/dev/tcp/localhost/9000 && printf 'GET /kc/health/ready HTTP/1.0\\r\\nHost: localhost\\r\\n\\r\\n' >&3 && grep -q '200 OK' <&3",
         ]
       interval: 15s
       timeout: 5s
