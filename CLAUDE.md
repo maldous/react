@@ -86,7 +86,7 @@ Sentry (tenant)        http://{slug}.aldous.info/sentry
 Before claiming production behaviour, check the live smoke suite:
 
 ```bash
-npx playwright test --config playwright.aldous.config.ts
+make e2e-prod
 ```
 
 If network access or browser dependencies are unavailable, say so and do not claim live production verification.

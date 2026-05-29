@@ -140,8 +140,9 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:report": "playwright show-report",
-    "validate:slices": "node tools/architecture/validate-slice-readiness/src/index.mjs",
+    "test:e2e:build": "playwright test --config playwright.build.config.ts",
     "test:e2e:prod": "playwright test --config playwright.prod.config.ts",
+    "validate:slices": "node tools/architecture/validate-slice-readiness/src/index.mjs",
     "build:spa": "cd apps/react-enterprise-app && ../../node_modules/.bin/vite build"
   },
   "devDependencies": {

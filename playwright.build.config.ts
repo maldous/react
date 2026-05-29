@@ -2,23 +2,21 @@ import process from "node:process";
 import { defineConfig, devices } from "@playwright/test";
 
 const API_PORT = process.env["PLATFORM_API_PORT"] ?? "3001";
-const APP_PORT = process.env["APP_PORT"] ?? "5173";
+const PREVIEW_PORT = process.env["PREVIEW_PORT"] ?? "4173";
 
 export default defineConfig({
   testDir: "./e2e/dev",
-  testMatch: ["**/smoke.test.ts"],
+  testMatch: ["**/build.test.ts"],
   fullyParallel: false,
-  forbidOnly: !!process.env["CI"],
-  retries: process.env["CI"] ? 1 : 0,
+  retries: 0,
   workers: 1,
-  reporter: [["html", { outputFolder: "playwright-report/dev", open: "never" }], ["list"]],
+  reporter: [["html", { outputFolder: "playwright-report/build", open: "never" }], ["list"]],
   use: {
-    baseURL: `http://localhost:${APP_PORT}`,
+    baseURL: `http://localhost:${PREVIEW_PORT}`,
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
-    video: "retain-on-failure",
   },
-  outputDir: "e2e-results/dev",
+  outputDir: "e2e-results/build",
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: [
     {
@@ -29,12 +27,12 @@ export default defineConfig({
       env: { PLATFORM_API_PORT: API_PORT, LOCAL_FIXTURE_SESSION: "tenant-admin" },
     },
     {
-      command: `cd apps/react-enterprise-app && npx vite --port ${APP_PORT}`,
-      url: `http://localhost:${APP_PORT}`,
-      timeout: 30000,
-      reuseExistingServer: true,
+      command: `cd apps/react-enterprise-app && ../../node_modules/.bin/vite build && ../../node_modules/.bin/vite preview --port ${PREVIEW_PORT}`,
+      url: `http://localhost:${PREVIEW_PORT}`,
+      timeout: 120000,
+      reuseExistingServer: false,
       stderr: "ignore",
-      env: { PLATFORM_API_PORT: API_PORT, VITE_E2E: "true" },
+      env: { PLATFORM_API_PORT: API_PORT },
     },
   ],
 });

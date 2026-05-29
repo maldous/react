@@ -79,11 +79,11 @@ make redis-flush-local   # Clear local Redis sessions
 
 ## E2E modes
 
-| Mode                  | Command                                                    | Target                 |
-| --------------------- | ---------------------------------------------------------- | ---------------------- |
-| Dev (fixture session) | `npm run test:e2e`                                         | localhost:5173 + :3001 |
-| Production build      | `npm run test:e2e:prod`                                    | vite preview           |
-| Live smoke            | `npx playwright test --config playwright.aldous.config.ts` | <https://aldous.info>  |
+| Mode                  | Command              | Target                 |
+| --------------------- | -------------------- | ---------------------- |
+| Dev (fixture session) | `make e2e-dev`       | localhost:5173 + :3001 |
+| Production build      | `make e2e-dev-build` | vite preview           |
+| Live / real auth      | `make e2e-prod`      | aldous.info            |
 
 ## API contract
 

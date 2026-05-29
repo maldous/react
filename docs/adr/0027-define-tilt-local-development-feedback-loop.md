@@ -31,11 +31,11 @@ Recent milestones that created this need:
 - Docker Compose `web` profile: `platform-api` container and a Caddy-served
   production React SPA container as a complete, deployable-to-production
   stack.
-- Vite dev server (`npm run test:e2e` via `playwright.config.ts`) and
-  production preview (`npm run test:e2e:prod` via `playwright.prod.config.ts`),
+- Vite dev server (`make e2e-dev` via `playwright.config.ts`) and
+  production preview (`make e2e-dev-build` via `playwright.build.config.ts`),
   each with their own service lifecycle and proxy rules.
-- aldous.info live smoke tests (`playwright.aldous.config.ts`) targeting the
-  deployed Cloudflare-proxied origin.
+- aldous.info real-auth tests (`make e2e-prod` via `playwright.prod.config.ts`)
+  targeting the deployed Cloudflare-proxied origin.
 - architecture/orchestrator governance checks (ADR-0011) that must run on
   every meaningful change.
 - i18n runtime and migration work pending (ADR-0026, ADR-ACT-0120–0124).
@@ -195,13 +195,14 @@ so file changes rebuild and restart in seconds, not minutes.
 Optimises for production fidelity. Uses the Compose `web` profile (containers)
 and the production SPA build. Slower to start; manual by default.
 
-| Resource              | How it runs                                                                                        | Rebuild trigger                                                                                      |
-| --------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| postgres, redis, etc. | Docker Compose (default profile)                                                                   | `compose.yaml` changes                                                                               |
-| platform-api          | Docker Compose `web` profile (`docker compose --profile web up platform-api`)                      | `apps/platform-api/Dockerfile`, `apps/platform-api/src/**`                                           |
-| react-app (Caddy)     | Docker Compose `web` profile (`docker compose --profile web up react-app`)                         | `apps/react-enterprise-app/Dockerfile`, `apps/react-enterprise-app/src/**`, `docker/caddy/Caddyfile` |
-| e2e-prod              | `local_resource` (`npm run test:e2e:prod`) — **manual trigger**                                    | Manual only                                                                                          |
-| aldous-smoke          | `local_resource` (`npx playwright test --config playwright.aldous.config.ts`) — **manual trigger** | Manual only                                                                                          |
+| Resource              | How it runs                                                                   | Rebuild trigger                                                                                      |
+| --------------------- | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| postgres, redis, etc. | Docker Compose (default profile)                                              | `compose.yaml` changes                                                                               |
+| platform-api          | Docker Compose `web` profile (`docker compose --profile web up platform-api`) | `apps/platform-api/Dockerfile`, `apps/platform-api/src/**`                                           |
+| react-app (Caddy)     | Docker Compose `web` profile (`docker compose --profile web up react-app`)    | `apps/react-enterprise-app/Dockerfile`, `apps/react-enterprise-app/src/**`, `docker/caddy/Caddyfile` |
+| e2e-dev               | `local_resource` (`make e2e-dev`) — **manual trigger**                        | Manual only                                                                                          |
+| e2e-dev-build         | `local_resource` (`make e2e-dev-build`) — **manual trigger**                  | Manual only                                                                                          |
+| e2e-prod              | `local_resource` (`make e2e-prod`) — **manual trigger**                       | Manual only                                                                                          |
 
 Mode switching is via a Tiltfile extension parameter or a named extension file
 (e.g. `tilt-production.env`). The Tiltfile must document how to activate each
@@ -288,8 +289,8 @@ actually affected by a change:
 | `eslint.config.mjs`, `.prettierrc.json`                                                   | lint                                                                                                     |
 | `infra/**`                                                                                | infra-keycloak-plan (manual trigger only)                                                                |
 | `playwright.config.ts`                                                                    | e2e-dev (manual)                                                                                         |
+| `playwright.build.config.ts`                                                              | e2e-dev-build (manual)                                                                                   |
 | `playwright.prod.config.ts`                                                               | e2e-prod (manual)                                                                                        |
-| `playwright.aldous.config.ts`                                                             | aldous-smoke (manual)                                                                                    |
 
 This mapping must be maintained in the Tiltfile using `watch_file()` or the
 `deps` argument to `local_resource()`. It must not be implicit.
@@ -355,7 +356,7 @@ To avoid scope creep, the following boundaries are explicit:
   `infra/bin/tf apply` (ADR-0023). Tilt may expose a manual trigger for
   `make keycloak-plan-local` but does not provision itself.
 - **Tilt does not own E2E configuration.** `playwright.config.ts`,
-  `playwright.prod.config.ts`, and `playwright.aldous.config.ts` are owned
+  `playwright.build.config.ts`, and `playwright.prod.config.ts` are owned
   by the platform; Tilt triggers them unchanged.
 - **Tilt does not own CI.** The Tiltfile is a local-developer tool only.
   CI pipelines (`.github/workflows/ci.yml`) do not import or depend on the

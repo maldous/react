@@ -51,36 +51,33 @@ ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
         compose-up-identity compose-up-cloud compose-up-sentry compose-up-external-mocks compose-up-web \
         compose-down compose-down-volumes compose-ps compose-logs \
         readmes generate infra-check pre-slice-gate local-substrate-check \
-        e2e-check e2e-local e2e-build-prod e2e-web-smoke e2e-real-auth e2e-prod \
+        e2e-dev e2e-dev-build e2e-prod \
         reset-local seed-demo db-migrate db-shell redis-flush-local
 
 # =============================================================================
-## all — Increasingly strict quality gauntlet ending in production smoke
+## all — Increasingly strict quality gauntlet
 ##
 ## Tier 1 — Quality gates (fast, no services):
 ##   install → format → lint → typecheck → architecture → audit → security
 ## Tier 2 — Unit + integration tests:
 ##   test → test-compose → sonar → advisory → sbom → license
-## Tier 3 — Local E2E (dev-server, fixture session):
-##   e2e-local
-## Tier 4 — Production build + E2E (prod build via vite preview):
-##   e2e-build-prod
-## Tier 5 — Web profile up + aldous.info smoke (fixture session via Caddy):
-##   compose-up-web → e2e-web-smoke
-## Tier 6 — Real Keycloak login E2E (skipped gracefully if Keycloak not running):
-##   e2e-real-auth
+## Tier 3 — Dev E2E (localhost, fixture session, Vite dev server):
+##   e2e-dev
+## Tier 4 — Build E2E (localhost, fixture session, vite preview production bundle):
+##   e2e-dev-build
+##
+## Note: e2e-prod (aldous.info, real auth) runs separately — not in make all.
+##   Run: make e2e-prod   (requires deployed site + Keycloak credentials)
 # =============================================================================
 all: install format lint typecheck architecture audit security \
      compose-up-default test test-compose sonar advisory sbom license \
-     e2e-local \
-     e2e-build-prod \
-     compose-up-web e2e-web-smoke \
-     e2e-real-auth
+     e2e-dev \
+     e2e-dev-build
 	@echo ""
 	@printf '$(BOLD)$(GREEN)'
 	@printf '  ╔══════════════════════════════════════════════════════╗\n'
 	@printf '  ║  make all — full gauntlet complete                   ║\n'
-	@printf '  ║  Quality → Tests → Local E2E → Prod E2E → Smoke     ║\n'
+	@printf '  ║  Quality → Tests → Dev E2E → Build E2E              ║\n'
 	@printf '  ╚══════════════════════════════════════════════════════╝\n'
 	@printf '$(RESET)'
 	@echo ""
@@ -450,100 +447,45 @@ pre-slice-gate: compose format lint typecheck test test-compose audit security a
 	@printf '  ╚══════════════════════════════════════════════════════╝\n'
 	@printf '$(RESET)'
 
-## e2e-check — Run Playwright E2E substrate tests (Tier 1 gate — requires services running)
-e2e-check:
-	$(call STEP,e2e:check)
+## e2e-dev — Tier 3: Dev E2E against localhost (fixture session, Vite dev server)
+## playwright.config.ts starts platform-api + Vite dev server automatically.
+e2e-dev:
+	$(call STEP,e2e:dev \(localhost fixture session\))
 	@if ! npx playwright --version > /dev/null 2>&1; then \
 		printf '$(RED)✗ Playwright not found. Run: npx playwright install chromium --with-deps$(RESET)\n'; \
 		exit 1; \
 	fi
-	npm run test:e2e
-	$(call OK,E2E substrate tests passed)
+	LOCAL_FIXTURE_SESSION=tenant-admin npx playwright test --config playwright.config.ts
+	$(call OK,dev E2E passed)
 
-## e2e-local — Tier 3: Playwright E2E against local dev server (fixture session)
-## Starts platform-api + Vite dev server automatically via webServer config.
-## Uses LOCAL_FIXTURE_SESSION=tenant-admin for deterministic actor state.
-e2e-local:
-	$(call STEP,e2e:local \(dev-server fixture session\))
+## e2e-dev-build — Tier 4: Dev E2E against production bundle (fixture session, vite preview)
+## playwright.build.config.ts builds the SPA then serves it with vite preview.
+e2e-dev-build:
+	$(call STEP,e2e:dev-build \(production bundle E2E\))
 	@if ! npx playwright --version > /dev/null 2>&1; then \
 		printf '$(RED)✗ Playwright not found. Run: npx playwright install chromium --with-deps$(RESET)\n'; \
 		exit 1; \
 	fi
-	LOCAL_FIXTURE_SESSION=tenant-admin npm run test:e2e
-	$(call OK,local E2E passed)
+	LOCAL_FIXTURE_SESSION=tenant-admin npx playwright test --config playwright.build.config.ts
+	$(call OK,dev build E2E passed)
 
-## e2e-build-prod — Tier 4: Build React SPA then run E2E against production build
-## Proves prod build artefacts match dev behaviour (no CSS import regressions etc).
-e2e-build-prod:
-	$(call STEP,e2e:build-prod \(production build E2E\))
-	@if ! npx playwright --version > /dev/null 2>&1; then \
-		printf '$(RED)✗ Playwright not found. Run: npx playwright install chromium --with-deps$(RESET)\n'; \
-		exit 1; \
-	fi
-	LOCAL_FIXTURE_SESSION=tenant-admin npm run test:e2e:prod
-	$(call OK,production build E2E passed)
-
-## e2e-web-smoke — Tier 5: Smoke tests against web Compose profile via localhost
-## No /etc/hosts required — Caddy serves http://localhost via :80 (same content as aldous.info).
-## Requires: compose-up-web already running; LOCAL_FIXTURE_SESSION=tenant-admin active in compose.
-e2e-web-smoke:
-	$(call STEP,e2e:web-smoke \(localhost → Caddy web profile\))
-	@if ! npx playwright --version > /dev/null 2>&1; then \
-		printf '$(RED)✗ Playwright not found. Run: npx playwright install chromium --with-deps$(RESET)\n'; \
-		exit 1; \
-	fi
-	@if ! curl -fsS --max-time 5 http://localhost/healthz > /dev/null 2>&1; then \
-		printf '$(RED)✗ Web profile not reachable at http://localhost. Run: make compose-up-web$(RESET)\n'; \
-		exit 1; \
-	fi
-	ALDOUS_BASE_URL=http://localhost npx playwright test --config playwright.aldous.config.ts --reporter=list
-	$(call OK,web smoke tests passed)
-
-## e2e-prod — Production smoke against live https://aldous.info via Cloudflare
-## NOT part of make all — run separately after a real deployment.
-## Tests as a real user (no fixture session). Skipped if site not reachable.
-## Requires KEYCLOAK_TEST_USERNAME and KEYCLOAK_TEST_PASSWORD for real-auth tests.
+## e2e-prod — Real-auth E2E against https://aldous.info (real user, no fixtures)
+## NOT part of make all — run separately after deployment.
+## Requires: PROD_BASE_URL (default https://aldous.info) reachable + Keycloak provisioned.
+## Set KEYCLOAK_TEST_USERNAME and KEYCLOAK_TEST_PASSWORD in .env.
 e2e-prod:
-	$(call STEP,e2e:prod \(https://aldous.info via Cloudflare — real user\))
+	$(call STEP,e2e:prod \($(PROD_BASE_URL)aldous.info — real user\))
 	@if ! npx playwright --version > /dev/null 2>&1; then \
 		printf '$(RED)✗ Playwright not found. Run: npx playwright install chromium --with-deps$(RESET)\n'; \
 		exit 1; \
 	fi
-	@if ! curl -fsS --max-time 10 https://aldous.info/healthz > /dev/null 2>&1; then \
-		$(call WARN,Production https://aldous.info not reachable — skipping); \
+	@BASE=$${PROD_BASE_URL:-https://aldous.info}; \
+	if ! curl -fsS --max-time 10 "$$BASE/healthz" > /dev/null 2>&1; then \
+		$(call WARN,$$BASE not reachable — skipping e2e-prod); \
 		exit 0; \
 	fi
-	@printf '$(YELLOW)ℹ Testing production site as real user (no fixture session)$(RESET)\n'
-	ALDOUS_BASE_URL=https://aldous.info npx playwright test --config playwright.aldous.config.ts --reporter=list
-	$(call OK,production smoke tests passed)
-	$(call OK,web smoke tests passed)
-
-## e2e-real-auth — Tier 6: Real Keycloak browser login E2E (gracefully skipped if not provisioned)
-## Requires: Keycloak running + provisioned + KEYCLOAK_TEST_USERNAME/PASSWORD set.
-## Skips with a warning rather than failing make all if Keycloak is unavailable.
-e2e-real-auth:
-	$(call STEP,e2e:real-auth \(Keycloak browser login\))
-	@if ! npx playwright --version > /dev/null 2>&1; then \
-		printf '$(RED)✗ Playwright not found. Run: npx playwright install chromium --with-deps$(RESET)\n'; \
-		exit 1; \
-	fi
-	@if [ -z "$(KEYCLOAK_TEST_PASSWORD)" ]; then \
-		$(call WARN,real-auth E2E skipped — KEYCLOAK_TEST_PASSWORD not set); \
-		$(call WARN,Set it in .env. Default: password \(from local.tfvars\)); \
-		exit 0; \
-	fi
-	@if ! curl -fsS --max-time 5 "http://localhost:$${KEYCLOAK_PORT:-8090}/health/ready" > /dev/null 2>&1; then \
-		$(call WARN,real-auth E2E skipped — Keycloak not reachable on port $${KEYCLOAK_PORT:-8090}); \
-		$(call WARN,Run: make compose-up-identity); \
-		exit 0; \
-	fi
-	@if [ ! -f "infra/env/local/terraform.tfstate" ]; then \
-		$(call WARN,real-auth E2E skipped — Keycloak realm not provisioned); \
-		$(call WARN,Run: make keycloak-provision); \
-		exit 0; \
-	fi
-	npx playwright test --config playwright.real-auth.config.ts
-	$(call OK,real-auth E2E passed)
+	npx playwright test --config playwright.prod.config.ts
+	$(call OK,prod E2E passed)
 
 ## local-substrate-check — Local developer quick-check (NOT sufficient to begin ADR-ACT-0008)
 local-substrate-check: compose format lint typecheck test test-compose audit architecture

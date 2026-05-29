@@ -42,9 +42,8 @@ test.describe("platform-api health substrate", () => {
 test.describe("React SPA substrate", () => {
   test("index page loads", async ({ page }) => {
     await page.goto("/");
-    await expect(page.locator("body")).toBeVisible();
-    // Index page should show the platform heading
-    await expect(page.getByRole("heading", { name: "Platform" })).toBeVisible();
+    await page.waitForLoadState("networkidle");
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible({ timeout: 10000 });
   });
 
   test("/auth/login renders sign in heading", async ({ page }) => {

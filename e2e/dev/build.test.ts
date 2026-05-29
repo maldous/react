@@ -9,11 +9,10 @@
  * - Asset loading failures (broken chunk references)
  * - Bundle split problems
  *
- * ADR-0025 gap addressed: the standard E2E tests use the Vite dev server.
- * This config targets the production build and must stay in sync with the
- * aldous.info smoke tests (e2e/aldous/smoke.test.ts).
+ * ADR-0025 gap: standard dev E2E tests use the Vite dev server.
+ * This suite targets the production bundle (playwright.build.config.ts).
  *
- * Run: npm run test:e2e:prod
+ * Run: make e2e-dev-build
  */
 import { test, expect } from "@playwright/test";
 

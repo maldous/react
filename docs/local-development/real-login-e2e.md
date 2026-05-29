@@ -93,7 +93,7 @@ export KEYCLOAK_TEST_PASSWORD=password  # or whatever you set in local.tfvars
 ## Running the tests
 
 ```sh
-npx playwright test --config playwright.real-auth.config.ts
+make e2e-prod
 ```
 
 Or with explicit env:
@@ -101,7 +101,7 @@ Or with explicit env:
 ```sh
 KEYCLOAK_TEST_USERNAME=sysadmin@aldous.info \
 KEYCLOAK_TEST_PASSWORD=password \
-npx playwright test --config playwright.real-auth.config.ts
+make e2e-prod
 ```
 
 View results:

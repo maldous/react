@@ -171,9 +171,9 @@ npm run compose:config:all       # validate all profiles
 
 npm run test:platform-api        # Node/BFF unit + substrate tests
 npm run test:frontend:run        # Vitest component tests
-npm run test:e2e                 # Playwright E2E (dev server + fixture session)
-npm run test:e2e:prod            # Playwright E2E (production build)
-npx playwright test --config playwright.aldous.config.ts   # live smoke against aldous.info
+make e2e-dev                     # Playwright E2E (dev server + fixture session)
+make e2e-dev-build               # Playwright E2E (production build + fixture session)
+make e2e-prod                    # Playwright E2E (aldous.info + real auth)
 ```
 
 ## Repository map
