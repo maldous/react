@@ -3,14 +3,16 @@
   "image": "mcr.microsoft.com/devcontainers/typescript-node:1-25-bullseye",
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {
-      "version": "latest",
+      "version": "2",
       "dockerDashComposeVersion": "v2"
     },
-    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "version": "1"
+    },
     "ghcr.io/devcontainers/features/common-utils:2": {
       "installZsh": true,
       "installOhMyZsh": false,
-      "upgradePackages": true
+      "upgradePackages": false
     }
   },
   "postCreateCommand": "bash .devcontainer/post-create.sh",
@@ -33,7 +35,7 @@
       }
     }
   },
-  "forwardPorts": [3001, 5173, 4173, 5433, 6379, 8025, 8089],
+  "forwardPorts": [3001, 5173, 4173, 5433, 6379, 8025, 8080, 8089, 10350],
   "portsAttributes": {
     "3001": { "label": "platform-api" },
     "5173": { "label": "React SPA (dev)" },
@@ -41,6 +43,8 @@
     "5433": { "label": "Postgres" },
     "6379": { "label": "Redis" },
     "8025": { "label": "Mailpit" },
-    "8089": { "label": "WireMock" }
+    "8080": { "label": "Keycloak" },
+    "8089": { "label": "WireMock" },
+    "10350": { "label": "Tilt UI" }
   }
 }
