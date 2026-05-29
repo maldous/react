@@ -170,10 +170,12 @@ resource "keycloak_openid_client" "provisioner" {
   client_secret = var.provisioner_client_secret
 }
 
-resource "keycloak_openid_client_service_account_realm_role" "provisioner_manage_realm" {
+resource "keycloak_openid_client_service_account_realm_role" "provisioner_create_realm" {
   realm_id                = "master"
   service_account_user_id = keycloak_openid_client.provisioner.service_account_user_id
-  role                    = "manage-realm"
+  # create-realm is a realm role in master — allows dynamic tenant realm provisioning.
+  # manage-realm is a client role (on master-realm client), not a realm role.
+  role = "create-realm"
 }
 
 # ---------------------------------------------------------------------------
