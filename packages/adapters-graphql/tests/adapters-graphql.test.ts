@@ -21,7 +21,7 @@ describe("GraphQLAdapter", () => {
     const result = await adapter.execute({ query: "{ health { status } }" });
     assert.strictEqual(
       (result.data as Record<string, { status: string }>)?.["health"]?.status,
-      "ok",
+      "ok"
     );
   });
 

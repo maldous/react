@@ -96,8 +96,7 @@ test
 
 ```text
 @platform/contracts-graphql
-@platform/adapters-postgres
-@platform/adapters-clickhouse
+@platform/graphql-api-runtime
 ```
 
 ### Provides APIs

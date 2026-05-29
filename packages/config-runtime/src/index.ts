@@ -66,7 +66,8 @@ export function loadConfig<S extends ConfigSchema>(schema: S): ResolvedConfig<S>
       }
     } else if (def.type === "number") {
       const parsed = Number(raw);
-      if (isNaN(parsed)) throw new ConfigError(`Config "${fieldName}" must be a number, got "${raw}"`);
+      if (isNaN(parsed))
+        throw new ConfigError(`Config "${fieldName}" must be a number, got "${raw}"`);
       result[fieldName] = parsed;
     } else if (def.type === "boolean") {
       if (raw === "true" || raw === "1") result[fieldName] = true;

@@ -4,7 +4,7 @@ import type { OrganisationProfile } from "@platform/contracts-organisation";
 export interface IdentityRepository {
   findExternalIdentity(
     provider: string,
-    providerSubject: string,
+    providerSubject: string
   ): Promise<{ user: User; externalIdentity: ExternalIdentity } | null>;
 
   createUserAndExternalIdentity(input: {
@@ -21,6 +21,6 @@ export interface OrganisationRepository {
   getById(organisationId: string): Promise<OrganisationProfile | null>;
   updateDisplayName(
     organisationId: string,
-    displayName: string,
+    displayName: string
   ): Promise<OrganisationProfile | null>;
 }

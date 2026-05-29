@@ -68,8 +68,9 @@
     },
     "relations": {
       "dependsOn": [
-        "@platform/profile-configuration",
-        "@platform/access-control"
+        "@platform/domain-identity",
+        "@platform/contracts-organisation",
+        "@platform/platform-errors"
       ],
       "providesApis": [
         "postgres-transactional-adapter",

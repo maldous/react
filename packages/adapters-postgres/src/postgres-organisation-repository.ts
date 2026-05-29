@@ -22,7 +22,7 @@ export class PostgresOrganisationRepository implements OrganisationRepository {
   async getById(organisationId: string): Promise<OrganisationProfile | null> {
     const { rows } = await this.pool.query(
       "SELECT id, slug, display_name, created_at, updated_at FROM organisations WHERE id = $1",
-      [organisationId],
+      [organisationId]
     );
     if (!rows.length) return null;
     return rowToProfile(rows[0] as Record<string, unknown>);
@@ -30,11 +30,11 @@ export class PostgresOrganisationRepository implements OrganisationRepository {
 
   async updateDisplayName(
     organisationId: string,
-    displayName: string,
+    displayName: string
   ): Promise<OrganisationProfile | null> {
     const { rows } = await this.pool.query(
       "UPDATE organisations SET display_name = $1, updated_at = now() WHERE id = $2 RETURNING id, slug, display_name, created_at, updated_at",
-      [displayName, organisationId],
+      [displayName, organisationId]
     );
     if (!rows.length) return null;
     return rowToProfile(rows[0] as Record<string, unknown>);

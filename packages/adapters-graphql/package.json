@@ -65,8 +65,7 @@
     "relations": {
       "dependsOn": [
         "@platform/contracts-graphql",
-        "@platform/adapters-postgres",
-        "@platform/adapters-clickhouse"
+        "@platform/graphql-api-runtime"
       ],
       "providesApis": [
         "graphql-runtime-adapter"

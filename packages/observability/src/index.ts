@@ -1,42 +1,93 @@
-import { createLogger } from "@platform/platform-logging";
-import { createTracer, withSpan as otelWithSpan } from "@platform/platform-observability";
-import type { OtelSpanAttributes } from "@platform/platform-observability";
-
 export const packageName = "@platform/observability";
 
-export interface ObservabilityConfig {
-  serviceName: string;
-  serviceVersion?: string;
-  logLevel?: "trace" | "debug" | "info" | "warn" | "error";
+// ---------------------------------------------------------------------------
+// Generic logger interface — zero @platform/* dependencies
+// ---------------------------------------------------------------------------
+
+export type LogLevel = "trace" | "debug" | "info" | "warn" | "error" | "fatal";
+
+export interface LogFields {
+  [key: string]: unknown;
 }
 
-export interface ObservabilityService {
-  logger: ReturnType<typeof createLogger>;
-  tracer: ReturnType<typeof createTracer>;
-  withSpan<T>(
-    name: string,
-    fn: () => T | Promise<T>,
-    attributes?: OtelSpanAttributes,
-  ): Promise<T>;
-  child(context: Record<string, unknown>): ObservabilityService;
+export interface ObservabilityLogger {
+  trace(msg: string, fields?: LogFields): void;
+  debug(msg: string, fields?: LogFields): void;
+  info(msg: string, fields?: LogFields): void;
+  warn(msg: string, fields?: LogFields): void;
+  error(msg: string, fields?: LogFields): void;
+  child(fields: LogFields): ObservabilityLogger;
 }
 
-export function createObservability(config: ObservabilityConfig): ObservabilityService {
-  const logger = createLogger({ name: config.serviceName, level: config.logLevel ?? "info" });
-  const tracer = createTracer(config.serviceName, config.serviceVersion);
+// ---------------------------------------------------------------------------
+// Generic span interface
+// ---------------------------------------------------------------------------
 
-  function build(log: ReturnType<typeof createLogger>): ObservabilityService {
+export interface ObservabilitySpan {
+  setAttribute(key: string, value: string | number | boolean): void;
+  recordException(err: Error): void;
+  end(): void;
+}
+
+// ---------------------------------------------------------------------------
+// ObservabilityPort — the port interface adapters must satisfy
+// ---------------------------------------------------------------------------
+
+export interface ObservabilityPort {
+  logger: ObservabilityLogger;
+  startSpan(name: string, fn: () => void): void;
+  withSpan<T>(name: string, fn: () => T | Promise<T>): Promise<T>;
+  child(fields: LogFields): ObservabilityPort;
+}
+
+// ---------------------------------------------------------------------------
+// Console-based noop implementation for testing and development
+// ---------------------------------------------------------------------------
+
+function makeConsoleLogger(fields: LogFields = {}): ObservabilityLogger {
+  function log(level: string, msg: string, extra?: LogFields): void {
+    const entry = { level, msg, ...fields, ...extra };
+    if (level === "error" || level === "fatal") {
+      console.error(JSON.stringify(entry));
+    } else {
+      console.log(JSON.stringify(entry));
+    }
+  }
+  return {
+    trace: (msg, f) => log("trace", msg, f),
+    debug: (msg, f) => log("debug", msg, f),
+    info: (msg, f) => log("info", msg, f),
+    warn: (msg, f) => log("warn", msg, f),
+    error: (msg, f) => log("error", msg, f),
+    child: (f) => makeConsoleLogger({ ...fields, ...f }),
+  };
+}
+
+export function createConsoleObservabilityPort(fields: LogFields = {}): ObservabilityPort {
+  const logger = makeConsoleLogger(fields);
+  function build(log: ObservabilityLogger): ObservabilityPort {
     return {
       logger: log,
-      tracer,
-      async withSpan(name, fn, attributes) {
-        return otelWithSpan(tracer, name, fn, attributes);
+      startSpan(name, fn) {
+        log.debug(`span:start ${name}`);
+        fn();
+        log.debug(`span:end ${name}`);
       },
-      child(context) {
-        return build(log.child(context));
+      async withSpan(name, fn) {
+        log.debug(`span:start ${name}`);
+        try {
+          const result = await fn();
+          log.debug(`span:end ${name}`);
+          return result;
+        } catch (err) {
+          log.error(`span:error ${name}`, { err: String(err) });
+          throw err;
+        }
+      },
+      child(f) {
+        return build(log.child(f));
       },
     };
   }
-
   return build(logger);
 }

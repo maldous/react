@@ -15,7 +15,7 @@ describe("ClickHouseAnalyticsAdapter", () => {
   it("insert resolves without error", async () => {
     const adapter = new ClickHouseAnalyticsAdapter(
       { database: "analytics", table: "events" },
-      makeFakeClient() as never,
+      makeFakeClient() as never
     );
     await assert.doesNotReject(() =>
       adapter.insert({
@@ -25,19 +25,22 @@ describe("ClickHouseAnalyticsAdapter", () => {
         page: "/home",
         referrer: null,
         timestamp: NOW,
-      }),
+      })
     );
   });
 
   it("bulkInsert with empty array is a no-op", async () => {
     const calls: unknown[][] = [];
     const fakeClient = {
-      insert: async (args: unknown) => { calls.push([args]); return {}; },
+      insert: async (args: unknown) => {
+        calls.push([args]);
+        return {};
+      },
       close: async () => {},
     };
     const adapter = new ClickHouseAnalyticsAdapter(
       { database: "analytics", table: "events" },
-      fakeClient as never,
+      fakeClient as never
     );
     await adapter.bulkInsert([]);
     assert.strictEqual(calls.length, 0);
@@ -46,16 +49,33 @@ describe("ClickHouseAnalyticsAdapter", () => {
   it("bulkInsert sends all events", async () => {
     let inserted: unknown[] = [];
     const fakeClient = {
-      insert: async ({ values }: { values: unknown[] }) => { inserted = values; return {}; },
+      insert: async ({ values }: { values: unknown[] }) => {
+        inserted = values;
+        return {};
+      },
       close: async () => {},
     };
     const adapter = new ClickHouseAnalyticsAdapter(
       { database: "analytics", table: "events" },
-      fakeClient as never,
+      fakeClient as never
     );
     await adapter.bulkInsert([
-      { type: "track", event: "click", userId: "u1", anonymousId: null, properties: {}, timestamp: NOW },
-      { type: "track", event: "submit", userId: "u2", anonymousId: null, properties: {}, timestamp: NOW },
+      {
+        type: "track",
+        event: "click",
+        userId: "u1",
+        anonymousId: null,
+        properties: {},
+        timestamp: NOW,
+      },
+      {
+        type: "track",
+        event: "submit",
+        userId: "u2",
+        anonymousId: null,
+        properties: {},
+        timestamp: NOW,
+      },
     ]);
     assert.strictEqual(inserted.length, 2);
   });

@@ -23,7 +23,11 @@ describe("OtelSdkAdapter", () => {
   });
 
   it("getTracer returns a tracer object", () => {
-    const adapter = createOtelSdkAdapter({ serviceName: "svc", serviceVersion: "1.0", enabled: false });
+    const adapter = createOtelSdkAdapter({
+      serviceName: "svc",
+      serviceVersion: "1.0",
+      enabled: false,
+    });
     const tracer = adapter.getTracer();
     assert.ok(tracer !== null && typeof tracer === "object");
   });

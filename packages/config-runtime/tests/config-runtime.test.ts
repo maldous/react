@@ -1,6 +1,13 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { loadConfig, getEnv, getEnvRequired, getEnvInt, getEnvBool, ConfigError } from "../src/index.ts";
+import {
+  loadConfig,
+  getEnv,
+  getEnvRequired,
+  getEnvInt,
+  getEnvBool,
+  ConfigError,
+} from "../src/index.ts";
 
 describe("getEnv", () => {
   it("returns the env var value", () => {

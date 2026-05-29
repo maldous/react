@@ -98,8 +98,9 @@ production
 ### Depends on
 
 ```text
-@platform/profile-configuration
-@platform/access-control
+@platform/domain-identity
+@platform/contracts-organisation
+@platform/platform-errors
 ```
 
 ### Provides APIs

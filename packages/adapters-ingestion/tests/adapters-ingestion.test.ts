@@ -19,7 +19,12 @@ describe("HttpIngestionAdapter", () => {
 
   it("rejects an invalid source", async () => {
     const adapter = new HttpIngestionAdapter({ validate: true });
-    const result = await adapter.ingest({ source: "fax", sourceId: "1", receivedAt: NOW, data: {} });
+    const result = await adapter.ingest({
+      source: "fax",
+      sourceId: "1",
+      receivedAt: NOW,
+      data: {},
+    });
     assert.strictEqual(result.status, "rejected");
     assert.ok(typeof result.reason === "string");
   });
@@ -37,14 +42,24 @@ describe("HttpIngestionAdapter", () => {
         version: 2,
       }),
     });
-    const result = await adapter.ingest({ source: "api", sourceId: "s1", receivedAt: NOW, data: {} });
+    const result = await adapter.ingest({
+      source: "api",
+      sourceId: "s1",
+      receivedAt: NOW,
+      data: {},
+    });
     assert.strictEqual(result.status, "accepted");
     assert.strictEqual(result.recordId, "custom-id");
   });
 
   it("skips validation when disabled", async () => {
     const adapter = new HttpIngestionAdapter({ validate: false });
-    const result = await adapter.ingest({ source: "api", sourceId: "s1", receivedAt: NOW, data: {} });
+    const result = await adapter.ingest({
+      source: "api",
+      sourceId: "s1",
+      receivedAt: NOW,
+      data: {},
+    });
     assert.strictEqual(result.status, "accepted");
   });
 });

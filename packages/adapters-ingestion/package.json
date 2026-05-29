@@ -66,9 +66,7 @@
     },
     "relations": {
       "dependsOn": [
-        "@platform/contracts-ingestion",
-        "@platform/adapters-postgres",
-        "@platform/adapters-clickhouse"
+        "@platform/contracts-ingestion"
       ],
       "providesApis": [
         "external-ingestion-runtime"

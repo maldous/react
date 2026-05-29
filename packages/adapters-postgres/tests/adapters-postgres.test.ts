@@ -25,7 +25,7 @@ describe("PostgresOrganisationRepository", () => {
       "",
       makeFakePool([
         { id: "org-1", slug: "acme", display_name: "Acme Corp", created_at: now, updated_at: now },
-      ]) as never,
+      ]) as never
     );
     const result = await repo.getById("org-1");
     assert.ok(result !== null);

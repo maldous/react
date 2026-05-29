@@ -15,11 +15,20 @@ describe("IngestionPayloadSchema", () => {
     assert.ok(result.success);
   });
   it("rejects invalid source", () => {
-    const result = IngestionPayloadSchema.safeParse({ source: "fax", sourceId: "1", receivedAt: NOW, data: {} });
+    const result = IngestionPayloadSchema.safeParse({
+      source: "fax",
+      sourceId: "1",
+      receivedAt: NOW,
+      data: {},
+    });
     assert.ok(!result.success);
   });
   it("rejects missing data", () => {
-    const result = IngestionPayloadSchema.safeParse({ source: "api", sourceId: "1", receivedAt: NOW });
+    const result = IngestionPayloadSchema.safeParse({
+      source: "api",
+      sourceId: "1",
+      receivedAt: NOW,
+    });
     assert.ok(!result.success);
   });
 });

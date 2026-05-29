@@ -112,6 +112,7 @@ production
 @platform/i18n-runtime
 @platform/adapters-keycloak
 @platform/adapters-redis
+@platform/adapters-postgres
 ```
 
 ### Provides APIs

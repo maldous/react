@@ -28,7 +28,7 @@ import {
   getOrganisationProfile,
   updateOrganisationDisplayName,
 } from "../../apps/platform-api/src/usecases/organisation.ts";
-import { PostgresOrganisationRepository } from "../../apps/platform-api/src/adapters/postgres-organisation-repository.ts";
+import { PostgresOrganisationRepository } from "../../packages/adapters-postgres/src/index.ts";
 import {
   S3Client,
   CreateBucketCommand,

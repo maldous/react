@@ -42,7 +42,7 @@ export function createInMemorySearchPort<T extends { id: string }>(): SearchPort
       const start = Date.now();
       const lower = q.toLowerCase();
       const matched = [...docs.values()].filter((d) =>
-        JSON.stringify(d).toLowerCase().includes(lower),
+        JSON.stringify(d).toLowerCase().includes(lower)
       );
       const startIdx = (page - 1) * limit;
       return {

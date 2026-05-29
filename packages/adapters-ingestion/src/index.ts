@@ -44,7 +44,11 @@ export class HttpIngestionAdapter {
       const normalized = this.normalizer(parsed.data);
       const normValidated = NormalizedRecordSchema.safeParse(normalized);
       if (!normValidated.success) {
-        return { recordId: "", status: "rejected", reason: "Normalization produced invalid record" };
+        return {
+          recordId: "",
+          status: "rejected",
+          reason: "Normalization produced invalid record",
+        };
       }
       return { recordId: normalized.id, status: "accepted" };
     }

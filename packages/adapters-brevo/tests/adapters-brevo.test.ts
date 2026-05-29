@@ -14,7 +14,7 @@ describe("BrevoEmailAdapter", () => {
   it("sends email and returns messageId", async () => {
     const adapter = new BrevoEmailAdapter(
       { apiKey: "test-key", defaultFromAddress: "noreply@test.com" },
-      makeFakeFetch(true, 201, { messageId: "brevo-123" }) as typeof fetch,
+      makeFakeFetch(true, 201, { messageId: "brevo-123" }) as typeof fetch
     );
     const result = await adapter.send({
       from: { address: "noreply@test.com" },
@@ -28,7 +28,7 @@ describe("BrevoEmailAdapter", () => {
   it("throws EmailError on API failure", async () => {
     const adapter = new BrevoEmailAdapter(
       { apiKey: "bad-key", defaultFromAddress: "a@b.com" },
-      makeFakeFetch(false, 401, { message: "Unauthorized" }) as typeof fetch,
+      makeFakeFetch(false, 401, { message: "Unauthorized" }) as typeof fetch
     );
     await assert.rejects(
       () =>
@@ -38,14 +38,14 @@ describe("BrevoEmailAdapter", () => {
           subject: "Hi",
           text: "Body",
         }),
-      { name: "EmailError" },
+      { name: "EmailError" }
     );
   });
 
   it("uses fallback messageId when response has none", async () => {
     const adapter = new BrevoEmailAdapter(
       { apiKey: "key", defaultFromAddress: "a@b.com" },
-      makeFakeFetch(true, 201, {}) as typeof fetch,
+      makeFakeFetch(true, 201, {}) as typeof fetch
     );
     const result = await adapter.send({
       from: { address: "a@b.com" },

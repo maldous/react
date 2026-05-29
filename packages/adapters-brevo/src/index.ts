@@ -1,5 +1,9 @@
-import type { EmailPort, EmailMessage, EmailSendResult } from "@platform/email-runtime";
-import { EmailError } from "@platform/email-runtime";
+import {
+  EmailError,
+  type EmailPort,
+  type EmailMessage,
+  type EmailSendResult,
+} from "@platform/email-runtime";
 
 export const packageName = "@platform/adapters-brevo";
 
@@ -45,7 +49,7 @@ export class BrevoEmailAdapter implements EmailPort {
     if (!response.ok) {
       const err = await response.json().catch(() => ({ message: `HTTP ${response.status}` }));
       throw new EmailError(
-        `Brevo API error ${response.status}: ${(err as { message?: string }).message ?? "Unknown error"}`,
+        `Brevo API error ${response.status}: ${(err as { message?: string }).message ?? "Unknown error"}`
       );
     }
 

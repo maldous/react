@@ -16,10 +16,15 @@ describe("S3ObjectStorageAdapter", () => {
 
   it("put delegates to S3Client", async () => {
     const calls: unknown[] = [];
-    const fakeClient = { send: async (cmd: unknown) => { calls.push(cmd); return {}; } };
+    const fakeClient = {
+      send: async (cmd: unknown) => {
+        calls.push(cmd);
+        return {};
+      },
+    };
     const adapter = new S3ObjectStorageAdapter(
       { bucket: "test", region: "us-east-1" },
-      fakeClient as never,
+      fakeClient as never
     );
     await adapter.put({ key: "test.txt", body: Buffer.from("hi"), contentType: "text/plain" });
     assert.strictEqual(calls.length, 1);
@@ -35,7 +40,7 @@ describe("S3ObjectStorageAdapter", () => {
     };
     const adapter = new S3ObjectStorageAdapter(
       { bucket: "test", region: "us-east-1" },
-      fakeClient as never,
+      fakeClient as never
     );
     const result = await adapter.get("missing.txt");
     assert.strictEqual(result, null);

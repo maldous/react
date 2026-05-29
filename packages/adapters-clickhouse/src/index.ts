@@ -50,7 +50,7 @@ export class ClickHouseAnalyticsAdapter {
 }
 
 export function createClickHouseAnalyticsAdapter(
-  config: ClickHouseConfig,
+  config: ClickHouseConfig
 ): ClickHouseAnalyticsAdapter {
   return new ClickHouseAnalyticsAdapter(config);
 }

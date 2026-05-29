@@ -43,7 +43,7 @@ export class PostgresIdentityRepository implements IdentityRepository {
 
   async findExternalIdentity(
     provider: string,
-    providerSubject: string,
+    providerSubject: string
   ): Promise<{ user: User; externalIdentity: ExternalIdentity } | null> {
     const { rows } = await this.pool.query(
       `SELECT
@@ -60,7 +60,7 @@ export class PostgresIdentityRepository implements IdentityRepository {
        FROM external_identities ei
        JOIN users u ON u.id = ei.user_id
        WHERE ei.provider = $1 AND ei.provider_subject = $2`,
-      [provider, providerSubject],
+      [provider, providerSubject]
     );
     if (!rows.length) return null;
     const row = rows[0] as Record<string, unknown>;
@@ -95,14 +95,14 @@ export class PostgresIdentityRepository implements IdentityRepository {
          VALUES ($1, $2)
          ON CONFLICT (email) DO NOTHING
          RETURNING id, email, display_name, created_at, updated_at`,
-        [input.email, input.displayName],
+        [input.email, input.displayName]
       );
       if (!userResult.rows.length) {
         await client.query("ROLLBACK");
         throw new ConflictError(
           "An account with this email exists but is not linked to this identity provider. " +
             "Contact an administrator to link accounts.",
-          { safeDetails: { provider: input.provider } },
+          { safeDetails: { provider: input.provider } }
         );
       }
       const user = rowToUser(userResult.rows[0] as Record<string, unknown>);
@@ -110,7 +110,7 @@ export class PostgresIdentityRepository implements IdentityRepository {
         `INSERT INTO external_identities (user_id, provider, provider_subject)
          VALUES ($1, $2, $3)
          RETURNING id, user_id, provider, provider_subject, created_at`,
-        [user.id, input.provider, input.providerSubject],
+        [user.id, input.provider, input.providerSubject]
       );
       await client.query("COMMIT");
       const externalIdentity = rowToExternalIdentity(eiResult.rows[0] as Record<string, unknown>);
@@ -130,7 +130,7 @@ export class PostgresIdentityRepository implements IdentityRepository {
        WHERE user_id = $1
        ORDER BY created_at DESC
        LIMIT 1`,
-      [userId],
+      [userId]
     );
     if (!rows.length) return null;
     return rowToMembership(rows[0] as Record<string, unknown>);

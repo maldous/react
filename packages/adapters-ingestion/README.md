@@ -97,8 +97,6 @@ production
 
 ```text
 @platform/contracts-ingestion
-@platform/adapters-postgres
-@platform/adapters-clickhouse
 ```
 
 ### Provides APIs

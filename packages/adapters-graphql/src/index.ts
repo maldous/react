@@ -22,7 +22,7 @@ export class GraphQLAdapter {
   }
 
   async execute<T = Record<string, unknown>>(
-    operation: OperationInput,
+    operation: OperationInput
   ): Promise<OperationResult<T>> {
     return executeOperation<T>(this.schema, operation);
   }

@@ -6,13 +6,13 @@ import {
   ListObjectsV2Command,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import type {
-  ObjectStoragePort,
-  PutObjectCommand,
-  GetObjectResult,
-  PresignedUrlOptions,
+import {
+  StorageError,
+  type ObjectStoragePort,
+  type PutObjectCommand,
+  type GetObjectResult,
+  type PresignedUrlOptions,
 } from "@platform/storage-runtime";
-import { StorageError } from "@platform/storage-runtime";
 
 export const packageName = "@platform/adapters-object-storage";
 
@@ -49,7 +49,7 @@ export class S3ObjectStorageAdapter implements ObjectStoragePort {
           Body: command.body as Blob,
           ContentType: command.contentType,
           Metadata: command.metadata,
-        }),
+        })
       );
     } catch (err) {
       throw new StorageError(`Failed to put object "${command.key}"`, err);
@@ -59,7 +59,7 @@ export class S3ObjectStorageAdapter implements ObjectStoragePort {
   async get(key: string): Promise<GetObjectResult | null> {
     try {
       const response = await this.client.send(
-        new GetObjectCommand({ Bucket: this.bucket, Key: key }),
+        new GetObjectCommand({ Bucket: this.bucket, Key: key })
       );
       if (!response.Body) return null;
       return {
@@ -87,7 +87,7 @@ export class S3ObjectStorageAdapter implements ObjectStoragePort {
       return await getSignedUrl(
         this.client,
         new GetObjectCommand({ Bucket: this.bucket, Key: options.key }),
-        { expiresIn: options.expiresInSeconds },
+        { expiresIn: options.expiresInSeconds }
       );
     } catch (err) {
       throw new StorageError(`Failed to get presigned URL for "${options.key}"`, err);
@@ -97,7 +97,7 @@ export class S3ObjectStorageAdapter implements ObjectStoragePort {
   async list(prefix = ""): Promise<Array<{ key: string; size: number; lastModified: Date }>> {
     try {
       const response = await this.client.send(
-        new ListObjectsV2Command({ Bucket: this.bucket, Prefix: prefix }),
+        new ListObjectsV2Command({ Bucket: this.bucket, Prefix: prefix })
       );
       return (response.Contents ?? []).map((obj) => ({
         key: obj.Key ?? "",

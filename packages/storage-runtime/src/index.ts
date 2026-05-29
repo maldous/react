@@ -50,10 +50,7 @@ export function createInMemoryObjectStoragePort(): ObjectStoragePort {
   >();
   return {
     async put({ key, body, contentType, metadata = {} }) {
-      const buf =
-        body instanceof Buffer
-          ? body
-          : Buffer.from(body as string);
+      const buf = body instanceof Buffer ? body : Buffer.from(body as string);
       store.set(key, { body: buf, contentType, metadata });
     },
     async get(key) {

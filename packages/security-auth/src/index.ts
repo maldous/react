@@ -36,7 +36,7 @@ export interface RateLimitResult {
 export interface RateLimitPort {
   check(
     key: string,
-    options?: { limit?: number; windowSeconds?: number },
+    options?: { limit?: number; windowSeconds?: number }
   ): Promise<RateLimitResult>;
   reset(key: string): Promise<void>;
 }

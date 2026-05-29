@@ -1,9 +1,4 @@
-import {
-  buildSchema,
-  graphql,
-  type GraphQLSchema,
-  type GraphQLResolveInfo,
-} from "graphql";
+import { buildSchema, graphql, type GraphQLSchema, type GraphQLResolveInfo } from "graphql";
 
 export const packageName = "@platform/graphql-api-runtime";
 
@@ -12,7 +7,12 @@ export type Resolver<
   TArgs = Record<string, unknown>,
   TContext = unknown,
   TReturn = unknown,
-> = (parent: TParent, args: TArgs, context: TContext, info: GraphQLResolveInfo) => TReturn | Promise<TReturn>;
+> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => TReturn | Promise<TReturn>;
 
 export type ResolverMap = Record<string, Record<string, Resolver>>;
 
@@ -53,7 +53,7 @@ export function buildExecutableSchema(input: ExecutableSchemaInput): GraphQLSche
 
 export async function executeOperation<T = Record<string, unknown>>(
   schema: GraphQLSchema,
-  operation: OperationInput,
+  operation: OperationInput
 ): Promise<OperationResult<T>> {
   const result = await graphql({
     schema,

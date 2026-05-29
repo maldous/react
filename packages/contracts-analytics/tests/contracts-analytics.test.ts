@@ -1,6 +1,11 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { PageViewEventSchema, TrackEventSchema, IdentifyEventSchema, AnalyticsEventSchema } from "../src/index.ts";
+import {
+  PageViewEventSchema,
+  TrackEventSchema,
+  IdentifyEventSchema,
+  AnalyticsEventSchema,
+} from "../src/index.ts";
 
 const NOW = new Date().toISOString();
 
@@ -17,7 +22,13 @@ describe("PageViewEventSchema", () => {
     assert.ok(result.success);
   });
   it("rejects missing page field", () => {
-    const result = PageViewEventSchema.safeParse({ type: "page_view", timestamp: NOW, userId: null, anonymousId: null, referrer: null });
+    const result = PageViewEventSchema.safeParse({
+      type: "page_view",
+      timestamp: NOW,
+      userId: null,
+      anonymousId: null,
+      referrer: null,
+    });
     assert.ok(!result.success);
   });
 });
@@ -36,7 +47,13 @@ describe("TrackEventSchema", () => {
     assert.strictEqual(result.data?.event, "button_clicked");
   });
   it("defaults properties to empty object", () => {
-    const result = TrackEventSchema.safeParse({ type: "track", event: "click", userId: null, anonymousId: null, timestamp: NOW });
+    const result = TrackEventSchema.safeParse({
+      type: "track",
+      event: "click",
+      userId: null,
+      anonymousId: null,
+      timestamp: NOW,
+    });
     assert.ok(result.success);
     assert.deepStrictEqual(result.data?.properties, {});
   });
@@ -57,7 +74,13 @@ describe("IdentifyEventSchema", () => {
 
 describe("AnalyticsEventSchema discriminated union", () => {
   it("dispatches to correct schema by type", () => {
-    const result = AnalyticsEventSchema.safeParse({ type: "track", event: "ev", userId: null, anonymousId: null, timestamp: NOW });
+    const result = AnalyticsEventSchema.safeParse({
+      type: "track",
+      event: "ev",
+      userId: null,
+      anonymousId: null,
+      timestamp: NOW,
+    });
     assert.ok(result.success);
     assert.strictEqual(result.data?.type, "track");
   });

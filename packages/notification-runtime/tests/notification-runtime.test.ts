@@ -17,14 +17,26 @@ describe("createInMemoryNotificationPort", () => {
   });
   it("sent notifications are retrievable", async () => {
     const port = createInMemoryNotificationPort();
-    await port.send({ userId: "user-1", type: "alert", title: "Hello", body: "World", channels: ["in-app"] });
+    await port.send({
+      userId: "user-1",
+      type: "alert",
+      title: "Hello",
+      body: "World",
+      channels: ["in-app"],
+    });
     const sent = port.getSent("user-1");
     assert.strictEqual(sent.length, 1);
     assert.strictEqual(sent[0]!.title, "Hello");
   });
   it("getSent filters by userId", async () => {
     const port = createInMemoryNotificationPort();
-    await port.send({ userId: "user-1", type: "alert", title: "A", body: "B", channels: ["in-app"] });
+    await port.send({
+      userId: "user-1",
+      type: "alert",
+      title: "A",
+      body: "B",
+      channels: ["in-app"],
+    });
     await port.send({ userId: "user-2", type: "alert", title: "C", body: "D", channels: ["push"] });
     assert.strictEqual(port.getSent("user-1").length, 1);
     assert.strictEqual(port.getSent("user-2").length, 1);

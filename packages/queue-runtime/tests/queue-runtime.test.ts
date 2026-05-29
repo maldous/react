@@ -22,7 +22,10 @@ describe("createInMemoryQueue", () => {
     await queue.drain(async (job) => {
       processed.push(job.payload.n);
     });
-    assert.deepStrictEqual(processed.sort((a, b) => a - b), [1, 2]);
+    assert.deepStrictEqual(
+      processed.sort((a, b) => a - b),
+      [1, 2]
+    );
     assert.strictEqual(await queue.size(), 0);
   });
 });
