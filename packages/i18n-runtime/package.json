@@ -1,0 +1,106 @@
+{
+  "name": "@platform/i18n-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Platform i18n runtime: locale loader, key resolver, interpolation, and BFF server helper.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "i18n-runtime",
+      "system": "enterprise-react-platform",
+      "domain": "experience",
+      "boundedContext": "app-shell",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "experimental",
+      "role": "platform",
+      "class": "experimental.platform",
+      "catalogLifecycle": "experimental",
+      "visibility": "internal",
+      "supportLevel": "experimental",
+      "reviewCadence": "on-change"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005",
+        "ADR-0026"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": false
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "i18n-runtime",
+      "serviceNamespace": "experience",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application",
+        "platform",
+        "feature",
+        "ui"
+      ],
+      "forbiddenConsumers": [
+        "domain",
+        "contract",
+        "adapter"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "translation-key-resolver",
+        "server-i18n-helper"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "library",
+      "stage": "experimental",
+      "role": "platform",
+      "layer": "platform"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "i18n runtime: locale JSON loader, translation key resolver, safe interpolation, and BFF server helper.",
+      "responsibilities": [
+        "Load en-GB locale JSON as the default locale",
+        "Resolve translation keys with en-GB fallback for missing non-default keys",
+        "Safely interpolate named parameters without executing HTML or script",
+        "Expose a serverT() helper for BFF/API user-safe messages"
+      ],
+      "nonResponsibilities": [
+        "Does not own translation JSON content — keys are owned by consuming packages",
+        "Does not handle plurals, date formatting, or number formatting in this baseline"
+      ],
+      "usage": [
+        "Create instance: const i18n = createI18n({ locale: 'en-GB', messages: enGB })",
+        "Resolve key: i18n.t('api.error.unauthenticated')",
+        "BFF: import serverT() and call with a key to get localised safe messages"
+      ],
+      "operationalNotes": [
+        "Locale files live in locales/<bcp47>.json — en-GB.json is the baseline and must always exist",
+        "Missing en-GB keys are reported by the ADR-ACT-0123 validation gate"
+      ]
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "app": {
+    "shell": {
+      "nav": {
+        "organisationProfile": "Organisation profile"
+      }
+    }
+  },
+  "feature": {
+    "organisation": {
+      "profile": {
+        "title": "Organisation profile",
+        "form": {
+          "displayName": {
+            "label": "Display name",
+            "validation": {
+              "required": "Display name is required",
+              "tooShort": "Display name must be at least {min} characters",
+              "tooLong": "Display name must be {max} characters or fewer"
+            }
+          }
+        }
+      }
+    }
+  },
+  "api": {
+    "error": {
+      "unauthenticated": "You need to sign in to continue",
+      "forbidden": "You do not have permission to perform this action",
+      "emailUnverified": "Your email address has not been verified",
+      "authStateMismatch": "Authentication flow error — please try again"
+    }
+  }
+}
