@@ -276,6 +276,8 @@ export async function getTenantResourceConfig(
   pool: pg.Pool,
   organisationId: string
 ): Promise<TenantResourceConfig | null> {
+  // Read-only withSystemAdmin — structured log required per withSystemAdmin audit rules.
+  log.info({ organisationId }, "provisioning.resource-config.read");
   const rows = await withSystemAdmin(pool, async (client) => {
     const result = await client.query<{
       database_tier: string;

@@ -1,46 +1,208 @@
 /**
  * forward-auth handler unit tests (ADR-0029, ADR-0030, ADR-0031)
  *
- * Tests the /internal/auth/forward endpoint which Caddy calls before
- * proxying admin/tool UIs. Covers:
- * - Secret validation (missing → 503 in production, 403 wrong)
- * - No session → 401
- * - system-admin allowed on super-global resources
- * - tenant-admin denied on aldous.info root (no slug)
- * - tenant-admin denied for another tenant's subdomain
- * - tenant-admin allowed for own tenant subdomain
+ * Coverage:
+ * - Secret validation: missing in production → 503; wrong → 403
+ * - Session: no session/cookie → 401
+ * - Access logic via checkResourceAccess (pure, no DB/Redis):
+ *   - system-admin granted all SYSTEM_ADMIN_RESOURCES
+ *   - system-admin denied unknown resources
+ *   - tenant-admin granted own subdomain tenant resources
+ *   - tenant-admin denied cross-tenant subdomain
+ *   - tenant-admin denied on aldous.info root
+ *   - tenant-admin denied for super-global-only resources
+ * - Handler integration: fixture session paths → correct status codes
  */
 
 import { describe, it, beforeEach, afterEach } from "node:test";
 import assert from "node:assert/strict";
 import http from "node:http";
+import {
+  checkResourceAccess,
+  extractSlugFromHost,
+  SYSTEM_ADMIN_RESOURCES,
+  TENANT_ADMIN_RESOURCES,
+} from "../../src/server/forward-auth.ts";
 
 // ---------------------------------------------------------------------------
-// Minimal in-process request/response pair for testing the handler directly
+// Helpers
 // ---------------------------------------------------------------------------
 
-function makeReq(overrides: {
-  url?: string;
-  headers?: Record<string, string>;
-}): http.IncomingMessage {
+function makeRawReq(url: string, headers: Record<string, string>): http.IncomingMessage {
   const req = new http.IncomingMessage(null as never);
-  req.url = overrides.url ?? "/internal/auth/forward?resource=admin:sonarqube&scope=read";
-  Object.assign(req, {
-    headers: {
-      host: "aldous.info",
-      ...overrides.headers,
-    },
-  });
+  req.url = url;
+  Object.assign(req, { headers: { host: "aldous.info", ...headers } });
   return req;
 }
 
+interface MockRes {
+  status: number;
+  body: unknown;
+}
+
+async function callHandler(
+  url: string,
+  headers: Record<string, string>
+): Promise<MockRes | undefined> {
+  const { handleForwardAuth } = await import("../../src/server/forward-auth.ts");
+  const collected: MockRes[] = [];
+  await handleForwardAuth(
+    {
+      raw: makeRawReq(url, headers),
+      body: null,
+      actor: null,
+      context: {} as never,
+      method: "GET",
+      path: "/internal/auth/forward",
+      requestId: "test",
+    },
+    {
+      raw: null as never,
+      json: (s: number, b: unknown) => collected.push({ status: s, body: b }),
+    }
+  );
+  return collected[0];
+}
+
 // ---------------------------------------------------------------------------
-// Secret validation — env-level checks
+// 1. extractSlugFromHost — pure function
 // ---------------------------------------------------------------------------
 
-describe("forward-auth: X-Internal-Secret", () => {
-  const NODE_ENV = process.env["NODE_ENV"];
-  const CADDY_SECRET = process.env["CADDY_INTERNAL_SECRET"];
+describe("extractSlugFromHost", () => {
+  it("returns null for the root domain (super-global)", () => {
+    assert.strictEqual(extractSlugFromHost("aldous.info"), null);
+  });
+
+  it("returns the slug for a tenant subdomain", () => {
+    assert.strictEqual(extractSlugFromHost("acme.aldous.info"), "acme");
+  });
+
+  it("returns null for a non-matching domain", () => {
+    assert.strictEqual(extractSlugFromHost("other.example.com"), null);
+  });
+
+  it("returns null for empty string", () => {
+    assert.strictEqual(extractSlugFromHost(""), null);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 2. checkResourceAccess — pure decision logic (no DB / Redis)
+// ---------------------------------------------------------------------------
+
+describe("checkResourceAccess: system-admin", () => {
+  it("grants access to every SYSTEM_ADMIN_RESOURCE from root host", () => {
+    for (const resource of SYSTEM_ADMIN_RESOURCES) {
+      assert.ok(
+        checkResourceAccess({
+          roles: ["system-admin"],
+          resource,
+          requestedSlug: null,
+          ownSlug: null,
+        }),
+        `system-admin must be granted "${resource}"`
+      );
+    }
+  });
+
+  it("grants access from a tenant subdomain (cross-domain admin support)", () => {
+    assert.ok(
+      checkResourceAccess({
+        roles: ["system-admin"],
+        resource: "admin:sonarqube",
+        requestedSlug: "acme",
+        ownSlug: "acme",
+      })
+    );
+  });
+
+  it("denies unknown resource", () => {
+    assert.ok(
+      !checkResourceAccess({
+        roles: ["system-admin"],
+        resource: "admin:unknown-tool",
+        requestedSlug: null,
+        ownSlug: null,
+      })
+    );
+  });
+});
+
+describe("checkResourceAccess: tenant-admin", () => {
+  const resource = [...TENANT_ADMIN_RESOURCES][0]!;
+
+  it("grants access when requestedSlug === ownSlug", () => {
+    assert.ok(
+      checkResourceAccess({
+        roles: ["tenant-admin"],
+        resource,
+        requestedSlug: "acme",
+        ownSlug: "acme",
+      }),
+      `tenant-admin must be granted ${resource} on own subdomain`
+    );
+  });
+
+  it("denies cross-tenant: requestedSlug differs from ownSlug", () => {
+    assert.ok(
+      !checkResourceAccess({
+        roles: ["tenant-admin"],
+        resource,
+        requestedSlug: "other",
+        ownSlug: "acme",
+      })
+    );
+  });
+
+  it("denies on super-global root (requestedSlug is null)", () => {
+    assert.ok(
+      !checkResourceAccess({
+        roles: ["tenant-admin"],
+        resource,
+        requestedSlug: null,
+        ownSlug: "acme",
+      })
+    );
+  });
+
+  it("denies when ownSlug is null (DB lookup failed)", () => {
+    assert.ok(
+      !checkResourceAccess({
+        roles: ["tenant-admin"],
+        resource,
+        requestedSlug: "acme",
+        ownSlug: null,
+      })
+    );
+  });
+
+  it("denies admin:sonarqube (super-global-only, not in TENANT_ADMIN_RESOURCES)", () => {
+    assert.ok(
+      !checkResourceAccess({
+        roles: ["tenant-admin"],
+        resource: "admin:sonarqube",
+        requestedSlug: "acme",
+        ownSlug: "acme",
+      })
+    );
+  });
+
+  it("denies with empty roles", () => {
+    assert.ok(
+      !checkResourceAccess({ roles: [], resource, requestedSlug: "acme", ownSlug: "acme" })
+    );
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 3. Handler: X-Internal-Secret validation
+// ---------------------------------------------------------------------------
+
+describe("handleForwardAuth: X-Internal-Secret", () => {
+  const saved = {
+    NODE_ENV: process.env["NODE_ENV"],
+    CADDY: process.env["CADDY_INTERNAL_SECRET"],
+  };
 
   beforeEach(() => {
     process.env["NODE_ENV"] = "production";
@@ -48,99 +210,80 @@ describe("forward-auth: X-Internal-Secret", () => {
   });
 
   afterEach(() => {
-    process.env["NODE_ENV"] = NODE_ENV;
-    if (CADDY_SECRET === undefined) delete process.env["CADDY_INTERNAL_SECRET"];
-    else process.env["CADDY_INTERNAL_SECRET"] = CADDY_SECRET;
+    process.env["NODE_ENV"] = saved.NODE_ENV;
+    if (saved.CADDY === undefined) delete process.env["CADDY_INTERNAL_SECRET"];
+    else process.env["CADDY_INTERNAL_SECRET"] = saved.CADDY;
   });
 
-  it("returns 503 when secret is unset in production", async () => {
+  it("503 MISCONFIGURED when secret empty in production", async () => {
     process.env["CADDY_INTERNAL_SECRET"] = "";
-    const responses: Array<{ status: number; body: unknown }> = [];
-    const { handleForwardAuth } = await import("../../src/server/forward-auth.ts");
-    await handleForwardAuth(
-      {
-        raw: makeReq({ headers: {} }),
-        body: null,
-        actor: null,
-        context: {} as never,
-        method: "GET",
-        path: "/internal/auth/forward",
-        requestId: "t",
-      },
-      { raw: null as never, json: (s, b) => responses.push({ status: s, body: b }) }
-    );
-    assert.strictEqual(responses[0]?.status, 503);
+    const r = await callHandler("/internal/auth/forward?resource=admin:sonarqube&scope=read", {});
+    assert.strictEqual(r?.status, 503);
+    assert.strictEqual((r?.body as Record<string, unknown>)?.["code"], "MISCONFIGURED");
   });
 
-  it("returns 403 when secret is wrong", async () => {
-    const responses: Array<{ status: number; body: unknown }> = [];
-    const { handleForwardAuth } = await import("../../src/server/forward-auth.ts");
-    await handleForwardAuth(
-      {
-        raw: makeReq({ headers: { "x-internal-secret": "wrong-secret" } }),
-        body: null,
-        actor: null,
-        context: {} as never,
-        method: "GET",
-        path: "/internal/auth/forward",
-        requestId: "t",
-      },
-      { raw: null as never, json: (s, b) => responses.push({ status: s, body: b }) }
-    );
-    assert.strictEqual(responses[0]?.status, 403);
+  it("403 FORBIDDEN when X-Internal-Secret is wrong", async () => {
+    const r = await callHandler("/internal/auth/forward?resource=admin:sonarqube&scope=read", {
+      "x-internal-secret": "wrong-secret",
+    });
+    assert.strictEqual(r?.status, 403);
+    assert.strictEqual((r?.body as Record<string, unknown>)?.["code"], "FORBIDDEN");
   });
 });
 
 // ---------------------------------------------------------------------------
-// Session checks (no real Redis — fixture session path)
+// 4. Handler: session / fixture paths
 // ---------------------------------------------------------------------------
 
-describe("forward-auth: session handling", () => {
-  const FIXTURE_SESSION = process.env["LOCAL_FIXTURE_SESSION"];
+describe("handleForwardAuth: session handling", () => {
+  const saved = {
+    FIXTURE: process.env["LOCAL_FIXTURE_SESSION"],
+    CADDY: process.env["CADDY_INTERNAL_SECRET"],
+    NODE_ENV: process.env["NODE_ENV"],
+  };
 
   afterEach(() => {
-    if (FIXTURE_SESSION === undefined) delete process.env["LOCAL_FIXTURE_SESSION"];
-    else process.env["LOCAL_FIXTURE_SESSION"] = FIXTURE_SESSION;
+    if (saved.FIXTURE === undefined) delete process.env["LOCAL_FIXTURE_SESSION"];
+    else process.env["LOCAL_FIXTURE_SESSION"] = saved.FIXTURE;
+    if (saved.CADDY === undefined) delete process.env["CADDY_INTERNAL_SECRET"];
+    else process.env["CADDY_INTERNAL_SECRET"] = saved.CADDY;
+    process.env["NODE_ENV"] = saved.NODE_ENV;
   });
 
-  it("returns 401 when no session and no fixture", async () => {
+  it("401 UNAUTHENTICATED when no fixture and no cookie", async () => {
     delete process.env["LOCAL_FIXTURE_SESSION"];
     process.env["CADDY_INTERNAL_SECRET"] = "";
     process.env["NODE_ENV"] = "development";
 
-    const responses: Array<{ status: number }> = [];
-    const { handleForwardAuth } = await import("../../src/server/forward-auth.ts");
-    await handleForwardAuth(
-      {
-        raw: makeReq({ headers: {} }),
-        body: null,
-        actor: null,
-        context: {} as never,
-        method: "GET",
-        path: "/internal/auth/forward",
-        requestId: "t",
-      },
-      { raw: null as never, json: (s) => responses.push({ status: s }) }
-    );
-    // 401 (no session) or 403 (fixture absent → system-admin check fails) — both acceptable
-    assert.ok(
-      responses[0]?.status === 401 || responses[0]?.status === 403,
-      `Expected 401 or 403, got ${responses[0]?.status}`
-    );
-    process.env["NODE_ENV"] = "test";
+    const r = await callHandler("/internal/auth/forward?resource=admin:sonarqube&scope=read", {
+      host: "aldous.info",
+    });
+    assert.strictEqual(r?.status, 401);
+    assert.strictEqual((r?.body as Record<string, unknown>)?.["code"], "UNAUTHENTICATED");
   });
 
-  it("system-admin fixture allowed for super-global resource on aldous.info", async () => {
-    process.env["LOCAL_FIXTURE_SESSION"] = "system-admin";
+  it("403 tenant-admin fixture denied on aldous.info root (super-global resource)", async () => {
+    // tenant-admin role + admin:sonarqube (not in TENANT_ADMIN_RESOURCES) + root host
+    // → all paths lead to 403
+    process.env["LOCAL_FIXTURE_SESSION"] = "tenant-admin";
     process.env["CADDY_INTERNAL_SECRET"] = "";
     process.env["NODE_ENV"] = "development";
 
-    // If fixture session is 'system-admin' and SYSTEM_ADMIN_RESOURCES contains the resource,
-    // the handler should return 200. We verify the logic at the unit level.
-    // Note: actual fixture actor resolution depends on session.ts behaviour.
-    // This test documents the expected behaviour; full integration requires Keycloak.
-    const { handleForwardAuth } = await import("../../src/server/forward-auth.ts");
-    assert.ok(typeof handleForwardAuth === "function", "handleForwardAuth must be exported");
-    process.env["NODE_ENV"] = "test";
+    const r = await callHandler("/internal/auth/forward?resource=admin:sonarqube&scope=read", {
+      host: "aldous.info",
+    });
+    assert.strictEqual(r?.status, 403, "tenant-admin must be denied on aldous.info root");
+  });
+
+  it("403 tenant-admin fixture denied for super-global-only resource from any subdomain", async () => {
+    process.env["LOCAL_FIXTURE_SESSION"] = "tenant-admin";
+    process.env["CADDY_INTERNAL_SECRET"] = "";
+    process.env["NODE_ENV"] = "development";
+
+    // admin:sonarqube is SYSTEM_ADMIN only; tenant-admin cannot access it from own subdomain
+    const r = await callHandler("/internal/auth/forward?resource=admin:sonarqube&scope=read", {
+      host: "fixture-org.aldous.info",
+    });
+    assert.strictEqual(r?.status, 403);
   });
 });

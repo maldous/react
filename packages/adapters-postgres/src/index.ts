@@ -30,10 +30,17 @@ export function tenantSchemaIdentifier(client: pg.ClientBase, organisationId: st
 }
 
 /**
- * Run a query inside a tenant schema.
- * Useful for callers that need a one-off tenant read without a full
- * withTenant() transaction (e.g. GET /api/theme, which is read-only and
- * does not need session isolation beyond schema scoping).
+ * Run a single query inside a tenant schema.
+ *
+ * Wraps the query in BEGIN/COMMIT so SET LOCAL search_path is
+ * transaction-scoped and takes effect. Without an explicit transaction,
+ * SET LOCAL is silently a no-op in PostgreSQL (SET LOCAL outside a
+ * transaction block is equivalent to SET for the session, which is not
+ * pool-safe). The transaction is kept as short as possible — connect,
+ * set path, query, commit — so it does not hold locks beyond the read.
+ *
+ * Use this for one-off tenant reads where a full withTenant() block is
+ * heavier than needed (e.g. GET /api/theme).
  */
 export async function queryTenantSchema<T extends pg.QueryResultRow>(
   pool: pg.Pool,
@@ -41,11 +48,25 @@ export async function queryTenantSchema<T extends pg.QueryResultRow>(
   sql: string,
   params?: unknown[]
 ): Promise<pg.QueryResult<T>> {
+  // Validate UUID before connecting — fail fast without a DB round-trip.
+  // tenantSchemaIdentifier re-validates, but doing it here avoids an
+  // unnecessary connect+rollback for clearly invalid input.
+  if (!UUID_V4_RE.test(organisationId)) {
+    throw new Error(
+      `Invalid organisationId: expected UUID v4, got "${organisationId.slice(0, 36)}"`
+    );
+  }
   const client = await pool.connect();
   try {
     const schema = tenantSchemaIdentifier(client, organisationId);
+    await client.query("BEGIN");
     await client.query(`SET LOCAL search_path = ${schema}, public`);
-    return await client.query<T>(sql, params);
+    const result = await client.query<T>(sql, params);
+    await client.query("COMMIT");
+    return result;
+  } catch (err) {
+    await client.query("ROLLBACK");
+    throw err;
   } finally {
     client.release();
   }
@@ -124,10 +145,20 @@ export async function withTenantActor<T>(
 //
 // Sets: SET LOCAL app.bypass_rls = true
 //
-// Bypasses Row-Level Security for cross-tenant operations (provisioning,
-// auth callback identity resolution, billing, support). Every withSystemAdmin
-// call must be audited before or adjacent to execution. Never use in
-// request handlers — only in provisioning and auth system paths.
+// Bypasses Row-Level Security for privileged cross-tenant operations.
+//
+// Audit rules:
+//   MUTATIONS (INSERT, UPDATE, DELETE): every call that mutates data must be
+//   adjacent to an AuditEvent emission. This includes provisioning, membership
+//   changes, and config writes.
+//
+//   READ-ONLY lookups (SELECT only): calls that only read data — e.g.
+//   getTenantResourceConfig, identity resolution during auth — must emit a
+//   structured log entry at info level (caller is responsible). A full audit
+//   event is not required for reads, but must not be silently absent.
+//
+// Never use in request handlers. Only in provisioning, auth system, and
+// explicitly-audited administrative read paths.
 // ---------------------------------------------------------------------------
 
 export async function withSystemAdmin<T>(

@@ -176,3 +176,41 @@ export const handleForwardAuth: PipelineHandler = async (req, res) => {
 
   res.json(403, { code: "FORBIDDEN", resource, scope, granted: false });
 };
+
+// ---------------------------------------------------------------------------
+// Exported pure functions — used by unit tests without needing live Redis/DB
+// ---------------------------------------------------------------------------
+
+export { extractSlugFromHost, SYSTEM_ADMIN_RESOURCES, TENANT_ADMIN_RESOURCES };
+
+/**
+ * Pure access decision: given roles, resource, and resolved slug ownership,
+ * return whether access should be granted. No DB or session I/O.
+ *
+ * Extracted to allow deterministic unit testing of the access logic without
+ * mocking the full handler pipeline.
+ */
+export function checkResourceAccess(params: {
+  roles: string[];
+  resource: string;
+  requestedSlug: string | null; // null = super-global (aldous.info root)
+  ownSlug: string | null; // null = DB lookup failed or no tenantId
+}): boolean {
+  const { roles, resource, requestedSlug, ownSlug } = params;
+
+  if (roles.includes("system-admin") && SYSTEM_ADMIN_RESOURCES.has(resource)) {
+    return true;
+  }
+
+  if (
+    roles.includes("tenant-admin") &&
+    TENANT_ADMIN_RESOURCES.has(resource) &&
+    requestedSlug !== null && // must be a tenant subdomain, not root
+    ownSlug !== null &&
+    ownSlug === requestedSlug
+  ) {
+    return true;
+  }
+
+  return false;
+}

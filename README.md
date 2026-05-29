@@ -121,20 +121,25 @@ Optional profiles add Keycloak, LocalStack, SonarQube, and Sentry. Terraform/Ope
 
 ### In progress (not production ready)
 
-**UMA-based dynamic policy enforcement (ADR-ACT-0145):** The BFF currently uses a static `requiredPermission` bridge against the session's resolved permissions. Runtime policy changes via Keycloak Authorization Services are NOT yet enforced. Full dynamic policy requires ADR-ACT-0145.
+The following are structurally complete but have explicit caveats. Each is tracked in `docs/adr/ACTION-REGISTER.md`.
 
-**RLS enforcement requires a non-superuser DB role (ADR-ACT-0153):** RLS policies are in migration 004 and helpers set the correct session variables. However, the Docker Compose dev setup creates `platform` as a PostgreSQL superuser, bypassing FORCE ROW LEVEL SECURITY. RLS only enforces in production with a non-superuser role.
+**UMA dynamic policy enforcement (ADR-ACT-0145):** The BFF uses a static `requiredPermission` bridge that checks session-resolved permissions from Redis. Keycloak Authorization Services UMA ticket evaluation is not yet wired. ADR-0030's "no-deploy policy changes" claim is NOT satisfied until ADR-ACT-0145 is complete. The Auth Settings API (`/api/auth/settings/*`) manages realm configuration but does not substitute for runtime UMA evaluation.
 
-**Persistent audit events (ADR-ACT-0148):** Provisioning emits to an in-memory port. A persistent adapter is required for durable audit trails.
+**RLS requires a non-superuser production DB role (ADR-ACT-0153):** Migration 004 adds FORCE ROW LEVEL SECURITY and the `withTenant`/`withSystemAdmin` helpers correctly set `app.current_tenant_id` / `app.bypass_rls`. However, the Docker Compose dev setup creates `platform` as a PostgreSQL superuser — superusers bypass FORCE RLS unconditionally. RLS will only enforce in production when a non-superuser application DB role is used.
 
-**Live Keycloak E2E:** The E2E test suite uses `LOCAL_FIXTURE_SESSION`. Browser-driven login requires `KEYCLOAK_CLIENT_SECRET` env var and the identity Compose profile.
+**Auth Settings API audit (ADR-ACT-0154):** The POST/PATCH `/api/auth/settings/*` routes validate bodies and proxy to Keycloak, but do not yet emit persistent audit events. Deferred pending a persistent `AuditEventPort` adapter (ADR-ACT-0148).
+
+**Persistent audit events (ADR-ACT-0148):** Provisioning emits audit events to an in-memory port. A ClickHouse- or Postgres-backed adapter is required for durable audit trails before tenant-admin UI release.
+
+**Live Keycloak browser E2E:** The current E2E test suite uses `LOCAL_FIXTURE_SESSION`. Browser-driven login through a real Keycloak realm requires `KEYCLOAK_CLIENT_SECRET` env var and the identity Compose profile running.
 
 ### Next
 
-- Live Keycloak browser E2E (confirm real login flow end to end)
+- Live Keycloak browser E2E login confirmation
 - Keycloak global logout (end-session endpoint)
 - UMA ticket evaluation in BFF pipeline (ADR-ACT-0145)
-- Production non-superuser DB role provisioning (ADR-ACT-0153)
+- Production non-superuser DB role (ADR-ACT-0153)
+- Persistent audit event adapter (ADR-ACT-0148, ADR-ACT-0154)
 - Second product vertical slice
 
 ## Commands
