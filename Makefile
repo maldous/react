@@ -56,8 +56,9 @@ ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
         reset-local seed-demo db-migrate db-shell redis-flush-local
 
 # =============================================================================
-## all — Complete quality + deployment + production E2E gauntlet
+## all — Complete quality + deployment + production E2E gauntlet (always from clean state)
 ##
+## Tier 0 — Clean slate: stop all services, kill stale ports, remove artefacts
 ## Tier 1 — Quality gates (fast, no services):
 ##   install → format → lint → typecheck → architecture → audit → security
 ## Tier 2 — Unit + integration tests (services must be running):
@@ -77,7 +78,8 @@ ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
 ##   KEYCLOAK_TEST_USERNAME and KEYCLOAK_TEST_PASSWORD in .env
 # =============================================================================
 all: export PROD_BASE_URL = http://aldous.info
-all: install format lint typecheck architecture audit security \
+all: clean \
+     install format lint typecheck architecture audit security \
      compose-up-default test test-compose sonar advisory sbom license \
      e2e-dev \
      e2e-dev-build \
@@ -266,11 +268,17 @@ fix:
 	npm run format:write
 	$(call OK,formatting applied)
 
-## clean — Remove generated artefacts (coverage, reports, sonar work)
+## clean — Stop all services, kill dangling processes, remove generated artefacts
 clean:
-	$(call STEP,clean)
-	rm -rf coverage/ reports/ .scannerwork/
-	$(call OK,artefacts removed)
+	$(call STEP,clean: stopping all services)
+	docker compose --profile identity --profile web --profile quality \
+	    --profile cloud-mocks --profile sentry --profile external-mocks \
+	    down --remove-orphans 2>/dev/null || true
+	$(call STEP,clean: killing stale port holders)
+	@fuser -k 5173/tcp 4173/tcp 3001/tcp 2>/dev/null || true
+	$(call STEP,clean: removing artefacts)
+	rm -rf coverage/ reports/ .scannerwork/ playwright-report/ e2e-results/
+	$(call OK,clean complete)
 
 # =============================================================================
 # COMPOSE LIFECYCLE HELPERS
