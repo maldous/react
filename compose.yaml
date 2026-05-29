@@ -238,10 +238,17 @@ services:
     ports:
       - "${KEYCLOAK_PORT:-8090}:8080"
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8080/health/ready || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 10
+      # curl/wget are not in the Keycloak UBI9 image; use bash TCP.
+      # Health is on the management port (9000), not the HTTP port (8080).
+      # KC_HEALTH_ENABLED=true must be set for the endpoint to exist.
+      test:
+        [
+          "CMD-SHELL",
+          "exec 3<>/dev/tcp/localhost/9000 && printf 'GET /health/ready HTTP/1.0\\r\\nHost: localhost\\r\\n\\r\\n' >&3 && grep -q '200 OK' <&3",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 20
       start_period: 60s
     restart: unless-stopped
 
