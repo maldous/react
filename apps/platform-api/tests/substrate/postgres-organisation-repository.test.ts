@@ -5,7 +5,7 @@
 import { describe, it, before, after } from "node:test";
 import assert from "node:assert/strict";
 import pg from "pg";
-import { PostgresOrganisationRepository } from "../../src/adapters/postgres-organisation-repository.ts";
+import { PostgresOrganisationRepository } from "@platform/adapters-postgres";
 
 const POSTGRES_URL =
   process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";

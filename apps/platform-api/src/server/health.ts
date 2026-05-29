@@ -6,7 +6,7 @@ import {
   type ReadinessResponse,
   type VersionResponse,
 } from "@platform/api-runtime";
-import { PostgresReadinessAdapter } from "../adapters/postgres-readiness-adapter.ts";
+import { PostgresReadinessAdapter } from "@platform/adapters-postgres";
 import { getPostgresReadinessAdapter } from "./dependencies.ts";
 
 export { type HealthResponse, type ReadinessResponse, type VersionResponse };

@@ -6,7 +6,7 @@ import { describe, it, before, after } from "node:test";
 import assert from "node:assert/strict";
 import pg from "pg";
 import { ConflictError } from "@platform/platform-errors";
-import { PostgresIdentityRepository } from "../../src/adapters/postgres-identity-repository.ts";
+import { PostgresIdentityRepository } from "@platform/adapters-postgres";
 
 const POSTGRES_URL =
   process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";

@@ -11,9 +11,11 @@
  * connectRedis() must be called once at server startup; disconnectRedis()
  * on graceful shutdown (or between tests to release the connection pool).
  */
-import { PostgresOrganisationRepository } from "../adapters/postgres-organisation-repository.ts";
-import { PostgresReadinessAdapter } from "../adapters/postgres-readiness-adapter.ts";
-import { PostgresIdentityRepository } from "../adapters/postgres-identity-repository.ts";
+import {
+  PostgresOrganisationRepository,
+  PostgresReadinessAdapter,
+  PostgresIdentityRepository,
+} from "@platform/adapters-postgres";
 import {
   createRedisClient,
   RedisSessionStore,

@@ -32,6 +32,7 @@ const PLATFORM_MAP = {
   "@platform/session-runtime": resolvePath(repoRoot, "packages/session-runtime/src/index.ts"),
   "@platform/adapters-keycloak": resolvePath(repoRoot, "packages/adapters-keycloak/src/index.ts"),
   "@platform/adapters-redis": resolvePath(repoRoot, "packages/adapters-redis/src/index.ts"),
+  "@platform/adapters-postgres": resolvePath(repoRoot, "packages/adapters-postgres/src/index.ts"),
   "@platform/contracts-organisation": resolvePath(
     repoRoot,
     "packages/contracts-organisation/src/index.ts"
