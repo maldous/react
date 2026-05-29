@@ -209,8 +209,10 @@ sonar:
 		printf '  Set SONAR_TOKEN in .env or environment to enable.\n$(RESET)'; \
 	else \
 		docker compose --profile quality up -d --no-recreate --wait --wait-timeout 420 sonarqube \
-			&& printf '$(GREEN)SonarQube is UP.$(RESET)\n'; \
-		npm run sonar:clean; \
+			|| { printf '$(RED)✗ SonarQube did not become healthy$(RESET)\n'; exit 1; }; \
+		printf '$(GREEN)SonarQube is UP.$(RESET)\n'; \
+		npm run sonar:clean \
+			|| { printf '$(RED)✗ Sonar quality gate failed$(RESET)\n'; exit 1; }; \
 		printf '$(GREEN)✓ Sonar quality gate passed$(RESET)\n'; \
 	fi
 
