@@ -101,25 +101,41 @@ Optional profiles add Keycloak, LocalStack, SonarQube, and Sentry. Terraform/Ope
 
 ## Current status
 
-Done:
+### Done
 
-- 25 accepted ADRs
-- 46 governed packages
-- Architecture tooling and import-boundary enforcement
-- Quality gate baseline
-- Local service substrate
-- React platform stack
-- Identity and session model
-- Playwright E2E substrate
-- Authenticated organisation profile vertical slice
-- Local Keycloak provisioning baseline
-- Real OAuth 2.0 Authorization Code + PKCE login through platform-api BFF
+- **ADRs 0001–0031** accepted and enforced (governance, hexagonal architecture, multi-tenant isolation, dynamic authorisation, infrastructure provisioning privilege model)
+- **60 governed packages** with architecture metadata, lifecycle evidence, and import-boundary validation
+- Architecture tooling: validate-package-metadata, validate-source-imports, validate-openapi-drift, generate-package-readmes, and orchestrator gate
+- Quality baseline: Prettier, ESLint, TypeScript strict, SonarQube, markdownlint, lefthook pre-commit
+- Local service substrate: Postgres, Redis, ClickHouse, MinIO, Mailpit, OTel Collector, Keycloak, WireMock
+- React 19 platform stack: TanStack Router, TanStack Query, React Hook Form, Zod, React Aria, Tailwind
+- Identity model: User, Organisation, Membership, ExternalIdentity, SessionActor (ADR-0021)
+- Playwright E2E substrate and authenticated organisation profile vertical slice
+- Real OAuth 2.0 Authorization Code + PKCE login through platform-api BFF with tenant-aware Keycloak realm selection
+- Multi-tenant isolation: schema-per-tenant (PostgreSQL), RLS policies, Redis namespace, S3 prefix per tenant
+- Caddy FQDN routing: `aldous.info` (super-global), `{slug}.aldous.info` (tenant), path-prefixed admin tool UIs
+- Tenant provisioning API (`POST /api/admin/tenants`) with per-resource tier configuration
+- Auth Settings API: IdP, MFA, session, and sysadmin-brokering management per tenant realm
+- Tilt fast-dev loop with keycloak-provision and WireMock resources
+- Hexagonal adapter packages for Keycloak, Postgres, Redis, S3, ClickHouse, Sentry, Brevo, OTel, GraphQL
 
-Next:
+### In progress (not production ready)
 
-- Live Keycloak browser E2E (requires `KEYCLOAK_CLIENT_SECRET` env var + running identity profile)
+**UMA-based dynamic policy enforcement (ADR-ACT-0145):** The BFF currently uses a static `requiredPermission` bridge against the session's resolved permissions. Runtime policy changes via Keycloak Authorization Services are NOT yet enforced. Full dynamic policy requires ADR-ACT-0145.
+
+**RLS enforcement requires a non-superuser DB role (ADR-ACT-0153):** RLS policies are in migration 004 and helpers set the correct session variables. However, the Docker Compose dev setup creates `platform` as a PostgreSQL superuser, bypassing FORCE ROW LEVEL SECURITY. RLS only enforces in production with a non-superuser role.
+
+**Persistent audit events (ADR-ACT-0148):** Provisioning emits to an in-memory port. A persistent adapter is required for durable audit trails.
+
+**Live Keycloak E2E:** The E2E test suite uses `LOCAL_FIXTURE_SESSION`. Browser-driven login requires `KEYCLOAK_CLIENT_SECRET` env var and the identity Compose profile.
+
+### Next
+
+- Live Keycloak browser E2E (confirm real login flow end to end)
 - Keycloak global logout (end-session endpoint)
-- Second product slice
+- UMA ticket evaluation in BFF pipeline (ADR-ACT-0145)
+- Production non-superuser DB role provisioning (ADR-ACT-0153)
+- Second product vertical slice
 
 ## Commands
 
