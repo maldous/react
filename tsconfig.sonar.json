@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "_comment": "Sonar-compatible tsconfig for SonarQube 9.9 static analysis only.",
+  "_comment2": "SonarQube 9.9's bundled TS bridge does not support moduleResolution:bundler,",
+  "_comment3": "allowImportingTsExtensions, or ignoreDeprecations. This file uses nodenext.",
+  "_comment4": "Do not use for compilation — use the app-specific tsconfigs instead.",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "nodenext",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "noEmit": true
+  },
+  "include": [
+    "apps/platform-api/src/**/*",
+    "apps/platform-api/loader.mjs",
+    "apps/react-enterprise-app/src/**/*",
+    "packages/*/src/**/*"
+  ],
+  "exclude": ["**/node_modules/**", "**/dist/**", "**/build/**"]
+}

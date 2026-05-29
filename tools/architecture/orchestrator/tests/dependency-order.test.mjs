@@ -35,6 +35,8 @@ assert.deepEqual(payload.dependencyOrder, [
   "generate-package-inventory",
   "generate-lifecycle-reports",
   "validate-lifecycle-evidence",
+  "validate-slice-readiness",
+  "validate-i18n",
 ]);
 
 assert.equal(payload.exitCode, 0);

@@ -23,8 +23,8 @@ import process from "node:process";
 const LOCALE_FILE = "packages/i18n-runtime/locales/en-GB.json";
 const SCAN_DIRS = ["apps/react-enterprise-app/src", "apps/platform-api/src", "packages"];
 
-// Match t("key") and serverT(messages, "key") patterns
-const KEY_PATTERN = /(?:\bt|serverT)\s*\(\s*(?:[^,)]+,\s*)?["']([a-z][a-z0-9._-]*)["']/g;
+// Match t("key") and serverT(messages, "key") patterns — bounded to prevent ReDoS
+const KEY_PATTERN = /(?:\bt|serverT)\s*\(\s*(?:[^,)"']{0,200},\s*)?["']([a-z][a-z0-9._-]*)["']/g;
 
 // Match t("key", { param: ... }) inline objects to extract param names used
 const INLINE_PARAMS_PATTERN = /\bt\s*\(\s*["']([a-z][a-z0-9._-]*)["']\s*,\s*\{([^}]*)\}/g;
@@ -69,6 +69,16 @@ function loadLocale(root) {
 // Source scanning
 // ---------------------------------------------------------------------------
 
+function processSourceFile(src, usedKeys, paramUsage) {
+  for (const m of src.matchAll(KEY_PATTERN)) usedKeys.add(m[1]);
+  for (const m of src.matchAll(INLINE_PARAMS_PATTERN)) {
+    const key = m[1];
+    const paramNames = [...m[2].matchAll(/(\w{1,50})\s*:/g)].map((p) => p[1]);
+    if (!paramUsage.has(key)) paramUsage.set(key, new Set());
+    paramNames.forEach((p) => paramUsage.get(key).add(p));
+  }
+}
+
 function scanDir(dir, usedKeys, paramUsage) {
   if (!fs.existsSync(dir)) return;
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -79,20 +89,7 @@ function scanDir(dir, usedKeys, paramUsage) {
       continue;
     }
     if (!/\.(ts|tsx|js|mjs)$/.test(entry.name)) continue;
-
-    const src = fs.readFileSync(full, "utf8");
-
-    // Collect used keys
-    for (const m of src.matchAll(KEY_PATTERN)) usedKeys.add(m[1]);
-
-    // Collect inline param names for interpolation check
-    for (const m of src.matchAll(INLINE_PARAMS_PATTERN)) {
-      const key = m[1];
-      const paramsText = m[2];
-      const paramNames = [...paramsText.matchAll(/(\w+)\s*:/g)].map((p) => p[1]);
-      if (!paramUsage.has(key)) paramUsage.set(key, new Set());
-      paramNames.forEach((p) => paramUsage.get(key).add(p));
-    }
+    processSourceFile(fs.readFileSync(full, "utf8"), usedKeys, paramUsage);
   }
 }
 
