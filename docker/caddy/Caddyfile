@@ -149,14 +149,11 @@ aldous.info {
 		reverse_proxy sentry-web:9000
 	}
 
-	# BFF — /internal/* not listed here (same reason as above)
+	# BFF — /internal/* intentionally NOT listed (same reason as aldous.info block above)
 	handle /api/* {
 		reverse_proxy platform-api:3001
 	}
 	handle /auth/* {
-		reverse_proxy platform-api:3001
-	}
-	handle /internal/* {
 		reverse_proxy platform-api:3001
 	}
 	handle /healthz {

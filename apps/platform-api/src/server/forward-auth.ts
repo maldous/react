@@ -26,6 +26,7 @@
  * ADR-0031: Infrastructure provisioning privilege model — forward auth is a trust boundary.
  */
 
+import crypto from "node:crypto";
 import pg from "pg";
 import type { PipelineHandler } from "./pipeline.ts";
 import { parseSessionCookie } from "./auth.ts";
@@ -84,12 +85,30 @@ function extractSlugFromHost(host: string): string | null {
 // ---------------------------------------------------------------------------
 
 export const handleForwardAuth: PipelineHandler = async (req, res) => {
-  // 1. Validate Caddy internal secret — rejects external callers
-  const internalSecret = process.env["CADDY_INTERNAL_SECRET"];
+  // 1. Validate Caddy internal secret — rejects external callers.
+  //
+  //    Fail-closed: if no secret is configured in production, deny all.
+  //    In development (NODE_ENV !== production) an unset secret is permitted
+  //    for local iteration, but a warning is emitted once at startup.
+  //    Constant-time comparison prevents timing side-channel attacks.
+  const internalSecret = process.env["CADDY_INTERNAL_SECRET"] ?? "";
+  const isProduction = process.env["NODE_ENV"] === "production";
+
+  if (!internalSecret && isProduction) {
+    // Production with no secret configured — deny everything. This is a
+    // misconfiguration; fail closed rather than exposing the endpoint.
+    res.json(503, { code: "MISCONFIGURED", message: "Internal secret not configured" });
+    return;
+  }
+
   if (internalSecret) {
     const provided = req.raw.headers["x-internal-secret"];
-    const provided1 = Array.isArray(provided) ? provided[0] : provided;
-    if (provided1 !== internalSecret) {
+    const provided1 = Array.isArray(provided) ? (provided[0] ?? "") : (provided ?? "");
+    // Constant-time comparison — prevents timing oracle on the secret value.
+    const a = Buffer.from(provided1);
+    const b = Buffer.from(internalSecret);
+    const match = a.length === b.length && crypto.timingSafeEqual(a, b);
+    if (!match) {
       res.json(403, { code: "FORBIDDEN", message: "Invalid internal secret" });
       return;
     }
