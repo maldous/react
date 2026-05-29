@@ -11,8 +11,9 @@ import { type SessionActor } from "@platform/contracts-auth";
 import { createRequestContext, type RuntimeContext } from "@platform/platform-runtime-context";
 import { getFixtureSession } from "./session.ts";
 import { parseSessionCookie } from "./auth.ts";
-import { getSessionStore } from "./dependencies.ts";
+import { getSessionStore, getApplicationPool } from "./dependencies.ts";
 import { serverT } from "./i18n.ts";
+import { resolveTenantFromRequest } from "./tenant-resolver.ts";
 
 // Types
 export interface PipelineRequest {
@@ -151,6 +152,14 @@ export function createRouter(
 
     // Auth check — resolve actor (null when unauthenticated)
     //
+    // FQDN tenant resolution (ADR-0029 §1) — resolve which tenant owns this request
+    // from the Host header. Skipped for fixture sessions (local dev + E2E).
+    // When a real tenant is resolved, the session tenant must match.
+    const isFixtureMode = !!getFixtureSession();
+    const fqdnTenant = isFixtureMode
+      ? null
+      : await resolveTenantFromRequest(req, getApplicationPool()).catch(() => null);
+
     // Precedence (Tier 1 fixture always wins for deterministic E2E tests):
     //   1. LOCAL_FIXTURE_SESSION env var → fixture actor (no Redis/DB)
     //   2. session cookie → real Redis-backed session actor
@@ -179,6 +188,26 @@ export function createRouter(
           }
         }
       }
+
+      // FQDN tenant cross-check (ADR-0029 invariant #2):
+      // If the request came in on a tenant subdomain, the session must belong
+      // to that same tenant. Prevents a user from one tenant accessing another
+      // tenant's data by navigating to a different subdomain.
+      if (actor && fqdnTenant && !actor.roles.includes("system-admin")) {
+        if (actor.organisationId !== fqdnTenant.organisationId) {
+          const err = new ForbiddenError("api.error.permissionRequired", {
+            safeDetails: { permission: "tenant:own" },
+          });
+          jsonResponse(
+            res,
+            403,
+            toSafeResponse(err, (m) => serverT(m, { permission: "own tenant" })),
+            requestId
+          );
+          return;
+        }
+      }
+
       if (!actor) {
         const err = new UnauthorizedError("api.error.authenticationRequired");
         jsonResponse(

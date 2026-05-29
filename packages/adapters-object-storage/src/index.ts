@@ -22,11 +22,28 @@ export interface S3Config {
   endpoint?: string;
   forcePathStyle?: boolean;
   credentials?: { accessKeyId: string; secretAccessKey: string };
+  /** When set, all key operations are validated to use "{organisationId}/" prefix (ADR-0029 §6) */
+  organisationId?: string;
 }
 
 export class S3ObjectStorageAdapter implements ObjectStoragePort {
   private readonly client: S3Client;
   private readonly bucket: string;
+  private readonly tenantPrefix: string | null;
+
+  /**
+   * Validate that an object key belongs to this adapter's tenant prefix.
+   * ADR-0029 §6: defence-in-depth — prefix validated at adapter layer before
+   * IAM policy enforcement at the S3/MinIO layer.
+   */
+  private validateKey(key: string): void {
+    if (!this.tenantPrefix) return;
+    if (!key.startsWith(this.tenantPrefix)) {
+      throw new StorageError(
+        `Key "${key}" does not belong to tenant prefix "${this.tenantPrefix}". Cross-tenant storage access rejected.`
+      );
+    }
+  }
 
   constructor(config: S3Config, client?: S3Client) {
     this.bucket = config.bucket;
@@ -38,9 +55,12 @@ export class S3ObjectStorageAdapter implements ObjectStoragePort {
         forcePathStyle: config.forcePathStyle,
         credentials: config.credentials,
       });
+    // If an organisationId is provided, lock this adapter to that tenant prefix
+    this.tenantPrefix = config.organisationId ? `${config.organisationId}/` : null;
   }
 
   async put(command: PutObjectCommand): Promise<void> {
+    this.validateKey(command.key);
     try {
       await this.client.send(
         new S3PutCommand({
@@ -57,6 +77,7 @@ export class S3ObjectStorageAdapter implements ObjectStoragePort {
   }
 
   async get(key: string): Promise<GetObjectResult | null> {
+    this.validateKey(key);
     try {
       const response = await this.client.send(
         new GetObjectCommand({ Bucket: this.bucket, Key: key })
@@ -75,6 +96,7 @@ export class S3ObjectStorageAdapter implements ObjectStoragePort {
   }
 
   async delete(key: string): Promise<void> {
+    this.validateKey(key);
     try {
       await this.client.send(new DeleteObjectCommand({ Bucket: this.bucket, Key: key }));
     } catch (err) {
@@ -83,6 +105,7 @@ export class S3ObjectStorageAdapter implements ObjectStoragePort {
   }
 
   async getPresignedUrl(options: PresignedUrlOptions): Promise<string> {
+    this.validateKey(options.key);
     try {
       return await getSignedUrl(
         this.client,

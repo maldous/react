@@ -32,9 +32,20 @@ import {
 } from "@platform/authorisation-runtime";
 import { createLogger } from "@platform/platform-logging";
 import { ConflictError } from "@platform/platform-errors";
+import {
+  createAuditEvent,
+  createInMemoryAuditEventPort,
+  AuditAction,
+  type AuditEventPort,
+} from "@platform/audit-events";
 import { getApplicationPool, getProvisioningConfig } from "./dependencies.ts";
 
 const log = createLogger({ name: "provisioning" });
+
+// Audit port — replaced with a real persistent adapter when audit-events
+// adapter is wired to the provisioning service (ADR-ACT-0148).
+// For now, logs to the in-memory port so events are visible in structured logs.
+const auditPort: AuditEventPort = createInMemoryAuditEventPort();
 
 // ---------------------------------------------------------------------------
 // Request schema (zod) — validated at the route handler before calling here
@@ -149,6 +160,18 @@ export async function provisionTenant(input: CreateTenantRequest): Promise<Provi
 
     // Step 7: create initial tenant-admin membership in the tenant schema
     await createInitialMembership(pool, organisationId, input.adminEmail);
+
+    // Emit audit event — ADR-0031 invariant: every provisioning operation is audited
+    await auditPort.emit(
+      createAuditEvent({
+        actorId: "system",
+        tenantId: "platform",
+        action: AuditAction.OrganisationUpdated,
+        resource: "organisation",
+        resourceId: organisationId,
+        metadata: { slug: input.slug, resources: JSON.stringify(resources) },
+      })
+    );
 
     log.info({ slug: input.slug, organisationId }, "provisioning.complete");
 

@@ -10,12 +10,15 @@ import { resolveSessionFromIdentity, destroySession } from "../usecases/auth.ts"
 import { serverT } from "./i18n.ts";
 import {
   getKeycloakConfig,
+  getKeycloakConfigForRealm,
   getAuthCallbackUrl,
   getAppBaseUrl,
   getAuthStateStore,
   getSessionStore,
   getIdentityRepository,
+  getApplicationPool,
 } from "./dependencies.ts";
+import { resolveTenantFromRequest } from "./tenant-resolver.ts";
 import type { PipelineHandler } from "./pipeline.ts";
 
 // ---------------------------------------------------------------------------
@@ -118,6 +121,13 @@ export const handleAuthLogin: PipelineHandler = async (req, res) => {
   // Sanitise returnTo: only relative paths are allowed (open-redirect protection)
   const returnTo = rawReturnTo.startsWith("/") ? rawReturnTo : "/";
 
+  // Resolve the Keycloak realm for this tenant's FQDN (ADR-0029 §2b).
+  // Falls back to the global platform realm when on aldous.info root or dev mode.
+  const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool()).catch(() => null);
+  const keycloakCfg = tenantCtx
+    ? getKeycloakConfigForRealm(tenantCtx.realmName)
+    : getKeycloakConfig();
+
   const state = crypto.randomUUID();
   const nonce = crypto.randomUUID(); // bound to this user-agent via pre-auth cookie
   const codeVerifier = generateCodeVerifier();
@@ -127,7 +137,7 @@ export const handleAuthLogin: PipelineHandler = async (req, res) => {
 
   const authUrl = buildAuthorizationUrl(
     { state, codeChallenge, redirectUri: getAuthCallbackUrl() },
-    getKeycloakConfig()
+    keycloakCfg
   );
 
   // Set a short-lived HttpOnly pre-auth cookie so /auth/callback can verify
@@ -151,6 +161,14 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
   const errorParam = url.searchParams.get("error");
+
+  // Resolve the tenant realm from the FQDN for token exchange (ADR-0029 §2b)
+  const callbackTenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool()).catch(
+    () => null
+  );
+  const callbackKeycloakCfg = callbackTenantCtx
+    ? getKeycloakConfigForRealm(callbackTenantCtx.realmName)
+    : getKeycloakConfig();
 
   if (errorParam) {
     res.json(
@@ -201,10 +219,10 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
     return;
   }
 
-  // Exchange authorization code for tokens
+  // Exchange authorization code for tokens (using tenant-aware realm config)
   const tokens = await exchangeCodeForTokens(
     { code, redirectUri: getAuthCallbackUrl(), codeVerifier: authState.codeVerifier },
-    getKeycloakConfig()
+    callbackKeycloakCfg
   );
   if (!tokens) {
     res.json(
@@ -214,8 +232,8 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
     return;
   }
 
-  // Get user identity from Keycloak /userinfo
-  const identity = await getUserInfo(tokens.accessToken, getKeycloakConfig());
+  // Get user identity from Keycloak /userinfo (using tenant-aware realm config)
+  const identity = await getUserInfo(tokens.accessToken, callbackKeycloakCfg);
   if (!identity) {
     // null means email absent or email_verified !== true (Fix 3)
     res.json(

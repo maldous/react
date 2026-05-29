@@ -115,6 +115,7 @@ production
 @platform/adapters-postgres
 @platform/authorisation-runtime
 @platform/adapters-object-storage
+@platform/audit-events
 ```
 
 ### Provides APIs

@@ -166,6 +166,16 @@ export function getKeycloakConfig(): KeycloakClientConfig {
   };
 }
 
+/** Per-tenant Keycloak config — selects the correct realm for the FQDN tenant. ADR-0029 §2b. */
+export function getKeycloakConfigForRealm(realmName: string): KeycloakClientConfig {
+  return {
+    url: process.env["KEYCLOAK_URL"] ?? "http://localhost:8080",
+    realm: realmName,
+    clientId: process.env["KEYCLOAK_CLIENT_ID"] ?? "platform-api",
+    clientSecret: process.env["KEYCLOAK_CLIENT_SECRET"] ?? "",
+  };
+}
+
 export function getAuthCallbackUrl(): string {
   const apiUrl = process.env["PLATFORM_API_URL"] ?? "http://localhost:3001";
   return `${apiUrl}/auth/callback`;
