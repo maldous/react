@@ -76,11 +76,12 @@ describe("GET /auth/login", () => {
     assert.equal(res.status, 302);
     const location = res.headers.get("location");
     assert.ok(location, "Location header must be present");
+    // The public Keycloak URL is now derived from the request Host header.
+    // Test server binds to 127.0.0.1:{port} so the public URL uses that host with /kc path.
+    const testHost = new URL(url).host;
     assert.ok(
-      location.startsWith(
-        "http://keycloak-test.local:8080/realms/test-realm/protocol/openid-connect/auth"
-      ),
-      `Expected Keycloak auth URL, got: ${location}`
+      location.startsWith(`http://${testHost}/kc/realms/test-realm/protocol/openid-connect/auth`),
+      `Expected Keycloak auth URL starting with http://${testHost}/kc/realms/..., got: ${location}`
     );
   });
 
@@ -122,9 +123,11 @@ describe("GET /auth/login", () => {
     // Still redirects to Keycloak (not to the external URL)
     assert.equal(res.status, 302);
     const location = res.headers.get("location") ?? "";
+    // With host-derived public URL, redirect goes to the test server's own /kc path
+    const testHost = new URL(url).host;
     assert.ok(
-      location.includes("keycloak-test.local"),
-      "Should redirect to Keycloak, not evil.example.com"
+      location.includes(`${testHost}/kc`),
+      `Should redirect to ${testHost}/kc, not evil.example.com. Got: ${location}`
     );
   });
 });

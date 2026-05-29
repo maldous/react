@@ -189,10 +189,38 @@ export function getKeycloakConfigForRealm(realmName: string): KeycloakClientConf
  *
  * Falls back to PLATFORM_API_URL when no host is provided (e.g. tests, local dev).
  */
-export function getAuthCallbackUrl(host?: string): string {
-  if (host) {
-    const scheme = host.includes("localhost") ? "http" : "https";
-    return `${scheme}://${host}/auth/callback`;
+/** True for loopback hosts — always HTTP, never publicly routable. */
+function isLoopback(host: string): boolean {
+  const h = (host.split(":")[0] ?? "").toLowerCase();
+  return h === "localhost" || h === "127.0.0.1" || h === "::1" || h === "[::1]";
+}
+
+/** Derive scheme from X-Forwarded-Proto or loopback detection. */
+function schemeFor(host: string, forwardedProto?: string): string {
+  if (forwardedProto === "https" || forwardedProto === "http") return forwardedProto;
+  return isLoopback(host) ? "http" : "https";
+}
+
+/**
+ * Validate the host against the apex domain allowlist.
+ *
+ * Accepts: loopback hosts (tests/local-dev), APEX_DOMAIN itself, and any
+ * *.APEX_DOMAIN subdomain (tenant FQDNs). Rejects anything else to prevent
+ * host-header injection from constructing attacker-controlled OAuth redirect URIs.
+ *
+ * Note: Caddy rewrites X-Forwarded-Host from its own virtual-host config, not
+ * from the client request, so this is defence-in-depth rather than the primary guard.
+ */
+function isAllowedHost(host: string): boolean {
+  const h = (host.split(":")[0] ?? "").toLowerCase();
+  if (isLoopback(h)) return true;
+  const apex = (process.env["APEX_DOMAIN"] ?? "aldous.info").toLowerCase();
+  return h === apex || h.endsWith(`.${apex}`);
+}
+
+export function getAuthCallbackUrl(host?: string, forwardedProto?: string): string {
+  if (host && isAllowedHost(host)) {
+    return `${schemeFor(host, forwardedProto)}://${host}/auth/callback`;
   }
   const apiUrl = process.env["PLATFORM_API_URL"] ?? "http://localhost:3001";
   return `${apiUrl}/auth/callback`;
@@ -202,12 +230,12 @@ export function getAuthCallbackUrl(host?: string): string {
  * Build the Keycloak public URL (browser-facing) from the request host.
  *
  * Every tenant and vanity domain gets the correct /kc path on their own origin.
- * Falls back to KEYCLOAK_PUBLIC_URL env var when no host is provided.
+ * Host is validated against the apex domain allowlist before use.
+ * Falls back to KEYCLOAK_PUBLIC_URL env var when no host is provided or allowed.
  */
-export function getKeycloakPublicUrl(host?: string): string {
-  if (host) {
-    const scheme = host.includes("localhost") ? "http" : "https";
-    return `${scheme}://${host}/kc`;
+export function getKeycloakPublicUrl(host?: string, forwardedProto?: string): string {
+  if (host && isAllowedHost(host)) {
+    return `${schemeFor(host, forwardedProto)}://${host}/kc`;
   }
   return (
     process.env["KEYCLOAK_PUBLIC_URL"] ?? process.env["KEYCLOAK_URL"] ?? "http://localhost:8090/kc"
