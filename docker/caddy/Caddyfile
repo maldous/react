@@ -35,7 +35,7 @@
 # Hosts the platform admin SPA, all developer tooling, and operational UIs.
 # Access governed by the platform realm (system-admin role or delegated).
 # ---------------------------------------------------------------------------
-aldous.info {
+http://aldous.info {
 	# Keycloak — all realms accessible (super-admin console + tenant realm access)
 	handle /kc/* {
 		import forward_auth_check admin:keycloak read
@@ -126,7 +126,7 @@ aldous.info {
 # Each subdomain routes to the tenant's Keycloak realm and application.
 # Tenant-scoped admin UIs are path-prefixed here with tenant-filtered access.
 # ---------------------------------------------------------------------------
-*.aldous.info {
+http://*.aldous.info {
 	# Keycloak — tenant-specific realm admin console
 	handle /kc/* {
 		import forward_auth_check admin:keycloak read

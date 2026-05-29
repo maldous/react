@@ -15,7 +15,9 @@
  */
 import { test, expect } from "@playwright/test";
 
-const BASE = "https://aldous.info";
+// Use ALDOUS_BASE_URL env var for local testing (http://aldous.info via /etc/hosts).
+// Defaults to https://aldous.info for production smoke runs.
+const BASE = process.env["ALDOUS_BASE_URL"] ?? "https://aldous.info";
 
 // ---------------------------------------------------------------------------
 // Infrastructure layer — direct API checks (no browser required)
