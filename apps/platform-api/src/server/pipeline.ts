@@ -104,7 +104,7 @@ export async function parseJsonBody(
 export function createRouter(
   routes: Route[]
 ): (req: http.IncomingMessage, res: http.ServerResponse) => Promise<void> {
-  const logger = createLogger({ name: "platform-api" });
+  const logger = createLogger({ name: "platform-api", level: process.env["LOG_LEVEL"] ?? "debug" });
 
   return async (req, res) => {
     if (req.method === "OPTIONS") {

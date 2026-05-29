@@ -402,9 +402,12 @@ services:
       PLATFORM_API_PORT: "3001"
       POSTGRES_URL: postgresql://${POSTGRES_USER:-platform}:${POSTGRES_PASSWORD:-platformpassword}@postgres:5432/${POSTGRES_DB:-platform}
       REDIS_URL: redis://redis:6379
-      # Fixture session for demo mode (tenant-admin by default).
-      # Set to empty string to require real Keycloak login (ADR-ACT-0119).
-      LOCAL_FIXTURE_SESSION: ${LOCAL_FIXTURE_SESSION:-tenant-admin}
+      # Leave empty (default) to require real Keycloak login.
+      # Set to a fixture role for dev without Keycloak: tenant-admin, viewer, no-membership
+      # Example: LOCAL_FIXTURE_SESSION=tenant-admin make compose-up-web
+      LOCAL_FIXTURE_SESSION: ${LOCAL_FIXTURE_SESSION:-}
+      # debug — shows all auth/session/tenant/provisioning operations. Set to info in prod.
+      LOG_LEVEL: ${LOG_LEVEL:-debug}
       # SESSION_COOKIE_SECURE defaults false for local HTTP Compose.
       # Set SESSION_COOKIE_SECURE=true in .env when behind HTTPS/Cloudflare.
       SESSION_COOKIE_SECURE: ${SESSION_COOKIE_SECURE:-false}

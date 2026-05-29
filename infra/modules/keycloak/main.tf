@@ -39,6 +39,14 @@ resource "keycloak_realm" "platform" {
   verify_email             = false
   login_with_email_allowed = true
   duplicate_emails_allowed = false
+
+  # Event logging — enabled for all environments so login failures, token errors,
+  # and admin actions are visible in Keycloak admin console Events tab.
+  # Local dev: kept in memory (no external event listener required).
+  events_enabled          = true
+  events_expiration       = 86400  # 1 day in seconds
+  admin_events_enabled    = true
+  admin_events_details_enabled = true
 }
 
 # ---------------------------------------------------------------------------
