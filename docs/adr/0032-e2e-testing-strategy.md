@@ -18,7 +18,7 @@ The core distinction that governs all E2E decisions is: **dev tests run on local
 
 ### Directory structure
 
-```
+```text
 e2e/
   dev/    — all localhost tests (fixture sessions, no real Keycloak required)
   prod/   — all aldous.info tests (real user auth, no fixture sessions)
@@ -28,7 +28,7 @@ No other top-level directories under `e2e/`. Feature-specific tests live in one 
 
 ### Playwright config naming convention
 
-```
+```text
 playwright.config.ts          — dev smoke tests (Vite dev server + fixture session)
 playwright.build.config.ts    — dev build tests (vite preview + fixture session)
 playwright.prod.config.ts     — prod tests (aldous.info + real auth)
@@ -54,10 +54,10 @@ Each config declares `testDir: ./e2e/dev` or `testDir: ./e2e/prod` and uses `tes
 
 ### Makefile targets
 
-```
-make e2e-dev       — Tier 3 in make all: runs e2e/dev/smoke.test.ts via playwright.config.ts
-make e2e-dev-build — Tier 4 in make all: runs e2e/dev/build.test.ts via playwright.build.config.ts
-make e2e-prod      — NOT in make all: runs e2e/prod/** against aldous.info
+```bash
+make e2e-dev       # Tier 3 in make all: runs e2e/dev/smoke.test.ts via playwright.config.ts
+make e2e-dev-build # Tier 4 in make all: runs e2e/dev/build.test.ts via playwright.build.config.ts
+make e2e-prod      # NOT in make all: runs e2e/prod/** against aldous.info
 ```
 
 `make all` stops at `e2e-dev-build`. `make e2e-prod` is a separate step run after a real deployment.
