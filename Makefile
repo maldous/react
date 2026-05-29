@@ -264,16 +264,20 @@ fix:
 	npm run format:write
 	$(call OK,formatting applied)
 
-## clean — Stop all services and remove generated artefacts (preserves DB volumes and data)
-## Uses `stop` not `down` — named volumes (postgres, sonarqube, keycloak) are untouched.
-## Use `make compose-down-volumes` only when you explicitly want to wipe all data.
+## clean — Stop app services, kill stale processes, remove generated artefacts.
+##
+## Deliberately does NOT stop SonarQube (quality) or Keycloak (identity).
+## Those are JVM services that take 2-4 min to restart and hold no app state.
+## If already healthy they pass --no-recreate --wait instantly in make all.
+## Use `make compose-down-volumes` to fully wipe all data and containers.
 clean:
-	$(call STEP,clean: stopping all services)
-	docker compose --profile identity --profile web --profile quality \
-	    --profile cloud-mocks --profile sentry --profile external-mocks \
+	$(call STEP,clean: stopping app services)
+	docker compose --profile web --profile cloud-mocks \
+	    --profile sentry --profile external-mocks \
 	    stop 2>/dev/null || true
+	docker compose stop postgres redis clickhouse minio mailpit otel-collector 2>/dev/null || true
 	$(call STEP,clean: killing stale port holders)
-	@fuser -k 5173/tcp 4173/tcp 3001/tcp 8090/tcp 2>/dev/null || true
+	@fuser -k 5173/tcp 4173/tcp 3001/tcp 2>/dev/null || true
 	$(call STEP,clean: removing artefacts)
 	rm -rf coverage/ reports/ .scannerwork/ playwright-report/ e2e-results/
 	$(call OK,clean complete)
