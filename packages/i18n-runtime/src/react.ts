@@ -15,9 +15,14 @@
  * so consuming code can import from the correct entry point now.
  */
 
-import { createI18n, type I18nInstance, type I18nLocale, type CreateI18nOptions } from "./index.ts";
+import {
+  createI18n,
+  type I18nInstance,
+  type I18nLocaleInput,
+  type CreateI18nOptions,
+} from "./index.ts";
 
-export type { I18nInstance, I18nLocale, CreateI18nOptions };
+export type { I18nInstance, I18nLocaleInput, CreateI18nOptions };
 
 /**
  * Placeholder React provider type contract.
@@ -25,8 +30,8 @@ export type { I18nInstance, I18nLocale, CreateI18nOptions };
  */
 export interface I18nProviderProps {
   locale: string;
-  messages: I18nLocale;
-  fallback?: I18nLocale;
+  messages: I18nLocaleInput;
+  fallback?: I18nLocaleInput;
   children: unknown; // typed as unknown to avoid React peer-dep at this layer
 }
 

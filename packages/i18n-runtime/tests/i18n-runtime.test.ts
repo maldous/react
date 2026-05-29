@@ -1,7 +1,14 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { createI18n, serverT, type I18nLocale } from "../src/index.ts";
+import {
+  createI18n,
+  serverT,
+  flattenLocaleMessages,
+  type I18nLocale,
+  type I18nLocaleResource,
+} from "../src/index.ts";
 
+// Flat fixture (used by existing tests — backward compat)
 const EN_GB: I18nLocale = {
   "app.shell.nav.organisationProfile": "Organisation profile",
   "feature.organisation.profile.title": "Organisation profile",
@@ -13,7 +20,48 @@ const EN_GB: I18nLocale = {
   "api.error.forbidden": "You do not have permission to perform this action",
 };
 
-describe("createI18n", () => {
+// Nested fixture — mirrors actual en-GB.json structure
+const EN_GB_NESTED: I18nLocaleResource = {
+  app: { shell: { nav: { organisationProfile: "Organisation profile" } } },
+  feature: {
+    organisation: {
+      profile: {
+        title: "Organisation profile",
+        form: {
+          displayName: {
+            label: "Display name",
+            validation: {
+              required: "Display name is required",
+              tooShort: "Display name must be at least {min} characters",
+            },
+          },
+        },
+      },
+    },
+  },
+  api: {
+    error: {
+      unauthenticated: "You need to sign in to continue",
+      forbidden: "You do not have permission to perform this action",
+    },
+  },
+};
+
+describe("flattenLocaleMessages", () => {
+  it("flattens nested JSON to dot-separated keys", () => {
+    const flat = flattenLocaleMessages(EN_GB_NESTED);
+    assert.equal(flat["app.shell.nav.organisationProfile"], "Organisation profile");
+    assert.equal(flat["feature.organisation.profile.title"], "Organisation profile");
+    assert.equal(flat["api.error.unauthenticated"], "You need to sign in to continue");
+  });
+
+  it("returns flat maps unchanged", () => {
+    const flat = flattenLocaleMessages(EN_GB);
+    assert.equal(flat["api.error.forbidden"], EN_GB["api.error.forbidden"]);
+  });
+});
+
+describe("createI18n — flat messages (backward compat)", () => {
   it("returns a t() function that resolves en-GB keys", () => {
     const i18n = createI18n({ locale: "en-GB", messages: EN_GB });
     assert.equal(i18n.t("app.shell.nav.organisationProfile"), "Organisation profile");
@@ -43,11 +91,35 @@ describe("createI18n", () => {
 
   it("falls back to en-GB when a key is missing from a non-default locale", () => {
     const frMessages: I18nLocale = { "api.error.unauthenticated": "Vous devez vous connecter" };
-    const i18n = createI18n({
-      locale: "fr-FR",
-      messages: frMessages,
-      fallback: EN_GB,
+    const i18n = createI18n({ locale: "fr-FR", messages: frMessages, fallback: EN_GB });
+    assert.equal(
+      i18n.t("api.error.forbidden"),
+      "You do not have permission to perform this action"
+    );
+    assert.equal(i18n.t("api.error.unauthenticated"), "Vous devez vous connecter");
+  });
+});
+
+describe("createI18n — nested JSON messages (en-GB.json shape)", () => {
+  it("resolves dot-separated keys from nested JSON resource", () => {
+    const i18n = createI18n({ locale: "en-GB", messages: EN_GB_NESTED });
+    assert.equal(i18n.t("feature.organisation.profile.title"), "Organisation profile");
+    assert.equal(i18n.t("api.error.unauthenticated"), "You need to sign in to continue");
+  });
+
+  it("interpolates parameters from nested resource", () => {
+    const i18n = createI18n({ locale: "en-GB", messages: EN_GB_NESTED });
+    const result = i18n.t("feature.organisation.profile.form.displayName.validation.tooShort", {
+      min: "2",
     });
+    assert.equal(result, "Display name must be at least 2 characters");
+  });
+
+  it("falls back to nested fallback when key missing from nested primary", () => {
+    const frNested: I18nLocaleResource = {
+      api: { error: { unauthenticated: "Vous devez vous connecter" } },
+    };
+    const i18n = createI18n({ locale: "fr-FR", messages: frNested, fallback: EN_GB_NESTED });
     assert.equal(
       i18n.t("api.error.forbidden"),
       "You do not have permission to perform this action"
@@ -57,8 +129,13 @@ describe("createI18n", () => {
 });
 
 describe("serverT", () => {
-  it("resolves a key from the provided locale", () => {
+  it("resolves a key from the provided locale (flat)", () => {
     const result = serverT(EN_GB, "api.error.unauthenticated");
+    assert.equal(result, "You need to sign in to continue");
+  });
+
+  it("resolves a key from nested locale resource", () => {
+    const result = serverT(EN_GB_NESTED, "api.error.unauthenticated");
     assert.equal(result, "You need to sign in to continue");
   });
 
