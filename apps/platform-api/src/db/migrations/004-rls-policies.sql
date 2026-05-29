@@ -1,26 +1,22 @@
--- Migration 004: Row-Level Security on global tenant boundary tables
+-- Migration 004: Row-Level Security on data-boundary tables
 --
--- Adds RLS to public-schema tables that scope data by tenant or user.
--- ADR-0029 §3c: RLS is defence-in-depth within each tenant schema.
--- ADR-0031: application DB user must not be superuser (superusers bypass RLS).
+-- ADR-0029 §3c: RLS is defence-in-depth for data tables that scope per tenant or user.
+-- ADR-0031: the app DB user must NOT be a PostgreSQL superuser in production;
+--           superusers bypass RLS even with FORCE ROW LEVEL SECURITY.
+--           The Docker Compose dev setup uses POSTGRES_USER=platform which is a
+--           superuser — RLS is structurally correct but not enforced in dev.
+--           Production deployment must use a non-superuser role (ADR-ACT-0153).
 --
--- SET LOCAL app.current_user_id and app.bypass_rls are set by the adapter
--- layer (withTenant, withSystemAdmin) per-transaction. All policies fall
--- through to DENY when the session variable is not set.
-
--- ---------------------------------------------------------------------------
--- organisations: a session can only see its own organisation row
--- ---------------------------------------------------------------------------
-
-ALTER TABLE public.organisations ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.organisations FORCE ROW LEVEL SECURITY;
-
-DROP POLICY IF EXISTS tenant_isolation ON public.organisations;
-CREATE POLICY tenant_isolation ON public.organisations
-  USING (
-    id::text = current_setting('app.current_tenant_id', true)
-    OR current_setting('app.bypass_rls', true)::boolean IS TRUE
-  );
+-- Context variables (SET LOCAL per-transaction by adapters-postgres helpers):
+--   app.current_tenant_id  — set by withTenant()
+--   app.current_user_id    — set by withTenantActor()
+--   app.bypass_rls         — set by withSystemAdmin()
+--
+-- public.organisations is intentionally EXCLUDED from RLS.
+-- Rationale: slug→id lookups happen before any session exists (FQDN routing,
+-- forward_auth). Adding RLS here would require withSystemAdmin on every
+-- request — routing is not sensitive data, schema-per-tenant already
+-- provides the meaningful isolation boundary. ADR-0029 §1a.
 
 -- ---------------------------------------------------------------------------
 -- memberships: visible only within the current tenant
@@ -51,9 +47,11 @@ CREATE POLICY tenant_isolation ON public.tenant_resource_config
   );
 
 -- ---------------------------------------------------------------------------
--- users: cross-tenant (users can belong to multiple orgs).
--- Accessible when: the user is part of the current tenant (via membership),
--- or system-admin bypass is active.
+-- users: cross-tenant global identity table.
+-- Accessible when:
+--   - system-admin bypass is active (provisioning, auth system)
+--   - the user belongs to the current tenant (via membership)
+--   - the record IS the current user (own-profile access)
 -- ---------------------------------------------------------------------------
 
 ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
@@ -68,7 +66,6 @@ CREATE POLICY tenant_access ON public.users
       WHERE m.user_id = users.id
         AND m.organisation_id::text = current_setting('app.current_tenant_id', true)
     )
-    -- Allow a user to always see their own record (for profile operations)
     OR id::text = current_setting('app.current_user_id', true)
   );
 
