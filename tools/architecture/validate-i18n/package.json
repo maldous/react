@@ -1,0 +1,99 @@
+{
+  "name": "@architecture/validate-i18n",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Report-only i18n validation: finds translation keys used in source that are missing from en-GB.json.",
+  "main": "src/index.mjs",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "test": "node --test tests/"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "tool",
+      "name": "validate-i18n",
+      "system": "architecture-governance",
+      "domain": "architecture",
+      "boundedContext": "architecture-governance",
+      "owner": "architecture"
+    },
+    "lifecycle": {
+      "stage": "experimental",
+      "role": "tooling",
+      "class": "experimental.tooling",
+      "catalogLifecycle": "experimental",
+      "visibility": "internal",
+      "supportLevel": "experimental",
+      "reviewCadence": "on-change"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0026",
+        "ADR-0011",
+        "ADR-0012"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "validate-i18n",
+      "serviceNamespace": "architecture",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "ci"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "feature",
+        "domain",
+        "ui",
+        "application"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "tool",
+      "stage": "experimental",
+      "role": "tooling",
+      "layer": "tooling"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Report-only i18n validation tool. Finds translation keys used in source files that are missing from en-GB.json. Promotes to a hard gate after ADR-ACT-0121 and ADR-ACT-0122 complete.",
+      "responsibilities": [
+        "Scan source files for i18n key usage patterns",
+        "Compare used keys against en-GB.json definitions",
+        "Report missing keys as warnings (report-only mode)"
+      ],
+      "nonResponsibilities": [
+        "Does not fail the build — report-only until ADR-ACT-0121 and ADR-ACT-0122 complete",
+        "Does not validate non-default locale files (future gate)"
+      ],
+      "usage": [
+        "node tools/architecture/validate-i18n/src/index.mjs [repo-root]"
+      ],
+      "operationalNotes": [
+        "ADR-ACT-0123. Promotes to hard gate after ADR-ACT-0121 and ADR-ACT-0122 are Done."
+      ]
+    }
+  }
+}
