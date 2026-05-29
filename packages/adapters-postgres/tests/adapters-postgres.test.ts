@@ -150,8 +150,14 @@ describe("withTenant", () => {
     const setTenantId = calls.find((c) => c.text.includes("app.current_tenant_id"));
 
     assert.ok(setSearchPath, "SET LOCAL search_path must be called");
-    assert.ok(setTenantId, "SET LOCAL app.current_tenant_id must be called");
+    assert.ok(setTenantId, "set_config app.current_tenant_id must be called");
+    // set_config uses $1 parameter for the value
     assert.deepStrictEqual(setTenantId?.values, [organisationId]);
+    // must use set_config, not SET LOCAL, for custom GUC values
+    assert.ok(
+      setTenantId?.text.includes("set_config"),
+      "must use set_config() not SET LOCAL for custom GUC"
+    );
 
     // search_path must come before current_tenant_id
     const spIdx = calls.indexOf(setSearchPath!);
@@ -185,8 +191,12 @@ describe("withTenantActor", () => {
     await withTenantActor(pool as never, orgId, userId, async () => {});
 
     const setUserId = calls.find((c) => c.text.includes("app.current_user_id"));
-    assert.ok(setUserId, "SET LOCAL app.current_user_id must be called");
+    assert.ok(setUserId, "set_config app.current_user_id must be called");
     assert.deepStrictEqual(setUserId?.values, [userId]);
+    assert.ok(
+      setUserId?.text.includes("set_config"),
+      "must use set_config() not SET LOCAL for custom GUC"
+    );
   });
 });
 
@@ -196,7 +206,11 @@ describe("withSystemAdmin", () => {
     await withSystemAdmin(pool as never, async () => {});
 
     const setBypass = calls.find((c) => c.text.includes("app.bypass_rls"));
-    assert.ok(setBypass, "SET LOCAL app.bypass_rls must be called");
+    assert.ok(setBypass, "set_config app.bypass_rls must be called");
+    assert.ok(
+      setBypass?.text.includes("set_config"),
+      "must use set_config() not SET LOCAL for custom GUC"
+    );
     assert.ok(setBypass?.text.includes("true"), "bypass_rls must be set to true");
   });
 

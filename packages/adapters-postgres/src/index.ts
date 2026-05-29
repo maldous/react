@@ -97,7 +97,7 @@ export async function withTenant<T>(
     const schema = tenantSchemaIdentifier(client, organisationId);
     await client.query("BEGIN");
     await client.query(`SET LOCAL search_path = ${schema}, public`);
-    await client.query("SET LOCAL app.current_tenant_id = $1", [organisationId]);
+    await client.query("SELECT set_config('app.current_tenant_id', $1, true)", [organisationId]);
     const result = await fn(client);
     await client.query("COMMIT");
     return result;
@@ -127,8 +127,8 @@ export async function withTenantActor<T>(
     const schema = tenantSchemaIdentifier(client, organisationId);
     await client.query("BEGIN");
     await client.query(`SET LOCAL search_path = ${schema}, public`);
-    await client.query("SET LOCAL app.current_tenant_id = $1", [organisationId]);
-    await client.query("SET LOCAL app.current_user_id = $1", [userId]);
+    await client.query("SELECT set_config('app.current_tenant_id', $1, true)", [organisationId]);
+    await client.query("SELECT set_config('app.current_user_id', $1, true)", [userId]);
     const result = await fn(client);
     await client.query("COMMIT");
     return result;
@@ -168,7 +168,7 @@ export async function withSystemAdmin<T>(
   const client = await pool.connect();
   try {
     await client.query("BEGIN");
-    await client.query("SET LOCAL app.bypass_rls = true");
+    await client.query("SELECT set_config('app.bypass_rls', 'true', true)");
     const result = await fn(client);
     await client.query("COMMIT");
     return result;

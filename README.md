@@ -144,19 +144,36 @@ The following are structurally complete but have explicit caveats. Each is track
 
 ## Commands
 
+Normal local development loop:
+
 ```sh
 npm ci
+make compose-up-default
+make check
+tilt up
+```
+
+Full baseline (required before claiming make all passes):
+
+```sh
 make all
 ```
 
-Useful shorter commands:
+Common targets and scripts:
 
 ```sh
-make check             # format, lint, typecheck, audit, compose config, architecture
-make ci                # CI-safe baseline
-make compose-up-default
-npm run test:e2e
-npm run test:platform-api
+make compose-up-default          # start core services (Postgres, Redis, ClickHouse, MinIO, Mailpit, OTel)
+make compose-up-external-mocks   # add WireMock for adapter contract tests
+make compose-up-web              # build + serve the full stack on :80 via Caddy
+make compose-ps                  # list running services and health
+npm run compose:config           # validate default Compose config
+npm run compose:config:all       # validate all profiles
+
+npm run test:platform-api        # Node/BFF unit + substrate tests
+npm run test:frontend:run        # Vitest component tests
+npm run test:e2e                 # Playwright E2E (dev server + fixture session)
+npm run test:e2e:prod            # Playwright E2E (production build)
+npx playwright test --config playwright.aldous.config.ts   # live smoke against aldous.info
 ```
 
 ## Repository map

@@ -147,31 +147,21 @@ export const handleForwardAuth: PipelineHandler = async (req, res) => {
     }
   }
 
-  // 4. system-admin: has access to all admin resources from any host
-  if (roles.includes("system-admin") && SYSTEM_ADMIN_RESOURCES.has(resource)) {
+  // 4 & 5. Access decision — resolve host slug, look up tenant ownership, delegate to
+  // checkResourceAccess() so tests and production use the same logic path.
+  const hostHeader = req.raw.headers["x-forwarded-host"] ?? req.raw.headers["host"] ?? "";
+  const rawHost = Array.isArray(hostHeader) ? (hostHeader[0] ?? "") : hostHeader;
+  const requestedSlug = extractSlugFromHost(rawHost);
+
+  // DB lookup only needed when tenant-admin may be granted access
+  const ownSlug =
+    tenantId && roles.includes("tenant-admin") && requestedSlug !== null
+      ? await resolveSlugForTenant(tenantId)
+      : null;
+
+  if (checkResourceAccess({ roles, resource, requestedSlug, ownSlug })) {
     res.json(200, { resource, scope, granted: true });
     return;
-  }
-
-  // 5. tenant-admin: verify ownership before granting access
-  //    Resolve the request host → slug, then resolve session tenantId → slug from DB.
-  //    Only grant if both slugs match. Never trust host header alone.
-  if (roles.includes("tenant-admin") && TENANT_ADMIN_RESOURCES.has(resource) && tenantId) {
-    const hostHeader = req.raw.headers["x-forwarded-host"] ?? req.raw.headers["host"] ?? "";
-    const rawHost = Array.isArray(hostHeader) ? (hostHeader[0] ?? "") : hostHeader;
-    const requestedSlug = extractSlugFromHost(rawHost);
-
-    if (requestedSlug) {
-      // DB lookup: what slug does the session's tenantId actually belong to?
-      const ownSlug = await resolveSlugForTenant(tenantId);
-
-      if (ownSlug !== null && ownSlug === requestedSlug) {
-        res.json(200, { resource, scope, granted: true });
-        return;
-      }
-      // Slug mismatch — cross-tenant attempt or slug not found
-    }
-    // requestedSlug null means super-global host — tenant-admin denied on global domain
   }
 
   res.json(403, { code: "FORBIDDEN", resource, scope, granted: false });
