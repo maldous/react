@@ -66,7 +66,7 @@ export interface ProvisioningConfig {
 
 export function getProvisioningConfig(): ProvisioningConfig {
   return {
-    keycloakUrl: process.env["KEYCLOAK_URL"] ?? "http://localhost:8080",
+    keycloakUrl: process.env["KEYCLOAK_URL"] ?? "http://localhost:8090/kc",
     keycloakProvisionerClientId:
       process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
     keycloakProvisionerClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
@@ -159,20 +159,24 @@ export function getIdentityRepository(): IdentityRepository {
 
 export function getKeycloakConfig(): KeycloakClientConfig {
   return {
-    url: process.env["KEYCLOAK_URL"] ?? "http://localhost:8080",
+    url: process.env["KEYCLOAK_URL"] ?? "http://localhost:8090/kc",
     realm: process.env["KEYCLOAK_REALM"] ?? "platform",
     clientId: process.env["KEYCLOAK_CLIENT_ID"] ?? "platform-api",
     clientSecret: process.env["KEYCLOAK_CLIENT_SECRET"] ?? "",
+    // KEYCLOAK_PUBLIC_URL: public base URL for browser redirects (e.g. http://aldous.info/kc).
+    // When absent, falls back to KEYCLOAK_URL — correct for local dev without Caddy proxy.
+    publicUrl: process.env["KEYCLOAK_PUBLIC_URL"],
   };
 }
 
 /** Per-tenant Keycloak config — selects the correct realm for the FQDN tenant. ADR-0029 §2b. */
 export function getKeycloakConfigForRealm(realmName: string): KeycloakClientConfig {
   return {
-    url: process.env["KEYCLOAK_URL"] ?? "http://localhost:8080",
+    url: process.env["KEYCLOAK_URL"] ?? "http://localhost:8090/kc",
     realm: realmName,
     clientId: process.env["KEYCLOAK_CLIENT_ID"] ?? "platform-api",
     clientSecret: process.env["KEYCLOAK_CLIENT_SECRET"] ?? "",
+    publicUrl: process.env["KEYCLOAK_PUBLIC_URL"],
   };
 }
 

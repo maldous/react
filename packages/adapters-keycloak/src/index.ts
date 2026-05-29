@@ -24,10 +24,13 @@ export interface KeycloakIdentityResult {
  * Passed explicitly — this adapter never reads environment variables directly.
  */
 export interface KeycloakClientConfig {
-  url: string; // e.g. http://localhost:8080
+  url: string; // server-side only — e.g. http://keycloak:8080 or http://localhost:8080
   realm: string; // e.g. platform
   clientId: string; // e.g. platform-api
   clientSecret: string;
+  /** Public-facing base URL for browser redirects (e.g. http://aldous.info/kc).
+   * Falls back to `url` when absent — correct for local dev without Caddy. */
+  publicUrl?: string;
 }
 
 /**
@@ -150,7 +153,7 @@ export function buildAuthorizationUrl(
   },
   config: KeycloakClientConfig
 ): string {
-  const base = `${config.url}/realms/${config.realm}/protocol/openid-connect/auth`;
+  const base = `${config.publicUrl ?? config.url}/realms/${config.realm}/protocol/openid-connect/auth`;
   const query = new URLSearchParams({
     response_type: "code",
     client_id: config.clientId,

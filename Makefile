@@ -432,9 +432,9 @@ keycloak-plan-local:
 	$(call STEP,keycloak:plan:local)
 	@chmod +x infra/bin/tf
 	@printf '$(BOLD)Requires: docker compose --profile identity up -d keycloak$(RESET)\n'
-	@curl -sf http://localhost:8090/realms/master > /dev/null 2>&1 \
-		|| { printf '$(RED)✗ Keycloak not reachable at http://localhost:8090\n  Run: docker compose --profile identity up -d keycloak$(RESET)\n'; exit 1; }
-	@printf '$(GREEN)✓ Keycloak reachable at http://localhost:8090$(RESET)\n'
+	@curl -sf http://localhost:8090/kc/realms/master > /dev/null 2>&1 \
+		|| { printf '$(RED)✗ Keycloak not reachable at http://localhost:8090/kc\n  Run: docker compose --profile identity up -d keycloak$(RESET)\n'; exit 1; }
+	@printf '$(GREEN)✓ Keycloak reachable at http://localhost:8090/kc$(RESET)\n'
 	@infra/bin/tf -chdir=infra/env/local init -backend=false -input=false > /dev/null 2>&1 \
 		&& printf '$(GREEN)✓ init ok$(RESET)\n' \
 		|| { printf '$(RED)✗ init failed$(RESET)\n'; exit 1; }

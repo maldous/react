@@ -84,7 +84,10 @@ function IndexPage() {
   // Unauthenticated: show sign-in prompt
   if (!actor) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 p-8">
+      <div
+        className="flex min-h-screen flex-col items-center justify-center bg-gray-50 p-8"
+        data-testid="sign-in-entry"
+      >
         <div className="w-full max-w-sm space-y-6 text-center">
           <div
             className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-2xl text-white shadow-md"

@@ -232,6 +232,11 @@ services:
       KC_HOSTNAME_STRICT: "false"
       KC_HTTP_ENABLED: "true"
       KC_HEALTH_ENABLED: "true"
+      # Tells Keycloak to generate all its URLs (login form actions, redirects, assets)
+      # with /kc as the path prefix. This matches how Caddy exposes Keycloak externally.
+      # Without this, Keycloak generates form actions at /realms/... (without /kc) causing
+      # form submissions to fail because Caddy has no handler for /realms/*.
+      KC_HTTP_RELATIVE_PATH: "/kc"
       KC_METRICS_ENABLED: "false"
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN_USER:-admin}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
@@ -427,6 +432,20 @@ services:
       CADDY_INTERNAL_SECRET: ${CADDY_INTERNAL_SECRET:-}
       # Apex domain for FQDN-based tenant slug resolution (ADR-0029, ADR-0031).
       APEX_DOMAIN: ${APEX_DOMAIN:-aldous.info}
+      # Keycloak — internal Docker hostname for server-side calls (token exchange, JWKS, provisioning).
+      # The browser redirect URL is derived from APP_BASE_URL + /kc (via Caddy path prefix).
+      # /kc suffix matches KC_HTTP_RELATIVE_PATH set in the keycloak service.
+      KEYCLOAK_URL: ${KEYCLOAK_URL:-http://keycloak:8080/kc}
+      # Public URL for browser-facing OAuth redirects — via Caddy /kc path prefix.
+      # The BFF uses KEYCLOAK_URL for internal token exchange; KEYCLOAK_PUBLIC_URL for
+      # the auth URL the browser navigates to (Authorization Code redirect).
+      # Browser-facing URL — matches Caddy's /kc path prefix and KC_HTTP_RELATIVE_PATH.
+      KEYCLOAK_PUBLIC_URL: ${KEYCLOAK_PUBLIC_URL:-http://aldous.info/kc}
+      KEYCLOAK_REALM: ${KEYCLOAK_REALM:-platform}
+      KEYCLOAK_BFF_CLIENT_ID: ${KEYCLOAK_BFF_CLIENT_ID:-platform-api}
+      KEYCLOAK_BFF_CLIENT_SECRET: ${KEYCLOAK_BFF_CLIENT_SECRET:-local-dev-bff-secret}
+      KEYCLOAK_PROVISIONER_CLIENT_ID: ${KEYCLOAK_PROVISIONER_CLIENT_ID:-platform-provisioner}
+      KEYCLOAK_PROVISIONER_CLIENT_SECRET: ${KEYCLOAK_PROVISIONER_CLIENT_SECRET:-local-dev-provisioner-secret}
     depends_on:
       postgres:
         condition: service_healthy

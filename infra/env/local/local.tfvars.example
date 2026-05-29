@@ -5,7 +5,7 @@
 # Require: docker compose --profile identity up -d keycloak
 
 # Keycloak admin credentials — matches KEYCLOAK_ADMIN_USER / KEYCLOAK_ADMIN_PASSWORD in compose.yaml
-keycloak_url           = "http://localhost:8090"
+keycloak_url           = "http://localhost:8090/kc"
 keycloak_admin_user    = "admin"
 keycloak_admin_password = "admin"
 
