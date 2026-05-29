@@ -12,6 +12,20 @@
 # ADR-0030: forward_auth enforces Keycloak UMA resource policies on all tool routes.
 
 # ---------------------------------------------------------------------------
+# Platform-api reverse proxy snippet — forwards scheme from Cloudflare.
+#
+# Cloudflare terminates TLS and forwards HTTP to Caddy (:80). Caddy would
+# normally replace X-Forwarded-Proto with "http" (its own connection scheme).
+# platform-api uses X-Forwarded-Proto to build HTTPS auth redirect URIs for
+# production. We preserve the upstream value so the correct scheme propagates.
+# ---------------------------------------------------------------------------
+(platform_api_proxy) {
+	reverse_proxy platform-api:3001 {
+		header_up X-Forwarded-Proto {http.request.header.X-Forwarded-Proto}
+	}
+}
+
+# ---------------------------------------------------------------------------
 # Forward auth snippet — reusable across all protected tool routes.
 # platform-api returns 200 (allow), 401 (no session), or 403 (forbidden).
 # Caddy copies the Cookie header so platform-api can read the session.
@@ -26,6 +40,7 @@
 		uri /internal/auth/forward?resource={args[0]}&scope={args[1]}
 		copy_headers Cookie
 		header_up X-Forwarded-Host {host}
+		header_up X-Forwarded-Proto {http.request.header.X-Forwarded-Proto}
 		header_up X-Internal-Secret {$CADDY_INTERNAL_SECRET}
 	}
 }
@@ -105,19 +120,19 @@ http://aldous.info http://localhost {
 	# externally reachable. Caddy calls platform-api:3001/internal/* directly
 	# via the forward_auth directive (Docker-internal network only).
 	handle /api/* {
-		reverse_proxy platform-api:3001
+		import platform_api_proxy
 	}
 	handle /auth/* {
-		reverse_proxy platform-api:3001
+		import platform_api_proxy
 	}
 	handle /healthz {
-		reverse_proxy platform-api:3001
+		import platform_api_proxy
 	}
 	handle /readyz {
-		reverse_proxy platform-api:3001
+		import platform_api_proxy
 	}
 	handle /version {
-		reverse_proxy platform-api:3001
+		import platform_api_proxy
 	}
 
 	# Super-admin React SPA (platform admin console)
@@ -163,19 +178,19 @@ http://*.aldous.info {
 
 	# BFF — /internal/* intentionally NOT listed (same reason as aldous.info block above)
 	handle /api/* {
-		reverse_proxy platform-api:3001
+		import platform_api_proxy
 	}
 	handle /auth/* {
-		reverse_proxy platform-api:3001
+		import platform_api_proxy
 	}
 	handle /healthz {
-		reverse_proxy platform-api:3001
+		import platform_api_proxy
 	}
 	handle /readyz {
-		reverse_proxy platform-api:3001
+		import platform_api_proxy
 	}
 	handle /version {
-		reverse_proxy platform-api:3001
+		import platform_api_proxy
 	}
 
 	# Tenant React SPA
