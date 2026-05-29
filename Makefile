@@ -275,7 +275,7 @@ clean:
 	    --profile cloud-mocks --profile sentry --profile external-mocks \
 	    down --remove-orphans 2>/dev/null || true
 	$(call STEP,clean: killing stale port holders)
-	@fuser -k 5173/tcp 4173/tcp 3001/tcp 2>/dev/null || true
+	@fuser -k 5173/tcp 4173/tcp 3001/tcp 8090/tcp 2>/dev/null || true
 	$(call STEP,clean: removing artefacts)
 	rm -rf coverage/ reports/ .scannerwork/ playwright-report/ e2e-results/
 	$(call OK,clean complete)
@@ -302,7 +302,7 @@ compose-up-quality:
 	docker compose --profile quality up -d sonarqube
 
 ## compose-up-identity — Start Keycloak (identity profile) and wait for it to be healthy.
-## --no-recreate: if Keycloak is already running keep it; avoids port 8080 race on restart.
+## --no-recreate: if Keycloak is already running keep it; avoids port 8090 race on restart.
 ## --wait: return only when the container healthcheck passes (start_period:60s + retries).
 ## --wait-timeout 360: maximum wait (start_period:60s + interval:30s × retries:10).
 compose-up-identity:
@@ -424,15 +424,15 @@ infra-check:
 	$(call OK,infra check complete)
 
 ## keycloak-plan-local — Plan Keycloak provisioning against local Compose Keycloak
-##   Requires: docker compose --profile identity up -d keycloak (localhost:8080)
+##   Requires: docker compose --profile identity up -d keycloak (localhost:8090)
 ##   Uses: infra/env/local/local.tfvars.example (placeholder secrets — safe to plan)
 keycloak-plan-local:
 	$(call STEP,keycloak:plan:local)
 	@chmod +x infra/bin/tf
 	@printf '$(BOLD)Requires: docker compose --profile identity up -d keycloak$(RESET)\n'
-	@curl -sf http://localhost:8080/realms/master > /dev/null 2>&1 \
-		|| { printf '$(RED)✗ Keycloak not reachable at http://localhost:8080\n  Run: docker compose --profile identity up -d keycloak$(RESET)\n'; exit 1; }
-	@printf '$(GREEN)✓ Keycloak reachable at http://localhost:8080$(RESET)\n'
+	@curl -sf http://localhost:8090/realms/master > /dev/null 2>&1 \
+		|| { printf '$(RED)✗ Keycloak not reachable at http://localhost:8090\n  Run: docker compose --profile identity up -d keycloak$(RESET)\n'; exit 1; }
+	@printf '$(GREEN)✓ Keycloak reachable at http://localhost:8090$(RESET)\n'
 	@infra/bin/tf -chdir=infra/env/local init -backend=false -input=false > /dev/null 2>&1 \
 		&& printf '$(GREEN)✓ init ok$(RESET)\n' \
 		|| { printf '$(RED)✗ init failed$(RESET)\n'; exit 1; }
@@ -529,8 +529,8 @@ e2e-prod-auth:
 		$(call WARN,prod-auth E2E skipped — KEYCLOAK_TEST_PASSWORD not set); \
 		exit 0; \
 	fi
-	@if ! curl -fsS --max-time 5 "http://localhost:$${KEYCLOAK_PORT:-8080}/health/ready" > /dev/null 2>&1; then \
-		$(call WARN,prod-auth E2E skipped — Keycloak not reachable on port $${KEYCLOAK_PORT:-8080}); \
+	@if ! curl -fsS --max-time 5 "http://localhost:$${KEYCLOAK_PORT:-8090}/health/ready" > /dev/null 2>&1; then \
+		$(call WARN,prod-auth E2E skipped — Keycloak not reachable on port $${KEYCLOAK_PORT:-8090}); \
 		$(call WARN,Run: make compose-up-identity); \
 		exit 0; \
 	fi
