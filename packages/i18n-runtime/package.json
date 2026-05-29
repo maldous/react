@@ -5,7 +5,8 @@
   "description": "Platform i18n runtime: locale loader, key resolver, interpolation, and BFF server helper.",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./react": "./src/react.ts"
   },
   "architecture": {
     "schemaVersion": "1.0",

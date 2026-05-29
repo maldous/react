@@ -2,11 +2,15 @@
 /**
  * validate-i18n — ADR-ACT-0123
  *
- * Report-only: finds i18n keys used in source files that are missing from en-GB.json.
- * Promotes to a hard gate after ADR-ACT-0121 and ADR-ACT-0122 complete.
+ * Finds i18n keys used in source files that are missing from en-GB.json.
+ *
+ * Default mode: report-only (exits 0 even when keys are missing).
+ * Strict mode:  exits non-zero when missing keys found (ADR-0011 fail-closed).
+ *
+ * Promotes to hard gate (--strict always on) after ADR-ACT-0121 and ADR-ACT-0122.
  *
  * Usage:
- *   node tools/architecture/validate-i18n/src/index.mjs [repo-root]
+ *   node tools/architecture/validate-i18n/src/index.mjs [repo-root] [--strict]
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -17,8 +21,13 @@ const SCAN_DIRS = ["apps/react-enterprise-app/src", "apps/platform-api/src", "pa
 // Match t("key") and serverT(messages, "key") patterns
 const KEY_PATTERN = /(?:\bt|serverT)\s*\(\s*(?:[^,)]+,\s*)?["']([a-z][a-z0-9._-]*)["']/g;
 
-function loadLocale(repoRoot) {
-  const fp = path.join(repoRoot, LOCALE_FILE);
+// Parse args: repo-root and optional --strict flag
+const args = process.argv.slice(2);
+const strictMode = args.includes("--strict");
+const repoRoot = args.find((a) => !a.startsWith("--")) ?? process.cwd();
+
+function loadLocale(root) {
+  const fp = path.join(root, LOCALE_FILE);
   if (!fs.existsSync(fp)) return null;
   try {
     return JSON.parse(fs.readFileSync(fp, "utf8"));
@@ -58,8 +67,8 @@ function scanDir(dir, usedKeys) {
   }
 }
 
-function run(repoRoot) {
-  const locale = loadLocale(repoRoot);
+function run(root) {
+  const locale = loadLocale(root);
   if (!locale) {
     console.warn(
       `[validate-i18n] ${LOCALE_FILE} not found — skipping (install i18n-runtime first)`
@@ -71,15 +80,13 @@ function run(repoRoot) {
   const used = new Set();
 
   for (const dir of SCAN_DIRS) {
-    scanDir(path.join(repoRoot, dir), used);
+    scanDir(path.join(root, dir), used);
   }
 
   const missing = [...used].filter((k) => !defined.has(k));
-
   return { status: "complete", missing, definedCount: defined.size, usedCount: used.size };
 }
 
-const repoRoot = process.argv[2] ?? process.cwd();
 const result = run(repoRoot);
 
 if (result.status === "skipped") {
@@ -91,14 +98,18 @@ if (result.missing.length > 0) {
   for (const k of result.missing) {
     console.warn(`  - ${k}`);
   }
-  console.warn(
-    "[validate-i18n] Report-only — will become a hard gate after ADR-ACT-0121 and ADR-ACT-0122."
-  );
+  if (strictMode) {
+    console.error("[validate-i18n] Strict mode: failing due to missing i18n keys (ADR-0011).");
+    process.exit(1);
+  } else {
+    console.warn(
+      "[validate-i18n] Report-only — promote to --strict after ADR-ACT-0121 and ADR-ACT-0122."
+    );
+    process.exit(0);
+  }
 } else {
   console.log(
     `[validate-i18n] OK — all ${result.usedCount} used keys found in en-GB.json (${result.definedCount} defined)`
   );
+  process.exit(0);
 }
-
-// Always exit 0 — report-only mode
-process.exit(0);

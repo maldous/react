@@ -27,9 +27,9 @@ make compose-up-default   # Start postgres redis clickhouse minio mailpit otel-c
 make compose-ps     # Check service health
 # Public web demo (builds containers, serves on :80 — stop system Caddy first):
 docker compose --profile web up -d --build
-# Local feedback loop (ADR-0027 — Tiltfile not yet implemented, see ADR-ACT-0127):
-# tilt up             # Fast dev: Compose infra + host Vite/API + auto checks
-# tilt up -- --mode=production  # Production parity: Compose web profile + prod E2E
+# Local feedback loop (ADR-0027, ADR-ACT-0127 Done):
+tilt up             # Fast dev: Compose infra + host Vite/API + auto checks (Tiltfile at repo root)
+# tilt up            # Production parity resources are manual triggers inside tilt up
 make readmes        # Regenerate package READMEs from metadata
 make help           # Show all targets
 ```

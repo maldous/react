@@ -505,6 +505,7 @@ Canonical source locations:
 | E2E test substrate evidence                           | `docs/evidence/e2e/`                                 | Committed governance evidence                                                 |
 | Vertical slice delivery evidence                      | `docs/evidence/vertical-slices/`                     | Committed governance evidence for completed vertical slices                   |
 | i18n runtime baseline evidence                        | `docs/evidence/i18n/`                                | Committed governance evidence for i18n runtime and locale baseline            |
+| Developer platform baseline evidence                  | `docs/evidence/developer-platform/`                  | Committed governance evidence for developer tooling baseline audits           |
 | Slice readiness manifests                             | `docs/slices/`                                       | Slice dependency declarations; governed by ADR-0024                           |
 | Playwright E2E configuration                          | `playwright.config.ts`                               | Committed E2E configuration; gitignores playwright-report/ and e2e-results/   |
 | Playwright E2E tests                                  | `e2e/`                                               | Committed E2E test source; artifacts (traces/videos) gitignored               |
@@ -593,6 +594,9 @@ docs/evidence/vertical-slices/
 
 docs/evidence/i18n/
   i18n runtime baseline evidence: locale resource files, key resolver implementation, interpolation safety, and server helper baseline.
+
+docs/evidence/developer-platform/
+  Developer platform baseline evidence: tooling audit covering Compose profiles, Make targets, E2E modes, Tilt status, i18n status, API contracts, dev container, dependency automation, and local development docs.
 ```
 
 Reports may reference evidence.
