@@ -123,7 +123,7 @@ make compose-up-quality
 
 ```bash
 npm run compose:config          # Validate compose.yaml (default profile)
-npm run compose:config:all      # Validate all 5 profiles
+npm run compose:config:all      # Validate all 6 profiles (quality, identity, cloud-mocks, sentry, web, external-mocks)
 npm run compose:up:default      # Start 6 default services explicitly
 npm run compose:up              # Start default services
 npm run compose:down            # Stop all

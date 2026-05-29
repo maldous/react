@@ -51,6 +51,9 @@ Single command for real-time dev feedback: `tilt up`
 [.devcontainer/ →](../../.devcontainer/devcontainer.json)
 
 Works with VS Code Dev Containers and GitHub Codespaces. Includes Node 25, Docker-in-Docker, GitHub CLI, and Playwright.
+Tilt is installed automatically by `.devcontainer/post-create.sh` using a pinned version with checksum verification.
+
+> `.env` and secrets are **not** created by the container — copy `.env.example` to `.env` manually before starting services.
 
 ## External mocks
 

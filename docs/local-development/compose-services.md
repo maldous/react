@@ -17,14 +17,18 @@ docker compose logs -f
 
 ## Profiles
 
-| Profile        | Command                          | Services                                                                  |
-| -------------- | -------------------------------- | ------------------------------------------------------------------------- |
-| (default)      | `docker compose up -d`           | postgres, redis, clickhouse, minio, mailpit, otel-collector               |
-| quality        | `npm run compose:quality`        | sonarqube + sonar-postgres                                                |
-| identity       | `npm run compose:identity`       | keycloak + keycloak-postgres                                              |
-| cloud-mocks    | `npm run compose:cloud`          | localstack                                                                |
-| external-mocks | `npm run compose:external-mocks` | wiremock                                                                  |
-| sentry         | `npm run compose:sentry`         | sentry-web + sentry-worker + sentry-cron + sentry-postgres + sentry-redis |
+| Profile        | Command                                      | Services                                                                  |
+| -------------- | -------------------------------------------- | ------------------------------------------------------------------------- |
+| (default)      | `docker compose up -d`                       | postgres, redis, clickhouse, minio, mailpit, otel-collector               |
+| web            | `docker compose --profile web up -d --build` | platform-api container + react-app (Caddy) on :80                         |
+| quality        | `npm run compose:quality`                    | sonarqube + sonar-postgres                                                |
+| identity       | `npm run compose:identity`                   | keycloak + keycloak-postgres                                              |
+| cloud-mocks    | `npm run compose:cloud`                      | localstack                                                                |
+| external-mocks | `npm run compose:external-mocks`             | wiremock                                                                  |
+| sentry         | `npm run compose:sentry`                     | sentry-web + sentry-worker + sentry-cron + sentry-postgres + sentry-redis |
+
+> **web profile note:** `SESSION_COOKIE_SECURE` must be `false` (the default in `.env.example`) when serving over `http://localhost:80`. Set it to `true` only when behind HTTPS (e.g. production or Cloudflare).
+> Stop any system Caddy process before starting the web profile to free port 80.
 
 ## Services and ports
 
