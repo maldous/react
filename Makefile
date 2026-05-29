@@ -529,12 +529,17 @@ e2e-real-auth:
 	fi
 	@if [ -z "$(KEYCLOAK_TEST_PASSWORD)" ]; then \
 		$(call WARN,real-auth E2E skipped — KEYCLOAK_TEST_PASSWORD not set); \
-		$(call WARN,Set it in .env or run: make keycloak-provision first); \
+		$(call WARN,Set it in .env. Default: password \(from local.tfvars\)); \
 		exit 0; \
 	fi
 	@if ! curl -fsS --max-time 5 "http://localhost:$${KEYCLOAK_PORT:-8090}/health/ready" > /dev/null 2>&1; then \
 		$(call WARN,real-auth E2E skipped — Keycloak not reachable on port $${KEYCLOAK_PORT:-8090}); \
-		$(call WARN,Run: make compose-up-identity and make keycloak-provision); \
+		$(call WARN,Run: make compose-up-identity); \
+		exit 0; \
+	fi
+	@if [ ! -f "infra/env/local/terraform.tfstate" ]; then \
+		$(call WARN,real-auth E2E skipped — Keycloak realm not provisioned); \
+		$(call WARN,Run: make keycloak-provision); \
 		exit 0; \
 	fi
 	npx playwright test --config playwright.real-auth.config.ts
