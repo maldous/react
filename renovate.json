@@ -1,0 +1,60 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "schedule": ["before 6am on Monday"],
+  "timezone": "Australia/Sydney",
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "labels": ["dependencies"],
+  "commitMessagePrefix": "chore(deps):",
+  "packageRules": [
+    {
+      "description": "Dev tooling patch and minor — group",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "matchPackageNames": ["eslint", "prettier", "typescript", "vitest", "markdownlint-cli2"],
+      "groupName": "dev tooling",
+      "automerge": false
+    },
+    {
+      "description": "GitHub Actions — group",
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions",
+      "automerge": false
+    },
+    {
+      "description": "Docker images — group",
+      "matchManagers": ["dockerfile", "docker-compose"],
+      "groupName": "Docker images",
+      "automerge": false
+    },
+    {
+      "description": "Playwright — separate PR, no automerge",
+      "matchPackageNames": ["playwright", "@playwright/test"],
+      "groupName": "Playwright",
+      "automerge": false
+    },
+    {
+      "description": "Major updates — always separate, never automerge",
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "addLabels": ["major-update"]
+    },
+    {
+      "description": "Platform runtime packages — no automerge",
+      "matchPackageNames": [
+        "zod",
+        "react",
+        "react-dom",
+        "@tanstack/react-query",
+        "@tanstack/react-router",
+        "@tanstack/react-table"
+      ],
+      "automerge": false
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "addLabels": ["security"],
+    "automerge": false
+  }
+}
