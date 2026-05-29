@@ -81,6 +81,8 @@ ADR-0028 defines GraphQL schema boundary governance (ADR-ACT-0015 Done).
 
 ADR-0029 defines multi-tenant isolation boundaries: schema-per-tenant + RLS, per-tenant Keycloak realm, identity brokering (external IdP + cross-tenant), FQDN-based routing, per-tenant theming, Redis ACL, S3 bucket policy isolation.
 
+ADR-0030 defines dynamic authorisation and tenant admin self-service: Keycloak Authorization Services (UMA/PEP pattern), per-resource runtime-configurable policies, tenant admin realm self-service via Auth Settings API, sysadmin cross-domain brokering, and hexagonal package design for AuthorisationPort + RealmAdminPort + adapters.
+
 Remaining open items are either blocked on external dependencies (Sonar CI secrets) or future-gated (after more vertical slices, before package publication).
 ```
 
