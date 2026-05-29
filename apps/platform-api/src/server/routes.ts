@@ -10,6 +10,7 @@ import {
 } from "./auth.ts";
 import { handleForwardAuth } from "./forward-auth.ts";
 import { getSessionStore, getApplicationPool, getKeycloakConfigForRealm } from "./dependencies.ts";
+import { queryTenantSchema } from "@platform/adapters-postgres";
 import { serverT } from "./i18n.ts";
 import { DEFAULT_THEME } from "@platform/authorisation-runtime";
 import {
@@ -19,6 +20,40 @@ import {
 } from "./provisioning.ts";
 import { resolveTenantFromRequest } from "./tenant-resolver.ts";
 import { KeycloakRealmAdminAdapter } from "@platform/adapters-keycloak";
+import { z } from "zod";
+
+// ---------------------------------------------------------------------------
+// Auth Settings body schemas (ADR-0030 §1b safety)
+// Client-supplied bodies are validated; admin secrets/clientIds are stripped.
+// Realm is always derived from the Host header — never from the request body.
+// ---------------------------------------------------------------------------
+
+const IdpBodySchema = z.object({
+  alias: z.string().min(1).max(64),
+  displayName: z.string().min(1).max(120),
+  providerId: z.enum(["oidc", "saml", "keycloak-oidc"]),
+  config: z.record(z.string(), z.string()).default({}),
+  enabled: z.boolean().default(true),
+});
+
+const MfaBodySchema = z.object({
+  required: z.enum(["none", "optional", "required"]),
+  type: z.enum(["totp", "webauthn"]).default("totp"),
+  gracePeriodSeconds: z.number().int().min(0).optional(),
+});
+
+const SessionBodySchema = z.object({
+  accessTokenLifespanSeconds: z.number().int().min(60).max(86400),
+  ssoSessionIdleTimeoutSeconds: z.number().int().min(300).max(86400),
+  ssoSessionMaxLifespanSeconds: z.number().int().min(3600).max(2592000),
+  rememberMe: z.boolean().default(false),
+});
+
+const SysadminBrokeringBodySchema = z.object({
+  enabled: z.boolean(),
+  requireMfa: z.boolean().default(true),
+  auditAllAccess: z.boolean().default(true),
+});
 
 export const routes: Route[] = [
   {
@@ -116,12 +151,17 @@ export const routes: Route[] = [
     method: "GET",
     path: "/api/theme",
     handler: async (req, res) => {
-      // Resolve per-tenant branding from tenant_settings (ADR-0029 §4)
+      // Resolve per-tenant branding from tenant_settings (ADR-0029 §4).
+      // Uses queryTenantSchema from adapters-postgres — same UUID validation
+      // and client.escapeIdentifier safety as withTenant. No manual schema
+      // string construction here (centralised in adapters-postgres).
       try {
         const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
         if (tenantCtx) {
-          const { rows } = await getApplicationPool().query<{ key: string; value: unknown }>(
-            `SELECT key, value FROM "tenant_${tenantCtx.organisationId.replaceAll("-", "_")}".tenant_settings WHERE key LIKE 'theme.%'`
+          const { rows } = await queryTenantSchema<{ key: string; value: unknown }>(
+            getApplicationPool(),
+            tenantCtx.organisationId,
+            "SELECT key, value FROM tenant_settings WHERE key LIKE 'theme.%'"
           );
           if (rows.length > 0) {
             const theme = { ...DEFAULT_THEME };
@@ -184,9 +224,12 @@ export const routes: Route[] = [
         adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
         adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
       });
-      await adapter.upsertIdentityProvider(
-        req.body as Parameters<typeof adapter.upsertIdentityProvider>[0]
-      );
+      const idpParsed = IdpBodySchema.safeParse(req.body);
+      if (!idpParsed.success) {
+        res.json(400, { code: "VALIDATION_ERROR", message: idpParsed.error.issues[0]?.message });
+        return;
+      }
+      await adapter.upsertIdentityProvider(idpParsed.data);
       res.json(204, null);
     },
   },
@@ -229,7 +272,12 @@ export const routes: Route[] = [
         adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
         adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
       });
-      await adapter.setMfaPolicy(req.body as Parameters<typeof adapter.setMfaPolicy>[0]);
+      const mfaParsed = MfaBodySchema.safeParse(req.body);
+      if (!mfaParsed.success) {
+        res.json(400, { code: "VALIDATION_ERROR", message: mfaParsed.error.issues[0]?.message });
+        return;
+      }
+      await adapter.setMfaPolicy(mfaParsed.data);
       res.json(204, null);
     },
   },
@@ -272,7 +320,15 @@ export const routes: Route[] = [
         adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
         adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
       });
-      await adapter.setSessionPolicy(req.body as Parameters<typeof adapter.setSessionPolicy>[0]);
+      const sessionParsed = SessionBodySchema.safeParse(req.body);
+      if (!sessionParsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: sessionParsed.error.issues[0]?.message,
+        });
+        return;
+      }
+      await adapter.setSessionPolicy(sessionParsed.data);
       res.json(204, null);
     },
   },
@@ -315,9 +371,15 @@ export const routes: Route[] = [
         adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
         adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
       });
-      await adapter.setSysadminBrokering(
-        req.body as Parameters<typeof adapter.setSysadminBrokering>[0]
-      );
+      const brokeringParsed = SysadminBrokeringBodySchema.safeParse(req.body);
+      if (!brokeringParsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: brokeringParsed.error.issues[0]?.message,
+        });
+        return;
+      }
+      await adapter.setSysadminBrokering(brokeringParsed.data);
       res.json(204, null);
     },
   },
