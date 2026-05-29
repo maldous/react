@@ -1,0 +1,46 @@
+{
+  "name": "Enterprise React Platform",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-25-bullseye",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "dockerDashComposeVersion": "v2"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "installOhMyZsh": false,
+      "upgradePackages": true
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "remoteEnv": {
+    "NODE_ENV": "development"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "ms-playwright.playwright",
+        "formulahendry.auto-rename-tag"
+      ],
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "typescript.preferences.importModuleSpecifier": "relative"
+      }
+    }
+  },
+  "forwardPorts": [3001, 5173, 4173, 5433, 6379, 8025, 8089],
+  "portsAttributes": {
+    "3001": { "label": "platform-api" },
+    "5173": { "label": "React SPA (dev)" },
+    "4173": { "label": "React SPA (preview)" },
+    "5433": { "label": "Postgres" },
+    "6379": { "label": "Redis" },
+    "8025": { "label": "Mailpit" },
+    "8089": { "label": "WireMock" }
+  }
+}
