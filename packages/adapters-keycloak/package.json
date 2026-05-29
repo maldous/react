@@ -65,7 +65,8 @@
     "relations": {
       "dependsOn": [
         "@platform/security-auth",
-        "@platform/config-runtime"
+        "@platform/config-runtime",
+        "@platform/authorisation-runtime"
       ],
       "providesApis": [
         "auth-keycloak-provider"

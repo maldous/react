@@ -188,6 +188,31 @@ Giving tenant-admins infrastructure admin credentials would break the isolation 
 
 The `platform` database owner can already `CREATE SCHEMA`. Using a superuser would be over-privileged (superuser bypasses all security checks including RLS). The existing database owner privilege is sufficient and safer.
 
+### Provider-agnostic provisioning (ISO 27001 / multi-cloud extensibility)
+
+The single-instance (shared cluster, same host) model described above is the **default and minimum viable configuration**. It is not the only option. The provisioning service account model is designed to be provider-agnostic and extensible.
+
+**Infrastructure tiers available per tenant (system-admin configurable):**
+
+| Tier                  | Database                            | Identity                       | Cache                     | Storage                    | Typical use                       |
+| --------------------- | ----------------------------------- | ------------------------------ | ------------------------- | -------------------------- | --------------------------------- |
+| **Shared** (default)  | Schema in shared cluster            | Realm in shared Keycloak       | Namespace in shared Redis | Prefix in shared bucket    | Standard tenants                  |
+| **Dedicated cluster** | Own PostgreSQL instance             | Own Keycloak instance          | Own Redis instance        | Own S3 bucket              | High-isolation tenants            |
+| **Separate cloud**    | RDS/Cloud SQL on different provider | Keycloak on tenant's own cloud | ElastiCache/Memorystore   | Tenant's own cloud storage | Regulatory data residency         |
+| **Air-gapped**        | Tenant-managed infra                | Tenant-managed IdP             | Tenant-managed            | Tenant-managed             | HIPAA, FedRAMP, ISO 27001 Annex A |
+
+The `RealmProvisioningPort`, `RedisProvisioningAdapter`, and `S3ProvisioningAdapter` are **port/adapter pairs** — the platform defines the interface; the adapter targets a specific infrastructure provider. Swapping from shared PostgreSQL to a dedicated RDS instance for a tenant requires:
+
+1. A new `RdsProvisioningAdapter` that implements the same `createTenantSchema` contract but connects to a different endpoint.
+2. System-admin configures the tenant's `provisioning_tier` in `public.platform_config`.
+3. The provisioning service selects the correct adapter at runtime based on tier.
+
+No code change to the provisioning API surface — only a new adapter and a data configuration change.
+
+**Per-resource deployment requirements** are supported through this adapter pattern: each infrastructure resource (database, identity, cache, storage, compute) can independently target a different provider or deployment target. A tenant could have their database on AWS RDS, their identity on Azure Entra (via SAML broker), their storage on GCS, and their cache on a shared cluster — each managed through the appropriate provisioning adapter, all coordinated by the platform provisioning service from a single API call.
+
+The system-admin console at `aldous.info/admin` exposes tenant infrastructure tier selection as a runtime configuration decision, not a deployment decision.
+
 ## Consequences
 
 **Positive:**
@@ -196,6 +221,8 @@ The `platform` database owner can already `CREATE SCHEMA`. Using a superuser wou
 - No human sysadmin bottleneck for normal growth of tenant or sub-organisation count.
 - Provisioning credentials are centralised in the secret store — rotation is managed in one place.
 - Audit trail covers all infrastructure operations regardless of who triggered them.
+- Infrastructure tier is a data-driven, runtime decision — tenants can be migrated between tiers without code deployment.
+- New infrastructure providers are added as adapter packages, not platform code changes.
 
 **Negative:**
 

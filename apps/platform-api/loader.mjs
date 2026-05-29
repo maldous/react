@@ -87,6 +87,10 @@ const PLATFORM_MAP = {
     "packages/contracts-organisation/src/index.ts"
   ),
   "@platform/i18n-runtime": resolvePath(repoRoot, "packages/i18n-runtime/src/index.ts"),
+  "@platform/authorisation-runtime": resolvePath(
+    repoRoot,
+    "packages/authorisation-runtime/src/index.ts"
+  ),
 };
 
 export function resolve(specifier, context, nextResolve) {

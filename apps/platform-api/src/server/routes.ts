@@ -11,6 +11,7 @@ import {
 import { handleForwardAuth } from "./forward-auth.ts";
 import { getSessionStore } from "./dependencies.ts";
 import { serverT } from "./i18n.ts";
+import { DEFAULT_THEME } from "@platform/authorisation-runtime";
 
 export const routes: Route[] = [
   {
@@ -98,6 +99,44 @@ export const routes: Route[] = [
     path: "/auth/logout",
     operationName: "auth.logout",
     handler: handleAuthLogout,
+  },
+  // ---------------------------------------------------------------------------
+  // Theme / branding (ADR-0029 §4) — unauthenticated, keyed by Host header.
+  // Returns per-tenant branding config for the React SPA to apply at load time.
+  // Stub: returns defaults until tenant_settings table is provisioned (ADR-ACT-0142).
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/theme",
+    handler: async (_req, res) => {
+      // TODO ADR-ACT-0142: resolve host → slug → tenant_settings for real branding
+      res.json(200, DEFAULT_THEME);
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Tenant provisioning stubs (ADR-ACT-0142, ADR-ACT-0143)
+  // Implementation blocked until provisioning service accounts are wired (ADR-0031).
+  // Returns 501 to signal "not yet implemented" without masking the intent.
+  // ---------------------------------------------------------------------------
+  {
+    method: "POST",
+    path: "/api/admin/tenants",
+    operationName: "admin.tenants.create",
+    requiresAuth: true,
+    requiredPermission: "admin.access",
+    handler: async (_req, res) => {
+      res.json(501, { code: "NOT_IMPLEMENTED", message: serverT("api.error.notImplemented") });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/sub-tenants",
+    operationName: "admin.sub-tenants.create",
+    requiresAuth: true,
+    requiredPermission: "admin.access",
+    handler: async (_req, res) => {
+      res.json(501, { code: "NOT_IMPLEMENTED", message: serverT("api.error.notImplemented") });
+    },
   },
   // ---------------------------------------------------------------------------
   // Organisation profile

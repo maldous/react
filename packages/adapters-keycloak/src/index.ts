@@ -173,3 +173,329 @@ export async function verifyKeycloakToken(token: string): Promise<Record<string,
   void token;
   return null;
 }
+
+// ---------------------------------------------------------------------------
+// KeycloakAuthorisationAdapter — implements AuthorisationPort via UMA 2.0
+// KeycloakRealmAdminAdapter — implements RealmAdminPort via Admin REST API
+// KeycloakProvisioningAdapter — creates/deletes realms (ADR-0031)
+// ADR-0030 §3a, §6b | ADR-0031
+// ---------------------------------------------------------------------------
+
+import type {
+  AuthorisationPort,
+  Resource,
+  AccessDecision,
+  RealmAdminPort,
+  IdentityProvider,
+  MfaPolicy,
+  SessionPolicy,
+  ResourcePolicy,
+  SysadminBrokeringConfig,
+  RealmProvisioningPort,
+  RealmProvisioningConfig,
+} from "@platform/authorisation-runtime";
+
+export class KeycloakAuthorisationAdapter implements AuthorisationPort {
+  private readonly config: KeycloakClientConfig;
+
+  constructor(config: KeycloakClientConfig) {
+    this.config = config;
+  }
+
+  async checkAccess(resource: Resource, accessToken: string): Promise<AccessDecision> {
+    const tokenUrl = `${this.config.url}/realms/${this.config.realm}/protocol/openid-connect/token`;
+    const body = new URLSearchParams({
+      grant_type: "urn:ietf:params:oauth:grant-type:uma-ticket",
+      audience: this.config.clientId,
+      permission: `${resource.name}#${resource.scope}`,
+      response_include_resource_name: "false",
+    });
+    try {
+      const response = await fetch(tokenUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body,
+      });
+      if (response.ok) {
+        const data = (await response.json()) as { access_token?: string };
+        return { granted: true, rpt: data.access_token ?? "" };
+      }
+      const err = (await response.json().catch(() => ({}))) as Record<string, unknown>;
+      const errorCode = String(err["error"] ?? "");
+      if (errorCode === "insufficient_scope")
+        return { granted: false, reason: "insufficient_scope" };
+      if (String(err["error_description"] ?? "").includes("auth_level"))
+        return { granted: false, reason: "insufficient_auth_level" };
+      return { granted: false, reason: "policy_denied" };
+    } catch {
+      return { granted: false, reason: "policy_denied" };
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// KeycloakRealmAdminAdapter — implements RealmAdminPort via Admin REST API
+// ADR-0030 §1b, §6b
+// ---------------------------------------------------------------------------
+
+export interface KeycloakAdminConfig {
+  url: string;
+  realm: string;
+  /** Service account client ID with realm-admin role */
+  adminClientId: string;
+  adminClientSecret: string;
+}
+
+export class KeycloakRealmAdminAdapter implements RealmAdminPort {
+  private readonly config: KeycloakAdminConfig;
+
+  constructor(config: KeycloakAdminConfig) {
+    this.config = config;
+  }
+
+  private async getAdminToken(): Promise<string> {
+    const tokenUrl = `${this.config.url}/realms/master/protocol/openid-connect/token`;
+    const response = await fetch(tokenUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        grant_type: "client_credentials",
+        client_id: this.config.adminClientId,
+        client_secret: this.config.adminClientSecret,
+      }),
+    });
+    if (!response.ok) throw new Error(`Keycloak admin token fetch failed: ${response.status}`);
+    const data = (await response.json()) as { access_token: string };
+    return data.access_token;
+  }
+
+  private adminUrl(path: string): string {
+    return `${this.config.url}/admin/realms/${this.config.realm}${path}`;
+  }
+
+  async listIdentityProviders(): Promise<IdentityProvider[]> {
+    const token = await this.getAdminToken();
+    const response = await fetch(this.adminUrl("/identity-provider/instances"), {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!response.ok) return [];
+    return (await response.json()) as IdentityProvider[];
+  }
+
+  async upsertIdentityProvider(idp: IdentityProvider): Promise<void> {
+    const token = await this.getAdminToken();
+    const existing = await fetch(this.adminUrl(`/identity-provider/instances/${idp.alias}`), {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const method = existing.ok ? "PUT" : "POST";
+    const url = existing.ok
+      ? this.adminUrl(`/identity-provider/instances/${idp.alias}`)
+      : this.adminUrl("/identity-provider/instances");
+    await fetch(url, {
+      method,
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify(idp),
+    });
+  }
+
+  async removeIdentityProvider(alias: string): Promise<void> {
+    const token = await this.getAdminToken();
+    await fetch(this.adminUrl(`/identity-provider/instances/${alias}`), {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
+
+  async getMfaPolicy(): Promise<MfaPolicy> {
+    const token = await this.getAdminToken();
+    const response = await fetch(this.adminUrl(""), {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const realm = (await response.json()) as Record<string, unknown>;
+    return {
+      required: (realm["otpPolicyType"] as MfaPolicy["required"]) ?? "optional",
+      type: String(realm["otpPolicyAlgorithm"] ?? "totp").includes("webauthn")
+        ? "webauthn"
+        : "totp",
+    };
+  }
+
+  async setMfaPolicy(policy: MfaPolicy): Promise<void> {
+    const token = await this.getAdminToken();
+    await fetch(this.adminUrl(""), {
+      method: "PUT",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ otpPolicyType: policy.required }),
+    });
+  }
+
+  async getSessionPolicy(): Promise<SessionPolicy> {
+    const token = await this.getAdminToken();
+    const response = await fetch(this.adminUrl(""), {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const realm = (await response.json()) as Record<string, unknown>;
+    return {
+      accessTokenLifespanSeconds: Number(realm["accessTokenLifespan"] ?? 900),
+      ssoSessionIdleTimeoutSeconds: Number(realm["ssoSessionIdleTimeout"] ?? 1800),
+      ssoSessionMaxLifespanSeconds: Number(realm["ssoSessionMaxLifespan"] ?? 36000),
+      rememberMe: Boolean(realm["rememberMe"] ?? false),
+    };
+  }
+
+  async setSessionPolicy(policy: SessionPolicy): Promise<void> {
+    const token = await this.getAdminToken();
+    await fetch(this.adminUrl(""), {
+      method: "PUT",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        accessTokenLifespan: policy.accessTokenLifespanSeconds,
+        ssoSessionIdleTimeout: policy.ssoSessionIdleTimeoutSeconds,
+        ssoSessionMaxLifespan: policy.ssoSessionMaxLifespanSeconds,
+        rememberMe: policy.rememberMe,
+      }),
+    });
+  }
+
+  async getResourcePolicy(resourceName: string): Promise<ResourcePolicy[]> {
+    void resourceName;
+    // Keycloak Authorization Services resource policy query
+    // Implementation depends on client resource server setup (ADR-0030 §3)
+    return [];
+  }
+
+  async setResourcePolicy(resourceName: string, policy: ResourcePolicy): Promise<void> {
+    void resourceName;
+    void policy;
+    // Keycloak Authorization Services policy creation
+    // Implementation tracked in ADR-ACT-0143
+  }
+
+  async removeResourcePolicy(resourceName: string, policyName: string): Promise<void> {
+    void resourceName;
+    void policyName;
+  }
+
+  async getSysadminBrokering(): Promise<SysadminBrokeringConfig> {
+    const idps = await this.listIdentityProviders();
+    const platformIdp = idps.find((i) => i.alias === "platform-realm");
+    return {
+      enabled: platformIdp?.enabled ?? false,
+      requireMfa: true,
+      auditAllAccess: true,
+    };
+  }
+
+  async setSysadminBrokering(config: SysadminBrokeringConfig): Promise<void> {
+    if (config.enabled) {
+      await this.upsertIdentityProvider({
+        alias: "platform-realm",
+        displayName: "Login with Platform Admin",
+        providerId: "keycloak-oidc",
+        config: {},
+        enabled: true,
+      });
+    } else {
+      await this.removeIdentityProvider("platform-realm");
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// KeycloakProvisioningAdapter — creates/deletes realms via master realm admin
+// ADR-0031: infrastructure provisioning privilege model
+// ---------------------------------------------------------------------------
+
+export interface KeycloakProvisioningConfig {
+  url: string;
+  /** Master realm service account client ID */
+  provisionerClientId: string;
+  provisionerClientSecret: string;
+}
+
+export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
+  private readonly config: KeycloakProvisioningConfig;
+
+  constructor(config: KeycloakProvisioningConfig) {
+    this.config = config;
+  }
+
+  private async getMasterToken(): Promise<string> {
+    const tokenUrl = `${this.config.url}/realms/master/protocol/openid-connect/token`;
+    const response = await fetch(tokenUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        grant_type: "client_credentials",
+        client_id: this.config.provisionerClientId,
+        client_secret: this.config.provisionerClientSecret,
+      }),
+    });
+    if (!response.ok) throw new Error(`Keycloak provisioner token failed: ${response.status}`);
+    const data = (await response.json()) as { access_token: string };
+    return data.access_token;
+  }
+
+  async realmExists(realmName: string): Promise<boolean> {
+    const token = await this.getMasterToken();
+    const response = await fetch(`${this.config.url}/admin/realms/${realmName}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.ok;
+  }
+
+  async createRealm(cfg: RealmProvisioningConfig): Promise<void> {
+    if (await this.realmExists(cfg.realmName)) return; // idempotent
+    const token = await this.getMasterToken();
+    const response = await fetch(`${this.config.url}/admin/realms`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        realm: cfg.realmName,
+        displayName: cfg.displayName,
+        enabled: true,
+        accessTokenLifespan: 900,
+        ssoSessionIdleTimeout: 1800,
+        ssoSessionMaxLifespan: 36000,
+        registrationAllowed: false,
+        loginWithEmailAllowed: true,
+        duplicateEmailsAllowed: false,
+        verifyEmail: false,
+        resetPasswordAllowed: true,
+      }),
+    });
+    if (!response.ok)
+      throw new Error(`Failed to create realm ${cfg.realmName}: ${response.status}`);
+    // Register the BFF client for this realm
+    await this.createBffClient(cfg, token);
+  }
+
+  private async createBffClient(cfg: RealmProvisioningConfig, token: string): Promise<void> {
+    await fetch(`${this.config.url}/admin/realms/${cfg.realmName}/clients`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        clientId: cfg.bffClientId,
+        secret: cfg.bffClientSecret,
+        publicClient: false,
+        standardFlowEnabled: true,
+        directAccessGrantsEnabled: false,
+        serviceAccountsEnabled: true,
+        redirectUris: cfg.bffRedirectUris,
+        webOrigins: ["+"],
+        protocol: "openid-connect",
+      }),
+    });
+  }
+
+  async deleteRealm(realmName: string): Promise<void> {
+    const token = await this.getMasterToken();
+    await fetch(`${this.config.url}/admin/realms/${realmName}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
+}

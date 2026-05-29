@@ -1,0 +1,106 @@
+{
+  "name": "@platform/authorisation-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Authorisation port interfaces: resource access decisions (UMA), realm admin operations, and resource policy management. Zero @platform dependencies — leaf port node.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "authorisation-runtime",
+      "system": "enterprise-react-platform",
+      "domain": "security",
+      "boundedContext": "authorisation",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "platform",
+      "class": "active.platform",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0029",
+        "ADR-0030",
+        "ADR-0031"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": true,
+      "testOnly": false,
+      "serviceName": "authorisation-runtime",
+      "serviceNamespace": "security",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "staging",
+        "production"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "platform",
+        "adapter",
+        "application"
+      ],
+      "forbiddenConsumers": [
+        "domain",
+        "contract",
+        "ui",
+        "feature"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "authorisation-check",
+        "realm-admin",
+        "resource-policy"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "security",
+      "type": "library",
+      "stage": "active",
+      "role": "platform",
+      "layer": "platform"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Authorisation port interfaces for resource access (UMA/PEP pattern) and realm administration. Zero @platform dependencies — this is a leaf port node.",
+      "responsibilities": [
+        "Define AuthorisationPort for UMA-based per-resource access decisions",
+        "Define RealmAdminPort for tenant realm configuration (IdP, MFA, session, policies)",
+        "Define all associated types: Resource, AccessDecision, IdentityProvider, MfaPolicy, SessionPolicy, ResourcePolicy",
+        "Provide noop/stub implementations for testing"
+      ],
+      "nonResponsibilities": [
+        "Does not implement UMA ticket evaluation (owned by adapters-keycloak)",
+        "Does not implement Keycloak Admin REST API calls (owned by adapters-keycloak)",
+        "Does not hold any Keycloak credentials"
+      ],
+      "usage": [
+        "Imported by platform-api to type-check the forward auth endpoint and auth settings API",
+        "adapters-keycloak implements both AuthorisationPort and RealmAdminPort"
+      ],
+      "operationalNotes": [
+        "Zero @platform/* dependencies required — this package must remain a leaf node to avoid import boundary violations"
+      ]
+    }
+  }
+}

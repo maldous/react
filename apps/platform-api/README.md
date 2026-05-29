@@ -113,6 +113,7 @@ production
 @platform/adapters-keycloak
 @platform/adapters-redis
 @platform/adapters-postgres
+@platform/authorisation-runtime
 ```
 
 ### Provides APIs

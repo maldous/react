@@ -119,3 +119,69 @@ export class RedisAuthStateStore {
     return JSON.parse(raw) as AuthStatePayload;
   }
 }
+
+// ---------------------------------------------------------------------------
+// createRedisAdminClient — admin connection for ACL user management
+// ADR-0031: used only by the provisioning path, never in request handlers.
+// Connects as a Redis user with +acl command permission.
+// ---------------------------------------------------------------------------
+
+export interface RedisAdminConfig {
+  url: string;
+  username?: string;
+  password?: string;
+}
+
+export function createRedisAdminClient(config: RedisAdminConfig): RedisClientType {
+  return createClient({
+    url: config.url,
+    username: config.username,
+    password: config.password,
+  }) as RedisClientType;
+}
+
+// ---------------------------------------------------------------------------
+// RedisProvisioningAdapter — creates/revokes per-tenant ACL users (ADR-0031)
+// ---------------------------------------------------------------------------
+
+export interface RedisAclUser {
+  username: string;
+  keyPattern: string;
+}
+
+export class RedisProvisioningAdapter {
+  private readonly client: RedisClientType;
+
+  constructor(adminClient: RedisClientType) {
+    this.client = adminClient;
+  }
+
+  async createTenantUser(organisationId: string, password: string): Promise<RedisAclUser> {
+    const username = `tenant_${organisationId.replaceAll("-", "_")}`;
+    const keyPattern = `t:${organisationId}:*`;
+    // Redis ACL SETUSER: enable user, set password, restrict to key pattern, allow read/write
+    await (
+      this.client as unknown as { sendCommand: (args: string[]) => Promise<unknown> }
+    ).sendCommand([
+      "ACL",
+      "SETUSER",
+      username,
+      "on",
+      `>${password}`,
+      `~${keyPattern}`,
+      "+@read",
+      "+@write",
+      "+@string",
+      "+@hash",
+      "+@set",
+    ]);
+    return { username, keyPattern };
+  }
+
+  async revokeTenantUser(organisationId: string): Promise<void> {
+    const username = `tenant_${organisationId.replaceAll("-", "_")}`;
+    await (
+      this.client as unknown as { sendCommand: (args: string[]) => Promise<unknown> }
+    ).sendCommand(["ACL", "DELUSER", username]);
+  }
+}

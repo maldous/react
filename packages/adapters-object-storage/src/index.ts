@@ -109,3 +109,97 @@ export class S3ObjectStorageAdapter implements ObjectStoragePort {
     }
   }
 }
+
+// ---------------------------------------------------------------------------
+// S3ProvisioningAdapter — creates per-tenant IAM users and bucket policies
+// ADR-0031: used only by the provisioning path, never in request handlers.
+// Requires admin-level S3/IAM credentials stored in the secret store.
+// ---------------------------------------------------------------------------
+
+import {
+  IAMClient,
+  CreateUserCommand,
+  DeleteUserCommand,
+  PutUserPolicyCommand,
+  DeleteUserPolicyCommand,
+  CreateAccessKeyCommand,
+} from "@aws-sdk/client-iam";
+
+export interface S3AdminConfig {
+  region: string;
+  bucket: string;
+  endpoint?: string;
+  forcePathStyle?: boolean;
+  credentials: { accessKeyId: string; secretAccessKey: string };
+}
+
+export interface TenantS3Credentials {
+  accessKeyId: string;
+  secretAccessKey: string;
+  keyPrefix: string;
+}
+
+export class S3ProvisioningAdapter {
+  private readonly iamClient: IAMClient;
+  private readonly bucket: string;
+
+  constructor(config: S3AdminConfig) {
+    this.bucket = config.bucket;
+    this.iamClient = new IAMClient({
+      region: config.region,
+      endpoint: config.endpoint,
+      forcePathStyle: config.forcePathStyle,
+      credentials: config.credentials,
+    });
+  }
+
+  async createTenantUser(organisationId: string): Promise<TenantS3Credentials> {
+    const username = `tenant-${organisationId}`;
+    const keyPrefix = `${organisationId}/`;
+
+    // Create IAM user
+    await this.iamClient.send(new CreateUserCommand({ UserName: username }));
+
+    // Attach inline policy scoped to tenant prefix
+    const policy = JSON.stringify({
+      Version: "2012-10-17",
+      Statement: [
+        {
+          Effect: "Allow",
+          Action: ["s3:GetObject", "s3:PutObject", "s3:DeleteObject", "s3:ListBucket"],
+          Resource: [`arn:aws:s3:::${this.bucket}/${keyPrefix}*`, `arn:aws:s3:::${this.bucket}`],
+          Condition: { StringLike: { "s3:prefix": `${keyPrefix}*` } },
+        },
+      ],
+    });
+
+    await this.iamClient.send(
+      new PutUserPolicyCommand({
+        UserName: username,
+        PolicyName: `tenant-${organisationId}-access`,
+        PolicyDocument: policy,
+      })
+    );
+
+    // Create access key for the tenant user
+    const keyResult = await this.iamClient.send(new CreateAccessKeyCommand({ UserName: username }));
+    return {
+      accessKeyId: keyResult.AccessKey?.AccessKeyId ?? "",
+      secretAccessKey: keyResult.AccessKey?.SecretAccessKey ?? "",
+      keyPrefix,
+    };
+  }
+
+  async revokeTenantUser(organisationId: string): Promise<void> {
+    const username = `tenant-${organisationId}`;
+    await this.iamClient
+      .send(
+        new DeleteUserPolicyCommand({
+          UserName: username,
+          PolicyName: `tenant-${organisationId}-access`,
+        })
+      )
+      .catch(() => undefined);
+    await this.iamClient.send(new DeleteUserCommand({ UserName: username })).catch(() => undefined);
+  }
+}
