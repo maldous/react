@@ -46,6 +46,11 @@ variable "bff_client_secret" {
   description = "Client secret for platform-api confidential client. Gitignored in local.tfvars."
 }
 
+variable "provisioner_client_secret" {
+  type      = string
+  sensitive = true
+}
+
 variable "provision_fixture_users" {
   type    = bool
   default = true
@@ -94,6 +99,10 @@ module "keycloak" {
     "http://localhost:3001/auth/callback",
     "http://localhost:3001/*",
   ]
+
+  # platform-provisioner service account — used by platform-api for runtime
+  # Keycloak realm creation when tenants are provisioned via POST /api/admin/tenants.
+  provisioner_client_secret = var.provisioner_client_secret
 
   provision_fixture_users = var.provision_fixture_users
   fixture_user_password   = var.fixture_user_password

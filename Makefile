@@ -51,38 +51,41 @@ ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
         compose-up-identity compose-up-cloud compose-up-sentry compose-up-external-mocks compose-up-web \
         compose-down compose-down-volumes compose-ps compose-logs \
         readmes generate infra-check pre-slice-gate local-substrate-check \
+        keycloak-provision \
         e2e-dev e2e-dev-build e2e-prod-smoke e2e-prod-auth e2e-prod \
         reset-local seed-demo db-migrate db-shell redis-flush-local
 
 # =============================================================================
-## all — Increasingly strict quality gauntlet ending in production smoke
+## all — Complete quality + deployment + production E2E gauntlet
 ##
 ## Tier 1 — Quality gates (fast, no services):
 ##   install → format → lint → typecheck → architecture → audit → security
-## Tier 2 — Unit + integration tests:
+## Tier 2 — Unit + integration tests (services must be running):
 ##   test → test-compose → sonar → advisory → sbom → license
-## Tier 3 — Dev E2E (localhost, fixture session, Vite dev server):
+## Tier 3 — Dev E2E (Vite dev server, fixture session):
 ##   e2e-dev
-## Tier 4 — Build E2E (localhost, fixture session, vite preview production bundle):
+## Tier 4 — Build E2E (vite preview, fixture session):
 ##   e2e-dev-build
-## Tier 5 — Deploy web profile + prod smoke (Docker Caddy, no auth required):
-##   compose-up-web → e2e-prod-smoke
-## Tier 6 — Real Keycloak auth E2E (gracefully skipped if not provisioned):
-##   e2e-prod-auth
+## Tier 5 — Deploy production stack + identity:
+##   compose-up-identity → keycloak-provision → compose-up-web
+## Tier 6 — Full production E2E (real auth, no fixtures):
+##   e2e-prod  (PROD_BASE_URL=http://localhost — Caddy serves both aldous.info and localhost)
 ##
-## After deployment: make e2e-prod (against https://aldous.info via Cloudflare)
+## Requires once: infra/env/local/local.tfvars (copy from local.tfvars.example)
+##                KEYCLOAK_TEST_USERNAME and KEYCLOAK_TEST_PASSWORD in .env
 # =============================================================================
+all: export PROD_BASE_URL = http://localhost
 all: install format lint typecheck architecture audit security \
      compose-up-default test test-compose sonar advisory sbom license \
      e2e-dev \
      e2e-dev-build \
-     compose-up-web e2e-prod-smoke \
-     e2e-prod-auth
+     compose-up-identity keycloak-provision \
+     compose-up-web e2e-prod
 	@echo ""
 	@printf '$(BOLD)$(GREEN)'
 	@printf '  ╔══════════════════════════════════════════════════════╗\n'
 	@printf '  ║  make all — full gauntlet complete                   ║\n'
-	@printf '  ║  Quality → Tests → Dev E2E → Deploy → Prod smoke    ║\n'
+	@printf '  ║  Quality → Tests → Dev E2E → Deploy → Prod E2E      ║\n'
 	@printf '  ╚══════════════════════════════════════════════════════╝\n'
 	@printf '$(RESET)'
 	@echo ""
@@ -288,9 +291,26 @@ compose-up-default:
 compose-up-quality:
 	docker compose --profile quality up -d sonarqube
 
-## compose-up-identity — Start Keycloak (identity profile)
+## compose-up-identity — Start Keycloak (identity profile) and wait for it to be ready
 compose-up-identity:
+	$(call STEP,compose: starting Keycloak)
 	docker compose --profile identity up -d keycloak
+	@timeout 90 bash -c 'until curl -fsS "http://localhost:$${KEYCLOAK_PORT:-8080}/health/ready" > /dev/null 2>&1; do sleep 3; done' \
+	    || (printf '$(RED)✗ Keycloak did not become ready in 90s$(RESET)\n'; exit 1)
+	$(call OK,Keycloak ready)
+
+## keycloak-provision — Apply Terraform to provision the platform Keycloak realm
+## Prerequisites: compose-up-identity; local.tfvars in infra/env/local/ (see local.tfvars.example)
+keycloak-provision:
+	$(call STEP,keycloak: provisioning realm via Terraform)
+	@if [ ! -f "infra/env/local/local.tfvars" ]; then \
+		printf '$(RED)✗ infra/env/local/local.tfvars not found.\n'; \
+		printf '  Copy infra/env/local/local.tfvars.example to local.tfvars and fill in values.$(RESET)\n'; \
+		exit 1; \
+	fi
+	cd infra/env/local && terraform init -upgrade -input=false > /dev/null 2>&1 \
+	    && terraform apply -var-file=local.tfvars -auto-approve -input=false
+	$(call OK,Keycloak realm provisioned)
 
 ## compose-up-cloud — Start LocalStack (cloud-mocks profile)
 compose-up-cloud:
@@ -498,8 +518,8 @@ e2e-prod-auth:
 		$(call WARN,prod-auth E2E skipped — KEYCLOAK_TEST_PASSWORD not set); \
 		exit 0; \
 	fi
-	@if ! curl -fsS --max-time 5 "http://localhost:$${KEYCLOAK_PORT:-8090}/health/ready" > /dev/null 2>&1; then \
-		$(call WARN,prod-auth E2E skipped — Keycloak not reachable on port $${KEYCLOAK_PORT:-8090}); \
+	@if ! curl -fsS --max-time 5 "http://localhost:$${KEYCLOAK_PORT:-8080}/health/ready" > /dev/null 2>&1; then \
+		$(call WARN,prod-auth E2E skipped — Keycloak not reachable on port $${KEYCLOAK_PORT:-8080}); \
 		$(call WARN,Run: make compose-up-identity); \
 		exit 0; \
 	fi

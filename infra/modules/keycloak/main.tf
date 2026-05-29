@@ -136,9 +136,41 @@ resource "keycloak_openid_client" "bff" {
   client_secret = var.bff_client_secret
 
   # BFF callback endpoints — the BFF exchanges code at the server, not the browser.
-  # Web origins intentionally empty; servers do not need CORS origin allowlisting.
+  # "+" instructs Keycloak to allow all origins that match a valid redirect URI;
+  # this avoids maintaining a separate origins list that drifts from redirect_uris.
   valid_redirect_uris = var.bff_redirect_uris
-  web_origins         = []
+  web_origins         = ["+"]
+}
+
+# ---------------------------------------------------------------------------
+# platform-provisioner service account — ADR-0031
+#
+# Used by platform-api to create per-tenant Keycloak realms at runtime
+# without a Terraform deployment. Requires the master-realm service account
+# role that allows realm creation only (no server-admin privilege escalation).
+#
+# The provisioner credentials are stored in env vars:
+#   KEYCLOAK_PROVISIONER_CLIENT_ID
+#   KEYCLOAK_PROVISIONER_CLIENT_SECRET
+# ---------------------------------------------------------------------------
+
+resource "keycloak_openid_client" "provisioner" {
+  realm_id  = "master"
+  client_id = var.provisioner_client_id
+  name      = "Platform Provisioner"
+  enabled   = true
+
+  access_type              = "CONFIDENTIAL"
+  standard_flow_enabled    = false
+  service_accounts_enabled = true
+
+  client_secret = var.provisioner_client_secret
+}
+
+resource "keycloak_openid_client_service_account_realm_role" "provisioner_manage_realm" {
+  realm_id                = "master"
+  service_account_user_id = keycloak_openid_client.provisioner.service_account_user_id
+  role                    = "manage-realm"
 }
 
 # ---------------------------------------------------------------------------

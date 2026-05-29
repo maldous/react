@@ -60,6 +60,22 @@ variable "bff_redirect_uris" {
 # Fixture users — local/dev only
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# platform-provisioner service account
+# ---------------------------------------------------------------------------
+
+variable "provisioner_client_id" {
+  type        = string
+  description = "Client ID for the platform-provisioner service account (ADR-0031)"
+  default     = "platform-provisioner"
+}
+
+variable "provisioner_client_secret" {
+  type        = string
+  sensitive   = true
+  description = "Client secret for the platform-provisioner service account. Store in .tfvars."
+}
+
 variable "provision_fixture_users" {
   type        = bool
   description = "Create fixture test users matching seed.ts. Set true for local/development only; never for staging or production."

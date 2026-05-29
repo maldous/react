@@ -16,6 +16,11 @@ realm_name = "platform"
 # The platform-api server reads this as KEYCLOAK_BFF_CLIENT_SECRET at runtime.
 bff_client_secret = "local-dev-bff-secret"
 
+# platform-provisioner service account secret — used by platform-api to create
+# per-tenant Keycloak realms at runtime (POST /api/admin/tenants).
+# Reads at runtime as KEYCLOAK_PROVISIONER_CLIENT_SECRET.
+provisioner_client_secret = "local-dev-provisioner-secret"
+
 # Fixture users — always true for local environment
 provision_fixture_users = true
 
