@@ -16,11 +16,17 @@
 # platform-api returns 200 (allow), 401 (no session), or 403 (forbidden).
 # Caddy copies the Cookie header so platform-api can read the session.
 # ---------------------------------------------------------------------------
+# X-Internal-Secret prevents external callers from reaching /internal/auth/forward.
+# Set CADDY_INTERNAL_SECRET in the environment; platform-api validates it.
+# /internal/* is NOT exposed in the public virtual host blocks below — this is
+# defence in depth: the route simply doesn't exist externally, and the secret
+# provides a second check in case of future misconfiguration.
 (forward_auth_check) {
 	forward_auth platform-api:3001 {
 		uri /internal/auth/forward?resource={args[0]}&scope={args[1]}
 		copy_headers Cookie
 		header_up X-Forwarded-Host {host}
+		header_up X-Internal-Secret {$CADDY_INTERNAL_SECRET}
 	}
 }
 
@@ -88,13 +94,13 @@ aldous.info {
 	# The Tiltfile exposes a direct link on the platform-api resource.
 
 	# BFF — platform admin API
+	# NOTE: /internal/* is intentionally NOT listed here — it must not be
+	# externally reachable. Caddy calls platform-api:3001/internal/* directly
+	# via the forward_auth directive (Docker-internal network only).
 	handle /api/* {
 		reverse_proxy platform-api:3001
 	}
 	handle /auth/* {
-		reverse_proxy platform-api:3001
-	}
-	handle /internal/* {
 		reverse_proxy platform-api:3001
 	}
 	handle /healthz {
@@ -143,7 +149,7 @@ aldous.info {
 		reverse_proxy sentry-web:9000
 	}
 
-	# BFF
+	# BFF — /internal/* not listed here (same reason as above)
 	handle /api/* {
 		reverse_proxy platform-api:3001
 	}
