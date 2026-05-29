@@ -9,9 +9,14 @@
 
 `packages/i18n-runtime` created with:
 
-- `locales/en-GB.json`: baseline en-GB resource file
-- `src/index.ts`: `createI18n()`, `serverT()`, `I18nLocale` type, `I18nParams` type, `I18nInstance` interface
-- 8 unit tests: key resolution, interpolation, XSS escape, fallback, missing key
+- `locales/en-GB.json`: baseline en-GB nested JSON resource file
+- `src/index.ts`: `createI18n()` (accepts nested or flat input), `serverT()`,
+  `flattenLocaleMessages()`, `I18nLocaleResource` (nested), `I18nMessages` (flat),
+  `I18nLocaleInput` (union), `I18nLocale` (@deprecated alias)
+- `src/react.ts`: React boundary entry point — exports `createReactI18n()` bootstrap
+  (placeholder; full `I18nProvider`/`useTranslation` hook deferred to ADR-ACT-0121)
+- 14 unit tests: flattening, flat backward-compat, nested JSON resolution,
+  interpolation, XSS escape, fallback (flat+nested), serverT
 
 ## en-GB keys provisioned
 
@@ -28,8 +33,9 @@
 
 ## Deferred
 
-- React provider/hook (separate src/react.ts entry to avoid pulling React into BFF)
-- Date/number/currency formatting via Intl
+- Full `I18nProvider`/`useTranslation` React hook — `src/react.ts` is a
+  bootstrap placeholder only; real React Context implementation tracked in ADR-ACT-0121
+- Date/number/currency formatting via `Intl`
 - Full React text migration: ADR-ACT-0121 (Open)
 - API message migration: ADR-ACT-0122 (Open)
-- Validation gate: ADR-ACT-0123 (Open)
+- Validation gate promotion to hard gate: ADR-ACT-0123 (In Progress)
