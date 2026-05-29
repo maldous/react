@@ -1,0 +1,349 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Enterprise Platform REST API",
+    "version": "0.1.0",
+    "description": "REST supplementary routes for the enterprise React platform BFF. GraphQL is the primary client boundary per ADR-0013; these routes cover health probes, auth, and session management."
+  },
+  "servers": [
+    { "url": "http://localhost:3001", "description": "Local dev (platform-api)" },
+    { "url": "https://aldous.info", "description": "Production (Cloudflare)" }
+  ],
+  "paths": {
+    "/healthz": {
+      "get": {
+        "summary": "Process liveness probe",
+        "operationId": "getHealth",
+        "tags": ["Operations"],
+        "responses": {
+          "200": {
+            "description": "Process is alive",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HealthResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/readyz": {
+      "get": {
+        "summary": "Dependency readiness probe",
+        "operationId": "getReadiness",
+        "tags": ["Operations"],
+        "responses": {
+          "200": {
+            "description": "All dependencies ready",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ReadinessResponse" }
+              }
+            }
+          },
+          "503": {
+            "description": "One or more dependencies not ready",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ReadinessResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/version": {
+      "get": {
+        "summary": "Build version metadata",
+        "operationId": "getVersion",
+        "tags": ["Operations"],
+        "responses": {
+          "200": {
+            "description": "Version info",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/VersionResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/session": {
+      "get": {
+        "summary": "Get current session actor",
+        "operationId": "getSession",
+        "tags": ["Auth"],
+        "responses": {
+          "200": {
+            "description": "Authenticated session actor",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SessionActor" }
+              }
+            }
+          },
+          "401": {
+            "description": "No active session",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "get": {
+        "summary": "Initiate OAuth 2.0 Authorization Code + PKCE login",
+        "operationId": "authLogin",
+        "tags": ["Auth"],
+        "parameters": [
+          {
+            "name": "returnTo",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "Relative path to redirect to after successful login"
+          }
+        ],
+        "responses": {
+          "302": { "description": "Redirect to Keycloak authorization endpoint" },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/callback": {
+      "get": {
+        "summary": "OAuth 2.0 Authorization Code callback",
+        "operationId": "authCallback",
+        "tags": ["Auth"],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "302": { "description": "Redirect to app after session creation" },
+          "400": {
+            "description": "Invalid state, code, or missing pre-auth cookie",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Unverified or absent email",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "409": {
+            "description": "Email already registered under a different identity provider",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "502": {
+            "description": "Token exchange or userinfo call failed",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "summary": "Destroy server-side session and clear cookie",
+        "operationId": "authLogout",
+        "tags": ["Auth"],
+        "responses": {
+          "204": { "description": "Session destroyed, cookie cleared" }
+        }
+      }
+    },
+    "/api/organisation/profile": {
+      "get": {
+        "summary": "Get the authenticated user's organisation profile",
+        "operationId": "getOrganisationProfile",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": {
+            "description": "Organisation profile",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/OrganisationProfile" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/ValidationError" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "patch": {
+        "summary": "Update the organisation display name",
+        "operationId": "patchOrganisationProfile",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateOrganisationProfileRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated organisation profile",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/OrganisationProfile" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/ValidationError" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "sessionCookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "platform_session",
+        "description": "HTTP-only session cookie set by /auth/callback (ADR-0022)"
+      }
+    },
+    "schemas": {
+      "HealthResponse": {
+        "type": "object",
+        "required": ["status"],
+        "properties": {
+          "status": { "type": "string", "enum": ["ok"] }
+        }
+      },
+      "ReadinessResponse": {
+        "type": "object",
+        "required": ["status"],
+        "properties": {
+          "status": { "type": "string", "enum": ["ready", "not-ready"] },
+          "dependencies": {
+            "type": "object",
+            "properties": {
+              "database": { "type": "string", "enum": ["ok", "failed"] }
+            }
+          }
+        }
+      },
+      "VersionResponse": {
+        "type": "object",
+        "required": ["version"],
+        "properties": {
+          "version": { "type": "string" },
+          "gitSha": { "type": "string" },
+          "buildTime": { "type": "string" },
+          "environment": { "type": "string" }
+        }
+      },
+      "SessionActor": {
+        "type": "object",
+        "required": ["userId", "tenantId", "organisationId", "roles", "permissions", "displayName"],
+        "properties": {
+          "userId": { "type": "string", "format": "uuid" },
+          "tenantId": { "type": "string" },
+          "organisationId": { "type": "string" },
+          "roles": { "type": "array", "items": { "type": "string" } },
+          "permissions": { "type": "array", "items": { "type": "string" } },
+          "displayName": { "type": "string" }
+        }
+      },
+      "OrganisationProfile": {
+        "type": "object",
+        "required": ["id", "slug", "displayName", "createdAt", "updatedAt"],
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "slug": { "type": "string" },
+          "displayName": { "type": "string" },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "UpdateOrganisationProfileRequest": {
+        "type": "object",
+        "required": ["displayName"],
+        "properties": {
+          "displayName": { "type": "string", "minLength": 2, "maxLength": 120 }
+        },
+        "additionalProperties": false
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": ["code", "message"],
+        "properties": {
+          "code": { "type": "string" },
+          "message": { "type": "string" },
+          "details": { "type": "object" }
+        }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Not authenticated",
+        "content": {
+          "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
+        }
+      },
+      "Forbidden": {
+        "description": "Insufficient permissions",
+        "content": {
+          "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
+        }
+      },
+      "NotFound": {
+        "description": "Resource not found",
+        "content": {
+          "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
+        }
+      },
+      "ValidationError": {
+        "description": "Request validation failed",
+        "content": {
+          "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
+        }
+      }
+    }
+  }
+}
