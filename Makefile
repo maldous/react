@@ -208,14 +208,8 @@ sonar:
 		printf '$(YELLOW)⚠ SONAR_TOKEN not set — skipping Sonar scan.\n'; \
 		printf '  Set SONAR_TOKEN in .env or environment to enable.\n$(RESET)'; \
 	else \
-		docker compose --profile quality ps sonarqube 2>/dev/null | grep -q "healthy" \
-			|| (printf '$(YELLOW)Starting SonarQube (quality profile)...$(RESET)\n' \
-			    && docker compose --profile quality up -d sonarqube \
-			    && printf 'Waiting for SonarQube to become UP (up to 120 s)...\n' \
-			    && timeout 120 bash -c \
-			         'until curl -sf http://$${SONAR_HOST_URL:-localhost:9003}/api/system/status \
-			                | grep -q "\"status\":\"UP\""; do sleep 5; done' \
-			    && printf '$(GREEN)SonarQube is UP.$(RESET)\n'); \
+		docker compose --profile quality up -d --no-recreate --wait --wait-timeout 420 sonarqube \
+			&& printf '$(GREEN)SonarQube is UP.$(RESET)\n'; \
 		npm run sonar:clean; \
 		printf '$(GREEN)✓ Sonar quality gate passed$(RESET)\n'; \
 	fi
@@ -299,7 +293,7 @@ compose-up-default:
 
 ## compose-up-quality — Start SonarQube (quality profile)
 compose-up-quality:
-	docker compose --profile quality up -d sonarqube
+	docker compose --profile quality up -d --no-recreate --wait --wait-timeout 420 sonarqube
 
 ## compose-up-identity — Start Keycloak (identity profile) and wait for it to be healthy.
 ## --no-recreate: if Keycloak is already running keep it; avoids port 8090 race on restart.
