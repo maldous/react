@@ -69,12 +69,14 @@ ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
 ## Tier 5 — Deploy production stack + identity:
 ##   compose-up-identity → keycloak-provision → compose-up-web
 ## Tier 6 — Full production E2E (real auth, no fixtures):
-##   e2e-prod  (PROD_BASE_URL=http://localhost — Caddy serves both aldous.info and localhost)
+##   e2e-prod  (PROD_BASE_URL=http://aldous.info — requires 127.0.0.1 aldous.info in /etc/hosts)
 ##
-## Requires once: infra/env/local/local.tfvars (copy from local.tfvars.example)
-##                KEYCLOAK_TEST_USERNAME and KEYCLOAK_TEST_PASSWORD in .env
+## One-time local setup:
+##   echo "127.0.0.1 aldous.info" | sudo tee -a /etc/hosts
+##   infra/env/local/local.tfvars (copy from local.tfvars.example)
+##   KEYCLOAK_TEST_USERNAME and KEYCLOAK_TEST_PASSWORD in .env
 # =============================================================================
-all: export PROD_BASE_URL = http://localhost
+all: export PROD_BASE_URL = http://aldous.info
 all: install format lint typecheck architecture audit security \
      compose-up-default test test-compose sonar advisory sbom license \
      e2e-dev \
@@ -532,19 +534,22 @@ e2e-prod-auth:
 	    e2e/prod/login.spec.ts e2e/prod/logout.spec.ts e2e/prod/caddy-links.spec.ts e2e/prod/auth-negative.spec.ts
 	$(call OK,prod auth E2E passed)
 
-## e2e-prod — Full prod E2E against https://aldous.info via Cloudflare (real user)
-## NOT part of make all — run after a real deployment.
-## Requires: PROD_BASE_URL reachable + Keycloak provisioned + credentials in .env.
+## e2e-prod — Full prod E2E against PROD_BASE_URL (default: http://aldous.info)
+## Called from make all with PROD_BASE_URL=http://aldous.info.
+## Called standalone for real Cloudflare: PROD_BASE_URL=https://aldous.info make e2e-prod
+## Requires: aldous.info to resolve (127.0.0.1 in /etc/hosts for local, real DNS for Cloudflare)
 e2e-prod:
-	$(call STEP,e2e:prod \(https://aldous.info — real user via Cloudflare\))
+	$(call STEP,e2e:prod \($${PROD_BASE_URL:-http://aldous.info}\))
 	@if ! npx playwright --version > /dev/null 2>&1; then \
 		printf '$(RED)✗ Playwright not found. Run: npx playwright install chromium --with-deps$(RESET)\n'; \
 		exit 1; \
 	fi
-	@BASE=$${PROD_BASE_URL:-https://aldous.info}; \
+	@BASE=$${PROD_BASE_URL:-http://aldous.info}; \
 	if ! curl -fsS --max-time 10 "$$BASE/healthz" > /dev/null 2>&1; then \
-		$(call WARN,$$BASE not reachable — skipping e2e-prod); \
-		exit 0; \
+		printf '$(RED)✗ $$BASE not reachable.\n'; \
+		printf '  For local: ensure 127.0.0.1 aldous.info is in /etc/hosts and make compose-up-web has run.\n'; \
+		printf '  For Cloudflare: ensure the site is deployed and accessible.$(RESET)\n'; \
+		exit 1; \
 	fi
 	npx playwright test --config playwright.prod.config.ts
 	$(call OK,prod E2E passed)
