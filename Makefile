@@ -293,12 +293,12 @@ compose-up-default:
 compose-up-quality:
 	docker compose --profile quality up -d sonarqube
 
-## compose-up-identity — Start Keycloak (identity profile) and wait for it to be ready
+## compose-up-identity — Start Keycloak (identity profile) and wait for it to be healthy
+## Uses docker compose --wait which honours the container's own healthcheck
+## (start_period:60s + interval:30s × retries:10 = up to 360s).
 compose-up-identity:
 	$(call STEP,compose: starting Keycloak)
-	docker compose --profile identity up -d keycloak
-	@timeout 90 bash -c 'until curl -fsS "http://localhost:$${KEYCLOAK_PORT:-8080}/health/ready" > /dev/null 2>&1; do sleep 3; done' \
-	    || (printf '$(RED)✗ Keycloak did not become ready in 90s$(RESET)\n'; exit 1)
+	docker compose --profile identity up -d --wait --wait-timeout 360 keycloak
 	$(call OK,Keycloak ready)
 
 ## keycloak-provision — Apply Terraform to provision the platform Keycloak realm
