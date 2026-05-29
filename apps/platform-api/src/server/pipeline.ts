@@ -12,6 +12,7 @@ import { createRequestContext, type RuntimeContext } from "@platform/platform-ru
 import { getFixtureSession } from "./session.ts";
 import { parseSessionCookie } from "./auth.ts";
 import { getSessionStore } from "./dependencies.ts";
+import { serverT } from "./i18n.ts";
 
 // Types
 export interface PipelineRequest {
@@ -110,8 +111,13 @@ export function createRouter(
     // Parse body
     const bodyResult = await parseJsonBody(req);
     if (!bodyResult.ok) {
-      const err = new ValidationError("Malformed JSON body");
-      jsonResponse(res, 400, toSafeResponse(err), requestId);
+      const err = new ValidationError("api.error.malformedJsonBody");
+      jsonResponse(
+        res,
+        400,
+        toSafeResponse(err, (message) => serverT(message)),
+        requestId
+      );
       return;
     }
 
@@ -120,7 +126,12 @@ export function createRouter(
     const matchingRoute = matchingMethod.find((r) => r.method === method.toUpperCase());
 
     if (matchingMethod.length === 0) {
-      jsonResponse(res, 404, { code: "NOT_FOUND", message: `${path} not found` }, requestId);
+      jsonResponse(
+        res,
+        404,
+        { code: "NOT_FOUND", message: serverT("api.error.pathNotFound", { path }) },
+        requestId
+      );
       return;
     }
     if (!matchingRoute) {
@@ -129,7 +140,10 @@ export function createRouter(
       jsonResponse(
         res,
         405,
-        { code: "METHOD_NOT_ALLOWED", message: `Method ${method} not allowed for ${path}` },
+        {
+          code: "METHOD_NOT_ALLOWED",
+          message: serverT("api.error.methodNotAllowed", { method, path }),
+        },
         requestId
       );
       return;
@@ -166,16 +180,29 @@ export function createRouter(
         }
       }
       if (!actor) {
-        const err = new UnauthorizedError("Authentication required");
-        jsonResponse(res, 401, toSafeResponse(err), requestId);
+        const err = new UnauthorizedError("api.error.authenticationRequired");
+        jsonResponse(
+          res,
+          401,
+          toSafeResponse(err, (message) => serverT(message)),
+          requestId
+        );
         return;
       }
       if (
         matchingRoute.requiredPermission &&
         !actor.permissions.includes(matchingRoute.requiredPermission)
       ) {
-        const err = new ForbiddenError(`Permission required: ${matchingRoute.requiredPermission}`);
-        jsonResponse(res, 403, toSafeResponse(err), requestId);
+        const requiredPermission = matchingRoute.requiredPermission;
+        const err = new ForbiddenError("api.error.permissionRequired", {
+          safeDetails: { permission: requiredPermission },
+        });
+        jsonResponse(
+          res,
+          403,
+          toSafeResponse(err, (message) => serverT(message, { permission: requiredPermission })),
+          requestId
+        );
         return;
       }
     }

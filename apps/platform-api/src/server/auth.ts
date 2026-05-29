@@ -7,6 +7,7 @@ import {
 } from "@platform/adapters-keycloak";
 import { SESSION_COOKIE_NAME } from "@platform/adapters-redis";
 import { resolveSessionFromIdentity, destroySession } from "../usecases/auth.ts";
+import { serverT } from "./i18n.ts";
 import {
   getKeycloakConfig,
   getAuthCallbackUrl,
@@ -152,32 +153,51 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
   const errorParam = url.searchParams.get("error");
 
   if (errorParam) {
-    res.json(400, toSafeResponse(new ValidationError(`Keycloak error: ${errorParam}`)));
+    res.json(
+      400,
+      toSafeResponse(new ValidationError("api.error.keycloakError"), (msg) =>
+        serverT(msg, { error: errorParam })
+      )
+    );
     return;
   }
 
   if (!code || !state) {
-    res.json(400, toSafeResponse(new ValidationError("Missing code or state parameter")));
+    res.json(
+      400,
+      toSafeResponse(new ValidationError("api.error.missingCodeOrState"), (msg) => serverT(msg))
+    );
     return;
   }
 
   // Verify pre-auth nonce cookie (user-agent binding)
   const preAuthNonce = parsePreAuthCookie(req.raw.headers["cookie"]);
   if (!preAuthNonce) {
-    res.json(400, toSafeResponse(new ValidationError("Missing pre-auth cookie")));
+    res.json(
+      400,
+      toSafeResponse(new ValidationError("api.error.missingPreAuthCookie"), (msg) => serverT(msg))
+    );
     return;
   }
 
   // Consume auth state (one-time use — prevents replay)
   const authState = await getAuthStateStore().take(state);
   if (!authState) {
-    res.json(400, toSafeResponse(new ValidationError("Invalid or expired state parameter")));
+    res.json(
+      400,
+      toSafeResponse(new ValidationError("api.error.invalidOrExpiredState"), (msg) => serverT(msg))
+    );
     return;
   }
 
   // Verify the pre-auth nonce matches the one bound at login time
   if (preAuthNonce !== authState.nonce) {
-    res.json(400, toSafeResponse(new ValidationError("Auth flow binding mismatch")));
+    res.json(
+      400,
+      toSafeResponse(new ValidationError("api.error.authFlowBindingMismatch"), (msg) =>
+        serverT(msg)
+      )
+    );
     return;
   }
 
@@ -187,7 +207,10 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
     getKeycloakConfig()
   );
   if (!tokens) {
-    res.json(502, toSafeResponse(new ValidationError("Token exchange failed")));
+    res.json(
+      502,
+      toSafeResponse(new ValidationError("api.error.tokenExchangeFailed"), (msg) => serverT(msg))
+    );
     return;
   }
 
@@ -197,7 +220,9 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
     // null means email absent or email_verified !== true (Fix 3)
     res.json(
       401,
-      toSafeResponse(new ValidationError("Unverified or missing email — login refused"))
+      toSafeResponse(new ValidationError("api.error.unverifiedOrMissingEmail"), (msg) =>
+        serverT(msg)
+      )
     );
     return;
   }

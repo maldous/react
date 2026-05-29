@@ -2,16 +2,18 @@ import { AlertCircle } from "lucide-react";
 import { cn } from "../lib/utils";
 
 export interface ErrorStateProps {
-  title?: string;
+  title: string;
   description?: string;
   onRetry?: () => void;
+  retryLabel?: string;
   className?: string;
 }
 
 export function ErrorState({
-  title = "Something went wrong",
+  title,
   description,
   onRetry,
+  retryLabel,
   className,
 }: ErrorStateProps) {
   return (
@@ -30,7 +32,7 @@ export function ErrorState({
           onClick={onRetry}
           className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
         >
-          Try again
+          {retryLabel ?? title}
         </button>
       )}
     </div>

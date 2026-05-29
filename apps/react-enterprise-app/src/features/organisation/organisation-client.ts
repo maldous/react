@@ -7,9 +7,13 @@ import type {
 export async function fetchOrganisationProfile(): Promise<GetOrganisationProfileResponse> {
   const res = await fetch("/api/organisation/profile", { credentials: "include" });
   if (!res.ok) {
-    const err = await res.json().catch(() => ({ code: "UNKNOWN", message: "Request failed" }));
+    const err = await res.json().catch(() => ({ code: "UNKNOWN" }));
     const e = Object.assign(
-      new Error((err as { message?: string }).message ?? "Failed to fetch profile"),
+      new Error(
+        (err as { message?: string; code?: string }).message ??
+          (err as { code?: string }).code ??
+          "UNKNOWN"
+      ),
       {
         code: (err as { code?: string }).code,
         status: res.status,
@@ -30,9 +34,13 @@ export async function updateOrganisationProfile(
     body: JSON.stringify(data),
   });
   if (!res.ok) {
-    const err = await res.json().catch(() => ({ code: "UNKNOWN", message: "Request failed" }));
+    const err = await res.json().catch(() => ({ code: "UNKNOWN" }));
     const e = Object.assign(
-      new Error((err as { message?: string }).message ?? "Failed to update profile"),
+      new Error(
+        (err as { message?: string; code?: string }).message ??
+          (err as { code?: string }).code ??
+          "UNKNOWN"
+      ),
       {
         code: (err as { code?: string }).code,
         status: res.status,

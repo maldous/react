@@ -119,9 +119,16 @@ export function isAppError(err: unknown): err is AppError {
   return err instanceof AppError;
 }
 
-export function toSafeResponse(err: unknown): SafeResponse {
+export function toSafeResponse(
+  err: unknown,
+  resolveMessage?: (message: string) => string
+): SafeResponse {
   if (isAppError(err)) {
-    return err.toSafeResponse();
+    const response = err.toSafeResponse();
+    if (resolveMessage) {
+      response.message = resolveMessage(response.message);
+    }
+    return response;
   }
   return {
     code: "UNEXPECTED_ERROR",

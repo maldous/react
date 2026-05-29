@@ -2,16 +2,12 @@ import { ShieldOff } from "lucide-react";
 import { cn } from "../lib/utils";
 
 export interface ForbiddenStateProps {
-  title?: string;
+  title: string;
   description?: string;
   className?: string;
 }
 
-export function ForbiddenState({
-  title = "Access denied",
-  description,
-  className,
-}: ForbiddenStateProps) {
+export function ForbiddenState({ title, description, className }: ForbiddenStateProps) {
   return (
     <div
       role="alert"

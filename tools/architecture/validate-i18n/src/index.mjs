@@ -82,7 +82,7 @@ function processSourceFile(src, usedKeys, paramUsage) {
 function scanDir(dir, usedKeys, paramUsage) {
   if (!fs.existsSync(dir)) return;
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    if (entry.name === "node_modules" || entry.name === "dist") continue;
+    if (entry.name === "node_modules" || entry.name === "dist" || entry.name === "tests") continue;
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       scanDir(full, usedKeys, paramUsage);

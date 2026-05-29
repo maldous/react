@@ -16,13 +16,13 @@ export interface SelectItem {
 
 export interface SelectProps<T extends SelectItem> extends Omit<AriaSelectProps<T>, "children"> {
   items: T[];
-  placeholder?: string;
+  placeholder: string;
   className?: string;
 }
 
 export function Select<T extends SelectItem>({
   items,
-  placeholder = "Select an option",
+  placeholder,
   className,
   ...props
 }: SelectProps<T>) {

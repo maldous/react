@@ -96,7 +96,7 @@ describe("OrganisationProfilePage", () => {
     );
 
     render(<OrganisationProfilePage />);
-    expect(screen.getByText(/loading organisation profile/i)).toBeInTheDocument();
+    expect(screen.getByRole("status")).toHaveTextContent(/loading/i);
   });
 
   it("tenant-admin sees editable form with display name input", async () => {

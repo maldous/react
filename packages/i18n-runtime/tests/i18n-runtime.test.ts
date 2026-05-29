@@ -98,6 +98,16 @@ describe("createI18n — flat messages (backward compat)", () => {
     );
     assert.equal(i18n.t("api.error.unauthenticated"), "Vous devez vous connecter");
   });
+
+  it("does not leak raw secret-like values into escaped interpolations", () => {
+    const i18n = createI18n({ locale: "en-GB", messages: EN_GB });
+    const secret = "token_abc123";
+    const result = i18n.t("feature.organisation.profile.form.displayName.validation.tooShort", {
+      min: secret,
+    });
+    assert.ok(result.includes(secret), "Interpolation should preserve the provided value");
+    assert.ok(!result.includes("<"), "Interpolated output should not introduce markup");
+  });
 });
 
 describe("createI18n — nested JSON messages (en-GB.json shape)", () => {

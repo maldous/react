@@ -1,4 +1,7 @@
+import enGB from "../locales/en-GB.json" with { type: "json" };
+
 export const packageName = "@platform/i18n-runtime";
+export { enGB };
 
 /**
  * Nested JSON locale resource (the shape of committed locale JSON files).
@@ -106,3 +109,5 @@ export function serverT(messages: I18nLocaleInput, key: string, params?: I18nPar
   if (!params) return template;
   return interpolate(template, params);
 }
+
+export { I18nProvider, useTranslation, createReactI18n } from "./react.ts";

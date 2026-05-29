@@ -35,6 +35,17 @@ dc_resource('mailpit',        labels=['infra'],
 dc_resource('otel-collector', labels=['infra'])
 
 # ---------------------------------------------------------------------------
+# Optional auth profile (manual)
+# ---------------------------------------------------------------------------
+
+local_resource(
+  'identity-profile',
+  cmd='make compose-up-identity',
+  labels=['auth'],
+  trigger_mode=TRIGGER_MODE_MANUAL,
+)
+
+# ---------------------------------------------------------------------------
 # platform-api dev server
 # ---------------------------------------------------------------------------
 
@@ -122,7 +133,7 @@ local_resource(
   'platform-api-tests',
   cmd='npm run test:platform-api',
   labels=['tests'],
-  resource_deps=['postgres', 'redis'],
+  resource_deps=['platform-api'],
   deps=[
     'apps/platform-api/src',
     'apps/platform-api/tests',
@@ -134,6 +145,7 @@ local_resource(
   'react-tests',
   cmd='npm run test:frontend:run',
   labels=['tests'],
+  resource_deps=['react-app'],
   deps=[
     'apps/react-enterprise-app/src',
     'packages',
@@ -184,6 +196,7 @@ local_resource(
   'i18n-validation',
   cmd='node tools/architecture/validate-i18n/src/index.mjs .',
   labels=['quality'],
+  resource_deps=['platform-api', 'react-app'],
   deps=[
     'packages/i18n-runtime/locales',
     'apps/react-enterprise-app/src',
@@ -199,6 +212,37 @@ local_resource(
 # profile production (platform-api container + Caddy container); that wiring
 # is deferred. See ADR-ACT-0128 for scope.
 # ---------------------------------------------------------------------------
+
+local_resource(
+  'platform-api-web',
+  cmd='docker compose --profile web up -d platform-api',
+  labels=['app', 'app:production'],
+  trigger_mode=TRIGGER_MODE_MANUAL,
+  resource_deps=['postgres', 'redis', 'keycloak'],
+  deps=[
+    'compose.yaml',
+    'apps/platform-api/Dockerfile',
+    'apps/platform-api/src',
+    'packages',
+    'docker/caddy/Caddyfile',
+  ],
+)
+
+local_resource(
+  'react-app-web',
+  cmd='docker compose --profile web up -d react-app',
+  labels=['app', 'app:production'],
+  trigger_mode=TRIGGER_MODE_MANUAL,
+  resource_deps=['platform-api-web'],
+  deps=[
+    'compose.yaml',
+    'apps/react-enterprise-app/Dockerfile',
+    'apps/react-enterprise-app/src',
+    'apps/react-enterprise-app/index.html',
+    'apps/react-enterprise-app/vite.config.ts',
+    'docker/caddy/Caddyfile',
+  ],
+)
 
 local_resource(
   'prod-build-and-test',
@@ -219,4 +263,5 @@ local_resource(
   cmd='npx playwright test --config playwright.aldous.config.ts',
   labels=['tests'],
   trigger_mode=TRIGGER_MODE_MANUAL,
+  resource_deps=['platform-api-web', 'react-app-web'],
 )

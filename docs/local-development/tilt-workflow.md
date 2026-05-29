@@ -34,6 +34,7 @@ open http://localhost:10350
 | lint                                                        | quality | auto (file watch) | `npm run lint && npm run lint:md`                                                        |
 | platform-api-tests                                          | tests   | auto (file watch) | `npm run test:platform-api`                                                              |
 | react-tests                                                 | tests   | auto (file watch) | `npm run test:frontend:run`                                                              |
+| identity-profile                                            | auth    | **manual**        | `make compose-up-identity`                                                               |
 | architecture-check                                          | quality | **manual**        | orchestrator `all --strict`                                                              |
 | make-check                                                  | quality | **manual**        | `make check`                                                                             |
 | e2e-dev                                                     | tests   | **manual**        | `npm run test:e2e`                                                                       |

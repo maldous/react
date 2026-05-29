@@ -1,0 +1,104 @@
+{
+  "name": "@architecture/validate-openapi-drift",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Report-only OpenAPI drift validation between platform-api routes.ts and docs/api/openapi.json.",
+  "main": "src/index.mjs",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "tool",
+      "name": "validate-openapi-drift",
+      "system": "enterprise-react-platform",
+      "domain": "architecture",
+      "boundedContext": "architecture-governance",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "stable",
+      "role": "tooling",
+      "class": "stable.tooling",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "on-change"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0011",
+        "ADR-0013"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": false
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": true,
+      "serviceName": "validate-openapi-drift",
+      "serviceNamespace": "architecture",
+      "deploymentEnvironments": [
+        "local",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "architecture"
+      ],
+      "forbiddenConsumers": [
+        "domain",
+        "contract",
+        "adapter",
+        "feature",
+        "ui",
+        "application",
+        "platform"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@architecture/validate-package-metadata"
+      ],
+      "providesApis": [
+        "openapi-drift-validation"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "governance",
+      "type": "tool",
+      "stage": "stable",
+      "role": "tooling",
+      "layer": "tooling"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Validates OpenAPI documentation drift for platform-api routes.",
+      "responsibilities": [
+        "Compare platform-api route definitions with docs/api/openapi.json",
+        "Report missing or extra path-method combinations",
+        "Emit evidence for ADR-ACT-0139"
+      ],
+      "nonResponsibilities": [
+        "Does not generate OpenAPI from source",
+        "Does not approve new REST routes"
+      ],
+      "usage": [
+        "node tools/architecture/validate-openapi-drift/src/index.mjs ."
+      ],
+      "operationalNotes": [
+        "This tool is report-only until the OpenAPI documentation process is expanded."
+      ]
+    }
+  },
+  "scripts": {
+    "test": "node --test tests/"
+  }
+}

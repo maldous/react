@@ -15,6 +15,8 @@
  * so consuming code can import from the correct entry point now.
  */
 
+import { createContext, createElement, useContext, useMemo, type ReactNode } from "react";
+import enGB from "../locales/en-GB.json" with { type: "json" };
 import {
   createI18n,
   type I18nInstance,
@@ -28,11 +30,15 @@ export type { I18nInstance, I18nLocaleInput, CreateI18nOptions };
  * Placeholder React provider type contract.
  * Replace with real React context implementation in ADR-ACT-0121.
  */
+const defaultI18n = createI18n({ locale: "en-GB", messages: enGB });
+
+const I18nContext = createContext<I18nInstance>(defaultI18n);
+
 export interface I18nProviderProps {
   locale: string;
   messages: I18nLocaleInput;
   fallback?: I18nLocaleInput;
-  children: unknown; // typed as unknown to avoid React peer-dep at this layer
+  children: ReactNode;
 }
 
 /**
@@ -43,4 +49,17 @@ export interface I18nProviderProps {
  */
 export function createReactI18n(options: CreateI18nOptions): I18nInstance {
   return createI18n(options);
+}
+
+export function I18nProvider({ locale, messages, fallback, children }: I18nProviderProps) {
+  const value = useMemo(
+    () => createI18n({ locale, messages, fallback }),
+    [locale, messages, fallback]
+  );
+  return createElement(I18nContext.Provider, { value, children });
+}
+
+export function useTranslation() {
+  const i18n = useContext(I18nContext);
+  return i18n.t;
 }

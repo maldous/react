@@ -3,18 +3,13 @@ import { Inbox } from "lucide-react";
 import { cn } from "../lib/utils";
 
 export interface EmptyStateProps {
-  title?: string;
+  title: string;
   description?: string;
   action?: ReactNode;
   className?: string;
 }
 
-export function EmptyState({
-  title = "No results",
-  description,
-  action,
-  className,
-}: EmptyStateProps) {
+export function EmptyState({ title, description, action, className }: EmptyStateProps) {
   return (
     <div
       className={cn("flex flex-col items-center justify-center gap-4 py-12 text-center", className)}

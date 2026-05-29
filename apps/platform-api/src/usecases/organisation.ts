@@ -19,16 +19,16 @@ const CONTROL_CHAR_RE = /[\x00-\x1F\x7F]/;
 export function normaliseOrganisationDisplayName(value: string): string {
   const trimmed = value.trim();
   if (trimmed.length === 0) {
-    throw new ValidationError("Display name is required");
+    throw new ValidationError("feature.organisation.profile.form.displayName.validation.required");
   }
   if (trimmed.length < 2) {
-    throw new ValidationError("Display name must be at least 2 characters");
+    throw new ValidationError("feature.organisation.profile.form.displayName.validation.tooShort");
   }
   if (trimmed.length > 120) {
-    throw new ValidationError("Display name must be 120 characters or less");
+    throw new ValidationError("feature.organisation.profile.form.displayName.validation.tooLong");
   }
   if (CONTROL_CHAR_RE.test(trimmed)) {
-    throw new ValidationError("Display name must not contain control characters");
+    throw new ValidationError("feature.organisation.profile.form.displayName.validation.invalid");
   }
   return trimmed;
 }
@@ -43,7 +43,7 @@ export async function getOrganisationProfile(
 ): Promise<OrganisationProfile> {
   const profile = await deps.organisations.getById(input.organisationId);
   if (!profile) {
-    throw new NotFoundError("Organisation not found");
+    throw new NotFoundError("api.error.organisationNotFound");
   }
   return profile;
 }
@@ -55,7 +55,7 @@ export async function updateOrganisationDisplayName(
   const displayName = normaliseOrganisationDisplayName(input.displayName);
   const profile = await deps.organisations.updateDisplayName(input.organisationId, displayName);
   if (!profile) {
-    throw new NotFoundError("Organisation not found");
+    throw new NotFoundError("api.error.organisationNotFound");
   }
   return profile;
 }

@@ -1,7 +1,11 @@
+# Make Check
+
 ---
+
 name: make-check
 description: Run make check after architecture or governance changes and report any gate failures
 user-invocable: false
+
 ---
 
 Run `make check` and report the result.

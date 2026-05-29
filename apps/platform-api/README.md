@@ -109,6 +109,7 @@ production
 @platform/contracts-organisation
 @platform/domain-identity
 @platform/session-runtime
+@platform/i18n-runtime
 @platform/adapters-keycloak
 @platform/adapters-redis
 ```

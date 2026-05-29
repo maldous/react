@@ -29,6 +29,15 @@ export default defineConfig({
         __dirname,
         "../../packages/contracts-organisation/src/index.ts"
       ),
+      "@platform/i18n-runtime": path.resolve(__dirname, "../../packages/i18n-runtime/src/index.ts"),
+      "@platform/i18n-runtime/react": path.resolve(
+        __dirname,
+        "../../packages/i18n-runtime/src/react.ts"
+      ),
+      "@platform/i18n-runtime/locales/en-GB.json": path.resolve(
+        __dirname,
+        "../../packages/i18n-runtime/locales/en-GB.json"
+      ),
     },
   },
   server: {

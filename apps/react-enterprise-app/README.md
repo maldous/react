@@ -107,6 +107,7 @@ production
 @platform/contracts-auth
 @platform/contracts-organisation
 @platform/platform-errors
+@platform/i18n-runtime
 ```
 
 ### Provides APIs

@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import { execFileSync, spawnSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import fs from "node:fs";
+import os from "node:os";
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../..");
 const TOOL = path.join(REPO_ROOT, "tools/architecture/validate-i18n/src/index.mjs");
@@ -49,5 +51,24 @@ describe("validate-i18n", () => {
     } else {
       assert.equal(r.status, 0);
     }
+  });
+
+  it("fails strict mode for a repo with a missing en-GB key", () => {
+    const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "validate-i18n-"));
+    fs.mkdirSync(path.join(tempRoot, "packages/i18n-runtime/locales"), { recursive: true });
+    fs.mkdirSync(path.join(tempRoot, "apps/react-enterprise-app/src"), { recursive: true });
+    fs.writeFileSync(
+      path.join(tempRoot, "packages/i18n-runtime/locales/en-GB.json"),
+      JSON.stringify({ feature: { example: { title: "Example" } } }, null, 2)
+    );
+    fs.writeFileSync(
+      path.join(tempRoot, "apps/react-enterprise-app/src/example.ts"),
+      'import { serverT } from "@platform/i18n-runtime";\nserverT({}, "feature.example.missing");\n'
+    );
+    const r = spawnSync(process.execPath, [TOOL, tempRoot, "--strict"], { encoding: "utf8" });
+    const combined = (r.stdout ?? "") + (r.stderr ?? "");
+    assert.equal(r.status, 1, `Expected strict failure, got ${r.status}: ${combined}`);
+    assert.ok(combined.includes("missing from"), `Expected missing-key report, got: ${combined}`);
+    assert.ok(combined.includes("Strict mode"), `Expected strict-mode banner, got: ${combined}`);
   });
 });

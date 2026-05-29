@@ -9,6 +9,7 @@ import {
   parseSessionCookie,
 } from "./auth.ts";
 import { getSessionStore } from "./dependencies.ts";
+import { serverT } from "./i18n.ts";
 
 export const routes: Route[] = [
   {
@@ -59,7 +60,10 @@ export const routes: Route[] = [
           // Redis unavailable — fall through to 401
         }
       }
-      res.json(401, { code: "UNAUTHENTICATED", message: "No session" });
+      res.json(401, {
+        code: "UNAUTHENTICATED",
+        message: serverT("api.error.unauthenticatedSession"),
+      });
     },
   },
   // ---------------------------------------------------------------------------
