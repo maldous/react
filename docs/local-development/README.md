@@ -1,0 +1,111 @@
+# Local development guide
+
+All local developer tooling for the enterprise React platform.
+
+## Quick start
+
+```bash
+# 1. Install dependencies
+npm ci
+
+# 2. Start Compose default services
+make compose-up-default
+
+# 3. Run database migrations and seed
+make db-migrate
+make seed-demo
+
+# 4. Start dev servers
+npm run api:start:admin    # platform-api on :3001
+# In another terminal:
+cd apps/react-enterprise-app && npx vite   # React SPA on :5173
+```
+
+Or with Tilt (all-in-one, requires Tilt installed — [install →](tilt-workflow.md)):
+
+```bash
+make compose-up-default
+tilt up
+```
+
+## Services and profiles
+
+[Compose services →](compose-services.md)
+
+| Profile        | Command                          | Services                                          |
+| -------------- | -------------------------------- | ------------------------------------------------- |
+| default        | `docker compose up -d`           | postgres, redis, clickhouse, minio, mailpit, otel |
+| web            | `make compose-up-web`            | platform-api + React SPA on :80                   |
+| identity       | `make compose-up-identity`       | Keycloak                                          |
+| external-mocks | `make compose-up-external-mocks` | WireMock                                          |
+| quality        | `make compose-up-quality`        | SonarQube                                         |
+
+## Tilt feedback loop
+
+[Tilt workflow →](tilt-workflow.md)
+
+Single command for real-time dev feedback: `tilt up`
+
+## Dev Container
+
+[.devcontainer/ →](../../.devcontainer/devcontainer.json)
+
+Works with VS Code Dev Containers and GitHub Codespaces. Includes Node 25, Docker-in-Docker, GitHub CLI, and Playwright.
+
+## External mocks
+
+[compose-services.md →](compose-services.md#wiremock-setup-external-mocks-profile)
+
+For deterministic external HTTP API simulation:
+
+```bash
+make compose-up-external-mocks
+curl http://localhost:8089/__admin/health
+```
+
+## Reset and demo data
+
+[reset-and-fixtures.md →](reset-and-fixtures.md)
+
+```bash
+make reset-local         # Destructive full database reset
+make seed-demo           # Re-seed fixture actors (idempotent)
+make db-shell            # psql into local Postgres
+make redis-flush-local   # Clear local Redis sessions
+```
+
+## E2E modes
+
+| Mode                  | Command                                                    | Target                 |
+| --------------------- | ---------------------------------------------------------- | ---------------------- |
+| Dev (fixture session) | `npm run test:e2e`                                         | localhost:5173 + :3001 |
+| Production build      | `npm run test:e2e:prod`                                    | vite preview           |
+| Live smoke            | `npx playwright test --config playwright.aldous.config.ts` | <https://aldous.info>  |
+
+## API contract
+
+[docs/api/ →](../api/README.md)
+
+OpenAPI 3.1 for REST supplementary routes. GraphQL is the primary boundary (ADR-0013).
+
+## Architecture checks
+
+```bash
+make check              # Fast quality gate (format + lint + tsc + audit + compose + arch)
+npm run test:architecture   # All architecture, platform, and API tests
+node tools/architecture/orchestrator/src/index.mjs all --no-reports --strict
+```
+
+## Key ports
+
+| Service             | Port | URL                                  |
+| ------------------- | ---- | ------------------------------------ |
+| platform-api        | 3001 | <http://localhost:3001/healthz>      |
+| React SPA (dev)     | 5173 | <http://localhost:5173>              |
+| React SPA (preview) | 4173 | <http://localhost:4173>              |
+| Postgres            | 5433 | postgresql://localhost:5433/platform |
+| Redis               | 6379 | redis://localhost:6379               |
+| Mailpit             | 8025 | <http://localhost:8025>              |
+| WireMock            | 8089 | <http://localhost:8089/__admin/>     |
+| Keycloak            | 8080 | <http://localhost:8080>              |
+| SonarQube           | 9003 | <http://localhost:9003>              |

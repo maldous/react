@@ -258,7 +258,7 @@ Package READMEs are generated from `architecture.readme` metadata. Do not edit g
 | 0026      | Define internationalisation and translation resource model              |
 | 0027      | Define Tilt local development feedback loop                             |
 
-ADR-0018 is reserved. Next ADR: **0028**. Next ACTION-REGISTER entry: **ADR-ACT-0133**.
+ADR-0018 is reserved. Next ADR: **0028**. Next ACTION-REGISTER entry: **ADR-ACT-0139**.
 
 ---
 
