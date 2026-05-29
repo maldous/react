@@ -5,11 +5,10 @@ It orchestrates Compose services, dev servers, and quality checks through a sing
 
 ## Prerequisites
 
-Install Tilt: <https://docs.tilt.dev/install.html>
+Install Tilt from the official release page: <https://docs.tilt.dev/install.html>
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/tilt-dev/tilt/master/scripts/install.sh | bash
-```
+Dev Container users: Tilt is installed automatically by `.devcontainer/post-create.sh`
+using a pinned version with checksum verification (see that file for the version and SHA256).
 
 ## Quick start
 
@@ -26,20 +25,21 @@ open http://localhost:10350
 
 ## Resources
 
-| Resource                                                    | Label   | Trigger           | What it runs                                                         |
-| ----------------------------------------------------------- | ------- | ----------------- | -------------------------------------------------------------------- |
-| postgres, redis, clickhouse, minio, mailpit, otel-collector | infra   | auto (Compose)    | Docker Compose default profile                                       |
-| platform-api                                                | app     | auto (file watch) | `npm run api:start:admin` on :3001                                   |
-| react-app                                                   | app     | auto (file watch) | Vite dev server on :5173                                             |
-| typecheck                                                   | quality | auto (file watch) | `npm run tsc:check`                                                  |
-| lint                                                        | quality | auto (file watch) | `npm run lint && npm run lint:md`                                    |
-| platform-api-tests                                          | tests   | auto (file watch) | `npm run test:platform-api`                                          |
-| react-tests                                                 | tests   | auto (file watch) | `npm run test:frontend:run`                                          |
-| architecture-check                                          | quality | **manual**        | orchestrator `all --strict`                                          |
-| make-check                                                  | quality | **manual**        | `make check`                                                         |
-| e2e-dev                                                     | tests   | **manual**        | `npm run test:e2e`                                                   |
-| prod-build-and-test                                         | tests   | **manual**        | `npm run test:e2e:prod` (builds production SPA then runs Playwright) |
-| aldous-smoke                                                | tests   | **manual**        | Playwright against [https://aldous.info](https://aldous.info)        |
+| Resource                                                    | Label   | Trigger           | What it runs                                                                             |
+| ----------------------------------------------------------- | ------- | ----------------- | ---------------------------------------------------------------------------------------- |
+| postgres, redis, clickhouse, minio, mailpit, otel-collector | infra   | auto (Compose)    | Docker Compose default profile                                                           |
+| platform-api                                                | app     | auto (file watch) | `npm run api:start:admin` on :3001                                                       |
+| react-app                                                   | app     | auto (file watch) | Vite dev server on :5173                                                                 |
+| typecheck                                                   | quality | auto (file watch) | `npm run tsc:check`                                                                      |
+| lint                                                        | quality | auto (file watch) | `npm run lint && npm run lint:md`                                                        |
+| platform-api-tests                                          | tests   | auto (file watch) | `npm run test:platform-api`                                                              |
+| react-tests                                                 | tests   | auto (file watch) | `npm run test:frontend:run`                                                              |
+| architecture-check                                          | quality | **manual**        | orchestrator `all --strict`                                                              |
+| make-check                                                  | quality | **manual**        | `make check`                                                                             |
+| e2e-dev                                                     | tests   | **manual**        | `npm run test:e2e`                                                                       |
+| i18n-validation                                             | quality | auto              | `node tools/architecture/validate-i18n/src/index.mjs .` (report-only)                    |
+| prod-build-and-test                                         | tests   | **manual**        | `npm run test:e2e:prod` (vite build + Playwright preview — not full Compose web-profile) |
+| aldous-smoke                                                | tests   | **manual**        | Playwright against [https://aldous.info](https://aldous.info)                            |
 
 ## Triggering manual resources
 
@@ -78,6 +78,11 @@ tilt up
 | Mailpit                | <http://localhost:8025>         |
 | Tilt UI                | <http://localhost:10350>        |
 
-## Production parity
+## Production parity (ADR-ACT-0128 — In Progress)
 
-Production parity resources are available as manual-trigger resources: `prod-build-and-test` runs the full production build and E2E suite; `aldous-smoke` runs live smoke tests against [https://aldous.info](https://aldous.info).
+`prod-build-and-test` runs `npm run test:e2e:prod`: builds the Vite SPA for
+production and runs Playwright against `vite preview`. This is not full
+Compose web-profile production (platform-api container + Caddy container);
+that wiring is deferred.
+
+`aldous-smoke` runs Playwright against the live `https://aldous.info` deployment.

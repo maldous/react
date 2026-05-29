@@ -252,6 +252,8 @@ ADR-ACT-0081: Done — Wired package-map.mjs (buildPackageMap) into index.mjs re
 | ADR-ACT-0137 | ADR-0017 | Add reset and demo data workflow. Add Make targets: reset-local (destructive db reset), seed-demo (idempotent fixture seed), db-migrate (idempotent migrations), db-shell (psql), redis-flush-local (destructive Redis flush). Create docs/local-development/reset-and-fixtures.md documenting fixture actors and idempotency. | Implementation | Done | Medium | ADR-0017 | Architecture owner / team-platform | Complete | Makefile, docs/local-development/reset-and-fixtures.md |
 | ADR-ACT-0138 | ADR-0011, ADR-0017, ADR-0027 | Add local development docs index. Create docs/local-development/README.md linking all developer resources: Compose services, Tilt workflow, Dev Container, external mocks, reset/demo data, E2E modes, API contract, architecture checks, and key ports. Update CLAUDE.md next ACTION-REGISTER entry to ADR-ACT-0139. | Documentation | Done | Low | ADR-ACT-0130 | Architecture owner / technical lead | Complete | docs/local-development/README.md |
 
+| ADR-ACT-0139 | ADR-0013, ADR-0011 | Add OpenAPI drift validation. Add a lightweight script that checks every route in apps/platform-api/src/server/routes.ts has a corresponding path+method in docs/api/openapi.json. Run as report-only gate before next REST route expansion. Source of truth remains routes.ts; openapi.json is documentation. | Implementation | Open | Medium | ADR-0013 | Architecture owner / team-platform | Before next REST route addition | |
+
 ## Notes
 
 Actions may later link to tickets, pull requests, issues, or delivery-board items.
