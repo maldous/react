@@ -444,8 +444,8 @@ services:
       # so all tenants and vanity domains work without any config change (ADR-0029 §2b).
       KEYCLOAK_PUBLIC_URL: ${KEYCLOAK_PUBLIC_URL:-}
       KEYCLOAK_REALM: ${KEYCLOAK_REALM:-platform}
-      KEYCLOAK_BFF_CLIENT_ID: ${KEYCLOAK_BFF_CLIENT_ID:-platform-api}
-      KEYCLOAK_BFF_CLIENT_SECRET: ${KEYCLOAK_BFF_CLIENT_SECRET:-local-dev-bff-secret}
+      KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID:-platform-api}
+      KEYCLOAK_CLIENT_SECRET: ${KEYCLOAK_CLIENT_SECRET:-local-dev-bff-secret}
       KEYCLOAK_PROVISIONER_CLIENT_ID: ${KEYCLOAK_PROVISIONER_CLIENT_ID:-platform-provisioner}
       KEYCLOAK_PROVISIONER_CLIENT_SECRET: ${KEYCLOAK_PROVISIONER_CLIENT_SECRET:-local-dev-provisioner-secret}
     depends_on:
