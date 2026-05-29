@@ -208,7 +208,7 @@ sonar:
 		printf '$(YELLOW)⚠ SONAR_TOKEN not set — skipping Sonar scan.\n'; \
 		printf '  Set SONAR_TOKEN in .env or environment to enable.\n$(RESET)'; \
 	else \
-		docker compose --profile quality up -d --no-recreate --wait --wait-timeout 420 sonarqube \
+		docker compose --profile quality up -d --wait --wait-timeout 420 sonarqube \
 			|| { printf '$(RED)✗ SonarQube did not become healthy$(RESET)\n'; exit 1; }; \
 		printf '$(GREEN)SonarQube is UP.$(RESET)\n'; \
 		npm run sonar:clean \
@@ -301,7 +301,7 @@ compose-up-default:
 
 ## compose-up-quality — Start SonarQube (quality profile)
 compose-up-quality:
-	docker compose --profile quality up -d --no-recreate --wait --wait-timeout 420 sonarqube
+	docker compose --profile quality up -d --wait --wait-timeout 420 sonarqube
 
 ## compose-up-identity — Start Keycloak (identity profile) and wait for it to be healthy.
 ## --no-recreate: if Keycloak is already running keep it; avoids port 8090 race on restart.
@@ -309,7 +309,7 @@ compose-up-quality:
 ## --wait-timeout 360: maximum wait (start_period:60s + interval:30s × retries:10).
 compose-up-identity:
 	$(call STEP,compose: starting Keycloak)
-	docker compose --profile identity up -d --no-recreate --wait --wait-timeout 360 keycloak
+	docker compose --profile identity up -d --wait --wait-timeout 360 keycloak
 	$(call OK,Keycloak ready)
 
 ## keycloak-provision — Apply Terraform to provision the platform Keycloak realm
