@@ -29,42 +29,45 @@ function extractRoutes(source) {
   return routes;
 }
 
+const OPENAPI_META_KEYS = new Set(["parameters", "summary", "description", "servers"]);
+
+function findMissing(routes, definedPaths) {
+  return routes.filter((route) => {
+    const pathSpec = definedPaths.get(route.path);
+    return !pathSpec || !pathSpec[route.method];
+  });
+}
+
+function findExtra(routes, definedPaths) {
+  const extra = [];
+  for (const [openapiPathKey, pathSpec] of definedPaths) {
+    for (const method of Object.keys(pathSpec)) {
+      if (OPENAPI_META_KEYS.has(method)) continue;
+      if (!routes.some((r) => r.path === openapiPathKey && r.method === method)) {
+        extra.push({ path: openapiPathKey, method });
+      }
+    }
+  }
+  return extra;
+}
+
 function checkDrift(repoRoot) {
   const routesPath = path.join(repoRoot, ROUTES_FILE);
   const openapiPath = path.join(repoRoot, OPENAPI_FILE);
 
-  if (!fs.existsSync(routesPath)) {
-    throw new Error(`Missing routes file: ${ROUTES_FILE}`);
-  }
-  if (!fs.existsSync(openapiPath)) {
-    throw new Error(`Missing OpenAPI file: ${OPENAPI_FILE}`);
-  }
+  if (!fs.existsSync(routesPath)) throw new Error(`Missing routes file: ${ROUTES_FILE}`);
+  if (!fs.existsSync(openapiPath)) throw new Error(`Missing OpenAPI file: ${OPENAPI_FILE}`);
 
   const source = fs.readFileSync(routesPath, "utf8");
   const openapi = loadJson(openapiPath);
   const routes = extractRoutes(source);
   const definedPaths = new Map(Object.entries(openapi.paths ?? {}));
 
-  const missing = [];
-  const extra = [];
-
-  for (const route of routes) {
-    const pathSpec = definedPaths.get(route.path);
-    if (!pathSpec || !pathSpec[route.method]) {
-      missing.push(route);
-    }
-  }
-
-  for (const [openapiPathKey, pathSpec] of definedPaths) {
-    for (const method of Object.keys(pathSpec)) {
-      if (["parameters", "summary", "description", "servers"].includes(method)) continue;
-      if (!routes.some((route) => route.path === openapiPathKey && route.method === method)) {
-        extra.push({ path: openapiPathKey, method });
-      }
-    }
-  }
-
-  return { routes, missing, extra };
+  return {
+    routes,
+    missing: findMissing(routes, definedPaths),
+    extra: findExtra(routes, definedPaths),
+  };
 }
 
 const repoRoot = findRepoRoot(process.cwd());
