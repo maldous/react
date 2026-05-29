@@ -27,6 +27,9 @@ make compose-up-default   # Start postgres redis clickhouse minio mailpit otel-c
 make compose-ps     # Check service health
 # Public web demo (builds containers, serves on :80 — stop system Caddy first):
 docker compose --profile web up -d --build
+# Local feedback loop (ADR-0027 — Tiltfile not yet implemented, see ADR-ACT-0127):
+# tilt up             # Fast dev: Compose infra + host Vite/API + auto checks
+# tilt up -- --mode=production  # Production parity: Compose web profile + prod E2E
 make readmes        # Regenerate package READMEs from metadata
 make help           # Show all targets
 ```
@@ -252,8 +255,10 @@ Package READMEs are generated from `architecture.readme` metadata. Do not edit g
 | 0023      | Define declarative infrastructure provisioning model                    |
 | 0024      | Define slice readiness and dependency gate model                        |
 | 0025      | Define Playwright end-to-end testing strategy                           |
+| 0026      | Define internationalisation and translation resource model              |
+| 0027      | Define Tilt local development feedback loop                             |
 
-ADR-0018 is reserved. Next ADR: **0026**. Next ACTION-REGISTER entry: **ADR-ACT-0120**.
+ADR-0018 is reserved. Next ADR: **0028**. Next ACTION-REGISTER entry: **ADR-ACT-0131**.
 
 ---
 
