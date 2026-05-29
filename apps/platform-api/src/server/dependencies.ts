@@ -180,9 +180,38 @@ export function getKeycloakConfigForRealm(realmName: string): KeycloakClientConf
   };
 }
 
-export function getAuthCallbackUrl(): string {
+/**
+ * Build the OAuth callback URL from the request host header.
+ *
+ * Using the request host makes the callback URL dynamic across all tenants and
+ * vanity domains without any per-tenant config — aldous.info, tenant1.aldous.info,
+ * or any custom domain all resolve correctly at runtime (ADR-0029 §2b).
+ *
+ * Falls back to PLATFORM_API_URL when no host is provided (e.g. tests, local dev).
+ */
+export function getAuthCallbackUrl(host?: string): string {
+  if (host) {
+    const scheme = host.includes("localhost") ? "http" : "https";
+    return `${scheme}://${host}/auth/callback`;
+  }
   const apiUrl = process.env["PLATFORM_API_URL"] ?? "http://localhost:3001";
   return `${apiUrl}/auth/callback`;
+}
+
+/**
+ * Build the Keycloak public URL (browser-facing) from the request host.
+ *
+ * Every tenant and vanity domain gets the correct /kc path on their own origin.
+ * Falls back to KEYCLOAK_PUBLIC_URL env var when no host is provided.
+ */
+export function getKeycloakPublicUrl(host?: string): string {
+  if (host) {
+    const scheme = host.includes("localhost") ? "http" : "https";
+    return `${scheme}://${host}/kc`;
+  }
+  return (
+    process.env["KEYCLOAK_PUBLIC_URL"] ?? process.env["KEYCLOAK_URL"] ?? "http://localhost:8090/kc"
+  );
 }
 
 export function getAppBaseUrl(): string {

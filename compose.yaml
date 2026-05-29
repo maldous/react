@@ -439,8 +439,10 @@ services:
       # Public URL for browser-facing OAuth redirects — via Caddy /kc path prefix.
       # The BFF uses KEYCLOAK_URL for internal token exchange; KEYCLOAK_PUBLIC_URL for
       # the auth URL the browser navigates to (Authorization Code redirect).
-      # Browser-facing URL — matches Caddy's /kc path prefix and KC_HTTP_RELATIVE_PATH.
-      KEYCLOAK_PUBLIC_URL: ${KEYCLOAK_PUBLIC_URL:-http://aldous.info/kc}
+      # KEYCLOAK_PUBLIC_URL: override only if the host-derived URL is wrong for your setup.
+      # By default, platform-api derives the public Keycloak URL from the request Host header,
+      # so all tenants and vanity domains work without any config change (ADR-0029 §2b).
+      KEYCLOAK_PUBLIC_URL: ${KEYCLOAK_PUBLIC_URL:-}
       KEYCLOAK_REALM: ${KEYCLOAK_REALM:-platform}
       KEYCLOAK_BFF_CLIENT_ID: ${KEYCLOAK_BFF_CLIENT_ID:-platform-api}
       KEYCLOAK_BFF_CLIENT_SECRET: ${KEYCLOAK_BFF_CLIENT_SECRET:-local-dev-bff-secret}

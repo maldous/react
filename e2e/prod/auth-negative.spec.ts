@@ -13,24 +13,9 @@ const BASE_URL = process.env["REAL_AUTH_BASE_URL"] ?? "http://aldous.info";
 
 test.describe("aldous.info: wrong credentials", () => {
   test("wrong password shows Keycloak error on login form", async ({ page }) => {
-    await page.goto("/");
-    // Navigate to login (via link or directly)
-    const signinLink = page
-      .locator(
-        '[data-testid="sign-in-link"], [data-testid="sign-in-button"], a[href="/auth/login"]'
-      )
-      .first();
-    if ((await signinLink.count()) > 0) {
-      await signinLink.click();
-    } else {
-      await page.goto("/auth/login");
-    }
-
-    // Trigger the BFF login redirect
-    const loginButton = page
-      .locator('[data-testid="sign-in-button"], a[href="/auth/login"]')
-      .first();
-    await loginButton.click();
+    // /auth/login on the BFF triggers the PKCE redirect to Keycloak directly.
+    // Caddy proxies /auth/* to platform-api, so there is no intermediate SPA login page.
+    await page.goto("/auth/login");
 
     // Fill wrong credentials on Keycloak form
     await page.waitForSelector("#username", { state: "visible", timeout: 15_000 });

@@ -40,14 +40,12 @@ http://aldous.info http://localhost {
 	# Keycloak realm endpoints — OAuth login, PKCE, JWKS, token exchange.
 	# These must be publicly reachable; Keycloak enforces its own auth internally.
 	handle /kc/realms/* {
-		uri strip_prefix /kc
 		reverse_proxy keycloak:8080
 	}
 
 	# Keycloak admin console — protected by platform forward_auth.
 	handle /kc/* {
 		import forward_auth_check admin:keycloak read
-		uri strip_prefix /kc
 		reverse_proxy keycloak:8080
 	}
 
@@ -138,14 +136,12 @@ http://aldous.info http://localhost {
 http://*.aldous.info {
 	# Keycloak realm endpoints — publicly accessible (Keycloak handles its own auth)
 	handle /kc/realms/* {
-		uri strip_prefix /kc
 		reverse_proxy keycloak:8080
 	}
 
 	# Keycloak admin console — tenant-scoped, protected
 	handle /kc/* {
 		import forward_auth_check admin:keycloak read
-		uri strip_prefix /kc
 		reverse_proxy keycloak:8080
 	}
 

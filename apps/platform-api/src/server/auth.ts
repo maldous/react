@@ -12,6 +12,7 @@ import {
   getKeycloakConfig,
   getKeycloakConfigForRealm,
   getAuthCallbackUrl,
+  getKeycloakPublicUrl,
   getAppBaseUrl,
   getAuthStateStore,
   getSessionStore,
@@ -121,12 +122,20 @@ export const handleAuthLogin: PipelineHandler = async (req, res) => {
   // Sanitise returnTo: only relative paths are allowed (open-redirect protection)
   const returnTo = rawReturnTo.startsWith("/") ? rawReturnTo : "/";
 
+  // Derive the request host for dynamic callback URL and Keycloak public URL.
+  // X-Forwarded-Host is set by Caddy; fall back to Host for direct connections.
+  const host =
+    (req.raw.headers["x-forwarded-host"] as string | undefined) ?? req.raw.headers["host"];
+
   // Resolve the Keycloak realm for this tenant's FQDN (ADR-0029 §2b).
   // Falls back to the global platform realm when on aldous.info root or dev mode.
   const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool()).catch(() => null);
-  const keycloakCfg = tenantCtx
-    ? getKeycloakConfigForRealm(tenantCtx.realmName)
-    : getKeycloakConfig();
+  const keycloakCfg = {
+    ...(tenantCtx ? getKeycloakConfigForRealm(tenantCtx.realmName) : getKeycloakConfig()),
+    // Override publicUrl with host-derived URL so every tenant gets the correct
+    // Keycloak origin in the authorization redirect (ADR-0029, ADR-0032).
+    publicUrl: getKeycloakPublicUrl(host),
+  };
 
   const state = crypto.randomUUID();
   const nonce = crypto.randomUUID(); // bound to this user-agent via pre-auth cookie
@@ -136,7 +145,7 @@ export const handleAuthLogin: PipelineHandler = async (req, res) => {
   await getAuthStateStore().put(state, { codeVerifier, returnTo, nonce });
 
   const authUrl = buildAuthorizationUrl(
-    { state, codeChallenge, redirectUri: getAuthCallbackUrl() },
+    { state, codeChallenge, redirectUri: getAuthCallbackUrl(host) },
     keycloakCfg
   );
 
@@ -161,6 +170,10 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
   const errorParam = url.searchParams.get("error");
+
+  // Derive host for dynamic callback URL (must match what was used in the authorization request)
+  const callbackHost =
+    (req.raw.headers["x-forwarded-host"] as string | undefined) ?? req.raw.headers["host"];
 
   // Resolve the tenant realm from the FQDN for token exchange (ADR-0029 §2b)
   const callbackTenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool()).catch(
@@ -219,9 +232,10 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
     return;
   }
 
-  // Exchange authorization code for tokens (using tenant-aware realm config)
+  // Exchange authorization code for tokens (using tenant-aware realm config).
+  // redirectUri must exactly match what was used in the authorization request.
   const tokens = await exchangeCodeForTokens(
-    { code, redirectUri: getAuthCallbackUrl(), codeVerifier: authState.codeVerifier },
+    { code, redirectUri: getAuthCallbackUrl(callbackHost), codeVerifier: authState.codeVerifier },
     callbackKeycloakCfg
   );
   if (!tokens) {
