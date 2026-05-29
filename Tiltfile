@@ -3,7 +3,9 @@
 #
 # MODES
 #   Fast dev (default):   tilt up
-#   Production parity:    see ADR-ACT-0128 (not yet implemented)
+#   Production parity:    prod-build-and-test and aldous-smoke are available
+#                         as manual resources. Full Compose web-profile container
+#                         wiring is deferred — see ADR-ACT-0128 (In Progress).
 #
 # PROFILES
 #   Default infra starts automatically via docker_compose()
@@ -172,9 +174,30 @@ local_resource(
 )
 
 # ---------------------------------------------------------------------------
-# Production parity — manual trigger (ADR-ACT-0128)
-# Runs npm run test:e2e:prod which builds the SPA with vite, then runs Playwright
-# against vite preview. Slower than dev mode — manual trigger only.
+# i18n validation — auto-trigger, report-only (ADR-ACT-0123, ADR-ACT-0129)
+# Scans source for translation key usage and reports keys missing from en-GB.json.
+# Report-only until ADR-ACT-0121 (React text migration) and ADR-ACT-0122
+# (API message migration) are complete.
+# ---------------------------------------------------------------------------
+
+local_resource(
+  'i18n-validation',
+  cmd='node tools/architecture/validate-i18n/src/index.mjs .',
+  labels=['quality'],
+  deps=[
+    'packages/i18n-runtime/locales',
+    'apps/react-enterprise-app/src',
+    'apps/platform-api/src',
+    'packages',
+  ],
+)
+
+# ---------------------------------------------------------------------------
+# Production parity — manual trigger (ADR-ACT-0128 — In Progress)
+# prod-build-and-test runs npm run test:e2e:prod: builds the SPA with vite,
+# then runs Playwright against vite preview. This is NOT full Compose web
+# profile production (platform-api container + Caddy container); that wiring
+# is deferred. See ADR-ACT-0128 for scope.
 # ---------------------------------------------------------------------------
 
 local_resource(

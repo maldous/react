@@ -21,6 +21,7 @@ Implemented at repo root. Resources:
 | architecture-check | local_resource (manual) | quality |
 | make-check | local_resource (manual) | quality |
 | e2e-dev | local_resource (manual) | tests |
+| i18n-validation | local_resource (auto, report-only) | quality |
 | prod-build-and-test | local_resource (manual) | tests |
 | aldous-smoke | local_resource (manual) | tests |
 
@@ -39,6 +40,6 @@ Implemented at repo root. Resources:
 
 ## Deferrals
 
-- Production parity resources: ADR-ACT-0128 (Done) — prod-build-and-test and aldous-smoke added as manual resources
-- i18n-validation trigger: ADR-ACT-0129 (blocked on ADR-ACT-0123)
+- **Production parity (ADR-ACT-0128 — In Progress):** prod-build-and-test runs `npm run test:e2e:prod` (vite build + Playwright preview); aldous-smoke tests live aldous.info. Full Compose web-profile container wiring (platform-api container + Caddy) is deferred.
+- **i18n-validation (ADR-ACT-0129 — In Progress):** auto-trigger resource added; full change-impact dependency mapping deferred.
 - Keycloak/SonarQube links: not yet wired (optional profile)
