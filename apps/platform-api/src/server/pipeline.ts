@@ -39,6 +39,20 @@ export interface Route {
   operationName?: string;
   handler: PipelineHandler;
   requiresAuth?: boolean;
+  /**
+   * INTERIM STATIC PERMISSION BRIDGE — ADR-ACT-0145
+   *
+   * requiredPermission is checked against the actor's resolved permission set
+   * from the session record. This is a static, pre-resolved check — it does
+   * NOT call Keycloak Authorization Services at runtime and does NOT support
+   * no-deploy policy changes.
+   *
+   * Full runtime dynamic policy enforcement (UMA ticket evaluation via
+   * KeycloakAuthorisationAdapter) is tracked in ADR-ACT-0145 and requires
+   * the access token to be stored in the session record (ADR-ACT-0153 scope).
+   * Until ADR-ACT-0145 is complete, permission checks are static and
+   * ADR-0030's "no-deploy policy changes" claim is NOT fully satisfied.
+   */
   requiredPermission?: string;
 }
 
