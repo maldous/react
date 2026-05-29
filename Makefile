@@ -48,7 +48,7 @@ ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
         sonar advisory sbom license \
         check ci full fix clean \
         compose-up compose-up-default compose-up-quality \
-        compose-up-identity compose-up-cloud compose-up-sentry compose-up-web \
+        compose-up-identity compose-up-cloud compose-up-sentry compose-up-external-mocks compose-up-web \
         compose-down compose-down-volumes compose-ps compose-logs \
         readmes generate infra-check pre-slice-gate local-substrate-check \
         e2e-check
@@ -274,6 +274,11 @@ compose-up-cloud:
 ## compose-up-sentry — Start Sentry stack (sentry profile — experimental)
 compose-up-sentry:
 	docker compose --profile sentry up -d
+
+## compose-up-external-mocks — Start WireMock (external-mocks profile)
+## Use for local development and E2E when adapters call external HTTP APIs.
+compose-up-external-mocks:
+	docker compose --profile external-mocks up -d wiremock
 
 ## compose-up-web — Build and start the web profile (platform-api + react SPA on :80)
 ## Requires: default services running; system service on :80 must be stopped first.

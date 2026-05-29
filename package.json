@@ -21,6 +21,7 @@
     "compose:identity": "docker compose --profile identity up -d keycloak",
     "compose:cloud": "docker compose --profile cloud-mocks up -d localstack",
     "compose:sentry": "docker compose --profile sentry up -d",
+    "compose:external-mocks": "docker compose --profile external-mocks up -d wiremock",
     "tsc:check": "tsc --noEmit -p apps/react-enterprise-app/tsconfig.json && npm run tsc:check:api && npm run tsc:check:packages",
     "tsc:check:api": "tsc --noEmit -p apps/platform-api/tsconfig.json",
     "tsc:check:packages": "tsc --noEmit -p packages/tsconfig.packages.json",

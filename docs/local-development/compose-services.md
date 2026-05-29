@@ -17,28 +17,30 @@ docker compose logs -f
 
 ## Profiles
 
-| Profile     | Command                    | Services                                                                  |
-| ----------- | -------------------------- | ------------------------------------------------------------------------- |
-| (default)   | `docker compose up -d`     | postgres, redis, clickhouse, minio, mailpit, otel-collector               |
-| quality     | `npm run compose:quality`  | sonarqube + sonar-postgres                                                |
-| identity    | `npm run compose:identity` | keycloak + keycloak-postgres                                              |
-| cloud-mocks | `npm run compose:cloud`    | localstack                                                                |
-| sentry      | `npm run compose:sentry`   | sentry-web + sentry-worker + sentry-cron + sentry-postgres + sentry-redis |
+| Profile        | Command                          | Services                                                                  |
+| -------------- | -------------------------------- | ------------------------------------------------------------------------- |
+| (default)      | `docker compose up -d`           | postgres, redis, clickhouse, minio, mailpit, otel-collector               |
+| quality        | `npm run compose:quality`        | sonarqube + sonar-postgres                                                |
+| identity       | `npm run compose:identity`       | keycloak + keycloak-postgres                                              |
+| cloud-mocks    | `npm run compose:cloud`          | localstack                                                                |
+| external-mocks | `npm run compose:external-mocks` | wiremock                                                                  |
+| sentry         | `npm run compose:sentry`         | sentry-web + sentry-worker + sentry-cron + sentry-postgres + sentry-redis |
 
 ## Services and ports
 
-| Service        | Profile     | Host port(s)                                 | Package/adapter                                         |
-| -------------- | ----------- | -------------------------------------------- | ------------------------------------------------------- |
-| postgres       | default     | 5433                                         | `@platform/adapters-postgres`                           |
-| redis          | default     | 6379                                         | `@platform/adapters-redis`                              |
-| clickhouse     | default     | 8124 (HTTP), 9002 (native)                   | `@platform/adapters-clickhouse`                         |
-| minio          | default     | 9000 (API), 9001 (console)                   | `@platform/adapters-object-storage`                     |
-| mailpit        | default     | 1025 (SMTP), 8025 (UI)                       | `@platform/adapters-brevo` (SMTP transport)             |
-| otel-collector | default     | 4317 (gRPC), 4318 (HTTP), 13133 (health API) | `@platform/adapters-opentelemetry`                      |
-| sonarqube      | quality     | 9003                                         | code quality analysis                                   |
-| keycloak       | identity    | 8080                                         | `@platform/adapters-keycloak`                           |
-| localstack     | cloud-mocks | 4566                                         | `@platform/adapters-object-storage` (S3), queue testing |
-| sentry-web     | sentry      | 9010                                         | `@platform/adapters-sentry`                             |
+| Service        | Profile        | Host port(s)                                 | Package/adapter                                          |
+| -------------- | -------------- | -------------------------------------------- | -------------------------------------------------------- |
+| postgres       | default        | 5433                                         | `@platform/adapters-postgres`                            |
+| redis          | default        | 6379                                         | `@platform/adapters-redis`                               |
+| clickhouse     | default        | 8124 (HTTP), 9002 (native)                   | `@platform/adapters-clickhouse`                          |
+| minio          | default        | 9000 (API), 9001 (console)                   | `@platform/adapters-object-storage`                      |
+| mailpit        | default        | 1025 (SMTP), 8025 (UI)                       | `@platform/adapters-brevo` (SMTP transport)              |
+| otel-collector | default        | 4317 (gRPC), 4318 (HTTP), 13133 (health API) | `@platform/adapters-opentelemetry`                       |
+| sonarqube      | quality        | 9003                                         | code quality analysis                                    |
+| keycloak       | identity       | 8080                                         | `@platform/adapters-keycloak`                            |
+| localstack     | cloud-mocks    | 4566                                         | `@platform/adapters-object-storage` (S3), queue testing  |
+| sentry-web     | sentry         | 9010                                         | `@platform/adapters-sentry`                              |
+| wiremock       | external-mocks | 8089                                         | external HTTP API simulation / adapter contract fixtures |
 
 ## Web UIs
 
@@ -50,6 +52,7 @@ docker compose logs -f
 | Keycloak      | <http://localhost:8080> | admin / admin                         |
 | Sentry        | <http://localhost:9010> | see setup below                       |
 | LocalStack    | <http://localhost:4566> | (no auth for S3/SQS)                  |
+| WireMock      | <http://localhost:8089> | admin UI: `/__admin/`                 |
 
 ## Configuration
 
@@ -60,6 +63,29 @@ cp .env.example .env
 ```
 
 Do not commit `.env`. All credentials in `.env.example` are development defaults only.
+
+## WireMock setup (external-mocks profile)
+
+WireMock simulates external HTTP APIs with deterministic stub responses. Use it when developing or testing adapters that call external services.
+
+```bash
+npm run compose:external-mocks
+# or: make compose-up-external-mocks
+
+# Health check
+curl http://localhost:${WIREMOCK_PORT:-8089}/__admin/health
+
+# Verify example stub
+curl http://localhost:${WIREMOCK_PORT:-8089}/__platform/mock/ping
+# → {"status":"ok"}
+
+# WireMock admin UI
+open http://localhost:${WIREMOCK_PORT:-8089}/__admin/
+```
+
+Committed mappings live in `docker/wiremock/mappings/`. Static response files live in `docker/wiremock/__files/`. Both directories are mounted read-only so container restarts do not modify source.
+
+> **Security:** Mappings and `__files` must never contain real credentials, tokens, production API responses, or customer data. Safe fixtures only.
 
 ## SonarQube setup (quality profile)
 

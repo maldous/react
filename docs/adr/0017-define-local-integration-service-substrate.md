@@ -100,13 +100,14 @@ Use Docker Compose with profile-gated services.
 
 ### Profiles
 
-| Profile     | Services                                                              | Adapter(s)                                                                                                              |
-| ----------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| (default)   | postgres, redis, clickhouse, minio, mailpit, otel-collector           | adapters-postgres, adapters-redis, adapters-clickhouse, adapters-object-storage, adapters-brevo, adapters-opentelemetry |
-| quality     | sonarqube, sonar-postgres                                             | code quality (report-only)                                                                                              |
-| identity    | keycloak, keycloak-postgres                                           | adapters-keycloak                                                                                                       |
-| cloud-mocks | localstack                                                            | adapters-object-storage (S3), queue testing                                                                             |
-| sentry      | sentry-web, sentry-worker, sentry-cron, sentry-postgres, sentry-redis | adapters-sentry                                                                                                         |
+| Profile        | Services                                                              | Adapter(s)                                                                                                              |
+| -------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| (default)      | postgres, redis, clickhouse, minio, mailpit, otel-collector           | adapters-postgres, adapters-redis, adapters-clickhouse, adapters-object-storage, adapters-brevo, adapters-opentelemetry |
+| quality        | sonarqube, sonar-postgres                                             | code quality (report-only)                                                                                              |
+| identity       | keycloak, keycloak-postgres                                           | adapters-keycloak                                                                                                       |
+| cloud-mocks    | localstack                                                            | adapters-object-storage (S3), queue testing                                                                             |
+| external-mocks | wiremock                                                              | external HTTP API adapters / service virtualisation / future adapter contract tests                                     |
+| sentry         | sentry-web, sentry-worker, sentry-cron, sentry-postgres, sentry-redis | adapters-sentry                                                                                                         |
 
 ### Image pinning
 
@@ -130,10 +131,37 @@ All credentials use environment variable substitution with safe development defa
 | keycloak       | 8080                       |                                                        |
 | localstack     | 4566                       |                                                        |
 | sentry-web     | 9010                       | 9000 conflicts with minio                              |
+| wiremock       | 8089                       | 8080 already used by Keycloak; container port is 8080  |
 
 ### CI integration
 
 CI runs `docker compose config` (syntax check only). No services are started in CI. Hard gates do not depend on Compose.
+
+### WireMock (external-mocks profile)
+
+WireMock provides deterministic local simulation of external HTTP APIs. Use it when developing or testing adapters that call third-party or platform-external HTTP services.
+
+**Rules:**
+
+- Mappings committed under `docker/wiremock/mappings/` represent safe fixtures only. No real customer payloads, secrets, tokens, or production samples are allowed in mappings or `docker/wiremock/__files/`.
+- WireMock must not be used to hide missing adapter contracts. It supplements adapter contract tests; it does not replace them.
+- Stub responses must be clearly non-production (e.g. `GET /__platform/mock/ping`). Business domain stubs may be added later with explicit review.
+
+**Future adapter guidance:**
+
+When an adapter that calls an external HTTP API is introduced, it should provide either:
+
+- contract tests against WireMock mappings, or
+- explicit evidence in its package explaining why WireMock is not applicable to that integration.
+
+**Validation commands:**
+
+```sh
+docker compose config --profile external-mocks
+docker compose --profile external-mocks up -d wiremock
+curl http://localhost:${WIREMOCK_PORT:-8089}/__admin/health
+curl http://localhost:${WIREMOCK_PORT:-8089}/__platform/mock/ping
+```
 
 ### Sonar profile note
 
