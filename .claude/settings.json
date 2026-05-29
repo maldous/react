@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "FILE=\"$CLAUDE_TOOL_INPUT_FILE_PATH\"; echo \"$FILE\" | grep -qE '\\.(ts|tsx|js|jsx|mjs|cjs|json|md|css|html|yaml|yml)$' && npx prettier --write \"$FILE\" 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"$CLAUDE_TOOL_INPUT_FILE_PATH\" | grep -qE '(\\.env(\\..*)?)$' && echo 'BLOCK: refusing to edit .env files — constraint #8 in CLAUDE.md' && exit 2 || exit 0"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -156,22 +156,13 @@ curl -fsS http://localhost:${WIREMOCK_PORT:-8089}/__admin/health
 
 Do not commit real payloads, secrets, tokens, cookies, or production/customer samples into WireMock mappings.
 
-## Tilt rules
+## Tilt
 
-`Tiltfile` is the local fast-development loop from ADR-0027.
-
-Current state:
-
-```text
-ADR-ACT-0127 Done        fast-dev Tiltfile
-ADR-ACT-0128 In Progress production parity Compose web-profile wiring
-ADR-ACT-0129 In Progress complete change-impact mapping
-ADR-ACT-0130 Open        final Tilt docs/evidence after 0128/0129
-```
+`Tiltfile` is the local fast-development loop (ADR-0027).
 
 Use `tilt up` for active development. Use manual Tilt resources for slower checks such as E2E and live smoke.
 
-Do not claim full Tilt production parity until the Compose `web` profile containers are actually wired as Tilt production resources.
+Do not claim full Tilt production parity until the Compose `web` profile containers are wired as Tilt production resources. Check `docs/adr/ACTION-REGISTER.md` for current status.
 
 ## Testing commands
 
@@ -195,23 +186,15 @@ Run the orchestrator for architecture-sensitive changes:
 node tools/architecture/orchestrator/src/index.mjs all --no-reports --strict
 ```
 
-The orchestrator includes package metadata, import boundaries, generated README checks, inventory, lifecycle evidence, slice readiness, and report-only i18n validation.
+The orchestrator includes package metadata, import boundaries, generated README checks, inventory, lifecycle evidence, slice readiness, and i18n validation.
 
-## i18n status
+## i18n
 
-ADR-0026 governs public-facing text.
+ADR-0026 governs public-facing text. Check `docs/adr/ACTION-REGISTER.md` for current migration status.
 
-Current state:
+Do not claim the React provider/hook is complete until the relevant action in ACTION-REGISTER is marked Done with evidence. `packages/i18n-runtime/src/react.ts` is a bootstrap placeholder.
 
-```text
-ADR-ACT-0120 Done        i18n runtime baseline, en-GB, nested+flat resolver
-ADR-ACT-0121 Open        real React provider/hook and UI copy migration
-ADR-ACT-0122 Open        API/auth/validation message migration
-ADR-ACT-0123 In Progress report-only validation baseline
-ADR-ACT-0124 Open        broader tests/evidence
-```
-
-Do not claim the React provider/hook is complete. `packages/i18n-runtime/src/react.ts` is a bootstrap placeholder until ADR-ACT-0121.
+Do not promote i18n validation to a hard gate until both the React provider/hook migration and the API/auth/validation message migration actions are complete.
 
 Validate i18n with:
 
@@ -219,15 +202,13 @@ Validate i18n with:
 node tools/architecture/validate-i18n/src/index.mjs .
 ```
 
-Do not promote i18n validation to a hard gate until ADR-ACT-0121 and ADR-ACT-0122 are complete.
-
-## API contract status
+## API contract
 
 `docs/api/openapi.json` is the REST documentation baseline for supplementary BFF routes.
 
 GraphQL remains the primary client-facing API boundary per ADR-0013.
 
-OpenAPI drift validation is tracked by ADR-ACT-0139 and is not complete yet.
+OpenAPI drift validation is not complete. Check `docs/adr/ACTION-REGISTER.md` for current status before assuming the contract is enforced.
 
 ## Dev Container
 
@@ -260,14 +241,7 @@ Update `docs/adr/ACTION-REGISTER.md` whenever work is opened, progressed, comple
 
 Update ADR-0007 when creating a new `docs/evidence/` subdirectory.
 
-Current reference:
-
-```text
-Current ADR range: ADR-0001 through ADR-0027
-ADR-0018 reserved
-Next ADR: ADR-0028
-Next action: ADR-ACT-0140
-```
+The authoritative next ADR number and next action number are always in `docs/adr/ACTION-REGISTER.md`. Do not maintain them here.
 
 ## Critical constraints
 
