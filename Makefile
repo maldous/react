@@ -71,7 +71,7 @@ ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
 ##   e2e-real-auth
 # =============================================================================
 all: install format lint typecheck architecture audit security \
-     test test-compose sonar advisory sbom license \
+     compose-up-default test test-compose sonar advisory sbom license \
      e2e-local \
      e2e-build-prod \
      compose-up-web e2e-web-smoke \
@@ -273,9 +273,14 @@ clean:
 compose-up:
 	docker compose up -d
 
-## compose-up-default — Start exactly the 6 default services
+## compose-up-default — Start exactly the 6 default services (idempotent)
 compose-up-default:
+	$(call STEP,compose:up:default)
 	docker compose up -d postgres redis clickhouse minio mailpit otel-collector
+	@printf 'Waiting for postgres to be healthy...\n'
+	@timeout 60 bash -c 'until docker compose ps postgres 2>/dev/null | grep -q healthy; do sleep 2; done' \
+		|| (printf '$(RED)✗ postgres did not become healthy$(RESET)\n' && exit 1)
+	$(call OK,default services healthy)
 
 ## compose-up-quality — Start SonarQube (quality profile)
 compose-up-quality:
@@ -300,15 +305,16 @@ compose-up-external-mocks:
 
 ## compose-up-web — Build and start the web profile (platform-api + react SPA on :80)
 ## Requires: default services running; port 80 must be free.
-## LOCAL_FIXTURE_SESSION defaults to empty (real Keycloak login required).
-## For fixture-session testing: LOCAL_FIXTURE_SESSION=tenant-admin make compose-up-web
+## make all uses LOCAL_FIXTURE_SESSION=tenant-admin for smoke test compatibility.
+## For real login testing: LOCAL_FIXTURE_SESSION= make compose-up-web
 compose-up-web:
 	$(call STEP,web:up)
 	@printf '$(BOLD)Building and starting web profile (platform-api + react-app)$(RESET)\n'
 	docker compose --profile web up -d --build
-	@printf 'Waiting for platform-api health...\n'
-	@timeout 60 bash -c 'until curl -fsS http://aldous.info/healthz >/dev/null 2>&1; do sleep 2; done' \
-		|| (printf '$(YELLOW)⚠ aldous.info not healthy after 60s. Check /etc/hosts and compose-ps.$(RESET)\n')
+	@printf 'Waiting for web profile to be healthy (up to 90s)...\n'
+	@timeout 90 bash -c 'until curl -fsS http://aldous.info/healthz >/dev/null 2>&1 || curl -fsS http://localhost/healthz >/dev/null 2>&1; do sleep 3; done' \
+		|| (printf '$(RED)✗ Web profile unhealthy after 90s. Check: make compose-ps\n'; \
+		    printf '  Also verify: 127.0.0.1 aldous.info in /etc/hosts$(RESET)\n'; exit 1)
 	$(call OK,web profile started — http://aldous.info)
 
 ## compose-down-web — Stop and remove web profile containers
@@ -492,8 +498,8 @@ e2e-web-smoke:
 		printf '  2. /etc/hosts has: 127.0.0.1 aldous.info\n$(RESET)'; \
 		exit 1; \
 	fi
-	@printf '$(YELLOW)ℹ Running smoke with fixture session (LOCAL_FIXTURE_SESSION=tenant-admin in compose)$(RESET)\n'
-	ALDOUS_BASE_URL=http://aldous.info npx playwright test --config playwright.aldous.config.ts
+	@printf '$(YELLOW)ℹ Smoke tests use aldous.info via /etc/hosts → Caddy web profile$(RESET)\n'
+	ALDOUS_BASE_URL=http://aldous.info npx playwright test --config playwright.aldous.config.ts --reporter=list
 	$(call OK,web smoke tests passed)
 
 ## e2e-real-auth — Tier 6: Real Keycloak browser login E2E (gracefully skipped if not provisioned)

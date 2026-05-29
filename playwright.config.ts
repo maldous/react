@@ -35,6 +35,9 @@ export default defineConfig({
       url: `http://localhost:${APP_PORT}`,
       timeout: 30000,
       reuseExistingServer: true,
+      // Suppress Vite's rolldown experimental "Missing field moduleType" noise —
+      // these are transform warnings from the experimental bundler, not test failures.
+      stderr: "ignore",
       env: {
         PLATFORM_API_PORT: API_PORT,
       },
