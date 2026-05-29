@@ -9,9 +9,14 @@ import {
   parseSessionCookie,
 } from "./auth.ts";
 import { handleForwardAuth } from "./forward-auth.ts";
-import { getSessionStore } from "./dependencies.ts";
+import { getSessionStore, getApplicationPool } from "./dependencies.ts";
 import { serverT } from "./i18n.ts";
 import { DEFAULT_THEME } from "@platform/authorisation-runtime";
+import {
+  provisionTenant,
+  getTenantResourceConfig,
+  CreateTenantRequestSchema,
+} from "./provisioning.ts";
 
 export const routes: Route[] = [
   {
@@ -114,9 +119,10 @@ export const routes: Route[] = [
     },
   },
   // ---------------------------------------------------------------------------
-  // Tenant provisioning stubs (ADR-ACT-0142, ADR-ACT-0143)
-  // Implementation blocked until provisioning service accounts are wired (ADR-0031).
-  // Returns 501 to signal "not yet implemented" without masking the intent.
+  // Tenant provisioning (ADR-ACT-0142)
+  // POST — provision a new tenant with per-resource tier config.
+  // GET  — read a tenant's current resource config.
+  // System-admin only (requiredPermission: admin.access).
   // ---------------------------------------------------------------------------
   {
     method: "POST",
@@ -124,8 +130,39 @@ export const routes: Route[] = [
     operationName: "admin.tenants.create",
     requiresAuth: true,
     requiredPermission: "admin.access",
-    handler: async (_req, res) => {
-      res.json(501, { code: "NOT_IMPLEMENTED", message: serverT("api.error.notImplemented") });
+    handler: async (req, res) => {
+      const parsed = CreateTenantRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        const msg = parsed.error.issues[0]?.message ?? "Invalid request body";
+        res.json(400, { code: "VALIDATION_ERROR", message: msg });
+        return;
+      }
+      const result = await provisionTenant(parsed.data);
+      res.json(201, result);
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/tenants/resources",
+    operationName: "admin.tenants.resources.get",
+    requiresAuth: true,
+    requiredPermission: "admin.access",
+    handler: async (req, res) => {
+      const url = new URL(req.raw.url ?? "", "http://localhost");
+      const organisationId = url.searchParams.get("organisationId") ?? "";
+      if (!organisationId) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: "organisationId query parameter is required",
+        });
+        return;
+      }
+      const config = await getTenantResourceConfig(getApplicationPool(), organisationId);
+      if (!config) {
+        res.json(404, { code: "NOT_FOUND", message: serverT("api.error.organisationNotFound") });
+        return;
+      }
+      res.json(200, config);
     },
   },
   {

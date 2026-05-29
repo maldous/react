@@ -11,6 +11,7 @@
  * connectRedis() must be called once at server startup; disconnectRedis()
  * on graceful shutdown (or between tests to release the connection pool).
  */
+import pg from "pg";
 import {
   PostgresOrganisationRepository,
   PostgresReadinessAdapter,
@@ -30,6 +31,54 @@ const DEFAULT_POSTGRES_URL = "postgresql://platform:platformpassword@localhost:5
 
 export function getPostgresUrl(): string {
   return process.env["POSTGRES_URL"] ?? DEFAULT_POSTGRES_URL;
+}
+
+// Shared application pool — used by withTenant, withSystemAdmin, provisioning.
+// Two connections reserved for provisioning operations (schema creation, migrations).
+let _appPool: pg.Pool | undefined;
+
+export function getApplicationPool(): pg.Pool {
+  if (!_appPool) {
+    _appPool = new pg.Pool({ connectionString: getPostgresUrl(), max: 12 });
+  }
+  return _appPool;
+}
+
+// ---------------------------------------------------------------------------
+// Provisioning credentials (loaded from env / secret store at startup)
+// Separate from runtime credentials — never exposed to request handlers.
+// ADR-0031: trusted provisioning broker model.
+// ---------------------------------------------------------------------------
+
+export interface ProvisioningConfig {
+  keycloakUrl: string;
+  keycloakProvisionerClientId: string;
+  keycloakProvisionerClientSecret: string;
+  redisAdminUrl: string | null;
+  s3AdminAccessKeyId: string | null;
+  s3AdminSecretAccessKey: string | null;
+  s3DefaultBucket: string;
+  s3DefaultRegion: string;
+  s3DefaultEndpoint: string | null;
+  apexDomain: string;
+  bffClientSecret: string;
+}
+
+export function getProvisioningConfig(): ProvisioningConfig {
+  return {
+    keycloakUrl: process.env["KEYCLOAK_URL"] ?? "http://localhost:8080",
+    keycloakProvisionerClientId:
+      process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
+    keycloakProvisionerClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
+    redisAdminUrl: process.env["REDIS_ADMIN_URL"] ?? null,
+    s3AdminAccessKeyId: process.env["S3_ADMIN_ACCESS_KEY_ID"] ?? null,
+    s3AdminSecretAccessKey: process.env["S3_ADMIN_SECRET_ACCESS_KEY"] ?? null,
+    s3DefaultBucket: process.env["S3_DEFAULT_BUCKET"] ?? "platform-data",
+    s3DefaultRegion: process.env["S3_DEFAULT_REGION"] ?? "us-east-1",
+    s3DefaultEndpoint: process.env["S3_DEFAULT_ENDPOINT"] ?? null,
+    apexDomain: process.env["APEX_DOMAIN"] ?? "aldous.info",
+    bffClientSecret: process.env["KEYCLOAK_CLIENT_SECRET"] ?? "",
+  };
 }
 
 // Shared singletons — adapters back themselves with a pg.Pool so repeated

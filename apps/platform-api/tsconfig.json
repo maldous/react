@@ -20,7 +20,11 @@
       "@platform/adapters-redis": ["../../packages/adapters-redis/src/index.ts"],
       "@platform/adapters-postgres": ["../../packages/adapters-postgres/src/index.ts"],
       "@platform/i18n-runtime": ["../../packages/i18n-runtime/src/index.ts"],
-      "@platform/authorisation-runtime": ["../../packages/authorisation-runtime/src/index.ts"]
+      "@platform/authorisation-runtime": ["../../packages/authorisation-runtime/src/index.ts"],
+      "@platform/adapters-object-storage": ["../../packages/adapters-object-storage/src/index.ts"],
+      "@platform/adapters-clickhouse": ["../../packages/adapters-clickhouse/src/index.ts"],
+      "@platform/storage-runtime": ["../../packages/storage-runtime/src/index.ts"],
+      "@platform/email-runtime": ["../../packages/email-runtime/src/index.ts"]
     }
   },
   "include": ["src/**/*.ts"],

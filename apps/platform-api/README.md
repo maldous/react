@@ -114,6 +114,7 @@ production
 @platform/adapters-redis
 @platform/adapters-postgres
 @platform/authorisation-runtime
+@platform/adapters-object-storage
 ```
 
 ### Provides APIs

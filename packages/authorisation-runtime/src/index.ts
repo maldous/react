@@ -171,3 +171,72 @@ export const DEFAULT_THEME: Readonly<TenantTheme> = {
   logoUrl: null,
   faviconUrl: null,
 };
+
+// ---------------------------------------------------------------------------
+// Per-resource provisioning config (ADR-0031, ADR-ACT-0142)
+//
+// Each resource type (database, identity, cache, storage) is independently
+// configurable. A tenant can mix tiers — e.g. dedicated DB + shared cache.
+//
+// Tiers:
+//   shared    — tenant namespace/schema/realm within platform shared infra
+//   dedicated — operator-provisioned dedicated infra; platform sets it up
+//   external  — tenant manages their own infra; platform stores config only
+//   air-gapped — no platform connection; tenant manages entirely offline
+// ---------------------------------------------------------------------------
+
+export type ResourceTier = "shared" | "dedicated" | "external" | "air-gapped";
+
+export interface DatabaseResourceConfig {
+  tier: ResourceTier;
+  /** For dedicated/external: connection URL to the tenant's own DB instance */
+  connectionUrl?: string;
+}
+
+export interface IdentityResourceConfig {
+  tier: ResourceTier;
+  /** For dedicated/external: Keycloak base URL of tenant's own instance */
+  keycloakUrl?: string;
+  provisionerClientId?: string;
+  provisionerClientSecret?: string;
+}
+
+export interface CacheResourceConfig {
+  tier: ResourceTier;
+  /** For dedicated/external: Redis URL of tenant's own instance */
+  redisUrl?: string;
+  /** For dedicated: admin URL for ACL management */
+  adminUrl?: string;
+}
+
+export interface StorageResourceConfig {
+  tier: ResourceTier;
+  bucket?: string;
+  region?: string;
+  endpoint?: string;
+  adminAccessKeyId?: string;
+  adminSecretAccessKey?: string;
+}
+
+export interface TenantResourceConfig {
+  database: DatabaseResourceConfig;
+  identity: IdentityResourceConfig;
+  cache: CacheResourceConfig;
+  storage: StorageResourceConfig;
+}
+
+export const DEFAULT_RESOURCE_CONFIG: Readonly<TenantResourceConfig> = {
+  database: { tier: "shared" },
+  identity: { tier: "shared" },
+  cache: { tier: "shared" },
+  storage: { tier: "shared" },
+};
+
+export function mergeResourceConfig(partial?: Partial<TenantResourceConfig>): TenantResourceConfig {
+  return {
+    database: { ...DEFAULT_RESOURCE_CONFIG.database, ...partial?.database },
+    identity: { ...DEFAULT_RESOURCE_CONFIG.identity, ...partial?.identity },
+    cache: { ...DEFAULT_RESOURCE_CONFIG.cache, ...partial?.cache },
+    storage: { ...DEFAULT_RESOURCE_CONFIG.storage, ...partial?.storage },
+  };
+}

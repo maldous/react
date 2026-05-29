@@ -46,7 +46,7 @@ export class S3ObjectStorageAdapter implements ObjectStoragePort {
         new S3PutCommand({
           Bucket: this.bucket,
           Key: command.key,
-          Body: command.body as Blob,
+          Body: command.body as Buffer | ReadableStream | string,
           ContentType: command.contentType,
           Metadata: command.metadata,
         })
@@ -128,8 +128,8 @@ import {
 export interface S3AdminConfig {
   region: string;
   bucket: string;
+  /** For MinIO/custom S3-compat: the endpoint URL */
   endpoint?: string;
-  forcePathStyle?: boolean;
   credentials: { accessKeyId: string; secretAccessKey: string };
 }
 
@@ -148,7 +148,6 @@ export class S3ProvisioningAdapter {
     this.iamClient = new IAMClient({
       region: config.region,
       endpoint: config.endpoint,
-      forcePathStyle: config.forcePathStyle,
       credentials: config.credentials,
     });
   }

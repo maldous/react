@@ -1,7 +1,7 @@
 export const packageName = "@platform/storage-runtime";
 
 export class StorageError extends Error {
-  readonly cause?: unknown;
+  override readonly cause?: unknown;
   constructor(message: string, cause?: unknown) {
     super(message);
     this.name = "StorageError";
