@@ -262,12 +262,14 @@ fix:
 	npm run format:write
 	$(call OK,formatting applied)
 
-## clean — Stop all services, kill dangling processes, remove generated artefacts
+## clean — Stop all services and remove generated artefacts (preserves DB volumes and data)
+## Uses `stop` not `down` — named volumes (postgres, sonarqube, keycloak) are untouched.
+## Use `make compose-down-volumes` only when you explicitly want to wipe all data.
 clean:
 	$(call STEP,clean: stopping all services)
 	docker compose --profile identity --profile web --profile quality \
 	    --profile cloud-mocks --profile sentry --profile external-mocks \
-	    down --remove-orphans 2>/dev/null || true
+	    stop 2>/dev/null || true
 	$(call STEP,clean: killing stale port holders)
 	@fuser -k 5173/tcp 4173/tcp 3001/tcp 8090/tcp 2>/dev/null || true
 	$(call STEP,clean: removing artefacts)
