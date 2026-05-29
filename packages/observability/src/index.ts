@@ -41,7 +41,10 @@ export interface ObservabilityPort {
 }
 
 // ---------------------------------------------------------------------------
-// Console-based noop implementation for testing and development
+// Console-based implementation — FOR TESTING AND LOCAL DEVELOPMENT ONLY.
+// Do NOT use createConsoleObservabilityPort in production BFF, adapter, or
+// app runtime code. Production code must use a platform-logging-backed
+// ObservabilityPort wired by the adapter layer (ADR-0020, ADR-0029).
 // ---------------------------------------------------------------------------
 
 function makeConsoleLogger(fields: LogFields = {}): ObservabilityLogger {
@@ -63,6 +66,13 @@ function makeConsoleLogger(fields: LogFields = {}): ObservabilityLogger {
   };
 }
 
+/**
+ * Console-backed ObservabilityPort — FOR TESTING AND LOCAL DEVELOPMENT ONLY.
+ *
+ * Uses console.log / console.error. Never use this in production BFF,
+ * adapter, or app runtime code (ADR-0020, CLAUDE.md constraint 7).
+ * Production wiring belongs in the adapter layer using platform-logging.
+ */
 export function createConsoleObservabilityPort(fields: LogFields = {}): ObservabilityPort {
   const logger = makeConsoleLogger(fields);
   function build(log: ObservabilityLogger): ObservabilityPort {

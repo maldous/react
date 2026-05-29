@@ -473,6 +473,8 @@ None.
 
 `packages/observability` (existing, lifecycle: `active.platform`) is the interface package with zero `@platform` dependencies. `packages/platform-observability` (new) builds on top of this interface and wraps `@opentelemetry/api`. The existing `packages/adapters-opentelemetry` implements the SDK-level wiring and is registered at application startup only.
 
+**Why `packages/observability` must have zero `@platform` dependencies:** It is a leaf port interface — the stable contract that all observability consumers import. If it depended on `platform-logging` or `platform-observability`, those packages would become transitive dependencies of every domain, feature, and UI package that imports `observability`, violating the import boundary rules (`no-raw-observability-in-domain`, `no-raw-observability-in-feature`). Keeping it dependency-free means: (a) domain and feature packages can import it without pulling in Pino or OTel, and (b) the interface can be implemented by any adapter without circular dependency risk. The `validate-source-imports` tool enforces this via the `no-platform-deps-in-observability` rule.
+
 The `packages/platform-logging` browser logger uses a minimal abstraction over `console` with structured field discipline and redaction enforcement. It does not use Pino in the browser (Pino is Node-only in its full form).
 
 `packages/platform-errors` has no `@platform` dependencies beyond shared type contracts. It is importable by React feature packages for safe client-side error type checks (e.g., checking `err instanceof ValidationError` to display form errors).
