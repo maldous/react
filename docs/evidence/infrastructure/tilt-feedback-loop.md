@@ -21,6 +21,8 @@ Implemented at repo root. Resources:
 | architecture-check | local_resource (manual) | quality |
 | make-check | local_resource (manual) | quality |
 | e2e-dev | local_resource (manual) | tests |
+| prod-build-and-test | local_resource (manual) | tests |
+| aldous-smoke | local_resource (manual) | tests |
 
 ## ADR-0027 acceptance criteria checklist
 
@@ -37,6 +39,6 @@ Implemented at repo root. Resources:
 
 ## Deferrals
 
-- Production parity resources: ADR-ACT-0128 (Open)
+- Production parity resources: ADR-ACT-0128 (Done) — prod-build-and-test and aldous-smoke added as manual resources
 - i18n-validation trigger: ADR-ACT-0129 (blocked on ADR-ACT-0123)
 - Keycloak/SonarQube links: not yet wired (optional profile)

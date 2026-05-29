@@ -26,18 +26,20 @@ open http://localhost:10350
 
 ## Resources
 
-| Resource                                                    | Label   | Trigger           | What it runs                       |
-| ----------------------------------------------------------- | ------- | ----------------- | ---------------------------------- |
-| postgres, redis, clickhouse, minio, mailpit, otel-collector | infra   | auto (Compose)    | Docker Compose default profile     |
-| platform-api                                                | app     | auto (file watch) | `npm run api:start:admin` on :3001 |
-| react-app                                                   | app     | auto (file watch) | Vite dev server on :5173           |
-| typecheck                                                   | quality | auto (file watch) | `npm run tsc:check`                |
-| lint                                                        | quality | auto (file watch) | `npm run lint && npm run lint:md`  |
-| platform-api-tests                                          | tests   | auto (file watch) | `npm run test:platform-api`        |
-| react-tests                                                 | tests   | auto (file watch) | `npm run test:frontend:run`        |
-| architecture-check                                          | quality | **manual**        | orchestrator `all --strict`        |
-| make-check                                                  | quality | **manual**        | `make check`                       |
-| e2e-dev                                                     | tests   | **manual**        | `npm run test:e2e`                 |
+| Resource                                                    | Label   | Trigger           | What it runs                                                         |
+| ----------------------------------------------------------- | ------- | ----------------- | -------------------------------------------------------------------- |
+| postgres, redis, clickhouse, minio, mailpit, otel-collector | infra   | auto (Compose)    | Docker Compose default profile                                       |
+| platform-api                                                | app     | auto (file watch) | `npm run api:start:admin` on :3001                                   |
+| react-app                                                   | app     | auto (file watch) | Vite dev server on :5173                                             |
+| typecheck                                                   | quality | auto (file watch) | `npm run tsc:check`                                                  |
+| lint                                                        | quality | auto (file watch) | `npm run lint && npm run lint:md`                                    |
+| platform-api-tests                                          | tests   | auto (file watch) | `npm run test:platform-api`                                          |
+| react-tests                                                 | tests   | auto (file watch) | `npm run test:frontend:run`                                          |
+| architecture-check                                          | quality | **manual**        | orchestrator `all --strict`                                          |
+| make-check                                                  | quality | **manual**        | `make check`                                                         |
+| e2e-dev                                                     | tests   | **manual**        | `npm run test:e2e`                                                   |
+| prod-build-and-test                                         | tests   | **manual**        | `npm run test:e2e:prod` (builds production SPA then runs Playwright) |
+| aldous-smoke                                                | tests   | **manual**        | Playwright against [https://aldous.info](https://aldous.info)        |
 
 ## Triggering manual resources
 
@@ -78,4 +80,4 @@ tilt up
 
 ## Production parity
 
-Production parity (Compose web profile + production SPA build + prod E2E) is not yet wired into Tilt. See ADR-ACT-0128.
+Production parity resources are available as manual-trigger resources: `prod-build-and-test` runs the full production build and E2E suite; `aldous-smoke` runs live smoke tests against [https://aldous.info](https://aldous.info).

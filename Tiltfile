@@ -170,3 +170,30 @@ local_resource(
   trigger_mode=TRIGGER_MODE_MANUAL,
   resource_deps=['platform-api', 'react-app'],
 )
+
+# ---------------------------------------------------------------------------
+# Production parity — manual trigger (ADR-ACT-0128)
+# Runs npm run test:e2e:prod which builds the SPA with vite, then runs Playwright
+# against vite preview. Slower than dev mode — manual trigger only.
+# ---------------------------------------------------------------------------
+
+local_resource(
+  'prod-build-and-test',
+  cmd='npm run test:e2e:prod',
+  labels=['tests'],
+  trigger_mode=TRIGGER_MODE_MANUAL,
+  deps=[
+    'apps/react-enterprise-app/Dockerfile',
+    'apps/platform-api/Dockerfile',
+    'docker/caddy/Caddyfile',
+    'apps/react-enterprise-app/src',
+    'apps/platform-api/src',
+  ],
+)
+
+local_resource(
+  'aldous-smoke',
+  cmd='npx playwright test --config playwright.aldous.config.ts',
+  labels=['tests'],
+  trigger_mode=TRIGGER_MODE_MANUAL,
+)
