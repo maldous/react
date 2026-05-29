@@ -101,6 +101,64 @@ The resolved slug is looked up in `public.organisations` to get the `organisatio
 
 **Wildcard TLS:** A wildcard certificate (`*.aldous.info`) is provisioned for all subdomains. Let's Encrypt supports wildcard certificates via DNS-01 challenge. Cloudflare handles this for the production deployment.
 
+#### 1a. Path-prefixed operational UI routing
+
+All developer and operational UI services are accessible through Caddy as path-prefixed routes. Access to every tool is gated by `GET /internal/auth/forward` on the BFF — Caddy's `forward_auth` directive checks the platform session before proxying. This means the platform's Keycloak Authorization Services policy (ADR-0030) governs who can access which tool, and tenant admins can configure access rules within their realm without platform operator involvement.
+
+**Super-global (`aldous.info`) — system-admin and delegated access:**
+
+| Path | Service | Default access |
+|---|---|---|
+| `/kc/*` | Keycloak (all realms) | `system-admin` |
+| `/mailpit/*` | Mailpit (all tenant email) | `system-admin` |
+| `/sonar/*` | SonarQube | `system-admin` |
+| `/minio/*` | MinIO console | `system-admin` |
+| `/sentry/*` | Sentry | `system-admin` |
+| `/wiremock/*` | WireMock admin (dev) | `system-admin` |
+| `/clickhouse/*` | ClickHouse HTTP UI | `system-admin` |
+| `/localstack/*` | LocalStack (dev/staging) | `system-admin` |
+
+Tilt UI (`:10350`) is NOT path-proxied — its SPA makes absolute `/api/*` calls that conflict with the platform API path. Access it directly at `http://localhost:10350` during local development.
+
+**Per-tenant (`{slug}.aldous.info`) — tenant-admin access:**
+
+| Path | Service | Filter |
+|---|---|---|
+| `/kc/*` | Keycloak (tenant realm admin) | Own realm only |
+| `/mailpit/*` | Mailpit (tenant email) | Tenant domain emails |
+| `/sentry/*` | Sentry (tenant project) | Tenant project |
+
+#### 1b. Universal build, data-driven tenants
+
+The React SPA and platform-api are compiled **once** into a single tenant-agnostic build artifact. The build does not contain or require tenant-specific code. At runtime:
+
+- The SPA detects `aldous.info` (super-admin mode) vs `{slug}.aldous.info` (tenant mode) from the hostname
+- `GET /api/theme` returns tenant-specific branding (logo, colours, display name) based on the Host header
+- The session actor's roles determine which features and admin tools are visible
+
+**Tenant provisioning is a runtime API operation, not a deployment.** Creating a new tenant is `POST /api/admin/tenants` which triggers:
+1. PostgreSQL schema creation
+2. Keycloak realm provisioning (via Admin API)
+3. Redis ACL user creation
+4. S3 bucket policy provisioning
+5. Initial membership creation
+
+No build, no restart, no deployment. The infrastructure serves the new tenant immediately after the API call completes.
+
+#### 1c. Recursive delegated administration
+
+The provisioning model is hierarchical and recursive:
+
+- `system-admin` at `aldous.info` provisions tenants (creates schemas, Keycloak realms, Redis ACLs, S3 policies).
+- `tenant-admin` at `{slug}.aldous.info` provisions within their tenant: groups, sub-organisations, feature modules, user accounts, IdP integrations, and resource policies — all without system-admin intervention.
+- Group admins within a tenant can be granted delegated rights over their group's user management via Keycloak's fine-grained admin permissions.
+
+Each level of admin sees the same dynamic provisioning pattern (data-driven, no deployment) scoped to their authority level. The tenant-admin's provisioning API is `POST /api/admin/*` routes gated by `admin:*` resource policies in their tenant's Keycloak realm, managed by the tenant admin themselves (ADR-0030).
+
+This means the platform admin UI at `aldous.info` and the tenant admin section at `{slug}.aldous.info/admin` are architecturally equivalent — both provision their respective scope at runtime from the same universal SPA build.
+
+**Does full isolation require separate Compose stacks per tenant?** No. The schema-per-tenant (PostgreSQL) + Redis namespace + S3 prefix model provides complete data isolation within a shared infrastructure stack. Separate stacks are only warranted for regulatory air-gap or geographic data residency requirements — tracked as future scope in ADR-ACT-0141.
+
 ---
 
 ### 2. Auth isolation — per-tenant Keycloak realm

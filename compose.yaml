@@ -85,6 +85,8 @@ services:
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-miniopassword}
+      # Redirect URL for MinIO console login — must match the path Caddy serves it on.
+      MINIO_BROWSER_REDIRECT_URL: ${MINIO_BROWSER_REDIRECT_URL:-http://aldous.info/minio}
     ports:
       - "${MINIO_API_PORT:-9000}:9000" # S3-compatible API
       - "${MINIO_CONSOLE_PORT:-9001}:9001" # MinIO console
@@ -100,6 +102,10 @@ services:
 
   mailpit:
     image: axllent/mailpit:v1.21.0
+    environment:
+      # Serve Mailpit UI under /mailpit so Caddy can proxy it at /mailpit/*
+      # without breaking relative asset URLs in the web interface.
+      MP_ROOT_URL: ${MAILPIT_ROOT_URL:-/mailpit}
     ports:
       - "${MAILPIT_SMTP_PORT:-1025}:1025" # SMTP
       - "${MAILPIT_UI_PORT:-8025}:8025" # Web UI
@@ -165,6 +171,8 @@ services:
       SONAR_JDBC_PASSWORD: ${SONAR_DB_PASSWORD:-sonarpassword}
       # Disable ES bootstrap checks (required without vm.max_map_count sysctl)
       SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+      # Serve SonarQube under /sonar so Caddy can proxy it at aldous.info/sonar/*
+      SONAR_WEB_CONTEXT: ${SONAR_WEB_CONTEXT:-/sonar}
       # Default credentials: admin / admin — change on first login; do not commit tokens
     ports:
       - "${SONAR_PORT:-9003}:9000"
@@ -424,6 +432,10 @@ services:
     profiles: [web]
     ports:
       - "${WEB_HTTP_PORT:-80}:80"
+    extra_hosts:
+      # Allows Caddy to reach host-machine services (e.g. Tilt UI on :10350).
+      # host-gateway resolves to the host's Docker bridge IP automatically.
+      - "host-gateway:host-gateway"
     depends_on:
       platform-api:
         condition: service_healthy

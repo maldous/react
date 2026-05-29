@@ -1,39 +1,172 @@
-# docker/caddy/Caddyfile — web profile reverse proxy
+# docker/caddy/Caddyfile
 #
-# Serves the React SPA (static files) and proxies BFF/API routes to
-# the platform-api container. Designed for Cloudflare-terminated TLS:
-# Cloudflare handles HTTPS; Caddy listens on :80 inside the container
-# (mapped to the host port via Compose).
+# Two virtual hosts:
+#   aldous.info        — super-global admin console + all developer/operational UIs
+#   *.aldous.info      — per-tenant application + tenant-scoped admin UIs
 #
-# ADR-0022: The BFF owns session exchange and auth routes.
-# ADR-0019: The React SPA uses client-side routing — all paths fall back to index.html.
+# TLS termination: Cloudflare handles HTTPS; Caddy listens on :80.
+# Forward auth: all admin/tool routes check session via platform-api before proxying.
+#
+# ADR-0022: BFF owns session exchange and auth routes.
+# ADR-0029: FQDN-based tenant routing; path-prefixed tool access.
+# ADR-0030: forward_auth enforces Keycloak UMA resource policies on all tool routes.
 
-:80 {
-  # BFF/API routes — forward to platform-api service (Docker DNS)
-  handle /api/* {
-    reverse_proxy platform-api:3001
-  }
+# ---------------------------------------------------------------------------
+# Forward auth snippet — reusable across all protected tool routes.
+# platform-api returns 200 (allow), 401 (no session), or 403 (forbidden).
+# Caddy copies the Cookie header so platform-api can read the session.
+# ---------------------------------------------------------------------------
+(forward_auth_check) {
+	forward_auth platform-api:3001 {
+		uri /internal/auth/forward?resource={args[0]}&scope={args[1]}
+		copy_headers Cookie
+		header_up X-Forwarded-Host {host}
+	}
+}
 
-  handle /auth/* {
-    reverse_proxy platform-api:3001
-  }
+# ---------------------------------------------------------------------------
+# Super-global admin — aldous.info
+# Hosts the platform admin SPA, all developer tooling, and operational UIs.
+# Access governed by the platform realm (system-admin role or delegated).
+# ---------------------------------------------------------------------------
+aldous.info {
+	# Keycloak — all realms accessible (super-admin console + tenant realm access)
+	handle /kc/* {
+		import forward_auth_check admin:keycloak read
+		reverse_proxy keycloak:8080
+	}
 
-  handle /healthz {
-    reverse_proxy platform-api:3001
-  }
+	# Mailpit — all tenant email capture (dev only; graceful 502 if not running)
+	handle /mailpit/* {
+		import forward_auth_check admin:mailpit read
+		uri strip_prefix /mailpit
+		reverse_proxy mailpit:8025
+	}
 
-  handle /readyz {
-    reverse_proxy platform-api:3001
-  }
+	# SonarQube — code quality dashboard
+	handle /sonar/* {
+		import forward_auth_check admin:sonarqube read
+		reverse_proxy sonarqube:9000
+	}
 
-  handle /version {
-    reverse_proxy platform-api:3001
-  }
+	# MinIO — object storage console
+	handle /minio/* {
+		import forward_auth_check admin:minio read
+		reverse_proxy minio:9001
+	}
 
-  # React SPA — serve static files with client-side routing fallback
-  handle {
-    root * /srv
-    try_files {path} /index.html
-    file_server
-  }
+	# Sentry — error and performance monitoring dashboard
+	handle /sentry/* {
+		import forward_auth_check admin:sentry read
+		uri strip_prefix /sentry
+		reverse_proxy sentry-web:9000
+	}
+
+	# WireMock — external HTTP mock admin (dev only)
+	handle /wiremock/* {
+		import forward_auth_check admin:wiremock read
+		uri strip_prefix /wiremock
+		reverse_proxy wiremock:8080
+	}
+
+	# ClickHouse — analytics HTTP play UI
+	handle /clickhouse/* {
+		import forward_auth_check admin:clickhouse read
+		uri strip_prefix /clickhouse
+		reverse_proxy clickhouse:8123
+	}
+
+	# LocalStack — cloud mock (dev/staging only)
+	handle /localstack/* {
+		import forward_auth_check admin:localstack read
+		uri strip_prefix /localstack
+		reverse_proxy localstack:4566
+	}
+
+	# Tilt UI cannot be path-proxied (its SPA makes absolute /api/* calls).
+	# Access Tilt directly at http://localhost:10350 during local development.
+	# The Tiltfile exposes a direct link on the platform-api resource.
+
+	# BFF — platform admin API
+	handle /api/* {
+		reverse_proxy platform-api:3001
+	}
+	handle /auth/* {
+		reverse_proxy platform-api:3001
+	}
+	handle /internal/* {
+		reverse_proxy platform-api:3001
+	}
+	handle /healthz {
+		reverse_proxy platform-api:3001
+	}
+	handle /readyz {
+		reverse_proxy platform-api:3001
+	}
+	handle /version {
+		reverse_proxy platform-api:3001
+	}
+
+	# Super-admin React SPA (platform admin console)
+	handle {
+		root * /srv
+		try_files {path} /index.html
+		file_server
+	}
+}
+
+# ---------------------------------------------------------------------------
+# Per-tenant — {slug}.aldous.info
+# Each subdomain routes to the tenant's Keycloak realm and application.
+# Tenant-scoped admin UIs are path-prefixed here with tenant-filtered access.
+# ---------------------------------------------------------------------------
+*.aldous.info {
+	# Keycloak — tenant-specific realm admin console
+	handle /kc/* {
+		import forward_auth_check admin:keycloak read
+		reverse_proxy keycloak:8080
+	}
+
+	# Mailpit — tenant-domain-filtered email view
+	# platform-api forward auth verifies the user belongs to this tenant
+	# and only shows emails addressed to @{slug}.aldous.info.
+	handle /mailpit/* {
+		import forward_auth_check admin:mailpit read
+		uri strip_prefix /mailpit
+		reverse_proxy mailpit:8025
+	}
+
+	# Sentry — tenant project scoped view
+	handle /sentry/* {
+		import forward_auth_check admin:sentry read
+		uri strip_prefix /sentry
+		reverse_proxy sentry-web:9000
+	}
+
+	# BFF
+	handle /api/* {
+		reverse_proxy platform-api:3001
+	}
+	handle /auth/* {
+		reverse_proxy platform-api:3001
+	}
+	handle /internal/* {
+		reverse_proxy platform-api:3001
+	}
+	handle /healthz {
+		reverse_proxy platform-api:3001
+	}
+	handle /readyz {
+		reverse_proxy platform-api:3001
+	}
+	handle /version {
+		reverse_proxy platform-api:3001
+	}
+
+	# Tenant React SPA
+	handle {
+		root * /srv
+		try_files {path} /index.html
+		file_server
+	}
 }

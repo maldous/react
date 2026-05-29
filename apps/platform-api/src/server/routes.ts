@@ -8,6 +8,7 @@ import {
   handleAuthLogout,
   parseSessionCookie,
 } from "./auth.ts";
+import { handleForwardAuth } from "./forward-auth.ts";
 import { getSessionStore } from "./dependencies.ts";
 import { serverT } from "./i18n.ts";
 
@@ -65,6 +66,17 @@ export const routes: Route[] = [
         message: serverT("api.error.unauthenticatedSession"),
       });
     },
+  },
+  // ---------------------------------------------------------------------------
+  // Caddy forward auth (ADR-0029, ADR-0030)
+  // Called by Caddy's forward_auth directive before proxying admin/tool UIs.
+  // Not authenticated itself — reads session cookie forwarded by Caddy.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/internal/auth/forward",
+    operationName: "internal.auth.forward",
+    handler: handleForwardAuth,
   },
   // ---------------------------------------------------------------------------
   // Auth routes (ADR-ACT-0119)

@@ -27,11 +27,18 @@ docker_compose('./compose.yaml')
 
 dc_resource('postgres',       labels=['infra'])
 dc_resource('redis',          labels=['infra'])
-dc_resource('clickhouse',     labels=['infra'])
+dc_resource('clickhouse',     labels=['infra'],
+  links=[link('http://localhost:8124/play', 'ClickHouse play')])
 dc_resource('minio',          labels=['infra'],
-  links=[link('http://localhost:9001', 'MinIO console')])
+  links=[
+    link('http://localhost:9001', 'MinIO console (direct)'),
+    link('http://aldous.info/minio', 'MinIO via Caddy'),
+  ])
 dc_resource('mailpit',        labels=['infra'],
-  links=[link('http://localhost:8025', 'Mailpit UI')])
+  links=[
+    link('http://localhost:8025', 'Mailpit UI (direct)'),
+    link('http://aldous.info/mailpit', 'Mailpit via Caddy'),
+  ])
 dc_resource('otel-collector', labels=['infra'])
 
 # ---------------------------------------------------------------------------

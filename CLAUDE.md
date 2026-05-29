@@ -44,15 +44,41 @@ When using Tilt, use the Tilt UI and resource logs. Do not develop blind.
 
 Useful local URLs:
 
+Direct (dev server / port-mapped):
+
 ```text
 React dev              http://localhost:5173
 platform-api health    http://localhost:3001/healthz
-platform-api readiness http://localhost:3001/readyz
 platform-api session   http://localhost:3001/api/session
-Mailpit                http://localhost:8025
-Keycloak               http://localhost:8080
-WireMock               http://localhost:8089
+Keycloak admin         http://localhost:8080/kc/admin
+Mailpit UI             http://localhost:8025
+MinIO console          http://localhost:9001
+SonarQube              http://localhost:9003
+WireMock admin         http://localhost:8089/__admin/
+ClickHouse play        http://localhost:8124/play
 Tilt UI                http://localhost:10350
+```
+
+Via Caddy (aldous.info super-global — requires `make compose-up-web`):
+
+```text
+App (super-admin)      http://aldous.info
+Keycloak all-realms    http://aldous.info/kc
+Mailpit (all tenants)  http://aldous.info/mailpit
+SonarQube              http://aldous.info/sonar
+MinIO console          http://aldous.info/minio
+Sentry                 http://aldous.info/sentry
+WireMock admin         http://aldous.info/wiremock
+ClickHouse             http://aldous.info/clickhouse
+```
+
+Per-tenant (via Caddy, requires /etc/hosts or DNS):
+
+```text
+App                    http://{slug}.aldous.info
+Keycloak realm admin   http://{slug}.aldous.info/kc
+Mailpit (tenant)       http://{slug}.aldous.info/mailpit
+Sentry (tenant)        http://{slug}.aldous.info/sentry
 ```
 
 ## Production awareness
