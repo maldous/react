@@ -16,35 +16,37 @@ describe("validate-i18n", () => {
     assert.ok(typeof result === "string");
   });
 
-  it("outputs a summary line with key counts or skip message", () => {
+  it("outputs a summary line with [validate-i18n] marker", () => {
     const r = spawnSync(process.execPath, [TOOL, REPO_ROOT], { encoding: "utf8" });
     assert.equal(r.status, 0, `Expected exit 0 in report-only mode, got ${r.status}: ${r.stderr}`);
     const combined = (r.stdout ?? "") + (r.stderr ?? "");
     assert.ok(
-      combined.includes("[validate-i18n]") || combined.includes("OK"),
-      `Expected tool output, got: ${combined}`
+      combined.includes("[validate-i18n]"),
+      `Expected [validate-i18n] marker, got: ${combined.slice(0, 200)}`
     );
   });
 
-  it("--strict flag: exits 0 when no keys are missing (passes all-good repos)", () => {
-    // In this repo, the tool may report missing test-fixture keys but exits 0 or 1
-    // We just verify the flag is accepted without crashing unexpectedly
+  it("correctly reads nested en-GB.json (no 'not found' warning)", () => {
+    const r = spawnSync(process.execPath, [TOOL, REPO_ROOT], { encoding: "utf8" });
+    const combined = (r.stdout ?? "") + (r.stderr ?? "");
+    assert.ok(
+      !combined.includes("not found"),
+      `en-GB.json should be found and parsed; got: ${combined.slice(0, 200)}`
+    );
+  });
+
+  it("--strict flag: accepted without crashing", () => {
     const r = spawnSync(process.execPath, [TOOL, REPO_ROOT, "--strict"], { encoding: "utf8" });
-    // Status is 0 (no missing keys) or 1 (missing keys in strict mode) — both are correct
     assert.ok(r.status === 0 || r.status === 1, `Unexpected exit code: ${r.status}`);
   });
 
-  it("--strict flag exits 1 when keys are missing (fail-closed per ADR-0011)", () => {
-    // The current repo has test fixture keys (this.key.does.not.exist etc.) that
-    // appear in i18n-runtime tests but are not in en-GB.json — strict mode must fail.
+  it("--strict flag exits 1 when missing keys found, with Strict mode banner", () => {
     const r = spawnSync(process.execPath, [TOOL, REPO_ROOT, "--strict"], { encoding: "utf8" });
     const combined = (r.stdout ?? "") + (r.stderr ?? "");
-    if (combined.includes("missing")) {
-      // If there are missing keys, strict mode must exit 1
+    if (combined.includes("missing from")) {
       assert.equal(r.status, 1, "Strict mode must exit 1 when missing keys are found");
-      assert.ok(combined.includes("Strict mode"), "Strict mode banner must appear in output");
+      assert.ok(combined.includes("Strict mode"), "Strict mode banner must appear");
     } else {
-      // No missing keys — strict mode exits 0
       assert.equal(r.status, 0);
     }
   });

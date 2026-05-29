@@ -162,6 +162,9 @@ export function buildStepCatalog(options, repoRoot) {
       repoRoot,
       true
     ),
+    // report-only: required=false until ADR-ACT-0121 and ADR-ACT-0122 complete.
+    // Do NOT pass --strict here — strict promotion is explicit per ADR-ACT-0123.
+    i18nValidation: step("validate-i18n", "tools/architecture/validate-i18n", [], repoRoot, false),
   };
 }
 
@@ -181,6 +184,7 @@ export function planFor(command, options, repoRoot) {
       s.lifecycleReportsWrite,
       s.evidenceCheck,
       s.sliceReadiness,
+      s.i18nValidation, // report-only; required=false until ADR-ACT-0121+0122 done
     ];
   }
 
