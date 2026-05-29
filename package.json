@@ -46,7 +46,9 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:report": "playwright show-report",
-    "validate:slices": "node tools/architecture/validate-slice-readiness/src/index.mjs"
+    "validate:slices": "node tools/architecture/validate-slice-readiness/src/index.mjs",
+    "test:e2e:prod": "playwright test --config playwright.prod.config.ts",
+    "build:spa": "cd apps/react-enterprise-app && ../../node_modules/.bin/vite build"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "3.1056.0",

@@ -391,9 +391,15 @@ function checkStrictViolations(
     }
   }
 
+  // Asset imports (.css, .svg, .png, etc.) are resolved by Vite/bundler at
+  // build time; TypeScript's module resolver returns null for them. Skip the
+  // unresolved check so CSS/asset side-effect imports are not flagged.
+  const ASSET_EXTENSIONS =
+    /\.(css|scss|sass|less|svg|png|jpg|jpeg|gif|ico|webp|woff|woff2|ttf|eot)$/i;
   if (
     (specifier.startsWith("./") || specifier.startsWith("../")) &&
-    edge?.resolutionStatus === "unresolved"
+    edge?.resolutionStatus === "unresolved" &&
+    !ASSET_EXTENSIONS.test(specifier)
   ) {
     violations.push({
       file: fileInfo.file,

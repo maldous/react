@@ -7,6 +7,11 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
+    // Ensure a single React instance across all aliased packages.
+    // Without dedupe, Vite may resolve react from multiple node_modules paths
+    // (root vs nested), causing the React 19 production hook dispatcher to be
+    // null when components from aliased platform packages call useEffect.
+    dedupe: ["react", "react-dom"],
     alias: {
       "@platform/ui-design-system": path.resolve(
         __dirname,
@@ -27,6 +32,30 @@ export default defineConfig({
     },
   },
   server: {
+    proxy: {
+      "/api": {
+        target: `http://localhost:${process.env["PLATFORM_API_PORT"] ?? 3001}`,
+        changeOrigin: true,
+      },
+      "/healthz": {
+        target: `http://localhost:${process.env["PLATFORM_API_PORT"] ?? 3001}`,
+        changeOrigin: true,
+      },
+      "/readyz": {
+        target: `http://localhost:${process.env["PLATFORM_API_PORT"] ?? 3001}`,
+        changeOrigin: true,
+      },
+      "/version": {
+        target: `http://localhost:${process.env["PLATFORM_API_PORT"] ?? 3001}`,
+        changeOrigin: true,
+      },
+    },
+  },
+  // preview.proxy mirrors server.proxy so `vite preview` tests the production
+  // build against the real BFF. Without this, production build E2E tests would
+  // not proxy API calls and would fail to prove the full stack.
+  // ADR-0025 gap: E2E tests must cover the production build, not only dev mode.
+  preview: {
     proxy: {
       "/api": {
         target: `http://localhost:${process.env["PLATFORM_API_PORT"] ?? 3001}`,
