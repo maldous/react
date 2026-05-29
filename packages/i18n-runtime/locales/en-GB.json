@@ -8,16 +8,29 @@
   },
   "appTitle": "Platform",
   "appSubtitle": "First vertical slice coming soon.",
+  "platform": {
+    "name": "Enterprise Platform",
+    "tagline": "Super-global administration console"
+  },
   "auth": {
     "login": {
       "title": "Sign in",
-      "body": "Authentication is not yet configured. SSO wiring is tracked in ADR-ACT-0108."
+      "body": "Use your platform account to continue.",
+      "signInButton": "Sign in with your account",
+      "footer": "Secure sign-in powered by Keycloak"
+    },
+    "logout": {
+      "label": "Sign out"
     },
     "status": {
       "loading": "Loading...",
       "checkingAuthentication": "Checking authentication...",
       "saving": "Saving..."
     }
+  },
+  "landing": {
+    "status": "Platform status",
+    "tools": "Admin tools"
   },
   "feature": {
     "organisation": {
@@ -62,14 +75,14 @@
       "unauthenticated": "You need to sign in to continue",
       "forbidden": "You do not have permission to perform this action",
       "emailUnverified": "Your email address has not been verified",
-      "authStateMismatch": "Authentication flow error \u2014 please try again",
+      "authStateMismatch": "Authentication flow error — please try again",
       "keycloakError": "Keycloak error: {error}",
       "missingCodeOrState": "Missing code or state parameter",
       "missingPreAuthCookie": "Missing pre-auth cookie",
       "invalidOrExpiredState": "Invalid or expired state parameter",
       "authFlowBindingMismatch": "Auth flow binding mismatch",
       "tokenExchangeFailed": "Token exchange failed",
-      "unverifiedOrMissingEmail": "Unverified or missing email \u2014 login refused",
+      "unverifiedOrMissingEmail": "Unverified or missing email — login refused",
       "missingOrganisationId": "Missing organisationId in session context",
       "organisationNotFound": "Organisation not found",
       "invalidRequestBody": "Invalid request body",

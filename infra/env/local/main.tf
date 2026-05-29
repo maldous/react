@@ -80,6 +80,17 @@ module "keycloak" {
   bff_client_id     = "platform-api"
   bff_client_secret = var.bff_client_secret
   bff_redirect_uris = [
+    # Vite dev server (standard local development)
+    "http://localhost:5173/auth/callback",
+    "http://localhost:5173/*",
+    # Caddy web profile — default PLATFORM_API_URL=http://localhost
+    "http://localhost/auth/callback",
+    "http://localhost/*",
+    # Caddy web profile — when PLATFORM_API_URL=http://aldous.info (real-auth E2E)
+    # Requires 127.0.0.1 aldous.info in /etc/hosts
+    "http://aldous.info/auth/callback",
+    "http://aldous.info/*",
+    # Legacy BFF direct (pre-Vite proxy)
     "http://localhost:3001/auth/callback",
     "http://localhost:3001/*",
   ]

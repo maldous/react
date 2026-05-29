@@ -249,3 +249,38 @@ resource "keycloak_user_roles" "viewer_roles" {
 
   role_ids = [keycloak_role.viewer.id]
 }
+
+# ---------------------------------------------------------------------------
+# Super-global system-admin fixture user — local/dev only
+#
+# Used by real-browser E2E login tests on aldous.info (playwright.real-auth.config.ts).
+# Has system-admin realm role so forward_auth grants access to all admin tool routes.
+# Email uses aldous.info domain to match the /api/session actor display.
+# Never add this user to staging or production — provision_fixture_users is false there.
+# ---------------------------------------------------------------------------
+
+resource "keycloak_user" "sysadmin" {
+  count    = var.provision_fixture_users ? 1 : 0
+  realm_id = keycloak_realm.platform.id
+  username = "sysadmin@aldous.info"
+  email    = "sysadmin@aldous.info"
+  enabled  = true
+
+  email_verified = true
+
+  first_name = "Platform"
+  last_name  = "SysAdmin"
+
+  initial_password {
+    value     = var.fixture_user_password
+    temporary = false
+  }
+}
+
+resource "keycloak_user_roles" "sysadmin_roles" {
+  count    = var.provision_fixture_users ? 1 : 0
+  realm_id = keycloak_realm.platform.id
+  user_id  = keycloak_user.sysadmin[0].id
+
+  role_ids = [keycloak_role.system_admin.id]
+}
