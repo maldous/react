@@ -79,6 +79,8 @@ Metadata vocabulary (ADR-ACT-0037) has been validated and documented. ADR-0005 c
 
 ADR-0028 defines GraphQL schema boundary governance (ADR-ACT-0015 Done).
 
+ADR-0029 defines multi-tenant isolation boundaries: schema-per-tenant + RLS, per-tenant Keycloak realm, identity brokering (external IdP + cross-tenant), FQDN-based routing, per-tenant theming, Redis ACL, S3 bucket policy isolation.
+
 Remaining open items are either blocked on external dependencies (Sonar CI secrets) or future-gated (after more vertical slices, before package publication).
 ```
 

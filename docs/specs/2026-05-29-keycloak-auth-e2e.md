@@ -14,7 +14,7 @@ Wire the existing Keycloak auth implementation into a fully testable end-to-end 
 
 ## Architecture overview
 
-```
+```text
 Dev:        Playwright → Vite:5173 → (proxy /auth/*, /api/*) → platform-api:3001
                                     ↘ redirect to Keycloak:8090/realms/platform
                                     ↙ callback via Vite proxy → session cookie on :5173
@@ -57,6 +57,7 @@ function LoginPage() {
 ```
 
 **i18n keys to add** (`packages/i18n-runtime/locales/en-GB.json`):
+
 - `auth.login.signInButton` → `"Sign in with your account"`
 - `auth.login.body` → `"Use your aldous.info account to continue."` (replaces placeholder)
 
@@ -94,7 +95,8 @@ KC_HTTP_RELATIVE_PATH: ${KC_HTTP_RELATIVE_PATH:-}
 ```
 
 **`.env.example`** — add:
-```
+
+```shell
 # Keycloak root context path. Empty for local dev (direct port access).
 # Set to /kc for production (path-prefixed behind Caddy).
 KC_HTTP_RELATIVE_PATH=
@@ -106,7 +108,8 @@ Production `.env` on the aldous.info host sets `KC_HTTP_RELATIVE_PATH=/kc`.
 
 ```yaml
 healthcheck:
-  test: ["CMD-SHELL", "curl -f http://localhost:8080${KC_HTTP_RELATIVE_PATH:-}/health/ready || exit 1"]
+  test:
+    ["CMD-SHELL", "curl -f http://localhost:8080${KC_HTTP_RELATIVE_PATH:-}/health/ready || exit 1"]
 ```
 
 ---
@@ -137,12 +140,13 @@ Add `sysadmin` and `manager` fixture users alongside the existing three. Rename 
 
 New fixture users (all gated by `provision_fixture_users`):
 
-| Resource | Email | Role |
-|---|---|---|
+| Resource                 | Email                  | Role           |
+| ------------------------ | ---------------------- | -------------- |
 | `keycloak_user.sysadmin` | `sysadmin@aldous.info` | `system-admin` |
-| `keycloak_user.manager` | `manager@aldous.info` | `manager` |
+| `keycloak_user.manager`  | `manager@aldous.info`  | `manager`      |
 
 Existing users renamed:
+
 - `admin@fixture.local` → `admin@aldous.info`
 - `viewer@fixture.local` → `viewer@aldous.info`
 - `forbidden@fixture.local` → `forbidden@aldous.info`
@@ -189,7 +193,8 @@ module "keycloak" {
 ```
 
 **File:** `infra/env/production/production.tfvars.example` — document required variables:
-```
+
+```hcl
 keycloak_url            = "https://aldous.info/kc"
 keycloak_admin_user     = "admin"
 keycloak_admin_password = "<aldous.info host env — never commit>"
@@ -206,17 +211,18 @@ Update `FIXTURE` constants and SQL to use `@aldous.info` emails. Add `sysadmin` 
 
 ```ts
 export const FIXTURE = {
-  ORG_ID:        "00000000-0000-0000-0000-000000000001",
-  ORG_SLUG:      "fixture-org",
-  ADMIN_ID:      "00000000-0000-0000-0000-000000000002",
-  VIEWER_ID:     "00000000-0000-0000-0000-000000000003",
-  FORBIDDEN_ID:  "00000000-0000-0000-0000-000000000004",
-  SYSADMIN_ID:   "00000000-0000-0000-0000-000000000005",
-  MANAGER_ID:    "00000000-0000-0000-0000-000000000006",
+  ORG_ID: "00000000-0000-0000-0000-000000000001",
+  ORG_SLUG: "fixture-org",
+  ADMIN_ID: "00000000-0000-0000-0000-000000000002",
+  VIEWER_ID: "00000000-0000-0000-0000-000000000003",
+  FORBIDDEN_ID: "00000000-0000-0000-0000-000000000004",
+  SYSADMIN_ID: "00000000-0000-0000-0000-000000000005",
+  MANAGER_ID: "00000000-0000-0000-0000-000000000006",
 } as const;
 ```
 
 Users:
+
 ```sql
 INSERT INTO users (id, email, display_name) VALUES
   ($1, 'admin@aldous.info',     'Fixture Admin'),
@@ -228,6 +234,7 @@ ON CONFLICT (id) DO NOTHING
 ```
 
 Memberships:
+
 ```sql
 INSERT INTO memberships (user_id, organisation_id, role) VALUES
   ($1, $org, 'tenant-admin'),
@@ -276,9 +283,10 @@ local_resource(
 `keycloak-provision` is `TRIGGER_MODE_MANUAL` — you trigger it once after starting the identity profile. Tilt re-runs it automatically when Terraform files change (e.g. adding a fixture user).
 
 Add a `make` target:
+
 ```makefile
 keycloak-provision:
-	cd infra/env/local && terraform init -input=false && terraform apply -auto-approve -var-file=local.tfvars
+    cd infra/env/local && terraform init -input=false && terraform apply -auto-approve -var-file=local.tfvars
 ```
 
 ---
@@ -287,28 +295,26 @@ keycloak-provision:
 
 ### Three Playwright configs
 
-| Config | Tests | Auth | Trigger |
-|---|---|---|---|
-| `playwright.config.ts` | `e2e/substrate/` | `LOCAL_FIXTURE_SESSION` | `npm run test:e2e` (always) |
-| `playwright.auth.config.ts` | `e2e/auth/` | real Keycloak UI login | `npm run test:e2e:auth` (when Keycloak running) |
-| `playwright.aldous.config.ts` | `e2e/aldous/` | real Keycloak UI login | `npx playwright test --config playwright.aldous.config.ts` |
+| Config                        | Tests            | Auth                    | Trigger                                                    |
+| ----------------------------- | ---------------- | ----------------------- | ---------------------------------------------------------- |
+| `playwright.config.ts`        | `e2e/substrate/` | `LOCAL_FIXTURE_SESSION` | `npm run test:e2e` (always)                                |
+| `playwright.auth.config.ts`   | `e2e/auth/`      | real Keycloak UI login  | `npm run test:e2e:auth` (when Keycloak running)            |
+| `playwright.aldous.config.ts` | `e2e/aldous/`    | real Keycloak UI login  | `npx playwright test --config playwright.aldous.config.ts` |
 
 ### `playwright.auth.config.ts` (new)
 
 ```ts
 export default defineConfig({
-  testDir: './e2e/auth',
-  globalSetup: './e2e/auth/global-setup.ts',
+  testDir: "./e2e/auth",
+  globalSetup: "./e2e/auth/global-setup.ts",
   fullyParallel: false,
   workers: 1,
   use: {
-    baseURL: 'http://localhost:5173',
-    trace: 'retain-on-failure',
-    screenshot: 'only-on-failure',
+    baseURL: "http://localhost:5173",
+    trace: "retain-on-failure",
+    screenshot: "only-on-failure",
   },
-  projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-  ],
+  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: [
     {
       // platform-api WITHOUT fixture session
@@ -316,11 +322,11 @@ export default defineConfig({
       url: `http://localhost:3001/healthz`,
       timeout: 20000,
       reuseExistingServer: true,
-      env: { PLATFORM_API_URL: 'http://localhost:5173' },  // redirect_uri via Vite proxy
+      env: { PLATFORM_API_URL: "http://localhost:5173" }, // redirect_uri via Vite proxy
     },
     {
       command: `cd apps/react-enterprise-app && npx vite --port 5173`,
-      url: 'http://localhost:5173',
+      url: "http://localhost:5173",
       timeout: 30000,
       reuseExistingServer: true,
     },
@@ -330,7 +336,7 @@ export default defineConfig({
 
 ### `e2e/auth/` structure
 
-```
+```text
 e2e/auth/
   global-setup.ts         ← logs in as each role once, saves .auth/<role>.json
   login-ui.spec.ts        ← validates login button, redirect chain, HTTP-only cookie
@@ -347,23 +353,23 @@ Authenticates each fixture user once via the Keycloak login form, saves Playwrig
 
 ```ts
 const FIXTURES = [
-  { role: 'admin',     email: 'admin@aldous.info',     path: '.auth/admin.json' },
-  { role: 'viewer',    email: 'viewer@aldous.info',    path: '.auth/viewer.json' },
-  { role: 'manager',   email: 'manager@aldous.info',   path: '.auth/manager.json' },
-  { role: 'sysadmin',  email: 'sysadmin@aldous.info',  path: '.auth/sysadmin.json' },
-  { role: 'forbidden', email: 'forbidden@aldous.info', path: '.auth/forbidden.json' },
+  { role: "admin", email: "admin@aldous.info", path: ".auth/admin.json" },
+  { role: "viewer", email: "viewer@aldous.info", path: ".auth/viewer.json" },
+  { role: "manager", email: "manager@aldous.info", path: ".auth/manager.json" },
+  { role: "sysadmin", email: "sysadmin@aldous.info", path: ".auth/sysadmin.json" },
+  { role: "forbidden", email: "forbidden@aldous.info", path: ".auth/forbidden.json" },
 ];
 
 for (const fixture of FIXTURES) {
   const page = await browser.newPage();
-  await page.goto('http://localhost:5173/auth/login');
-  await page.click('a[href="/auth/login"]');           // Sign in button
+  await page.goto("http://localhost:5173/auth/login");
+  await page.click('a[href="/auth/login"]'); // Sign in button
   // Keycloak login form (on localhost:KEYCLOAK_PORT)
-  await page.fill('#username', fixture.email);
-  await page.fill('#password', process.env.FIXTURE_USER_PASSWORD ?? 'password');
-  await page.click('[type=submit]');
+  await page.fill("#username", fixture.email);
+  await page.fill("#password", process.env.FIXTURE_USER_PASSWORD ?? "password");
+  await page.click("[type=submit]");
   // Wait for redirect back to React app
-  await page.waitForURL('http://localhost:5173/**');
+  await page.waitForURL("http://localhost:5173/**");
   await page.context().storageState({ path: fixture.path });
   await page.close();
 }
@@ -372,6 +378,7 @@ for (const fixture of FIXTURES) {
 ### `login-ui.spec.ts`
 
 Tests the login button and full redirect chain:
+
 - Page at `/auth/login` renders a "Sign in" button
 - Clicking it redirects to Keycloak login form (different origin)
 - After login, browser is at `http://localhost:5173` with a session
@@ -383,12 +390,12 @@ Tests the login button and full redirect chain:
 Each role spec loads its storage state and asserts correct access:
 
 ```ts
-test.use({ storageState: '.auth/admin.json' });
+test.use({ storageState: ".auth/admin.json" });
 
-test('tenant-admin can view and edit org profile', async ({ page }) => {
-  await page.goto('/organisation/profile');
-  await expect(page.getByTestId('organisation-profile')).toBeVisible();
-  await expect(page.getByTestId('profile-edit-form')).toBeVisible();
+test("tenant-admin can view and edit org profile", async ({ page }) => {
+  await page.goto("/organisation/profile");
+  await expect(page.getByTestId("organisation-profile")).toBeVisible();
+  await expect(page.getByTestId("profile-edit-form")).toBeVisible();
 });
 ```
 
@@ -399,20 +406,20 @@ test('tenant-admin can view and edit org profile', async ({ page }) => {
 Human-runnable real auth test on production. Reads credentials from env:
 
 ```ts
-const ADMIN_EMAIL    = process.env['E2E_ADMIN_EMAIL']    ?? '';
-const ADMIN_PASSWORD = process.env['E2E_ADMIN_PASSWORD'] ?? '';
+const ADMIN_EMAIL = process.env["E2E_ADMIN_EMAIL"] ?? "";
+const ADMIN_PASSWORD = process.env["E2E_ADMIN_PASSWORD"] ?? "";
 
-test.skip(!ADMIN_EMAIL, 'Set E2E_ADMIN_EMAIL and E2E_ADMIN_PASSWORD to run auth tests');
+test.skip(!ADMIN_EMAIL, "Set E2E_ADMIN_EMAIL and E2E_ADMIN_PASSWORD to run auth tests");
 
-test('admin can log in and reach org profile on aldous.info', async ({ page }) => {
-  await page.goto('/auth/login');
+test("admin can log in and reach org profile on aldous.info", async ({ page }) => {
+  await page.goto("/auth/login");
   await page.click('a[href="/auth/login"]');
-  await page.fill('#username', ADMIN_EMAIL);
-  await page.fill('#password', ADMIN_PASSWORD);
-  await page.click('[type=submit]');
-  await page.waitForURL('https://aldous.info/**');
-  await page.goto('/organisation/profile');
-  await expect(page.getByTestId('organisation-profile')).toBeVisible();
+  await page.fill("#username", ADMIN_EMAIL);
+  await page.fill("#password", ADMIN_PASSWORD);
+  await page.click("[type=submit]");
+  await page.waitForURL("https://aldous.info/**");
+  await page.goto("/organisation/profile");
+  await expect(page.getByTestId("organisation-profile")).toBeVisible();
 });
 ```
 
@@ -421,21 +428,23 @@ test('admin can log in and reach org profile on aldous.info', async ({ page }) =
 ## 9. npm scripts and make targets
 
 **`package.json`** — add:
+
 ```json
 "test:e2e:auth": "playwright test --config playwright.auth.config.ts"
 ```
 
 **`Makefile`** — add:
+
 ```makefile
 keycloak-provision:
-	cd infra/env/local && terraform init -input=false && terraform apply -auto-approve -var-file=local.tfvars
+    cd infra/env/local && terraform init -input=false && terraform apply -auto-approve -var-file=local.tfvars
 ```
 
 ---
 
 ## 10. `.gitignore` additions
 
-```
+```gitignore
 .auth/           # Playwright storage state — contains session cookies
 infra/env/local/local.tfvars
 infra/env/production/production.tfvars
