@@ -108,7 +108,7 @@ make check
 For production-build risk:
 
 ```bash
-npm run test:e2e:prod
+make e2e-dev-build
 ```
 
 For full baseline:

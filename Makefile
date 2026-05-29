@@ -51,11 +51,11 @@ ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
         compose-up-identity compose-up-cloud compose-up-sentry compose-up-external-mocks compose-up-web \
         compose-down compose-down-volumes compose-ps compose-logs \
         readmes generate infra-check pre-slice-gate local-substrate-check \
-        e2e-dev e2e-dev-build e2e-prod \
+        e2e-dev e2e-dev-build e2e-prod-smoke e2e-prod-auth e2e-prod \
         reset-local seed-demo db-migrate db-shell redis-flush-local
 
 # =============================================================================
-## all — Increasingly strict quality gauntlet
+## all — Increasingly strict quality gauntlet ending in production smoke
 ##
 ## Tier 1 — Quality gates (fast, no services):
 ##   install → format → lint → typecheck → architecture → audit → security
@@ -65,19 +65,24 @@ ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
 ##   e2e-dev
 ## Tier 4 — Build E2E (localhost, fixture session, vite preview production bundle):
 ##   e2e-dev-build
+## Tier 5 — Deploy web profile + prod smoke (Docker Caddy, no auth required):
+##   compose-up-web → e2e-prod-smoke
+## Tier 6 — Real Keycloak auth E2E (gracefully skipped if not provisioned):
+##   e2e-prod-auth
 ##
-## Note: e2e-prod (aldous.info, real auth) runs separately — not in make all.
-##   Run: make e2e-prod   (requires deployed site + Keycloak credentials)
+## After deployment: make e2e-prod (against https://aldous.info via Cloudflare)
 # =============================================================================
 all: install format lint typecheck architecture audit security \
      compose-up-default test test-compose sonar advisory sbom license \
      e2e-dev \
-     e2e-dev-build
+     e2e-dev-build \
+     compose-up-web e2e-prod-smoke \
+     e2e-prod-auth
 	@echo ""
 	@printf '$(BOLD)$(GREEN)'
 	@printf '  ╔══════════════════════════════════════════════════════╗\n'
 	@printf '  ║  make all — full gauntlet complete                   ║\n'
-	@printf '  ║  Quality → Tests → Dev E2E → Build E2E              ║\n'
+	@printf '  ║  Quality → Tests → Dev E2E → Deploy → Prod smoke    ║\n'
 	@printf '  ╚══════════════════════════════════════════════════════╝\n'
 	@printf '$(RESET)'
 	@echo ""
@@ -469,12 +474,49 @@ e2e-dev-build:
 	LOCAL_FIXTURE_SESSION=tenant-admin npx playwright test --config playwright.build.config.ts
 	$(call OK,dev build E2E passed)
 
-## e2e-prod — Real-auth E2E against https://aldous.info (real user, no fixtures)
-## NOT part of make all — run separately after deployment.
-## Requires: PROD_BASE_URL (default https://aldous.info) reachable + Keycloak provisioned.
-## Set KEYCLOAK_TEST_USERNAME and KEYCLOAK_TEST_PASSWORD in .env.
+## e2e-prod-smoke — Tier 5: Prod smoke tests against localhost Docker Caddy (no auth required)
+## Runs e2e/prod/smoke.test.ts only. No Keycloak needed. Always part of make all.
+e2e-prod-smoke:
+	$(call STEP,e2e:prod-smoke \(http://localhost — prod smoke, no auth\))
+	@if ! npx playwright --version > /dev/null 2>&1; then \
+		printf '$(RED)✗ Playwright not found. Run: npx playwright install chromium --with-deps$(RESET)\n'; \
+		exit 1; \
+	fi
+	@if ! curl -fsS --max-time 5 http://localhost/healthz > /dev/null 2>&1; then \
+		printf '$(RED)✗ Web profile not reachable. Run: make compose-up-web$(RESET)\n'; \
+		exit 1; \
+	fi
+	PROD_BASE_URL=http://localhost npx playwright test --config playwright.prod.config.ts e2e/prod/smoke.test.ts
+	$(call OK,prod smoke tests passed)
+
+## e2e-prod-auth — Tier 6: Real Keycloak auth E2E against local stack (gracefully skipped)
+## Requires: compose-up-identity + keycloak-provision + KEYCLOAK_TEST_PASSWORD set.
+## Skips with a warning rather than failing make all if prerequisites not met.
+e2e-prod-auth:
+	$(call STEP,e2e:prod-auth \(Keycloak login — gracefully skipped if not provisioned\))
+	@if [ -z "$${KEYCLOAK_TEST_PASSWORD}" ]; then \
+		$(call WARN,prod-auth E2E skipped — KEYCLOAK_TEST_PASSWORD not set); \
+		exit 0; \
+	fi
+	@if ! curl -fsS --max-time 5 "http://localhost:$${KEYCLOAK_PORT:-8090}/health/ready" > /dev/null 2>&1; then \
+		$(call WARN,prod-auth E2E skipped — Keycloak not reachable on port $${KEYCLOAK_PORT:-8090}); \
+		$(call WARN,Run: make compose-up-identity); \
+		exit 0; \
+	fi
+	@if [ ! -f "infra/env/local/terraform.tfstate" ]; then \
+		$(call WARN,prod-auth E2E skipped — Keycloak realm not provisioned); \
+		$(call WARN,Run: make keycloak-provision); \
+		exit 0; \
+	fi
+	PROD_BASE_URL=http://aldous.info npx playwright test --config playwright.prod.config.ts \
+	    e2e/prod/login.spec.ts e2e/prod/logout.spec.ts e2e/prod/caddy-links.spec.ts e2e/prod/auth-negative.spec.ts
+	$(call OK,prod auth E2E passed)
+
+## e2e-prod — Full prod E2E against https://aldous.info via Cloudflare (real user)
+## NOT part of make all — run after a real deployment.
+## Requires: PROD_BASE_URL reachable + Keycloak provisioned + credentials in .env.
 e2e-prod:
-	$(call STEP,e2e:prod \($(PROD_BASE_URL)aldous.info — real user\))
+	$(call STEP,e2e:prod \(https://aldous.info — real user via Cloudflare\))
 	@if ! npx playwright --version > /dev/null 2>&1; then \
 		printf '$(RED)✗ Playwright not found. Run: npx playwright install chromium --with-deps$(RESET)\n'; \
 		exit 1; \

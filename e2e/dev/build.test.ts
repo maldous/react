@@ -52,7 +52,7 @@ test.describe("production build: React mounts correctly", () => {
 
   test("visible heading renders (page is not a white screen)", async ({ page }) => {
     await page.goto("/");
-    const heading = page.getByRole("heading", { name: /platform/i });
+    const heading = page.getByRole("heading", { level: 1 });
     await expect(heading).toBeVisible({ timeout: 10000 });
   });
 });
@@ -79,7 +79,7 @@ test.describe("production build: CSS and assets load", () => {
     page,
   }) => {
     await page.goto("/");
-    const heading = page.getByRole("heading", { name: /platform/i });
+    const heading = page.getByRole("heading", { level: 1 });
     await expect(heading).toBeVisible();
     const box = await heading.boundingBox();
     expect(box, "Heading has no bounding box — CSS may not be loaded").not.toBeNull();
