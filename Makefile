@@ -51,7 +51,8 @@ ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
         compose-up-identity compose-up-cloud compose-up-sentry compose-up-external-mocks compose-up-web \
         compose-down compose-down-volumes compose-ps compose-logs \
         readmes generate infra-check pre-slice-gate local-substrate-check \
-        e2e-check
+        e2e-check \
+        reset-local seed-demo db-migrate db-shell redis-flush-local
 
 # =============================================================================
 ## all — Run the complete quality baseline (everything)
@@ -291,6 +292,40 @@ compose-up-web:
 ## compose-down-web — Stop and remove web profile containers
 compose-down-web:
 	docker compose --profile web down
+
+## reset-local — Reset local Postgres to a clean migrated+seeded state (destructive)
+## Only runs against the local Compose DB (POSTGRES_URL defaults to localhost:5433)
+reset-local:
+	$(call STEP,reset:local)
+	@printf '$(BOLD)$(RED)Resetting local database — drops all tables, re-migrates, re-seeds$(RESET)\n'
+	npm run db:reset
+	npm run db:migrate
+	npm run db:seed
+	$(call OK,local database reset complete)
+
+## seed-demo — Seed fixture data into local Postgres (idempotent — ON CONFLICT DO NOTHING)
+seed-demo:
+	$(call STEP,seed:demo)
+	npm run db:seed
+	$(call OK,fixture data seeded)
+
+## db-migrate — Run database migrations (idempotent)
+db-migrate:
+	$(call STEP,db:migrate)
+	npm run db:migrate
+	$(call OK,migrations complete)
+
+## db-shell — Open a psql shell to the local Compose Postgres
+db-shell:
+	$(call STEP,db:shell)
+	docker compose exec postgres psql -U $${POSTGRES_USER:-platform} -d $${POSTGRES_DB:-platform}
+
+## redis-flush-local — Flush all keys from local Compose Redis (destructive — clears sessions)
+redis-flush-local:
+	$(call STEP,redis:flush:local)
+	@printf '$(BOLD)$(RED)Flushing local Redis — all sessions will be cleared$(RESET)\n'
+	docker compose exec redis redis-cli FLUSHALL
+	$(call OK,Redis flushed)
 
 ## compose-down — Stop all running compose services
 compose-down:
