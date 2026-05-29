@@ -28,7 +28,7 @@ if (!TOKEN) {
 
 function sonarGet(path) {
   return new Promise((resolve, reject) => {
-    const url = new URL(path, HOST);
+    const url = new URL(HOST.replace(/\/$/, "") + path);
     const auth = Buffer.from(`${TOKEN}:`).toString("base64");
     const options = { headers: { Authorization: `Basic ${auth}` } };
     const lib = url.protocol === "https:" ? https : http;
