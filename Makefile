@@ -642,7 +642,6 @@ infra-check:
 ## keycloak-plan-dev ? Plan Keycloak provisioning against dev Compose Keycloak
 ##   Requires: docker compose --profile identity up -d keycloak (localhost:8090)
 ##   Uses: infra/env/dev/dev.tfvars.example (placeholder secrets ? safe to plan)
-keycloak-plan-local: keycloak-plan-dev
 keycloak-plan-dev:
 	$(call STEP,keycloak:plan:dev)
 	@chmod +x infra/bin/tf
@@ -904,7 +903,7 @@ stage-test:
 ##   - KEYCLOAK_TEST_PASSWORD must be set for auth tests (optional ? skipped)
 stage-staging:
 	$(call STEP,stage:staging (Cloudflare external ? preserving))
-	$(MAKE) clean ENV=staging
+	# clean intentionally skipped — staging data is preserved across runs; run manually if needed
 	$(MAKE) compose-down ENV=staging
 	@sudo fuser -k 8090/tcp 2>/dev/null || true
 	$(MAKE) staging-up
@@ -937,7 +936,7 @@ stage-staging:
 ##   - KEYCLOAK_TEST_PASSWORD must be set for auth tests (optional ? skipped)
 stage-prod:
 	$(call STEP,stage:prod (Cloudflare external ? preserving, exhaustive))
-	$(MAKE) clean ENV=prod
+	# clean intentionally skipped — prod data is preserved across runs; run manually if needed
 	$(MAKE) compose-down ENV=prod
 	@sudo fuser -k 8090/tcp 2>/dev/null || true
 	$(MAKE) prod-up
