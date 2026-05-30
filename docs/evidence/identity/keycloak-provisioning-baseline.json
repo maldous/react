@@ -11,7 +11,7 @@
     "versionConstraint": "~> 4.4",
     "versionResolved": "4.4.0",
     "keycloakVersionTested": "26.2.5",
-    "lockFile": "infra/env/local/.terraform.lock.hcl"
+    "lockFile": "infra/env/dev/.terraform.lock.hcl"
   },
   "realm": {
     "name": "platform",
@@ -91,7 +91,7 @@
         "matchesSeedTs": true
       }
     ],
-    "passwords": "gitignored local.tfvars; placeholder in local.tfvars.example"
+    "passwords": "gitignored dev.tfvars; placeholder in dev.tfvars.example"
   },
   "secretsPolicy": {
     "noBff_client_secretCommitted": true,
@@ -109,7 +109,7 @@
   },
   "makefileTargets": [
     { "target": "make infra-check", "requires": "network for first init (provider download); offline after lock file committed" },
-    { "target": "make keycloak-plan-local", "requires": "Keycloak running at http://localhost:8080 (docker compose --profile identity up -d keycloak)" }
+    { "target": "make keycloak-plan-dev", "requires": "Keycloak running at http://localhost:8080 (docker compose --profile identity up -d keycloak)" }
   ],
   "deferrals": [
     "Real browser login flow not wired ? tracked in ADR-ACT-0119",

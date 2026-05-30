@@ -9,7 +9,7 @@ Implemented in ADR-ACT-0110.
 
 ## Provider
 
-`mrparkers/keycloak ~> 4.4` ? see `infra/env/local/versions.tf`.
+`mrparkers/keycloak ~> 4.4` ? see `infra/env/dev/versions.tf`.
 
 ## What this module provisions
 
@@ -69,13 +69,13 @@ Fixture user emails match `apps/platform-api/src/db/seed.ts` exactly.
 
 ## Usage
 
-See `infra/env/local/` for the local environment wiring.
+See `infra/env/dev/` for the local environment wiring.
 
 ```sh
 # Requires Keycloak running:
 docker compose --profile identity up -d keycloak
 
-make keycloak-plan-local
+make keycloak-plan-dev
 # Review, then:
-infra/bin/tf -chdir=infra/env/local apply -var-file=local.tfvars
+infra/bin/tf -chdir=infra/env/dev apply -var-file=dev.tfvars
 ```

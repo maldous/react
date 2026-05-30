@@ -101,7 +101,7 @@ infra/
     aws-observability/               ? scaffold
     ci-oidc/                         ? scaffold
   env/
-    local/                           ? scaffold + local.tfvars.example
+    local/                           ? scaffold + dev.tfvars.example
     development/                     ? scaffold + development.tfvars.example
     test/                            ? scaffold + test.tfvars.example
     staging/                         ? scaffold + staging.tfvars.example

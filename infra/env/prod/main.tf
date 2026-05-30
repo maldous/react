@@ -107,20 +107,22 @@ variable "fixture_user_password" {
 
 # Fixture users (sysadmin, admin, viewer) are backdoor accounts — they must
 # never be provisioned against a remote (real) production Keycloak.
-# The validation allows fixture users only when keycloak_url is localhost/127.x,
-# which means a local prod-stack simulation (not the real cloud Keycloak).
-# Any non-loopback keycloak_url with provision_fixture_users=true is rejected.
+# keycloak_is_local=true must be set explicitly in prod.tfvars (local stack only).
+# Real production tfvars omit or set it to false; provision_fixture_users=true
+# without keycloak_is_local=true is rejected by the validation block below.
+variable "keycloak_is_local" {
+  description = "Set to true only in prod.tfvars for local prod-stack testing. Must be false for real production."
+  type        = bool
+  default     = false
+}
+
 variable "provision_fixture_users" {
-  description = "Provision fixture test users. Only permitted when keycloak_url is localhost (local stack). Must be false for remote Keycloak."
+  description = "Provision fixture test users. Requires keycloak_is_local=true — never set both true for a remote Keycloak."
   type        = bool
   default     = false
   validation {
-    condition = (
-      !var.provision_fixture_users ||
-      startswith(var.keycloak_url, "http://localhost") ||
-      startswith(var.keycloak_url, "http://127.")
-    )
-    error_message = "provision_fixture_users=true is only allowed when keycloak_url is localhost/127.x. Set it to false for remote (real production) Keycloak deployments."
+    condition     = !var.provision_fixture_users || var.keycloak_is_local
+    error_message = "provision_fixture_users=true requires keycloak_is_local=true. Set keycloak_is_local=true only in tfvars files that target a localhost or Docker-internal Keycloak."
   }
 }
 

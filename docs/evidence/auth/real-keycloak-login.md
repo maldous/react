@@ -55,7 +55,7 @@ npx playwright test --config playwright.real-auth.config.ts
 - `/etc/hosts`: `127.0.0.1 aldous.info`
 - `make compose-up-default && make compose-up-identity && make keycloak-provision`
 - `PLATFORM_API_URL=http://aldous.info APP_BASE_URL=http://aldous.info make compose-up-web`
-- `KEYCLOAK_CLIENT_SECRET` must match the value in `local.tfvars`
+- `KEYCLOAK_CLIENT_SECRET` must match the value in `dev.tfvars`
 
 ## ADR-0022 invariants verified
 

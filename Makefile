@@ -90,7 +90,7 @@ ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
 ##
 ## One-time local setup:
 ##   echo "127.0.0.1 aldous.info" | sudo tee -a /etc/hosts
-##   infra/env/local/local.tfvars (copy from local.tfvars.example)
+##   infra/env/dev/dev.tfvars (copy from dev.tfvars.example)
 ##   KEYCLOAK_TEST_USERNAME and KEYCLOAK_TEST_PASSWORD in .env
 # =============================================================================
 all: KEEP_STACKS_UP = true
@@ -381,21 +381,18 @@ compose-up-identity:
 	$(call OK,Keycloak ready for $(ENV))
 
 ## keycloak-provision ? Apply Terraform to provision the platform Keycloak realm
-## Scoped to ENV: dev uses infra/env/local, others use infra/env/$(ENV).
+## Scoped to ENV: each environment uses infra/env/$(ENV)/$(ENV).tfvars.
 ## Prerequisites: compose-up-identity for the selected environment.
 keycloak-provision:
 	$(call STEP,keycloak: provisioning realm via Terraform ($(ENV)))
-	@_tfdir=infra/env/local; \
-	[ "$(ENV)" != "dev" ] && _tfdir=infra/env/$(ENV); \
-	if [ ! -f "$${_tfdir}/local.tfvars" ] && [ ! -f "$${_tfdir}/$(ENV).tfvars" ]; then \
+	@_tfdir=infra/env/$(ENV); \
+	if [ ! -f "$${_tfdir}/$(ENV).tfvars" ]; then \
 		printf "$(RED)? Terraform vars not found in $${_tfdir}.\n"; \
 		printf "  Copy $(ENV).tfvars.example to $(ENV).tfvars and fill in values.$(RESET)\n"; \
 		exit 1; \
 	fi; \
-	_varfile="$${_tfdir}/local.tfvars"; \
-	[ ! -f "$${_tfdir}/local.tfvars" ] && _varfile="$${_tfdir}/$(ENV).tfvars"; \
 	cd $${_tfdir} && terraform init -upgrade -input=false > /dev/null 2>&1 \
-	    && terraform apply -var-file=$$(basename $${_varfile}) -auto-approve -input=false
+	    && terraform apply -var-file=$(ENV).tfvars -auto-approve -input=false
 	$(call OK,Keycloak realm provisioned for $(ENV))
 
 # =============================================================================
@@ -634,32 +631,33 @@ infra-check:
 	@infra/bin/tf fmt -check -recursive infra/ \
 		&& printf '$(GREEN)? terraform format clean$(RESET)\n' \
 		|| { printf '$(YELLOW)? run: infra/bin/tf fmt -recursive infra/$(RESET)\n'; exit 1; }
-	@infra/bin/tf -chdir=infra/env/local init -backend=false -input=false > /dev/null 2>&1 \
-		&& printf '$(GREEN)? infra/env/local init ok$(RESET)\n' \
+	@infra/bin/tf -chdir=infra/env/dev init -backend=false -input=false > /dev/null 2>&1 \
+		&& printf '$(GREEN)? infra/env/dev init ok$(RESET)\n' \
 		|| { printf '$(YELLOW)? init failed ? check provider availability (requires internet for first run)$(RESET)\n'; exit 1; }
-	@infra/bin/tf -chdir=infra/env/local validate -no-color \
-		&& printf '$(GREEN)? infra/env/local validate ok$(RESET)\n' \
-		|| { printf '$(RED)? infra/env/local validate failed$(RESET)\n'; exit 1; }
+	@infra/bin/tf -chdir=infra/env/dev validate -no-color \
+		&& printf '$(GREEN)? infra/env/dev validate ok$(RESET)\n' \
+		|| { printf '$(RED)? infra/env/dev validate failed$(RESET)\n'; exit 1; }
 	$(call OK,infra check complete)
 
-## keycloak-plan-local ? Plan Keycloak provisioning against local Compose Keycloak
+## keycloak-plan-dev ? Plan Keycloak provisioning against dev Compose Keycloak
 ##   Requires: docker compose --profile identity up -d keycloak (localhost:8090)
-##   Uses: infra/env/local/local.tfvars.example (placeholder secrets ? safe to plan)
-keycloak-plan-local:
-	$(call STEP,keycloak:plan:local)
+##   Uses: infra/env/dev/dev.tfvars.example (placeholder secrets ? safe to plan)
+keycloak-plan-local: keycloak-plan-dev
+keycloak-plan-dev:
+	$(call STEP,keycloak:plan:dev)
 	@chmod +x infra/bin/tf
 	@printf '$(BOLD)Requires: docker compose --profile identity up -d keycloak$(RESET)\n'
 	@curl -sf http://localhost:8090/kc/realms/master > /dev/null 2>&1 \
 		|| { printf '$(RED)? Keycloak not reachable at http://localhost:8090/kc\n  Run: docker compose --profile identity up -d keycloak$(RESET)\n'; exit 1; }
 	@printf '$(GREEN)? Keycloak reachable at http://localhost:8090/kc$(RESET)\n'
-	@infra/bin/tf -chdir=infra/env/local init -backend=false -input=false > /dev/null 2>&1 \
+	@infra/bin/tf -chdir=infra/env/dev init -backend=false -input=false > /dev/null 2>&1 \
 		&& printf '$(GREEN)? init ok$(RESET)\n' \
 		|| { printf '$(RED)? init failed$(RESET)\n'; exit 1; }
-	@infra/bin/tf -chdir=infra/env/local validate -no-color \
+	@infra/bin/tf -chdir=infra/env/dev validate -no-color \
 		&& printf '$(GREEN)? validate ok$(RESET)\n' \
 		|| { printf '$(RED)? validate failed$(RESET)\n'; exit 1; }
-	@infra/bin/tf -chdir=infra/env/local plan \
-		-var-file=local.tfvars.example \
+	@infra/bin/tf -chdir=infra/env/dev plan \
+		-var-file=dev.tfvars.example \
 		-input=false \
 		-no-color
 	$(call OK,keycloak plan complete ? review above before running apply)

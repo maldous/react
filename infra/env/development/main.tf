@@ -6,7 +6,7 @@
 #   KC_HOSTNAME = http://dev.localhost/kc
 #
 # Override via development.tfvars for CI or shared development hosts.
-# Provider config lives in versions.tf (shared with infra/env/local).
+# Provider config lives in versions.tf (shared with infra/env/dev).
 # ---------------------------------------------------------------------------
 
 variable "keycloak_url" {

@@ -20,7 +20,7 @@ mappers, ADR-0021 roles, and fixture test users. `terraform validate` passes off
 | Version constraint | `~> 4.4` |
 | Version resolved | `4.4.0` |
 | Keycloak version tested | `26.2.5` (Compose identity profile) |
-| Lock file | `infra/env/local/.terraform.lock.hcl` |
+| Lock file | `infra/env/dev/.terraform.lock.hcl` |
 
 ## Realm
 
@@ -99,7 +99,7 @@ request it explicitly via the `scope` parameter.
 | `viewer@fixture.local` | `viewer` | `00000000-0000-0000-0000-000000000001` |
 | `forbidden@fixture.local` | (none) | (none) ? no-membership actor |
 
-Fixture user passwords are stored in `local.tfvars` (gitignored). The `.tfvars.example`
+Fixture user passwords are stored in `dev.tfvars` (gitignored). The `.tfvars.example`
 contains a placeholder (`password`) that documents the pattern without committing a secret.
 
 ## Secrets policy
@@ -118,17 +118,17 @@ infra/bin/tf fmt -check -recursive infra/
 # ? EXIT 0: format clean
 
 # Init (downloads mrparkers/keycloak v4.4.0, generates lock file)
-infra/bin/tf -chdir=infra/env/local init -backend=false -input=false
+infra/bin/tf -chdir=infra/env/dev init -backend=false -input=false
 # ? Terraform has been successfully initialized!
 
 # Validate (offline ? no Keycloak required)
-infra/bin/tf -chdir=infra/env/local validate
+infra/bin/tf -chdir=infra/env/dev validate
 # ? Success! The configuration is valid.
 
 # Plan (requires local Keycloak on http://localhost:8080)
 # In this test run, Keycloak was on http://localhost:8090 (port 8080 occupied)
-infra/bin/tf -chdir=infra/env/local plan \
-  -var-file=local.tfvars.example \
+infra/bin/tf -chdir=infra/env/dev plan \
+  -var-file=dev.tfvars.example \
   -var="keycloak_url=http://localhost:8090" \
   -input=false
 # ? Plan: 15 to add, 0 to change, 0 to destroy.
@@ -167,7 +167,7 @@ Outputs:
 | Target | Description |
 | --- | --- |
 | `make infra-check` | fmt-check + init + validate (offline, no Keycloak needed) |
-| `make keycloak-plan-local` | init + validate + plan (requires Keycloak on localhost:8080) |
+| `make keycloak-plan-dev` | init + validate + plan (requires Keycloak on localhost:8080) |
 
 ## Known deferrals
 

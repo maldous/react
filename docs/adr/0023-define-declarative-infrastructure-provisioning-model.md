@@ -266,7 +266,7 @@ infra/
   env/
     local/
       main.tf                   ? calls keycloak module, no cloud modules
-      local.tfvars.example
+      dev.tfvars.example
     development/
       main.tf
       development.tfvars.example
@@ -292,13 +292,13 @@ infra/
 infra/bin/tf fmt -check -recursive infra/
 
 # Init without backend (downloads providers, validates references)
-infra/bin/tf -chdir=infra/env/local init -backend=false
+infra/bin/tf -chdir=infra/env/dev init -backend=false
 
 # Validate module structure
-infra/bin/tf -chdir=infra/env/local validate
+infra/bin/tf -chdir=infra/env/dev validate
 
 # Plan with example vars (requires provider, not real credentials for Keycloak local)
-infra/bin/tf -chdir=infra/env/local plan -var-file=local.tfvars.example
+infra/bin/tf -chdir=infra/env/dev plan -var-file=dev.tfvars.example
 ```
 
 ---
@@ -409,6 +409,6 @@ None.
 
 `infra/bin/tf` is the canonical command throughout Makefiles, CI pipelines, and documentation. It resolves to `tofu` if found on PATH, else `terraform`. This single wrapper preserves OpenTofu optionality without requiring two sets of instructions.
 
-The `infra/env/local/` configuration targets a locally-running Keycloak container (Compose identity profile, `localhost:8080`). It does not require cloud credentials. This enables developers to provision a deterministic local Keycloak realm without touching the cloud environment.
+The `infra/env/dev/` configuration targets a locally-running Keycloak container (Compose identity profile, `localhost:8080`). It does not require cloud credentials. This enables developers to provision a deterministic local Keycloak realm without touching the cloud environment.
 
 ADR-ACT-0008 (authenticated organisation profile slice) may proceed before ADR-ACT-0110 using pre-built `SessionActor` fixtures injected into the test/BFF layer. The slice must not claim real SSO login is complete.

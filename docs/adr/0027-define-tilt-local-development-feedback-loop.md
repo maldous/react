@@ -354,7 +354,7 @@ To avoid scope creep, the following boundaries are explicit:
 - **Tilt does not provision identity.** Keycloak realm, clients, and roles
   are owned by `infra/modules/keycloak/` and provisioned via
   `infra/bin/tf apply` (ADR-0023). Tilt may expose a manual trigger for
-  `make keycloak-plan-local` but does not provision itself.
+  `make keycloak-plan-dev` but does not provision itself.
 - **Tilt does not own E2E configuration.** `playwright.config.ts`,
   `playwright.build.config.ts`, and `playwright.prod.config.ts` are owned
   by the platform; Tilt triggers them unchanged.

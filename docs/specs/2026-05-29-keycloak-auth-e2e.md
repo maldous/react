@@ -155,7 +155,7 @@ Also update `keycloak_user_roles` resources to assign the new users their roles.
 
 ### 5b. Local env ? updated redirect URIs
 
-**File:** `infra/env/local/main.tf`
+**File:** `infra/env/dev/main.tf`
 
 Change `bff_redirect_uris` to route the callback through the Vite proxy:
 
@@ -166,7 +166,7 @@ bff_redirect_uris = [
 ]
 ```
 
-Update `local.tfvars.example` to reflect that `PLATFORM_API_URL` should be `http://localhost:5173` for dev auth E2E (so platform-api constructs the correct `redirect_uri` for code exchange).
+Update `dev.tfvars.example` to reflect that `PLATFORM_API_URL` should be `http://localhost:5173` for dev auth E2E (so platform-api constructs the correct `redirect_uri` for code exchange).
 
 ### 5c. Production env
 
@@ -258,13 +258,13 @@ Add two resources after `identity-profile`:
 ```python
 local_resource(
   'keycloak-provision',
-  cmd='cd infra/env/local && terraform init -input=false -upgrade && terraform apply -auto-approve -var-file=local.tfvars',
+  cmd='cd infra/env/dev && terraform init -input=false -upgrade && terraform apply -auto-approve -var-file=dev.tfvars',
   resource_deps=['identity-profile'],
   labels=['auth'],
   trigger_mode=TRIGGER_MODE_MANUAL,
   deps=[
     'infra/modules/keycloak',
-    'infra/env/local/main.tf',
+    'infra/env/dev/main.tf',
   ],
 )
 
@@ -286,7 +286,7 @@ Add a `make` target:
 
 ```makefile
 keycloak-provision:
-    cd infra/env/local && terraform init -input=false && terraform apply -auto-approve -var-file=local.tfvars
+    cd infra/env/dev && terraform init -input=false && terraform apply -auto-approve -var-file=dev.tfvars
 ```
 
 ---
@@ -437,7 +437,7 @@ test("admin can log in and reach org profile on aldous.info", async ({ page }) =
 
 ```makefile
 keycloak-provision:
-    cd infra/env/local && terraform init -input=false && terraform apply -auto-approve -var-file=local.tfvars
+    cd infra/env/dev && terraform init -input=false && terraform apply -auto-approve -var-file=dev.tfvars
 ```
 
 ---
@@ -446,7 +446,7 @@ keycloak-provision:
 
 ```gitignore
 .auth/           # Playwright storage state ? contains session cookies
-infra/env/local/local.tfvars
+infra/env/dev/dev.tfvars
 infra/env/production/production.tfvars
 infra/env/**/.terraform/
 infra/env/**/terraform.tfstate*
@@ -460,7 +460,7 @@ A change is complete when:
 
 - [ ] Login page renders "Sign in" button that initiates Keycloak PKCE flow
 - [ ] Vite proxies `/auth/*` correctly ? session cookie set for `localhost:5173` origin
-- [ ] `terraform apply` in `infra/env/local` provisions realm, 5 roles, 5 fixture users
+- [ ] `terraform apply` in `infra/env/dev` provisions realm, 5 roles, 5 fixture users
 - [ ] `infra/env/production/main.tf` complete and `terraform validate` passes
 - [ ] Tiltfile `keycloak-provision` resource runs without error when triggered
 - [ ] `npm run test:e2e:auth` passes all 6 spec files with real Keycloak

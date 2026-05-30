@@ -45,15 +45,15 @@ make compose-up-identity      # Keycloak (binds port from $KEYCLOAK_PORT, defaul
 
 ```sh
 make keycloak-provision
-# Runs: cd infra/env/local && terraform apply -var-file=local.tfvars
+# Runs: cd infra/env/dev && terraform apply -var-file=dev.tfvars
 ```
 
 This creates the `platform` realm with all fixture users including `sysadmin@aldous.info`.
 
-If you don't have `local.tfvars`, copy the example and fill in the password:
+If you don't have `dev.tfvars`, copy the example and fill in the password:
 
 ```sh
-cp infra/env/local/local.tfvars.example infra/env/local/local.tfvars
+cp infra/env/dev/dev.tfvars.example infra/env/dev/dev.tfvars
 # Set fixture_user_password = "password" (or a value of your choice)
 ```
 
@@ -81,11 +81,11 @@ curl -s http://aldous.info/api/session   # {"code":"UNAUTHENTICATED",...} (401)
 
 ### 5. Set test credentials
 
-The default sysadmin fixture user uses the password from `local.tfvars`:
+The default sysadmin fixture user uses the password from `dev.tfvars`:
 
 ```sh
 export KEYCLOAK_TEST_USERNAME=sysadmin@aldous.info
-export KEYCLOAK_TEST_PASSWORD=password  # or whatever you set in local.tfvars
+export KEYCLOAK_TEST_PASSWORD=password  # or whatever you set in dev.tfvars
 ```
 
 ---
@@ -120,7 +120,7 @@ npx playwright show-report playwright-report/real-auth
 | `admin@fixture.local`  | `tenant-admin` | Existing fixture; not used for real-auth E2E         |
 | `viewer@fixture.local` | `viewer`       | Existing fixture                                     |
 
-Password for all: value of `fixture_user_password` in `local.tfvars` (default: `password`).
+Password for all: value of `fixture_user_password` in `dev.tfvars` (default: `password`).
 
 ---
 

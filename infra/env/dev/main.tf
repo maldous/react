@@ -1,11 +1,11 @@
 # ---------------------------------------------------------------------------
-# env/local ? Local Keycloak provisioning (ADR-ACT-0110)
+# env/dev ? Dev Keycloak provisioning (ADR-ACT-0110)
 #
-# Targets the local Compose Keycloak service (identity profile).
+# Targets the dev Compose Keycloak service (identity profile).
 # Start with: docker compose --profile identity up -d keycloak
 #
 # Provider config lives in versions.tf.
-# Variable values live in local.tfvars (gitignored); use local.tfvars.example
+# Variable values live in dev.tfvars (gitignored); use dev.tfvars.example
 # as the template.
 # ---------------------------------------------------------------------------
 
@@ -43,7 +43,7 @@ variable "realm_name" {
 variable "bff_client_secret" {
   type        = string
   sensitive   = true
-  description = "Client secret for platform-api confidential client. Gitignored in local.tfvars."
+  description = "Client secret for platform-api confidential client. Gitignored in dev.tfvars."
 }
 
 variable "provisioner_client_secret" {
@@ -51,19 +51,19 @@ variable "provisioner_client_secret" {
   sensitive = true
 }
 
+variable "keycloak_is_local" {
+  description = "Set to true only in dev.tfvars for localhost/Docker-internal Keycloak. Gates provision_fixture_users."
+  type        = bool
+  default     = false
+}
+
 variable "provision_fixture_users" {
-  description = "Provision fixture test users. Only permitted when keycloak_url is localhost/127.x or Docker-internal. Must be false for remote Keycloak."
+  description = "Provision fixture test users. Requires keycloak_is_local=true — never set both true for a remote Keycloak."
   type        = bool
   default     = true
   validation {
-    condition = (
-      !var.provision_fixture_users ||
-      startswith(var.keycloak_url, "http://localhost") ||
-      startswith(var.keycloak_url, "https://localhost") ||
-      startswith(var.keycloak_url, "http://127.") ||
-      startswith(var.keycloak_url, "http://keycloak")
-    )
-    error_message = "provision_fixture_users=true is only allowed when keycloak_url is localhost/127.x or a Docker-internal address. Set it to false for remote Keycloak deployments."
+    condition     = !var.provision_fixture_users || var.keycloak_is_local
+    error_message = "provision_fixture_users=true requires keycloak_is_local=true. Set keycloak_is_local=true only in tfvars files that target a localhost or Docker-internal Keycloak."
   }
 }
 

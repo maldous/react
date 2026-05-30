@@ -1,4 +1,4 @@
-# Infrastructure ? Declarative Provisioning
+# Infrastructure — Declarative Provisioning
 
 Governed by [ADR-0023](../docs/adr/0023-define-declarative-infrastructure-provisioning-model.md).
 
@@ -11,7 +11,7 @@ Governed by [ADR-0023](../docs/adr/0023-define-declarative-infrastructure-provis
 | CI/CD trust (OIDC, deploy roles)          | Terraform/OpenTofu     | `infra/modules/ci-oidc/`      |
 | Local service startup                     | Docker Compose         | `compose.yaml`                |
 | Database schema                           | Application migrations | `packages/adapters-postgres/` |
-| Fixture data                              | Seed scripts           | local/development only        |
+| Fixture data                              | Seed scripts           | dev/test only                 |
 
 ## Quick start
 
@@ -19,55 +19,55 @@ Governed by [ADR-0023](../docs/adr/0023-define-declarative-infrastructure-provis
 # Use the wrapper (tofu if available, else terraform)
 ./infra/bin/tf fmt -check -recursive infra/
 
-# Provision local Keycloak realm (requires Compose identity profile running)
+# Provision dev Keycloak realm (requires Compose identity profile running)
 # make compose-up-identity
-./infra/bin/tf -chdir=infra/env/local init -backend=false
-./infra/bin/tf -chdir=infra/env/local plan -var-file=local.tfvars.example
-./infra/bin/tf -chdir=infra/env/local apply -var-file=local.tfvars.example
+./infra/bin/tf -chdir=infra/env/dev init -backend=false
+./infra/bin/tf -chdir=infra/env/dev plan -var-file=dev.tfvars.example
+./infra/bin/tf -chdir=infra/env/dev apply -var-file=dev.tfvars.example
 ```
 
 ## Environments
 
-| Environment   | State backend      | Secrets         | Users provisioned          |
-| ------------- | ------------------ | --------------- | -------------------------- |
-| `local`       | Local (no backend) | `.env` file     | Fixture users (local only) |
-| `development` | Remote (S3)        | CI secrets      | Fixture users              |
-| `test`        | Remote (S3)        | CI secrets      | Fixture users              |
-| `staging`     | Remote (S3)        | Secrets Manager | None by default            |
-| `production`  | Remote (S3)        | Secrets Manager | None by default            |
+| Environment | State backend      | Secrets         | Users provisioned           |
+| ----------- | ------------------ | --------------- | --------------------------- |
+| `dev`       | Local (no backend) | `.env` file     | Fixture users (dev only)    |
+| `test`      | Local (no backend) | `.env` file     | Fixture users (opt-in)      |
+| `staging`   | Remote (S3)        | Secrets Manager | Fixture users (local stack) |
+| `prod`      | Remote (S3)        | Secrets Manager | Fixture users (local stack) |
 
 ## Secrets policy
 
 - No secrets committed. `.tfvars.example` files contain placeholder values only.
 - Production secrets are Secrets Manager or Parameter Store references.
-- `terraform.tfvars` and `*.auto.tfvars` are gitignored.
+- `*.tfvars` and `*.auto.tfvars` are gitignored.
+- `keycloak_is_local=true` must be set explicitly in tfvars to allow fixture user provisioning.
 
 ## Implementation status
 
 | Module                       | Status                                                 |
 | ---------------------------- | ------------------------------------------------------ |
-| `modules/keycloak/`          | Done ? ADR-ACT-0110 (mrparkers/keycloak v4.4.0)        |
-| `modules/aws-network/`       | Planned ? pre-production                               |
-| `modules/aws-database/`      | Planned ? pre-production                               |
-| `modules/aws-observability/` | Planned ? pre-production                               |
-| `modules/ci-oidc/`           | Planned ? pre-CI setup                                 |
-| `env/local/`                 | Done ? ADR-ACT-0110 (calls keycloak module, validated) |
-| `env/development/`           | Planned ? ADR-ACT-0109                                 |
-| `env/staging/`               | Planned ? pre-production                               |
-| `env/production/`            | Planned ? pre-production                               |
+| `modules/keycloak/`          | Done — ADR-ACT-0110 (mrparkers/keycloak v4.4.0)        |
+| `modules/aws-network/`       | Planned — pre-production                               |
+| `modules/aws-database/`      | Planned — pre-production                               |
+| `modules/aws-observability/` | Planned — pre-production                               |
+| `modules/ci-oidc/`           | Planned — pre-CI setup                                 |
+| `env/dev/`                   | Done — ADR-ACT-0110 (calls keycloak module, validated) |
+| `env/test/`                  | Done — ADR-ACT-0110                                    |
+| `env/staging/`               | Done — ADR-ACT-0110                                    |
+| `env/prod/`                  | Done — ADR-ACT-0110                                    |
 
 ## Validation commands
 
 ```sh
-# Format + init + validate ? offline, no Keycloak required
+# Format + init + validate — offline, no Keycloak required
 make infra-check
 
-# Plan local Keycloak provisioning ? requires Keycloak running
+# Plan dev Keycloak provisioning — requires Keycloak running
 docker compose --profile identity up -d keycloak
-make keycloak-plan-local
+make keycloak-plan-dev
 
 # Apply (when ready)
-cp infra/env/local/local.tfvars.example infra/env/local/local.tfvars
-# Edit local.tfvars with real local credentials
-infra/bin/tf -chdir=infra/env/local apply -var-file=local.tfvars
+cp infra/env/dev/dev.tfvars.example infra/env/dev/dev.tfvars
+# Edit dev.tfvars with real dev credentials
+infra/bin/tf -chdir=infra/env/dev apply -var-file=dev.tfvars
 ```
