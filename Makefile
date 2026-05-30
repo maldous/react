@@ -340,12 +340,11 @@ clean:
 	rm -rf coverage/ reports/ .scannerwork/ playwright-report/ e2e-results/
 	$(call OK,clean complete for $(ENV))
 
-## clean-all ? Stop services for ALL 4 environments
+## clean-all ? Stop services for dev and test environments only
+## staging and prod are HA — never cleaned automatically; manage manually when needed
 clean-all:
 	$(MAKE) clean ENV=dev
 	$(MAKE) clean ENV=test
-	$(MAKE) clean ENV=staging
-	$(MAKE) clean ENV=prod
 	$(call OK,all environments cleaned)
 
 # =============================================================================
@@ -889,58 +888,44 @@ stage-test:
 	fi; \
 	test $$_r -eq 0 || exit 1
 
-## stage-staging ? Staging stage: preservation testing (data preserving, Cloudflare external)
+## stage-staging ? Staging stage: run tests against the always-on staging stack
 ##
-##   external-caddy:up ? staging-up ? E2E tests ? staging-down ? external-caddy:down
+## HIGH AVAILABILITY: staging must already be running. This target does NOT
+## start, stop, or restart any services. The stack is managed independently
+## and must remain available between pipeline runs.
 ##
-## Starts the staging internal Compose stack (platform-api + SPA on port 82)
-## and the external Caddy on port 80 (routes staging.aldous.info ? localhost:82).
-## Cloudflare terminates TLS and forwards to the external Caddy.
+##   db:migrate ? unit/API tests ? external E2E (no stack lifecycle changes)
 ##
-## Prerequisites:
-##   - staging.aldous.info must be DNS-resolvable to Cloudflare IPs
-##     (no /etc/hosts override ? toggle with # if needed for local dev)
-##   - KEYCLOAK_TEST_PASSWORD must be set for auth tests (optional ? skipped)
+## Prerequisites (must be pre-running):
+##   - staging internal stack: make staging-up
+##   - external Caddy on port 80: make external-caddy-up
+##   - staging.aldous.info DNS-resolvable to Cloudflare IPs
+##   - KEYCLOAK_TEST_PASSWORD set for auth tests (optional ? skipped if absent)
 stage-staging:
-	$(call STEP,stage:staging (Cloudflare external ? preserving))
-	# clean intentionally skipped — staging data is preserved across runs; run manually if needed
-	$(MAKE) compose-down ENV=staging
-	@sudo fuser -k 8090/tcp 2>/dev/null || true
-	$(MAKE) staging-up
-	$(MAKE) external-caddy-up
+	$(call STEP,stage:staging (Cloudflare external ? HA, no stack changes))
 	@printf 'Running database migrations (staging, port 5435 ? data preserving)...\n'
 	POSTGRES_URL=postgresql://platform:platformpassword@localhost:5435/platform npm run db:migrate \
 	    && $(MAKE) run-stage-tests ENV=staging \
 	        POSTGRES_URL='postgresql://platform:platformpassword@localhost:5435/platform' \
 	        REDIS_URL='redis://localhost:6381' \
 	&& PROD_BASE_URL='$(or $(PROD_BASE_URL),http://staging.aldous.info)' $(MAKE) e2e-external \
-	    && printf '$(GREEN)? stage:staging passed$(RESET)\n'; _r=$$?; \
-	if [ "$(KEEP_STACKS_UP)" != "true" ]; then \
-	    $(MAKE) external-caddy-down; \
-	    $(MAKE) compose-down ENV=staging; \
-	fi; \
-	test $$_r -eq 0 || exit 1
+	    && printf '$(GREEN)? stage:staging passed$(RESET)\n'
 
-## stage-prod ? Production stage: preservation confirmation (data preserving, Cloudflare external, exhaustive)
+## stage-prod ? Production stage: run tests against the always-on prod stack
 ##
-##   external-caddy:up ? prod-up ? external E2E ? exhaustive prod E2E ? prod-down ? external-caddy:down
+## HIGH AVAILABILITY: prod must already be running. This target does NOT
+## start, stop, or restart any services. The stack is managed independently
+## and must remain available between pipeline runs.
 ##
-## Starts the production internal Compose stack (platform-api + SPA on port 83)
-## and the external Caddy on port 80 (routes aldous.info ? localhost:83).
-## Cloudflare terminates TLS and forwards to the external Caddy.
-## Runs the full external suite followed by exhaustive prod tests (ADR-0034).
+##   db:migrate ? unit/API tests ? external E2E ? exhaustive prod E2E (no stack lifecycle changes)
 ##
-## Prerequisites:
-##   - aldous.info must be DNS-resolvable to Cloudflare IPs
-##     (no /etc/hosts override ? toggle with # if needed for local dev)
-##   - KEYCLOAK_TEST_PASSWORD must be set for auth tests (optional ? skipped)
+## Prerequisites (must be pre-running):
+##   - prod internal stack: make prod-up
+##   - external Caddy on port 80: make external-caddy-up
+##   - aldous.info DNS-resolvable to Cloudflare IPs
+##   - KEYCLOAK_TEST_PASSWORD set for auth tests (optional ? skipped if absent)
 stage-prod:
-	$(call STEP,stage:prod (Cloudflare external ? preserving, exhaustive))
-	# clean intentionally skipped — prod data is preserved across runs; run manually if needed
-	$(MAKE) compose-down ENV=prod
-	@sudo fuser -k 8090/tcp 2>/dev/null || true
-	$(MAKE) prod-up
-	$(MAKE) external-caddy-up
+	$(call STEP,stage:prod (Cloudflare external ? HA, no stack changes, exhaustive))
 	@printf 'Running database migrations (prod, port 5436 ? data preserving)...\n'
 	POSTGRES_URL=postgresql://platform:platformpassword@localhost:5436/platform npm run db:migrate \
 	    && $(MAKE) run-stage-tests ENV=prod \
@@ -948,12 +933,7 @@ stage-prod:
 	        REDIS_URL='redis://localhost:6382' \
 	    && PROD_BASE_URL='$(or $(PROD_BASE_URL),http://aldous.info)' $(MAKE) e2e-external \
 	    && npm run test:e2e:prod \
-	    && printf '$(GREEN)? stage:prod passed$(RESET)\n'; _r=$$?; \
-	if [ "$(KEEP_STACKS_UP)" != "true" ]; then \
-	    $(MAKE) external-caddy-down; \
-	    $(MAKE) compose-down ENV=prod; \
-	fi; \
-	test $$_r -eq 0 || exit 1
+	    && printf '$(GREEN)? stage:prod passed$(RESET)\n'
 
 ## local-substrate-check ? Local developer quick-check (NOT sufficient to begin ADR-ACT-0008)
 local-substrate-check: compose format lint typecheck test test-compose audit architecture
