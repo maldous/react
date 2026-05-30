@@ -50,10 +50,8 @@ test.describe(`${TARGET_HOST}: platform login`, () => {
         })
         .first()
     ).toBeVisible();
-    // Sign-in button must be present
-    await expect(
-      page.locator('[data-testid="sign-in-button"], a[href="/auth/login"]').first()
-    ).toBeVisible();
+    // Keycloak form submit button must be present (not a React testid — we are on the KC page)
+    await expect(page.getByRole("button", { name: /sign in/i })).toBeVisible();
   });
 
   test("real Keycloak login succeeds and session is established", async ({ page }) => {

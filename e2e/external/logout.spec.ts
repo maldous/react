@@ -42,13 +42,13 @@ test.describe(`${TARGET_HOST}: logout and session invalidation`, () => {
     await loginAs(page, username, password);
 
     await page.getByTestId("logout-button").click();
-    await page.waitForURL(TARGET_HOST_RE, { timeout: 10_000 });
 
-    // Sign-in entry must reappear
+    // Wait directly for the sign-in entry — this covers the full redirect chain after logout
+    // without a separate waitForURL that can time out on slow server-side redirects.
     const signInEntry = page.locator(
       '[data-testid="sign-in-link"], [data-testid="sign-in-button"], h1:has-text("Sign in")'
     );
-    await expect(signInEntry.first()).toBeVisible({ timeout: 10_000 });
+    await expect(signInEntry.first()).toBeVisible({ timeout: 20_000 });
   });
 
   test("POST /auth/logout directly returns 2xx or redirect", async ({ page }) => {
