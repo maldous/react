@@ -26,7 +26,9 @@ web_origins   = ["https://aldous.info"]
 
 apex_domain = "aldous.info"
 
-# MUST be false for aldous.info — fixture users are prohibited in production
+# Fixture users: permitted when keycloak_url is localhost (local stack only).
+# MUST be false when keycloak_url points to a remote (real production) Keycloak.
+# The validation in main.tf enforces this — setting true with a remote URL is rejected.
 provision_fixture_users = false
 
 # Secrets — must match values used in platform-api env and provisioner service

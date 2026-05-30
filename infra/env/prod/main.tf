@@ -106,16 +106,21 @@ variable "fixture_user_password" {
 }
 
 # Fixture users (sysadmin, admin, viewer) are backdoor accounts — they must
-# never be provisioned into the production realm (apex_domain = aldous.info).
-# Validation enforces this: fixture users are blocked for the production apex
-# domain regardless of what is supplied in tfvars.
+# never be provisioned against a remote (real) production Keycloak.
+# The validation allows fixture users only when keycloak_url is localhost/127.x,
+# which means a local prod-stack simulation (not the real cloud Keycloak).
+# Any non-loopback keycloak_url with provision_fixture_users=true is rejected.
 variable "provision_fixture_users" {
-  description = "Provision fixture test users. MUST be false for apex_domain=aldous.info (real production)."
+  description = "Provision fixture test users. Only permitted when keycloak_url is localhost (local stack). Must be false for remote Keycloak."
   type        = bool
   default     = false
   validation {
-    condition     = !var.provision_fixture_users || var.apex_domain != "aldous.info"
-    error_message = "provision_fixture_users must be false when apex_domain is aldous.info — fixture users are prohibited in the production realm."
+    condition = (
+      !var.provision_fixture_users ||
+      startswith(var.keycloak_url, "http://localhost") ||
+      startswith(var.keycloak_url, "http://127.")
+    )
+    error_message = "provision_fixture_users=true is only allowed when keycloak_url is localhost/127.x. Set it to false for remote (real production) Keycloak deployments."
   }
 }
 
