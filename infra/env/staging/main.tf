@@ -82,9 +82,19 @@ variable "fixture_user_password" {
 }
 
 variable "provision_fixture_users" {
-  description = "Whether to provision fixture test users (staging: false by default)"
+  description = "Provision fixture test users. Only permitted when keycloak_url is localhost/127.x or Docker-internal. Must be false for remote Keycloak."
   type        = bool
   default     = false
+  validation {
+    condition = (
+      !var.provision_fixture_users ||
+      startswith(var.keycloak_url, "http://localhost") ||
+      startswith(var.keycloak_url, "https://localhost") ||
+      startswith(var.keycloak_url, "http://127.") ||
+      startswith(var.keycloak_url, "http://keycloak")
+    )
+    error_message = "provision_fixture_users=true is only allowed when keycloak_url is localhost/127.x or a Docker-internal address. Set it to false for remote Keycloak deployments."
+  }
 }
 
 provider "keycloak" {
