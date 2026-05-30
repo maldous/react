@@ -3,36 +3,37 @@
 # Do not commit prod.tfvars — it contains secrets.
 #
 # ADR-0033: APEX_DOMAIN = aldous.info
-#   KC_HOSTNAME = http://aldous.info/kc  (http for local; https when behind Cloudflare)
+#   KC_HOSTNAME = https://aldous.info/kc  (https:// required for real production)
 #
 # After filling in values:
 #   make compose-up-identity ENV=prod   # start Keycloak
 #   make keycloak-provision ENV=prod    # apply Terraform
+#
+# Security notes:
+#   - keycloak_url must be https:// or http://localhost (validated in main.tf)
+#   - kc_hostname / redirect_uris / web_origins default to https:// in main.tf;
+#     override to http:// only for local stack testing (no real TLS available)
+#   - provision_fixture_users MUST remain false for apex_domain=aldous.info;
+#     main.tf has a validation block that enforces this
 
 keycloak_url      = "http://localhost:8093/kc"
 keycloak_realm    = "platform-production"
 
-# Redirect URIs — must match what platform-api uses for KEYCLOAK_CALLBACK_URL
-redirect_uris = ["http://aldous.info/auth/callback"]
-web_origins   = ["http://aldous.info"]
+# Use https:// for real production; http:// only for local stack testing
+kc_hostname   = "https://aldous.info/kc"
+redirect_uris = ["https://aldous.info/auth/callback"]
+web_origins   = ["https://aldous.info"]
 
-# Keycloak frontend hostname (token issuer).
-# Local prod-stack: http://aldous.info/kc
-# Real Cloudflare deployment: https://aldous.info/kc
-kc_hostname = "http://aldous.info/kc"
-
-# Apex domain for FQDN-based tenant routing
 apex_domain = "aldous.info"
 
-# Provision fixture test users (true for local prod-stack E2E; false for real production)
-provision_fixture_users = true
+# MUST be false for aldous.info — fixture users are prohibited in production
+provision_fixture_users = false
 
-# Secrets — must match values used in platform-api and provisioner service
+# Secrets — must match values used in platform-api env and provisioner service
 bff_client_secret         = "REPLACE_WITH_REAL_SECRET"
 provisioner_client_secret = "REPLACE_WITH_REAL_SECRET"
 
-keycloak_admin_user     = "admin"
-keycloak_admin_password = "admin"
+keycloak_admin_user     = "REPLACE_WITH_ADMIN_USER"
+keycloak_admin_password = "REPLACE_WITH_ADMIN_PASSWORD"
 
-# Fixture user password (only used when provision_fixture_users = true)
-fixture_user_password = "REPLACE_WITH_REAL_PASSWORD"
+fixture_user_password = ""

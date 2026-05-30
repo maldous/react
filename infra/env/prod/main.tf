@@ -21,16 +21,27 @@ terraform {
   }
 }
 
+# keycloak_url is the internal Keycloak server URL used by the Terraform provider.
+# Must be https:// for any non-loopback deployment; http://localhost is allowed
+# for local stack testing where TLS is not available.
 variable "keycloak_url" {
-  description = "Keycloak server URL (internal, with KC_HTTP_RELATIVE_PATH prefix)"
+  description = "Keycloak server URL (internal, with KC_HTTP_RELATIVE_PATH prefix). https:// required for non-localhost."
   type        = string
-  default     = "http://localhost:8093/kc"
+  validation {
+    condition = (
+      startswith(var.keycloak_url, "https://") ||
+      startswith(var.keycloak_url, "http://localhost") ||
+      startswith(var.keycloak_url, "http://127.")
+    )
+    error_message = "keycloak_url must use https:// except when targeting localhost/127.x for local stack testing."
+  }
 }
 
+# No default — force the operator to supply an explicit value so the wrong
+# credentials are never silently used against a real Keycloak instance.
 variable "keycloak_admin_user" {
-  description = "Keycloak admin username"
+  description = "Keycloak admin username. Supply explicitly in tfvars — no default to prevent accidental credential reuse."
   type        = string
-  default     = "admin"
 }
 
 variable "keycloak_admin_password" {
@@ -45,22 +56,28 @@ variable "keycloak_realm" {
   default     = "platform-production"
 }
 
+# Defaults to https:// — safe for real production deployments.
+# Local prod-stack testing (aldous.info → 127.0.0.1 via /etc/hosts) must
+# explicitly set http:// in prod.tfvars; Cloudflare handles TLS externally.
 variable "redirect_uris" {
-  description = "OAuth redirect URIs for the BFF client"
+  description = "OAuth redirect URIs for the BFF client. Use https:// for real production."
   type        = list(string)
-  default     = ["http://aldous.info/auth/callback"]
+  default     = ["https://aldous.info/auth/callback"]
 }
 
 variable "web_origins" {
-  description = "Allowed web origins for CORS"
+  description = "Allowed web origins for CORS. Use https:// for real production."
   type        = list(string)
-  default     = ["http://aldous.info"]
+  default     = ["https://aldous.info"]
 }
 
+# Default is https:// — the correct value for real production where Cloudflare
+# provides TLS. Local prod-stack must explicitly set http:// in prod.tfvars
+# because the local stack has no TLS certificate.
 variable "kc_hostname" {
-  description = "Keycloak frontend hostname URL (determines token issuer). Production: http://aldous.info/kc"
+  description = "Keycloak frontend hostname URL (token issuer). https://aldous.info/kc for real production."
   type        = string
-  default     = "http://aldous.info/kc"
+  default     = "https://aldous.info/kc"
 }
 
 variable "apex_domain" {
@@ -82,16 +99,24 @@ variable "provisioner_client_secret" {
 }
 
 variable "fixture_user_password" {
-  description = "Password for fixture test users. Required when provision_fixture_users = true."
+  description = "Password for fixture test users. Only relevant when provision_fixture_users = true."
   type        = string
   sensitive   = true
   default     = ""
 }
 
+# Fixture users (sysadmin, admin, viewer) are backdoor accounts — they must
+# never be provisioned into the production realm (apex_domain = aldous.info).
+# Validation enforces this: fixture users are blocked for the production apex
+# domain regardless of what is supplied in tfvars.
 variable "provision_fixture_users" {
-  description = "Whether to provision fixture test users. Set true for local prod-stack E2E; false for real production."
+  description = "Provision fixture test users. MUST be false for apex_domain=aldous.info (real production)."
   type        = bool
   default     = false
+  validation {
+    condition     = !var.provision_fixture_users || var.apex_domain != "aldous.info"
+    error_message = "provision_fixture_users must be false when apex_domain is aldous.info — fixture users are prohibited in the production realm."
+  }
 }
 
 provider "keycloak" {
