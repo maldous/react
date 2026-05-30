@@ -50,7 +50,7 @@ Semver policy: internal-traceable
 - Does not import adapters, HTTP frameworks, logging SDKs, observability SDKs, or React
 - Does not import Keycloak SDK or any @platform/* packages
 - Does not own persistence or session management
-- Does not use Zod — domain uses plain TypeScript types
+- Does not use Zod ? domain uses plain TypeScript types
 
 ## Public exports and usage
 

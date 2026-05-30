@@ -1,6 +1,6 @@
 export const PACKAGE_NAME = "@platform/api-runtime";
 
-/** Response shape for GET /healthz — process liveness. */
+/** Response shape for GET /healthz ? process liveness. */
 export interface HealthResponse {
   status: "ok";
 }
@@ -8,13 +8,13 @@ export interface HealthResponse {
 /** Dependency readiness status. */
 export type DependencyStatus = "ok" | "failed" | "unknown";
 
-/** Response shape for GET /readyz — dependency readiness. */
+/** Response shape for GET /readyz ? dependency readiness. */
 export interface ReadinessResponse {
   status: "ready" | "not-ready";
   dependencies: Record<string, DependencyStatus>;
 }
 
-/** Response shape for GET /version — build metadata. */
+/** Response shape for GET /version ? build metadata. */
 export interface VersionResponse {
   version: string;
   gitSha: string | "unknown";

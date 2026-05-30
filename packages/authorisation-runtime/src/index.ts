@@ -34,13 +34,13 @@ export type AccessDecision =
 export interface AuthorisationPort {
   /**
    * Check whether the current access token grants access to resource+scope.
-   * Implements the UMA ticket endpoint call (ADR-0030 §3a).
+   * Implements the UMA ticket endpoint call (ADR-0030 ?3a).
    * Returns an RPT (Requesting Party Token) on success.
    */
   checkAccess(resource: Resource, accessToken: string): Promise<AccessDecision>;
 }
 
-/** Noop implementation — always denies. For testing and as a safe default. */
+/** Noop implementation ? always denies. For testing and as a safe default. */
 export function createDenyAllAuthorisationPort(): AuthorisationPort {
   return {
     async checkAccess() {
@@ -49,7 +49,7 @@ export function createDenyAllAuthorisationPort(): AuthorisationPort {
   };
 }
 
-/** Noop implementation — always grants. For development only. */
+/** Noop implementation ? always grants. For development only. */
 export function createAllowAllAuthorisationPort(): AuthorisationPort {
   return {
     async checkAccess(_resource) {
@@ -59,7 +59,7 @@ export function createAllowAllAuthorisationPort(): AuthorisationPort {
 }
 
 // ---------------------------------------------------------------------------
-// Realm administration (ADR-0030 §1b, §6b)
+// Realm administration (ADR-0030 ?1b, ?6b)
 // ---------------------------------------------------------------------------
 
 export interface IdentityProvider {
@@ -119,14 +119,14 @@ export interface RealmAdminPort {
   setResourcePolicy(resourceName: string, policy: ResourcePolicy): Promise<void>;
   removeResourcePolicy(resourceName: string, policyName: string): Promise<void>;
 
-  // Sysadmin cross-domain brokering (ADR-0029 §2e)
+  // Sysadmin cross-domain brokering (ADR-0029 ?2e)
   getSysadminBrokering(): Promise<SysadminBrokeringConfig>;
   setSysadminBrokering(config: SysadminBrokeringConfig): Promise<void>;
 }
 
 // ---------------------------------------------------------------------------
 // Realm provisioning (ADR-0031)
-// Used only by the platform provisioning service — never by request handlers.
+// Used only by the platform provisioning service ? never by request handlers.
 // ---------------------------------------------------------------------------
 
 export interface RealmProvisioningConfig {
@@ -155,7 +155,7 @@ export interface RealmProvisioningPort {
 }
 
 // ---------------------------------------------------------------------------
-// Theme / branding (ADR-0029 §4)
+// Theme / branding (ADR-0029 ?4)
 // ---------------------------------------------------------------------------
 
 export interface TenantTheme {
@@ -176,13 +176,13 @@ export const DEFAULT_THEME: Readonly<TenantTheme> = {
 // Per-resource provisioning config (ADR-0031, ADR-ACT-0142)
 //
 // Each resource type (database, identity, cache, storage) is independently
-// configurable. A tenant can mix tiers — e.g. dedicated DB + shared cache.
+// configurable. A tenant can mix tiers ? e.g. dedicated DB + shared cache.
 //
 // Tiers:
-//   shared    — tenant namespace/schema/realm within platform shared infra
-//   dedicated — operator-provisioned dedicated infra; platform sets it up
-//   external  — tenant manages their own infra; platform stores config only
-//   air-gapped — no platform connection; tenant manages entirely offline
+//   shared    ? tenant namespace/schema/realm within platform shared infra
+//   dedicated ? operator-provisioned dedicated infra; platform sets it up
+//   external  ? tenant manages their own infra; platform stores config only
+//   air-gapped ? no platform connection; tenant manages entirely offline
 // ---------------------------------------------------------------------------
 
 export type ResourceTier = "shared" | "dedicated" | "external" | "air-gapped";

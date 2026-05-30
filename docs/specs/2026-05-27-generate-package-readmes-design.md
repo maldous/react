@@ -97,7 +97,7 @@ In `--check` mode, edits outside the extension markers cause a `stale` result wi
 
 ### Package-local README files
 
-Written at `<package-dir>/README.md` — committed source artifacts, not in `reports/`.
+Written at `<package-dir>/README.md` ? committed source artifacts, not in `reports/`.
 
 ### Self-evidence (gitignored)
 

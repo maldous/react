@@ -10,7 +10,7 @@ slice) requires Tier 1. Slice manifests live at `docs/slices/`.
 
 ## Readiness tiers
 
-### Tier 0 — Local substrate
+### Tier 0 ? Local substrate
 
 **Status: PASSED** (ADR-ACT-0111 complete)
 
@@ -23,7 +23,7 @@ Evidence:
 - React app browser-only Vitest tests pass: `npm run test:frontend:run`
 - Architecture boundary checks pass: `node tools/architecture/orchestrator/src/index.mjs all --no-reports --strict`
 
-### Tier 1 — Local vertical slice test substrate
+### Tier 1 ? Local vertical slice test substrate
 
 **Status: ESTABLISHED** (ADR-ACT-0112 complete)
 
@@ -35,21 +35,21 @@ Evidence:
 - make e2e-check target established
 - Playwright webServer config starts both services automatically
 
-### Tier 2 — Real identity substrate
+### Tier 2 ? Real identity substrate
 
 **Status: BLOCKED** on ADR-ACT-0110 (Keycloak Terraform/OpenTofu provisioning)
 
 Terraform/OpenTofu required: Keycloak realm, clients, scopes, mappers, roles.
 Not required for ADR-ACT-0008.
 
-### Tier 3 — Cloud deployment substrate
+### Tier 3 ? Cloud deployment substrate
 
 **Status: BLOCKED** on cloud Terraform/OpenTofu modules (not yet defined)
 
 Terraform/OpenTofu required: all cloud infrastructure (database, cache, DNS, TLS, ingress).
 Not required for ADR-ACT-0008.
 
-### Tier 4 — Production readiness
+### Tier 4 ? Production readiness
 
 **Status: BLOCKED** on Tier 3 and production approval workflow.
 

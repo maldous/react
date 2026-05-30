@@ -119,8 +119,8 @@ None
 
 ## Operational notes
 
-- The auth provider interface decouples platform from IdP — swapping providers requires only a new adapter
-- RBAC primitives are additive — claims are enriched, never narrowed, at this layer
+- The auth provider interface decouples platform from IdP ? swapping providers requires only a new adapter
+- RBAC primitives are additive ? claims are enriched, never narrowed, at this layer
 
 ## Governance
 

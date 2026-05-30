@@ -10,7 +10,7 @@
   "claudeAcceptanceReview": "2026-05-28",
   "adrRef": "ADR-0024",
   "sliceManifest": "docs/slices/ADR-ACT-0008.json",
-  "summary": "First vertical slice: React protected route (organisation.read) → useSession → TanStack Query → contract client → platform-api permission guard → use case (DI, no pg) → repository port → Postgres adapter → structured logs/traces. Hardened to canonical hexagonal architecture via ADR-ACT-0118.",
+  "summary": "First vertical slice: React protected route (organisation.read) ? useSession ? TanStack Query ? contract client ? platform-api permission guard ? use case (DI, no pg) ? repository port ? Postgres adapter ? structured logs/traces. Hardened to canonical hexagonal architecture via ADR-ACT-0118.",
   "architectureShape": {
     "reactProtectedRoute": "apps/react-enterprise-app/src/routes/organisation/profile.tsx",
     "tanstackQuery": "apps/react-enterprise-app/src/features/organisation/use-organisation-profile.ts",
@@ -22,18 +22,18 @@
     "postgresAdapter": "apps/platform-api/src/adapters/postgres-organisation-repository.ts"
   },
   "shortcutsFixed": [
-    "usecases/organisation.ts imported pg directly — removed, DI via OrganisationRepository port",
-    "Routes duplicated in tests — server/routes.ts exported and shared by http.ts and tests",
-    "no-permissions fixture had organisationId — replaced with no-membership (empty tenantId/organisationId)",
-    "Operation name was raw path string — explicit operationName field on Route",
-    "No domain validation for displayName — normaliseOrganisationDisplayName() trims, validates length/chars"
+    "usecases/organisation.ts imported pg directly ? removed, DI via OrganisationRepository port",
+    "Routes duplicated in tests ? server/routes.ts exported and shared by http.ts and tests",
+    "no-permissions fixture had organisationId ? replaced with no-membership (empty tenantId/organisationId)",
+    "Operation name was raw path string ? explicit operationName field on Route",
+    "No domain validation for displayName ? normaliseOrganisationDisplayName() trims, validates length/chars"
   ],
   "finalAuditHardening": [
-    "Use case held module-level createLogger/createTracer globals — removed; use case is now purely repo orchestration + business validation. Logging/tracing owned by the pipeline layer.",
-    "Both handlers duplicated POSTGRES_URL + PostgresOrganisationRepository wiring — added apps/platform-api/src/server/dependencies.ts as a minimal composition root (getPostgresUrl, getOrganisationRepository, createOrganisationDependencies).",
-    "Adapter opened a fresh pg.Client per method call — adapter now owns a shared pg.Pool (max=10) constructed once per process.",
-    "apps/platform-api/src/server/health.ts contained raw SELECT 1 — extracted to adapters/postgres-readiness-adapter.ts (PostgresReadinessAdapter.ping); server/ now contains zero raw SQL.",
-    "contracts-organisation UpdateOrganisationProfileRequestSchema bounds (min 1 / max 100) disagreed with domain rules (min 2 / max 120) — aligned to min 2 / max 120 and made .strict() so unknown fields (slug, id, tenantId) are rejected at the contract boundary with 400 instead of being silently dropped."
+    "Use case held module-level createLogger/createTracer globals ? removed; use case is now purely repo orchestration + business validation. Logging/tracing owned by the pipeline layer.",
+    "Both handlers duplicated POSTGRES_URL + PostgresOrganisationRepository wiring ? added apps/platform-api/src/server/dependencies.ts as a minimal composition root (getPostgresUrl, getOrganisationRepository, createOrganisationDependencies).",
+    "Adapter opened a fresh pg.Client per method call ? adapter now owns a shared pg.Pool (max=10) constructed once per process.",
+    "apps/platform-api/src/server/health.ts contained raw SELECT 1 ? extracted to adapters/postgres-readiness-adapter.ts (PostgresReadinessAdapter.ping); server/ now contains zero raw SQL.",
+    "contracts-organisation UpdateOrganisationProfileRequestSchema bounds (min 1 / max 100) disagreed with domain rules (min 2 / max 120) ? aligned to min 2 / max 120 and made .strict() so unknown fields (slug, id, tenantId) are rejected at the contract boundary with 400 instead of being silently dropped."
   ],
   "packages": [
     {
@@ -106,20 +106,20 @@
   },
   "e2eIdempotency": {
     "tenantAdminUpdateTest": "Restores fixture display name ('Fixture Organisation') within the same test. No teardown required.",
-    "viewerTest": "Mocks /api/session at browser level — no Postgres mutation, order-independent.",
-    "noMembershipTest": "Mocks /api/session at browser level — no Postgres mutation, order-independent.",
-    "unauthenticatedTest": "Mocks /api/session at browser level — no Postgres mutation, order-independent.",
+    "viewerTest": "Mocks /api/session at browser level ? no Postgres mutation, order-independent.",
+    "noMembershipTest": "Mocks /api/session at browser level ? no Postgres mutation, order-independent.",
+    "unauthenticatedTest": "Mocks /api/session at browser level ? no Postgres mutation, order-independent.",
     "result": "Repeated test:e2e runs produce identical results."
   },
   "constraints": [
     "React app does not import pg, platform-api, or server-side packages",
     "contracts-organisation has zero @platform/* dependencies",
-    "Fixture session used — no real Keycloak (ADR-ACT-0110 remains Open)",
-    "Use case has zero pg imports — all SQL owned by PostgresOrganisationRepository adapter",
-    "Use case has zero module-level globals — logger/tracer not constructed inside usecases/organisation.ts",
-    "server/ contains zero raw SQL — readiness probe owned by PostgresReadinessAdapter",
+    "Fixture session used ? no real Keycloak (ADR-ACT-0110 remains Open)",
+    "Use case has zero pg imports ? all SQL owned by PostgresOrganisationRepository adapter",
+    "Use case has zero module-level globals ? logger/tracer not constructed inside usecases/organisation.ts",
+    "server/ contains zero raw SQL ? readiness probe owned by PostgresReadinessAdapter",
     "Contract bounds and domain validation rules are intentionally identical (min 2 / max 120)",
-    "Update request schema is .strict() — slug/id/tenantId in body are rejected with 400",
+    "Update request schema is .strict() ? slug/id/tenantId in body are rejected with 400",
     "no-membership fixture uses empty strings for test-only semantics; documented as not production identity"
   ],
   "acceptanceCriteriaPassed": [

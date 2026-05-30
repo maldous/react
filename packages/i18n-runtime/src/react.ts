@@ -1,5 +1,5 @@
 /**
- * @platform/i18n-runtime/react — React provider/hook boundary (ADR-0026)
+ * @platform/i18n-runtime/react ? React provider/hook boundary (ADR-0026)
  *
  * Separate entry point so server-side code (BFF/API) can import from
  * @platform/i18n-runtime without pulling in React as a dependency.
@@ -7,7 +7,7 @@
  * Usage:
  *   import { I18nProvider, useTranslation } from "@platform/i18n-runtime/react";
  *
- * This module satisfies the ADR-0026 §Runtime model requirement:
+ * This module satisfies the ADR-0026 ?Runtime model requirement:
  *   "expose a React provider/hook for UI code"
  *
  * Full implementation (React context, useTranslation hook) is tracked in
@@ -43,7 +43,7 @@ export interface I18nProviderProps {
 
 /**
  * Create an i18n instance scoped for a React component tree.
- * This is the bootstrap call — in the full implementation (ADR-ACT-0121)
+ * This is the bootstrap call ? in the full implementation (ADR-ACT-0121)
  * this will be wrapped in a React Context so child components can call
  * useTranslation() without explicit prop threading.
  */

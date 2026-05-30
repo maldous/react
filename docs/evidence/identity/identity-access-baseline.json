@@ -66,7 +66,7 @@
     "keycloakPackage": "packages/adapters-keycloak",
     "leaksToReact": false,
     "leaksToDomain": false,
-    "externalIdentityMapping": "provider + providerSubject → User + ExternalIdentity"
+    "externalIdentityMapping": "provider + providerSubject ? User + ExternalIdentity"
   },
   "sessionModel": {
     "storage": "Redis (packages/adapters-redis)",
@@ -86,17 +86,17 @@
     "requiredPermissionToRead": "organisation.read",
     "requiredPermissionToEdit": "organisation.update",
     "testCases": [
-      "authenticated tenant-admin: can read and edit → 200",
-      "authenticated viewer: can read, edit controls hidden → 200",
-      "authenticated but no membership: forbidden → 403",
-      "unauthenticated: redirect to /auth/login → 401"
+      "authenticated tenant-admin: can read and edit ? 200",
+      "authenticated viewer: can read, edit controls hidden ? 200",
+      "authenticated but no membership: forbidden ? 403",
+      "unauthenticated: redirect to /auth/login ? 401"
     ]
   },
   "openActions": [
-    "ADR-ACT-0105 — identity/access-control contracts and domain primitives",
-    "ADR-ACT-0106 — platform-auth/session boundary primitives",
-    "ADR-ACT-0107 — protected route and API guard primitives",
-    "ADR-ACT-0108 — Keycloak adapter skeleton"
+    "ADR-ACT-0105 ? identity/access-control contracts and domain primitives",
+    "ADR-ACT-0106 ? platform-auth/session boundary primitives",
+    "ADR-ACT-0107 ? protected route and API guard primitives",
+    "ADR-ACT-0108 ? Keycloak adapter skeleton"
   ],
   "adrActZeroZeroEightStatus": "NOT started"
 }

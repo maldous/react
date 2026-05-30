@@ -18,9 +18,9 @@ Substrate tests converted from Vitest to node:test and moved to `apps/platform-a
 - ADR-0021 (identity and access control)
 - ADR-0022 (session and BFF primitives; boundary fix governed by this ADR)
 - ADR-0023 (declarative provisioning)
-- ADR-ACT-0111 (Done — this record)
-- ADR-ACT-0008 (Open — first vertical slice, may now begin)
-- ADR-ACT-0110 (Open — Keycloak provisioning, still blocked)
+- ADR-ACT-0111 (Done ? this record)
+- ADR-ACT-0008 (Open ? first vertical slice, may now begin)
+- ADR-ACT-0110 (Open ? Keycloak provisioning, still blocked)
 - Hardened: 2026-05-28
 - Boundary fix: 2026-05-28
 
@@ -32,10 +32,10 @@ File: `apps/platform-api/src/db/migrations/001-identity-schema.sql`
 
 Tables created:
 
-- `users` — UUID PK, email (unique), display\_name, created\_at, updated\_at
-- `external_identities` — UUID PK, user\_id FK, provider, provider\_subject (unique per provider)
-- `organisations` — UUID PK, slug (unique), display\_name, created\_at, updated\_at
-- `memberships` — UUID PK, user\_id FK, organisation\_id FK, role (CHECK constraint), created\_at, updated\_at
+- `users` ? UUID PK, email (unique), display\_name, created\_at, updated\_at
+- `external_identities` ? UUID PK, user\_id FK, provider, provider\_subject (unique per provider)
+- `organisations` ? UUID PK, slug (unique), display\_name, created\_at, updated\_at
+- `memberships` ? UUID PK, user\_id FK, organisation\_id FK, role (CHECK constraint), created\_at, updated\_at
 
 Migration runner: `apps/platform-api/src/db/migrate.ts`
 
@@ -56,9 +56,9 @@ Fixture constants (FIXTURE object):
 Fixture data seeded:
 
 - Fixture Organisation (tenant-admin + viewer members)
-- `admin@fixture.local` → tenant-admin role in fixture-org
-- `viewer@fixture.local` → viewer role in fixture-org
-- `forbidden@fixture.local` → no membership (forbidden actor)
+- `admin@fixture.local` ? tenant-admin role in fixture-org
+- `viewer@fixture.local` ? viewer role in fixture-org
+- `forbidden@fixture.local` ? no membership (forbidden actor)
 
 ### 3. Database reset utility
 
@@ -72,11 +72,11 @@ File: `apps/platform-api/src/server/health.ts`
 
 | Handler | Returns |
 | --- | --- |
-| getHealth() | `{ status: "ok" }` — always |
+| getHealth() | `{ status: "ok" }` ? always |
 | getReadiness(postgresUrl?) | `{ status: "ready" \| "not-ready", dependencies: { database: "ok" \| "failed" } }` |
 | getVersion() | `{ version, gitSha, buildTime, environment }` from env vars |
 
-Pure functions — no HTTP server created.
+Pure functions ? no HTTP server created.
 
 ### 5. Session fixture handler
 
@@ -113,30 +113,30 @@ Import boundary rule `no-server-packages-in-react-spa` enforces this in `docs/ar
 ```text
 npm run test:compose
 
-✔ postgres: container is healthy
-✔ postgres: pg client can connect
-✔ postgres: write/read/delete roundtrip
-✔ database: migration creates identity schema tables
-✔ database: seed creates fixture actors and organisation
-✔ redis: container is healthy
-✔ redis: client can PING
-✔ redis: SET/GET/DEL roundtrip
-✔ clickhouse: container is healthy
-✔ clickhouse: /ping returns Ok.
-✔ clickhouse: SELECT 1 returns 1
-✔ clickhouse: CREATE/INSERT/SELECT/DROP roundtrip
-✔ minio: health/live endpoint returns 200
-✔ minio: S3 client can list buckets
-✔ minio: create bucket / PUT / GET / DELETE roundtrip
-✔ mailpit: /api/v1/info returns version
-✔ mailpit: nodemailer SMTP send and retrieve via API
-✔ otel-collector: container is running
-✔ otel-collector: OTLP/HTTP POST /v1/traces returns 200
+? postgres: container is healthy
+? postgres: pg client can connect
+? postgres: write/read/delete roundtrip
+? database: migration creates identity schema tables
+? database: seed creates fixture actors and organisation
+? redis: container is healthy
+? redis: client can PING
+? redis: SET/GET/DEL roundtrip
+? clickhouse: container is healthy
+? clickhouse: /ping returns Ok.
+? clickhouse: SELECT 1 returns 1
+? clickhouse: CREATE/INSERT/SELECT/DROP roundtrip
+? minio: health/live endpoint returns 200
+? minio: S3 client can list buckets
+? minio: create bucket / PUT / GET / DELETE roundtrip
+? mailpit: /api/v1/info returns version
+? mailpit: nodemailer SMTP send and retrieve via API
+? otel-collector: container is running
+? otel-collector: OTLP/HTTP POST /v1/traces returns 200
 
 tests 19 | pass 19 | fail 0
 ```
 
-### Vitest frontend tests (react-enterprise-app only — browser tests)
+### Vitest frontend tests (react-enterprise-app only ? browser tests)
 
 ```text
 npm run test:frontend:run
@@ -148,7 +148,7 @@ Tests  11 passed (11)
 After boundary fix: substrate tests removed from Vitest runner. Remaining tests:
 
 - `use-session.test.ts` (4 tests)
-- `protected-route.test.tsx` (6 tests — browser-only, stays in react app)
+- `protected-route.test.tsx` (6 tests ? browser-only, stays in react app)
 - `ProtectedRoute.test.tsx` if present (additional accessibility tests)
 
 ### platform-api substrate tests (node:test)
@@ -156,14 +156,14 @@ After boundary fix: substrate tests removed from Vitest runner. Remaining tests:
 ```text
 npm run test:platform-api
 
-✔ health handlers > getHealth returns status ok
-✔ health handlers > getVersion returns an object with version field
-✔ fixture session > createFixtureSessionActor returns tenant-admin actor
-✔ fixture session > createFixtureSessionActor returns viewer actor with limited permissions
-✔ fixture session > getFixtureSession returns null when LOCAL_FIXTURE_SESSION is unauthenticated
-✔ fixture session > getFixtureSession returns actor when LOCAL_FIXTURE_SESSION is tenant-admin
-✔ fixture session > getFixtureSession returns null when env var is not set
-✔ observability smoke — platform primitives integration > (12 tests)
+? health handlers > getHealth returns status ok
+? health handlers > getVersion returns an object with version field
+? fixture session > createFixtureSessionActor returns tenant-admin actor
+? fixture session > createFixtureSessionActor returns viewer actor with limited permissions
+? fixture session > getFixtureSession returns null when LOCAL_FIXTURE_SESSION is unauthenticated
+? fixture session > getFixtureSession returns actor when LOCAL_FIXTURE_SESSION is tenant-admin
+? fixture session > getFixtureSession returns null when env var is not set
+? observability smoke ? platform primitives integration > (12 tests)
 
 tests 19 | pass 19 | fail 0
 ```
@@ -197,10 +197,10 @@ tests 337+ | pass 337+ | fail 0
 ### Quality gates
 
 ```text
-npm run lint        → 0 problems
-npm run format:check → All matched files use Prettier code style!
-npm run tsc:check   → No errors
-npm run lint:md     → 0 errors
+npm run lint        ? 0 problems
+npm run format:check ? All matched files use Prettier code style!
+npm run tsc:check   ? No errors
+npm run lint:md     ? 0 errors
 ```
 
 ## Known deferrals

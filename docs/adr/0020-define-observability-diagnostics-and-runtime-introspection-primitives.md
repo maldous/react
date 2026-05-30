@@ -14,13 +14,13 @@ Architecture owner / technical lead
 
 ## Consulted
 
-- ADR-0001 (hexagonal architecture — adapters own external integrations)
-- ADR-0002 (bounded contexts — operations domain)
+- ADR-0001 (hexagonal architecture ? adapters own external integrations)
+- ADR-0002 (bounded contexts ? operations domain)
 - ADR-0003 (modular monorepo)
 - ADR-0013 (client-facing API boundary)
 - ADR-0016 (quality gate baseline)
-- ADR-0017 (local integration substrate — OTel collector in Compose)
-- ADR-0019 (React component platform — browser safety)
+- ADR-0017 (local integration substrate ? OTel collector in Compose)
+- ADR-0019 (React component platform ? browser safety)
 
 ## Context
 
@@ -28,9 +28,9 @@ The first vertical slice (ADR-ACT-0008) must prove not only functional architect
 
 The platform already includes:
 
-- `packages/adapters-opentelemetry` — OpenTelemetry SDK adapter
-- `packages/observability` — operations interface package (no `@platform` deps)
-- `packages/adapters-sentry` — Sentry error-monitoring adapter
+- `packages/adapters-opentelemetry` ? OpenTelemetry SDK adapter
+- `packages/observability` ? operations interface package (no `@platform` deps)
+- `packages/adapters-sentry` ? Sentry error-monitoring adapter
 - An `otel-collector` in the Compose default profile (ADR-0017)
 
 This ADR defines the internal platform abstractions and conventions built on top of those adapters: structured logging, runtime context, error primitives, debug policy, health endpoints, and metric conventions.
@@ -97,12 +97,12 @@ Cons:
 
 ---
 
-### 1. Observability standard — OpenTelemetry
+### 1. Observability standard ? OpenTelemetry
 
 ```text
-@opentelemetry/api             (API surface — imported by platform-observability)
-@opentelemetry/sdk-node        (Node SDK — used by adapters-opentelemetry)
-@opentelemetry/exporter-otlp-* (OTLP exporter — configured by adapters-opentelemetry)
+@opentelemetry/api             (API surface ? imported by platform-observability)
+@opentelemetry/sdk-node        (Node SDK ? used by adapters-opentelemetry)
+@opentelemetry/exporter-otlp-* (OTLP exporter ? configured by adapters-opentelemetry)
 ```
 
 Rules:
@@ -117,7 +117,7 @@ Rules:
 
 ---
 
-### 2. Structured logging — Pino + `packages/platform-logging`
+### 2. Structured logging ? Pino + `packages/platform-logging`
 
 ```text
 pino  (Node BFF and adapter logging)
@@ -125,11 +125,11 @@ pino  (Node BFF and adapter logging)
 
 Create `packages/platform-logging`. It must provide:
 
-- `createLogger(options)` — returns a scoped Pino logger
-- `createChildLogger(parent, fields)` — returns a child logger with additional bound fields
-- `createRequestLogger(req, context)` — request-scoped logger with `requestId`, `traceId`, `spanId`
-- `redactionConfig` — exported redaction paths configuration
-- `createBrowserLogger(options)` — browser-safe logger (no console.log fallthrough; no sensitive fields)
+- `createLogger(options)` ? returns a scoped Pino logger
+- `createChildLogger(parent, fields)` ? returns a child logger with additional bound fields
+- `createRequestLogger(req, context)` ? request-scoped logger with `requestId`, `traceId`, `spanId`
+- `redactionConfig` ? exported redaction paths configuration
+- `createBrowserLogger(options)` ? browser-safe logger (no console.log fallthrough; no sensitive fields)
 - Safe metadata helpers: `safeErrorMeta(err)`, `safeContextMeta(ctx)`
 
 Required log fields (structured JSON, Node runtime):
@@ -200,7 +200,7 @@ Rules:
 
 ---
 
-### 4. Runtime context — `packages/platform-runtime-context`
+### 4. Runtime context ? `packages/platform-runtime-context`
 
 Create `packages/platform-runtime-context`. It must define:
 
@@ -220,7 +220,7 @@ interface RuntimeContext {
 
 Rules:
 
-- Runtime context flows: BFF request handler → use case → adapter.
+- Runtime context flows: BFF request handler ? use case ? adapter.
 - Domain logic receives only `{ requestId, traceId, operationName }` if it requires context.
 - Do not pass raw HTTP `Request` / `Response` objects into domain or use-case packages.
 - React feature hooks receive `requestId` only through contract client helpers; full runtime context is never exposed to the browser.
@@ -228,13 +228,13 @@ Rules:
 
 ---
 
-### 5. Error primitives — `packages/platform-errors`
+### 5. Error primitives ? `packages/platform-errors`
 
 Create `packages/platform-errors`. It must define:
 
 | Class                 | HTTP status | Retryable | Use case                                                                           |
 | --------------------- | ----------- | --------- | ---------------------------------------------------------------------------------- |
-| `AppError`            | —           | Base      | Abstract base with `code`, `safeMessage`, `httpStatus`, `retryable`, `safeDetails` |
+| `AppError`            | ?           | Base      | Abstract base with `code`, `safeMessage`, `httpStatus`, `retryable`, `safeDetails` |
 | `ValidationError`     | 400         | No        | Input validation failure; safe for client                                          |
 | `NotFoundError`       | 404         | No        | Resource not found; safe for client                                                |
 | `ConflictError`       | 409         | No        | State conflict (duplicate, version mismatch)                                       |
@@ -245,12 +245,12 @@ Create `packages/platform-errors`. It must define:
 
 Each error class must have:
 
-- `code` — stable, namespaced string identifier (e.g., `VALIDATION_ERROR`, `NOT_FOUND`)
-- `safeMessage` — message safe to include in API responses
-- `httpStatus` — numeric HTTP status code
-- `retryable` — boolean, populated by subclass default
-- `safeDetails` — optional structured object safe for API responses
-- `internalDetails` — optional object for log-only context; never serialised to response
+- `code` ? stable, namespaced string identifier (e.g., `VALIDATION_ERROR`, `NOT_FOUND`)
+- `safeMessage` ? message safe to include in API responses
+- `httpStatus` ? numeric HTTP status code
+- `retryable` ? boolean, populated by subclass default
+- `safeDetails` ? optional structured object safe for API responses
+- `internalDetails` ? optional object for log-only context; never serialised to response
 
 Rules:
 
@@ -258,9 +258,9 @@ Rules:
 - Do not throw raw `Error` for validation failures, not-found cases, or conflict conditions.
 - API responses must expose `{ code, message, details? }` using `safeMessage` and `safeDetails` only.
 - Logs may include `internalDetails` after redaction.
-- Domain packages must not import HTTP frameworks or response objects. Throwing `new ValidationError("…")` is permitted in domain/use-case code — it uses a _semantic error category_, not an HTTP concept.
+- Domain packages must not import HTTP frameworks or response objects. Throwing `new ValidationError("...")` is permitted in domain/use-case code ? it uses a _semantic error category_, not an HTTP concept.
 - `httpStatus` on `AppError` subclasses is **metadata for the API boundary**, not a domain concept. Domain code never reads `httpStatus`; the API boundary reads it once to set the HTTP response status code.
-- The API boundary owns the final HTTP response mapping — it reads `err.httpStatus`, constructs `{ code, message, details? }`, and sets the status. Nothing else does this.
+- The API boundary owns the final HTTP response mapping ? it reads `err.httpStatus`, constructs `{ code, message, details? }`, and sets the status. Nothing else does this.
 - `UnexpectedError` wraps unknown errors; the wrapped cause is log-only.
 
 ---
@@ -288,21 +288,21 @@ Rules:
 
 The Node BFF/API runtime must expose the following contracts. Implementation is tracked in ADR-ACT-0104.
 
-**`GET /healthz`** — process liveness
+**`GET /healthz`** ? process liveness
 
 ```text
 200 OK
 { "status": "ok" }
 ```
 
-**`GET /readyz`** — dependency readiness
+**`GET /readyz`** ? dependency readiness
 
 ```text
 200 OK  { "status": "ready", "dependencies": { "database": "ok", "cache": "ok" } }
 503 Service Unavailable  { "status": "not-ready", "dependencies": { "database": "failed" } }
 ```
 
-**`GET /version`** — build metadata
+**`GET /version`** ? build metadata
 
 ```text
 200 OK
@@ -340,7 +340,7 @@ Required metric names and dimensions:
 Rules:
 
 - Metric names follow OpenTelemetry semantic conventions where applicable.
-- Cardinality must be bounded — do not add unbounded dimensions (e.g., userId, entityId).
+- Cardinality must be bounded ? do not add unbounded dimensions (e.g., userId, entityId).
 - Metrics are recorded by the BFF request handler and adapter base classes; features do not record metrics directly.
 
 ---
@@ -385,22 +385,22 @@ Rules:
 
 Option C is chosen because:
 
-1. **Vendor neutrality** — OTel API + OTLP exporter allows swapping backends (Jaeger, Grafana Tempo, Datadog, Honeycomb) by configuration change, not code change. The local Compose OTel collector (ADR-0017) provides immediate local tracing.
+1. **Vendor neutrality** ? OTel API + OTLP exporter allows swapping backends (Jaeger, Grafana Tempo, Datadog, Honeycomb) by configuration change, not code change. The local Compose OTel collector (ADR-0017) provides immediate local tracing.
 
-2. **Typed error primitives** — Raw `Error` throws produce inconsistent API responses. Typed error classes with `safeMessage` / `safeDetails` / `internalDetails` enforce the boundary between what the browser sees and what the logs contain.
+2. **Typed error primitives** ? Raw `Error` throws produce inconsistent API responses. Typed error classes with `safeMessage` / `safeDetails` / `internalDetails` enforce the boundary between what the browser sees and what the logs contain.
 
-3. **Redaction at source** — Pino's `redact` option at the root logger level is the only reliable way to prevent credential leakage. Per-log-site omission is fragile and will miss cases.
+3. **Redaction at source** ? Pino's `redact` option at the root logger level is the only reliable way to prevent credential leakage. Per-log-site omission is fragile and will miss cases.
 
-4. **Domain isolation** — Domain packages must not know about Pino, OTel, or Sentry. This is enforced by routing all observability through `packages/platform-logging` and `packages/platform-observability` abstractions, which themselves have no `@platform` dependencies.
+4. **Domain isolation** ? Domain packages must not know about Pino, OTel, or Sentry. This is enforced by routing all observability through `packages/platform-logging` and `packages/platform-observability` abstractions, which themselves have no `@platform` dependencies.
 
-5. **W3C trace context** — `traceparent` is a standard header supported by every modern tracing backend. Using proprietary propagation formats (Datadog `x-datadog-trace-id`, AWS X-Ray `X-Amzn-Trace-Id`) would create vendor lock-in at the protocol level.
+5. **W3C trace context** ? `traceparent` is a standard header supported by every modern tracing backend. Using proprietary propagation formats (Datadog `x-datadog-trace-id`, AWS X-Ray `X-Amzn-Trace-Id`) would create vendor lock-in at the protocol level.
 
 ## Consequences
 
 **Positive:**
 
 - Distributed tracing from browser request to adapter response is possible from the first slice.
-- API responses expose only safe, typed error shapes — no internal stack traces or connection details.
+- API responses expose only safe, typed error shapes ? no internal stack traces or connection details.
 - Redaction is enforced platform-wide without per-site discipline.
 - Local tracing works out of the box with the Compose OTel collector.
 
@@ -460,9 +460,9 @@ None.
 
 ## References
 
-- ADR-0001: Hexagonal architecture — adapters own external integrations
-- ADR-0017: Local integration substrate — OTel collector in Compose
-- ADR-0019: React component platform — browser safety requirements
+- ADR-0001: Hexagonal architecture ? adapters own external integrations
+- ADR-0017: Local integration substrate ? OTel collector in Compose
+- ADR-0019: React component platform ? browser safety requirements
 - `docs/evidence/observability/observability-runtime-baseline.md`
 - OpenTelemetry: <https://opentelemetry.io>
 - Pino: <https://getpino.io>
@@ -473,7 +473,7 @@ None.
 
 `packages/observability` (existing, lifecycle: `active.platform`) is the interface package with zero `@platform` dependencies. `packages/platform-observability` (new) builds on top of this interface and wraps `@opentelemetry/api`. The existing `packages/adapters-opentelemetry` implements the SDK-level wiring and is registered at application startup only.
 
-**Why `packages/observability` must have zero `@platform` dependencies:** It is a leaf port interface — the stable contract that all observability consumers import. If it depended on `platform-logging` or `platform-observability`, those packages would become transitive dependencies of every domain, feature, and UI package that imports `observability`, violating the import boundary rules (`no-raw-observability-in-domain`, `no-raw-observability-in-feature`). Keeping it dependency-free means: (a) domain and feature packages can import it without pulling in Pino or OTel, and (b) the interface can be implemented by any adapter without circular dependency risk. The `validate-source-imports` tool enforces this via the `no-platform-deps-in-observability` rule.
+**Why `packages/observability` must have zero `@platform` dependencies:** It is a leaf port interface ? the stable contract that all observability consumers import. If it depended on `platform-logging` or `platform-observability`, those packages would become transitive dependencies of every domain, feature, and UI package that imports `observability`, violating the import boundary rules (`no-raw-observability-in-domain`, `no-raw-observability-in-feature`). Keeping it dependency-free means: (a) domain and feature packages can import it without pulling in Pino or OTel, and (b) the interface can be implemented by any adapter without circular dependency risk. The `validate-source-imports` tool enforces this via the `no-platform-deps-in-observability` rule.
 
 The `packages/platform-logging` browser logger uses a minimal abstraction over `console` with structured field discipline and redaction enforcement. It does not use Pino in the browser (Pino is Node-only in its full form).
 

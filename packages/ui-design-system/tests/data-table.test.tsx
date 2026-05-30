@@ -45,7 +45,7 @@ describe("DataTable", () => {
     render(<DataTable data={data} columns={columns} />);
     const nameHeader = screen.getByText("Name");
     await userEvent.click(nameHeader);
-    // After click, sort indicator should appear (↑ or ↓)
-    expect(nameHeader.parentElement?.textContent).toContain("↑");
+    // After click, sort indicator should appear (? or ?)
+    expect(nameHeader.parentElement?.textContent).toContain("?");
   });
 });

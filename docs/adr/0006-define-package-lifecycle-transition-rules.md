@@ -297,15 +297,15 @@ Lifecycle stage transitions use this primary flow:
 
 ```text
 experimental
-  ↓
+  ?
 candidate
-  ↓
+  ?
 active
-  ↓
+  ?
 stable
-  ↓
+  ?
 maintenance
-  ↓
+  ?
 deprecated
 ```
 
@@ -313,7 +313,7 @@ Externalisation is a promotion path from a sufficiently mature package:
 
 ```text
 stable
-  ↓
+  ?
 external
 ```
 
@@ -321,7 +321,7 @@ A package may also move from active to deprecated when the package is being reti
 
 ```text
 active
-  ↓
+  ?
 deprecated
 ```
 
@@ -329,7 +329,7 @@ A package may move from candidate back to experimental if validation fails:
 
 ```text
 candidate
-  ↓
+  ?
 experimental
 ```
 
@@ -337,7 +337,7 @@ A package may move from stable back to active only when active product change re
 
 ```text
 stable
-  ↓
+  ?
 active
 ```
 

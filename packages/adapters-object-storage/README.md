@@ -118,7 +118,7 @@ AWS S3 SDK
 
 ## Operational notes
 
-- AWS credentials are resolved from the instance role or config-runtime — never hardcoded
+- AWS credentials are resolved from the instance role or config-runtime ? never hardcoded
 - Bucket names and regions are resolved from config-runtime
 
 ## Governance

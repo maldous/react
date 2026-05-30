@@ -12,8 +12,8 @@ export const Route = createRoute({
 });
 
 // ---------------------------------------------------------------------------
-// Tool link definitions — source of truth: docker/caddy/Caddyfile
-// Routes are path-prefixed behind Caddy on aldous.info (ADR-0029 §1a).
+// Tool link definitions ? source of truth: docker/caddy/Caddyfile
+// Routes are path-prefixed behind Caddy on aldous.info (ADR-0029 ?1a).
 // ---------------------------------------------------------------------------
 
 interface ToolLink {
@@ -28,7 +28,7 @@ const TOOL_LINKS: ToolLink[] = [
   {
     label: "Keycloak",
     href: "/kc",
-    description: "Identity and SSO — all realms",
+    description: "Identity and SSO ? all realms",
     profileGated: "identity",
   },
   { label: "Mailpit", href: "/mailpit", description: "Caught email (all tenants)" },
@@ -93,7 +93,7 @@ function IndexPage() {
             className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-2xl text-white shadow-md"
             aria-hidden="true"
           >
-            ⬡
+            ?
           </div>
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-gray-900">
@@ -124,7 +124,7 @@ function IndexPage() {
               className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-base text-white"
               aria-hidden="true"
             >
-              ⬡
+              ?
             </span>
             <h1 className="text-lg font-semibold text-gray-900">{t("platform.name")}</h1>
           </div>

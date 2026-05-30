@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# Keycloak provisioning module — ADR-ACT-0110
+# Keycloak provisioning module ? ADR-ACT-0110
 #
 # Provisions:
 #   - realm
@@ -42,18 +42,18 @@ resource "keycloak_realm" "platform" {
 
 }
 
-# Event logging — kept in memory; visible in Keycloak admin console Events tab.
+# Event logging ? kept in memory; visible in Keycloak admin console Events tab.
 # Moved out of keycloak_realm (provider v4.4 uses separate resource).
 resource "keycloak_realm_events" "platform" {
-  realm_id             = keycloak_realm.platform.id
-  events_enabled       = true
-  events_expiration    = 86400
-  admin_events_enabled = true
+  realm_id                     = keycloak_realm.platform.id
+  events_enabled               = true
+  events_expiration            = 86400
+  admin_events_enabled         = true
   admin_events_details_enabled = true
 }
 
 # ---------------------------------------------------------------------------
-# Realm roles — ADR-0021
+# Realm roles ? ADR-0021
 # ---------------------------------------------------------------------------
 
 resource "keycloak_role" "system_admin" {
@@ -87,7 +87,7 @@ resource "keycloak_role" "viewer" {
 }
 
 # ---------------------------------------------------------------------------
-# SPA client — public, PKCE, no client secret
+# SPA client ? public, PKCE, no client secret
 #
 # Provisioned for future direct-SPA flows (e.g. admin console, alternative
 # auth patterns). The current ADR-ACT-0008 slice uses fixture sessions and
@@ -113,10 +113,10 @@ resource "keycloak_openid_client" "spa" {
 }
 
 # ---------------------------------------------------------------------------
-# BFF/API client — confidential, PKCE
+# BFF/API client ? confidential, PKCE
 #
 # The platform-api BFF handles the entire OAuth callback flow (ADR-0022):
-#   React app → /auth/login → BFF → Keycloak → BFF callback
+#   React app ? /auth/login ? BFF ? Keycloak ? BFF callback
 #   BFF exchanges code for tokens, writes SessionActor to Redis session.
 #   React app receives only safe SessionActor JSON from /api/session.
 # ---------------------------------------------------------------------------
@@ -138,15 +138,16 @@ resource "keycloak_openid_client" "bff" {
 
   client_secret = var.bff_client_secret
 
-  # BFF callback endpoints — the BFF exchanges code at the server, not the browser.
-  # "+" instructs Keycloak to allow all origins that match a valid redirect URI;
-  # this avoids maintaining a separate origins list that drifts from redirect_uris.
+  # BFF callback endpoints ? the BFF exchanges code at the server, not the browser.
+  # Generated from kc_hostname and apex_domain for environment-appropriate redirect URIs.
+  # Override via bff_redirect_uris variable if custom URIs are needed.
+  # Note: "+" would allow all valid redirect URIs; we use explicit list for security.
   valid_redirect_uris = var.bff_redirect_uris
   web_origins         = ["+"]
 }
 
 # ---------------------------------------------------------------------------
-# platform-provisioner service account — ADR-0031
+# platform-provisioner service account ? ADR-0031
 #
 # Used by platform-api to create per-tenant Keycloak realms at runtime
 # without a Terraform deployment. Requires the master-realm service account
@@ -173,13 +174,13 @@ resource "keycloak_openid_client" "provisioner" {
 resource "keycloak_openid_client_service_account_realm_role" "provisioner_create_realm" {
   realm_id                = "master"
   service_account_user_id = keycloak_openid_client.provisioner.service_account_user_id
-  # create-realm is a realm role in master — allows dynamic tenant realm provisioning.
+  # create-realm is a realm role in master ? allows dynamic tenant realm provisioning.
   # manage-realm is a client role (on master-realm client), not a realm role.
   role = "create-realm"
 }
 
 # ---------------------------------------------------------------------------
-# platform-claims client scope — organisationId claim mapper
+# platform-claims client scope ? organisationId claim mapper
 #
 # Adds organisationId to tokens via a user attribute.
 # Fixture users have this attribute set to the fixture org UUID.
@@ -211,7 +212,7 @@ resource "keycloak_openid_user_attribute_protocol_mapper" "organisation_id" {
 }
 
 # ---------------------------------------------------------------------------
-# Fixture users — local/dev environments only
+# Fixture users ? local/dev environments only
 #
 # Emails match apps/platform-api/src/db/seed.ts exactly so that the
 # adapters-keycloak ExternalIdentity lookup succeeds when real login is wired.
@@ -227,6 +228,8 @@ resource "keycloak_user" "admin" {
   username = "admin@fixture.local"
   email    = "admin@fixture.local"
   enabled  = true
+
+  email_verified = true
 
   first_name = "Fixture"
   last_name  = "Admin"
@@ -248,6 +251,8 @@ resource "keycloak_user" "viewer" {
   email    = "viewer@fixture.local"
   enabled  = true
 
+  email_verified = true
+
   first_name = "Fixture"
   last_name  = "Viewer"
 
@@ -268,6 +273,8 @@ resource "keycloak_user" "forbidden" {
   email    = "forbidden@fixture.local"
   enabled  = true
 
+  email_verified = true
+
   first_name = "Fixture"
   last_name  = "Forbidden"
 
@@ -276,7 +283,7 @@ resource "keycloak_user" "forbidden" {
     temporary = false
   }
 
-  # No organisationId attribute — this user has no active membership (ADR-ACT-0008 no-membership fixture)
+  # No organisationId attribute ? this user has no active membership (ADR-ACT-0008 no-membership fixture)
 }
 
 resource "keycloak_user_roles" "admin_roles" {
@@ -296,12 +303,12 @@ resource "keycloak_user_roles" "viewer_roles" {
 }
 
 # ---------------------------------------------------------------------------
-# Super-global system-admin fixture user — local/dev only
+# Super-global system-admin fixture user ? local/dev only
 #
 # Used by real-browser E2E login tests on aldous.info (playwright.real-auth.config.ts).
 # Has system-admin realm role so forward_auth grants access to all admin tool routes.
 # Email uses aldous.info domain to match the /api/session actor display.
-# Never add this user to staging or production — provision_fixture_users is false there.
+# Never add this user to staging or production ? provision_fixture_users is false there.
 # ---------------------------------------------------------------------------
 
 resource "keycloak_user" "sysadmin" {

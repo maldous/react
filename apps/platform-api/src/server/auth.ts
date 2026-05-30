@@ -18,6 +18,8 @@ import {
   getSessionStore,
   getIdentityRepository,
   getApplicationPool,
+  schemeFor,
+  isAllowedHost,
 } from "./dependencies.ts";
 import { resolveTenantFromRequest } from "./tenant-resolver.ts";
 import type { PipelineHandler } from "./pipeline.ts";
@@ -44,9 +46,11 @@ function getSessionCookieDomain(): string | undefined {
 }
 
 function isSecureCookie(): boolean {
-  return (
-    process.env["NODE_ENV"] === "production" || process.env["SESSION_COOKIE_SECURE"] === "true"
-  );
+  // Only add Secure flag when explicitly configured.
+  // NODE_ENV=production does NOT auto-enable Secure ? on this host,
+  // Cloudflare Flexible SSL means the browser ? Caddy connection is
+  // plain HTTP. Secure cookies set over HTTP are rejected by browsers.
+  return process.env["SESSION_COOKIE_SECURE"] === "true";
 }
 
 function buildSetCookieHeader(sessionId: string): string {
@@ -128,7 +132,7 @@ export const handleAuthLogin: PipelineHandler = async (req, res) => {
     (req.raw.headers["x-forwarded-host"] as string | undefined) ?? req.raw.headers["host"];
   const forwardedProto = req.raw.headers["x-forwarded-proto"] as string | undefined;
 
-  // Resolve the Keycloak realm for this tenant's FQDN (ADR-0029 §2b).
+  // Resolve the Keycloak realm for this tenant's FQDN (ADR-0029 ?2b).
   // Falls back to the global platform realm when on aldous.info root or dev mode.
   const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool()).catch(() => null);
   const keycloakCfg = {
@@ -174,10 +178,12 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
 
   // Derive host/proto for dynamic callback URL (must match authorization request exactly)
   const callbackHost =
-    (req.raw.headers["x-forwarded-host"] as string | undefined) ?? req.raw.headers["host"];
+    (req.raw.headers["x-forwarded-host"] as string | undefined) ??
+    req.raw.headers["host"] ??
+    "localhost";
   const callbackProto = req.raw.headers["x-forwarded-proto"] as string | undefined;
 
-  // Resolve the tenant realm from the FQDN for token exchange (ADR-0029 §2b)
+  // Resolve the tenant realm from the FQDN for token exchange (ADR-0029 ?2b)
   const callbackTenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool()).catch(
     () => null
   );
@@ -213,7 +219,7 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
     return;
   }
 
-  // Consume auth state (one-time use — prevents replay)
+  // Consume auth state (one-time use ? prevents replay)
   const authState = await getAuthStateStore().take(state);
   if (!authState) {
     res.json(
@@ -255,7 +261,6 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
   // Get user identity from Keycloak /userinfo (using tenant-aware realm config)
   const identity = await getUserInfo(tokens.accessToken, callbackKeycloakCfg);
   if (!identity) {
-    // null means email absent or email_verified !== true (Fix 3)
     res.json(
       401,
       toSafeResponse(new ValidationError("api.error.unverifiedOrMissingEmail"), (msg) =>
@@ -279,7 +284,7 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
     );
   } catch (err) {
     if (err instanceof ConflictError) {
-      // Email already registered under a different identity — 409 Conflict.
+      // Email already registered under a different identity ? 409 Conflict.
       // The raw ConflictError from the identity adapter reaches here because the
       // pipeline's unhandled-error branch always emits 500; catching it here
       // gives the user-agent the semantically correct HTTP status.
@@ -289,10 +294,17 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
     throw err;
   }
 
-  // Set session cookie, clear pre-auth cookie, redirect to React app
+  // Set session cookie, clear pre-auth cookie, redirect to React app.
+  // Use the request host to derive the redirect base URL ? this makes
+  // multi-tenant and .localhost domains work without per-domain APP_BASE_URL config.
+  // Falls back to APP_BASE_URL env var when host is not available or allowed.
+  const redirectProto = callbackProto ?? schemeFor(callbackHost);
+  const redirectBase = isAllowedHost(callbackHost)
+    ? `${redirectProto}://${callbackHost}`
+    : getAppBaseUrl();
   res.raw.writeHead(302, {
     "Set-Cookie": [buildSetCookieHeader(session.sessionId), buildClearPreAuthCookieHeader()],
-    Location: `${getAppBaseUrl()}${authState.returnTo}`,
+    Location: `${redirectBase}${authState.returnTo}`,
   });
   res.raw.end();
 };

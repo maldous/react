@@ -23,9 +23,9 @@ These licenses are permissive and compatible with proprietary and commercial use
 
 These licenses have reciprocal or network clauses that may affect the platform depending on how the dependency is used:
 
-- MPL-2.0 (Mozilla Public License 2.0) — file-level copyleft; compatible if files are kept separate
-- EPL-1.0 / EPL-2.0 (Eclipse Public License) — weak copyleft; review required
-- LGPL-2.0 / LGPL-2.1 / LGPL-3.0 (Lesser GPL) — compatible if dynamically linked; static linking requires review
+- MPL-2.0 (Mozilla Public License 2.0) ? file-level copyleft; compatible if files are kept separate
+- EPL-1.0 / EPL-2.0 (Eclipse Public License) ? weak copyleft; review required
+- LGPL-2.0 / LGPL-2.1 / LGPL-3.0 (Lesser GPL) ? compatible if dynamically linked; static linking requires review
 
 Review is requested via an ADR-ACT entry citing the dependency name, version, and intended use.
 
@@ -34,7 +34,7 @@ Review is requested via an ADR-ACT entry citing the dependency name, version, an
 These licenses impose strong copyleft requirements incompatible with the platform's commercial use model, or are not approved for use in this codebase:
 
 - GPL-2.0 / GPL-3.0 (GNU General Public License)
-- AGPL-3.0 (GNU Affero General Public License) — network-use copyleft applies to web services
+- AGPL-3.0 (GNU Affero General Public License) ? network-use copyleft applies to web services
 - SSPL (Server Side Public License)
 - Commons Clause modifier
 - Unknown / unlicensed

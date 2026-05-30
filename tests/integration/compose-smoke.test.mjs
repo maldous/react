@@ -5,7 +5,7 @@
  * Run with: npm run test:compose
  *
  * Uses npm clients for all data operations (pg, redis, @aws-sdk/client-s3,
- * nodemailer). Only Docker CLI is used for container health checks — there is
+ * nodemailer). Only Docker CLI is used for container health checks ? there is
  * no npm equivalent for inspecting Docker container state.
  *
  * Each test performs a full read/write roundtrip and cleans up after itself
@@ -20,7 +20,7 @@ import { spawnSync } from "node:child_process";
 import pg from "pg";
 import { createClient as createRedisClient } from "redis";
 
-// DB substrate — TypeScript modules (Node 25.8 strips types natively)
+// DB substrate ? TypeScript modules (Node 25.8 strips types natively)
 import { runMigrations, isMigrated } from "../../apps/platform-api/src/db/migrate.ts";
 import { seedFixtures, FIXTURE } from "../../apps/platform-api/src/db/seed.ts";
 import { resetDatabase } from "../../apps/platform-api/src/db/reset.ts";
@@ -55,7 +55,7 @@ const smokeKey = `platform-smoke-${Date.now()}`;
 const smokeBucket = `smoke-${Date.now()}`;
 
 // ---------------------------------------------------------------------------
-// Docker helper — only used for container health state checks
+// Docker helper ? only used for container health state checks
 // ---------------------------------------------------------------------------
 
 function dockerInspect(container, format) {
@@ -67,7 +67,7 @@ function dockerInspect(container, format) {
 }
 
 // ---------------------------------------------------------------------------
-// Clients — declared here, connected in before()
+// Clients ? declared here, connected in before()
 // ---------------------------------------------------------------------------
 
 const pgClient = new pg.Client(POSTGRES_URL);
@@ -92,7 +92,7 @@ before(async () => {
 });
 
 after(async () => {
-  // Best-effort cleanup — individual tests clean up; this is a final safety net
+  // Best-effort cleanup ? individual tests clean up; this is a final safety net
   try {
     await pgClient.query("DROP TABLE IF EXISTS _smoke_test");
   } catch {}
@@ -109,7 +109,7 @@ after(async () => {
 });
 
 // ---------------------------------------------------------------------------
-// PostgreSQL (pg client → localhost:5433)
+// PostgreSQL (pg client ? localhost:5433)
 // ---------------------------------------------------------------------------
 
 test("postgres: container is healthy", () => {
@@ -135,7 +135,7 @@ test("postgres: write/read/delete roundtrip", async () => {
 });
 
 // ---------------------------------------------------------------------------
-// Database substrate — migration and seed
+// Database substrate ? migration and seed
 // ---------------------------------------------------------------------------
 
 test("database: migration creates identity schema tables", async () => {
@@ -238,7 +238,7 @@ test("database: migration fails if committed file has changed checksum", async (
 });
 
 // ---------------------------------------------------------------------------
-// Redis (redis npm client → localhost:6379)
+// Redis (redis npm client ? localhost:6379)
 // ---------------------------------------------------------------------------
 
 test("redis: container is healthy", () => {
@@ -261,7 +261,7 @@ test("redis: SET/GET/DEL roundtrip", async () => {
 });
 
 // ---------------------------------------------------------------------------
-// ClickHouse (fetch → localhost:8124)
+// ClickHouse (fetch ? localhost:8124)
 // ---------------------------------------------------------------------------
 
 async function chQuery(query) {
@@ -311,7 +311,7 @@ test("clickhouse: CREATE/INSERT/SELECT/DROP roundtrip", async () => {
 });
 
 // ---------------------------------------------------------------------------
-// MinIO (@aws-sdk/client-s3 → localhost:9000)
+// MinIO (@aws-sdk/client-s3 ? localhost:9000)
 // ---------------------------------------------------------------------------
 
 test("minio: health/live endpoint returns 200", async () => {
@@ -345,7 +345,7 @@ test("minio: create bucket / PUT / GET / DELETE roundtrip", async () => {
 });
 
 // ---------------------------------------------------------------------------
-// Mailpit (nodemailer SMTP + fetch API → localhost:1025 / localhost:8025)
+// Mailpit (nodemailer SMTP + fetch API ? localhost:1025 / localhost:8025)
 // ---------------------------------------------------------------------------
 
 test("mailpit: /api/v1/info returns version", async () => {
@@ -371,11 +371,11 @@ test("mailpit: nodemailer SMTP send and retrieve via API", async () => {
   const res = await fetch(`${MAILPIT_API}/api/v1/search?query=${encodeURIComponent(subject)}`);
   assert.equal(res.status, 200);
   const data = await res.json();
-  assert.ok(data.total >= 1, `Expected ≥1 message for subject "${subject}", got ${data.total}`);
+  assert.ok(data.total >= 1, `Expected ?1 message for subject "${subject}", got ${data.total}`);
 });
 
 // ---------------------------------------------------------------------------
-// OpenTelemetry Collector (fetch → localhost:4318)
+// OpenTelemetry Collector (fetch ? localhost:4318)
 // ---------------------------------------------------------------------------
 
 test("otel-collector: container is running", () => {

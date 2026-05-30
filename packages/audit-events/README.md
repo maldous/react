@@ -117,7 +117,7 @@ None
 
 ## Operational notes
 
-- Audit events must not be dropped — configure durable delivery in production
+- Audit events must not be dropped ? configure durable delivery in production
 - Schema versioning must be incremented on any audit field addition
 
 ## Governance

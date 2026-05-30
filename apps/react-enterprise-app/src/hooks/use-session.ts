@@ -3,7 +3,7 @@ import { type SessionActor, type AuthErrorCode, AUTH_ERROR_CODE } from "@platfor
 
 export const sessionQueryKey = ["session"] as const;
 
-/** Typed error for session fetch failures — uses the platform auth error vocabulary. */
+/** Typed error for session fetch failures ? uses the platform auth error vocabulary. */
 export class SessionFetchError extends Error {
   readonly code: AuthErrorCode = AUTH_ERROR_CODE.PROVIDER_ERROR;
   readonly status: number;

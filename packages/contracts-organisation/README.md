@@ -115,7 +115,7 @@ None
 ## Operational notes
 
 - All schemas use Zod for runtime validation
-- Zero @platform/* dependencies — this is a pure contract package
+- Zero @platform/* dependencies ? this is a pure contract package
 
 ## Governance
 

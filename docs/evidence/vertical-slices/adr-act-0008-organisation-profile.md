@@ -1,4 +1,4 @@
-# Evidence: ADR-ACT-0008 — Authenticated Organisation Profile Slice
+# Evidence: ADR-ACT-0008 ? Authenticated Organisation Profile Slice
 
 **Date:** 2026-05-28
 **Status:** Done (hardened via ADR-ACT-0118; Claude acceptance review 2026-05-28)
@@ -7,29 +7,29 @@
 
 ## Summary
 
-First vertical slice proving the full React SPA → platform-api → Postgres integration path.
+First vertical slice proving the full React SPA ? platform-api ? Postgres integration path.
 A functional first pass was implemented, then hardened into canonical hexagonal architecture
 via ADR-ACT-0118 before treating it as the canonical pattern for future slices.
 
 ## Architecture shape (canonical, post-ADR-ACT-0118)
 
-1. **React protected route** (`/organisation/profile`) — `ProtectedRoute` checks `organisation.read` via `useSession()`
-2. **TanStack Query** — `useOrganisationProfile` fetches from `/api/organisation/profile`
-3. **Contract client** — `organisation-client.ts` typed via `@platform/contracts-organisation`
-4. **Production route list** — `server/routes.ts` (shared by `http.ts` and all tests)
-5. **Pipeline permission guard** — `organisation.read` (GET) / `organisation.update` (PATCH)
-6. **Handler** — `server/organisation.ts` wires `PostgresOrganisationRepository` into use case via DI
-7. **Use case** — `usecases/organisation.ts` receives `OrganisationRepository` dep; calls `normaliseOrganisationDisplayName`; throws typed errors; no SQL, no pg import
-8. **Repository port** — `ports/organisation-repository.ts` (`OrganisationRepository` interface)
-9. **Postgres adapter** — `adapters/postgres-organisation-repository.ts` owns SQL and row mapping
-10. **Local Postgres** — `organisations` table; fixture seed
-11. **Structured logs + traces** — `requestId`, `actorId`, `tenantId`, `organisationId`, explicit `operationName` propagated
+1. **React protected route** (`/organisation/profile`) ? `ProtectedRoute` checks `organisation.read` via `useSession()`
+2. **TanStack Query** ? `useOrganisationProfile` fetches from `/api/organisation/profile`
+3. **Contract client** ? `organisation-client.ts` typed via `@platform/contracts-organisation`
+4. **Production route list** ? `server/routes.ts` (shared by `http.ts` and all tests)
+5. **Pipeline permission guard** ? `organisation.read` (GET) / `organisation.update` (PATCH)
+6. **Handler** ? `server/organisation.ts` wires `PostgresOrganisationRepository` into use case via DI
+7. **Use case** ? `usecases/organisation.ts` receives `OrganisationRepository` dep; calls `normaliseOrganisationDisplayName`; throws typed errors; no SQL, no pg import
+8. **Repository port** ? `ports/organisation-repository.ts` (`OrganisationRepository` interface)
+9. **Postgres adapter** ? `adapters/postgres-organisation-repository.ts` owns SQL and row mapping
+10. **Local Postgres** ? `organisations` table; fixture seed
+11. **Structured logs + traces** ? `requestId`, `actorId`, `tenantId`, `organisationId`, explicit `operationName` propagated
 
 ## Shortcuts fixed (ADR-ACT-0118)
 
 | Shortcut | Fixed |
 | -------- | ----- |
-| `usecases/organisation.ts` imported `pg` directly | Removed — DI via `OrganisationRepository` port |
+| `usecases/organisation.ts` imported `pg` directly | Removed ? DI via `OrganisationRepository` port |
 | Routes duplicated in tests | `server/routes.ts` exported; shared by `http.ts` and tests |
 | `no-permissions` fixture had organisationId | Replaced with `no-membership` (empty tenantId/organisationId) |
 | Operation name was raw path string | Explicit `operationName` field on `Route` |
@@ -80,11 +80,11 @@ via ADR-ACT-0118 before treating it as the canonical pattern for future slices.
 
 ## Boundary checks passed
 
-- No `pg` import in usecases, React SPA, UI, or features ✓
-- No raw SQL in `apps/platform-api/src/server` or `apps/platform-api/src/usecases` (readiness probe lives in `adapters/postgres-readiness-adapter.ts`) ✓
-- No server runtime imports in React SPA/UI/features ✓
-- `contracts-organisation` has zero `@platform/*` dependencies ✓
-- `validate-source-imports --strict`: 0 violations ✓
+- No `pg` import in usecases, React SPA, UI, or features ?
+- No raw SQL in `apps/platform-api/src/server` or `apps/platform-api/src/usecases` (readiness probe lives in `adapters/postgres-readiness-adapter.ts`) ?
+- No server runtime imports in React SPA/UI/features ?
+- `contracts-organisation` has zero `@platform/*` dependencies ?
+- `validate-source-imports --strict`: 0 violations ?
 
 ## Test counts
 
@@ -103,7 +103,7 @@ via ADR-ACT-0118 before treating it as the canonical pattern for future slices.
 
 The `tenant-admin can update display name` test restores the fixture display name ("Fixture Organisation")
 in the same test run before exiting. Viewer, unauthenticated, and no-membership tests mock `/api/session`
-at the browser level and do not mutate Postgres data — they are order-independent. Repeated `npm run test:e2e`
+at the browser level and do not mutate Postgres data ? they are order-independent. Repeated `npm run test:e2e`
 runs produce identical results.
 
 ## no-membership fixture semantics
@@ -118,20 +118,20 @@ test-only convention, not a production identity pattern. Documented in `session.
 
 Codebuff hardening (ADR-ACT-0118) reviewed against canonical slice architecture. All acceptance criteria passed:
 
-- Canonical architecture shape confirmed (React route → feature hook → contract → pipeline guard → use case → repo port → Postgres adapter → local Postgres) ✓
-- Use case purity confirmed (no pg, no SQL, no env reads, no getFixtureSession, DI, owns validation) ✓
-- Composition root (`dependencies.ts`) centralises wiring without framework complexity ✓
-- no-membership fixture semantics: empty strings documented as test-only, not production identity ✓
-- /e2e-harness: test-only comment present, not linked from product navigation ✓
-- contracts-organisation: strict schema, zero @platform/* imports ✓
-- Frontend: ProtectedRoute, TanStack Query read+mutation, cache invalidation, forbidden state ✓
-- E2E idempotency: fixture data restored in-test ✓
-- All boundary checks: CLEAN ✓
-- pre-slice-gate: PASSED ✓
+- Canonical architecture shape confirmed (React route ? feature hook ? contract ? pipeline guard ? use case ? repo port ? Postgres adapter ? local Postgres) ?
+- Use case purity confirmed (no pg, no SQL, no env reads, no getFixtureSession, DI, owns validation) ?
+- Composition root (`dependencies.ts`) centralises wiring without framework complexity ?
+- no-membership fixture semantics: empty strings documented as test-only, not production identity ?
+- /e2e-harness: test-only comment present, not linked from product navigation ?
+- contracts-organisation: strict schema, zero @platform/* imports ?
+- Frontend: ProtectedRoute, TanStack Query read+mutation, cache invalidation, forbidden state ?
+- E2E idempotency: fixture data restored in-test ?
+- All boundary checks: CLEAN ?
+- pre-slice-gate: PASSED ?
 
 ## Constraints honoured
 
-- No real Keycloak — fixture `LOCAL_FIXTURE_SESSION` only
+- No real Keycloak ? fixture `LOCAL_FIXTURE_SESSION` only
 - `ADR-ACT-0110` (Keycloak) remains Open
 - `validate-source-imports --strict` passes
 - `make check` passes

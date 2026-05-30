@@ -91,7 +91,7 @@
         "Expose a serverT() helper for BFF/API user-safe messages"
       ],
       "nonResponsibilities": [
-        "Does not own translation JSON content — keys are owned by consuming packages",
+        "Does not own translation JSON content ? keys are owned by consuming packages",
         "Does not handle plurals, date formatting, or number formatting in this baseline"
       ],
       "usage": [
@@ -100,7 +100,7 @@
         "BFF: import serverT() and call with a key to get localised safe messages"
       ],
       "operationalNotes": [
-        "Locale files live in locales/<bcp47>.json — en-GB.json is the baseline and must always exist",
+        "Locale files live in locales/<bcp47>.json ? en-GB.json is the baseline and must always exist",
         "Missing en-GB keys are reported by the ADR-ACT-0123 validation gate"
       ]
     }

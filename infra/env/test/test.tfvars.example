@@ -1,14 +1,20 @@
-# test.tfvars.example — placeholder values only
-# Copy to test.tfvars and fill in real values (gitignored).
+# test.tfvars.example ? copy to test.tfvars and fill in real values (gitignored).
 # Do not commit real secrets.
 
-keycloak_url      = "http://localhost:8080"
-keycloak_realm    = "platform-test"
-keycloak_client   = "platform-spa-test"
+keycloak_url              = "http://keycloak:8081/kc"
+keycloak_admin_user       = "admin"
+keycloak_admin_password   = "change-me"
 
-# Environment-specific redirect URIs
-redirect_uris  = ["http://localhost:5173/*"]
-web_origins    = ["http://localhost:5173"]
+realm_name = "platform-test"
 
-# Set to true only for local/development to provision fixture users
+bff_client_secret        = "change-me-to-a-real-secret"
+provisioner_client_secret = "change-me-to-a-real-secret"
+
+# Test environment: use .localhost TLD (auto-resolves to 127.0.0.1 ? RFC 6761)
+# For real test DNS environments, override with the appropriate hostname.
+kc_hostname = "http://test.localhost/kc"
+apex_domain = "test.localhost"
+
+# Fixture users not provisioned by default in test (override if needed)
 provision_fixture_users = false
+fixture_user_password   = ""

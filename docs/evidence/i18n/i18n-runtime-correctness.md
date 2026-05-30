@@ -1,4 +1,4 @@
-# Evidence: ADR-ACT-0124 — i18n runtime correctness
+# Evidence: ADR-ACT-0124 ? i18n runtime correctness
 
 **Date:** 2026-05-29
 **Status:** Done

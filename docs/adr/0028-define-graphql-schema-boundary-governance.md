@@ -39,7 +39,7 @@ GraphQL schema governance follows three rules:
 
 All GraphQL types, queries, mutations, and subscriptions are defined in `@platform/contracts-graphql` first. The runtime package `@platform/graphql-api-runtime` may only expose types declared in the contract. No type may appear in a resolver without a matching contract declaration.
 
-The import-boundary rule `no-architecture-in-product` already enforces that adapters do not bleed into domain packages. The complementary rule here is that resolvers are adapters — they must import from contracts, never from domain packages directly.
+The import-boundary rule `no-architecture-in-product` already enforces that adapters do not bleed into domain packages. The complementary rule here is that resolvers are adapters ? they must import from contracts, never from domain packages directly.
 
 ### 2. Breaking changes require architecture review
 
@@ -49,7 +49,7 @@ Additive changes (new types, new optional fields, new enum values) do not requir
 
 ### 3. Resolver data ownership matches bounded-context ownership
 
-A resolver may only read from or write to the bounded context that owns the underlying data, as defined in ADR-0014 (transactional data ownership). Cross-context reads must go through a published use-case or domain service — never through a direct adapter import.
+A resolver may only read from or write to the bounded context that owns the underlying data, as defined in ADR-0014 (transactional data ownership). Cross-context reads must go through a published use-case or domain service ? never through a direct adapter import.
 
 This rule is enforced by the import-boundary validator (`validate-source-imports`) which already prevents adapters from appearing in domain packages. No additional tooling is required; the hexagonal architecture's existing import rules enforce this.
 
@@ -71,7 +71,7 @@ This rule is enforced by the import-boundary validator (`validate-source-imports
 
 **Schema-last (generate from resolvers):** Rejected. Schema-last couples the API surface to implementation details and makes breaking-change detection harder.
 
-**Separate schema registry:** Considered for future scale. Deferred — the current package boundary (`@platform/contracts-graphql`) provides equivalent isolation at this team size.
+**Separate schema registry:** Considered for future scale. Deferred ? the current package boundary (`@platform/contracts-graphql`) provides equivalent isolation at this team size.
 
 ## Links
 

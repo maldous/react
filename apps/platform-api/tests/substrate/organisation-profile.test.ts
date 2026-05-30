@@ -249,7 +249,7 @@ describe("organisation profile: PATCH /api/organisation/profile", () => {
     assert.equal(((await res.json()) as { code: string }).code, "VALIDATION_ERROR");
   });
 
-  it("extra fields in body are rejected (strict schema): 400 — slug/id/tenantId cannot be sent", async () => {
+  it("extra fields in body are rejected (strict schema): 400 ? slug/id/tenantId cannot be sent", async () => {
     setFixtureRole("tenant-admin");
     const res = await fetch(`${url}/api/organisation/profile`, {
       method: "PATCH",

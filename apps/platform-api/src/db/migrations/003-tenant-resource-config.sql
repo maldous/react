@@ -3,7 +3,7 @@
 -- Stores which infrastructure tier each resource type uses for a given tenant
 -- and the connection config required for non-shared tiers.
 --
--- Lives in the public (global) schema — not per-tenant — because it must be
+-- Lives in the public (global) schema ? not per-tenant ? because it must be
 -- readable before the tenant schema is selected (e.g. for routing decisions).
 --
 -- ADR-0031: provider-agnostic provisioning; each resource independently configurable.

@@ -9,7 +9,7 @@
 
 ## Purpose
 
-Validates that every `package.json` in `apps/`, `packages/`, and `tools/architecture/` conforms to the governed architecture metadata schema and cross-field semantic rules. This is the foundation check that all other governance tools depend on — it must pass before any downstream tool is meaningful.
+Validates that every `package.json` in `apps/`, `packages/`, and `tools/architecture/` conforms to the governed architecture metadata schema and cross-field semantic rules. This is the foundation check that all other governance tools depend on ? it must pass before any downstream tool is meaningful.
 
 ---
 
@@ -46,7 +46,7 @@ node tools/architecture/validate-package-metadata/src/index.mjs \
 | `--no-reports`        | Skip writing `reports/validation/` and self-evidence.                                                        |
 | `--allow-missing-ajv` | Treat missing Ajv as a warning instead of a hard error. Used in environments without installed dependencies. |
 | `--strict`            | Reserved; currently a no-op pass-through.                                                                    |
-| `--check` / `--write` | Accepted and ignored — this tool is always read-only.                                                        |
+| `--check` / `--write` | Accepted and ignored ? this tool is always read-only.                                                        |
 | positional args       | Directories to scan relative to `--root`. Default: `apps packages tools/architecture`.                       |
 
 **Exit codes:** `0` = all packages valid. `1` = any package invalid or unrecoverable error.
@@ -55,19 +55,19 @@ node tools/architecture/validate-package-metadata/src/index.mjs \
 
 ## Validation layers
 
-### Layer 1 — JSON Schema (Ajv)
+### Layer 1 ? JSON Schema (Ajv)
 
 Validates the full `package.json` structure against `docs/schemas/package-json-architecture.schema.json`. Requires Ajv `^8.17.1` declared as a dependency. Falls back gracefully when Ajv is absent if `--allow-missing-ajv` is set.
 
-### Layer 2 — Required field presence
+### Layer 2 ? Required field presence
 
 Checks that `name`, `version`, `description`, `private`, `type`, `exports`, and `architecture` are all present.
 
-### Layer 3 — Architecture group presence
+### Layer 3 ? Architecture group presence
 
 Checks that `architecture` contains all required groups: `schemaVersion`, `component`, `lifecycle`, `governance`, `runtime`, `boundaries`, `relations`, `tags`, `readme`.
 
-### Layer 4 — Semantic cross-field rules
+### Layer 4 ? Semantic cross-field rules
 
 Rules not expressible in JSON Schema alone:
 

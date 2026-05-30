@@ -19,7 +19,7 @@
         "PipelineRequest.context: RuntimeContext",
         "createRequestContext() called after auth resolution",
         "enrichedLogger enriched with actorId/tenantId for authenticated routes",
-        "405 now uses jsonResponse() — X-Request-Id present in all error responses",
+        "405 now uses jsonResponse() ? X-Request-Id present in all error responses",
         "route matched and request complete log lines"
       ]
     },
@@ -42,7 +42,7 @@
     "adrAct0008Manifest": {
       "file": "docs/slices/ADR-ACT-0008.json",
       "changes": [
-        "blockedBy: [ADR-ACT-0112, ADR-ACT-0113] → blockedBy: []  (both are Done)",
+        "blockedBy: [ADR-ACT-0112, ADR-ACT-0113] ? blockedBy: []  (both are Done)",
         "requiredCapabilities: added migration-runner"
       ]
     }
@@ -82,11 +82,11 @@
   },
   "gateResults": {
     "tscCheck": "PASS",
-    "lint": "PASS — 0 ESLint problems",
+    "lint": "PASS ? 0 ESLint problems",
     "formatCheck": "PASS",
-    "orchestratorAllNoReportsStrict": "PASS — 7/7 steps",
-    "testCoverage": "PASS — 381/381 tests",
+    "orchestratorAllNoReportsStrict": "PASS ? 7/7 steps",
+    "testCoverage": "PASS ? 381/381 tests",
     "validateSlices": "PASS",
-    "testE2e": "PASS — 8/8 tests"
+    "testE2e": "PASS ? 8/8 tests"
   }
 }

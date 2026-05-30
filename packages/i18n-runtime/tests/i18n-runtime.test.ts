@@ -8,7 +8,7 @@ import {
   type I18nLocaleResource,
 } from "../src/index.ts";
 
-// Flat fixture (used by existing tests — backward compat)
+// Flat fixture (used by existing tests ? backward compat)
 const EN_GB: I18nLocale = {
   "app.shell.nav.organisationProfile": "Organisation profile",
   "feature.organisation.profile.title": "Organisation profile",
@@ -20,7 +20,7 @@ const EN_GB: I18nLocale = {
   "api.error.forbidden": "You do not have permission to perform this action",
 };
 
-// Nested fixture — mirrors actual en-GB.json structure
+// Nested fixture ? mirrors actual en-GB.json structure
 const EN_GB_NESTED: I18nLocaleResource = {
   app: { shell: { nav: { organisationProfile: "Organisation profile" } } },
   feature: {
@@ -61,7 +61,7 @@ describe("flattenLocaleMessages", () => {
   });
 });
 
-describe("createI18n — flat messages (backward compat)", () => {
+describe("createI18n ? flat messages (backward compat)", () => {
   it("returns a t() function that resolves en-GB keys", () => {
     const i18n = createI18n({ locale: "en-GB", messages: EN_GB });
     assert.equal(i18n.t("app.shell.nav.organisationProfile"), "Organisation profile");
@@ -110,7 +110,7 @@ describe("createI18n — flat messages (backward compat)", () => {
   });
 });
 
-describe("createI18n — nested JSON messages (en-GB.json shape)", () => {
+describe("createI18n ? nested JSON messages (en-GB.json shape)", () => {
   it("resolves dot-separated keys from nested JSON resource", () => {
     const i18n = createI18n({ locale: "en-GB", messages: EN_GB_NESTED });
     assert.equal(i18n.t("feature.organisation.profile.title"), "Organisation profile");

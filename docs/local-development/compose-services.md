@@ -81,7 +81,7 @@ curl http://localhost:${WIREMOCK_PORT:-8089}/__admin/health
 
 # Verify example stub
 curl http://localhost:${WIREMOCK_PORT:-8089}/__platform/mock/ping
-# → {"status":"ok"}
+# ? {"status":"ok"}
 
 # WireMock admin UI
 open http://localhost:${WIREMOCK_PORT:-8089}/__admin/
@@ -95,24 +95,24 @@ Committed mappings live in `docker/wiremock/mappings/`. Static response files li
 
 ```bash
 npm run compose:quality
-# Wait for Sonar to start (1–2 minutes first run)
+# Wait for Sonar to start (1?2 minutes first run)
 docker compose --profile quality ps
 
 # Configure sonar-project.properties token:
 # 1. Log in at http://localhost:9003 with admin/admin
 # 2. Change password when prompted
-# 3. Go to Account → Security → Generate Token
+# 3. Go to Account ? Security ? Generate Token
 # 4. Set SONAR_TOKEN=<token> in .env
 npm run sonar:scan
 ```
 
-## Sentry setup (sentry profile — experimental)
+## Sentry setup (sentry profile ? experimental)
 
 > **Experimental:** SDK smoke testing only. Not a full self-hosted Sentry stack. `sentry-worker` and `sentry-cron` are included but unvalidated. Do not depend on this profile for adapter validation until ADR-ACT-0089 is resolved.
 
 ```bash
 npm run compose:sentry
-# Wait for sentry-web to run the upgrade (2–3 minutes first run)
+# Wait for sentry-web to run the upgrade (2?3 minutes first run)
 docker compose --profile sentry ps
 
 # Create admin user after upgrade completes:
@@ -136,7 +136,7 @@ ClickHouse native protocol (port 9000) conflicts with MinIO's API port (9000). T
 Host ports are configurable via `.env`. Override any default to avoid conflicts with other services:
 
 ```bash
-# .env — override any defaults
+# .env ? override any defaults
 POSTGRES_PORT=5434       # default: 5433
 REDIS_PORT=6380          # default: 6379
 CLICKHOUSE_HTTP_PORT=8125  # default: 8124
@@ -149,7 +149,7 @@ All port variables and defaults are documented in `.env.example`.
 
 ## LocalStack Docker socket
 
-> **Security:** The `cloud-mocks` profile mounts `/var/run/docker.sock` for LocalStack Lambda/ECS emulation. This is a local-dev exception — profile-gated, never starts by default, and must not run in CI or on shared hosts without explicit approval.
+> **Security:** The `cloud-mocks` profile mounts `/var/run/docker.sock` for LocalStack Lambda/ECS emulation. This is a local-dev exception ? profile-gated, never starts by default, and must not run in CI or on shared hosts without explicit approval.
 
 ## npm scripts
 

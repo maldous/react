@@ -152,7 +152,7 @@ describe("OrganisationProfilePage", () => {
     );
 
     render(<OrganisationProfilePage />);
-    // Profile is in error state — error message shown; no edit form or read-only view
+    // Profile is in error state ? error message shown; no edit form or read-only view
     expect(screen.getByText(/could not load profile/i)).toBeInTheDocument();
     expect(screen.queryByTestId("profile-edit-form")).not.toBeInTheDocument();
     expect(screen.queryByTestId("profile-read-only")).not.toBeInTheDocument();

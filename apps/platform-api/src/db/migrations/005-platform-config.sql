@@ -1,4 +1,4 @@
--- Migration 005: platform_config — quota and capacity governance
+-- Migration 005: platform_config ? quota and capacity governance
 --
 -- Stores platform-wide configuration including per-tenant quotas.
 -- ADR-0031: quota/capacity governance is a system-admin responsibility;
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS public.platform_config (
 
 COMMENT ON TABLE public.platform_config IS
   'Platform-wide configuration: quotas, capacity limits, feature flags. '
-  'Changes require system-admin action (ADR-0031 §Quota and capacity governance).';
+  'Changes require system-admin action (ADR-0031 ?Quota and capacity governance).';
 
 -- Default quota values
 INSERT INTO public.platform_config (key, value, updated_by) VALUES

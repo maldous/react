@@ -9,7 +9,7 @@
 
 ## Purpose
 
-Validates and generates lifecycle transition evidence bundles. Every governed package lifecycle transition (e.g., `active.feature` → `stable.platform`) requires a committed evidence bundle under `docs/evidence/lifecycle/<package-name>/<date-from-to>/transition-evidence.{json,md}`. This tool validates existing bundles against `docs/schemas/lifecycle-transition-evidence.schema.json` and can generate new bundles.
+Validates and generates lifecycle transition evidence bundles. Every governed package lifecycle transition (e.g., `active.feature` ? `stable.platform`) requires a committed evidence bundle under `docs/evidence/lifecycle/<package-name>/<date-from-to>/transition-evidence.{json,md}`. This tool validates existing bundles against `docs/schemas/lifecycle-transition-evidence.schema.json` and can generate new bundles.
 
 ---
 
@@ -61,7 +61,7 @@ node tools/architecture/validate-lifecycle-evidence/src/index.mjs \
 
 **Exit codes:** `0` = all evidence bundles valid (check) or bundle generated (write). `1` = any invalid bundle or generation failure.
 
-**Environment variable:** `ARCHITECTURE_EVIDENCE_CREATED_AT` — if set, overrides `bundle.createdAt` and `transition.requestedAt` timestamps in generated bundles. Used in tests for deterministic golden-file comparison.
+**Environment variable:** `ARCHITECTURE_EVIDENCE_CREATED_AT` ? if set, overrides `bundle.createdAt` and `transition.requestedAt` timestamps in generated bundles. Used in tests for deterministic golden-file comparison.
 
 ---
 
@@ -110,7 +110,7 @@ There is no `evidenceType` or `approved` field. The Markdown file is a human-rea
 
 1. Locates the target package's `package.json` by scanning `apps/`, `packages/`, and `tools/architecture/` for a `name` field matching `--package`
 2. Constructs the evidence bundle JSON from provided arguments + current timestamp (overridable via `ARCHITECTURE_EVIDENCE_CREATED_AT` for deterministic tests)
-3. Reads `package.json` architecture metadata only to populate `sourceMetadataSnapshot.architecture` and `package.owner` — does **not** validate that the current lifecycle class matches `--from-class`
+3. Reads `package.json` architecture metadata only to populate `sourceMetadataSnapshot.architecture` and `package.owner` ? does **not** validate that the current lifecycle class matches `--from-class`
 4. Renders the Markdown summary
 5. Creates the evidence directory (`docs/evidence/lifecycle/<pkg-slug>/<date-from-to>/`) and writes both files; overwrites silently if the directory already exists
 

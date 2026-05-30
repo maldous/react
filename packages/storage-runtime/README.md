@@ -118,7 +118,7 @@ None
 
 ## Operational notes
 
-- Presigned URLs must have short TTLs — configure per-bucket maximums in the adapter
+- Presigned URLs must have short TTLs ? configure per-bucket maximums in the adapter
 - Bucket naming must follow the platform naming convention to enable IAM policy automation
 
 ## Governance

@@ -1,6 +1,6 @@
 export const packageName = "@platform/adapters-keycloak";
 
-// Internal Keycloak claim types — NEVER exported to domain or React packages
+// Internal Keycloak claim types ? NEVER exported to domain or React packages
 interface KeycloakTokenClaims {
   sub: string;
   preferred_username?: string;
@@ -21,15 +21,15 @@ export interface KeycloakIdentityResult {
 
 /**
  * Configuration for connecting to a Keycloak realm.
- * Passed explicitly — this adapter never reads environment variables directly.
+ * Passed explicitly ? this adapter never reads environment variables directly.
  */
 export interface KeycloakClientConfig {
-  url: string; // server-side only — e.g. http://keycloak:8080 or http://localhost:8080
+  url: string; // server-side only ? e.g. http://keycloak:8080 or http://localhost:8080
   realm: string; // e.g. platform
   clientId: string; // e.g. platform-api
   clientSecret: string;
   /** Public-facing base URL for browser redirects (e.g. http://aldous.info/kc).
-   * Falls back to `url` when absent — correct for local dev without Caddy. */
+   * Falls back to `url` when absent ? correct for local dev without Caddy. */
   publicUrl?: string;
 }
 
@@ -81,6 +81,9 @@ export async function exchangeCodeForTokens(
     code: input.code,
     redirect_uri: input.redirectUri,
     code_verifier: input.codeVerifier,
+    // Explicit scope ensures the token includes the openid scope,
+    // which is required for the userinfo endpoint to accept it.
+    scope: "openid email profile",
   });
 
   let res: Response;
@@ -167,7 +170,7 @@ export function buildAuthorizationUrl(
 }
 
 /**
- * Stub — kept for interface compatibility.
+ * Stub ? kept for interface compatibility.
  * The real verification path uses getUserInfo instead, which avoids JWKS
  * caching complexity. This stub is preserved for future use cases where
  * the platform receives inbound tokens from external callers.
@@ -178,10 +181,10 @@ export async function verifyKeycloakToken(token: string): Promise<Record<string,
 }
 
 // ---------------------------------------------------------------------------
-// KeycloakAuthorisationAdapter — implements AuthorisationPort via UMA 2.0
-// KeycloakRealmAdminAdapter — implements RealmAdminPort via Admin REST API
-// KeycloakProvisioningAdapter — creates/deletes realms (ADR-0031)
-// ADR-0030 §3a, §6b | ADR-0031
+// KeycloakAuthorisationAdapter ? implements AuthorisationPort via UMA 2.0
+// KeycloakRealmAdminAdapter ? implements RealmAdminPort via Admin REST API
+// KeycloakProvisioningAdapter ? creates/deletes realms (ADR-0031)
+// ADR-0030 ?3a, ?6b | ADR-0031
 // ---------------------------------------------------------------------------
 
 import type {
@@ -240,8 +243,8 @@ export class KeycloakAuthorisationAdapter implements AuthorisationPort {
 }
 
 // ---------------------------------------------------------------------------
-// KeycloakRealmAdminAdapter — implements RealmAdminPort via Admin REST API
-// ADR-0030 §1b, §6b
+// KeycloakRealmAdminAdapter ? implements RealmAdminPort via Admin REST API
+// ADR-0030 ?1b, ?6b
 // ---------------------------------------------------------------------------
 
 export interface KeycloakAdminConfig {
@@ -366,7 +369,7 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
   async getResourcePolicy(resourceName: string): Promise<ResourcePolicy[]> {
     void resourceName;
     // Keycloak Authorization Services resource policy query
-    // Implementation depends on client resource server setup (ADR-0030 §3)
+    // Implementation depends on client resource server setup (ADR-0030 ?3)
     return [];
   }
 
@@ -408,7 +411,7 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
 }
 
 // ---------------------------------------------------------------------------
-// KeycloakProvisioningAdapter — creates/deletes realms via master realm admin
+// KeycloakProvisioningAdapter ? creates/deletes realms via master realm admin
 // ADR-0031: infrastructure provisioning privilege model
 // ---------------------------------------------------------------------------
 

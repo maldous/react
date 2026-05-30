@@ -458,13 +458,13 @@ Typical feature-package path:
 
 ```text
 experimental.feature
-  ↓
+  ?
 candidate.feature
-  ↓
+  ?
 active.feature
-  ↓
+  ?
 stable.feature
-  ↓
+  ?
 maintenance.feature
 ```
 
@@ -472,11 +472,11 @@ Typical contract-package path:
 
 ```text
 candidate.contract
-  ↓
+  ?
 active.contract
-  ↓
+  ?
 stable.contract
-  ↓
+  ?
 external.contract
 ```
 
@@ -484,9 +484,9 @@ Typical retirement path:
 
 ```text
 active.<role> | stable.<role> | maintenance.<role>
-  ↓
+  ?
 deprecated.<role>
-  ↓
+  ?
 removed or archived
 ```
 

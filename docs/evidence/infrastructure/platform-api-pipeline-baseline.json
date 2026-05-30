@@ -20,11 +20,11 @@
     "cases": [
       "404 for unknown path",
       "405 for wrong method",
-      "malformed JSON body → 400",
-      "requiresAuth without session → 401",
-      "requiresAuth with insufficient permission → 403",
-      "successful handler → 200",
-      "handler throws → 500 safe error",
+      "malformed JSON body ? 400",
+      "requiresAuth without session ? 401",
+      "requiresAuth with insufficient permission ? 403",
+      "successful handler ? 200",
+      "handler throws ? 500 safe error",
       "X-Request-Id header present"
     ]
   },

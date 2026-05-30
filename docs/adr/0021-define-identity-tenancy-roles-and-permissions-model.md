@@ -14,12 +14,12 @@ Architecture owner / technical lead
 
 ## Consulted
 
-- ADR-0001 (hexagonal architecture — domain models own rules)
-- ADR-0002 (bounded contexts — core domain)
+- ADR-0001 (hexagonal architecture ? domain models own rules)
+- ADR-0002 (bounded contexts ? core domain)
 - ADR-0003 (modular monorepo)
 - ADR-0013 (client-facing API boundary)
-- ADR-0019 (React component platform — UI permission checks are convenience only)
-- ADR-0020 (RuntimeContext — actorId, tenantId, roles, permissions)
+- ADR-0019 (React component platform ? UI permission checks are convenience only)
+- ADR-0020 (RuntimeContext ? actorId, tenantId, roles, permissions)
 - ADR-0022 (authentication and session boundary)
 
 ## Context
@@ -39,17 +39,17 @@ The existing `packages/access-control` package (interface, zero `@platform` deps
 
 - **Security:** Permissions must be the authoritative enforcement primitive. Role checks are a convenience shorthand; they must not bypass permission enforcement at the API or use-case layer.
 - **Engineering:** Multi-tenancy must be explicit in every scoped operation. No implicit "current user has access" assumptions.
-- **Product:** The role model must be simple enough to reason about without reading source code — five roles with clear semantics.
+- **Product:** The role model must be simple enough to reason about without reading source code ? five roles with clear semantics.
 - **Architecture:** External identity (Keycloak JWT) must not pollute the domain model. A user in the domain is not the same as an SSO principal.
 - **Compliance:** All permission checks must be auditable through the structured log/trace stack (ADR-0020).
 
 ## Decision drivers
 
-1. External identity (SSO token) and internal user identity must be decoupled — the same person may log in from multiple providers.
+1. External identity (SSO token) and internal user identity must be decoupled ? the same person may log in from multiple providers.
 2. Permissions are atomic and the authoritative enforcement point. Roles are convenience bundles of permissions.
 3. All access is tenant-scoped by default. Global roles are explicit exceptions.
 4. The domain model must not depend on HTTP, SSO libraries, or session implementations.
-5. RuntimeContext (ADR-0020) carries safe actor context — actorId, tenantId, resolved permissions — not raw tokens.
+5. RuntimeContext (ADR-0020) carries safe actor context ? actorId, tenantId, resolved permissions ? not raw tokens.
 
 ## Options considered
 
@@ -155,9 +155,9 @@ interface Membership {
 }
 ```
 
-**Role** — see §2 below.
+**Role** ? see ?2 below.
 
-**Permission** — see §3 below.
+**Permission** ? see ?3 below.
 
 #### SessionActor
 
@@ -198,7 +198,7 @@ interface SessionActor {
 **Rules:**
 
 - `system-admin` is a global role. It does not require a Membership record.
-- All other roles are tenant-scoped — they apply only within the Organisation identified by the Membership.
+- All other roles are tenant-scoped ? they apply only within the Organisation identified by the Membership.
 - Role checks may be used for convenience (e.g., "only show the admin panel to `tenant-admin`"), but **permission checks are the authoritative enforcement primitive**.
 - A role check that bypasses a permission check is an architecture violation.
 
@@ -226,15 +226,15 @@ interface SessionActor {
 
 | Permission            | system-admin | tenant-admin | manager | member | viewer |
 | --------------------- | ------------ | ------------ | ------- | ------ | ------ |
-| `organisation.read`   | ✓            | ✓            | ✓       | ✓      | ✓      |
-| `organisation.update` | ✓            | ✓            | —       | —      | —      |
-| `member.read`         | ✓            | ✓            | ✓       | ✓      | ✓      |
-| `member.invite`       | ✓            | ✓            | ✓       | —      | —      |
-| `member.update_role`  | ✓            | ✓            | —       | —      | —      |
-| `profile.read_self`   | ✓            | ✓            | ✓       | ✓      | ✓      |
-| `profile.update_self` | ✓            | ✓            | ✓       | ✓      | ✓      |
-| `admin.access`        | ✓            | ✓            | —       | —      | —      |
-| `audit.read`          | ✓            | ✓            | —       | —      | —      |
+| `organisation.read`   | ?            | ?            | ?       | ?      | ?      |
+| `organisation.update` | ?            | ?            | ?       | ?      | ?      |
+| `member.read`         | ?            | ?            | ?       | ?      | ?      |
+| `member.invite`       | ?            | ?            | ?       | ?      | ?      |
+| `member.update_role`  | ?            | ?            | ?       | ?      | ?      |
+| `profile.read_self`   | ?            | ?            | ?       | ?      | ?      |
+| `profile.update_self` | ?            | ?            | ?       | ?      | ?      |
+| `admin.access`        | ?            | ?            | ?       | ?      | ?      |
+| `audit.read`          | ?            | ?            | ?       | ?      | ?      |
 
 ---
 
@@ -251,7 +251,7 @@ interface SessionActor {
 - Must check the appropriate permission before processing the request.
 - Returns `UnauthorizedError` (401) if no valid session.
 - Returns `ForbiddenError` (403) if session exists but permission is missing.
-- Enforces `tenantId` from session — never from client-supplied parameters alone.
+- Enforces `tenantId` from session ? never from client-supplied parameters alone.
 
 **Use-case layer:**
 
@@ -296,7 +296,7 @@ Option C is chosen because:
 
 3. **Clean IdP separation.** `ExternalIdentity` as a separate entity means the domain model survives a future IdP migration. `User` is the stable identity; `ExternalIdentity` is a transient mapping.
 
-4. **Scales to ABAC.** The permission resolution step (role → permissions via Membership) can be enriched with resource-level or environment-level attributes later, without changing the enforcement API.
+4. **Scales to ABAC.** The permission resolution step (role ? permissions via Membership) can be enriched with resource-level or environment-level attributes later, without changing the enforcement API.
 
 ## Consequences
 
@@ -339,7 +339,7 @@ Evidence file: `docs/evidence/identity/identity-access-baseline.md`
 - API: Every route requires session derivation and permission check.
 - Data: User, ExternalIdentity, Organisation, Membership tables required before first slice.
 - Testing: Allowed, forbidden, and unauthenticated cases must be tested for every protected route.
-- Documentation: Permission list is versioned governance — changes require ADR amendment or new ADR.
+- Documentation: Permission list is versioned governance ? changes require ADR amendment or new ADR.
 
 ## Follow-up actions
 
@@ -360,9 +360,9 @@ None.
 ## References
 
 - ADR-0001: Hexagonal architecture
-- ADR-0002: Bounded contexts — core domain
+- ADR-0002: Bounded contexts ? core domain
 - ADR-0013: Client-facing API boundary
-- ADR-0020: RuntimeContext — actorId, tenantId, permissions
+- ADR-0020: RuntimeContext ? actorId, tenantId, permissions
 - ADR-0022: Authentication, session, and SSO integration boundary
 - `docs/evidence/identity/identity-access-baseline.md`
 - OWASP Broken Access Control: <https://owasp.org/Top10/A01_2021-Broken_Access_Control/>

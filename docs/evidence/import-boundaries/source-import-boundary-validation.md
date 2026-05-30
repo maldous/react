@@ -6,7 +6,7 @@
 Tool version:   0.3.1
 Scan method:    typescript-ast+typescript-module-resolution
 Strict mode:    true
-tsconfig path:  (none — synthetic paths only)
+tsconfig path:  (none ? synthetic paths only)
 Module resolution: Bundler
 Path alias count:  0
 Rule set:       ADR-0001, ADR-0002, ADR-0013, ADR-0014, ADR-0015, import-boundary-rules.md

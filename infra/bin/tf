@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# infra/bin/tf — OpenTofu/Terraform wrapper
+# infra/bin/tf ? OpenTofu/Terraform wrapper
 # Resolves to `tofu` if available on PATH, falls back to `terraform`.
 # Use this wrapper in all Makefile targets, CI pipelines, and documentation.
 set -euo pipefail

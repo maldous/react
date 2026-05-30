@@ -1,15 +1,15 @@
 name: react-platform
 
 # Profile guide:
-#   (none)           — default: postgres, redis, clickhouse, minio, mailpit, otel-collector
-#   web              — platform-api BFF + react SPA (Caddy); wires the full app on :80
-#   quality          — sonarqube + sonar-postgres
-#   identity         — keycloak + keycloak-postgres
-#   cloud-mocks      — localstack
-#   external-mocks   — wiremock for deterministic external HTTP API mocks
-#   sentry           — sentry-web + sentry-worker + sentry-cron + sentry-postgres + sentry-redis
+#   (none)           ? default: postgres, redis, clickhouse, minio, mailpit, otel-collector
+#   web              ? platform-api BFF + react SPA (Caddy); wires the full app on :80
+#   quality          ? sonarqube + sonar-postgres
+#   identity         ? keycloak + keycloak-postgres
+#   cloud-mocks      ? localstack
+#   external-mocks   ? wiremock for deterministic external HTTP API mocks
+#   sentry           ? sentry-web + sentry-worker + sentry-cron + sentry-postgres + sentry-redis
 #
-# Port map — defaults shown; override any via .env (e.g. POSTGRES_PORT=5434):
+# Port map ? defaults shown; override any via .env (e.g. POSTGRES_PORT=5434):
 #   POSTGRES_PORT=5433          REDIS_PORT=6379
 #   CLICKHOUSE_HTTP_PORT=8124   CLICKHOUSE_NATIVE_PORT=9002
 #   MINIO_API_PORT=9000         MINIO_CONSOLE_PORT=9001
@@ -21,7 +21,7 @@ name: react-platform
 
 services:
   # ---------------------------------------------------------------------------
-  # DEFAULT PROFILE — no profile selector; started by `docker compose up -d`
+  # DEFAULT PROFILE ? no profile selector; started by `docker compose up -d`
   # ---------------------------------------------------------------------------
 
   postgres:
@@ -85,7 +85,7 @@ services:
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-miniopassword}
-      # Redirect URL for MinIO console login — must match the path Caddy serves it on.
+      # Redirect URL for MinIO console login ? must match the path Caddy serves it on.
       MINIO_BROWSER_REDIRECT_URL: ${MINIO_BROWSER_REDIRECT_URL:-http://aldous.info/minio}
     ports:
       - "${MINIO_API_PORT:-9000}:9000" # S3-compatible API
@@ -139,7 +139,7 @@ services:
     restart: unless-stopped
 
   # ---------------------------------------------------------------------------
-  # QUALITY PROFILE — `docker compose --profile quality up -d sonarqube`
+  # QUALITY PROFILE ? `docker compose --profile quality up -d sonarqube`
   # ---------------------------------------------------------------------------
 
   sonar-postgres:
@@ -173,7 +173,7 @@ services:
       SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
       # Serve SonarQube under /sonar so Caddy can proxy it at aldous.info/sonar/*
       SONAR_WEB_CONTEXT: ${SONAR_WEB_CONTEXT:-/sonar}
-      # Default credentials: admin / admin — change on first login; do not commit tokens
+      # Default credentials: admin / admin ? change on first login; do not commit tokens
     ports:
       - "${SONAR_PORT:-9003}:9000"
     volumes:
@@ -193,7 +193,7 @@ services:
     restart: unless-stopped
 
   # ---------------------------------------------------------------------------
-  # IDENTITY PROFILE — `docker compose --profile identity up -d keycloak`
+  # IDENTITY PROFILE ? `docker compose --profile identity up -d keycloak`
   # ---------------------------------------------------------------------------
 
   keycloak-postgres:
@@ -229,7 +229,12 @@ services:
       KC_DB_URL: jdbc:postgresql://keycloak-postgres:5432/${KEYCLOAK_DB_NAME:-keycloak}
       KC_DB_USERNAME: ${KEYCLOAK_DB_USER:-keycloak}
       KC_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD:-keycloakpassword}
-      KC_HOSTNAME_STRICT: "false"
+      # KC_HOSTNAME_STRICT: When true, Keycloak only accepts requests whose Host
+      # header matches KC_HOSTNAME. Set to true so the token issuer (iss claim)
+      # is locked to the public-facing URL. Backchannel requests from the BFF to
+      # the Docker-internal hostname are accepted via STRICT_BACKCHANNEL=false.
+      KC_HOSTNAME_STRICT: "true"
+      KC_HOSTNAME_STRICT_BACKCHANNEL: "false"
       KC_HTTP_ENABLED: "true"
       KC_HEALTH_ENABLED: "true"
       # Tells Keycloak to generate all its URLs (login form actions, redirects, assets)
@@ -237,6 +242,13 @@ services:
       # Without this, Keycloak generates form actions at /realms/... (without /kc) causing
       # form submissions to fail because Caddy has no handler for /realms/*.
       KC_HTTP_RELATIVE_PATH: "/kc"
+      # KC_HOSTNAME (v2) sets the frontend URL which determines the token issuer (iss claim).
+      # Must match the public-facing URL (e.g. http://localhost/kc, http://dev.localhost/kc)
+      # so the issuer matches what the browser sees. KC_HOSTNAME_STRICT_BACKCHANNEL=false
+      # allows the BFF to call the token/userinfo endpoints directly on the Docker-internal
+      # hostname (keycloak:8080) while Keycloak still uses the KC_HOSTNAME URL for the issuer.
+      # Override via env: KC_HOSTNAME=http://dev.localhost/kc for Tilt dev mode.
+      KC_HOSTNAME: ${KC_HOSTNAME:-http://localhost/kc}
       KC_METRICS_ENABLED: "false"
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN_USER:-admin}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
@@ -258,7 +270,7 @@ services:
     restart: unless-stopped
 
   # ---------------------------------------------------------------------------
-  # CLOUD-MOCKS PROFILE — `docker compose --profile cloud-mocks up -d localstack`
+  # CLOUD-MOCKS PROFILE ? `docker compose --profile cloud-mocks up -d localstack`
   # ---------------------------------------------------------------------------
 
   localstack:
@@ -286,9 +298,9 @@ services:
     restart: unless-stopped
 
   # ---------------------------------------------------------------------------
-  # SENTRY PROFILE — `docker compose --profile sentry up -d`
+  # SENTRY PROFILE ? `docker compose --profile sentry up -d`
   # ---------------------------------------------------------------------------
-  # EXPERIMENTAL — SDK smoke testing only. Not a full self-hosted Sentry stack.
+  # EXPERIMENTAL ? SDK smoke testing only. Not a full self-hosted Sentry stack.
   # Does not replace external Sentry or Grafana Cloud observability.
   # Adapter validation must not depend on this profile until proven stable.
   # See ADR-ACT-0089 for validation/replacement tracking.
@@ -395,13 +407,13 @@ services:
     restart: unless-stopped
 
   # ---------------------------------------------------------------------------
-  # WEB PROFILE — `docker compose --profile web up -d`
+  # WEB PROFILE ? `docker compose --profile web up -d`
   #
-  # Delivers the full platform on :80 — no system services required.
+  # Delivers the full platform on :80 ? no system services required.
   # platform-api: Node 25 BFF; runs migrations+seed then serves /api /auth /healthz
-  # react-app:    Multi-stage Vite build → Caddy static SPA + API reverse proxy
+  # react-app:    Multi-stage Vite build ? Caddy static SPA + API reverse proxy
   #
-  # ADR-0001: hexagonal architecture — adapters own external integrations
+  # ADR-0001: hexagonal architecture ? adapters own external integrations
   # ADR-0017: profile-gated; every service has a healthcheck
   # ADR-0022: BFF session model; HTTP-only cookie; fixture session for demo
   # ---------------------------------------------------------------------------
@@ -420,28 +432,28 @@ services:
       # Set to a fixture role for dev without Keycloak: tenant-admin, viewer, no-membership
       # Example: LOCAL_FIXTURE_SESSION=tenant-admin make compose-up-web
       LOCAL_FIXTURE_SESSION: ${LOCAL_FIXTURE_SESSION:-}
-      # debug — shows all auth/session/tenant/provisioning operations. Set to info in prod.
+      # debug ? shows all auth/session/tenant/provisioning operations. Set to info in prod.
       LOG_LEVEL: ${LOG_LEVEL:-debug}
       # SESSION_COOKIE_SECURE defaults false for local HTTP Compose.
       # Set SESSION_COOKIE_SECURE=true in .env when behind HTTPS/Cloudflare.
       SESSION_COOKIE_SECURE: ${SESSION_COOKIE_SECURE:-false}
       APP_BASE_URL: ${APP_BASE_URL:-http://localhost}
       PLATFORM_API_URL: ${PLATFORM_API_URL:-http://localhost}
-      # Forward auth secret — must match CADDY_INTERNAL_SECRET in react-app.
+      # Forward auth secret ? must match CADDY_INTERNAL_SECRET in react-app.
       # Prevents external callers from reaching /internal/auth/forward. ADR-0031.
       CADDY_INTERNAL_SECRET: ${CADDY_INTERNAL_SECRET:-}
       # Apex domain for FQDN-based tenant slug resolution (ADR-0029, ADR-0031).
       APEX_DOMAIN: ${APEX_DOMAIN:-aldous.info}
-      # Keycloak — internal Docker hostname for server-side calls (token exchange, JWKS, provisioning).
+      # Keycloak ? internal Docker hostname for server-side calls (token exchange, JWKS, provisioning).
       # The browser redirect URL is derived from APP_BASE_URL + /kc (via Caddy path prefix).
       # /kc suffix matches KC_HTTP_RELATIVE_PATH set in the keycloak service.
       KEYCLOAK_URL: ${KEYCLOAK_URL:-http://keycloak:8080/kc}
-      # Public URL for browser-facing OAuth redirects — via Caddy /kc path prefix.
+      # Public URL for browser-facing OAuth redirects ? via Caddy /kc path prefix.
       # The BFF uses KEYCLOAK_URL for internal token exchange; KEYCLOAK_PUBLIC_URL for
       # the auth URL the browser navigates to (Authorization Code redirect).
       # KEYCLOAK_PUBLIC_URL: override only if the host-derived URL is wrong for your setup.
       # By default, platform-api derives the public Keycloak URL from the request Host header,
-      # so all tenants and vanity domains work without any config change (ADR-0029 §2b).
+      # so all tenants and vanity domains work without any config change (ADR-0029 ?2b).
       KEYCLOAK_PUBLIC_URL: ${KEYCLOAK_PUBLIC_URL:-}
       KEYCLOAK_REALM: ${KEYCLOAK_REALM:-platform}
       KEYCLOAK_CLIENT_ID: ${KEYCLOAK_CLIENT_ID:-platform-api}
@@ -462,7 +474,7 @@ services:
     restart: unless-stopped
 
   react-app:
-    # Multi-stage: Vite build → Caddy serving SPA + proxying to platform-api
+    # Multi-stage: Vite build ? Caddy serving SPA + proxying to platform-api
     # See apps/react-enterprise-app/Dockerfile and docker/caddy/Caddyfile
     build:
       context: .
@@ -489,11 +501,38 @@ services:
     restart: unless-stopped
 
   # ---------------------------------------------------------------------------
-  # EXTERNAL-MOCKS PROFILE — `docker compose --profile external-mocks up -d wiremock`
+  # EXTERNAL WEB PROFILE ? `docker compose --profile external-web up -d external-caddy`
+  #
+  # External-facing Caddy on host port 80 ? receives Cloudflare-terminated
+  # HTTP traffic (Flexible SSL) and routes by Host header:
+  #   staging.aldous.info ??? localhost:82 (staging internal Caddy)
+  #   aldous.info         ??? localhost:83 (prod internal Caddy)
+  #
+  # Uses host networking so it can reach per-environment internal Caddies
+  # on their respective published host ports.
+  # See docker/caddy/Caddyfile.external for route configuration.
+  # ---------------------------------------------------------------------------
+
+  external-caddy:
+    image: caddy:2-alpine
+    profiles: [external-web]
+    network_mode: host
+    volumes:
+      - ./docker/caddy/Caddyfile.external:/etc/caddy/Caddyfile:ro
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # EXTERNAL-MOCKS PROFILE ? `docker compose --profile external-mocks up -d wiremock`
   #
   # Deterministic simulation of external HTTP APIs for local dev and E2E.
   # Mappings committed under docker/wiremock/mappings/ represent safe fixtures
-  # only — no real customer payloads, secrets, tokens, or production samples.
+  # only ? no real customer payloads, secrets, tokens, or production samples.
   # Use this profile when developing or testing adapters that call external APIs.
   # WireMock must not be used to hide missing adapter contracts; it supplements them.
   #
@@ -520,7 +559,7 @@ services:
     restart: unless-stopped
 
 # ---------------------------------------------------------------------------
-# VOLUMES — all named; no anonymous volumes
+# VOLUMES ? all named; no anonymous volumes
 # ---------------------------------------------------------------------------
 
 volumes:

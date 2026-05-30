@@ -2,7 +2,7 @@
  * Dependency composition root for platform-api.
  *
  * Centralises URL/config lookup and adapter construction so route handlers do
- * not duplicate wiring code. Intentionally minimal — not a DI container.
+ * not duplicate wiring code. Intentionally minimal ? not a DI container.
  *
  * ADR-0022 requires Redis-backed server-side sessions (BFF session model).
  * The Redis client, RedisSessionStore, and RedisAuthStateStore are singleton
@@ -33,7 +33,7 @@ export function getPostgresUrl(): string {
   return process.env["POSTGRES_URL"] ?? DEFAULT_POSTGRES_URL;
 }
 
-// Shared application pool — used by withTenant, withSystemAdmin, provisioning.
+// Shared application pool ? used by withTenant, withSystemAdmin, provisioning.
 // Two connections reserved for provisioning operations (schema creation, migrations).
 let _appPool: pg.Pool | undefined;
 
@@ -46,7 +46,7 @@ export function getApplicationPool(): pg.Pool {
 
 // ---------------------------------------------------------------------------
 // Provisioning credentials (loaded from env / secret store at startup)
-// Separate from runtime credentials — never exposed to request handlers.
+// Separate from runtime credentials ? never exposed to request handlers.
 // ADR-0031: trusted provisioning broker model.
 // ---------------------------------------------------------------------------
 
@@ -81,7 +81,7 @@ export function getProvisioningConfig(): ProvisioningConfig {
   };
 }
 
-// Shared singletons — adapters back themselves with a pg.Pool so repeated
+// Shared singletons ? adapters back themselves with a pg.Pool so repeated
 // access does not open a fresh client per request.
 let organisationRepository: OrganisationRepository | undefined;
 let readinessAdapter: PostgresReadinessAdapter | undefined;
@@ -154,7 +154,7 @@ export function getIdentityRepository(): IdentityRepository {
 }
 
 // ---------------------------------------------------------------------------
-// Keycloak configuration (read from env — never committed)
+// Keycloak configuration (read from env ? never committed)
 // ---------------------------------------------------------------------------
 
 export function getKeycloakConfig(): KeycloakClientConfig {
@@ -164,12 +164,12 @@ export function getKeycloakConfig(): KeycloakClientConfig {
     clientId: process.env["KEYCLOAK_CLIENT_ID"] ?? "platform-api",
     clientSecret: process.env["KEYCLOAK_CLIENT_SECRET"] ?? "",
     // KEYCLOAK_PUBLIC_URL: public base URL for browser redirects (e.g. http://aldous.info/kc).
-    // When absent, falls back to KEYCLOAK_URL — correct for local dev without Caddy proxy.
+    // When absent, falls back to KEYCLOAK_URL ? correct for local dev without Caddy proxy.
     publicUrl: process.env["KEYCLOAK_PUBLIC_URL"],
   };
 }
 
-/** Per-tenant Keycloak config — selects the correct realm for the FQDN tenant. ADR-0029 §2b. */
+/** Per-tenant Keycloak config ? selects the correct realm for the FQDN tenant. ADR-0029 ?2b. */
 export function getKeycloakConfigForRealm(realmName: string): KeycloakClientConfig {
   return {
     url: process.env["KEYCLOAK_URL"] ?? "http://localhost:8090/kc",
@@ -184,19 +184,32 @@ export function getKeycloakConfigForRealm(realmName: string): KeycloakClientConf
  * Build the OAuth callback URL from the request host header.
  *
  * Using the request host makes the callback URL dynamic across all tenants and
- * vanity domains without any per-tenant config — aldous.info, tenant1.aldous.info,
- * or any custom domain all resolve correctly at runtime (ADR-0029 §2b).
+ * vanity domains without any per-tenant config ? aldous.info, tenant1.aldous.info,
+ * or any custom domain all resolve correctly at runtime (ADR-0029 ?2b).
  *
  * Falls back to PLATFORM_API_URL when no host is provided (e.g. tests, local dev).
  */
-/** True for loopback hosts — always HTTP, never publicly routable. */
-function isLoopback(host: string): boolean {
+/** True for loopback hosts ? always HTTP, never publicly routable.
+ *
+ * In addition to standard loopback hostnames (localhost, 127.0.0.1, ::1),
+ * accepts any host ending in `.localhost` per RFC 6761. This special-use
+ * TLD always resolves to 127.0.0.1 on all operating systems and browsers,
+ * making dev.localhost, test.localhost, and multi-tenant subdomains such
+ * as tenant1.dev.localhost work without /etc/hosts (ADR-0033).
+ */
+export function isLoopback(host: string): boolean {
   const h = (host.split(":")[0] ?? "").toLowerCase();
-  return h === "localhost" || h === "127.0.0.1" || h === "::1" || h === "[::1]";
+  return (
+    h === "localhost" ||
+    h === "127.0.0.1" ||
+    h === "::1" ||
+    h === "[::1]" ||
+    h.endsWith(".localhost")
+  );
 }
 
 /** Derive scheme from X-Forwarded-Proto or loopback detection. */
-function schemeFor(host: string, forwardedProto?: string): string {
+export function schemeFor(host: string, forwardedProto?: string): string {
   if (forwardedProto === "https" || forwardedProto === "http") return forwardedProto;
   return isLoopback(host) ? "http" : "https";
 }
@@ -211,7 +224,7 @@ function schemeFor(host: string, forwardedProto?: string): string {
  * Note: Caddy rewrites X-Forwarded-Host from its own virtual-host config, not
  * from the client request, so this is defence-in-depth rather than the primary guard.
  */
-function isAllowedHost(host: string): boolean {
+export function isAllowedHost(host: string): boolean {
   const h = (host.split(":")[0] ?? "").toLowerCase();
   if (isLoopback(h)) return true;
   const apex = (process.env["APEX_DOMAIN"] ?? "aldous.info").toLowerCase();
@@ -246,15 +259,31 @@ export function getAppBaseUrl(): string {
   return process.env["APP_BASE_URL"] ?? "http://localhost:5173";
 }
 
-/** Connect the Redis client (call once at server startup). */
+/** Connect the Redis client (call once at server startup).
+ *
+ * Idempotent: if the client is already connected, returns immediately.
+ * This is safe to call across test `describe` blocks even if `disconnectRedis()`
+ * was skipped due to a cancelled test parent (node:test cancels after() when
+ * a describe block is torn down mid-flight).
+ *
+ * Uses `client.isOpen` (redis v4) to avoid duplicate connect() calls instead
+ * of relying on error-message matching.
+ */
 export async function connectRedis(): Promise<void> {
-  await getRedisClient().connect();
+  const client = getRedisClient();
+  if (!client.isOpen) {
+    await client.connect();
+  }
 }
 
 /** Disconnect Redis and reset singletons (useful in tests between describe blocks). */
 export async function disconnectRedis(): Promise<void> {
   if (redisClient) {
-    await redisClient.disconnect();
+    try {
+      await redisClient.disconnect();
+    } catch {
+      // Swallow disconnect errors so test after() hooks always complete.
+    }
     redisClient = undefined;
     sessionStore = undefined;
     authStateStore = undefined;

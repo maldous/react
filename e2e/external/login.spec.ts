@@ -10,7 +10,12 @@
  * Prerequisites: docs/local-development/real-login-e2e.md
  */
 import { test, expect } from "@playwright/test";
-import { getTestCredentials, loginAs, assertSessionAuthenticated } from "./helpers.ts";
+import {
+  getExternalBaseUrl,
+  getTestCredentials,
+  loginAs,
+  assertSessionAuthenticated,
+} from "./helpers.ts";
 
 test.describe("aldous.info: platform login", () => {
   test.beforeEach(({}, testInfo) => {
@@ -23,7 +28,7 @@ test.describe("aldous.info: platform login", () => {
   });
 
   test("unauthenticated visitor sees sign-in entry on homepage", async ({ page }) => {
-    await page.goto("/");
+    await page.goto(new URL("/", getExternalBaseUrl(page)).toString());
     // Either the index page shows a sign-in link, or it redirects to /auth/login
     const signinEntry = page.locator(
       '[data-testid="sign-in-link"], [data-testid="sign-in-button"], h1:has-text("Sign in")'
@@ -32,12 +37,15 @@ test.describe("aldous.info: platform login", () => {
   });
 
   test("login page is themed with platform branding", async ({ page }) => {
-    await page.goto("/auth/login");
-    // Platform name must appear — proves Option B theming is applied
+    await page.goto(new URL("/auth/login", getExternalBaseUrl(page)).toString());
+    // Platform name must appear — proves Option B theming is applied.
+    // Keycloak renders "Enterprise Platform (local)" in a banner element, not h1/h2.
     await expect(
       page
-        .locator("h1, h2")
-        .filter({ hasText: /Enterprise Platform|Platform/i })
+        .locator("#kc-header-wrapper, header, .pf-v5-c-brand")
+        .filter({
+          hasText: /Enterprise Platform|Platform/i,
+        })
         .first()
     ).toBeVisible();
     // Sign-in button must be present
@@ -73,7 +81,9 @@ test.describe("aldous.info: platform login", () => {
     const { username, password } = getTestCredentials();
     await loginAs(page, username, password);
 
-    const res = await page.request.get("/api/session");
+    const res = await page.request.get(
+      new URL("/api/session", getExternalBaseUrl(page)).toString()
+    );
     const body = await res.text();
     expect(body).not.toContain("access_token");
     expect(body).not.toContain("refresh_token");

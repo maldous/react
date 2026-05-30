@@ -44,7 +44,7 @@ export interface RateLimitPort {
 export function createNoopAuthPort(): AuthPort {
   return {
     async validateToken() {
-      return { valid: false, reason: "noop auth port — no validation configured" };
+      return { valid: false, reason: "noop auth port ? no validation configured" };
     },
   };
 }

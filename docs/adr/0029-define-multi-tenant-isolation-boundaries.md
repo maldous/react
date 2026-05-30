@@ -18,10 +18,11 @@ Architecture owner / technical lead
 - ADR-0002 (bounded contexts)
 - ADR-0013 (client-facing API boundary)
 - ADR-0014 (transactional data ownership)
-- ADR-0020 (RuntimeContext — actorId, tenantId)
+- ADR-0020 (RuntimeContext ? actorId, tenantId)
 - ADR-0021 (identity, tenancy, roles, permissions)
 - ADR-0022 (authentication, session, SSO boundary)
 - ADR-0028 (GraphQL schema boundary)
+- ADR-0033 (environment-specific domain configuration ? APEX_DOMAIN determines the base domain for all tenant FQDNs)
 
 ## Context
 
@@ -29,11 +30,11 @@ ADR-0021 establishes that all access is tenant-scoped and that `tenantId` must b
 
 As the platform accepts enterprise tenant consumers, the following requirements must be satisfied:
 
-1. **No cross-tenant data leakage** — even if application code contains a bug, no infrastructure layer allows one tenant to access another's data.
-2. **Subdomain-per-tenant routing** — each tenant is accessed via their own FQDN (`tenant1.aldous.info`). The global admin console uses the root domain (`aldous.info`).
-3. **Per-tenant SSO** — each tenant configures and maintains their own identity provider (Google, Microsoft Entra, Okta, SAML, or local credentials). Keycloak brokers external tokens into the platform's standard token.
-4. **Per-tenant theming** — each tenant has their own branded login page and application theme.
-5. **Full infrastructure isolation** — separate database schema, separate cache namespace, separate storage namespace per tenant.
+1. **No cross-tenant data leakage** ? even if application code contains a bug, no infrastructure layer allows one tenant to access another's data.
+2. **Subdomain-per-tenant routing** ? each tenant is accessed via their own FQDN (`tenant1.aldous.info`). The global admin console uses the root domain (`aldous.info`).
+3. **Per-tenant SSO** ? each tenant configures and maintains their own identity provider (Google, Microsoft Entra, Okta, SAML, or local credentials). Keycloak brokers external tokens into the platform's standard token.
+4. **Per-tenant theming** ? each tenant has their own branded login page and application theme.
+5. **Full infrastructure isolation** ? separate database schema, separate cache namespace, separate storage namespace per tenant.
 
 **Current state (gap this ADR closes):**
 
@@ -54,13 +55,13 @@ The platform implements **full-stack per-tenant isolation** across five layers: 
 Each tenant is assigned a subdomain on provisioning:
 
 ````text
-aldous.info             ← global admin / super-admin console
-{slug}.aldous.info      ← tenant application and login
+aldous.info             ? global admin / super-admin console
+{slug}.aldous.info      ? tenant application and login
 ```
 
-The `slug` is the tenant's `organisations.slug` value — a lowercase alphanumeric identifier chosen at provisioning.
+The `slug` is the tenant's `organisations.slug` value ? a lowercase alphanumeric identifier chosen at provisioning.
 
-**Caddy routing** — wildcard subdomain:
+**Caddy routing** ? wildcard subdomain:
 
 ```caddy
 *.aldous.info, aldous.info {
@@ -95,17 +96,17 @@ function resolveTenantFromHost(host: string): string | null {
 }
 ```
 
-The resolved slug is looked up in `public.organisations` to get the `organisationId`. This value is then verified against the session's `organisationId` — a mismatch (user from tenant A accessing tenant B's FQDN) is a `ForbiddenError`.
+The resolved slug is looked up in `public.organisations` to get the `organisationId`. This value is then verified against the session's `organisationId` ? a mismatch (user from tenant A accessing tenant B's FQDN) is a `ForbiddenError`.
 
-**Why FQDN not session:** The FQDN determines which tenant's UI, theme, and Keycloak realm are served to the browser — before the user is logged in. The session then confirms the user belongs to that tenant.
+**Why FQDN not session:** The FQDN determines which tenant's UI, theme, and Keycloak realm are served to the browser ? before the user is logged in. The session then confirms the user belongs to that tenant.
 
 **Wildcard TLS:** A wildcard certificate (`*.aldous.info`) is provisioned for all subdomains. Let's Encrypt supports wildcard certificates via DNS-01 challenge. Cloudflare handles this for the production deployment.
 
 #### 1a. Path-prefixed operational UI routing
 
-All developer and operational UI services are accessible through Caddy as path-prefixed routes. Access to every tool is gated by `GET /internal/auth/forward` on the BFF — Caddy's `forward_auth` directive checks the platform session before proxying. This means the platform's Keycloak Authorization Services policy (ADR-0030) governs who can access which tool, and tenant admins can configure access rules within their realm without platform operator involvement.
+All developer and operational UI services are accessible through Caddy as path-prefixed routes. Access to every tool is gated by `GET /internal/auth/forward` on the BFF ? Caddy's `forward_auth` directive checks the platform session before proxying. This means the platform's Keycloak Authorization Services policy (ADR-0030) governs who can access which tool, and tenant admins can configure access rules within their realm without platform operator involvement.
 
-**Super-global (`aldous.info`) — system-admin and delegated access:**
+**Super-global (`aldous.info`) ? system-admin and delegated access:**
 
 | Path | Service | Default access |
 |---|---|---|
@@ -118,9 +119,9 @@ All developer and operational UI services are accessible through Caddy as path-p
 | `/clickhouse/*` | ClickHouse HTTP UI | `system-admin` |
 | `/localstack/*` | LocalStack (dev/staging) | `system-admin` |
 
-Tilt UI (`:10350`) is NOT path-proxied — its SPA makes absolute `/api/*` calls that conflict with the platform API path. Access it directly at `http://localhost:10350` during local development.
+Tilt UI (`:10350`) is NOT path-proxied ? its SPA makes absolute `/api/*` calls that conflict with the platform API path. Access it directly at `http://localhost:10350` during local development.
 
-**Per-tenant (`{slug}.aldous.info`) — tenant-admin access:**
+**Per-tenant (`{slug}.aldous.info`) ? tenant-admin access:**
 
 | Path | Service | Filter |
 |---|---|---|
@@ -150,33 +151,33 @@ No build, no restart, no deployment. The infrastructure serves the new tenant im
 The provisioning model is hierarchical and recursive:
 
 - `system-admin` at `aldous.info` provisions tenants (creates schemas, Keycloak realms, Redis ACLs, S3 policies).
-- `tenant-admin` at `{slug}.aldous.info` provisions within their tenant: groups, sub-organisations, feature modules, user accounts, IdP integrations, and resource policies — all without system-admin intervention.
+- `tenant-admin` at `{slug}.aldous.info` provisions within their tenant: groups, sub-organisations, feature modules, user accounts, IdP integrations, and resource policies ? all without system-admin intervention.
 - Group admins within a tenant can be granted delegated rights over their group's user management via Keycloak's fine-grained admin permissions.
 
 Each level of admin sees the same dynamic provisioning pattern (data-driven, no deployment) scoped to their authority level. The tenant-admin's provisioning API is `POST /api/admin/*` routes gated by `admin:*` resource policies in their tenant's Keycloak realm, managed by the tenant admin themselves (ADR-0030).
 
-This means the platform admin UI at `aldous.info` and the tenant admin section at `{slug}.aldous.info/admin` are architecturally equivalent — both provision their respective scope at runtime from the same universal SPA build.
+This means the platform admin UI at `aldous.info` and the tenant admin section at `{slug}.aldous.info/admin` are architecturally equivalent ? both provision their respective scope at runtime from the same universal SPA build.
 
-**Does full isolation require separate Compose stacks per tenant?** No. The schema-per-tenant (PostgreSQL) + Redis namespace + S3 prefix model provides complete data isolation within a shared infrastructure stack. Separate stacks are only warranted for regulatory air-gap or geographic data residency requirements — tracked as future scope in ADR-ACT-0141.
+**Does full isolation require separate Compose stacks per tenant?** No. The schema-per-tenant (PostgreSQL) + Redis namespace + S3 prefix model provides complete data isolation within a shared infrastructure stack. Separate stacks are only warranted for regulatory air-gap or geographic data residency requirements ? tracked as future scope in ADR-ACT-0141.
 
 ---
 
-### 2. Auth isolation — per-tenant Keycloak realm
+### 2. Auth isolation ? per-tenant Keycloak realm
 
 #### 2a. One realm per tenant
 
 Each tenant has its own Keycloak realm:
 
 ```text
-realms/platform         ← super-admin realm (global admin operations)
-realms/tenant-{id}      ← one realm per tenant organisation
+realms/platform         ? super-admin realm (global admin operations)
+realms/tenant-{id}      ? one realm per tenant organisation
 ```
 
 A Keycloak realm is a completely isolated namespace: its own user store, roles, clients, identity providers, login theme, and session configuration. A user in `realms/tenant-acme` cannot authenticate against `realms/tenant-other`.
 
 The super-admin realm (`platform`) contains only `system-admin` users. It does not contain tenant users.
 
-#### 2b. Identity brokering — per-tenant SSO
+#### 2b. Identity brokering ? per-tenant SSO
 
 Each tenant realm is configured with one or more **identity providers** (IdPs) that Keycloak brokers:
 
@@ -185,22 +186,22 @@ Each tenant realm is configured with one or more **identity providers** (IdPs) t
 | Local credentials   | Username/password in the tenant's own Keycloak realm user store. Self-service registration, password reset, MFA, and email verification are all configurable per tenant. No external IdP required. |
 | OIDC                | Google, Microsoft Entra (Azure AD), Okta, Auth0, any OpenID Connect IdP                                                                                                                            |
 | SAML 2.0            | Corporate SAML providers, on-premises AD FS                                                                                                                                                        |
-| Cross-tenant broker | Another tenant's Keycloak realm (see §2e)                                                                                                                                                          |
+| Cross-tenant broker | Another tenant's Keycloak realm (see ?2e)                                                                                                                                                          |
 
-**Local accounts are a first-class option**, not a fallback. Tenants without a corporate identity provider manage their users directly in their realm. The tenant admin creates users, sets password policies, enables MFA, and manages account lifecycle — all through the Keycloak admin console for their realm at `{slug}.aldous.info/kc/admin/tenant-{id}/console`. The platform does not need to be involved in day-to-day user management for local-account tenants.
+**Local accounts are a first-class option**, not a fallback. Tenants without a corporate identity provider manage their users directly in their realm. The tenant admin creates users, sets password policies, enables MFA, and manages account lifecycle ? all through the Keycloak admin console for their realm at `{slug}.aldous.info/kc/admin/tenant-{id}/console`. The platform does not need to be involved in day-to-day user management for local-account tenants.
 
 **Brokering flow:**
 
 ```text
-Browser → /kc/realms/tenant-{id}/protocol/openid-connect/auth
-        → Keycloak login page (tenant-branded)
-        → [User selects their IdP, or enters local credentials]
-        → External IdP authenticates user, returns token to Keycloak
-        → Keycloak maps claims (sub, email, groups) → Keycloak user model
-        → Keycloak issues access_token to platform-api BFF client
-        → BFF exchanges code for token (PKCE)
-        → BFF creates session, sets HTTP-only cookie
-        → User lands on tenant application
+Browser ? /kc/realms/tenant-{id}/protocol/openid-connect/auth
+        ? Keycloak login page (tenant-branded)
+        ? [User selects their IdP, or enters local credentials]
+        ? External IdP authenticates user, returns token to Keycloak
+        ? Keycloak maps claims (sub, email, groups) ? Keycloak user model
+        ? Keycloak issues access_token to platform-api BFF client
+        ? BFF exchanges code for token (PKCE)
+        ? BFF creates session, sets HTTP-only cookie
+        ? User lands on tenant application
 ```
 
 Keycloak brokered tokens contain the platform's standard claims (`sub`, `email`, `realm_access.roles`, `organisationId` attribute) regardless of which upstream IdP authenticated the user. The BFF and the rest of the platform never see the upstream IdP token.
@@ -222,7 +223,7 @@ The BFF resolves which client secret to use based on the tenant resolved from th
 
 When the browser hits `{slug}.aldous.info/auth/login`, the BFF:
 
-1. Resolves the slug → `organisationId` → Keycloak realm name (`tenant-{id}`)
+1. Resolves the slug ? `organisationId` ? Keycloak realm name (`tenant-{id}`)
 2. Constructs the Keycloak authorization URL for that realm
 3. Redirects the browser to the tenant's Keycloak login page
 
@@ -233,18 +234,18 @@ The user never sees a "which organisation are you?" selector. The FQDN they navi
 Tenants may grant access to users from other tenants based on their own configured rules. This is implemented via Keycloak cross-realm OIDC federation:
 
 ```text
-User at acme.aldous.info → chooses "Login with partner.aldous.info"
-  → acme realm redirects to partner realm (configured as an IdP in acme's realm)
-  → partner realm authenticates the user against their own IdP (their Google, Entra, etc.)
-  → partner realm issues a token to acme realm
-  → acme realm brokers: maps partner user claims → acme realm user model
-  → acme realm issues access_token to the BFF
-  → BFF creates session; user has a Membership in acme's tenant schema
+User at acme.aldous.info ? chooses "Login with partner.aldous.info"
+  ? acme realm redirects to partner realm (configured as an IdP in acme's realm)
+  ? partner realm authenticates the user against their own IdP (their Google, Entra, etc.)
+  ? partner realm issues a token to acme realm
+  ? acme realm brokers: maps partner user claims ? acme realm user model
+  ? acme realm issues access_token to the BFF
+  ? BFF creates session; user has a Membership in acme's tenant schema
 ```
 
 **Tenant controls their own trust rules:**
 
-The tenant (`acme`) configures which other tenant realms it trusts as identity providers via the Keycloak admin console for their own realm. The platform does not mediate or approve cross-tenant trust relationships — this is fully within the tenant admin's control.
+The tenant (`acme`) configures which other tenant realms it trusts as identity providers via the Keycloak admin console for their own realm. The platform does not mediate or approve cross-tenant trust relationships ? this is fully within the tenant admin's control.
 
 **Broker-sourced users get a Membership:**
 
@@ -253,7 +254,7 @@ When a broker-sourced user logs in for the first time to a tenant that is not th
 1. The BFF receives the brokered token. The `sub` claim is prefixed with the source realm: `broker:{source-realm}:{original-sub}`.
 2. A `users` record is created in `public.users` (if not existing) with the brokered email.
 3. An `ExternalIdentity` is created linking the source realm's subject to the platform user.
-4. The platform looks up the user's `Membership` in the target tenant schema. If none exists, the login is rejected with an `UnauthorizedError` — the tenant admin must pre-provision the cross-tenant membership before a broker-sourced user can access.
+4. The platform looks up the user's `Membership` in the target tenant schema. If none exists, the login is rejected with an `UnauthorizedError` ? the tenant admin must pre-provision the cross-tenant membership before a broker-sourced user can access.
 5. If a Membership exists, the session is created with the role assigned in that Membership.
 
 **No implicit access:** A user brokering from tenant A is not automatically a member of tenant B. Tenant B's admin must explicitly create the Membership (with the desired role) before the cross-tenant login succeeds. This ensures the tenant fully controls who enters their namespace.
@@ -272,7 +273,7 @@ A session cookie issued for `acme.aldous.info` is not sent to `other.aldous.info
 
 ---
 
-### 3. Database isolation — schema-per-tenant + RLS
+### 3. Database isolation ? schema-per-tenant + RLS
 
 #### 3a. Schema naming
 
@@ -311,7 +312,7 @@ async function withTenant<T>(
 }
 ```
 
-`SET LOCAL` scopes `search_path` to the transaction only — pool-safe.
+`SET LOCAL` scopes `search_path` to the transaction only ? pool-safe.
 
 #### 3c. Row-Level Security (defence in depth)
 
@@ -374,7 +375,7 @@ Migrations are idempotent. A failure in one tenant schema does not affect others
 
 ### 4. Extended auth capabilities
 
-The per-tenant Keycloak realm model is designed for maximum flexibility. The following auth behaviours are supported out of the box by the Keycloak-per-realm architecture — all are tenant-configurable without platform code changes:
+The per-tenant Keycloak realm model is designed for maximum flexibility. The following auth behaviours are supported out of the box by the Keycloak-per-realm architecture ? all are tenant-configurable without platform code changes:
 
 #### 4a. Multi-factor authentication (MFA)
 
@@ -386,7 +387,7 @@ Each tenant configures their own MFA policy via the Keycloak admin console:
 - Email OTP
 - MFA can be required for all users, only for specific roles (e.g., `tenant-admin`), or optional
 
-The platform does not enforce a global MFA policy — this is a per-tenant security decision.
+The platform does not enforce a global MFA policy ? this is a per-tenant security decision.
 
 #### 4b. Passwordless login
 
@@ -422,11 +423,11 @@ These flows are configured per realm via Keycloak's Authentication Flow builder.
 Tenants can mirror their IdP's groups to Keycloak roles via claim mappers:
 
 ```text
-External IdP group "platform-admins" → Keycloak realm role "tenant-admin"
-External IdP group "readonly-users"  → Keycloak realm role "viewer"
+External IdP group "platform-admins" ? Keycloak realm role "tenant-admin"
+External IdP group "readonly-users"  ? Keycloak realm role "viewer"
 ```
 
-This means the tenant does not need to manage individual user roles in the platform — role assignment flows from their corporate directory.
+This means the tenant does not need to manage individual user roles in the platform ? role assignment flows from their corporate directory.
 
 #### 4f. Account self-service
 
@@ -437,11 +438,11 @@ For local-account tenants, Keycloak provides:
 - Email verification on registration
 - Account linking (connect additional IdPs to an existing account)
 
-The platform BFF session is unaffected by account self-service — it uses the realm's token endpoint. Self-service operations go directly to Keycloak and do not pass through the BFF.
+The platform BFF session is unaffected by account self-service ? it uses the realm's token endpoint. Self-service operations go directly to Keycloak and do not pass through the BFF.
 
 #### 4g. Just-in-time (JIT) user provisioning
 
-When a user authenticates via an external IdP for the first time, Keycloak automatically creates a local user record in the realm (JIT provisioning). The platform then creates an `ExternalIdentity` record mapping the Keycloak user to the platform `User`. A `Membership` record must exist (pre-provisioned by the tenant admin) before the session is created — login without a Membership is rejected.
+When a user authenticates via an external IdP for the first time, Keycloak automatically creates a local user record in the realm (JIT provisioning). The platform then creates an `ExternalIdentity` record mapping the Keycloak user to the platform `User`. A `Membership` record must exist (pre-provisioned by the tenant admin) before the session is created ? login without a Membership is rejected.
 
 JIT provisioning means the tenant admin does not need to pre-create user accounts in Keycloak; they only need to pre-create Memberships in the platform.
 
@@ -449,7 +450,7 @@ JIT provisioning means the tenant admin does not need to pre-create user account
 
 Tenants may want a fully custom domain (e.g., `app.acmecorp.com` instead of `acme.aldous.info`). The architecture supports this via:
 
-- DNS CNAME from `app.acmecorp.com` → `acme.aldous.info`
+- DNS CNAME from `app.acmecorp.com` ? `acme.aldous.info`
 - Caddy SNI-based virtual host matching the custom domain
 - TLS certificate provisioned via Let's Encrypt HTTP-01 (no wildcard needed for custom domain)
 - The platform resolves the tenant from the custom domain via the `organisations.custom_domain` column
@@ -462,37 +463,37 @@ Custom domain support is tracked separately and is not part of the initial deliv
 
 Each tenant can configure:
 
-- **Login page theme** — Keycloak supports custom themes per realm. A base theme is provided by the platform; tenants can override colours, logo, and background via the Keycloak admin console.
-- **Application theme** — The React SPA reads a `GET /api/theme` endpoint that returns the tenant's configured colour scheme, logo URL, and display name. The app applies these at load time before rendering.
-- **Email templates** — Keycloak transactional emails (password reset, email verification) use the tenant's realm theme.
+- **Login page theme** ? Keycloak supports custom themes per realm. A base theme is provided by the platform; tenants can override colours, logo, and background via the Keycloak admin console.
+- **Application theme** ? The React SPA reads a `GET /api/theme` endpoint that returns the tenant's configured colour scheme, logo URL, and display name. The app applies these at load time before rendering.
+- **Email templates** ? Keycloak transactional emails (password reset, email verification) use the tenant's realm theme.
 
 **Theme resolution flow:**
 
 ```text
 Browser loads {slug}.aldous.info
-  → React SPA fetches /api/theme (unauthenticated endpoint, keyed by Host header)
-  → Returns { primaryColour, logoUrl, displayName, faviconUrl }
-  → SPA applies CSS variables and renders tenant branding
-  → Login page is Keycloak's themed realm login (also keyed to the realm)
+  ? React SPA fetches /api/theme (unauthenticated endpoint, keyed by Host header)
+  ? Returns { primaryColour, logoUrl, displayName, faviconUrl }
+  ? SPA applies CSS variables and renders tenant branding
+  ? Login page is Keycloak's themed realm login (also keyed to the realm)
 ```
 
 Theme configuration is stored in the tenant schema as a `tenant_settings` table row, returned by the `GET /api/theme` endpoint without requiring authentication.
 
 ---
 
-### 6. Cache isolation — Redis
+### 6. Cache isolation ? Redis
 
 #### Per-tenant key namespace and ACL
 
 Every tenant-scoped Redis key uses the prefix `t:{organisationId}:`:
 
 ```text
-t:{organisationId}:perm:{userId}       ← resolved permissions cache
-t:{organisationId}:profile             ← org profile cache
-t:{organisationId}:theme               ← theme config cache
+t:{organisationId}:perm:{userId}       ? resolved permissions cache
+t:{organisationId}:profile             ? org profile cache
+t:{organisationId}:theme               ? theme config cache
 ```
 
-Sessions are keyed by opaque `sessionId` — the tenant is inside the session value, not the key.
+Sessions are keyed by opaque `sessionId` ? the tenant is inside the session value, not the key.
 
 In production, each tenant has a Redis ACL user restricted to their key prefix:
 
@@ -504,7 +505,7 @@ Application code uses the tenant ACL user for tenant-scoped operations and the p
 
 ---
 
-### 7. Object storage isolation — S3 / MinIO
+### 7. Object storage isolation ? S3 / MinIO
 
 Every tenant's objects are stored under `{organisationId}/`:
 
@@ -512,11 +513,11 @@ Every tenant's objects are stored under `{organisationId}/`:
 {organisationId}/{feature}/{filename}
 ```
 
-`S3ObjectStorageAdapter` validates the prefix on every write and read. In production, a per-tenant IAM user or bucket policy restricts access to the tenant's prefix at the AWS/MinIO level. Presigned URLs are scoped to the tenant's prefix — they cannot be used to access another tenant's objects.
+`S3ObjectStorageAdapter` validates the prefix on every write and read. In production, a per-tenant IAM user or bucket policy restricts access to the tenant's prefix at the AWS/MinIO level. Presigned URLs are scoped to the tenant's prefix ? they cannot be used to access another tenant's objects.
 
 ---
 
-### 8. Analytics isolation — ClickHouse
+### 8. Analytics isolation ? ClickHouse
 
 Every analytics table has a required `tenant_id UUID NOT NULL` column. Tables are partitioned by `tenant_id` for efficient deletion. The `ClickHouseAnalyticsAdapter` enforces `tenantId` as a required query parameter. Cross-tenant analytics (billing, platform health) use a separate read-only reporting user with explicit cross-tenant access.
 
@@ -562,7 +563,7 @@ All user sessions for the tenant are invalidated. Keycloak realm is disabled (no
 
 ---
 
-### 10. Invariants — never violate without ADR amendment
+### 10. Invariants ? never violate without ADR amendment
 
 1. **Tenant is determined from FQDN.** The BFF reads `Host` header on every request. `organisationId` is never accepted from the request body as the tenant selector.
 
@@ -590,7 +591,7 @@ All user sessions for the tenant are invalidated. Keycloak realm is disabled (no
 
 **Schema-per-tenant** is chosen for database isolation because:
 
-- Physical data separation is required — not just logical (RLS-only).
+- Physical data separation is required ? not just logical (RLS-only).
 - `DROP SCHEMA CASCADE` provides atomic, complete tenant deletion.
 - Schema isolation combined with RLS provides two independent isolation layers.
 - Operationally simpler than database-per-tenant (no per-tenant connection pools).
@@ -599,7 +600,7 @@ All user sessions for the tenant are invalidated. Keycloak realm is disabled (no
 
 - Each tenant needs independent SSO configuration (their own IdP, login flow, MFA policy).
 - Realm-level isolation means a compromise of one tenant's realm does not expose others.
-- Keycloak login page theming is per-realm — no shared login page.
+- Keycloak login page theming is per-realm ? no shared login page.
 - Identity brokering (federated tokens from corporate IdPs) is a standard Keycloak feature per realm.
 
 **FQDN-based tenant selection** is chosen because:
@@ -622,18 +623,18 @@ All user sessions for the tenant are invalidated. Keycloak realm is disabled (no
 
 - Keycloak realm provisioning adds steps to tenant creation (automated via Terraform/Keycloak admin API).
 - Schema migrations run per tenant on deploy (parallelised, idempotent).
-- BFF must manage N Keycloak client secrets (one per tenant realm) — requires a secret store (e.g., AWS Secrets Manager or Vault).
+- BFF must manage N Keycloak client secrets (one per tenant realm) ? requires a secret store (e.g., AWS Secrets Manager or Vault).
 - Wildcard TLS certificate required; DNS-01 ACME challenge needed for Let's Encrypt.
 
 **Operational:**
 
-- Keycloak secret rotation per tenant is independent — no shared secret.
+- Keycloak secret rotation per tenant is independent ? no shared secret.
 - PgBouncer must be in `transaction` pooling mode.
 - Application database role must not be a PostgreSQL superuser.
 
 ## Migration path from current state
 
-1. Add FQDN column to `organisations` table. Add slug → FQDN mapping.
+1. Add FQDN column to `organisations` table. Add slug ? FQDN mapping.
 2. Implement Host-header tenant resolution in the BFF pipeline.
 3. Implement `withTenant` helper in `packages/adapters-postgres`. Migrate all repository methods.
 4. Create a migration script to extract existing data into `tenant_{id}` schemas.
@@ -654,7 +655,7 @@ AI used: Yes
 
 ## Validation / evidence
 
-Evidence level: Decision — implementation evidence tracked in ACTION-REGISTER.
+Evidence level: Decision ? implementation evidence tracked in ACTION-REGISTER.
 
 ## Impacted areas
 

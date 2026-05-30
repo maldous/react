@@ -8,14 +8,16 @@
  * those are tracked in ACTION-REGISTER (ADR-ACT-0157 through ADR-ACT-0160).
  */
 import { test, expect } from "@playwright/test";
+import { getExternalBaseUrl } from "./helpers.ts";
 
-const BASE_URL = process.env["REAL_AUTH_BASE_URL"] ?? "http://aldous.info";
+const BASE_URL =
+  process.env["REAL_AUTH_BASE_URL"] ?? process.env["PROD_BASE_URL"] ?? "http://aldous.info";
 
 test.describe("aldous.info: wrong credentials", () => {
   test("wrong password shows Keycloak error on login form", async ({ page }) => {
     // /auth/login on the BFF triggers the PKCE redirect to Keycloak directly.
     // Caddy proxies /auth/* to platform-api, so there is no intermediate SPA login page.
-    await page.goto("/auth/login");
+    await page.goto(new URL("/auth/login", getExternalBaseUrl(page)).toString());
 
     // Fill wrong credentials on Keycloak form
     await page.waitForSelector("#username", { state: "visible", timeout: 15_000 });
@@ -31,7 +33,9 @@ test.describe("aldous.info: wrong credentials", () => {
     const hasSession = currentUrl.startsWith(BASE_URL) && !currentUrl.includes("/kc/");
     if (hasSession) {
       // If somehow we're back at aldous.info, session must NOT be authenticated
-      const res = await page.request.get("/api/session");
+      const res = await page.request.get(
+        new URL("/api/session", getExternalBaseUrl(page)).toString()
+      );
       expect(res.status()).toBe(401);
     } else {
       // Still on Keycloak — form remained, which is the expected error behaviour

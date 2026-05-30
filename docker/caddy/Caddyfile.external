@@ -1,0 +1,74 @@
+# docker/caddy/Caddyfile.external
+#
+# External-facing Caddy — listens on port 80 (host network).
+# Receives Cloudflare-terminated HTTP traffic (Flexible SSL).
+# Routes by Host header to per-environment internal Caddies.
+#
+# Internal Caddies (each serves its own SPA + tool proxy + API route):
+#   staging.aldous.info ──► localhost:82 (staging internal Caddy)
+#   aldous.info         ──► localhost:83 (prod internal Caddy)
+#
+# The internal Caddy on each environment handles SPA serving, Keycloak proxy,
+# forward auth, and tool subdomain routing. The external Caddy is a pure
+# reverse-proxy routing layer — no SPA files, no tool routing logic.
+#
+# TLS: Cloudflare terminates HTTPS. Caddy receives plain HTTP on :80.
+# X-Forwarded-Proto: {scheme} resolves to "https" for Cloudflare traffic
+#   because trusted_proxies includes Cloudflare edge IPs.
+
+# ---------------------------------------------------------------------------
+# Global options
+# ---------------------------------------------------------------------------
+{
+	servers {
+		# Trust Cloudflare IPs so {scheme} reflects the original client scheme.
+		# Private ranges cover Docker and host-local networking.
+		trusted_proxies static \
+			127.0.0.1/8 \
+			::1/128 \
+			10.0.0.0/8 \
+			172.16.0.0/12 \
+			192.168.0.0/16 \
+			103.21.244.0/22 \
+			103.22.200.0/22 \
+			103.31.4.0/22 \
+			104.16.0.0/13 \
+			104.24.0.0/14 \
+			108.162.192.0/18 \
+			131.0.72.0/22 \
+			141.101.64.0/18 \
+			162.158.0.0/15 \
+			172.64.0.0/13 \
+			173.245.48.0/20 \
+			188.114.96.0/20 \
+			190.93.240.0/20 \
+			197.234.240.0/22 \
+			198.41.128.0/17 \
+			2400:cb00::/32 \
+			2606:4700::/32 \
+			2803:f800::/32 \
+			2405:b500::/32 \
+			2405:8100::/32 \
+			2a06:98c0::/29 \
+			2c0f:f248::/32
+	}
+}
+
+# ---------------------------------------------------------------------------
+# Production — aldous.info (port 83 internal Caddy)
+# ---------------------------------------------------------------------------
+:80 {
+	# Staging — staging.aldous.info -> localhost:82 (staging internal Caddy)
+	@staging host staging.aldous.info *.staging.aldous.info
+	reverse_proxy @staging localhost:82 {
+		header_up X-Forwarded-Host {host}
+		header_up X-Forwarded-Proto {scheme}
+	}
+
+	# Production — aldous.info -> localhost:83 (prod internal Caddy)
+	@prod host aldous.info *.aldous.info
+	reverse_proxy @prod localhost:83 {
+		header_up X-Forwarded-Host {host}
+		header_up X-Forwarded-Proto {scheme}
+	}
+}

@@ -1,7 +1,7 @@
 import process from "node:process";
 import { defineConfig, devices } from "@playwright/test";
 
-const BASE_URL = process.env["PROD_BASE_URL"] ?? "https://aldous.info";
+const BASE_URL = process.env["PROD_BASE_URL"] ?? "http://localhost:83";
 
 export default defineConfig({
   testDir: "./e2e/prod",
@@ -19,5 +19,5 @@ export default defineConfig({
   },
   outputDir: "e2e-results/prod",
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
-  // No webServer — the production stack must already be running at PROD_BASE_URL.
+  // No webServer ? the prod-like stack must already be running.
 });

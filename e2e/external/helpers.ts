@@ -4,6 +4,21 @@
  */
 import { type Page, expect } from "@playwright/test";
 
+export function getExternalBaseUrl(page?: Page): string {
+  const envBase = process.env["PROD_BASE_URL"] ?? "http://aldous.info";
+  if (page) {
+    try {
+      const url = new URL(page.url());
+      if (url.protocol === "http:" || url.protocol === "https:") {
+        return url.origin;
+      }
+    } catch {
+      // Ignore: page.url() is not usable before first navigation.
+    }
+  }
+  return envBase.replace(/\/+$/, "");
+}
+
 /** Credentials from environment — tests skip if not provided */
 export function getTestCredentials(): { username: string; password: string } {
   const username = process.env["KEYCLOAK_TEST_USERNAME"] ?? "";
@@ -38,7 +53,9 @@ export async function completeKeycloakLogin(
  * Returns after the post-login redirect back to aldous.info completes.
  */
 export async function loginAs(page: Page, username: string, password: string): Promise<void> {
-  await page.goto("/");
+  const baseUrl = getExternalBaseUrl();
+  await page.goto(new URL("/", baseUrl).toString());
+  const appOrigin = new URL(page.url()).origin;
   // Click the sign-in link/button on the landing page or login page
   const signInLink = page
     .locator('[data-testid="sign-in-link"], [data-testid="sign-in-button"], a[href="/auth/login"]')
@@ -46,8 +63,10 @@ export async function loginAs(page: Page, username: string, password: string): P
   await signInLink.click();
   // Complete Keycloak login
   await completeKeycloakLogin(page, username, password);
-  // Wait for redirect back to aldous.info
-  await page.waitForURL(/aldous\.info/, { timeout: 20_000 });
+  // Wait for redirect back to the homepage (not the intermediate callback URL).
+  // Must exclude /auth/callback which also contains "aldous.info".
+  const escapedOrigin = appOrigin.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  await page.waitForURL(new RegExp(`^${escapedOrigin}/?$`), { timeout: 20_000 });
   // Wait for the actor display (confirms session is active)
   await expect(page.getByTestId("actor-display")).toBeVisible({ timeout: 10_000 });
 }
@@ -56,7 +75,7 @@ export async function loginAs(page: Page, username: string, password: string): P
  * Verify /api/session returns an authenticated actor.
  */
 export async function assertSessionAuthenticated(page: Page): Promise<void> {
-  const res = await page.request.get("/api/session");
+  const res = await page.request.get(new URL("/api/session", getExternalBaseUrl(page)).toString());
   expect(res.status()).toBe(200);
   const body = (await res.json()) as { userId?: string; roles?: string[] };
   expect(body.userId).toBeTruthy();
@@ -66,6 +85,6 @@ export async function assertSessionAuthenticated(page: Page): Promise<void> {
  * Verify /api/session returns 401 (unauthenticated).
  */
 export async function assertSessionUnauthenticated(page: Page): Promise<void> {
-  const res = await page.request.get("/api/session");
+  const res = await page.request.get(new URL("/api/session", getExternalBaseUrl(page)).toString());
   expect(res.status()).toBe(401);
 }

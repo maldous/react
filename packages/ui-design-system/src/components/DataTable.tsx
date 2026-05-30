@@ -60,9 +60,9 @@ export function DataTable<TData>({ data, columns, height, className }: DataTable
                       ? null
                       : flexRender(header.column.columnDef.header, header.getContext())}
                     {header.column.getIsSorted() === "asc"
-                      ? " ↑"
+                      ? " ?"
                       : header.column.getIsSorted() === "desc"
-                        ? " ↓"
+                        ? " ?"
                         : null}
                   </th>
                 ))}

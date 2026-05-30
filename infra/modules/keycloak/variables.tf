@@ -16,7 +16,7 @@ variable "realm_display_name" {
 }
 
 # ---------------------------------------------------------------------------
-# SPA client (public, PKCE) — React app
+# SPA client (public, PKCE) ? React app
 # ---------------------------------------------------------------------------
 
 variable "spa_client_id" {
@@ -36,7 +36,7 @@ variable "spa_web_origins" {
 }
 
 # ---------------------------------------------------------------------------
-# BFF/API client (confidential) — platform-api handles the OAuth callback
+# BFF/API client (confidential) ? platform-api handles the OAuth callback
 # ---------------------------------------------------------------------------
 
 variable "bff_client_id" {
@@ -57,7 +57,7 @@ variable "bff_redirect_uris" {
 }
 
 # ---------------------------------------------------------------------------
-# Fixture users — local/dev only
+# Fixture users ? local/dev only
 # ---------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------
@@ -87,4 +87,16 @@ variable "fixture_user_password" {
   sensitive   = true
   description = "Password for all fixture test users. Only used when provision_fixture_users = true. Local/dev only."
   default     = ""
+}
+
+variable "kc_hostname" {
+  type        = string
+  description = "Keycloak hostname (KC_HOSTNAME v2) ? determines the token issuer (iss claim). Must match the public-facing URL for the environment. (ADR-0033)"
+  default     = "http://localhost/kc"
+}
+
+variable "apex_domain" {
+  type        = string
+  description = "Apex domain for FQDN-based tenant routing. Used to construct redirect URIs and web origins for the environment. (ADR-0029, ADR-0033)"
+  default     = "aldous.info"
 }

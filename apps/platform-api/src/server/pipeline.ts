@@ -40,10 +40,10 @@ export interface Route {
   handler: PipelineHandler;
   requiresAuth?: boolean;
   /**
-   * INTERIM STATIC PERMISSION BRIDGE — ADR-ACT-0145
+   * INTERIM STATIC PERMISSION BRIDGE ? ADR-ACT-0145
    *
    * requiredPermission is checked against the actor's resolved permission set
-   * from the session record. This is a static, pre-resolved check — it does
+   * from the session record. This is a static, pre-resolved check ? it does
    * NOT call Keycloak Authorization Services at runtime and does NOT support
    * no-deploy policy changes.
    *
@@ -164,9 +164,9 @@ export function createRouter(
       return;
     }
 
-    // Auth check — resolve actor (null when unauthenticated)
+    // Auth check ? resolve actor (null when unauthenticated)
     //
-    // FQDN tenant resolution (ADR-0029 §1) — resolve which tenant owns this request
+    // FQDN tenant resolution (ADR-0029 ?1) ? resolve which tenant owns this request
     // from the Host header. Skipped for fixture sessions (local dev + E2E).
     // When a real tenant is resolved, the session tenant must match.
     const isFixtureMode = !!getFixtureSession();
@@ -175,9 +175,9 @@ export function createRouter(
       : await resolveTenantFromRequest(req, getApplicationPool()).catch(() => null);
 
     // Precedence (Tier 1 fixture always wins for deterministic E2E tests):
-    //   1. LOCAL_FIXTURE_SESSION env var → fixture actor (no Redis/DB)
-    //   2. session cookie → real Redis-backed session actor
-    //   3. neither → unauthenticated (null)
+    //   1. LOCAL_FIXTURE_SESSION env var ? fixture actor (no Redis/DB)
+    //   2. session cookie ? real Redis-backed session actor
+    //   3. neither ? unauthenticated (null)
     let actor: SessionActor | null = null;
     if (matchingRoute.requiresAuth) {
       actor = getFixtureSession();
@@ -198,7 +198,7 @@ export function createRouter(
               };
             }
           } catch {
-            // Redis unavailable — treat as unauthenticated (do not crash)
+            // Redis unavailable ? treat as unauthenticated (do not crash)
           }
         }
       }

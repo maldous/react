@@ -1,7 +1,7 @@
 -- Migration 004: Row-Level Security on global tenant boundary tables
 --
 -- Adds RLS to public-schema tables that scope data by tenant or user.
--- ADR-0029 §3c: RLS is defence-in-depth within each tenant schema.
+-- ADR-0029 ?3c: RLS is defence-in-depth within each tenant schema.
 -- ADR-0031: application DB user must not be superuser (superusers bypass RLS).
 --
 -- SET LOCAL app.current_user_id and app.bypass_rls are set by the adapter

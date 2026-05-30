@@ -14,10 +14,10 @@ Architecture owner / technical lead
 
 ## Consulted
 
-- ADR-0001 (hexagonal architecture — adapters own runtime integration)
-- ADR-0002 (bounded contexts — adapter packages per service)
+- ADR-0001 (hexagonal architecture ? adapters own runtime integration)
+- ADR-0002 (bounded contexts ? adapter packages per service)
 - ADR-0007 (repository layout)
-- ADR-0016 (quality gate baseline — Compose gates are opt-in)
+- ADR-0016 (quality gate baseline ? Compose gates are opt-in)
 - ADR-ACT-0087 (implementation tracking)
 
 ## Context
@@ -31,7 +31,7 @@ Without a defined local service substrate:
 - Service versions diverge across developer machines.
 - Integration testing has no repeatable local surface.
 
-The local substrate must remain opt-in — architecture, lint, and security gates must not require Docker Compose to run.
+The local substrate must remain opt-in ? architecture, lint, and security gates must not require Docker Compose to run.
 
 ## Stakeholder concerns
 
@@ -43,7 +43,7 @@ The local substrate must remain opt-in — architecture, lint, and security gate
 ## Decision drivers
 
 1. Adapters require local service counterparts for integration validation.
-2. Compose must be profile-gated — heavy services are opt-in.
+2. Compose must be profile-gated ? heavy services are opt-in.
 3. Architecture and quality gates must not depend on Compose.
 4. Images must be pinned to stable tags. No `latest`.
 5. No secrets in version control. `.env.example` only.
@@ -76,7 +76,7 @@ Pros:
 
 Cons:
 
-- Heavy services (Sentry, SonarQube, Keycloak) always start — wastes memory.
+- Heavy services (Sentry, SonarQube, Keycloak) always start ? wastes memory.
 - Developers running only lint checks must still have Docker.
 
 ### Option C: Profile-gated Compose file (chosen)
@@ -242,7 +242,7 @@ None.
 
 ## References
 
-- ADR-0001: Hexagonal architecture — adapters own runtime integration
+- ADR-0001: Hexagonal architecture ? adapters own runtime integration
 - ADR-0002: Bounded contexts
 - ADR-0007: Repository artifact layout
 - ADR-0016: Quality gate baseline
@@ -252,7 +252,7 @@ None.
 
 ## Notes
 
-**Sentry profile is experimental and for SDK smoke testing only.** The `sentry` profile provides a minimal single-image Sentry setup for testing `@platform/adapters-sentry` SDK connectivity. It is not a full self-hosted Sentry stack, does not replace external Sentry or Grafana Cloud, and must not be used as the primary observability target. The `sentry-worker` and `sentry-cron` services are included but unvalidated — they use process-only liveness rather than HTTP healthchecks. See ADR-ACT-0089 for validation tracking.
+**Sentry profile is experimental and for SDK smoke testing only.** The `sentry` profile provides a minimal single-image Sentry setup for testing `@platform/adapters-sentry` SDK connectivity. It is not a full self-hosted Sentry stack, does not replace external Sentry or Grafana Cloud, and must not be used as the primary observability target. The `sentry-worker` and `sentry-cron` services are included but unvalidated ? they use process-only liveness rather than HTTP healthchecks. See ADR-ACT-0089 for validation tracking.
 
 **Host port overrides.** All compose host ports are configurable via `.env` environment variables (e.g. `POSTGRES_PORT=5434`). The defaults in `compose.yaml` reflect the validation host environment and may conflict on other machines. Override in `.env` rather than editing `compose.yaml`.
 

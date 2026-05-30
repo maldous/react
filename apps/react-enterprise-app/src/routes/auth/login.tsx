@@ -3,11 +3,11 @@ import { Route as RootRoute } from "../__root";
 import { useTranslation } from "@platform/i18n-runtime";
 
 /**
- * Platform login entry — Option B themed (ADR-ACT-0155).
+ * Platform login entry ? Option B themed (ADR-ACT-0155).
  *
  * The "Sign in" button navigates to /auth/login on the BFF, which generates
  * the PKCE challenge and redirects to the Keycloak login page.
- * Keycloak itself is not yet theme-customised — tracked in ADR-ACT-0156.
+ * Keycloak itself is not yet theme-customised ? tracked in ADR-ACT-0156.
  */
 export const Route = createRoute({
   getParentRoute: () => RootRoute,
@@ -26,7 +26,7 @@ function LoginPage() {
             className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-2xl text-white shadow-md"
             aria-hidden="true"
           >
-            ⬡
+            ?
           </div>
           <h1 className="mt-4 text-2xl font-bold tracking-tight text-gray-900">
             {t("platform.name")}
@@ -39,7 +39,7 @@ function LoginPage() {
           <h2 className="mb-1 text-base font-semibold text-gray-900">{t("auth.login.title")}</h2>
           <p className="mb-6 text-sm text-gray-500">{t("auth.login.body")}</p>
 
-          {/* Full-page navigation: triggers /auth/login BFF route → Keycloak PKCE flow */}
+          {/* Full-page navigation: triggers /auth/login BFF route ? Keycloak PKCE flow */}
           <a
             href="/auth/login"
             className="flex w-full items-center justify-center rounded-md bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"

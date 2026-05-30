@@ -14,12 +14,12 @@ Architecture owner / technical lead
 
 ## Consulted
 
-- ADR-0001 (hexagonal architecture — adapters own external integrations)
-- ADR-0003 (modular monorepo — delivery packages)
-- ADR-0007 (repository layout — delivery domain)
-- ADR-0017 (Compose substrate — local service runtime)
-- ADR-0021 (identity model — roles and permissions to provision)
-- ADR-0022 (auth/session boundary — Keycloak as adapter)
+- ADR-0001 (hexagonal architecture ? adapters own external integrations)
+- ADR-0003 (modular monorepo ? delivery packages)
+- ADR-0007 (repository layout ? delivery domain)
+- ADR-0017 (Compose substrate ? local service runtime)
+- ADR-0021 (identity model ? roles and permissions to provision)
+- ADR-0022 (auth/session boundary ? Keycloak as adapter)
 
 ## Context
 
@@ -45,13 +45,13 @@ This ADR defines the ownership boundary and provisioning model before ADR-ACT-01
 - **Security:** No secrets committed. No admin credentials in version control. Production identity configuration must be fully reproducible from committed code.
 - **Operations:** Every environment (development, staging, production) must be provisionable deterministically from the infra/ directory without manual console steps.
 - **Engineering:** Local development must not require cloud credentials. Compose owns local service startup; Terraform/OpenTofu owns durable configuration.
-- **Compliance:** Keycloak realm, roles, and client configuration must be auditable through version control — not through manual console history.
+- **Compliance:** Keycloak realm, roles, and client configuration must be auditable through version control ? not through manual console history.
 - **Architecture:** Terraform/OpenTofu must not create application tables. Application migrations own schema. Seed scripts own fixture data.
 
 ## Decision drivers
 
-1. Manual console configuration is not an accepted baseline for committed environments — it is not reproducible, auditable, or reviewable.
-2. Compose is not a provisioning tool — it starts services; it does not configure them.
+1. Manual console configuration is not an accepted baseline for committed environments ? it is not reproducible, auditable, or reviewable.
+2. Compose is not a provisioning tool ? it starts services; it does not configure them.
 3. Secrets must not be committed. Terraform/OpenTofu uses secret manager references or environment variables.
 4. The provisioning tool must be OpenTofu-compatible to preserve vendor-neutral optionality.
 5. Validation must be possible without live cloud credentials (syntax, format, plan with example vars).
@@ -177,7 +177,7 @@ Compose owns **local service runtime startup only**. It does not own durable env
 | local Mailpit        | Container lifecycle                                          |
 | local OTel Collector | Container lifecycle, config file mount                       |
 | local SonarQube      | Container lifecycle                                          |
-| local Keycloak       | Container lifecycle only — realm config belongs to Terraform |
+| local Keycloak       | Container lifecycle only ? realm config belongs to Terraform |
 
 **Rule:** If a Compose service requires non-trivial configuration beyond startup, that configuration must be:
 
@@ -197,7 +197,7 @@ Compose owns **local service runtime startup only**. It does not own durable env
 
 - Demo users, local organisations, test memberships (local and development environments)
 - Fixture data for automated tests
-- Local only — seed scripts must not run in staging or production without explicit gating
+- Local only ? seed scripts must not run in staging or production without explicit gating
 
 ---
 
@@ -205,7 +205,7 @@ Compose owns **local service runtime startup only**. It does not own durable env
 
 Rules:
 
-- No secrets committed to version control — not in `.tf` files, not in `.tfvars`, not in CI config.
+- No secrets committed to version control ? not in `.tf` files, not in `.tfvars`, not in CI config.
 - Generated client secrets are populated out-of-band or via CI secret injection into Secrets Manager.
 - Provider admin credentials (Keycloak admin password, cloud root credentials) are never committed.
 - `.tfvars.example` files may contain obviously-fake placeholder values only.
@@ -216,13 +216,13 @@ Rules:
 
 ### 4. Environment model
 
-| Environment   | Users                                                  | Secrets           | Config scope                                                           |
-| ------------- | ------------------------------------------------------ | ----------------- | ---------------------------------------------------------------------- |
-| `local`       | Fixture users (Terraform-provisioned or script-seeded) | Local `.env` file | Compose + local Terraform (no state backend required)                  |
-| `development` | Controlled fixture users                               | CI secrets        | Terraform with remote state                                            |
-| `test`        | Controlled fixture users                               | CI secrets        | Terraform with remote state                                            |
-| `staging`     | No users provisioned by default                        | Secrets Manager   | Terraform with remote state                                            |
-| `production`  | No users provisioned by default                        | Secrets Manager   | Terraform with remote state; destructive ops require approval workflow |
+| Environment   | APEX_DOMAIN           | KC_HOSTNAME                      | Users                                                  | Secrets           | Config scope                                                           |
+| ------------- | --------------------- | -------------------------------- | ------------------------------------------------------ | ----------------- | ---------------------------------------------------------------------- |
+| `local`       | `dev.localhost`       | `http://dev.localhost/kc`        | Fixture users (Terraform-provisioned or script-seeded) | Local `.env` file | Compose + local Terraform (no state backend required)                  |
+| `development` | `dev.localhost`       | `http://dev.localhost/kc`        | Controlled fixture users                               | CI secrets        | Terraform with remote state                                            |
+| `test`        | `test.localhost`      | `http://test.localhost/kc`       | Controlled fixture users                               | CI secrets        | Terraform with remote state                                            |
+| `staging`     | `staging.aldous.info` | `https://staging.aldous.info/kc` | No users provisioned by default                        | Secrets Manager   | Terraform with remote state                                            |
+| `production`  | `aldous.info`         | `https://aldous.info/kc`         | No users provisioned by default                        | Secrets Manager   | Terraform with remote state; destructive ops require approval workflow |
 
 Rules:
 
@@ -236,36 +236,36 @@ Rules:
 
 ```text
 infra/
-  README.md                     — this decision's operational documentation
+  README.md                     ? this decision's operational documentation
   bin/
-    tf                          — wrapper: tofu if available, else terraform
+    tf                          ? wrapper: tofu if available, else terraform
 
   modules/
-    keycloak/                   — Keycloak realm, clients, scopes, roles, users
+    keycloak/                   ? Keycloak realm, clients, scopes, roles, users
       main.tf
       variables.tf
       outputs.tf
       README.md
-    aws-network/                — VPC, subnets, security groups
+    aws-network/                ? VPC, subnets, security groups
       main.tf
       variables.tf
       outputs.tf
-    aws-database/               — RDS, ElastiCache, parameter store
+    aws-database/               ? RDS, ElastiCache, parameter store
       main.tf
       variables.tf
       outputs.tf
-    aws-observability/          — CloudWatch, log groups, alert routing
+    aws-observability/          ? CloudWatch, log groups, alert routing
       main.tf
       variables.tf
       outputs.tf
-    ci-oidc/                    — GitHub Actions OIDC trust, deployment roles
+    ci-oidc/                    ? GitHub Actions OIDC trust, deployment roles
       main.tf
       variables.tf
       outputs.tf
 
   env/
     local/
-      main.tf                   — calls keycloak module, no cloud modules
+      main.tf                   ? calls keycloak module, no cloud modules
       local.tfvars.example
     development/
       main.tf
@@ -280,7 +280,7 @@ infra/
       main.tf
       production.tfvars.example
 
-  .gitignore                    — .terraform/, *.tfstate, *.auto.tfvars, etc.
+  .gitignore                    ? .terraform/, *.tfstate, *.auto.tfvars, etc.
 ```
 
 ---
@@ -323,11 +323,11 @@ The Terraform Keycloak provider used is `mrparkers/keycloak` (most mature produc
 
 Terraform/OpenTofu (Option C) is chosen because:
 
-1. **Keycloak provider maturity** — `mrparkers/keycloak` covers realm, client, scope, mapper, role, and user resources with production track records.
-2. **Auditability** — Every Keycloak configuration change is a reviewed pull request. No console steps outside version control.
-3. **OpenTofu compatibility** — HCL syntax is identical; `tofu` is a drop-in replacement. The `infra/bin/tf` wrapper preserves optionality.
-4. **Plan/apply model** — `terraform plan` shows exactly what will change before applying. Useful for security review of role/permission changes.
-5. **State management** — Remote state (S3 + DynamoDB lock) enables concurrent team workflows without conflicts.
+1. **Keycloak provider maturity** ? `mrparkers/keycloak` covers realm, client, scope, mapper, role, and user resources with production track records.
+2. **Auditability** ? Every Keycloak configuration change is a reviewed pull request. No console steps outside version control.
+3. **OpenTofu compatibility** ? HCL syntax is identical; `tofu` is a drop-in replacement. The `infra/bin/tf` wrapper preserves optionality.
+4. **Plan/apply model** ? `terraform plan` shows exactly what will change before applying. Useful for security review of role/permission changes.
+5. **State management** ? Remote state (S3 + DynamoDB lock) enables concurrent team workflows without conflicts.
 
 ## Consequences
 
@@ -380,6 +380,12 @@ Follow-up actions tracked in `docs/adr/ACTION-REGISTER.md`.
 ## Review date
 
 2026-08-28
+
+## Related ADRs
+
+- [ADR-0033](0033-define-environment-specific-domain-configuration.md) ? Extends the environment model with per-environment `kc_hostname`, `apex_domain`, and `.localhost` TLD conventions for local development.
+- [ADR-0029](0029-define-multi-tenant-isolation-boundaries.md) ? Multi-tenant FQDN routing; the environment model determines the APEX_DOMAIN that all tenant FQDNs are subdomains of.
+- [ADR-0027](0027-define-tilt-local-development-feedback-loop.md) ? Tilt dev mode sets `APEX_DOMAIN=dev.localhost` for auto-resolving multi-tenant dev.
 
 ## Supersedes
 

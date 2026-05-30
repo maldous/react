@@ -1,4 +1,4 @@
-# Keycloak Auth + E2E Login Tests — Design Spec
+# Keycloak Auth + E2E Login Tests ? Design Spec
 
 **Date:** 2026-05-29
 **Status:** Approved
@@ -15,15 +15,15 @@ Wire the existing Keycloak auth implementation into a fully testable end-to-end 
 ## Architecture overview
 
 ```text
-Dev:        Playwright → Vite:5173 → (proxy /auth/*, /api/*) → platform-api:3001
-                                    ↘ redirect to Keycloak:8090/realms/platform
-                                    ↙ callback via Vite proxy → session cookie on :5173
+Dev:        Playwright ? Vite:5173 ? (proxy /auth/*, /api/*) ? platform-api:3001
+                                    ? redirect to Keycloak:8090/realms/platform
+                                    ? callback via Vite proxy ? session cookie on :5173
 
-Production: Browser → Cloudflare → Caddy:80
-                                  /kc/*  → keycloak:8080  (KC_HTTP_RELATIVE_PATH=/kc)
-                                  /api/* → platform-api:3001
-                                  /auth/* → platform-api:3001
-                                  /* → React SPA
+Production: Browser ? Cloudflare ? Caddy:80
+                                  /kc/*  ? keycloak:8080  (KC_HTTP_RELATIVE_PATH=/kc)
+                                  /api/* ? platform-api:3001
+                                  /auth/* ? platform-api:3001
+                                  /* ? React SPA
 ```
 
 The BFF auth flow (PKCE) is already implemented in `apps/platform-api/src/server/auth.ts`. The missing pieces are: login page UI, Vite `/auth` proxy, Caddy `/kc` proxy, Keycloak compose path config, Terraform completions, Tiltfile provisioning, and E2E test suites.
@@ -58,14 +58,14 @@ function LoginPage() {
 
 **i18n keys to add** (`packages/i18n-runtime/locales/en-GB.json`):
 
-- `auth.login.signInButton` → `"Sign in with your account"`
-- `auth.login.body` → `"Use your aldous.info account to continue."` (replaces placeholder)
+- `auth.login.signInButton` ? `"Sign in with your account"`
+- `auth.login.body` ? `"Use your aldous.info account to continue."` (replaces placeholder)
 
 The button is an `<a href>` not a `<button>` because it triggers a full-page navigation (required for the OAuth redirect chain). No React state needed.
 
 ---
 
-## 2. Vite proxy — add `/auth`
+## 2. Vite proxy ? add `/auth`
 
 **File:** `apps/react-enterprise-app/vite.config.ts`
 
@@ -84,7 +84,7 @@ Add `/auth` and `/kc` to the proxy config alongside existing `/api`, `/healthz`,
 
 ---
 
-## 3. Compose — Keycloak path prefix
+## 3. Compose ? Keycloak path prefix
 
 **File:** `compose.yaml`, `keycloak` service
 
@@ -94,7 +94,7 @@ Add one environment variable, controlled by `.env`:
 KC_HTTP_RELATIVE_PATH: ${KC_HTTP_RELATIVE_PATH:-}
 ```
 
-**`.env.example`** — add:
+**`.env.example`** ? add:
 
 ```shell
 # Keycloak root context path. Empty for local dev (direct port access).
@@ -104,7 +104,7 @@ KC_HTTP_RELATIVE_PATH=
 
 Production `.env` on the aldous.info host sets `KC_HTTP_RELATIVE_PATH=/kc`.
 
-**Healthcheck** — the current healthcheck targets `http://localhost:8080/health/ready`. When `KC_HTTP_RELATIVE_PATH=/kc` is set, the health endpoint moves to `http://localhost:8080/kc/health/ready`. Update the healthcheck to use the env var:
+**Healthcheck** ? the current healthcheck targets `http://localhost:8080/health/ready`. When `KC_HTTP_RELATIVE_PATH=/kc` is set, the health endpoint moves to `http://localhost:8080/kc/health/ready`. Update the healthcheck to use the env var:
 
 ```yaml
 healthcheck:
@@ -114,7 +114,7 @@ healthcheck:
 
 ---
 
-## 4. Caddy — Keycloak reverse proxy
+## 4. Caddy ? Keycloak reverse proxy
 
 **File:** `docker/caddy/Caddyfile`
 
@@ -132,7 +132,7 @@ This proxies all Keycloak traffic (admin console, OIDC endpoints, token endpoint
 
 ## 5. Terraform
 
-### 5a. Keycloak module — new fixture users
+### 5a. Keycloak module ? new fixture users
 
 **File:** `infra/modules/keycloak/main.tf`
 
@@ -147,13 +147,13 @@ New fixture users (all gated by `provision_fixture_users`):
 
 Existing users renamed:
 
-- `admin@fixture.local` → `admin@aldous.info`
-- `viewer@fixture.local` → `viewer@aldous.info`
-- `forbidden@fixture.local` → `forbidden@aldous.info`
+- `admin@fixture.local` ? `admin@aldous.info`
+- `viewer@fixture.local` ? `viewer@aldous.info`
+- `forbidden@fixture.local` ? `forbidden@aldous.info`
 
 Also update `keycloak_user_roles` resources to assign the new users their roles.
 
-### 5b. Local env — updated redirect URIs
+### 5b. Local env ? updated redirect URIs
 
 **File:** `infra/env/local/main.tf`
 
@@ -170,7 +170,7 @@ Update `local.tfvars.example` to reflect that `PLATFORM_API_URL` should be `http
 
 ### 5c. Production env
 
-**File:** `infra/env/production/main.tf` — replace scaffold:
+**File:** `infra/env/production/main.tf` ? replace scaffold:
 
 ```hcl
 module "keycloak" {
@@ -192,18 +192,18 @@ module "keycloak" {
 }
 ```
 
-**File:** `infra/env/production/production.tfvars.example` — document required variables:
+**File:** `infra/env/production/production.tfvars.example` ? document required variables:
 
 ```hcl
 keycloak_url            = "https://aldous.info/kc"
 keycloak_admin_user     = "admin"
-keycloak_admin_password = "<aldous.info host env — never commit>"
-bff_client_secret       = "<strong random secret — never commit>"
+keycloak_admin_password = "<aldous.info host env ? never commit>"
+bff_client_secret       = "<strong random secret ? never commit>"
 ```
 
 ---
 
-## 6. Database seed — update fixture emails
+## 6. Database seed ? update fixture emails
 
 **File:** `apps/platform-api/src/db/seed.ts`
 
@@ -245,7 +245,7 @@ ON CONFLICT (user_id, organisation_id) DO NOTHING
 -- forbidden@aldous.info: no membership (tests the no-access case)
 ```
 
-The existing fixture session actors in `session.ts` also reference these emails — update to match.
+The existing fixture session actors in `session.ts` also reference these emails ? update to match.
 
 ---
 
@@ -280,7 +280,7 @@ local_resource(
 )
 ```
 
-`keycloak-provision` is `TRIGGER_MODE_MANUAL` — you trigger it once after starting the identity profile. Tilt re-runs it automatically when Terraform files change (e.g. adding a fixture user).
+`keycloak-provision` is `TRIGGER_MODE_MANUAL` ? you trigger it once after starting the identity profile. Tilt re-runs it automatically when Terraform files change (e.g. adding a fixture user).
 
 Add a `make` target:
 
@@ -338,18 +338,18 @@ export default defineConfig({
 
 ```text
 e2e/auth/
-  global-setup.ts         ← logs in as each role once, saves .auth/<role>.json
-  login-ui.spec.ts        ← validates login button, redirect chain, HTTP-only cookie
-  role-sysadmin.spec.ts   ← global admin access (all orgs visible)
-  role-admin.spec.ts      ← tenant-admin: read + write org profile
-  role-manager.spec.ts    ← manager: read org profile, no update
-  role-viewer.spec.ts     ← viewer: read-only, no edit form
-  role-forbidden.spec.ts  ← no-membership: redirected to /auth/login
+  global-setup.ts         ? logs in as each role once, saves .auth/<role>.json
+  login-ui.spec.ts        ? validates login button, redirect chain, HTTP-only cookie
+  role-sysadmin.spec.ts   ? global admin access (all orgs visible)
+  role-admin.spec.ts      ? tenant-admin: read + write org profile
+  role-manager.spec.ts    ? manager: read org profile, no update
+  role-viewer.spec.ts     ? viewer: read-only, no edit form
+  role-forbidden.spec.ts  ? no-membership: redirected to /auth/login
 ```
 
 ### `global-setup.ts`
 
-Authenticates each fixture user once via the Keycloak login form, saves Playwright storage state (browser cookies) to `.auth/<role>.json`. All role-specific tests load the saved state — no repeated browser login.
+Authenticates each fixture user once via the Keycloak login form, saves Playwright storage state (browser cookies) to `.auth/<role>.json`. All role-specific tests load the saved state ? no repeated browser login.
 
 ```ts
 const FIXTURES = [
@@ -427,13 +427,13 @@ test("admin can log in and reach org profile on aldous.info", async ({ page }) =
 
 ## 9. npm scripts and make targets
 
-**`package.json`** — add:
+**`package.json`** ? add:
 
 ```json
 "test:e2e:auth": "playwright test --config playwright.auth.config.ts"
 ```
 
-**`Makefile`** — add:
+**`Makefile`** ? add:
 
 ```makefile
 keycloak-provision:
@@ -445,7 +445,7 @@ keycloak-provision:
 ## 10. `.gitignore` additions
 
 ```gitignore
-.auth/           # Playwright storage state — contains session cookies
+.auth/           # Playwright storage state ? contains session cookies
 infra/env/local/local.tfvars
 infra/env/production/production.tfvars
 infra/env/**/.terraform/
@@ -459,7 +459,7 @@ infra/env/**/terraform.tfstate*
 A change is complete when:
 
 - [ ] Login page renders "Sign in" button that initiates Keycloak PKCE flow
-- [ ] Vite proxies `/auth/*` correctly — session cookie set for `localhost:5173` origin
+- [ ] Vite proxies `/auth/*` correctly ? session cookie set for `localhost:5173` origin
 - [ ] `terraform apply` in `infra/env/local` provisions realm, 5 roles, 5 fixture users
 - [ ] `infra/env/production/main.tf` complete and `terraform validate` passes
 - [ ] Tiltfile `keycloak-provision` resource runs without error when triggered

@@ -43,7 +43,7 @@ Semver policy: internal-traceable
 - Implement the email-runtime provider interface using the Brevo Transactional Email API
 - Map platform email payloads to Brevo API request shapes
 - Handle Brevo API rate limits, retries, and error responses
-- Resolve API key from config-runtime — never from hardcoded values
+- Resolve API key from config-runtime ? never from hardcoded values
 
 ## Non-responsibilities
 
@@ -59,7 +59,7 @@ Deep imports allowed: false
 ```
 
 - Registered at application startup as the concrete email provider
-- Never imported by feature or domain packages — only by application entrypoints
+- Never imported by feature or domain packages ? only by application entrypoints
 
 ## Boundaries
 
@@ -117,7 +117,7 @@ Brevo Transactional Email API
 
 ## Operational notes
 
-- Brevo free tier: 300 emails/day — monitor daily volume and upgrade before approaching limit
+- Brevo free tier: 300 emails/day ? monitor daily volume and upgrade before approaching limit
 - API key is resolved from config-runtime; never commit to source control
 - Template IDs in Brevo must match the template contract types defined in email-runtime
 

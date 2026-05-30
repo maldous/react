@@ -57,20 +57,20 @@ node tools/architecture/orchestrator/src/index.mjs \
 | Command                       | Steps executed                                                                                                                                                                                                                 |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `validate` (default)          | `validate-package-metadata`                                                                                                                                                                                                    |
-| `all`                         | `validate-package-metadata` → `generate-package-readmes` (--check) → `generate-package-inventory` (--check) → `generate-lifecycle-reports` (--check, optional) → `validate-lifecycle-evidence`                                 |
-| `generate-readmes`            | `validate-package-metadata` → `generate-package-readmes` (--write)                                                                                                                                                             |
-| `generate-inventory`          | `validate-package-metadata` → `generate-package-readmes` (--check) → `generate-package-inventory` (--write)                                                                                                                    |
-| `generate-lifecycle-reports`  | `validate-package-metadata` → `generate-package-readmes` (--check) → `generate-package-inventory` (--check) → `generate-lifecycle-reports` (--write)                                                                           |
-| `validate-evidence`           | `validate-package-metadata` → `generate-package-readmes` (--check) → `generate-package-inventory` (--check) → `generate-lifecycle-reports` (--check) → `validate-lifecycle-evidence`                                           |
-| `generate-lifecycle-evidence` | `validate-package-metadata` → `generate-package-readmes` (--check) → `generate-package-inventory` (--check) → `generate-lifecycle-reports` (--check) → `generate-lifecycle-evidence` (--write) → `validate-lifecycle-evidence` |
+| `all`                         | `validate-package-metadata` ? `generate-package-readmes` (--check) ? `generate-package-inventory` (--check) ? `generate-lifecycle-reports` (--check, optional) ? `validate-lifecycle-evidence`                                 |
+| `generate-readmes`            | `validate-package-metadata` ? `generate-package-readmes` (--write)                                                                                                                                                             |
+| `generate-inventory`          | `validate-package-metadata` ? `generate-package-readmes` (--check) ? `generate-package-inventory` (--write)                                                                                                                    |
+| `generate-lifecycle-reports`  | `validate-package-metadata` ? `generate-package-readmes` (--check) ? `generate-package-inventory` (--check) ? `generate-lifecycle-reports` (--write)                                                                           |
+| `validate-evidence`           | `validate-package-metadata` ? `generate-package-readmes` (--check) ? `generate-package-inventory` (--check) ? `generate-lifecycle-reports` (--check) ? `validate-lifecycle-evidence`                                           |
+| `generate-lifecycle-evidence` | `validate-package-metadata` ? `generate-package-readmes` (--check) ? `generate-package-inventory` (--check) ? `generate-lifecycle-reports` (--check) ? `generate-lifecycle-evidence` (--write) ? `validate-lifecycle-evidence` |
 
 ---
 
 ## Dependency ordering and failure behaviour
 
-Each step has a `required` flag. If a required step exits non-zero, the orchestrator stops immediately — no subsequent steps run. Optional steps (`generate-lifecycle-reports`) are skipped on failure but do not halt the pipeline.
+Each step has a `required` flag. If a required step exits non-zero, the orchestrator stops immediately ? no subsequent steps run. Optional steps (`generate-lifecycle-reports`) are skipped on failure but do not halt the pipeline.
 
-Steps are invoked synchronously via `spawnSync`. The orchestrator does not run tools in parallel — ordered execution is load-bearing for the dependency model (later tools depend on outputs of earlier ones).
+Steps are invoked synchronously via `spawnSync`. The orchestrator does not run tools in parallel ? ordered execution is load-bearing for the dependency model (later tools depend on outputs of earlier ones).
 
 ---
 
@@ -98,7 +98,7 @@ Used by tests to assert dependency ordering without executing tools.
 
 Required fields: `toolName`, `toolVersion`, `command`, `mode`, `root`, `startedAt`, `finishedAt`, `durationMs`, `inputRoots`, `outputPaths`, `rulesEvaluated`, `checksPassed`, `checksFailed`, `warnings`, `errors`, `dependencySteps` (array of `{ name, status, required, exitCode, reason }` for every step), `dependencyOrder` (planned step names), `stepsRun`, `stepsSkipped`, `failedStep` (name of first failed required step, or `null`), `stopReason`, `evidenceGenerationRequested`, `evidenceGenerated`, `exitCode`.
 
-Evidence generation is **not** triggered by default — only by the `generate-lifecycle-evidence` command with `--evidence-generation-requested`. This prevents accidental committed-artifact mutation during routine checks.
+Evidence generation is **not** triggered by default ? only by the `generate-lifecycle-evidence` command with `--evidence-generation-requested`. This prevents accidental committed-artifact mutation during routine checks.
 
 ---
 

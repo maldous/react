@@ -1,4 +1,4 @@
-# Evidence: ADR-ACT-0127 — Tilt fast-dev mode
+# Evidence: ADR-ACT-0127 ? Tilt fast-dev mode
 
 **Date:** 2026-05-29
 **Status:** Done (fast-dev mode)
@@ -41,7 +41,7 @@ Implemented at repo root. Resources:
 
 ## Deferrals
 
-- **Production parity (ADR-ACT-0128 — In Progress):** prod-build-and-test runs `npm run test:e2e:prod` (vite build + Playwright preview); aldous-smoke tests live aldous.info. Full Compose web-profile container wiring (platform-api container + Caddy) is deferred.
-- **Production parity (ADR-ACT-0128 — In Progress):** prod-build-and-test runs `npm run test:e2e:prod` (vite build + Playwright preview); aldous-smoke tests live aldous.info. Compose web-profile container resources are now represented as manual Tilt resources (`platform-api-web`, `react-app-web`), with the identity profile exposed as `identity-profile`.
-- **i18n-validation (ADR-ACT-0129 — In Progress):** auto-trigger resource added and now depends on the React/API app resources so it reflects the affected surface set.
+- **Production parity (ADR-ACT-0128 ? In Progress):** prod-build-and-test runs `npm run test:e2e:prod` (vite build + Playwright preview); aldous-smoke tests live aldous.info. Full Compose web-profile container wiring (platform-api container + Caddy) is deferred.
+- **Production parity (ADR-ACT-0128 ? In Progress):** prod-build-and-test runs `npm run test:e2e:prod` (vite build + Playwright preview); aldous-smoke tests live aldous.info. Compose web-profile container resources are now represented as manual Tilt resources (`platform-api-web`, `react-app-web`), with the identity profile exposed as `identity-profile`.
+- **i18n-validation (ADR-ACT-0129 ? In Progress):** auto-trigger resource added and now depends on the React/API app resources so it reflects the affected surface set.
 - Keycloak link: intentionally only available after `make compose-up-identity` via `identity-profile`.

@@ -33,7 +33,7 @@ export function Select<T extends SelectItem>({
           {({ selectedItem }) => (selectedItem ? selectedItem.label : placeholder)}
         </SelectValue>
         <span aria-hidden="true" className="text-gray-400">
-          ▼
+          ?
         </span>
       </Button>
       <Popover className="w-[--trigger-width] rounded-md border border-gray-200 bg-white shadow-md outline-none">

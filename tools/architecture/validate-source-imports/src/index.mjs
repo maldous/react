@@ -198,7 +198,7 @@ function checkCycleViolations(files, packageGraph) {
       packageName,
       specifier: cycle[cycle.length - 1],
       rule: "no-package-cycle",
-      message: `Package cycle detected: ${cycle.join(" → ")}`,
+      message: `Package cycle detected: ${cycle.join(" ? ")}`,
       resolvedFile: null,
       resolvedPackage: null,
     };

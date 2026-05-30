@@ -15,7 +15,7 @@ Architecture owner / technical lead
 ## Consulted
 
 - ADR-0001 (hexagonal architecture)
-- ADR-0002 (bounded contexts — experience domain)
+- ADR-0002 (bounded contexts ? experience domain)
 - ADR-0003 (modular monorepo)
 - ADR-0005 (package metadata)
 - ADR-0007 (repository layout)
@@ -29,7 +29,7 @@ The first vertical slice (ADR-ACT-0008) will produce the first user-facing featu
 
 This ADR chooses the internal React component model, routing, server/cache state, local UI state, forms, schema validation, UI primitives, data grids, testing, and supplementary libraries before slice work begins.
 
-The platform uses a Vite-built React SPA shell (`apps/react-enterprise-app`) with a separate Node BFF/API runtime. The React app must not import adapters directly — all server interaction goes through the approved API boundary.
+The platform uses a Vite-built React SPA shell (`apps/react-enterprise-app`) with a separate Node BFF/API runtime. The React app must not import adapters directly ? all server interaction goes through the approved API boundary.
 
 ## Stakeholder concerns
 
@@ -77,7 +77,7 @@ Cons:
 
 - ADR-0003 established a Vite SPA shell with a separate BFF. Next.js would replace the BFF pattern with Next.js API routes, creating an architectural split in the platform model.
 - SSR changes caching, hydration, and adapter boundary patterns.
-- Adoption requires superseding ADR-0003 (modular monorepo + BFF) and ADR-0013 (API boundary); it is not a simple library addition. Not deferred — architecturally incompatible with the current model until those ADRs are revisited.
+- Adoption requires superseding ADR-0003 (modular monorepo + BFF) and ADR-0013 (API boundary); it is not a simple library addition. Not deferred ? architecturally incompatible with the current model until those ADRs are revisited.
 
 ### Option C: TanStack ecosystem + React Aria + open-code UI (chosen)
 
@@ -89,7 +89,7 @@ Pros:
 - TanStack Query is the standard for server state in React without Redux overhead.
 - React Aria provides accessible primitives without visual opinion.
 - Open-code component model: platform owns component source.
-- Zustand is minimal — no reducer boilerplate.
+- Zustand is minimal ? no reducer boilerplate.
 - Zod unifies contract validation and form validation schemas.
 
 Cons:
@@ -111,7 +111,7 @@ The platform adopts the following frontend stack. All decisions take effect befo
 
 ---
 
-### 2. Routing — TanStack Router
+### 2. Routing ? TanStack Router
 
 ```text
 @tanstack/react-router
@@ -129,7 +129,7 @@ Rules:
 
 ---
 
-### 3. Server and cache state — TanStack Query
+### 3. Server and cache state ? TanStack Query
 
 ```text
 @tanstack/react-query
@@ -145,7 +145,7 @@ Rules:
 
 ---
 
-### 4. Local and cross-component UI state — React local state + Zustand
+### 4. Local and cross-component UI state ? React local state + Zustand
 
 ```text
 zustand
@@ -166,7 +166,7 @@ Rules:
 
 ---
 
-### 5. Forms — React Hook Form + Zod
+### 5. Forms ? React Hook Form + Zod
 
 ```text
 react-hook-form
@@ -185,7 +185,7 @@ Rules:
 
 ---
 
-### 6. Contract and schema validation — Zod
+### 6. Contract and schema validation ? Zod
 
 ```text
 zod
@@ -213,26 +213,26 @@ lucide-react
 
 Rationale:
 
-- **React Aria Components** — Accessible, high-quality interaction behaviour (focus, keyboard, ARIA). WAI-ARIA patterns are implemented correctly without hand-rolling.
-- **Tailwind CSS** — Styling primitives; utility-first; purge-safe.
-- **class-variance-authority (cva)** — Type-safe component variant definitions.
-- **tailwind-merge** — Safe class merging for overrides.
-- **clsx** — Conditional class composition.
-- **lucide-react** — Icon set; tree-shakable, consistent visual style.
+- **React Aria Components** ? Accessible, high-quality interaction behaviour (focus, keyboard, ARIA). WAI-ARIA patterns are implemented correctly without hand-rolling.
+- **Tailwind CSS** ? Styling primitives; utility-first; purge-safe.
+- **class-variance-authority (cva)** ? Type-safe component variant definitions.
+- **tailwind-merge** ? Safe class merging for overrides.
+- **clsx** ? Conditional class composition.
+- **lucide-react** ? Icon set; tree-shakable, consistent visual style.
 
 ---
 
-### 8. Internal component distribution model — open-code
+### 8. Internal component distribution model ? open-code
 
 `packages/ui` owns all reusable UI primitives using an open-code model:
 
 Rules:
 
-- Components are source code in the repository — not black-box wrappers around a third-party suite.
+- Components are source code in the repository ? not black-box wrappers around a third-party suite.
 - Upstream component patterns (from shadcn/ui or React Aria examples) may be copied and adapted; final code is owned by `packages/ui`.
 - Component APIs must be stable, typed with TypeScript, and documented in JSDoc.
 - Every interactive component must implement accessibility states (disabled, focused, invalid).
-- Do NOT adopt Material UI or Ant Design as the **baseline design system** for `packages/ui`. They are baseline-prohibited: the open-code model takes precedence. A targeted ADR may approve adopting a specific MUI or Ant Design component for a feature with a clear product requirement (e.g., a complex date picker or complex data visualisation widget not covered by the component set) — this is an exception, not a direction change.
+- Do NOT adopt Material UI or Ant Design as the **baseline design system** for `packages/ui`. They are baseline-prohibited: the open-code model takes precedence. A targeted ADR may approve adopting a specific MUI or Ant Design component for a feature with a clear product requirement (e.g., a complex date picker or complex data visualisation widget not covered by the component set) ? this is an exception, not a direction change.
 
 ---
 
@@ -256,7 +256,7 @@ Scope boundary: Do not build feature-specific components in `packages/ui`. Do no
 
 ---
 
-### 10. Data grids and tables — TanStack Table + TanStack Virtual
+### 10. Data grids and tables ? TanStack Table + TanStack Virtual
 
 ```text
 @tanstack/react-table
@@ -274,7 +274,7 @@ Rules:
 
 ---
 
-### 11. Charts — Recharts
+### 11. Charts ? Recharts
 
 ```text
 recharts
@@ -288,7 +288,7 @@ Rules:
 
 ---
 
-### 12. Search / command menu — cmdk
+### 12. Search / command menu ? cmdk
 
 ```text
 cmdk
@@ -301,7 +301,7 @@ Rules:
 
 ---
 
-### 13. Notifications — Sonner
+### 13. Notifications ? Sonner
 
 ```text
 sonner
@@ -315,7 +315,7 @@ Rules:
 
 ---
 
-### 14. Dates and time — date-fns + React Aria
+### 14. Dates and time ? date-fns + React Aria
 
 ```text
 date-fns
@@ -331,7 +331,7 @@ Rules:
 
 ---
 
-### 15. Accessibility — required baseline
+### 15. Accessibility ? required baseline
 
 Rules:
 
@@ -345,7 +345,7 @@ Rules:
 
 ---
 
-### 16. Frontend testing — Vitest + React Testing Library + MSW
+### 16. Frontend testing ? Vitest + React Testing Library + MSW
 
 ```text
 vitest
@@ -366,7 +366,7 @@ Rules:
 
 ---
 
-### 17. Animation — Framer Motion (sparingly)
+### 17. Animation ? Framer Motion (sparingly)
 
 ```text
 framer-motion
@@ -444,15 +444,15 @@ Rules:
 
 Option C (TanStack ecosystem + React Aria + open-code UI) is chosen because:
 
-1. **Type safety** — TanStack Router provides the strongest route param typing available in the React SPA ecosystem. Combined with TanStack Query's typed queries and Zod schemas, the full request/response cycle is typed without ceremony.
+1. **Type safety** ? TanStack Router provides the strongest route param typing available in the React SPA ecosystem. Combined with TanStack Query's typed queries and Zod schemas, the full request/response cycle is typed without ceremony.
 
-2. **Accessibility** — React Aria implements WAI-ARIA patterns correctly for complex components. Rolling focus management and keyboard behaviour by hand is error-prone and under-tested. React Aria separates behaviour from style, allowing full visual control.
+2. **Accessibility** ? React Aria implements WAI-ARIA patterns correctly for complex components. Rolling focus management and keyboard behaviour by hand is error-prone and under-tested. React Aria separates behaviour from style, allowing full visual control.
 
-3. **Component ownership** — Adopting Material UI or Ant Design as the baseline transfers visual identity ownership to a third party. An open-code model keeps component APIs and visual decisions in the repository.
+3. **Component ownership** ? Adopting Material UI or Ant Design as the baseline transfers visual identity ownership to a third party. An open-code model keeps component APIs and visual decisions in the repository.
 
-4. **State isolation** — TanStack Query for server state and Zustand for UI state avoids the common pattern of mixing server data into a Redux store. Domain data stays in the query cache; UI preferences stay local.
+4. **State isolation** ? TanStack Query for server state and Zustand for UI state avoids the common pattern of mixing server data into a Redux store. Domain data stays in the query cache; UI preferences stay local.
 
-5. **Minimal footprint** — React Hook Form + Zod is the lightest complete form/validation stack that integrates cleanly with the contract schema model (DTO schemas defined in `packages/contracts`).
+5. **Minimal footprint** ? React Hook Form + Zod is the lightest complete form/validation stack that integrates cleanly with the contract schema model (DTO schemas defined in `packages/contracts`).
 
 ## Consequences
 
@@ -472,7 +472,7 @@ Option C (TanStack ecosystem + React Aria + open-code UI) is chosen because:
 
 **Neutral / operational:**
 
-- The DataTable shell delegates column/row decisions to feature packages — features are responsible for defining their data representations.
+- The DataTable shell delegates column/row decisions to feature packages ? features are responsible for defining their data representations.
 - AG Grid is not adopted initially. Adoption criteria: Excel-like cell editing, column pivoting, multi-level grouping, server-side row model for >100K rows, or enterprise licensing acceptance. Requires dedicated ADR.
 - Next.js and TanStack Start are architecturally incompatible with the current platform model (ADR-0003 Vite SPA + BFF). Adoption requires superseding ADR-0003 and ADR-0013; they are not a deferral candidate.
 - XState is not adopted initially. For complex UI state machines (multi-step wizards, multi-stage form flows, complex approval workflows), XState is the preferred choice over ad-hoc Zustand reducers. Introduce per-feature without requiring a formal ADR once the test harness (ADR-ACT-0097) is in place.
@@ -525,7 +525,7 @@ None.
 ## References
 
 - ADR-0001: Hexagonal architecture
-- ADR-0002: Bounded contexts — experience domain
+- ADR-0002: Bounded contexts ? experience domain
 - ADR-0003: Modular monorepo
 - ADR-0013: Client-facing API boundary
 - ADR-0016: Quality gate baseline

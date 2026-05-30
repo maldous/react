@@ -19,7 +19,7 @@ export function createRedisClient(url: string): RedisClientType {
 }
 
 // ---------------------------------------------------------------------------
-// RedisSessionStore — implements SessionStore from session-runtime
+// RedisSessionStore ? implements SessionStore from session-runtime
 //
 // Key scheme:  session:<sessionId>
 // Value:       JSON-serialised SessionRecord
@@ -80,11 +80,11 @@ export class RedisSessionStore implements SessionStore {
 }
 
 // ---------------------------------------------------------------------------
-// RedisAuthStateStore — one-time PKCE state storage
+// RedisAuthStateStore ? one-time PKCE state storage
 //
 // Key scheme:  auth_state:<state>
 // Value:       JSON { codeVerifier, returnTo }
-// TTL:         short (5 minutes) — consumed on first read
+// TTL:         short (5 minutes) ? consumed on first read
 //
 // `take()` is consume-once: reads the value then deletes it atomically.
 // This prevents replay attacks on the OAuth state parameter.
@@ -121,7 +121,7 @@ export class RedisAuthStateStore {
 }
 
 // ---------------------------------------------------------------------------
-// createRedisAdminClient — admin connection for ACL user management
+// createRedisAdminClient ? admin connection for ACL user management
 // ADR-0031: used only by the provisioning path, never in request handlers.
 // Connects as a Redis user with +acl command permission.
 // ---------------------------------------------------------------------------
@@ -141,7 +141,7 @@ export function createRedisAdminClient(config: RedisAdminConfig): RedisClientTyp
 }
 
 // ---------------------------------------------------------------------------
-// RedisProvisioningAdapter — creates/revokes per-tenant ACL users (ADR-0031)
+// RedisProvisioningAdapter ? creates/revokes per-tenant ACL users (ADR-0031)
 // ---------------------------------------------------------------------------
 
 export interface RedisAclUser {

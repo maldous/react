@@ -118,7 +118,7 @@ None
 
 ## Operational notes
 
-- Redis key namespaces: sessions:, queues:, cache: — do not mix
+- Redis key namespaces: sessions:, queues:, cache: ? do not mix
 - Connection pool size must be tuned based on worker concurrency settings
 
 ## Governance

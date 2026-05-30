@@ -2,7 +2,7 @@
 
 # @platform/platform-observability
 
-OpenTelemetry API wrapper for trace span creation, metrics recording, and active context access. Uses @opentelemetry/api only — SDK wiring stays in adapters-opentelemetry.
+OpenTelemetry API wrapper for trace span creation, metrics recording, and active context access. Uses @opentelemetry/api only ? SDK wiring stays in adapters-opentelemetry.
 
 ## Package identity
 
@@ -58,7 +58,7 @@ Public exports only: true
 Deep imports allowed: false
 ```
 
-- Import from @platform/platform-observability — public exports only
+- Import from @platform/platform-observability ? public exports only
 
 ## Boundaries
 

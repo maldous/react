@@ -115,7 +115,7 @@ None
 
 ## Operational notes
 
-- Provider version locks must be updated deliberately — patch without review is not allowed
+- Provider version locks must be updated deliberately ? patch without review is not allowed
 - All Terraform modules must pass tflint and tfsec before merge
 
 ## Governance

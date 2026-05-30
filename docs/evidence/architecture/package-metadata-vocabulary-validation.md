@@ -33,15 +33,15 @@ Key enums and structural terms from the schema:
 
 ### Backstage Software Catalog
 
-Backstage uses `kind: Component` with `spec.type` values: `service`, `website`, `library`. Our schema extends this with `application`, `api`, `worker`, `tool`, `test`, `documentation` — all additive, no conflicts.
+Backstage uses `kind: Component` with `spec.type` values: `service`, `website`, `library`. Our schema extends this with `application`, `api`, `worker`, `tool`, `test`, `documentation` ? all additive, no conflicts.
 
-Backstage `spec.lifecycle` maps to `experimental`, `production`, `deprecated`. Our `catalogLifecycle` field mirrors this exactly and is used to populate Backstage exports. ✓ **Aligned.**
+Backstage `spec.lifecycle` maps to `experimental`, `production`, `deprecated`. Our `catalogLifecycle` field mirrors this exactly and is used to populate Backstage exports. ? **Aligned.**
 
-Backstage `spec.owner` is a free-string team reference. Our schema has `component.owner` as a non-empty string. ✓ **Aligned.**
+Backstage `spec.owner` is a free-string team reference. Our schema has `component.owner` as a non-empty string. ? **Aligned.**
 
-Backstage `spec.system` maps to our `component.system`. ✓ **Aligned.**
+Backstage `spec.system` maps to our `component.system`. ? **Aligned.**
 
-**Gap:** Backstage has `spec.subcomponentOf` and `spec.dependsOn` relationship fields. We do not use these — our boundaries use `import-boundary-rules.json` instead. This is intentional and documented in ADR-0003. No vocabulary conflict.
+**Gap:** Backstage has `spec.subcomponentOf` and `spec.dependsOn` relationship fields. We do not use these ? our boundaries use `import-boundary-rules.json` instead. This is intentional and documented in ADR-0003. No vocabulary conflict.
 
 ---
 
@@ -49,18 +49,18 @@ Backstage `spec.system` maps to our `component.system`. ✓ **Aligned.**
 
 DDD uses: bounded context, domain, aggregate, entity, value object, domain event, repository, service.
 
-Our schema uses `boundedContext` and `domain` as first-class fields at the component level. ✓ **Aligned with DDD terminology.**
+Our schema uses `boundedContext` and `domain` as first-class fields at the component level. ? **Aligned with DDD terminology.**
 
 Our `lifecycle.role` values (`feature`, `platform`, `contract`, `adapter`) map to DDD patterns:
 
-- `feature` → application service / use-case
-- `platform` → shared kernel / supporting domain infrastructure
-- `contract` → anti-corruption layer interface / published language
-- `adapter` → port-and-adapter (hexagonal) — explicit ADR-0001 reference
+- `feature` ? application service / use-case
+- `platform` ? shared kernel / supporting domain infrastructure
+- `contract` ? anti-corruption layer interface / published language
+- `adapter` ? port-and-adapter (hexagonal) ? explicit ADR-0001 reference
 
-**Gap:** DDD uses "aggregate root" — not present in our vocabulary as we are pre-schema growth. No conflict; additive if needed.
+**Gap:** DDD uses "aggregate root" ? not present in our vocabulary as we are pre-schema growth. No conflict; additive if needed.
 
-✓ **Core DDD boundary vocabulary is present and consistently used.**
+? **Core DDD boundary vocabulary is present and consistently used.**
 
 ---
 
@@ -72,7 +72,7 @@ Our `component.type` values map to C4 containers: `application` and `service` ar
 
 Our `tags.layer` values (`domain`, `application`, `adapter`, `ui`, `infrastructure`) align with the standard C4 container decomposition in hexagonal architecture.
 
-✓ **C4 vocabulary is present at the right level of abstraction.**
+? **C4 vocabulary is present at the right level of abstraction.**
 
 ---
 
@@ -80,9 +80,9 @@ Our `tags.layer` values (`domain`, `application`, `adapter`, `ui`, `infrastructu
 
 Nx uses tags on projects for boundary enforcement (e.g. `type:feature`, `scope:shared`). Our `tags.type`, `tags.role`, and `tags.layer` are the structural equivalents and are used by `validate-source-imports` via `import-boundary-rules.json`.
 
-Nx tag conventions: `type:app`, `type:lib`, `scope:*`, `layer:*`. Our schema uses `type` and `layer` with domain-specific values. No collision — our tags are a strict superset of Nx's minimal tag vocabulary.
+Nx tag conventions: `type:app`, `type:lib`, `scope:*`, `layer:*`. Our schema uses `type` and `layer` with domain-specific values. No collision ? our tags are a strict superset of Nx's minimal tag vocabulary.
 
-✓ **Aligned. Our tag schema is richer than Nx defaults and fully subsumes them.**
+? **Aligned. Our tag schema is richer than Nx defaults and fully subsumes them.**
 
 ---
 
@@ -90,13 +90,13 @@ Nx tag conventions: `type:app`, `type:lib`, `scope:*`, `layer:*`. Our schema use
 
 OTel uses service name, service version, service namespace, deployment environment. Our schema has:
 
-- `component.system` → OTel `service.namespace`
-- `component.name` → OTel `service.name`
-- `runtime.deploymentEnvironments` → OTel `deployment.environment` (values: `local`, `development`, `test`, `ci`, `staging`, `production`)
+- `component.system` ? OTel `service.namespace`
+- `component.name` ? OTel `service.name`
+- `runtime.deploymentEnvironments` ? OTel `deployment.environment` (values: `local`, `development`, `test`, `ci`, `staging`, `production`)
 
-OTel `deployment.environment` values are not standardised — our set is conventional and compatible.
+OTel `deployment.environment` values are not standardised ? our set is conventional and compatible.
 
-✓ **Aligned for observability metadata generation.**
+? **Aligned for observability metadata generation.**
 
 ---
 
@@ -104,9 +104,9 @@ OTel `deployment.environment` values are not standardised — our set is convent
 
 Our schema is written in JSON Schema draft-07 compatible syntax. Field names, `$ref`, `$defs`, `additionalProperties`, `required`, `enum`, `const`, `allOf`, `if`/`then`/`else` are used correctly.
 
-`nonEmptyString` uses `minLength: 1` pattern — correct JSON Schema idiom.
+`nonEmptyString` uses `minLength: 1` pattern ? correct JSON Schema idiom.
 
-✓ **Technically correct JSON Schema vocabulary throughout.**
+? **Technically correct JSON Schema vocabulary throughout.**
 
 ---
 
@@ -116,7 +116,7 @@ K8s uses labels and annotations with `key: value` pairs. Our `component.tags` ob
 
 K8s does not govern package-level metadata. No vocabulary conflict at this level.
 
-✓ **No conflict. Compatible if K8s metadata generation is added later.**
+? **No conflict. Compatible if K8s metadata generation is added later.**
 
 ---
 
@@ -126,7 +126,7 @@ SPDX governs software supply-chain metadata: package name, version, license, che
 
 Our schema has `governance.semverPolicy` and `governance.changeControl` which govern versioning discipline but do not duplicate SPDX fields. SPDX data is generated separately via `npm run sbom:generate` (CycloneDX format, tracked in ADR-ACT-0090).
 
-✓ **No vocabulary conflict. SPDX coverage is via SBOM, not package.json architecture metadata.**
+? **No vocabulary conflict. SPDX coverage is via SBOM, not package.json architecture metadata.**
 
 ---
 
@@ -134,13 +134,13 @@ Our schema has `governance.semverPolicy` and `governance.changeControl` which go
 
 | Reference system | Alignment | Notes |
 | --- | --- | --- |
-| Backstage | ✓ Aligned | `catalogLifecycle` mirrors Backstage lifecycle exactly |
-| DDD | ✓ Aligned | `boundedContext`, `domain`, `role` use canonical DDD terms |
-| C4 | ✓ Aligned | Layer/type vocabulary maps to C4 container decomposition |
-| Nx | ✓ Aligned | Tag schema is a superset of Nx tag conventions |
-| OpenTelemetry | ✓ Aligned | `system`, `name`, `deploymentEnvironments` map to OTel semantic conventions |
-| JSON Schema | ✓ Correct | Schema uses correct draft-07 idioms throughout |
-| Kubernetes | ✓ Compatible | No conflict; `tags` is K8s-annotation-compatible |
-| SPDX | ✓ Separated | SBOM generation covers SPDX; no schema vocabulary conflict |
+| Backstage | ? Aligned | `catalogLifecycle` mirrors Backstage lifecycle exactly |
+| DDD | ? Aligned | `boundedContext`, `domain`, `role` use canonical DDD terms |
+| C4 | ? Aligned | Layer/type vocabulary maps to C4 container decomposition |
+| Nx | ? Aligned | Tag schema is a superset of Nx tag conventions |
+| OpenTelemetry | ? Aligned | `system`, `name`, `deploymentEnvironments` map to OTel semantic conventions |
+| JSON Schema | ? Correct | Schema uses correct draft-07 idioms throughout |
+| Kubernetes | ? Compatible | No conflict; `tags` is K8s-annotation-compatible |
+| SPDX | ? Separated | SBOM generation covers SPDX; no schema vocabulary conflict |
 
 **Verdict:** The package metadata vocabulary in `docs/schemas/package-json-architecture.schema.json` is consistent with all eight reference systems. No term conflicts or aliasing errors were found. The schema can be formally accepted as the canonical architecture vocabulary for ADR-0005.

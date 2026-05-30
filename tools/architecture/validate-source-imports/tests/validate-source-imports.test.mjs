@@ -49,7 +49,7 @@ function parseOutput(result) {
   }
 }
 
-// Valid fixtures — each should exit 0 with no violations
+// Valid fixtures ? each should exit 0 with no violations
 const validFixtures = [
   { name: "domain-core (no imports)", dir: "valid/domain-core" },
   { name: "feature-workflow (permitted imports)", dir: "valid/feature-workflow" },
@@ -79,10 +79,10 @@ for (const fixture of validFixtures) {
     `${fixture.name}: expected exit 0\n${result.stdout}\n${result.stderr}`
   );
   assert.equal(payload?.violations?.length ?? 0, 0, `${fixture.name}: expected no violations`);
-  console.log(`✓ valid: ${fixture.name}`);
+  console.log(`? valid: ${fixture.name}`);
 }
 
-// Invalid fixtures — each should exit 1 with the expected rule in violations
+// Invalid fixtures ? each should exit 1 with the expected rule in violations
 const invalidFixtures = [
   { name: "deep-import", dir: "invalid/deep-import", rule: "no-deep-import" },
   {
@@ -204,10 +204,10 @@ for (const fixture of invalidFixtures) {
     ruleIds.includes(fixture.rule),
     `${fixture.name}: expected rule ${fixture.rule}, got ${ruleIds.join(", ")}`
   );
-  console.log(`✓ invalid: ${fixture.name} (rule: ${fixture.rule})`);
+  console.log(`? invalid: ${fixture.name} (rule: ${fixture.rule})`);
 }
 
-// Strict-mode fixtures — each needs --strict to trigger the violation
+// Strict-mode fixtures ? each needs --strict to trigger the violation
 const strictFixtures = [
   {
     name: "computed-dynamic-import",
@@ -252,7 +252,7 @@ for (const fixture of strictFixtures) {
     ruleIds.includes(fixture.rule),
     `${fixture.name}: expected rule ${fixture.rule}, got ${ruleIds.join(", ")}`
   );
-  console.log(`✓ strict: ${fixture.name} (rule: ${fixture.rule})`);
+  console.log(`? strict: ${fixture.name} (rule: ${fixture.rule})`);
 }
 
 // Test that --no-reports suppresses report file writing (already using --no-reports above)
@@ -265,7 +265,7 @@ assert.equal(
   `real repo scan should pass\n${repoResult.stdout}\n${repoResult.stderr}`
 );
 assert.equal(repoPayload?.violations?.length ?? 0, 0, "real repo should have no violations");
-console.log("✓ real repo scan: no violations");
+console.log("? real repo scan: no violations");
 
 // Test that real repo passes with --strict too
 const strictRepoResult = run(["apps", "packages"], ["--strict"]);
@@ -280,7 +280,7 @@ assert.equal(
   0,
   "real repo should have no violations in strict mode"
 );
-console.log("✓ real repo strict scan: no violations");
+console.log("? real repo strict scan: no violations");
 
 // Test --write emits committed evidence (isolated temp dir to avoid dirtying committed evidence)
 {
@@ -313,7 +313,7 @@ console.log("✓ real repo strict scan: no violations");
       writePayload?.outputPaths?.some((p) => p.includes("source-import-boundary-validation.json")),
       "--write should emit committed evidence JSON"
     );
-    console.log("✓ --write emits committed evidence");
+    console.log("? --write emits committed evidence");
   } finally {
     fs.rmSync(tmpDir, { recursive: true, force: true });
   }

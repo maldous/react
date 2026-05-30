@@ -9,7 +9,7 @@
   "commitMessagePrefix": "chore(deps):",
   "packageRules": [
     {
-      "description": "Dev tooling patch and minor — group",
+      "description": "Dev tooling patch and minor ? group",
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["patch", "minor"],
       "matchPackageNames": ["eslint", "prettier", "typescript", "vitest", "markdownlint-cli2"],
@@ -17,31 +17,31 @@
       "automerge": false
     },
     {
-      "description": "GitHub Actions — group",
+      "description": "GitHub Actions ? group",
       "matchManagers": ["github-actions"],
       "groupName": "GitHub Actions",
       "automerge": false
     },
     {
-      "description": "Docker images — group",
+      "description": "Docker images ? group",
       "matchManagers": ["dockerfile", "docker-compose"],
       "groupName": "Docker images",
       "automerge": false
     },
     {
-      "description": "Playwright — separate PR, no automerge",
+      "description": "Playwright ? separate PR, no automerge",
       "matchPackageNames": ["playwright", "@playwright/test"],
       "groupName": "Playwright",
       "automerge": false
     },
     {
-      "description": "Major updates — always separate, never automerge",
+      "description": "Major updates ? always separate, never automerge",
       "matchUpdateTypes": ["major"],
       "automerge": false,
       "addLabels": ["major-update"]
     },
     {
-      "description": "Platform runtime packages — no automerge",
+      "description": "Platform runtime packages ? no automerge",
       "matchPackageNames": [
         "zod",
         "react",

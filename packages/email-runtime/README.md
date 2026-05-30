@@ -118,8 +118,8 @@ None
 
 ## Operational notes
 
-- Provider interface decouples the platform from a specific email vendor — swapping requires only a new adapter
-- Template IDs should be treated as stable contracts — verify before renaming
+- Provider interface decouples the platform from a specific email vendor ? swapping requires only a new adapter
+- Template IDs should be treated as stable contracts ? verify before renaming
 
 ## Governance
 

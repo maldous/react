@@ -117,7 +117,7 @@ None
 
 ## Operational notes
 
-- Config is validated and frozen at startup — mutation after boot is not supported
+- Config is validated and frozen at startup ? mutation after boot is not supported
 - Secret resolution may incur I/O latency on first access
 
 ## Governance

@@ -21,7 +21,7 @@ export function getFixtureSession(): SessionActor | null {
   const role = process.env["LOCAL_FIXTURE_SESSION"] as FixtureRole | undefined;
   if (!role || role === "unauthenticated") return null;
   if (role === "no-membership") {
-    // Test-only fixture — not production identity semantics.
+    // Test-only fixture ? not production identity semantics.
     // Represents an authenticated user with no active organisation membership.
     // SessionActorSchema requires non-null strings; empty strings signal the
     // absence of membership context without violating the schema contract.

@@ -119,8 +119,8 @@ None
 
 ## Operational notes
 
-- Index schemas are versioned — breaking schema changes require a re-index migration
-- Search is eventually consistent with the transactional store — document freshness depends on indexing lag
+- Index schemas are versioned ? breaking schema changes require a re-index migration
+- Search is eventually consistent with the transactional store ? document freshness depends on indexing lag
 
 ## Governance
 

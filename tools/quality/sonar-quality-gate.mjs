@@ -3,9 +3,9 @@
  * Checks the SonarQube quality gate for the project and exits non-zero on failure.
  *
  * Required env vars:
- *   SONAR_HOST_URL     — SonarQube server URL (default: http://localhost:9003)
- *   SONAR_TOKEN        — SonarQube user token
- *   SONAR_PROJECT_KEY  — Project key (default: maldous-react)
+ *   SONAR_HOST_URL     ? SonarQube server URL (default: http://localhost:9003)
+ *   SONAR_TOKEN        ? SonarQube user token
+ *   SONAR_PROJECT_KEY  ? Project key (default: maldous-react)
  *
  * Coverage policy (ADR-0016 / ADR-ACT-0093):
  *   Coverage must be non-zero before slicing (lcov.info must exist).
@@ -115,7 +115,7 @@ async function main() {
   console.log(`  Code smells:           ${codeSmells}`);
   console.log(`  Total open issues:     ${totalIssues}`);
   console.log("");
-  console.log("Coverage (advisory — threshold hard after ADR-ACT-0008):");
+  console.log("Coverage (advisory ? threshold hard after ADR-ACT-0008):");
   console.log(`  Overall coverage:      ${coverage != null ? coverage.toFixed(2) + "%" : "N/A"}`);
   console.log(
     `  Line coverage:         ${lineCoverage != null ? lineCoverage.toFixed(2) + "%" : "N/A"}`
@@ -128,7 +128,7 @@ async function main() {
   console.log("");
   console.log("Gate conditions:");
   for (const c of conditions) {
-    const mark = c.status === "OK" ? "✓" : "✗";
+    const mark = c.status === "OK" ? "?" : "?";
     console.log(
       `  ${mark} ${c.metricKey} = ${c.actualValue ?? "?"} (threshold ${c.errorThreshold ?? "?"})`
     );
@@ -141,22 +141,22 @@ async function main() {
   if (hotspotCount > 0) failures.push(`Unreviewed security hotspots: ${hotspotCount} (must be 0)`);
   if (codeSmells > 0) failures.push(`Code smells: ${codeSmells} (must be 0)`);
 
-  // Coverage must be present and non-zero (advisory threshold — see ADR-0016)
+  // Coverage must be present and non-zero (advisory threshold ? see ADR-0016)
   if (coverage === null) {
-    failures.push("Coverage data absent from Sonar — run test:coverage before sonar:scan");
+    failures.push("Coverage data absent from Sonar ? run test:coverage before sonar:scan");
   } else if (coverage === 0 && linesToCover !== null && linesToCover > 0) {
     failures.push(
-      `Coverage is 0% with ${linesToCover} lines to cover — LCOV may not have been ingested`
+      `Coverage is 0% with ${linesToCover} lines to cover ? LCOV may not have been ingested`
     );
   }
 
   if (failures.length > 0) {
     console.error("\nGATE FAILED:");
-    for (const f of failures) console.error(`  ✗ ${f}`);
+    for (const f of failures) console.error(`  ? ${f}`);
     process.exit(1);
   }
 
-  console.log("\n✓ Sonar baseline is clean. Coverage is present. ADR-ACT-0008 may proceed.");
+  console.log("\n? Sonar baseline is clean. Coverage is present. ADR-ACT-0008 may proceed.");
 }
 
 main().catch((err) => {

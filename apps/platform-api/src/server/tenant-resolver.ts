@@ -1,16 +1,18 @@
 /**
- * Tenant resolution from FQDN — ADR-0029 §1
+ * Tenant resolution from FQDN ? ADR-0029 ?1
  *
  * Resolves the active tenant from the HTTP Host header. Used by both the
  * main request pipeline (to verify session tenant matches FQDN tenant) and
  * the auth flow (to select the correct Keycloak realm per tenant).
  *
  * Security: the slug derived from the Host header is always verified against
- * the database — a forged header resolves to no tenant and is rejected.
+ * the database ? a forged header resolves to no tenant and is rejected.
  */
 
 import type { IncomingMessage } from "node:http";
 import pg from "pg";
+
+import { isSlugReserved } from "@platform/domain-identity";
 
 const APEX_DOMAIN = process.env["APEX_DOMAIN"] ?? "aldous.info";
 
@@ -29,6 +31,7 @@ export function extractSlugFromHost(host: string, apexDomain = APEX_DOMAIN): str
   if (!host.endsWith(`.${apexDomain}`) && host !== apexDomain) return null;
   if (host === apexDomain) return null;
   const slug = host.slice(0, host.length - apexDomain.length - 1);
+  if (isSlugReserved(slug)) return null;
   return slug.length > 0 && /^[a-z0-9-]+$/.test(slug) ? slug : null;
 }
 

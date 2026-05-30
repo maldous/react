@@ -17,7 +17,7 @@ describe("createInMemoryProfileConfigPort", () => {
     assert.strictEqual(prefs.theme, "dark");
   });
 
-  it("update merges partial — other fields unchanged", async () => {
+  it("update merges partial ? other fields unchanged", async () => {
     const port = createInMemoryProfileConfigPort();
     await port.update("user-1", { language: "fr-FR" });
     const prefs = await port.get("user-1");

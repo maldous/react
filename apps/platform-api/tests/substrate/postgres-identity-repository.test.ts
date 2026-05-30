@@ -16,7 +16,7 @@ const FIXTURE_ADMIN_ID = "00000000-0000-0000-0000-000000000002";
 
 // Generate per-test unique email/subject. Each call returns a fresh pair so
 // tests never share state. ConflictError on email collision is correct behaviour,
-// not a test bug — isolation prevents it from appearing unexpectedly.
+// not a test bug ? isolation prevents it from appearing unexpectedly.
 let _seq = 0;
 const _createdEmails: string[] = [];
 const _createdSubjects: string[] = [];
@@ -90,7 +90,7 @@ describe("PostgresIdentityRepository", () => {
       assert.equal(externalIdentity.userId, user.id);
     });
 
-    it("rejects second call with same email — no silent account merge (security fix)", async () => {
+    it("rejects second call with same email ? no silent account merge (security fix)", async () => {
       const { email, subject } = fresh();
       // First call creates user + external identity
       await repo.createUserAndExternalIdentity({

@@ -100,7 +100,7 @@
         "Concrete channel adapters are registered at application startup via the channel registry"
       ],
       "operationalNotes": [
-        "Delivery is best-effort by default — channels that require at-least-once must be backed by queue-runtime",
+        "Delivery is best-effort by default ? channels that require at-least-once must be backed by queue-runtime",
         "Notification payloads must not contain PII beyond what is necessary for delivery"
       ]
     }

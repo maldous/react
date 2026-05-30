@@ -10,6 +10,8 @@ import {
   canAccessAdmin,
   validateMembership,
   validateOrganisationSlug,
+  isSlugReserved,
+  RESERVED_SLUGS,
   resolvePermissions,
   type Membership,
 } from "../src/index.ts";
@@ -191,6 +193,58 @@ describe("validateOrganisationSlug", () => {
   it("returns error for slug with special characters", () => {
     const errors = validateOrganisationSlug("my_org");
     assert.ok(errors.some((e) => e.includes("lowercase letters, digits, and hyphens")));
+  });
+
+  it("returns error for reserved slug: staging", () => {
+    const errors = validateOrganisationSlug("staging");
+    assert.ok(errors.some((e) => e.includes("reserved")));
+  });
+
+  it("returns error for reserved slug: prod", () => {
+    const errors = validateOrganisationSlug("prod");
+    assert.ok(errors.some((e) => e.includes("reserved")));
+  });
+
+  it("returns error for reserved slug: admin", () => {
+    const errors = validateOrganisationSlug("admin");
+    assert.ok(errors.some((e) => e.includes("reserved")));
+  });
+
+  it("returns error for reserved slug: kc", () => {
+    const errors = validateOrganisationSlug("kc");
+    assert.ok(errors.some((e) => e.includes("reserved")));
+  });
+
+  it("returns no error for a slug that looks reserved but isn't (random match)", () => {
+    assert.deepEqual(validateOrganisationSlug("my-company"), []);
+  });
+});
+
+describe("isSlugReserved", () => {
+  it("returns true for staging", () => {
+    assert.ok(isSlugReserved("staging"));
+  });
+
+  it("returns true for prod", () => {
+    assert.ok(isSlugReserved("prod"));
+  });
+
+  it("returns true for kc", () => {
+    assert.ok(isSlugReserved("kc"));
+  });
+
+  it("returns false for a non-reserved slug", () => {
+    assert.ok(!isSlugReserved("my-company"));
+  });
+
+  it("returns false for empty string", () => {
+    assert.ok(!isSlugReserved(""));
+  });
+
+  it("all RESERVED_SLUGS entries return true from isSlugReserved", () => {
+    for (const slug of RESERVED_SLUGS) {
+      assert.ok(isSlugReserved(slug), `isSlugReserved must return true for "${slug}"`);
+    }
   });
 });
 

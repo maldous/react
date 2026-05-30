@@ -38,7 +38,7 @@ Recent milestones that created this need:
   targeting the deployed Cloudflare-proxied origin.
 - architecture/orchestrator governance checks (ADR-0011) that must run on
   every meaningful change.
-- i18n runtime and migration work pending (ADR-0026, ADR-ACT-0120–0124).
+- i18n runtime and migration work pending (ADR-0026, ADR-ACT-0120?0124).
 
 The Makefile remains the canonical command index and the CI pipeline is the
 authoritative gate. Docker Compose remains the service-definition owner.
@@ -49,7 +49,7 @@ showing which services are healthy, which checks are passing, and what is
 blocked.
 
 Tilt fills that gap. It is a local control plane for the development feedback
-loop — not a replacement for any existing layer.
+loop ? not a replacement for any existing layer.
 
 ## Stakeholder concerns
 
@@ -61,7 +61,7 @@ loop — not a replacement for any existing layer.
   - Need visual, real-time health status across all local services and checks.
   - Need the production-parity path (`web` Compose profile + production E2E)
     to be accessible without memorising a sequence of commands.
-  - Must not break CI — Tilt is local-only.
+  - Must not break CI ? Tilt is local-only.
 
 - **Architecture:**
   - Tilt must not duplicate or bypass Makefile commands, Compose definitions,
@@ -172,7 +172,7 @@ Tilt must not replace or duplicate:
 
 ## Two operating modes
 
-### Mode 1 — Fast dev (default: `tilt up`)
+### Mode 1 ? Fast dev (default: `tilt up`)
 
 Optimises for iteration speed. Uses host processes for the application tier
 so file changes rebuild and restart in seconds, not minutes.
@@ -187,10 +187,10 @@ so file changes rebuild and restart in seconds, not minutes.
 | architecture-orchestrator                                   | `local_resource` (`node tools/architecture/orchestrator/src/index.mjs all --no-reports --strict`) | `apps/**/package.json`, `packages/**/package.json`, `docs/adr/**`, `docs/architecture/**` |
 | platform-api-tests                                          | `local_resource` (`npm run test:platform-api`)                                                    | `apps/platform-api/src/**`, `apps/platform-api/tests/**`, `packages/**`                   |
 | react-tests                                                 | `local_resource` (`npm run test:frontend:run`)                                                    | `apps/react-enterprise-app/src/**`, `packages/**`                                         |
-| e2e-dev                                                     | `local_resource` (`npm run test:e2e`) — **manual trigger**                                        | Manual only                                                                               |
+| e2e-dev                                                     | `local_resource` (`npm run test:e2e`) ? **manual trigger**                                        | Manual only                                                                               |
 | i18n-validation                                             | `local_resource` (future: key validation gate from ADR-ACT-0123)                                  | `packages/i18n-runtime/locales/**`, `apps/react-enterprise-app/src/**`                    |
 
-### Mode 2 — Production parity (manual entry: `tilt up -- --mode=production`)
+### Mode 2 ? Production parity (manual entry: `tilt up -- --mode=production`)
 
 Optimises for production fidelity. Uses the Compose `web` profile (containers)
 and the production SPA build. Slower to start; manual by default.
@@ -200,9 +200,9 @@ and the production SPA build. Slower to start; manual by default.
 | postgres, redis, etc. | Docker Compose (default profile)                                              | `compose.yaml` changes                                                                               |
 | platform-api          | Docker Compose `web` profile (`docker compose --profile web up platform-api`) | `apps/platform-api/Dockerfile`, `apps/platform-api/src/**`                                           |
 | react-app (Caddy)     | Docker Compose `web` profile (`docker compose --profile web up react-app`)    | `apps/react-enterprise-app/Dockerfile`, `apps/react-enterprise-app/src/**`, `docker/caddy/Caddyfile` |
-| e2e-dev               | `local_resource` (`make e2e-dev`) — **manual trigger**                        | Manual only                                                                                          |
-| e2e-dev-build         | `local_resource` (`make e2e-dev-build`) — **manual trigger**                  | Manual only                                                                                          |
-| e2e-prod              | `local_resource` (`make e2e-prod`) — **manual trigger**                       | Manual only                                                                                          |
+| e2e-dev               | `local_resource` (`make e2e-dev`) ? **manual trigger**                        | Manual only                                                                                          |
+| e2e-dev-build         | `local_resource` (`make e2e-dev-build`) ? **manual trigger**                  | Manual only                                                                                          |
+| e2e-prod              | `local_resource` (`make e2e-prod`) ? **manual trigger**                       | Manual only                                                                                          |
 
 Mode switching is via a Tiltfile extension parameter or a named extension file
 (e.g. `tilt-production.env`). The Tiltfile must document how to activate each
@@ -390,7 +390,7 @@ This ADR governs Compose + local resources only.
 Implementation is tracked in the following ACTION-REGISTER actions:
 
 - **ADR-ACT-0126:** Create ADR-0027 for Tilt local development feedback loop.
-  (This ADR — governance only, no Tiltfile.)
+  (This ADR ? governance only, no Tiltfile.)
 - **ADR-ACT-0127:** Implement root Tiltfile fast-dev mode. Wire infra Compose
   services, platform-api dev server, react-enterprise-app dev server, and
   auto-trigger quality checks (typecheck, lint, architecture-orchestrator,
@@ -437,8 +437,9 @@ Implementation is tracked in the following ACTION-REGISTER actions:
 - [local_resource()](https://api.tilt.dev/core/local-resource.html)
 - [trigger_mode()](https://api.tilt.dev/core/trigger-mode.html)
 - [resource_deps](https://api.tilt.dev/core/resource-deps.html)
-- [ADR-0011](0011-define-architecture-tooling-execution-model.md) — Architecture tooling execution model
-- [ADR-0017](0017-define-local-integration-service-substrate.md) — Local integration service substrate
-- [ADR-0023](0023-define-declarative-infrastructure-provisioning-model.md) — Declarative infrastructure provisioning model
-- [ADR-0025](0025-define-playwright-end-to-end-testing-strategy.md) — Playwright E2E testing strategy
-- [ADR-0026](0026-define-internationalisation-and-translation-resource-model.md) — Internationalisation and translation resource model
+- [ADR-0011](0011-define-architecture-tooling-execution-model.md) ? Architecture tooling execution model
+- [ADR-0017](0017-define-local-integration-service-substrate.md) ? Local integration service substrate
+- [ADR-0023](0023-define-declarative-infrastructure-provisioning-model.md) ? Declarative infrastructure provisioning model
+- [ADR-0025](0025-define-playwright-end-to-end-testing-strategy.md) ? Playwright E2E testing strategy
+- [ADR-0026](0026-define-internationalisation-and-translation-resource-model.md) ? Internationalisation and translation resource model
+- [ADR-0033](0033-define-environment-specific-domain-configuration.md) ? Environment-specific domain configuration; the Tiltfile sets `APEX_DOMAIN=dev.localhost` for auto-resolving multi-tenant dev

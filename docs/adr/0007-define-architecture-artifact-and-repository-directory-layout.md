@@ -715,7 +715,7 @@ Version-control rule summary:
 | Architecture tooling           | `tools/architecture/**`                                                            | Commit                                                                          |
 | Package metadata               | `apps/**/package.json`, `packages/**/package.json`                                 | Commit                                                                          |
 | TypeScript configs             | `tsconfig.base.json`, `apps/**/tsconfig.json`                                      | Commit                                                                          |
-| Infrastructure provisioning    | `infra/**`                                                                         | Commit (ADR-0023) — HCL, .tfvars.example, bin/tf; excludes .tfvars and .tfstate |
+| Infrastructure provisioning    | `infra/**`                                                                         | Commit (ADR-0023) ? HCL, .tfvars.example, bin/tf; excludes .tfvars and .tfstate |
 | Docker service configs         | `docker/**`                                                                        | Commit                                                                          |
 | Root lock file                 | `package-lock.json`                                                                | Commit                                                                          |
 | App lock files                 | `apps/**/package-lock.json`                                                        | Commit                                                                          |

@@ -39,7 +39,7 @@ open http://localhost:10350
 | make-check                                                  | quality | **manual**        | `make check`                                                                             |
 | e2e-dev                                                     | tests   | **manual**        | `npm run test:e2e`                                                                       |
 | i18n-validation                                             | quality | auto              | `node tools/architecture/validate-i18n/src/index.mjs .` (report-only)                    |
-| prod-build-and-test                                         | tests   | **manual**        | `npm run test:e2e:prod` (vite build + Playwright preview — not full Compose web-profile) |
+| prod-build-and-test                                         | tests   | **manual**        | `npm run test:e2e:prod` (vite build + Playwright preview ? not full Compose web-profile) |
 | aldous-smoke                                                | tests   | **manual**        | Playwright against [https://aldous.info](https://aldous.info)                            |
 
 ## Triggering manual resources
@@ -79,7 +79,7 @@ tilt up
 | Mailpit                | <http://localhost:8025>         |
 | Tilt UI                | <http://localhost:10350>        |
 
-## Production parity (ADR-ACT-0128 — In Progress)
+## Production parity (ADR-ACT-0128 ? In Progress)
 
 `prod-build-and-test` runs `npm run test:e2e:prod`: builds the Vite SPA for
 production and runs Playwright against `vite preview`. This is not full

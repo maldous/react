@@ -40,17 +40,17 @@ The repository is currently a governed skeleton. Some tooling (Knip, dependency-
 - **Engineering:** Hard gates must not block skeleton package development with false positives.
 - **Security:** High/critical CVEs, committed secrets, and security anti-patterns must be detected before merge.
 - **Architecture:** validate-source-imports must remain the sole authoritative ADR import-boundary gate; ESLint and other tools must not duplicate the full ADR import matrix.
-- **Operations:** Gate failures in CI must be actionable — not noise from advisory tools.
+- **Operations:** Gate failures in CI must be actionable ? not noise from advisory tools.
 - **Governance:** Evidence of quality gate configuration must be committed and version-controlled.
 - **Compliance:** SBOM, license policy, and OSV scanning baselines are required before production readiness.
 
 ## Decision drivers
 
 1. Gates must be proportional to the risk they address.
-2. Hard gates must be deterministic (same input → same result) and false-positive-free in skeleton state.
+2. Hard gates must be deterministic (same input ? same result) and false-positive-free in skeleton state.
 3. Advisory gates must not fail CI; they are informational until stabilised.
 4. validate-source-imports and the architecture orchestrator are the authoritative governance gates; other tools are complementary.
-5. ESLint and dependency-cruiser must not encode ADR import-boundary rules — the custom validator owns that logic.
+5. ESLint and dependency-cruiser must not encode ADR import-boundary rules ? the custom validator owns that logic.
 6. Tooling decisions must be recorded in evidence so gate changes are traceable.
 
 ## Options considered
@@ -66,9 +66,9 @@ Pros:
 
 Cons:
 
-- No formatting enforcement — byte-level drift accumulates.
-- No security scanning — CVEs and secrets undetected.
-- No code quality baseline — technical debt is invisible.
+- No formatting enforcement ? byte-level drift accumulates.
+- No security scanning ? CVEs and secrets undetected.
+- No code quality baseline ? technical debt is invisible.
 
 Risks:
 
@@ -85,20 +85,20 @@ Pros:
 
 Cons:
 
-- Knip, dependency-cruiser, and Sonar produce skeleton false positives — blocks developers until first slice.
+- Knip, dependency-cruiser, and Sonar produce skeleton false positives ? blocks developers until first slice.
 - Over-gates CI before useful signal exists.
 
 Risks:
 
-- Gate fatigue — developers learn to ignore or bypass CI.
+- Gate fatigue ? developers learn to ignore or bypass CI.
 
 ### Option C: Layered model with staged promotion (chosen)
 
 Three-tier model:
 
-1. **Authoritative architecture gates** — always hard; validate-source-imports, validate-package-metadata, orchestrator, architecture tests.
-2. **Hard quality/security gates** — always hard; deterministic tools where false positives in skeleton state are not expected.
-3. **Advisory gates** — report-only until first vertical slice stabilises real signal.
+1. **Authoritative architecture gates** ? always hard; validate-source-imports, validate-package-metadata, orchestrator, architecture tests.
+2. **Hard quality/security gates** ? always hard; deterministic tools where false positives in skeleton state are not expected.
+3. **Advisory gates** ? report-only until first vertical slice stabilises real signal.
 
 Promotion rule: advisory gates become hard only after the first vertical slice ships real exports, imports, dependencies, and test coverage.
 
@@ -120,7 +120,7 @@ Risks:
 
 The repository uses a three-tier quality-gate model.
 
-### Tier 1 — Authoritative architecture gates (always hard)
+### Tier 1 ? Authoritative architecture gates (always hard)
 
 These enforce the decisions made in ADR-0001 through ADR-0015:
 
@@ -133,7 +133,7 @@ These enforce the decisions made in ADR-0001 through ADR-0015:
 
 validate-source-imports is the sole authoritative gate for ADR import boundaries. No other tool may duplicate or override its rule set.
 
-### Tier 2 — Hard quality and security gates
+### Tier 2 ? Hard quality and security gates
 
 These run on every push and PR. Failure blocks merge:
 
@@ -150,17 +150,17 @@ These run on every push and PR. Failure blocks merge:
 
 SonarQube is required locally as a pre-slice hard gate using a custom "Governance Tooling" quality gate (bugs=0, vulnerabilities=0, security_hotspots_reviewed=100%, reliability_rating=A, security_rating=A, maintainability_rating=A, code_smells=0). Coverage and duplication thresholds are not enforced because: (1) architecture tooling uses `node --test` without LCOV generation, and (2) similar argument-parsing patterns across tools are intentional and architecturally consistent. Coverage tooling (ADR-ACT-0092) and Sonar CI wiring (ADR-ACT-0092) are tracked separately.
 
-ESLint is configured with two buckets (Node.js tooling; TypeScript packages and apps). It must not encode ADR import-boundary rules — validate-source-imports owns that logic exclusively.
+ESLint is configured with two buckets (Node.js tooling; TypeScript packages and apps). It must not encode ADR import-boundary rules ? validate-source-imports owns that logic exclusively.
 
-### Tier 3 — Advisory / report-only gates
+### Tier 3 ? Advisory / report-only gates
 
-Most run in CI but never fail the build. SonarQube is a **pre-slice hard baseline gate** — see Tier 2 addition below. Other advisory gates become hard after the first vertical slice:
+Most run in CI but never fail the build. SonarQube is a **pre-slice hard baseline gate** ? see Tier 2 addition below. Other advisory gates become hard after the first vertical slice:
 
 | Gate                       | Tool               | Promotion trigger                                                              |
 | -------------------------- | ------------------ | ------------------------------------------------------------------------------ |
 | Unused exports/deps        | Knip               | First slice exports real symbols                                               |
 | Dependency graph           | dependency-cruiser | First slice defines real import graph                                          |
-| Code quality — pre-slice   | SonarQube          | **Pre-slice hard baseline** — zero bugs, vulns, hotspots, code smells required |
+| Code quality ? pre-slice   | SonarQube          | **Pre-slice hard baseline** ? zero bugs, vulns, hotspots, code smells required |
 | Software bill of materials | CycloneDX npm      | Before production readiness review                                             |
 | License compliance         | license-checker    | Before production readiness review                                             |
 
@@ -264,7 +264,7 @@ None.
 
 ## References
 
-- ADR-0007: Repository layout — evidence directory structure
+- ADR-0007: Repository layout ? evidence directory structure
 - ADR-0011: Architecture tooling execution model
 - ADR-0012: Architecture tooling test strategy
 - ADR-ACT-0084: Implementation of quality gate baseline
@@ -284,4 +284,4 @@ None.
 
 ## Notes
 
-Tier 3 promotion decisions (Knip, dependency-cruiser, Sonar, SBOM, license) are tracked as separate ADR-ACT entries after the first vertical slice. No advisory gate should remain advisory indefinitely — each must either be promoted or explicitly retired.
+Tier 3 promotion decisions (Knip, dependency-cruiser, Sonar, SBOM, license) are tracked as separate ADR-ACT entries after the first vertical slice. No advisory gate should remain advisory indefinitely ? each must either be promoted or explicitly retired.

@@ -103,7 +103,7 @@ Optional profiles add Keycloak, LocalStack, SonarQube, and Sentry. Terraform/Ope
 
 ### Done
 
-- **ADRs 0001–0031** accepted and enforced (governance, hexagonal architecture, multi-tenant isolation, dynamic authorisation, infrastructure provisioning privilege model)
+- **ADRs 0001?0031** accepted and enforced (governance, hexagonal architecture, multi-tenant isolation, dynamic authorisation, infrastructure provisioning privilege model)
 - **60 governed packages** with architecture metadata, lifecycle evidence, and import-boundary validation
 - Architecture tooling: validate-package-metadata, validate-source-imports, validate-openapi-drift, generate-package-readmes, and orchestrator gate
 - Quality baseline: Prettier, ESLint, TypeScript strict, SonarQube, markdownlint, lefthook pre-commit
@@ -125,7 +125,7 @@ The following are structurally complete but have explicit caveats. Each is track
 
 **UMA dynamic policy enforcement (ADR-ACT-0145):** The BFF uses a static `requiredPermission` bridge that checks session-resolved permissions from Redis. Keycloak Authorization Services UMA ticket evaluation is not yet wired. ADR-0030's "no-deploy policy changes" claim is NOT satisfied until ADR-ACT-0145 is complete. The Auth Settings API (`/api/auth/settings/*`) manages realm configuration but does not substitute for runtime UMA evaluation.
 
-**RLS requires a non-superuser production DB role (ADR-ACT-0153):** Migration 004 adds FORCE ROW LEVEL SECURITY and the `withTenant`/`withSystemAdmin` helpers correctly set `app.current_tenant_id` / `app.bypass_rls`. However, the Docker Compose dev setup creates `platform` as a PostgreSQL superuser — superusers bypass FORCE RLS unconditionally. RLS will only enforce in production when a non-superuser application DB role is used.
+**RLS requires a non-superuser production DB role (ADR-ACT-0153):** Migration 004 adds FORCE ROW LEVEL SECURITY and the `withTenant`/`withSystemAdmin` helpers correctly set `app.current_tenant_id` / `app.bypass_rls`. However, the Docker Compose dev setup creates `platform` as a PostgreSQL superuser ? superusers bypass FORCE RLS unconditionally. RLS will only enforce in production when a non-superuser application DB role is used.
 
 **Auth Settings API audit (ADR-ACT-0154):** The POST/PATCH `/api/auth/settings/*` routes validate bodies and proxy to Keycloak, but do not yet emit persistent audit events. Deferred pending a persistent `AuditEventPort` adapter (ADR-ACT-0148).
 

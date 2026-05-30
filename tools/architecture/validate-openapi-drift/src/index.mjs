@@ -75,7 +75,7 @@ const result = checkDrift(repoRoot);
 
 if (result.missing.length === 0 && result.extra.length === 0) {
   console.log(
-    `[validate-openapi-drift] OK — ${result.routes.length} route(s) match docs/api/openapi.json`
+    `[validate-openapi-drift] OK ? ${result.routes.length} route(s) match docs/api/openapi.json`
   );
   process.exit(0);
 }

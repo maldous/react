@@ -1,4 +1,4 @@
-# Evidence: ADR-ACT-0132 — WireMock contract policy
+# Evidence: ADR-ACT-0132 ? WireMock contract policy
 
 **Date:** 2026-05-29
 **Status:** Done
@@ -27,7 +27,7 @@ another moving part into the adapter boundary.
 WireMock remains available for future external HTTP adapters and service-level
 E2E stubbing, via `docker/wiremock/mappings/` and the `external-mocks`
 Compose profile. For the current Keycloak adapter, the existing contract tests
-already cover the adapter’s HTTP contract directly and deterministically.
+already cover the adapter?s HTTP contract directly and deterministically.
 
 ## Result
 

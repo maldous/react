@@ -42,7 +42,7 @@ export default defineConfig({
   },
   server: {
     // Disable HMR under Playwright to avoid rolldown builtin:vite-react-refresh-wrapper
-    // "Missing field moduleType" bug in Vite 6 — causes HTTP 500 on cold dev server starts.
+    // "Missing field moduleType" bug in Vite 6 ? causes HTTP 500 on cold dev server starts.
     hmr: !process.env["VITE_E2E"],
     proxy: {
       "/api": {

@@ -120,7 +120,7 @@ function extractImports(source, filePath) {
       if (ts.isStringLiteral(arg)) {
         addEdge(arg.text, false, true, node.getStart());
       } else {
-        // computed dynamic import — specifier cannot be statically determined
+        // computed dynamic import ? specifier cannot be statically determined
         computedImports.push({ line: lineOf(sourceFile, node.getStart()) });
       }
     }

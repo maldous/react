@@ -7,12 +7,12 @@ Ratified observability, structured logging, runtime context, error primitives, a
 ## Governance
 
 - ADR-0020 (accepted)
-- ADR-ACT-0099 (Done — ADR created)
-- ADR-ACT-0100 (Open — platform-logging)
-- ADR-ACT-0101 (Open — platform-runtime-context)
-- ADR-ACT-0102 (Open — platform-errors)
-- ADR-ACT-0103 (Open — platform-observability)
-- ADR-ACT-0104 (Open — BFF health/readiness/version endpoint contract)
+- ADR-ACT-0099 (Done ? ADR created)
+- ADR-ACT-0100 (Open ? platform-logging)
+- ADR-ACT-0101 (Open ? platform-runtime-context)
+- ADR-ACT-0102 (Open ? platform-errors)
+- ADR-ACT-0103 (Open ? platform-observability)
+- ADR-ACT-0104 (Open ? BFF health/readiness/version endpoint contract)
 - Committed: 2026-05-28
 
 ## Selected stack
@@ -23,7 +23,7 @@ Ratified observability, structured logging, runtime context, error primitives, a
 | --- | --- | --- |
 | Trace/metrics API | `@opentelemetry/api` | Vendor-neutral; swappable exporter |
 | Propagation format | W3C `traceparent` / `tracestate` | Standard; supported by all modern backends |
-| Local exporter | OTLP → Compose `otel-collector` | ADR-0017 Compose default profile |
+| Local exporter | OTLP ? Compose `otel-collector` | ADR-0017 Compose default profile |
 | SDK (Node) | `@opentelemetry/sdk-node` | Via `packages/adapters-opentelemetry` only |
 | Browser tracing | `traceparent` header forwarding | Browser does not import OTel SDK |
 
@@ -40,7 +40,7 @@ Ratified observability, structured logging, runtime context, error primitives, a
 | Component | Choice | Rationale |
 | --- | --- | --- |
 | Context carrier | `packages/platform-runtime-context` | Typed carrier for requestId, traceId, actor, tenant |
-| Propagation | BFF → use case → adapter (function param) | No async-local-storage magic; explicit and testable |
+| Propagation | BFF ? use case ? adapter (function param) | No async-local-storage magic; explicit and testable |
 | Browser exposure | `requestId` only via contract client helpers | No server-internal context in browser |
 
 ### Error primitives
@@ -109,14 +109,14 @@ Internal details (stack traces, SQL, upstream errors): log-only, redacted, never
 
 ## Trace propagation policy
 
-1. Browser makes HTTP request to BFF — includes `traceparent` header if a browser trace exists.
-2. BFF receives request — extracts or creates span; binds `traceId`/`spanId` to `RuntimeContext`.
-3. BFF calls use case — passes `RuntimeContext` as explicit parameter.
-4. Use case creates child span — binds to `operationName`.
-5. Use case calls adapter — passes `RuntimeContext`.
+1. Browser makes HTTP request to BFF ? includes `traceparent` header if a browser trace exists.
+2. BFF receives request ? extracts or creates span; binds `traceId`/`spanId` to `RuntimeContext`.
+3. BFF calls use case ? passes `RuntimeContext` as explicit parameter.
+4. Use case creates child span ? binds to `operationName`.
+5. Use case calls adapter ? passes `RuntimeContext`.
 6. Adapter creates child span around external I/O (DB query, cache get, queue publish, etc.).
-7. Adapter returns — span ends.
-8. BFF sends response — includes `traceparent` in response if downstream needs it.
+7. Adapter returns ? span ends.
+8. BFF sends response ? includes `traceparent` in response if downstream needs it.
 
 ## Health endpoint contracts
 
@@ -171,12 +171,12 @@ adapter:<adapter>:<operation>       e.g. adapter:adapters-postgres:findUser
 
 | Consumer | Allowed | Forbidden |
 | --- | --- | --- |
-| `packages/domain/*` | — | pino, OTel SDK, Sentry, any platform observability package |
+| `packages/domain/*` | ? | pino, OTel SDK, Sentry, any platform observability package |
 | `packages/features/*` | `platform-errors` (client types), `platform-runtime-context` (types only) | pino, Sentry, adapters |
-| `packages/ui` | — | All logging/observability/error packages except UI-safe `ErrorState` display types |
+| `packages/ui` | ? | All logging/observability/error packages except UI-safe `ErrorState` display types |
 | Use-case/application | `platform-runtime-context`, `platform-errors`, `platform-observability` (abstraction) | OTel SDK, Sentry, pino |
 | Adapter packages | `platform-logging`, `platform-observability`, `platform-runtime-context`, `platform-errors` | Direct Sentry import (use adapters-sentry) |
-| BFF / API runtime | All platform packages | — |
+| BFF / API runtime | All platform packages | ? |
 
 ## Metric conventions
 
@@ -205,26 +205,26 @@ Cardinality constraint: no unbounded dimensions (userId, entityId, etc.).
 
 | Item | Status |
 | --- | --- |
-| Prometheus scrape endpoint | Deferred — OTel collector can expose Prometheus format if needed; no feature requirement yet |
-| Browser distributed tracing (full OTel SDK) | Deferred — `traceparent` header forwarding is sufficient for first slice |
-| Sentry production wiring | Deferred — ADR-ACT-0089; Compose profile experimental |
-| OpenTelemetry baggage propagation | Deferred — `traceparent` is sufficient; baggage adds complexity |
+| Prometheus scrape endpoint | Deferred ? OTel collector can expose Prometheus format if needed; no feature requirement yet |
+| Browser distributed tracing (full OTel SDK) | Deferred ? `traceparent` header forwarding is sufficient for first slice |
+| Sentry production wiring | Deferred ? ADR-ACT-0089; Compose profile experimental |
+| OpenTelemetry baggage propagation | Deferred ? `traceparent` is sufficient; baggage adds complexity |
 | `DEBUG` hot-reload in production | Not planned |
 
 ## Validation commands run
 
 ```text
-npm run format:check      → All matched files use Prettier code style!
-npm run lint:md           → 0 errors
-npm run lint              → 0 problems
-npm run tsc:check         → 0 errors
-npm run test:coverage     → 180 tests, 0 failures
-npm run sonar:clean       → Quality gate OK
-npm run audit:deps        → 0 vulnerabilities
-npm run audit:osv         → 0 issues
-npm run compose:config    → valid
-npm run compose:config:all → valid (all profiles)
-node orchestrator all --strict → 6/6 passed
+npm run format:check      ? All matched files use Prettier code style!
+npm run lint:md           ? 0 errors
+npm run lint              ? 0 problems
+npm run tsc:check         ? 0 errors
+npm run test:coverage     ? 180 tests, 0 failures
+npm run sonar:clean       ? Quality gate OK
+npm run audit:deps        ? 0 vulnerabilities
+npm run audit:osv         ? 0 issues
+npm run compose:config    ? valid
+npm run compose:config:all ? valid (all profiles)
+node orchestrator all --strict ? 6/6 passed
 ```
 
 ## ADR-ACT-0008 status

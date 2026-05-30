@@ -1,0 +1,95 @@
+{
+  "name": "@architecture/validate-pipeline-composition",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Meta-test: validates that Makefile stage targets run the correct E2E test composition per ADR-0034 hierarchy (dev -> test -> staging -> prod).",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "tool",
+      "name": "validate-pipeline-composition",
+      "system": "architecture-governance",
+      "domain": "architecture",
+      "boundedContext": "architecture-governance",
+      "owner": "architecture"
+    },
+    "lifecycle": {
+      "stage": "experimental",
+      "role": "tooling",
+      "class": "experimental.tooling",
+      "catalogLifecycle": "experimental",
+      "visibility": "internal",
+      "supportLevel": "experimental",
+      "reviewCadence": "on-change"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0034",
+        "ADR-0011",
+        "ADR-0012"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "validate-pipeline-composition",
+      "serviceNamespace": "architecture",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "ci"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "tooling"
+      ],
+      "forbiddenConsumers": [
+        "feature",
+        "domain",
+        "ui",
+        "application"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "tool",
+      "stage": "experimental",
+      "role": "tooling",
+      "layer": "tooling"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Validates Makefile stage targets run the correct E2E test composition per ADR-0034 progression hierarchy.",
+      "responsibilities": [
+        "Parse Makefile stage targets (stage-dev, stage-test, stage-staging, stage-prod)",
+        "Validate each stage runs the correct E2E test types per ADR-0034 rules",
+        "Warn if test breadth decreases between stages"
+      ],
+      "nonResponsibilities": [
+        "Does not run the actual E2E tests",
+        "Does not validate individual test file composition"
+      ],
+      "usage": [
+        "node tools/architecture/validate-pipeline-composition/src/index.mjs"
+      ],
+      "operationalNotes": [
+        "Run as part of architecture governance via orchestrator"
+      ]
+    }
+  }
+}

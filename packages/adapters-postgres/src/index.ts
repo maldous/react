@@ -36,8 +36,8 @@ export function tenantSchemaIdentifier(client: pg.ClientBase, organisationId: st
  * transaction-scoped and takes effect. Without an explicit transaction,
  * SET LOCAL is silently a no-op in PostgreSQL (SET LOCAL outside a
  * transaction block is equivalent to SET for the session, which is not
- * pool-safe). The transaction is kept as short as possible — connect,
- * set path, query, commit — so it does not hold locks beyond the read.
+ * pool-safe). The transaction is kept as short as possible ? connect,
+ * set path, query, commit ? so it does not hold locks beyond the read.
  *
  * Use this for one-off tenant reads where a full withTenant() block is
  * heavier than needed (e.g. GET /api/theme).
@@ -48,7 +48,7 @@ export async function queryTenantSchema<T extends pg.QueryResultRow>(
   sql: string,
   params?: unknown[]
 ): Promise<pg.QueryResult<T>> {
-  // Validate UUID before connecting — fail fast without a DB round-trip.
+  // Validate UUID before connecting ? fail fast without a DB round-trip.
   // tenantSchemaIdentifier re-validates, but doing it here avoids an
   // unnecessary connect+rollback for clearly invalid input.
   if (!UUID_V4_RE.test(organisationId)) {
@@ -73,7 +73,7 @@ export async function queryTenantSchema<T extends pg.QueryResultRow>(
 }
 
 // ---------------------------------------------------------------------------
-// withTenant — schema-per-tenant transaction context (ADR-0029 §3b)
+// withTenant ? schema-per-tenant transaction context (ADR-0029 ?3b)
 //
 // Sets:
 //   SET LOCAL search_path = "tenant_{id}", public
@@ -84,7 +84,7 @@ export async function queryTenantSchema<T extends pg.QueryResultRow>(
 // tables (memberships, users, external_identities) when the app DB user is
 // a non-superuser (production requirement per ADR-0031).
 //
-// SET LOCAL scopes both settings to the current transaction — pool-safe.
+// SET LOCAL scopes both settings to the current transaction ? pool-safe.
 // ---------------------------------------------------------------------------
 
 export async function withTenant<T>(
@@ -110,7 +110,7 @@ export async function withTenant<T>(
 }
 
 /**
- * withTenantActor — tenant + user context (ADR-0029 §3d)
+ * withTenantActor ? tenant + user context (ADR-0029 ?3d)
  *
  * Extends withTenant by also setting app.current_user_id so that RLS policies
  * allowing own-record access (users, external_identities) function correctly
@@ -141,7 +141,7 @@ export async function withTenantActor<T>(
 }
 
 // ---------------------------------------------------------------------------
-// withSystemAdmin — cross-tenant RLS bypass (ADR-0029 §3d, ADR-0031)
+// withSystemAdmin ? cross-tenant RLS bypass (ADR-0029 ?3d, ADR-0031)
 //
 // Sets: SET LOCAL app.bypass_rls = true
 //
@@ -152,8 +152,8 @@ export async function withTenantActor<T>(
 //   adjacent to an AuditEvent emission. This includes provisioning, membership
 //   changes, and config writes.
 //
-//   READ-ONLY lookups (SELECT only): calls that only read data — e.g.
-//   getTenantResourceConfig, identity resolution during auth — must emit a
+//   READ-ONLY lookups (SELECT only): calls that only read data ? e.g.
+//   getTenantResourceConfig, identity resolution during auth ? must emit a
 //   structured log entry at info level (caller is responsible). A full audit
 //   event is not required for reads, but must not be silently absent.
 //
@@ -181,9 +181,9 @@ export async function withSystemAdmin<T>(
 }
 
 // ---------------------------------------------------------------------------
-// createTenantSchema — provision a new tenant schema (ADR-0029 §8, ADR-0031)
+// createTenantSchema ? provision a new tenant schema (ADR-0029 ?8, ADR-0031)
 //
-// Uses the platform DB user (database owner) — no superuser privilege needed.
+// Uses the platform DB user (database owner) ? no superuser privilege needed.
 // Idempotent: safe to call if schema already exists.
 // ---------------------------------------------------------------------------
 

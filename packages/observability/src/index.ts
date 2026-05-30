@@ -1,7 +1,7 @@
 export const packageName = "@platform/observability";
 
 // ---------------------------------------------------------------------------
-// Generic logger interface — zero @platform/* dependencies
+// Generic logger interface ? zero @platform/* dependencies
 // ---------------------------------------------------------------------------
 
 export type LogLevel = "trace" | "debug" | "info" | "warn" | "error" | "fatal";
@@ -30,7 +30,7 @@ export interface ObservabilitySpan {
 }
 
 // ---------------------------------------------------------------------------
-// ObservabilityPort — the port interface adapters must satisfy
+// ObservabilityPort ? the port interface adapters must satisfy
 // ---------------------------------------------------------------------------
 
 export interface ObservabilityPort {
@@ -41,7 +41,7 @@ export interface ObservabilityPort {
 }
 
 // ---------------------------------------------------------------------------
-// Console-based implementation — FOR TESTING AND LOCAL DEVELOPMENT ONLY.
+// Console-based implementation ? FOR TESTING AND LOCAL DEVELOPMENT ONLY.
 // Do NOT use createConsoleObservabilityPort in production BFF, adapter, or
 // app runtime code. Production code must use a platform-logging-backed
 // ObservabilityPort wired by the adapter layer (ADR-0020, ADR-0029).
@@ -67,7 +67,7 @@ function makeConsoleLogger(fields: LogFields = {}): ObservabilityLogger {
 }
 
 /**
- * Console-backed ObservabilityPort — FOR TESTING AND LOCAL DEVELOPMENT ONLY.
+ * Console-backed ObservabilityPort ? FOR TESTING AND LOCAL DEVELOPMENT ONLY.
  *
  * Uses console.log / console.error. Never use this in production BFF,
  * adapter, or app runtime code (ADR-0020, CLAUDE.md constraint 7).

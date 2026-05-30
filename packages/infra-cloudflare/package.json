@@ -89,14 +89,14 @@
       "nonResponsibilities": [
         "Does not own AWS infrastructure definitions (infra-aws)",
         "Does not define Terraform workflow tooling or module patterns (tooling-terraform)",
-        "Does not manage Cloudflare Workers or edge compute — kept out of scope initially"
+        "Does not manage Cloudflare Workers or edge compute ? kept out of scope initially"
       ],
       "usage": [
         "Applied via tooling-terraform scripts as part of the front-end delivery pipeline in tooling-ci",
         "Complements infra-aws: Cloudflare handles CDN/edge layer, AWS handles compute and data"
       ],
       "operationalNotes": [
-        "Cloudflare free tier covers CDN, R2 (10GB storage, 1M operations/month), and Pages — monitor usage before upgrading",
+        "Cloudflare free tier covers CDN, R2 (10GB storage, 1M operations/month), and Pages ? monitor usage before upgrading",
         "R2 egress is free; use for static assets and media to avoid AWS data transfer costs",
         "WAF rules must be reviewed quarterly for emerging threat patterns"
       ]

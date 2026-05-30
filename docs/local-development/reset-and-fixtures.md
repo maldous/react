@@ -36,6 +36,6 @@ Fixture organisation: `fixture-org` (id: `00000000-0000-0000-0000-000000000001`)
 
 ## Idempotency
 
-- Migrations: tracked in `schema_migrations` table with checksums — running twice applies nothing new
-- Seed: uses `ON CONFLICT (id) DO NOTHING` for all inserts — safe to run multiple times
+- Migrations: tracked in `schema_migrations` table with checksums ? running twice applies nothing new
+- Seed: uses `ON CONFLICT (id) DO NOTHING` for all inserts ? safe to run multiple times
 - `make reset-local` is destructive but produces identical state every run

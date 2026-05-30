@@ -1,4 +1,4 @@
-# Terraform/OpenTofu generated files — never commit these
+# Terraform/OpenTofu generated files ? never commit these
 .terraform/
 .terraform.tfstate
 *.tfstate
@@ -7,19 +7,19 @@
 crash.log
 crash.*.log
 
-# Variable files with real values — use .tfvars.example for committed templates
+# Variable files with real values ? use .tfvars.example for committed templates
 # *.tfvars broadly covers local.tfvars, development.tfvars, staging.tfvars, etc.
 # Only *.tfvars.example files are committed (placeholder values, no real secrets).
 *.tfvars
 *.auto.tfvars
 
-# Override files — local machine overrides only
+# Override files ? local machine overrides only
 override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
 
-# Lock file — COMMITTED (do not add to .gitignore)
+# Lock file ? COMMITTED (do not add to .gitignore)
 # .terraform.lock.hcl pins provider versions for reproducible provisioning (ADR-0023).
 # Commit it alongside module changes so all contributors use the same provider versions.
 # Regenerate with: infra/bin/tf -chdir=infra/env/<env> providers lock

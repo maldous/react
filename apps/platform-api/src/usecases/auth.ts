@@ -40,7 +40,7 @@ export async function resolveSessionFromIdentity(
   deps: AuthUseCaseDeps,
   sessionTtlSeconds = 1800
 ): Promise<SessionResolution> {
-  // Step 1–2: Look up or create the internal User + ExternalIdentity
+  // Step 1?2: Look up or create the internal User + ExternalIdentity
   let pair = await deps.identities.findExternalIdentity(
     identity.provider,
     identity.providerSubject
@@ -68,7 +68,7 @@ export async function resolveSessionFromIdentity(
   const roles: string[] = membership ? [membership.role] : [];
   const permissions = membership ? resolvePermissions(membership.role) : [];
 
-  // Step 4: Create server-side session (ADR-0022 — no raw tokens stored)
+  // Step 4: Create server-side session (ADR-0022 ? no raw tokens stored)
   const command: CreateSessionCommand = {
     userId: user.id,
     tenantId,

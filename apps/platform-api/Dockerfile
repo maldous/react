@@ -1,9 +1,9 @@
 # apps/platform-api/Dockerfile
 #
 # Node.js 25 BFF/API container for the enterprise React platform.
-# Uses Node 25 native TypeScript execution — no compilation step required.
+# Uses Node 25 native TypeScript execution ? no compilation step required.
 #
-# ADR-0001: hexagonal architecture — adapters own external integrations
+# ADR-0001: hexagonal architecture ? adapters own external integrations
 # ADR-0017: every Compose service must have a healthcheck
 # ADR-0022: BFF owns session creation, token exchange, and HTTP-only cookies
 
@@ -21,7 +21,7 @@ COPY tsconfig.base.json ./
 COPY packages/ ./packages/
 COPY apps/platform-api/ ./apps/platform-api/
 
-# Copy entrypoint (migrate → seed → serve)
+# Copy entrypoint (migrate ? seed ? serve)
 COPY docker/entrypoint-api.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 

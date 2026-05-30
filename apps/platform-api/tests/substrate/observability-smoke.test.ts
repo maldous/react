@@ -17,7 +17,7 @@ import {
 } from "@platform/platform-errors";
 import { createRequestContext, withOperation } from "@platform/platform-runtime-context";
 
-describe("observability smoke — platform primitives integration", () => {
+describe("observability smoke ? platform primitives integration", () => {
   it("platform-logging: createRequestLogger binds requestId to log output", () => {
     const logger = createLogger({ name: "test-service" });
     const reqLogger = createRequestLogger(logger, {

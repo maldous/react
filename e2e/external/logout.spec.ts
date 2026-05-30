@@ -4,7 +4,12 @@
  * Logout and session invalidation E2E — http://aldous.info
  */
 import { test, expect } from "@playwright/test";
-import { getTestCredentials, loginAs, assertSessionUnauthenticated } from "./helpers.ts";
+import {
+  getExternalBaseUrl,
+  getTestCredentials,
+  loginAs,
+  assertSessionUnauthenticated,
+} from "./helpers.ts";
 
 test.describe("aldous.info: logout and session invalidation", () => {
   test.beforeEach(({}, testInfo) => {
@@ -48,7 +53,9 @@ test.describe("aldous.info: logout and session invalidation", () => {
     await loginAs(page, username, password);
 
     // Direct logout request
-    const res = await page.request.post("/auth/logout");
+    const res = await page.request.post(
+      new URL("/auth/logout", getExternalBaseUrl(page)).toString()
+    );
     // Accepts 200, 302, or 204
     expect([200, 204, 302]).toContain(res.status());
   });

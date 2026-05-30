@@ -5,20 +5,20 @@ const API_PORT = process.env["PLATFORM_API_PORT"] ?? "3001";
 const APP_PORT = process.env["APP_PORT"] ?? "5173";
 
 export default defineConfig({
-  testDir: "./e2e/dev",
+  testDir: "./e2e/internal",
   testMatch: ["**/smoke.test.ts"],
   fullyParallel: false,
   forbidOnly: !!process.env["CI"],
   retries: process.env["CI"] ? 1 : 0,
   workers: 1,
-  reporter: [["html", { outputFolder: "playwright-report/dev", open: "never" }], ["list"]],
+  reporter: [["html", { outputFolder: "playwright-report/internal", open: "never" }], ["list"]],
   use: {
     baseURL: `http://localhost:${APP_PORT}`,
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
   },
-  outputDir: "e2e-results/dev",
+  outputDir: "e2e-results/internal",
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: [
     {

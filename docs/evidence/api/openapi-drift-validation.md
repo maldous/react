@@ -1,4 +1,4 @@
-# Evidence: ADR-ACT-0139 — OpenAPI drift validation
+# Evidence: ADR-ACT-0139 ? OpenAPI drift validation
 
 **Date:** 2026-05-29
 **Status:** Done

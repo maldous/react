@@ -22,11 +22,11 @@ Architecture owner / technical lead
 
 ADR-0029 establishes per-tenant Keycloak realms, identity brokering, and infrastructure isolation. The following requirements are not addressed there:
 
-1. **Tenant admin self-service** — tenant administrators must be able to configure all authentication-related settings (IdPs, MFA policies, session lifetimes, login flows) at runtime without requiring platform deployments or sysadmin intervention.
+1. **Tenant admin self-service** ? tenant administrators must be able to configure all authentication-related settings (IdPs, MFA policies, session lifetimes, login flows) at runtime without requiring platform deployments or sysadmin intervention.
 
-2. **Sysadmin cross-domain brokering** — system administrators must be able to authenticate into any tenant's application using their `platform` realm credentials, subject to rules configured and allowed by that tenant.
+2. **Sysadmin cross-domain brokering** ? system administrators must be able to authenticate into any tenant's application using their `platform` realm credentials, subject to rules configured and allowed by that tenant.
 
-3. **Dynamic per-resource authorisation** — every protected resource (API route, feature, UI section) must have its own configurable auth policy (required roles, required MFA level, required IdP, time-based constraints), all changeable at runtime by the tenant admin. Changing a policy must not require a code deployment.
+3. **Dynamic per-resource authorisation** ? every protected resource (API route, feature, UI section) must have its own configurable auth policy (required roles, required MFA level, required IdP, time-based constraints), all changeable at runtime by the tenant admin. Changing a policy must not require a code deployment.
 
 Without this ADR, auth policy is static: a route is protected by a hardcoded permission check, and changing that check requires a code change and deployment. This is insufficient for an enterprise platform where tenant security requirements evolve independently.
 
@@ -34,7 +34,7 @@ Without this ADR, auth policy is static: a route is protected by a hardcoded per
 
 - **Security:** Auth policy must be auditable. Every policy change must produce an audit record. Sysadmin cross-tenant access must be explicitly opted-in by the tenant.
 - **Engineering:** No deployment should ever be required to change an auth policy for a resource. The platform codebase defines the set of available resources; the policies on those resources are data, not code.
-- **Product:** Tenant admins must be able to manage auth from a platform UI — not by navigating raw Keycloak admin screens.
+- **Product:** Tenant admins must be able to manage auth from a platform UI ? not by navigating raw Keycloak admin screens.
 - **Compliance:** Per-resource policies must be exportable for audit (what policy governs this resource? who approved it? when did it change?).
 
 ## Decision
@@ -43,7 +43,7 @@ The platform adopts the **Policy Enforcement Point (PEP)** pattern using Keycloa
 
 ---
 
-### 1. Tenant admin self-service — full realm control
+### 1. Tenant admin self-service ? full realm control
 
 #### 1a. Realm-admin role
 
@@ -82,13 +82,13 @@ Capabilities exposed via the platform Auth Settings API:
 | Get resource policies | `GET /realms/{realm}/clients/{id}/authz/resource-server/resource` |
 | Set resource policy   | `PUT /realms/{realm}/clients/{id}/authz/resource-server/policy`   |
 
-The platform Auth Settings API authenticates to Keycloak's Admin REST API using a **service account** with `realm-admin` rights — not the tenant admin's personal credentials. The tenant admin authenticates to the **platform** (via their own session), and the platform proxies to Keycloak on their behalf. This means the tenant admin never needs a Keycloak service account or direct API access.
+The platform Auth Settings API authenticates to Keycloak's Admin REST API using a **service account** with `realm-admin` rights ? not the tenant admin's personal credentials. The tenant admin authenticates to the **platform** (via their own session), and the platform proxies to Keycloak on their behalf. This means the tenant admin never needs a Keycloak service account or direct API access.
 
 Every call through the Auth Settings API emits an audit event (`AuditEventPort`) recording: which admin made the change, what was changed, and the before/after state.
 
 #### 1c. No deployment ever required
 
-The Auth Settings API is backed entirely by Keycloak's runtime-mutable configuration. Policy changes, IdP additions, MFA flow updates, and resource permission changes all take effect immediately — Keycloak evaluates them on the next request. Platform code defines the set of known resources; policies on those resources are data stored in Keycloak.
+The Auth Settings API is backed entirely by Keycloak's runtime-mutable configuration. Policy changes, IdP additions, MFA flow updates, and resource permission changes all take effect immediately ? Keycloak evaluates them on the next request. Platform code defines the set of known resources; policies on those resources are data stored in Keycloak.
 
 ---
 
@@ -96,17 +96,17 @@ The Auth Settings API is backed entirely by Keycloak's runtime-mutable configura
 
 #### 2a. Architecture
 
-The `platform` super-admin Keycloak realm is registered as an OIDC Identity Provider option in each tenant realm. Whether it is enabled is controlled entirely by the tenant admin — it is disabled by default and must be explicitly activated.
+The `platform` super-admin Keycloak realm is registered as an OIDC Identity Provider option in each tenant realm. Whether it is enabled is controlled entirely by the tenant admin ? it is disabled by default and must be explicitly activated.
 
 ```text
 system-admin logs in at acme.aldous.info
-  → clicks "Login with Platform Admin"
-  → acme realm redirects to platform realm for authentication
-  → platform realm authenticates the sysadmin (MFA required by platform realm policy)
-  → platform realm issues token to acme realm
-  → acme realm brokers: maps platform user → acme realm user
-  → acme realm issues token to BFF
-  → BFF creates session with sysadmin context in acme's tenant schema
+  ? clicks "Login with Platform Admin"
+  ? acme realm redirects to platform realm for authentication
+  ? platform realm authenticates the sysadmin (MFA required by platform realm policy)
+  ? platform realm issues token to acme realm
+  ? acme realm brokers: maps platform user ? acme realm user
+  ? acme realm issues token to BFF
+  ? BFF creates session with sysadmin context in acme's tenant schema
 ```
 
 The sysadmin's brokered session in the tenant context:
@@ -130,7 +130,7 @@ PATCH /api/auth/settings/sysadmin-brokering
 }
 ```
 
-When enabled, the platform registers the `platform` realm as an IdP in the tenant's realm. When disabled, the IdP is removed — existing sysadmin sessions for that tenant are invalidated at the next token refresh.
+When enabled, the platform registers the `platform` realm as an IdP in the tenant's realm. When disabled, the IdP is removed ? existing sysadmin sessions for that tenant are invalidated at the next token refresh.
 
 #### 2c. Audit
 
@@ -139,7 +139,7 @@ Every sysadmin cross-domain login emits two audit events:
 1. In the `platform` realm: "sysadmin authenticated for cross-domain access to tenant {slug}"
 2. In the tenant's audit log: "system-admin {userId} logged in via cross-domain broker from platform realm"
 
-Sysadmin access cannot be silently performed — it is always visible in both the global platform audit log and the tenant's own audit log.
+Sysadmin access cannot be silently performed ? it is always visible in both the global platform audit log and the tenant's own audit log.
 
 #### 2d. MFA enforcement
 
@@ -147,43 +147,43 @@ Platform realm policy requires MFA for all `system-admin` users before any cross
 
 ---
 
-### 3. Dynamic per-resource authorisation — Keycloak Authorization Services
+### 3. Dynamic per-resource authorisation ? Keycloak Authorization Services
 
 #### 3a. Policy Enforcement Point (PEP) pattern
 
-The BFF (`platform-api`) operates as a **Policy Enforcement Point** (PEP). It does not hardcode permission checks — instead, it queries Keycloak's Authorization Server at runtime to determine whether the current actor can perform a specific action on a specific resource.
+The BFF (`platform-api`) operates as a **Policy Enforcement Point** (PEP). It does not hardcode permission checks ? instead, it queries Keycloak's Authorization Server at runtime to determine whether the current actor can perform a specific action on a specific resource.
 
 ```text
 Request arrives at platform-api
-  → BFF extracts session → gets access token
-  → BFF sends UMA ticket request to Keycloak Authorization Server:
+  ? BFF extracts session ? gets access token
+  ? BFF sends UMA ticket request to Keycloak Authorization Server:
       POST /realms/{realm}/protocol/openid-connect/token
       grant_type=urn:ietf:params:oauth:grant-type:uma-ticket
       audience=platform-api
       permission={resource}#{scope}
-  → Keycloak evaluates all policies for resource+scope
-  → Returns RPT (Requesting Party Token) if granted, or 403 if denied
-  → BFF proceeds if granted; returns 403 with denial reason if not
+  ? Keycloak evaluates all policies for resource+scope
+  ? Returns RPT (Requesting Party Token) if granted, or 403 if denied
+  ? BFF proceeds if granted; returns 403 with denial reason if not
 ```
 
 This replaces the current hardcoded `permission && !actor.permissions.includes(permission)` check in the pipeline with a runtime Keycloak policy evaluation.
 
 #### 3b. Resource registry
 
-The platform defines a catalogue of resources in code — the set of things that can be protected. Resources are registered in Keycloak on tenant provisioning (and on platform upgrades when new resources are added).
+The platform defines a catalogue of resources in code ? the set of things that can be protected. Resources are registered in Keycloak on tenant provisioning (and on platform upgrades when new resources are added).
 
 Platform resources follow a hierarchical naming convention:
 
 ```text
-organisation:profile              ← organisation profile resource
-organisation:members              ← member list resource
-organisation:settings             ← organisation settings
-feature:{feature-name}:read       ← feature read access
-feature:{feature-name}:write      ← feature write access
-api:{route-group}:{method}        ← specific API route groups
-admin:users                       ← user management
-admin:auth                        ← auth settings management
-audit:read                        ← audit log access
+organisation:profile              ? organisation profile resource
+organisation:members              ? member list resource
+organisation:settings             ? organisation settings
+feature:{feature-name}:read       ? feature read access
+feature:{feature-name}:write      ? feature write access
+api:{route-group}:{method}        ? specific API route groups
+admin:users                       ? user management
+admin:auth                        ? auth settings management
+audit:read                        ? audit log access
 ```
 
 Resources are registered using the Keycloak Admin API:
@@ -212,7 +212,7 @@ Tenant admins can create the following policy types for any resource:
 | Regex policy      | Attribute matching                          | Only users whose email domain is `@acmecorp.com` |
 | Custom JS policy  | JavaScript evaluation (Keycloak engine)     | Complex business rules evaluated server-side     |
 
-Policies are created and managed via the Keycloak admin console or the platform Auth Settings API. They take effect on the next request — no caching of policy decisions beyond the token lifetime.
+Policies are created and managed via the Keycloak admin console or the platform Auth Settings API. They take effect on the next request ? no caching of policy decisions beyond the token lifetime.
 
 #### 3d. Permission binding
 
@@ -223,46 +223,46 @@ Examples of runtime-configurable permissions:
 ```text
 Resource: organisation:profile, Scope: write
   Policy: Role=tenant-admin OR Role=manager
-  → Only admins and managers can update the profile
+  ? Only admins and managers can update the profile
 
 Resource: admin:auth, Scope: write
   Policy: Role=tenant-admin AND Time=business-hours AND MFA-completed
-  → Auth settings can only be changed by admins during business hours after MFA
+  ? Auth settings can only be changed by admins during business hours after MFA
 
 Resource: feature:reports, Scope: read
   Policy: Role=any AND IdP=corporate-entra
-  → Reports are only accessible to users who authenticated via Entra (not local accounts)
+  ? Reports are only accessible to users who authenticated via Entra (not local accounts)
 
 Resource: api:exports, Scope: write
   Policy: Role=tenant-admin AND Step-up-auth-required
-  → Exports require fresh authentication (step-up) even if already logged in
+  ? Exports require fresh authentication (step-up) even if already logged in
 ```
 
 #### 3e. Step-up authentication
 
 For resources that require a higher authentication level than the current session provides, Keycloak supports **step-up authentication**:
 
-1. BFF checks resource access → Keycloak denies with `insufficient_auth_level`
+1. BFF checks resource access ? Keycloak denies with `insufficient_auth_level`
 2. BFF redirects the browser to a Keycloak re-authentication flow (e.g., MFA challenge)
 3. Keycloak issues a new token with elevated `acr` (Authentication Context Class Reference) claim
 4. BFF retries the resource check with the elevated token
 5. Access granted
 
-The step-up flow is configured per resource by the tenant admin. The BFF handles the redirect and retry loop without any code changes — it responds to the `insufficient_auth_level` denial code automatically.
+The step-up flow is configured per resource by the tenant admin. The BFF handles the redirect and retry loop without any code changes ? it responds to the `insufficient_auth_level` denial code automatically.
 
 #### 3f. Policy evaluation cache
 
-Keycloak's RPT (Requesting Party Token) is cached in the BFF's request context for the duration of a single request — not across requests. This means:
+Keycloak's RPT (Requesting Party Token) is cached in the BFF's request context for the duration of a single request ? not across requests. This means:
 
 - Policy changes take effect on the next request (no stale policy cache)
 - Each request performs at most one UMA ticket evaluation per resource check
 - Multiple checks on the same resource within a request reuse the cached RPT
 
-No persistent policy decision cache is maintained. This is intentional — stale cached decisions are a security risk.
+No persistent policy decision cache is maintained. This is intentional ? stale cached decisions are a security risk.
 
 ---
 
-### 4. Keycloak Admin API proxy — platform service account
+### 4. Keycloak Admin API proxy ? platform service account
 
 The platform maintains a **service account** in each tenant's Keycloak realm with the `realm-admin` role. This service account is used exclusively by the platform's Auth Settings API (`/api/auth/settings/*`) to proxy admin operations on behalf of authenticated tenant admins.
 
@@ -271,15 +271,15 @@ The service account credentials are:
 - Generated on tenant provisioning
 - Stored in the platform's secret store (e.g., AWS Secrets Manager or Vault) keyed by `tenant/{organisationId}/keycloak-admin-sa`
 - Rotated on a schedule (or on demand via the platform operator console)
-- Never exposed to the tenant admin — only used by the platform internally
+- Never exposed to the tenant admin ? only used by the platform internally
 
 The tenant admin authenticates to the **platform** via their normal session. The platform verifies they have `admin.access` permission + `admin:auth:write` resource permission before proxying any admin operation to Keycloak.
 
 ---
 
-### 5. Invariants — never violate without ADR amendment
+### 5. Invariants ? never violate without ADR amendment
 
-1. **No hardcoded permission checks for resource access.** The BFF's resource protection uses UMA ticket evaluation, not inline `actor.permissions.includes(...)` comparisons. Inline checks may only be used for session-level guards (is the user authenticated? do they have any valid session?) — not for business resource access.
+1. **No hardcoded permission checks for resource access.** The BFF's resource protection uses UMA ticket evaluation, not inline `actor.permissions.includes(...)` comparisons. Inline checks may only be used for session-level guards (is the user authenticated? do they have any valid session?) ? not for business resource access.
 
 2. **Tenant admins cannot escalate beyond their realm.** The realm-admin role is scoped to `realms/tenant-{id}`. The service account used by the Auth Settings API never holds server-admin or cross-realm rights.
 
@@ -291,7 +291,7 @@ The tenant admin authenticates to the **platform** via their normal session. The
 
 6. **MFA is required for sysadmin cross-domain access.** Platform realm enforces MFA for `system-admin` users unconditionally. This cannot be disabled from within a tenant realm.
 
-7. **Resources are defined in platform code; policies are defined in Keycloak data.** The set of protectable resources is a code artifact (deployed). The policies applied to those resources are Keycloak data (runtime-mutable). Tenant admins can only configure policies on pre-registered resources — they cannot create arbitrary resources.
+7. **Resources are defined in platform code; policies are defined in Keycloak data.** The set of protectable resources is a code artifact (deployed). The policies applied to those resources are Keycloak data (runtime-mutable). Tenant admins can only configure policies on pre-registered resources ? they cannot create arbitrary resources.
 
 ---
 
@@ -299,7 +299,7 @@ The tenant admin authenticates to the **platform** via their normal session. The
 
 The new components introduced by this ADR must conform to the hexagonal architecture (ADR-0001). Ports define the interfaces; adapters implement them against Keycloak.
 
-#### 6a. New port package — `packages/authorisation-runtime`
+#### 6a. New port package ? `packages/authorisation-runtime`
 
 Defines the resource authorisation port interface. Zero `@platform` dependencies (leaf node, like `packages/access-control`).
 
@@ -371,7 +371,7 @@ export interface ResourcePolicy {
 
 Two new classes added to the existing adapter package:
 
-**`KeycloakAuthorisationAdapter`** — implements `AuthorisationPort`:
+**`KeycloakAuthorisationAdapter`** ? implements `AuthorisationPort`:
 
 ```typescript
 export class KeycloakAuthorisationAdapter implements AuthorisationPort {
@@ -408,7 +408,7 @@ export class KeycloakAuthorisationAdapter implements AuthorisationPort {
 }
 ```
 
-**`KeycloakRealmAdminAdapter`** — implements `RealmAdminPort`:
+**`KeycloakRealmAdminAdapter`** ? implements `RealmAdminPort`:
 
 Uses the Keycloak Admin REST API, authenticated via the per-tenant service account token. The service account credentials are resolved from the secret store (injected via config, never read from env directly in the adapter).
 
@@ -449,7 +449,7 @@ Routes declare `resource` and `scope` instead of `requiredPermission`:
 
 `authorisation-runtime` follows the same boundary rules as other runtime packages:
 
-- No `@platform` imports — it is a leaf port package
+- No `@platform` imports ? it is a leaf port package
 - May be imported by: `platform` layer (BFF/server), `adapter` layer
 - Must not be imported by: `domain`, `feature`, `ui`, `contract` packages
 
@@ -465,11 +465,11 @@ Routes declare `resource` and `scope` instead of `requiredPermission`:
 
 2. **No custom policy engine.** Keycloak provides role, user, group, time, aggregated, regex, and JavaScript policies out of the box. A custom policy engine would be significant engineering investment with worse coverage.
 
-3. **Tenant self-service.** Policies are stored as Keycloak realm data — each tenant's policies are completely isolated in their realm. The tenant admin has full control without touching other tenants.
+3. **Tenant self-service.** Policies are stored as Keycloak realm data ? each tenant's policies are completely isolated in their realm. The tenant admin has full control without touching other tenants.
 
 4. **Standard protocol.** UMA 2.0 is an IETF standard. The BFF's PEP role is a well-understood integration pattern.
 
-5. **Sysadmin brokering fits naturally.** Cross-realm identity brokering is a Keycloak feature. The sysadmin cross-domain flow requires no custom code — it is configuration in Keycloak.
+5. **Sysadmin brokering fits naturally.** Cross-realm identity brokering is a Keycloak feature. The sysadmin cross-domain flow requires no custom code ? it is configuration in Keycloak.
 
 ### Alternative considered: platform-managed policy store
 
@@ -494,15 +494,15 @@ Rejected because:
 **Negative:**
 
 - UMA ticket evaluation adds one Keycloak round-trip per resource check per request. This must be optimised with efficient token reuse within a request.
-- Keycloak Authorization Services must be enabled on every tenant's BFF client on provisioning — adds a provisioning step.
-- The service account per tenant realm must be managed (provisioned, rotated, secured) — adds secret management complexity.
-- JavaScript policies in Keycloak execute server-side in Keycloak's Nashorn/Graal engine — a security review is required if tenants are permitted to write custom JS policies.
+- Keycloak Authorization Services must be enabled on every tenant's BFF client on provisioning ? adds a provisioning step.
+- The service account per tenant realm must be managed (provisioned, rotated, secured) ? adds secret management complexity.
+- JavaScript policies in Keycloak execute server-side in Keycloak's Nashorn/Graal engine ? a security review is required if tenants are permitted to write custom JS policies.
 
 **Operational:**
 
 - Platform operators must monitor UMA evaluation latency as a performance signal.
 - Platform upgrades that add new resources must apply the resource registration to all existing tenant realms (migration runner pattern, same as DB migrations).
-- Keycloak's `realm-admin` role grants significant power to the tenant admin — the scope (restricted to their realm) must be confirmed on every Keycloak major version upgrade.
+- Keycloak's `realm-admin` role grants significant power to the tenant admin ? the scope (restricted to their realm) must be confirmed on every Keycloak major version upgrade.
 
 ## Migration path from current state
 
@@ -524,7 +524,7 @@ AI used: Yes
 
 ## Validation / evidence
 
-Evidence level: Decision — implementation evidence tracked in ACTION-REGISTER.
+Evidence level: Decision ? implementation evidence tracked in ACTION-REGISTER.
 
 ## Impacted areas
 
@@ -535,7 +535,7 @@ Evidence level: Decision — implementation evidence tracked in ACTION-REGISTER.
 - Secret management: Keycloak admin service account per tenant realm
 - `packages/adapters-keycloak`: add UMA ticket evaluation + Admin API client methods
 - Tiltfile: no change (Keycloak provisioning already handles this)
-- E2E tests: add tests for runtime policy change → immediate effect verification
+- E2E tests: add tests for runtime policy change ? immediate effect verification
 
 ## Follow-up actions
 

@@ -1,6 +1,9 @@
-# production.tfvars.example — placeholder values only
+# production.tfvars.example ? placeholder values only
 # Copy to production.tfvars and fill in real values (gitignored).
 # Do not commit real secrets.
+#
+# ADR-0033: APEX_DOMAIN = aldous.info
+#   KC_HOSTNAME = https://aldous.info/kc
 
 keycloak_url      = "http://localhost:8080"
 keycloak_realm    = "platform-production"
@@ -9,6 +12,14 @@ keycloak_client   = "platform-spa-production"
 # Environment-specific redirect URIs
 redirect_uris  = ["http://localhost:5173/*"]
 web_origins    = ["http://localhost:5173"]
+
+# Keycloak frontend hostname (determines token issuer)
+# For production behind Cloudflare: https://aldous.info/kc
+kc_hostname = "https://aldous.info/kc"
+
+# Apex domain for FQDN-based tenant routing
+# Production: *.aldous.info resolves to the Caddy
+apex_domain = "aldous.info"
 
 # Set to true only for local/development to provision fixture users
 provision_fixture_users = false

@@ -51,7 +51,7 @@ function closeServer(server: http.Server): Promise<void> {
 }
 
 // ---------------------------------------------------------------------------
-// GET /auth/login — redirect to Keycloak
+// GET /auth/login ? redirect to Keycloak
 // ---------------------------------------------------------------------------
 
 describe("GET /auth/login", () => {
@@ -116,7 +116,7 @@ describe("GET /auth/login", () => {
     assert.equal(res.status, 302);
   });
 
-  it("rejects absolute returnTo — falls back to /", async () => {
+  it("rejects absolute returnTo ? falls back to /", async () => {
     const res = await fetch(`${url}/auth/login?returnTo=https://evil.example.com`, {
       redirect: "manual",
     });
@@ -133,10 +133,10 @@ describe("GET /auth/login", () => {
 });
 
 // ---------------------------------------------------------------------------
-// GET /auth/callback — error paths
+// GET /auth/callback ? error paths
 // ---------------------------------------------------------------------------
 
-describe("GET /auth/callback — error paths", () => {
+describe("GET /auth/callback ? error paths", () => {
   let server: http.Server;
   let url: string;
 
@@ -234,10 +234,10 @@ describe("POST /auth/logout", () => {
 });
 
 // ---------------------------------------------------------------------------
-// GET /api/session — fixture regression
+// GET /api/session ? fixture regression
 // ---------------------------------------------------------------------------
 
-describe("GET /api/session — fixture session regression", () => {
+describe("GET /api/session ? fixture session regression", () => {
   let server: http.Server;
   let url: string;
   let savedEnv: string | undefined;

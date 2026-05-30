@@ -79,7 +79,7 @@ quality test packages must not be imported by production packages
 operations packages own server-side runtime concerns: API serving, workers, config, sessions, auth, queues, storage, email, notifications, and search
 operations platform packages (security-auth, observability, queue-runtime, storage-runtime, audit-events, config-runtime, email-runtime, notification-runtime, search-runtime) define interfaces; adapters implement them
 operations adapter packages (adapters-keycloak, adapters-redis, adapters-sentry, adapters-opentelemetry, adapters-object-storage) must not be imported by feature or domain packages
-session-runtime and security-auth must not be imported by feature packages — only by runtime (api-runtime) and application packages
+session-runtime and security-auth must not be imported by feature packages ? only by runtime (api-runtime) and application packages
 
 delivery packages are not runtime dependencies of any production package
 delivery packages (dev-services, tooling-docker, tooling-terraform, tooling-ci, infra-aws) are consumed by the delivery pipeline, not by platform code

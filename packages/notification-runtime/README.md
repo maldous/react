@@ -119,7 +119,7 @@ None
 
 ## Operational notes
 
-- Delivery is best-effort by default — channels that require at-least-once must be backed by queue-runtime
+- Delivery is best-effort by default ? channels that require at-least-once must be backed by queue-runtime
 - Notification payloads must not contain PII beyond what is necessary for delivery
 
 ## Governance

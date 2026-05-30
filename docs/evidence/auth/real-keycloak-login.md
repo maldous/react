@@ -22,10 +22,10 @@ end-to-end evidence of the platform's authentication flow against the local
 
 | Layer | Proof |
 | --- | --- |
-| Browser → Caddy | Caddy serves aldous.info on port 80; virtual host routing confirmed |
-| Caddy → Keycloak | `/kc/*` proxied to keycloak:8080; Keycloak login form rendered |
-| Keycloak → platform-api | PKCE code exchange at `/auth/callback` succeeds |
-| platform-api → Redis | Session stored with roles/permissions; visible in `/api/session` |
+| Browser ? Caddy | Caddy serves aldous.info on port 80; virtual host routing confirmed |
+| Caddy ? Keycloak | `/kc/*` proxied to keycloak:8080; Keycloak login form rendered |
+| Keycloak ? platform-api | PKCE code exchange at `/auth/callback` succeeds |
+| platform-api ? Redis | Session stored with roles/permissions; visible in `/api/session` |
 | Cookie | `platform_session` not accessible via `document.cookie` (HttpOnly) |
 | Logout | `/auth/logout` POST clears session; `/api/session` returns 401 |
 | forward_auth | Unauthenticated tool route returns 401/403; authenticated system-admin passes |

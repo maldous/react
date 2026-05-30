@@ -78,7 +78,7 @@ export function validateMembership(membership: Partial<Membership>): string[] {
 }
 
 // ---------------------------------------------------------------------------
-// Permission resolution — ADR-0021
+// Permission resolution ? ADR-0021
 //
 // Permissions are the authoritative enforcement primitive. Roles are
 // convenience bundles that map to a fixed permission set. This function is
@@ -129,7 +129,58 @@ export function resolvePermissions(role: AnyRole): string[] {
   return ROLE_PERMISSION_MAP[role] ?? [];
 }
 
-// Validates that an Organisation slug is well-formed
+// ---------------------------------------------------------------------------
+// Reserved slugs ? must never be used as tenant slugs to prevent domain
+// conflicts with platform environments and tool subdomains.
+//
+// These slugs would collide with Caddy-routed subdomains or environment
+// apex domains (ADR-0033). If a tenant claimed "staging.aldous.info" it
+// would shadow the real staging environment.
+// ---------------------------------------------------------------------------
+export const RESERVED_SLUGS = new Set([
+  // Environment apex domains (ADR-0033)
+  "staging",
+  "prod",
+  "dev",
+  "test",
+  // Caddy-routed tool subdomains (compose.yaml profiles, Caddyfile)
+  "kc",
+  "keycloak",
+  "mailpit",
+  "minio",
+  "sonar",
+  "sonarqube",
+  "wiremock",
+  "clickhouse",
+  "sentry",
+  "otel",
+  "opentelemetry",
+  // Common infrastructure subdomains
+  "admin",
+  "api",
+  "www",
+  "mail",
+  "app",
+  "auth",
+  "account",
+  "help",
+  "status",
+  "docs",
+  "health",
+  "monitor",
+  "assets",
+  "static",
+  "support",
+]);
+
+/**
+ * Check whether a slug is reserved and cannot be used as a tenant slug.
+ */
+export function isSlugReserved(slug: string): boolean {
+  return RESERVED_SLUGS.has(slug);
+}
+
+// Validates that an Organisation slug is well-formed and not reserved
 export function validateOrganisationSlug(slug: string): string[] {
   const errors: string[] = [];
   if (!slug || slug.trim().length === 0) errors.push("slug is required");
@@ -138,5 +189,7 @@ export function validateOrganisationSlug(slug: string): string[] {
   if (slug.startsWith("-") || slug.endsWith("-"))
     errors.push("slug must not start or end with a hyphen");
   if (slug.length < 2 || slug.length > 63) errors.push("slug must be between 2 and 63 characters");
+  if (RESERVED_SLUGS.has(slug))
+    errors.push(`"${slug}" is reserved and cannot be used as a tenant slug`);
   return errors;
 }

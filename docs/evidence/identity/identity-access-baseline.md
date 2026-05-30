@@ -6,13 +6,13 @@ Ratified identity, tenancy, roles, permissions model, and SSO boundary before th
 
 ## Governance
 
-- ADR-0021 (identity, tenancy, roles, permissions — accepted)
-- ADR-0022 (authentication, session, SSO boundary — accepted)
-- ADR-ACT-0105 (Open — identity/access-control contracts and domain primitives)
-- ADR-ACT-0106 (Open — platform-auth/session boundary primitives)
-- ADR-ACT-0107 (Open — protected route and API guard primitives)
-- ADR-ACT-0108 (Open — Keycloak adapter skeleton)
-- ADR-ACT-0008 (Open — updated: authenticated organisation profile slice)
+- ADR-0021 (identity, tenancy, roles, permissions ? accepted)
+- ADR-0022 (authentication, session, SSO boundary ? accepted)
+- ADR-ACT-0105 (Open ? identity/access-control contracts and domain primitives)
+- ADR-ACT-0106 (Open ? platform-auth/session boundary primitives)
+- ADR-ACT-0107 (Open ? protected route and API guard primitives)
+- ADR-ACT-0108 (Open ? Keycloak adapter skeleton)
+- ADR-ACT-0008 (Open ? updated: authenticated organisation profile slice)
 - Committed: 2026-05-28
 
 ## Identity model
@@ -21,20 +21,20 @@ Ratified identity, tenancy, roles, permissions model, and SSO boundary before th
 
 | Entity | Purpose |
 | --- | --- |
-| `User` | Internal platform identity — stable UUID, independent of any IdP |
+| `User` | Internal platform identity ? stable UUID, independent of any IdP |
 | `ExternalIdentity` | Maps SSO provider subject to internal User (provider + providerSubject) |
-| `Organisation` | Multi-tenant boundary — tenantId/organisationId |
+| `Organisation` | Multi-tenant boundary ? tenantId/organisationId |
 | `Membership` | User relationship to an Organisation with a tenant-scoped Role |
 | `Role` | Named bundle of Permissions (global or tenant-scoped) |
-| `Permission` | Atomic authorisation string code — the enforcement primitive |
+| `Permission` | Atomic authorisation string code ? the enforcement primitive |
 | `SessionActor` | Runtime-safe projection of authenticated actor context for RuntimeContext |
 
 ### Key rules
 
-- A User is not the same as an external login — `ExternalIdentity` bridges the two.
+- A User is not the same as an external login ? `ExternalIdentity` bridges the two.
 - A User gains access through `Membership`. Roles are assigned through Membership.
 - One User can belong to multiple Organisations (multiple Memberships).
-- `SessionActor` is a plain value object — never mutated, never holds tokens.
+- `SessionActor` is a plain value object ? never mutated, never holds tokens.
 
 ## Role model
 
@@ -72,11 +72,11 @@ Ratified identity, tenancy, roles, permissions model, and SSO boundary before th
 ### Enforcement rules
 
 - **Permissions are the authoritative enforcement primitive.** Role checks are convenience shorthands.
-- UI checks hide/show controls (convenience only — not enforcement).
+- UI checks hide/show controls (convenience only ? not enforcement).
 - API guards enforce permissions before calling use cases.
 - Use cases enforce business permissions before executing domain operations.
 - Domain layer does not trust any frontend check.
-- `tenantId` always comes from the verified session — never from client-supplied parameters.
+- `tenantId` always comes from the verified session ? never from client-supplied parameters.
 
 ## SSO boundary
 
@@ -105,13 +105,13 @@ Keycloak is an **adapter**, not the domain model. `packages/adapters-keycloak` i
 
 - Holds `SessionActor` value from `/api/session` in TanStack Query cache.
 - Does not hold, persist, or decode tokens.
-- On 401: TanStack Query retry → redirect to `/auth/login`.
+- On 401: TanStack Query retry ? redirect to `/auth/login`.
 - No raw tokens in Zustand or localStorage.
 
 ### RuntimeContext derivation (per-request)
 
 ```text
-Session cookie → Redis lookup → SessionActor →
+Session cookie ? Redis lookup ? SessionActor ?
   RuntimeContext { requestId, traceId, actorId, tenantId, permissions }
 ```
 
@@ -121,8 +121,8 @@ RuntimeContext is derived fresh on every authenticated request and never mutated
 
 | Package | Type | State |
 | --- | --- | --- |
-| `packages/contracts-auth` | Contract (Zod, zero @platform deps) | Planned — ADR-ACT-0105 |
-| `packages/domain-identity` | Domain (no HTTP, no adapters) | Planned — ADR-ACT-0105 |
+| `packages/contracts-auth` | Contract (Zod, zero @platform deps) | Planned ? ADR-ACT-0105 |
+| `packages/domain-identity` | Domain (no HTTP, no adapters) | Planned ? ADR-ACT-0105 |
 | `packages/access-control` | Interface (existing, zero @platform deps) | Exists |
 | `packages/session-runtime` | Platform interface (existing) | Exists |
 | `packages/adapters-keycloak` | Adapter (existing) | Exists (skeleton) |
@@ -135,24 +135,24 @@ The first vertical slice proves:
 
 ```text
 React protected route (organisation.read permission check)
-→ useSession() → SessionActor from TanStack Query
-→ useOrganisationProfile() → TanStack Query feature hook
-→ contract client → BFF/API route
-→ API guard (organisation.read permission enforcement)
-→ use case (getOrganisationProfile)
-→ domain logic (Organisation entity validation)
-→ Postgres adapter (read from adapters-postgres)
-→ local Postgres (localhost:5433 via Compose)
-→ structured logs with requestId/traceId/actorId/tenantId
-→ UI renders read-only (viewer) or editable (tenant-admin) state
+? useSession() ? SessionActor from TanStack Query
+? useOrganisationProfile() ? TanStack Query feature hook
+? contract client ? BFF/API route
+? API guard (organisation.read permission enforcement)
+? use case (getOrganisationProfile)
+? domain logic (Organisation entity validation)
+? Postgres adapter (read from adapters-postgres)
+? local Postgres (localhost:5433 via Compose)
+? structured logs with requestId/traceId/actorId/tenantId
+? UI renders read-only (viewer) or editable (tenant-admin) state
 ```
 
 Test cases required:
 
-1. **Permitted**: `tenant-admin` can load and edit organisation profile → 200 OK
-2. **Permitted read-only**: `viewer` can load but not edit → 200 OK, edit controls hidden
-3. **Forbidden**: authenticated user without Membership in this org → 403 ForbiddenError
-4. **Unauthenticated**: no session cookie → 401 UnauthorizedError (and redirect in React)
+1. **Permitted**: `tenant-admin` can load and edit organisation profile ? 200 OK
+2. **Permitted read-only**: `viewer` can load but not edit ? 200 OK, edit controls hidden
+3. **Forbidden**: authenticated user without Membership in this org ? 403 ForbiddenError
+4. **Unauthenticated**: no session cookie ? 401 UnauthorizedError (and redirect in React)
 
 ## Rejected alternatives
 
@@ -167,12 +167,12 @@ Test cases required:
 ## Commands run
 
 ```text
-make check                           → all quality gates pass
-npm run test:coverage                → 271/271 architecture tests pass
-npm run test:frontend:run            → 10/10 frontend tests pass
-node orchestrator all --strict       → 6/6 architecture tools passed
-npm run audit:deps                   → 0 vulnerabilities
-npm run audit:osv                    → 0 issues
+make check                           ? all quality gates pass
+npm run test:coverage                ? 271/271 architecture tests pass
+npm run test:frontend:run            ? 10/10 frontend tests pass
+node orchestrator all --strict       ? 6/6 architecture tools passed
+npm run audit:deps                   ? 0 vulnerabilities
+npm run audit:osv                    ? 0 issues
 ```
 
 ## ADR-ACT-0008 status

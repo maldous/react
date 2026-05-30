@@ -11,9 +11,9 @@ that supports authentication guards, permission checks, and safe error serialisa
 
 ## Implementation
 
-- `apps/platform-api/src/server/pipeline.ts` — `createRouter()`, `parseJsonBody()`,
+- `apps/platform-api/src/server/pipeline.ts` ? `createRouter()`, `parseJsonBody()`,
   `jsonResponse()`, `generateRequestId()`, `Route`, `PipelineRequest`, `PipelineResponse` types.
-- `apps/platform-api/src/server/http.ts` — updated to use `createRouter` from pipeline.ts.
+- `apps/platform-api/src/server/http.ts` ? updated to use `createRouter` from pipeline.ts.
 
 ## Capabilities implemented
 
@@ -25,7 +25,7 @@ that supports authentication guards, permission checks, and safe error serialisa
 | Auth guard | `requiresAuth` flag checks `getFixtureSession()`; 401 if no session |
 | Permission guard | `requiredPermission` field; 403 if permission missing |
 | Safe error serialisation | Handler exceptions caught; `toSafeResponse()` strips internal details |
-| CORS | `Access-Control-Allow-Origin: *` on all responses; OPTIONS → 204 |
+| CORS | `Access-Control-Allow-Origin: *` on all responses; OPTIONS ? 204 |
 | Structured logging | `createLogger` from `@platform/platform-logging`; child logger per request |
 
 ## Tests
@@ -36,11 +36,11 @@ Location: `apps/platform-api/tests/substrate/api-pipeline.test.ts`
 
 1. 404 for unknown path
 2. 405 for wrong method
-3. Malformed JSON body → 400
-4. `requiresAuth=true` without session → 401
-5. `requiresAuth=true` with session but missing permission → 403
-6. Successful handler → 200
-7. Handler that throws → 500, no internal details leaked
+3. Malformed JSON body ? 400
+4. `requiresAuth=true` without session ? 401
+5. `requiresAuth=true` with session but missing permission ? 403
+6. Successful handler ? 200
+7. Handler that throws ? 500, no internal details leaked
 8. `X-Request-Id` header present in response
 
 ## Gate compliance

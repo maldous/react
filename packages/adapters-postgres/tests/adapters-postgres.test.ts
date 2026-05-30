@@ -12,7 +12,7 @@ import {
 } from "../src/index.ts";
 
 // ---------------------------------------------------------------------------
-// Fake pool for unit tests — no real Postgres required
+// Fake pool for unit tests ? no real Postgres required
 // ---------------------------------------------------------------------------
 
 function makeFakePool(rows: Record<string, unknown>[]) {
@@ -26,7 +26,7 @@ function makeFakePool(rows: Record<string, unknown>[]) {
 }
 
 // ---------------------------------------------------------------------------
-// PostgresOrganisationRepository — unit tests
+// PostgresOrganisationRepository ? unit tests
 // ---------------------------------------------------------------------------
 
 describe("PostgresOrganisationRepository", () => {
@@ -60,7 +60,7 @@ describe("PostgresOrganisationRepository", () => {
 });
 
 // ---------------------------------------------------------------------------
-// PostgresReadinessAdapter — construction
+// PostgresReadinessAdapter ? construction
 // ---------------------------------------------------------------------------
 
 describe("PostgresReadinessAdapter", () => {
@@ -71,7 +71,7 @@ describe("PostgresReadinessAdapter", () => {
 });
 
 // ---------------------------------------------------------------------------
-// tenantSchemaIdentifier — validation
+// tenantSchemaIdentifier ? validation
 // ---------------------------------------------------------------------------
 
 describe("tenantSchemaIdentifier", () => {
@@ -97,7 +97,7 @@ describe("tenantSchemaIdentifier", () => {
 });
 
 // ---------------------------------------------------------------------------
-// UUID_V4_RE — exported pattern
+// UUID_V4_RE ? exported pattern
 // ---------------------------------------------------------------------------
 
 describe("UUID_V4_RE", () => {
@@ -113,7 +113,7 @@ describe("UUID_V4_RE", () => {
 });
 
 // ---------------------------------------------------------------------------
-// withTenant / withTenantActor / withSystemAdmin — context setting
+// withTenant / withTenantActor / withSystemAdmin ? context setting
 //
 // These tests use a spy pool to verify the exact SQL SET LOCAL statements
 // are issued in the correct order. No real Postgres required.
@@ -214,7 +214,7 @@ describe("withSystemAdmin", () => {
     assert.ok(setBypass?.text.includes("true"), "bypass_rls must be set to true");
   });
 
-  it("does NOT set search_path (cross-tenant — no schema selected)", async () => {
+  it("does NOT set search_path (cross-tenant ? no schema selected)", async () => {
     const { calls, pool } = makeSpyPool();
     await withSystemAdmin(pool as never, async () => {});
     assert.ok(
@@ -225,7 +225,7 @@ describe("withSystemAdmin", () => {
 });
 
 // ---------------------------------------------------------------------------
-// queryTenantSchema — transaction order and rollback
+// queryTenantSchema ? transaction order and rollback
 // ---------------------------------------------------------------------------
 
 describe("queryTenantSchema", () => {

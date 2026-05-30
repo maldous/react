@@ -65,7 +65,7 @@ tools/architecture/validate-source-imports/
 
 | Module         | Responsibility                                                                             |
 | -------------- | ------------------------------------------------------------------------------------------ |
-| `index.mjs`    | CLI entry, arg parsing, orchestration of scan → validate → report cycle, ADR-0011 contract |
+| `index.mjs`    | CLI entry, arg parsing, orchestration of scan ? validate ? report cycle, ADR-0011 contract |
 | `rules.mjs`    | Encodes the full boundary rule matrix from `import-boundary-rules.md`                      |
 | `scanner.mjs`  | File walker + regex import extractor, package identification by nearest `package.json`     |
 | `reporter.mjs` | JSON/Markdown report construction, self-evidence emission                                  |
@@ -107,7 +107,7 @@ Universal rules (applied to every package):
 
 | Rule ID                   | Description                                                      |
 | ------------------------- | ---------------------------------------------------------------- |
-| `no-deep-import`          | No `@platform/<x>/<anything>` — only bare package import allowed |
+| `no-deep-import`          | No `@platform/<x>/<anything>` ? only bare package import allowed |
 | `no-test-support-in-prod` | Non-test source files must not import `@platform/test-support`   |
 
 Per-package rules (subset shown; full set in `rules.mjs`):
@@ -137,7 +137,7 @@ re-export:       export\s+(?:\*|\{[^}]*\})\s+from\s+['"]([^'"]+)['"]
 dynamic import:  import\s*\(\s*['"]([^'"]+)['"]\s*\)
 ```
 
-Dynamic imports with runtime-computed paths (template literals, variables) are not matched and are therefore not checked — this is acceptable for a governance tool targeting static structure.
+Dynamic imports with runtime-computed paths (template literals, variables) are not matched and are therefore not checked ? this is acceptable for a governance tool targeting static structure.
 
 ### Package identification
 
@@ -157,11 +157,11 @@ Test files are excluded from the `no-test-support-in-prod` rule only. All other 
 
 ### File extensions scanned
 
-`.ts`, `.tsx`, `.js`, `.mjs`, `.cjs` — excludes `.d.ts` declaration files.
+`.ts`, `.tsx`, `.js`, `.mjs`, `.cjs` ? excludes `.d.ts` declaration files.
 
 ### Directories skipped
 
-`node_modules`, `dist`, `build`, `.git`, `coverage` — same ignored-set pattern as `validate-package-metadata`.
+`node_modules`, `dist`, `build`, `.git`, `coverage` ? same ignored-set pattern as `validate-package-metadata`.
 
 ---
 
@@ -222,10 +222,10 @@ Each valid fixture is a directory containing a `package.json` (minimal: `name`, 
 
 | Fixture                    | What it validates                                                                                  |
 | -------------------------- | -------------------------------------------------------------------------------------------------- |
-| `valid/domain-core/`       | domain-core with zero imports — passes all rules                                                   |
-| `valid/feature-workflow/`  | feature-workflow importing `@platform/ui-design-system` and `@platform/domain-core` — permitted    |
-| `valid/access-control/`    | access-control importing `@platform/domain-core` and `@platform/profile-configuration` — permitted |
-| `valid/contracts-graphql/` | contracts-graphql with no adapter imports — permitted                                              |
+| `valid/domain-core/`       | domain-core with zero imports ? passes all rules                                                   |
+| `valid/feature-workflow/`  | feature-workflow importing `@platform/ui-design-system` and `@platform/domain-core` ? permitted    |
+| `valid/access-control/`    | access-control importing `@platform/domain-core` and `@platform/profile-configuration` ? permitted |
+| `valid/contracts-graphql/` | contracts-graphql with no adapter imports ? permitted                                              |
 
 ### Invalid fixtures
 
@@ -255,14 +255,14 @@ The orchestrator's `all` command plan is updated to include `validate-source-imp
 
 ```text
 validate-package-metadata
-  → validate-source-imports    ← new, required
-  → generate-package-readmes   (--check, optional)
-  → generate-package-inventory (--check, optional)
-  → generate-lifecycle-reports (--check, optional)
-  → validate-lifecycle-evidence
+  ? validate-source-imports    ? new, required
+  ? generate-package-readmes   (--check, optional)
+  ? generate-package-inventory (--check, optional)
+  ? generate-lifecycle-reports (--check, optional)
+  ? validate-lifecycle-evidence
 ```
 
-The `validate` command (metadata only) remains unchanged — source scanning requires explicit `all` or direct invocation.
+The `validate` command (metadata only) remains unchanged ? source scanning requires explicit `all` or direct invocation.
 
 Orchestrator `package.json` `dependsOn` is updated to include `@architecture/validate-source-imports`.
 
@@ -290,8 +290,8 @@ Evidence column for ADR-ACT-0007: `Source import boundary scanning implemented i
 
 ## Non-goals and constraints
 
-- Do not parse TypeScript types — specifiers only
+- Do not parse TypeScript types ? specifiers only
 - Do not validate third-party dependency boundaries beyond universal rules: non-`@platform/*` specifiers are checked only for universal rules (`no-deep-import`, `no-test-support-in-prod`); no attempt is made to enforce allowed/forbidden third-party packages at the per-package level
-- Do not add any runtime dependencies — regex only, zero `node_modules`
-- Do not alter `validate-package-metadata` — it remains metadata-only
-- Do not generate a new ADR — all rules derive from existing accepted ADRs
+- Do not add any runtime dependencies ? regex only, zero `node_modules`
+- Do not alter `validate-package-metadata` ? it remains metadata-only
+- Do not generate a new ADR ? all rules derive from existing accepted ADRs

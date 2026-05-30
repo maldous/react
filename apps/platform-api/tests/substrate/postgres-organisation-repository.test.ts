@@ -54,7 +54,7 @@ describe("PostgresOrganisationRepository", () => {
       assert.equal(result, null);
     });
 
-    it("does not throw for missing org — returns null", async () => {
+    it("does not throw for missing org ? returns null", async () => {
       await assert.doesNotReject(() => repo.getById("00000000-0000-0000-0000-000000000099"));
     });
   });
@@ -80,7 +80,7 @@ describe("PostgresOrganisationRepository", () => {
       assert.equal(result, null);
     });
 
-    it("does not throw for missing org — returns null", async () => {
+    it("does not throw for missing org ? returns null", async () => {
       await assert.doesNotReject(() =>
         repo.updateDisplayName("00000000-0000-0000-0000-000000000099", "Ghost")
       );

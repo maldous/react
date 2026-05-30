@@ -18,7 +18,7 @@ export function getHealth(): HealthResponse {
 /**
  * Readiness probe.
  *
- * SQL is owned by the PostgresReadinessAdapter — server/ contains no raw SQL.
+ * SQL is owned by the PostgresReadinessAdapter ? server/ contains no raw SQL.
  * `postgresUrl` may be passed in by tests; production uses the shared
  * composition root in dependencies.ts.
  */

@@ -57,7 +57,7 @@ Public exports only: true
 Deep imports allowed: false
 ```
 
-- Import from @platform/platform-runtime-context — public exports only
+- Import from @platform/platform-runtime-context ? public exports only
 
 ## Boundaries
 

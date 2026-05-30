@@ -119,8 +119,8 @@ None
 
 ## Operational notes
 
-- Queue name changes require coordinated migration — names are part of the topology contract
-- Exactly-once delivery is not guaranteed by default — idempotent job processors are required
+- Queue name changes require coordinated migration ? names are part of the topology contract
+- Exactly-once delivery is not guaranteed by default ? idempotent job processors are required
 
 ## Governance
 

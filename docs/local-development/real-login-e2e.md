@@ -1,15 +1,15 @@
-# Real Keycloak Login E2E — Local Setup
+# Real Keycloak Login E2E ? Local Setup
 
 This guide explains how to run the real browser login E2E tests against
 `http://aldous.info` locally. These tests exercise the full auth flow:
 
 ```text
-browser → React login page → Caddy → /auth/login → Keycloak realm
-       → PKCE callback → platform-api session → Redis → HTTP-only cookie
-       → React landing page
+browser ? React login page ? Caddy ? /auth/login ? Keycloak realm
+       ? PKCE callback ? platform-api session ? Redis ? HTTP-only cookie
+       ? React landing page
 ```
 
-No `LOCAL_FIXTURE_SESSION` is used — every test performs a real login.
+No `LOCAL_FIXTURE_SESSION` is used ? every test performs a real login.
 
 ---
 

@@ -40,7 +40,7 @@
       "boundedContext": "graphql-server",
       "lifecycleClass": "active.platform",
       "owner": "team-platform",
-      "rationale": "GraphQL server has distinct dependencies (schema stitching, DataLoader, persisted queries) and is consumed only by application packages — separate from the generic HTTP runtime.",
+      "rationale": "GraphQL server has distinct dependencies (schema stitching, DataLoader, persisted queries) and is consumed only by application packages ? separate from the generic HTTP runtime.",
       "fiveTestResults": {
         "stableOwnership": true,
         "differentDependencyRules": true,
@@ -85,7 +85,7 @@
       "boundedContext": "session-service",
       "lifecycleClass": "active.platform",
       "owner": "team-security",
-      "rationale": "Session management crosses auth, Redis, and request context — distinct from security-auth (which defines the interface) and adapters-redis (which owns the connection). Security team ownership.",
+      "rationale": "Session management crosses auth, Redis, and request context ? distinct from security-auth (which defines the interface) and adapters-redis (which owns the connection). Security team ownership.",
       "fiveTestResults": {
         "stableOwnership": true,
         "differentDependencyRules": true,
@@ -190,7 +190,7 @@
       "boundedContext": "cache-queue-redis",
       "lifecycleClass": "active.adapter",
       "owner": "team-adapter",
-      "rationale": "Redis serves both cache (sessions) and queue (BullMQ) concerns. Consolidating both into one adapter is justified — both consumers are platform packages, not feature packages.",
+      "rationale": "Redis serves both cache (sessions) and queue (BullMQ) concerns. Consolidating both into one adapter is justified ? both consumers are platform packages, not feature packages.",
       "fiveTestResults": {
         "stableOwnership": true,
         "differentDependencyRules": true,
@@ -220,7 +220,7 @@
       "boundedContext": "telemetry",
       "lifecycleClass": "active.adapter",
       "owner": "team-platform",
-      "rationale": "OpenTelemetry must be initialized before all other imports for auto-instrumentation — that startup concern is distinct from Sentry's error capture and warrants separation.",
+      "rationale": "OpenTelemetry must be initialized before all other imports for auto-instrumentation ? that startup concern is distinct from Sentry's error capture and warrants separation.",
       "fiveTestResults": {
         "stableOwnership": true,
         "differentDependencyRules": true,
@@ -295,7 +295,7 @@
       "boundedContext": "ci-pipeline",
       "lifecycleClass": "active.tooling",
       "owner": "team-platform",
-      "rationale": "CI/CD pipeline definitions are the top-level delivery orchestrator — they invoke Docker builds, Terraform applies, and architecture governance checks. Distinct ownership from infrastructure.",
+      "rationale": "CI/CD pipeline definitions are the top-level delivery orchestrator ? they invoke Docker builds, Terraform applies, and architecture governance checks. Distinct ownership from infrastructure.",
       "fiveTestResults": {
         "stableOwnership": true,
         "differentDependencyRules": true,
@@ -327,7 +327,7 @@
       "boundedContext": "email-service",
       "lifecycleClass": "active.platform",
       "owner": "team-platform",
-      "rationale": "Email send interface is a stable abstraction point consumed by multiple feature packages. Provider swap (e.g. Brevo → SES) requires only a new adapter — zero feature package changes.",
+      "rationale": "Email send interface is a stable abstraction point consumed by multiple feature packages. Provider swap (e.g. Brevo ? SES) requires only a new adapter ? zero feature package changes.",
       "fiveTestResults": { "stableOwnership": true, "differentDependencyRules": true, "differentRuntimeConcerns": false, "differentValidationNeeds": false, "likelyReuse": true }
     },
     {

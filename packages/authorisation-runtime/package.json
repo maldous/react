@@ -2,7 +2,7 @@
   "name": "@platform/authorisation-runtime",
   "version": "0.1.0",
   "private": true,
-  "description": "Authorisation port interfaces: resource access decisions (UMA), realm admin operations, and resource policy management. Zero @platform dependencies — leaf port node.",
+  "description": "Authorisation port interfaces: resource access decisions (UMA), realm admin operations, and resource policy management. Zero @platform dependencies ? leaf port node.",
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
@@ -82,7 +82,7 @@
     },
     "readme": {
       "generated": true,
-      "summary": "Authorisation port interfaces for resource access (UMA/PEP pattern) and realm administration. Zero @platform dependencies — this is a leaf port node.",
+      "summary": "Authorisation port interfaces for resource access (UMA/PEP pattern) and realm administration. Zero @platform dependencies ? this is a leaf port node.",
       "responsibilities": [
         "Define AuthorisationPort for UMA-based per-resource access decisions",
         "Define RealmAdminPort for tenant realm configuration (IdP, MFA, session, policies)",
@@ -99,7 +99,7 @@
         "adapters-keycloak implements both AuthorisationPort and RealmAdminPort"
       ],
       "operationalNotes": [
-        "Zero @platform/* dependencies required — this package must remain a leaf node to avoid import boundary violations"
+        "Zero @platform/* dependencies required ? this package must remain a leaf node to avoid import boundary violations"
       ]
     }
   }

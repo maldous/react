@@ -2,7 +2,7 @@ import pino from "pino";
 
 export const packageName = "@platform/platform-logging";
 
-/** Pino redaction paths per ADR-0020 §3. */
+/** Pino redaction paths per ADR-0020 ?3. */
 export const redactionPaths: string[] = [
   "password",
   "passwordHash",

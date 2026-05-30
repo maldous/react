@@ -1,8 +1,8 @@
 # docker/caddy/Caddyfile
 #
 # Two virtual hosts:
-#   aldous.info        — super-global admin console + all developer/operational UIs
-#   *.aldous.info      — per-tenant application + tenant-scoped admin UIs
+#   aldous.info        ? super-global admin console + all developer/operational UIs
+#   *.aldous.info      ? per-tenant application + tenant-scoped admin UIs
 #
 # TLS termination: Cloudflare handles HTTPS; Caddy listens on :80.
 # Forward auth: all admin/tool routes check session via platform-api before proxying.
@@ -12,27 +12,74 @@
 # ADR-0030: forward_auth enforces Keycloak UMA resource policies on all tool routes.
 
 # ---------------------------------------------------------------------------
-# Platform-api reverse proxy snippet — forwards scheme from Cloudflare.
+# Global options ? trust Cloudflare IP ranges for X-Forwarded-* headers.
 #
-# Cloudflare terminates TLS and forwards HTTP to Caddy (:80). Caddy would
-# normally replace X-Forwarded-Proto with "http" (its own connection scheme).
-# platform-api uses X-Forwarded-Proto to build HTTPS auth redirect URIs for
-# production. We preserve the upstream value so the correct scheme propagates.
+# When trusted_proxies is configured, Caddy's {scheme} placeholder reflects
+# the original client scheme (https) from the trusted upstream. Clients that
+# connect directly (not via Cloudflare) cannot spoof X-Forwarded-Proto because
+# their IP is not in the trusted list ? Caddy uses the raw connection scheme.
+#
+# Cloudflare IP ranges: https://www.cloudflare.com/ips/
 # ---------------------------------------------------------------------------
-(platform_api_proxy) {
-	reverse_proxy platform-api:3001 {
-		header_up X-Forwarded-Proto {http.request.header.X-Forwarded-Proto}
+{
+	servers {
+		# Trust Cloudflare edge IPs and private/loopback ranges.
+		# Private ranges cover cloudflared tunnel (connects from 127.0.0.1) and
+		# Docker-internal networking (172.16-31.x.x). Cloudflare edge IPs are
+		# listed explicitly so X-Forwarded-Proto: https is trusted from them too.
+		# When trusted, Caddy's {scheme} reflects the original client scheme.
+		trusted_proxies static \
+			127.0.0.1/8 \
+			::1/128 \
+			10.0.0.0/8 \
+			172.16.0.0/12 \
+			192.168.0.0/16 \
+			103.21.244.0/22 \
+			103.22.200.0/22 \
+			103.31.4.0/22 \
+			104.16.0.0/13 \
+			104.24.0.0/14 \
+			108.162.192.0/18 \
+			131.0.72.0/22 \
+			141.101.64.0/18 \
+			162.158.0.0/15 \
+			172.64.0.0/13 \
+			173.245.48.0/20 \
+			188.114.96.0/20 \
+			190.93.240.0/20 \
+			197.234.240.0/22 \
+			198.41.128.0/17 \
+			2400:cb00::/32 \
+			2606:4700::/32 \
+			2803:f800::/32 \
+			2405:b500::/32 \
+			2405:8100::/32 \
+			2a06:98c0::/29 \
+			2c0f:f248::/32
 	}
 }
 
 # ---------------------------------------------------------------------------
-# Forward auth snippet — reusable across all protected tool routes.
+# Platform-api reverse proxy snippet ? passes resolved scheme to platform-api.
+#
+# With trusted_proxies configured above, {scheme} reflects the original client
+# scheme when the request came from Cloudflare (https), or the raw connection
+# scheme otherwise (http for local dev). No client can spoof this.
+# ---------------------------------------------------------------------------
+(platform_api_proxy) {
+	reverse_proxy platform-api:3001 {
+		header_up X-Forwarded-Proto {scheme}
+	}
+}
+
+# ---------------------------------------------------------------------------
+# Forward auth snippet ? reusable across all protected tool routes.
 # platform-api returns 200 (allow), 401 (no session), or 403 (forbidden).
 # Caddy copies the Cookie header so platform-api can read the session.
 # ---------------------------------------------------------------------------
 # X-Internal-Secret prevents external callers from reaching /internal/auth/forward.
 # Set CADDY_INTERNAL_SECRET in the environment; platform-api validates it.
-# /internal/* is NOT exposed in the public virtual host blocks below — this is
+# /internal/* is NOT exposed in the public virtual host blocks below ? this is
 # defence in depth: the route simply doesn't exist externally, and the secret
 # provides a second check in case of future misconfiguration.
 (forward_auth_check) {
@@ -40,71 +87,75 @@
 		uri /internal/auth/forward?resource={args[0]}&scope={args[1]}
 		copy_headers Cookie
 		header_up X-Forwarded-Host {host}
-		header_up X-Forwarded-Proto {http.request.header.X-Forwarded-Proto}
+		header_up X-Forwarded-Proto {scheme}
 		header_up X-Internal-Secret {$CADDY_INTERNAL_SECRET}
 	}
 }
 
 # ---------------------------------------------------------------------------
-# Super-global admin — aldous.info (and localhost for local E2E without /etc/hosts)
+# Super-global admin ? aldous.info, localhost, dev.localhost, test.localhost
 # Hosts the platform admin SPA, all developer tooling, and operational UIs.
-# http://localhost allows make all to run e2e-web-smoke without /etc/hosts.
-# http://aldous.info handles production (via Cloudflare) and dev with /etc/hosts.
+#
+# http://localhost       ? legacy local dev (Tilt, compose smoke)
+# http://aldous.info     ? production (via Cloudflare) and dev with /etc/hosts
+# http://dev.localhost   ? local dev with auto-resolving .localhost TLD (ADR-0033)
+# http://test.localhost  ? test/CI environment with .localhost TLD
+#   No /etc/hosts needed ? .localhost resolves to 127.0.0.1 per RFC 6761.
 # ---------------------------------------------------------------------------
-http://aldous.info http://localhost {
-	# Keycloak realm endpoints — OAuth login, PKCE, JWKS, token exchange.
+http://aldous.info http://localhost http://dev.localhost http://test.localhost http://staging.aldous.info {
+	# Keycloak realm endpoints ? OAuth login, PKCE, JWKS, token exchange.
 	# These must be publicly reachable; Keycloak enforces its own auth internally.
 	handle /kc/realms/* {
 		reverse_proxy keycloak:8080
 	}
 
-	# Keycloak admin console — protected by platform forward_auth.
+	# Keycloak admin console ? protected by platform forward_auth.
 	handle /kc/* {
 		import forward_auth_check admin:keycloak read
 		reverse_proxy keycloak:8080
 	}
 
-	# Mailpit — all tenant email capture (dev only; graceful 502 if not running)
+	# Mailpit ? all tenant email capture (dev only; graceful 502 if not running)
 	handle /mailpit/* {
 		import forward_auth_check admin:mailpit read
 		uri strip_prefix /mailpit
 		reverse_proxy mailpit:8025
 	}
 
-	# SonarQube — code quality dashboard
+	# SonarQube ? code quality dashboard
 	handle /sonar/* {
 		import forward_auth_check admin:sonarqube read
 		reverse_proxy sonarqube:9000
 	}
 
-	# MinIO — object storage console
+	# MinIO ? object storage console
 	handle /minio/* {
 		import forward_auth_check admin:minio read
 		reverse_proxy minio:9001
 	}
 
-	# Sentry — error and performance monitoring dashboard
+	# Sentry ? error and performance monitoring dashboard
 	handle /sentry/* {
 		import forward_auth_check admin:sentry read
 		uri strip_prefix /sentry
 		reverse_proxy sentry-web:9000
 	}
 
-	# WireMock — external HTTP mock admin (dev only)
+	# WireMock ? external HTTP mock admin (dev only)
 	handle /wiremock/* {
 		import forward_auth_check admin:wiremock read
 		uri strip_prefix /wiremock
 		reverse_proxy wiremock:8080
 	}
 
-	# ClickHouse — analytics HTTP play UI
+	# ClickHouse ? analytics HTTP play UI
 	handle /clickhouse/* {
 		import forward_auth_check admin:clickhouse read
 		uri strip_prefix /clickhouse
 		reverse_proxy clickhouse:8123
 	}
 
-	# LocalStack — cloud mock (dev/staging only)
+	# LocalStack ? cloud mock (dev/staging only)
 	handle /localstack/* {
 		import forward_auth_check admin:localstack read
 		uri strip_prefix /localstack
@@ -115,8 +166,8 @@ http://aldous.info http://localhost {
 	# Access Tilt directly at http://localhost:10350 during local development.
 	# The Tiltfile exposes a direct link on the platform-api resource.
 
-	# BFF — platform admin API
-	# NOTE: /internal/* is intentionally NOT listed here — it must not be
+	# BFF ? platform admin API
+	# NOTE: /internal/* is intentionally NOT listed here ? it must not be
 	# externally reachable. Caddy calls platform-api:3001/internal/* directly
 	# via the forward_auth directive (Docker-internal network only).
 	handle /api/* {
@@ -144,23 +195,29 @@ http://aldous.info http://localhost {
 }
 
 # ---------------------------------------------------------------------------
-# Per-tenant — {slug}.aldous.info
+# Per-tenant ? {slug}.aldous.info, {slug}.dev.localhost, {slug}.test.localhost
+#
 # Each subdomain routes to the tenant's Keycloak realm and application.
-# Tenant-scoped admin UIs are path-prefixed here with tenant-filtered access.
+# .localhost variant works without /etc/hosts ? RFC 6761 resolves .localhost
+# to 127.0.0.1 automatically. Tenants provisioned at runtime via POST /api/admin/tenants
+# are immediately accessible here ? no container rebuild or Caddy reload needed.
+#
+# ADR-0029: FQDN-based tenant routing
+# ADR-0033: .localhost dev/test domain convention
 # ---------------------------------------------------------------------------
-http://*.aldous.info {
-	# Keycloak realm endpoints — publicly accessible (Keycloak handles its own auth)
+http://*.aldous.info http://*.dev.localhost http://*.test.localhost http://*.staging.aldous.info {
+	# Keycloak realm endpoints ? publicly accessible (Keycloak handles its own auth)
 	handle /kc/realms/* {
 		reverse_proxy keycloak:8080
 	}
 
-	# Keycloak admin console — tenant-scoped, protected
+	# Keycloak admin console ? tenant-scoped, protected
 	handle /kc/* {
 		import forward_auth_check admin:keycloak read
 		reverse_proxy keycloak:8080
 	}
 
-	# Mailpit — tenant-domain-filtered email view
+	# Mailpit ? tenant-domain-filtered email view
 	# platform-api forward auth verifies the user belongs to this tenant
 	# and only shows emails addressed to @{slug}.aldous.info.
 	handle /mailpit/* {
@@ -169,14 +226,14 @@ http://*.aldous.info {
 		reverse_proxy mailpit:8025
 	}
 
-	# Sentry — tenant project scoped view
+	# Sentry ? tenant project scoped view
 	handle /sentry/* {
 		import forward_auth_check admin:sentry read
 		uri strip_prefix /sentry
 		reverse_proxy sentry-web:9000
 	}
 
-	# BFF — /internal/* intentionally NOT listed (same reason as aldous.info block above)
+	# BFF ? /internal/* intentionally NOT listed (same reason as aldous.info block above)
 	handle /api/* {
 		import platform_api_proxy
 	}

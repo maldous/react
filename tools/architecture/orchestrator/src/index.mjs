@@ -169,6 +169,13 @@ export function buildStepCatalog(options, repoRoot) {
       repoRoot,
       true
     ),
+    pipelineComposition: step(
+      "validate-pipeline-composition",
+      "tools/architecture/validate-pipeline-composition",
+      ["--format", "json"],
+      repoRoot,
+      true
+    ),
   };
 }
 
@@ -189,6 +196,7 @@ export function planFor(command, options, repoRoot) {
       s.evidenceCheck,
       s.sliceReadiness,
       s.i18nValidation,
+      s.pipelineComposition,
     ];
   }
 

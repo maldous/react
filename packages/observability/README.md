@@ -49,7 +49,7 @@ Semver policy: internal-traceable
 
 - Does not implement a specific observability backend (owned by adapters-sentry, adapters-opentelemetry)
 - Does not own alerting rules or dashboards
-- Does not collect business metrics — only platform-level signals
+- Does not collect business metrics ? only platform-level signals
 
 ## Public exports and usage
 

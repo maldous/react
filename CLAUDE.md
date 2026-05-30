@@ -59,7 +59,7 @@ ClickHouse play        http://localhost:8124/play
 Tilt UI                http://localhost:10350
 ```
 
-Via Caddy (aldous.info super-global — requires `make compose-up-web`):
+Via Caddy (aldous.info super-global ? requires `make compose-up-web`):
 
 ```text
 App (super-admin)      http://aldous.info

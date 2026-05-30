@@ -46,7 +46,7 @@ Semver policy: internal-traceable
 
 ## Non-responsibilities
 
-- Does not fail the build — report-only until ADR-ACT-0121 and ADR-ACT-0122 complete
+- Does not fail the build ? report-only until ADR-ACT-0121 and ADR-ACT-0122 complete
 - Does not validate non-default locale files (future gate)
 
 ## Public exports and usage

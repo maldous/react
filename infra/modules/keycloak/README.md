@@ -9,27 +9,27 @@ Implemented in ADR-ACT-0110.
 
 ## Provider
 
-`mrparkers/keycloak ~> 4.4` — see `infra/env/local/versions.tf`.
+`mrparkers/keycloak ~> 4.4` ? see `infra/env/local/versions.tf`.
 
 ## What this module provisions
 
 | Resource                                         | Description                                                              |
 | ------------------------------------------------ | ------------------------------------------------------------------------ |
 | `keycloak_realm`                                 | Platform realm with token lifetimes and login policy                     |
-| `keycloak_openid_client.spa`                     | `platform-spa` — public, PKCE, React SPA client                          |
-| `keycloak_openid_client.bff`                     | `platform-api` — confidential, PKCE, BFF/API client (ADR-0022)           |
+| `keycloak_openid_client.spa`                     | `platform-spa` ? public, PKCE, React SPA client                          |
+| `keycloak_openid_client.bff`                     | `platform-api` ? confidential, PKCE, BFF/API client (ADR-0022)           |
 | `keycloak_openid_client_scope.platform_claims`   | Optional scope for organisationId claim                                  |
-| `keycloak_openid_user_attribute_protocol_mapper` | Maps `organisationId` user attribute → JWT claim                         |
-| `keycloak_role` × 5                              | `system-admin`, `tenant-admin`, `manager`, `member`, `viewer` (ADR-0021) |
-| `keycloak_user` × 3                              | Fixture users (local/dev only, gated by `provision_fixture_users`)       |
-| `keycloak_user_roles` × 2                        | Role assignments for admin (tenant-admin) and viewer fixture users       |
+| `keycloak_openid_user_attribute_protocol_mapper` | Maps `organisationId` user attribute ? JWT claim                         |
+| `keycloak_role` ? 5                              | `system-admin`, `tenant-admin`, `manager`, `member`, `viewer` (ADR-0021) |
+| `keycloak_user` ? 3                              | Fixture users (local/dev only, gated by `provision_fixture_users`)       |
+| `keycloak_user_roles` ? 2                        | Role assignments for admin (tenant-admin) and viewer fixture users       |
 
 ## What this module does NOT manage
 
-- Database schema — owned by application migrations (`apps/platform-api/src/db/`)
-- Application fixture data — owned by seed scripts (`apps/platform-api/src/db/seed.ts`)
-- Production users — never provisioned here
-- Cloud infrastructure (AWS, CloudFlare) — separate modules
+- Database schema ? owned by application migrations (`apps/platform-api/src/db/`)
+- Application fixture data ? owned by seed scripts (`apps/platform-api/src/db/seed.ts`)
+- Production users ? never provisioned here
+- Cloud infrastructure (AWS, CloudFlare) ? separate modules
 
 ## Inputs
 

@@ -135,7 +135,7 @@ function validateBlockerGovernance(manifest, actionStatuses, fail) {
 
     // A blocker that is already Done should be removed from blockedBy
     if (status === "done") {
-      fail(`Blocker ${blocker} is Done — remove it from blockedBy`);
+      fail(`Blocker ${blocker} is Done ? remove it from blockedBy`);
     }
   }
 }
@@ -161,7 +161,7 @@ function main() {
   const slicesDir = path.join(repoRoot, "docs", "slices");
 
   if (!fs.existsSync(slicesDir)) {
-    process.stdout.write("No docs/slices/ directory found — nothing to validate.\n");
+    process.stdout.write("No docs/slices/ directory found ? nothing to validate.\n");
     process.exit(0);
   }
 

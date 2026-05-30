@@ -23,9 +23,9 @@ import { KeycloakRealmAdminAdapter } from "@platform/adapters-keycloak";
 import { z } from "zod";
 
 // ---------------------------------------------------------------------------
-// Auth Settings body schemas (ADR-0030 §1b safety)
+// Auth Settings body schemas (ADR-0030 ?1b safety)
 // Client-supplied bodies are validated; admin secrets/clientIds are stripped.
-// Realm is always derived from the Host header — never from the request body.
+// Realm is always derived from the Host header ? never from the request body.
 // ---------------------------------------------------------------------------
 
 const IdpBodySchema = z.object({
@@ -84,7 +84,7 @@ export const routes: Route[] = [
         res.json(200, fixtureActor);
         return;
       }
-      // Real session: read from HTTP-only cookie → Redis
+      // Real session: read from HTTP-only cookie ? Redis
       const sessionId = parseSessionCookie(req.raw.headers["cookie"]);
       if (sessionId) {
         try {
@@ -101,7 +101,7 @@ export const routes: Route[] = [
             return;
           }
         } catch {
-          // Redis unavailable — fall through to 401
+          // Redis unavailable ? fall through to 401
         }
       }
       res.json(401, {
@@ -113,7 +113,7 @@ export const routes: Route[] = [
   // ---------------------------------------------------------------------------
   // Caddy forward auth (ADR-0029, ADR-0030)
   // Called by Caddy's forward_auth directive before proxying admin/tool UIs.
-  // Not authenticated itself — reads session cookie forwarded by Caddy.
+  // Not authenticated itself ? reads session cookie forwarded by Caddy.
   // ---------------------------------------------------------------------------
   {
     method: "GET",
@@ -143,7 +143,7 @@ export const routes: Route[] = [
     handler: handleAuthLogout,
   },
   // ---------------------------------------------------------------------------
-  // Theme / branding (ADR-0029 §4) — unauthenticated, keyed by Host header.
+  // Theme / branding (ADR-0029 ?4) ? unauthenticated, keyed by Host header.
   // Returns per-tenant branding config for the React SPA to apply at load time.
   // Stub: returns defaults until tenant_settings table is provisioned (ADR-ACT-0142).
   // ---------------------------------------------------------------------------
@@ -151,8 +151,8 @@ export const routes: Route[] = [
     method: "GET",
     path: "/api/theme",
     handler: async (req, res) => {
-      // Resolve per-tenant branding from tenant_settings (ADR-0029 §4).
-      // Uses queryTenantSchema from adapters-postgres — same UUID validation
+      // Resolve per-tenant branding from tenant_settings (ADR-0029 ?4).
+      // Uses queryTenantSchema from adapters-postgres ? same UUID validation
       // and client.escapeIdentifier safety as withTenant. No manual schema
       // string construction here (centralised in adapters-postgres).
       try {
@@ -174,13 +174,13 @@ export const routes: Route[] = [
           }
         }
       } catch {
-        // Schema not yet created or settings not seeded — fall through to defaults
+        // Schema not yet created or settings not seeded ? fall through to defaults
       }
       res.json(200, DEFAULT_THEME);
     },
   },
   // ---------------------------------------------------------------------------
-  // Auth Settings API — tenant admin self-service (ADR-0030 §1b)
+  // Auth Settings API ? tenant admin self-service (ADR-0030 ?1b)
   // Tenant admin manages their realm's IdPs, MFA policy, session policy, and
   // sysadmin brokering through these endpoints. All calls are proxied to
   // Keycloak Admin REST API via KeycloakRealmAdminAdapter.
@@ -385,8 +385,8 @@ export const routes: Route[] = [
   },
   // ---------------------------------------------------------------------------
   // Tenant provisioning (ADR-ACT-0142)
-  // POST — provision a new tenant with per-resource tier config.
-  // GET  — read a tenant's current resource config.
+  // POST ? provision a new tenant with per-resource tier config.
+  // GET  ? read a tenant's current resource config.
   // System-admin only (requiredPermission: admin.access).
   // ---------------------------------------------------------------------------
   {

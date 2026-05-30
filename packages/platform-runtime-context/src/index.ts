@@ -47,7 +47,7 @@ export function withTrace(ctx: RuntimeContext, traceId: string, spanId?: string)
   return { ...ctx, traceId, spanId };
 }
 
-/** Returns only the requestId field — safe to expose to browser/React features. */
+/** Returns only the requestId field ? safe to expose to browser/React features. */
 export function safeClientContext(ctx: RuntimeContext): Pick<RuntimeContext, "requestId"> {
   return { requestId: ctx.requestId };
 }

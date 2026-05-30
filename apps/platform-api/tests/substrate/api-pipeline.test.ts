@@ -34,7 +34,7 @@ function closeServer(server: http.Server): Promise<void> {
   });
 }
 
-// ── 1. 404 for unknown path ────────────────────────────────────────────────
+// ?? 1. 404 for unknown path ????????????????????????????????????????????????
 describe("api pipeline: 404 for unknown path", () => {
   let server: http.Server;
   let url: string;
@@ -59,7 +59,7 @@ describe("api pipeline: 404 for unknown path", () => {
   });
 });
 
-// ── 2. 405 for wrong method ───────────────────────────────────────────────
+// ?? 2. 405 for wrong method ???????????????????????????????????????????????
 describe("api pipeline: 405 for wrong method", () => {
   let server: http.Server;
   let url: string;
@@ -88,7 +88,7 @@ describe("api pipeline: 405 for wrong method", () => {
   });
 });
 
-// ── 3. Malformed JSON body → 400 ─────────────────────────────────────────
+// ?? 3. Malformed JSON body ? 400 ?????????????????????????????????????????
 describe("api pipeline: malformed JSON body", () => {
   let server: http.Server;
   let url: string;
@@ -117,7 +117,7 @@ describe("api pipeline: malformed JSON body", () => {
   });
 });
 
-// ── 4. requiresAuth=true without session → 401 ───────────────────────────
+// ?? 4. requiresAuth=true without session ? 401 ???????????????????????????
 describe("api pipeline: auth required without session", () => {
   let server: http.Server;
   let url: string;
@@ -156,7 +156,7 @@ describe("api pipeline: auth required without session", () => {
   });
 });
 
-// ── 5. requiresAuth=true with session but missing permission → 403 ────────
+// ?? 5. requiresAuth=true with session but missing permission ? 403 ????????
 describe("api pipeline: auth with insufficient permission", () => {
   let server: http.Server;
   let url: string;
@@ -196,7 +196,7 @@ describe("api pipeline: auth with insufficient permission", () => {
   });
 });
 
-// ── 6. Successful handler → 200 ──────────────────────────────────────────
+// ?? 6. Successful handler ? 200 ??????????????????????????????????????????
 describe("api pipeline: successful handler", () => {
   let server: http.Server;
   let url: string;
@@ -225,7 +225,7 @@ describe("api pipeline: successful handler", () => {
   });
 });
 
-// ── 7. Handler that throws → 500, no internalDetails leaked ──────────────
+// ?? 7. Handler that throws ? 500, no internalDetails leaked ??????????????
 describe("api pipeline: handler error is handled safely", () => {
   let server: http.Server;
   let url: string;
@@ -262,7 +262,7 @@ describe("api pipeline: handler error is handled safely", () => {
   });
 });
 
-// ── 8. requestId appears in X-Request-Id header ──────────────────────────
+// ?? 8. requestId appears in X-Request-Id header ??????????????????????????
 describe("api pipeline: X-Request-Id header", () => {
   let server: http.Server;
   let url: string;
@@ -297,7 +297,7 @@ describe("api pipeline: X-Request-Id header", () => {
   });
 });
 
-// ── 9. Authenticated route receives actor in pipelineReq ─────────────────
+// ?? 9. Authenticated route receives actor in pipelineReq ?????????????????
 describe("api pipeline: authenticated route receives actor", () => {
   let server: http.Server;
   let url: string;
@@ -341,7 +341,7 @@ describe("api pipeline: authenticated route receives actor", () => {
   });
 });
 
-// ── 10. Authenticated route receives tenantId and permissions in context ──
+// ?? 10. Authenticated route receives tenantId and permissions in context ??
 describe("api pipeline: actor context propagated", () => {
   let server: http.Server;
   let url: string;
@@ -388,7 +388,7 @@ describe("api pipeline: actor context propagated", () => {
   });
 });
 
-// ── 11. Permission guard: handler can read permission from req.actor ──────
+// ?? 11. Permission guard: handler can read permission from req.actor ??????
 describe("api pipeline: handler reads permission from req.actor", () => {
   let server: http.Server;
   let url: string;
@@ -433,7 +433,7 @@ describe("api pipeline: handler reads permission from req.actor", () => {
   });
 });
 
-// ── 12. 405 response includes X-Request-Id header ────────────────────────
+// ?? 12. 405 response includes X-Request-Id header ????????????????????????
 describe("api pipeline: 405 includes X-Request-Id", () => {
   let server: http.Server;
   let url: string;
@@ -467,7 +467,7 @@ describe("api pipeline: 405 includes X-Request-Id", () => {
   });
 });
 
-// ── 13. 500 response includes X-Request-Id and safe body only ────────────
+// ?? 13. 500 response includes X-Request-Id and safe body only ????????????
 describe("api pipeline: 500 with UnexpectedError does not leak internalDetails", () => {
   let server: http.Server;
   let url: string;

@@ -5,8 +5,8 @@
 
 ## Summary
 
-Playwright E2E substrate established for the react platform. Proves browser → React SPA →
-platform-api → browser roundtrip using deterministic fixture session actors.
+Playwright E2E substrate established for the react platform. Proves browser ? React SPA ?
+platform-api ? browser roundtrip using deterministic fixture session actors.
 
 ## Configuration
 
@@ -70,8 +70,8 @@ Total E2E tests: 8
 
 ## Artifact locations (gitignored)
 
-- `playwright-report/` — HTML test report
-- `e2e-results/` — traces, videos, screenshots on failure
+- `playwright-report/` ? HTML test report
+- `e2e-results/` ? traces, videos, screenshots on failure
 
 ## Commands
 
@@ -93,7 +93,7 @@ make e2e-check
 
 - Real Keycloak OIDC login tests: blocked until ADR-ACT-0110
 - Additional browsers (Firefox, WebKit): deferred until cross-browser parity required
-- /readyz E2E test: deferred — requires live Postgres (available when compose is running)
+- /readyz E2E test: deferred ? requires live Postgres (available when compose is running)
 
 ## ADR compliance
 

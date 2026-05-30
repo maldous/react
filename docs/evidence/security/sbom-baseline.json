@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:a5f768f5-11d6-4003-b5eb-18a9c16ebc5e",
+  "serialNumber": "urn:uuid:a56468b9-cbc7-46ef-95aa-a1fbdb7d4da9",
   "metadata": {
-    "timestamp": "2026-05-29T10:48:18.516Z",
+    "timestamp": "2026-05-30T04:46:22.329Z",
     "tools": {
       "components": [
         {
@@ -103,8 +103,8 @@
       "type": "library",
       "name": "client-iam",
       "group": "@aws-sdk",
-      "version": "3.1056.0",
-      "bom-ref": "react-platform@0.1.0|@aws-sdk/client-iam@3.1056.0",
+      "version": "3.1057.0",
+      "bom-ref": "react-platform@0.1.0|@aws-sdk/client-iam@3.1057.0",
       "licenses": [
         {
           "license": {
@@ -113,15 +113,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40aws-sdk/client-iam@3.1056.0",
+      "purl": "pkg:npm/%40aws-sdk/client-iam@3.1057.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@aws-sdk/client-iam/-/client-iam-3.1056.0.tgz",
+          "url": "https://registry.npmjs.org/@aws-sdk/client-iam/-/client-iam-3.1057.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "104c9d8f3a22910c20c0309d137d00dc8aafd3fccf61330406f16be3e51c509aba7b1a25abed53e33397bc0f3a3e6d3927d7259fe05380387a964e30c5c4490a"
+              "content": "3faf68ffba0c895764e748f6fa709bf9577e4b21b2743ddd22d7eaa5a6bfff9535868e4312cad2e85a8ad20ed37d2cfd6bcee7ac30d187cd011ecd70f81fc6ed"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -177,8 +177,8 @@
       "type": "library",
       "name": "s3-request-presigner",
       "group": "@aws-sdk",
-      "version": "3.1056.0",
-      "bom-ref": "react-platform@0.1.0|@aws-sdk/s3-request-presigner@3.1056.0",
+      "version": "3.1057.0",
+      "bom-ref": "react-platform@0.1.0|@aws-sdk/s3-request-presigner@3.1057.0",
       "licenses": [
         {
           "license": {
@@ -187,15 +187,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40aws-sdk/s3-request-presigner@3.1056.0",
+      "purl": "pkg:npm/%40aws-sdk/s3-request-presigner@3.1057.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@aws-sdk/s3-request-presigner/-/s3-request-presigner-3.1056.0.tgz",
+          "url": "https://registry.npmjs.org/@aws-sdk/s3-request-presigner/-/s3-request-presigner-3.1057.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "6d1aaf5a08df24e2da920b267178149d30ab4dea7507da690948ec532bb433bb9e46756370d736b99a31fdb9de08a3a08dbcd01bb1ecf1ba3e953a2d45d39538"
+              "content": "993c4ef410b3b65a2cee0cc720529fde9dc26a43a62e18dfbfa2e5a3d2c8005f940aefde0a828c3da162f3b5a66145967fbac8188c9bdb459af21778a6eb942a"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -279,125 +279,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@cyclonedx/cyclonedx-npm"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "cyclonedx-library",
-          "group": "@cyclonedx",
-          "version": "10.0.0",
-          "bom-ref": "react-platform@0.1.0|@cyclonedx/cyclonedx-npm@4.2.1|@cyclonedx/cyclonedx-library@10.0.0",
-          "licenses": [
-            {
-              "license": {
-                "id": "Apache-2.0",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/%40cyclonedx/cyclonedx-library@10.0.0",
-          "externalReferences": [
-            {
-              "url": "https://registry.npmjs.org/@cyclonedx/cyclonedx-library/-/cyclonedx-library-10.0.0.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "c435dfd9eab37851dd8da9a3ea8055dddb9149fae59ac279fb6cfdb57a7bab9ab124fe40c268dfe00052bad4b8aa45471e3ec9cca14bfc433457436285cef33e"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/@cyclonedx/cyclonedx-npm/node_modules/@cyclonedx/cyclonedx-library"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "ajv",
-          "version": "8.20.0",
-          "bom-ref": "react-platform@0.1.0|@cyclonedx/cyclonedx-npm@4.2.1|ajv@8.20.0",
-          "scope": "optional",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/ajv@8.20.0",
-          "externalReferences": [
-            {
-              "url": "https://registry.npmjs.org/ajv/-/ajv-8.20.0.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "4e16e58be3a53a3fa230f60505505f2773a60809da4b2367e0cd6fcfd4fa1a46b926df5b6bf1c8479ea3a32eb9b58ea4c7f142179557341f35f58eff194ac118"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/@cyclonedx/cyclonedx-npm/node_modules/ajv"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "json-schema-traverse",
-          "version": "1.0.0",
-          "bom-ref": "react-platform@0.1.0|@cyclonedx/cyclonedx-npm@4.2.1|json-schema-traverse@1.0.0",
-          "scope": "optional",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/json-schema-traverse@1.0.0",
-          "externalReferences": [
-            {
-              "url": "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-1.0.0.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "34cf3f3fd9f75e35e12199f594b86415a0024ce5114178d6855e0103f4673aff31be0aadaa9017f483b89914314b1d51968e2dab37aa6f4b0e96bb9a3b2dddba"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/@cyclonedx/cyclonedx-npm/node_modules/json-schema-traverse"
-            }
-          ]
         }
       ]
     },
@@ -1330,6 +1211,46 @@
           "name": "cdx:npm:package:path",
           "value": "node_modules/dependency-cruiser"
         }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "enhanced-resolve",
+          "version": "5.22.0",
+          "bom-ref": "react-platform@0.1.0|dependency-cruiser@17.4.2|enhanced-resolve@5.22.0",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/enhanced-resolve@5.22.0",
+          "externalReferences": [
+            {
+              "url": "https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.22.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "c587035aba442e4173cfd4a96773e523a12ee9e0fddd87f458b0d1c629068562773008abd923594c8542559a99fcd532c7c01d31cda04fd0b480f8b0d7c906f8"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/dependency-cruiser/node_modules/enhanced-resolve"
+            }
+          ]
+        }
       ]
     },
     {
@@ -1372,6 +1293,44 @@
       "components": [
         {
           "type": "library",
+          "name": "ajv",
+          "version": "6.15.0",
+          "bom-ref": "react-platform@0.1.0|eslint@10.4.0|ajv@6.15.0",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/ajv@6.15.0",
+          "externalReferences": [
+            {
+              "url": "https://registry.npmjs.org/ajv/-/ajv-6.15.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "7e0171ec77e8abad32b4ad9cec386717c8c8bf362038cc5fba08cb3923078cb20f81e9ea6bb4bba1a6a001352af7d995e8862f376b51982d309d3617ea23db33"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/eslint/node_modules/ajv"
+            }
+          ]
+        },
+        {
+          "type": "library",
           "name": "ignore",
           "version": "5.3.2",
           "bom-ref": "react-platform@0.1.0|eslint@10.4.0|ignore@5.3.2",
@@ -1405,6 +1364,44 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/eslint/node_modules/ignore"
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "json-schema-traverse",
+          "version": "0.4.1",
+          "bom-ref": "react-platform@0.1.0|eslint@10.4.0|json-schema-traverse@0.4.1",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/json-schema-traverse@0.4.1",
+          "externalReferences": [
+            {
+              "url": "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "c5b6c21f9742614e53f0b704861ba1ec727cf075ee5b7aac237634cce64529f6441dca5688753f271ce4eb6f41aec69bfe63221d0b62f7030ffbce3944f7b756"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/eslint/node_modules/json-schema-traverse"
             }
           ]
         }
@@ -1522,46 +1519,6 @@
           "name": "cdx:npm:package:path",
           "value": "node_modules/jsdom"
         }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "lru-cache",
-          "version": "11.5.1",
-          "bom-ref": "react-platform@0.1.0|jsdom@29.1.1|lru-cache@11.5.1",
-          "licenses": [
-            {
-              "license": {
-                "id": "BlueOak-1.0.0",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/lru-cache@11.5.1",
-          "externalReferences": [
-            {
-              "url": "https://registry.npmjs.org/lru-cache/-/lru-cache-11.5.1.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "44f8a6c3feda31dbf6a2a46bc4ac2f65770f7f006b9ff259db161c63d1eeb3fe8b692dd538029558a5a034b0854a23a6d444978a78ec0e589d554ec996708dd8"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/jsdom/node_modules/lru-cache"
-            }
-          ]
-        }
       ]
     },
     {
@@ -1605,8 +1562,8 @@
     {
       "type": "library",
       "name": "lefthook",
-      "version": "2.1.8",
-      "bom-ref": "react-platform@0.1.0|lefthook@2.1.8",
+      "version": "2.1.9",
+      "bom-ref": "react-platform@0.1.0|lefthook@2.1.9",
       "licenses": [
         {
           "license": {
@@ -1615,15 +1572,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/lefthook@2.1.8",
+      "purl": "pkg:npm/lefthook@2.1.9",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/lefthook/-/lefthook-2.1.8.tgz",
+          "url": "https://registry.npmjs.org/lefthook/-/lefthook-2.1.9.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "b49228569145e763ee53c60f248f5b469ac6c3323a151d8635e05ba4c9d77518e37c91f2391e1544b5e2973a10ea56e12951df4e885786b4202e9538d5b2884e"
+              "content": "6f00da20e5624e4b44f2424b7fd8cfd29f87dbf4434e514595ce37026d98814b17db6848e92ab845bcecade730cd8e72f8c1d38a9387ed6b2659212789e3c759"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -2284,6 +2241,47 @@
           "name": "cdx:npm:package:path",
           "value": "node_modules/vite"
         }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "fsevents",
+          "version": "2.3.3",
+          "bom-ref": "react-platform@0.1.0|vite@8.0.14|fsevents@2.3.3",
+          "scope": "optional",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/fsevents@2.3.3",
+          "externalReferences": [
+            {
+              "url": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "e71a037d7f9f2fb7da0139da82658fa5b16dc21fd1efb5a630caaa1c64bae42defbc1d181eb805f81d58999df8e35b4c8f99fade4d36d765cda09c339617df43"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/vite/node_modules/fsevents"
+            }
+          ]
+        }
       ]
     },
     {
@@ -2664,8 +2662,8 @@
       "type": "library",
       "name": "credential-provider-node",
       "group": "@aws-sdk",
-      "version": "3.972.46",
-      "bom-ref": "react-platform@0.1.0|@aws-sdk/credential-provider-node@3.972.46",
+      "version": "3.972.47",
+      "bom-ref": "react-platform@0.1.0|@aws-sdk/credential-provider-node@3.972.47",
       "licenses": [
         {
           "license": {
@@ -2674,15 +2672,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40aws-sdk/credential-provider-node@3.972.46",
+      "purl": "pkg:npm/%40aws-sdk/credential-provider-node@3.972.47",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@aws-sdk/credential-provider-node/-/credential-provider-node-3.972.46.tgz",
+          "url": "https://registry.npmjs.org/@aws-sdk/credential-provider-node/-/credential-provider-node-3.972.47.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "712e30d23cc345bd633a5922252df2f343b175d1f3924cbf30df64dcd62ce6381a9cd2952e3174969be39704b5d7ca0632bddc7407ce955768f202eead3484ef"
+              "content": "1eb21df82d03580e6a0c8c8b1bae3f923501d9136d3f2a7198006721cb4af930353f590794e62813f59fe53e6d28e30a81bd3c3fb93fccdca1bdf277961e4e6a"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -3249,6 +3247,45 @@
     },
     {
       "type": "library",
+      "name": "cyclonedx-library",
+      "group": "@cyclonedx",
+      "version": "10.0.0",
+      "bom-ref": "react-platform@0.1.0|@cyclonedx/cyclonedx-library@10.0.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40cyclonedx/cyclonedx-library@10.0.0",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/@cyclonedx/cyclonedx-library/-/cyclonedx-library-10.0.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "c435dfd9eab37851dd8da9a3ea8055dddb9149fae59ac279fb6cfdb57a7bab9ab124fe40c268dfe00052bad4b8aa45471e3ec9cca14bfc433457436285cef33e"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@cyclonedx/cyclonedx-library"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "name": "ajv-formats-draft2019",
       "version": "1.6.1",
       "bom-ref": "react-platform@0.1.0|ajv-formats-draft2019@1.6.1",
@@ -3323,85 +3360,44 @@
           "name": "cdx:npm:package:path",
           "value": "node_modules/ajv-formats"
         }
-      ],
-      "components": [
+      ]
+    },
+    {
+      "type": "library",
+      "name": "ajv",
+      "version": "8.20.0",
+      "bom-ref": "react-platform@0.1.0|ajv@8.20.0",
+      "scope": "optional",
+      "licenses": [
         {
-          "type": "library",
-          "name": "ajv",
-          "version": "8.20.0",
-          "bom-ref": "react-platform@0.1.0|ajv-formats@3.0.1|ajv@8.20.0",
-          "scope": "optional",
-          "licenses": [
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/ajv@8.20.0",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/ajv/-/ajv-8.20.0.tgz",
+          "type": "distribution",
+          "hashes": [
             {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
+              "alg": "SHA-512",
+              "content": "4e16e58be3a53a3fa230f60505505f2773a60809da4b2367e0cd6fcfd4fa1a46b926df5b6bf1c8479ea3a32eb9b58ea4c7f142179557341f35f58eff194ac118"
             }
           ],
-          "purl": "pkg:npm/ajv@8.20.0",
-          "externalReferences": [
-            {
-              "url": "https://registry.npmjs.org/ajv/-/ajv-8.20.0.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "4e16e58be3a53a3fa230f60505505f2773a60809da4b2367e0cd6fcfd4fa1a46b926df5b6bf1c8479ea3a32eb9b58ea4c7f142179557341f35f58eff194ac118"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/ajv-formats/node_modules/ajv"
-            }
-          ]
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         },
         {
-          "type": "library",
-          "name": "json-schema-traverse",
-          "version": "1.0.0",
-          "bom-ref": "react-platform@0.1.0|ajv-formats@3.0.1|json-schema-traverse@1.0.0",
-          "scope": "optional",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/json-schema-traverse@1.0.0",
-          "externalReferences": [
-            {
-              "url": "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-1.0.0.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "34cf3f3fd9f75e35e12199f594b86415a0024ce5114178d6855e0103f4673aff31be0aadaa9017f483b89914314b1d51968e2dab37aa6f4b0e96bb9a3b2dddba"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/ajv-formats/node_modules/json-schema-traverse"
-            }
-          ]
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/ajv"
         }
       ]
     },
@@ -3747,47 +3743,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/playwright"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "fsevents",
-          "version": "2.3.2",
-          "bom-ref": "react-platform@0.1.0|playwright@1.60.0|fsevents@2.3.2",
-          "scope": "optional",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/fsevents@2.3.2",
-          "externalReferences": [
-            {
-              "url": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "c62a8c411e3101e1d3b81f6e5a6f9f1517083a02813223813fe7978b24fb8ec8150aad5b915ca0b74d28012a3007b11db6938769a3e02adf35d8ff5a6fe0c328"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/playwright/node_modules/fsevents"
-            }
-          ]
         }
       ]
     },
@@ -5108,44 +5063,6 @@
     },
     {
       "type": "library",
-      "name": "enhanced-resolve",
-      "version": "5.22.0",
-      "bom-ref": "react-platform@0.1.0|enhanced-resolve@5.22.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/enhanced-resolve@5.22.0",
-      "externalReferences": [
-        {
-          "url": "https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.22.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "c587035aba442e4173cfd4a96773e523a12ee9e0fddd87f458b0d1c629068562773008abd923594c8542559a99fcd532c7c01d31cda04fd0b480f8b0d7c906f8"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/enhanced-resolve"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "ignore",
       "version": "7.0.5",
       "bom-ref": "react-platform@0.1.0|ignore@7.0.5",
@@ -5801,8 +5718,8 @@
       "type": "library",
       "name": "plugin-kit",
       "group": "@eslint",
-      "version": "0.7.1",
-      "bom-ref": "react-platform@0.1.0|@eslint/plugin-kit@0.7.1",
+      "version": "0.7.2",
+      "bom-ref": "react-platform@0.1.0|@eslint/plugin-kit@0.7.2",
       "licenses": [
         {
           "license": {
@@ -5811,15 +5728,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40eslint/plugin-kit@0.7.1",
+      "purl": "pkg:npm/%40eslint/plugin-kit@0.7.2",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@eslint/plugin-kit/-/plugin-kit-0.7.1.tgz",
+          "url": "https://registry.npmjs.org/@eslint/plugin-kit/-/plugin-kit-0.7.2.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "ad900fdda56007d76cf4a39e5122fecd9db584f9a8f1d87a7e7205c11423e4401997d83347bc3161b617632b0033c093a869941b2a764b8914755d7b3271ae59"
+              "content": "f82340cf182592ba4d7ff90acb0a907e4ef8423b5c7ae384ed09be005f26891bcf17fc2698ae7e3893a0561dc05534f744fda61f7f8539ac65139bfbda8c24d0"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -5989,44 +5906,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@types/estree"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "ajv",
-      "version": "6.15.0",
-      "bom-ref": "react-platform@0.1.0|ajv@6.15.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/ajv@6.15.0",
-      "externalReferences": [
-        {
-          "url": "https://registry.npmjs.org/ajv/-/ajv-6.15.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "7e0171ec77e8abad32b4ad9cec386717c8c8bf362038cc5fba08cb3923078cb20f81e9ea6bb4bba1a6a001352af7d995e8862f376b51982d309d3617ea23db33"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/ajv"
         }
       ]
     },
@@ -7215,6 +7094,44 @@
     },
     {
       "type": "library",
+      "name": "lru-cache",
+      "version": "11.5.1",
+      "bom-ref": "react-platform@0.1.0|lru-cache@11.5.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "BlueOak-1.0.0",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/lru-cache@11.5.1",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/lru-cache/-/lru-cache-11.5.1.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "44f8a6c3feda31dbf6a2a46bc4ac2f65770f7f006b9ff259db161c63d1eeb3fe8b692dd538029558a5a034b0854a23a6d444978a78ec0e589d554ec996708dd8"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/lru-cache"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "name": "parse5",
       "version": "8.0.1",
       "bom-ref": "react-platform@0.1.0|parse5@8.0.1",
@@ -7826,8 +7743,8 @@
     {
       "type": "library",
       "name": "oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|oxc-resolver@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|oxc-resolver@11.20.0",
       "licenses": [
         {
           "license": {
@@ -7836,15 +7753,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/oxc-resolver@11.19.1",
+      "purl": "pkg:npm/oxc-resolver@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/oxc-resolver/-/oxc-resolver-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/oxc-resolver/-/oxc-resolver-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "a84fc2220feca70ad3045b7968a9b07b789f78374b7c0d8d112377d04e365ff9482390a517c57b5ade9620985c1998e9d3f43e9d0fbdbe0c4693fff164d5f686"
+              "content": "09b972b41895fdafd95d8df876c554d8dc6120ec4c5ecb7c0af0c2b7205e95521381decf2eb2b36c46c0ea828b74f8ef0ca0f30a25b8f2ace6cd9fa661aaa7fa"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -8054,8 +7971,8 @@
     {
       "type": "library",
       "name": "lefthook-darwin-arm64",
-      "version": "2.1.8",
-      "bom-ref": "react-platform@0.1.0|lefthook-darwin-arm64@2.1.8",
+      "version": "2.1.9",
+      "bom-ref": "react-platform@0.1.0|lefthook-darwin-arm64@2.1.9",
       "scope": "optional",
       "licenses": [
         {
@@ -8065,15 +7982,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/lefthook-darwin-arm64@2.1.8",
+      "purl": "pkg:npm/lefthook-darwin-arm64@2.1.9",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/lefthook-darwin-arm64/-/lefthook-darwin-arm64-2.1.8.tgz",
+          "url": "https://registry.npmjs.org/lefthook-darwin-arm64/-/lefthook-darwin-arm64-2.1.9.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "e9d66bd9051d24e3afcbd1634076681557cf8e0c5bf481f97fd0de53438160c4347141af6f96231e7914911ad62250129b0166d5b93738fc21a8a53ba53b080b"
+              "content": "d75f47af235cbebe27aa7d30508acd3e0a4c10f9fdc8c43311c5bf95ecd1b276f9e8f089ae2241f76f8c0b248f55c583c499d979fee8d13de37673cd8921fb42"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -8093,8 +8010,8 @@
     {
       "type": "library",
       "name": "lefthook-darwin-x64",
-      "version": "2.1.8",
-      "bom-ref": "react-platform@0.1.0|lefthook-darwin-x64@2.1.8",
+      "version": "2.1.9",
+      "bom-ref": "react-platform@0.1.0|lefthook-darwin-x64@2.1.9",
       "scope": "optional",
       "licenses": [
         {
@@ -8104,15 +8021,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/lefthook-darwin-x64@2.1.8",
+      "purl": "pkg:npm/lefthook-darwin-x64@2.1.9",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/lefthook-darwin-x64/-/lefthook-darwin-x64-2.1.8.tgz",
+          "url": "https://registry.npmjs.org/lefthook-darwin-x64/-/lefthook-darwin-x64-2.1.9.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "0d6d7273e5b94411ddc1a3c9f78fe6c053513a634723c3acbb48b38887891572487644363fe2877e8c4159e8d8776400d84bb95bd8be801b2c4c3909e245f690"
+              "content": "770a394e47b65dc402339e831878052817d16c920beb1b36c19d331b54d4559825e2de26414b7a2e267857f6507d81d3645f6acb0bd7a08951e4ddf9a8e6a255"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -8132,8 +8049,8 @@
     {
       "type": "library",
       "name": "lefthook-freebsd-arm64",
-      "version": "2.1.8",
-      "bom-ref": "react-platform@0.1.0|lefthook-freebsd-arm64@2.1.8",
+      "version": "2.1.9",
+      "bom-ref": "react-platform@0.1.0|lefthook-freebsd-arm64@2.1.9",
       "scope": "optional",
       "licenses": [
         {
@@ -8143,15 +8060,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/lefthook-freebsd-arm64@2.1.8",
+      "purl": "pkg:npm/lefthook-freebsd-arm64@2.1.9",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/lefthook-freebsd-arm64/-/lefthook-freebsd-arm64-2.1.8.tgz",
+          "url": "https://registry.npmjs.org/lefthook-freebsd-arm64/-/lefthook-freebsd-arm64-2.1.9.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "ae65957489938a163f5756cb49bdf3783c441e344142db9d9e428ab28a61f77e1e9c858fc3321aa79cd51c7023f2af66ce9d30a67e6bd726d7e7968edb033ad4"
+              "content": "fb4f4f55aa7a9e5eb1b1a1dc87924bb6aed6bc847ef94d50d8ccc0d9a8b4338b81fd53f702aaef2aa1f0ebef618f22a7207f871cbf37baa8bbec4018f8b6b12c"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -8171,8 +8088,8 @@
     {
       "type": "library",
       "name": "lefthook-freebsd-x64",
-      "version": "2.1.8",
-      "bom-ref": "react-platform@0.1.0|lefthook-freebsd-x64@2.1.8",
+      "version": "2.1.9",
+      "bom-ref": "react-platform@0.1.0|lefthook-freebsd-x64@2.1.9",
       "scope": "optional",
       "licenses": [
         {
@@ -8182,15 +8099,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/lefthook-freebsd-x64@2.1.8",
+      "purl": "pkg:npm/lefthook-freebsd-x64@2.1.9",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/lefthook-freebsd-x64/-/lefthook-freebsd-x64-2.1.8.tgz",
+          "url": "https://registry.npmjs.org/lefthook-freebsd-x64/-/lefthook-freebsd-x64-2.1.9.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "a35006e02a668044b12ea656ce45e19def8f84b84b155d061d50082429a278ec2ae2adbeac3600b9d1a1b68b7f36b812a72302a3ce2a55242623c0e09eed5727"
+              "content": "f17adeb23288629904f404600ad044660259c405374f8308ab38f8ccdcb5e57453e7d23552cf9076a5d3366fa9919e3561dd97fe7c6cd8f92f6eadcd5969481b"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -8210,8 +8127,8 @@
     {
       "type": "library",
       "name": "lefthook-linux-arm64",
-      "version": "2.1.8",
-      "bom-ref": "react-platform@0.1.0|lefthook-linux-arm64@2.1.8",
+      "version": "2.1.9",
+      "bom-ref": "react-platform@0.1.0|lefthook-linux-arm64@2.1.9",
       "scope": "optional",
       "licenses": [
         {
@@ -8221,15 +8138,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/lefthook-linux-arm64@2.1.8",
+      "purl": "pkg:npm/lefthook-linux-arm64@2.1.9",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/lefthook-linux-arm64/-/lefthook-linux-arm64-2.1.8.tgz",
+          "url": "https://registry.npmjs.org/lefthook-linux-arm64/-/lefthook-linux-arm64-2.1.9.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "7abdf34e3c760ccc688cf2752d9bf41b7ba0f5387e9806a9a96aede5966140d717596dbca5fbe8d9f0aa06ce85cf5e06327e316acb26c0ea46a2fbad4a1d54b4"
+              "content": "d6834841fc2b3deeab814d8a703337685ebe86964308ac754e66b040aa57518e6056c6d9ecca97d1293fd659e75b1a8f9be9104397fa27676915677ee311fc8e"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -8249,8 +8166,8 @@
     {
       "type": "library",
       "name": "lefthook-linux-x64",
-      "version": "2.1.8",
-      "bom-ref": "react-platform@0.1.0|lefthook-linux-x64@2.1.8",
+      "version": "2.1.9",
+      "bom-ref": "react-platform@0.1.0|lefthook-linux-x64@2.1.9",
       "scope": "optional",
       "licenses": [
         {
@@ -8260,15 +8177,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/lefthook-linux-x64@2.1.8",
+      "purl": "pkg:npm/lefthook-linux-x64@2.1.9",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/lefthook-linux-x64/-/lefthook-linux-x64-2.1.8.tgz",
+          "url": "https://registry.npmjs.org/lefthook-linux-x64/-/lefthook-linux-x64-2.1.9.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "df21b1d1515b3dc68a8888abdf5dc44cd732ab7e027c0c24214f91cb758c1838ebb1136e03f6250f19b404728b72e9bbbbeae955f4f8533eabf201dd6875e896"
+              "content": "7d3fbb43e049c86a7e0ac94542435799d151832557b0f1cf8bd340b035f46ba40ec8d9e839107202cbf1eb37802ae179acbdc106035f868d7fbf646e1b11b2f7"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -8288,8 +8205,8 @@
     {
       "type": "library",
       "name": "lefthook-openbsd-arm64",
-      "version": "2.1.8",
-      "bom-ref": "react-platform@0.1.0|lefthook-openbsd-arm64@2.1.8",
+      "version": "2.1.9",
+      "bom-ref": "react-platform@0.1.0|lefthook-openbsd-arm64@2.1.9",
       "scope": "optional",
       "licenses": [
         {
@@ -8299,15 +8216,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/lefthook-openbsd-arm64@2.1.8",
+      "purl": "pkg:npm/lefthook-openbsd-arm64@2.1.9",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/lefthook-openbsd-arm64/-/lefthook-openbsd-arm64-2.1.8.tgz",
+          "url": "https://registry.npmjs.org/lefthook-openbsd-arm64/-/lefthook-openbsd-arm64-2.1.9.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "0eaf8625d25d7253b0c6de0d9de4c51e32d2038bfcb48ed7519ab8d0a515b695100e965c6215d27644f2b41d2e2e60f9dad6c52adf4ac7455b07abafc4fbcbbf"
+              "content": "e1b56e69f064ddd75d54da34fb784c6e3709b389aa600b2dc693cc997dae7e4b9d493605348856a2ac2e195415fd24bfc5d70e289025756e2a6b203379ddb2b3"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -8327,8 +8244,8 @@
     {
       "type": "library",
       "name": "lefthook-openbsd-x64",
-      "version": "2.1.8",
-      "bom-ref": "react-platform@0.1.0|lefthook-openbsd-x64@2.1.8",
+      "version": "2.1.9",
+      "bom-ref": "react-platform@0.1.0|lefthook-openbsd-x64@2.1.9",
       "scope": "optional",
       "licenses": [
         {
@@ -8338,15 +8255,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/lefthook-openbsd-x64@2.1.8",
+      "purl": "pkg:npm/lefthook-openbsd-x64@2.1.9",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/lefthook-openbsd-x64/-/lefthook-openbsd-x64-2.1.8.tgz",
+          "url": "https://registry.npmjs.org/lefthook-openbsd-x64/-/lefthook-openbsd-x64-2.1.9.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "fc6bf611d973ca20e82bef5f0d6227f8479382b35e567710b12780178ed7d806dee4b1b1b858d96c15f1108918d4153bf4e40d34b9e4c748051dbaebe6699df5"
+              "content": "3e63e83262cfff041059c43dbb6607f3a6d36775027c1b31b849954c4c8f53653c475a924e9e6bfc6b371bc70de4cc68f755c1f6804446d1759fec43dd6e9a54"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -8366,8 +8283,8 @@
     {
       "type": "library",
       "name": "lefthook-windows-arm64",
-      "version": "2.1.8",
-      "bom-ref": "react-platform@0.1.0|lefthook-windows-arm64@2.1.8",
+      "version": "2.1.9",
+      "bom-ref": "react-platform@0.1.0|lefthook-windows-arm64@2.1.9",
       "scope": "optional",
       "licenses": [
         {
@@ -8377,15 +8294,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/lefthook-windows-arm64@2.1.8",
+      "purl": "pkg:npm/lefthook-windows-arm64@2.1.9",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/lefthook-windows-arm64/-/lefthook-windows-arm64-2.1.8.tgz",
+          "url": "https://registry.npmjs.org/lefthook-windows-arm64/-/lefthook-windows-arm64-2.1.9.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "4befe90418ffee13103a5f692c14b852df3e5347de41bce60fb88dd227cdb61e2bfeea96f14145007c0445b7257ec5679e2e1c787a6dee516beec5ecbb4454f2"
+              "content": "2a985f9012a6c019e6a25cab761225de5ac168ec93702817053d8007ff4e1e711784e2efbf9b9309492b0f86110315cfb452aae94be76a921ea0bdc666ad1b74"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -8405,8 +8322,8 @@
     {
       "type": "library",
       "name": "lefthook-windows-x64",
-      "version": "2.1.8",
-      "bom-ref": "react-platform@0.1.0|lefthook-windows-x64@2.1.8",
+      "version": "2.1.9",
+      "bom-ref": "react-platform@0.1.0|lefthook-windows-x64@2.1.9",
       "scope": "optional",
       "licenses": [
         {
@@ -8416,15 +8333,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/lefthook-windows-x64@2.1.8",
+      "purl": "pkg:npm/lefthook-windows-x64@2.1.9",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/lefthook-windows-x64/-/lefthook-windows-x64-2.1.8.tgz",
+          "url": "https://registry.npmjs.org/lefthook-windows-x64/-/lefthook-windows-x64-2.1.9.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "32976028c53f24b2c2b04a53a89f635a5c678127438771249ef507bde59e3eb226b3b1b5d72e91de86413514aa67ecf1fcf18d97f1cabea12d6f0b70f07cf783"
+              "content": "daa954b64247677332531815e574c499cac8a0d640d3b8b06aaba8b3001caafff531e0455e50fe3be9281517ebcd69e0d8ee566046e926777cb6f6989d5f1f4c"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -8789,8 +8706,8 @@
       "type": "library",
       "name": "confirm",
       "group": "@inquirer",
-      "version": "6.1.0",
-      "bom-ref": "react-platform@0.1.0|@inquirer/confirm@6.1.0",
+      "version": "6.1.1",
+      "bom-ref": "react-platform@0.1.0|@inquirer/confirm@6.1.1",
       "licenses": [
         {
           "license": {
@@ -8799,15 +8716,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40inquirer/confirm@6.1.0",
+      "purl": "pkg:npm/%40inquirer/confirm@6.1.1",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@inquirer/confirm/-/confirm-6.1.0.tgz",
+          "url": "https://registry.npmjs.org/@inquirer/confirm/-/confirm-6.1.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "512a5e07be9ea8aef21ab89c0e5180ba9c56969e1ae7daa97993a83566b13bf9c9967eda82926f7b2364435779bbc6171ba4ceab166d42928f3914100eb755b0"
+              "content": "79bf03059733ff6a8759075ae2b936262424e61f5057f7151e2d728edd1febd58564c4459f4b094f27b71003fc89cbadf140cc8d03ec687e4a6dc3a881e7eb15"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -9509,44 +9426,6 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/yargs/node_modules/strip-ansi"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "ansi-regex",
-          "version": "5.0.1",
-          "bom-ref": "react-platform@0.1.0|yargs@17.7.2|ansi-regex@5.0.1",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/ansi-regex@5.0.1",
-          "externalReferences": [
-            {
-              "url": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "aae2505e54d25062f62c7f52517a3c570b18e2ca1a9e1828e8b3529bce04d4b05c13cb373b4c29762473c91f73fd9649325316bf7eea38e6fda5d26531410a15"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/yargs/node_modules/ansi-regex"
             }
           ]
         }
@@ -10551,8 +10430,8 @@
     {
       "type": "library",
       "name": "react-is",
-      "version": "17.0.2",
-      "bom-ref": "react-platform@0.1.0|react-is@17.0.2",
+      "version": "19.2.6",
+      "bom-ref": "react-platform@0.1.0|react-is@19.2.6",
       "licenses": [
         {
           "license": {
@@ -10561,15 +10440,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/react-is@17.0.2",
+      "purl": "pkg:npm/react-is@19.2.6",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz",
+          "url": "https://registry.npmjs.org/react-is/-/react-is-19.2.6.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "c361accae90beb62099e569f7ff9d17a03d047de02fd75da9af3169921d1278cbb4ecff8a1c1919931ef3acf0f484ea90777563ab0ff9ee7ae539b1db81b10e3"
+              "content": "5e3051d790615eeca58161aeb258432aa9526b2baabea057f7504ff296ae1bc91dd7363c928b643566d792c4c23516abb1ee24b866deda4218d39011b70348bf"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -11122,45 +11001,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@typescript-eslint/utils"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "fsevents",
-      "version": "2.3.3",
-      "bom-ref": "react-platform@0.1.0|fsevents@2.3.3",
-      "scope": "optional",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/fsevents@2.3.3",
-      "externalReferences": [
-        {
-          "url": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "e71a037d7f9f2fb7da0139da82658fa5b16dc21fd1efb5a630caaa1c64bae42defbc1d181eb805f81d58999df8e35b4c8f99fade4d36d765cda09c339617df43"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/fsevents"
         }
       ]
     },
@@ -11899,8 +11739,8 @@
     {
       "type": "library",
       "name": "tinyexec",
-      "version": "1.2.2",
-      "bom-ref": "react-platform@0.1.0|tinyexec@1.2.2",
+      "version": "1.2.3",
+      "bom-ref": "react-platform@0.1.0|tinyexec@1.2.3",
       "licenses": [
         {
           "license": {
@@ -11909,15 +11749,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/tinyexec@1.2.2",
+      "purl": "pkg:npm/tinyexec@1.2.3",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/tinyexec/-/tinyexec-1.2.2.tgz",
+          "url": "https://registry.npmjs.org/tinyexec/-/tinyexec-1.2.3.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "33f434076729e0aee4ca7693fef9c40f58fc4e52d8f8fa7b0ba5a5d9b97feeefc5d26515c1dc8ea70a2641bf09a582e2b4752cb0025198b65d3021acaf1ee2fa"
+              "content": "83ad9d07ec35fce1059cfbe65f4c9dfc79deb5821338bfb59c95bb922b4ec9c39e02f99b582fe7bb47f09a643f92ea4da23a84c73c82fd3fbea524ff8d127699"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -12363,8 +12203,8 @@
       "type": "library",
       "name": "credential-provider-ini",
       "group": "@aws-sdk",
-      "version": "3.972.45",
-      "bom-ref": "react-platform@0.1.0|@aws-sdk/credential-provider-ini@3.972.45",
+      "version": "3.972.46",
+      "bom-ref": "react-platform@0.1.0|@aws-sdk/credential-provider-ini@3.972.46",
       "licenses": [
         {
           "license": {
@@ -12373,15 +12213,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40aws-sdk/credential-provider-ini@3.972.45",
+      "purl": "pkg:npm/%40aws-sdk/credential-provider-ini@3.972.46",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@aws-sdk/credential-provider-ini/-/credential-provider-ini-3.972.45.tgz",
+          "url": "https://registry.npmjs.org/@aws-sdk/credential-provider-ini/-/credential-provider-ini-3.972.46.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "b097b965689b3b8b3b4568c543c66897be8ac6825c218c84647d7fc3141204c488000c73689f1c4bf21301a20759442f0ca41db75f3e70900729607b9f5266ae"
+              "content": "86f7207303a24b49dbd9715be4ea753f3fef61a5b3e4af242ae965ce21a974d46e1b4370cd15ec7ae3edd82a01aa49c719a48f55eb2ed5a3a7d8e71cb4461d08"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -12503,8 +12343,8 @@
       "type": "library",
       "name": "credential-provider-imds",
       "group": "@smithy",
-      "version": "4.3.5",
-      "bom-ref": "react-platform@0.1.0|@smithy/credential-provider-imds@4.3.5",
+      "version": "4.3.6",
+      "bom-ref": "react-platform@0.1.0|@smithy/credential-provider-imds@4.3.6",
       "licenses": [
         {
           "license": {
@@ -12513,15 +12353,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40smithy/credential-provider-imds@4.3.5",
+      "purl": "pkg:npm/%40smithy/credential-provider-imds@4.3.6",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@smithy/credential-provider-imds/-/credential-provider-imds-4.3.5.tgz",
+          "url": "https://registry.npmjs.org/@smithy/credential-provider-imds/-/credential-provider-imds-4.3.6.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "ca217cc47a5d91a4dfccb56a173b0fe96bcd82110afaa6732d85850f5dcbd92b0585b5f004697176870a17de6a8ebeece651393516a07be10914ae2602cc7cf1"
+              "content": "b4785d89665f1b564887661c45f3c9998da01dc066a9b033aa6dc44784c80c562c484a930f9b48093edc810fe423c2d16a4c69d769b2398c8aebc5cf9fb3271f"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -12842,6 +12682,45 @@
     },
     {
       "type": "library",
+      "name": "json-schema-traverse",
+      "version": "1.0.0",
+      "bom-ref": "react-platform@0.1.0|json-schema-traverse@1.0.0",
+      "scope": "optional",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/json-schema-traverse@1.0.0",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-1.0.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "34cf3f3fd9f75e35e12199f594b86415a0024ce5114178d6855e0103f4673aff31be0aadaa9017f483b89914314b1d51968e2dab37aa6f4b0e96bb9a3b2dddba"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/json-schema-traverse"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "name": "require-from-string",
       "version": "2.0.2",
       "bom-ref": "react-platform@0.1.0|require-from-string@2.0.2",
@@ -13150,46 +13029,6 @@
           "name": "cdx:npm:package:path",
           "value": "node_modules/hosted-git-info"
         }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "lru-cache",
-          "version": "11.5.0",
-          "bom-ref": "react-platform@0.1.0|hosted-git-info@9.0.3|lru-cache@11.5.0",
-          "licenses": [
-            {
-              "license": {
-                "id": "BlueOak-1.0.0",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/lru-cache@11.5.0",
-          "externalReferences": [
-            {
-              "url": "https://registry.npmjs.org/lru-cache/-/lru-cache-11.5.0.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "e58807f5425def055bf61228b88d9a756a60aabac80a4b74ef40e78fc114635f81e01d8ff5e44b3c0900028e8d20203b08484e21e047978eaef7348da4dbbbcc"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/hosted-git-info/node_modules/lru-cache"
-            }
-          ]
-        }
       ]
     },
     {
@@ -13465,6 +13304,45 @@
     },
     {
       "type": "library",
+      "name": "fsevents",
+      "version": "2.3.2",
+      "bom-ref": "react-platform@0.1.0|fsevents@2.3.2",
+      "scope": "optional",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/fsevents@2.3.2",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "c62a8c411e3101e1d3b81f6e5a6f9f1517083a02813223813fe7978b24fb8ec8150aad5b915ca0b74d28012a3007b11db6938769a3e02adf35d8ff5a6fe0c328"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/fsevents"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "name": "playwright-core",
       "version": "1.60.0",
       "bom-ref": "react-platform@0.1.0|playwright-core@1.60.0",
@@ -13537,6 +13415,44 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@jridgewell/remapping"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "enhanced-resolve",
+      "version": "5.22.1",
+      "bom-ref": "react-platform@0.1.0|enhanced-resolve@5.22.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/enhanced-resolve@5.22.1",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.22.1.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "e9012ec37ce85f548941cedbf3b6815e47bf9e8fa61b66d3060c36f6058c4289cb9a91245a808056497e338f5ee3c019956cf1883cc367361da7a9286dcc8bc3"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/enhanced-resolve"
         }
       ]
     },
@@ -14557,9 +14473,9 @@
       "components": [
         {
           "type": "library",
-          "name": "ansi-regex",
-          "version": "5.0.1",
-          "bom-ref": "react-platform@0.1.0|pretty-format@27.5.1|ansi-regex@5.0.1",
+          "name": "react-is",
+          "version": "17.0.2",
+          "bom-ref": "react-platform@0.1.0|pretty-format@27.5.1|react-is@17.0.2",
           "licenses": [
             {
               "license": {
@@ -14568,15 +14484,15 @@
               }
             }
           ],
-          "purl": "pkg:npm/ansi-regex@5.0.1",
+          "purl": "pkg:npm/react-is@17.0.2",
           "externalReferences": [
             {
-              "url": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
+              "url": "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz",
               "type": "distribution",
               "hashes": [
                 {
                   "alg": "SHA-512",
-                  "content": "aae2505e54d25062f62c7f52517a3c570b18e2ca1a9e1828e8b3529bce04d4b05c13cb373b4c29762473c91f73fd9649325316bf7eea38e6fda5d26531410a15"
+                  "content": "c361accae90beb62099e569f7ff9d17a03d047de02fd75da9af3169921d1278cbb4ecff8a1c1919931ef3acf0f484ea90777563ab0ff9ee7ae539b1db81b10e3"
                 }
               ],
               "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -14589,45 +14505,7 @@
             },
             {
               "name": "cdx:npm:package:path",
-              "value": "node_modules/pretty-format/node_modules/ansi-regex"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "ansi-styles",
-          "version": "5.2.0",
-          "bom-ref": "react-platform@0.1.0|pretty-format@27.5.1|ansi-styles@5.2.0",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/ansi-styles@5.2.0",
-          "externalReferences": [
-            {
-              "url": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-5.2.0.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "0b1c29b7649f4f34ed5dc7ce97318479ef0ef9cf8c994806acd8817179ee5b1b852477ba6b91f3eeac21c1ee4e81a498234209be42ea597d40486f9c24e90488"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/pretty-format/node_modules/ansi-styles"
+              "value": "node_modules/pretty-format/node_modules/react-is"
             }
           ]
         }
@@ -15790,6 +15668,46 @@
           "name": "cdx:npm:package:path",
           "value": "node_modules/chalk"
         }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "ansi-styles",
+          "version": "4.3.0",
+          "bom-ref": "react-platform@0.1.0|chalk@4.1.2|ansi-styles@4.3.0",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/ansi-styles@4.3.0",
+          "externalReferences": [
+            {
+              "url": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-4.3.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "cdb07dac22404f5adb8e25436f686a2851cd60bc60b64f0d511c59dc86700f717a36dc5b5d94029e74a2d4b931f880e885d3e5169db6db05402c885e64941212"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/chalk/node_modules/ansi-styles"
+            }
+          ]
+        }
       ]
     },
     {
@@ -16059,44 +15977,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/fast-json-stable-stringify"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "json-schema-traverse",
-      "version": "0.4.1",
-      "bom-ref": "react-platform@0.1.0|json-schema-traverse@0.4.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/json-schema-traverse@0.4.1",
-      "externalReferences": [
-        {
-          "url": "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "c5b6c21f9742614e53f0b704861ba1ec727cf075ee5b7aac237634cce64529f6441dca5688753f271ce4eb6f41aec69bfe63221d0b62f7030ffbce3944f7b756"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/json-schema-traverse"
         }
       ]
     },
@@ -18090,8 +17970,8 @@
       "type": "library",
       "name": "binding-android-arm-eabi",
       "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-android-arm-eabi@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-android-arm-eabi@11.20.0",
       "scope": "optional",
       "licenses": [
         {
@@ -18101,15 +17981,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-android-arm-eabi@11.19.1",
+      "purl": "pkg:npm/%40oxc-resolver/binding-android-arm-eabi@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-android-arm-eabi/-/binding-android-arm-eabi-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/@oxc-resolver/binding-android-arm-eabi/-/binding-android-arm-eabi-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "694b38ef2fb1c971d42a56e1a87523040063bf272ae98483edba71496eefa6552677302527ddf25d8e99474735a35c7903f40a6c4342becdfe36563c229215ce"
+              "content": "2237d639746024535d3910e5f947f56a26cd81963682e383df398e871d411956ff3088aa9454dd9a3a50369952379f258567a19d7e1436a0b7430a54a3ca6326"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18130,8 +18010,8 @@
       "type": "library",
       "name": "binding-android-arm64",
       "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-android-arm64@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-android-arm64@11.20.0",
       "scope": "optional",
       "licenses": [
         {
@@ -18141,15 +18021,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-android-arm64@11.19.1",
+      "purl": "pkg:npm/%40oxc-resolver/binding-android-arm64@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-android-arm64/-/binding-android-arm64-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/@oxc-resolver/binding-android-arm64/-/binding-android-arm64-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "a2895b9115fe9bb3ead8b363aff90a818782edb4433154d63e0c4118c8d2a598bff94b24568e23b0c53730b85e655e798cbe9cdeb35e94f978a03eb4820626a8"
+              "content": "42ab25640b85406f10f719bb26e227f0951bbf2c2148131586e407b585be6ae8ab6499684b8d68c5451a05793bb94859260a78e1ce7340b795be615a0d007ed9"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18170,8 +18050,8 @@
       "type": "library",
       "name": "binding-darwin-arm64",
       "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-darwin-arm64@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-darwin-arm64@11.20.0",
       "scope": "optional",
       "licenses": [
         {
@@ -18181,15 +18061,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-darwin-arm64@11.19.1",
+      "purl": "pkg:npm/%40oxc-resolver/binding-darwin-arm64@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-darwin-arm64/-/binding-darwin-arm64-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/@oxc-resolver/binding-darwin-arm64/-/binding-darwin-arm64-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "9d40ba7768b7479075dac516e0eeb8eaa0f97273177f6a0118f2c821e6917d4f5da0944e4406c4d921afe1e5baaccaa10fe1bb9dfd98f134c94cb8a23b743f75"
+              "content": "31471abf2923d9ec2547e91ce5aae9838b42d91bf32645315ad36fef8a5fee570d934d06a48a4de37bd7323fa3eabe1e3267d98656fc86e78aa086fc7bd90019"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18210,8 +18090,8 @@
       "type": "library",
       "name": "binding-darwin-x64",
       "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-darwin-x64@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-darwin-x64@11.20.0",
       "scope": "optional",
       "licenses": [
         {
@@ -18221,15 +18101,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-darwin-x64@11.19.1",
+      "purl": "pkg:npm/%40oxc-resolver/binding-darwin-x64@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-darwin-x64/-/binding-darwin-x64-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/@oxc-resolver/binding-darwin-x64/-/binding-darwin-x64-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "715e74bc4e7eb8080d7056b7418d4939e2834a433ff5178871cffdc27e136af856fe2b640c6ad7870f6368a9e442719b8c9d7df188799db5ff1abda6af86798d"
+              "content": "046075ea74542b912d8affff8a13f2ce3f0b8f5a71d26861e1821f7b41437f4e39cb09277d29b41846e24444a9afa4382bcd80be7c9a44886196e1c1caf4b86e"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18250,8 +18130,8 @@
       "type": "library",
       "name": "binding-freebsd-x64",
       "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-freebsd-x64@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-freebsd-x64@11.20.0",
       "scope": "optional",
       "licenses": [
         {
@@ -18261,15 +18141,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-freebsd-x64@11.19.1",
+      "purl": "pkg:npm/%40oxc-resolver/binding-freebsd-x64@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-freebsd-x64/-/binding-freebsd-x64-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/@oxc-resolver/binding-freebsd-x64/-/binding-freebsd-x64-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "c59390898185c6d938f0f04a7dff99c28ca6ed270f008569e1cd7895f2f18b33b62d34d325ee6cc7dbd0346ac1ca6adffef6ad48f34c0f8160b1a6918a03e4ab"
+              "content": "25982d78f6aa8f7aa60f95c51c96922d6cc747142ed0b68f91da0cd4a2576000ef01a6bcde28d71dc955dde8f70ae79e5b4c317c801b1826553f8e49d0203bb9"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18290,8 +18170,8 @@
       "type": "library",
       "name": "binding-linux-arm-gnueabihf",
       "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-arm-gnueabihf@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-arm-gnueabihf@11.20.0",
       "scope": "optional",
       "licenses": [
         {
@@ -18301,15 +18181,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-linux-arm-gnueabihf@11.19.1",
+      "purl": "pkg:npm/%40oxc-resolver/binding-linux-arm-gnueabihf@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-arm-gnueabihf/-/binding-linux-arm-gnueabihf-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-arm-gnueabihf/-/binding-linux-arm-gnueabihf-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "9576585800ba91a19efe4cb6b2ef787bd8cdf6de8cd3fe9cf86ad2942a8bfff5ced5cc62e65a40867258772aca7e6d1912bfdced1372031dcfec5481701779f8"
+              "content": "84e43fa77af2defdd27215015e272bae7b33688fd4998ccce30b52e1119fc205545fb6be1dbc904b327968eceefa8e976641644b76573783d903384e6fbece4a"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18330,8 +18210,8 @@
       "type": "library",
       "name": "binding-linux-arm-musleabihf",
       "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-arm-musleabihf@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-arm-musleabihf@11.20.0",
       "scope": "optional",
       "licenses": [
         {
@@ -18341,15 +18221,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-linux-arm-musleabihf@11.19.1",
+      "purl": "pkg:npm/%40oxc-resolver/binding-linux-arm-musleabihf@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-arm-musleabihf/-/binding-linux-arm-musleabihf-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-arm-musleabihf/-/binding-linux-arm-musleabihf-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "bde1b590ab2e2b9fadd88b0ef6ad0312b6154b0d9acef095bd61e77d3392ef7584d124dd2cb07b4356c1f5647ec873d033be804a417245ba205a8d46475f966d"
+              "content": "d80acf92c6b0d00a9eb8605fa12ef5e5517e26f2500210f69e25a08c4e6154ef8bfa701f8a4550a29be7802317f71e010fc8ad5a84377678a4ad0ca5e47a3926"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18370,8 +18250,8 @@
       "type": "library",
       "name": "binding-linux-arm64-gnu",
       "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-arm64-gnu@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-arm64-gnu@11.20.0",
       "scope": "optional",
       "licenses": [
         {
@@ -18381,15 +18261,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-linux-arm64-gnu@11.19.1",
+      "purl": "pkg:npm/%40oxc-resolver/binding-linux-arm64-gnu@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-arm64-gnu/-/binding-linux-arm64-gnu-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-arm64-gnu/-/binding-linux-arm64-gnu-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "85e576fa3997c989d4ae951748fba0a960d1a67b107039b6017e30cd3baf81d9597e83583b43b75b6015a4961a0e7f401b825d33a2b1a26f3e7e813bfc17128a"
+              "content": "d1b267998169eb625d6789d5303519fc2e7c04264e09caa02ad9d4969ecbf4e8dffdccc837ede3ef66252cf7962e4ce5afa4a562f21003848657f1f23b477eaa"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18410,8 +18290,8 @@
       "type": "library",
       "name": "binding-linux-arm64-musl",
       "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-arm64-musl@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-arm64-musl@11.20.0",
       "scope": "optional",
       "licenses": [
         {
@@ -18421,15 +18301,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-linux-arm64-musl@11.19.1",
+      "purl": "pkg:npm/%40oxc-resolver/binding-linux-arm64-musl@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-arm64-musl/-/binding-linux-arm64-musl-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-arm64-musl/-/binding-linux-arm64-musl-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "8efa363e3b3573d28fc4cb8c3c8790b20bb498e245f6b11bdf2dd3769b2bab0c5133e00debf9c30f0bf8e67e59ad49d032c741cb980869b8a830a9d07d6a3d7b"
+              "content": "c0a1c7ccf299a3b51f86ffc1b7acb14fb14e8272205b88305dc2548a9912846a7af16df0195aafaf54abd1f63ae653743b2eb2e35fa0da4203be481968c31493"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18450,8 +18330,8 @@
       "type": "library",
       "name": "binding-linux-ppc64-gnu",
       "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-ppc64-gnu@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-ppc64-gnu@11.20.0",
       "scope": "optional",
       "licenses": [
         {
@@ -18461,15 +18341,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-linux-ppc64-gnu@11.19.1",
+      "purl": "pkg:npm/%40oxc-resolver/binding-linux-ppc64-gnu@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-ppc64-gnu/-/binding-linux-ppc64-gnu-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-ppc64-gnu/-/binding-linux-ppc64-gnu-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "bcb99d37158274ded4a39b2e6b2b3a03ffb2c016f2d8f58104f5dcb563e0e55d3e795bb3b09c60027e8c301e263e5b21b2461ba698e9376660f3702b1f37bd81"
+              "content": "44df20a05ec87b407bf4be22e06e8e781a1c4e0482e7abc96d0eb95498defa85e795d5692e7394ee3fc043f74ff784dc092f9887a586f2edd0b78113b5e5c535"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18490,8 +18370,8 @@
       "type": "library",
       "name": "binding-linux-riscv64-gnu",
       "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-riscv64-gnu@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-riscv64-gnu@11.20.0",
       "scope": "optional",
       "licenses": [
         {
@@ -18501,15 +18381,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-linux-riscv64-gnu@11.19.1",
+      "purl": "pkg:npm/%40oxc-resolver/binding-linux-riscv64-gnu@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-riscv64-gnu/-/binding-linux-riscv64-gnu-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-riscv64-gnu/-/binding-linux-riscv64-gnu-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "fdbf96811f954d2071ce03a10ceed394c5c2d6e7cf20c47a563d7337eff1f8c9f25c65bba6b4cbcd4f5e5bce408fb4e1ec20841bd02b09b4deab10b3156760db"
+              "content": "e65d7253aff1404a8b651cf1aa633125f58fb25a700a606c74319a06f0013de871aae0970c2edd77ba2b68d74a48950c0d748ced5bd58fc1f60f61538d4ee85b"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18530,8 +18410,8 @@
       "type": "library",
       "name": "binding-linux-riscv64-musl",
       "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-riscv64-musl@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-riscv64-musl@11.20.0",
       "scope": "optional",
       "licenses": [
         {
@@ -18541,15 +18421,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-linux-riscv64-musl@11.19.1",
+      "purl": "pkg:npm/%40oxc-resolver/binding-linux-riscv64-musl@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-riscv64-musl/-/binding-linux-riscv64-musl-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-riscv64-musl/-/binding-linux-riscv64-musl-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "62545d7966fd8f8da9dbd44e87e8787a0fce437753265a4749afbce2950cf7ea7a8b7763b4fcf5ab9e722c98605bd5df0dc87b14dd6943f55de983fec5f448bb"
+              "content": "c4712f91b833e940be03724ec83432efa2e451ac6c3527c8af7fc657cb25c19b27ba8a09888077e20cc97eccaf47825d09835450fb1125cff0fe85a4383bbe86"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18570,8 +18450,8 @@
       "type": "library",
       "name": "binding-linux-s390x-gnu",
       "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-s390x-gnu@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-s390x-gnu@11.20.0",
       "scope": "optional",
       "licenses": [
         {
@@ -18581,15 +18461,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-linux-s390x-gnu@11.19.1",
+      "purl": "pkg:npm/%40oxc-resolver/binding-linux-s390x-gnu@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-s390x-gnu/-/binding-linux-s390x-gnu-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-s390x-gnu/-/binding-linux-s390x-gnu-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "103a5a7d5390585f3f309ca7b2338615385caa1447cb8d7bb11c8b7d099e89a989f2a56148a027d839f65552941828d507d0b8e951a384da3b9ce3d48b5c7ab8"
+              "content": "6963c35149927b21ef956f92a0451df89209b1085586ee9ae6d0690d132ed39f2768f01c853800546085cb7e738db9c596dd22f212d6ce27dfe875f40f72d4e2"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18610,8 +18490,8 @@
       "type": "library",
       "name": "binding-linux-x64-gnu",
       "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-x64-gnu@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-x64-gnu@11.20.0",
       "scope": "optional",
       "licenses": [
         {
@@ -18621,15 +18501,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-linux-x64-gnu@11.19.1",
+      "purl": "pkg:npm/%40oxc-resolver/binding-linux-x64-gnu@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-x64-gnu/-/binding-linux-x64-gnu-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-x64-gnu/-/binding-linux-x64-gnu-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "3718d97beaea5a1afe453f3f224fb9a6d037a33eed530dfad566b94564172a77eac12487747cabc3a21d7137d8ba697d74cf39e8094a5992145c3980f6492205"
+              "content": "c7661e4a29af8498ca2d50fc292bbc7ffaea535a68b5c74432402920f26a8d958dedcd85a6de20d97df6583835a7e5c3026c93ee7b9019ed2f9e1bd778b6c7fa"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18650,8 +18530,8 @@
       "type": "library",
       "name": "binding-linux-x64-musl",
       "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-x64-musl@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-x64-musl@11.20.0",
       "scope": "optional",
       "licenses": [
         {
@@ -18661,15 +18541,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-linux-x64-musl@11.19.1",
+      "purl": "pkg:npm/%40oxc-resolver/binding-linux-x64-musl@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-x64-musl/-/binding-linux-x64-musl-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/@oxc-resolver/binding-linux-x64-musl/-/binding-linux-x64-musl-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "70cfe1430b0edd1789839911f92a48ebd0cc7ef342a7e03f7954786f8602944e5b559c33f2b876361d392278702391d1ffd700adb124ccc8dc2a04c74ba51a37"
+              "content": "91c44b108c6965e7de61f2c2863a6015fde2941cd10d9fb2a1b32ba51b10952af1b851ad9b753a3cc53b01a12932aa3735f0c6572249b1e0239d12f33051e3c1"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18690,8 +18570,8 @@
       "type": "library",
       "name": "binding-openharmony-arm64",
       "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-openharmony-arm64@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-openharmony-arm64@11.20.0",
       "scope": "optional",
       "licenses": [
         {
@@ -18701,15 +18581,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-openharmony-arm64@11.19.1",
+      "purl": "pkg:npm/%40oxc-resolver/binding-openharmony-arm64@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-openharmony-arm64/-/binding-openharmony-arm64-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/@oxc-resolver/binding-openharmony-arm64/-/binding-openharmony-arm64-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "405d3cd08a30141d3ef5187a45c0f5f5b760878f41a501d45b94da8c6d6abd61ef9ab4339d36598d896013696d2d7c8a63eaace05fefe71b97d574bb22cfb7a8"
+              "content": "1c771f9c0a52646b4a853887a9ef0e66bb8e65ee57b85407e7f1346218f7bbc7e716fce4338fe4e968da7147f84af03448f1006df6e062654fba8d155ff7c805"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18730,8 +18610,8 @@
       "type": "library",
       "name": "binding-wasm32-wasi",
       "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-wasm32-wasi@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-wasm32-wasi@11.20.0",
       "scope": "optional",
       "licenses": [
         {
@@ -18741,15 +18621,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-wasm32-wasi@11.19.1",
+      "purl": "pkg:npm/%40oxc-resolver/binding-wasm32-wasi@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-wasm32-wasi/-/binding-wasm32-wasi-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/@oxc-resolver/binding-wasm32-wasi/-/binding-wasm32-wasi-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "c3c5022a15fcdba70ffd92e89170d2ebe9a294df32e17ef389db00b6d11d5a55686a64cd7fa96104995d696af7ba44c38b27bbb381d172e3c43ce5cd0b8df656"
+              "content": "4e7d32d5738560735f2b5c29d59e502bc45c95dfdbb0ec112124177ea019e48069bfc1b3d48bd5dfd7d458da6ba8d7518b381cbc584ecd6c05ba7db3909b3206"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18770,8 +18650,8 @@
       "type": "library",
       "name": "binding-win32-arm64-msvc",
       "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-win32-arm64-msvc@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-win32-arm64-msvc@11.20.0",
       "scope": "optional",
       "licenses": [
         {
@@ -18781,15 +18661,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-win32-arm64-msvc@11.19.1",
+      "purl": "pkg:npm/%40oxc-resolver/binding-win32-arm64-msvc@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-win32-arm64-msvc/-/binding-win32-arm64-msvc-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/@oxc-resolver/binding-win32-arm64-msvc/-/binding-win32-arm64-msvc-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "9c9e00b14559ad52b09d4fd045dccf082aced13ada6c1aa027ca49857213759198395dbc4c8632b2d5755452db43b0ed01c6811e9a1c4f9fd926717bf1824fb5"
+              "content": "a8f8b6e5834f7b861e9d2f0c82c414dbe6c8147c71a4bc752d59dadb8e387041ea34f84d8ef59ff73aa3e1a584e371fd2e902c4e692402503778be4494153798"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18808,50 +18688,10 @@
     },
     {
       "type": "library",
-      "name": "binding-win32-ia32-msvc",
-      "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-win32-ia32-msvc@11.19.1",
-      "scope": "optional",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-win32-ia32-msvc@11.19.1",
-      "externalReferences": [
-        {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-win32-ia32-msvc/-/binding-win32-ia32-msvc-11.19.1.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "116f8d0f9ab64e5f9ade91fcd65d506df81b1771e6aa0c0b7c37d58ad85116179a73c3937276d7b7f271a83d866c391bef1604ab2d7335a54546bde8786f27a4"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@oxc-resolver/binding-win32-ia32-msvc"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "binding-win32-x64-msvc",
       "group": "@oxc-resolver",
-      "version": "11.19.1",
-      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-win32-x64-msvc@11.19.1",
+      "version": "11.20.0",
+      "bom-ref": "react-platform@0.1.0|@oxc-resolver/binding-win32-x64-msvc@11.20.0",
       "scope": "optional",
       "licenses": [
         {
@@ -18861,15 +18701,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oxc-resolver/binding-win32-x64-msvc@11.19.1",
+      "purl": "pkg:npm/%40oxc-resolver/binding-win32-x64-msvc@11.20.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@oxc-resolver/binding-win32-x64-msvc/-/binding-win32-x64-msvc-11.19.1.tgz",
+          "url": "https://registry.npmjs.org/@oxc-resolver/binding-win32-x64-msvc/-/binding-win32-x64-msvc-11.20.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "ea1214dd142ee3907e54d4d8e11bbca691708d54bf4b9ab06321a1068b668f17c42a4e352360e51ad45f1899dd679fba967784da9c25a2aba794ec99b97fd703"
+              "content": "59bd788d6116f21b87e88b7d17ab1777dbeb626212ee932b82453ab31a4bc643fef73fb0460b3bd61504851a5c9fc14e5c015adbb15559f636b51a5b7d3cdf2f"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -19691,8 +19531,8 @@
       "type": "library",
       "name": "core",
       "group": "@inquirer",
-      "version": "11.2.0",
-      "bom-ref": "react-platform@0.1.0|@inquirer/core@11.2.0",
+      "version": "11.2.1",
+      "bom-ref": "react-platform@0.1.0|@inquirer/core@11.2.1",
       "licenses": [
         {
           "license": {
@@ -19701,15 +19541,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40inquirer/core@11.2.0",
+      "purl": "pkg:npm/%40inquirer/core@11.2.1",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@inquirer/core/-/core-11.2.0.tgz",
+          "url": "https://registry.npmjs.org/@inquirer/core/-/core-11.2.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "8e8475612dac234bacfbd77423c562a856eb44b38d3bc0854eecaf057e1954149c87e56c662ba050005dae10575c9475572133be9cf94900a2c7791e113439f2"
+              "content": "41de86253d72572ad96427cdf16daa285e40a66aabc9746144a0ae8a9f21d35c76c3f7ac250d9721873a7fd69b3081e02907417c54d239d6c744b021b8cd3d50"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -19730,8 +19570,8 @@
       "type": "library",
       "name": "type",
       "group": "@inquirer",
-      "version": "4.0.6",
-      "bom-ref": "react-platform@0.1.0|@inquirer/type@4.0.6",
+      "version": "4.0.7",
+      "bom-ref": "react-platform@0.1.0|@inquirer/type@4.0.7",
       "licenses": [
         {
           "license": {
@@ -19740,15 +19580,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40inquirer/type@4.0.6",
+      "purl": "pkg:npm/%40inquirer/type@4.0.7",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@inquirer/type/-/type-4.0.6.tgz",
+          "url": "https://registry.npmjs.org/@inquirer/type/-/type-4.0.7.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "27ef6d7713ac92e62e1a3b2f19aab4d006a684382347b6a78445b674fe10750a4508c3e7802782fdb098590e4db0c59945db32e778acee40076fffbb7300e4da"
+              "content": "b76f229efd789cc4353e12a9b093d8fa412cfdcd34ab3782392da04cd4724e31b977aaac540d9f22dc56e2192f199e65bda9c62ddb42cd5231e5dc1d469375fa"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -20112,9 +19952,9 @@
         },
         {
           "type": "library",
-          "name": "ansi-regex",
-          "version": "5.0.1",
-          "bom-ref": "react-platform@0.1.0|cliui@8.0.1|ansi-regex@5.0.1",
+          "name": "ansi-styles",
+          "version": "4.3.0",
+          "bom-ref": "react-platform@0.1.0|cliui@8.0.1|ansi-styles@4.3.0",
           "licenses": [
             {
               "license": {
@@ -20123,15 +19963,15 @@
               }
             }
           ],
-          "purl": "pkg:npm/ansi-regex@5.0.1",
+          "purl": "pkg:npm/ansi-styles@4.3.0",
           "externalReferences": [
             {
-              "url": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
+              "url": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-4.3.0.tgz",
               "type": "distribution",
               "hashes": [
                 {
                   "alg": "SHA-512",
-                  "content": "aae2505e54d25062f62c7f52517a3c570b18e2ca1a9e1828e8b3529bce04d4b05c13cb373b4c29762473c91f73fd9649325316bf7eea38e6fda5d26531410a15"
+                  "content": "cdb07dac22404f5adb8e25436f686a2851cd60bc60b64f0d511c59dc86700f717a36dc5b5d94029e74a2d4b931f880e885d3e5169db6db05402c885e64941212"
                 }
               ],
               "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -20144,7 +19984,7 @@
             },
             {
               "name": "cdx:npm:package:path",
-              "value": "node_modules/cliui/node_modules/ansi-regex"
+              "value": "node_modules/cliui/node_modules/ansi-styles"
             }
           ]
         }
@@ -22865,43 +22705,6 @@
           "name": "cdx:npm:package:path",
           "value": "node_modules/@smithy/util-buffer-from"
         }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "is-array-buffer",
-          "group": "@smithy",
-          "version": "2.2.0",
-          "bom-ref": "react-platform@0.1.0|@smithy/util-buffer-from@2.2.0|@smithy/is-array-buffer@2.2.0",
-          "licenses": [
-            {
-              "license": {
-                "id": "Apache-2.0",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/%40smithy/is-array-buffer@2.2.0",
-          "externalReferences": [
-            {
-              "url": "https://registry.npmjs.org/@smithy/is-array-buffer/-/is-array-buffer-2.2.0.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "1863f73bd4050f6e2e19e0176148f04935c0468aa967290769d3a603c1b9bdf24f2b4fc30baeea6bfff4aafaab2732f5c5cf164165fbff273b7f0b9d8cf1cf84"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/@smithy/util-buffer-from/node_modules/@smithy/is-array-buffer"
-            }
-          ]
-        }
       ]
     },
     {
@@ -24454,6 +24257,82 @@
     },
     {
       "type": "library",
+      "name": "ansi-regex",
+      "version": "5.0.1",
+      "bom-ref": "react-platform@0.1.0|ansi-regex@5.0.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/ansi-regex@5.0.1",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "aae2505e54d25062f62c7f52517a3c570b18e2ca1a9e1828e8b3529bce04d4b05c13cb373b4c29762473c91f73fd9649325316bf7eea38e6fda5d26531410a15"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/ansi-regex"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "ansi-styles",
+      "version": "5.2.0",
+      "bom-ref": "react-platform@0.1.0|ansi-styles@5.2.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/ansi-styles@5.2.0",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-5.2.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "0b1c29b7649f4f34ed5dc7ce97318479ef0ef9cf8c994806acd8817179ee5b1b852477ba6b91f3eeac21c1ee4e81a498234209be42ea597d40486f9c24e90488"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/ansi-styles"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "name": "xtend",
       "version": "4.0.2",
       "bom-ref": "react-platform@0.1.0|xtend@4.0.2",
@@ -24946,44 +24825,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/supports-preserve-symlinks-flag"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "ansi-styles",
-      "version": "4.3.0",
-      "bom-ref": "react-platform@0.1.0|ansi-styles@4.3.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/ansi-styles@4.3.0",
-      "externalReferences": [
-        {
-          "url": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-4.3.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "cdb07dac22404f5adb8e25436f686a2851cd60bc60b64f0d511c59dc86700f717a36dc5b5d94029e74a2d4b931f880e885d3e5169db6db05402c885e64941212"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/ansi-styles"
         }
       ]
     },
@@ -26512,6 +26353,46 @@
           "name": "cdx:npm:package:path",
           "value": "node_modules/strip-ansi"
         }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "ansi-regex",
+          "version": "6.2.2",
+          "bom-ref": "react-platform@0.1.0|strip-ansi@7.2.0|ansi-regex@6.2.2",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/ansi-regex@6.2.2",
+          "externalReferences": [
+            {
+              "url": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-6.2.2.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "06add2992a721476968cf93c21ff7273ab2f33c739e9d079040b56e106f0e631d3c305d77132e844c9290c9a7a54bd17ce559a0874d7ae415444c6260f4b0baa"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/strip-ansi/node_modules/ansi-regex"
+            }
+          ]
+        }
       ]
     },
     {
@@ -26556,8 +26437,8 @@
       "type": "library",
       "name": "ansi",
       "group": "@inquirer",
-      "version": "2.0.6",
-      "bom-ref": "react-platform@0.1.0|@inquirer/ansi@2.0.6",
+      "version": "2.0.7",
+      "bom-ref": "react-platform@0.1.0|@inquirer/ansi@2.0.7",
       "licenses": [
         {
           "license": {
@@ -26566,15 +26447,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40inquirer/ansi@2.0.6",
+      "purl": "pkg:npm/%40inquirer/ansi@2.0.7",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@inquirer/ansi/-/ansi-2.0.6.tgz",
+          "url": "https://registry.npmjs.org/@inquirer/ansi/-/ansi-2.0.7.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "23f20dc38b071a5559fda7d939c9292e20cff5299b325d60fc60aa7878cbc3501fc3fd0f951b36b511604c65a6748d21a0db96667df2da21cd986d6fc840b241"
+              "content": "dde4ee50ed6f1f67199b664a1de4319ceaa54e2f447d90c68087b704bdc8e2efab247a1cafd173f3a3387e360004fbc59d01bf8062b9e751ea0e221c113c14e9"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -26595,8 +26476,8 @@
       "type": "library",
       "name": "figures",
       "group": "@inquirer",
-      "version": "2.0.6",
-      "bom-ref": "react-platform@0.1.0|@inquirer/figures@2.0.6",
+      "version": "2.0.7",
+      "bom-ref": "react-platform@0.1.0|@inquirer/figures@2.0.7",
       "licenses": [
         {
           "license": {
@@ -26605,15 +26486,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40inquirer/figures@2.0.6",
+      "purl": "pkg:npm/%40inquirer/figures@2.0.7",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/@inquirer/figures/-/figures-2.0.6.tgz",
+          "url": "https://registry.npmjs.org/@inquirer/figures/-/figures-2.0.7.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "76c66042d1f6b7943a6a1dda3db65b784640c6c0fda90bb40d77f4d4096db847d14e6f8da0b37afab2d56ebfb879d7846cd0a9ff004d33a9802d15adb10a5f93"
+              "content": "689f1304f38607a7ffdaace23df1252124c211de573984c57240364868e136688acdf2bfbb8a2ddefd035331957549ca8cdd7412a9e710f724dfa064c9f2e727"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -26709,8 +26590,8 @@
     {
       "type": "library",
       "name": "mute-stream",
-      "version": "4.0.0",
-      "bom-ref": "react-platform@0.1.0|mute-stream@4.0.0",
+      "version": "3.0.0",
+      "bom-ref": "react-platform@0.1.0|mute-stream@3.0.0",
       "licenses": [
         {
           "license": {
@@ -26719,15 +26600,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/mute-stream@4.0.0",
+      "purl": "pkg:npm/mute-stream@3.0.0",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/mute-stream/-/mute-stream-4.0.0.tgz",
+          "url": "https://registry.npmjs.org/mute-stream/-/mute-stream-3.0.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "812ae9aead1f277122384af38dd219ae3cac555989e2ebb54167c20ecb392f2a40e4e5efacc8dee589b9cfa57a44bc89d9e17cee56ac5fbb7a6b402716f65b96"
+              "content": "7641093d5bee9f816bcaa0666792a10e8d0af620d70309f4f2d30b0e29cd75104d3dc6040e2598cac2dc73a9379a34cc95b3fd2b2ca5bd1a5de3016dc2b4fdaf"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -27205,6 +27086,41 @@
     },
     {
       "type": "library",
+      "name": "is-array-buffer",
+      "group": "@smithy",
+      "version": "2.2.0",
+      "bom-ref": "react-platform@0.1.0|@smithy/is-array-buffer@2.2.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40smithy/is-array-buffer@2.2.0",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/@smithy/is-array-buffer/-/is-array-buffer-2.2.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "1863f73bd4050f6e2e19e0176148f04935c0468aa967290769d3a603c1b9bdf24f2b4fc30baeea6bfff4aafaab2732f5c5cf164165fbff273b7f0b9d8cf1cf84"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@smithy/is-array-buffer"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "name": "entities",
       "group": "@nodable",
       "version": "2.1.1",
@@ -27495,6 +27411,47 @@
           "name": "cdx:npm:package:path",
           "value": "node_modules/@npmcli/agent"
         }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "lru-cache",
+          "version": "10.4.3",
+          "bom-ref": "react-platform@0.1.0|@npmcli/agent@3.0.0|lru-cache@10.4.3",
+          "scope": "optional",
+          "licenses": [
+            {
+              "license": {
+                "id": "ISC",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/lru-cache@10.4.3",
+          "externalReferences": [
+            {
+              "url": "https://registry.npmjs.org/lru-cache/-/lru-cache-10.4.3.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "24d03365c5eb0ade365462ee633d337c0cc37c0bc9596e807d8943050c835790c2948da6e6c0262be3883bbb39f577ec46c587a74da3009ad169d3d1193b7a49"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/@npmcli/agent/node_modules/lru-cache"
+            }
+          ]
+        }
       ]
     },
     {
@@ -27533,6 +27490,47 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/cacache"
+        }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "lru-cache",
+          "version": "10.4.3",
+          "bom-ref": "react-platform@0.1.0|cacache@19.0.1|lru-cache@10.4.3",
+          "scope": "optional",
+          "licenses": [
+            {
+              "license": {
+                "id": "ISC",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/lru-cache@10.4.3",
+          "externalReferences": [
+            {
+              "url": "https://registry.npmjs.org/lru-cache/-/lru-cache-10.4.3.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "24d03365c5eb0ade365462ee633d337c0cc37c0bc9596e807d8943050c835790c2948da6e6c0262be3883bbb39f577ec46c587a74da3009ad169d3d1193b7a49"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/cacache/node_modules/lru-cache"
+            }
+          ]
         }
       ]
     },
@@ -28595,8 +28593,8 @@
     {
       "type": "library",
       "name": "hasown",
-      "version": "2.0.3",
-      "bom-ref": "react-platform@0.1.0|hasown@2.0.3",
+      "version": "2.0.4",
+      "bom-ref": "react-platform@0.1.0|hasown@2.0.4",
       "licenses": [
         {
           "license": {
@@ -28605,15 +28603,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/hasown@2.0.3",
+      "purl": "pkg:npm/hasown@2.0.4",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/hasown/-/hasown-2.0.3.tgz",
+          "url": "https://registry.npmjs.org/hasown/-/hasown-2.0.4.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "7a3e0085f85f2f6436ce93262e8ed4d54bfdf8fca1219a6040b193d45f668881a6882248a0281299ccc576b73dee6593e24558ef6280f969e7849e698214af4a"
+              "content": "4f651b7db044177db089ea5722c3254d6f7e743602eb0321fedfef600e2db8e30aa96cff9f7bebd4d152c508b23fece4da65eca0c03f8bfeea57a2cabadd6dd4"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -29167,44 +29165,6 @@
     },
     {
       "type": "library",
-      "name": "ansi-regex",
-      "version": "6.2.2",
-      "bom-ref": "react-platform@0.1.0|ansi-regex@6.2.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/ansi-regex@6.2.2",
-      "externalReferences": [
-        {
-          "url": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-6.2.2.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "06add2992a721476968cf93c21ff7273ab2f33c739e9d079040b56e106f0e631d3c305d77132e844c9290c9a7a54bd17ce559a0874d7ae415444c6260f4b0baa"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/ansi-regex"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "to-regex-range",
       "version": "5.0.1",
       "bom-ref": "react-platform@0.1.0|to-regex-range@5.0.1",
@@ -29505,45 +29465,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/https-proxy-agent"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "lru-cache",
-      "version": "10.4.3",
-      "bom-ref": "react-platform@0.1.0|lru-cache@10.4.3",
-      "scope": "optional",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/lru-cache@10.4.3",
-      "externalReferences": [
-        {
-          "url": "https://registry.npmjs.org/lru-cache/-/lru-cache-10.4.3.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "24d03365c5eb0ade365462ee633d337c0cc37c0bc9596e807d8943050c835790c2948da6e6c0262be3883bbb39f577ec46c587a74da3009ad169d3d1193b7a49"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/lru-cache"
         }
       ]
     },
@@ -30907,6 +30828,47 @@
           "name": "cdx:npm:package:path",
           "value": "node_modules/path-scurry"
         }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "lru-cache",
+          "version": "10.4.3",
+          "bom-ref": "react-platform@0.1.0|path-scurry@1.11.1|lru-cache@10.4.3",
+          "scope": "optional",
+          "licenses": [
+            {
+              "license": {
+                "id": "ISC",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/lru-cache@10.4.3",
+          "externalReferences": [
+            {
+              "url": "https://registry.npmjs.org/lru-cache/-/lru-cache-10.4.3.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "24d03365c5eb0ade365462ee633d337c0cc37c0bc9596e807d8943050c835790c2948da6e6c0262be3883bbb39f577ec46c587a74da3009ad169d3d1193b7a49"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/path-scurry/node_modules/lru-cache"
+            }
+          ]
+        }
       ]
     },
     {
@@ -31574,45 +31536,6 @@
               "value": "node_modules/string-width-cjs/node_modules/strip-ansi"
             }
           ]
-        },
-        {
-          "type": "library",
-          "name": "ansi-regex",
-          "version": "5.0.1",
-          "bom-ref": "react-platform@0.1.0|string-width@4.2.3|ansi-regex@5.0.1",
-          "scope": "optional",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/ansi-regex@5.0.1",
-          "externalReferences": [
-            {
-              "url": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "aae2505e54d25062f62c7f52517a3c570b18e2ca1a9e1828e8b3529bce04d4b05c13cb373b4c29762473c91f73fd9649325316bf7eea38e6fda5d26531410a15"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/string-width-cjs/node_modules/ansi-regex"
-            }
-          ]
         }
       ]
     },
@@ -31652,47 +31575,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/strip-ansi-cjs"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "ansi-regex",
-          "version": "5.0.1",
-          "bom-ref": "react-platform@0.1.0|strip-ansi@6.0.1|ansi-regex@5.0.1",
-          "scope": "optional",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/ansi-regex@5.0.1",
-          "externalReferences": [
-            {
-              "url": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "aae2505e54d25062f62c7f52517a3c570b18e2ca1a9e1828e8b3529bce04d4b05c13cb373b4c29762473c91f73fd9649325316bf7eea38e6fda5d26531410a15"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/strip-ansi-cjs/node_modules/ansi-regex"
-            }
-          ]
         }
       ]
     },
@@ -31735,6 +31617,45 @@
         }
       ],
       "components": [
+        {
+          "type": "library",
+          "name": "ansi-styles",
+          "version": "4.3.0",
+          "bom-ref": "react-platform@0.1.0|wrap-ansi@7.0.0|ansi-styles@4.3.0",
+          "scope": "optional",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/ansi-styles@4.3.0",
+          "externalReferences": [
+            {
+              "url": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-4.3.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "cdb07dac22404f5adb8e25436f686a2851cd60bc60b64f0d511c59dc86700f717a36dc5b5d94029e74a2d4b931f880e885d3e5169db6db05402c885e64941212"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/wrap-ansi-cjs/node_modules/ansi-styles"
+            }
+          ]
+        },
         {
           "type": "library",
           "name": "string-width",
@@ -31810,45 +31731,6 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/wrap-ansi-cjs/node_modules/strip-ansi"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "ansi-regex",
-          "version": "5.0.1",
-          "bom-ref": "react-platform@0.1.0|wrap-ansi@7.0.0|ansi-regex@5.0.1",
-          "scope": "optional",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/ansi-regex@5.0.1",
-          "externalReferences": [
-            {
-              "url": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "aae2505e54d25062f62c7f52517a3c570b18e2ca1a9e1828e8b3529bce04d4b05c13cb373b4c29762473c91f73fd9649325316bf7eea38e6fda5d26531410a15"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/wrap-ansi-cjs/node_modules/ansi-regex"
             }
           ]
         }
@@ -32056,9 +31938,9 @@
     {
       "ref": "react-platform@0.1.0",
       "dependsOn": [
-        "react-platform@0.1.0|@aws-sdk/client-iam@3.1056.0",
+        "react-platform@0.1.0|@aws-sdk/client-iam@3.1057.0",
         "react-platform@0.1.0|@aws-sdk/client-s3@3.1056.0",
-        "react-platform@0.1.0|@aws-sdk/s3-request-presigner@3.1056.0",
+        "react-platform@0.1.0|@aws-sdk/s3-request-presigner@3.1057.0",
         "react-platform@0.1.0|@clickhouse/client@1.19.0",
         "react-platform@0.1.0|@cyclonedx/cyclonedx-npm@4.2.1",
         "react-platform@0.1.0|@eslint/js@10.0.1",
@@ -32089,7 +31971,7 @@
         "react-platform@0.1.0|globals@17.6.0",
         "react-platform@0.1.0|jsdom@29.1.1",
         "react-platform@0.1.0|knip@6.14.2",
-        "react-platform@0.1.0|lefthook@2.1.8",
+        "react-platform@0.1.0|lefthook@2.1.9",
         "react-platform@0.1.0|lucide-react@1.17.0",
         "react-platform@0.1.0|markdownlint-cli2@0.22.1",
         "react-platform@0.1.0|msw@2.14.6",
@@ -32114,12 +31996,12 @@
       ]
     },
     {
-      "ref": "react-platform@0.1.0|@aws-sdk/client-iam@3.1056.0",
+      "ref": "react-platform@0.1.0|@aws-sdk/client-iam@3.1057.0",
       "dependsOn": [
         "react-platform@0.1.0|@aws-crypto/sha256-browser@5.2.0",
         "react-platform@0.1.0|@aws-crypto/sha256-js@5.2.0",
         "react-platform@0.1.0|@aws-sdk/core@3.974.15",
-        "react-platform@0.1.0|@aws-sdk/credential-provider-node@3.972.46",
+        "react-platform@0.1.0|@aws-sdk/credential-provider-node@3.972.47",
         "react-platform@0.1.0|@aws-sdk/types@3.973.9",
         "react-platform@0.1.0|@smithy/core@3.24.5",
         "react-platform@0.1.0|@smithy/fetch-http-handler@5.4.5",
@@ -32135,7 +32017,7 @@
         "react-platform@0.1.0|@aws-crypto/sha256-browser@5.2.0",
         "react-platform@0.1.0|@aws-crypto/sha256-js@5.2.0",
         "react-platform@0.1.0|@aws-sdk/core@3.974.15",
-        "react-platform@0.1.0|@aws-sdk/credential-provider-node@3.972.46",
+        "react-platform@0.1.0|@aws-sdk/credential-provider-node@3.972.47",
         "react-platform@0.1.0|@aws-sdk/middleware-bucket-endpoint@3.972.17",
         "react-platform@0.1.0|@aws-sdk/middleware-expect-continue@3.972.14",
         "react-platform@0.1.0|@aws-sdk/middleware-flexible-checksums@3.974.23",
@@ -32152,7 +32034,7 @@
       ]
     },
     {
-      "ref": "react-platform@0.1.0|@aws-sdk/s3-request-presigner@3.1056.0",
+      "ref": "react-platform@0.1.0|@aws-sdk/s3-request-presigner@3.1057.0",
       "dependsOn": [
         "react-platform@0.1.0|@aws-sdk/core@3.974.15",
         "react-platform@0.1.0|@aws-sdk/signature-v4-multi-region@3.996.30",
@@ -32171,10 +32053,10 @@
     {
       "ref": "react-platform@0.1.0|@cyclonedx/cyclonedx-npm@4.2.1",
       "dependsOn": [
-        "react-platform@0.1.0|@cyclonedx/cyclonedx-npm@4.2.1|@cyclonedx/cyclonedx-library@10.0.0",
+        "react-platform@0.1.0|@cyclonedx/cyclonedx-library@10.0.0",
         "react-platform@0.1.0|ajv-formats-draft2019@1.6.1",
         "react-platform@0.1.0|ajv-formats@3.0.1",
-        "react-platform@0.1.0|@cyclonedx/cyclonedx-npm@4.2.1|ajv@8.20.0",
+        "react-platform@0.1.0|ajv@8.20.0",
         "react-platform@0.1.0|commander@14.0.3",
         "react-platform@0.1.0|libxmljs2@0.37.0",
         "react-platform@0.1.0|normalize-package-data@8.0.0",
@@ -32182,30 +32064,6 @@
         "react-platform@0.1.0|spdx-expression-parse@4.0.0",
         "react-platform@0.1.0|xmlbuilder2@4.0.3"
       ]
-    },
-    {
-      "ref": "react-platform@0.1.0|@cyclonedx/cyclonedx-npm@4.2.1|@cyclonedx/cyclonedx-library@10.0.0",
-      "dependsOn": [
-        "react-platform@0.1.0|ajv-formats-draft2019@1.6.1",
-        "react-platform@0.1.0|ajv-formats@3.0.1",
-        "react-platform@0.1.0|@cyclonedx/cyclonedx-npm@4.2.1|ajv@8.20.0",
-        "react-platform@0.1.0|libxmljs2@0.37.0",
-        "react-platform@0.1.0|packageurl-js@2.0.1",
-        "react-platform@0.1.0|spdx-expression-parse@4.0.0",
-        "react-platform@0.1.0|xmlbuilder2@4.0.3"
-      ]
-    },
-    {
-      "ref": "react-platform@0.1.0|@cyclonedx/cyclonedx-npm@4.2.1|ajv@8.20.0",
-      "dependsOn": [
-        "react-platform@0.1.0|fast-deep-equal@3.1.3",
-        "react-platform@0.1.0|fast-uri@3.1.2",
-        "react-platform@0.1.0|@cyclonedx/cyclonedx-npm@4.2.1|json-schema-traverse@1.0.0",
-        "react-platform@0.1.0|require-from-string@2.0.2"
-      ]
-    },
-    {
-      "ref": "react-platform@0.1.0|@cyclonedx/cyclonedx-npm@4.2.1|json-schema-traverse@1.0.0"
     },
     {
       "ref": "react-platform@0.1.0|@eslint/js@10.0.1",
@@ -32371,7 +32229,7 @@
         "react-platform@0.1.0|acorn-walk@8.3.5",
         "react-platform@0.1.0|acorn@8.16.0",
         "react-platform@0.1.0|commander@14.0.3",
-        "react-platform@0.1.0|enhanced-resolve@5.22.0",
+        "react-platform@0.1.0|dependency-cruiser@17.4.2|enhanced-resolve@5.22.0",
         "react-platform@0.1.0|ignore@7.0.5",
         "react-platform@0.1.0|interpret@3.1.1",
         "react-platform@0.1.0|is-installed-globally@1.0.0",
@@ -32386,6 +32244,13 @@
       ]
     },
     {
+      "ref": "react-platform@0.1.0|dependency-cruiser@17.4.2|enhanced-resolve@5.22.0",
+      "dependsOn": [
+        "react-platform@0.1.0|graceful-fs@4.2.11",
+        "react-platform@0.1.0|tapable@2.3.3"
+      ]
+    },
+    {
       "ref": "react-platform@0.1.0|eslint@10.4.0",
       "dependsOn": [
         "react-platform@0.1.0|@eslint-community/eslint-utils@4.9.1",
@@ -32393,12 +32258,12 @@
         "react-platform@0.1.0|@eslint/config-array@0.23.5",
         "react-platform@0.1.0|@eslint/config-helpers@0.6.0",
         "react-platform@0.1.0|@eslint/core@1.2.1",
-        "react-platform@0.1.0|@eslint/plugin-kit@0.7.1",
+        "react-platform@0.1.0|@eslint/plugin-kit@0.7.2",
         "react-platform@0.1.0|@humanfs/node@0.16.8",
         "react-platform@0.1.0|@humanwhocodes/module-importer@1.0.1",
         "react-platform@0.1.0|@humanwhocodes/retry@0.4.3",
         "react-platform@0.1.0|@types/estree@1.0.9",
-        "react-platform@0.1.0|ajv@6.15.0",
+        "react-platform@0.1.0|eslint@10.4.0|ajv@6.15.0",
         "react-platform@0.1.0|cross-spawn@7.0.6",
         "react-platform@0.1.0|debug@4.4.3",
         "react-platform@0.1.0|escape-string-regexp@4.0.0",
@@ -32422,7 +32287,19 @@
       ]
     },
     {
+      "ref": "react-platform@0.1.0|eslint@10.4.0|ajv@6.15.0",
+      "dependsOn": [
+        "react-platform@0.1.0|fast-deep-equal@3.1.3",
+        "react-platform@0.1.0|fast-json-stable-stringify@2.1.0",
+        "react-platform@0.1.0|eslint@10.4.0|json-schema-traverse@0.4.1",
+        "react-platform@0.1.0|uri-js@4.4.1"
+      ]
+    },
+    {
       "ref": "react-platform@0.1.0|eslint@10.4.0|ignore@5.3.2"
+    },
+    {
+      "ref": "react-platform@0.1.0|eslint@10.4.0|json-schema-traverse@0.4.1"
     },
     {
       "ref": "react-platform@0.1.0|framer-motion@12.40.0",
@@ -32450,7 +32327,7 @@
         "react-platform@0.1.0|decimal.js@10.6.0",
         "react-platform@0.1.0|html-encoding-sniffer@6.0.0",
         "react-platform@0.1.0|is-potential-custom-element-name@1.0.1",
-        "react-platform@0.1.0|jsdom@29.1.1|lru-cache@11.5.1",
+        "react-platform@0.1.0|lru-cache@11.5.1",
         "react-platform@0.1.0|parse5@8.0.1",
         "react-platform@0.1.0|saxes@6.0.0",
         "react-platform@0.1.0|symbol-tree@3.2.4",
@@ -32464,9 +32341,6 @@
       ]
     },
     {
-      "ref": "react-platform@0.1.0|jsdom@29.1.1|lru-cache@11.5.1"
-    },
-    {
       "ref": "react-platform@0.1.0|knip@6.14.2",
       "dependsOn": [
         "react-platform@0.1.0|fdir@6.5.0",
@@ -32475,7 +32349,7 @@
         "react-platform@0.1.0|jiti@2.7.0",
         "react-platform@0.1.0|minimist@1.2.8",
         "react-platform@0.1.0|oxc-parser@0.130.0",
-        "react-platform@0.1.0|oxc-resolver@11.19.1",
+        "react-platform@0.1.0|oxc-resolver@11.20.0",
         "react-platform@0.1.0|picomatch@4.0.4",
         "react-platform@0.1.0|smol-toml@1.6.1",
         "react-platform@0.1.0|strip-json-comments@5.0.3",
@@ -32486,18 +32360,18 @@
       ]
     },
     {
-      "ref": "react-platform@0.1.0|lefthook@2.1.8",
+      "ref": "react-platform@0.1.0|lefthook@2.1.9",
       "dependsOn": [
-        "react-platform@0.1.0|lefthook-darwin-arm64@2.1.8",
-        "react-platform@0.1.0|lefthook-darwin-x64@2.1.8",
-        "react-platform@0.1.0|lefthook-freebsd-arm64@2.1.8",
-        "react-platform@0.1.0|lefthook-freebsd-x64@2.1.8",
-        "react-platform@0.1.0|lefthook-linux-arm64@2.1.8",
-        "react-platform@0.1.0|lefthook-linux-x64@2.1.8",
-        "react-platform@0.1.0|lefthook-openbsd-arm64@2.1.8",
-        "react-platform@0.1.0|lefthook-openbsd-x64@2.1.8",
-        "react-platform@0.1.0|lefthook-windows-arm64@2.1.8",
-        "react-platform@0.1.0|lefthook-windows-x64@2.1.8"
+        "react-platform@0.1.0|lefthook-darwin-arm64@2.1.9",
+        "react-platform@0.1.0|lefthook-darwin-x64@2.1.9",
+        "react-platform@0.1.0|lefthook-freebsd-arm64@2.1.9",
+        "react-platform@0.1.0|lefthook-freebsd-x64@2.1.9",
+        "react-platform@0.1.0|lefthook-linux-arm64@2.1.9",
+        "react-platform@0.1.0|lefthook-linux-x64@2.1.9",
+        "react-platform@0.1.0|lefthook-openbsd-arm64@2.1.9",
+        "react-platform@0.1.0|lefthook-openbsd-x64@2.1.9",
+        "react-platform@0.1.0|lefthook-windows-arm64@2.1.9",
+        "react-platform@0.1.0|lefthook-windows-x64@2.1.9"
       ]
     },
     {
@@ -32523,7 +32397,7 @@
     {
       "ref": "react-platform@0.1.0|msw@2.14.6",
       "dependsOn": [
-        "react-platform@0.1.0|@inquirer/confirm@6.1.0",
+        "react-platform@0.1.0|@inquirer/confirm@6.1.1",
         "react-platform@0.1.0|@mswjs/interceptors@0.41.9",
         "react-platform@0.1.0|@open-draft/deferred-promise@3.0.0",
         "react-platform@0.1.0|@types/statuses@2.0.6",
@@ -32606,7 +32480,7 @@
         "react-platform@0.1.0|eventemitter3@5.0.4",
         "react-platform@0.1.0|immer@10.2.0",
         "react-platform@0.1.0|react-dom@19.2.6",
-        "react-platform@0.1.0|react-is@17.0.2",
+        "react-platform@0.1.0|react-is@19.2.6",
         "react-platform@0.1.0|react-redux@9.3.0",
         "react-platform@0.1.0|react@19.2.6",
         "react-platform@0.1.0|reselect@5.1.1",
@@ -32656,7 +32530,7 @@
       "ref": "react-platform@0.1.0|vite@8.0.14",
       "dependsOn": [
         "react-platform@0.1.0|@types/node@25.9.1",
-        "react-platform@0.1.0|fsevents@2.3.3",
+        "react-platform@0.1.0|vite@8.0.14|fsevents@2.3.3",
         "react-platform@0.1.0|jiti@2.7.0",
         "react-platform@0.1.0|lightningcss@1.32.0",
         "react-platform@0.1.0|picomatch@4.0.4",
@@ -32665,6 +32539,9 @@
         "react-platform@0.1.0|tinyglobby@0.2.16",
         "react-platform@0.1.0|yaml@2.9.0"
       ]
+    },
+    {
+      "ref": "react-platform@0.1.0|vite@8.0.14|fsevents@2.3.3"
     },
     {
       "ref": "react-platform@0.1.0|vitest-axe@1.0.0-pre.5",
@@ -32709,7 +32586,7 @@
         "react-platform@0.1.0|picomatch@4.0.4",
         "react-platform@0.1.0|std-env@4.1.0",
         "react-platform@0.1.0|tinybench@2.9.0",
-        "react-platform@0.1.0|tinyexec@1.2.2",
+        "react-platform@0.1.0|tinyexec@1.2.3",
         "react-platform@0.1.0|tinyglobby@0.2.16",
         "react-platform@0.1.0|tinyrainbow@3.1.0",
         "react-platform@0.1.0|vite@8.0.14",
@@ -32762,17 +32639,17 @@
       ]
     },
     {
-      "ref": "react-platform@0.1.0|@aws-sdk/credential-provider-node@3.972.46",
+      "ref": "react-platform@0.1.0|@aws-sdk/credential-provider-node@3.972.47",
       "dependsOn": [
         "react-platform@0.1.0|@aws-sdk/credential-provider-env@3.972.41",
         "react-platform@0.1.0|@aws-sdk/credential-provider-http@3.972.43",
-        "react-platform@0.1.0|@aws-sdk/credential-provider-ini@3.972.45",
+        "react-platform@0.1.0|@aws-sdk/credential-provider-ini@3.972.46",
         "react-platform@0.1.0|@aws-sdk/credential-provider-process@3.972.41",
         "react-platform@0.1.0|@aws-sdk/credential-provider-sso@3.972.45",
         "react-platform@0.1.0|@aws-sdk/credential-provider-web-identity@3.972.45",
         "react-platform@0.1.0|@aws-sdk/types@3.973.9",
         "react-platform@0.1.0|@smithy/core@3.24.5",
-        "react-platform@0.1.0|@smithy/credential-provider-imds@4.3.5",
+        "react-platform@0.1.0|@smithy/credential-provider-imds@4.3.6",
         "react-platform@0.1.0|@smithy/types@4.14.2",
         "react-platform@0.1.0|tslib@2.8.1"
       ]
@@ -32901,9 +32778,21 @@
       "ref": "react-platform@0.1.0|@clickhouse/client-common@1.19.0"
     },
     {
+      "ref": "react-platform@0.1.0|@cyclonedx/cyclonedx-library@10.0.0",
+      "dependsOn": [
+        "react-platform@0.1.0|ajv-formats-draft2019@1.6.1",
+        "react-platform@0.1.0|ajv-formats@3.0.1",
+        "react-platform@0.1.0|ajv@8.20.0",
+        "react-platform@0.1.0|libxmljs2@0.37.0",
+        "react-platform@0.1.0|packageurl-js@2.0.1",
+        "react-platform@0.1.0|spdx-expression-parse@4.0.0",
+        "react-platform@0.1.0|xmlbuilder2@4.0.3"
+      ]
+    },
+    {
       "ref": "react-platform@0.1.0|ajv-formats-draft2019@1.6.1",
       "dependsOn": [
-        "react-platform@0.1.0|ajv@6.15.0",
+        "react-platform@0.1.0|ajv@8.20.0",
         "react-platform@0.1.0|punycode@2.3.1",
         "react-platform@0.1.0|schemes@1.4.0",
         "react-platform@0.1.0|smtp-address-parser@1.1.0",
@@ -32913,20 +32802,17 @@
     {
       "ref": "react-platform@0.1.0|ajv-formats@3.0.1",
       "dependsOn": [
-        "react-platform@0.1.0|ajv-formats@3.0.1|ajv@8.20.0"
+        "react-platform@0.1.0|ajv@8.20.0"
       ]
     },
     {
-      "ref": "react-platform@0.1.0|ajv-formats@3.0.1|ajv@8.20.0",
+      "ref": "react-platform@0.1.0|ajv@8.20.0",
       "dependsOn": [
         "react-platform@0.1.0|fast-deep-equal@3.1.3",
         "react-platform@0.1.0|fast-uri@3.1.2",
-        "react-platform@0.1.0|ajv-formats@3.0.1|json-schema-traverse@1.0.0",
+        "react-platform@0.1.0|json-schema-traverse@1.0.0",
         "react-platform@0.1.0|require-from-string@2.0.2"
       ]
-    },
-    {
-      "ref": "react-platform@0.1.0|ajv-formats@3.0.1|json-schema-traverse@1.0.0"
     },
     {
       "ref": "react-platform@0.1.0|commander@14.0.3"
@@ -32979,18 +32865,15 @@
     {
       "ref": "react-platform@0.1.0|playwright@1.60.0",
       "dependsOn": [
-        "react-platform@0.1.0|playwright@1.60.0|fsevents@2.3.2",
+        "react-platform@0.1.0|fsevents@2.3.2",
         "react-platform@0.1.0|playwright-core@1.60.0"
       ]
-    },
-    {
-      "ref": "react-platform@0.1.0|playwright@1.60.0|fsevents@2.3.2"
     },
     {
       "ref": "react-platform@0.1.0|@tailwindcss/node@4.3.0",
       "dependsOn": [
         "react-platform@0.1.0|@jridgewell/remapping@2.3.5",
-        "react-platform@0.1.0|enhanced-resolve@5.22.0",
+        "react-platform@0.1.0|enhanced-resolve@5.22.1",
         "react-platform@0.1.0|jiti@2.7.0",
         "react-platform@0.1.0|lightningcss@1.32.0",
         "react-platform@0.1.0|magic-string@0.30.21",
@@ -33212,13 +33095,6 @@
       "ref": "react-platform@0.1.0|acorn@8.16.0"
     },
     {
-      "ref": "react-platform@0.1.0|enhanced-resolve@5.22.0",
-      "dependsOn": [
-        "react-platform@0.1.0|graceful-fs@4.2.11",
-        "react-platform@0.1.0|tapable@2.3.3"
-      ]
-    },
-    {
       "ref": "react-platform@0.1.0|ignore@7.0.5"
     },
     {
@@ -33263,7 +33139,7 @@
       "ref": "react-platform@0.1.0|tsconfig-paths-webpack-plugin@4.2.0",
       "dependsOn": [
         "react-platform@0.1.0|chalk@4.1.2",
-        "react-platform@0.1.0|enhanced-resolve@5.22.0",
+        "react-platform@0.1.0|enhanced-resolve@5.22.1",
         "react-platform@0.1.0|tapable@2.3.3",
         "react-platform@0.1.0|tsconfig-paths@4.2.0"
       ]
@@ -33305,7 +33181,7 @@
       ]
     },
     {
-      "ref": "react-platform@0.1.0|@eslint/plugin-kit@0.7.1",
+      "ref": "react-platform@0.1.0|@eslint/plugin-kit@0.7.2",
       "dependsOn": [
         "react-platform@0.1.0|@eslint/core@1.2.1",
         "react-platform@0.1.0|levn@0.4.1"
@@ -33327,15 +33203,6 @@
     },
     {
       "ref": "react-platform@0.1.0|@types/estree@1.0.9"
-    },
-    {
-      "ref": "react-platform@0.1.0|ajv@6.15.0",
-      "dependsOn": [
-        "react-platform@0.1.0|fast-deep-equal@3.1.3",
-        "react-platform@0.1.0|fast-json-stable-stringify@2.1.0",
-        "react-platform@0.1.0|json-schema-traverse@0.4.1",
-        "react-platform@0.1.0|uri-js@4.4.1"
-      ]
     },
     {
       "ref": "react-platform@0.1.0|cross-spawn@7.0.6",
@@ -33511,6 +33378,9 @@
       "ref": "react-platform@0.1.0|is-potential-custom-element-name@1.0.1"
     },
     {
+      "ref": "react-platform@0.1.0|lru-cache@11.5.1"
+    },
+    {
       "ref": "react-platform@0.1.0|parse5@8.0.1",
       "dependsOn": [
         "react-platform@0.1.0|parse5@8.0.1|entities@8.0.0"
@@ -33608,28 +33478,27 @@
       ]
     },
     {
-      "ref": "react-platform@0.1.0|oxc-resolver@11.19.1",
+      "ref": "react-platform@0.1.0|oxc-resolver@11.20.0",
       "dependsOn": [
-        "react-platform@0.1.0|@oxc-resolver/binding-android-arm-eabi@11.19.1",
-        "react-platform@0.1.0|@oxc-resolver/binding-android-arm64@11.19.1",
-        "react-platform@0.1.0|@oxc-resolver/binding-darwin-arm64@11.19.1",
-        "react-platform@0.1.0|@oxc-resolver/binding-darwin-x64@11.19.1",
-        "react-platform@0.1.0|@oxc-resolver/binding-freebsd-x64@11.19.1",
-        "react-platform@0.1.0|@oxc-resolver/binding-linux-arm-gnueabihf@11.19.1",
-        "react-platform@0.1.0|@oxc-resolver/binding-linux-arm-musleabihf@11.19.1",
-        "react-platform@0.1.0|@oxc-resolver/binding-linux-arm64-gnu@11.19.1",
-        "react-platform@0.1.0|@oxc-resolver/binding-linux-arm64-musl@11.19.1",
-        "react-platform@0.1.0|@oxc-resolver/binding-linux-ppc64-gnu@11.19.1",
-        "react-platform@0.1.0|@oxc-resolver/binding-linux-riscv64-gnu@11.19.1",
-        "react-platform@0.1.0|@oxc-resolver/binding-linux-riscv64-musl@11.19.1",
-        "react-platform@0.1.0|@oxc-resolver/binding-linux-s390x-gnu@11.19.1",
-        "react-platform@0.1.0|@oxc-resolver/binding-linux-x64-gnu@11.19.1",
-        "react-platform@0.1.0|@oxc-resolver/binding-linux-x64-musl@11.19.1",
-        "react-platform@0.1.0|@oxc-resolver/binding-openharmony-arm64@11.19.1",
-        "react-platform@0.1.0|@oxc-resolver/binding-wasm32-wasi@11.19.1",
-        "react-platform@0.1.0|@oxc-resolver/binding-win32-arm64-msvc@11.19.1",
-        "react-platform@0.1.0|@oxc-resolver/binding-win32-ia32-msvc@11.19.1",
-        "react-platform@0.1.0|@oxc-resolver/binding-win32-x64-msvc@11.19.1"
+        "react-platform@0.1.0|@oxc-resolver/binding-android-arm-eabi@11.20.0",
+        "react-platform@0.1.0|@oxc-resolver/binding-android-arm64@11.20.0",
+        "react-platform@0.1.0|@oxc-resolver/binding-darwin-arm64@11.20.0",
+        "react-platform@0.1.0|@oxc-resolver/binding-darwin-x64@11.20.0",
+        "react-platform@0.1.0|@oxc-resolver/binding-freebsd-x64@11.20.0",
+        "react-platform@0.1.0|@oxc-resolver/binding-linux-arm-gnueabihf@11.20.0",
+        "react-platform@0.1.0|@oxc-resolver/binding-linux-arm-musleabihf@11.20.0",
+        "react-platform@0.1.0|@oxc-resolver/binding-linux-arm64-gnu@11.20.0",
+        "react-platform@0.1.0|@oxc-resolver/binding-linux-arm64-musl@11.20.0",
+        "react-platform@0.1.0|@oxc-resolver/binding-linux-ppc64-gnu@11.20.0",
+        "react-platform@0.1.0|@oxc-resolver/binding-linux-riscv64-gnu@11.20.0",
+        "react-platform@0.1.0|@oxc-resolver/binding-linux-riscv64-musl@11.20.0",
+        "react-platform@0.1.0|@oxc-resolver/binding-linux-s390x-gnu@11.20.0",
+        "react-platform@0.1.0|@oxc-resolver/binding-linux-x64-gnu@11.20.0",
+        "react-platform@0.1.0|@oxc-resolver/binding-linux-x64-musl@11.20.0",
+        "react-platform@0.1.0|@oxc-resolver/binding-openharmony-arm64@11.20.0",
+        "react-platform@0.1.0|@oxc-resolver/binding-wasm32-wasi@11.20.0",
+        "react-platform@0.1.0|@oxc-resolver/binding-win32-arm64-msvc@11.20.0",
+        "react-platform@0.1.0|@oxc-resolver/binding-win32-x64-msvc@11.20.0"
       ]
     },
     {
@@ -33652,34 +33521,34 @@
       "ref": "react-platform@0.1.0|yaml@2.9.0"
     },
     {
-      "ref": "react-platform@0.1.0|lefthook-darwin-arm64@2.1.8"
+      "ref": "react-platform@0.1.0|lefthook-darwin-arm64@2.1.9"
     },
     {
-      "ref": "react-platform@0.1.0|lefthook-darwin-x64@2.1.8"
+      "ref": "react-platform@0.1.0|lefthook-darwin-x64@2.1.9"
     },
     {
-      "ref": "react-platform@0.1.0|lefthook-freebsd-arm64@2.1.8"
+      "ref": "react-platform@0.1.0|lefthook-freebsd-arm64@2.1.9"
     },
     {
-      "ref": "react-platform@0.1.0|lefthook-freebsd-x64@2.1.8"
+      "ref": "react-platform@0.1.0|lefthook-freebsd-x64@2.1.9"
     },
     {
-      "ref": "react-platform@0.1.0|lefthook-linux-arm64@2.1.8"
+      "ref": "react-platform@0.1.0|lefthook-linux-arm64@2.1.9"
     },
     {
-      "ref": "react-platform@0.1.0|lefthook-linux-x64@2.1.8"
+      "ref": "react-platform@0.1.0|lefthook-linux-x64@2.1.9"
     },
     {
-      "ref": "react-platform@0.1.0|lefthook-openbsd-arm64@2.1.8"
+      "ref": "react-platform@0.1.0|lefthook-openbsd-arm64@2.1.9"
     },
     {
-      "ref": "react-platform@0.1.0|lefthook-openbsd-x64@2.1.8"
+      "ref": "react-platform@0.1.0|lefthook-openbsd-x64@2.1.9"
     },
     {
-      "ref": "react-platform@0.1.0|lefthook-windows-arm64@2.1.8"
+      "ref": "react-platform@0.1.0|lefthook-windows-arm64@2.1.9"
     },
     {
-      "ref": "react-platform@0.1.0|lefthook-windows-x64@2.1.8"
+      "ref": "react-platform@0.1.0|lefthook-windows-x64@2.1.9"
     },
     {
       "ref": "react-platform@0.1.0|globby@16.2.0",
@@ -33746,10 +33615,10 @@
       "ref": "react-platform@0.1.0|micromatch@4.0.8|picomatch@2.3.2"
     },
     {
-      "ref": "react-platform@0.1.0|@inquirer/confirm@6.1.0",
+      "ref": "react-platform@0.1.0|@inquirer/confirm@6.1.1",
       "dependsOn": [
-        "react-platform@0.1.0|@inquirer/core@11.2.0",
-        "react-platform@0.1.0|@inquirer/type@4.0.6",
+        "react-platform@0.1.0|@inquirer/core@11.2.1",
+        "react-platform@0.1.0|@inquirer/type@4.0.7",
         "react-platform@0.1.0|@types/node@25.9.1"
       ]
     },
@@ -33836,11 +33705,8 @@
     {
       "ref": "react-platform@0.1.0|yargs@17.7.2|strip-ansi@6.0.1",
       "dependsOn": [
-        "react-platform@0.1.0|yargs@17.7.2|ansi-regex@5.0.1"
+        "react-platform@0.1.0|ansi-regex@5.0.1"
       ]
-    },
-    {
-      "ref": "react-platform@0.1.0|yargs@17.7.2|ansi-regex@5.0.1"
     },
     {
       "ref": "react-platform@0.1.0|pg-cloudflare@1.4.0"
@@ -33971,7 +33837,7 @@
       "ref": "react-platform@0.1.0|immer@10.2.0"
     },
     {
-      "ref": "react-platform@0.1.0|react-is@17.0.2"
+      "ref": "react-platform@0.1.0|react-is@19.2.6"
     },
     {
       "ref": "react-platform@0.1.0|react-redux@9.3.0",
@@ -34098,9 +33964,6 @@
         "react-platform@0.1.0|eslint@10.4.0",
         "react-platform@0.1.0|typescript@6.0.3"
       ]
-    },
-    {
-      "ref": "react-platform@0.1.0|fsevents@2.3.3"
     },
     {
       "ref": "react-platform@0.1.0|lightningcss@1.32.0",
@@ -34234,7 +34097,7 @@
       "ref": "react-platform@0.1.0|tinybench@2.9.0"
     },
     {
-      "ref": "react-platform@0.1.0|tinyexec@1.2.2"
+      "ref": "react-platform@0.1.0|tinyexec@1.2.3"
     },
     {
       "ref": "react-platform@0.1.0|tinyrainbow@3.1.0"
@@ -34318,7 +34181,7 @@
       ]
     },
     {
-      "ref": "react-platform@0.1.0|@aws-sdk/credential-provider-ini@3.972.45",
+      "ref": "react-platform@0.1.0|@aws-sdk/credential-provider-ini@3.972.46",
       "dependsOn": [
         "react-platform@0.1.0|@aws-sdk/core@3.974.15",
         "react-platform@0.1.0|@aws-sdk/credential-provider-env@3.972.41",
@@ -34330,7 +34193,7 @@
         "react-platform@0.1.0|@aws-sdk/nested-clients@3.997.13",
         "react-platform@0.1.0|@aws-sdk/types@3.973.9",
         "react-platform@0.1.0|@smithy/core@3.24.5",
-        "react-platform@0.1.0|@smithy/credential-provider-imds@4.3.5",
+        "react-platform@0.1.0|@smithy/credential-provider-imds@4.3.6",
         "react-platform@0.1.0|@smithy/types@4.14.2",
         "react-platform@0.1.0|tslib@2.8.1"
       ]
@@ -34369,7 +34232,7 @@
       ]
     },
     {
-      "ref": "react-platform@0.1.0|@smithy/credential-provider-imds@4.3.5",
+      "ref": "react-platform@0.1.0|@smithy/credential-provider-imds@4.3.6",
       "dependsOn": [
         "react-platform@0.1.0|@smithy/core@3.24.5",
         "react-platform@0.1.0|@smithy/types@4.14.2",
@@ -34422,6 +34285,9 @@
     },
     {
       "ref": "react-platform@0.1.0|fast-uri@3.1.2"
+    },
+    {
+      "ref": "react-platform@0.1.0|json-schema-traverse@1.0.0"
     },
     {
       "ref": "react-platform@0.1.0|require-from-string@2.0.2"
@@ -34479,11 +34345,8 @@
     {
       "ref": "react-platform@0.1.0|hosted-git-info@9.0.3",
       "dependsOn": [
-        "react-platform@0.1.0|hosted-git-info@9.0.3|lru-cache@11.5.0"
+        "react-platform@0.1.0|lru-cache@11.5.1"
       ]
-    },
-    {
-      "ref": "react-platform@0.1.0|hosted-git-info@9.0.3|lru-cache@11.5.0"
     },
     {
       "ref": "react-platform@0.1.0|validate-npm-package-license@3.0.4",
@@ -34523,6 +34386,9 @@
       "ref": "react-platform@0.1.0|@oozcitak/util@10.0.0"
     },
     {
+      "ref": "react-platform@0.1.0|fsevents@2.3.2"
+    },
+    {
       "ref": "react-platform@0.1.0|playwright-core@1.60.0"
     },
     {
@@ -34530,6 +34396,13 @@
       "dependsOn": [
         "react-platform@0.1.0|@jridgewell/gen-mapping@0.3.13",
         "react-platform@0.1.0|@jridgewell/trace-mapping@0.3.31"
+      ]
+    },
+    {
+      "ref": "react-platform@0.1.0|enhanced-resolve@5.22.1",
+      "dependsOn": [
+        "react-platform@0.1.0|graceful-fs@4.2.11",
+        "react-platform@0.1.0|tapable@2.3.3"
       ]
     },
     {
@@ -34629,16 +34502,13 @@
     {
       "ref": "react-platform@0.1.0|pretty-format@27.5.1",
       "dependsOn": [
-        "react-platform@0.1.0|pretty-format@27.5.1|ansi-regex@5.0.1",
-        "react-platform@0.1.0|pretty-format@27.5.1|ansi-styles@5.2.0",
-        "react-platform@0.1.0|react-is@17.0.2"
+        "react-platform@0.1.0|ansi-regex@5.0.1",
+        "react-platform@0.1.0|ansi-styles@5.2.0",
+        "react-platform@0.1.0|pretty-format@27.5.1|react-is@17.0.2"
       ]
     },
     {
-      "ref": "react-platform@0.1.0|pretty-format@27.5.1|ansi-regex@5.0.1"
-    },
-    {
-      "ref": "react-platform@0.1.0|pretty-format@27.5.1|ansi-styles@5.2.0"
+      "ref": "react-platform@0.1.0|pretty-format@27.5.1|react-is@17.0.2"
     },
     {
       "ref": "react-platform@0.1.0|undici-types@7.24.6"
@@ -34834,8 +34704,14 @@
     {
       "ref": "react-platform@0.1.0|chalk@4.1.2",
       "dependsOn": [
-        "react-platform@0.1.0|ansi-styles@4.3.0",
+        "react-platform@0.1.0|chalk@4.1.2|ansi-styles@4.3.0",
         "react-platform@0.1.0|supports-color@7.2.0"
+      ]
+    },
+    {
+      "ref": "react-platform@0.1.0|chalk@4.1.2|ansi-styles@4.3.0",
+      "dependsOn": [
+        "react-platform@0.1.0|color-convert@2.0.1"
       ]
     },
     {
@@ -34870,9 +34746,6 @@
     },
     {
       "ref": "react-platform@0.1.0|fast-json-stable-stringify@2.1.0"
-    },
-    {
-      "ref": "react-platform@0.1.0|json-schema-traverse@0.4.1"
     },
     {
       "ref": "react-platform@0.1.0|path-key@3.1.1"
@@ -35080,67 +34953,66 @@
       "ref": "react-platform@0.1.0|@oxc-project/types@0.130.0"
     },
     {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-android-arm-eabi@11.19.1"
+      "ref": "react-platform@0.1.0|@oxc-resolver/binding-android-arm-eabi@11.20.0"
     },
     {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-android-arm64@11.19.1"
+      "ref": "react-platform@0.1.0|@oxc-resolver/binding-android-arm64@11.20.0"
     },
     {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-darwin-arm64@11.19.1"
+      "ref": "react-platform@0.1.0|@oxc-resolver/binding-darwin-arm64@11.20.0"
     },
     {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-darwin-x64@11.19.1"
+      "ref": "react-platform@0.1.0|@oxc-resolver/binding-darwin-x64@11.20.0"
     },
     {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-freebsd-x64@11.19.1"
+      "ref": "react-platform@0.1.0|@oxc-resolver/binding-freebsd-x64@11.20.0"
     },
     {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-arm-gnueabihf@11.19.1"
+      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-arm-gnueabihf@11.20.0"
     },
     {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-arm-musleabihf@11.19.1"
+      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-arm-musleabihf@11.20.0"
     },
     {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-arm64-gnu@11.19.1"
+      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-arm64-gnu@11.20.0"
     },
     {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-arm64-musl@11.19.1"
+      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-arm64-musl@11.20.0"
     },
     {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-ppc64-gnu@11.19.1"
+      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-ppc64-gnu@11.20.0"
     },
     {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-riscv64-gnu@11.19.1"
+      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-riscv64-gnu@11.20.0"
     },
     {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-riscv64-musl@11.19.1"
+      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-riscv64-musl@11.20.0"
     },
     {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-s390x-gnu@11.19.1"
+      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-s390x-gnu@11.20.0"
     },
     {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-x64-gnu@11.19.1"
+      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-x64-gnu@11.20.0"
     },
     {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-x64-musl@11.19.1"
+      "ref": "react-platform@0.1.0|@oxc-resolver/binding-linux-x64-musl@11.20.0"
     },
     {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-openharmony-arm64@11.19.1"
+      "ref": "react-platform@0.1.0|@oxc-resolver/binding-openharmony-arm64@11.20.0"
     },
     {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-wasm32-wasi@11.19.1",
+      "ref": "react-platform@0.1.0|@oxc-resolver/binding-wasm32-wasi@11.20.0",
       "dependsOn": [
+        "react-platform@0.1.0|@emnapi/core@1.10.0",
+        "react-platform@0.1.0|@emnapi/runtime@1.10.0",
         "react-platform@0.1.0|@napi-rs/wasm-runtime@1.1.4"
       ]
     },
     {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-win32-arm64-msvc@11.19.1"
+      "ref": "react-platform@0.1.0|@oxc-resolver/binding-win32-arm64-msvc@11.20.0"
     },
     {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-win32-ia32-msvc@11.19.1"
-    },
-    {
-      "ref": "react-platform@0.1.0|@oxc-resolver/binding-win32-x64-msvc@11.19.1"
+      "ref": "react-platform@0.1.0|@oxc-resolver/binding-win32-x64-msvc@11.20.0"
     },
     {
       "ref": "react-platform@0.1.0|@sindresorhus/merge-streams@4.0.0"
@@ -35304,20 +35176,20 @@
       ]
     },
     {
-      "ref": "react-platform@0.1.0|@inquirer/core@11.2.0",
+      "ref": "react-platform@0.1.0|@inquirer/core@11.2.1",
       "dependsOn": [
-        "react-platform@0.1.0|@inquirer/ansi@2.0.6",
-        "react-platform@0.1.0|@inquirer/figures@2.0.6",
-        "react-platform@0.1.0|@inquirer/type@4.0.6",
+        "react-platform@0.1.0|@inquirer/ansi@2.0.7",
+        "react-platform@0.1.0|@inquirer/figures@2.0.7",
+        "react-platform@0.1.0|@inquirer/type@4.0.7",
         "react-platform@0.1.0|@types/node@25.9.1",
         "react-platform@0.1.0|cli-width@4.1.0",
         "react-platform@0.1.0|fast-wrap-ansi@0.2.2",
-        "react-platform@0.1.0|mute-stream@4.0.0",
+        "react-platform@0.1.0|mute-stream@3.0.0",
         "react-platform@0.1.0|signal-exit@4.1.0"
       ]
     },
     {
-      "ref": "react-platform@0.1.0|@inquirer/type@4.0.6",
+      "ref": "react-platform@0.1.0|@inquirer/type@4.0.7",
       "dependsOn": [
         "react-platform@0.1.0|@types/node@25.9.1"
       ]
@@ -35363,19 +35235,22 @@
     {
       "ref": "react-platform@0.1.0|cliui@8.0.1|strip-ansi@6.0.1",
       "dependsOn": [
-        "react-platform@0.1.0|cliui@8.0.1|ansi-regex@5.0.1"
+        "react-platform@0.1.0|ansi-regex@5.0.1"
       ]
     },
     {
       "ref": "react-platform@0.1.0|cliui@8.0.1|wrap-ansi@7.0.0",
       "dependsOn": [
-        "react-platform@0.1.0|ansi-styles@4.3.0",
+        "react-platform@0.1.0|cliui@8.0.1|ansi-styles@4.3.0",
         "react-platform@0.1.0|cliui@8.0.1|string-width@4.2.3",
         "react-platform@0.1.0|cliui@8.0.1|strip-ansi@6.0.1"
       ]
     },
     {
-      "ref": "react-platform@0.1.0|cliui@8.0.1|ansi-regex@5.0.1"
+      "ref": "react-platform@0.1.0|cliui@8.0.1|ansi-styles@4.3.0",
+      "dependsOn": [
+        "react-platform@0.1.0|color-convert@2.0.1"
+      ]
     },
     {
       "ref": "react-platform@0.1.0|escalade@3.2.0"
@@ -35665,13 +35540,7 @@
     {
       "ref": "react-platform@0.1.0|@smithy/util-buffer-from@2.2.0",
       "dependsOn": [
-        "react-platform@0.1.0|@smithy/util-buffer-from@2.2.0|@smithy/is-array-buffer@2.2.0",
-        "react-platform@0.1.0|tslib@2.8.1"
-      ]
-    },
-    {
-      "ref": "react-platform@0.1.0|@smithy/util-buffer-from@2.2.0|@smithy/is-array-buffer@2.2.0",
-      "dependsOn": [
+        "react-platform@0.1.0|@smithy/is-array-buffer@2.2.0",
         "react-platform@0.1.0|tslib@2.8.1"
       ]
     },
@@ -35924,6 +35793,12 @@
       "ref": "react-platform@0.1.0|js-tokens@4.0.0"
     },
     {
+      "ref": "react-platform@0.1.0|ansi-regex@5.0.1"
+    },
+    {
+      "ref": "react-platform@0.1.0|ansi-styles@5.2.0"
+    },
+    {
       "ref": "react-platform@0.1.0|xtend@4.0.2"
     },
     {
@@ -35993,7 +35868,7 @@
     {
       "ref": "react-platform@0.1.0|is-core-module@2.16.2",
       "dependsOn": [
-        "react-platform@0.1.0|hasown@2.0.3"
+        "react-platform@0.1.0|hasown@2.0.4"
       ]
     },
     {
@@ -36001,12 +35876,6 @@
     },
     {
       "ref": "react-platform@0.1.0|supports-preserve-symlinks-flag@1.0.0"
-    },
-    {
-      "ref": "react-platform@0.1.0|ansi-styles@4.3.0",
-      "dependsOn": [
-        "react-platform@0.1.0|color-convert@2.0.1"
-      ]
     },
     {
       "ref": "react-platform@0.1.0|supports-color@7.2.0",
@@ -36225,8 +36094,11 @@
     {
       "ref": "react-platform@0.1.0|strip-ansi@7.2.0",
       "dependsOn": [
-        "react-platform@0.1.0|ansi-regex@6.2.2"
+        "react-platform@0.1.0|strip-ansi@7.2.0|ansi-regex@6.2.2"
       ]
+    },
+    {
+      "ref": "react-platform@0.1.0|strip-ansi@7.2.0|ansi-regex@6.2.2"
     },
     {
       "ref": "react-platform@0.1.0|fill-range@7.1.1",
@@ -36235,10 +36107,10 @@
       ]
     },
     {
-      "ref": "react-platform@0.1.0|@inquirer/ansi@2.0.6"
+      "ref": "react-platform@0.1.0|@inquirer/ansi@2.0.7"
     },
     {
-      "ref": "react-platform@0.1.0|@inquirer/figures@2.0.6"
+      "ref": "react-platform@0.1.0|@inquirer/figures@2.0.7"
     },
     {
       "ref": "react-platform@0.1.0|cli-width@4.1.0"
@@ -36250,7 +36122,7 @@
       ]
     },
     {
-      "ref": "react-platform@0.1.0|mute-stream@4.0.0"
+      "ref": "react-platform@0.1.0|mute-stream@3.0.0"
     },
     {
       "ref": "react-platform@0.1.0|signal-exit@4.1.0"
@@ -36292,6 +36164,12 @@
       "ref": "react-platform@0.1.0|assertion-error@2.0.1"
     },
     {
+      "ref": "react-platform@0.1.0|@smithy/is-array-buffer@2.2.0",
+      "dependsOn": [
+        "react-platform@0.1.0|tslib@2.8.1"
+      ]
+    },
+    {
       "ref": "react-platform@0.1.0|@nodable/entities@2.1.1"
     },
     {
@@ -36326,9 +36204,12 @@
         "react-platform@0.1.0|agent-base@7.1.4",
         "react-platform@0.1.0|http-proxy-agent@7.0.2",
         "react-platform@0.1.0|https-proxy-agent@7.0.6",
-        "react-platform@0.1.0|lru-cache@10.4.3",
+        "react-platform@0.1.0|@npmcli/agent@3.0.0|lru-cache@10.4.3",
         "react-platform@0.1.0|socks-proxy-agent@8.0.5"
       ]
+    },
+    {
+      "ref": "react-platform@0.1.0|@npmcli/agent@3.0.0|lru-cache@10.4.3"
     },
     {
       "ref": "react-platform@0.1.0|cacache@19.0.1",
@@ -36336,7 +36217,7 @@
         "react-platform@0.1.0|@npmcli/fs@4.0.0",
         "react-platform@0.1.0|fs-minipass@3.0.3",
         "react-platform@0.1.0|glob@10.5.0",
-        "react-platform@0.1.0|lru-cache@10.4.3",
+        "react-platform@0.1.0|cacache@19.0.1|lru-cache@10.4.3",
         "react-platform@0.1.0|minipass-collect@2.0.1",
         "react-platform@0.1.0|minipass-flush@1.0.7",
         "react-platform@0.1.0|minipass-pipeline@1.2.4",
@@ -36346,6 +36227,9 @@
         "react-platform@0.1.0|tar@7.5.15",
         "react-platform@0.1.0|unique-filename@4.0.0"
       ]
+    },
+    {
+      "ref": "react-platform@0.1.0|cacache@19.0.1|lru-cache@10.4.3"
     },
     {
       "ref": "react-platform@0.1.0|http-cache-semantics@4.2.0"
@@ -36476,7 +36360,7 @@
       "ref": "react-platform@0.1.0|detect-node-es@1.1.0"
     },
     {
-      "ref": "react-platform@0.1.0|hasown@2.0.3",
+      "ref": "react-platform@0.1.0|hasown@2.0.4",
       "dependsOn": [
         "react-platform@0.1.0|function-bind@1.1.2"
       ]
@@ -36541,9 +36425,6 @@
       "ref": "react-platform@0.1.0|@types/ms@2.1.0"
     },
     {
-      "ref": "react-platform@0.1.0|ansi-regex@6.2.2"
-    },
-    {
       "ref": "react-platform@0.1.0|to-regex-range@5.0.1",
       "dependsOn": [
         "react-platform@0.1.0|is-number@7.0.0"
@@ -36580,9 +36461,6 @@
         "react-platform@0.1.0|agent-base@7.1.4",
         "react-platform@0.1.0|debug@4.4.3"
       ]
-    },
-    {
-      "ref": "react-platform@0.1.0|lru-cache@10.4.3"
     },
     {
       "ref": "react-platform@0.1.0|socks-proxy-agent@8.0.5",
@@ -36754,9 +36632,12 @@
     {
       "ref": "react-platform@0.1.0|path-scurry@1.11.1",
       "dependsOn": [
-        "react-platform@0.1.0|lru-cache@10.4.3",
+        "react-platform@0.1.0|path-scurry@1.11.1|lru-cache@10.4.3",
         "react-platform@0.1.0|minipass@7.1.3"
       ]
+    },
+    {
+      "ref": "react-platform@0.1.0|path-scurry@1.11.1|lru-cache@10.4.3"
     },
     {
       "ref": "react-platform@0.1.0|unique-slug@5.0.0",
@@ -36840,27 +36721,27 @@
     {
       "ref": "react-platform@0.1.0|string-width@4.2.3|strip-ansi@6.0.1",
       "dependsOn": [
-        "react-platform@0.1.0|string-width@4.2.3|ansi-regex@5.0.1"
+        "react-platform@0.1.0|ansi-regex@5.0.1"
       ]
-    },
-    {
-      "ref": "react-platform@0.1.0|string-width@4.2.3|ansi-regex@5.0.1"
     },
     {
       "ref": "react-platform@0.1.0|strip-ansi@6.0.1",
       "dependsOn": [
-        "react-platform@0.1.0|strip-ansi@6.0.1|ansi-regex@5.0.1"
+        "react-platform@0.1.0|ansi-regex@5.0.1"
       ]
-    },
-    {
-      "ref": "react-platform@0.1.0|strip-ansi@6.0.1|ansi-regex@5.0.1"
     },
     {
       "ref": "react-platform@0.1.0|wrap-ansi@7.0.0",
       "dependsOn": [
-        "react-platform@0.1.0|ansi-styles@4.3.0",
+        "react-platform@0.1.0|wrap-ansi@7.0.0|ansi-styles@4.3.0",
         "react-platform@0.1.0|wrap-ansi@7.0.0|string-width@4.2.3",
         "react-platform@0.1.0|wrap-ansi@7.0.0|strip-ansi@6.0.1"
+      ]
+    },
+    {
+      "ref": "react-platform@0.1.0|wrap-ansi@7.0.0|ansi-styles@4.3.0",
+      "dependsOn": [
+        "react-platform@0.1.0|color-convert@2.0.1"
       ]
     },
     {
@@ -36874,11 +36755,8 @@
     {
       "ref": "react-platform@0.1.0|wrap-ansi@7.0.0|strip-ansi@6.0.1",
       "dependsOn": [
-        "react-platform@0.1.0|wrap-ansi@7.0.0|ansi-regex@5.0.1"
+        "react-platform@0.1.0|ansi-regex@5.0.1"
       ]
-    },
-    {
-      "ref": "react-platform@0.1.0|wrap-ansi@7.0.0|ansi-regex@5.0.1"
     },
     {
       "ref": "react-platform@0.1.0|wrap-ansi@8.1.0",

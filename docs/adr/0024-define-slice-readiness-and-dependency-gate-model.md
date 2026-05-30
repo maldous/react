@@ -33,7 +33,7 @@ Without a defined readiness model, slice authors must guess which capabilities a
 start. Infrastructure owners must guess which provisioning work is a hard prerequisite versus a
 deferred item. Reviewers cannot consistently judge whether a slice gate has been met.
 
-The architecture needs a shared vocabulary — a tiered readiness model — that slice authors, infra
+The architecture needs a shared vocabulary ? a tiered readiness model ? that slice authors, infra
 owners, and reviewers can all use as a coordination language.
 
 The model must also make explicit what Terraform/OpenTofu is required before each tier, versus what
@@ -66,7 +66,7 @@ application code owns (migrations, seeds, runtime config).
 
 ## Options considered
 
-### Option A: No formal model — ad-hoc slice gating
+### Option A: No formal model ? ad-hoc slice gating
 
 Description: Each slice owner decides what is needed and gates themselves.
 
@@ -74,7 +74,7 @@ Pros: Flexible.
 
 Cons: Produces inconsistent gates, missed dependencies, and environment failures mid-slice.
 
-### Option B: Single binary gate — everything or nothing
+### Option B: Single binary gate ? everything or nothing
 
 Description: One pre-slice-gate target must pass before any slice begins.
 
@@ -97,7 +97,7 @@ Cons: More complex vocabulary to establish upfront.
 
 Use a five-tier progressive readiness model.
 
-### Tier 0 — Local substrate
+### Tier 0 ? Local substrate
 
 The local development environment is in a known working state.
 
@@ -114,7 +114,7 @@ Required capabilities:
 
 Terraform/OpenTofu: not required.
 
-### Tier 1 — Local vertical slice test substrate
+### Tier 1 ? Local vertical slice test substrate
 
 The local environment supports full browser-to-API vertical slice testing using deterministic
 fixture actors.
@@ -130,7 +130,7 @@ Required capabilities, in addition to Tier 0:
 
 Terraform/OpenTofu: not required.
 
-### Tier 2 — Real identity substrate
+### Tier 2 ? Real identity substrate
 
 The local environment uses real Keycloak login rather than fixture session actors.
 
@@ -145,7 +145,7 @@ Required capabilities, in addition to Tier 1:
 
 Terraform/OpenTofu: required for Keycloak realm/client provisioning.
 
-### Tier 3 — Cloud deployment substrate
+### Tier 3 ? Cloud deployment substrate
 
 The slice is deployable to a non-production cloud environment.
 
@@ -164,7 +164,7 @@ Terraform/OpenTofu: required for all cloud infrastructure.
 Note: Terraform/OpenTofu must not create application tables. Application migrations own schema.
 Seed scripts own fixture data. Terraform provisions durable infrastructure only.
 
-### Tier 4 — Production readiness
+### Tier 4 ? Production readiness
 
 The slice is eligible for production release.
 

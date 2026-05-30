@@ -1,9 +1,9 @@
 /**
- * Tenant provisioning service — ADR-ACT-0142, ADR-0031
+ * Tenant provisioning service ? ADR-ACT-0142, ADR-0031
  *
  * Orchestrates per-resource infrastructure provisioning for a new tenant.
  * Each resource type (database, identity, cache, storage) dispatches to the
- * correct adapter based on the requested tier. Tiers are independent — a
+ * correct adapter based on the requested tier. Tiers are independent ? a
  * tenant can mix shared database with dedicated storage, etc.
  *
  * Security: uses provisioning service accounts from ProvisioningConfig,
@@ -12,7 +12,7 @@
  * Idempotency: each step checks existence before creating. Safe to retry.
  *
  * Rollback: on failure after partial provisioning, cleanup is attempted per
- * resource. Partial state is logged — operator can complete cleanup manually.
+ * resource. Partial state is logged ? operator can complete cleanup manually.
  */
 
 import crypto from "node:crypto";
@@ -42,17 +42,18 @@ import {
   AuditAction,
   type AuditEventPort,
 } from "@platform/audit-events";
+import { isSlugReserved } from "@platform/domain-identity";
 import { getApplicationPool, getProvisioningConfig } from "./dependencies.ts";
 
 const log = createLogger({ name: "provisioning" });
 
-// Audit port — replaced with a real persistent adapter when audit-events
+// Audit port ? replaced with a real persistent adapter when audit-events
 // adapter is wired to the provisioning service (ADR-ACT-0148).
 // For now, logs to the in-memory port so events are visible in structured logs.
 const auditPort: AuditEventPort = createInMemoryAuditEventPort();
 
 // ---------------------------------------------------------------------------
-// Request schema (zod) — validated at the route handler before calling here
+// Request schema (zod) ? validated at the route handler before calling here
 // ---------------------------------------------------------------------------
 
 const ResourceTierSchema = z.enum(["shared", "dedicated", "external", "air-gapped"]);
@@ -66,7 +67,10 @@ export const CreateTenantRequestSchema = z.object({
     .refine(
       (s) => !s.startsWith("-") && !s.endsWith("-"),
       "Slug must not start or end with a hyphen"
-    ),
+    )
+    .refine((s) => !isSlugReserved(s), {
+      message: "This slug is reserved and cannot be used as a tenant slug",
+    }),
   displayName: z.string().min(2).max(120),
   adminEmail: z.string().email(),
   resources: z
@@ -128,7 +132,7 @@ export async function provisionTenant(input: CreateTenantRequest): Promise<Provi
 
   // All public-schema writes run under withSystemAdmin so they function
   // correctly regardless of whether the app DB user is a superuser or a
-  // non-superuser with RLS enforced (ADR-0031 §PostgreSQL privilege analysis).
+  // non-superuser with RLS enforced (ADR-0031 ?PostgreSQL privilege analysis).
   // Each withSystemAdmin block is adjacent to an audit emission.
   await withSystemAdmin(pool, async (client) => {
     // Audit: provisioning attempt
@@ -185,7 +189,7 @@ export async function provisionTenant(input: CreateTenantRequest): Promise<Provi
     // Step 7: create initial tenant-admin membership in the tenant schema
     await createInitialMembership(pool, organisationId, input.adminEmail);
 
-    // Emit audit event — ADR-0031 invariant: every provisioning operation is audited
+    // Emit audit event ? ADR-0031 invariant: every provisioning operation is audited
     await auditPort.emit(
       createAuditEvent({
         actorId: "system",
@@ -214,7 +218,7 @@ export async function provisionTenant(input: CreateTenantRequest): Promise<Provi
         log.error({ err: String(e) }, "provisioning.cleanup.failed");
       });
     }
-    // Remove org record on failure — also under system admin context
+    // Remove org record on failure ? also under system admin context
     await withSystemAdmin(pool, async (client) => {
       await client.query("DELETE FROM public.organisations WHERE id = $1", [organisationId]);
     }).catch(() => undefined);
@@ -276,7 +280,7 @@ export async function getTenantResourceConfig(
   pool: pg.Pool,
   organisationId: string
 ): Promise<TenantResourceConfig | null> {
-  // Read-only withSystemAdmin — structured log required per withSystemAdmin audit rules.
+  // Read-only withSystemAdmin ? structured log required per withSystemAdmin audit rules.
   log.info({ organisationId }, "provisioning.resource-config.read");
   const rows = await withSystemAdmin(pool, async (client) => {
     const result = await client.query<{
@@ -393,7 +397,7 @@ async function provisionCache(
 ): Promise<void> {
   if (config.tier === "external" || config.tier === "air-gapped") return;
   if (!platformCfg.redisAdminUrl && config.tier === "shared") {
-    // No Redis admin URL configured — shared mode without per-tenant ACL (dev default)
+    // No Redis admin URL configured ? shared mode without per-tenant ACL (dev default)
     log.info({ organisationId }, "provisioning.cache.skipped");
     return;
   }
@@ -481,17 +485,17 @@ async function createInitialMembership(
   adminEmail: string
 ): Promise<void> {
   // Use withTenant to set both search_path and app.current_tenant_id via
-  // the shared tenantSchemaIdentifier helper — no manual schema interpolation.
+  // the shared tenantSchemaIdentifier helper ? no manual schema interpolation.
   // bypassRls is inherited from the surrounding withSystemAdmin if present;
   // here we use withTenant since the membership INSERT is tenant-scoped.
   // withSystemAdmin bypasses RLS on public tables (users lookup).
   // tenantSchemaIdentifier from adapters-postgres provides the safe, validated
-  // schema name — no manual string construction here.
+  // schema name ? no manual string construction here.
   await withSystemAdmin(pool, async (client) => {
     const schema = tenantSchemaIdentifier(client, organisationId);
     await client.query(`SET LOCAL search_path = ${schema}, public`);
     await client.query("SET LOCAL app.current_tenant_id = $1", [organisationId]);
-    // Look up the user in public.users (they may not exist yet — JIT on first login)
+    // Look up the user in public.users (they may not exist yet ? JIT on first login)
     const { rows } = await client.query<{ id: string }>(
       "SELECT id FROM public.users WHERE email = $1",
       [adminEmail]
@@ -504,6 +508,6 @@ async function createInitialMembership(
         [rows[0]!.id, organisationId]
       );
     }
-    // If user doesn't exist yet, membership will be created on first login (JIT, ADR-0030 §4g)
+    // If user doesn't exist yet, membership will be created on first login (JIT, ADR-0030 ?4g)
   });
 }

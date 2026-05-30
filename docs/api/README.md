@@ -34,7 +34,7 @@ npx swagger-ui-watcher docs/api/openapi.json
 When adding a new route to `apps/platform-api/src/server/routes.ts`, update this file in the same commit.
 
 Automated drift validation (checking every route in `routes.ts` against `openapi.json`) is not yet implemented.
-This is tracked by **ADR-ACT-0139** (Open — before next REST route addition).
+This is tracked by **ADR-ACT-0139** (Open ? before next REST route addition).
 
 ## Not in scope
 

@@ -117,7 +117,7 @@ Sentry SDK
 
 ## Operational notes
 
-- DSN is resolved from config-runtime — never committed to source control
+- DSN is resolved from config-runtime ? never committed to source control
 - Sentry source maps must be uploaded as part of the CI build pipeline
 
 ## Governance

@@ -49,7 +49,7 @@ Semver policy: internal-traceable
 
 - Does not own AWS infrastructure definitions (infra-aws)
 - Does not define Terraform workflow tooling or module patterns (tooling-terraform)
-- Does not manage Cloudflare Workers or edge compute — kept out of scope initially
+- Does not manage Cloudflare Workers or edge compute ? kept out of scope initially
 
 ## Public exports and usage
 
@@ -115,7 +115,7 @@ None
 
 ## Operational notes
 
-- Cloudflare free tier covers CDN, R2 (10GB storage, 1M operations/month), and Pages — monitor usage before upgrading
+- Cloudflare free tier covers CDN, R2 (10GB storage, 1M operations/month), and Pages ? monitor usage before upgrading
 - R2 egress is free; use for static assets and media to avoid AWS data transfer costs
 - WAF rules must be reviewed quarterly for emerging threat patterns
 

@@ -9,16 +9,16 @@ export type SafeResponse = {
 /**
  * Base class for all typed platform errors.
  *
- * Design note — `httpStatus` as metadata, not HTTP coupling (ADR-0020 §5):
+ * Design note ? `httpStatus` as metadata, not HTTP coupling (ADR-0020 ?5):
  *   Domain and use-case packages may throw typed AppError subclasses
- *   (e.g. `new ValidationError(…)`) without knowing anything about HTTP.
+ *   (e.g. `new ValidationError(...)`) without knowing anything about HTTP.
  *   `httpStatus` is a numeric hint stored on the error for the API boundary
  *   to read when constructing an HTTP response. Domain code never reads it.
- *   The API boundary is the only layer that maps httpStatus → HTTP response.
+ *   The API boundary is the only layer that maps httpStatus ? HTTP response.
  */
 export abstract class AppError extends Error {
   abstract readonly code: string;
-  /** Numeric HTTP status hint. Read only by the API boundary — never by domain code. */
+  /** Numeric HTTP status hint. Read only by the API boundary ? never by domain code. */
   abstract readonly httpStatus: number;
   abstract readonly retryable: boolean;
 
@@ -94,7 +94,7 @@ export class UnexpectedError extends AppError {
   readonly retryable = false;
 }
 
-// API guard helper — throws ForbiddenError if the permission is missing
+// API guard helper ? throws ForbiddenError if the permission is missing
 export function assertPermission(
   permissions: string[],
   required: string,
@@ -108,7 +108,7 @@ export function assertPermission(
   }
 }
 
-// Auth guard helper — throws UnauthorizedError if no actor context
+// Auth guard helper ? throws UnauthorizedError if no actor context
 export function assertAuthenticated(actor: { userId?: string } | null | undefined): void {
   if (!actor?.userId) {
     throw new UnauthorizedError("Authentication required");

@@ -21,7 +21,7 @@ npm run api:start:admin    # platform-api on :3001
 cd apps/react-enterprise-app && npx vite   # React SPA on :5173
 ```
 
-Or with Tilt (all-in-one, requires Tilt installed — [install →](tilt-workflow.md)):
+Or with Tilt (all-in-one, requires Tilt installed ? [install ?](tilt-workflow.md)):
 
 ```bash
 make compose-up-default
@@ -30,7 +30,7 @@ tilt up
 
 ## Services and profiles
 
-[Compose services →](compose-services.md)
+[Compose services ?](compose-services.md)
 
 | Profile        | Command                          | Services                                          |
 | -------------- | -------------------------------- | ------------------------------------------------- |
@@ -42,22 +42,22 @@ tilt up
 
 ## Tilt feedback loop
 
-[Tilt workflow →](tilt-workflow.md)
+[Tilt workflow ?](tilt-workflow.md)
 
 Single command for real-time dev feedback: `tilt up`
 
 ## Dev Container
 
-[.devcontainer/ →](../../.devcontainer/devcontainer.json)
+[.devcontainer/ ?](../../.devcontainer/devcontainer.json)
 
 Works with VS Code Dev Containers and GitHub Codespaces. Includes Node 25, Docker-in-Docker, GitHub CLI, and Playwright.
 Tilt is installed automatically by `.devcontainer/post-create.sh` using a pinned version with checksum verification.
 
-> `.env` and secrets are **not** created by the container — copy `.env.example` to `.env` manually before starting services.
+> `.env` and secrets are **not** created by the container ? copy `.env.example` to `.env` manually before starting services.
 
 ## External mocks
 
-[compose-services.md →](compose-services.md#wiremock-setup-external-mocks-profile)
+[compose-services.md ?](compose-services.md#wiremock-setup-external-mocks-profile)
 
 For deterministic external HTTP API simulation:
 
@@ -68,7 +68,7 @@ curl http://localhost:8089/__admin/health
 
 ## Reset and demo data
 
-[reset-and-fixtures.md →](reset-and-fixtures.md)
+[reset-and-fixtures.md ?](reset-and-fixtures.md)
 
 ```bash
 make reset-local         # Destructive full database reset
@@ -87,7 +87,7 @@ make redis-flush-local   # Clear local Redis sessions
 
 ## API contract
 
-[docs/api/ →](../api/README.md)
+[docs/api/ ?](../api/README.md)
 
 OpenAPI 3.1 for REST supplementary routes. GraphQL is the primary boundary (ADR-0013).
 

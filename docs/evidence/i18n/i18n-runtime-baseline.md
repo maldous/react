@@ -1,4 +1,4 @@
-# Evidence: ADR-ACT-0120 — i18n runtime baseline
+# Evidence: ADR-ACT-0120 ? i18n runtime baseline
 
 **Date:** 2026-05-29
 **Status:** Done
@@ -13,7 +13,7 @@
 - `src/index.ts`: `createI18n()` (accepts nested or flat input), `serverT()`,
   `flattenLocaleMessages()`, `I18nLocaleResource` (nested), `I18nMessages` (flat),
   `I18nLocaleInput` (union), `I18nLocale` (@deprecated alias)
-- `src/react.ts`: React boundary entry point — exports `createReactI18n()` bootstrap
+- `src/react.ts`: React boundary entry point ? exports `createReactI18n()` bootstrap
   (placeholder; full `I18nProvider`/`useTranslation` hook deferred to ADR-ACT-0121)
 - 14 unit tests: flattening, flat backward-compat, nested JSON resolution,
   interpolation, XSS escape, fallback (flat+nested), serverT
@@ -33,7 +33,7 @@
 
 ## Deferred
 
-- Full `I18nProvider`/`useTranslation` React hook — `src/react.ts` is a
+- Full `I18nProvider`/`useTranslation` React hook ? `src/react.ts` is a
   bootstrap placeholder only; real React Context implementation tracked in ADR-ACT-0121
 - Date/number/currency formatting via `Intl`
 - Full React text migration: ADR-ACT-0121 (Open)

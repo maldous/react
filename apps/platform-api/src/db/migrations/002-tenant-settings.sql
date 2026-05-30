@@ -3,7 +3,7 @@
 -- Creates tenant_settings within each tenant's schema (schema-per-tenant, ADR-0029).
 -- This migration is applied per-tenant by the withTenant migration runner (ADR-0031).
 --
--- tenant_settings holds theme/branding config returned by GET /api/theme (ADR-0029 §4)
+-- tenant_settings holds theme/branding config returned by GET /api/theme (ADR-0029 ?4)
 -- and other per-tenant runtime configuration (feature flags, quotas).
 --
 -- This migration runs within SET LOCAL search_path = "tenant_{id}", public

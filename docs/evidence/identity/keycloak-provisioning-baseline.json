@@ -40,7 +40,7 @@
       "serviceAccounts": false,
       "localRedirectUris": ["http://localhost:3001/auth/callback", "http://localhost:3001/*"],
       "webOrigins": [],
-      "clientSecret": "variable — gitignored .tfvars only",
+      "clientSecret": "variable ? gitignored .tfvars only",
       "note": "Handles full OAuth callback flow per ADR-0022."
     }
   ],
@@ -100,7 +100,7 @@
     "tfvarsExamplePlaceholdersOnly": true
   },
   "validationResults": {
-    "terraformFmtCheck": "EXIT 0 — format clean",
+    "terraformFmtCheck": "EXIT 0 ? format clean",
     "terraformInit": "mrparkers/keycloak v4.4.0 installed, lock file generated",
     "terraformValidate": "Success! The configuration is valid.",
     "terraformPlan": "Plan: 15 to add, 0 to change, 0 to destroy.",
@@ -112,11 +112,11 @@
     { "target": "make keycloak-plan-local", "requires": "Keycloak running at http://localhost:8080 (docker compose --profile identity up -d keycloak)" }
   ],
   "deferrals": [
-    "Real browser login flow not wired — tracked in ADR-ACT-0119",
+    "Real browser login flow not wired ? tracked in ADR-ACT-0119",
     "Cloud/staging/production identity environments blocked until AWS infra exists",
     "Secrets management for non-local environments not implemented",
     "apply automation in CI not implemented"
   ],
-  "adtAct0008Status": "accepted — unchanged; still uses fixture sessions; make pre-slice-gate passes",
-  "realLoginFlowStatus": "NOT complete — ADR-ACT-0110 provisions identity substrate only; login UI/callback wiring tracked in ADR-ACT-0119"
+  "adtAct0008Status": "accepted ? unchanged; still uses fixture sessions; make pre-slice-gate passes",
+  "realLoginFlowStatus": "NOT complete ? ADR-ACT-0110 provisions identity substrate only; login UI/callback wiring tracked in ADR-ACT-0119"
 }

@@ -7,7 +7,7 @@ on:
 
 jobs:
   quality-gates:
-    name: Quality gates (format · lint · audit · secrets)
+    name: Quality gates (format ? lint ? audit ? secrets)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -58,10 +58,10 @@ jobs:
 
       # --- Report-only gates (never fail the build) ---
 
-      - name: Knip — unused exports/deps (report only)
+      - name: Knip ? unused exports/deps (report only)
         run: npm run knip || true
 
-      - name: Dependency cruiser — graph smoke test (report only)
+      - name: Dependency cruiser ? graph smoke test (report only)
         run: npm run depcruise || true
 
   architecture-checks:

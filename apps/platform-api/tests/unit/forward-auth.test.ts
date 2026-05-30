@@ -2,8 +2,8 @@
  * forward-auth handler unit tests (ADR-0029, ADR-0030, ADR-0031)
  *
  * Coverage:
- * - Secret validation: missing in production → 503; wrong → 403
- * - Session: no session/cookie → 401
+ * - Secret validation: missing in production ? 503; wrong ? 403
+ * - Session: no session/cookie ? 401
  * - Access logic via checkResourceAccess (pure, no DB/Redis):
  *   - system-admin granted all SYSTEM_ADMIN_RESOURCES
  *   - system-admin denied unknown resources
@@ -11,7 +11,7 @@
  *   - tenant-admin denied cross-tenant subdomain
  *   - tenant-admin denied on aldous.info root
  *   - tenant-admin denied for super-global-only resources
- * - Handler integration: fixture session paths → correct status codes
+ * - Handler integration: fixture session paths ? correct status codes
  */
 
 import { describe, it, beforeEach, afterEach } from "node:test";
@@ -65,7 +65,7 @@ async function callHandler(
 }
 
 // ---------------------------------------------------------------------------
-// 1. extractSlugFromHost — pure function
+// 1. extractSlugFromHost ? pure function
 // ---------------------------------------------------------------------------
 
 describe("extractSlugFromHost", () => {
@@ -87,7 +87,7 @@ describe("extractSlugFromHost", () => {
 });
 
 // ---------------------------------------------------------------------------
-// 2. checkResourceAccess — pure decision logic (no DB / Redis)
+// 2. checkResourceAccess ? pure decision logic (no DB / Redis)
 // ---------------------------------------------------------------------------
 
 describe("checkResourceAccess: system-admin", () => {
@@ -264,7 +264,7 @@ describe("handleForwardAuth: session handling", () => {
 
   it("403 tenant-admin fixture denied on aldous.info root (super-global resource)", async () => {
     // tenant-admin role + admin:sonarqube (not in TENANT_ADMIN_RESOURCES) + root host
-    // → all paths lead to 403
+    // ? all paths lead to 403
     process.env["LOCAL_FIXTURE_SESSION"] = "tenant-admin";
     process.env["CADDY_INTERNAL_SECRET"] = "";
     process.env["NODE_ENV"] = "development";

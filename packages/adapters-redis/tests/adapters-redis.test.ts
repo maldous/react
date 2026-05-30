@@ -4,7 +4,7 @@ import { RedisSessionStore, RedisAuthStateStore } from "../src/index.ts";
 import type { CreateSessionCommand } from "@platform/session-runtime";
 
 // ---------------------------------------------------------------------------
-// Minimal fake Redis client for unit tests — no real Redis required
+// Minimal fake Redis client for unit tests ? no real Redis required
 // ---------------------------------------------------------------------------
 
 function makeFakeRedis(): {

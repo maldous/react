@@ -29,7 +29,7 @@ export type I18nLocale = I18nMessages;
 
 /**
  * Flatten a nested JSON locale resource into dot-separated keys.
- * { feature: { title: "x" } } → { "feature.title": "x" }
+ * { feature: { title: "x" } } ? { "feature.title": "x" }
  * Already-flat maps are returned unchanged.
  */
 export function flattenLocaleMessages(resource: I18nLocaleInput, prefix = ""): I18nMessages {
@@ -68,9 +68,9 @@ export interface I18nInstance {
 
 export interface CreateI18nOptions {
   locale: string;
-  /** Flat or nested locale messages — createI18n normalises both. */
+  /** Flat or nested locale messages ? createI18n normalises both. */
   messages: I18nLocaleInput;
-  /** Fallback locale (flat or nested) — used when a key is missing from the primary. */
+  /** Fallback locale (flat or nested) ? used when a key is missing from the primary. */
   fallback?: I18nLocaleInput;
 }
 
@@ -83,8 +83,8 @@ export interface CreateI18nOptions {
  *
  * Resolution order:
  *  1. messages[key]  (primary locale)
- *  2. fallback[key]  (fallback locale — typically en-GB)
- *  3. key itself     (missing key — reported by ADR-ACT-0123 validation gate)
+ *  2. fallback[key]  (fallback locale ? typically en-GB)
+ *  3. key itself     (missing key ? reported by ADR-ACT-0123 validation gate)
  */
 export function createI18n(options: CreateI18nOptions): I18nInstance {
   const messages = flattenLocaleMessages(options.messages);

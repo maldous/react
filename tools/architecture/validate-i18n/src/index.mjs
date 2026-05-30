@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /**
- * validate-i18n — ADR-ACT-0123
+ * validate-i18n ? ADR-ACT-0123
  *
- * Sub-checks (staged, per ADR-0026 §Tooling and enforcement):
- *  1. Parse and flatten en-GB.json (nested → dot-separated keys)
+ * Sub-checks (staged, per ADR-0026 ?Tooling and enforcement):
+ *  1. Parse and flatten en-GB.json (nested ? dot-separated keys)
  *  2. Scan source for keys used via t() and serverT()
  *  3. Report keys used in source that are missing from en-GB.json
  *  4. Report interpolation variable mismatches where detectable from inline calls
@@ -23,7 +23,7 @@ import process from "node:process";
 const LOCALE_FILE = "packages/i18n-runtime/locales/en-GB.json";
 const SCAN_DIRS = ["apps/react-enterprise-app/src", "apps/platform-api/src", "packages"];
 
-// Match t("key") and serverT(messages, "key") patterns — bounded to prevent ReDoS
+// Match t("key") and serverT(messages, "key") patterns ? bounded to prevent ReDoS
 const KEY_PATTERN = /(?:\bt|serverT)\s*\(\s*(?:[^,)"']{0,200},\s*)?["']([a-z][a-z0-9._-]*)["']/g;
 
 // Match t("key", { param: ... }) inline objects to extract param names used
@@ -38,7 +38,7 @@ const strictMode = args.includes("--strict");
 const repoRoot = args.find((a) => !a.startsWith("--")) ?? process.cwd();
 
 // ---------------------------------------------------------------------------
-// Locale loading — supports nested JSON (mirrors en-GB.json shape)
+// Locale loading ? supports nested JSON (mirrors en-GB.json shape)
 // ---------------------------------------------------------------------------
 
 function flattenLocale(obj, prefix) {
@@ -125,7 +125,7 @@ function run(root) {
   const locale = loadLocale(root);
   if (!locale) {
     console.warn(
-      `[validate-i18n] ${LOCALE_FILE} not found — skipping (install i18n-runtime first)`
+      `[validate-i18n] ${LOCALE_FILE} not found ? skipping (install i18n-runtime first)`
     );
     return { status: "skipped" };
   }
@@ -174,7 +174,7 @@ if (result.interpMismatches.length > 0) {
 
 if (!hasKeyViolations && result.interpMismatches.length === 0) {
   console.log(
-    `[validate-i18n] OK — all ${result.usedCount} used keys found in en-GB.json (${result.definedCount} defined)`
+    `[validate-i18n] OK ? all ${result.usedCount} used keys found in en-GB.json (${result.definedCount} defined)`
   );
 }
 

@@ -14,7 +14,7 @@ export function ProtectedRoute({ permission, children }: ProtectedRouteProps) {
   const t = useTranslation();
 
   if (isLoading) return <LoadingState message={t("auth.status.checkingAuthentication")} />;
-  // "/auth/login" is registered in routeTree.gen.ts — type-safe, no cast needed
+  // "/auth/login" is registered in routeTree.gen.ts ? type-safe, no cast needed
   if (!isAuthenticated) return <Navigate to="/auth/login" />;
   if (permission && !hasPermission(permission)) {
     return (

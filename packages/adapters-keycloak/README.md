@@ -59,7 +59,7 @@ Deep imports allowed: false
 ```
 
 - Registered at application startup as the concrete auth provider implementation
-- Only imported by application entrypoints — never by feature or domain packages
+- Only imported by application entrypoints ? never by feature or domain packages
 
 ## Boundaries
 
@@ -119,7 +119,7 @@ Keycloak OIDC endpoints
 ## Operational notes
 
 - JWKS cache TTL must be shorter than Keycloak key rotation interval
-- Realm and client IDs are resolved via config-runtime — never hardcoded
+- Realm and client IDs are resolved via config-runtime ? never hardcoded
 
 ## Governance
 

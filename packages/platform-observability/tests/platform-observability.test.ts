@@ -107,7 +107,7 @@ describe("getTraceContext", () => {
 
   it("traceId and spanId are undefined or string when no active span", () => {
     const ctx = getTraceContext();
-    // With no OTel SDK configured, the span is a NoopSpan — traceId/spanId may be strings
+    // With no OTel SDK configured, the span is a NoopSpan ? traceId/spanId may be strings
     assert.ok(ctx.traceId === undefined || typeof ctx.traceId === "string");
     assert.ok(ctx.spanId === undefined || typeof ctx.spanId === "string");
   });

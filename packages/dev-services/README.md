@@ -114,7 +114,7 @@ None
 
 ## Operational notes
 
-- Local service ports are fixed to avoid conflicts with host services — see docker-compose.yml
+- Local service ports are fixed to avoid conflicts with host services ? see docker-compose.yml
 - Keycloak realm export is committed here to enable reproducible local auth setup
 
 ## Governance

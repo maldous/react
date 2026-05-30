@@ -24,8 +24,8 @@ ADR-0019 ratified Vitest and React Testing Library with MSW as the frontend comp
 testing stack.
 
 That decision deliberately deferred end-to-end browser testing. As ADR-ACT-0008 (first vertical
-slice) approaches, the platform needs an E2E standard to prove the full browser → React → BFF/API
-→ DB → browser roundtrip.
+slice) approaches, the platform needs an E2E standard to prove the full browser ? React ? BFF/API
+? DB ? browser roundtrip.
 
 Without an E2E standard, slice validation relies on unit and integration tests that mock the
 server layer. MSW is excellent for component tests but it cannot prove that the real server
@@ -92,7 +92,7 @@ Use Playwright as the browser E2E standard.
 
 ### Scope
 
-Playwright owns browser E2E tests: the full browser → React SPA → BFF/API → DB → browser
+Playwright owns browser E2E tests: the full browser ? React SPA ? BFF/API ? DB ? browser
 roundtrip.
 
 Vitest (with React Testing Library and MSW) owns component tests and hook tests. MSW must not be
@@ -128,8 +128,8 @@ Every E2E test run retains on failure:
 
 ### Artifact locations (gitignored)
 
-- playwright-report/ — HTML test report
-- e2e-results/ — test output artifacts (traces, videos, screenshots)
+- playwright-report/ ? HTML test report
+- e2e-results/ ? test output artifacts (traces, videos, screenshots)
 
 These directories are gitignored. They are never committed.
 

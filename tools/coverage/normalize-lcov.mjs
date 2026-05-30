@@ -21,7 +21,7 @@ const TOOLS_MARKER = "tools/architecture/";
 const repoRoot = process.cwd();
 
 if (!fs.existsSync(LCOV_PATH)) {
-  console.error(`normalize-lcov: ${LCOV_PATH} not found — run test:coverage first`);
+  console.error(`normalize-lcov: ${LCOV_PATH} not found ? run test:coverage first`);
   process.exit(1);
 }
 
@@ -79,6 +79,6 @@ const remapped = addedFromTemp.size;
 const dropped = beforeCount - afterCount - remapped;
 
 console.log(
-  `normalize-lcov: ${beforeCount} → ${afterCount} SF entries` +
+  `normalize-lcov: ${beforeCount} ? ${afterCount} SF entries` +
     ` (remapped ${remapped} temp paths, dropped ${dropped} unresolvable)`
 );

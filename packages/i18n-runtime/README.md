@@ -47,7 +47,7 @@ Semver policy: internal-traceable
 
 ## Non-responsibilities
 
-- Does not own translation JSON content — keys are owned by consuming packages
+- Does not own translation JSON content ? keys are owned by consuming packages
 - Does not handle plurals, date formatting, or number formatting in this baseline
 
 ## Public exports and usage
@@ -116,7 +116,7 @@ None
 
 ## Operational notes
 
-- Locale files live in locales/<bcp47>.json — en-GB.json is the baseline and must always exist
+- Locale files live in locales/<bcp47>.json ? en-GB.json is the baseline and must always exist
 - Missing en-GB keys are reported by the ADR-ACT-0123 validation gate
 
 ## Governance

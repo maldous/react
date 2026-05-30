@@ -58,7 +58,7 @@ describe("mapKeycloakClaims", () => {
     assert.deepEqual(result.realmRoles, ["tenant-admin"]);
   });
 
-  it("returns null when email is absent — no preferred_username fallback for email", () => {
+  it("returns null when email is absent ? no preferred_username fallback for email", () => {
     // preferred_username is user-controlled and unverified; it must never become the email
     const result = mapKeycloakClaims({ sub: "s", preferred_username: "u", email_verified: true });
     assert.equal(result, null, "Should return null when email claim is absent");
@@ -261,7 +261,7 @@ describe("getUserInfo", () => {
 // ---------------------------------------------------------------------------
 
 describe("verifyKeycloakToken", () => {
-  it("returns null (stub — use getUserInfo for identity resolution)", async () => {
+  it("returns null (stub ? use getUserInfo for identity resolution)", async () => {
     const result = await verifyKeycloakToken("any-token");
     assert.equal(result, null);
   });

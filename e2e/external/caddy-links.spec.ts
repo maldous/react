@@ -12,7 +12,7 @@
  * when the route allows the request through.
  */
 import { test, expect } from "@playwright/test";
-import { getTestCredentials, loginAs } from "./helpers.ts";
+import { getExternalBaseUrl, getTestCredentials, loginAs } from "./helpers.ts";
 
 /** Admin routes protected by forward_auth in Caddyfile */
 const PROTECTED_ROUTES = [
@@ -30,7 +30,7 @@ test.describe("aldous.info: Caddy forward_auth — unauthenticated denial", () =
       request,
     }) => {
       // Direct HTTP request with no session cookie
-      const res = await request.get(route.path, {
+      const res = await request.get(new URL(route.path, getExternalBaseUrl()).toString(), {
         maxRedirects: 0,
         failOnStatusCode: false,
       });
@@ -63,7 +63,7 @@ test.describe("aldous.info: Caddy forward_auth — authenticated system-admin ac
       await loginAs(page, username, password);
 
       // Navigate to the tool route — Caddy forward_auth must allow it
-      const response = await page.goto(route.path);
+      const response = await page.goto(new URL(route.path, getExternalBaseUrl(page)).toString());
       // Accept: 200 (service running), 502/503 (service not running but auth passed),
       // or 30x (service redirects internally). Reject: 401, 403 (auth denied).
       const status = response?.status() ?? 0;

@@ -1,4 +1,4 @@
-# Infrastructure — Declarative Provisioning
+# Infrastructure ? Declarative Provisioning
 
 Governed by [ADR-0023](../docs/adr/0023-define-declarative-infrastructure-provisioning-model.md).
 
@@ -46,23 +46,23 @@ Governed by [ADR-0023](../docs/adr/0023-define-declarative-infrastructure-provis
 
 | Module                       | Status                                                 |
 | ---------------------------- | ------------------------------------------------------ |
-| `modules/keycloak/`          | Done — ADR-ACT-0110 (mrparkers/keycloak v4.4.0)        |
-| `modules/aws-network/`       | Planned — pre-production                               |
-| `modules/aws-database/`      | Planned — pre-production                               |
-| `modules/aws-observability/` | Planned — pre-production                               |
-| `modules/ci-oidc/`           | Planned — pre-CI setup                                 |
-| `env/local/`                 | Done — ADR-ACT-0110 (calls keycloak module, validated) |
-| `env/development/`           | Planned — ADR-ACT-0109                                 |
-| `env/staging/`               | Planned — pre-production                               |
-| `env/production/`            | Planned — pre-production                               |
+| `modules/keycloak/`          | Done ? ADR-ACT-0110 (mrparkers/keycloak v4.4.0)        |
+| `modules/aws-network/`       | Planned ? pre-production                               |
+| `modules/aws-database/`      | Planned ? pre-production                               |
+| `modules/aws-observability/` | Planned ? pre-production                               |
+| `modules/ci-oidc/`           | Planned ? pre-CI setup                                 |
+| `env/local/`                 | Done ? ADR-ACT-0110 (calls keycloak module, validated) |
+| `env/development/`           | Planned ? ADR-ACT-0109                                 |
+| `env/staging/`               | Planned ? pre-production                               |
+| `env/production/`            | Planned ? pre-production                               |
 
 ## Validation commands
 
 ```sh
-# Format + init + validate — offline, no Keycloak required
+# Format + init + validate ? offline, no Keycloak required
 make infra-check
 
-# Plan local Keycloak provisioning — requires Keycloak running
+# Plan local Keycloak provisioning ? requires Keycloak running
 docker compose --profile identity up -d keycloak
 make keycloak-plan-local
 

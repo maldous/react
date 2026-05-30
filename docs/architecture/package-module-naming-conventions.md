@@ -234,7 +234,7 @@ Rules:
 
 ```text
 operations runtime packages own server-side process lifecycle and cross-cutting platform concerns
-operations platform packages (security-auth, observability, queue-runtime, storage-runtime, audit-events, config-runtime) define interfaces — adapters implement them
+operations platform packages (security-auth, observability, queue-runtime, storage-runtime, audit-events, config-runtime) define interfaces ? adapters implement them
 operations runtime packages must not be imported by domain or contract packages
 feature packages may import queue-runtime and storage-runtime to enqueue jobs or request presigned URLs
 feature packages must not import session-runtime, security-auth, api-runtime, graphql-api-runtime, or worker-runtime

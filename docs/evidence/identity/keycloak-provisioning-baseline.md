@@ -1,4 +1,4 @@
-# Evidence: ADR-ACT-0110 — Keycloak Terraform/OpenTofu Provisioning Baseline
+# Evidence: ADR-ACT-0110 ? Keycloak Terraform/OpenTofu Provisioning Baseline
 
 **Date:** 2026-05-29
 **Status:** Done
@@ -37,7 +37,7 @@ mappers, ADR-0021 roles, and fixture test users. `terraform validate` passes off
 
 ## Clients
 
-### SPA client — `platform-spa`
+### SPA client ? `platform-spa`
 
 | Field | Value |
 | --- | --- |
@@ -49,7 +49,7 @@ mappers, ADR-0021 roles, and fixture test users. `terraform validate` passes off
 | Web origins (local) | `http://localhost:5173` |
 | Note | Provisioned for future direct-SPA flows. Current ADR-ACT-0008 slice uses fixture sessions; this client is not yet used at runtime. |
 
-### BFF/API client — `platform-api`
+### BFF/API client ? `platform-api`
 
 | Field | Value |
 | --- | --- |
@@ -59,14 +59,14 @@ mappers, ADR-0021 roles, and fixture test users. `terraform validate` passes off
 | Service accounts | Disabled |
 | Redirect URIs (local) | `http://localhost:3001/auth/callback`, `http://localhost:3001/*` |
 | Web origins | `[]` (servers don't need CORS origins) |
-| Client secret | Variable `bff_client_secret` — stored in `.tfvars` (gitignored); placeholder in `.tfvars.example` |
+| Client secret | Variable `bff_client_secret` ? stored in `.tfvars` (gitignored); placeholder in `.tfvars.example` |
 | Note | The BFF handles the full OAuth callback flow per ADR-0022. |
 
 ## Client scopes
 
 | Scope | Type | Mapper |
 | --- | --- | --- |
-| `platform-claims` | Optional | `keycloak_openid_user_attribute_protocol_mapper`: maps `organisationId` user attribute → `organisationId` JWT claim (id_token, access_token, userinfo) |
+| `platform-claims` | Optional | `keycloak_openid_user_attribute_protocol_mapper`: maps `organisationId` user attribute ? `organisationId` JWT claim (id_token, access_token, userinfo) |
 
 The scope is created as optional (not default) to avoid replacing built-in scopes. Clients
 request it explicitly via the `scope` parameter.
@@ -97,7 +97,7 @@ request it explicitly via the `scope` parameter.
 | --- | --- | --- |
 | `admin@fixture.local` | `tenant-admin` | `00000000-0000-0000-0000-000000000001` |
 | `viewer@fixture.local` | `viewer` | `00000000-0000-0000-0000-000000000001` |
-| `forbidden@fixture.local` | (none) | (none) — no-membership actor |
+| `forbidden@fixture.local` | (none) | (none) ? no-membership actor |
 
 Fixture user passwords are stored in `local.tfvars` (gitignored). The `.tfvars.example`
 contains a placeholder (`password`) that documents the pattern without committing a secret.
@@ -115,15 +115,15 @@ contains a placeholder (`password`) that documents the pattern without committin
 ```sh
 # Format check
 infra/bin/tf fmt -check -recursive infra/
-# → EXIT 0: format clean
+# ? EXIT 0: format clean
 
 # Init (downloads mrparkers/keycloak v4.4.0, generates lock file)
 infra/bin/tf -chdir=infra/env/local init -backend=false -input=false
-# → Terraform has been successfully initialized!
+# ? Terraform has been successfully initialized!
 
-# Validate (offline — no Keycloak required)
+# Validate (offline ? no Keycloak required)
 infra/bin/tf -chdir=infra/env/local validate
-# → Success! The configuration is valid.
+# ? Success! The configuration is valid.
 
 # Plan (requires local Keycloak on http://localhost:8080)
 # In this test run, Keycloak was on http://localhost:8090 (port 8080 occupied)
@@ -131,7 +131,7 @@ infra/bin/tf -chdir=infra/env/local plan \
   -var-file=local.tfvars.example \
   -var="keycloak_url=http://localhost:8090" \
   -input=false
-# → Plan: 15 to add, 0 to change, 0 to destroy.
+# ? Plan: 15 to add, 0 to change, 0 to destroy.
 ```
 
 ## Plan result

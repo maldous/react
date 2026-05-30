@@ -11,11 +11,11 @@ Evaluate the full set of packages required for a complete, generic, enterprise-g
 
 A package is added only when it passes at least 4 of 5 tests:
 
-1. **Stable ownership** — a single team or role owns it unambiguously
-2. **Different dependency rules** — it has forbidden consumers or dependencies distinct from neighboring packages
-3. **Different runtime/deployment concerns** — it runs in a different process, environment, or has a separate lifecycle
-4. **Different validation/evidence needs** — it requires its own compliance or governance checks
-5. **Likely reuse** — multiple other packages or teams will depend on it
+1. **Stable ownership** ? a single team or role owns it unambiguously
+2. **Different dependency rules** ? it has forbidden consumers or dependencies distinct from neighboring packages
+3. **Different runtime/deployment concerns** ? it runs in a different process, environment, or has a separate lifecycle
+4. **Different validation/evidence needs** ? it requires its own compliance or governance checks
+5. **Likely reuse** ? multiple other packages or teams will depend on it
 
 ## Summary
 
@@ -35,17 +35,17 @@ Round 2 added 5 previously-deferred packages after the boundary rationale was va
 
 ## Packages added
 
-### Operations domain — server-side runtime
+### Operations domain ? server-side runtime
 
 | Package | Owner | Class | Rationale |
 | --- | --- | --- | --- |
 | @platform/api-runtime | team-platform | active.platform | HTTP server lifecycle with distinct auth/middleware concerns; separate from GraphQL server and domain logic |
-| @platform/graphql-api-runtime | team-platform | active.platform | GraphQL schema stitching, DataLoader, persisted-query enforcement — distinct from generic HTTP runtime |
+| @platform/graphql-api-runtime | team-platform | active.platform | GraphQL schema stitching, DataLoader, persisted-query enforcement ? distinct from generic HTTP runtime |
 | @platform/worker-runtime | team-platform | active.platform | Separate process, different lifecycle (drain on shutdown), different queue-broker dependencies |
 | @platform/config-runtime | team-platform | active.platform | Leaf node with no @platform deps; consumed by every adapter and runtime; typed-schema-at-startup pattern |
-| @platform/session-runtime | team-security | active.platform | Crosses auth, Redis, and request context — distinct from auth interface and Redis adapter |
+| @platform/session-runtime | team-security | active.platform | Crosses auth, Redis, and request context ? distinct from auth interface and Redis adapter |
 
-### Operations domain — cross-cutting platform abstractions
+### Operations domain ? cross-cutting platform abstractions
 
 | Package | Owner | Class | Rationale |
 | --- | --- | --- | --- |
@@ -55,7 +55,7 @@ Round 2 added 5 previously-deferred packages after the boundary rationale was va
 | @platform/queue-runtime | team-platform | active.platform | Stable contract point between producers (features) and consumers (worker-runtime, adapters-redis) |
 | @platform/storage-runtime | team-platform | active.platform | No @platform deps; presigned URL flow is a distinct abstraction pattern from other runtime concerns |
 
-### Operations domain — concrete adapters
+### Operations domain ? concrete adapters
 
 | Package | Owner | Class | Rationale |
 | --- | --- | --- | --- |
@@ -65,7 +65,7 @@ Round 2 added 5 previously-deferred packages after the boundary rationale was va
 | @platform/adapters-opentelemetry | team-platform | active.adapter | Must initialize before all other imports (auto-instrumentation startup concern) |
 | @platform/adapters-object-storage | team-adapter | active.adapter | AWS S3 SDK encapsulation; presigned URL, multipart upload distinct from storage-runtime abstraction |
 
-### Delivery domain — CI/CD and infrastructure
+### Delivery domain ? CI/CD and infrastructure
 
 | Package | Owner | Class | Rationale |
 | --- | --- | --- | --- |
@@ -83,7 +83,7 @@ These packages were initially deferred and subsequently added after boundary rat
 
 | Package | Owner | Class | Rationale |
 | --- | --- | --- | --- |
-| @platform/email-runtime | team-platform | active.platform | Email send interface is a stable abstraction consumed by multiple feature packages; provider swap (e.g. Brevo → SES) requires only a new adapter. |
+| @platform/email-runtime | team-platform | active.platform | Email send interface is a stable abstraction consumed by multiple feature packages; provider swap (e.g. Brevo ? SES) requires only a new adapter. |
 | @platform/adapters-brevo | team-platform | active.adapter | Brevo free-tier transactional email (300/day free); concrete implementation of email-runtime registered at application startup only. |
 | @platform/notification-runtime | team-platform | active.platform | Push and in-app notification delivery is a distinct cross-cutting concern with a channel registry pattern separating interface from provider SDKs. |
 | @platform/search-runtime | team-platform | active.platform | Search has distinct eventual-consistency semantics, index management lifecycle, and provider-swap requirements that justify a dedicated interface. |
@@ -113,7 +113,7 @@ These candidates were assessed and explicitly rejected.
 
 **Interface/adapter split:** Each cross-cutting concern (auth, observability, queue, storage, audit) is split into an interface package (no @platform deps) and one or more adapter packages. This means:
 
-- Platform code imports the interface — never the adapter
+- Platform code imports the interface ? never the adapter
 - Adapter packages are registered at application startup only
 - Swapping vendors requires only a new adapter package
 

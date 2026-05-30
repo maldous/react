@@ -5,18 +5,21 @@ const API_PORT = process.env["PLATFORM_API_PORT"] ?? "3001";
 const PREVIEW_PORT = process.env["PREVIEW_PORT"] ?? "4173";
 
 export default defineConfig({
-  testDir: "./e2e/dev",
+  testDir: "./e2e/internal",
   testMatch: ["**/build.test.ts"],
   fullyParallel: false,
   retries: 0,
   workers: 1,
-  reporter: [["html", { outputFolder: "playwright-report/build", open: "never" }], ["list"]],
+  reporter: [
+    ["html", { outputFolder: "playwright-report/internal-build", open: "never" }],
+    ["list"],
+  ],
   use: {
     baseURL: `http://localhost:${PREVIEW_PORT}`,
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
   },
-  outputDir: "e2e-results/build",
+  outputDir: "e2e-results/internal-build",
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: [
     {

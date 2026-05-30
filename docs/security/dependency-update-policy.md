@@ -13,9 +13,9 @@ Weekly, before 6am Monday (Australia/Sydney timezone).
 | Dev tooling      | eslint, prettier, typescript, vitest, markdownlint-cli2 | No (review required)     |
 | GitHub Actions   | All actions                                             | No                       |
 | Docker images    | Dockerfiles, compose.yaml                               | No                       |
-| Playwright       | playwright, @playwright/test                            | No — E2E regression risk |
-| Platform runtime | react, zod, @tanstack/\*                                | No — manual review       |
-| Major updates    | Any major bump                                          | No — always separate PR  |
+| Playwright       | playwright, @playwright/test                            | No ? E2E regression risk |
+| Platform runtime | react, zod, @tanstack/\*                                | No ? manual review       |
+| Major updates    | Any major bump                                          | No ? always separate PR  |
 
 ## Security alerts
 

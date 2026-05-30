@@ -49,7 +49,7 @@ Semver policy: internal-traceable
 
 - Does not depend on HTTP frameworks (httpStatus is data, not express/fastify)
 - Does not import or wrap any @platform package
-- Does not log — logging is handled by the adapter/BFF layer
+- Does not log ? logging is handled by the adapter/BFF layer
 
 ## Public exports and usage
 
@@ -58,7 +58,7 @@ Public exports only: true
 Deep imports allowed: false
 ```
 
-- Import from @platform/platform-errors — public exports only
+- Import from @platform/platform-errors ? public exports only
 
 ## Boundaries
 

@@ -334,7 +334,7 @@ UI packages
   @platform/platform-observability (server-only)
   @platform/platform-runtime-context (server-only)
   @platform/adapters-* (adapter packages)
-  @platform/platform-api (BFF/API app — not a browser dependency)
+  @platform/platform-api (BFF/API app ? not a browser dependency)
 ```
 
 Server/BFF logic (database migrations, seed, health/readiness/version handlers, fixture session provider)
@@ -419,7 +419,7 @@ These rules are validated against package metadata declarations and enforced by 
 
 ## Observability, logging, and error primitive boundaries (ADR-0020)
 
-### Domain packages — no raw observability
+### Domain packages ? no raw observability
 
 Domain packages (`domain-core`, `profile-configuration`, `access-control`) must not import:
 
@@ -436,7 +436,7 @@ pino
 Domain may import `@platform/platform-runtime-context` for typed context fields (requestId, traceId)
 and `@platform/platform-errors` for typed error class checks.
 
-### Feature packages — no logging/tracing SDKs
+### Feature packages ? no logging/tracing SDKs
 
 Feature packages (`feature-workflow` and all future `@platform/feature-*` packages) must not import:
 
@@ -452,10 +452,10 @@ pino
 
 Features may import:
 
-- `@platform/platform-errors` — safe client error types and instanceof checks
-- `@platform/platform-runtime-context` — requestId types (via contract client helpers only)
+- `@platform/platform-errors` ? safe client error types and instanceof checks
+- `@platform/platform-runtime-context` ? requestId types (via contract client helpers only)
 
-### UI packages — no observability or error primitives
+### UI packages ? no observability or error primitives
 
 UI packages (`ui-design-system`) must not import:
 
@@ -475,7 +475,7 @@ UI components handle display only. Error display uses UI-safe `ErrorState` primi
 (to be defined in `packages/ui` as part of ADR-ACT-0095). The `@platform/platform-errors`
 prohibition may be revisited once `ErrorState` exposes a separately exported safe display type.
 
-### Contract packages — no concrete observability
+### Contract packages ? no concrete observability
 
 Contract packages (`contracts-graphql`, `contracts-analytics`, `contracts-ingestion`) must not import:
 
@@ -491,12 +491,12 @@ pino
 
 Contract packages define data shapes and DTO schemas only.
 
-### platform-runtime-context — zero @platform dependencies
+### platform-runtime-context ? zero @platform dependencies
 
 `@platform/platform-runtime-context` must not import any `@platform/*` package.
 It exports typed interfaces and factory helpers only.
 
-### platform-errors — zero @platform dependencies
+### platform-errors ? zero @platform dependencies
 
 `@platform/platform-errors` must not import any `@platform/*` package.
 It must remain importable by React feature packages without pulling in server-side dependencies.
@@ -508,7 +508,7 @@ These rules prevent the two wrapping packages from accidentally pulling in SDK-l
 **`@platform/platform-logging`** must not import:
 
 ```text
-@opentelemetry/*      (tracing is separate — platform-observability owns it)
+@opentelemetry/*      (tracing is separate ? platform-observability owns it)
 @sentry/*             (error monitoring is adapter-only)
 @platform/adapters-*  (no adapter imports)
 @platform/platform-observability  (no circular observability dependency)
@@ -552,17 +552,17 @@ packages/platform-errors:
 
 ## Identity and authentication boundary rules (ADR-0021 + ADR-0022)
 
-### Keycloak SDK — forbidden everywhere except adapters-keycloak
+### Keycloak SDK ? forbidden everywhere except adapters-keycloak
 
 `keycloak-js` and `@keycloak/*` packages are forbidden in all packages except `@platform/adapters-keycloak`:
 
 ```text
 Forbidden in: domain packages, feature packages, contract packages, UI packages
-Reason: ADR-0022 — Keycloak is an adapter. Only adapters-keycloak imports Keycloak SDK.
+Reason: ADR-0022 ? Keycloak is an adapter. Only adapters-keycloak imports Keycloak SDK.
 Note: @platform/adapters-keycloak is already forbidden by existing domain/feature rules.
 ```
 
-### adapters-keycloak — must not import React or features
+### adapters-keycloak ? must not import React or features
 
 `@platform/adapters-keycloak` must not import:
 
@@ -574,7 +574,7 @@ react, react-dom
 
 The Keycloak adapter is a server-side integration only. React-side auth flows, if ever needed, require a separate browser-side adapter with its own ADR.
 
-### domain-identity — pure domain rules
+### domain-identity ? pure domain rules
 
 `@platform/domain-identity` follows the same zero-infrastructure-dependency pattern as other domain packages. It must not import:
 
@@ -584,7 +584,7 @@ adapters, API runtime, session runtime, pino, OTel, Sentry, React, UI
 
 It may import `@platform/platform-runtime-context` for typed value objects if needed.
 
-### contracts-auth — Zod schemas only
+### contracts-auth ? Zod schemas only
 
 `@platform/contracts-auth` must not import:
 

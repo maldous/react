@@ -7,9 +7,9 @@ Ratified declarative infrastructure provisioning model before the first vertical
 ## Governance
 
 - ADR-0023 (accepted)
-- ADR-ACT-0109 (Open — create provisioning baseline and infra layout)
-- ADR-ACT-0110 (Open — create Keycloak Terraform/OpenTofu provisioning baseline)
-- ADR-ACT-0008 (Open — may proceed with fixture sessions; real SSO blocked until ADR-ACT-0110)
+- ADR-ACT-0109 (Open ? create provisioning baseline and infra layout)
+- ADR-ACT-0110 (Open ? create Keycloak Terraform/OpenTofu provisioning baseline)
+- ADR-ACT-0008 (Open ? may proceed with fixture sessions; real SSO blocked until ADR-ACT-0110)
 - Committed: 2026-05-28
 
 ## Selected provisioning tool
@@ -20,7 +20,7 @@ Ratified declarative infrastructure provisioning model before the first vertical
 | --- | --- | --- |
 | `terraform` | Available (v1.13.4 via tfenv) | Primary CLI in this environment |
 | `tofu` | Not installed | Drop-in replacement; install when needed |
-| `infra/bin/tf` | Created | Wrapper resolves to tofu → terraform |
+| `infra/bin/tf` | Created | Wrapper resolves to tofu ? terraform |
 
 All documentation, Makefile targets, and CI pipelines use `infra/bin/tf` as the canonical command.
 
@@ -56,7 +56,7 @@ All documentation, Makefile targets, and CI pipelines use `infra/bin/tf` as the 
 Local service runtime startup only (lifecycle, not configuration):
 postgres, redis, clickhouse, minio, mailpit, otel-collector, sonarqube, keycloak
 
-Compose does not own Keycloak realm configuration — that belongs to Terraform.
+Compose does not own Keycloak realm configuration ? that belongs to Terraform.
 
 ### Application migrations own
 
@@ -72,7 +72,7 @@ Staging and production are never seeded by default.
 
 | Rule | Status |
 | --- | --- |
-| No secrets committed | Enforced — .gitignore covers *.tfvars, .terraform/ |
+| No secrets committed | Enforced ? .gitignore covers *.tfvars, .terraform/ |
 | .tfvars.example with placeholders | Created for all environments |
 | Production secrets via Secrets Manager | Policy established |
 | Provider admin credentials | Never committed |
@@ -91,21 +91,21 @@ Staging and production are never seeded by default.
 
 ```text
 infra/
-  README.md                          ✓ created
-  bin/tf                             ✓ created (tofu → terraform wrapper)
-  .gitignore                         ✓ created
+  README.md                          ? created
+  bin/tf                             ? created (tofu ? terraform wrapper)
+  .gitignore                         ? created
   modules/
-    keycloak/                        ✓ scaffold (ADR-ACT-0110)
-    aws-network/                     ✓ scaffold
-    aws-database/                    ✓ scaffold
-    aws-observability/               ✓ scaffold
-    ci-oidc/                         ✓ scaffold
+    keycloak/                        ? scaffold (ADR-ACT-0110)
+    aws-network/                     ? scaffold
+    aws-database/                    ? scaffold
+    aws-observability/               ? scaffold
+    ci-oidc/                         ? scaffold
   env/
-    local/                           ✓ scaffold + local.tfvars.example
-    development/                     ✓ scaffold + development.tfvars.example
-    test/                            ✓ scaffold + test.tfvars.example
-    staging/                         ✓ scaffold + staging.tfvars.example
-    production/                      ✓ scaffold + production.tfvars.example
+    local/                           ? scaffold + local.tfvars.example
+    development/                     ? scaffold + development.tfvars.example
+    test/                            ? scaffold + test.tfvars.example
+    staging/                         ? scaffold + staging.tfvars.example
+    production/                      ? scaffold + production.tfvars.example
 ```
 
 ## Keycloak provisioning scope (ADR-ACT-0110)
@@ -135,10 +135,10 @@ Real Keycloak login is blocked until ADR-ACT-0110 is Done.
 ## Validation commands run
 
 ```text
-make check                              → all quality gates pass
-npm run test:coverage                   → 337/337 pass
-node orchestrator all --no-reports --strict → 6/6 passed
-infra/bin/tf fmt -check -recursive infra/ → no formatting errors (scaffold only)
+make check                              ? all quality gates pass
+npm run test:coverage                   ? 337/337 pass
+node orchestrator all --no-reports --strict ? 6/6 passed
+infra/bin/tf fmt -check -recursive infra/ ? no formatting errors (scaffold only)
 ```
 
 ## ADR-ACT-0008 status

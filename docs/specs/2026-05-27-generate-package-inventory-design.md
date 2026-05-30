@@ -50,7 +50,7 @@ node tools/architecture/generate-package-inventory/src/index.mjs \
 
 **Exit codes:** `0` = all reports fresh (check) or all written successfully. `1` = any report stale/missing in check mode.
 
-**Environment variable:** `ARCHITECTURE_REPORT_GENERATED_AT` — if set, overrides the `generatedAt` timestamp in all outputs. Used in tests for deterministic golden-file comparison.
+**Environment variable:** `ARCHITECTURE_REPORT_GENERATED_AT` ? if set, overrides the `generatedAt` timestamp in all outputs. Used in tests for deterministic golden-file comparison.
 
 ---
 

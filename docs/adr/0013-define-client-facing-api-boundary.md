@@ -24,7 +24,7 @@ Architecture owner / technical lead.
 
 The platform is structured as a modular hexagonal monorepo (ADR-0001) around bounded contexts (ADR-0002) with governed package boundaries (ADR-0003).
 
-The client-facing API boundary is the surface through which external consumers — the React application, mobile clients, and third-party integrators — interact with platform services.
+The client-facing API boundary is the surface through which external consumers ? the React application, mobile clients, and third-party integrators ? interact with platform services.
 
 Without a defined API boundary decision, client integration patterns fragment across packages. Consumer contracts become implicit. API versioning and access-control integration lack a consistent anchoring point.
 

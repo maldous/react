@@ -1,10 +1,10 @@
-# local.tfvars.example — copy to local.tfvars and fill in values (gitignored).
-# local.tfvars is listed in infra/.gitignore — never commit the real file.
+# local.tfvars.example ? copy to local.tfvars and fill in values (gitignored).
+# local.tfvars is listed in infra/.gitignore ? never commit the real file.
 #
 # These values match the Docker Compose identity profile defaults (.env.example).
 # Require: docker compose --profile identity up -d keycloak
 
-# Keycloak admin credentials — matches KEYCLOAK_ADMIN_USER / KEYCLOAK_ADMIN_PASSWORD in compose.yaml
+# Keycloak admin credentials ? matches KEYCLOAK_ADMIN_USER / KEYCLOAK_ADMIN_PASSWORD in compose.yaml
 keycloak_url           = "http://localhost:8090/kc"
 keycloak_admin_user    = "admin"
 keycloak_admin_password = "admin"
@@ -12,17 +12,32 @@ keycloak_admin_password = "admin"
 # Realm
 realm_name = "platform"
 
-# BFF/API client secret — known local-only development value; not a real secret.
+# BFF/API client secret ? known local-only development value; not a real secret.
 # The platform-api server reads this as KEYCLOAK_BFF_CLIENT_SECRET at runtime.
 bff_client_secret = "local-dev-bff-secret"
 
-# platform-provisioner service account secret — used by platform-api to create
+# platform-provisioner service account secret ? used by platform-api to create
 # per-tenant Keycloak realms at runtime (POST /api/admin/tenants).
 # Reads at runtime as KEYCLOAK_PROVISIONER_CLIENT_SECRET.
 provisioner_client_secret = "local-dev-provisioner-secret"
 
-# Fixture users — always true for local environment
+# Fixture users ? always true for local environment
 provision_fixture_users = true
 
-# Fixture user password — local-only, not a real secret
+# Fixture user password ? local-only, not a real secret
 fixture_user_password = "password"
+
+# Keycloak hostname ? determines token issuer (iss claim).
+# Must match the public-facing URL:
+#   Local dev (Compose with Caddy):  http://localhost/kc
+#   Dev .localhost:                  http://dev.localhost/kc
+#   Test .localhost:                 http://test.localhost/kc
+#   Production:                      https://aldous.info/kc
+kc_hostname = "http://localhost/kc"
+
+# Apex domain for FQDN-based tenant routing (ADR-0029, ADR-0033).
+#   Local dev (Compose with Caddy):  aldous.info  (via /etc/hosts)
+#   Dev .localhost:                  dev.localhost
+#   Test .localhost:                 test.localhost
+#   Production:                      aldous.info
+apex_domain = "aldous.info"

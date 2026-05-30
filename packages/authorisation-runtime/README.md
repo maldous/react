@@ -2,7 +2,7 @@
 
 # @platform/authorisation-runtime
 
-Authorisation port interfaces for resource access (UMA/PEP pattern) and realm administration. Zero @platform dependencies — this is a leaf port node.
+Authorisation port interfaces for resource access (UMA/PEP pattern) and realm administration. Zero @platform dependencies ? this is a leaf port node.
 
 ## Package identity
 
@@ -118,7 +118,7 @@ None
 
 ## Operational notes
 
-- Zero @platform/* dependencies required — this package must remain a leaf node to avoid import boundary violations
+- Zero @platform/* dependencies required ? this package must remain a leaf node to avoid import boundary violations
 
 ## Governance
 

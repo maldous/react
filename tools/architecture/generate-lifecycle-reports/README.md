@@ -48,8 +48,8 @@ Semver policy: internal-traceable
 
 ## Non-responsibilities
 
-- Does not validate package metadata — use validate-package-metadata for that
-- Does not generate the lifecycle summary counts — use generate-package-inventory for that
+- Does not validate package metadata ? use validate-package-metadata for that
+- Does not generate the lifecycle summary counts ? use generate-package-inventory for that
 - Does not validate lifecycle transition evidence bundles
 
 ## Public exports and usage

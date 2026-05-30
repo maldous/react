@@ -22,7 +22,7 @@ export interface S3Config {
   endpoint?: string;
   forcePathStyle?: boolean;
   credentials?: { accessKeyId: string; secretAccessKey: string };
-  /** When set, all key operations are validated to use "{organisationId}/" prefix (ADR-0029 §6) */
+  /** When set, all key operations are validated to use "{organisationId}/" prefix (ADR-0029 ?6) */
   organisationId?: string;
 }
 
@@ -33,7 +33,7 @@ export class S3ObjectStorageAdapter implements ObjectStoragePort {
 
   /**
    * Validate that an object key belongs to this adapter's tenant prefix.
-   * ADR-0029 §6: defence-in-depth — prefix validated at adapter layer before
+   * ADR-0029 ?6: defence-in-depth ? prefix validated at adapter layer before
    * IAM policy enforcement at the S3/MinIO layer.
    */
   private validateKey(key: string): void {
@@ -134,7 +134,7 @@ export class S3ObjectStorageAdapter implements ObjectStoragePort {
 }
 
 // ---------------------------------------------------------------------------
-// S3ProvisioningAdapter — creates per-tenant IAM users and bucket policies
+// S3ProvisioningAdapter ? creates per-tenant IAM users and bucket policies
 // ADR-0031: used only by the provisioning path, never in request handlers.
 // Requires admin-level S3/IAM credentials stored in the secret store.
 // ---------------------------------------------------------------------------

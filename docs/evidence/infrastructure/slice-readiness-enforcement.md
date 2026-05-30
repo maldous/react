@@ -25,10 +25,10 @@ against the ADR-0024 readiness tier model. Integrated into the orchestrator `all
 | `actionId` present | ERROR |
 | `name` present | ERROR |
 | `status` present and valid value | ERROR |
-| `requiredReadinessTier` present and 0–4 | ERROR |
-| `requiredCapabilities` — only known IDs | ERROR |
-| `blockedBy` — ADR-ACT-NNNN format | ERROR |
-| `forbiddenDependencies` — unrecognised values | WARN |
+| `requiredReadinessTier` present and 0?4 | ERROR |
+| `requiredCapabilities` ? only known IDs | ERROR |
+| `blockedBy` ? ADR-ACT-NNNN format | ERROR |
+| `forbiddenDependencies` ? unrecognised values | WARN |
 
 ## Orchestrator integration
 

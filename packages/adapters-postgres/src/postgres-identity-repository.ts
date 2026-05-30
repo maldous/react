@@ -46,7 +46,7 @@ export class PostgresIdentityRepository implements IdentityRepository {
   // multiple tenants, and the auth callback runs before any tenant context
   // is established). All methods use withSystemAdmin so they function
   // correctly when the app DB user is a non-superuser with RLS enforced.
-  // ADR-0031 §PostgreSQL privilege analysis; ADR-ACT-0153.
+  // ADR-0031 ?PostgreSQL privilege analysis; ADR-ACT-0153.
 
   async findExternalIdentity(
     provider: string,

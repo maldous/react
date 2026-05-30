@@ -1,5 +1,5 @@
 #!/bin/sh
-# docker/entrypoint-api.sh — platform-api container entrypoint
+# docker/entrypoint-api.sh ? platform-api container entrypoint
 # Runs migrations and seed before starting the HTTP server.
 # ADR-0017: application schema owned by migrations; fixture data by seed scripts.
 set -e
