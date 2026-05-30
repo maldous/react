@@ -888,21 +888,21 @@ stage-test:
 	fi; \
 	test $$_r -eq 0 || exit 1
 
-## stage-staging ? Staging stage: run tests against the always-on staging stack
+## stage-staging ? Staging stage: start/update stack then run tests (HA ? no teardown)
 ##
-## HIGH AVAILABILITY: staging must already be running. This target does NOT
-## start, stop, or restart any services. The stack is managed independently
-## and must remain available between pipeline runs.
+## Calls staging-up (idempotent ? Compose no-ops if already running, rebuilds on
+## image/config changes) and external-caddy-up, then runs migrations and tests.
+## The stack is NEVER torn down ? it stays available between pipeline runs.
 ##
-##   db:migrate ? unit/API tests ? external E2E (no stack lifecycle changes)
+##   staging-up ? external-caddy-up ? db:migrate ? unit/API tests ? external E2E
 ##
-## Prerequisites (must be pre-running):
-##   - staging internal stack: make staging-up
-##   - external Caddy on port 80: make external-caddy-up
+## Prerequisites:
 ##   - staging.aldous.info DNS-resolvable to Cloudflare IPs
 ##   - KEYCLOAK_TEST_PASSWORD set for auth tests (optional ? skipped if absent)
 stage-staging:
-	$(call STEP,stage:staging (Cloudflare external ? HA, no stack changes))
+	$(call STEP,stage:staging (Cloudflare external ? HA, up-if-changed, no teardown))
+	$(MAKE) staging-up
+	$(MAKE) external-caddy-up
 	@printf 'Running database migrations (staging, port 5435 ? data preserving)...\n'
 	POSTGRES_URL=postgresql://platform:platformpassword@localhost:5435/platform npm run db:migrate \
 	    && $(MAKE) run-stage-tests ENV=staging \
@@ -911,21 +911,21 @@ stage-staging:
 	&& PROD_BASE_URL='$(or $(PROD_BASE_URL),http://staging.aldous.info)' $(MAKE) e2e-external \
 	    && printf '$(GREEN)? stage:staging passed$(RESET)\n'
 
-## stage-prod ? Production stage: run tests against the always-on prod stack
+## stage-prod ? Production stage: start/update stack then run tests (HA ? no teardown)
 ##
-## HIGH AVAILABILITY: prod must already be running. This target does NOT
-## start, stop, or restart any services. The stack is managed independently
-## and must remain available between pipeline runs.
+## Calls prod-up (idempotent ? includes keycloak-provision which creates fixture
+## users including sysadmin@aldous.info) and external-caddy-up, then runs
+## migrations and tests. The stack is NEVER torn down.
 ##
-##   db:migrate ? unit/API tests ? external E2E ? exhaustive prod E2E (no stack lifecycle changes)
+##   prod-up ? external-caddy-up ? db:migrate ? unit/API tests ? external E2E ? exhaustive prod E2E
 ##
-## Prerequisites (must be pre-running):
-##   - prod internal stack: make prod-up
-##   - external Caddy on port 80: make external-caddy-up
+## Prerequisites:
 ##   - aldous.info DNS-resolvable to Cloudflare IPs
 ##   - KEYCLOAK_TEST_PASSWORD set for auth tests (optional ? skipped if absent)
 stage-prod:
-	$(call STEP,stage:prod (Cloudflare external ? HA, no stack changes, exhaustive))
+	$(call STEP,stage:prod (Cloudflare external ? HA, up-if-changed, no teardown, exhaustive))
+	$(MAKE) prod-up
+	$(MAKE) external-caddy-up
 	@printf 'Running database migrations (prod, port 5436 ? data preserving)...\n'
 	POSTGRES_URL=postgresql://platform:platformpassword@localhost:5436/platform npm run db:migrate \
 	    && $(MAKE) run-stage-tests ENV=prod \
