@@ -17,7 +17,9 @@ import {
   assertSessionAuthenticated,
 } from "./helpers.ts";
 
-test.describe("aldous.info: platform login", () => {
+const TARGET_HOST = new URL(process.env["PROD_BASE_URL"] || "http://aldous.info").hostname;
+
+test.describe(`${TARGET_HOST}: platform login`, () => {
   test.beforeEach(({}, testInfo) => {
     // Skip entire suite if env vars are not set
     try {

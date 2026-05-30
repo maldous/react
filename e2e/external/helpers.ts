@@ -5,7 +5,7 @@
 import { type Page, expect } from "@playwright/test";
 
 export function getExternalBaseUrl(page?: Page): string {
-  const envBase = process.env["PROD_BASE_URL"] ?? "http://aldous.info";
+  const envBase = process.env["PROD_BASE_URL"] || "http://aldous.info";
   if (page) {
     try {
       const url = new URL(page.url());

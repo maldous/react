@@ -11,9 +11,10 @@ import { test, expect } from "@playwright/test";
 import { getExternalBaseUrl } from "./helpers.ts";
 
 const BASE_URL =
-  process.env["REAL_AUTH_BASE_URL"] ?? process.env["PROD_BASE_URL"] ?? "http://aldous.info";
+  process.env["REAL_AUTH_BASE_URL"] || process.env["PROD_BASE_URL"] || "http://aldous.info";
+const TARGET_HOST = new URL(BASE_URL).hostname;
 
-test.describe("aldous.info: wrong credentials", () => {
+test.describe(`${TARGET_HOST}: wrong credentials`, () => {
   test("wrong password shows Keycloak error on login form", async ({ page }) => {
     // /auth/login on the BFF triggers the PKCE redirect to Keycloak directly.
     // Caddy proxies /auth/* to platform-api, so there is no intermediate SPA login page.
@@ -49,7 +50,7 @@ test.describe("aldous.info: wrong credentials", () => {
 // Tests are skipped — corresponding ACTION-REGISTER items created below.
 // ---------------------------------------------------------------------------
 
-test.describe("aldous.info: deferred auth models (provisioning not yet available)", () => {
+test.describe(`${TARGET_HOST}: deferred auth models (provisioning not yet available)`, () => {
   test.skip(
     true,
     "OIDC broker login (ADR-ACT-0157): Requires OIDC IdP configured in platform realm. " +

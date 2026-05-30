@@ -14,6 +14,8 @@
 import { test, expect } from "@playwright/test";
 import { getExternalBaseUrl, getTestCredentials, loginAs } from "./helpers.ts";
 
+const TARGET_HOST = new URL(process.env["PROD_BASE_URL"] || "http://aldous.info").hostname;
+
 /** Admin routes protected by forward_auth in Caddyfile */
 const PROTECTED_ROUTES = [
   { path: "/kc/", label: "Keycloak", resource: "admin:keycloak" },
@@ -24,7 +26,7 @@ const PROTECTED_ROUTES = [
   { path: "/clickhouse/", label: "ClickHouse", resource: "admin:clickhouse" },
 ];
 
-test.describe("aldous.info: Caddy forward_auth — unauthenticated denial", () => {
+test.describe(`${TARGET_HOST}: Caddy forward_auth — unauthenticated denial`, () => {
   for (const route of PROTECTED_ROUTES) {
     test(`unauthenticated request to ${route.path} is denied (401/403/redirect)`, async ({
       request,
@@ -46,7 +48,7 @@ test.describe("aldous.info: Caddy forward_auth — unauthenticated denial", () =
   }
 });
 
-test.describe("aldous.info: Caddy forward_auth — authenticated system-admin access", () => {
+test.describe(`${TARGET_HOST}: Caddy forward_auth — authenticated system-admin access`, () => {
   test.beforeEach(({}, testInfo) => {
     try {
       getTestCredentials();

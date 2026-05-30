@@ -742,7 +742,7 @@ e2e-external-smoke:
 	if ! curl -fsS --max-time 10 "$$BASE/healthz" > /dev/null 2>&1; then \
 		printf '$(RED)? $$BASE not reachable. Run: make compose-up-web$(RESET)\n'; \
 		exit 1; \
-	fi
+	fi; \
 	PROD_BASE_URL=$$BASE npx playwright test --config playwright.external.config.ts e2e/external/smoke.test.ts
 	$(call OK,external smoke tests passed)
 
@@ -758,7 +758,7 @@ e2e-external-auth:
 	if ! curl -fsS --max-time 10 "$$BASE/healthz" > /dev/null 2>&1; then \
 		printf '$(RED)? $$BASE not reachable.$(RESET)\n'; \
 		exit 1; \
-	fi
+	fi; \
 	PROD_BASE_URL=$$BASE npx playwright test --config playwright.external.config.ts \
 	    e2e/external/login.spec.ts e2e/external/logout.spec.ts e2e/external/caddy-links.spec.ts e2e/external/auth-negative.spec.ts
 	$(call OK,external auth E2E passed)
@@ -778,7 +778,7 @@ e2e-external:
 		printf '  For local: ensure 127.0.0.1 aldous.info is in /etc/hosts and make compose-up-web has run.\n'; \
 		printf '  For Cloudflare: ensure the site is deployed and accessible.$(RESET)\n'; \
 		exit 1; \
-	fi
+	fi; \
 	PROD_BASE_URL="$$BASE" npx playwright test --config playwright.external.config.ts
 	$(call OK,external E2E passed)
 

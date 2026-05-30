@@ -11,7 +11,10 @@ import {
   assertSessionUnauthenticated,
 } from "./helpers.ts";
 
-test.describe("aldous.info: logout and session invalidation", () => {
+const TARGET_HOST = new URL(process.env["PROD_BASE_URL"] || "http://aldous.info").hostname;
+const TARGET_HOST_RE = new RegExp(TARGET_HOST.replace(/\./g, "\\."));
+
+test.describe(`${TARGET_HOST}: logout and session invalidation`, () => {
   test.beforeEach(({}, testInfo) => {
     try {
       getTestCredentials();
@@ -28,7 +31,7 @@ test.describe("aldous.info: logout and session invalidation", () => {
     await page.getByTestId("logout-button").click();
 
     // Wait for the page to return to unauthenticated state
-    await page.waitForURL(/aldous\.info/, { timeout: 10_000 });
+    await page.waitForURL(TARGET_HOST_RE, { timeout: 10_000 });
 
     // Session must be cleared
     await assertSessionUnauthenticated(page);
@@ -39,7 +42,7 @@ test.describe("aldous.info: logout and session invalidation", () => {
     await loginAs(page, username, password);
 
     await page.getByTestId("logout-button").click();
-    await page.waitForURL(/aldous\.info/, { timeout: 10_000 });
+    await page.waitForURL(TARGET_HOST_RE, { timeout: 10_000 });
 
     // Sign-in entry must reappear
     const signInEntry = page.locator(
