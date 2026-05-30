@@ -57,16 +57,25 @@ export async function resolveSessionFromIdentity(
 
   const { user } = pair;
 
-  // Step 3: Find the user's active membership
-  const membership = await deps.identities.findMembershipByUser(user.id);
+  // Step 3: Derive roles and permissions.
+  //
+  // system-admin is a Keycloak realm role (no DB membership) — ADR-0021.
+  // All other roles come exclusively from the platform DB membership record.
+  // The Keycloak BFF client includes realm_access.roles in /userinfo (ADR-ACT-0175),
+  // so identity.realmRoles is populated with the user's Keycloak realm assignments.
+  const isSystemAdmin = identity.realmRoles.includes("system-admin");
 
-  // Users with no membership are authenticated but have no org context.
-  // The no-membership pattern is documented in ADR-ACT-0008.
-  // They can still log in; permission guards will reject specific routes.
+  // Skip the DB lookup for system admins — they have no org membership.
+  const membership = isSystemAdmin ? null : await deps.identities.findMembershipByUser(user.id);
+
   const tenantId = membership?.organisationId ?? "";
   const organisationId = membership?.organisationId ?? "";
-  const roles: string[] = membership ? [membership.role] : [];
-  const permissions = membership ? resolvePermissions(membership.role) : [];
+  const roles: string[] = isSystemAdmin ? ["system-admin"] : membership ? [membership.role] : [];
+  const permissions = isSystemAdmin
+    ? resolvePermissions("system-admin")
+    : membership
+      ? resolvePermissions(membership.role)
+      : [];
 
   // Step 4: Create server-side session (ADR-0022 ? no raw tokens stored)
   const command: CreateSessionCommand = {

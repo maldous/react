@@ -212,6 +212,32 @@ resource "keycloak_openid_user_attribute_protocol_mapper" "organisation_id" {
 }
 
 # ---------------------------------------------------------------------------
+# Realm roles → /userinfo — ADR-ACT-0175
+#
+# Keycloak includes realm_access.roles in access tokens by default, but NOT
+# in the /userinfo response. The platform-api BFF calls /userinfo (not the
+# access token) to resolve identity claims, so realm roles are invisible to
+# the session creation flow without this mapper.
+#
+# This mapper adds realm_access.roles to the /userinfo response for the BFF
+# client only (not access token or id token — those already have it via the
+# default realm-management mapper). Enables resolveSessionFromIdentity() to
+# propagate the system-admin realm role into the platform session.
+# ---------------------------------------------------------------------------
+
+resource "keycloak_openid_user_realm_role_protocol_mapper" "bff_realm_roles_userinfo" {
+  realm_id  = keycloak_realm.platform.id
+  client_id = keycloak_openid_client.bff.id
+  name      = "realm-roles-userinfo"
+
+  claim_name          = "realm_access.roles"
+  multivalued         = true
+  add_to_id_token     = false
+  add_to_access_token = false
+  add_to_userinfo     = true
+}
+
+# ---------------------------------------------------------------------------
 # Fixture users ? local/dev environments only
 #
 # Emails match apps/platform-api/src/db/seed.ts exactly so that the

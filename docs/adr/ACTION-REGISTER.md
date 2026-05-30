@@ -292,6 +292,8 @@ ADR-ACT-0081: Done ? Wired package-map.mjs (buildPackageMap) into index.mjs repl
 
 | ADR-ACT-0178 | ADR-0034 | Create pipeline composition meta-test (validate-pipeline-composition) that parses Makefile stage targets and validates each runs the correct E2E test types per ADR-0034 hierarchy. Wired into architecture governance orchestrator as part of `make check` and `make all`. | Implementation | Done | High | ADR-ACT-0174 | Architecture owner / technical lead | Complete | tools/architecture/validate-pipeline-composition/src/index.mjs; tools/architecture/validate-pipeline-composition/package.json; wired into orchestrator buildStepCatalog + planFor |
 
+| ADR-ACT-0179 | ADR-0021, ADR-0022 | Bridge Keycloak system-admin realm role into platform session. The BFF calls /userinfo (not the access token) to resolve identity; Keycloak does not include realm_access.roles in /userinfo by default. Fix: (1) add keycloak_openid_user_realm_role_protocol_mapper to BFF client with add_to_userinfo=true so /userinfo carries realm_access.roles; (2) resolveSessionFromIdentity() checks identity.realmRoles for system-admin and sets roles:["system-admin"] directly, skipping the DB membership lookup (system-admin is a global role with no org context per ADR-0021). | Implementation | Done | High | ADR-ACT-0110, ADR-ACT-0155 | Architecture owner / technical lead | Complete | infra/modules/keycloak/main.tf (keycloak_openid_user_realm_role_protocol_mapper.bff_realm_roles_userinfo); apps/platform-api/src/usecases/auth.ts (isSystemAdmin branch); apps/platform-api/tests/unit/auth-usecase.test.ts (system-admin test case) |
+
 ## Notes
 
 Actions may later link to tickets, pull requests, issues, or delivery-board items.

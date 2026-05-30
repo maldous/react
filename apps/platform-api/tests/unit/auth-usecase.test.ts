@@ -135,6 +135,31 @@ describe("resolveSessionFromIdentity", () => {
     assert.deepEqual(result.permissions, []);
   });
 
+  it("system-admin realm role grants session role without DB membership", async () => {
+    let membershipCalled = false;
+    const sessions = makeFakeSessionStore();
+    const deps: AuthUseCaseDeps = {
+      identities: makeFakeIdentityRepo({
+        findMembershipByUser: async () => {
+          membershipCalled = true;
+          return null;
+        },
+      }),
+      sessions,
+    };
+    const sysadminIdentity: KeycloakIdentityResult = {
+      ...KEYCLOAK_IDENTITY,
+      realmRoles: ["system-admin"],
+    };
+    const result = await resolveSessionFromIdentity(sysadminIdentity, deps);
+    assert.deepEqual(result.roles, ["system-admin"]);
+    assert.ok(result.permissions.includes("admin.access"), "system-admin must have admin.access");
+    assert.ok(result.permissions.includes("organisation.read"));
+    assert.equal(result.tenantId, "");
+    assert.equal(result.organisationId, "");
+    assert.equal(membershipCalled, false, "DB membership lookup must be skipped for system-admin");
+  });
+
   it("stores no raw tokens in the session", async () => {
     const sessions = makeFakeSessionStore();
     const deps: AuthUseCaseDeps = {
