@@ -135,6 +135,63 @@ describe("resolveSessionFromIdentity", () => {
     assert.deepEqual(result.permissions, []);
   });
 
+  // All five ADR-0021 tenant-scoped roles sourced from DB membership
+  for (const role of ["tenant-admin", "manager", "member", "viewer"] as const) {
+    it(`membership role "${role}" is reflected in session roles and permissions`, async () => {
+      const sessions = makeFakeSessionStore();
+      const deps: AuthUseCaseDeps = {
+        identities: makeFakeIdentityRepo({
+          findMembershipByUser: async () => ({ ...FIXTURE_MEMBERSHIP, role }),
+        }),
+        sessions,
+      };
+      const result = await resolveSessionFromIdentity(KEYCLOAK_IDENTITY, deps);
+      assert.deepEqual(result.roles, [role]);
+      assert.ok(
+        result.permissions.includes("organisation.read"),
+        `${role} must have organisation.read`
+      );
+      assert.equal(result.tenantId, FIXTURE_MEMBERSHIP.organisationId);
+    });
+  }
+
+  it("tenant-admin membership has org write and admin.access permissions", async () => {
+    const sessions = makeFakeSessionStore();
+    const deps: AuthUseCaseDeps = { identities: makeFakeIdentityRepo(), sessions };
+    const result = await resolveSessionFromIdentity(KEYCLOAK_IDENTITY, deps);
+    assert.ok(result.permissions.includes("organisation.update"));
+    assert.ok(result.permissions.includes("admin.access"));
+    assert.ok(result.permissions.includes("member.invite"));
+  });
+
+  it("viewer membership does not have write permissions", async () => {
+    const sessions = makeFakeSessionStore();
+    const deps: AuthUseCaseDeps = {
+      identities: makeFakeIdentityRepo({
+        findMembershipByUser: async () => ({ ...FIXTURE_MEMBERSHIP, role: "viewer" as const }),
+      }),
+      sessions,
+    };
+    const result = await resolveSessionFromIdentity(KEYCLOAK_IDENTITY, deps);
+    assert.ok(!result.permissions.includes("organisation.update"));
+    assert.ok(!result.permissions.includes("admin.access"));
+    assert.ok(!result.permissions.includes("member.invite"));
+  });
+
+  it("manager membership can invite members but cannot update org settings", async () => {
+    const sessions = makeFakeSessionStore();
+    const deps: AuthUseCaseDeps = {
+      identities: makeFakeIdentityRepo({
+        findMembershipByUser: async () => ({ ...FIXTURE_MEMBERSHIP, role: "manager" as const }),
+      }),
+      sessions,
+    };
+    const result = await resolveSessionFromIdentity(KEYCLOAK_IDENTITY, deps);
+    assert.ok(result.permissions.includes("member.invite"));
+    assert.ok(!result.permissions.includes("organisation.update"));
+    assert.ok(!result.permissions.includes("admin.access"));
+  });
+
   it("system-admin realm role grants session role without DB membership", async () => {
     let membershipCalled = false;
     const sessions = makeFakeSessionStore();
@@ -158,6 +215,39 @@ describe("resolveSessionFromIdentity", () => {
     assert.equal(result.tenantId, "");
     assert.equal(result.organisationId, "");
     assert.equal(membershipCalled, false, "DB membership lookup must be skipped for system-admin");
+  });
+
+  it("system-admin realm role wins over existing DB membership", async () => {
+    // Even if the user somehow has a membership, the system-admin realm role takes precedence.
+    const sessions = makeFakeSessionStore();
+    const deps: AuthUseCaseDeps = {
+      identities: makeFakeIdentityRepo(), // default: FIXTURE_MEMBERSHIP (tenant-admin)
+      sessions,
+    };
+    const sysadminIdentity: KeycloakIdentityResult = {
+      ...KEYCLOAK_IDENTITY,
+      realmRoles: ["system-admin"],
+    };
+    const result = await resolveSessionFromIdentity(sysadminIdentity, deps);
+    assert.deepEqual(result.roles, ["system-admin"]);
+    assert.equal(result.tenantId, "");
+  });
+
+  it("non-system-admin Keycloak realm roles do not pollute session roles", async () => {
+    // Keycloak adds built-in roles like offline_access and uma_authorization.
+    // These must not appear in the platform session.
+    const sessions = makeFakeSessionStore();
+    const deps: AuthUseCaseDeps = {
+      identities: makeFakeIdentityRepo({ findMembershipByUser: async () => null }),
+      sessions,
+    };
+    const identity: KeycloakIdentityResult = {
+      ...KEYCLOAK_IDENTITY,
+      realmRoles: ["offline_access", "uma_authorization", "default-roles-platform"],
+    };
+    const result = await resolveSessionFromIdentity(identity, deps);
+    assert.deepEqual(result.roles, []);
+    assert.deepEqual(result.permissions, []);
   });
 
   it("stores no raw tokens in the session", async () => {
