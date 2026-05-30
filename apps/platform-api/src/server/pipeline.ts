@@ -70,7 +70,8 @@ export function jsonResponse(
 ): void {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
+    "X-Content-Type-Options": "nosniff",
+    "Cache-Control": "no-cache, no-store, must-revalidate",
   };
   if (requestId) headers["X-Request-Id"] = requestId;
   res.writeHead(status, headers);
@@ -109,8 +110,8 @@ export function createRouter(
   return async (req, res) => {
     if (req.method === "OPTIONS") {
       res.writeHead(204, {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
+        "X-Content-Type-Options": "nosniff",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
       });
       res.end();
       return;

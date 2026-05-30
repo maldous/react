@@ -51,19 +51,19 @@ describe("createVersionResponse", () => {
   it("includes all fields when fully specified", () => {
     const response = createVersionResponse({
       version: "1.2.3",
-      gitSha: "abc123",
+      commit: "abc123",
       buildTime: "2026-05-01T12:00:00Z",
       environment: "production",
     });
     assert.equal(response.version, "1.2.3");
-    assert.equal(response.gitSha, "abc123");
+    assert.equal(response.commit, "abc123");
     assert.equal(response.buildTime, "2026-05-01T12:00:00Z");
     assert.equal(response.environment, "production");
   });
 
-  it("defaults gitSha to 'unknown' when not provided", () => {
+  it("defaults commit to 'unknown' when not provided", () => {
     const response = createVersionResponse({ version: "1.0.0", environment: "staging" });
-    assert.equal(response.gitSha, "unknown");
+    assert.equal(response.commit, "unknown");
   });
 
   it("defaults buildTime to 'unknown' when not provided", () => {

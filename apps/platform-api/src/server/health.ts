@@ -33,7 +33,7 @@ export async function getReadiness(postgresUrl?: string): Promise<ReadinessRespo
 export function getVersion(): VersionResponse {
   return createVersionResponse({
     version: process.env["APP_VERSION"] ?? "0.1.0",
-    gitSha: process.env["GIT_SHA"] ?? "unknown",
+    commit: process.env["GIT_SHA"] ?? "unknown",
     buildTime: process.env["BUILD_TIME"] ?? "unknown",
     environment: process.env["NODE_ENV"] ?? "development",
   });

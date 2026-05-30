@@ -103,6 +103,22 @@
 #   No /etc/hosts needed ? .localhost resolves to 127.0.0.1 per RFC 6761.
 # ---------------------------------------------------------------------------
 http://aldous.info http://localhost http://dev.localhost http://test.localhost http://staging.aldous.info {
+	# Security headers — applied to all responses from this virtual host.
+	# Content-hashed assets (/assets/*) override Cache-Control below.
+	header {
+		X-Content-Type-Options nosniff
+		X-Frame-Options DENY
+		Referrer-Policy strict-origin-when-cross-origin
+		Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=()"
+		Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; frame-ancestors 'none'"
+		Cache-Control "no-cache, no-store, must-revalidate"
+		-Server
+	}
+
+	# Content-hashed static assets — far-future immutable caching
+	@assets path /assets/*
+	header @assets Cache-Control "public, max-age=31536000, immutable"
+
 	# Keycloak realm endpoints ? OAuth login, PKCE, JWKS, token exchange.
 	# These must be publicly reachable; Keycloak enforces its own auth internally.
 	handle /kc/realms/* {
@@ -206,6 +222,21 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 # ADR-0033: .localhost dev/test domain convention
 # ---------------------------------------------------------------------------
 http://*.aldous.info http://*.dev.localhost http://*.test.localhost http://*.staging.aldous.info {
+	# Security headers — applied to all responses from this virtual host.
+	header {
+		X-Content-Type-Options nosniff
+		X-Frame-Options DENY
+		Referrer-Policy strict-origin-when-cross-origin
+		Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=()"
+		Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; frame-ancestors 'none'"
+		Cache-Control "no-cache, no-store, must-revalidate"
+		-Server
+	}
+
+	# Content-hashed static assets — far-future immutable caching
+	@assets path /assets/*
+	header @assets Cache-Control "public, max-age=31536000, immutable"
+
 	# Keycloak realm endpoints ? publicly accessible (Keycloak handles its own auth)
 	handle /kc/realms/* {
 		reverse_proxy keycloak:8080

@@ -8,16 +8,29 @@
  */
 
 import { test, expect } from "@playwright/test";
+import { loginAs, getTestCredentials } from "../external/helpers.ts";
+
+// ---------------------------------------------------------------------------
+// Session cookie attributes — require an authenticated session
+// ---------------------------------------------------------------------------
 
 test.describe("cookies: session cookie attributes", () => {
-  test("session cookie is HttpOnly (not accessible via document.cookie)", async ({ page }) => {
-    await page.goto("/");
-    await page.waitForLoadState("networkidle");
+  test.beforeEach(async ({ page }, testInfo) => {
+    try {
+      getTestCredentials();
+    } catch {
+      testInfo.skip();
+      return;
+    }
+    const { username, password } = getTestCredentials();
+    await loginAs(page, username, password);
+  });
 
+  test("session cookie is HttpOnly (not accessible via document.cookie)", async ({ page }) => {
     const cookies = await page.context().cookies();
     const sessionCookie = cookies.find((c) => c.name === "platform_session");
 
-    expect(sessionCookie, "platform_session cookie must exist").toBeTruthy();
+    expect(sessionCookie, "platform_session cookie must exist after login").toBeTruthy();
     expect(sessionCookie!.httpOnly, "platform_session must be HttpOnly").toBe(true);
 
     // Also verify from JS perspective
@@ -26,41 +39,35 @@ test.describe("cookies: session cookie attributes", () => {
   });
 
   test("session cookie has SameSite=Lax or Strict", async ({ page }) => {
-    await page.goto("/");
-    await page.waitForLoadState("networkidle");
-
     const cookies = await page.context().cookies();
     const sessionCookie = cookies.find((c) => c.name === "platform_session");
 
-    expect(sessionCookie, "platform_session cookie must exist").toBeTruthy();
+    expect(sessionCookie, "platform_session cookie must exist after login").toBeTruthy();
     expect(["Lax", "Strict"]).toContain(sessionCookie!.sameSite);
   });
 
   test("session cookie path is scoped correctly", async ({ page }) => {
-    await page.goto("/");
-    await page.waitForLoadState("networkidle");
-
     const cookies = await page.context().cookies();
     const sessionCookie = cookies.find((c) => c.name === "platform_session");
 
-    expect(sessionCookie, "platform_session cookie must exist").toBeTruthy();
-    // Path should be / for full-site scope (not overly narrow)
+    expect(sessionCookie, "platform_session cookie must exist after login").toBeTruthy();
     expect(sessionCookie!.path).toBe("/");
   });
 
   test("no session cookie values exposed in HTML source", async ({ page }) => {
-    // Visit page and grab raw HTML
-    const response = await page.goto("/");
-    const html = (await response?.text()) ?? "";
-
-    // The HTML source must not contain session cookie values
     const cookies = await page.context().cookies();
     const sessionCookie = cookies.find((c) => c.name === "platform_session");
     if (sessionCookie) {
+      const response = await page.goto("/");
+      const html = (await response?.text()) ?? "";
       expect(html).not.toContain(sessionCookie.value);
     }
   });
 });
+
+// ---------------------------------------------------------------------------
+// No sensitive data in cookies
+// ---------------------------------------------------------------------------
 
 test.describe("cookies: no sensitive data in cookies", () => {
   test("no cookies contain tokens or secrets directly", async ({ page }) => {
@@ -81,9 +88,9 @@ test.describe("cookies: no sensitive data in cookies", () => {
     await page.waitForLoadState("networkidle");
 
     const cookies = await page.context().cookies();
-    const expectedDomains = [page.url().hostname.replace(/:\d+$/, ""), "localhost"];
+    const pageHostname = new URL(page.url()).hostname;
+    const expectedDomains = [pageHostname, "localhost"];
     for (const cookie of cookies) {
-      // All cookies should be for our domain
       expect(
         expectedDomains.some((d) => cookie.domain.includes(d)),
         `Unexpected cookie domain: ${cookie.domain}`
@@ -92,14 +99,16 @@ test.describe("cookies: no sensitive data in cookies", () => {
   });
 });
 
+// ---------------------------------------------------------------------------
+// Cookie hygiene
+// ---------------------------------------------------------------------------
+
 test.describe("cookies: cookie count and hygiene", () => {
   test("only essential cookies are set on unauthenticated visit", async ({ page }) => {
     await page.goto("/");
     await page.waitForLoadState("networkidle");
 
     const cookies = await page.context().cookies();
-    // Unauthenticated visit should set minimal cookies
-    // platform_session is set by every visit (even unauthenticated — anonymous session)
     expect(cookies.length).toBeLessThanOrEqual(2);
   });
 

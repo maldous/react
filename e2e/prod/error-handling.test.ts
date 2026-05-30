@@ -48,9 +48,9 @@ test.describe("error handling: API error format", () => {
     const res = await request.get("/api/session");
     expect(res.status()).toBe(401);
     const body = await res.json();
-    // Should have a consistent error shape
-    expect(body).toHaveProperty("error");
-    expect(typeof body.error).toBe("string");
+    // API uses {code, message} error shape (platform-errors convention)
+    expect(body).toHaveProperty("code");
+    expect(typeof body.code).toBe("string");
   });
 
   test("non-existent API route returns 404 with JSON body", async ({ request }) => {
@@ -59,7 +59,8 @@ test.describe("error handling: API error format", () => {
     const ct = res.headers()["content-type"] ?? "";
     expect(ct).toContain("application/json");
     const body = await res.json();
-    expect(body).toHaveProperty("error");
+    // API uses {code, message} error shape (platform-errors convention)
+    expect(body).toHaveProperty("code");
   });
 
   test("invalid method returns 405 with Allow header", async ({ request }) => {

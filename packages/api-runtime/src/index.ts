@@ -17,7 +17,7 @@ export interface ReadinessResponse {
 /** Response shape for GET /version ? build metadata. */
 export interface VersionResponse {
   version: string;
-  gitSha: string | "unknown";
+  commit: string | "unknown";
   buildTime: string | "unknown";
   environment: string;
 }
@@ -38,13 +38,13 @@ export function createReadinessResponse(
 /** Creates a version response from available build metadata. */
 export function createVersionResponse(options: {
   version: string;
-  gitSha?: string;
+  commit?: string;
   buildTime?: string;
   environment: string;
 }): VersionResponse {
   return {
     version: options.version,
-    gitSha: options.gitSha ?? "unknown",
+    commit: options.commit ?? "unknown",
     buildTime: options.buildTime ?? "unknown",
     environment: options.environment,
   };

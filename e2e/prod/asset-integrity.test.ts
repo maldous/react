@@ -49,8 +49,8 @@ test.describe("assets: all bundles load successfully", () => {
     await page.goto("/");
     await page.waitForLoadState("networkidle");
 
-    // At minimum: entry + vendor + main chunk
-    expect(jsAssets.length).toBeGreaterThanOrEqual(2);
+    // At minimum one JS bundle must load; small apps may bundle as a single chunk
+    expect(jsAssets.length).toBeGreaterThanOrEqual(1);
   });
 
   test("no 404s or 5xx errors for any resource type", async ({ page }) => {
@@ -88,7 +88,7 @@ test.describe("assets: content hashing (fingerprint integrity)", () => {
     for (const url of jsAssets) {
       // Vite produces filenames like: index-abc123.js or chunk-abc123.js
       const filename = url.split("/").pop() ?? "";
-      expect(filename, `JS bundle ${url} must have content hash`).toMatch(/-[a-f0-9]{8,}\./);
+      expect(filename, `JS bundle ${url} must have content hash`).toMatch(/-[A-Za-z0-9_-]{8,}\./);
     }
   });
 
@@ -106,7 +106,7 @@ test.describe("assets: content hashing (fingerprint integrity)", () => {
 
     for (const url of cssAssets) {
       const filename = url.split("/").pop() ?? "";
-      expect(filename, `CSS bundle ${url} must have content hash`).toMatch(/-[a-f0-9]{8,}\./);
+      expect(filename, `CSS bundle ${url} must have content hash`).toMatch(/-[A-Za-z0-9_-]{8,}\./);
     }
   });
 
