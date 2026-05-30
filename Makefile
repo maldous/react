@@ -388,8 +388,8 @@ keycloak-provision:
 	@_tfdir=infra/env/local; \
 	[ "$(ENV)" != "dev" ] && _tfdir=infra/env/$(ENV); \
 	if [ ! -f "$${_tfdir}/local.tfvars" ] && [ ! -f "$${_tfdir}/$(ENV).tfvars" ]; then \
-		printf '$(RED)? Terraform vars not found in $${_tfdir}.\n'; \
-		printf '  Copy $(ENV).tfvars.example to $(ENV).tfvars and fill in values.$(RESET)\n'; \
+		printf "$(RED)? Terraform vars not found in $${_tfdir}.\n"; \
+		printf "  Copy $(ENV).tfvars.example to $(ENV).tfvars and fill in values.$(RESET)\n"; \
 		exit 1; \
 	fi; \
 	_varfile="$${_tfdir}/local.tfvars"; \
