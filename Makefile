@@ -307,29 +307,27 @@ clean:
 	# names (e.g. default directory-based 'react-*' containers that
 	# survive ENV-scoped 'docker compose --project-name dev stop').
 	# Also reads env-specific ports from .env.$(ENV) so per-environment
-	# overrides (like OTEL_GRPC_PORT=4322) are covered.
-	# Excludes JVM ports (8090 Keycloak, 9003 SonarQube) that are
+	# overrides are covered. Excludes 8090 (Keycloak JVM) which is
 	# deliberately preserved for fast restart.
-	@for port in 3001 4317 4318 5173 5433 6379 8025 8089 8124 9000 9001 9002 10350 13133 \
-	    $$(grep -oP '_PORT=\K\d+' .env.$(ENV) 2>/dev/null | grep -vw '8090\|9003'); do \
+	@for port in 3001 4317 4318 5173 5433 6379 8025 8124 9000 9001 9002 10350 13133 \
+	    $$(grep -oP '_PORT=\K\d+' .env.$(ENV) 2>/dev/null | grep -vw '8090'); do \
 	    docker ps -q --filter "publish=$$port" 2>/dev/null | xargs -r docker rm -f 2>/dev/null; \
 	done
 	$(call STEP,clean: killing stale port holders)
 	# Kill stale host-port holders (docker-proxy runs as root, so
 	# fuser needs sudo). Covers all compose.yaml host ports and
 	# reads env-specific port overrides from .env.$(ENV) dynamically.
-	# Excludes JVM ports (8090 Keycloak, 9003 SonarQube) that are
-	# deliberately preserved for fast restart.
+	# Excludes 8090 (Keycloak JVM) preserved for fast restart.
 	@sudo fuser -k \
-	    80/tcp 1025/tcp 3001/tcp 4173/tcp 4317/tcp 4318/tcp 4566/tcp \
-	    5173/tcp 5433/tcp 6379/tcp 8025/tcp 8089/tcp \
-	    8124/tcp 9000/tcp 9001/tcp 9002/tcp 9010/tcp \
+	    80/tcp 1025/tcp 3001/tcp 4173/tcp 4317/tcp 4318/tcp \
+	    5173/tcp 5433/tcp 6379/tcp 8025/tcp \
+	    8124/tcp 9000/tcp 9001/tcp 9002/tcp \
 	    10350/tcp 13133/tcp \
-	    $$(grep -oP '_PORT=\K\d+' .env.$(ENV) 2>/dev/null | grep -vw '8090\|9003' | sed 's/$$/\/tcp/' | tr '\n' ' ') \
+	    $$(grep -oP '_PORT=\K\d+' .env.$(ENV) 2>/dev/null | grep -vw '8090' | sed 's/$$/\/tcp/' | tr '\n' ' ') \
 	    2>/dev/null || true
 	$(call STEP,clean: verifying ports free)
 	# Verify all default ports + env-specific ports are free after cleanup
-	@_all_ports="3001 4317 5173 5433 9000 10350 $$(grep -oP '_PORT=\K\d+' .env.$(ENV) 2>/dev/null | grep -vw '8090\|9003')"; \
+	@_all_ports="3001 4317 5173 5433 9000 10350 $$(grep -oP '_PORT=\K\d+' .env.$(ENV) 2>/dev/null | grep -vw '8090')"; \
 	for port in $$_all_ports; do \
 	    if ss -tlnp "sport = :$$port" 2>/dev/null | grep -q LISTEN; then \
 	        printf '$(RED)? Port %s still in use$(RESET)\n' "$$port"; \
@@ -906,7 +904,7 @@ stage-test:
 	$(call STEP,stage:test (Compose ? destructive, internal E2E))
 	$(MAKE) compose-down-reset ENV=test
 	$(call STEP,stage:test: freeing ports for test)
-	@_all_ports="3001 4317 5173 5433 6379 8025 8089 8124 9000 9001 9002 10350 13133 $$(grep -oP '_PORT=\K\d+' .env.test 2>/dev/null)"; \
+	@_all_ports="3001 4317 5173 5433 6379 8025 8124 9000 9001 9002 10350 13133 $$(grep -oP '_PORT=\K\d+' .env.test 2>/dev/null)"; \
 	for port in $$_all_ports; do \
 	    docker ps -q --filter "publish=$$port" 2>/dev/null | xargs -r docker rm -f 2>/dev/null; \
 	done; \
