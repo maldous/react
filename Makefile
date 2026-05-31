@@ -430,6 +430,9 @@ staging-up:
 	$(MAKE) compose-up-default ENV=staging
 	$(MAKE) compose-up-identity ENV=staging
 	$(MAKE) keycloak-provision ENV=staging
+	$(MAKE) compose-up-quality ENV=staging
+	$(MAKE) compose-up-sentry ENV=staging
+	$(MAKE) compose-up-external-mocks ENV=staging
 	$(MAKE) compose-up-web ENV=staging
 
 ## prod-up ? Full production-like stack (aldous.info, port 83)
@@ -439,6 +442,9 @@ prod-up:
 	$(MAKE) compose-up-default ENV=prod
 	$(MAKE) compose-up-identity ENV=prod
 	$(MAKE) keycloak-provision ENV=prod
+	$(MAKE) compose-up-quality ENV=prod
+	$(MAKE) compose-up-sentry ENV=prod
+	$(MAKE) compose-up-external-mocks ENV=prod
 	$(MAKE) compose-up-web ENV=prod
 
 ## dev-down ? Stop dev stack
@@ -885,16 +891,17 @@ stage-dev:
 	fi; \
 	exit $$_r
 
-## stage-test ? Test stage: clean behaviour (data destructive, internal + external E2E)
+## stage-test ? Test stage: clean behaviour (data destructive, internal E2E only)
 ##
-##   compose-down-volumes ? Compose up ? internal tests ? external smoke ? compose-down-volumes
+##   compose-down-volumes ? Compose up ? internal tests ? compose-down-volumes
 ##
 ## Data is destroyed before (clean slate) and after (cleanup). Confirms the
 ## application works correctly from scratch with a full Compose stack.
-## Runs internal E2E (common with dev) followed by external smoke for validation (ADR-0034).
+## Runs internal E2E only (common with dev). External tests run from staging
+## onward against deployed stacks ? not against the local Compose stack (ADR-0034).
 ## Uses Compose with --project-name test (port 81).
 stage-test:
-	$(call STEP,stage:test (Compose ? destructive, internal + external E2E))
+	$(call STEP,stage:test (Compose ? destructive, internal E2E))
 	$(MAKE) compose-down-reset ENV=test
 	$(call STEP,stage:test: freeing ports for test)
 	@_all_ports="3001 4317 5173 5433 6379 8025 8089 8124 9000 9001 9002 10350 13133 $$(grep -oP '_PORT=\K\d+' .env.test 2>/dev/null)"; \
@@ -922,7 +929,6 @@ stage-test:
 	    && $(MAKE) e2e-internal \
 	        POSTGRES_URL='postgresql://platform:platformpassword@localhost:5434/platform' \
 	        REDIS_URL='redis://localhost:6380' \
-	    && $(MAKE) run-stage-e2e ENV=test \
 	    && printf '$(GREEN)? stage:test passed$(RESET)\n'; _r=$$?; \
 	if [ "$(KEEP_STACKS_UP)" != "true" ]; then \
 	    $(MAKE) compose-down-reset ENV=test; \

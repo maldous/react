@@ -340,7 +340,7 @@ services:
     restart: unless-stopped
 
   sentry-web:
-    image: sentry:24.12.0
+    image: getsentry/sentry:24.12.0
     profiles: [sentry]
     command: /bin/sh -c "sentry upgrade --noinput && exec sentry run web"
     depends_on:
@@ -372,7 +372,7 @@ services:
   sentry-worker:
     # Unvalidated long-running background worker. Process-only liveness (no
     # HTTP health endpoint). Profile-only; not started by default. ADR-ACT-0089.
-    image: sentry:24.12.0
+    image: getsentry/sentry:24.12.0
     profiles: [sentry]
     command: sentry run worker
     depends_on:
@@ -393,7 +393,7 @@ services:
   sentry-cron:
     # Unvalidated long-running cron process. Process-only liveness (no
     # HTTP health endpoint). Profile-only; not started by default. ADR-ACT-0089.
-    image: sentry:24.12.0
+    image: getsentry/sentry:24.12.0
     profiles: [sentry]
     command: sentry run cron
     depends_on:
