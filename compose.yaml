@@ -7,7 +7,7 @@ name: react-platform
 #   identity         ? keycloak + keycloak-postgres
 #   cloud-mocks      ? localstack
 #   external-mocks   ? wiremock for deterministic external HTTP API mocks
-#   sentry           ? sentry-web + sentry-worker + sentry-cron + sentry-postgres + sentry-redis
+#   sentry           ? sentry-web + sentry-worker + sentry-cron (uses shared postgres + redis)
 #
 # Port map ? defaults shown; override any via .env (e.g. POSTGRES_PORT=5434):
 #   POSTGRES_PORT=5433          REDIS_PORT=6379
@@ -30,10 +30,18 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-platform}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-platformpassword}
       POSTGRES_DB: ${POSTGRES_DB:-platform}
+      # Extra databases for SonarQube and Sentry (init script creates them)
+      SONAR_DB_USER: ${SONAR_DB_USER:-sonar}
+      SONAR_DB_PASSWORD: ${SONAR_DB_PASSWORD:-sonarpassword}
+      SONAR_DB_NAME: ${SONAR_DB_NAME:-sonar}
+      SENTRY_DB_USER: ${SENTRY_DB_USER:-sentry}
+      SENTRY_DB_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
+      SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
     ports:
       - "${POSTGRES_PORT:-5433}:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+      - ./docker/postgres/init-extra-databases.sh:/docker-entrypoint-initdb.d/init-extra-databases.sh:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-platform} -d ${POSTGRES_DB:-platform}"]
       interval: 10s
@@ -145,33 +153,17 @@ services:
 
   # ---------------------------------------------------------------------------
   # QUALITY PROFILE ? `docker compose --profile quality up -d sonarqube`
+  # SonarQube uses the shared postgres instance (sonar db created by init script).
   # ---------------------------------------------------------------------------
-
-  sonar-postgres:
-    image: postgres:16.6-alpine
-    profiles: [quality]
-    environment:
-      POSTGRES_USER: ${SONAR_DB_USER:-sonar}
-      POSTGRES_PASSWORD: ${SONAR_DB_PASSWORD:-sonarpassword}
-      POSTGRES_DB: ${SONAR_DB_NAME:-sonar}
-    volumes:
-      - sonar-postgres-data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${SONAR_DB_USER:-sonar} -d ${SONAR_DB_NAME:-sonar}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 20s
-    restart: unless-stopped
 
   sonarqube:
     image: sonarqube:lts-community
     profiles: [quality]
     depends_on:
-      sonar-postgres:
+      postgres:
         condition: service_healthy
     environment:
-      SONAR_JDBC_URL: jdbc:postgresql://sonar-postgres:5432/${SONAR_DB_NAME:-sonar}
+      SONAR_JDBC_URL: jdbc:postgresql://postgres:5432/${SONAR_DB_NAME:-sonar}
       SONAR_JDBC_USERNAME: ${SONAR_DB_USER:-sonar}
       SONAR_JDBC_PASSWORD: ${SONAR_DB_PASSWORD:-sonarpassword}
       # Disable ES bootstrap checks (required without vm.max_map_count sysctl)
@@ -310,53 +302,25 @@ services:
   # Adapter validation must not depend on this profile until proven stable.
   # See ADR-ACT-0089 for validation/replacement tracking.
 
-  sentry-postgres:
-    image: postgres:16.6-alpine
-    profiles: [sentry]
-    environment:
-      POSTGRES_USER: ${SENTRY_DB_USER:-sentry}
-      POSTGRES_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
-      POSTGRES_DB: ${SENTRY_DB_NAME:-sentry}
-    volumes:
-      - sentry-postgres-data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${SENTRY_DB_USER:-sentry} -d ${SENTRY_DB_NAME:-sentry}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 20s
-    restart: unless-stopped
-
-  sentry-redis:
-    image: redis:7.4.2-alpine
-    profiles: [sentry]
-    volumes:
-      - sentry-redis-data:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
-
   sentry-web:
-    image: getsentry/sentry:24.12.0
+    image: sentry:9.1.2
     profiles: [sentry]
-    command: /bin/sh -c "sentry upgrade --noinput && exec sentry run web"
+    command: /bin/sh -c "sleep 3 && sentry upgrade --noinput && exec sentry run web"
     depends_on:
-      sentry-postgres:
+      postgres:
         condition: service_healthy
-      sentry-redis:
+      redis:
         condition: service_healthy
     environment:
       SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY:-change-this-secret-key-in-dot-env}
-      SENTRY_POSTGRES_HOST: sentry-postgres
+      SENTRY_POSTGRES_HOST: postgres
       SENTRY_DB_USER: ${SENTRY_DB_USER:-sentry}
       SENTRY_DB_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
       SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
-      SENTRY_REDIS_HOST: sentry-redis
+      SENTRY_REDIS_HOST: redis
       SENTRY_REDIS_PORT: "6379"
       SENTRY_SINGLE_ORGANIZATION: "true"
+      # which is not part of this standalone deployment.
     ports:
       - "${SENTRY_PORT:-9010}:9000"
     volumes:
@@ -372,7 +336,7 @@ services:
   sentry-worker:
     # Unvalidated long-running background worker. Process-only liveness (no
     # HTTP health endpoint). Profile-only; not started by default. ADR-ACT-0089.
-    image: getsentry/sentry:24.12.0
+    image: sentry:9.1.2
     profiles: [sentry]
     command: sentry run worker
     depends_on:
@@ -380,11 +344,11 @@ services:
         condition: service_healthy
     environment:
       SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY:-change-this-secret-key-in-dot-env}
-      SENTRY_POSTGRES_HOST: sentry-postgres
+      SENTRY_POSTGRES_HOST: postgres
       SENTRY_DB_USER: ${SENTRY_DB_USER:-sentry}
       SENTRY_DB_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
       SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
-      SENTRY_REDIS_HOST: sentry-redis
+      SENTRY_REDIS_HOST: redis
       SENTRY_REDIS_PORT: "6379"
     volumes:
       - sentry-data:/var/lib/sentry/files
@@ -393,7 +357,7 @@ services:
   sentry-cron:
     # Unvalidated long-running cron process. Process-only liveness (no
     # HTTP health endpoint). Profile-only; not started by default. ADR-ACT-0089.
-    image: getsentry/sentry:24.12.0
+    image: sentry:9.1.2
     profiles: [sentry]
     command: sentry run cron
     depends_on:
@@ -401,11 +365,11 @@ services:
         condition: service_healthy
     environment:
       SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY:-change-this-secret-key-in-dot-env}
-      SENTRY_POSTGRES_HOST: sentry-postgres
+      SENTRY_POSTGRES_HOST: postgres
       SENTRY_DB_USER: ${SENTRY_DB_USER:-sentry}
       SENTRY_DB_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
       SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
-      SENTRY_REDIS_HOST: sentry-redis
+      SENTRY_REDIS_HOST: redis
       SENTRY_REDIS_PORT: "6379"
     volumes:
       - sentry-data:/var/lib/sentry/files
@@ -572,12 +536,9 @@ volumes:
   redis-data:
   clickhouse-data:
   minio-data:
-  sonar-postgres-data:
   sonarqube-data:
   sonarqube-extensions:
   sonarqube-logs:
   keycloak-postgres-data:
   localstack-data:
-  sentry-postgres-data:
-  sentry-redis-data:
   sentry-data:
