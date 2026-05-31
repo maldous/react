@@ -176,6 +176,13 @@ export function buildStepCatalog(options, repoRoot) {
       repoRoot,
       true
     ),
+    composePorts: step(
+      "validate-compose-ports",
+      "tools/architecture/validate-compose-ports",
+      ["--format", "json"],
+      repoRoot,
+      true
+    ),
   };
 }
 
@@ -197,6 +204,7 @@ export function planFor(command, options, repoRoot) {
       s.sliceReadiness,
       s.i18nValidation,
       s.pipelineComposition,
+      s.composePorts,
     ];
   }
 

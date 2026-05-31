@@ -30,11 +30,11 @@ const RULES = {
       "Dev runs internal fixture tests. External tests require Keycloak (not provisioned by Tilt).",
   },
   "stage-test": {
-    mustContain: ["e2e-internal", "run-stage-e2e"],
-    mustNotContain: ["$(MAKE) e2e-external", "test:e2e:prod"],
-    label: "Test - internal + external smoke",
+    mustContain: ["e2e-internal", "run-stage-tests"],
+    mustNotContain: ["$(MAKE) e2e-external", "test:e2e:prod", "run-stage-e2e"],
+    label: "Test - internal E2E only",
     description:
-      "Test validates internal behaviour is preserved (common with dev) then runs external smoke against Compose stack.",
+      "Test runs unit/API tests (run-stage-tests) and internal E2E with fixture sessions. External E2E starts from staging.",
   },
   "stage-staging": {
     mustContain: ["e2e-external"],
