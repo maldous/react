@@ -121,13 +121,28 @@ All developer and operational UI services are accessible through Caddy as path-p
 
 Tilt UI (`:10350`) is NOT path-proxied ? its SPA makes absolute `/api/*` calls that conflict with the platform API path. Access it directly at `http://localhost:10350` during local development.
 
-**Per-tenant (`{slug}.aldous.info`) ? tenant-admin access:**
+**Per-tenant (`{slug}.aldous.info`) — tenant-admin access:**
 
-| Path | Service | Filter |
-|---|---|---|
-| `/kc/*` | Keycloak (tenant realm admin) | Own realm only |
-| `/mailpit/*` | Mailpit (tenant email) | Tenant domain emails |
-| `/sentry/*` | Sentry (tenant project) | Tenant project |
+| Path | Service | Filter | Classification |
+|---|---|---|---|
+| `/kc/*` | Keycloak (tenant realm admin) | Own realm only (OIDC login is realm-scoped) | TENANT_SCOPED_SAFE |
+| `/mailpit/*` | Mailpit (tenant email) | Tenant domain emails | TENANT_SCOPED_SAFE |
+| `/sentry/*` | Sentry (tenant project) | Tenant project | TENANT_SCOPED_SAFE |
+
+**PGAdmin — GLOBAL_ONLY (never tenant-admin)**
+
+PGAdmin is restricted to system-admin/global operators only and is never exposed to tenant admins.
+
+**Reason:** PGAdmin grants raw SQL access. Row-Level Security (RLS) in PostgreSQL uses the GUC `app.current_tenant_id` to identify the tenant context, but GUCs are user-settable: any connection holder can execute `SET app.current_tenant_id = 'other-org-id'` to bypass RLS and read other tenants' data. Until ADR-ACT-0184 replaces the GUC bypass with a Postgres role-membership check (`pg_has_role(current_user, 'rls_bypass', 'MEMBER')`), tenant-scoped PGAdmin access cannot be proven safe.
+
+**Current enforcement:**
+
+- `TENANT_ADMIN_RESOURCES` in `forward-auth.ts` does not include `admin:pgadmin`.
+- `SYSTEM_ADMIN_RESOURCES` includes `admin:pgadmin` — system-admin only.
+- Caddy `forward_auth` gate at `/pgadmin/*` uses `resource=admin:pgadmin scope=read`.
+- PGAdmin server configuration uses `pgadmin_sysadmin` role (bypasses RLS, sees all tenant data).
+
+**Future:** Tenant-scoped PGAdmin requires ADR-ACT-0184 (role-membership RLS bypass) plus a separate PGAdmin instance or a proven per-tenant role that hard-isolates tenant data. Requires a new ADR amendment before proceeding.
 
 #### 1b. Universal build, data-driven tenants
 
