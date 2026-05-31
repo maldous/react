@@ -515,7 +515,7 @@ compose-up-cloud:
 ## compose-up-sentry ? Start Sentry stack (sentry profile ? experimental)
 ## Scoped to selected ENV for port isolation.
 compose-up-sentry:
-	$(COMPOSE_CMD) --profile sentry up -d --wait --wait-timeout 360
+	$(COMPOSE_CMD) --profile sentry up -d --wait --wait-timeout 900
 
 ## compose-up-external-mocks ? Start WireMock (external-mocks profile)
 ## Scoped to selected ENV for port isolation.
