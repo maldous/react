@@ -36,6 +36,20 @@ export function extractSlugFromHost(host: string, apexDomain = APEX_DOMAIN): str
 }
 
 /**
+ * Returns true when the given host is the apex (global) host for the configured
+ * APEX_DOMAIN. Used by pipeline scope enforcement to distinguish global routes
+ * (aldous.info) from tenant routes ({slug}.aldous.info).
+ *
+ * One runtime per environment — production uses APEX_DOMAIN=aldous.info,
+ * staging uses APEX_DOMAIN=staging.aldous.info. The two environments are
+ * never served by a single runtime instance.
+ */
+export function isGlobalHost(host: string, apexDomain = APEX_DOMAIN): boolean {
+  const bare = host.split(":")[0] ?? host; // strip port if present
+  return bare === apexDomain;
+}
+
+/**
  * Resolve a tenant slug to its organisation record.
  * Returns null when the slug is not found in the database.
  */
