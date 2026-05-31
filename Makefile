@@ -945,7 +945,7 @@ stage-staging:
 	    && $(MAKE) run-stage-tests ENV=staging \
 	        POSTGRES_URL="$$_pg_url" \
 	        REDIS_URL="$$_rd_url" \
-	    && PROD_BASE_URL='$(or $(PROD_BASE_URL),http://staging.aldous.info)' $(MAKE) e2e-external \
+	    && PROD_BASE_URL='$(or $(PROD_BASE_URL),https://staging.aldous.info)' $(MAKE) e2e-external \
 	    && printf '$(GREEN)? stage:staging passed$(RESET)\n'
 
 ## stage-prod ? Production stage: start/update stack then run tests (HA ? no teardown)
@@ -969,7 +969,7 @@ stage-prod:
 	    && $(MAKE) run-stage-tests ENV=prod \
 	        POSTGRES_URL="$$_pg_url" \
 	        REDIS_URL="$$_rd_url" \
-	    && PROD_BASE_URL='$(or $(PROD_BASE_URL),http://aldous.info)' $(MAKE) e2e-external \
+	    && PROD_BASE_URL='$(or $(PROD_BASE_URL),https://aldous.info)' $(MAKE) e2e-external \
 	    && npm run test:e2e:prod \
 	    && printf '$(GREEN)? stage:prod passed$(RESET)\n'
 

@@ -150,6 +150,15 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 	}
 
 	# WireMock ? external HTTP mock admin (dev only)
+	# /wiremock/ root redirects to /__admin/ — WireMock has no handler at /
+	handle_path /wiremock {
+		import forward_auth_check admin:wiremock read
+		redir /wiremock/__admin/ 302
+	}
+	handle /wiremock/ {
+		import forward_auth_check admin:wiremock read
+		redir /wiremock/__admin/ 302
+	}
 	handle /wiremock/* {
 		import forward_auth_check admin:wiremock read
 		uri strip_prefix /wiremock
