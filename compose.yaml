@@ -370,7 +370,11 @@ services:
     volumes:
       - sentry-data:/var/lib/sentry/files
     healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:9000/_health/ | grep -q ok || exit 1"]
+      test:
+        [
+          "CMD-SHELL",
+          'python -c "import urllib2; assert urllib2.urlopen(''http://localhost:9000/_health/'').read().strip() == ''ok''"',
+        ]
       interval: 30s
       timeout: 10s
       retries: 20
