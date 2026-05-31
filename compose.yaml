@@ -326,11 +326,11 @@ services:
     volumes:
       - sentry-data:/var/lib/sentry/files
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:9000/_health/ || exit 1"]
+      test: ["CMD-SHELL", "wget -qO- http://localhost:9000/_health/ | grep -q ok || exit 1"]
       interval: 30s
       timeout: 10s
-      retries: 15
-      start_period: 120s
+      retries: 20
+      start_period: 300s
     restart: unless-stopped
 
   sentry-worker:
