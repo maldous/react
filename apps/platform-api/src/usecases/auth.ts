@@ -57,6 +57,11 @@ export async function resolveSessionFromIdentity(
 
   const { user } = pair;
 
+  // Step 2b: Consume any pending invitations for this user's email (JIT membership).
+  // This is a no-op when no invitations exist or all are already consumed.
+  // Must run before findMembershipByUser so the membership is visible immediately.
+  await deps.identities.consumePendingInvitationsForUser(user.id, identity.email);
+
   // Step 3: Derive roles and permissions.
   //
   // system-admin is a Keycloak realm role (no DB membership) — ADR-0021.

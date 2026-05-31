@@ -518,7 +518,13 @@ async function createInitialMembership(
          ON CONFLICT (user_id, organisation_id) DO NOTHING`,
         [rows[0]!.id, organisationId]
       );
+    } else {
+      // User not yet registered — create a pending invitation consumed on first login (JIT, ADR-0030 §4g)
+      await client.query(
+        `INSERT INTO public.pending_invitations (email, organisation_id, role)
+         VALUES ($1, $2, 'tenant-admin')`,
+        [adminEmail, organisationId]
+      );
     }
-    // If user doesn't exist yet, membership will be created on first login (JIT, ADR-0030 ?4g)
   });
 }

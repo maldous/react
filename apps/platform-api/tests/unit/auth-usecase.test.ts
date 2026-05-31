@@ -55,6 +55,7 @@ function makeFakeIdentityRepo(overrides: Partial<IdentityRepository> = {}): Iden
       externalIdentity: FIXTURE_EI,
     }),
     findMembershipByUser: async () => FIXTURE_MEMBERSHIP,
+    consumePendingInvitationsForUser: async () => [],
     ...overrides,
   };
 }

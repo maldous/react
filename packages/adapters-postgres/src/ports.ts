@@ -15,6 +15,16 @@ export interface IdentityRepository {
   }): Promise<{ user: User; externalIdentity: ExternalIdentity }>;
 
   findMembershipByUser(userId: string): Promise<(Membership & { role: TenantRole }) | null>;
+
+  /**
+   * Consume any unexpired pending invitations for the given user email,
+   * creating membership records in the relevant tenant schemas.
+   * Called on first login to implement JIT membership (ADR-0030 §4g).
+   */
+  consumePendingInvitationsForUser(
+    userId: string,
+    email: string
+  ): Promise<Array<{ organisationId: string; role: TenantRole }>>;
 }
 
 export interface OrganisationRepository {

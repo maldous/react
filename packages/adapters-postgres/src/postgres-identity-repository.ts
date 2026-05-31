@@ -2,7 +2,7 @@ import pg from "pg";
 import type { User, ExternalIdentity, Membership, TenantRole } from "@platform/domain-identity";
 import { ConflictError } from "@platform/platform-errors";
 import type { IdentityRepository } from "./ports.ts";
-import { withSystemAdmin } from "./index.ts";
+import { withSystemAdmin, tenantSchemaIdentifier } from "./index.ts";
 
 function rowToUser(row: Record<string, unknown>): User {
   return {
@@ -135,6 +135,37 @@ export class PostgresIdentityRepository implements IdentityRepository {
       );
       if (!rows.length) return null;
       return rowToMembership(rows[0] as Record<string, unknown>);
+    });
+  }
+
+  async consumePendingInvitationsForUser(
+    userId: string,
+    email: string
+  ): Promise<Array<{ organisationId: string; role: TenantRole }>> {
+    return withSystemAdmin(this.pool, async (client) => {
+      const { rows: invites } = await client.query<{ organisation_id: string; role: string }>(
+        `UPDATE public.pending_invitations
+         SET consumed_at = now()
+         WHERE email = $1
+           AND consumed_at IS NULL
+           AND expires_at > now()
+         RETURNING organisation_id, role`,
+        [email]
+      );
+      const consumed: Array<{ organisationId: string; role: TenantRole }> = [];
+      for (const invite of invites) {
+        const schema = tenantSchemaIdentifier(client, invite.organisation_id);
+        await client.query(`SET LOCAL search_path = ${schema}, public`);
+        await client.query(`SET LOCAL app.current_tenant_id = $1`, [invite.organisation_id]);
+        await client.query(
+          `INSERT INTO memberships (user_id, organisation_id, role)
+           VALUES ($1, $2, $3)
+           ON CONFLICT (user_id, organisation_id) DO NOTHING`,
+          [userId, invite.organisation_id, invite.role]
+        );
+        consumed.push({ organisationId: invite.organisation_id, role: invite.role as TenantRole });
+      }
+      return consumed;
     });
   }
 }
