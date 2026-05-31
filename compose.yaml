@@ -104,8 +104,9 @@ services:
     image: axllent/mailpit:v1.21.0
     environment:
       # Serve Mailpit UI under /mailpit so Caddy can proxy it at /mailpit/*
-      # without breaking relative asset URLs in the web interface.
-      MP_ROOT_URL: ${MAILPIT_ROOT_URL:-/mailpit}
+      # --webroot sets the base path for all assets and API calls in the web UI.
+      # MP_ROOT_URL is not the correct env var; MP_WEBROOT maps to --webroot flag.
+      MP_WEBROOT: ${MAILPIT_ROOT_URL:-/mailpit}
     ports:
       - "${MAILPIT_SMTP_PORT:-1025}:1025" # SMTP
       - "${MAILPIT_UI_PORT:-8025}:8025" # Web UI
