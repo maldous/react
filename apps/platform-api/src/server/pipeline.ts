@@ -217,7 +217,10 @@ export function createRouter(
       // If the request came in on a tenant subdomain, the session must belong
       // to that same tenant. Prevents a user from one tenant accessing another
       // tenant's data by navigating to a different subdomain.
-      if (actor && fqdnTenant && !actor.roles.includes("system-admin")) {
+      // system-admin is NOT exempt — they must operate from the global host.
+      // Cross-tenant support access requires an explicit audited support session
+      // (not yet implemented; tracked as future work in ACTION-REGISTER).
+      if (actor && fqdnTenant) {
         if (actor.organisationId !== fqdnTenant.organisationId) {
           const err = new ForbiddenError("api.error.permissionRequired", {
             safeDetails: { permission: "tenant:own" },
