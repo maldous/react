@@ -366,9 +366,11 @@ compose-up-default:
 	$(call OK,default services healthy for $(ENV))
 
 ## compose-up-quality ? Start SonarQube (quality profile)
-## Not ENV-scoped ? SonarQube is a cross-cutting tool.
+## Scoped to selected ENV so each environment has its own SonarQube + sonar-postgres.
 compose-up-quality:
-	docker compose --profile quality up -d --wait --wait-timeout 420 sonarqube
+	$(call STEP,compose: starting SonarQube ($(ENV)))
+	$(COMPOSE_CMD) --profile quality up -d --wait --wait-timeout 420 sonarqube
+	$(call OK,SonarQube ready for $(ENV))
 
 ## compose-up-identity ? Start Keycloak (identity profile) and wait for it to be healthy.
 ## Scoped to ENV so each environment has its own Keycloak instance.
