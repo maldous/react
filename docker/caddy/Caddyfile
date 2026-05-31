@@ -148,8 +148,9 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 	handle /sentry/* {
 		import forward_auth_check admin:sentry read
 		uri strip_prefix /sentry
-		header_down Location ^/(.*) /sentry/$1
-		reverse_proxy sentry-web:9000
+		reverse_proxy sentry-web:9000 {
+			header_down Location ^/(.*) /sentry/$1
+		}
 	}
 
 	# WireMock ? external HTTP mock admin (dev only)
