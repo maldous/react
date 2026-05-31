@@ -173,9 +173,7 @@ test-compose:
 	$(call STEP,test:compose ($(ENV)))
 	@$(COMPOSE_CMD) ps postgres 2>/dev/null | grep -q "healthy" \
 		|| (printf '$(YELLOW)$(ENV) services not running ? starting them...$(RESET)\n' \
-		    && $(COMPOSE_CMD) up -d postgres redis clickhouse minio mailpit otel-collector \
-		    && printf 'Waiting 20 s for healthchecks...\n' \
-		    && sleep 20)
+		    && $(MAKE) compose-up-default ENV=$(ENV))
 	npm run test:compose
 	$(call OK,compose smoke tests passed ($(ENV)))
 
@@ -274,13 +272,13 @@ clean:
 	$(call STEP,clean: stopping $(ENV) services)
 	$(COMPOSE_CMD) --profile web --profile cloud-mocks \
 	    --profile sentry --profile external-mocks \
-	    stop 2>/dev/null || true
-	$(COMPOSE_CMD) stop postgres redis clickhouse minio mailpit otel-collector 2>/dev/null || true
+	    down --timeout 30 2>/dev/null || true
+	$(COMPOSE_CMD) down --timeout 30 2>/dev/null || true
 	$(call STEP,clean: stopping default Tilt project)
 	# Tilt uses the default compose project name ("react"), so make all needs
 	# to clear that project too or its old Postgres volume can survive and
 	# trigger migration checksum mismatches on the next dev stage.
-	docker compose down --volumes 2>/dev/null || true
+	docker compose down --volumes --timeout 30 2>/dev/null || true
 	$(call STEP,clean: nuking stale port-holding containers)
 	# Force-remove any container publishing our ports regardless of project name.
 	# JVM_PORTS_EXCLUDE spares Keycloak + SonarQube (slow to restart, hold no app state).
@@ -319,16 +317,13 @@ clean-all:
 
 ## compose-up ? Start default services for the selected ENV
 compose-up:
-	$(COMPOSE_CMD) up -d
+	$(COMPOSE_CMD) up -d --wait --wait-timeout 120
 
 ## compose-up-default ? Start exactly the 6 default services (idempotent)
 ## Accepts ENV=dev|test|staging|prod (default: dev)
 compose-up-default:
 	$(call STEP,compose:up:default ($(ENV)))
-	$(COMPOSE_CMD) up -d postgres redis clickhouse minio mailpit otel-collector
-	@printf 'Waiting for postgres to be healthy...\n'
-	@timeout 60 bash -c 'until $(COMPOSE_CMD) ps postgres 2>/dev/null | grep -q healthy; do sleep 2; done' \
-		|| (printf '$(RED)? postgres did not become healthy$(RESET)\n' && exit 1)
+	$(COMPOSE_CMD) up -d --wait --wait-timeout 120 postgres redis clickhouse minio mailpit otel-collector
 	$(call OK,default services healthy for $(ENV))
 
 ## compose-up-quality ? Start SonarQube (quality profile)
@@ -473,31 +468,30 @@ prod-e2e:
 ## Requires: staging and/or prod internal Caddies running on their ports.
 external-caddy-up:
 	$(call STEP,external-caddy: startup)
-	# Caddy starts in under 1s. No --wait needed ? the Caddyfile has no localhost
-	# site block, so a container healthcheck wouldn't be meaningful here.
 	docker compose --profile external-web up -d external-caddy
-	@sleep 2
+	@timeout 30 bash -c 'until docker compose --profile external-web ps external-caddy 2>/dev/null | grep -q "Up"; do sleep 1; done' \
+		|| { printf '$(RED)? external-caddy did not start$(RESET)\n'; exit 1; }
 	$(call OK,external Caddy ready on port 80)
 
 ## external-caddy-down ? Stop external Caddy
 external-caddy-down:
-	docker compose --profile external-web down
+	docker compose --profile external-web down --timeout 30
 	$(call OK,external Caddy stopped)
 
 ## compose-up-cloud ? Start LocalStack (cloud-mocks profile)
 ## Scoped to selected ENV for port isolation.
 compose-up-cloud:
-	$(COMPOSE_CMD) --profile cloud-mocks up -d localstack
+	$(COMPOSE_CMD) --profile cloud-mocks up -d --wait --wait-timeout 120 localstack
 
 ## compose-up-sentry ? Start Sentry stack (sentry profile ? experimental)
 ## Scoped to selected ENV for port isolation.
 compose-up-sentry:
-	$(COMPOSE_CMD) --profile sentry up -d
+	$(COMPOSE_CMD) --profile sentry up -d --wait --wait-timeout 360
 
 ## compose-up-external-mocks ? Start WireMock (external-mocks profile)
 ## Scoped to selected ENV for port isolation.
 compose-up-external-mocks:
-	$(COMPOSE_CMD) --profile external-mocks up -d wiremock
+	$(COMPOSE_CMD) --profile external-mocks up -d --wait --wait-timeout 60 wiremock
 
 ## compose-up-web ? Build and start the web profile for the selected ENV.
 ## Requires: default services + identity running for that environment.
@@ -519,7 +513,7 @@ compose-up-web:
 
 ## compose-down-web ? Stop and remove web profile containers for the selected ENV
 compose-down-web:
-	$(COMPOSE_CMD) --profile web down
+	$(COMPOSE_CMD) --profile web down --timeout 30
 
 ## reset-local ? Reset local Postgres to a clean migrated+seeded state (destructive)
 ## Only runs against the local Compose DB (POSTGRES_URL defaults to localhost:$POSTGRES_PORT (from .env.$ENV))
@@ -557,12 +551,12 @@ redis-flush-local:
 
 ## compose-down ? Stop all running compose services for the selected ENV
 compose-down:
-	$(COMPOSE_CMD) down
+	$(COMPOSE_CMD) down --timeout 30
 
 ## compose-down-volumes ? Stop services and remove ALL named volumes for the selected ENV
 ## Destroys everything including Keycloak and SonarQube data.
 compose-down-volumes:
-	$(COMPOSE_CMD) down --volumes
+	$(COMPOSE_CMD) down --volumes --timeout 30
 
 ## compose-down-reset ? Stop services and reset app data (preserves JVM volumes by default)
 ## Removes Postgres, Redis, ClickHouse, and MinIO data volumes for a clean app state.
@@ -572,9 +566,9 @@ compose-down-reset:
 	$(call STEP,compose:down:reset ($(ENV)) ? app data reset)
 	@if [ "$(PRESERVE_JVM_VOLUMES)" = "false" ]; then \
 		printf '  PRESERVE_JVM_VOLUMES=false ? destroying ALL volumes including JVM\\n'; \
-		$(COMPOSE_CMD) down --volumes; \
+		$(COMPOSE_CMD) down --volumes --timeout 30; \
 	else \
-		$(COMPOSE_CMD) down; \
+		$(COMPOSE_CMD) down --timeout 30; \
 		printf '  Removing app data volumes (preserving Keycloak/SonarQube)...\\n'; \
 		docker volume rm \
 			$(ENV)_postgres-data \
@@ -834,22 +828,22 @@ stage-dev:
 	# compose-down-reset resets app data volumes for a clean slate.
 	$(MAKE) clean ENV=dev
 	$(MAKE) compose-down-reset ENV=dev
-	tilt up &
-	_TILT_PID=$$!
-	@_api_port="$$(grep -oP 'PLATFORM_API_PORT=\K\d+' .env.$(ENV) 2>/dev/null | head -1)"; _api_port=$${_api_port:-3001}; \
+	@tilt up & _tilt_pid=$$!; \
+	_api_port="$$(grep -oP 'PLATFORM_API_PORT=\K\d+' .env.$(ENV) 2>/dev/null | head -1)"; _api_port=$${_api_port:-3001}; \
 	printf 'Waiting for platform-api to be healthy (up to 120s)...\n'; \
-	timeout 120 bash -c "until curl -fsS http://localhost:$${_api_port}/healthz >/dev/null 2>&1; do sleep 2; done" \
-		|| { printf '$(RED)? platform-api timeout$(RESET)\n'; kill %1 2>/dev/null || true; tilt down 2>/dev/null; exit 1; }
-	@printf 'Waiting for react-app dev server (up to 120s)...\n'
-	@timeout 120 bash -c 'until curl -fsS http://localhost:5173/ >/dev/null 2>&1; do sleep 2; done' \
-		|| { printf '$(RED)? react-app timeout$(RESET)\n'; kill %1 2>/dev/null || true; tilt down 2>/dev/null; exit 1; }
-	@printf 'Running database migrations and seeding...\n'
+	timeout 120 bash -c "until curl -fsS http://localhost:$${_api_port}/healthz >/dev/null 2>&1; do \
+	    kill -0 $$_tilt_pid 2>/dev/null || { printf '$(RED)? tilt exited unexpectedly$(RESET)\n'; exit 1; }; sleep 2; done" \
+		|| { tilt down 2>/dev/null; wait $$_tilt_pid 2>/dev/null; $(MAKE) compose-down-reset ENV=dev; exit 1; }; \
+	printf 'Waiting for react-app dev server (up to 120s)...\n'; \
+	timeout 120 bash -c 'until curl -fsS http://localhost:5173/ >/dev/null 2>&1; do sleep 2; done' \
+		|| { tilt down 2>/dev/null; wait $$_tilt_pid 2>/dev/null; $(MAKE) compose-down-reset ENV=dev; exit 1; }; \
+	printf 'Running database migrations and seeding...\n'; \
 	npm run db:migrate && npm run db:seed \
 	    && $(MAKE) run-stage-tests ENV=dev \
 	    && $(MAKE) e2e-internal \
 	    && printf '$(GREEN)? stage:dev passed$(RESET)\n'; _r=$$?; \
 	if [ "$(KEEP_STACKS_UP)" != "true" ]; then \
-	    tilt down; \
+	    tilt down; wait $$_tilt_pid 2>/dev/null; \
 	    $(MAKE) compose-down-reset ENV=dev; \
 	fi; \
 	exit $$_r
