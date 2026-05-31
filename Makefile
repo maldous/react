@@ -298,7 +298,13 @@ clean:
 	$(COMPOSE_CMD) down --timeout 30 2>/dev/null || true
 	@$(call CONFIRM_DOWN,$(ENV))
 	$(call STEP,clean: stopping default Tilt project)
+	# docker compose down misses profile-gated containers (e.g. pgadmin).
+	# Force-remove every container in the default "react" project by label.
 	docker compose down --volumes --timeout 30 2>/dev/null || true
+	@docker ps -q --filter "label=com.docker.compose.project=react" \
+	    | xargs -r docker rm -f 2>/dev/null || true
+	@docker volume ls -q --filter "label=com.docker.compose.project=react" \
+	    | xargs -r docker volume rm 2>/dev/null || true
 	@$(call CONFIRM_DOWN,react)
 	$(call STEP,clean: nuking stale port-holding containers)
 	@$(JVM_PORTS_EXCLUDE); \
