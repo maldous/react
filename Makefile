@@ -71,6 +71,28 @@ _pg_url="postgresql://platform:platformpassword@localhost:$${_pg_port}/platform"
 _rd_url="redis://localhost:$${_rd_port}"
 endef
 
+# ── Confirmation helpers ──────────────────────────────────────────────────────
+# CONFIRM_DOWN(project) — block until all containers for compose project $(1)
+# are fully stopped and removed. Fails loudly if still running after 60s.
+define CONFIRM_DOWN
+timeout 60 bash -c 'while docker ps -q --filter "label=com.docker.compose.project=$(1)" 2>/dev/null | grep -q .; do sleep 1; done' \
+    || { printf '$(RED)? containers still running for project $(1) after down$(RESET)\n'; \
+         docker ps --filter "label=com.docker.compose.project=$(1)"; exit 1; }
+endef
+
+# CONFIRM_PORT_FREE(port) — block until no process holds port $(1). Fails after 30s.
+define CONFIRM_PORT_FREE
+timeout 30 bash -c 'while ss -tlnp "sport = :$(1)" 2>/dev/null | grep -q LISTEN; do sleep 1; done' \
+    || { printf '$(RED)? port $(1) still in use after cleanup$(RESET)\n'; \
+         ss -tlnp "sport = :$(1)"; exit 1; }
+endef
+
+# CONFIRM_VOLUME_GONE(vol) — verify named volume $(1) no longer exists.
+define CONFIRM_VOLUME_GONE
+docker volume inspect $(1) >/dev/null 2>&1 \
+    && { printf '$(RED)? volume $(1) still exists after removal$(RESET)\n'; exit 1; } || true
+endef
+
 # ─── PHONY DECLARATIONS ───
 
 .PHONY: all help install \
@@ -274,18 +296,19 @@ clean:
 	    --profile sentry --profile external-mocks \
 	    down --timeout 30 2>/dev/null || true
 	$(COMPOSE_CMD) down --timeout 30 2>/dev/null || true
+	@$(call CONFIRM_DOWN,$(ENV))
 	$(call STEP,clean: stopping default Tilt project)
-	# Tilt uses the default compose project name ("react"), so make all needs
-	# to clear that project too or its old Postgres volume can survive and
-	# trigger migration checksum mismatches on the next dev stage.
 	docker compose down --volumes --timeout 30 2>/dev/null || true
+	@$(call CONFIRM_DOWN,react)
 	$(call STEP,clean: nuking stale port-holding containers)
-	# Force-remove any container publishing our ports regardless of project name.
-	# JVM_PORTS_EXCLUDE spares Keycloak + SonarQube (slow to restart, hold no app state).
 	@$(JVM_PORTS_EXCLUDE); \
 	for port in 5173 10350 \
 	    $$(grep -oP '_PORT=\K\d+' .env.$(ENV) 2>/dev/null | grep -vwE "$$_jvm_ports"); do \
-	    docker ps -q --filter "publish=$$port" 2>/dev/null | xargs -r docker rm -f 2>/dev/null; \
+	    _cids="$$(docker ps -q --filter "publish=$$port" 2>/dev/null)"; \
+	    [ -z "$$_cids" ] && continue; \
+	    echo "$$_cids" | xargs docker rm -f 2>/dev/null; \
+	    timeout 10 bash -c "while docker ps -q --filter \"publish=$$port\" 2>/dev/null | grep -q .; do sleep 1; done" \
+	        || { printf '$(RED)? container on port %s still running$(RESET)\n' "$$port"; exit 1; }; \
 	done
 	$(call STEP,clean: killing stale port holders)
 	@$(JVM_PORTS_EXCLUDE); \
@@ -293,14 +316,13 @@ clean:
 	    4173/tcp 5173/tcp 10350/tcp \
 	    $$(grep -oP '_PORT=\K\d+' .env.$(ENV) 2>/dev/null | grep -vwE "$$_jvm_ports" | sed 's/$$/\/tcp/' | tr '\n' ' ') \
 	    2>/dev/null || true
-	$(call STEP,clean: verifying ports free)
+	$(call STEP,clean: confirming all ports free)
 	@$(JVM_PORTS_EXCLUDE); \
 	for port in 5173 10350 \
 	    $$(grep -oP '_PORT=\K\d+' .env.$(ENV) 2>/dev/null | grep -vwE "$$_jvm_ports"); do \
-	    if ss -tlnp "sport = :$$port" 2>/dev/null | grep -q LISTEN; then \
-	        printf '$(RED)? Port %s still in use$(RESET)\n' "$$port"; \
-	        exit 1; \
-	    fi; \
+	    timeout 15 bash -c "while ss -tlnp 'sport = :$$port' 2>/dev/null | grep -q LISTEN; do sleep 1; done" \
+	        || { printf '$(RED)? port %s still in use$(RESET)\n' "$$port"; \
+	             ss -tlnp "sport = :$$port"; exit 1; }; \
 	done
 	$(call STEP,clean: removing artefacts)
 	rm -rf coverage/ reports/ .scannerwork/ playwright-report/ e2e-results/
@@ -476,6 +498,7 @@ external-caddy-up:
 ## external-caddy-down ? Stop external Caddy
 external-caddy-down:
 	docker compose --profile external-web down --timeout 30
+	@$(call CONFIRM_DOWN,react)
 	$(call OK,external Caddy stopped)
 
 ## compose-up-cloud ? Start LocalStack (cloud-mocks profile)
@@ -514,6 +537,7 @@ compose-up-web:
 ## compose-down-web ? Stop and remove web profile containers for the selected ENV
 compose-down-web:
 	$(COMPOSE_CMD) --profile web down --timeout 30
+	@$(call CONFIRM_DOWN,$(ENV))
 
 ## reset-local ? Reset local Postgres to a clean migrated+seeded state (destructive)
 ## Only runs against the local Compose DB (POSTGRES_URL defaults to localhost:$POSTGRES_PORT (from .env.$ENV))
@@ -552,11 +576,13 @@ redis-flush-local:
 ## compose-down ? Stop all running compose services for the selected ENV
 compose-down:
 	$(COMPOSE_CMD) down --timeout 30
+	@$(call CONFIRM_DOWN,$(ENV))
 
 ## compose-down-volumes ? Stop services and remove ALL named volumes for the selected ENV
 ## Destroys everything including Keycloak and SonarQube data.
 compose-down-volumes:
 	$(COMPOSE_CMD) down --volumes --timeout 30
+	@$(call CONFIRM_DOWN,$(ENV))
 
 ## compose-down-reset ? Stop services and reset app data (preserves JVM volumes by default)
 ## Removes Postgres, Redis, ClickHouse, and MinIO data volumes for a clean app state.
@@ -570,14 +596,14 @@ compose-down-reset:
 	else \
 		$(COMPOSE_CMD) down --timeout 30; \
 		printf '  Removing app data volumes (preserving Keycloak/SonarQube)...\\n'; \
-		docker volume rm \
-			$(ENV)_postgres-data \
-			$(ENV)_redis-data \
-			$(ENV)_clickhouse-data \
-			$(ENV)_minio-data \
-			$(if $(filter dev,$(ENV)),react_postgres-data react_redis-data react_clickhouse-data react_minio-data,) \
-			2>/dev/null || true; \
+		for vol in $(ENV)_postgres-data $(ENV)_redis-data $(ENV)_clickhouse-data $(ENV)_minio-data \
+		           $(if $(filter dev,$(ENV)),react_postgres-data react_redis-data react_clickhouse-data react_minio-data,); do \
+			docker volume rm "$$vol" 2>/dev/null || true; \
+			docker volume inspect "$$vol" >/dev/null 2>&1 \
+				&& printf '$(RED)? volume %s still exists$(RESET)\n' "$$vol" && exit 1 || true; \
+		done; \
 	fi
+	@$(call CONFIRM_DOWN,$(ENV))
 	$(call OK,app data reset for $(ENV)$(if $(filter true,$(PRESERVE_JVM_VOLUMES)), ? JVM volumes preserved))
 
 ## compose-ps ? Show compose service status for the selected ENV
@@ -833,17 +859,23 @@ stage-dev:
 	printf 'Waiting for platform-api to be healthy (up to 120s)...\n'; \
 	timeout 120 bash -c "until curl -fsS http://localhost:$${_api_port}/healthz >/dev/null 2>&1; do \
 	    kill -0 $$_tilt_pid 2>/dev/null || { printf '$(RED)? tilt exited unexpectedly$(RESET)\n'; exit 1; }; sleep 2; done" \
-		|| { tilt down 2>/dev/null; wait $$_tilt_pid 2>/dev/null; $(MAKE) compose-down-reset ENV=dev; exit 1; }; \
+		|| { tilt down 2>/dev/null; wait $$_tilt_pid 2>/dev/null; \
+		     timeout 30 bash -c 'while pgrep -f "tilt" >/dev/null 2>&1; do sleep 1; done' || true; \
+		     $(MAKE) compose-down-reset ENV=dev; exit 1; }; \
 	printf 'Waiting for react-app dev server (up to 120s)...\n'; \
 	timeout 120 bash -c 'until curl -fsS http://localhost:5173/ >/dev/null 2>&1; do sleep 2; done' \
-		|| { tilt down 2>/dev/null; wait $$_tilt_pid 2>/dev/null; $(MAKE) compose-down-reset ENV=dev; exit 1; }; \
+		|| { tilt down 2>/dev/null; wait $$_tilt_pid 2>/dev/null; \
+		     timeout 30 bash -c 'while pgrep -f "tilt" >/dev/null 2>&1; do sleep 1; done' || true; \
+		     $(MAKE) compose-down-reset ENV=dev; exit 1; }; \
 	printf 'Running database migrations and seeding...\n'; \
 	npm run db:migrate && npm run db:seed \
 	    && $(MAKE) run-stage-tests ENV=dev \
 	    && $(MAKE) e2e-internal \
 	    && printf '$(GREEN)? stage:dev passed$(RESET)\n'; _r=$$?; \
 	if [ "$(KEEP_STACKS_UP)" != "true" ]; then \
-	    tilt down; wait $$_tilt_pid 2>/dev/null; \
+	    tilt down; \
+	    wait $$_tilt_pid 2>/dev/null; \
+	    timeout 30 bash -c 'while pgrep -f "tilt" >/dev/null 2>&1; do sleep 1; done' || true; \
 	    $(MAKE) compose-down-reset ENV=dev; \
 	fi; \
 	exit $$_r
@@ -863,14 +895,17 @@ stage-test:
 	$(call STEP,stage:test: freeing ports for test)
 	@_all_ports="5173 10350 $$(grep -oP '_PORT=\K\d+' .env.test 2>/dev/null)"; \
 	for port in $$_all_ports; do \
-	    docker ps -q --filter "publish=$$port" 2>/dev/null | xargs -r docker rm -f 2>/dev/null; \
+	    _cids="$$(docker ps -q --filter "publish=$$port" 2>/dev/null)"; \
+	    [ -z "$$_cids" ] && continue; \
+	    echo "$$_cids" | xargs docker rm -f 2>/dev/null; \
+	    timeout 10 bash -c "while docker ps -q --filter \"publish=$$port\" 2>/dev/null | grep -q .; do sleep 1; done" \
+	        || { printf '$(RED)? container on port %s still running$(RESET)\n' "$$port"; exit 1; }; \
 	done; \
 	sudo fuser -k $$(printf '%s/tcp ' $$_all_ports) 2>/dev/null || true; \
 	for port in $$_all_ports; do \
-	    if ss -tlnp "sport = :$$port" 2>/dev/null | grep -q LISTEN; then \
-	        printf '$(RED)? Port %s still held after container nuke + fuser$(RESET)\n' "$$port"; \
-	        exit 1; \
-	    fi; \
+	    timeout 15 bash -c "while ss -tlnp 'sport = :$$port' 2>/dev/null | grep -q LISTEN; do sleep 1; done" \
+	        || { printf '$(RED)? port %s still in use after fuser$(RESET)\n' "$$port"; \
+	             ss -tlnp "sport = :$$port"; exit 1; }; \
 	done
 	$(MAKE) test-up
 	@$(call CONN_URLS,.env.test); \
