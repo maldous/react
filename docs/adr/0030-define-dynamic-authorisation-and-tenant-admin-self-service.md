@@ -562,3 +562,42 @@ None.
 - UMA 2.0 specification: [oauth.net/uma](https://oauth.net/uma/)
 - Keycloak UMA ticket endpoint: [keycloak.org/authorization_services](https://www.keycloak.org/docs/latest/authorization_services/#_service_obtaining_permissions)
 - OWASP Authorization Cheat Sheet: [owasp.org/authz](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html)
+
+---
+
+## Amendment: Static Enforcement Interim (2026-05-31)
+
+**Status of runtime UMA enforcement:** NOT YET IMPLEMENTED.
+
+The decision above (full Keycloak Authorization Services / UMA ticket evaluation) remains the architectural target. However, the current implementation uses **static permission enforcement** only:
+
+```typescript
+if (
+  matchingRoute.requiredPermission &&
+  !actor.permissions.includes(matchingRoute.requiredPermission)
+) {
+  return 403;
+}
+```
+
+This means:
+
+- Permission changes require a code/config deploy (not a Keycloak policy update).
+- No UMA resource/scope evaluation occurs at runtime.
+- The "no-deploy policy changes" claim from the original ADR is **not satisfied**.
+- The `AuthorisationPort` / Keycloak UMA adapter does not exist yet.
+
+**What IS implemented:**
+
+- Permissions are resolved from roles at session creation time via `resolvePermissions()` in `@platform/domain-identity`.
+- Roles are asserted from the Keycloak JWT at login via the auth callback.
+- Static permission checks on every route via the `requiredPermission` field in `pipeline.ts`.
+- Route scope enforcement (`scope: "global" | "tenant"`) ensures global routes can only be called from the apex host and tenant routes require a tenant FQDN — enforced in `pipeline.ts` without UMA.
+- Per-tenant Keycloak realm isolation — each tenant has its own realm.
+- Permissions are now split: `platform.*` for system-admin only, `tenant.*` for tenant-admin only. `admin.access` is removed.
+
+**Tracked in ACTION-REGISTER as:** ADR-ACT-0145 (UMA enforcement), ADR-ACT-0153 (access token in session).
+
+The static enforcement is intentional and safe as a baseline. It will be replaced by UMA when ADR-ACT-0145 is complete.
+
+**Auth Settings Keycloak service account:** Routes in `GET/POST /api/auth/settings/*` use `KEYCLOAK_PROVISIONER_CLIENT_ID` / `KEYCLOAK_PROVISIONER_SECRET` (the `platform-provisioner` client). This client is granted `realm-management` roles only in each tenant realm during provisioning — not in the master realm. Therefore it cannot manage other realms or server-level configuration. A dedicated per-tenant service account stored in tenant secret storage remains future work tracked in ACTION-REGISTER.
