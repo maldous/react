@@ -548,8 +548,6 @@ None.
 
 ## Notes
 
-ADR-0018 is reserved for a separate architectural decision. ADR-0019 is the frontend platform baseline.
-
 The `shadcn/ui` project is referenced as a component pattern source (open-code model, React Aria integration examples) but is not imported as a package dependency. Components are authored directly in `packages/ui`.
 
 AG Grid is not adopted initially. Specific criteria that justify introducing it (each requires a dedicated ADR):

@@ -1,8 +1,12 @@
 # ADR-0032: E2E Testing Strategy
 
-**Status:** Accepted ? updated 2026-05-30 (internal/external split)
+## Status
 
-**Date:** 2026-05-29
+Accepted — updated 2026-05-30 (internal/external split)
+
+## Date
+
+2026-05-29
 
 ---
 
