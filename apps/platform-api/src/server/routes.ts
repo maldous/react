@@ -185,6 +185,16 @@ export const routes: Route[] = [
   // sysadmin brokering through these endpoints. All calls are proxied to
   // Keycloak Admin REST API via KeycloakRealmAdminAdapter.
   // scope: "tenant" — must be called from a tenant FQDN, not the global apex.
+  //
+  // CREDENTIAL SCOPE NOTE (ADR-ACT-0186):
+  // These routes use KEYCLOAK_PROVISIONER_CLIENT_ID (platform-provisioner), a
+  // master-realm service account with create-realm role. Through the Keycloak
+  // master realm admin API, this credential can manage ANY tenant realm — it is
+  // effectively a global credential, not a per-tenant service account.
+  // The adapter is scoped to tenantCtx.realmName so API calls target the correct
+  // realm, but the underlying credential has broader access than ideal.
+  // Per-tenant realm-admin service accounts (stored in tenant secret storage)
+  // are tracked in ADR-ACT-0186.
   // ---------------------------------------------------------------------------
   {
     method: "GET",
