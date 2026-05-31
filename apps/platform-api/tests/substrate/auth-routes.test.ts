@@ -17,13 +17,36 @@ import { routes } from "../../src/server/routes.ts";
 import { SESSION_COOKIE_NAME } from "@platform/adapters-redis";
 import { connectRedis, disconnectRedis } from "../../src/server/dependencies.ts";
 
-// Environment overrides so auth handlers use predictable Keycloak URLs
-process.env["KEYCLOAK_URL"] = "http://keycloak-test.local:8080";
-process.env["KEYCLOAK_REALM"] = "test-realm";
-process.env["KEYCLOAK_CLIENT_ID"] = "test-client";
-process.env["KEYCLOAK_CLIENT_SECRET"] = "test-secret";
-process.env["PLATFORM_API_URL"] = "http://localhost:3001";
-process.env["APP_BASE_URL"] = "http://localhost:5173";
+// Auth-route env vars — applied per describe block (not at module level) so they
+// cannot mutate process.env during import and interfere with other test files that
+// load concurrently in the Node.js test runner.
+const AUTH_TEST_ENV: Record<string, string> = {
+  KEYCLOAK_URL: "http://keycloak-test.local:8080",
+  KEYCLOAK_REALM: "test-realm",
+  KEYCLOAK_CLIENT_ID: "test-client",
+  KEYCLOAK_CLIENT_SECRET: "test-secret",
+  PLATFORM_API_URL: "http://localhost:3001",
+  APP_BASE_URL: "http://localhost:5173",
+};
+let savedAuthEnv: Record<string, string | undefined> = {};
+
+function applyAuthEnv() {
+  for (const [k, v] of Object.entries(AUTH_TEST_ENV)) {
+    savedAuthEnv[k] = process.env[k];
+    process.env[k] = v;
+  }
+}
+
+function restoreAuthEnv() {
+  for (const k of Object.keys(AUTH_TEST_ENV)) {
+    if (savedAuthEnv[k] === undefined) {
+      delete process.env[k];
+    } else {
+      process.env[k] = savedAuthEnv[k];
+    }
+  }
+  savedAuthEnv = {};
+}
 
 function makeServer(): Promise<{ server: http.Server; url: string }> {
   return new Promise((resolve, reject) => {
@@ -59,6 +82,7 @@ describe("GET /auth/login", () => {
   let url: string;
 
   before(async () => {
+    applyAuthEnv();
     delete process.env["LOCAL_FIXTURE_SESSION"];
     await connectRedis();
     const s = await makeServer();
@@ -69,6 +93,7 @@ describe("GET /auth/login", () => {
   after(async () => {
     await closeServer(server);
     await disconnectRedis();
+    restoreAuthEnv();
   });
 
   it("redirects to Keycloak authorization endpoint (302)", async () => {
@@ -141,6 +166,7 @@ describe("GET /auth/callback ? error paths", () => {
   let url: string;
 
   before(async () => {
+    applyAuthEnv();
     delete process.env["LOCAL_FIXTURE_SESSION"];
     await connectRedis();
     const s = await makeServer();
@@ -151,6 +177,7 @@ describe("GET /auth/callback ? error paths", () => {
   after(async () => {
     await closeServer(server);
     await disconnectRedis();
+    restoreAuthEnv();
   });
 
   it("returns 400 when pre-auth cookie is missing (no user-agent binding)", async () => {
@@ -207,6 +234,7 @@ describe("POST /auth/logout", () => {
   let url: string;
 
   before(async () => {
+    applyAuthEnv();
     delete process.env["LOCAL_FIXTURE_SESSION"];
     await connectRedis();
     const s = await makeServer();
@@ -217,6 +245,7 @@ describe("POST /auth/logout", () => {
   after(async () => {
     await closeServer(server);
     await disconnectRedis();
+    restoreAuthEnv();
   });
 
   it("returns 204 even without a session cookie", async () => {
@@ -243,6 +272,7 @@ describe("GET /api/session ? fixture session regression", () => {
   let savedEnv: string | undefined;
 
   before(async () => {
+    applyAuthEnv();
     savedEnv = process.env["LOCAL_FIXTURE_SESSION"];
     const s = await makeServer();
     server = s.server;
@@ -253,6 +283,7 @@ describe("GET /api/session ? fixture session regression", () => {
     if (savedEnv !== undefined) process.env["LOCAL_FIXTURE_SESSION"] = savedEnv;
     else delete process.env["LOCAL_FIXTURE_SESSION"];
     await closeServer(server);
+    restoreAuthEnv();
   });
 
   it("returns fixture actor when LOCAL_FIXTURE_SESSION=tenant-admin", async () => {
