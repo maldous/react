@@ -46,8 +46,8 @@ test.describe("React SPA substrate", () => {
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible({ timeout: 10000 });
   });
 
-  test("/auth/login renders sign in heading", async ({ page }) => {
-    await page.goto("/auth/login");
+  test("/login renders sign in heading", async ({ page }) => {
+    await page.goto("/login");
     await expect(page.getByRole("heading", { name: /sign in/i })).toBeVisible();
   });
 
@@ -77,7 +77,7 @@ test.describe("React SPA substrate", () => {
     );
     await page.goto("/e2e-harness");
     // ProtectedRoute detects unauthenticated (isAuthenticated=false) and redirects
-    await expect(page).toHaveURL(/\/auth\/login/, { timeout: 10000 });
+    await expect(page).toHaveURL(/\/login/, { timeout: 10000 });
   });
 });
 
@@ -128,7 +128,7 @@ test.describe("organisation profile slice", () => {
     await expect(page.getByTestId("profile-edit-form")).not.toBeVisible();
   });
 
-  test("unauthenticated redirects to /auth/login", async ({ page }) => {
+  test("unauthenticated redirects to /login", async ({ page }) => {
     await page.route("**/api/session", (route) =>
       route.fulfill({
         status: 401,
@@ -137,7 +137,7 @@ test.describe("organisation profile slice", () => {
       })
     );
     await page.goto("/organisation/profile");
-    await expect(page).toHaveURL(/\/auth\/login/, { timeout: 5000 });
+    await expect(page).toHaveURL(/\/login/, { timeout: 5000 });
   });
 
   test("no-membership fixture: profile page shows access denied (no permissions)", async ({
