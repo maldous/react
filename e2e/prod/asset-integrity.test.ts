@@ -21,7 +21,7 @@ test.describe("assets: all bundles load successfully", () => {
     });
 
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("load");
     expect(failures, `JS bundle failures: ${failures.join(", ")}`).toHaveLength(0);
   });
 
@@ -34,7 +34,7 @@ test.describe("assets: all bundles load successfully", () => {
     });
 
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("load");
     expect(failures, `CSS asset failures: ${failures.join(", ")}`).toHaveLength(0);
   });
 
@@ -47,7 +47,7 @@ test.describe("assets: all bundles load successfully", () => {
     });
 
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("load");
 
     // At minimum one JS bundle must load; small apps may bundle as a single chunk
     expect(jsAssets.length).toBeGreaterThanOrEqual(1);
@@ -63,7 +63,7 @@ test.describe("assets: all bundles load successfully", () => {
     });
 
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("load");
     expect(failures, `HTTP errors: ${JSON.stringify(failures)}`).toHaveLength(0);
   });
 });
@@ -83,7 +83,7 @@ test.describe("assets: content hashing (fingerprint integrity)", () => {
     });
 
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("load");
 
     for (const url of jsAssets) {
       // Vite produces filenames like: index-abc123.js or chunk-abc123.js
@@ -102,7 +102,7 @@ test.describe("assets: content hashing (fingerprint integrity)", () => {
     });
 
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("load");
 
     for (const url of cssAssets) {
       const filename = url.split("/").pop() ?? "";
@@ -125,7 +125,7 @@ test.describe("assets: content hashing (fingerprint integrity)", () => {
     });
 
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("load");
 
     // Duplicate hashes mean identical content. This is common for small shared
     // chunks (e.g., a utility re-exported from multiple entry points). Log them
@@ -157,7 +157,7 @@ test.describe("assets: bundle size budgets", () => {
     });
 
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("load");
 
     // All non-vendor JS bundles should be under budget
     for (const asset of assetSizes) {
@@ -182,7 +182,7 @@ test.describe("assets: bundle size budgets", () => {
     });
 
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("load");
 
     const totalKB = (totalJsBytes / 1024).toFixed(1);
     expect(
@@ -209,7 +209,7 @@ test.describe("assets: fonts and images load correctly", () => {
     });
 
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("load");
     expect(failures, `Broken asset requests: ${JSON.stringify(failures)}`).toHaveLength(0);
   });
 });

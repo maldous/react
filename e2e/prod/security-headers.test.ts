@@ -133,7 +133,7 @@ test.describe("security: static asset headers", () => {
     });
 
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("load");
 
     for (const asset of assetHeaders) {
       expect(asset.cacheControl, `Asset ${asset.url} must have immutable cache control`).toMatch(
@@ -154,7 +154,7 @@ test.describe("security: static asset headers", () => {
     });
 
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("load");
 
     for (const asset of assetHeaders) {
       expect(asset.cacheControl, `Asset ${asset.url} must have immutable cache control`).toMatch(

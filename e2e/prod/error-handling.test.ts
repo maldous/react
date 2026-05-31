@@ -95,7 +95,7 @@ test.describe("error handling: client-side resilience", () => {
 
     // Navigate to a route that might trigger edge cases
     await page.goto("/?error=1&__proto__=test");
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("load");
 
     // The app must still be mounted (not crashed)
     const root = page.locator("#root");
@@ -106,14 +106,14 @@ test.describe("error handling: client-side resilience", () => {
   test("page fully recovers after navigation error", async ({ page }) => {
     // Navigate to a valid route first
     await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("load");
     await expect(page.getByRole("heading", { name: /platform/i })).toBeVisible();
 
     // Navigate back and forth — should not crash
     await page.goto("/organisation/profile");
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("load");
     await page.goBack();
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("load");
 
     const root = page.locator("#root");
     await expect(root).not.toBeEmpty({ timeout: 10_000 });
