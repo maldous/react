@@ -61,10 +61,19 @@ export interface ProvisioningConfig {
   s3DefaultRegion: string;
   s3DefaultEndpoint: string | null;
   apexDomain: string;
+  /** Scheme for tenant callback URIs. Derived from KC_HOSTNAME or APP_BASE_URL so
+   *  local-dev (HTTP) and production (HTTPS via Cloudflare) are handled correctly. */
+  tenantUriScheme: "http" | "https";
   bffClientSecret: string;
 }
 
 export function getProvisioningConfig(): ProvisioningConfig {
+  // Derive the public-facing scheme from KC_HOSTNAME (set per environment).
+  // KC_HOSTNAME reflects whether Cloudflare serves HTTPS (production/staging)
+  // or bare HTTP (.localhost / dev environments). ADR-0033.
+  const kcHostname = process.env["KC_HOSTNAME"] ?? "http://localhost/kc";
+  const tenantUriScheme: "http" | "https" = kcHostname.startsWith("https://") ? "https" : "http";
+
   return {
     keycloakUrl: process.env["KEYCLOAK_URL"] ?? "http://localhost:8090/kc",
     keycloakProvisionerClientId:
@@ -77,6 +86,7 @@ export function getProvisioningConfig(): ProvisioningConfig {
     s3DefaultRegion: process.env["S3_DEFAULT_REGION"] ?? "us-east-1",
     s3DefaultEndpoint: process.env["S3_DEFAULT_ENDPOINT"] ?? null,
     apexDomain: process.env["APEX_DOMAIN"] ?? "aldous.info",
+    tenantUriScheme,
     bffClientSecret: process.env["KEYCLOAK_CLIENT_SECRET"] ?? "",
   };
 }

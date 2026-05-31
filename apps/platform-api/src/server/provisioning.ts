@@ -365,12 +365,18 @@ async function provisionIdentity(
       config.provisionerClientSecret ?? platformCfg.keycloakProvisionerClientSecret,
   });
 
+  const scheme = platformCfg.tenantUriScheme;
+  const tenantOrigin = `${scheme}://${slug}.${platformCfg.apexDomain}`;
+
   await keycloakAdapter.createRealm({
     realmName: `tenant-${organisationId}`,
     displayName,
     bffClientId: "platform-api",
     bffClientSecret: platformCfg.bffClientSecret,
-    bffRedirectUris: [`https://${slug}.${platformCfg.apexDomain}/auth/callback`],
+    // Include the scheme-correct callback plus a wildcard for future sub-paths.
+    // tenantUriScheme is derived from KC_HOSTNAME so it matches the public-facing
+    // URL scheme (http for .localhost dev, https for Cloudflare production).
+    bffRedirectUris: [`${tenantOrigin}/auth/callback`, `${tenantOrigin}/auth/*`],
   });
 
   log.info({ tier: config.tier, organisationId }, "provisioning.identity.done");

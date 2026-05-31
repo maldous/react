@@ -480,7 +480,8 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
   }
 
   private async createBffClient(cfg: RealmProvisioningConfig, token: string): Promise<void> {
-    await fetch(`${this.config.url}/admin/realms/${cfg.realmName}/clients`, {
+    const clientsUrl = `${this.config.url}/admin/realms/${cfg.realmName}/clients`;
+    const res = await fetch(clientsUrl, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -495,6 +496,37 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
         protocol: "openid-connect",
       }),
     });
+
+    // Add realm-roles-in-userinfo mapper so the BFF can read realmRoles from /userinfo.
+    // This mirrors the Terraform-managed mapper on the platform realm (ADR-ACT-0179).
+    // Without it, system-admin role detection fails for users authenticating via this realm.
+    if (res.ok || res.status === 409) {
+      const clients = await fetch(`${clientsUrl}?clientId=${cfg.bffClientId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (clients.ok) {
+        const list = (await clients.json()) as Array<{ id: string }>;
+        const clientId = list[0]?.id;
+        if (clientId) {
+          await fetch(`${clientsUrl}/${clientId}/protocol-mappers/models`, {
+            method: "POST",
+            headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: "realm-roles-userinfo",
+              protocol: "openid-connect",
+              protocolMapper: "oidc-usermodel-realm-role-mapper",
+              config: {
+                "claim.name": "realm_access.roles",
+                multivalued: "true",
+                "id.token.claim": "false",
+                "access.token.claim": "false",
+                "userinfo.token.claim": "true",
+              },
+            }),
+          });
+        }
+      }
+    }
   }
 
   async deleteRealm(realmName: string): Promise<void> {
