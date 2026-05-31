@@ -38,7 +38,7 @@ import { createLogger } from "@platform/platform-logging";
 import { ConflictError } from "@platform/platform-errors";
 import {
   createAuditEvent,
-  createInMemoryAuditEventPort,
+  createPostgresAuditEventPort,
   AuditAction,
   type AuditEventPort,
 } from "@platform/audit-events";
@@ -47,10 +47,11 @@ import { getApplicationPool, getProvisioningConfig } from "./dependencies.ts";
 
 const log = createLogger({ name: "provisioning" });
 
-// Audit port ? replaced with a real persistent adapter when audit-events
-// adapter is wired to the provisioning service (ADR-ACT-0148).
-// For now, logs to the in-memory port so events are visible in structured logs.
-const auditPort: AuditEventPort = createInMemoryAuditEventPort();
+// Audit port — PostgreSQL-backed (ADR-ACT-0148 satisfied).
+// Lazy reference to the pool so the adapter is constructed after app startup.
+function getAuditPort(): AuditEventPort {
+  return createPostgresAuditEventPort(getApplicationPool());
+}
 
 // ---------------------------------------------------------------------------
 // Request schema (zod) ? validated at the route handler before calling here
@@ -121,8 +122,12 @@ export interface ProvisionTenantResult {
   realmName: string;
 }
 
-export async function provisionTenant(input: CreateTenantRequest): Promise<ProvisionTenantResult> {
+export async function provisionTenant(
+  input: CreateTenantRequest,
+  callerActorId: string
+): Promise<ProvisionTenantResult> {
   const pool = getApplicationPool();
+  const auditPort = getAuditPort();
   const cfg = getProvisioningConfig();
   const resources = mergeResourceConfig(input.resources);
   const organisationId = crypto.randomUUID();
@@ -138,7 +143,7 @@ export async function provisionTenant(input: CreateTenantRequest): Promise<Provi
     // Audit: provisioning attempt
     await auditPort.emit(
       createAuditEvent({
-        actorId: "system",
+        actorId: callerActorId,
         tenantId: "platform",
         action: AuditAction.OrganisationUpdated,
         resource: "organisation",
@@ -192,7 +197,7 @@ export async function provisionTenant(input: CreateTenantRequest): Promise<Provi
     // Emit audit event ? ADR-0031 invariant: every provisioning operation is audited
     await auditPort.emit(
       createAuditEvent({
-        actorId: "system",
+        actorId: callerActorId,
         tenantId: "platform",
         action: AuditAction.OrganisationUpdated,
         resource: "organisation",

@@ -412,7 +412,7 @@ export const routes: Route[] = [
         res.json(400, { code: "VALIDATION_ERROR", message: msg });
         return;
       }
-      const result = await provisionTenant(parsed.data);
+      const result = await provisionTenant(parsed.data, req.actor!.userId);
       res.json(201, result);
     },
   },
