@@ -7,7 +7,7 @@ describe("fixture session", () => {
     const actor = createFixtureSessionActor("tenant-admin");
     assert.ok(actor.roles.includes("tenant-admin"));
     assert.ok(actor.permissions.includes("organisation.update"));
-    assert.ok(actor.permissions.includes("admin.access"));
+    assert.ok(actor.permissions.includes("tenant.admin.access"));
     assert.ok(actor.userId);
     assert.ok(actor.tenantId);
   });
@@ -17,7 +17,8 @@ describe("fixture session", () => {
     assert.ok(actor.roles.includes("viewer"));
     assert.ok(actor.permissions.includes("organisation.read"));
     assert.ok(!actor.permissions.includes("organisation.update"));
-    assert.ok(!actor.permissions.includes("admin.access"));
+    assert.ok(!actor.permissions.includes("tenant.admin.access"));
+    assert.ok(!actor.permissions.includes("platform.admin.access"));
   });
 
   it("getFixtureSession returns null when LOCAL_FIXTURE_SESSION is unauthenticated", () => {

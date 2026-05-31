@@ -180,17 +180,19 @@ export const routes: Route[] = [
     },
   },
   // ---------------------------------------------------------------------------
-  // Auth Settings API ? tenant admin self-service (ADR-0030 ?1b)
+  // Auth Settings API — tenant admin self-service (ADR-0030 §1b)
   // Tenant admin manages their realm's IdPs, MFA policy, session policy, and
   // sysadmin brokering through these endpoints. All calls are proxied to
   // Keycloak Admin REST API via KeycloakRealmAdminAdapter.
+  // scope: "tenant" — must be called from a tenant FQDN, not the global apex.
   // ---------------------------------------------------------------------------
   {
     method: "GET",
     path: "/api/auth/settings/idps",
     operationName: "auth.settings.idps.list",
     requiresAuth: true,
-    requiredPermission: "admin.access",
+    requiredPermission: "tenant.auth.settings.read",
+    scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
       if (!tenantCtx) {
@@ -211,7 +213,8 @@ export const routes: Route[] = [
     path: "/api/auth/settings/idps",
     operationName: "auth.settings.idps.upsert",
     requiresAuth: true,
-    requiredPermission: "admin.access",
+    requiredPermission: "tenant.auth.settings.write",
+    scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
       if (!tenantCtx) {
@@ -238,7 +241,8 @@ export const routes: Route[] = [
     path: "/api/auth/settings/mfa",
     operationName: "auth.settings.mfa.get",
     requiresAuth: true,
-    requiredPermission: "admin.access",
+    requiredPermission: "tenant.auth.settings.read",
+    scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
       if (!tenantCtx) {
@@ -259,7 +263,8 @@ export const routes: Route[] = [
     path: "/api/auth/settings/mfa",
     operationName: "auth.settings.mfa.set",
     requiresAuth: true,
-    requiredPermission: "admin.access",
+    requiredPermission: "tenant.auth.settings.write",
+    scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
       if (!tenantCtx) {
@@ -286,7 +291,8 @@ export const routes: Route[] = [
     path: "/api/auth/settings/session",
     operationName: "auth.settings.session.get",
     requiresAuth: true,
-    requiredPermission: "admin.access",
+    requiredPermission: "tenant.auth.settings.read",
+    scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
       if (!tenantCtx) {
@@ -307,7 +313,8 @@ export const routes: Route[] = [
     path: "/api/auth/settings/session",
     operationName: "auth.settings.session.set",
     requiresAuth: true,
-    requiredPermission: "admin.access",
+    requiredPermission: "tenant.auth.settings.write",
+    scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
       if (!tenantCtx) {
@@ -337,7 +344,8 @@ export const routes: Route[] = [
     path: "/api/auth/settings/sysadmin-brokering",
     operationName: "auth.settings.brokering.get",
     requiresAuth: true,
-    requiredPermission: "admin.access",
+    requiredPermission: "tenant.auth.settings.read",
+    scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
       if (!tenantCtx) {
@@ -358,7 +366,8 @@ export const routes: Route[] = [
     path: "/api/auth/settings/sysadmin-brokering",
     operationName: "auth.settings.brokering.set",
     requiresAuth: true,
-    requiredPermission: "admin.access",
+    requiredPermission: "tenant.auth.settings.write",
+    scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
       if (!tenantCtx) {
@@ -385,16 +394,17 @@ export const routes: Route[] = [
   },
   // ---------------------------------------------------------------------------
   // Tenant provisioning (ADR-ACT-0142)
-  // POST ? provision a new tenant with per-resource tier config.
-  // GET  ? read a tenant's current resource config.
-  // System-admin only (requiredPermission: admin.access).
+  // POST — provision a new tenant with per-resource tier config.
+  // GET  — read a tenant's current resource config.
+  // scope: "global" — system-admin only, must be called from global apex host.
   // ---------------------------------------------------------------------------
   {
     method: "POST",
     path: "/api/admin/tenants",
     operationName: "admin.tenants.create",
     requiresAuth: true,
-    requiredPermission: "admin.access",
+    requiredPermission: "platform.tenants.create",
+    scope: "global" as const,
     handler: async (req, res) => {
       const parsed = CreateTenantRequestSchema.safeParse(req.body);
       if (!parsed.success) {
@@ -411,7 +421,8 @@ export const routes: Route[] = [
     path: "/api/admin/tenants/resources",
     operationName: "admin.tenants.resources.get",
     requiresAuth: true,
-    requiredPermission: "admin.access",
+    requiredPermission: "platform.tenants.read",
+    scope: "global" as const,
     handler: async (req, res) => {
       const url = new URL(req.raw.url ?? "", "http://localhost");
       const organisationId = url.searchParams.get("organisationId") ?? "";
@@ -435,7 +446,8 @@ export const routes: Route[] = [
     path: "/api/admin/sub-tenants",
     operationName: "admin.sub-tenants.create",
     requiresAuth: true,
-    requiredPermission: "admin.access",
+    requiredPermission: "tenant.admin.access",
+    scope: "tenant" as const,
     handler: async (_req, res) => {
       res.json(501, { code: "NOT_IMPLEMENTED", message: serverT("api.error.notImplemented") });
     },

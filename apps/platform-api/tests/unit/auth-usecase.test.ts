@@ -155,12 +155,12 @@ describe("resolveSessionFromIdentity", () => {
     });
   }
 
-  it("tenant-admin membership has org write and admin.access permissions", async () => {
+  it("tenant-admin membership has org write and tenant.admin.access permissions", async () => {
     const sessions = makeFakeSessionStore();
     const deps: AuthUseCaseDeps = { identities: makeFakeIdentityRepo(), sessions };
     const result = await resolveSessionFromIdentity(KEYCLOAK_IDENTITY, deps);
     assert.ok(result.permissions.includes("organisation.update"));
-    assert.ok(result.permissions.includes("admin.access"));
+    assert.ok(result.permissions.includes("tenant.admin.access"));
     assert.ok(result.permissions.includes("member.invite"));
   });
 
@@ -174,7 +174,8 @@ describe("resolveSessionFromIdentity", () => {
     };
     const result = await resolveSessionFromIdentity(KEYCLOAK_IDENTITY, deps);
     assert.ok(!result.permissions.includes("organisation.update"));
-    assert.ok(!result.permissions.includes("admin.access"));
+    assert.ok(!result.permissions.includes("tenant.admin.access"));
+    assert.ok(!result.permissions.includes("platform.admin.access"));
     assert.ok(!result.permissions.includes("member.invite"));
   });
 
@@ -189,7 +190,8 @@ describe("resolveSessionFromIdentity", () => {
     const result = await resolveSessionFromIdentity(KEYCLOAK_IDENTITY, deps);
     assert.ok(result.permissions.includes("member.invite"));
     assert.ok(!result.permissions.includes("organisation.update"));
-    assert.ok(!result.permissions.includes("admin.access"));
+    assert.ok(!result.permissions.includes("tenant.admin.access"));
+    assert.ok(!result.permissions.includes("platform.admin.access"));
   });
 
   it("system-admin realm role grants session role without DB membership", async () => {
@@ -210,7 +212,14 @@ describe("resolveSessionFromIdentity", () => {
     };
     const result = await resolveSessionFromIdentity(sysadminIdentity, deps);
     assert.deepEqual(result.roles, ["system-admin"]);
-    assert.ok(result.permissions.includes("admin.access"), "system-admin must have admin.access");
+    assert.ok(
+      result.permissions.includes("platform.admin.access"),
+      "system-admin must have platform.admin.access"
+    );
+    assert.ok(
+      !result.permissions.includes("tenant.admin.access"),
+      "system-admin must NOT have tenant.admin.access"
+    );
     assert.ok(result.permissions.includes("organisation.read"));
     assert.equal(result.tenantId, "");
     assert.equal(result.organisationId, "");

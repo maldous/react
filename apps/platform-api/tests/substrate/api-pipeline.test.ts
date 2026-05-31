@@ -171,7 +171,7 @@ describe("api pipeline: auth with insufficient permission", () => {
         method: "GET",
         path: "/admin-only",
         requiresAuth: true,
-        requiredPermission: "admin.access",
+        requiredPermission: "platform.admin.access",
         handler: async (_req, res) => res.json(200, { secret: true }),
       },
     ]);

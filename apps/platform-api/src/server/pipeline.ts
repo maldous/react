@@ -40,10 +40,10 @@ export interface Route {
   handler: PipelineHandler;
   requiresAuth?: boolean;
   /**
-   * INTERIM STATIC PERMISSION BRIDGE ? ADR-ACT-0145
+   * INTERIM STATIC PERMISSION BRIDGE — ADR-ACT-0145
    *
    * requiredPermission is checked against the actor's resolved permission set
-   * from the session record. This is a static, pre-resolved check ? it does
+   * from the session record. This is a static, pre-resolved check — it does
    * NOT call Keycloak Authorization Services at runtime and does NOT support
    * no-deploy policy changes.
    *
@@ -54,6 +54,15 @@ export interface Route {
    * ADR-0030's "no-deploy policy changes" claim is NOT fully satisfied.
    */
   requiredPermission?: string;
+  /**
+   * FQDN scope enforcement — ADR-0029.
+   * "global": route must be called from the global/apex host (no tenant FQDN).
+   *           Rejects requests from {slug}.aldous.info.
+   * "tenant": route must be called from a tenant FQDN.
+   *           Rejects requests from the bare apex aldous.info.
+   * undefined: no FQDN scope enforcement (public routes, session, health checks).
+   */
+  scope?: "global" | "tenant";
 }
 
 // requestId generator
@@ -248,6 +257,37 @@ export function createRouter(
           requestId
         );
         return;
+      }
+
+      // Route scope enforcement (ADR-0029 §3):
+      // "global" routes require no tenant in FQDN — must arrive at the apex host.
+      // "tenant" routes require a tenant resolved from FQDN.
+      // Fixture mode skips FQDN resolution so scope checks are also skipped.
+      if (!isFixtureMode) {
+        if (matchingRoute.scope === "global" && fqdnTenant !== null) {
+          const err = new ForbiddenError("api.error.permissionRequired", {
+            safeDetails: { permission: "platform:global-host-required" },
+          });
+          jsonResponse(
+            res,
+            403,
+            toSafeResponse(err, (m) => serverT(m, { permission: "global host" })),
+            requestId
+          );
+          return;
+        }
+        if (matchingRoute.scope === "tenant" && fqdnTenant === null) {
+          const err = new ForbiddenError("api.error.permissionRequired", {
+            safeDetails: { permission: "tenant:fqdn-required" },
+          });
+          jsonResponse(
+            res,
+            403,
+            toSafeResponse(err, (m) => serverT(m, { permission: "tenant host" })),
+            requestId
+          );
+          return;
+        }
       }
     }
 

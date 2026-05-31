@@ -31,12 +31,12 @@ describe("assertPermission", () => {
   it("includes the required permission in safeDetails", () => {
     let thrown: ForbiddenError | undefined;
     try {
-      assertPermission([], "admin.access");
+      assertPermission([], "platform.admin.access");
     } catch (e) {
       if (e instanceof ForbiddenError) thrown = e;
     }
     assert.ok(thrown !== undefined);
-    assert.deepEqual(thrown.safeDetails, { required: "admin.access" });
+    assert.deepEqual(thrown.safeDetails, { required: "platform.admin.access" });
   });
 
   it("includes context in internalDetails when provided", () => {
