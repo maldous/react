@@ -107,7 +107,6 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 	# Tool proxy routes (/kc/*, /mailpit/*, etc.) must NOT receive the platform
 	# CSP — those services serve their own UIs with external assets that would be
 	# blocked by default-src 'self'. The global header block is intentionally absent.
-	-Server
 
 	# Keycloak realm endpoints ? OAuth login, PKCE, JWKS, token exchange.
 	# These must be publicly reachable; Keycloak enforces its own auth internally.
@@ -232,7 +231,6 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 # ---------------------------------------------------------------------------
 http://*.aldous.info http://*.dev.localhost http://*.test.localhost http://*.staging.aldous.info {
 	# No global header block — security headers are scoped per route (same reason as above).
-	-Server
 
 	# Keycloak realm endpoints ? publicly accessible (Keycloak handles its own auth)
 	handle /kc/realms/* {
