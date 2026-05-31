@@ -1,24 +1,14 @@
 {
   "Servers": {
     "1": {
-      "Name": "Platform DB — sysadmin (bypass RLS)",
+      "Name": "Platform DB — sysadmin (bypass RLS, all tenants)",
       "Group": "Platform",
       "Host": "postgres",
       "Port": 5432,
       "MaintenanceDB": "platform",
       "Username": "pgadmin_sysadmin",
       "SSLMode": "prefer",
-      "Comment": "system-admin connection. app.bypass_rls=true by default — sees all tenant data. RLS policies still evaluated but bypass flag set, matching withSystemAdmin() in the app."
-    },
-    "2": {
-      "Name": "Platform DB — tenant-admin (RLS enforced)",
-      "Group": "Platform",
-      "Host": "postgres",
-      "Port": 5432,
-      "MaintenanceDB": "platform",
-      "Username": "pgadmin_tenant_admin",
-      "SSLMode": "prefer",
-      "Comment": "tenant-admin connection. Full RLS enforced — only sees own tenant rows. Before querying, run: SELECT set_config('app.current_tenant_id', '<your-org-id>', true); Read-only (SELECT only) to match tenant-admin data access level."
+      "Comment": "System-admin only. app.bypass_rls=true by default — sees all tenant data. RLS enforced but bypass flag set (non-superuser role). Tenant-scoped pgAdmin access is not implemented: GUC-based RLS (app.current_tenant_id) is user-settable so tenant scope cannot be enforced for arbitrary SQL execution. See ADR-ACT-0184."
     }
   }
 }

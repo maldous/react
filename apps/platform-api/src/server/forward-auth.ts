@@ -51,7 +51,10 @@ const TENANT_ADMIN_RESOURCES = new Set([
   "admin:keycloak",
   "admin:mailpit",
   "admin:sentry",
-  "admin:pgadmin",
+  // admin:pgadmin is NOT in TENANT_ADMIN_RESOURCES — pgAdmin is sysadmin-only.
+  // The pgadmin_tenant_admin Postgres role is not deployed: tenant scope is self-asserted
+  // via a user-settable GUC (app.current_tenant_id) which any connection holder can override.
+  // See ADR-ACT-0184 for the role-membership bypass mechanism that would make this safe.
 ]);
 
 const APEX_DOMAIN = process.env["APEX_DOMAIN"] ?? "aldous.info";

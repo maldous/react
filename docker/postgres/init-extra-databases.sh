@@ -50,11 +50,17 @@ create_db_and_user "$SENTRY_DB_NAME" "$SENTRY_DB_USER" "$SENTRY_DB_PASSWORD"
 PGADMIN_DB="${POSTGRES_DB:-platform}"
 PGADMIN_SYSADMIN_ROLE="pgadmin_sysadmin"
 PGADMIN_SYSADMIN_PASS="${PGADMIN_DB_PASSWORD:-pgadmin-sysadmin-password}"
-PGADMIN_TENANT_ROLE="pgadmin_tenant_admin"
-PGADMIN_TENANT_PASS="${PGADMIN_TENANT_DB_PASSWORD:-pgadmin-tenant-password}"
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$PGADMIN_DB" <<EOSQL
--- pgadmin_sysadmin: system-admin connection — bypass_rls sees all tenant data
+-- pgadmin_sysadmin: system-admin connection only.
+-- Non-superuser so FORCE ROW LEVEL SECURITY applies; app.bypass_rls=true mirrors
+-- withSystemAdmin() in the platform-api and grants cross-tenant visibility.
+--
+-- NOTE: pgadmin_tenant_admin is intentionally NOT created here.
+-- Tenant-scoped pgAdmin access is unsafe with GUC-based RLS: any connection holder
+-- can execute SET app.current_tenant_id = '<other-org>' or SET app.bypass_rls = 'true'
+-- to access cross-tenant data. See ADR-ACT-0184 for the role-membership bypass
+-- mechanism that would make tenant-scoped pgAdmin safe.
 DO \$\$
 BEGIN
   IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = '${PGADMIN_SYSADMIN_ROLE}') THEN
@@ -67,26 +73,7 @@ ALTER ROLE "${PGADMIN_SYSADMIN_ROLE}" SET "app.current_tenant_id" = '';
 GRANT CONNECT ON DATABASE "${PGADMIN_DB}" TO "${PGADMIN_SYSADMIN_ROLE}";
 GRANT USAGE ON SCHEMA public TO "${PGADMIN_SYSADMIN_ROLE}";
 GRANT ALL ON ALL TABLES IN SCHEMA public TO "${PGADMIN_SYSADMIN_ROLE}";
-GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO "${PGADMIN_SYSADMIN_ROLE}";
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO "${PGADMIN_SYSADMIN_ROLE}";
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO "${PGADMIN_SYSADMIN_ROLE}";
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO "${PGADMIN_SYSADMIN_ROLE}";
-
--- pgadmin_tenant_admin: tenant-admin connection — RLS enforced, sees own tenant only.
--- app.current_tenant_id must be set per-session by the tenant-admin in the query tool:
---   SELECT set_config('app.current_tenant_id', '<org-id>', true);
-DO \$\$
-BEGIN
-  IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = '${PGADMIN_TENANT_ROLE}') THEN
-    CREATE ROLE "${PGADMIN_TENANT_ROLE}" LOGIN PASSWORD '${PGADMIN_TENANT_PASS}';
-  END IF;
-END
-\$\$;
--- No bypass_rls: RLS policies are fully enforced for this role.
-ALTER ROLE "${PGADMIN_TENANT_ROLE}" SET "app.bypass_rls" = 'false';
-ALTER ROLE "${PGADMIN_TENANT_ROLE}" SET "app.current_tenant_id" = '';
-GRANT CONNECT ON DATABASE "${PGADMIN_DB}" TO "${PGADMIN_TENANT_ROLE}";
-GRANT USAGE ON SCHEMA public TO "${PGADMIN_TENANT_ROLE}";
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO "${PGADMIN_TENANT_ROLE}";
-GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO "${PGADMIN_TENANT_ROLE}";
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO "${PGADMIN_TENANT_ROLE}";
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT USAGE, SELECT ON SEQUENCES TO "${PGADMIN_SYSADMIN_ROLE}";
 EOSQL
