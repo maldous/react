@@ -59,16 +59,19 @@
 # ---------------------------------------------------------------------------
 :80 {
 	# Staging — staging.aldous.info -> localhost:82 (staging internal Caddy)
+	# X-Forwarded-Proto is hardcoded https: these domains are ALWAYS behind
+	# Cloudflare which terminates TLS. {scheme} here is always http (external
+	# Caddy receives plain HTTP from Cloudflare) so it cannot be used.
 	@staging host staging.aldous.info *.staging.aldous.info
 	reverse_proxy @staging localhost:82 {
 		header_up X-Forwarded-Host {host}
-		header_up X-Forwarded-Proto {scheme}
+		header_up X-Forwarded-Proto https
 	}
 
 	# Production — aldous.info -> localhost:83 (prod internal Caddy)
 	@prod host aldous.info *.aldous.info
 	reverse_proxy @prod localhost:83 {
 		header_up X-Forwarded-Host {host}
-		header_up X-Forwarded-Proto {scheme}
+		header_up X-Forwarded-Proto https
 	}
 }

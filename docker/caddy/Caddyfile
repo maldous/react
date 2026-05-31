@@ -60,16 +60,13 @@
 }
 
 # ---------------------------------------------------------------------------
-# Platform-api reverse proxy snippet ? passes resolved scheme to platform-api.
-#
-# With trusted_proxies configured above, {scheme} reflects the original client
-# scheme when the request came from Cloudflare (https), or the raw connection
-# scheme otherwise (http for local dev). No client can spoof this.
+# Platform-api reverse proxy snippet.
+# X-Forwarded-Proto is NOT set here — Caddy's reverse_proxy preserves the
+# header if already present (set by external Caddy for Cloudflare traffic)
+# and adds it from the connection scheme if absent (local dev, no external Caddy).
 # ---------------------------------------------------------------------------
 (platform_api_proxy) {
-	reverse_proxy platform-api:3001 {
-		header_up X-Forwarded-Proto {scheme}
-	}
+	reverse_proxy platform-api:3001
 }
 
 # ---------------------------------------------------------------------------
@@ -87,7 +84,6 @@
 		uri /internal/auth/forward?resource={args[0]}&scope={args[1]}
 		copy_headers Cookie
 		header_up X-Forwarded-Host {host}
-		header_up X-Forwarded-Proto {scheme}
 		header_up X-Internal-Secret {$CADDY_INTERNAL_SECRET}
 	}
 }
