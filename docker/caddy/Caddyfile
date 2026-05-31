@@ -123,7 +123,6 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 	# Mailpit ? all tenant email capture (dev only; graceful 502 if not running)
 	handle /mailpit/* {
 		import forward_auth_check admin:mailpit read
-		uri strip_prefix /mailpit
 		reverse_proxy mailpit:8025
 	}
 
@@ -254,7 +253,6 @@ http://*.aldous.info http://*.dev.localhost http://*.test.localhost http://*.sta
 	# Mailpit ? tenant-domain-filtered email view
 	handle /mailpit/* {
 		import forward_auth_check admin:mailpit read
-		uri strip_prefix /mailpit
 		reverse_proxy mailpit:8025
 	}
 

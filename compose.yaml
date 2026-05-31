@@ -111,7 +111,11 @@ services:
       - "${MAILPIT_SMTP_PORT:-1025}:1025" # SMTP
       - "${MAILPIT_UI_PORT:-8025}:8025" # Web UI
     healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:8025/api/v1/info >/dev/null 2>&1 || exit 1"]
+      test:
+        [
+          "CMD-SHELL",
+          "wget -qO- http://localhost:8025/mailpit/api/v1/info >/dev/null 2>&1 || exit 1",
+        ]
       interval: 10s
       timeout: 5s
       retries: 5
