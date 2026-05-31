@@ -287,3 +287,89 @@ describe("handleForwardAuth: session handling", () => {
     assert.strictEqual(r?.status, 403);
   });
 });
+
+// ---------------------------------------------------------------------------
+// 5. Clickthrough service classification
+// ---------------------------------------------------------------------------
+
+describe("checkResourceAccess — GLOBAL_ONLY services (tenant-admin must be denied)", () => {
+  const globalOnlyServices = [
+    "admin:pgadmin",
+    "admin:minio",
+    "admin:sonarqube",
+    "admin:wiremock",
+    "admin:clickhouse",
+    "admin:localstack",
+    "admin:tilt",
+  ];
+
+  for (const service of globalOnlyServices) {
+    it(`tenant-admin denied ${service} on own slug`, () => {
+      assert.ok(
+        !checkResourceAccess({
+          roles: ["tenant-admin"],
+          resource: service,
+          requestedSlug: "acme",
+          ownSlug: "acme",
+        }),
+        `${service} must be GLOBAL_ONLY — tenant-admin must not have access`
+      );
+    });
+
+    it(`system-admin allowed ${service}`, () => {
+      assert.ok(
+        checkResourceAccess({
+          roles: ["system-admin"],
+          resource: service,
+          requestedSlug: null,
+          ownSlug: null,
+        }),
+        `${service} must be accessible to system-admin`
+      );
+    });
+  }
+});
+
+describe("checkResourceAccess — TENANT_SCOPED_SAFE services", () => {
+  const tenantSafeServices = ["admin:keycloak", "admin:mailpit", "admin:sentry"];
+
+  for (const service of tenantSafeServices) {
+    it(`tenant-admin allowed ${service} on own slug`, () => {
+      assert.ok(
+        checkResourceAccess({
+          roles: ["tenant-admin"],
+          resource: service,
+          requestedSlug: "acme",
+          ownSlug: "acme",
+        }),
+        `${service} must be TENANT_SCOPED_SAFE — tenant-admin must have access on own slug`
+      );
+    });
+
+    it(`tenant-admin denied ${service} on different slug`, () => {
+      assert.ok(
+        !checkResourceAccess({
+          roles: ["tenant-admin"],
+          resource: service,
+          requestedSlug: "other",
+          ownSlug: "acme",
+        }),
+        `${service} — tenant-admin must not access another tenant`
+      );
+    });
+  }
+});
+
+describe("SYSTEM_ADMIN_RESOURCES and TENANT_ADMIN_RESOURCES set membership", () => {
+  it("admin:pgadmin is in SYSTEM_ADMIN_RESOURCES", () => {
+    assert.ok(SYSTEM_ADMIN_RESOURCES.has("admin:pgadmin"));
+  });
+
+  it("admin:pgadmin is NOT in TENANT_ADMIN_RESOURCES", () => {
+    assert.ok(!TENANT_ADMIN_RESOURCES.has("admin:pgadmin"));
+  });
+
+  it("admin:minio is NOT in TENANT_ADMIN_RESOURCES", () => {
+    assert.ok(!TENANT_ADMIN_RESOURCES.has("admin:minio"));
+  });
+});

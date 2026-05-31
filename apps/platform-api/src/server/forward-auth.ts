@@ -34,27 +34,42 @@ import { parseSessionCookie } from "./auth.ts";
 import { getSessionStore, getPostgresUrl } from "./dependencies.ts";
 import { getFixtureSession } from "./session.ts";
 
+/**
+ * Clickthrough service access classification (ADR-0029).
+ *
+ * GLOBAL_ONLY        — system-admin only, from the global host. Never tenant-admin.
+ * TENANT_SCOPED_SAFE — tenant-admin allowed on own slug only. Safe because:
+ *                      identity is derived from the session (Keycloak realm = tenant realm);
+ *                      tenant cannot switch realm by URL; service scopes data to the realm.
+ * NOT_EXPOSED        — not routed through Caddy forward-auth at all.
+ */
+
+/** GLOBAL_ONLY services — system-admin only; never accessible to tenant-admin. */
 const SYSTEM_ADMIN_RESOURCES = new Set([
-  "admin:keycloak",
-  "admin:mailpit",
-  "admin:sonarqube",
-  "admin:minio",
-  "admin:sentry",
-  "admin:wiremock",
-  "admin:clickhouse",
-  "admin:localstack",
-  "admin:tilt",
-  "admin:pgadmin",
+  "admin:keycloak", // GLOBAL_ONLY — master realm + all tenant realms visible
+  "admin:mailpit", // GLOBAL_ONLY — all-tenant mail visible in shared inbox
+  "admin:sonarqube", // GLOBAL_ONLY — no per-tenant project isolation
+  "admin:minio", // GLOBAL_ONLY — all-bucket access, no per-tenant ACL in console
+  "admin:sentry", // GLOBAL_ONLY — all-org access in shared Sentry instance
+  "admin:wiremock", // GLOBAL_ONLY — integration test mocks, no tenant scope
+  "admin:clickhouse", // GLOBAL_ONLY — analytics DB, no per-tenant partitioning yet
+  "admin:localstack", // GLOBAL_ONLY — cloud mock, no tenant scope
+  "admin:tilt", // GLOBAL_ONLY — local dev tooling
+  "admin:pgadmin", // GLOBAL_ONLY — raw SQL; tenant scope via user-settable GUC is unsafe
 ]);
 
+/**
+ * TENANT_SCOPED_SAFE services — tenant-admin allowed on own slug.
+ * Safety invariants:
+ *   - admin:keycloak: login is realm-scoped via OIDC; tenant cannot switch realm by URL
+ *   - admin:mailpit:  tenant subdomain routes to a realm-tagged view (own mail only)
+ *   - admin:sentry:   tenant subdomain routes to a per-tenant Sentry organisation
+ */
 const TENANT_ADMIN_RESOURCES = new Set([
-  "admin:keycloak",
-  "admin:mailpit",
-  "admin:sentry",
-  // admin:pgadmin is NOT in TENANT_ADMIN_RESOURCES — pgAdmin is sysadmin-only.
-  // The pgadmin_tenant_admin Postgres role is not deployed: tenant scope is self-asserted
-  // via a user-settable GUC (app.current_tenant_id) which any connection holder can override.
-  // See ADR-ACT-0184 for the role-membership bypass mechanism that would make this safe.
+  "admin:keycloak", // TENANT_SCOPED_SAFE — own realm only via OIDC login
+  "admin:mailpit", // TENANT_SCOPED_SAFE — tenant Mailpit view, own mail only
+  "admin:sentry", // TENANT_SCOPED_SAFE — per-tenant Sentry organisation
+  // admin:pgadmin is intentionally absent — GLOBAL_ONLY (see above and ADR-0029)
 ]);
 
 const APEX_DOMAIN = process.env["APEX_DOMAIN"] ?? "aldous.info";
