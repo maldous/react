@@ -46,12 +46,14 @@ const RUNNING_TOOLS = [
   {
     path: "/sentry/",
     label: "Sentry",
+    // Sentry redirects to its own /auth/login/sentry/ — title is "Login | Sentry"
     expectTitle: /Sentry/i,
   },
   {
     path: "/wiremock/",
     label: "WireMock",
-    expectTitle: /WireMock/i,
+    // WireMock /__admin/ is a JSON REST API — no HTML title; check JSON body instead
+    expectBodyContains: "mappings",
   },
   {
     path: "/pgadmin/",
@@ -134,6 +136,12 @@ test.describe(`${TARGET_HOST}: admin tool services load after sysadmin login`, (
         expect(body.trim(), `${tool.label}: must not return bare health response`).not.toMatch(
           tool.expectBodyNot
         );
+      }
+      if (tool.expectBodyContains && body) {
+        expect(
+          body,
+          `${tool.label}: response body must contain "${tool.expectBodyContains}"`
+        ).toContain(tool.expectBodyContains);
       }
       if (tool.expectTitle) {
         await expect(page).toHaveTitle(tool.expectTitle, { timeout: 15_000 });

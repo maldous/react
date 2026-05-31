@@ -143,9 +143,12 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 	}
 
 	# Sentry ? error and performance monitoring dashboard
+	# header_down rewrites absolute Location redirects (e.g. /auth/login/sentry/)
+	# to stay under the /sentry/ prefix so the browser doesn't escape the route.
 	handle /sentry/* {
 		import forward_auth_check admin:sentry read
 		uri strip_prefix /sentry
+		header_down Location ^/(.*) /sentry/$1
 		reverse_proxy sentry-web:9000
 	}
 
