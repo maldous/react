@@ -133,8 +133,12 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 	}
 
 	# MinIO ? object storage console
+	# MINIO_BROWSER_REDIRECT_URL sets <base href="/minio/"> so relative asset paths
+	# resolve back through /minio/*. Strip the prefix: MinIO serves assets at root
+	# (/images/..., /static/...), not at /minio/images/....
 	handle /minio/* {
 		import forward_auth_check admin:minio read
+		uri strip_prefix /minio
 		reverse_proxy minio:9001
 	}
 

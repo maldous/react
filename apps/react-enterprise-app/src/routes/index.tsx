@@ -69,7 +69,7 @@ const TOOL_LINKS: ToolLink[] = [
   },
   {
     label: "ClickHouse",
-    href: "/clickhouse/",
+    href: "/clickhouse/play",
     description: "Analytics HTTP play UI",
     testId: "tool-link-clickhouse",
   },
