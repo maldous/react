@@ -65,9 +65,10 @@ test.describe("SPA: page loads with visible content", () => {
 
   test("Tailwind CSS is loaded — heading has non-zero bounding box", async ({ page }) => {
     await page.goto(new URL("/", getExternalBaseUrl(page)).toString());
-    await page.waitForLoadState("networkidle");
+    // Wait for the heading directly; CSS must be applied for it to have a bounding box.
+    // networkidle is avoided — react-aria background activity keeps it from settling.
     const heading = page.getByRole("heading", { name: /platform/i });
-    await expect(heading).toBeVisible();
+    await expect(heading).toBeVisible({ timeout: 15_000 });
     const box = await heading.boundingBox();
     expect(box).not.toBeNull();
     expect(box!.height).toBeGreaterThan(0);
@@ -78,7 +79,9 @@ test.describe("SPA: page loads with visible content", () => {
     const errors: string[] = [];
     page.on("pageerror", (err) => errors.push(err.message));
     await page.goto(new URL("/", getExternalBaseUrl(page)).toString());
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("load");
+    // Allow one render cycle for React to mount and report errors
+    await expect(page.locator("#root")).not.toBeEmpty({ timeout: 10_000 });
     expect(errors, `JS errors on page load: ${errors.join(", ")}`).toHaveLength(0);
   });
 
@@ -90,14 +93,14 @@ test.describe("SPA: page loads with visible content", () => {
       }
     });
     await page.goto(new URL("/", getExternalBaseUrl(page)).toString());
-    await page.waitForLoadState("networkidle");
+    // load fires once HTML + synchronous resources are done; assets are captured by the listener
+    await page.waitForLoadState("load");
     expect(failedAssets, `Failed assets: ${failedAssets.join(", ")}`).toHaveLength(0);
   });
 
   test("unauthenticated homepage shows sign-in entry point", async ({ page }) => {
     await page.goto(new URL("/", getExternalBaseUrl(page)).toString());
-    await page.waitForLoadState("networkidle");
-    await expect(page.getByTestId("sign-in-entry")).toBeVisible({ timeout: 10000 });
+    await expect(page.getByTestId("sign-in-entry")).toBeVisible({ timeout: 15_000 });
   });
 });
 
@@ -138,7 +141,7 @@ test.describe("routing: SPA fallback", () => {
 test.describe("security: token boundary", () => {
   test("session cookie is HTTP-only (not accessible via document.cookie)", async ({ page }) => {
     await page.goto(new URL("/", getExternalBaseUrl(page)).toString());
-    await page.waitForLoadState("networkidle");
+    await expect(page.locator("#root")).not.toBeEmpty({ timeout: 10_000 });
     const cookieValue = await page.evaluate(() => document.cookie);
     expect(cookieValue).not.toContain("platform_session");
   });
