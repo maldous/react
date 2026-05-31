@@ -170,6 +170,14 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 		reverse_proxy localstack:4566
 	}
 
+	# pgAdmin ? PostgreSQL web admin UI
+	# SCRIPT_NAME=/pgadmin is set in compose.yaml so pgAdmin serves at /pgadmin/...;
+	# no uri strip_prefix needed — pgAdmin handles the subpath internally.
+	handle /pgadmin/* {
+		import forward_auth_check admin:pgadmin read
+		reverse_proxy pgadmin:80
+	}
+
 	# Tilt UI cannot be path-proxied (its SPA makes absolute /api/* calls).
 	# Access Tilt directly at http://localhost:10350 during local development.
 	# The Tiltfile exposes a direct link on the platform-api resource.

@@ -44,6 +44,7 @@ const SYSTEM_ADMIN_RESOURCES = new Set([
   "admin:clickhouse",
   "admin:localstack",
   "admin:tilt",
+  "admin:pgadmin",
 ]);
 
 const TENANT_ADMIN_RESOURCES = new Set(["admin:keycloak", "admin:mailpit", "admin:sentry"]);

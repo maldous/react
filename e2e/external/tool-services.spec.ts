@@ -53,6 +53,11 @@ const RUNNING_TOOLS = [
     label: "WireMock",
     expectTitle: /WireMock/i,
   },
+  {
+    path: "/pgadmin/",
+    label: "pgAdmin",
+    expectTitle: /pgAdmin/i,
+  },
 ];
 
 // No profile-gated tools — all tools are required

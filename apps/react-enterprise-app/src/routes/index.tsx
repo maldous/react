@@ -73,6 +73,12 @@ const TOOL_LINKS: ToolLink[] = [
     description: "Analytics HTTP play UI",
     testId: "tool-link-clickhouse",
   },
+  {
+    label: "pgAdmin",
+    href: "/pgadmin/",
+    description: "PostgreSQL database admin",
+    testId: "tool-link-pgadmin",
+  },
 ];
 
 const STATUS_LINKS: { label: string; href: string }[] = [

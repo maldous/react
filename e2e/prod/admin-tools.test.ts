@@ -20,6 +20,7 @@ const ADMIN_TOOLS = [
   { path: "/mailpit/", label: "Mailpit", resource: "admin:mailpit" },
   { path: "/minio/", label: "MinIO console", resource: "admin:minio" },
   { path: "/clickhouse/", label: "ClickHouse", resource: "admin:clickhouse" },
+  { path: "/pgadmin/", label: "pgAdmin", resource: "admin:pgadmin" },
 ];
 
 // ---------------------------------------------------------------------------
