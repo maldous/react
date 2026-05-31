@@ -171,38 +171,42 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 	# Access Tilt directly at http://localhost:10350 during local development.
 	# The Tiltfile exposes a direct link on the platform-api resource.
 
+	# Content-hashed static assets — far-future immutable caching.
+	# Defined at site level (not inside a handle block) so Caddy recognises the matcher.
+	@assets path /assets/*
+	header @assets Cache-Control "public, max-age=31536000, immutable"
+
 	# BFF ? platform admin API
 	# NOTE: /internal/* is intentionally NOT listed here ? it must not be
 	# externally reachable. Caddy calls platform-api:3001/internal/* directly
 	# via the forward_auth directive (Docker-internal network only).
+	# X-Content-Type-Options and Cache-Control are already set by platform-api
+	# in jsonResponse(); no Caddy-level duplicate needed.
 	handle /api/* {
-		header X-Content-Type-Options nosniff
-		header Cache-Control "no-cache, no-store, must-revalidate"
 		import platform_api_proxy
 	}
+	# /auth/* carries full SPA security headers — browsers may display the BFF
+	# redirect response (e.g. error pages), and /auth/login is tested as a
+	# security-sensitive route.
 	handle /auth/* {
 		header X-Content-Type-Options nosniff
+		header X-Frame-Options DENY
+		header Referrer-Policy strict-origin-when-cross-origin
+		header Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=()"
 		header Cache-Control "no-cache, no-store, must-revalidate"
 		import platform_api_proxy
 	}
 	handle /healthz {
-		header X-Content-Type-Options nosniff
-		header Cache-Control "no-cache, no-store, must-revalidate"
 		import platform_api_proxy
 	}
 	handle /readyz {
-		header X-Content-Type-Options nosniff
-		header Cache-Control "no-cache, no-store, must-revalidate"
 		import platform_api_proxy
 	}
 	handle /version {
-		header X-Content-Type-Options nosniff
-		header Cache-Control "no-cache, no-store, must-revalidate"
 		import platform_api_proxy
 	}
 
 	# Super-admin React SPA (platform admin console)
-	# Security headers scoped here: only the SPA and its assets need CSP/HSTS.
 	handle {
 		header X-Content-Type-Options nosniff
 		header X-Frame-Options DENY
@@ -210,8 +214,6 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 		header Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=()"
 		header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; frame-ancestors 'none'"
 		header Cache-Control "no-cache, no-store, must-revalidate"
-		@assets path /assets/*
-		header @assets Cache-Control "public, max-age=31536000, immutable"
 		root * /srv
 		try_files {path} /index.html
 		file_server
@@ -257,34 +259,33 @@ http://*.aldous.info http://*.dev.localhost http://*.test.localhost http://*.sta
 		reverse_proxy sentry-web:9000
 	}
 
+	# Content-hashed static assets
+	@tenantAssets path /assets/*
+	header @tenantAssets Cache-Control "public, max-age=31536000, immutable"
+
 	# BFF ? /internal/* intentionally NOT listed (same reason as aldous.info block above)
 	handle /api/* {
-		header X-Content-Type-Options nosniff
-		header Cache-Control "no-cache, no-store, must-revalidate"
 		import platform_api_proxy
 	}
 	handle /auth/* {
 		header X-Content-Type-Options nosniff
+		header X-Frame-Options DENY
+		header Referrer-Policy strict-origin-when-cross-origin
+		header Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=()"
 		header Cache-Control "no-cache, no-store, must-revalidate"
 		import platform_api_proxy
 	}
 	handle /healthz {
-		header X-Content-Type-Options nosniff
-		header Cache-Control "no-cache, no-store, must-revalidate"
 		import platform_api_proxy
 	}
 	handle /readyz {
-		header X-Content-Type-Options nosniff
-		header Cache-Control "no-cache, no-store, must-revalidate"
 		import platform_api_proxy
 	}
 	handle /version {
-		header X-Content-Type-Options nosniff
-		header Cache-Control "no-cache, no-store, must-revalidate"
 		import platform_api_proxy
 	}
 
-	# Tenant React SPA — security headers scoped here only
+	# Tenant React SPA
 	handle {
 		header X-Content-Type-Options nosniff
 		header X-Frame-Options DENY
@@ -292,8 +293,6 @@ http://*.aldous.info http://*.dev.localhost http://*.test.localhost http://*.sta
 		header Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=()"
 		header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; frame-ancestors 'none'"
 		header Cache-Control "no-cache, no-store, must-revalidate"
-		@assets path /assets/*
-		header @assets Cache-Control "public, max-age=31536000, immutable"
 		root * /srv
 		try_files {path} /index.html
 		file_server
