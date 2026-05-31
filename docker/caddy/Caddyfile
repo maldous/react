@@ -172,9 +172,14 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 	# The Tiltfile exposes a direct link on the platform-api resource.
 
 	# Content-hashed static assets — far-future immutable caching.
-	# Defined at site level (not inside a handle block) so Caddy recognises the matcher.
+	# A dedicated handle block ensures the immutable Cache-Control is applied
+	# before the SPA catch-all handle {} can override it with no-cache.
 	@assets path /assets/*
-	header @assets Cache-Control "public, max-age=31536000, immutable"
+	handle @assets {
+		header Cache-Control "public, max-age=31536000, immutable"
+		root * /srv
+		file_server
+	}
 
 	# BFF ? platform admin API
 	# NOTE: /internal/* is intentionally NOT listed here ? it must not be
@@ -261,7 +266,11 @@ http://*.aldous.info http://*.dev.localhost http://*.test.localhost http://*.sta
 
 	# Content-hashed static assets
 	@tenantAssets path /assets/*
-	header @tenantAssets Cache-Control "public, max-age=31536000, immutable"
+	handle @tenantAssets {
+		header Cache-Control "public, max-age=31536000, immutable"
+		root * /srv
+		file_server
+	}
 
 	# BFF ? /internal/* intentionally NOT listed (same reason as aldous.info block above)
 	handle /api/* {

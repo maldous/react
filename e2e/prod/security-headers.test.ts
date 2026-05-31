@@ -22,17 +22,18 @@ test.describe("security: SPA response headers", () => {
 
   for (const route of SPA_ROUTES) {
     test(`SPA route ${route} sets X-Content-Type-Options: nosniff`, async ({ request }) => {
-      const res = await request.get(route);
+      // maxRedirects:0 so /auth/login's 302 is checked directly, not the Keycloak destination
+      const res = await request.get(route, { maxRedirects: 0, failOnStatusCode: false });
       expect(res.headers()["x-content-type-options"]).toBe("nosniff");
     });
 
     test(`SPA route ${route} sets X-Frame-Options: DENY`, async ({ request }) => {
-      const res = await request.get(route);
+      const res = await request.get(route, { maxRedirects: 0, failOnStatusCode: false });
       expect(res.headers()["x-frame-options"]).toBe("DENY");
     });
 
     test(`SPA route ${route} sets Referrer-Policy`, async ({ request }) => {
-      const res = await request.get(route);
+      const res = await request.get(route, { maxRedirects: 0, failOnStatusCode: false });
       const policy = res.headers()["referrer-policy"];
       expect(policy).toBeTruthy();
       // Must be one of the strict policies
@@ -40,7 +41,7 @@ test.describe("security: SPA response headers", () => {
     });
 
     test(`SPA route ${route} sets Permissions-Policy`, async ({ request }) => {
-      const res = await request.get(route);
+      const res = await request.get(route, { maxRedirects: 0, failOnStatusCode: false });
       const policy = res.headers()["permissions-policy"];
       expect(policy).toBeTruthy();
       // Must not grant dangerous permissions broadly
@@ -50,7 +51,7 @@ test.describe("security: SPA response headers", () => {
     });
 
     test(`SPA route ${route} sets Content-Security-Policy`, async ({ request }) => {
-      const res = await request.get(route);
+      const res = await request.get(route, { maxRedirects: 0, failOnStatusCode: false });
       const csp = res.headers()["content-security-policy"];
       expect(csp, `CSP must be set on ${route}`).toBeTruthy();
       // CSP must not allow unsafe-inline for scripts
@@ -60,7 +61,7 @@ test.describe("security: SPA response headers", () => {
     });
 
     test(`SPA route ${route} sets Cache-Control for dynamic content`, async ({ request }) => {
-      const res = await request.get(route);
+      const res = await request.get(route, { maxRedirects: 0, failOnStatusCode: false });
       const cacheControl = res.headers()["cache-control"];
       expect(cacheControl).toBeTruthy();
       // Dynamic HTML must not be cached aggressively
