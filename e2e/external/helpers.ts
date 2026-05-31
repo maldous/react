@@ -50,24 +50,32 @@ export async function completeKeycloakLogin(
 
 /**
  * Navigate to / and perform the full Keycloak login flow.
- * Returns after the post-login redirect back to aldous.info completes.
+ *
+ * Two-hop flow:
+ *   / (homepage) → click sign-in-link → /login (React themed entry)
+ *                → click sign-in-button → /auth/login (BFF, Caddy-proxied)
+ *                → Keycloak PKCE → fill credentials → /auth/callback → /
+ *
+ * Returns after the post-login redirect back to the app root completes.
  */
 export async function loginAs(page: Page, username: string, password: string): Promise<void> {
   const baseUrl = getExternalBaseUrl();
   await page.goto(new URL("/", baseUrl).toString());
   const appOrigin = new URL(page.url()).origin;
-  // Click the sign-in link/button on the landing page or login page
-  const signInLink = page
-    .locator('[data-testid="sign-in-link"], [data-testid="sign-in-button"], a[href="/auth/login"]')
-    .first();
-  await signInLink.click();
-  // Complete Keycloak login
+
+  // Hop 1: from homepage click the sign-in entry link → /login (React page)
+  await page.getByTestId("sign-in-link").click();
+
+  // Hop 2: from /login click the sign-in button → /auth/login (BFF PKCE start)
+  await page.getByTestId("sign-in-button").click();
+
+  // Complete Keycloak login form
   await completeKeycloakLogin(page, username, password);
-  // Wait for redirect back to the homepage (not the intermediate callback URL).
-  // Must exclude /auth/callback which also contains "aldous.info".
+
+  // Wait for redirect back to the app root (excludes /auth/callback)
   const escapedOrigin = appOrigin.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   await page.waitForURL(new RegExp(`^${escapedOrigin}/?$`), { timeout: 20_000 });
-  // Wait for the actor display (confirms session is active)
+  // Confirm session is active
   await expect(page.getByTestId("actor-display")).toBeVisible({ timeout: 10_000 });
 }
 

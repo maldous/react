@@ -3,7 +3,7 @@ import { Route as rootRoute } from "./__root";
 import { useSession, sessionQueryKey } from "../hooks/use-session";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "@platform/i18n-runtime";
-import { LoadingState } from "@platform/ui-design-system";
+import { LoadingState, Card, CardBody, Badge, Button } from "@platform/ui-design-system";
 
 export const Route = createRoute({
   getParentRoute: () => rootRoute,
@@ -12,8 +12,9 @@ export const Route = createRoute({
 });
 
 // ---------------------------------------------------------------------------
-// Tool link definitions ? source of truth: docker/caddy/Caddyfile
-// Routes are path-prefixed behind Caddy on aldous.info (ADR-0029 ?1a).
+// Tool link definitions — source of truth: docker/caddy/Caddyfile
+// Routes are path-prefixed behind Caddy on aldous.info (ADR-0029 §1a).
+// Trailing slash is required: Caddy routes /kc/*, /mailpit/*, etc.
 // ---------------------------------------------------------------------------
 
 interface ToolLink {
@@ -22,36 +23,56 @@ interface ToolLink {
   description: string;
   /** Compose profile required; link is shown but may return 502 if not running */
   profileGated?: string;
+  testId: string;
 }
 
 const TOOL_LINKS: ToolLink[] = [
   {
     label: "Keycloak",
-    href: "/kc",
-    description: "Identity and SSO ? all realms",
+    href: "/kc/",
+    description: "Identity and SSO — all realms",
     profileGated: "identity",
+    testId: "tool-link-keycloak",
   },
-  { label: "Mailpit", href: "/mailpit", description: "Caught email (all tenants)" },
-  { label: "MinIO", href: "/minio", description: "Object storage console" },
+  {
+    label: "Mailpit",
+    href: "/mailpit/",
+    description: "Caught email (all tenants)",
+    testId: "tool-link-mailpit",
+  },
+  {
+    label: "MinIO",
+    href: "/minio/",
+    description: "Object storage console",
+    testId: "tool-link-minio",
+  },
   {
     label: "SonarQube",
-    href: "/sonar",
+    href: "/sonar/",
     description: "Code quality dashboard",
     profileGated: "quality",
+    testId: "tool-link-sonarqube",
   },
   {
     label: "Sentry",
-    href: "/sentry",
+    href: "/sentry/",
     description: "Error and performance monitoring",
     profileGated: "sentry",
+    testId: "tool-link-sentry",
   },
   {
     label: "WireMock",
-    href: "/wiremock",
+    href: "/wiremock/",
     description: "External HTTP mock admin",
     profileGated: "external-mocks",
+    testId: "tool-link-wiremock",
   },
-  { label: "ClickHouse", href: "/clickhouse", description: "Analytics HTTP play UI" },
+  {
+    label: "ClickHouse",
+    href: "/clickhouse/",
+    description: "Analytics HTTP play UI",
+    testId: "tool-link-clickhouse",
+  },
 ];
 
 const STATUS_LINKS: { label: string; href: string }[] = [
@@ -74,14 +95,14 @@ function IndexPage() {
   async function handleLogout() {
     await fetch("/auth/logout", { method: "POST", credentials: "include" });
     await queryClient.invalidateQueries({ queryKey: sessionQueryKey });
-    void navigate({ to: "/auth/login" });
+    void navigate({ to: "/" });
   }
 
   if (isLoading) {
     return <LoadingState message={t("auth.status.checkingAuthentication")} />;
   }
 
-  // Unauthenticated: show sign-in prompt
+  // Unauthenticated: show sign-in prompt linking to the React login entry page
   if (!actor) {
     return (
       <div
@@ -93,7 +114,7 @@ function IndexPage() {
             className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-2xl text-white shadow-md"
             aria-hidden="true"
           >
-            ?
+            ⬡
           </div>
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-gray-900">
@@ -101,8 +122,9 @@ function IndexPage() {
             </h1>
             <p className="mt-1 text-sm text-gray-500">{t("platform.tagline")}</p>
           </div>
+          {/* Link to the React-rendered login entry page (/login), not the BFF endpoint */}
           <a
-            href="/auth/login"
+            href="/login"
             className="inline-flex items-center rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
             data-testid="sign-in-link"
           >
@@ -124,26 +146,23 @@ function IndexPage() {
               className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-base text-white"
               aria-hidden="true"
             >
-              ?
+              ⬡
             </span>
             <h1 className="text-lg font-semibold text-gray-900">{t("platform.name")}</h1>
           </div>
           <div className="flex items-center gap-4">
             <span className="text-sm text-gray-600" data-testid="actor-display">
               {actor.displayName}
-              {actor.roles.length > 0 && (
-                <span className="ml-2 rounded bg-indigo-100 px-1.5 py-0.5 text-xs font-medium text-indigo-700">
-                  {actor.roles[0]}
-                </span>
-              )}
+              {actor.roles.length > 0 && <Badge className="ml-2">{actor.roles[0]}</Badge>}
             </span>
-            <button
-              onClick={() => void handleLogout()}
-              className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
+            <Button
+              variant="outline"
+              size="sm"
+              onPress={() => void handleLogout()}
               data-testid="logout-button"
             >
               {t("auth.logout.label")}
-            </button>
+            </Button>
           </div>
         </div>
       </header>
@@ -185,18 +204,22 @@ function IndexPage() {
               <a
                 key={tool.href}
                 href={tool.href}
-                className="group flex flex-col rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition hover:border-indigo-300 hover:shadow"
-                data-testid={`tool-link-${tool.label.toLowerCase()}`}
+                className="group block no-underline"
+                data-testid={tool.testId}
               >
-                <span className="font-medium text-gray-900 group-hover:text-indigo-600">
-                  {tool.label}
-                </span>
-                <span className="mt-0.5 text-xs text-gray-500">{tool.description}</span>
-                {tool.profileGated && (
-                  <span className="mt-2 self-start rounded bg-amber-50 px-1.5 py-0.5 text-xs text-amber-700 ring-1 ring-amber-200">
-                    profile: {tool.profileGated}
-                  </span>
-                )}
+                <Card className="h-full transition hover:border-indigo-300 hover:shadow">
+                  <CardBody className="p-4">
+                    <span className="font-medium text-gray-900 group-hover:text-indigo-600">
+                      {tool.label}
+                    </span>
+                    <span className="mt-0.5 block text-xs text-gray-500">{tool.description}</span>
+                    {tool.profileGated && (
+                      <Badge className="mt-2 bg-amber-50 text-amber-700 ring-1 ring-amber-200">
+                        profile: {tool.profileGated}
+                      </Badge>
+                    )}
+                  </CardBody>
+                </Card>
               </a>
             ))}
           </div>

@@ -39,19 +39,16 @@ test.describe(`${TARGET_HOST}: platform login`, () => {
   });
 
   test("login page is themed with platform branding", async ({ page }) => {
-    await page.goto(new URL("/auth/login", getExternalBaseUrl(page)).toString());
-    // Platform name must appear — proves Option B theming is applied.
-    // Keycloak renders "Enterprise Platform (local)" in a banner element, not h1/h2.
+    // Visit the React-rendered login entry page (/login), not the BFF endpoint.
+    // /auth/login is Caddy-proxied to the BFF and immediately redirects to Keycloak.
+    // Keycloak theming is tracked separately in ADR-ACT-0156.
+    await page.goto(new URL("/login", getExternalBaseUrl(page)).toString());
+    // Platform name must appear in the React-rendered heading
     await expect(
-      page
-        .locator("#kc-header-wrapper, header, .pf-v5-c-brand")
-        .filter({
-          hasText: /Enterprise Platform|Platform/i,
-        })
-        .first()
+      page.getByRole("heading", { name: /Enterprise Platform|Platform/i })
     ).toBeVisible();
-    // Keycloak form submit button must be present (not a React testid — we are on the KC page)
-    await expect(page.getByRole("button", { name: /sign in/i })).toBeVisible();
+    // Sign-in button (data-testid) must be present — this triggers the BFF PKCE flow
+    await expect(page.getByTestId("sign-in-button")).toBeVisible();
   });
 
   test("real Keycloak login succeeds and session is established", async ({ page }) => {

@@ -26,7 +26,7 @@ describe("ProtectedRoute", () => {
     expect(screen.getByText(/checking authentication/i)).toBeInTheDocument();
   });
 
-  it("redirects to /auth/login when unauthenticated", () => {
+  it("redirects to /login when unauthenticated", () => {
     vi.mocked(useSession).mockReturnValue({
       actor: null,
       isLoading: false,
@@ -36,7 +36,7 @@ describe("ProtectedRoute", () => {
     });
     render(<ProtectedRoute>Protected Content</ProtectedRoute>);
     const nav = screen.getByTestId("navigate");
-    expect(nav).toHaveAttribute("data-to", "/auth/login");
+    expect(nav).toHaveAttribute("data-to", "/login");
   });
 
   it("shows forbidden state when authenticated but missing permission", () => {

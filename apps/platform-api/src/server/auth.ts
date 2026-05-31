@@ -45,11 +45,12 @@ function getSessionCookieDomain(): string | undefined {
   return process.env["SESSION_COOKIE_DOMAIN"];
 }
 
-function isSecureCookie(): boolean {
-  // Only add Secure flag when explicitly configured.
-  // NODE_ENV=production does NOT auto-enable Secure ? on this host,
-  // Cloudflare Flexible SSL means the browser ? Caddy connection is
-  // plain HTTP. Secure cookies set over HTTP are rejected by browsers.
+// Exported for unit testing only.
+// Local HTTP (Compose/dev): SESSION_COOKIE_SECURE=false (default in compose.yaml)
+// Cloudflare/HTTPS production: SESSION_COOKIE_SECURE=true (set in .env.staging / .env.prod)
+// NODE_ENV=production does NOT imply Secure — Cloudflare Flexible SSL means the
+// browser→Caddy leg is plain HTTP; browsers reject Secure cookies over HTTP.
+export function isSecureCookie(): boolean {
   return process.env["SESSION_COOKIE_SECURE"] === "true";
 }
 

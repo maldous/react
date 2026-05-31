@@ -14,8 +14,8 @@ export function ProtectedRoute({ permission, children }: ProtectedRouteProps) {
   const t = useTranslation();
 
   if (isLoading) return <LoadingState message={t("auth.status.checkingAuthentication")} />;
-  // "/auth/login" is registered in routeTree.gen.ts ? type-safe, no cast needed
-  if (!isAuthenticated) return <Navigate to="/auth/login" />;
+  // Redirect to the React-rendered login entry page; /auth/login is BFF-only (Caddy-proxied)
+  if (!isAuthenticated) return <Navigate to="/login" />;
   if (permission && !hasPermission(permission)) {
     return (
       <ForbiddenState
