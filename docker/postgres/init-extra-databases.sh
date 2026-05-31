@@ -48,29 +48,45 @@ create_db_and_user "$SENTRY_DB_NAME" "$SENTRY_DB_USER" "$SENTRY_DB_PASSWORD"
 # ---------------------------------------------------------------------------
 
 PGADMIN_DB="${POSTGRES_DB:-platform}"
-PGADMIN_ROLE="pgadmin_sysadmin"
-PGADMIN_PASS="${PGADMIN_DB_PASSWORD:-pgadmin-sysadmin-password}"
+PGADMIN_SYSADMIN_ROLE="pgadmin_sysadmin"
+PGADMIN_SYSADMIN_PASS="${PGADMIN_DB_PASSWORD:-pgadmin-sysadmin-password}"
+PGADMIN_TENANT_ROLE="pgadmin_tenant_admin"
+PGADMIN_TENANT_PASS="${PGADMIN_TENANT_DB_PASSWORD:-pgadmin-tenant-password}"
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$PGADMIN_DB" <<EOSQL
+-- pgadmin_sysadmin: system-admin connection — bypass_rls sees all tenant data
 DO \$\$
 BEGIN
-  IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = '${PGADMIN_ROLE}') THEN
-    CREATE ROLE "${PGADMIN_ROLE}" LOGIN PASSWORD '${PGADMIN_PASS}';
+  IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = '${PGADMIN_SYSADMIN_ROLE}') THEN
+    CREATE ROLE "${PGADMIN_SYSADMIN_ROLE}" LOGIN PASSWORD '${PGADMIN_SYSADMIN_PASS}';
   END IF;
 END
 \$\$;
+ALTER ROLE "${PGADMIN_SYSADMIN_ROLE}" SET "app.bypass_rls" = 'true';
+ALTER ROLE "${PGADMIN_SYSADMIN_ROLE}" SET "app.current_tenant_id" = '';
+GRANT CONNECT ON DATABASE "${PGADMIN_DB}" TO "${PGADMIN_SYSADMIN_ROLE}";
+GRANT USAGE ON SCHEMA public TO "${PGADMIN_SYSADMIN_ROLE}";
+GRANT ALL ON ALL TABLES IN SCHEMA public TO "${PGADMIN_SYSADMIN_ROLE}";
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO "${PGADMIN_SYSADMIN_ROLE}";
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO "${PGADMIN_SYSADMIN_ROLE}";
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO "${PGADMIN_SYSADMIN_ROLE}";
 
--- Not a superuser: RLS policies apply to this role.
--- app.bypass_rls = true mirrors withSystemAdmin() in the application layer.
--- This means pgAdmin sees all tenant data but RLS is still enforced (not bypassed).
-ALTER ROLE "${PGADMIN_ROLE}" SET "app.bypass_rls" = 'true';
-ALTER ROLE "${PGADMIN_ROLE}" SET "app.current_tenant_id" = '';
-
--- Full access to the platform database for administration
-GRANT CONNECT ON DATABASE "${PGADMIN_DB}" TO "${PGADMIN_ROLE}";
-GRANT USAGE ON SCHEMA public TO "${PGADMIN_ROLE}";
-GRANT ALL ON ALL TABLES IN SCHEMA public TO "${PGADMIN_ROLE}";
-GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO "${PGADMIN_ROLE}";
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO "${PGADMIN_ROLE}";
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO "${PGADMIN_ROLE}";
+-- pgadmin_tenant_admin: tenant-admin connection — RLS enforced, sees own tenant only.
+-- app.current_tenant_id must be set per-session by the tenant-admin in the query tool:
+--   SELECT set_config('app.current_tenant_id', '<org-id>', true);
+DO \$\$
+BEGIN
+  IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = '${PGADMIN_TENANT_ROLE}') THEN
+    CREATE ROLE "${PGADMIN_TENANT_ROLE}" LOGIN PASSWORD '${PGADMIN_TENANT_PASS}';
+  END IF;
+END
+\$\$;
+-- No bypass_rls: RLS policies are fully enforced for this role.
+ALTER ROLE "${PGADMIN_TENANT_ROLE}" SET "app.bypass_rls" = 'false';
+ALTER ROLE "${PGADMIN_TENANT_ROLE}" SET "app.current_tenant_id" = '';
+GRANT CONNECT ON DATABASE "${PGADMIN_DB}" TO "${PGADMIN_TENANT_ROLE}";
+GRANT USAGE ON SCHEMA public TO "${PGADMIN_TENANT_ROLE}";
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO "${PGADMIN_TENANT_ROLE}";
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO "${PGADMIN_TENANT_ROLE}";
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO "${PGADMIN_TENANT_ROLE}";
 EOSQL

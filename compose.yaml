@@ -38,8 +38,9 @@ services:
       SENTRY_DB_USER: ${SENTRY_DB_USER:-sentry}
       SENTRY_DB_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
       SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
-      # pgAdmin RLS-aware role — non-superuser so RLS applies (init script creates it)
+      # pgAdmin roles — non-superuser so RLS applies (init script creates them)
       PGADMIN_DB_PASSWORD: ${PGADMIN_DB_PASSWORD:-pgadmin-sysadmin-password}
+      PGADMIN_TENANT_DB_PASSWORD: ${PGADMIN_TENANT_DB_PASSWORD:-pgadmin-tenant-password}
     ports:
       - "${POSTGRES_PORT:-5433}:5432"
     volumes:
@@ -177,8 +178,9 @@ services:
       KEYCLOAK_URL: ${KEYCLOAK_URL:-http://keycloak:8080/kc}
       KC_HOSTNAME: ${KC_HOSTNAME:-http://localhost/kc}
       KEYCLOAK_REALM: ${KEYCLOAK_REALM:-platform}
-      # RLS-aware role password — must match init-extra-databases.sh
+      # RLS-aware role passwords — must match init-extra-databases.sh
       PGADMIN_DB_PASSWORD: ${PGADMIN_DB_PASSWORD:-pgadmin-sysadmin-password}
+      PGADMIN_TENANT_DB_PASSWORD: ${PGADMIN_TENANT_DB_PASSWORD:-pgadmin-tenant-password}
     ports:
       - "${PGADMIN_PORT:-5050}:80"
     volumes:

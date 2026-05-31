@@ -1,14 +1,24 @@
 {
   "Servers": {
     "1": {
-      "Name": "Platform DB (RLS-aware sysadmin)",
+      "Name": "Platform DB — sysadmin (bypass RLS)",
       "Group": "Platform",
       "Host": "postgres",
       "Port": 5432,
       "MaintenanceDB": "platform",
       "Username": "pgadmin_sysadmin",
       "SSLMode": "prefer",
-      "Comment": "Connects as pgadmin_sysadmin (non-superuser). app.bypass_rls=true is set by default so sysadmin sees all tenant data. RLS is still evaluated — not bypassed. For tenant-scoped queries run: SELECT set_config('app.current_tenant_id', '<org-id>', true);"
+      "Comment": "system-admin connection. app.bypass_rls=true by default — sees all tenant data. RLS policies still evaluated but bypass flag set, matching withSystemAdmin() in the app."
+    },
+    "2": {
+      "Name": "Platform DB — tenant-admin (RLS enforced)",
+      "Group": "Platform",
+      "Host": "postgres",
+      "Port": 5432,
+      "MaintenanceDB": "platform",
+      "Username": "pgadmin_tenant_admin",
+      "SSLMode": "prefer",
+      "Comment": "tenant-admin connection. Full RLS enforced — only sees own tenant rows. Before querying, run: SELECT set_config('app.current_tenant_id', '<your-org-id>', true); Read-only (SELECT only) to match tenant-admin data access level."
     }
   }
 }

@@ -47,7 +47,12 @@ const SYSTEM_ADMIN_RESOURCES = new Set([
   "admin:pgadmin",
 ]);
 
-const TENANT_ADMIN_RESOURCES = new Set(["admin:keycloak", "admin:mailpit", "admin:sentry"]);
+const TENANT_ADMIN_RESOURCES = new Set([
+  "admin:keycloak",
+  "admin:mailpit",
+  "admin:sentry",
+  "admin:pgadmin",
+]);
 
 const APEX_DOMAIN = process.env["APEX_DOMAIN"] ?? "aldous.info";
 
