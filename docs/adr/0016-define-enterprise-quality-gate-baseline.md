@@ -218,6 +218,7 @@ Option C is chosen because:
 - Adding a new package requires passing all hard gates (formatting, lint, security) but not advisory gates.
 - Changing gate configuration requires updating `docs/evidence/quality-gates/` evidence.
 - The `reports/` directory is gitignored; only committed evidence is version-controlled.
+- HTTP response security headers (`X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy`, `Content-Security-Policy`, `Cache-Control`) are part of the security baseline and are enforced by the Caddy reverse proxy for all virtual hosts. Changes to the header policy require updating the Caddyfile and evidence.
 
 ## AI-assistance record
 

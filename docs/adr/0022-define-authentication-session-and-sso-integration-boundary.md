@@ -269,6 +269,7 @@ Option B (BFF with HTTP-only session cookie) is chosen because:
 - Session TTL and token refresh strategy are operational decisions, not architecture decisions.
 - The Keycloak Compose profile (`make compose-up-identity`) provides a local IdP for development.
 - Login UI (login page, error display) is not in scope for the first vertical slice (ADR-ACT-0008). The first slice assumes an authenticated session already exists.
+- The BFF does not set CORS response headers; all browser requests to the BFF must be same-origin. Cross-origin access is not supported and should not be added without a new ADR. The Caddy reverse proxy serves both the SPA and the BFF from the same origin, making CORS unnecessary for the standard deployment model.
 
 ## AI-assistance record
 
