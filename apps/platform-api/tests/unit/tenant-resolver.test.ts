@@ -19,6 +19,9 @@ describe("extractSlugFromHost — production apex (aldous.info)", () => {
     assert.equal(extractSlugFromHost("admin.aldous.info", apex), null);
     assert.equal(extractSlugFromHost("api.aldous.info", apex), null);
     assert.equal(extractSlugFromHost("kc.aldous.info", apex), null);
+    assert.equal(extractSlugFromHost("pgadmin.aldous.info", apex), null);
+    assert.equal(extractSlugFromHost("platform.aldous.info", apex), null);
+    assert.equal(extractSlugFromHost("aldous.aldous.info", apex), null);
   });
 
   it("returns null for unrelated hosts", () => {

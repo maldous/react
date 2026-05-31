@@ -163,8 +163,13 @@ export const RESERVED_SLUGS = new Set([
   // Environment apex domains (ADR-0033)
   "staging",
   "prod",
+  "production",
   "dev",
   "test",
+  // Auth / application entry paths
+  "login",
+  "sso",
+  "account",
   // Caddy-routed tool subdomains (compose.yaml profiles, Caddyfile)
   "kc",
   "keycloak",
@@ -177,6 +182,10 @@ export const RESERVED_SLUGS = new Set([
   "sentry",
   "otel",
   "opentelemetry",
+  "pgadmin",
+  "grafana",
+  "monitoring",
+  "localstack",
   // Common infrastructure subdomains
   "admin",
   "api",
@@ -184,7 +193,6 @@ export const RESERVED_SLUGS = new Set([
   "mail",
   "app",
   "auth",
-  "account",
   "help",
   "status",
   "docs",
@@ -192,7 +200,14 @@ export const RESERVED_SLUGS = new Set([
   "monitor",
   "assets",
   "static",
+  "cdn",
   "support",
+  // Platform-reserved terms
+  "global",
+  "platform",
+  "root",
+  "system",
+  "aldous",
 ]);
 
 /**

@@ -246,6 +246,52 @@ describe("isSlugReserved", () => {
       assert.ok(isSlugReserved(slug), `isSlugReserved must return true for "${slug}"`);
     }
   });
+
+  const required = [
+    "staging",
+    "prod",
+    "production",
+    "dev",
+    "test",
+    "admin",
+    "api",
+    "app",
+    "auth",
+    "login",
+    "account",
+    "sso",
+    "kc",
+    "keycloak",
+    "pgadmin",
+    "grafana",
+    "monitoring",
+    "mailpit",
+    "minio",
+    "sonar",
+    "sonarqube",
+    "sentry",
+    "wiremock",
+    "clickhouse",
+    "localstack",
+    "otel",
+    "opentelemetry",
+    "static",
+    "assets",
+    "cdn",
+    "support",
+    "status",
+    "docs",
+    "global",
+    "platform",
+    "root",
+    "system",
+    "aldous",
+  ];
+  for (const slug of required) {
+    it(`"${slug}" is reserved`, () => {
+      assert.ok(isSlugReserved(slug), `Expected "${slug}" to be reserved`);
+    });
+  }
 });
 
 describe("resolvePermissions", () => {
