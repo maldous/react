@@ -1,0 +1,13 @@
+# gitleaks configuration — https://github.com/gitleaks/gitleaks
+#
+# Allowlisted findings are secrets that have been identified, remediated
+# (file untracked, secret rotated), and recorded here so historical commits
+# no longer fail the scan. Do not add active secrets to this list.
+
+[allowlist]
+description = "Remediated historical findings"
+commits = [
+  # CADDY_INTERNAL_SECRET committed in .env.staging (f30dd06), file immediately
+  # untracked in 578975c. Secret has been rotated — see .env.example.
+  "f30dd0683d5985c3c1e6d7cefb885a567da5d2c3",
+]
