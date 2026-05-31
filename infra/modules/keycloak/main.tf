@@ -238,6 +238,59 @@ resource "keycloak_openid_user_realm_role_protocol_mapper" "bff_realm_roles_user
 }
 
 # ---------------------------------------------------------------------------
+# SSO clients for admin tool UIs — pgAdmin and MinIO (ADR-0030)
+#
+# These are public PKCE clients so no client secret is needed (tools run on the
+# same host and redirect back to the same origin). The BFF pattern is NOT used
+# for admin tools — they handle their own OIDC flow directly with Keycloak.
+# ---------------------------------------------------------------------------
+
+# pgAdmin OAuth2 client — public, PKCE, Authorization Code flow
+resource "keycloak_openid_client" "pgadmin" {
+  realm_id  = keycloak_realm.platform.id
+  client_id = "pgadmin"
+  name      = "pgAdmin"
+  enabled   = true
+
+  access_type                  = "PUBLIC"
+  standard_flow_enabled        = true
+  implicit_flow_enabled        = false
+  direct_access_grants_enabled = false
+
+  pkce_code_challenge_method = "S256"
+
+  valid_redirect_uris = [
+    "http://localhost:5050/pgadmin/oauth2/authorize",
+    "http://${var.apex_domain}/pgadmin/oauth2/authorize",
+    "https://${var.apex_domain}/pgadmin/oauth2/authorize",
+  ]
+  web_origins = ["+"]
+}
+
+# MinIO OIDC client — public, PKCE, Authorization Code flow
+resource "keycloak_openid_client" "minio" {
+  realm_id  = keycloak_realm.platform.id
+  client_id = "minio"
+  name      = "MinIO Console"
+  enabled   = true
+
+  access_type                  = "PUBLIC"
+  standard_flow_enabled        = true
+  implicit_flow_enabled        = false
+  direct_access_grants_enabled = false
+
+  pkce_code_challenge_method = "S256"
+
+  valid_redirect_uris = [
+    "http://localhost:9001/minio/oauth_callback",
+    "http://localhost:9031/minio/oauth_callback",
+    "http://${var.apex_domain}/minio/oauth_callback",
+    "https://${var.apex_domain}/minio/oauth_callback",
+  ]
+  web_origins = ["+"]
+}
+
+# ---------------------------------------------------------------------------
 # Fixture users ? local/dev environments only
 #
 # Emails match apps/platform-api/src/db/seed.ts exactly so that the

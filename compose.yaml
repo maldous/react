@@ -94,8 +94,16 @@ services:
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-miniopassword}
-      # Redirect URL for MinIO console login ? must match the path Caddy serves it on.
+      # Redirect URL for MinIO console login — must match the path Caddy serves it on.
       MINIO_BROWSER_REDIRECT_URL: ${MINIO_BROWSER_REDIRECT_URL:-http://aldous.info/minio}
+      # Keycloak OIDC SSO — MinIO console authenticates via platform Keycloak realm.
+      # Users sign in with their Keycloak account; existing sessions auto-authenticate.
+      MINIO_IDENTITY_OPENID_CONFIG_URL: ${KEYCLOAK_URL:-http://keycloak:8080/kc}/realms/${KEYCLOAK_REALM:-platform}/.well-known/openid-configuration
+      MINIO_IDENTITY_OPENID_CLIENT_ID: minio
+      MINIO_IDENTITY_OPENID_CLIENT_SECRET: ""
+      MINIO_IDENTITY_OPENID_CLAIM_NAME: preferred_username
+      MINIO_IDENTITY_OPENID_SCOPES: "openid,email,profile"
+      MINIO_IDENTITY_OPENID_REDIRECT_URI_DYNAMIC_ALL: "on"
     ports:
       - "${MINIO_API_PORT:-9000}:9000" # S3-compatible API
       - "${MINIO_CONSOLE_PORT:-9001}:9001" # MinIO console
@@ -154,18 +162,24 @@ services:
 
   # pgAdmin — PostgreSQL web admin UI, accessible at /pgadmin/ via Caddy forward_auth.
   # SCRIPT_NAME=/pgadmin tells pgAdmin its subpath so all assets resolve correctly.
+  # OAuth2 SSO with Keycloak is configured via docker/pgadmin/config_local.py.
+  # SERVER_MODE=True is required for OAuth2; after passing forward_auth, pgAdmin
+  # redirects to Keycloak which recognises the existing session (SSO — no re-login).
   pgadmin:
     image: dpage/pgadmin4:8.14
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@aldous.info}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-      PGADMIN_CONFIG_SERVER_MODE: "False"
-      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
       SCRIPT_NAME: /pgadmin
+      # Keycloak SSO config — read by docker/pgadmin/config_local.py
+      KEYCLOAK_URL: ${KEYCLOAK_URL:-http://keycloak:8080/kc}
+      KC_HOSTNAME: ${KC_HOSTNAME:-http://localhost/kc}
+      KEYCLOAK_REALM: ${KEYCLOAK_REALM:-platform}
     ports:
       - "${PGADMIN_PORT:-5050}:80"
     volumes:
       - pgadmin-data:/var/lib/pgadmin
+      - ./docker/pgadmin/config_local.py:/pgadmin4/config_local.py:ro
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:80/pgadmin/misc/ping || exit 1"]
       interval: 15s
