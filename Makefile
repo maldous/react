@@ -1,6 +1,6 @@
-# =============================================================================
-# Platform Makefile ? maldous/react
-# =============================================================================
+
+# ─── Platform Makefile ? maldous/react ───
+
 # Usage:
 #   make all           Run every check, test, audit, compose, and gate
 #   make check         Fast local check (no sonar, no compose smoke tests)
@@ -12,7 +12,6 @@
 #
 # Sonar requires SONAR_TOKEN. Set it in .env or the environment:
 #   echo 'SONAR_TOKEN=squ_...' >> .env
-# =============================================================================
 
 SHELL := /bin/bash
 .DEFAULT_GOAL := all
@@ -56,9 +55,24 @@ SKIP  = @printf '$(YELLOW)? %s$(RESET)\n' "$(1)"
 # Orchestrator shorthand
 ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
 
-# =============================================================================
-# PHONY DECLARATIONS
-# =============================================================================
+# ── Port helpers ─────────────────────────────────────────────────────────────
+# JVM_PORTS_EXCLUDE — shell fragment that sets _jvm_ports="port1|port2".
+# Reads KEYCLOAK_PORT and SONAR_PORT from the active .env.$(ENV) file so
+# the fuser/verify steps spare both JVM services across all environments.
+JVM_PORTS_EXCLUDE = _jvm_ports="$$(grep -oP '(?:KEYCLOAK|SONAR)_PORT=\K\d+' .env.$(ENV) 2>/dev/null | tr '\n' '|' | sed 's/|$$//')"
+
+# CONN_URLS(envfile) — shell fragment that sets _pg_port, _rd_port, _pg_url,
+# _rd_url by reading POSTGRES_PORT and REDIS_PORT from the given env file.
+# Usage in recipe: @$(call CONN_URLS,.env.$(ENV)); POSTGRES_URL="$$_pg_url" ...
+define CONN_URLS
+_pg_port="$$(grep -oP 'POSTGRES_PORT=\K\d+' $(1) 2>/dev/null | head -1)"; _pg_port=$${_pg_port:-5433}; \
+_rd_port="$$(grep -oP 'REDIS_PORT=\K\d+' $(1) 2>/dev/null | head -1)"; _rd_port=$${_rd_port:-6379}; \
+_pg_url="postgresql://platform:platformpassword@localhost:$${_pg_port}/platform"; \
+_rd_url="redis://localhost:$${_rd_port}"
+endef
+
+# ─── PHONY DECLARATIONS ───
+
 .PHONY: all help install \
         format lint typecheck \
         test test-compose \
@@ -80,7 +94,6 @@ ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
         stage-dev stage-test stage-staging stage-prod \
         run-stage-tests run-stage-e2e
 
-# =============================================================================
 ## all ? Complete promotion pipeline across all 4 environments
 ##
 ##   clean-all ? quality gates ? dev (Tilt) ? test ? staging (Cloudflare) ? prod (Cloudflare)
@@ -92,7 +105,6 @@ ORCHESTRATOR = node tools/architecture/orchestrator/src/index.mjs
 ##   echo "127.0.0.1 aldous.info" | sudo tee -a /etc/hosts
 ##   infra/env/dev/dev.tfvars (copy from dev.tfvars.example)
 ##   KEYCLOAK_TEST_USERNAME and KEYCLOAK_TEST_PASSWORD in .env
-# =============================================================================
 all: KEEP_STACKS_UP = true
 all: clean-all \
      install format lint typecheck architecture audit security \
@@ -110,9 +122,7 @@ all: clean-all \
 	@printf '$(RESET)'
 	@echo ""
 
-# =============================================================================
 ## help ? Show all documented targets
-# =============================================================================
 help:
 	@echo ""
 	@echo "$(BOLD)Platform Makefile ? maldous/react$(RESET)"
@@ -122,9 +132,7 @@ help:
 		| awk -F ' ? ' '{ printf "  $(BOLD)%-22s$(RESET) %s\n", $$1, $$2 }'
 	@echo ""
 
-# =============================================================================
 ## install ? Install all npm dependencies (root + governance tools)
-# =============================================================================
 install:
 	$(call STEP,install)
 	npm ci
@@ -133,44 +141,34 @@ install:
 	@cd tools/architecture/validate-lifecycle-evidence && npm ci --silent
 	$(call OK,dependencies installed)
 
-# =============================================================================
 ## format ? Write Prettier formatting then verify
-# =============================================================================
 format:
 	$(call STEP,format)
 	npm run format:write
 	npm run format:check
 	$(call OK,formatting clean)
 
-# =============================================================================
 ## lint ? Markdown lint (markdownlint-cli2) + ESLint flat config
-# =============================================================================
 lint:
 	$(call STEP,lint)
 	npm run lint:md
 	npm run lint
 	$(call OK,lint clean)
 
-# =============================================================================
 ## typecheck ? TypeScript strict (app + all platform packages)
-# =============================================================================
 typecheck:
 	$(call STEP,typecheck)
 	npm run tsc:check
 	$(call OK,TypeScript clean)
 
-# =============================================================================
 ## test ? Run all 271 tests with V8 LCOV coverage
-# =============================================================================
 test:
 	$(call STEP,test \(271 tests + LCOV coverage\))
 	npm run test:coverage
 	$(call OK,tests passed ? coverage/lcov.info generated)
 
-# =============================================================================
 ## test-compose ? Compose service smoke tests (starts services if needed)
 ## Scoped to the selected ENV (default: dev).
-# =============================================================================
 test-compose:
 	$(call STEP,test:compose ($(ENV)))
 	@$(COMPOSE_CMD) ps postgres 2>/dev/null | grep -q "healthy" \
@@ -181,45 +179,35 @@ test-compose:
 	npm run test:compose
 	$(call OK,compose smoke tests passed ($(ENV)))
 
-# =============================================================================
 ## audit ? npm audit (high/critical) + OSV vulnerability scanner
-# =============================================================================
 audit:
 	$(call STEP,audit)
 	npm run audit:deps
 	npm run audit:osv
 	$(call OK,no vulnerabilities)
 
-# =============================================================================
 ## security ? Secret scan via gitleaks
-# =============================================================================
 security:
 	$(call STEP,security \(gitleaks\))
 	npm run secrets:scan
 	$(call OK,no secrets detected)
 
-# =============================================================================
 ## compose ? Validate compose.yaml syntax (no services started)
-# =============================================================================
 compose:
 	$(call STEP,compose:config)
 	npm run compose:config
 	npm run compose:config:all
 	$(call OK,all compose profiles valid)
 
-# =============================================================================
 ## architecture ? Full architecture governance suite (--strict, 6/6)
-# =============================================================================
 architecture:
 	$(call STEP,architecture governance)
 	$(ORCHESTRATOR) all --no-reports --strict
 	$(call OK,all architecture gates passed)
 
-# =============================================================================
 ## sonar ? SonarQube scan + quality gate (requires SONAR_TOKEN)
 ##         Starts quality profile automatically if SonarQube is not healthy.
 ##         Not ENV-scoped ? SonarQube is a cross-cutting tool.
-# =============================================================================
 sonar:
 	$(call STEP,sonar)
 	@if [ -z "$$SONAR_TOKEN" ]; then \
@@ -235,35 +223,27 @@ sonar:
 		printf '$(GREEN)? Sonar quality gate passed$(RESET)\n'; \
 	fi
 
-# =============================================================================
 ## advisory ? Report-only gates (never fail make all)
 ##            Knip (unused exports/deps) + dependency-cruiser (graph smoke)
-# =============================================================================
 advisory:
 	$(call STEP,advisory \(report-only ? never fails\))
 	-npm run knip
 	-npm run depcruise
 	$(call OK,advisory complete)
 
-# =============================================================================
 ## sbom ? Generate CycloneDX 1.6 SBOM to docs/evidence/security/
-# =============================================================================
 sbom:
 	$(call STEP,sbom)
 	npm run sbom:generate
 	$(call OK,SBOM generated)
 
-# =============================================================================
 ## license ? Show license policy status (documentation-only gate)
-# =============================================================================
 license:
 	$(call STEP,license policy)
 	npm run license:policy
 	$(call OK,license policy noted)
 
-# =============================================================================
-# SHORTHAND COMPOSITE TARGETS
-# =============================================================================
+# ─── SHORTHAND COMPOSITE TARGETS ───
 
 ## check ? Fast local check: format/lint/typecheck/audit/compose/architecture
 check: format lint typecheck audit compose architecture
@@ -302,34 +282,23 @@ clean:
 	# trigger migration checksum mismatches on the next dev stage.
 	docker compose down --volumes 2>/dev/null || true
 	$(call STEP,clean: nuking stale port-holding containers)
-	# Force-remove ANY container publishing our ports, regardless of
-	# Compose project name. Handles stale containers from old project
-	# names (e.g. default directory-based 'react-*' containers that
-	# survive ENV-scoped 'docker compose --project-name dev stop').
-	# Also reads env-specific ports from .env.$(ENV) so per-environment
-	# overrides are covered. Excludes Keycloak and SonarQube (both JVM)
-	# which are deliberately preserved for fast restart — their ports are
-	# read dynamically from the env file so they stay correct across envs.
-	@_jvm_ports="$$(grep -oP '(?:KEYCLOAK|SONAR)_PORT=\K\d+' .env.$(ENV) 2>/dev/null | tr '\n' '|' | sed 's/|$$//')"; \
+	# Force-remove any container publishing our ports regardless of project name.
+	# JVM_PORTS_EXCLUDE spares Keycloak + SonarQube (slow to restart, hold no app state).
+	@$(JVM_PORTS_EXCLUDE); \
 	for port in 5173 10350 \
 	    $$(grep -oP '_PORT=\K\d+' .env.$(ENV) 2>/dev/null | grep -vwE "$$_jvm_ports"); do \
 	    docker ps -q --filter "publish=$$port" 2>/dev/null | xargs -r docker rm -f 2>/dev/null; \
 	done
 	$(call STEP,clean: killing stale port holders)
-	# Kill stale host-port holders (docker-proxy runs as root, so
-	# fuser needs sudo). Covers all compose.yaml host ports and
-	# reads env-specific port overrides from .env.$(ENV) dynamically.
-	# Excludes Keycloak and SonarQube (JVM) preserved for fast restart.
-	@_jvm_ports="$$(grep -oP '(?:KEYCLOAK|SONAR)_PORT=\K\d+' .env.$(ENV) 2>/dev/null | tr '\n' '|' | sed 's/|$$//')"; \
+	@$(JVM_PORTS_EXCLUDE); \
 	sudo fuser -k \
 	    4173/tcp 5173/tcp 10350/tcp \
 	    $$(grep -oP '_PORT=\K\d+' .env.$(ENV) 2>/dev/null | grep -vwE "$$_jvm_ports" | sed 's/$$/\/tcp/' | tr '\n' ' ') \
 	    2>/dev/null || true
 	$(call STEP,clean: verifying ports free)
-	# Verify all default ports + env-specific ports are free after cleanup
-	@_jvm_ports="$$(grep -oP '(?:KEYCLOAK|SONAR)_PORT=\K\d+' .env.$(ENV) 2>/dev/null | tr '\n' '|' | sed 's/|$//')"; \
-	_all_ports="5173 10350 $$(grep -oP '_PORT=\K\d+' .env.$(ENV) 2>/dev/null | grep -vwE "$$_jvm_ports")"; \
-	for port in $$_all_ports; do \
+	@$(JVM_PORTS_EXCLUDE); \
+	for port in 5173 10350 \
+	    $$(grep -oP '_PORT=\K\d+' .env.$(ENV) 2>/dev/null | grep -vwE "$$_jvm_ports"); do \
 	    if ss -tlnp "sport = :$$port" 2>/dev/null | grep -q LISTEN; then \
 	        printf '$(RED)? Port %s still in use$(RESET)\n' "$$port"; \
 	        exit 1; \
@@ -346,9 +315,7 @@ clean-all:
 	$(MAKE) clean ENV=test
 	$(call OK,all environments cleaned)
 
-# =============================================================================
-# COMPOSE LIFECYCLE HELPERS
-# =============================================================================
+# ─── COMPOSE LIFECYCLE HELPERS ───
 
 ## compose-up ? Start default services for the selected ENV
 compose-up:
@@ -395,13 +362,11 @@ keycloak-provision:
 	    && terraform apply -var-file=$(ENV).tfvars -auto-approve -input=false
 	$(call OK,Keycloak realm provisioned for $(ENV))
 
-# =============================================================================
 # ENVIRONMENT-SPECIFIC TARGETS (ADR-0033)
 #
 # Dev:   APEX_DOMAIN=dev.localhost  ? auto-resolving .localhost TLD (RFC 6761)
 # Test:  APEX_DOMAIN=test.localhost ? separate .localhost TLD for test/CI
 # Prod:  APEX_DOMAIN=aldous.info    ? Cloudflare TLS, real DNS
-# =============================================================================
 
 ## dev-up ? Full dev stack: default infra + identity + web (dev.localhost, port 80)
 dev-up:
@@ -629,9 +594,7 @@ compose-ps:
 compose-logs:
 	$(COMPOSE_CMD) logs -f
 
-# =============================================================================
-# GOVERNANCE HELPERS
-# =============================================================================
+# ─── GOVERNANCE HELPERS ───
 
 ## infra-check ? Validate Terraform/OpenTofu syntax, format, init, and validate (no cloud credentials needed)
 infra-check:
@@ -719,10 +682,9 @@ e2e-internal:
 		printf '$(RED)? Playwright not found. Run: npx playwright install chromium --with-deps$(RESET)\n'; \
 		exit 1; \
 	fi
-	@_pg_port="$$(grep -oP 'POSTGRES_PORT=\K\d+' .env.$(ENV) 2>/dev/null | head -1)"; _pg_port=$${_pg_port:-5433}; \
-	_rd_port="$$(grep -oP 'REDIS_PORT=\K\d+' .env.$(ENV) 2>/dev/null | head -1)"; _rd_port=$${_rd_port:-6379}; \
-	POSTGRES_URL="$(or $(POSTGRES_URL),postgresql://platform:platformpassword@localhost:$${_pg_port}/platform)" \
-	REDIS_URL="$(or $(REDIS_URL),redis://localhost:$${_rd_port})" \
+	@$(call CONN_URLS,.env.$(ENV)); \
+	POSTGRES_URL="$(or $(POSTGRES_URL),$$_pg_url)" \
+	REDIS_URL="$(or $(REDIS_URL),$$_rd_url)" \
 	LOCAL_FIXTURE_SESSION=tenant-admin npx playwright test --config playwright.internal.config.ts
 	$(call OK,internal E2E passed)
 
@@ -830,25 +792,20 @@ e2e-external:
 	PROD_BASE_URL="$$BASE" npx playwright test --config playwright.external.config.ts
 	$(call OK,external E2E passed)
 
-# =============================================================================
 # STAGE TARGETS ? Promotion pipeline (ADR-0033)
 #
 # Each stage starts the environment, runs the full test suite, and tears down.
 # Internal (dev + test): fixture sessions, no real Keycloak required.
 # External (staging + prod): real deployed stacks with auth.
-# =============================================================================
 
 ## run-stage-tests ? Run the standard test suite against the active environment
 ## Requires: postgres + platform-api to be reachable.
 ## Accepts environment overrides: POSTGRES_URL, REDIS_URL.
 run-stage-tests:
 	$(call STEP,run-stage-tests ($(ENV)))
-	# Use make's $(or) function to resolve POSTGRES_URL/REDIS_URL at make-expansion time.
-	# Defaults are derived from .env.$(ENV) so the correct per-environment port is used.
-	@_pg_port="$$(grep -oP 'POSTGRES_PORT=\K\d+' .env.$(ENV) 2>/dev/null | head -1)"; _pg_port=$${_pg_port:-5433}; \
-	_rd_port="$$(grep -oP 'REDIS_PORT=\K\d+' .env.$(ENV) 2>/dev/null | head -1)"; _rd_port=$${_rd_port:-6379}; \
-	POSTGRES_URL="$(or $(POSTGRES_URL),postgresql://platform:platformpassword@localhost:$${_pg_port}/platform)" \
-	REDIS_URL="$(or $(REDIS_URL),redis://localhost:$${_rd_port})" \
+	@$(call CONN_URLS,.env.$(ENV)); \
+	POSTGRES_URL="$(or $(POSTGRES_URL),$$_pg_url)" \
+	REDIS_URL="$(or $(REDIS_URL),$$_rd_url)" \
 	npm run test:platform-api
 	npm run test:frontend:run
 	$(call OK,stage tests passed for $(ENV))
@@ -910,7 +867,7 @@ stage-test:
 	$(call STEP,stage:test (Compose ? destructive, internal E2E))
 	$(MAKE) compose-down-reset ENV=test
 	$(call STEP,stage:test: freeing ports for test)
-	@_all_ports="3001 4317 5173 5433 6379 8025 8124 9000 9001 9002 10350 13133 $$(grep -oP '_PORT=\K\d+' .env.test 2>/dev/null)"; \
+	@_all_ports="5173 10350 $$(grep -oP '_PORT=\K\d+' .env.test 2>/dev/null)"; \
 	for port in $$_all_ports; do \
 	    docker ps -q --filter "publish=$$port" 2>/dev/null | xargs -r docker rm -f 2>/dev/null; \
 	done; \
@@ -922,10 +879,7 @@ stage-test:
 	    fi; \
 	done
 	$(MAKE) test-up
-	@_pg_port="$$(grep -oP 'POSTGRES_PORT=\K\d+' .env.test 2>/dev/null | head -1)"; _pg_port=$${_pg_port:-5433}; \
-	_rd_port="$$(grep -oP 'REDIS_PORT=\K\d+' .env.test 2>/dev/null | head -1)"; _rd_port=$${_rd_port:-6379}; \
-	_pg_url="postgresql://platform:platformpassword@localhost:$${_pg_port}/platform"; \
-	_rd_url="redis://localhost:$${_rd_port}"; \
+	@$(call CONN_URLS,.env.test); \
 	printf 'Running database migrations and seeding (test, port %s)...\n' "$$_pg_port"; \
 	POSTGRES_URL="$$_pg_url" REDIS_URL="$$_rd_url" npm run db:migrate \
 	    && POSTGRES_URL="$$_pg_url" REDIS_URL="$$_rd_url" npm run db:seed \
@@ -956,16 +910,13 @@ stage-staging:
 	$(call STEP,stage:staging (Cloudflare external ? HA, up-if-changed, no teardown))
 	$(MAKE) staging-up
 	$(MAKE) external-caddy-up
-	@_pg_port="$$(grep -oP 'POSTGRES_PORT=\K\d+' .env.staging 2>/dev/null | head -1)"; _pg_port=$${_pg_port:-5433}; \
-	_rd_port="$$(grep -oP 'REDIS_PORT=\K\d+' .env.staging 2>/dev/null | head -1)"; _rd_port=$${_rd_port:-6379}; \
-	_pg_url="postgresql://platform:platformpassword@localhost:$${_pg_port}/platform"; \
-	_rd_url="redis://localhost:$${_rd_port}"; \
+	@$(call CONN_URLS,.env.staging); \
 	printf 'Running database migrations (staging, port %s — data preserving)...\n' "$$_pg_port"; \
 	POSTGRES_URL="$$_pg_url" npm run db:migrate \
 	    && $(MAKE) run-stage-tests ENV=staging \
 	        POSTGRES_URL="$$_pg_url" \
 	        REDIS_URL="$$_rd_url" \
-	&& PROD_BASE_URL='$(or $(PROD_BASE_URL),http://staging.aldous.info)' $(MAKE) e2e-external \
+	    && PROD_BASE_URL='$(or $(PROD_BASE_URL),http://staging.aldous.info)' $(MAKE) e2e-external \
 	    && printf '$(GREEN)? stage:staging passed$(RESET)\n'
 
 ## stage-prod ? Production stage: start/update stack then run tests (HA ? no teardown)
@@ -983,10 +934,7 @@ stage-prod:
 	$(call STEP,stage:prod (Cloudflare external ? HA, up-if-changed, no teardown, exhaustive))
 	$(MAKE) prod-up
 	$(MAKE) external-caddy-up
-	@_pg_port="$$(grep -oP 'POSTGRES_PORT=\K\d+' .env.prod 2>/dev/null | head -1)"; _pg_port=$${_pg_port:-5433}; \
-	_rd_port="$$(grep -oP 'REDIS_PORT=\K\d+' .env.prod 2>/dev/null | head -1)"; _rd_port=$${_rd_port:-6379}; \
-	_pg_url="postgresql://platform:platformpassword@localhost:$${_pg_port}/platform"; \
-	_rd_url="redis://localhost:$${_rd_port}"; \
+	@$(call CONN_URLS,.env.prod); \
 	printf 'Running database migrations (prod, port %s — data preserving)...\n' "$$_pg_port"; \
 	POSTGRES_URL="$$_pg_url" npm run db:migrate \
 	    && $(MAKE) run-stage-tests ENV=prod \
