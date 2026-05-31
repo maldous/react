@@ -11,6 +11,7 @@ export type BaseRole = TenantScopedRole | GlobalRole;
 // --- Permission types ---
 
 export type Permission =
+  // Shared non-admin permissions
   | "organisation.read"
   | "organisation.update"
   | "member.read"
@@ -18,8 +19,33 @@ export type Permission =
   | "member.update_role"
   | "profile.read_self"
   | "profile.update_self"
-  | "admin.access"
-  | "audit.read";
+  | "audit.read"
+  // Global/platform permissions (system-admin only)
+  | "platform.admin.access"
+  | "platform.tenants.create"
+  | "platform.tenants.read"
+  | "platform.tenants.update"
+  | "platform.tenants.delete"
+  | "platform.clickthrough.pgadmin"
+  | "platform.clickthrough.keycloak"
+  | "platform.clickthrough.minio"
+  | "platform.clickthrough.mailpit"
+  | "platform.clickthrough.sonarqube"
+  | "platform.clickthrough.sentry"
+  | "platform.clickthrough.wiremock"
+  | "platform.clickthrough.clickhouse"
+  | "platform.audit.read_all"
+  // Tenant-scoped permissions (tenant-admin only)
+  | "tenant.admin.access"
+  | "tenant.members.read"
+  | "tenant.members.invite"
+  | "tenant.members.update_role"
+  | "tenant.auth.settings.read"
+  | "tenant.auth.settings.write"
+  | "tenant.audit.read"
+  | "tenant.clickthrough.keycloak"
+  | "tenant.clickthrough.mailpit"
+  | "tenant.clickthrough.sentry";
 
 // --- AuthErrorCode ---
 

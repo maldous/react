@@ -249,19 +249,18 @@ describe("isSlugReserved", () => {
 });
 
 describe("resolvePermissions", () => {
-  it("system-admin has all 9 permissions", () => {
+  it("system-admin has core shared permissions", () => {
     const perms = resolvePermissions("system-admin");
     assert.ok(perms.includes("organisation.read"));
     assert.ok(perms.includes("organisation.update"));
-    assert.ok(perms.includes("admin.access"));
+    assert.ok(perms.includes("platform.admin.access"));
     assert.ok(perms.includes("audit.read"));
-    assert.equal(perms.length, 9);
   });
 
-  it("tenant-admin has all 9 permissions", () => {
+  it("tenant-admin has core shared permissions", () => {
     const perms = resolvePermissions("tenant-admin");
-    assert.equal(perms.length, 9);
     assert.ok(perms.includes("organisation.update"));
+    assert.ok(perms.includes("tenant.admin.access"));
   });
 
   it("manager can manage members but not org settings", () => {
@@ -269,7 +268,8 @@ describe("resolvePermissions", () => {
     assert.ok(perms.includes("member.invite"));
     assert.ok(perms.includes("member.update_role"));
     assert.ok(!perms.includes("organisation.update"));
-    assert.ok(!perms.includes("admin.access"));
+    assert.ok(!perms.includes("platform.admin.access"));
+    assert.ok(!perms.includes("tenant.admin.access"));
   });
 
   it("member has standard access", () => {
@@ -288,10 +288,60 @@ describe("resolvePermissions", () => {
   });
 
   it("fixture tenant-admin permissions match resolvePermissions output", () => {
-    // Guards that session.ts fixtures stay in sync with domain-identity
     const resolved = resolvePermissions("tenant-admin");
     assert.ok(resolved.includes("organisation.read"));
     assert.ok(resolved.includes("organisation.update"));
-    assert.ok(resolved.includes("admin.access"));
+    assert.ok(resolved.includes("tenant.admin.access"));
+  });
+});
+
+describe("resolvePermissions — split admin permissions", () => {
+  it("system-admin has platform.admin.access and not tenant.admin.access", () => {
+    const perms = resolvePermissions("system-admin");
+    assert.ok(
+      perms.includes("platform.admin.access"),
+      "system-admin must have platform.admin.access"
+    );
+    assert.ok(
+      !perms.includes("tenant.admin.access"),
+      "system-admin must NOT have tenant.admin.access"
+    );
+    assert.ok(!perms.includes("admin.access"), "legacy admin.access must not appear");
+  });
+
+  it("tenant-admin has tenant.admin.access and not platform.admin.access", () => {
+    const perms = resolvePermissions("tenant-admin");
+    assert.ok(perms.includes("tenant.admin.access"), "tenant-admin must have tenant.admin.access");
+    assert.ok(
+      !perms.includes("platform.admin.access"),
+      "tenant-admin must NOT have platform.admin.access"
+    );
+    assert.ok(!perms.includes("admin.access"), "legacy admin.access must not appear");
+  });
+
+  it("system-admin has platform.tenants.create", () => {
+    assert.ok(resolvePermissions("system-admin").includes("platform.tenants.create"));
+  });
+
+  it("tenant-admin does not have platform.tenants.create", () => {
+    assert.ok(!resolvePermissions("tenant-admin").includes("platform.tenants.create"));
+  });
+
+  it("tenant-admin has tenant.auth.settings.read and tenant.auth.settings.write", () => {
+    const perms = resolvePermissions("tenant-admin");
+    assert.ok(perms.includes("tenant.auth.settings.read"));
+    assert.ok(perms.includes("tenant.auth.settings.write"));
+  });
+
+  it("system-admin does not have tenant.auth.settings.read", () => {
+    assert.ok(!resolvePermissions("system-admin").includes("tenant.auth.settings.read"));
+  });
+
+  it("tenant-admin does not have platform.clickthrough.pgadmin", () => {
+    assert.ok(!resolvePermissions("tenant-admin").includes("platform.clickthrough.pgadmin"));
+  });
+
+  it("system-admin has platform.clickthrough.pgadmin", () => {
+    assert.ok(resolvePermissions("system-admin").includes("platform.clickthrough.pgadmin"));
   });
 });
