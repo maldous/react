@@ -1,0 +1,14 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "Platform DB (RLS-aware sysadmin)",
+      "Group": "Platform",
+      "Host": "postgres",
+      "Port": 5432,
+      "MaintenanceDB": "platform",
+      "Username": "pgadmin_sysadmin",
+      "SSLMode": "prefer",
+      "Comment": "Connects as pgadmin_sysadmin (non-superuser). app.bypass_rls=true is set by default so sysadmin sees all tenant data. RLS is still evaluated — not bypassed. For tenant-scoped queries run: SELECT set_config('app.current_tenant_id', '<org-id>', true);"
+    }
+  }
+}
