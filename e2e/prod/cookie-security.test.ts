@@ -72,7 +72,7 @@ test.describe("cookies: session cookie attributes", () => {
 test.describe("cookies: no sensitive data in cookies", () => {
   test("no cookies contain tokens or secrets directly", async ({ page }) => {
     await page.goto("/");
-    await page.waitForLoadState("load");
+    await expect(page.locator("#root")).not.toBeEmpty({ timeout: 10_000 });
 
     const cookies = await page.context().cookies();
     for (const cookie of cookies) {
@@ -85,7 +85,7 @@ test.describe("cookies: no sensitive data in cookies", () => {
 
   test("no third-party cookies set", async ({ page }) => {
     await page.goto("/");
-    await page.waitForLoadState("load");
+    await expect(page.locator("#root")).not.toBeEmpty({ timeout: 10_000 });
 
     const cookies = await page.context().cookies();
     const pageHostname = new URL(page.url()).hostname;
@@ -106,7 +106,7 @@ test.describe("cookies: no sensitive data in cookies", () => {
 test.describe("cookies: cookie count and hygiene", () => {
   test("only essential cookies are set on unauthenticated visit", async ({ page }) => {
     await page.goto("/");
-    await page.waitForLoadState("load");
+    await expect(page.locator("#root")).not.toBeEmpty({ timeout: 10_000 });
 
     const cookies = await page.context().cookies();
     expect(cookies.length).toBeLessThanOrEqual(2);
@@ -114,7 +114,7 @@ test.describe("cookies: cookie count and hygiene", () => {
 
   test("no cookies with future expiry > 1 year (session cookie hygiene)", async ({ page }) => {
     await page.goto("/");
-    await page.waitForLoadState("load");
+    await expect(page.locator("#root")).not.toBeEmpty({ timeout: 10_000 });
 
     const cookies = await page.context().cookies();
     const oneYearMs = 365 * 24 * 60 * 60 * 1000;

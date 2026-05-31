@@ -12,7 +12,7 @@ test.describe("performance: page load metrics", () => {
   test("homepage loads within 5 seconds (basic budget)", async ({ page }) => {
     const start = Date.now();
     await page.goto("/");
-    await page.waitForLoadState("load");
+    await expect(page.locator("#root")).not.toBeEmpty({ timeout: 10_000 });
     const loadTime = Date.now() - start;
 
     expect(loadTime, `Homepage load time: ${loadTime} ms — exceeds 5s budget`).toBeLessThanOrEqual(
@@ -61,7 +61,7 @@ test.describe("performance: resource counts", () => {
     });
 
     await page.goto("/");
-    await page.waitForLoadState("load");
+    await expect(page.locator("#root")).not.toBeEmpty({ timeout: 10_000 });
 
     expect(requests.length, `Too many requests: ${requests.length} requests`).toBeLessThanOrEqual(
       40
@@ -80,7 +80,7 @@ test.describe("performance: resource counts", () => {
     });
 
     await page.goto("/");
-    await page.waitForLoadState("load");
+    await expect(page.locator("#root")).not.toBeEmpty({ timeout: 10_000 });
 
     const totalKB = (totalBytes / 1024).toFixed(1);
     expect(totalBytes, `Page weight: ${totalKB} KB — exceeds 2 MB budget`).toBeLessThanOrEqual(
