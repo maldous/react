@@ -311,7 +311,7 @@ clean:
 	# which are deliberately preserved for fast restart — their ports are
 	# read dynamically from the env file so they stay correct across envs.
 	@_jvm_ports="$$(grep -oP '(?:KEYCLOAK|SONAR)_PORT=\K\d+' .env.$(ENV) 2>/dev/null | tr '\n' '|' | sed 's/|$$//')"; \
-	for port in 3001 4317 4318 5173 5433 6379 8025 8124 9000 9001 9002 10350 13133 \
+	for port in 5173 10350 \
 	    $$(grep -oP '_PORT=\K\d+' .env.$(ENV) 2>/dev/null | grep -vwE "$$_jvm_ports"); do \
 	    docker ps -q --filter "publish=$$port" 2>/dev/null | xargs -r docker rm -f 2>/dev/null; \
 	done
@@ -322,16 +322,13 @@ clean:
 	# Excludes Keycloak and SonarQube (JVM) preserved for fast restart.
 	@_jvm_ports="$$(grep -oP '(?:KEYCLOAK|SONAR)_PORT=\K\d+' .env.$(ENV) 2>/dev/null | tr '\n' '|' | sed 's/|$$//')"; \
 	sudo fuser -k \
-	    80/tcp 1025/tcp 3001/tcp 4173/tcp 4317/tcp 4318/tcp \
-	    5173/tcp 5433/tcp 6379/tcp 8025/tcp \
-	    8124/tcp 9000/tcp 9001/tcp 9002/tcp \
-	    10350/tcp 13133/tcp \
+	    4173/tcp 5173/tcp 10350/tcp \
 	    $$(grep -oP '_PORT=\K\d+' .env.$(ENV) 2>/dev/null | grep -vwE "$$_jvm_ports" | sed 's/$$/\/tcp/' | tr '\n' ' ') \
 	    2>/dev/null || true
 	$(call STEP,clean: verifying ports free)
 	# Verify all default ports + env-specific ports are free after cleanup
 	@_jvm_ports="$$(grep -oP '(?:KEYCLOAK|SONAR)_PORT=\K\d+' .env.$(ENV) 2>/dev/null | tr '\n' '|' | sed 's/|$//')"; \
-	_all_ports="3001 4317 5173 5433 9000 10350 $$(grep -oP '_PORT=\K\d+' .env.$(ENV) 2>/dev/null | grep -vwE "$$_jvm_ports")"; \
+	_all_ports="5173 10350 $$(grep -oP '_PORT=\K\d+' .env.$(ENV) 2>/dev/null | grep -vwE "$$_jvm_ports")"; \
 	for port in $$_all_ports; do \
 	    if ss -tlnp "sport = :$$port" 2>/dev/null | grep -q LISTEN; then \
 	        printf '$(RED)? Port %s still in use$(RESET)\n' "$$port"; \
@@ -470,15 +467,18 @@ prod-down:
 ## dev-e2e ? Run E2E tests against dev (internal) environment
 dev-e2e:
 	$(call STEP,e2e: dev (internal))
-	PROD_BASE_URL=http://dev.localhost:8080 \
+	@_base_url="$$(grep -oP 'APP_BASE_URL=\K\S+' .env.dev 2>/dev/null | head -1)"; _base_url=$${_base_url:-http://dev.localhost:8080}; \
+	PROD_BASE_URL="$$_base_url" \
 	npx playwright test --config playwright.external.config.ts e2e/external/smoke.test.ts
 	$(call OK,dev E2E passed)
 
 ## dev-e2e-auth ? Run auth E2E against dev (requires Keycloak)
 dev-e2e-auth:
 	$(call STEP,e2e: dev auth)
-	PROD_BASE_URL=http://dev.localhost:8080 \
-	APEX_DOMAIN=dev.localhost \
+	@_base_url="$$(grep -oP 'APP_BASE_URL=\K\S+' .env.dev 2>/dev/null | head -1)"; _base_url=$${_base_url:-http://dev.localhost:8080}; \
+	_apex="$$(grep -oP 'APEX_DOMAIN=\K\S+' .env.dev 2>/dev/null | head -1)"; _apex=$${_apex:-dev.localhost}; \
+	PROD_BASE_URL="$$_base_url" \
+	APEX_DOMAIN="$$_apex" \
 	npx playwright test --config playwright.external.config.ts e2e/external/login.spec.ts e2e/external/logout.spec.ts
 	$(call OK,dev auth E2E passed)
 
@@ -557,7 +557,7 @@ compose-down-web:
 	$(COMPOSE_CMD) --profile web down
 
 ## reset-local ? Reset local Postgres to a clean migrated+seeded state (destructive)
-## Only runs against the local Compose DB (POSTGRES_URL defaults to localhost:5433)
+## Only runs against the local Compose DB (POSTGRES_URL defaults to localhost:$POSTGRES_PORT (from .env.$ENV))
 reset-local:
 	$(call STEP,reset:local)
 	@printf '$(BOLD)$(RED)Resetting local database ? drops all tables, re-migrates, re-seeds$(RESET)\n'
@@ -649,15 +649,16 @@ infra-check:
 	$(call OK,infra check complete)
 
 ## keycloak-plan-dev ? Plan Keycloak provisioning against dev Compose Keycloak
-##   Requires: docker compose --profile identity up -d keycloak (localhost:8090)
+##   Requires: docker compose --profile identity up -d keycloak (port from KEYCLOAK_PORT in .env.$ENV)
 ##   Uses: infra/env/dev/dev.tfvars.example (placeholder secrets ? safe to plan)
 keycloak-plan-dev:
 	$(call STEP,keycloak:plan:dev)
 	@chmod +x infra/bin/tf
 	@printf '$(BOLD)Requires: docker compose --profile identity up -d keycloak$(RESET)\n'
-	@curl -sf http://localhost:8090/kc/realms/master > /dev/null 2>&1 \
-		|| { printf '$(RED)? Keycloak not reachable at http://localhost:8090/kc\n  Run: docker compose --profile identity up -d keycloak$(RESET)\n'; exit 1; }
-	@printf '$(GREEN)? Keycloak reachable at http://localhost:8090/kc$(RESET)\n'
+	@_kc_port="$$(grep -oP 'KEYCLOAK_PORT=\K\d+' .env.$(ENV) 2>/dev/null | head -1)"; _kc_port=$${_kc_port:-8090}; \
+	curl -sf http://localhost:$${_kc_port}/kc/realms/master > /dev/null 2>&1 \
+		|| { printf '$(RED)? Keycloak not reachable at http://localhost:%s/kc\n  Run: make compose-up-identity ENV=$(ENV)$(RESET)\n' "$$_kc_port"; exit 1; }; \
+	printf '$(GREEN)? Keycloak reachable at http://localhost:%s/kc$(RESET)\n' "$$_kc_port"
 	@infra/bin/tf -chdir=infra/env/dev init -backend=false -input=false > /dev/null 2>&1 \
 		&& printf '$(GREEN)? init ok$(RESET)\n' \
 		|| { printf '$(RED)? init failed$(RESET)\n'; exit 1; }
@@ -711,17 +712,17 @@ pre-slice-gate: compose format lint typecheck test test-compose audit security a
 ## e2e-internal ? Internal E2E: fixture session against localhost (Vite dev server)
 ## playwright.internal.config.ts starts platform-api + Vite dev server automatically.
 ## Accepts POSTGRES_URL and REDIS_URL overrides (e.g. from stage-test).
-## Defaults to localhost:5433 and localhost:6379 when run standalone.
+## Defaults to POSTGRES_PORT and REDIS_PORT from .env.$ENV when run standalone.
 e2e-internal:
 	$(call STEP,e2e:internal \(localhost fixture session\))
 	@if ! npx playwright --version > /dev/null 2>&1; then \
 		printf '$(RED)? Playwright not found. Run: npx playwright install chromium --with-deps$(RESET)\n'; \
 		exit 1; \
 	fi
-	# Use make's $(or) to resolve env vars at make-expansion time (same pattern as run-stage-tests).
-	# This ensures command-line overrides from stage targets are used correctly.
-	POSTGRES_URL='$(or $(POSTGRES_URL),postgresql://platform:platformpassword@localhost:5433/platform)' \
-	REDIS_URL='$(or $(REDIS_URL),redis://localhost:6379)' \
+	@_pg_port="$$(grep -oP 'POSTGRES_PORT=\K\d+' .env.$(ENV) 2>/dev/null | head -1)"; _pg_port=$${_pg_port:-5433}; \
+	_rd_port="$$(grep -oP 'REDIS_PORT=\K\d+' .env.$(ENV) 2>/dev/null | head -1)"; _rd_port=$${_rd_port:-6379}; \
+	POSTGRES_URL="$(or $(POSTGRES_URL),postgresql://platform:platformpassword@localhost:$${_pg_port}/platform)" \
+	REDIS_URL="$(or $(REDIS_URL),redis://localhost:$${_rd_port})" \
 	LOCAL_FIXTURE_SESSION=tenant-admin npx playwright test --config playwright.internal.config.ts
 	$(call OK,internal E2E passed)
 
@@ -842,12 +843,12 @@ e2e-external:
 ## Accepts environment overrides: POSTGRES_URL, REDIS_URL.
 run-stage-tests:
 	$(call STEP,run-stage-tests ($(ENV)))
-	# Use make's $(or) function to resolve POSTGRES_URL/REDIS_URL at make-expansion time
-	# instead of relying on shell ${VAR:-default} which needs export to propagate
-	# command-line overrides to the recipe environment.
-	# $(or A,B) evaluates to A if A is non-empty, otherwise B (make's native expansion).
-	POSTGRES_URL='$(or $(POSTGRES_URL),postgresql://platform:platformpassword@localhost:5433/platform)' \
-	REDIS_URL='$(or $(REDIS_URL),redis://localhost:6379)' \
+	# Use make's $(or) function to resolve POSTGRES_URL/REDIS_URL at make-expansion time.
+	# Defaults are derived from .env.$(ENV) so the correct per-environment port is used.
+	@_pg_port="$$(grep -oP 'POSTGRES_PORT=\K\d+' .env.$(ENV) 2>/dev/null | head -1)"; _pg_port=$${_pg_port:-5433}; \
+	_rd_port="$$(grep -oP 'REDIS_PORT=\K\d+' .env.$(ENV) 2>/dev/null | head -1)"; _rd_port=$${_rd_port:-6379}; \
+	POSTGRES_URL="$(or $(POSTGRES_URL),postgresql://platform:platformpassword@localhost:$${_pg_port}/platform)" \
+	REDIS_URL="$(or $(REDIS_URL),redis://localhost:$${_rd_port})" \
 	npm run test:platform-api
 	npm run test:frontend:run
 	$(call OK,stage tests passed for $(ENV))
@@ -878,8 +879,9 @@ stage-dev:
 	$(MAKE) compose-down-reset ENV=dev
 	tilt up &
 	_TILT_PID=$$!
-	@printf 'Waiting for platform-api to be healthy (up to 120s)...\n'
-	@timeout 120 bash -c 'until curl -fsS http://localhost:3001/healthz >/dev/null 2>&1; do sleep 2; done' \
+	@_api_port="$$(grep -oP 'PLATFORM_API_PORT=\K\d+' .env.$(ENV) 2>/dev/null | head -1)"; _api_port=$${_api_port:-3001}; \
+	printf 'Waiting for platform-api to be healthy (up to 120s)...\n'; \
+	timeout 120 bash -c "until curl -fsS http://localhost:$${_api_port}/healthz >/dev/null 2>&1; do sleep 2; done" \
 		|| { printf '$(RED)? platform-api timeout$(RESET)\n'; kill %1 2>/dev/null || true; tilt down 2>/dev/null; exit 1; }
 	@printf 'Waiting for react-app dev server (up to 120s)...\n'
 	@timeout 120 bash -c 'until curl -fsS http://localhost:5173/ >/dev/null 2>&1; do sleep 2; done' \
@@ -920,19 +922,19 @@ stage-test:
 	    fi; \
 	done
 	$(MAKE) test-up
-	@printf 'Running database migrations and seeding (test, port 5434)...\n'
-	POSTGRES_URL=postgresql://platform:platformpassword@localhost:5434/platform \
-	REDIS_URL=redis://localhost:6380 \
-	npm run db:migrate \
-	    && POSTGRES_URL=postgresql://platform:platformpassword@localhost:5434/platform \
-	       REDIS_URL=redis://localhost:6380 \
-	    npm run db:seed \
+	@_pg_port="$$(grep -oP 'POSTGRES_PORT=\K\d+' .env.test 2>/dev/null | head -1)"; _pg_port=$${_pg_port:-5433}; \
+	_rd_port="$$(grep -oP 'REDIS_PORT=\K\d+' .env.test 2>/dev/null | head -1)"; _rd_port=$${_rd_port:-6379}; \
+	_pg_url="postgresql://platform:platformpassword@localhost:$${_pg_port}/platform"; \
+	_rd_url="redis://localhost:$${_rd_port}"; \
+	printf 'Running database migrations and seeding (test, port %s)...\n' "$$_pg_port"; \
+	POSTGRES_URL="$$_pg_url" REDIS_URL="$$_rd_url" npm run db:migrate \
+	    && POSTGRES_URL="$$_pg_url" REDIS_URL="$$_rd_url" npm run db:seed \
 	    && $(MAKE) run-stage-tests ENV=test \
-	        POSTGRES_URL='postgresql://platform:platformpassword@localhost:5434/platform' \
-	        REDIS_URL='redis://localhost:6380' \
+	        POSTGRES_URL="$$_pg_url" \
+	        REDIS_URL="$$_rd_url" \
 	    && $(MAKE) e2e-internal \
-	        POSTGRES_URL='postgresql://platform:platformpassword@localhost:5434/platform' \
-	        REDIS_URL='redis://localhost:6380' \
+	        POSTGRES_URL="$$_pg_url" \
+	        REDIS_URL="$$_rd_url" \
 	    && printf '$(GREEN)? stage:test passed$(RESET)\n'; _r=$$?; \
 	if [ "$(KEEP_STACKS_UP)" != "true" ]; then \
 	    $(MAKE) compose-down-reset ENV=test; \
@@ -954,11 +956,15 @@ stage-staging:
 	$(call STEP,stage:staging (Cloudflare external ? HA, up-if-changed, no teardown))
 	$(MAKE) staging-up
 	$(MAKE) external-caddy-up
-	@printf 'Running database migrations (staging, port 5435 ? data preserving)...\n'
-	POSTGRES_URL=postgresql://platform:platformpassword@localhost:5435/platform npm run db:migrate \
+	@_pg_port="$$(grep -oP 'POSTGRES_PORT=\K\d+' .env.staging 2>/dev/null | head -1)"; _pg_port=$${_pg_port:-5433}; \
+	_rd_port="$$(grep -oP 'REDIS_PORT=\K\d+' .env.staging 2>/dev/null | head -1)"; _rd_port=$${_rd_port:-6379}; \
+	_pg_url="postgresql://platform:platformpassword@localhost:$${_pg_port}/platform"; \
+	_rd_url="redis://localhost:$${_rd_port}"; \
+	printf 'Running database migrations (staging, port %s — data preserving)...\n' "$$_pg_port"; \
+	POSTGRES_URL="$$_pg_url" npm run db:migrate \
 	    && $(MAKE) run-stage-tests ENV=staging \
-	        POSTGRES_URL='postgresql://platform:platformpassword@localhost:5435/platform' \
-	        REDIS_URL='redis://localhost:6381' \
+	        POSTGRES_URL="$$_pg_url" \
+	        REDIS_URL="$$_rd_url" \
 	&& PROD_BASE_URL='$(or $(PROD_BASE_URL),http://staging.aldous.info)' $(MAKE) e2e-external \
 	    && printf '$(GREEN)? stage:staging passed$(RESET)\n'
 
@@ -977,11 +983,15 @@ stage-prod:
 	$(call STEP,stage:prod (Cloudflare external ? HA, up-if-changed, no teardown, exhaustive))
 	$(MAKE) prod-up
 	$(MAKE) external-caddy-up
-	@printf 'Running database migrations (prod, port 5436 ? data preserving)...\n'
-	POSTGRES_URL=postgresql://platform:platformpassword@localhost:5436/platform npm run db:migrate \
+	@_pg_port="$$(grep -oP 'POSTGRES_PORT=\K\d+' .env.prod 2>/dev/null | head -1)"; _pg_port=$${_pg_port:-5433}; \
+	_rd_port="$$(grep -oP 'REDIS_PORT=\K\d+' .env.prod 2>/dev/null | head -1)"; _rd_port=$${_rd_port:-6379}; \
+	_pg_url="postgresql://platform:platformpassword@localhost:$${_pg_port}/platform"; \
+	_rd_url="redis://localhost:$${_rd_port}"; \
+	printf 'Running database migrations (prod, port %s — data preserving)...\n' "$$_pg_port"; \
+	POSTGRES_URL="$$_pg_url" npm run db:migrate \
 	    && $(MAKE) run-stage-tests ENV=prod \
-	        POSTGRES_URL='postgresql://platform:platformpassword@localhost:5436/platform' \
-	        REDIS_URL='redis://localhost:6382' \
+	        POSTGRES_URL="$$_pg_url" \
+	        REDIS_URL="$$_rd_url" \
 	    && PROD_BASE_URL='$(or $(PROD_BASE_URL),http://aldous.info)' $(MAKE) e2e-external \
 	    && npm run test:e2e:prod \
 	    && printf '$(GREEN)? stage:prod passed$(RESET)\n'
