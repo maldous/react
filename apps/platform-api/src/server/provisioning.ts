@@ -416,6 +416,12 @@ async function provisionIdentity(
     authSettingsClientSecret
   );
 
+  // Register platform UMA resource catalogue in tenant realm (ADR-ACT-0145).
+  // Resources are registered with no policies by default — no access-control
+  // behaviour change on day 1. Policies are configured via setResourcePolicy().
+  await keycloakAdapter.registerPlatformResources(realmName, "platform-api");
+  log.info({ organisationId }, "provisioning.uma-resources.registered");
+
   log.info({ tier: config.tier, organisationId }, "provisioning.identity.done");
   return credential;
 }
