@@ -281,7 +281,13 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
         identities: getIdentityRepository(),
         sessions: getSessionStore(),
       },
-      ttlSeconds
+      ttlSeconds,
+      // Pass tokens for encrypted storage (ADR-ACT-0153)
+      {
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.refreshToken,
+        expiresIn: tokens.expiresIn,
+      }
     );
   } catch (err) {
     if (err instanceof ConflictError) {
