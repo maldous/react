@@ -255,6 +255,38 @@ export interface KeycloakAdminConfig {
   adminClientSecret: string;
 }
 
+// ---------------------------------------------------------------------------
+// hasUserinfoRealmRolesMapper — pure predicate (ADR-ACT-0181 / ADR-ACT-0175)
+//
+// Returns true when the given array of Keycloak protocol-mapper objects contains
+// a mapper that exposes realm_access.roles in /userinfo. Match is on functional
+// config rather than mapper name to tolerate the two creation paths:
+//   - Terraform names it "realm-roles-userinfo" (platform realm)
+//   - KeycloakProvisioningAdapter names it "realm-roles-userinfo" (tenant realms)
+//
+// Required properties:
+//   protocolMapper === "oidc-usermodel-realm-role-mapper"
+//   config["claim.name"] === "realm_access.roles"
+//   config["userinfo.token.claim"] === "true"
+// ---------------------------------------------------------------------------
+
+export interface KeycloakProtocolMapper {
+  protocolMapper?: string;
+  config?: Record<string, string>;
+  [key: string]: unknown;
+}
+
+export function hasUserinfoRealmRolesMapper(mappers: unknown[]): boolean {
+  return mappers.some((m) => {
+    const mapper = m as KeycloakProtocolMapper;
+    return (
+      mapper.protocolMapper === "oidc-usermodel-realm-role-mapper" &&
+      mapper.config?.["claim.name"] === "realm_access.roles" &&
+      mapper.config?.["userinfo.token.claim"] === "true"
+    );
+  });
+}
+
 export class KeycloakRealmAdminAdapter implements RealmAdminPort {
   private readonly config: KeycloakAdminConfig;
 
@@ -407,6 +439,56 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
     } else {
       await this.removeIdentityProvider("platform-realm");
     }
+  }
+
+  /**
+   * Check whether the BFF client for a given clientId has the required
+   * realm-roles-userinfo mapper (ADR-ACT-0181 / ADR-ACT-0175).
+   *
+   * Returns:
+   *   "present"     — mapper found with correct functional config
+   *   "missing"     — admin API responded but mapper is absent or misconfigured
+   *   "unavailable" — admin API is unreachable or returned an auth error
+   */
+  async checkUserinfoRealmRolesMapper(
+    clientId: string
+  ): Promise<"present" | "missing" | "unavailable"> {
+    let token: string;
+    try {
+      token = await this.getAdminToken();
+    } catch {
+      return "unavailable";
+    }
+
+    // Look up the client's internal Keycloak UUID by clientId
+    let clientUuid: string;
+    try {
+      const res = await fetch(
+        this.adminUrl(`/clients?clientId=${encodeURIComponent(clientId)}&max=2`),
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (!res.ok) return "unavailable";
+      const list = (await res.json()) as Array<{ id?: string }>;
+      const found = list[0]?.id;
+      if (!found) return "missing";
+      clientUuid = found;
+    } catch {
+      return "unavailable";
+    }
+
+    // Fetch protocol mappers for this client
+    let mappers: unknown[];
+    try {
+      const res = await fetch(this.adminUrl(`/clients/${clientUuid}/protocol-mappers/models`), {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) return "unavailable";
+      mappers = (await res.json()) as unknown[];
+    } catch {
+      return "unavailable";
+    }
+
+    return hasUserinfoRealmRolesMapper(mappers) ? "present" : "missing";
   }
 }
 
