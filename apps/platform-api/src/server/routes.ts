@@ -196,15 +196,10 @@ export const routes: Route[] = [
   // Keycloak Admin REST API via KeycloakRealmAdminAdapter.
   // scope: "tenant" — must be called from a tenant FQDN, not the global apex.
   //
-  // CREDENTIAL SCOPE NOTE (ADR-ACT-0186):
-  // These routes use KEYCLOAK_PROVISIONER_CLIENT_ID (platform-provisioner), a
-  // master-realm service account with create-realm role. Through the Keycloak
-  // master realm admin API, this credential can manage ANY tenant realm — it is
-  // effectively a global credential, not a per-tenant service account.
-  // The adapter is scoped to tenantCtx.realmName so API calls target the correct
-  // realm, but the underlying credential has broader access than ideal.
-  // Per-tenant realm-admin service accounts (stored in tenant secret storage)
-  // are tracked in ADR-ACT-0186.
+  // All Auth Settings routes (read + write) use the per-tenant service account
+  // credential stored in tenant_auth_settings_credentials (ADR-ACT-0186).
+  // Reads resolve the credential then build the adapter; returns 503 NO_CREDENTIAL
+  // if the tenant was provisioned before ADR-ACT-0186 landed.
   // ---------------------------------------------------------------------------
   {
     method: "GET",
@@ -219,11 +214,18 @@ export const routes: Route[] = [
         res.json(400, { code: "NO_TENANT", message: "No tenant context" });
         return;
       }
+      const cred = await new PostgresTenantCredentialStore(
+        getApplicationPool()
+      ).getAuthSettingsCredential(tenantCtx.organisationId);
+      if (!cred) {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
+        return;
+      }
       const adapter = new KeycloakRealmAdminAdapter({
         url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
         realm: tenantCtx.realmName,
-        adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
-        adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
+        adminClientId: cred.clientId,
+        adminClientSecret: cred.clientSecret,
       });
       res.json(200, await adapter.listIdentityProviders());
     },
@@ -288,11 +290,18 @@ export const routes: Route[] = [
         res.json(400, { code: "NO_TENANT", message: "No tenant context" });
         return;
       }
+      const cred = await new PostgresTenantCredentialStore(
+        getApplicationPool()
+      ).getAuthSettingsCredential(tenantCtx.organisationId);
+      if (!cred) {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
+        return;
+      }
       const adapter = new KeycloakRealmAdminAdapter({
         url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
         realm: tenantCtx.realmName,
-        adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
-        adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
+        adminClientId: cred.clientId,
+        adminClientSecret: cred.clientSecret,
       });
       res.json(200, await adapter.getMfaPolicy());
     },
@@ -357,11 +366,18 @@ export const routes: Route[] = [
         res.json(400, { code: "NO_TENANT", message: "No tenant context" });
         return;
       }
+      const cred = await new PostgresTenantCredentialStore(
+        getApplicationPool()
+      ).getAuthSettingsCredential(tenantCtx.organisationId);
+      if (!cred) {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
+        return;
+      }
       const adapter = new KeycloakRealmAdminAdapter({
         url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
         realm: tenantCtx.realmName,
-        adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
-        adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
+        adminClientId: cred.clientId,
+        adminClientSecret: cred.clientSecret,
       });
       res.json(200, await adapter.getSessionPolicy());
     },
@@ -426,11 +442,18 @@ export const routes: Route[] = [
         res.json(400, { code: "NO_TENANT", message: "No tenant context" });
         return;
       }
+      const cred = await new PostgresTenantCredentialStore(
+        getApplicationPool()
+      ).getAuthSettingsCredential(tenantCtx.organisationId);
+      if (!cred) {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
+        return;
+      }
       const adapter = new KeycloakRealmAdminAdapter({
         url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
         realm: tenantCtx.realmName,
-        adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
-        adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
+        adminClientId: cred.clientId,
+        adminClientSecret: cred.clientSecret,
       });
       res.json(200, await adapter.getSysadminBrokering());
     },

@@ -8,6 +8,13 @@
  * In development (key absent): stored with an "unenc:" prefix and a logged warning.
  * Production deployments MUST set TENANT_SECRET_ENCRYPTION_KEY.
  *
+ * Encrypted value format stored in client_secret_enc:
+ *   enc:<iv_hex>:<ciphertext_hex>:<tag_hex>   (AES-256-GCM, all components hex-encoded)
+ *   unenc:<plaintext>                          (dev mode — key absent)
+ *
+ * Note: migration 009 comment incorrectly described the format as "base64".
+ * The actual format is hex as documented here.
+ *
  * Limitation: application-level AES defends against database dump exposure but
  * not against full app-server compromise. A KMS-backed solution is a future step.
  */
