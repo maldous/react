@@ -30,8 +30,15 @@ describe("createReadinessResponse", () => {
     assert.equal(response.status, "not-ready");
   });
 
-  it("returns not-ready when a dependency is unknown", () => {
+  it("returns ready when a dependency is unknown (degraded but not blocking)", () => {
+    // "unknown" means the check could not be completed — degraded but traffic can still be served.
+    // Only "failed" (confirmed unhealthy) blocks readiness.
     const response = createReadinessResponse({ db: "unknown" });
+    assert.equal(response.status, "ready");
+  });
+
+  it("returns not-ready when a dependency is failed even if others are unknown", () => {
+    const response = createReadinessResponse({ db: "failed", cache: "unknown" });
     assert.equal(response.status, "not-ready");
   });
 
