@@ -443,7 +443,10 @@ services:
     environment:
       NODE_ENV: production
       PLATFORM_API_PORT: "3001"
+      # Superuser URL — used only by migration runner, seed, and reset scripts.
       POSTGRES_URL: postgresql://${POSTGRES_USER:-platform}:${POSTGRES_PASSWORD:-platformpassword}@postgres:5432/${POSTGRES_DB:-platform}
+      # Non-superuser app role URL — runtime pool (ADR-ACT-0189). Set POSTGRES_APP_PASSWORD to a strong value in production.
+      POSTGRES_APP_URL: postgresql://platform_app:${POSTGRES_APP_PASSWORD:-platformapppassword}@postgres:5432/${POSTGRES_DB:-platform}
       REDIS_URL: redis://redis:6379
       # Leave empty (default) to require real Keycloak login.
       # Set to a fixture role for dev without Keycloak: tenant-admin, viewer, no-membership
