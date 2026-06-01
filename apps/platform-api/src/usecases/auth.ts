@@ -2,10 +2,18 @@ import { resolvePermissions } from "@platform/domain-identity";
 import type { KeycloakIdentityResult } from "@platform/adapters-keycloak";
 import type { SessionStore, CreateSessionCommand } from "@platform/session-runtime";
 import type { IdentityRepository } from "../ports/identity-repository.ts";
+import { encryptToken } from "../server/token-crypto.ts";
 
 export interface AuthUseCaseDeps {
   identities: IdentityRepository;
   sessions: SessionStore;
+}
+
+/** Tokens returned by the Keycloak token exchange. Optional — absent for fixture sessions. */
+export interface TokenSet {
+  accessToken: string;
+  refreshToken: string;
+  expiresIn: number; // seconds
 }
 
 export interface SessionResolution {
@@ -38,7 +46,8 @@ export interface SessionResolution {
 export async function resolveSessionFromIdentity(
   identity: KeycloakIdentityResult,
   deps: AuthUseCaseDeps,
-  sessionTtlSeconds = 1800
+  sessionTtlSeconds = 1800,
+  tokens?: TokenSet
 ): Promise<SessionResolution> {
   // Step 1?2: Look up or create the internal User + ExternalIdentity
   let pair = await deps.identities.findExternalIdentity(
@@ -82,7 +91,9 @@ export async function resolveSessionFromIdentity(
       ? resolvePermissions(membership.role)
       : [];
 
-  // Step 4: Create server-side session (ADR-0022 ? no raw tokens stored)
+  // Step 4: Create server-side session.
+  // Tokens are encrypted before storage (ADR-ACT-0153 / ADR-0022 amendment).
+  // Fixture sessions pass no tokens; only real Keycloak sessions store them.
   const command: CreateSessionCommand = {
     userId: user.id,
     tenantId,
@@ -91,6 +102,13 @@ export async function resolveSessionFromIdentity(
     permissions,
     displayName: user.displayName,
     ttlSeconds: sessionTtlSeconds,
+    ...(tokens
+      ? {
+          accessTokenEnc: encryptToken(tokens.accessToken),
+          refreshTokenEnc: encryptToken(tokens.refreshToken),
+          accessTokenExpiresAt: new Date(Date.now() + tokens.expiresIn * 1000),
+        }
+      : {}),
   };
 
   const sessionId = await deps.sessions.create(command);

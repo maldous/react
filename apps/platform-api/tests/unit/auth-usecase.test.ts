@@ -323,3 +323,37 @@ describe("destroySession", () => {
     assert.equal(result, null);
   });
 });
+
+// ---------------------------------------------------------------------------
+// Token storage (ADR-ACT-0153)
+// ---------------------------------------------------------------------------
+
+describe("resolveSessionFromIdentity — token storage", () => {
+  it("stores encrypted token fields when tokens are provided", async () => {
+    const sessions = makeFakeSessionStore();
+    const deps: AuthUseCaseDeps = { identities: makeFakeIdentityRepo(), sessions };
+    await resolveSessionFromIdentity(KEYCLOAK_IDENTITY, deps, 1800, {
+      accessToken: "at-abc123",
+      refreshToken: "rt-xyz789",
+      expiresIn: 900,
+    });
+    const created = sessions._store.values().next().value as SessionRecord;
+    assert.ok(created.accessTokenEnc, "must store encrypted access token");
+    assert.ok(created.refreshTokenEnc, "must store encrypted refresh token");
+    assert.ok(created.accessTokenExpiresAt instanceof Date);
+    // Tokens must be stored in enc: or unenc: format — never raw plaintext without a prefix
+    assert.ok(
+      created.accessTokenEnc.startsWith("enc:") || created.accessTokenEnc.startsWith("unenc:"),
+      "token must use encryption format"
+    );
+  });
+
+  it("does not store token fields when no tokens provided (fixture sessions)", async () => {
+    const sessions = makeFakeSessionStore();
+    const deps: AuthUseCaseDeps = { identities: makeFakeIdentityRepo(), sessions };
+    await resolveSessionFromIdentity(KEYCLOAK_IDENTITY, deps, 1800);
+    const created = sessions._store.values().next().value as SessionRecord;
+    assert.equal(created.accessTokenEnc, undefined);
+    assert.equal(created.refreshTokenEnc, undefined);
+  });
+});
