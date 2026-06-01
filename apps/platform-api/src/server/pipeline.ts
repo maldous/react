@@ -11,7 +11,12 @@ import { type SessionActor } from "@platform/contracts-auth";
 import { createRequestContext, type RuntimeContext } from "@platform/platform-runtime-context";
 import { getFixtureSession } from "./session.ts";
 import { parseSessionCookie } from "./auth.ts";
-import { getSessionStore, getApplicationPool } from "./dependencies.ts";
+import {
+  getSessionStore,
+  getApplicationPool,
+  getAuthorisationPort,
+  resolveAccessToken,
+} from "./dependencies.ts";
 import { serverT } from "./i18n.ts";
 import { resolveTenantFromRequest } from "./tenant-resolver.ts";
 
@@ -54,6 +59,15 @@ export interface Route {
    * ADR-0030's "no-deploy policy changes" claim is NOT fully satisfied.
    */
   requiredPermission?: string;
+  /**
+   * UMA resource+scope for dynamic authorisation (ADR-ACT-0145).
+   * When both present and actor has an access token, the pipeline calls
+   * KeycloakAuthorisationAdapter.checkAccess() instead of the static permission check.
+   * Routes without these fields fall back to requiredPermission static check.
+   * Note: "scope" is taken by FQDN scope enforcement; use "umaScope" here.
+   */
+  resource?: string;
+  umaScope?: string;
   /**
    * FQDN scope enforcement — ADR-0029.
    * "global": route must be called from the global/apex host (no tenant FQDN).
@@ -211,12 +225,14 @@ export function createRouter(
     //   2. session cookie ? real Redis-backed session actor
     //   3. neither ? unauthenticated (null)
     let actor: SessionActor | null = null;
+    let resolvedSessionId: string | null = null; // captured for UMA token refresh
     if (matchingRoute.requiresAuth) {
       actor = getFixtureSession();
       if (!actor) {
         // Real session: read the HTTP-only cookie
         const sessionId = parseSessionCookie(req.headers["cookie"]);
         if (sessionId) {
+          resolvedSessionId = sessionId;
           try {
             const record = await getSessionStore().find(sessionId);
             if (record) {
@@ -235,6 +251,8 @@ export function createRouter(
                       supportAccessReason: record.supportAccessReason,
                     }
                   : {}),
+                // Preserve UMA token fields (ADR-ACT-0153) — needed for pipeline checkAccess
+                ...(record.accessTokenEnc ? { accessTokenEnc: record.accessTokenEnc } : {}),
               };
             }
           } catch {
@@ -274,7 +292,70 @@ export function createRouter(
         );
         return;
       }
+      // UMA dynamic authorisation (ADR-ACT-0145)
+      // Runs when route declares resource+umaScope AND actor has a stored token.
+      // Falls back to static requiredPermission check if no token (fixture sessions,
+      // sessions pre-dating ADR-ACT-0153). On Keycloak unavailable, also falls back.
+      let umaGranted = false;
+      if (matchingRoute.resource && matchingRoute.umaScope && actor.accessTokenEnc) {
+        const rawToken = resolvedSessionId
+          ? await resolveAccessToken(resolvedSessionId, getSessionStore())
+          : null;
+
+        if (!rawToken) {
+          // Token missing or refresh failed
+          jsonResponse(
+            res,
+            401,
+            toSafeResponse(new UnauthorizedError("api.error.authenticationRequired"), (m) =>
+              serverT(m)
+            ),
+            requestId
+          );
+          return;
+        }
+
+        const decision = await getAuthorisationPort(fqdnTenant).checkAccess(
+          { name: matchingRoute.resource, scope: matchingRoute.umaScope },
+          rawToken
+        );
+
+        if (decision.granted) {
+          umaGranted = true;
+        } else if (decision.reason === "keycloak_unavailable") {
+          // Degrade gracefully — fall through to static check
+          const log = createLogger({ name: "pipeline" });
+          log.warn(
+            { resource: matchingRoute.resource, scope: matchingRoute.umaScope },
+            "UMA check unavailable — falling back to static permission check"
+          );
+        } else if (decision.reason === "insufficient_auth_level") {
+          jsonResponse(
+            res,
+            401,
+            { code: "STEP_UP_REQUIRED", message: "Additional authentication required" },
+            requestId
+          );
+          return;
+        } else {
+          const err = new ForbiddenError("api.error.permissionRequired", {
+            safeDetails: {
+              permission: `${matchingRoute.resource}#${matchingRoute.umaScope}`,
+            },
+          });
+          jsonResponse(
+            res,
+            403,
+            toSafeResponse(err, (m) => serverT(m, { permission: matchingRoute.resource! })),
+            requestId
+          );
+          return;
+        }
+      }
+
+      // Static permission check — backward compat and UMA degraded fallback
       if (
+        !umaGranted &&
         matchingRoute.requiredPermission &&
         !actor.permissions.includes(matchingRoute.requiredPermission)
       ) {

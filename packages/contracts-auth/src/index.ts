@@ -75,6 +75,10 @@ export const SessionActorSchema = z.object({
   supportMode: z.literal(true).optional(),
   effectiveOrganisationId: z.string().optional(),
   supportAccessReason: z.string().optional(),
+  // UMA token field (ADR-ACT-0145 / ADR-ACT-0153) — pipeline-internal, never in API responses.
+  // Populated from SessionRecord.accessTokenEnc when a real session is resolved.
+  // Absent for fixture sessions and legacy sessions created before token storage landed.
+  accessTokenEnc: z.string().optional(),
 });
 
 export type SessionActor = z.infer<typeof SessionActorSchema>;
