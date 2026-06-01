@@ -207,6 +207,8 @@ export const routes: Route[] = [
     operationName: "auth.settings.idps.list",
     requiresAuth: true,
     requiredPermission: "tenant.auth.settings.read",
+    resource: "admin:auth",
+    umaScope: "read" as const,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -236,6 +238,8 @@ export const routes: Route[] = [
     operationName: "auth.settings.idps.upsert",
     requiresAuth: true,
     requiredPermission: "tenant.auth.settings.write",
+    resource: "admin:auth",
+    umaScope: "write" as const,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -283,6 +287,8 @@ export const routes: Route[] = [
     operationName: "auth.settings.mfa.get",
     requiresAuth: true,
     requiredPermission: "tenant.auth.settings.read",
+    resource: "admin:auth",
+    umaScope: "read" as const,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -312,6 +318,8 @@ export const routes: Route[] = [
     operationName: "auth.settings.mfa.set",
     requiresAuth: true,
     requiredPermission: "tenant.auth.settings.write",
+    resource: "admin:auth",
+    umaScope: "write" as const,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -359,6 +367,8 @@ export const routes: Route[] = [
     operationName: "auth.settings.session.get",
     requiresAuth: true,
     requiredPermission: "tenant.auth.settings.read",
+    resource: "admin:auth",
+    umaScope: "read" as const,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -388,6 +398,8 @@ export const routes: Route[] = [
     operationName: "auth.settings.session.set",
     requiresAuth: true,
     requiredPermission: "tenant.auth.settings.write",
+    resource: "admin:auth",
+    umaScope: "write" as const,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -435,6 +447,8 @@ export const routes: Route[] = [
     operationName: "auth.settings.brokering.get",
     requiresAuth: true,
     requiredPermission: "tenant.auth.settings.read",
+    resource: "admin:auth",
+    umaScope: "read" as const,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -464,6 +478,8 @@ export const routes: Route[] = [
     operationName: "auth.settings.brokering.set",
     requiresAuth: true,
     requiredPermission: "tenant.auth.settings.write",
+    resource: "admin:auth",
+    umaScope: "write" as const,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -517,6 +533,8 @@ export const routes: Route[] = [
     operationName: "admin.tenants.create",
     requiresAuth: true,
     requiredPermission: "platform.tenants.create",
+    resource: "admin:tenants",
+    umaScope: "create" as const,
     scope: "global" as const,
     handler: async (req, res) => {
       const parsed = CreateTenantRequestSchema.safeParse(req.body);
@@ -535,6 +553,8 @@ export const routes: Route[] = [
     operationName: "admin.tenants.resources.get",
     requiresAuth: true,
     requiredPermission: "platform.tenants.read",
+    resource: "admin:tenants",
+    umaScope: "read" as const,
     scope: "global" as const,
     handler: async (req, res) => {
       const url = new URL(req.raw.url ?? "", "http://localhost");
@@ -560,6 +580,8 @@ export const routes: Route[] = [
     operationName: "admin.sub-tenants.create",
     requiresAuth: true,
     requiredPermission: "tenant.admin.access",
+    resource: "admin:tenants",
+    umaScope: "create" as const,
     scope: "tenant" as const,
     handler: async (_req, res) => {
       res.json(501, { code: "NOT_IMPLEMENTED", message: serverT("api.error.notImplemented") });
@@ -577,6 +599,8 @@ export const routes: Route[] = [
     operationName: "admin.support-session.create",
     requiresAuth: true,
     requiredPermission: "platform.admin.access",
+    resource: "platform:support",
+    umaScope: "enter" as const,
     scope: "global" as const,
     handler: async (req, res) => {
       const SupportSessionRequestSchema = z.object({
@@ -649,6 +673,8 @@ export const routes: Route[] = [
     operationName: "organisation.profile.get",
     requiresAuth: true,
     requiredPermission: "organisation.read",
+    resource: "organisation:profile",
+    umaScope: "read" as const,
     handler: handleGetOrganisationProfile,
   },
   {
@@ -657,6 +683,8 @@ export const routes: Route[] = [
     operationName: "organisation.profile.update",
     requiresAuth: true,
     requiredPermission: "organisation.update",
+    resource: "organisation:profile",
+    umaScope: "write" as const,
     handler: handlePatchOrganisationProfile,
   },
 ];
