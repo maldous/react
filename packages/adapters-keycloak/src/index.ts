@@ -890,6 +890,16 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
         type: "urn:platform:resources:organisation",
         scopes: ["read", "create", "update", "delete"],
       },
+      {
+        name: "organisation:sub-organisations",
+        type: "urn:platform:resources:organisation",
+        scopes: ["read", "create", "update", "delete"],
+      },
+      {
+        name: "organisation:features",
+        type: "urn:platform:resources:organisation",
+        scopes: ["read", "update"],
+      },
       { name: "admin:auth", type: "urn:platform:resources:admin", scopes: ["read", "write"] },
       {
         name: "admin:tenants",

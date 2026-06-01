@@ -579,12 +579,13 @@ export const routes: Route[] = [
     path: "/api/admin/sub-tenants",
     operationName: "admin.sub-tenants.create",
     requiresAuth: true,
-    requiredPermission: "tenant.admin.access",
-    resource: "admin:tenants",
+    requiredPermission: "tenant.suborgs.create",
+    resource: "organisation:sub-organisations",
     umaScope: "create" as const,
     scope: "tenant" as const,
     handler: async (_req, res) => {
-      res.json(501, { code: "NOT_IMPLEMENTED", message: serverT("api.error.notImplemented") });
+      // Redirects to the canonical sub-organisations endpoint
+      res.json(308, { code: "MOVED", message: "Use POST /api/org/sub-organisations" });
     },
   },
   // ---------------------------------------------------------------------------
@@ -1245,6 +1246,321 @@ export const routes: Route[] = [
         return;
       }
       res.json(204, null);
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Feature toggles (ADR-ACT-0143 Slice 4)
+  // Tenant admin enables/disables named platform capabilities.
+  // Stored in tenant_settings (tenant schema). Audit-first.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/org/features",
+    operationName: "org.features.list",
+    requiresAuth: true,
+    requiredPermission: "tenant.features.read",
+    resource: "organisation:features",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { listFeatures } = await import("../usecases/features.ts");
+      const features = await listFeatures(tenantCtx.organisationId, getApplicationPool());
+      res.json(200, { features });
+    },
+  },
+  {
+    method: "PATCH",
+    path: "/api/org/features/:featureKey",
+    operationName: "org.features.toggle",
+    requiresAuth: true,
+    requiredPermission: "tenant.features.update",
+    resource: "organisation:features",
+    umaScope: "update" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const featureKey = req.params["featureKey"] ?? "";
+      const { toggleFeature } = await import("../usecases/features.ts");
+      const result = await toggleFeature(
+        {
+          rawBody: req.body,
+          featureKey,
+          organisationId: tenantCtx.organisationId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          pool: getApplicationPool(),
+        }
+      );
+      if (result.kind === "invalid_body") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      if (result.kind === "unknown_key") {
+        res.json(404, { code: "NOT_FOUND", message: result.message });
+        return;
+      }
+      res.json(200, result.state);
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Sub-organisation management (ADR-ACT-0143 Slice 3)
+  // Tenant admin manages sub-organisations inside their own tenant.
+  // Sub-orgs are Tier 2: share parent Keycloak realm, no new infrastructure.
+  // All routes: scope "tenant" — must arrive at {slug}.aldous.info.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/org/sub-organisations",
+    operationName: "org.sub-organisations.list",
+    requiresAuth: true,
+    requiredPermission: "tenant.suborgs.read",
+    resource: "organisation:sub-organisations",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { listSubOrgs } = await import("../usecases/sub-organisations.ts");
+      const subOrgs = await listSubOrgs(tenantCtx.organisationId, getApplicationPool());
+      res.json(200, { subOrganisations: subOrgs });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/org/sub-organisations",
+    operationName: "org.sub-organisations.create",
+    requiresAuth: true,
+    requiredPermission: "tenant.suborgs.create",
+    resource: "organisation:sub-organisations",
+    umaScope: "create" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { createSubOrg } = await import("../usecases/sub-organisations.ts");
+      const result = await createSubOrg(
+        {
+          rawBody: req.body,
+          parentOrgId: tenantCtx.organisationId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          pool: getApplicationPool(),
+        }
+      );
+      if (result.kind === "invalid_body") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      if (result.kind === "reserved_slug") {
+        res.json(422, { code: "VALIDATION_ERROR", message: "This slug is reserved" });
+        return;
+      }
+      if (result.kind === "conflict") {
+        res.json(409, {
+          code: "CONFLICT",
+          message: "An organisation with this slug already exists",
+        });
+        return;
+      }
+      res.json(201, result.subOrg);
+    },
+  },
+  {
+    method: "PATCH",
+    path: "/api/org/sub-organisations/:subOrgId",
+    operationName: "org.sub-organisations.update",
+    requiresAuth: true,
+    requiredPermission: "tenant.suborgs.update",
+    resource: "organisation:sub-organisations",
+    umaScope: "update" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const subOrgId = req.params["subOrgId"] ?? "";
+      if (!subOrgId) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "subOrgId path parameter is required" });
+        return;
+      }
+      const { updateSubOrg } = await import("../usecases/sub-organisations.ts");
+      const result = await updateSubOrg(
+        {
+          rawBody: req.body,
+          parentOrgId: tenantCtx.organisationId,
+          subOrgId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          pool: getApplicationPool(),
+        }
+      );
+      if (result.kind === "invalid_body") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Sub-organisation not found" });
+        return;
+      }
+      res.json(200, result.subOrg);
+    },
+  },
+  {
+    method: "DELETE",
+    path: "/api/org/sub-organisations/:subOrgId",
+    operationName: "org.sub-organisations.deactivate",
+    requiresAuth: true,
+    requiredPermission: "tenant.suborgs.delete",
+    resource: "organisation:sub-organisations",
+    umaScope: "delete" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const subOrgId = req.params["subOrgId"] ?? "";
+      if (!subOrgId) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "subOrgId path parameter is required" });
+        return;
+      }
+      const { deactivateSubOrg } = await import("../usecases/sub-organisations.ts");
+      const result = await deactivateSubOrg(
+        {
+          parentOrgId: tenantCtx.organisationId,
+          subOrgId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          pool: getApplicationPool(),
+        }
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Sub-organisation not found" });
+        return;
+      }
+      res.json(204, null);
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Vanity domain ownership challenges (ADR-ACT-0188)
+  // ---------------------------------------------------------------------------
+  {
+    method: "POST",
+    path: "/api/auth/settings/domains/challenges",
+    operationName: "auth.settings.domains.challenge.create",
+    requiresAuth: true,
+    requiredPermission: "tenant.auth.settings.write",
+    resource: "admin:auth",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const body = req.body as Record<string, unknown>;
+      const domain = typeof body?.domain === "string" ? body.domain : "";
+      const { createDomainChallenge } = await import("../usecases/vanity-domain-challenge.ts");
+      const result = await createDomainChallenge(
+        {
+          domain,
+          organisationId: tenantCtx.organisationId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          pool: getApplicationPool(),
+        }
+      );
+      if (result.kind === "invalid_domain") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      res.json(201, { txtRecord: result.txtRecord, token: result.token });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/auth/settings/domains/verify",
+    operationName: "auth.settings.domains.challenge.verify",
+    requiresAuth: true,
+    requiredPermission: "tenant.auth.settings.write",
+    resource: "admin:auth",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const body = req.body as Record<string, unknown>;
+      const domain = typeof body?.domain === "string" ? body.domain : "";
+      const { verifyDomainChallenge } = await import("../usecases/vanity-domain-challenge.ts");
+      const result = await verifyDomainChallenge(
+        {
+          domain,
+          organisationId: tenantCtx.organisationId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          pool: getApplicationPool(),
+        }
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "No active challenge for this domain" });
+        return;
+      }
+      if (result.kind === "expired") {
+        res.json(422, { code: "VALIDATION_ERROR", message: "Challenge has expired" });
+        return;
+      }
+      if (result.kind === "already_verified") {
+        res.json(200, { status: "already_verified" });
+        return;
+      }
+      if (result.kind === "dns_not_found" || result.kind === "dns_mismatch") {
+        res.json(422, {
+          code: "VALIDATION_ERROR",
+          message: `DNS verification failed: ${result.kind}`,
+        });
+        return;
+      }
+      res.json(200, { status: "verified" });
     },
   },
   // ---------------------------------------------------------------------------
