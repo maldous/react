@@ -201,17 +201,17 @@ test("planFor: validate returns just metadata step", () => {
   assert.equal(plan[0].name, "validate-package-metadata");
 });
 
-test("planFor: all returns 8 steps in dependency order", () => {
+test("planFor: all returns 10 steps in dependency order", () => {
   const opts = defaultOptions({ command: "all" });
   const plan = planFor("all", opts, repoRoot);
-  assert.equal(plan.length, 8);
+  assert.equal(plan.length, 10);
   const names = plan.map((s) => s.name);
   // metadata must come first
   assert.equal(names[0], "validate-package-metadata");
-  // validate-i18n is last (report-only, required=false)
-  assert.equal(names[names.length - 1], "validate-i18n");
-  // slice readiness is second to last
-  assert.equal(names[names.length - 2], "validate-slice-readiness");
+  // validate-compose-ports is last
+  assert.equal(names[names.length - 1], "validate-compose-ports");
+  // pipeline-composition is second to last
+  assert.equal(names[names.length - 2], "validate-pipeline-composition");
 });
 
 test("planFor: generate-readmes returns metadata + readmesWrite", () => {

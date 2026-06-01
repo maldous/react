@@ -141,19 +141,23 @@ export async function withTenantActor<T>(
 }
 
 // ---------------------------------------------------------------------------
-// withSystemAdmin ? cross-tenant RLS bypass (ADR-0029 ?3d, ADR-0031)
+// withSystemAdmin ? cross-tenant RLS bypass (ADR-0029 ?3d, ADR-0031, ADR-ACT-0184)
 //
-// Sets: SET LOCAL app.bypass_rls = true
+// RLS bypass is controlled by PostgreSQL role membership (rls_bypass role),
+// NOT by a session GUC. The application DB user is granted the rls_bypass role
+// (migration 008), so pg_has_role(current_user, 'rls_bypass', 'MEMBER') is true
+// for the duration of the connection — no per-transaction GUC is required.
 //
-// Bypasses Row-Level Security for privileged cross-tenant operations.
+// This replaces the previous app.bypass_rls GUC approach, which was user-settable:
+// any connection holder could SET app.bypass_rls = 'true' to escalate privileges.
+// Role membership cannot be changed by an unprivileged session.
 //
 // Audit rules:
 //   MUTATIONS (INSERT, UPDATE, DELETE): every call that mutates data must be
 //   adjacent to an AuditEvent emission. This includes provisioning, membership
 //   changes, and config writes.
 //
-//   READ-ONLY lookups (SELECT only): calls that only read data ? e.g.
-//   getTenantResourceConfig, identity resolution during auth ? must emit a
+//   READ-ONLY lookups (SELECT only): calls that only read data must emit a
 //   structured log entry at info level (caller is responsible). A full audit
 //   event is not required for reads, but must not be silently absent.
 //
@@ -168,7 +172,6 @@ export async function withSystemAdmin<T>(
   const client = await pool.connect();
   try {
     await client.query("BEGIN");
-    await client.query("SELECT set_config('app.bypass_rls', 'true', true)");
     const result = await fn(client);
     await client.query("COMMIT");
     return result;

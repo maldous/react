@@ -52,15 +52,36 @@ PGADMIN_SYSADMIN_ROLE="pgadmin_sysadmin"
 PGADMIN_SYSADMIN_PASS="${PGADMIN_DB_PASSWORD:-pgadmin-sysadmin-password}"
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$PGADMIN_DB" <<EOSQL
--- pgadmin_sysadmin: system-admin connection only.
--- Non-superuser so FORCE ROW LEVEL SECURITY applies; app.bypass_rls=true mirrors
--- withSystemAdmin() in the platform-api and grants cross-tenant visibility.
+-- rls_bypass: NOLOGIN role that controls RLS bypass via pg_has_role() (ADR-ACT-0184).
+-- Granted to pgadmin_sysadmin below, and to the platform app user by migration 008.
+-- This replaces the user-settable app.bypass_rls GUC which any connection holder
+-- could SET to escalate privileges.
+DO \$\$
+BEGIN
+  IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'rls_bypass') THEN
+    CREATE ROLE rls_bypass NOLOGIN;
+  END IF;
+END
+\$\$;
+
+-- Grant rls_bypass to the platform app user so withSystemAdmin() works without a GUC.
+-- Migration 008 also does this for existing databases; this covers fresh initdb installs.
+DO \$\$
+BEGIN
+  IF NOT pg_has_role('${POSTGRES_USER}', 'rls_bypass', 'MEMBER') THEN
+    GRANT rls_bypass TO "${POSTGRES_USER}";
+  END IF;
+END
+\$\$;
+
+-- pgadmin_sysadmin: system-admin pgAdmin connection only. Non-superuser so
+-- FORCE ROW LEVEL SECURITY applies. Granted rls_bypass so cross-tenant data
+-- is visible — same as withSystemAdmin() in the platform-api, but via role
+-- membership (immutable by unprivileged sessions) not a user-settable GUC.
 --
 -- NOTE: pgadmin_tenant_admin is intentionally NOT created here.
--- Tenant-scoped pgAdmin access is unsafe with GUC-based RLS: any connection holder
--- can execute SET app.current_tenant_id = '<other-org>' or SET app.bypass_rls = 'true'
--- to access cross-tenant data. See ADR-ACT-0184 for the role-membership bypass
--- mechanism that would make tenant-scoped pgAdmin safe.
+-- Tenant-scoped pgAdmin access remains disabled until a separate role-level
+-- tenant isolation design is implemented (see ADR-0029 and ADR-ACT-0184).
 DO \$\$
 BEGIN
   IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = '${PGADMIN_SYSADMIN_ROLE}') THEN
@@ -68,7 +89,7 @@ BEGIN
   END IF;
 END
 \$\$;
-ALTER ROLE "${PGADMIN_SYSADMIN_ROLE}" SET "app.bypass_rls" = 'true';
+GRANT rls_bypass TO "${PGADMIN_SYSADMIN_ROLE}";
 ALTER ROLE "${PGADMIN_SYSADMIN_ROLE}" SET "app.current_tenant_id" = '';
 GRANT CONNECT ON DATABASE "${PGADMIN_DB}" TO "${PGADMIN_SYSADMIN_ROLE}";
 GRANT USAGE ON SCHEMA public TO "${PGADMIN_SYSADMIN_ROLE}";

@@ -201,26 +201,63 @@ describe("withTenantActor", () => {
 });
 
 describe("withSystemAdmin", () => {
-  it("sets app.bypass_rls = true", async () => {
+  it("does NOT set any user-settable bypass GUC (ADR-ACT-0184 regression)", async () => {
+    // RLS bypass is controlled by rls_bypass role membership (pg_has_role),
+    // not by a user-settable session variable. Any session GUC could be SET
+    // by an unprivileged connection to escalate privileges.
     const { calls, pool } = makeSpyPool();
     await withSystemAdmin(pool as never, async () => {});
 
-    const setBypass = calls.find((c) => c.text.includes("app.bypass_rls"));
-    assert.ok(setBypass, "set_config app.bypass_rls must be called");
-    assert.ok(
-      setBypass?.text.includes("set_config"),
-      "must use set_config() not SET LOCAL for custom GUC"
+    const bypassGucCall = calls.find(
+      (c) => c.text.includes("bypass_rls") || c.text.includes("bypass")
     );
-    assert.ok(setBypass?.text.includes("true"), "bypass_rls must be set to true");
+    assert.strictEqual(
+      bypassGucCall,
+      undefined,
+      "withSystemAdmin must NOT set any bypass GUC — bypass is via rls_bypass role membership"
+    );
   });
 
-  it("does NOT set search_path (cross-tenant ? no schema selected)", async () => {
+  it("does NOT set search_path (cross-tenant — no schema selected)", async () => {
     const { calls, pool } = makeSpyPool();
     await withSystemAdmin(pool as never, async () => {});
     assert.ok(
       !calls.some((c) => c.text.includes("search_path")),
       "withSystemAdmin must not set search_path"
     );
+  });
+
+  it("wraps fn in BEGIN/COMMIT and releases client", async () => {
+    const { calls, pool } = makeSpyPool();
+    let fnCalled = false;
+    await withSystemAdmin(pool as never, async () => {
+      fnCalled = true;
+    });
+    assert.ok(fnCalled, "callback must be called");
+    assert.ok(
+      calls.some((c) => c.text === "BEGIN"),
+      "BEGIN must be issued"
+    );
+    assert.ok(
+      calls.some((c) => c.text === "COMMIT"),
+      "COMMIT must be issued"
+    );
+  });
+
+  it("rolls back on error and re-throws", async () => {
+    const { calls, pool } = makeSpyPool();
+    await assert.rejects(
+      () =>
+        withSystemAdmin(pool as never, async () => {
+          throw new Error("admin error");
+        }),
+      { message: "admin error" }
+    );
+    assert.ok(
+      calls.some((c) => c.text === "ROLLBACK"),
+      "ROLLBACK must be called on error"
+    );
+    assert.ok(!calls.some((c) => c.text === "COMMIT"), "COMMIT must not be called on error");
   });
 });
 
@@ -284,5 +321,47 @@ describe("queryTenantSchema", () => {
       message: /Invalid organisationId/,
     });
     assert.strictEqual(calls.length, 0, "No SQL must be issued for invalid organisationId");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Static migration content assertions (ADR-ACT-0184)
+// Verify that migration 008 uses pg_has_role and that the adapter source
+// no longer contains the user-settable app.bypass_rls GUC.
+// ---------------------------------------------------------------------------
+
+import { readFileSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const _dir = dirname(fileURLToPath(import.meta.url));
+
+describe("ADR-ACT-0184 static assertions", () => {
+  it("migration 008 uses pg_has_role for bypass — not app.bypass_rls GUC", () => {
+    const migration = readFileSync(
+      join(_dir, "../../../apps/platform-api/src/db/migrations/008-rls-bypass-role.sql"),
+      "utf8"
+    );
+    assert.ok(
+      migration.includes("pg_has_role"),
+      "migration 008 must use pg_has_role for RLS bypass"
+    );
+    assert.ok(
+      !migration.includes("set_config") || !migration.includes("bypass_rls"),
+      "migration 008 must not set app.bypass_rls via set_config"
+    );
+  });
+
+  it("adapters-postgres/src/index.ts does not call set_config for app.bypass_rls", () => {
+    const source = readFileSync(join(_dir, "../src/index.ts"), "utf8");
+    // Strip comment lines before checking — comments documenting the old approach are acceptable.
+    const codeOnly = source
+      .split("\n")
+      .filter((l) => !l.trimStart().startsWith("//"))
+      .join("\n");
+    assert.ok(
+      !codeOnly.includes("bypass_rls"),
+      "adapters-postgres runtime code must not set app.bypass_rls GUC — bypass is via role membership"
+    );
   });
 });
