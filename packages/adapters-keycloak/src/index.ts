@@ -411,6 +411,17 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
   }
 
   async setResourcePolicy(resourceName: string, policy: ResourcePolicy): Promise<void> {
+    const ALLOWED_POLICY_TYPES: ResourcePolicy["type"][] = [
+      "role",
+      "time",
+      "aggregated",
+      "user",
+      "group",
+      "regex",
+    ];
+    if (!ALLOWED_POLICY_TYPES.includes(policy.type)) {
+      throw new Error(`setResourcePolicy: policy type "${policy.type}" is not allowed`);
+    }
     const token = await this.getAdminToken();
     const clientUuid = await this._getBffClientUuid(token);
     if (!clientUuid) throw new Error("setResourcePolicy: BFF client not found");

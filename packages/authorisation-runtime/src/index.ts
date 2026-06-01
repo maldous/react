@@ -87,10 +87,10 @@ export interface SessionPolicy {
   rememberMe: boolean;
 }
 
+// "js" excluded: Keycloak JS policies execute arbitrary JavaScript — privilege escalation risk.
 export interface ResourcePolicy {
   name: string;
-  /** "role" | "time" | "aggregated" | "user" | "group" | "regex" | "js" */
-  type: "role" | "time" | "aggregated" | "user" | "group" | "regex" | "js";
+  type: "role" | "time" | "aggregated" | "user" | "group" | "regex";
   config: Record<string, unknown>;
   enabled: boolean;
 }

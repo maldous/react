@@ -60,9 +60,27 @@ export async function removeVanityDomain(
   await mutateBffClientUris(input.realmName, input.domain, "remove", deps.adminConfig);
 }
 
+// Validates a vanity domain hostname before it is added to Keycloak redirect_uris.
+// Does NOT verify ownership — the caller must hold a separate proof-of-ownership
+// step (ADR-ACT-0188) before persisting. This function only rejects syntactically
+// invalid or trivially abusable hostnames.
 function validateDomain(domain: string): void {
-  if (!/^[a-zA-Z0-9.-]+$/.test(domain)) {
+  // Lowercase, max 253 chars overall, at least one dot (requires a TLD)
+  const lower = domain.toLowerCase();
+  if (lower.length > 253 || !lower.includes(".")) {
     throw new Error(`vanity-domain: invalid domain format: ${domain}`);
+  }
+  // Each label: 1–63 chars, alphanumeric or internal hyphens, no leading/trailing hyphen
+  const labelRe = /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/;
+  const labels = lower.split(".");
+  for (const label of labels) {
+    if (!label || !labelRe.test(label)) {
+      throw new Error(`vanity-domain: invalid domain format: ${domain}`);
+    }
+  }
+  // Reject IP literals (all-numeric labels with no letters, e.g. 1.2.3.4)
+  if (labels.every((l) => /^\d+$/.test(l))) {
+    throw new Error(`vanity-domain: IP literals are not allowed: ${domain}`);
   }
 }
 

@@ -9,6 +9,8 @@ import {
 } from "@platform/platform-errors";
 import { type SessionActor } from "@platform/contracts-auth";
 import { createRequestContext, type RuntimeContext } from "@platform/platform-runtime-context";
+import { type SessionStore } from "@platform/session-runtime";
+import { type AuthorisationPort } from "@platform/authorisation-runtime";
 import { getFixtureSession } from "./session.ts";
 import { parseSessionCookie } from "./auth.ts";
 import {
@@ -18,7 +20,14 @@ import {
   resolveAccessToken,
 } from "./dependencies.ts";
 import { serverT } from "./i18n.ts";
-import { resolveTenantFromRequest } from "./tenant-resolver.ts";
+import { resolveTenantFromRequest, type TenantContext } from "./tenant-resolver.ts";
+
+// Test-only injection seam. Production callers never pass this.
+export interface RouterTestDeps {
+  sessionStore?: SessionStore;
+  authorisationPort?: (tenant: TenantContext | null) => AuthorisationPort;
+  resolveAccessToken?: (sessionId: string, store: SessionStore) => Promise<string | null>;
+}
 
 // Types
 export interface PipelineRequest {
@@ -45,18 +54,19 @@ export interface Route {
   handler: PipelineHandler;
   requiresAuth?: boolean;
   /**
-   * INTERIM STATIC PERMISSION BRIDGE — ADR-ACT-0145
+   * Static permission backstop — ADR-ACT-0145 (Done).
    *
-   * requiredPermission is checked against the actor's resolved permission set
-   * from the session record. This is a static, pre-resolved check — it does
-   * NOT call Keycloak Authorization Services at runtime and does NOT support
-   * no-deploy policy changes.
+   * requiredPermission is checked against the actor's pre-resolved permission set
+   * when UMA is not available (no access token in session, or Keycloak unreachable).
    *
-   * Full runtime dynamic policy enforcement (UMA ticket evaluation via
-   * KeycloakAuthorisationAdapter) is tracked in ADR-ACT-0145 and requires
-   * the access token to be stored in the session record (ADR-ACT-0153 scope).
-   * Until ADR-ACT-0145 is complete, permission checks are static and
-   * ADR-0030's "no-deploy policy changes" claim is NOT fully satisfied.
+   * In production with a valid session token, UMA (resource+umaScope) is the
+   * primary enforcement gate. This field is the degraded-mode fallback: it ensures
+   * access is not completely lost during Keycloak unavailability, at the cost of
+   * not honouring runtime policy changes made in Keycloak during the outage.
+   * This trade-off is documented in ADR-0030 as a deliberate transitional stance.
+   *
+   * Routes with resource+umaScope but WITHOUT requiredPermission fail closed:
+   * UMA unavailability → 403 (not degraded fallback).
    */
   requiredPermission?: string;
   /**
@@ -148,7 +158,8 @@ export async function parseJsonBody(
 
 // Create the HTTP request handler from a route list
 export function createRouter(
-  routes: Route[]
+  routes: Route[],
+  _testDeps?: RouterTestDeps
 ): (req: http.IncomingMessage, res: http.ServerResponse) => Promise<void> {
   const logger = createLogger({ name: "platform-api", level: process.env["LOG_LEVEL"] ?? "debug" });
 
@@ -234,7 +245,8 @@ export function createRouter(
         if (sessionId) {
           resolvedSessionId = sessionId;
           try {
-            const record = await getSessionStore().find(sessionId);
+            const store = _testDeps?.sessionStore ?? getSessionStore();
+            const record = await store.find(sessionId);
             if (record) {
               actor = {
                 userId: record.userId,
@@ -292,14 +304,17 @@ export function createRouter(
         );
         return;
       }
-      // UMA dynamic authorisation (ADR-ACT-0145)
+      // UMA dynamic authorisation (ADR-ACT-0145, Done)
       // Runs when route declares resource+umaScope AND actor has a stored token.
-      // Falls back to static requiredPermission check if no token (fixture sessions,
-      // sessions pre-dating ADR-ACT-0153). On Keycloak unavailable, also falls back.
+      // Falls back to static requiredPermission when: no token (fixture sessions,
+      // pre-0153 sessions) OR Keycloak unavailable — degraded mode, see ADR-0030.
+      const effectiveResolveToken = _testDeps?.resolveAccessToken ?? resolveAccessToken;
+      const effectiveAuthorisationPort = _testDeps?.authorisationPort ?? getAuthorisationPort;
       let umaGranted = false;
       if (matchingRoute.resource && matchingRoute.umaScope && actor.accessTokenEnc) {
+        const store = _testDeps?.sessionStore ?? getSessionStore();
         const rawToken = resolvedSessionId
-          ? await resolveAccessToken(resolvedSessionId, getSessionStore())
+          ? await effectiveResolveToken(resolvedSessionId, store)
           : null;
 
         if (!rawToken) {
@@ -315,7 +330,7 @@ export function createRouter(
           return;
         }
 
-        const decision = await getAuthorisationPort(fqdnTenant).checkAccess(
+        const decision = await effectiveAuthorisationPort(fqdnTenant).checkAccess(
           { name: matchingRoute.resource, scope: matchingRoute.umaScope },
           rawToken
         );

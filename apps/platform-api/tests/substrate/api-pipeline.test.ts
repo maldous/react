@@ -6,12 +6,21 @@
 import { describe, it, before, after } from "node:test";
 import assert from "node:assert/strict";
 import http from "node:http";
-import { createRouter, type Route, type PipelineRequest } from "../../src/server/pipeline.ts";
+import {
+  createRouter,
+  type Route,
+  type PipelineRequest,
+  type RouterTestDeps,
+} from "../../src/server/pipeline.ts";
+import type { SessionRecord } from "@platform/session-runtime";
 
 // Helper: create a test server with given routes, return {server, url}
-function makeServer(routes: Route[]): Promise<{ server: http.Server; url: string }> {
+function makeServer(
+  routes: Route[],
+  testDeps?: RouterTestDeps
+): Promise<{ server: http.Server; url: string }> {
   return new Promise((resolve, reject) => {
-    const router = createRouter(routes);
+    const router = createRouter(routes, testDeps);
     const server = http.createServer(router);
     server.listen(0, "127.0.0.1", () => {
       const addr = server.address();
@@ -464,6 +473,404 @@ describe("api pipeline: 405 includes X-Request-Id", () => {
       /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i,
       "X-Request-Id should be a UUID"
     );
+  });
+});
+
+// ---------------------------------------------------------------------------
+// UMA pipeline tests (ADR-ACT-0145)
+//
+// These tests exercise the UMA enforcement path. Because fixture sessions have
+// no accessTokenEnc, UMA is not triggered in fixture mode. These tests use the
+// RouterTestDeps injection seam to provide a fake session store (with a record
+// carrying accessTokenEnc), a fake resolveAccessToken, and a fake authorisation
+// port — so no Redis or Keycloak is needed.
+// ---------------------------------------------------------------------------
+
+const UMA_SESSION_ID = "uma-test-session-id";
+const UMA_COOKIE = `platform_session=${UMA_SESSION_ID}`;
+
+function makeUmaSession(): SessionRecord {
+  return {
+    sessionId: UMA_SESSION_ID,
+    userId: "user-uma",
+    tenantId: "tenant-uma",
+    organisationId: "org-uma",
+    roles: ["tenant-admin"],
+    permissions: ["tenant.auth.settings.read", "tenant.auth.settings.write"],
+    displayName: "UMA Test User",
+    expiresAt: new Date(Date.now() + 3_600_000),
+    createdAt: new Date(),
+    accessTokenEnc: "enc:fake-token",
+  };
+}
+
+function fakeStore(): RouterTestDeps["sessionStore"] {
+  return {
+    find: async () => makeUmaSession(),
+    create: async () => UMA_SESSION_ID,
+    refresh: async () => {},
+    destroy: async () => {},
+  };
+}
+
+// ?? 14. UMA grant allows access ???????????????????????????????????????????
+describe("api pipeline: UMA grant allows access", () => {
+  let server: http.Server;
+  let url: string;
+  let savedEnv: string | undefined;
+
+  before(async () => {
+    savedEnv = process.env["LOCAL_FIXTURE_SESSION"];
+    delete process.env["LOCAL_FIXTURE_SESSION"];
+
+    const deps: RouterTestDeps = {
+      sessionStore: fakeStore(),
+      authorisationPort: () => ({
+        checkAccess: async () => ({ granted: true as const, rpt: "rpt-token" }),
+      }),
+      resolveAccessToken: async () => "raw-access-token",
+    };
+
+    const s = await makeServer(
+      [
+        {
+          method: "GET",
+          path: "/uma-protected",
+          requiresAuth: true,
+          resource: "admin:auth",
+          umaScope: "read",
+          handler: async (_req, res) => res.json(200, { ok: true }),
+        },
+      ],
+      deps
+    );
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    if (savedEnv !== undefined) process.env["LOCAL_FIXTURE_SESSION"] = savedEnv;
+    else delete process.env["LOCAL_FIXTURE_SESSION"];
+    await closeServer(server);
+  });
+
+  it("returns 200 when UMA grants access", async () => {
+    const res = await fetch(`${url}/uma-protected`, {
+      headers: { Cookie: UMA_COOKIE },
+    });
+    assert.equal(res.status, 200);
+  });
+});
+
+// ?? 15. UMA policy_denied blocks even with static permission ???????????????
+describe("api pipeline: UMA policy_denied blocks access", () => {
+  let server: http.Server;
+  let url: string;
+  let savedEnv: string | undefined;
+
+  before(async () => {
+    savedEnv = process.env["LOCAL_FIXTURE_SESSION"];
+    delete process.env["LOCAL_FIXTURE_SESSION"];
+
+    const deps: RouterTestDeps = {
+      sessionStore: fakeStore(),
+      authorisationPort: () => ({
+        checkAccess: async () => ({ granted: false as const, reason: "policy_denied" as const }),
+      }),
+      resolveAccessToken: async () => "raw-access-token",
+    };
+
+    const s = await makeServer(
+      [
+        {
+          method: "GET",
+          path: "/uma-denied",
+          requiresAuth: true,
+          resource: "admin:auth",
+          umaScope: "write",
+          // actor has this static permission, but UMA must take precedence
+          requiredPermission: "tenant.auth.settings.write",
+          handler: async (_req, res) => res.json(200, { ok: true }),
+        },
+      ],
+      deps
+    );
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    if (savedEnv !== undefined) process.env["LOCAL_FIXTURE_SESSION"] = savedEnv;
+    else delete process.env["LOCAL_FIXTURE_SESSION"];
+    await closeServer(server);
+  });
+
+  it("returns 403 when UMA returns policy_denied (even though static permission would allow)", async () => {
+    const res = await fetch(`${url}/uma-denied`, {
+      headers: { Cookie: UMA_COOKIE },
+    });
+    assert.equal(res.status, 403);
+    const body = await res.json();
+    assert.equal(body.code, "FORBIDDEN");
+  });
+});
+
+// ?? 16. UMA insufficient_scope blocks access ?????????????????????????????????????
+describe("api pipeline: UMA insufficient_scope blocks access", () => {
+  let server: http.Server;
+  let url: string;
+  let savedEnv: string | undefined;
+
+  before(async () => {
+    savedEnv = process.env["LOCAL_FIXTURE_SESSION"];
+    delete process.env["LOCAL_FIXTURE_SESSION"];
+
+    const deps: RouterTestDeps = {
+      sessionStore: fakeStore(),
+      authorisationPort: () => ({
+        checkAccess: async () => ({
+          granted: false as const,
+          reason: "insufficient_scope" as const,
+        }),
+      }),
+      resolveAccessToken: async () => "raw-access-token",
+    };
+
+    const s = await makeServer(
+      [
+        {
+          method: "GET",
+          path: "/uma-scope",
+          requiresAuth: true,
+          resource: "admin:auth",
+          umaScope: "write",
+          handler: async (_req, res) => res.json(200, { ok: true }),
+        },
+      ],
+      deps
+    );
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    if (savedEnv !== undefined) process.env["LOCAL_FIXTURE_SESSION"] = savedEnv;
+    else delete process.env["LOCAL_FIXTURE_SESSION"];
+    await closeServer(server);
+  });
+
+  it("returns 403 when UMA returns insufficient_scope", async () => {
+    const res = await fetch(`${url}/uma-scope`, { headers: { Cookie: UMA_COOKIE } });
+    assert.equal(res.status, 403);
+    const body = await res.json();
+    assert.equal(body.code, "FORBIDDEN");
+  });
+});
+
+// ?? 17. UMA insufficient_auth_level returns STEP_UP_REQUIRED ????????????????????
+describe("api pipeline: UMA insufficient_auth_level returns STEP_UP_REQUIRED", () => {
+  let server: http.Server;
+  let url: string;
+  let savedEnv: string | undefined;
+
+  before(async () => {
+    savedEnv = process.env["LOCAL_FIXTURE_SESSION"];
+    delete process.env["LOCAL_FIXTURE_SESSION"];
+
+    const deps: RouterTestDeps = {
+      sessionStore: fakeStore(),
+      authorisationPort: () => ({
+        checkAccess: async () => ({
+          granted: false as const,
+          reason: "insufficient_auth_level" as const,
+        }),
+      }),
+      resolveAccessToken: async () => "raw-access-token",
+    };
+
+    const s = await makeServer(
+      [
+        {
+          method: "GET",
+          path: "/uma-stepup",
+          requiresAuth: true,
+          resource: "admin:auth",
+          umaScope: "write",
+          handler: async (_req, res) => res.json(200, { ok: true }),
+        },
+      ],
+      deps
+    );
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    if (savedEnv !== undefined) process.env["LOCAL_FIXTURE_SESSION"] = savedEnv;
+    else delete process.env["LOCAL_FIXTURE_SESSION"];
+    await closeServer(server);
+  });
+
+  it("returns 401 with code STEP_UP_REQUIRED", async () => {
+    const res = await fetch(`${url}/uma-stepup`, { headers: { Cookie: UMA_COOKIE } });
+    assert.equal(res.status, 401);
+    const body = await res.json();
+    assert.equal(body.code, "STEP_UP_REQUIRED");
+  });
+});
+
+// ?? 18. Keycloak unavailable falls back to static permission ????????????????
+describe("api pipeline: Keycloak unavailable degrades to static check", () => {
+  let server: http.Server;
+  let url: string;
+  let savedEnv: string | undefined;
+
+  before(async () => {
+    savedEnv = process.env["LOCAL_FIXTURE_SESSION"];
+    delete process.env["LOCAL_FIXTURE_SESSION"];
+
+    const deps: RouterTestDeps = {
+      sessionStore: fakeStore(),
+      authorisationPort: () => ({
+        checkAccess: async () => ({
+          granted: false as const,
+          reason: "keycloak_unavailable" as const,
+        }),
+      }),
+      resolveAccessToken: async () => "raw-access-token",
+    };
+
+    const s = await makeServer(
+      [
+        {
+          method: "GET",
+          path: "/uma-degraded",
+          requiresAuth: true,
+          resource: "admin:auth",
+          umaScope: "read",
+          // actor has this permission — static fallback should grant
+          requiredPermission: "tenant.auth.settings.read",
+          handler: async (_req, res) => res.json(200, { ok: true }),
+        },
+      ],
+      deps
+    );
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    if (savedEnv !== undefined) process.env["LOCAL_FIXTURE_SESSION"] = savedEnv;
+    else delete process.env["LOCAL_FIXTURE_SESSION"];
+    await closeServer(server);
+  });
+
+  it("returns 200 via static fallback when Keycloak is unavailable (degraded mode)", async () => {
+    const res = await fetch(`${url}/uma-degraded`, { headers: { Cookie: UMA_COOKIE } });
+    assert.equal(res.status, 200);
+  });
+});
+
+// ?? 19. Sole-UMA route fails closed when Keycloak unavailable ??????????????
+describe("api pipeline: sole-UMA route fails closed when Keycloak unavailable", () => {
+  let server: http.Server;
+  let url: string;
+  let savedEnv: string | undefined;
+
+  before(async () => {
+    savedEnv = process.env["LOCAL_FIXTURE_SESSION"];
+    delete process.env["LOCAL_FIXTURE_SESSION"];
+
+    const deps: RouterTestDeps = {
+      sessionStore: fakeStore(),
+      authorisationPort: () => ({
+        checkAccess: async () => ({
+          granted: false as const,
+          reason: "keycloak_unavailable" as const,
+        }),
+      }),
+      resolveAccessToken: async () => "raw-access-token",
+    };
+
+    const s = await makeServer(
+      [
+        {
+          method: "GET",
+          path: "/uma-sole",
+          requiresAuth: true,
+          resource: "admin:auth",
+          umaScope: "read",
+          // NO requiredPermission — must fail closed
+          handler: async (_req, res) => res.json(200, { ok: true }),
+        },
+      ],
+      deps
+    );
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    if (savedEnv !== undefined) process.env["LOCAL_FIXTURE_SESSION"] = savedEnv;
+    else delete process.env["LOCAL_FIXTURE_SESSION"];
+    await closeServer(server);
+  });
+
+  it("returns 403 (fail-closed) when sole-UMA route's Keycloak is unavailable", async () => {
+    const res = await fetch(`${url}/uma-sole`, { headers: { Cookie: UMA_COOKIE } });
+    assert.equal(res.status, 403);
+    const body = await res.json();
+    assert.equal(body.code, "FORBIDDEN");
+  });
+});
+
+// ?? 20. Missing/expired token → 401 ??????????????????????????????????????????
+describe("api pipeline: missing access token fails with 401", () => {
+  let server: http.Server;
+  let url: string;
+  let savedEnv: string | undefined;
+
+  before(async () => {
+    savedEnv = process.env["LOCAL_FIXTURE_SESSION"];
+    delete process.env["LOCAL_FIXTURE_SESSION"];
+
+    const deps: RouterTestDeps = {
+      sessionStore: fakeStore(),
+      authorisationPort: () => ({
+        checkAccess: async () => ({ granted: true as const, rpt: "rpt" }),
+      }),
+      // resolveAccessToken returns null — token refresh failed or expired
+      resolveAccessToken: async () => null,
+    };
+
+    const s = await makeServer(
+      [
+        {
+          method: "GET",
+          path: "/uma-no-token",
+          requiresAuth: true,
+          resource: "admin:auth",
+          umaScope: "read",
+          handler: async (_req, res) => res.json(200, { ok: true }),
+        },
+      ],
+      deps
+    );
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    if (savedEnv !== undefined) process.env["LOCAL_FIXTURE_SESSION"] = savedEnv;
+    else delete process.env["LOCAL_FIXTURE_SESSION"];
+    await closeServer(server);
+  });
+
+  it("returns 401 when resolveAccessToken returns null (token missing or refresh failed)", async () => {
+    const res = await fetch(`${url}/uma-no-token`, { headers: { Cookie: UMA_COOKIE } });
+    assert.equal(res.status, 401);
+    const body = await res.json();
+    assert.equal(body.code, "UNAUTHORIZED");
   });
 });
 

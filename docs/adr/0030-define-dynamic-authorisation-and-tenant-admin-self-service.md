@@ -565,11 +565,22 @@ None.
 
 ---
 
-## Amendment: UMA Enforcement Implemented (2026-06-01)
+## Amendment: UMA Enforcement Implemented + Degraded Fallback Policy (2026-06-01)
 
 **Status of runtime UMA enforcement:** IMPLEMENTED — see ADR-ACT-0145 Done in ACTION-REGISTER.
 
-The pipeline now calls `KeycloakAuthorisationAdapter.checkAccess()` for every route that declares `resource` + `umaScope`. Static `requiredPermission` checks are retained as a backstop during migration and on Keycloak unavailability. The fail-closed invariant is enforced: if UMA is the sole gate and evaluation fails, the request is denied (never silently allowed).
+The pipeline calls `KeycloakAuthorisationAdapter.checkAccess()` for every route that declares `resource` + `umaScope`. The fail-closed invariant is enforced: if UMA is the **sole** gate (no `requiredPermission` backstop) and evaluation fails for any reason, the request is denied.
+
+### Deliberate degraded-mode fallback
+
+All currently deployed routes carry **both** `resource+umaScope` and `requiredPermission`. When Keycloak returns `keycloak_unavailable`, the pipeline falls back to the static `requiredPermission` check and logs a warning. This is a **deliberate transitional stance**:
+
+- It prevents a complete auth outage when Keycloak is temporarily unreachable.
+- It does **not** satisfy the ADR's "no-deploy policy changes" guarantee during a Keycloak outage: a user whose UMA policy was revoked will regain access for the duration of the outage if their static permission still allows it.
+
+This trade-off is accepted for the current phase. The no-deploy revocation guarantee is fully active when Keycloak is available. Routes that require strict revocation guarantees (even during Keycloak downtime) must declare only `resource+umaScope` without `requiredPermission`; those routes fail closed unconditionally.
+
+Future work: once all sessions carry access tokens and UMA is proven stable in production, the `keycloak_unavailable` fallback path should be removed so all routes fail closed. Track this as a future amendment.
 
 ---
 

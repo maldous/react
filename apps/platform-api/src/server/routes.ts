@@ -729,7 +729,7 @@ export const routes: Route[] = [
         resourceName: z.string().min(1).max(120),
         policy: z.object({
           name: z.string().min(1).max(120),
-          type: z.enum(["role", "time", "aggregated", "user", "group", "regex", "js"]),
+          type: z.enum(["role", "time", "aggregated", "user", "group", "regex"]),
           config: z.record(z.string(), z.unknown()).default({}),
         }),
       });
