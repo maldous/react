@@ -31,7 +31,7 @@ import pg from "pg";
 import type { PipelineHandler } from "./pipeline.ts";
 import { isSlugReserved } from "@platform/domain-identity";
 import { parseSessionCookie } from "./auth.ts";
-import { getSessionStore, getPostgresUrl } from "./dependencies.ts";
+import { getSessionStore, getPostgresAppUrl } from "./dependencies.ts";
 import { getFixtureSession } from "./session.ts";
 
 /**
@@ -81,7 +81,7 @@ const APEX_DOMAIN = process.env["APEX_DOMAIN"] ?? "aldous.info";
 let _pgPool: pg.Pool | undefined;
 
 function getPool(): pg.Pool {
-  if (!_pgPool) _pgPool = new pg.Pool({ connectionString: getPostgresUrl(), max: 2 });
+  if (!_pgPool) _pgPool = new pg.Pool({ connectionString: getPostgresAppUrl(), max: 2 });
   return _pgPool;
 }
 

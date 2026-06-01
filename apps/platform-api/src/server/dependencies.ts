@@ -38,18 +38,29 @@ import { getFixtureSession } from "./session.ts";
 import type { TenantContext } from "./tenant-resolver.ts";
 
 const DEFAULT_POSTGRES_URL = "postgresql://platform:platformpassword@localhost:5433/platform";
+const DEFAULT_POSTGRES_APP_URL =
+  "postgresql://platform_app:platformapppassword@localhost:5433/platform";
 
+// Superuser URL — used only by migration runner, seed, and reset scripts.
+// Never use this for the runtime application pool.
 export function getPostgresUrl(): string {
   return process.env["POSTGRES_URL"] ?? DEFAULT_POSTGRES_URL;
 }
 
-// Shared application pool ? used by withTenant, withSystemAdmin, provisioning.
-// Two connections reserved for provisioning operations (schema creation, migrations).
+// Non-superuser app role URL — used by the runtime application pool (ADR-ACT-0189).
+// Falls back to DEFAULT_POSTGRES_APP_URL for local dev without POSTGRES_APP_URL set.
+// Production must set POSTGRES_APP_URL to the platform_app role connection string.
+export function getPostgresAppUrl(): string {
+  return process.env["POSTGRES_APP_URL"] ?? DEFAULT_POSTGRES_APP_URL;
+}
+
+// Shared application pool — used by withTenant, withSystemAdmin, provisioning.
+// Connects as platform_app (non-superuser) so RLS enforces at runtime.
 let _appPool: pg.Pool | undefined;
 
 export function getApplicationPool(): pg.Pool {
   if (!_appPool) {
-    _appPool = new pg.Pool({ connectionString: getPostgresUrl(), max: 12 });
+    _appPool = new pg.Pool({ connectionString: getPostgresAppUrl(), max: 12 });
   }
   return _appPool;
 }
@@ -108,14 +119,14 @@ let readinessAdapter: PostgresReadinessAdapter | undefined;
 
 export function getOrganisationRepository(): OrganisationRepository {
   if (!organisationRepository) {
-    organisationRepository = new PostgresOrganisationRepository(getPostgresUrl());
+    organisationRepository = new PostgresOrganisationRepository(getPostgresAppUrl());
   }
   return organisationRepository;
 }
 
 export function getPostgresReadinessAdapter(): PostgresReadinessAdapter {
   if (!readinessAdapter) {
-    readinessAdapter = new PostgresReadinessAdapter(getPostgresUrl());
+    readinessAdapter = new PostgresReadinessAdapter(getPostgresAppUrl());
   }
   return readinessAdapter;
 }
@@ -168,7 +179,7 @@ export function getAuthStateStore(): RedisAuthStateStore {
 
 export function getIdentityRepository(): IdentityRepository {
   if (!identityRepository) {
-    identityRepository = new PostgresIdentityRepository(getPostgresUrl());
+    identityRepository = new PostgresIdentityRepository(getPostgresAppUrl());
   }
   return identityRepository;
 }
