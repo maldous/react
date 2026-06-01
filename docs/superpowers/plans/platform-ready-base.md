@@ -10,14 +10,26 @@
 
 ---
 
-## Baseline state
+## Final state (2026-06-02, after reconciliation)
 
-| What | Status |
+| What | Result |
 |---|---|
-| 224 platform-api tests | PASS |
+| **254** platform-api tests | **PASS** (was 224; +30 new tests) |
 | 26 frontend tests | PASS |
-| 636/638 architecture tests (2 OpenAPI drift pre-existing) | PASS |
-| 24/30 compose tests (6 container-health pre-existing) | PASS |
+| **638/638** architecture tests | **PASS** (was 636/638; OpenAPI drift cleared) |
+| 24/30 compose tests | PASS (6 environment-configuration failures — see note) |
+| `npm run audit:deps` | 0 vulnerabilities |
+| `npm run license:policy` | passed |
+| `make check` | all gates passed |
+
+**Compose test note:** The 6 failing tests are environment-configuration limitations, not code failures.
+4 are container health-check assertions that hardcode `react-platform-*-1` container names but the local
+compose project runs as `react` (so containers are `react-*-1`). 2 are mailpit API path tests — the
+mailpit container is configured with `MP_WEBROOT=/mailpit` so its API is at `/mailpit/api/v1/info`
+not the bare `/api/v1/info` the test expects. All 24 actual data-operation tests (DB roundtrips,
+RLS enforcement, Redis, ClickHouse, MinIO S3, org CRUD) pass.
+
+## Baseline state (original, start of session)
 | make check | PASS |
 | ADR-ACT-0143 Slice 1 (members) | Done |
 | ADR-ACT-0143 Slice 2 (groups) | Done |
