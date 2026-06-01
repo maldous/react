@@ -108,7 +108,7 @@ function makeGroupsAdapter(
     },
     async updateGroup(groupId, _name) {
       if (opts.shouldFailUpdate) throw new Error("Keycloak error");
-      updateCalls.push({ id: groupId, name });
+      updateCalls.push({ id: groupId, name: _name });
     },
     async deleteGroup(groupId) {
       if (opts.shouldFailDelete) throw new Error("Keycloak error");
