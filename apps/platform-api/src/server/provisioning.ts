@@ -44,6 +44,7 @@ import {
 } from "@platform/audit-events";
 import { isSlugReserved } from "@platform/domain-identity";
 import { getApplicationPool, getProvisioningConfig } from "./dependencies.ts";
+import { PostgresTenantCredentialStore } from "../adapters/postgres-tenant-credential-store.ts";
 
 const log = createLogger({ name: "provisioning" });
 
@@ -179,9 +180,22 @@ export async function provisionTenant(
     await provisionDatabase(pool, organisationId, resources.database, cfg);
     cleanupSteps.push(() => dropTenantSchemaIfShared(pool, organisationId, resources.database));
 
-    // Step 4: identity
-    await provisionIdentity(organisationId, input.slug, input.displayName, resources.identity, cfg);
+    // Step 4: identity — returns auth-settings service account credential
+    const authSettingsCredential = await provisionIdentity(
+      organisationId,
+      input.slug,
+      input.displayName,
+      resources.identity,
+      cfg
+    );
     cleanupSteps.push(() => deprovisionIdentity(realmName, resources.identity, cfg));
+
+    // Step 4b: persist auth-settings credential so Auth Settings routes can use it
+    if (authSettingsCredential) {
+      const credentialStore = new PostgresTenantCredentialStore(pool);
+      await credentialStore.setAuthSettingsCredential(organisationId, authSettingsCredential);
+      log.info({ organisationId }, "provisioning.auth-settings-credential.stored");
+    }
 
     // Step 5: cache
     await provisionCache(organisationId, resources.cache, cfg);
@@ -354,14 +368,19 @@ async function dropTenantSchemaIfShared(
   await dropTenantSchema(pool, organisationId);
 }
 
+interface AuthSettingsCredential {
+  clientId: string;
+  clientSecret: string;
+}
+
 async function provisionIdentity(
   organisationId: string,
   slug: string,
   displayName: string,
   config: IdentityResourceConfig,
   platformCfg: ReturnType<typeof getProvisioningConfig>
-): Promise<void> {
-  if (config.tier === "external" || config.tier === "air-gapped") return;
+): Promise<AuthSettingsCredential | null> {
+  if (config.tier === "external" || config.tier === "air-gapped") return null;
 
   const keycloakAdapter = new KeycloakProvisioningAdapter({
     url: config.keycloakUrl ?? platformCfg.keycloakUrl,
@@ -370,11 +389,12 @@ async function provisionIdentity(
       config.provisionerClientSecret ?? platformCfg.keycloakProvisionerClientSecret,
   });
 
+  const realmName = `tenant-${organisationId}`;
   const scheme = platformCfg.tenantUriScheme;
   const tenantOrigin = `${scheme}://${slug}.${platformCfg.apexDomain}`;
 
   await keycloakAdapter.createRealm({
-    realmName: `tenant-${organisationId}`,
+    realmName,
     displayName,
     bffClientId: "platform-api",
     bffClientSecret: platformCfg.bffClientSecret,
@@ -384,7 +404,20 @@ async function provisionIdentity(
     bffRedirectUris: [`${tenantOrigin}/auth/callback`, `${tenantOrigin}/auth/*`],
   });
 
+  // Create the per-tenant auth-settings service account (ADR-ACT-0186).
+  // Uses minimum realm-management roles: manage-identity-providers + manage-realm.
+  // The client secret is generated here and stored via the credential store.
+  const authSettingsClientId = `auth-settings-${organisationId}`;
+  const authSettingsClientSecret = crypto.randomUUID();
+
+  const credential = await keycloakAdapter.createAuthSettingsServiceAccount(
+    realmName,
+    authSettingsClientId,
+    authSettingsClientSecret
+  );
+
   log.info({ tier: config.tier, organisationId }, "provisioning.identity.done");
+  return credential;
 }
 
 async function deprovisionIdentity(

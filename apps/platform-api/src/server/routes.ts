@@ -29,6 +29,7 @@ import {
 import { createPostgresAuditEventPort, AuditAction } from "@platform/audit-events";
 import { resolveTenantFromRequest } from "./tenant-resolver.ts";
 import { KeycloakRealmAdminAdapter } from "@platform/adapters-keycloak";
+import { PostgresTenantCredentialStore } from "../adapters/postgres-tenant-credential-store.ts";
 import { z } from "zod";
 
 // ---------------------------------------------------------------------------
@@ -236,14 +237,6 @@ export const routes: Route[] = [
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
-      const adapter = tenantCtx
-        ? new KeycloakRealmAdminAdapter({
-            url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
-            realm: tenantCtx.realmName,
-            adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
-            adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
-          })
-        : null;
       const result = await mutateAuthSetting(
         {
           rawBody: req.body,
@@ -253,10 +246,19 @@ export const routes: Route[] = [
           auditAction: AuditAction.AuthSettingsIdpChanged,
           buildAuditMetadata: buildIdpAuditMetadata,
           schema: IdpBodySchema,
-          mutate: (body) => adapter!.upsertIdentityProvider(body),
+          mutate: (body, cred) =>
+            new KeycloakRealmAdminAdapter({
+              url: getKeycloakConfigForRealm(tenantCtx!.realmName).url,
+              realm: tenantCtx!.realmName,
+              adminClientId: cred.clientId,
+              adminClientSecret: cred.clientSecret,
+            }).upsertIdentityProvider(body),
           sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
         },
-        { audit: createPostgresAuditEventPort(getApplicationPool()) }
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          credentialStore: new PostgresTenantCredentialStore(getApplicationPool()),
+        }
       );
       if (result.kind === "invalid_body") {
         res.json(400, { code: "VALIDATION_ERROR", message: result.message });
@@ -264,6 +266,10 @@ export const routes: Route[] = [
       }
       if (result.kind === "no_tenant") {
         res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      if (result.kind === "no_credential") {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
         return;
       }
       res.json(204, null);
@@ -300,14 +306,6 @@ export const routes: Route[] = [
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
-      const adapter = tenantCtx
-        ? new KeycloakRealmAdminAdapter({
-            url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
-            realm: tenantCtx.realmName,
-            adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
-            adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
-          })
-        : null;
       const result = await mutateAuthSetting(
         {
           rawBody: req.body,
@@ -317,10 +315,19 @@ export const routes: Route[] = [
           auditAction: AuditAction.AuthSettingsMfaChanged,
           buildAuditMetadata: buildMfaAuditMetadata,
           schema: MfaBodySchema,
-          mutate: (body) => adapter!.setMfaPolicy(body),
+          mutate: (body, cred) =>
+            new KeycloakRealmAdminAdapter({
+              url: getKeycloakConfigForRealm(tenantCtx!.realmName).url,
+              realm: tenantCtx!.realmName,
+              adminClientId: cred.clientId,
+              adminClientSecret: cred.clientSecret,
+            }).setMfaPolicy(body),
           sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
         },
-        { audit: createPostgresAuditEventPort(getApplicationPool()) }
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          credentialStore: new PostgresTenantCredentialStore(getApplicationPool()),
+        }
       );
       if (result.kind === "invalid_body") {
         res.json(400, { code: "VALIDATION_ERROR", message: result.message });
@@ -328,6 +335,10 @@ export const routes: Route[] = [
       }
       if (result.kind === "no_tenant") {
         res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      if (result.kind === "no_credential") {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
         return;
       }
       res.json(204, null);
@@ -364,14 +375,6 @@ export const routes: Route[] = [
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
-      const adapter = tenantCtx
-        ? new KeycloakRealmAdminAdapter({
-            url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
-            realm: tenantCtx.realmName,
-            adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
-            adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
-          })
-        : null;
       const result = await mutateAuthSetting(
         {
           rawBody: req.body,
@@ -381,10 +384,19 @@ export const routes: Route[] = [
           auditAction: AuditAction.AuthSettingsSessionChanged,
           buildAuditMetadata: buildSessionAuditMetadata,
           schema: SessionBodySchema,
-          mutate: (body) => adapter!.setSessionPolicy(body),
+          mutate: (body, cred) =>
+            new KeycloakRealmAdminAdapter({
+              url: getKeycloakConfigForRealm(tenantCtx!.realmName).url,
+              realm: tenantCtx!.realmName,
+              adminClientId: cred.clientId,
+              adminClientSecret: cred.clientSecret,
+            }).setSessionPolicy(body),
           sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
         },
-        { audit: createPostgresAuditEventPort(getApplicationPool()) }
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          credentialStore: new PostgresTenantCredentialStore(getApplicationPool()),
+        }
       );
       if (result.kind === "invalid_body") {
         res.json(400, { code: "VALIDATION_ERROR", message: result.message });
@@ -392,6 +404,10 @@ export const routes: Route[] = [
       }
       if (result.kind === "no_tenant") {
         res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      if (result.kind === "no_credential") {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
         return;
       }
       res.json(204, null);
@@ -428,14 +444,6 @@ export const routes: Route[] = [
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
-      const adapter = tenantCtx
-        ? new KeycloakRealmAdminAdapter({
-            url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
-            realm: tenantCtx.realmName,
-            adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
-            adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
-          })
-        : null;
       const result = await mutateAuthSetting(
         {
           rawBody: req.body,
@@ -445,10 +453,19 @@ export const routes: Route[] = [
           auditAction: AuditAction.AuthSettingsSysadminBrokeringChanged,
           buildAuditMetadata: buildSysadminBrokeringAuditMetadata,
           schema: SysadminBrokeringBodySchema,
-          mutate: (body) => adapter!.setSysadminBrokering(body),
+          mutate: (body, cred) =>
+            new KeycloakRealmAdminAdapter({
+              url: getKeycloakConfigForRealm(tenantCtx!.realmName).url,
+              realm: tenantCtx!.realmName,
+              adminClientId: cred.clientId,
+              adminClientSecret: cred.clientSecret,
+            }).setSysadminBrokering(body),
           sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
         },
-        { audit: createPostgresAuditEventPort(getApplicationPool()) }
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          credentialStore: new PostgresTenantCredentialStore(getApplicationPool()),
+        }
       );
       if (result.kind === "invalid_body") {
         res.json(400, { code: "VALIDATION_ERROR", message: result.message });
@@ -456,6 +473,10 @@ export const routes: Route[] = [
       }
       if (result.kind === "no_tenant") {
         res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      if (result.kind === "no_credential") {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
         return;
       }
       res.json(204, null);

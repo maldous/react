@@ -58,7 +58,10 @@ function makeAuditPort(opts: { shouldFail?: boolean } = {}): AuditEventPort & {
   };
 }
 
-function makeMutateSpy(): { calls: unknown[]; fn: (body: unknown) => Promise<void> } {
+function makeMutateSpy(): {
+  calls: unknown[];
+  fn: (body: unknown, _cred: unknown) => Promise<void>;
+} {
   const calls: unknown[] = [];
   return {
     calls,
@@ -67,6 +70,16 @@ function makeMutateSpy(): { calls: unknown[]; fn: (body: unknown) => Promise<voi
     },
   };
 }
+
+// Pass-through credential store — always returns a fixed credential so
+// tests focused on audit behaviour don't need to set up tenant credentials.
+const ALWAYS_PRESENT_CREDENTIAL = { clientId: "test-client", clientSecret: "test-secret" };
+const alwaysPresentCredentialStore = {
+  async getAuthSettingsCredential() {
+    return ALWAYS_PRESENT_CREDENTIAL;
+  },
+  async setAuthSettingsCredential() {},
+};
 
 // Simple schemas for testing
 const SimpleSchema = z.object({ value: z.string() });
@@ -99,7 +112,7 @@ describe("mutateAuthSetting — ordering", () => {
           callOrder.push("mutate");
         },
       },
-      { audit }
+      { audit, credentialStore: alwaysPresentCredentialStore }
     );
 
     assert.deepEqual(callOrder, ["audit", "mutate"]);
@@ -122,7 +135,7 @@ describe("mutateAuthSetting — ordering", () => {
             schema: SimpleSchema,
             mutate: spy.fn,
           },
-          { audit }
+          { audit, credentialStore: alwaysPresentCredentialStore }
         ),
       /audit store unavailable/
     );
@@ -145,7 +158,7 @@ describe("mutateAuthSetting — ordering", () => {
         schema: SimpleSchema,
         mutate: spy.fn,
       },
-      { audit }
+      { audit, credentialStore: alwaysPresentCredentialStore }
     );
 
     assert.equal(result.kind, "invalid_body");
@@ -168,7 +181,7 @@ describe("mutateAuthSetting — ordering", () => {
         schema: SimpleSchema,
         mutate: spy.fn,
       },
-      { audit }
+      { audit, credentialStore: alwaysPresentCredentialStore }
     );
 
     assert.equal(result.kind, "no_tenant");
@@ -191,7 +204,7 @@ describe("mutateAuthSetting — ordering", () => {
         schema: SimpleSchema,
         mutate: spy.fn,
       },
-      { audit }
+      { audit, credentialStore: alwaysPresentCredentialStore }
     );
 
     assert.equal(result.kind, "ok");
@@ -292,7 +305,7 @@ describe("mutateAuthSetting — all four routes emit correct audit action", () =
           schema: tc.schema as z.ZodType<typeof tc.body>,
           mutate: async () => {},
         },
-        { audit }
+        { audit, credentialStore: alwaysPresentCredentialStore }
       );
       assert.equal(audit.events.length, 1);
       assert.equal(audit.events[0]!.action, tc.action);

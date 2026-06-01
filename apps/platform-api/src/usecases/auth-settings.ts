@@ -1,23 +1,31 @@
 import { z } from "zod";
 import { createAuditEvent, type AuditEventPort } from "@platform/audit-events";
+import type {
+  TenantAdminCredential,
+  TenantCredentialStore,
+} from "../ports/tenant-credential-store.ts";
+
+// Re-export so callers can type the credential without importing the port directly
+export type { TenantAdminCredential };
 
 // ---------------------------------------------------------------------------
-// Auth Settings mutation usecase (ADR-ACT-0154 / ADR-0030 §1b)
+// Auth Settings mutation usecase (ADR-ACT-0154 / ADR-ACT-0186 / ADR-0030 §1b)
 //
-// Enforces audit-first discipline for all Auth Settings API mutations:
+// Enforces audit-first discipline with per-tenant credentials for all four
+// Auth Settings API mutations. Ordering (ADR-ACT-0186 adds step 3):
 //   1. Validate request body — return "invalid_body" without emitting if invalid
-//   2. Check tenant context — return "no_tenant" without emitting if absent
-//   3. Emit audit event — if this throws, propagate; do NOT call Keycloak
-//   4. Call Keycloak adapter — only if audit succeeded
+//   2. Check tenant context  — return "no_tenant"    without emitting if absent
+//   3. Resolve tenant cred   — return "no_credential" without emitting if absent
+//   4. Emit audit event      — if this throws, propagate; do NOT call Keycloak
+//   5. Call Keycloak adapter — only if audit succeeded; uses tenant credential
 //
-// The generic mutateAuthSetting<T> function is used by all four mutation
-// routes; each route supplies its own schema, metadata builder, and mutation
-// function, keeping the route handlers thin.
+// Credential values never reach buildAuditMetadata, createAuditEvent, or logs.
 // ---------------------------------------------------------------------------
 
 export type AuthSettingsMutationResult =
   | { kind: "invalid_body"; message: string }
   | { kind: "no_tenant" }
+  | { kind: "no_credential" }
   | { kind: "ok" };
 
 export interface AuthSettingsMutationInput<T> {
@@ -30,17 +38,23 @@ export interface AuthSettingsMutationInput<T> {
   /**
    * Build safe audit metadata from the validated body.
    * Must NOT include secrets, tokens, client credentials, or raw IdP config values.
+   * The tenant credential is never passed here.
    */
   buildAuditMetadata: (body: T) => Record<string, unknown>;
   schema: z.ZodType<T>;
-  /** The Keycloak mutation to run after a successful audit. */
-  mutate: (body: T) => Promise<void>;
+  /**
+   * The Keycloak mutation to run after a successful audit.
+   * Receives the validated body AND the tenant credential — use the credential
+   * to construct the KeycloakRealmAdminAdapter with tenant-scoped credentials.
+   */
+  mutate: (body: T, credential: TenantAdminCredential) => Promise<void>;
   sourceHost?: string;
   ipAddress?: string;
 }
 
 export interface AuthSettingsMutationDeps {
   audit: AuditEventPort;
+  credentialStore: TenantCredentialStore;
 }
 
 export async function mutateAuthSetting<T>(
@@ -61,8 +75,18 @@ export async function mutateAuthSetting<T>(
   const body = parsed.data;
   const { organisationId, realmName } = input.tenantCtx;
 
-  // Step 3: Emit audit event BEFORE calling Keycloak.
+  // Step 3: Resolve per-tenant service account credential (ADR-ACT-0186).
+  // A missing credential means the tenant was provisioned without a service
+  // account (e.g. before this feature) — return early without an audit event
+  // (misconfiguration, not an authorization failure).
+  const credential = await deps.credentialStore.getAuthSettingsCredential(organisationId);
+  if (!credential) {
+    return { kind: "no_credential" };
+  }
+
+  // Step 4: Emit audit event BEFORE calling Keycloak.
   // If this throws, the mutation does not run.
+  // The credential is NOT included in the event — it never reaches audit storage.
   await deps.audit.emit(
     createAuditEvent({
       actorId: input.actorId,
@@ -80,8 +104,8 @@ export async function mutateAuthSetting<T>(
     })
   );
 
-  // Step 4: Call the Keycloak adapter
-  await input.mutate(body);
+  // Step 5: Call the Keycloak adapter with the tenant credential
+  await input.mutate(body, credential);
 
   return { kind: "ok" };
 }
