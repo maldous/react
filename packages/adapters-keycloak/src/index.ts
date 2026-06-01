@@ -399,22 +399,60 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
   }
 
   async getResourcePolicy(resourceName: string): Promise<ResourcePolicy[]> {
-    void resourceName;
-    // Keycloak Authorization Services resource policy query
-    // Implementation depends on client resource server setup (ADR-0030 ?3)
-    return [];
+    const token = await this.getAdminToken();
+    const clientUuid = await this._getBffClientUuid(token);
+    if (!clientUuid) return [];
+    const res = await fetch(
+      `${this.config.url}/admin/realms/${this.config.realm}/clients/${clientUuid}/authz/resource-server/policy?name=${encodeURIComponent(resourceName)}&max=50`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    if (!res.ok) return [];
+    return (await res.json()) as ResourcePolicy[];
   }
 
   async setResourcePolicy(resourceName: string, policy: ResourcePolicy): Promise<void> {
-    void resourceName;
-    void policy;
-    // Keycloak Authorization Services policy creation
-    // Implementation tracked in ADR-ACT-0143
+    const token = await this.getAdminToken();
+    const clientUuid = await this._getBffClientUuid(token);
+    if (!clientUuid) throw new Error("setResourcePolicy: BFF client not found");
+    const policyUrl = `${this.config.url}/admin/realms/${this.config.realm}/clients/${clientUuid}/authz/resource-server/policy`;
+    const body = { ...policy, resources: [resourceName] };
+    const res = await fetch(policyUrl, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok && res.status !== 409) {
+      throw new Error(`setResourcePolicy: failed ${res.status}`);
+    }
   }
 
   async removeResourcePolicy(resourceName: string, policyName: string): Promise<void> {
+    const token = await this.getAdminToken();
+    const clientUuid = await this._getBffClientUuid(token);
+    if (!clientUuid) return;
+    const searchRes = await fetch(
+      `${this.config.url}/admin/realms/${this.config.realm}/clients/${clientUuid}/authz/resource-server/policy?name=${encodeURIComponent(policyName)}&max=1`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    if (!searchRes.ok) return;
+    const policies = (await searchRes.json()) as Array<{ id: string }>;
+    const policyId = policies[0]?.id;
+    if (!policyId) return;
+    await fetch(
+      `${this.config.url}/admin/realms/${this.config.realm}/clients/${clientUuid}/authz/resource-server/policy/${policyId}`,
+      { method: "DELETE", headers: { Authorization: `Bearer ${token}` } }
+    );
     void resourceName;
-    void policyName;
+  }
+
+  /** Helper: resolve the BFF client UUID (platform-api) by clientId. Cached-free (called per operation). */
+  private async _getBffClientUuid(token: string): Promise<string | null> {
+    const res = await fetch(this.adminUrl(`/clients?clientId=platform-api&max=1`), {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) return null;
+    const clients = (await res.json()) as Array<{ id: string }>;
+    return clients[0]?.id ?? null;
   }
 
   async getSysadminBrokering(): Promise<SysadminBrokeringConfig> {
@@ -733,5 +771,76 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
     }
 
     return { clientId, clientSecret };
+  }
+
+  /**
+   * Register the platform resource catalogue in a Keycloak realm's Authorization Server.
+   * Called on tenant provisioning and when new resources are added to the platform.
+   * Idempotent — POST returns 409 when resource already exists; we skip silently.
+   *
+   * Default resource registration makes no access-control behaviour change on day 1 —
+   * policies are configured separately by `setResourcePolicy()`.
+   */
+  async registerPlatformResources(realmName: string, bffClientId: string): Promise<void> {
+    const token = await this.getMasterToken();
+
+    // Resolve BFF client UUID
+    const clientsRes = await fetch(
+      `${this.config.url}/admin/realms/${realmName}/clients?clientId=${encodeURIComponent(bffClientId)}&max=1`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    if (!clientsRes.ok)
+      throw new Error(`registerPlatformResources: client lookup failed ${clientsRes.status}`);
+    const clients = (await clientsRes.json()) as Array<{ id: string }>;
+    const clientUuid = clients[0]?.id;
+    if (!clientUuid)
+      throw new Error(
+        `registerPlatformResources: BFF client ${bffClientId} not found in realm ${realmName}`
+      );
+
+    const resourcesUrl = `${this.config.url}/admin/realms/${realmName}/clients/${clientUuid}/authz/resource-server/resource`;
+
+    const resources = [
+      {
+        name: "organisation:profile",
+        type: "urn:platform:resources:organisation",
+        scopes: ["read", "write"],
+      },
+      {
+        name: "organisation:members",
+        type: "urn:platform:resources:organisation",
+        scopes: ["read", "invite", "update_role"],
+      },
+      { name: "admin:auth", type: "urn:platform:resources:admin", scopes: ["read", "write"] },
+      {
+        name: "admin:tenants",
+        type: "urn:platform:resources:admin",
+        scopes: ["create", "read", "update", "delete"],
+      },
+      { name: "platform:admin", type: "urn:platform:resources:platform", scopes: ["access"] },
+      { name: "profile:self", type: "urn:platform:resources:profile", scopes: ["read", "write"] },
+      { name: "audit:platform", type: "urn:platform:resources:audit", scopes: ["read"] },
+      { name: "audit:tenant", type: "urn:platform:resources:audit", scopes: ["read"] },
+      { name: "platform:support", type: "urn:platform:resources:platform", scopes: ["enter"] },
+    ];
+
+    for (const resource of resources) {
+      const body = {
+        name: resource.name,
+        type: resource.type,
+        scopes: resource.scopes.map((s) => ({ name: s })),
+        displayName: resource.name,
+      };
+      const res = await fetch(resourcesUrl, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok && res.status !== 409) {
+        throw new Error(
+          `registerPlatformResources: failed to register ${resource.name}: ${res.status}`
+        );
+      }
+    }
   }
 }
