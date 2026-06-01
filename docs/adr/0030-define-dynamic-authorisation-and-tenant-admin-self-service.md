@@ -565,9 +565,17 @@ None.
 
 ---
 
+## Amendment: UMA Enforcement Implemented (2026-06-01)
+
+**Status of runtime UMA enforcement:** IMPLEMENTED — see ADR-ACT-0145 Done in ACTION-REGISTER.
+
+The pipeline now calls `KeycloakAuthorisationAdapter.checkAccess()` for every route that declares `resource` + `umaScope`. Static `requiredPermission` checks are retained as a backstop during migration and on Keycloak unavailability. The fail-closed invariant is enforced: if UMA is the sole gate and evaluation fails, the request is denied (never silently allowed).
+
+---
+
 ## Amendment: Static Enforcement Interim (2026-05-31)
 
-**Status of runtime UMA enforcement:** NOT YET IMPLEMENTED.
+**Status of runtime UMA enforcement (original):** Superseded by 2026-06-01 amendment above.
 
 The decision above (full Keycloak Authorization Services / UMA ticket evaluation) remains the architectural target. However, the current implementation uses **static permission enforcement** only:
 

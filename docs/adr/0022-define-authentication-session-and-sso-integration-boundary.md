@@ -325,3 +325,19 @@ None.
 "Do not make login the first vertical slice" is a deliberate architecture decision. The first slice (ADR-ACT-0008) assumes an authenticated session and proves the full request ? permission ? domain ? database ? response stack. Login mechanics are a separate concern tracked in ADR-ACT-0106 and ADR-ACT-0108.
 
 `packages/contracts-auth` is a new package following the zero-`@platform`-dependency contract pattern. It exports Zod schemas for `SessionActor`, login/logout request/response shapes, and `AuthError` subtypes. It must not import adapters, domain packages, or session implementations.
+
+---
+
+## Amendment: Encrypted Token Storage for UMA (2026-06-01)
+
+**ADR-ACT-0153 resolved.** The original "no raw tokens stored" invariant is preserved under an updated interpretation: tokens stored in the session record are AES-256-GCM encrypted using `TENANT_SECRET_ENCRYPTION_KEY` — the same key used for Auth Settings credentials (ADR-ACT-0186). The encryption key is not accessible to the session store (Redis); only the application layer can decrypt.
+
+**What changed:**
+
+- `SessionRecord` and `CreateSessionCommand` gain optional `accessTokenEnc`, `refreshTokenEnc`, and `accessTokenExpiresAt` fields.
+- `auth.ts` callback stores encrypted tokens from `exchangeCodeForTokens()`.
+- `resolveAccessToken()` in `dependencies.ts` decrypts and auto-refreshes on expiry.
+- Fixture sessions continue to carry no tokens; static permission check is used as fallback.
+- The pipeline falls closed: if UMA is the sole gate and no token is present, the request is denied (403) rather than silently allowed.
+
+**Why:** UMA ticket evaluation (ADR-ACT-0145) requires the current access token on every request. Storing encrypted tokens eliminates an extra Keycloak round-trip per request. Token theft from Redis requires both Redis access AND knowledge of `TENANT_SECRET_ENCRYPTION_KEY`.
