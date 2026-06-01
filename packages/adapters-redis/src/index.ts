@@ -57,6 +57,14 @@ export class RedisSessionStore implements SessionStore {
             supportAccessReason: command.supportAccessReason,
           }
         : {}),
+      // UMA token fields: only included when present (ADR-ACT-0153)
+      ...(command.accessTokenEnc
+        ? {
+            accessTokenEnc: command.accessTokenEnc,
+            refreshTokenEnc: command.refreshTokenEnc,
+            accessTokenExpiresAt: command.accessTokenExpiresAt,
+          }
+        : {}),
     };
     await this.client.set(this.keyPrefix + sessionId, JSON.stringify(record), {
       EX: command.ttlSeconds,
@@ -70,11 +78,15 @@ export class RedisSessionStore implements SessionStore {
     const parsed = JSON.parse(raw) as SessionRecord & {
       expiresAt: string;
       createdAt: string;
+      accessTokenExpiresAt?: string;
     };
     return {
       ...parsed,
       expiresAt: new Date(parsed.expiresAt),
       createdAt: new Date(parsed.createdAt),
+      ...(parsed.accessTokenExpiresAt
+        ? { accessTokenExpiresAt: new Date(parsed.accessTokenExpiresAt) }
+        : {}),
     };
   }
 

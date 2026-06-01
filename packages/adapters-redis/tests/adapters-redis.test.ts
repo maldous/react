@@ -133,6 +133,30 @@ describe("RedisSessionStore", () => {
     assert.ok("userId" in parsed);
     assert.ok("permissions" in parsed);
   });
+
+  it("persists and retrieves token fields via create+find (ADR-ACT-0153)", async () => {
+    const redis = makeFakeRedis();
+    const store = new RedisSessionStore(redis as never);
+    const expiresAt = new Date(Date.now() + 900_000);
+    const id = await store.create({
+      userId: "u-token",
+      tenantId: "t1",
+      organisationId: "o1",
+      roles: ["tenant-admin"],
+      permissions: [],
+      displayName: "Token Test",
+      ttlSeconds: 30,
+      accessTokenEnc: "enc:aabbcc:ddeeff:001122",
+      refreshTokenEnc: "enc:112233:445566:778899",
+      accessTokenExpiresAt: expiresAt,
+    });
+    const record = await store.find(id);
+    assert.equal(record?.accessTokenEnc, "enc:aabbcc:ddeeff:001122");
+    assert.equal(record?.refreshTokenEnc, "enc:112233:445566:778899");
+    assert.ok(record?.accessTokenExpiresAt instanceof Date);
+    assert.equal(record?.accessTokenExpiresAt?.getTime(), expiresAt.getTime());
+    await store.destroy(id);
+  });
 });
 
 // ---------------------------------------------------------------------------
