@@ -7,6 +7,8 @@ import {
   buildAuthorizationUrl,
   verifyKeycloakToken,
   type KeycloakClientConfig,
+  KeycloakRealmAdminAdapter,
+  type KeycloakAdminConfig,
 } from "../src/index.ts";
 
 const CONFIG: KeycloakClientConfig = {
@@ -282,5 +284,205 @@ describe("import boundary: no Keycloak SDK in exports", () => {
     assert.ok("packageName" in mod);
     // Should NOT export raw Keycloak SDK types (KeycloakTokenClaims is internal only)
     assert.ok(!("KeycloakTokenClaims" in mod));
+  });
+});
+
+// ---------------------------------------------------------------------------
+// KeycloakRealmAdminAdapter — group methods (ADR-ACT-0143 Slice 2)
+// ---------------------------------------------------------------------------
+
+const ADMIN_CONFIG: KeycloakAdminConfig = {
+  url: "http://localhost:8080",
+  realm: "tenant-abc",
+  adminClientId: "tenant-service-account",
+  adminClientSecret: "secret",
+};
+
+const TOKEN_RESPONSE = { access_token: "test-admin-token" };
+
+// Helper: multi-step fetch mock (token then group endpoint)
+function twoStepFetch(groupResponse: FetchMock): FetchMock {
+  let callCount = 0;
+  return async (input, init) => {
+    callCount++;
+    if (callCount === 1) return jsonResponse(TOKEN_RESPONSE);
+    return groupResponse(input, init);
+  };
+}
+
+describe("KeycloakRealmAdminAdapter — listGroups", () => {
+  let restore: () => void;
+  afterEach(() => restore?.());
+
+  it("returns group array on 200", async () => {
+    const groups = [
+      { id: "g1", name: "Editors", path: "/Editors" },
+      { id: "g2", name: "Readers", path: "/Readers" },
+    ];
+    restore = mockFetch(twoStepFetch(async () => jsonResponse(groups)));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    const result = await adapter.listGroups();
+    assert.equal(result.length, 2);
+    assert.equal(result[0]?.name, "Editors");
+  });
+
+  it("returns empty array on non-OK response (fail-soft)", async () => {
+    restore = mockFetch(twoStepFetch(async () => new Response(null, { status: 503 })));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    const result = await adapter.listGroups();
+    assert.deepEqual(result, []);
+  });
+
+  it("calls correct URL path", async () => {
+    let capturedUrl = "";
+    restore = mockFetch(
+      twoStepFetch(async (input) => {
+        capturedUrl = typeof input === "string" ? input : (input as URL).toString();
+        return jsonResponse([]);
+      })
+    );
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await adapter.listGroups();
+    assert.ok(
+      capturedUrl.includes("/admin/realms/tenant-abc/groups"),
+      `unexpected URL: ${capturedUrl}`
+    );
+  });
+});
+
+describe("KeycloakRealmAdminAdapter — getGroup", () => {
+  let restore: () => void;
+  afterEach(() => restore?.());
+
+  it("returns group on 200", async () => {
+    const group = { id: "g1", name: "Editors", path: "/Editors" };
+    restore = mockFetch(twoStepFetch(async () => jsonResponse(group)));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    const result = await adapter.getGroup("g1");
+    assert.ok(result !== null);
+    assert.equal(result?.name, "Editors");
+  });
+
+  it("returns null on 404", async () => {
+    restore = mockFetch(twoStepFetch(async () => new Response(null, { status: 404 })));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    const result = await adapter.getGroup("missing");
+    assert.equal(result, null);
+  });
+
+  it("calls correct URL path with encoded groupId", async () => {
+    let capturedUrl = "";
+    restore = mockFetch(
+      twoStepFetch(async (input) => {
+        capturedUrl = typeof input === "string" ? input : (input as URL).toString();
+        return jsonResponse({ id: "g1", name: "X", path: "/X" });
+      })
+    );
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await adapter.getGroup("group-id-123");
+    assert.ok(capturedUrl.includes("group-id-123"), `URL must include groupId: ${capturedUrl}`);
+  });
+});
+
+describe("KeycloakRealmAdminAdapter — createGroup", () => {
+  let restore: () => void;
+  afterEach(() => restore?.());
+
+  it("returns extracted group ID from Location header", async () => {
+    restore = mockFetch(
+      twoStepFetch(
+        async () =>
+          new Response(null, {
+            status: 201,
+            headers: {
+              Location: "http://localhost:8080/admin/realms/tenant-abc/groups/new-group-id",
+            },
+          })
+      )
+    );
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    const id = await adapter.createGroup("MyNewGroup");
+    assert.equal(id, "new-group-id");
+  });
+
+  it("sends POST with correct name in body", async () => {
+    let capturedBody = "";
+    restore = mockFetch(
+      twoStepFetch(async (input, init) => {
+        capturedBody = init?.body as string;
+        return new Response(null, {
+          status: 201,
+          headers: { Location: "http://x/groups/new-id" },
+        });
+      })
+    );
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await adapter.createGroup("TestGroup");
+    const parsed = JSON.parse(capturedBody) as { name: string };
+    assert.equal(parsed.name, "TestGroup");
+  });
+
+  it("throws on non-201 response", async () => {
+    restore = mockFetch(twoStepFetch(async () => new Response(null, { status: 500 })));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await assert.rejects(() => adapter.createGroup("Bad"), /createGroup: failed 500/);
+  });
+});
+
+describe("KeycloakRealmAdminAdapter — updateGroup", () => {
+  let restore: () => void;
+  afterEach(() => restore?.());
+
+  it("sends PUT with merged body (preserves existing attributes)", async () => {
+    let capturedBody = "";
+    restore = mockFetch(
+      twoStepFetch(async (input, init) => {
+        capturedBody = init?.body as string;
+        return new Response(null, { status: 204 });
+      })
+    );
+    const existing = { id: "g1", name: "OldName", path: "/OldName", realmRoles: ["viewer"] };
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await adapter.updateGroup("g1", "NewName", existing);
+    const parsed = JSON.parse(capturedBody) as { name: string; realmRoles: string[] };
+    assert.equal(parsed.name, "NewName");
+    assert.deepEqual(parsed.realmRoles, ["viewer"], "existing attributes must be preserved");
+  });
+
+  it("throws on non-OK response", async () => {
+    restore = mockFetch(twoStepFetch(async () => new Response(null, { status: 403 })));
+    const existing = { id: "g1", name: "Old", path: "/Old" };
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await assert.rejects(
+      () => adapter.updateGroup("g1", "New", existing),
+      /updateGroup: failed 403/
+    );
+  });
+});
+
+describe("KeycloakRealmAdminAdapter — deleteGroup", () => {
+  let restore: () => void;
+  afterEach(() => restore?.());
+
+  it("sends DELETE to correct path", async () => {
+    let capturedMethod = "";
+    let capturedUrl = "";
+    restore = mockFetch(
+      twoStepFetch(async (input, init) => {
+        capturedMethod = init?.method ?? "";
+        capturedUrl = typeof input === "string" ? input : (input as URL).toString();
+        return new Response(null, { status: 204 });
+      })
+    );
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await adapter.deleteGroup("group-to-delete");
+    assert.equal(capturedMethod, "DELETE");
+    assert.ok(capturedUrl.includes("group-to-delete"), `URL must include groupId: ${capturedUrl}`);
+  });
+
+  it("throws on non-OK response", async () => {
+    restore = mockFetch(twoStepFetch(async () => new Response(null, { status: 404 })));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await assert.rejects(() => adapter.deleteGroup("gone"), /deleteGroup: failed 404/);
   });
 });

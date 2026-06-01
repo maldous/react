@@ -199,6 +199,7 @@ import type {
   SysadminBrokeringConfig,
   RealmProvisioningPort,
   RealmProvisioningConfig,
+  KeycloakGroup,
 } from "@platform/authorisation-runtime";
 
 export class KeycloakAuthorisationAdapter implements AuthorisationPort {
@@ -539,6 +540,68 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
 
     return hasUserinfoRealmRolesMapper(mappers) ? "present" : "missing";
   }
+
+  // ---------------------------------------------------------------------------
+  // Group management (ADR-ACT-0143 Slice 2)
+  // Uses the realm admin token (per-tenant service account, ADR-ACT-0186).
+  // Reads fail-soft (return [] / null on non-OK) so list never throws.
+  // Writes throw on non-OK — caller converts to result types.
+  // ---------------------------------------------------------------------------
+
+  async listGroups(): Promise<KeycloakGroup[]> {
+    const token = await this.getAdminToken();
+    const res = await fetch(this.adminUrl("/groups?max=200"), {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) return [];
+    return (await res.json()) as KeycloakGroup[];
+  }
+
+  async getGroup(groupId: string): Promise<KeycloakGroup | null> {
+    const token = await this.getAdminToken();
+    const res = await fetch(this.adminUrl(`/groups/${encodeURIComponent(groupId)}`), {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (res.status === 404) return null;
+    if (!res.ok) return null;
+    return (await res.json()) as KeycloakGroup;
+  }
+
+  async createGroup(name: string): Promise<string> {
+    const token = await this.getAdminToken();
+    const res = await fetch(this.adminUrl("/groups"), {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ name }),
+    });
+    if (!res.ok) throw new Error(`createGroup: failed ${res.status}`);
+    // Keycloak returns 201 with Location: .../groups/{id}
+    const location = res.headers.get("location") ?? "";
+    const id = location.split("/").pop() ?? "";
+    if (!id) throw new Error("createGroup: could not extract group ID from Location header");
+    return id;
+  }
+
+  async updateGroup(groupId: string, name: string, existing: KeycloakGroup): Promise<void> {
+    const token = await this.getAdminToken();
+    // Merge to avoid wiping existing group attributes/roles
+    const body: KeycloakGroup = { ...existing, name };
+    const res = await fetch(this.adminUrl(`/groups/${encodeURIComponent(groupId)}`), {
+      method: "PUT",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) throw new Error(`updateGroup: failed ${res.status}`);
+  }
+
+  async deleteGroup(groupId: string): Promise<void> {
+    const token = await this.getAdminToken();
+    const res = await fetch(this.adminUrl(`/groups/${encodeURIComponent(groupId)}`), {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) throw new Error(`deleteGroup: failed ${res.status}`);
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -821,6 +884,11 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
         name: "organisation:members",
         type: "urn:platform:resources:organisation",
         scopes: ["read", "invite", "update_role", "delete"],
+      },
+      {
+        name: "organisation:groups",
+        type: "urn:platform:resources:organisation",
+        scopes: ["read", "create", "update", "delete"],
       },
       { name: "admin:auth", type: "urn:platform:resources:admin", scopes: ["read", "write"] },
       {

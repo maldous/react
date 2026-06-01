@@ -123,6 +123,24 @@ export interface RealmAdminPort {
   // Sysadmin cross-domain brokering (ADR-0029 ?2e)
   getSysadminBrokering(): Promise<SysadminBrokeringConfig>;
   setSysadminBrokering(config: SysadminBrokeringConfig): Promise<void>;
+
+  // Group management (ADR-ACT-0143 Slice 2)
+  listGroups(): Promise<KeycloakGroup[]>;
+  getGroup(groupId: string): Promise<KeycloakGroup | null>;
+  createGroup(name: string): Promise<string>; // returns new group ID
+  updateGroup(groupId: string, name: string, existing: KeycloakGroup): Promise<void>;
+  deleteGroup(groupId: string): Promise<void>;
+}
+
+/** Keycloak group representation (top-level groups in a tenant realm). */
+export interface KeycloakGroup {
+  id: string;
+  name: string;
+  path: string;
+  subGroups?: KeycloakGroup[];
+  attributes?: Record<string, string[]>;
+  realmRoles?: string[];
+  clientRoles?: Record<string, string[]>;
 }
 
 // ---------------------------------------------------------------------------

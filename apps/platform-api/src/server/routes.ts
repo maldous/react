@@ -1041,6 +1041,213 @@ export const routes: Route[] = [
     },
   },
   // ---------------------------------------------------------------------------
+  // Group management (ADR-ACT-0143 Slice 2)
+  // Tenant admin manages groups in their own Keycloak realm.
+  // All routes: scope "tenant" — must arrive at {slug}.aldous.info.
+  // Uses per-tenant auth-settings credential (ADR-ACT-0186).
+  // UMA resource: organisation:groups
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/org/groups",
+    operationName: "org.groups.list",
+    requiresAuth: true,
+    requiredPermission: "tenant.groups.read",
+    resource: "organisation:groups",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const cred = await new PostgresTenantCredentialStore(
+        getApplicationPool()
+      ).getAuthSettingsCredential(tenantCtx.organisationId);
+      if (!cred) {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
+        return;
+      }
+      const adapter = new KeycloakRealmAdminAdapter({
+        url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
+        realm: tenantCtx.realmName,
+        adminClientId: cred.clientId,
+        adminClientSecret: cred.clientSecret,
+      });
+      const { listOrgGroups } = await import("../usecases/groups.ts");
+      const groups = await listOrgGroups(adapter);
+      res.json(200, { groups });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/org/groups",
+    operationName: "org.groups.create",
+    requiresAuth: true,
+    requiredPermission: "tenant.groups.create",
+    resource: "organisation:groups",
+    umaScope: "create" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const cred = await new PostgresTenantCredentialStore(
+        getApplicationPool()
+      ).getAuthSettingsCredential(tenantCtx.organisationId);
+      if (!cred) {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
+        return;
+      }
+      const adapter = new KeycloakRealmAdminAdapter({
+        url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
+        realm: tenantCtx.realmName,
+        adminClientId: cred.clientId,
+        adminClientSecret: cred.clientSecret,
+      });
+      const body = req.body as Record<string, unknown>;
+      const { createOrgGroup } = await import("../usecases/groups.ts");
+      const result = await createOrgGroup(
+        {
+          rawName: body?.name,
+          organisationId: tenantCtx.organisationId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        { groups: adapter, audit: createPostgresAuditEventPort(getApplicationPool()) }
+      );
+      if (result.kind === "invalid_name") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      if (result.kind === "conflict") {
+        res.json(409, { code: "CONFLICT", message: "A group with this name already exists" });
+        return;
+      }
+      res.json(201, { groupId: result.groupId, name: result.groupName });
+    },
+  },
+  {
+    method: "PATCH",
+    path: "/api/org/groups/:groupId",
+    operationName: "org.groups.update",
+    requiresAuth: true,
+    requiredPermission: "tenant.groups.update",
+    resource: "organisation:groups",
+    umaScope: "update" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const groupId = req.params["groupId"] ?? "";
+      if (!groupId) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "groupId path parameter is required" });
+        return;
+      }
+      const cred = await new PostgresTenantCredentialStore(
+        getApplicationPool()
+      ).getAuthSettingsCredential(tenantCtx.organisationId);
+      if (!cred) {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
+        return;
+      }
+      const adapter = new KeycloakRealmAdminAdapter({
+        url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
+        realm: tenantCtx.realmName,
+        adminClientId: cred.clientId,
+        adminClientSecret: cred.clientSecret,
+      });
+      const body = req.body as Record<string, unknown>;
+      const { updateOrgGroup } = await import("../usecases/groups.ts");
+      const result = await updateOrgGroup(
+        {
+          groupId,
+          rawName: body?.name,
+          organisationId: tenantCtx.organisationId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        { groups: adapter, audit: createPostgresAuditEventPort(getApplicationPool()) }
+      );
+      if (result.kind === "invalid_name") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Group not found" });
+        return;
+      }
+      if (result.kind === "conflict") {
+        res.json(409, { code: "CONFLICT", message: "A group with this name already exists" });
+        return;
+      }
+      res.json(204, null);
+    },
+  },
+  {
+    method: "DELETE",
+    path: "/api/org/groups/:groupId",
+    operationName: "org.groups.delete",
+    requiresAuth: true,
+    requiredPermission: "tenant.groups.delete",
+    resource: "organisation:groups",
+    umaScope: "delete" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const groupId = req.params["groupId"] ?? "";
+      if (!groupId) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "groupId path parameter is required" });
+        return;
+      }
+      const cred = await new PostgresTenantCredentialStore(
+        getApplicationPool()
+      ).getAuthSettingsCredential(tenantCtx.organisationId);
+      if (!cred) {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
+        return;
+      }
+      const adapter = new KeycloakRealmAdminAdapter({
+        url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
+        realm: tenantCtx.realmName,
+        adminClientId: cred.clientId,
+        adminClientSecret: cred.clientSecret,
+      });
+      const { deleteOrgGroup } = await import("../usecases/groups.ts");
+      const result = await deleteOrgGroup(
+        {
+          groupId,
+          organisationId: tenantCtx.organisationId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        { groups: adapter, audit: createPostgresAuditEventPort(getApplicationPool()) }
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Group not found" });
+        return;
+      }
+      if (result.kind === "protected") {
+        res.json(422, {
+          code: "VALIDATION_ERROR",
+          message: "This group is protected and cannot be deleted",
+        });
+        return;
+      }
+      res.json(204, null);
+    },
+  },
+  // ---------------------------------------------------------------------------
   // Organisation profile
   // ---------------------------------------------------------------------------
   {
