@@ -353,6 +353,23 @@ export function createRouter(
         }
       }
 
+      // Fail-closed gate: if UMA was the sole declared gate (resource+umaScope present,
+      // no requiredPermission fallback) and UMA did not grant access, deny unconditionally.
+      // This prevents fail-open when Keycloak is unavailable and no static fallback exists.
+      const umaConfigured = !!(matchingRoute.resource && matchingRoute.umaScope);
+      if (umaConfigured && !umaGranted && !matchingRoute.requiredPermission) {
+        const err = new ForbiddenError("api.error.permissionRequired", {
+          safeDetails: { permission: `${matchingRoute.resource}#${matchingRoute.umaScope}` },
+        });
+        jsonResponse(
+          res,
+          403,
+          toSafeResponse(err, (m) => serverT(m, { permission: matchingRoute.resource! })),
+          requestId
+        );
+        return;
+      }
+
       // Static permission check — backward compat and UMA degraded fallback
       if (
         !umaGranted &&
