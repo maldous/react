@@ -767,6 +767,112 @@ export const routes: Route[] = [
     },
   },
   // ---------------------------------------------------------------------------
+  // Vanity domain management — tenant admin runtime redirect_uri management (ADR-ACT-0162)
+  // Add/remove custom domains from the tenant's BFF client without deployment.
+  // ---------------------------------------------------------------------------
+  {
+    method: "POST",
+    path: "/api/auth/settings/domains",
+    operationName: "auth.settings.domains.add",
+    requiresAuth: true,
+    requiredPermission: "tenant.auth.settings.write",
+    resource: "admin:auth",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const DomainBodySchema = z.object({
+        domain: z.string().regex(/^[a-zA-Z0-9.-]+$/, "domain must be a valid hostname"),
+      });
+      const parsed = DomainBodySchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, { code: "VALIDATION_ERROR", message: parsed.error.issues[0]?.message });
+        return;
+      }
+      const cred = await new PostgresTenantCredentialStore(
+        getApplicationPool()
+      ).getAuthSettingsCredential(tenantCtx.organisationId);
+      if (!cred) {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
+        return;
+      }
+      const { addVanityDomain } = await import("../usecases/vanity-domain.ts");
+      await addVanityDomain(
+        {
+          organisationId: tenantCtx.organisationId,
+          realmName: tenantCtx.realmName,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          domain: parsed.data.domain,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          adminConfig: {
+            url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
+            realm: tenantCtx.realmName,
+            adminClientId: cred.clientId,
+            adminClientSecret: cred.clientSecret,
+          },
+        }
+      );
+      res.json(201, { domain: parsed.data.domain });
+    },
+  },
+  {
+    method: "DELETE",
+    path: "/api/auth/settings/domains/:domain",
+    operationName: "auth.settings.domains.remove",
+    requiresAuth: true,
+    requiredPermission: "tenant.auth.settings.write",
+    resource: "admin:auth",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const url = new URL(req.raw.url ?? "", "http://localhost");
+      const domain = url.pathname.split("/").pop() ?? "";
+      if (!/^[a-zA-Z0-9.-]+$/.test(domain)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "invalid domain format" });
+        return;
+      }
+      const cred = await new PostgresTenantCredentialStore(
+        getApplicationPool()
+      ).getAuthSettingsCredential(tenantCtx.organisationId);
+      if (!cred) {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
+        return;
+      }
+      const { removeVanityDomain } = await import("../usecases/vanity-domain.ts");
+      await removeVanityDomain(
+        {
+          organisationId: tenantCtx.organisationId,
+          realmName: tenantCtx.realmName,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          domain,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          adminConfig: {
+            url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
+            realm: tenantCtx.realmName,
+            adminClientId: cred.clientId,
+            adminClientSecret: cred.clientSecret,
+          },
+        }
+      );
+      res.json(204, null);
+    },
+  },
+  // ---------------------------------------------------------------------------
   // Organisation profile
   // ---------------------------------------------------------------------------
   {
