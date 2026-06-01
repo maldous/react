@@ -98,3 +98,50 @@ GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO "${PGADMIN_SYSADMIN_ROL
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO "${PGADMIN_SYSADMIN_ROLE}";
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT USAGE, SELECT ON SEQUENCES TO "${PGADMIN_SYSADMIN_ROLE}";
 EOSQL
+
+# ---------------------------------------------------------------------------
+# platform_app — non-superuser application runtime role (ADR-ACT-0189)
+#
+# Created at initdb time so the role exists before migrations run.
+# Migration 010 is idempotent and skips re-creation. Table/sequence GRANT ON
+# ALL TABLES is NOT done here because tables don't exist yet at initdb time —
+# migration 010 handles that after all table migrations complete.
+#
+# Password: override via POSTGRES_APP_PASSWORD (default: dev only).
+# ---------------------------------------------------------------------------
+PLATFORM_APP_ROLE="platform_app"
+PLATFORM_APP_PASS="${POSTGRES_APP_PASSWORD:-platformapppassword}"
+
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$PGADMIN_DB" <<EOSQL
+DO \$\$
+BEGIN
+  IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = '${PLATFORM_APP_ROLE}') THEN
+    CREATE ROLE "${PLATFORM_APP_ROLE}"
+      LOGIN
+      PASSWORD '${PLATFORM_APP_PASS}'
+      NOSUPERUSER
+      NOCREATEDB
+      NOCREATEROLE
+      NOREPLICATION
+      NOBYPASSRLS;
+  END IF;
+END
+\$\$;
+
+DO \$\$
+BEGIN
+  IF NOT pg_has_role('${PLATFORM_APP_ROLE}', 'rls_bypass', 'MEMBER') THEN
+    GRANT rls_bypass TO "${PLATFORM_APP_ROLE}";
+  END IF;
+END
+\$\$;
+
+GRANT CONNECT ON DATABASE "${PGADMIN_DB}" TO "${PLATFORM_APP_ROLE}";
+GRANT USAGE ON SCHEMA public TO "${PLATFORM_APP_ROLE}";
+
+ALTER DEFAULT PRIVILEGES FOR ROLE "${POSTGRES_USER}" IN SCHEMA public
+  GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO "${PLATFORM_APP_ROLE}";
+
+ALTER DEFAULT PRIVILEGES FOR ROLE "${POSTGRES_USER}" IN SCHEMA public
+  GRANT USAGE, SELECT, UPDATE ON SEQUENCES TO "${PLATFORM_APP_ROLE}";
+EOSQL
