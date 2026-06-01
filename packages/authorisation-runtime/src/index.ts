@@ -25,7 +25,8 @@ export type AccessDenialReason =
   | "insufficient_scope" // token lacks required scope
   | "insufficient_auth_level" // step-up auth required (MFA, re-auth)
   | "policy_denied" // Keycloak policy evaluation returned deny
-  | "no_session"; // no valid token presented
+  | "no_session" // no valid token presented
+  | "keycloak_unavailable"; // Keycloak admin API unreachable / network error
 
 export type AccessDecision =
   | { granted: true; rpt: string } // RPT for downstream use

@@ -26,12 +26,12 @@ Every protected route in the BFF pipeline is evaluated at runtime by Keycloak Au
 
 This replaces all `actor.permissions.includes(requiredPermission)` static checks.
 
-```
+````text
 Request → pipeline.ts → canAccessTenantFqdn() → token-refresh-if-expired
   → authorisationPort.checkAccess({ name, scope }, accessToken)
   → Keycloak UMA endpoint → policy evaluation → AccessDecision
   → granted: proceed | denied: 403/401/503
-```
+```text
 
 ### 2.2 Token Storage (ADR-0022 Amendment)
 
@@ -77,7 +77,7 @@ interface Route {
   resource?: string; // e.g. "organisation:profile"
   umaScope?: string; // e.g. "write"
 }
-```
+```text
 
 Pipeline evaluation order:
 
@@ -104,7 +104,7 @@ if (matchingRoute.resource && actor.accessTokenEnc) {
 } else if (matchingRoute.requiredPermission) {
   // existing static check — unchanged
 }
-```
+```text
 
 `getAuthorisationPort(fqdnTenant)` returns:
 
@@ -120,17 +120,17 @@ resource "keycloak_openid_client" "bff" {
   authorization_services_enabled = true   # NEW — enables UMA on this client
   service_accounts_enabled       = true   # NEW — needed for Authorization Services
 }
-```
+```text
 
 Resource + default policy registration via `KeycloakProvisioningAdapter.registerPlatformResources()` called during `provisionTenant()` and during initial platform realm setup.
 
 ### 2.7 Tenant Admin Policy Management API
 
-```
+```text
 POST   /api/admin/resource-policies          scope:global, platform.admin.access
 GET    /api/auth/settings/resource-policies  scope:tenant, tenant.auth.settings.read
 PATCH  /api/auth/settings/resource-policies  scope:tenant, tenant.auth.settings.write
-```
+```text
 
 These wrap Keycloak Authorization Services resource/policy management. The GET/PATCH tenant routes use the per-tenant auth-settings credential (ADR-ACT-0186). The global POST is for platform-level resource registration.
 
@@ -138,10 +138,10 @@ Unlocks ADR-ACT-0151 (resource policy stubs replaced with real implementation).
 
 ### 2.8 Vanity Domain Support (ADR-ACT-0162)
 
-```
+```text
 POST /api/auth/settings/domains   scope:tenant, tenant.auth.settings.write
 DELETE /api/auth/settings/domains/:domain
-```
+```text
 
 Calls Keycloak Admin API to add/remove `customDomain` to tenant realm's BFF client `redirect_uris` and `web_origins`. Uses per-tenant auth-settings credential. No Terraform apply required at runtime.
 
@@ -283,3 +283,4 @@ Move `IdentityRepository` and `OrganisationRepository` interfaces from `packages
 | `docs/adr/0022*.md`                                        | Amendment: encrypted token storage                                     |
 | `docs/adr/0030*.md`                                        | Amendment: UMA implemented                                             |
 | `docs/adr/ACTION-REGISTER.md`                              | Close ADR-ACT-0145, 0153, 0151, 0162, 0141                             |
+````

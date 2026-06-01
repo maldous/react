@@ -237,7 +237,7 @@ export class KeycloakAuthorisationAdapter implements AuthorisationPort {
         return { granted: false, reason: "insufficient_auth_level" };
       return { granted: false, reason: "policy_denied" };
     } catch {
-      return { granted: false, reason: "policy_denied" };
+      return { granted: false, reason: "keycloak_unavailable" };
     }
   }
 }
