@@ -365,3 +365,75 @@ describe("ADR-ACT-0184 static assertions", () => {
     );
   });
 });
+
+// ---------------------------------------------------------------------------
+// Static migration content assertions (ADR-ACT-0189)
+// Verify migration 010 creates platform_app correctly and that the init
+// script mirrors the role creation at fresh initdb time.
+// ---------------------------------------------------------------------------
+
+describe("ADR-ACT-0189 static assertions — migration 010 platform_app role", () => {
+  const migration010 = readFileSync(
+    join(_dir, "../../../apps/platform-api/src/db/migrations/010-platform-app-role.sql"),
+    "utf8"
+  );
+
+  it("migration 010 creates platform_app with NOSUPERUSER", () => {
+    assert.ok(
+      migration010.includes("platform_app"),
+      "migration 010 must reference platform_app role"
+    );
+    assert.ok(
+      migration010.includes("NOSUPERUSER"),
+      "migration 010 must create platform_app with NOSUPERUSER"
+    );
+  });
+
+  it("migration 010 creates platform_app with NOBYPASSRLS", () => {
+    assert.ok(
+      migration010.includes("NOBYPASSRLS"),
+      "migration 010 must create platform_app with NOBYPASSRLS"
+    );
+  });
+
+  it("migration 010 grants rls_bypass to platform_app", () => {
+    assert.ok(migration010.includes("rls_bypass"), "migration 010 must reference rls_bypass role");
+    assert.ok(
+      migration010.toLowerCase().includes("grant rls_bypass to platform_app"),
+      "migration 010 must GRANT rls_bypass TO platform_app"
+    );
+  });
+
+  it("migration 010 grants DML on all existing tables to platform_app", () => {
+    assert.ok(
+      migration010
+        .toLowerCase()
+        .includes(
+          "grant select, insert, update, delete on all tables in schema public to platform_app"
+        ),
+      "migration 010 must GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO platform_app"
+    );
+  });
+
+  it("migration 010 sets ALTER DEFAULT PRIVILEGES for future tables and sequences", () => {
+    assert.ok(
+      migration010.toLowerCase().includes("alter default privileges"),
+      "migration 010 must set ALTER DEFAULT PRIVILEGES for future tables/sequences"
+    );
+  });
+
+  it("init-extra-databases.sh creates platform_app at initdb with NOBYPASSRLS", () => {
+    const initScript = readFileSync(
+      join(_dir, "../../../docker/postgres/init-extra-databases.sh"),
+      "utf8"
+    );
+    assert.ok(
+      initScript.includes("platform_app"),
+      "init-extra-databases.sh must create platform_app role at initdb"
+    );
+    assert.ok(
+      initScript.includes("NOBYPASSRLS"),
+      "init-extra-databases.sh must create platform_app with NOBYPASSRLS"
+    );
+  });
+});
