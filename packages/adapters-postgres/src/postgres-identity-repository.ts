@@ -143,10 +143,13 @@ export class PostgresIdentityRepository implements IdentityRepository {
     email: string
   ): Promise<Array<{ organisationId: string; role: TenantRole }>> {
     return withSystemAdmin(this.pool, async (client) => {
+      // Case-insensitive match: invitations are stored with lowercase email
+      // (normalized at invite time in inviteOrgMember). Keycloak may return
+      // the email in mixed case at login, so we compare lower(email).
       const { rows: invites } = await client.query<{ organisation_id: string; role: string }>(
         `UPDATE public.pending_invitations
          SET consumed_at = now()
-         WHERE email = $1
+         WHERE lower(email) = lower($1)
            AND consumed_at IS NULL
            AND expires_at > now()
          RETURNING organisation_id, role`,

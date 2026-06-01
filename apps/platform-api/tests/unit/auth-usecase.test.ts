@@ -162,7 +162,10 @@ describe("resolveSessionFromIdentity", () => {
     const result = await resolveSessionFromIdentity(KEYCLOAK_IDENTITY, deps);
     assert.ok(result.permissions.includes("organisation.update"));
     assert.ok(result.permissions.includes("tenant.admin.access"));
-    assert.ok(result.permissions.includes("member.invite"));
+    // tenant-admin uses tenant.members.* (the enforced permissions).
+    // Legacy member.invite was removed from the tenant-admin bundle in ADR-ACT-0143 hardening.
+    assert.ok(result.permissions.includes("tenant.members.invite"));
+    assert.ok(result.permissions.includes("tenant.members.delete"));
   });
 
   it("viewer membership does not have write permissions", async () => {

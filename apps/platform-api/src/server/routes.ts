@@ -930,8 +930,12 @@ export const routes: Route[] = [
         res.json(400, { code: "VALIDATION_ERROR", message: result.message });
         return;
       }
-      if (result.kind === "conflict") {
-        res.json(409, { code: "CONFLICT", message: "Member already exists" });
+      if (result.kind === "conflict" || result.kind === "already_invited") {
+        res.json(409, {
+          code: "CONFLICT",
+          message:
+            result.kind === "conflict" ? "Member already exists" : "Invitation already pending",
+        });
         return;
       }
       res.json(201, { kind: result.kind });
@@ -975,6 +979,17 @@ export const routes: Route[] = [
         res.json(400, { code: "VALIDATION_ERROR", message: result.message });
         return;
       }
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: serverT("api.error.organisationNotFound") });
+        return;
+      }
+      if (result.kind === "last_admin_cannot_be_demoted") {
+        res.json(422, {
+          code: "VALIDATION_ERROR",
+          message: "Cannot demote the last tenant-admin",
+        });
+        return;
+      }
       res.json(204, null);
     },
   },
@@ -983,7 +998,7 @@ export const routes: Route[] = [
     path: "/api/org/members/:userId",
     operationName: "org.members.remove",
     requiresAuth: true,
-    requiredPermission: "tenant.admin.access",
+    requiredPermission: "tenant.members.delete",
     resource: "organisation:members",
     umaScope: "delete" as const,
     scope: "tenant" as const,
@@ -999,7 +1014,7 @@ export const routes: Route[] = [
         return;
       }
       const { removeMember } = await import("../usecases/members.ts");
-      await removeMember(
+      const result = await removeMember(
         {
           organisationId: tenantCtx.organisationId,
           targetUserId,
@@ -1011,6 +1026,17 @@ export const routes: Route[] = [
           pool: getApplicationPool(),
         }
       );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: serverT("api.error.organisationNotFound") });
+        return;
+      }
+      if (result.kind === "last_admin_cannot_be_removed") {
+        res.json(422, {
+          code: "VALIDATION_ERROR",
+          message: "Cannot remove the last tenant-admin",
+        });
+        return;
+      }
       res.json(204, null);
     },
   },

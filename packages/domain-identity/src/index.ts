@@ -86,6 +86,11 @@ export function validateMembership(membership: Partial<Membership>): string[] {
 // (session.ts) and real login (auth callback) use identical permission sets.
 // ---------------------------------------------------------------------------
 
+// Note: "member.*" permission strings (member.read, member.invite, member.update_role)
+// are pre-ADR-ACT-0185 legacy names carried in role bundles for backward compatibility.
+// No route currently enforces them — routes use "tenant.members.*" or "platform.*".
+// They remain in system-admin and manager bundles as informational signals only and
+// will be cleaned up when a dedicated permissions audit ADR is opened.
 const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
   "system-admin": [
     "organisation.read",
@@ -108,15 +113,12 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     "platform.clickthrough.sonarqube",
     "platform.clickthrough.sentry",
     "platform.clickthrough.wiremock",
-    "platform.clickthrough.clickhouse",
+    "platform.clickhouse",
     "platform.audit.read_all",
   ],
   "tenant-admin": [
     "organisation.read",
     "organisation.update",
-    "member.read",
-    "member.invite",
-    "member.update_role",
     "profile.read_self",
     "profile.update_self",
     "audit.read",
@@ -124,6 +126,7 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     "tenant.members.read",
     "tenant.members.invite",
     "tenant.members.update_role",
+    "tenant.members.delete",
     "tenant.auth.settings.read",
     "tenant.auth.settings.write",
     "tenant.audit.read",

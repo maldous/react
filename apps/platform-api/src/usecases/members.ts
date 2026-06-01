@@ -1,23 +1,38 @@
 import { z } from "zod";
 import pg from "pg";
 import { AuditAction, createAuditEvent, type AuditEventPort } from "@platform/audit-events";
-import { NotFoundError, ValidationError } from "@platform/platform-errors";
 import { withTenant, withSystemAdmin } from "@platform/adapters-postgres";
 import type { TenantRole } from "@platform/domain-identity";
 
 // ---------------------------------------------------------------------------
-// Member management usecases (ADR-ACT-0143 Slice 1)
+// Member management usecases (ADR-ACT-0143 Slice 1, hardened)
 //
-// All mutations follow the audit-first pattern (ADR-ACT-0154):
-//   1. Validate input          — return early on invalid; no side-effects
-//   2. Check pre-conditions    — throw NotFoundError if resource is absent
+// All mutations follow the audit-first pattern (ADR-ACT-0154).
+// Ordering for mutations with pre-condition checks:
+//   1. Validate input          — return result early; no side-effects
+//   2. Read pre-conditions     — existence, last-admin count (pure read)
 //   3. Emit audit event        — if this throws, mutation does not run
 //   4. Execute DB mutation     — only if audit succeeded
 //
-// Membership rows live in public.memberships (public schema, RLS-enforced).
-// withTenant() sets app.current_tenant_id so RLS passes for platform_app.
-// User existence lookups use withSystemAdmin() (cross-tenant, bypass RLS).
-// pending_invitations live in public schema with no RLS — direct pool query.
+// Ordering for invite (outcome is determined before auditing):
+//   1. Validate input
+//   2. Determine outcome (check user+membership existence — pure reads)
+//   3. If outcome is conflict/duplicate: return early WITHOUT audit
+//   4. Emit audit for the real outcome (invited or added)
+//   5. Execute DB write
+//
+// This satisfies "audit failure aborts mutation" while not emitting
+// misleading audit events for no-op conflict paths.
+//
+// Email normalization: all email addresses are lowercased before DB lookup
+// and storage. consumePendingInvitationsForUser uses lower(email) = lower($1)
+// for case-insensitive matching (see postgres-identity-repository.ts).
+//
+// pending_invitations isolation: the table has no RLS (intentional — the JIT
+// consume path matches by email with no tenant context). The list query is
+// safe because: (a) organisationId comes from FQDN resolution, not user input;
+// (b) the WHERE clause always filters on organisation_id; (c) the route is
+// scope:"tenant" so it only runs from authenticated tenant FQDN sessions.
 // ---------------------------------------------------------------------------
 
 export interface MembersDeps {
@@ -77,6 +92,8 @@ export async function listOrgMembers(
     }));
   });
 
+  // pending_invitations has no RLS — safe because organisationId is always
+  // FQDN-derived and the WHERE clause is mandatory.
   const { rows: invRows } = await pool.query<{
     email: string;
     role: TenantRole;
@@ -105,16 +122,24 @@ export async function listOrgMembers(
 
 // ---------------------------------------------------------------------------
 // inviteOrgMember — create invitation or direct membership
+// Flow: validate → determine outcome → audit (only on real write) → mutate
 // ---------------------------------------------------------------------------
 
 export const InviteMemberSchema = z.object({
+  // Email is normalized to lowercase before all DB operations so JIT consume
+  // (case-insensitive match) finds the right invitation regardless of how
+  // Keycloak returns the user's email at login time.
   email: z.string().email("email must be a valid email address"),
   role: z.enum(["tenant-admin", "manager", "member", "viewer"]),
 });
 
 export type InviteMemberBody = z.infer<typeof InviteMemberSchema>;
 
-export type InviteOrgMemberResult = { kind: "invited" } | { kind: "added" } | { kind: "conflict" };
+export type InviteOrgMemberResult =
+  | { kind: "invited" } // new user — pending_invitation created (JIT on first login)
+  | { kind: "added" } // existing user — membership created directly
+  | { kind: "conflict" } // user already has an active membership in this org
+  | { kind: "already_invited" }; // unconsumed pending invitation already exists
 
 export async function inviteOrgMember(
   input: {
@@ -129,9 +154,41 @@ export async function inviteOrgMember(
   if (!parsed.success) {
     return { kind: "invalid_body", message: parsed.error.issues[0]?.message ?? "Invalid body" };
   }
-  const { email, role } = parsed.data;
+  const email = parsed.data.email.toLowerCase();
+  const { role } = parsed.data;
 
-  // Audit before any DB write
+  // Step 2: Determine outcome before auditing (pure reads).
+  const existingUser = await withSystemAdmin(deps.pool, async (client) => {
+    const { rows } = await client.query<{ id: string }>(
+      "SELECT id FROM public.users WHERE lower(email) = $1 LIMIT 1",
+      [email]
+    );
+    return rows[0] ?? null;
+  });
+
+  if (existingUser) {
+    // Check if already a member — conflict is a no-op, no audit emitted.
+    const alreadyMember = await withTenant(deps.pool, input.organisationId, async (client) => {
+      const { rows } = await client.query(
+        "SELECT id FROM memberships WHERE user_id = $1 AND organisation_id = $2 LIMIT 1",
+        [existingUser.id, input.organisationId]
+      );
+      return rows.length > 0;
+    });
+    if (alreadyMember) return { kind: "conflict" };
+  } else {
+    // Check for an existing unconsumed invitation — duplicate is a no-op.
+    const { rows: existing } = await deps.pool.query(
+      `SELECT id FROM public.pending_invitations
+       WHERE lower(email) = $1 AND organisation_id = $2
+         AND consumed_at IS NULL AND expires_at > now()
+       LIMIT 1`,
+      [email, input.organisationId]
+    );
+    if (existing.length > 0) return { kind: "already_invited" };
+  }
+
+  // Step 3: Audit the real write (invited or added). Failure aborts step 4.
   await deps.audit.emit(
     createAuditEvent({
       actorId: input.actorId,
@@ -144,33 +201,19 @@ export async function inviteOrgMember(
     })
   );
 
-  // Check if user already exists (cross-tenant lookup)
-  const existingUser = await withSystemAdmin(deps.pool, async (client) => {
-    const { rows } = await client.query<{ id: string }>(
-      "SELECT id FROM public.users WHERE email = $1 LIMIT 1",
-      [email]
-    );
-    return rows[0] ?? null;
-  });
-
+  // Step 4: Execute write.
   if (existingUser) {
-    // User exists — create membership directly
-    const inserted = await withTenant(deps.pool, input.organisationId, async (client) => {
-      const { rowCount } = await client.query(
-        `INSERT INTO memberships (user_id, organisation_id, role)
-         VALUES ($1, $2, $3)
-         ON CONFLICT (user_id, organisation_id) DO NOTHING`,
+    await withTenant(deps.pool, input.organisationId, async (client) => {
+      await client.query(
+        `INSERT INTO memberships (user_id, organisation_id, role) VALUES ($1, $2, $3)`,
         [existingUser.id, input.organisationId, role]
       );
-      return (rowCount ?? 0) > 0;
     });
-    return inserted ? { kind: "added" } : { kind: "conflict" };
+    return { kind: "added" };
   }
 
-  // User not yet registered — create pending invitation (JIT on first login)
   await deps.pool.query(
-    `INSERT INTO public.pending_invitations (email, organisation_id, role)
-     VALUES ($1, $2, $3)`,
+    `INSERT INTO public.pending_invitations (email, organisation_id, role) VALUES ($1, $2, $3)`,
     [email, input.organisationId, role]
   );
   return { kind: "invited" };
@@ -184,6 +227,12 @@ export const UpdateMemberRoleSchema = z.object({
   role: z.enum(["tenant-admin", "manager", "member", "viewer"]),
 });
 
+export type UpdateMemberRoleResult =
+  | { kind: "ok" }
+  | { kind: "invalid_body"; message: string }
+  | { kind: "not_found" }
+  | { kind: "last_admin_cannot_be_demoted" };
+
 export async function updateMemberRole(
   input: {
     organisationId: string;
@@ -193,22 +242,38 @@ export async function updateMemberRole(
     rawBody: unknown;
   },
   deps: MembersDeps
-): Promise<{ kind: "ok" } | { kind: "invalid_body"; message: string }> {
+): Promise<UpdateMemberRoleResult> {
   const parsed = UpdateMemberRoleSchema.safeParse(input.rawBody);
   if (!parsed.success) {
     return { kind: "invalid_body", message: parsed.error.issues[0]?.message ?? "Invalid body" };
   }
   const { role: newRole } = parsed.data;
 
-  // Verify membership exists before auditing
-  const exists = await withTenant(deps.pool, input.organisationId, async (client) => {
-    const { rows } = await client.query(
-      "SELECT id FROM memberships WHERE user_id = $1 AND organisation_id = $2 LIMIT 1",
+  // Fetch existing role and count admins in one withTenant block.
+  const check = await withTenant(deps.pool, input.organisationId, async (client) => {
+    const { rows: memberRows } = await client.query<{ role: string }>(
+      "SELECT role FROM memberships WHERE user_id = $1 AND organisation_id = $2 LIMIT 1",
       [input.targetUserId, input.organisationId]
     );
-    return rows.length > 0;
+    if (memberRows.length === 0) return null;
+    const currentRole = memberRows[0]!.role as TenantRole;
+    // Only count admins if we might be demoting the last one.
+    let adminCount = 0;
+    if (currentRole === "tenant-admin" && newRole !== "tenant-admin") {
+      const { rows: countRows } = await client.query<{ cnt: number }>(
+        `SELECT count(*)::int AS cnt FROM memberships
+         WHERE organisation_id = $1 AND role = 'tenant-admin'`,
+        [input.organisationId]
+      );
+      adminCount = countRows[0]?.cnt ?? 0;
+    }
+    return { currentRole, adminCount };
   });
-  if (!exists) throw new NotFoundError("api.error.memberNotFound");
+
+  if (check === null) return { kind: "not_found" };
+  if (check.currentRole === "tenant-admin" && newRole !== "tenant-admin" && check.adminCount <= 1) {
+    return { kind: "last_admin_cannot_be_demoted" };
+  }
 
   await deps.audit.emit(
     createAuditEvent({
@@ -237,6 +302,11 @@ export async function updateMemberRole(
 // removeMember — remove a membership record
 // ---------------------------------------------------------------------------
 
+export type RemoveMemberResult =
+  | { kind: "ok" }
+  | { kind: "not_found" }
+  | { kind: "last_admin_cannot_be_removed" };
+
 export async function removeMember(
   input: {
     organisationId: string;
@@ -245,15 +315,35 @@ export async function removeMember(
     actorRoles: string[];
   },
   deps: MembersDeps
-): Promise<void> {
-  const exists = await withTenant(deps.pool, input.organisationId, async (client) => {
-    const { rows } = await client.query(
-      "SELECT id FROM memberships WHERE user_id = $1 AND organisation_id = $2 LIMIT 1",
+): Promise<RemoveMemberResult> {
+  // Fetch existing role and admin count in one withTenant block.
+  // TOCTOU note: two separate transactions (this read + the delete below)
+  // could race if two admins are removed concurrently. Accepted: single-admin
+  // orgs are uncommon and the window is tiny; a database-level constraint
+  // would require a trigger, which is deferred to a future hardening pass.
+  const check = await withTenant(deps.pool, input.organisationId, async (client) => {
+    const { rows } = await client.query<{ role: string }>(
+      "SELECT role FROM memberships WHERE user_id = $1 AND organisation_id = $2 LIMIT 1",
       [input.targetUserId, input.organisationId]
     );
-    return rows.length > 0;
+    if (rows.length === 0) return null;
+    const currentRole = rows[0]!.role as TenantRole;
+    let adminCount = 0;
+    if (currentRole === "tenant-admin") {
+      const { rows: countRows } = await client.query<{ cnt: number }>(
+        `SELECT count(*)::int AS cnt FROM memberships
+         WHERE organisation_id = $1 AND role = 'tenant-admin'`,
+        [input.organisationId]
+      );
+      adminCount = countRows[0]?.cnt ?? 0;
+    }
+    return { currentRole, adminCount };
   });
-  if (!exists) throw new NotFoundError("api.error.memberNotFound");
+
+  if (check === null) return { kind: "not_found" };
+  if (check.currentRole === "tenant-admin" && check.adminCount <= 1) {
+    return { kind: "last_admin_cannot_be_removed" };
+  }
 
   await deps.audit.emit(
     createAuditEvent({
@@ -273,7 +363,6 @@ export async function removeMember(
       input.organisationId,
     ]);
   });
-}
 
-// Re-export for ValidationError usage in routes
-export { ValidationError };
+  return { kind: "ok" };
+}

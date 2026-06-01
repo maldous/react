@@ -40,6 +40,7 @@ export type Permission =
   | "tenant.members.read"
   | "tenant.members.invite"
   | "tenant.members.update_role"
+  | "tenant.members.delete"
   | "tenant.auth.settings.read"
   | "tenant.auth.settings.write"
   | "tenant.audit.read"
