@@ -665,6 +665,108 @@ export const routes: Route[] = [
     },
   },
   // ---------------------------------------------------------------------------
+  // Resource policy management — tenant admin self-service (ADR-ACT-0151 / ADR-0030 §3d)
+  // Tenant admins view and update resource policies for their realm at runtime.
+  // Changes take effect on the next request — no deployment required.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/auth/settings/resource-policies",
+    operationName: "auth.settings.resource-policies.list",
+    requiresAuth: true,
+    requiredPermission: "tenant.auth.settings.read",
+    resource: "admin:auth",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const cred = await new PostgresTenantCredentialStore(
+        getApplicationPool()
+      ).getAuthSettingsCredential(tenantCtx.organisationId);
+      if (!cred) {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
+        return;
+      }
+      const { getResourcePolicies } = await import("../usecases/resource-policies.ts");
+      const adapter = new KeycloakRealmAdminAdapter({
+        url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
+        realm: tenantCtx.realmName,
+        adminClientId: cred.clientId,
+        adminClientSecret: cred.clientSecret,
+      });
+      const result = await getResourcePolicies(
+        {
+          organisationId: tenantCtx.organisationId,
+          realmName: tenantCtx.realmName,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        { adapter }
+      );
+      res.json(200, result);
+    },
+  },
+  {
+    method: "PATCH",
+    path: "/api/auth/settings/resource-policies",
+    operationName: "auth.settings.resource-policies.set",
+    requiresAuth: true,
+    requiredPermission: "tenant.auth.settings.write",
+    resource: "admin:auth",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const ResourcePolicyBodySchema = z.object({
+        resourceName: z.string().min(1).max(120),
+        policy: z.object({
+          name: z.string().min(1).max(120),
+          type: z.enum(["role", "time", "aggregated", "user", "group", "regex", "js"]),
+          config: z.record(z.string(), z.unknown()).default({}),
+        }),
+      });
+      const parsed = ResourcePolicyBodySchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, { code: "VALIDATION_ERROR", message: parsed.error.issues[0]?.message });
+        return;
+      }
+      const cred = await new PostgresTenantCredentialStore(
+        getApplicationPool()
+      ).getAuthSettingsCredential(tenantCtx.organisationId);
+      if (!cred) {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
+        return;
+      }
+      const { setResourcePolicy } = await import("../usecases/resource-policies.ts");
+      const adapter = new KeycloakRealmAdminAdapter({
+        url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
+        realm: tenantCtx.realmName,
+        adminClientId: cred.clientId,
+        adminClientSecret: cred.clientSecret,
+      });
+      await setResourcePolicy(
+        {
+          organisationId: tenantCtx.organisationId,
+          realmName: tenantCtx.realmName,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          resourceName: parsed.data.resourceName,
+          policy: parsed.data.policy as import("@platform/authorisation-runtime").ResourcePolicy,
+        },
+        { adapter, audit: createPostgresAuditEventPort(getApplicationPool()) }
+      );
+      res.json(204, null);
+    },
+  },
+  // ---------------------------------------------------------------------------
   // Organisation profile
   // ---------------------------------------------------------------------------
   {
