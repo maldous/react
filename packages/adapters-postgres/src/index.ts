@@ -141,16 +141,20 @@ export async function withTenantActor<T>(
 }
 
 // ---------------------------------------------------------------------------
-// withSystemAdmin ? cross-tenant RLS bypass (ADR-0029 ?3d, ADR-0031, ADR-ACT-0184)
+// withSystemAdmin — cross-tenant RLS bypass (ADR-0029 §3d, ADR-0031, ADR-ACT-0184, ADR-ACT-0189)
 //
-// RLS bypass is controlled by PostgreSQL role membership (rls_bypass role),
-// NOT by a session GUC. The application DB user is granted the rls_bypass role
-// (migration 008), so pg_has_role(current_user, 'rls_bypass', 'MEMBER') is true
-// for the duration of the connection — no per-transaction GUC is required.
+// RLS bypass uses SET LOCAL ROLE rls_bypass inside the transaction. This changes
+// current_user to 'rls_bypass' for the transaction lifetime only, so
+// pg_has_role(current_user, 'rls_bypass', 'USAGE') evaluates to true and the
+// USAGE-based RLS policies allow cross-tenant access.
 //
-// This replaces the previous app.bypass_rls GUC approach, which was user-settable:
-// any connection holder could SET app.bypass_rls = 'true' to escalate privileges.
-// Role membership cannot be changed by an unprivileged session.
+// Why SET LOCAL ROLE instead of a GUC (ADR-ACT-0184 context, updated ADR-ACT-0189):
+//   - The runtime connection (platform_app) is NOINHERIT: it is a MEMBER of rls_bypass
+//     but does not automatically inherit its privileges (USAGE = false outside SET ROLE).
+//   - SET LOCAL ROLE is transaction-scoped: it reverts on COMMIT or ROLLBACK — pool-safe.
+//   - The rls_bypass NOLOGIN role cannot be used as an initial login credential.
+//   - Unlike a session GUC, SET LOCAL ROLE cannot be forged by unprivileged SQL
+//     unless the connection user is already a member of the target role.
 //
 // Audit rules:
 //   MUTATIONS (INSERT, UPDATE, DELETE): every call that mutates data must be
@@ -172,6 +176,7 @@ export async function withSystemAdmin<T>(
   const client = await pool.connect();
   try {
     await client.query("BEGIN");
+    await client.query("SET LOCAL ROLE rls_bypass");
     const result = await fn(client);
     await client.query("COMMIT");
     return result;

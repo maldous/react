@@ -201,21 +201,28 @@ describe("withTenantActor", () => {
 });
 
 describe("withSystemAdmin", () => {
-  it("does NOT set any user-settable bypass GUC (ADR-ACT-0184 regression)", async () => {
-    // RLS bypass is controlled by rls_bypass role membership (pg_has_role),
-    // not by a user-settable session variable. Any session GUC could be SET
-    // by an unprivileged connection to escalate privileges.
+  it("uses SET LOCAL ROLE rls_bypass — not set_config GUC (ADR-ACT-0184 / ADR-ACT-0189)", async () => {
+    // RLS bypass is controlled by SET LOCAL ROLE rls_bypass (transaction-scoped role switch),
+    // not by a user-settable session GUC. A GUC like set_config('app.bypass_rls', ...) could
+    // be forged by any connection holder; SET LOCAL ROLE requires actual role membership.
     const { calls, pool } = makeSpyPool();
     await withSystemAdmin(pool as never, async () => {});
 
-    const bypassGucCall = calls.find(
-      (c) => c.text.includes("bypass_rls") || c.text.includes("bypass")
+    // Must NOT use set_config to set any bypass variable
+    const gucBypassCall = calls.find(
+      (c) => c.text.toLowerCase().includes("set_config") && c.text.toLowerCase().includes("bypass")
     );
     assert.strictEqual(
-      bypassGucCall,
+      gucBypassCall,
       undefined,
-      "withSystemAdmin must NOT set any bypass GUC — bypass is via rls_bypass role membership"
+      "withSystemAdmin must NOT use set_config to bypass RLS — use SET LOCAL ROLE instead"
     );
+
+    // Must use SET LOCAL ROLE rls_bypass
+    const roleSwitch = calls.find((c) =>
+      c.text.toLowerCase().includes("set local role rls_bypass")
+    );
+    assert.ok(roleSwitch, "withSystemAdmin must SET LOCAL ROLE rls_bypass for RLS bypass");
   });
 
   it("does NOT set search_path (cross-tenant — no schema selected)", async () => {

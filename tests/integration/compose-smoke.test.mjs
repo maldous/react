@@ -45,6 +45,8 @@ import nodemailer from "nodemailer";
 // ---------------------------------------------------------------------------
 
 const POSTGRES_URL = "postgresql://platform:platformpassword@localhost:5433/platform";
+// Non-superuser app role URL used for RLS enforcement tests (ADR-ACT-0189)
+const POSTGRES_APP_URL = "postgresql://platform_app:platformapppassword@localhost:5433/platform";
 const REDIS_URL = "redis://localhost:6379";
 const MINIO_ENDPOINT = "http://localhost:9000";
 const CLICKHOUSE_HTTP = "http://localhost:8124";
@@ -449,4 +451,155 @@ test("otel-collector: OTLP/HTTP POST /v1/traces returns 200", async () => {
     }),
   });
   assert.equal(res.status, 200);
+});
+
+// ---------------------------------------------------------------------------
+// RLS enforcement with platform_app role (ADR-ACT-0189)
+//
+// These tests verify that RLS actually enforces on the non-superuser app role.
+// Setup uses the superuser client (pgClient) for INSERT; assertions use a
+// separate platform_app client so the non-superuser behaviour is observed.
+//
+// Test UUIDs use a distinct prefix (aaaa/bbbb) to avoid FIXTURE collisions.
+// ---------------------------------------------------------------------------
+
+const RLS_ORG_A = "aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa";
+const RLS_ORG_B = "bbbbbbbb-bbbb-4bbb-bbbb-bbbbbbbbbbbb";
+const RLS_USER_A = "cccccccc-cccc-4ccc-cccc-cccccccccccc";
+const RLS_USER_B = "dddddddd-dddd-4ddd-dddd-dddddddddddd";
+
+test("platform_app: not superuser, no BYPASSRLS, has rls_bypass membership", async () => {
+  const { rows } = await pgClient.query(`
+    SELECT rolsuper, rolbypassrls, rolcanlogin,
+           pg_has_role('platform_app', 'rls_bypass', 'MEMBER') AS has_rls_bypass
+    FROM pg_roles WHERE rolname = 'platform_app'
+  `);
+  assert.equal(rows.length, 1, "platform_app role must exist");
+  assert.equal(rows[0].rolsuper, false, "platform_app must NOT be superuser");
+  assert.equal(rows[0].rolbypassrls, false, "platform_app must NOT have BYPASSRLS");
+  assert.equal(rows[0].rolcanlogin, true, "platform_app must have LOGIN");
+  assert.equal(
+    rows[0].has_rls_bypass,
+    true,
+    "platform_app must have rls_bypass membership for withSystemAdmin()"
+  );
+});
+
+test("pgadmin_sysadmin retains rls_bypass membership (regression guard)", async () => {
+  const { rows } = await pgClient.query(`
+    SELECT pg_has_role('pgadmin_sysadmin', 'rls_bypass', 'MEMBER') AS has_rls_bypass
+    FROM pg_roles WHERE rolname = 'pgadmin_sysadmin'
+  `);
+  assert.equal(rows.length, 1, "pgadmin_sysadmin must still exist");
+  assert.equal(rows[0].has_rls_bypass, true, "pgadmin_sysadmin must retain rls_bypass");
+});
+
+test("RLS: platform_app sees only own-tenant memberships", async () => {
+  await resetDatabase();
+  await runMigrations();
+
+  await pgClient.query(
+    "INSERT INTO organisations(id, slug, display_name) VALUES ($1,'rls-org-a','RLS Org A'),($2,'rls-org-b','RLS Org B')",
+    [RLS_ORG_A, RLS_ORG_B]
+  );
+  await pgClient.query(
+    "INSERT INTO users(id, email, display_name) VALUES ($1,'rls-a@test.local','RLS User A'),($2,'rls-b@test.local','RLS User B')",
+    [RLS_USER_A, RLS_USER_B]
+  );
+  await pgClient.query(
+    "INSERT INTO memberships(user_id, organisation_id, role) VALUES ($1,$2,'tenant-admin'),($3,$4,'tenant-admin')",
+    [RLS_USER_A, RLS_ORG_A, RLS_USER_B, RLS_ORG_B]
+  );
+
+  const appClient = new pg.Client(POSTGRES_APP_URL);
+  await appClient.connect();
+  try {
+    // Tenant A context: should see only Org A's membership
+    await appClient.query("BEGIN");
+    await appClient.query("SELECT set_config('app.current_tenant_id', $1, true)", [RLS_ORG_A]);
+    const { rows: ownRows } = await appClient.query("SELECT organisation_id FROM memberships");
+    assert.equal(ownRows.length, 1, "Should see exactly 1 row (own tenant)");
+    assert.equal(ownRows[0].organisation_id, RLS_ORG_A, "Should see only Org A's row");
+    await appClient.query("COMMIT");
+
+    // Tenant B context: should see only Org B's membership
+    await appClient.query("BEGIN");
+    await appClient.query("SELECT set_config('app.current_tenant_id', $1, true)", [RLS_ORG_B]);
+    const { rows: bRows } = await appClient.query("SELECT organisation_id FROM memberships");
+    assert.equal(bRows.length, 1, "Should see exactly 1 row (Org B context)");
+    assert.equal(bRows[0].organisation_id, RLS_ORG_B, "Should see only Org B's row");
+    await appClient.query("COMMIT");
+
+    // No tenant context: should see no rows
+    await appClient.query("BEGIN");
+    await appClient.query("SELECT set_config('app.current_tenant_id', '', true)", []);
+    const { rows: noRows } = await appClient.query("SELECT 1 FROM memberships LIMIT 1");
+    assert.equal(noRows.length, 0, "Without tenant context, RLS must hide all rows");
+    await appClient.query("COMMIT");
+  } finally {
+    await appClient.end();
+  }
+});
+
+test("RLS: platform_app cannot see another tenant's rows via forged current_tenant_id", async () => {
+  // Data from previous test still present (no resetDatabase between these tests).
+  // Connect as platform_app, set tenant A context, attempt to read Org B rows.
+  const appClient = new pg.Client(POSTGRES_APP_URL);
+  await appClient.connect();
+  try {
+    await appClient.query("BEGIN");
+    await appClient.query("SELECT set_config('app.current_tenant_id', $1, true)", [RLS_ORG_A]);
+    const { rows } = await appClient.query(
+      "SELECT organisation_id FROM memberships WHERE organisation_id = $1",
+      [RLS_ORG_B]
+    );
+    assert.equal(rows.length, 0, "RLS must prevent seeing Org B rows when tenant context is Org A");
+    await appClient.query("COMMIT");
+  } finally {
+    await appClient.end();
+  }
+});
+
+test("RLS: SET LOCAL ROLE rls_bypass (withSystemAdmin path) sees all tenants", async () => {
+  // withSystemAdmin() uses SET LOCAL ROLE rls_bypass inside a transaction.
+  // This changes current_user to 'rls_bypass' for the transaction lifetime,
+  // satisfying the RLS policy's current_user = 'rls_bypass' bypass check.
+  // After COMMIT/ROLLBACK, current_user reverts to platform_app automatically.
+  const appClient = new pg.Client(POSTGRES_APP_URL);
+  await appClient.connect();
+  try {
+    // Confirm platform_app is a member of rls_bypass (required for SET LOCAL ROLE)
+    const { rows: memberCheck } = await appClient.query(
+      "SELECT pg_has_role(current_user, 'rls_bypass', 'MEMBER') AS can_set_role"
+    );
+    assert.equal(
+      memberCheck[0].can_set_role,
+      true,
+      "platform_app must be a rls_bypass member so SET LOCAL ROLE rls_bypass works"
+    );
+
+    // Simulate withSystemAdmin(): BEGIN; SET LOCAL ROLE rls_bypass; <work>; COMMIT
+    await appClient.query("BEGIN");
+    await appClient.query("SET LOCAL ROLE rls_bypass");
+    assert.equal(
+      (await appClient.query("SELECT current_user")).rows[0].current_user,
+      "rls_bypass",
+      "current_user must be rls_bypass after SET LOCAL ROLE"
+    );
+    const { rows: allRows } = await appClient.query(
+      "SELECT organisation_id FROM memberships ORDER BY organisation_id"
+    );
+    assert.equal(allRows.length, 2, "withSystemAdmin path must see all tenant rows");
+    await appClient.query("COMMIT");
+
+    // After COMMIT, current_user reverts to platform_app (SET LOCAL is transaction-scoped)
+    const { rows: afterCommit } = await appClient.query("SELECT current_user");
+    assert.equal(
+      afterCommit[0].current_user,
+      "platform_app",
+      "current_user must revert to platform_app after COMMIT"
+    );
+  } finally {
+    await appClient.end();
+  }
 });
