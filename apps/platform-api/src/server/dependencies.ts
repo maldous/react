@@ -22,10 +22,20 @@ import {
   RedisSessionStore,
   RedisAuthStateStore,
 } from "@platform/adapters-redis";
-import type { KeycloakClientConfig } from "@platform/adapters-keycloak";
+import {
+  KeycloakAuthorisationAdapter,
+  type KeycloakClientConfig,
+} from "@platform/adapters-keycloak";
+import {
+  createAllowAllAuthorisationPort,
+  type AuthorisationPort,
+} from "@platform/authorisation-runtime";
 import type { OrganisationRepository } from "../ports/organisation-repository.ts";
 import type { IdentityRepository } from "../ports/identity-repository.ts";
 import type { SessionStore } from "@platform/session-runtime";
+import { decryptToken } from "./token-crypto.ts";
+import { getFixtureSession } from "./session.ts";
+import type { TenantContext } from "./tenant-resolver.ts";
 
 const DEFAULT_POSTGRES_URL = "postgresql://platform:platformpassword@localhost:5433/platform";
 
@@ -297,5 +307,103 @@ export async function disconnectRedis(): Promise<void> {
     redisClient = undefined;
     sessionStore = undefined;
     authStateStore = undefined;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// UMA authorisation port factory (ADR-ACT-0145)
+//
+// Returns the correct AuthorisationPort for the current request context:
+//   - Fixture mode (LOCAL_FIXTURE_SESSION set): allow-all (no Keycloak call)
+//   - Tenant FQDN: tenant realm Authorization Services
+//   - Global host: platform realm Authorization Services
+// ---------------------------------------------------------------------------
+
+export function getAuthorisationPort(fqdnTenant: TenantContext | null): AuthorisationPort {
+  if (getFixtureSession()) return createAllowAllAuthorisationPort();
+  const cfg = fqdnTenant ? getKeycloakConfigForRealm(fqdnTenant.realmName) : getKeycloakConfig();
+  return new KeycloakAuthorisationAdapter(cfg);
+}
+
+// ---------------------------------------------------------------------------
+// resolveAccessToken — decrypt and optionally refresh the actor's access token
+//
+// Returns the plaintext access token ready for the UMA ticket request.
+// Returns null if the session has no token (fixture sessions, sessions
+// created before ADR-ACT-0153) — callers must fall back to static check.
+// ---------------------------------------------------------------------------
+
+export async function resolveAccessToken(
+  sessionId: string,
+  sessionStore: ReturnType<typeof getSessionStore>
+): Promise<string | null> {
+  const record = await sessionStore.find(sessionId);
+  if (!record?.accessTokenEnc) return null;
+
+  try {
+    const plaintext = decryptToken(record.accessTokenEnc);
+    // If not near expiry, return immediately
+    const expiresAt = record.accessTokenExpiresAt?.getTime() ?? 0;
+    if (expiresAt - Date.now() > 30_000) return plaintext;
+
+    // Token near or past expiry — attempt silent refresh using refresh token
+    if (!record.refreshTokenEnc) return null;
+    const refreshToken = decryptToken(record.refreshTokenEnc);
+    const cfg = getKeycloakConfig();
+    const refreshed = await _refreshAccessToken(refreshToken, cfg);
+    if (!refreshed) {
+      // Refresh failed — destroy session, force re-login
+      await sessionStore.destroy(sessionId);
+      return null;
+    }
+
+    const { encryptToken } = await import("./token-crypto.ts");
+    // Update session record with new tokens (best-effort)
+    await sessionStore
+      .create({
+        ...record,
+        ttlSeconds: Math.max(30, Math.round((record.expiresAt.getTime() - Date.now()) / 1000)),
+        accessTokenEnc: encryptToken(refreshed.accessToken),
+        refreshTokenEnc: encryptToken(refreshed.refreshToken),
+        accessTokenExpiresAt: new Date(Date.now() + refreshed.expiresIn * 1000),
+      })
+      .catch(() => undefined);
+
+    return refreshed.accessToken;
+  } catch {
+    return null;
+  }
+}
+
+async function _refreshAccessToken(
+  refreshToken: string,
+  cfg: ReturnType<typeof getKeycloakConfig>
+): Promise<{ accessToken: string; refreshToken: string; expiresIn: number } | null> {
+  const tokenUrl = `${cfg.url}/realms/${cfg.realm}/protocol/openid-connect/token`;
+  try {
+    const res = await fetch(tokenUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        grant_type: "refresh_token",
+        client_id: cfg.clientId,
+        client_secret: cfg.clientSecret,
+        refresh_token: refreshToken,
+      }),
+    });
+    if (!res.ok) return null;
+    const data = (await res.json()) as {
+      access_token?: string;
+      refresh_token?: string;
+      expires_in?: number;
+    };
+    if (!data.access_token) return null;
+    return {
+      accessToken: data.access_token,
+      refreshToken: data.refresh_token ?? refreshToken,
+      expiresIn: data.expires_in ?? 900,
+    };
+  } catch {
+    return null;
   }
 }
