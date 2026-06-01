@@ -10,7 +10,7 @@
 #
 # ADR-0023: Declarative infrastructure provisioning model
 # ADR-0033: Environment-specific domain configuration ? production uses aldous.info with Cloudflare TLS
-	erraform {
+erraform {
   required_version = "~> 1.13"
   required_providers {
     keycloak = {
@@ -97,14 +97,14 @@ provider "keycloak" {
 module "keycloak" {
   source = "../../modules/keycloak"
 
-  keycloak_url   = var.keycloak_url
-  realm_name = var.keycloak_realm
-  kc_hostname    = var.kc_hostname
-  apex_domain    = var.apex_domain
-  bff_client_secret = var.bff_client_secret
+  keycloak_url              = var.keycloak_url
+  realm_name                = var.keycloak_realm
+  kc_hostname               = var.kc_hostname
+  apex_domain               = var.apex_domain
+  bff_client_secret         = var.bff_client_secret
   provisioner_client_secret = var.provisioner_client_secret
 
-  fixture_user_password  = var.fixture_user_password
+  fixture_user_password   = var.fixture_user_password
   provision_fixture_users = var.provision_fixture_users
 
   # Production-specific BFF redirect URIs (HTTPS via aldous.info)

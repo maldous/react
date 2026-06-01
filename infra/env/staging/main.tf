@@ -107,14 +107,14 @@ provider "keycloak" {
 module "keycloak" {
   source = "../../modules/keycloak"
 
-  keycloak_url           = var.keycloak_url
-  realm_name         = var.keycloak_realm
-  kc_hostname            = var.kc_hostname
-  apex_domain            = var.apex_domain
-  bff_client_secret      = var.bff_client_secret
+  keycloak_url              = var.keycloak_url
+  realm_name                = var.keycloak_realm
+  kc_hostname               = var.kc_hostname
+  apex_domain               = var.apex_domain
+  bff_client_secret         = var.bff_client_secret
   provisioner_client_secret = var.provisioner_client_secret
-  fixture_user_password  = var.fixture_user_password
-  provision_fixture_users = var.provision_fixture_users
+  fixture_user_password     = var.fixture_user_password
+  provision_fixture_users   = var.provision_fixture_users
 
   # Staging-specific BFF redirect URIs (HTTPS via staging.aldous.info)
   spa_redirect_uris = var.redirect_uris
