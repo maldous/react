@@ -15,6 +15,11 @@ export interface SessionRecord {
   supportMode?: true;
   effectiveOrganisationId?: string;
   supportAccessReason?: string;
+  // UMA token fields (ADR-ACT-0145 / ADR-ACT-0153) — only present for real Keycloak sessions
+  // Tokens are AES-256-GCM encrypted (see token-crypto.ts). Format: enc:<iv_hex>:<ct_hex>:<tag_hex>
+  accessTokenEnc?: string;
+  refreshTokenEnc?: string;
+  accessTokenExpiresAt?: Date;
 }
 
 // Commands for session lifecycle
@@ -30,6 +35,10 @@ export interface CreateSessionCommand {
   supportMode?: true;
   effectiveOrganisationId?: string;
   supportAccessReason?: string;
+  // UMA token fields (ADR-ACT-0145 / ADR-ACT-0153)
+  accessTokenEnc?: string;
+  refreshTokenEnc?: string;
+  accessTokenExpiresAt?: Date;
 }
 
 export interface SessionStore {
