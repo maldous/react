@@ -131,14 +131,24 @@ resource "keycloak_openid_client" "bff" {
   standard_flow_enabled        = true
   implicit_flow_enabled        = false
   direct_access_grants_enabled = false
-  service_accounts_enabled     = false
+  service_accounts_enabled     = true # Required for Authorization Services (ADR-ACT-0145)
+
+  # Keycloak Authorization Services (UMA 2.0) — ADR-ACT-0145
+  # Enables runtime per-resource policy evaluation via UMA ticket endpoint.
+  # The BFF calls POST /realms/{realm}/protocol/openid-connect/token with
+  # grant_type=urn:ietf:params:oauth:grant-type:uma-ticket on each request.
+  authorization {
+    policy_enforcement_mode          = "ENFORCING"
+    decision_strategy                = "AFFIRMATIVE"
+    allow_remote_resource_management = true
+  }
 
   # PKCE as additional security layer even for confidential clients
   pkce_code_challenge_method = "S256"
 
   client_secret = var.bff_client_secret
 
-  # BFF callback endpoints ? the BFF exchanges code at the server, not the browser.
+  # BFF callback endpoints — the BFF exchanges code at the server, not the browser.
   # Generated from kc_hostname and apex_domain for environment-appropriate redirect URIs.
   # Override via bff_redirect_uris variable if custom URIs are needed.
   # Note: "+" would allow all valid redirect URIs; we use explicit list for security.
