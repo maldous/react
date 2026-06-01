@@ -49,6 +49,14 @@ export class RedisSessionStore implements SessionStore {
       displayName: command.displayName,
       expiresAt,
       createdAt: now,
+      // Support-mode fields: only included when present (ADR-ACT-0187)
+      ...(command.supportMode
+        ? {
+            supportMode: command.supportMode,
+            effectiveOrganisationId: command.effectiveOrganisationId,
+            supportAccessReason: command.supportAccessReason,
+          }
+        : {}),
     };
     await this.client.set(this.keyPrefix + sessionId, JSON.stringify(record), {
       EX: command.ttlSeconds,

@@ -65,6 +65,28 @@ export interface Route {
   scope?: "global" | "tenant";
 }
 
+// ---------------------------------------------------------------------------
+// canAccessTenantFqdn — FQDN access predicate (ADR-0029, ADR-ACT-0187)
+//
+// Returns true when the actor is permitted to access the given tenant FQDN.
+// Three cases:
+//   1. Regular tenant user: actor.organisationId must match the FQDN tenant.
+//   2. System-admin (no support mode): BLOCKED. Must use the global host.
+//   3. System-admin (explicit support mode): allowed ONLY for the effective
+//      tenant, which was audited at support-session creation time.
+//
+// Exported for unit testing.
+// ---------------------------------------------------------------------------
+export function canAccessTenantFqdn(actor: SessionActor, fqdnOrganisationId: string): boolean {
+  const isSystemAdmin = actor.roles.includes("system-admin");
+  if (isSystemAdmin) {
+    // System-admin may ONLY access via explicit audited support mode
+    return actor.supportMode === true && actor.effectiveOrganisationId === fqdnOrganisationId;
+  }
+  // Regular tenant user: must belong to this tenant
+  return actor.organisationId === fqdnOrganisationId;
+}
+
 // requestId generator
 export function generateRequestId(): string {
   return crypto.randomUUID();
@@ -205,6 +227,14 @@ export function createRouter(
                 roles: record.roles,
                 permissions: record.permissions,
                 displayName: record.displayName,
+                // Preserve support-mode fields (ADR-ACT-0187)
+                ...(record.supportMode
+                  ? {
+                      supportMode: record.supportMode,
+                      effectiveOrganisationId: record.effectiveOrganisationId,
+                      supportAccessReason: record.supportAccessReason,
+                    }
+                  : {}),
               };
             }
           } catch {
@@ -213,15 +243,14 @@ export function createRouter(
         }
       }
 
-      // FQDN tenant cross-check (ADR-0029 invariant #2):
-      // If the request came in on a tenant subdomain, the session must belong
-      // to that same tenant. Prevents a user from one tenant accessing another
-      // tenant's data by navigating to a different subdomain.
-      // system-admin is NOT exempt — they must operate from the global host.
-      // Cross-tenant support access requires an explicit audited support session
-      // (not yet implemented; tracked as future work in ACTION-REGISTER).
+      // FQDN tenant cross-check (ADR-0029 invariant #2, ADR-ACT-0187):
+      // If the request came in on a tenant subdomain, the session must have
+      // explicit access to that tenant. canAccessTenantFqdn enforces:
+      //   - Regular users: only their own tenant.
+      //   - System-admin (no support mode): always blocked on tenant FQDNs.
+      //   - System-admin (support mode): only the specific effective tenant.
       if (actor && fqdnTenant) {
-        if (actor.organisationId !== fqdnTenant.organisationId) {
+        if (!canAccessTenantFqdn(actor, fqdnTenant.organisationId)) {
           const err = new ForbiddenError("api.error.permissionRequired", {
             safeDetails: { permission: "tenant:own" },
           });

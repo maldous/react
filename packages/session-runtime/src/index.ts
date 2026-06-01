@@ -11,6 +11,10 @@ export interface SessionRecord {
   displayName: string;
   expiresAt: Date;
   createdAt: Date;
+  // Support-mode fields (ADR-ACT-0187) — only present on explicit support sessions
+  supportMode?: true;
+  effectiveOrganisationId?: string;
+  supportAccessReason?: string;
 }
 
 // Commands for session lifecycle
@@ -22,6 +26,10 @@ export interface CreateSessionCommand {
   permissions: string[];
   displayName: string;
   ttlSeconds: number;
+  // Support-mode fields (ADR-ACT-0187)
+  supportMode?: true;
+  effectiveOrganisationId?: string;
+  supportAccessReason?: string;
 }
 
 export interface SessionStore {

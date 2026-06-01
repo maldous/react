@@ -12,6 +12,7 @@ export const AuditAction = {
   ProfileUpdated: "profile.updated",
   ApiKeyCreated: "api_key.created",
   ApiKeyRevoked: "api_key.revoked",
+  SupportSessionCreated: "support_session.created",
 } as const;
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction];

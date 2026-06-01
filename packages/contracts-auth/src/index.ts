@@ -68,6 +68,13 @@ export const SessionActorSchema = z.object({
   roles: z.array(z.string()),
   permissions: z.array(z.string()),
   displayName: z.string(),
+  // Support-mode fields (ADR-ACT-0187). Only present on explicit support sessions.
+  // When present: actor is a system-admin operating on effectiveOrganisationId's tenant
+  // under explicit audited support access. The pipeline allows FQDN access only to
+  // that specific tenant — other tenant FQDNs still return 403.
+  supportMode: z.literal(true).optional(),
+  effectiveOrganisationId: z.string().optional(),
+  supportAccessReason: z.string().optional(),
 });
 
 export type SessionActor = z.infer<typeof SessionActorSchema>;

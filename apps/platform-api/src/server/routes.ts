@@ -18,6 +18,8 @@ import {
   getTenantResourceConfig,
   CreateTenantRequestSchema,
 } from "./provisioning.ts";
+import { enterSupportMode } from "../usecases/support.ts";
+import { createPostgresAuditEventPort } from "@platform/audit-events";
 import { resolveTenantFromRequest } from "./tenant-resolver.ts";
 import { KeycloakRealmAdminAdapter } from "@platform/adapters-keycloak";
 import { z } from "zod";
@@ -460,6 +462,81 @@ export const routes: Route[] = [
     scope: "tenant" as const,
     handler: async (_req, res) => {
       res.json(501, { code: "NOT_IMPLEMENTED", message: serverT("api.error.notImplemented") });
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Support mode — explicit audited system-admin support session (ADR-ACT-0187)
+  // Must be called from the global host (scope: global). Creates a short-lived
+  // support session for the specified tenant. Audit event is emitted before
+  // the session is created — no unaudited support access.
+  // ---------------------------------------------------------------------------
+  {
+    method: "POST",
+    path: "/api/admin/support-session",
+    operationName: "admin.support-session.create",
+    requiresAuth: true,
+    requiredPermission: "platform.admin.access",
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const SupportSessionRequestSchema = z.object({
+        targetOrganisationId: z.string().uuid("targetOrganisationId must be a valid UUID"),
+        supportAccessReason: z.string().min(1, "supportAccessReason must not be empty").max(500),
+      });
+
+      const parsed = SupportSessionRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid request body",
+        });
+        return;
+      }
+
+      const { targetOrganisationId, supportAccessReason } = parsed.data;
+      const actor = req.actor!;
+      const auditPort = createPostgresAuditEventPort(getApplicationPool());
+
+      try {
+        const result = await enterSupportMode(
+          {
+            actorUserId: actor.userId,
+            actorRoles: actor.roles,
+            actorDisplayName: actor.displayName,
+            targetOrganisationId,
+            targetTenantId: targetOrganisationId,
+            supportAccessReason,
+            sourceHost:
+              (req.raw.headers["x-forwarded-host"] as string | undefined) ??
+              req.raw.headers["host"],
+            ipAddress:
+              (req.raw.headers["x-forwarded-for"] as string | undefined)?.split(",")[0]?.trim() ??
+              req.raw.socket?.remoteAddress,
+          },
+          { sessions: getSessionStore(), audit: auditPort }
+        );
+
+        res.json(201, {
+          supportSessionId: result.supportSessionId,
+          targetOrganisationId: result.targetOrganisationId,
+          supportAccessReason: result.supportAccessReason,
+          expiresInSeconds: 3600,
+        });
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : "support session creation failed";
+        if (msg.startsWith("support_mode.reason_required")) {
+          res.json(400, {
+            code: "VALIDATION_ERROR",
+            message: "supportAccessReason must not be empty",
+          });
+        } else if (msg.startsWith("support_mode.forbidden")) {
+          res.json(403, {
+            code: "FORBIDDEN",
+            message: "Only system-admin may create support sessions",
+          });
+        } else {
+          throw err;
+        }
+      }
     },
   },
   // ---------------------------------------------------------------------------
