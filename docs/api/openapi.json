@@ -710,6 +710,675 @@
           }
         }
       }
+    },
+    "/api/admin/support-session": {
+      "post": {
+        "summary": "Create system-admin support session",
+        "operationId": "admin.support-session.create",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SupportSessionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Support session created"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/api/auth/settings/resource-policies": {
+      "get": {
+        "summary": "List resource policies",
+        "operationId": "auth.settings.resource-policies.list",
+        "tags": ["Auth Settings"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource policy list"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "503": {
+            "description": "No credential configured"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Set resource policy",
+        "operationId": "auth.settings.resource-policies.set",
+        "tags": ["Auth Settings"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Resource policy updated"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "503": {
+            "description": "No credential configured"
+          }
+        }
+      }
+    },
+    "/api/auth/settings/domains": {
+      "post": {
+        "summary": "Add vanity domain",
+        "operationId": "auth.settings.domains.add",
+        "tags": ["Auth Settings"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Domain added"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "503": {
+            "description": "No credential configured"
+          }
+        }
+      }
+    },
+    "/api/auth/settings/domains/:domain": {
+      "delete": {
+        "summary": "Remove vanity domain",
+        "operationId": "auth.settings.domains.remove",
+        "tags": ["Auth Settings"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Domain removed"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "503": {
+            "description": "No credential configured"
+          }
+        }
+      }
+    },
+    "/api/auth/settings/domains/challenges": {
+      "post": {
+        "summary": "Create domain ownership challenge",
+        "operationId": "auth.settings.domains.challenge.create",
+        "tags": ["Auth Settings"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Challenge created"
+          },
+          "400": {
+            "description": "Invalid domain"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/api/auth/settings/domains/verify": {
+      "post": {
+        "summary": "Verify domain ownership via DNS",
+        "operationId": "auth.settings.domains.challenge.verify",
+        "tags": ["Auth Settings"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Verification result"
+          },
+          "404": {
+            "description": "No active challenge"
+          },
+          "422": {
+            "description": "DNS verification failed"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/api/org/members": {
+      "get": {
+        "summary": "List tenant members and pending invitations",
+        "operationId": "org.members.list",
+        "tags": ["Members"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Member list"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/api/org/members/invite": {
+      "post": {
+        "summary": "Invite a member",
+        "operationId": "org.members.invite",
+        "tags": ["Members"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Invitation sent or member added"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        }
+      }
+    },
+    "/api/org/members/:userId": {
+      "patch": {
+        "summary": "Update member role",
+        "operationId": "org.members.update_role",
+        "tags": ["Members"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Role updated"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Member not found"
+          },
+          "422": {
+            "description": "Last admin cannot be demoted"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove member",
+        "operationId": "org.members.remove",
+        "tags": ["Members"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Member removed"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Member not found"
+          },
+          "422": {
+            "description": "Last admin cannot be removed"
+          }
+        }
+      }
+    },
+    "/api/org/groups": {
+      "get": {
+        "summary": "List Keycloak groups in tenant realm",
+        "operationId": "org.groups.list",
+        "tags": ["Groups"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group list"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "503": {
+            "description": "No credential configured"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a group",
+        "operationId": "org.groups.create",
+        "tags": ["Groups"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Group created"
+          },
+          "400": {
+            "description": "Invalid name"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "Name conflict"
+          },
+          "503": {
+            "description": "No credential configured"
+          }
+        }
+      }
+    },
+    "/api/org/groups/:groupId": {
+      "patch": {
+        "summary": "Rename a group",
+        "operationId": "org.groups.update",
+        "tags": ["Groups"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Group renamed"
+          },
+          "400": {
+            "description": "Invalid name"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Group not found"
+          },
+          "409": {
+            "description": "Name conflict"
+          },
+          "503": {
+            "description": "No credential configured"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a group",
+        "operationId": "org.groups.delete",
+        "tags": ["Groups"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Group deleted"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Group not found"
+          },
+          "422": {
+            "description": "Group is protected"
+          },
+          "503": {
+            "description": "No credential configured"
+          }
+        }
+      }
+    },
+    "/api/org/features": {
+      "get": {
+        "summary": "List feature toggle states",
+        "operationId": "org.features.list",
+        "tags": ["Features"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Feature states"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/api/org/features/:featureKey": {
+      "patch": {
+        "summary": "Toggle a feature",
+        "operationId": "org.features.toggle",
+        "tags": ["Features"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "featureKey",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Toggle applied"
+          },
+          "400": {
+            "description": "Invalid body"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Unknown feature key"
+          }
+        }
+      }
+    },
+    "/api/org/sub-organisations": {
+      "get": {
+        "summary": "List sub-organisations",
+        "operationId": "org.sub-organisations.list",
+        "tags": ["Sub-organisations"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sub-organisation list"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a sub-organisation",
+        "operationId": "org.sub-organisations.create",
+        "tags": ["Sub-organisations"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sub-organisation created"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "Slug conflict"
+          },
+          "422": {
+            "description": "Reserved slug"
+          }
+        }
+      }
+    },
+    "/api/org/sub-organisations/:subOrgId": {
+      "patch": {
+        "summary": "Update a sub-organisation",
+        "operationId": "org.sub-organisations.update",
+        "tags": ["Sub-organisations"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "subOrgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sub-organisation updated"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deactivate a sub-organisation",
+        "operationId": "org.sub-organisations.deactivate",
+        "tags": ["Sub-organisations"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "subOrgId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sub-organisation deactivated"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
     }
   },
   "components": {

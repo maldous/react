@@ -42,6 +42,15 @@ These licenses impose strong copyleft requirements incompatible with the platfor
 
 If a dependency is detected with a blocked license, the dependency must be replaced or an explicit written approval obtained from the architecture owner and legal representative before merge.
 
+## Automated enforcement (ADR-ACT-0086/0090)
+
+The `license:policy` npm script runs `license-checker-rseidelsohn` on production dependencies.
+It hard-fails on: GPL-2.0, GPL-3.0, AGPL-3.0, SSPL, Commons Clause.
+
+Run: `npm run license:policy`
+
+Promoted to a hard gate as of ADR-ACT-0086/0090 completion (2026-06-02).
+
 ## Enforcement
 
 License scanning is a report-only advisory gate until a stable tool is integrated (see ADR-ACT-0086). Until then:
