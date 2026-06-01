@@ -33,11 +33,30 @@ export interface RouterTestDeps {
 export interface PipelineRequest {
   method: string;
   path: string;
+  /** Path parameters extracted from :param segments in the registered route path. */
+  params: Record<string, string>;
   requestId: string;
   body: unknown;
   actor: SessionActor | null;
   context: RuntimeContext;
   raw: http.IncomingMessage;
+}
+
+// Route path matching — supports :param wildcard segments.
+// "/api/org/members/:userId" matches "/api/org/members/abc-123" with params = { userId: "abc-123" }.
+export function matchesPath(routePath: string, requestPath: string): boolean {
+  const rs = routePath.split("/");
+  const rq = requestPath.split("/");
+  if (rs.length !== rq.length) return false;
+  return rs.every((seg, i) => seg.startsWith(":") || seg === rq[i]);
+}
+
+export function extractParams(routePath: string, requestPath: string): Record<string, string> {
+  const params: Record<string, string> = {};
+  routePath.split("/").forEach((seg, i) => {
+    if (seg.startsWith(":")) params[seg.slice(1)] = requestPath.split("/")[i] ?? "";
+  });
+  return params;
 }
 
 export interface PipelineResponse {
@@ -193,8 +212,8 @@ export function createRouter(
       return;
     }
 
-    // Find matching route
-    const matchingMethod = routes.filter((r) => r.path === path);
+    // Find matching route (supports :param wildcard segments)
+    const matchingMethod = routes.filter((r) => matchesPath(r.path, path));
     const matchingRoute = matchingMethod.find((r) => r.method === method.toUpperCase());
 
     if (matchingMethod.length === 0) {
@@ -457,6 +476,7 @@ export function createRouter(
     const pipelineReq: PipelineRequest = {
       method,
       path,
+      params: extractParams(matchingRoute.path, path),
       requestId,
       body: bodyResult.body,
       actor,
