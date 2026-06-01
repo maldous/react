@@ -820,7 +820,7 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
       {
         name: "organisation:members",
         type: "urn:platform:resources:organisation",
-        scopes: ["read", "invite", "update_role"],
+        scopes: ["read", "invite", "update_role", "delete"],
       },
       { name: "admin:auth", type: "urn:platform:resources:admin", scopes: ["read", "write"] },
       {

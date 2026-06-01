@@ -873,6 +873,148 @@ export const routes: Route[] = [
     },
   },
   // ---------------------------------------------------------------------------
+  // Member management (ADR-ACT-0143 Slice 1)
+  // Tenant admin self-service: list, invite, update role, remove members.
+  // All routes: scope "tenant" — must arrive at {slug}.aldous.info.
+  // UMA resource: organisation:members
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/org/members",
+    operationName: "org.members.list",
+    requiresAuth: true,
+    requiredPermission: "tenant.members.read",
+    resource: "organisation:members",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { listOrgMembers } = await import("../usecases/members.ts");
+      const result = await listOrgMembers(tenantCtx.organisationId, getApplicationPool());
+      res.json(200, result);
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/org/members/invite",
+    operationName: "org.members.invite",
+    requiresAuth: true,
+    requiredPermission: "tenant.members.invite",
+    resource: "organisation:members",
+    umaScope: "invite" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { inviteOrgMember } = await import("../usecases/members.ts");
+      const result = await inviteOrgMember(
+        {
+          rawBody: req.body,
+          organisationId: tenantCtx.organisationId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          pool: getApplicationPool(),
+        }
+      );
+      if (result.kind === "invalid_body") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      if (result.kind === "conflict") {
+        res.json(409, { code: "CONFLICT", message: "Member already exists" });
+        return;
+      }
+      res.json(201, { kind: result.kind });
+    },
+  },
+  {
+    method: "PATCH",
+    path: "/api/org/members/:userId",
+    operationName: "org.members.update_role",
+    requiresAuth: true,
+    requiredPermission: "tenant.members.update_role",
+    resource: "organisation:members",
+    umaScope: "update_role" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const targetUserId = req.params["userId"] ?? "";
+      if (!targetUserId) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "userId path parameter is required" });
+        return;
+      }
+      const { updateMemberRole } = await import("../usecases/members.ts");
+      const result = await updateMemberRole(
+        {
+          rawBody: req.body,
+          organisationId: tenantCtx.organisationId,
+          targetUserId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          pool: getApplicationPool(),
+        }
+      );
+      if (result.kind === "invalid_body") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      res.json(204, null);
+    },
+  },
+  {
+    method: "DELETE",
+    path: "/api/org/members/:userId",
+    operationName: "org.members.remove",
+    requiresAuth: true,
+    requiredPermission: "tenant.admin.access",
+    resource: "organisation:members",
+    umaScope: "delete" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const targetUserId = req.params["userId"] ?? "";
+      if (!targetUserId) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "userId path parameter is required" });
+        return;
+      }
+      const { removeMember } = await import("../usecases/members.ts");
+      await removeMember(
+        {
+          organisationId: tenantCtx.organisationId,
+          targetUserId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          pool: getApplicationPool(),
+        }
+      );
+      res.json(204, null);
+    },
+  },
+  // ---------------------------------------------------------------------------
   // Organisation profile
   // ---------------------------------------------------------------------------
   {
