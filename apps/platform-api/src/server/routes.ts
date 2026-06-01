@@ -19,7 +19,14 @@ import {
   CreateTenantRequestSchema,
 } from "./provisioning.ts";
 import { enterSupportMode } from "../usecases/support.ts";
-import { createPostgresAuditEventPort } from "@platform/audit-events";
+import {
+  mutateAuthSetting,
+  buildIdpAuditMetadata,
+  buildMfaAuditMetadata,
+  buildSessionAuditMetadata,
+  buildSysadminBrokeringAuditMetadata,
+} from "../usecases/auth-settings.ts";
+import { createPostgresAuditEventPort, AuditAction } from "@platform/audit-events";
 import { resolveTenantFromRequest } from "./tenant-resolver.ts";
 import { KeycloakRealmAdminAdapter } from "@platform/adapters-keycloak";
 import { z } from "zod";
@@ -229,22 +236,36 @@ export const routes: Route[] = [
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
-      if (!tenantCtx) {
+      const adapter = tenantCtx
+        ? new KeycloakRealmAdminAdapter({
+            url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
+            realm: tenantCtx.realmName,
+            adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
+            adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
+          })
+        : null;
+      const result = await mutateAuthSetting(
+        {
+          rawBody: req.body,
+          tenantCtx,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          auditAction: AuditAction.AuthSettingsIdpChanged,
+          buildAuditMetadata: buildIdpAuditMetadata,
+          schema: IdpBodySchema,
+          mutate: (body) => adapter!.upsertIdentityProvider(body),
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+        },
+        { audit: createPostgresAuditEventPort(getApplicationPool()) }
+      );
+      if (result.kind === "invalid_body") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      if (result.kind === "no_tenant") {
         res.json(400, { code: "NO_TENANT", message: "No tenant context" });
         return;
       }
-      const adapter = new KeycloakRealmAdminAdapter({
-        url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
-        realm: tenantCtx.realmName,
-        adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
-        adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
-      });
-      const idpParsed = IdpBodySchema.safeParse(req.body);
-      if (!idpParsed.success) {
-        res.json(400, { code: "VALIDATION_ERROR", message: idpParsed.error.issues[0]?.message });
-        return;
-      }
-      await adapter.upsertIdentityProvider(idpParsed.data);
       res.json(204, null);
     },
   },
@@ -279,22 +300,36 @@ export const routes: Route[] = [
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
-      if (!tenantCtx) {
+      const adapter = tenantCtx
+        ? new KeycloakRealmAdminAdapter({
+            url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
+            realm: tenantCtx.realmName,
+            adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
+            adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
+          })
+        : null;
+      const result = await mutateAuthSetting(
+        {
+          rawBody: req.body,
+          tenantCtx,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          auditAction: AuditAction.AuthSettingsMfaChanged,
+          buildAuditMetadata: buildMfaAuditMetadata,
+          schema: MfaBodySchema,
+          mutate: (body) => adapter!.setMfaPolicy(body),
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+        },
+        { audit: createPostgresAuditEventPort(getApplicationPool()) }
+      );
+      if (result.kind === "invalid_body") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      if (result.kind === "no_tenant") {
         res.json(400, { code: "NO_TENANT", message: "No tenant context" });
         return;
       }
-      const adapter = new KeycloakRealmAdminAdapter({
-        url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
-        realm: tenantCtx.realmName,
-        adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
-        adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
-      });
-      const mfaParsed = MfaBodySchema.safeParse(req.body);
-      if (!mfaParsed.success) {
-        res.json(400, { code: "VALIDATION_ERROR", message: mfaParsed.error.issues[0]?.message });
-        return;
-      }
-      await adapter.setMfaPolicy(mfaParsed.data);
       res.json(204, null);
     },
   },
@@ -329,25 +364,36 @@ export const routes: Route[] = [
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
-      if (!tenantCtx) {
+      const adapter = tenantCtx
+        ? new KeycloakRealmAdminAdapter({
+            url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
+            realm: tenantCtx.realmName,
+            adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
+            adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
+          })
+        : null;
+      const result = await mutateAuthSetting(
+        {
+          rawBody: req.body,
+          tenantCtx,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          auditAction: AuditAction.AuthSettingsSessionChanged,
+          buildAuditMetadata: buildSessionAuditMetadata,
+          schema: SessionBodySchema,
+          mutate: (body) => adapter!.setSessionPolicy(body),
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+        },
+        { audit: createPostgresAuditEventPort(getApplicationPool()) }
+      );
+      if (result.kind === "invalid_body") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      if (result.kind === "no_tenant") {
         res.json(400, { code: "NO_TENANT", message: "No tenant context" });
         return;
       }
-      const adapter = new KeycloakRealmAdminAdapter({
-        url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
-        realm: tenantCtx.realmName,
-        adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
-        adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
-      });
-      const sessionParsed = SessionBodySchema.safeParse(req.body);
-      if (!sessionParsed.success) {
-        res.json(400, {
-          code: "VALIDATION_ERROR",
-          message: sessionParsed.error.issues[0]?.message,
-        });
-        return;
-      }
-      await adapter.setSessionPolicy(sessionParsed.data);
       res.json(204, null);
     },
   },
@@ -382,25 +428,36 @@ export const routes: Route[] = [
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
-      if (!tenantCtx) {
+      const adapter = tenantCtx
+        ? new KeycloakRealmAdminAdapter({
+            url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
+            realm: tenantCtx.realmName,
+            adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
+            adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
+          })
+        : null;
+      const result = await mutateAuthSetting(
+        {
+          rawBody: req.body,
+          tenantCtx,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          auditAction: AuditAction.AuthSettingsSysadminBrokeringChanged,
+          buildAuditMetadata: buildSysadminBrokeringAuditMetadata,
+          schema: SysadminBrokeringBodySchema,
+          mutate: (body) => adapter!.setSysadminBrokering(body),
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+        },
+        { audit: createPostgresAuditEventPort(getApplicationPool()) }
+      );
+      if (result.kind === "invalid_body") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      if (result.kind === "no_tenant") {
         res.json(400, { code: "NO_TENANT", message: "No tenant context" });
         return;
       }
-      const adapter = new KeycloakRealmAdminAdapter({
-        url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
-        realm: tenantCtx.realmName,
-        adminClientId: process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
-        adminClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
-      });
-      const brokeringParsed = SysadminBrokeringBodySchema.safeParse(req.body);
-      if (!brokeringParsed.success) {
-        res.json(400, {
-          code: "VALIDATION_ERROR",
-          message: brokeringParsed.error.issues[0]?.message,
-        });
-        return;
-      }
-      await adapter.setSysadminBrokering(brokeringParsed.data);
       res.json(204, null);
     },
   },

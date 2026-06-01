@@ -13,6 +13,10 @@ export const AuditAction = {
   ApiKeyCreated: "api_key.created",
   ApiKeyRevoked: "api_key.revoked",
   SupportSessionCreated: "support_session.created",
+  AuthSettingsIdpChanged: "auth_settings.idp.changed",
+  AuthSettingsMfaChanged: "auth_settings.mfa.changed",
+  AuthSettingsSessionChanged: "auth_settings.session.changed",
+  AuthSettingsSysadminBrokeringChanged: "auth_settings.sysadmin_brokering.changed",
 } as const;
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction];
