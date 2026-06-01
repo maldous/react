@@ -10,8 +10,8 @@ keycloak_realm    = "platform-staging"
 keycloak_client   = "platform-spa-staging"
 
 # Environment-specific redirect URIs
-redirect_uris  = ["http://localhost:5173/*", "http://staging.aldous.info/auth/callback"]
-web_origins    = ["http://localhost:5173", "http://staging.aldous.info"]
+redirect_uris  = ["http://localhost:5173/*", "https://staging.aldous.info/auth/callback"]
+web_origins    = ["http://localhost:5173", "https://staging.aldous.info"]
 
 # Keycloak frontend hostname (determines token issuer)
 # Locally: http; Cloudflare: https
