@@ -96,3 +96,21 @@ export async function assertSessionUnauthenticated(page: Page): Promise<void> {
   const res = await page.request.get(new URL("/api/session", getExternalBaseUrl(page)).toString());
   expect(res.status()).toBe(401);
 }
+
+/**
+ * Returns true when running against the production environment (aldous.info).
+ *
+ * Use this to gate tests that require *.aldous.info TLS coverage. Cloudflare
+ * Universal SSL covers aldous.info and *.aldous.info, but NOT the second-level
+ * wildcard *.staging.aldous.info — that requires Cloudflare Advanced Certificate
+ * Manager, which is not enabled. Tests that navigate to sentry.aldous.info or
+ * other service subdomains must be skipped on staging.
+ */
+export function isProd(): boolean {
+  const url = process.env["PROD_BASE_URL"] ?? "https://aldous.info";
+  try {
+    return new URL(url).hostname === "aldous.info";
+  } catch {
+    return false;
+  }
+}

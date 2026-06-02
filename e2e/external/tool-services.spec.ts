@@ -11,7 +11,7 @@
  * - MinIO preloader images are not broken (assets route correctly)
  */
 import { test, expect } from "@playwright/test";
-import { loginAs, getTestCredentials, getExternalBaseUrl } from "./helpers.ts";
+import { loginAs, getTestCredentials, getExternalBaseUrl, isProd } from "./helpers.ts";
 
 const TARGET_HOST = new URL(process.env["PROD_BASE_URL"] || "http://aldous.info").hostname;
 const BASE = process.env["PROD_BASE_URL"] || "http://aldous.info";
@@ -198,6 +198,18 @@ test.describe(`${TARGET_HOST}: Sentry subdomain routing`, () => {
   let isSysadmin = false;
 
   test.beforeEach(async ({ page }, testInfo) => {
+    // Skip the entire describe block on staging.
+    // sentry.staging.aldous.info requires *.staging.aldous.info TLS which is
+    // not available without Cloudflare Advanced Certificate Manager.
+    // Staging E2E only tests staging.aldous.info routes directly.
+    if (!isProd()) {
+      testInfo.skip(
+        true,
+        "Sentry subdomain tests only run on prod (aldous.info). " +
+          "*.staging.aldous.info lacks Cloudflare Universal SSL coverage — no ACM in use."
+      );
+      return;
+    }
     try {
       getTestCredentials();
     } catch {
@@ -229,37 +241,20 @@ test.describe(`${TARGET_HOST}: Sentry subdomain routing`, () => {
   test("Sentry subdomain does not return platform NOT_FOUND — /auth/login/ collision must be gone", async ({
     page,
     request,
-    testInfo,
   }) => {
+    // isProd() guard is in beforeEach — this only runs on aldous.info.
     const apexUrl = getExternalBaseUrl(page);
     const apexHost = new URL(apexUrl.toString()).hostname;
     const sentryBase = `${new URL(apexUrl.toString()).protocol}//sentry.${apexHost}`;
 
     // Unauthenticated hit must return 401 JSON (forward_auth), NOT platform NOT_FOUND.
-    // If sentry.{apex} DNS is not yet provisioned, the request will fail with a network
-    // error (ENOTFOUND / ECONNREFUSED). This is acceptable — it means the operator still
-    // needs to add the DNS record and reload Caddy. Skip the test in that case.
-    let unauthStatus: number;
-    let unauthBody: string;
-    try {
-      const unauthRes = await request.get(sentryBase, {
-        maxRedirects: 0,
-        failOnStatusCode: false,
-        timeout: 10_000,
-      });
-      unauthStatus = unauthRes.status();
-      unauthBody = await unauthRes.text().catch(() => "");
-    } catch (err: unknown) {
-      // DNS not set up or connection refused — sentry subdomain not yet provisioned.
-      // Skip the test and document the operator action required.
-      const msg = err instanceof Error ? err.message : String(err);
-      testInfo.skip(
-        true,
-        `sentry.${apexHost} is not reachable (${msg}). ` +
-          `Operator action required: add DNS record and reload Caddy with the new sentry.* host block.`
-      );
-      return;
-    }
+    const unauthRes = await request.get(sentryBase, {
+      maxRedirects: 0,
+      failOnStatusCode: false,
+      timeout: 10_000,
+    });
+    const unauthStatus = unauthRes.status();
+    const unauthBody = await unauthRes.text().catch(() => "");
 
     expect(unauthStatus, "unauthenticated sentry must return 401 (forward_auth)").toBe(401);
     expect(
