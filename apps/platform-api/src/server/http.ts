@@ -1,14 +1,12 @@
 import http from "node:http";
 import process from "node:process";
-import { createLogger } from "@platform/platform-logging";
+import { createLogger, type PlatformLogLevel } from "@platform/platform-logging";
 import { createRouter } from "./pipeline.ts";
 import { routes } from "./routes.ts";
 import { connectRedis, disconnectRedis } from "./dependencies.ts";
 
-// LOG_LEVEL defaults to "debug" so all auth/session/tenant operations are visible.
-// Set LOG_LEVEL=info in production to reduce noise.
-const LOG_LEVEL = process.env["LOG_LEVEL"] ?? "debug";
-const log = createLogger({ name: "platform-api", level: LOG_LEVEL });
+const LOG_LEVEL = (process.env["LOG_LEVEL"] ?? "info") as PlatformLogLevel;
+const log = createLogger({ name: "platform-api", service: "platform-api", level: LOG_LEVEL });
 const PORT = Number(process.env["PLATFORM_API_PORT"] ?? 3001);
 
 async function start(): Promise<void> {

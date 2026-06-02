@@ -424,6 +424,88 @@ services:
     restart: unless-stopped
 
   # ---------------------------------------------------------------------------
+  # OBSERVABILITY PROFILE ? `docker compose --profile observability up -d`
+  #
+  # Grafana Loki + Grafana + Grafana Alloy for log ingestion, retention, and
+  # search (ADR-0032). Alloy discovers all react-platform containers via Docker
+  # socket, parses Pino JSON stdout, and forwards to Loki.
+  #
+  # Usage:
+  #   make compose-up-observability          # start Loki + Grafana + Alloy
+  #   http://localhost:${GRAFANA_PORT:-3000}  # Grafana UI (admin:admin by default)
+  #   http://localhost:${LOKI_PORT:-3100}     # Loki API (internal; exposed for dev)
+  #
+  # Grafana clickthrough:  http://aldous.info/grafana/
+  #
+  # Production note: replace loki-config.yaml filesystem storage with S3/MinIO
+  # before accumulating significant log volume (see docker/loki/loki-config.yaml).
+  # ---------------------------------------------------------------------------
+
+  loki:
+    image: grafana/loki:3.3.2
+    profiles: [observability]
+    command: ["-config.file=/etc/loki/loki-config.yaml"]
+    ports:
+      - "${LOKI_PORT:-3100}:3100"
+    volumes:
+      - ./docker/loki/loki-config.yaml:/etc/loki/loki-config.yaml:ro
+      - loki-data:/loki
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3100/ready | grep -q ready || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:11.4.0
+    profiles: [observability]
+    ports:
+      - "${GRAFANA_PORT:-3200}:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+      GF_USERS_DEFAULT_THEME: light
+      # Serve Grafana under /grafana/ so Caddy can path-proxy it.
+      GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
+      GF_SERVER_SERVE_FROM_SUB_PATH: "true"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./docker/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./docker/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      loki:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/api/health | grep -q ok || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+    restart: unless-stopped
+
+  alloy:
+    image: grafana/alloy:v1.5.1
+    profiles: [observability]
+    command:
+      - run
+      - /etc/alloy/config.alloy
+      - --server.http.listen-addr=0.0.0.0:12345
+    ports:
+      - "${ALLOY_PORT:-12345}:12345"
+    environment:
+      PLATFORM_ENV: ${PLATFORM_ENV:-development}
+    volumes:
+      - ./docker/alloy/config.alloy:/etc/alloy/config.alloy:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      loki:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
   # WEB PROFILE ? `docker compose --profile web up -d`
   #
   # Delivers the full platform on :80 ? no system services required.
@@ -599,3 +681,5 @@ volumes:
   localstack-data:
   sentry-data:
   pgadmin-data:
+  loki-data:
+  grafana-data:

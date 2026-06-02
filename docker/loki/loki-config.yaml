@@ -1,0 +1,57 @@
+# Loki configuration for the enterprise-react-platform log backend.
+# ADR-0032: contained platform log indexing and search.
+#
+# Storage: filesystem (local). For production, replace with S3/MinIO:
+#   storage_config:
+#     aws:
+#       s3: s3://<access_key>:<secret_key>@minio:9000/loki
+#       s3forcepathstyle: true
+#
+# Retention: 30 days default. Adjust limits_config.retention_period for environment.
+
+auth_enabled: false
+
+server:
+  http_listen_port: 3100
+  grpc_listen_port: 9096
+  log_level: warn
+
+common:
+  path_prefix: /loki
+  replication_factor: 1
+  ring:
+    kvstore:
+      store: inmemory
+
+storage_config:
+  filesystem:
+    directory: /loki/chunks
+
+schema_config:
+  configs:
+    - from: 2026-01-01
+      store: tsdb
+      object_store: filesystem
+      schema: v13
+      index:
+        prefix: platform_loki_index_
+        period: 24h
+
+limits_config:
+  retention_period: 30d
+  ingestion_rate_mb: 32
+  ingestion_burst_size_mb: 64
+  max_query_parallelism: 16
+  max_entries_limit_per_query: 10000
+  reject_old_samples: true
+  reject_old_samples_max_age: 168h
+  allow_structured_metadata: true
+
+query_range:
+  parallelise_shardable_queries: true
+  cache_results: true
+
+compactor:
+  working_directory: /loki/compactor
+  retention_enabled: true
+  delete_request_store: filesystem

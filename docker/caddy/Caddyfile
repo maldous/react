@@ -188,6 +188,15 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 		reverse_proxy pgadmin:80
 	}
 
+	# Grafana ? log search and dashboards (observability profile)
+	# GF_SERVER_SERVE_FROM_SUB_PATH=true configured in compose so Grafana
+	# handles /grafana/** internally without strip_prefix.
+	# Returns 502 gracefully if observability profile is not running.
+	handle /grafana/* {
+		import forward_auth_check admin:grafana read
+		reverse_proxy grafana:3000
+	}
+
 	# Tilt UI cannot be path-proxied (its SPA makes absolute /api/* calls).
 	# Access Tilt directly at http://localhost:10350 during local development.
 	# The Tiltfile exposes a direct link on the platform-api resource.

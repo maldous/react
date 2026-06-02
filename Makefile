@@ -103,7 +103,7 @@ endef
         sonar advisory sbom license \
         check ci full fix clean \
         compose-up compose-up-default compose-up-quality \
-        compose-up-identity compose-up-cloud compose-up-sentry compose-up-external-mocks compose-up-web \
+        compose-up-identity compose-up-cloud compose-up-sentry compose-up-external-mocks compose-up-web compose-up-observability \
         compose-down compose-down-volumes compose-down-reset compose-ps compose-logs \
         readmes generate infra-check pre-slice-gate local-substrate-check \
         keycloak-provision \
@@ -351,8 +351,23 @@ compose-up:
 ## Accepts ENV=dev|test|staging|prod (default: dev)
 compose-up-default:
 	$(call STEP,compose:up:default ($(ENV)))
-	$(COMPOSE_CMD) up -d --wait --wait-timeout 120 postgres redis clickhouse minio mailpit otel-collector
+	@set -e; \
+	if ! $(COMPOSE_CMD) up -d --wait --wait-timeout 120 postgres redis clickhouse minio mailpit otel-collector; then \
+		printf '$(YEL)? default services failed to start for $(ENV) - retrying after clean down$(RESET)\n'; \
+		$(COMPOSE_CMD) down --timeout 30 >/dev/null 2>&1 || true; \
+		sleep 2; \
+		$(COMPOSE_CMD) up -d --wait --wait-timeout 120 postgres redis clickhouse minio mailpit otel-collector; \
+	fi
 	$(call OK,default services healthy for $(ENV))
+
+## compose-up-observability ? Start Loki + Grafana + Alloy (observability profile)
+## Grafana UI: http://localhost:${GRAFANA_PORT:-3200}  (admin:admin by default)
+## Loki API:   http://localhost:${LOKI_PORT:-3100}
+## Clickthrough via Caddy: http://aldous.info/grafana/
+compose-up-observability:
+	$(call STEP,compose: starting Loki + Grafana + Alloy ($(ENV)))
+	$(COMPOSE_CMD) --profile observability up -d --wait --wait-timeout 120 loki grafana alloy
+	$(call OK,Observability stack ready for $(ENV))
 
 ## compose-up-quality ? Start SonarQube (quality profile)
 ## Scoped to selected ENV so each environment has its own SonarQube + sonar-postgres.

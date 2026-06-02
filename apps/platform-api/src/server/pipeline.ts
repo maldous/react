@@ -1,6 +1,6 @@
 import http from "node:http";
 import crypto from "node:crypto";
-import { createLogger } from "@platform/platform-logging";
+import { createLogger, type PlatformLogLevel } from "@platform/platform-logging";
 import {
   ForbiddenError,
   UnauthorizedError,
@@ -175,12 +175,30 @@ export async function parseJsonBody(
   });
 }
 
+/** Extract W3C traceparent fields from an incoming request for log correlation. */
+function getTraceContext(req: http.IncomingMessage): {
+  traceId?: string;
+  spanId?: string;
+  traceparent?: string;
+} {
+  const traceparent = req.headers["traceparent"];
+  if (typeof traceparent !== "string") return {};
+  const parts = traceparent.split("-");
+  if (parts.length < 4) return { traceparent };
+  return { traceparent, traceId: parts[1], spanId: parts[2] };
+}
+
 // Create the HTTP request handler from a route list
 export function createRouter(
   routes: Route[],
   _testDeps?: RouterTestDeps
 ): (req: http.IncomingMessage, res: http.ServerResponse) => Promise<void> {
-  const logger = createLogger({ name: "platform-api", level: process.env["LOG_LEVEL"] ?? "debug" });
+  const logger = createLogger({
+    name: "platform-api",
+    service: "platform-api",
+    boundedContext: "bff",
+    level: (process.env["LOG_LEVEL"] as PlatformLogLevel | undefined) ?? "info",
+  });
 
   return async (req, res) => {
     if (req.method === "OPTIONS") {
@@ -192,12 +210,20 @@ export function createRouter(
       return;
     }
 
+    const startedAt = process.hrtime.bigint();
     const requestId = generateRequestId();
     const method = req.method ?? "GET";
     const url = new URL(req.url ?? "/", "http://localhost");
     const path = url.pathname;
-    const reqLogger = logger.child({ requestId, method, path });
-    reqLogger.info("incoming request");
+    const trace = getTraceContext(req);
+    const reqLogger = logger.child({
+      requestId,
+      method,
+      path,
+      ...(trace.traceId ? { traceId: trace.traceId } : {}),
+      ...(trace.spanId ? { spanId: trace.spanId } : {}),
+    });
+    reqLogger.debug("http.request.start");
 
     // Parse body
     const bodyResult = await parseJsonBody(req);
@@ -488,12 +514,18 @@ export function createRouter(
       json: (status, body) => jsonResponse(res, status, body, requestId),
     };
 
+    const routeMeta = {
+      route: matchingRoute.path,
+      operationName: matchingRoute.operationName ?? path,
+    };
+
     try {
-      enrichedLogger.info({ status: "processing" }, "route matched");
       await matchingRoute.handler(pipelineReq, pipelineRes);
-      enrichedLogger.info({ status: 200 }, "request complete");
+      const durationMs = Number(process.hrtime.bigint() - startedAt) / 1_000_000;
+      enrichedLogger.info({ ...routeMeta, status: 200, durationMs }, "http.request.complete");
     } catch (err) {
-      enrichedLogger.error({ err }, "unhandled error in route handler");
+      const durationMs = Number(process.hrtime.bigint() - startedAt) / 1_000_000;
+      enrichedLogger.error({ err, ...routeMeta, status: 500, durationMs }, "http.request.failed");
       const safe = toSafeResponse(err);
       jsonResponse(res, 500, safe, requestId);
     }

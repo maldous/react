@@ -86,6 +86,13 @@ const TOOL_LINKS: ToolLink[] = [
   // WireMock intentionally absent — NOT_EXPOSED as a user-facing clickthrough.
   // Access WireMock directly at http://localhost:${WIREMOCK_PORT:-8089}/__admin/
   {
+    label: "Grafana",
+    href: "/grafana/",
+    description: "Log search and dashboards (observability profile)",
+    profileGated: "observability",
+    testId: "tool-link-grafana",
+  },
+  {
     label: "ClickHouse",
     href: "/clickhouse/play",
     description: "Analytics HTTP play UI",

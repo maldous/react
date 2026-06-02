@@ -1,0 +1,124 @@
+// Grafana Alloy config for platform log collection.
+// Discovers containers in the react-platform compose project,
+// parses Pino JSON fields, and forwards to Loki.
+//
+// Label policy (ADR-0032):
+//   LOW-cardinality → Loki labels:    service, environment, level
+//   HIGH-cardinality → structured metadata: requestId, traceId, actorId,
+//                                             tenantId, organisationId, path
+
+logging {
+  level  = "warn"
+  format = "logfmt"
+}
+
+// --- Container discovery ---------------------------------------------------
+
+discovery.docker "containers" {
+  host = "unix:///var/run/docker.sock"
+}
+
+discovery.relabel "platform_containers" {
+  targets = discovery.docker.containers.targets
+
+  // Keep only containers from this compose project
+  rule {
+    source_labels = ["__meta_docker_container_label_com_docker_compose_project"]
+    regex         = "react-platform"
+    action        = "keep"
+  }
+
+  // Strip leading slash from container name
+  rule {
+    source_labels = ["__meta_docker_container_name"]
+    target_label  = "container"
+    regex         = "/(.*)"
+  }
+
+  // Use compose service name as the primary service label
+  rule {
+    source_labels = ["__meta_docker_container_label_com_docker_compose_service"]
+    target_label  = "service"
+  }
+
+  // Inject the platform environment from compose env
+  rule {
+    target_label = "environment"
+    replacement  = sys.env("PLATFORM_ENV")
+  }
+}
+
+// --- Log collection and processing ----------------------------------------
+
+loki.source.docker "platform_stdout" {
+  host       = "unix:///var/run/docker.sock"
+  targets    = discovery.relabel.platform_containers.output
+  forward_to = [loki.process.platform_logs.receiver]
+}
+
+loki.process "platform_logs" {
+  // Parse Pino JSON log lines
+  stage.json {
+    expressions = {
+      level          = "level",
+      time           = "time",
+      msg            = "msg",
+      requestId      = "requestId",
+      traceId        = "traceId",
+      spanId         = "spanId",
+      actorId        = "actorId",
+      tenantId       = "tenantId",
+      organisationId = "organisationId",
+      operation      = "operation",
+      operationName  = "operationName",
+      method         = "method",
+      path           = "path",
+      status         = "status",
+      durationMs     = "durationMs",
+      errorCode      = "errorCode",
+      errName        = "err.name",
+    }
+  }
+
+  // Low-cardinality Loki labels
+  stage.labels {
+    values = {
+      level       = "",
+      service     = "",
+      environment = "",
+    }
+  }
+
+  // High-cardinality fields as structured metadata (not labels)
+  stage.structured_metadata {
+    values = {
+      requestId      = "",
+      traceId        = "",
+      spanId         = "",
+      actorId        = "",
+      tenantId       = "",
+      organisationId = "",
+      operationName  = "",
+      method         = "",
+      path           = "",
+      status         = "",
+      durationMs     = "",
+      errorCode      = "",
+      errName        = "",
+    }
+  }
+
+  forward_to = [loki.write.platform_loki.receiver]
+}
+
+// --- Loki write target ----------------------------------------------------
+
+loki.write "platform_loki" {
+  endpoint {
+    url = "http://loki:3100/loki/api/v1/push"
+  }
+
+  external_labels = {
+    platform = "enterprise-react-platform",
+  }
+}

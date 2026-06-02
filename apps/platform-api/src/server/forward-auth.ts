@@ -57,6 +57,7 @@ const SYSTEM_ADMIN_RESOURCES = new Set([
   "admin:localstack", // GLOBAL_ONLY — cloud mock, no tenant scope
   "admin:tilt", // GLOBAL_ONLY — local dev tooling
   "admin:pgadmin", // GLOBAL_ONLY — raw SQL; tenant scope via user-settable GUC is unsafe
+  "admin:grafana", // GLOBAL_ONLY — platform log search; all tenants' logs visible
 ]);
 
 /**
