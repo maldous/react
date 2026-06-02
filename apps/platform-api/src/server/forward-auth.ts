@@ -50,8 +50,9 @@ const SYSTEM_ADMIN_RESOURCES = new Set([
   "admin:mailpit", // GLOBAL_ONLY — all-tenant mail visible in shared inbox
   "admin:sonarqube", // GLOBAL_ONLY — no per-tenant project isolation
   "admin:minio", // GLOBAL_ONLY — all-bucket access, no per-tenant ACL in console
-  "admin:sentry", // GLOBAL_ONLY — all-org access in shared Sentry instance
-  "admin:wiremock", // GLOBAL_ONLY — integration test mocks, no tenant scope
+  "admin:sentry", // GLOBAL_ONLY — all-org access in shared Sentry instance (subdomain)
+  // admin:wiremock intentionally absent — WireMock is NOT_EXPOSED as a clickthrough.
+  // Access WireMock directly via WIREMOCK_PORT in dev; it must not be linked in UI.
   "admin:clickhouse", // GLOBAL_ONLY — analytics DB, no per-tenant partitioning yet
   "admin:localstack", // GLOBAL_ONLY — cloud mock, no tenant scope
   "admin:tilt", // GLOBAL_ONLY — local dev tooling

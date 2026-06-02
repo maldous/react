@@ -89,6 +89,25 @@
 }
 
 # ---------------------------------------------------------------------------
+# Sentry error-monitoring subdomain
+#
+# Sentry performs internal redirects to absolute paths like /auth/login/ which
+# conflicts with the platform BFF's /auth/* routes if served as /sentry/* path-
+# prefix. Moving to a dedicated subdomain avoids this routing collision entirely.
+#
+# protected by forward_auth (system-admin only via admin:sentry).
+# All paths proxied to sentry-web:9000 without strip_prefix so Sentry's own
+# auth flow (/auth/login/, /auth/register/, etc.) resolves within its origin.
+#
+# Session cookie must carry Domain=<apex> (SESSION_COOKIE_DOMAIN env var) so
+# platform_session is sent to the sentry.* subdomain and forward_auth passes.
+# ---------------------------------------------------------------------------
+http://sentry.aldous.info http://sentry.staging.aldous.info http://sentry.dev.localhost http://sentry.test.localhost http://sentry.localhost {
+	import forward_auth_check admin:sentry read
+	reverse_proxy sentry-web:9000
+}
+
+# ---------------------------------------------------------------------------
 # Super-global admin ? aldous.info, localhost, dev.localhost, test.localhost
 # Hosts the platform admin SPA, all developer tooling, and operational UIs.
 #
@@ -138,28 +157,14 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 		reverse_proxy minio:9001
 	}
 
-	# Sentry ? error and performance monitoring dashboard
-	handle /sentry/* {
-		import forward_auth_check admin:sentry read
-		uri strip_prefix /sentry
-		reverse_proxy sentry-web:9000
-	}
+	# Sentry ? moved to sentry.aldous.info subdomain (above).
+	# The /sentry/* path-prefix approach was removed because Sentry emits absolute
+	# redirects (e.g. /auth/login/) that conflict with the platform BFF /auth/*.
+	# Use http://sentry.aldous.info / sentry.staging.aldous.info instead.
 
-	# WireMock ? external HTTP mock admin (dev only)
-	# /wiremock/ root redirects to /__admin/ — WireMock has no handler at /
-	handle_path /wiremock {
-		import forward_auth_check admin:wiremock read
-		redir /wiremock/__admin/ 302
-	}
-	handle /wiremock/ {
-		import forward_auth_check admin:wiremock read
-		redir /wiremock/__admin/ 302
-	}
-	handle /wiremock/* {
-		import forward_auth_check admin:wiremock read
-		uri strip_prefix /wiremock
-		reverse_proxy wiremock:8080
-	}
+	# WireMock ? dev-only mock server; NOT exposed as a clickthrough.
+	# Access WireMock directly via http://localhost:${WIREMOCK_PORT:-8089}/__admin/
+	# in local development. It must not be linked in the platform admin UI.
 
 	# ClickHouse ? analytics HTTP play UI
 	handle /clickhouse/* {
@@ -273,12 +278,7 @@ http://*.aldous.info http://*.dev.localhost http://*.test.localhost http://*.sta
 		reverse_proxy mailpit:8025
 	}
 
-	# Sentry ? tenant project scoped view
-	handle /sentry/* {
-		import forward_auth_check admin:sentry read
-		uri strip_prefix /sentry
-		reverse_proxy sentry-web:9000
-	}
+	# Sentry ? served on sentry.{apex} subdomain, not path-prefixed here.
 
 	# Content-hashed static assets
 	@tenantAssets path /assets/*

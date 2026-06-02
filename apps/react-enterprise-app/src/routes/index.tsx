@@ -12,8 +12,10 @@ export const Route = createRoute({
 
 // ---------------------------------------------------------------------------
 // Tool link definitions — source of truth: docker/caddy/Caddyfile
-// Routes are path-prefixed behind Caddy on aldous.info (ADR-0029 §1a).
-// Trailing slash is required: Caddy routes /kc/*, /mailpit/*, etc.
+// Most routes are path-prefixed behind Caddy on aldous.info (ADR-0029 §1a).
+// Sentry is served on a dedicated subdomain (sentry.<apex>) to avoid its
+// internal /auth/login/ redirects colliding with the platform BFF /auth/*.
+// WireMock is NOT exposed as a clickthrough — access directly via port in dev.
 // ---------------------------------------------------------------------------
 
 interface ToolLink {
@@ -23,6 +25,14 @@ interface ToolLink {
   /** Compose profile required; link is shown but may return 502 if not running */
   profileGated?: string;
   testId: string;
+}
+
+// Sentry lives on a subdomain to avoid /auth/* path conflicts.
+// Derive the URL from the current hostname: sentry.{hostname}.
+// e.g. aldous.info → sentry.aldous.info; staging.aldous.info → sentry.staging.aldous.info
+function getSentryHref(): string {
+  if (typeof window === "undefined") return "//sentry.aldous.info/";
+  return `//sentry.${window.location.hostname}/`;
 }
 
 const TOOL_LINKS: ToolLink[] = [
@@ -54,18 +64,13 @@ const TOOL_LINKS: ToolLink[] = [
   },
   {
     label: "Sentry",
-    href: "/sentry/",
+    href: getSentryHref(),
     description: "Error and performance monitoring",
     profileGated: "sentry",
     testId: "tool-link-sentry",
   },
-  {
-    label: "WireMock",
-    href: "/wiremock/",
-    description: "External HTTP mock admin",
-    profileGated: "external-mocks",
-    testId: "tool-link-wiremock",
-  },
+  // WireMock intentionally absent — NOT_EXPOSED as a user-facing clickthrough.
+  // Access WireMock directly at http://localhost:${WIREMOCK_PORT:-8089}/__admin/
   {
     label: "ClickHouse",
     href: "/clickhouse/play",
