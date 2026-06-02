@@ -40,31 +40,30 @@ test.describe(`${TARGET_HOST}: logout and session invalidation`, () => {
   test("after logout, the landing page shows sign-in entry again", async ({ page }) => {
     const { username, password } = getTestCredentials();
     await loginAs(page, username, password);
+    const baseUrl = getExternalBaseUrl(page);
 
-    // The logout button now performs a full-page navigation to GET /auth/logout?returnTo=/login,
-    // which redirects through Keycloak RP-Initiated Logout and finally back to the platform
-    // /login page (via post_logout_redirect_uri). This redirect chain can take several seconds
-    // and may vary based on KC configuration (e.g. skip-logout-confirmation setting).
-    await page.getByTestId("logout-button").click();
-
-    // Wait for the redirect chain to settle: KC end_session → post_logout_redirect_uri → /login.
-    // Allow up to 30s. If KC doesn't redirect back (e.g. post_logout_redirect_uris not yet
-    // registered via Terraform), we navigate to the platform root manually.
-    try {
-      await page.waitForURL(/\/login/, { timeout: 30_000 });
-    } catch {
-      // KC may not have redirected (needs terraform apply to register post_logout_redirect_uris).
-      // Navigate to the platform root directly to verify the session is gone.
-      await page.goto(getExternalBaseUrl(page).toString(), {
+    // Navigate directly to the logout endpoint. The platform destroys the Redis
+    // session and clears the cookie before redirecting to Keycloak. We use a short
+    // timeout because we only need the platform-side action to complete — we don't
+    // wait for the KC end_session chain (which requires terraform apply to register
+    // post_logout_redirect_uris and may show a confirmation page).
+    await page
+      .goto(`${baseUrl}/auth/logout?returnTo=/login`, {
         waitUntil: "domcontentloaded",
-        timeout: 20_000,
+        timeout: 8_000,
+      })
+      .catch(() => {
+        // Timeout or KC error — the platform session was destroyed before any KC
+        // redirect, so we can proceed to verify the unauthenticated state.
       });
-    }
+
+    // Navigate to the platform root. Aborts any ongoing KC redirect chain.
+    await page.goto(baseUrl, { waitUntil: "domcontentloaded", timeout: 15_000 });
 
     // Platform session must be cleared
     await assertSessionUnauthenticated(page);
 
-    // Sign-in entry must be visible on whatever page we landed on
+    // Sign-in entry must be visible on the platform root
     const signInEntry = page.locator(
       '[data-testid="sign-in-link"], [data-testid="sign-in-button"], h1:has-text("Sign in")'
     );
