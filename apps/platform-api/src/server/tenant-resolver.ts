@@ -79,8 +79,16 @@ export async function resolveTenantFromRequest(
   req: IncomingMessage,
   pool: pg.Pool
 ): Promise<TenantContext | null> {
-  const hostHeader = req.headers["host"] ?? "";
-  const host = Array.isArray(hostHeader) ? (hostHeader[0] ?? "") : hostHeader;
+  // Prefer X-Forwarded-Host (set by the external Caddy reverse-proxy to the
+  // original client host) over the raw Host header (which Caddy may rewrite to
+  // the upstream address when proxying between internal services).
+  const rawForwardedHost = req.headers["x-forwarded-host"];
+  const rawHost = req.headers["host"] ?? "";
+  const hostValue =
+    (Array.isArray(rawForwardedHost) ? (rawForwardedHost[0] ?? "") : (rawForwardedHost ?? "")) ||
+    (Array.isArray(rawHost) ? (rawHost[0] ?? "") : rawHost);
+  // X-Forwarded-Host can be comma-separated (multiple proxies); take the first.
+  const host = hostValue.split(",")[0]?.trim() ?? "";
   const slug = extractSlugFromHost(host);
   if (!slug) return null;
 
