@@ -154,6 +154,11 @@ resource "keycloak_openid_client" "bff" {
   # Note: "+" would allow all valid redirect URIs; we use explicit list for security.
   valid_redirect_uris = var.bff_redirect_uris
   web_origins         = ["+"]
+
+  # Keycloak RP-Initiated Logout (RFC 7591) — required so post_logout_redirect_uri
+  # is accepted when platform-api redirects to the KC end_session endpoint.
+  # "+" matches all valid_redirect_uris; explicit list also accepted.
+  valid_post_logout_redirect_uris = ["+"]
 }
 
 # ---------------------------------------------------------------------------

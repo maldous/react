@@ -64,10 +64,21 @@ function buildSetCookieHeader(sessionId: string): string {
   return parts.join("; ");
 }
 
-function buildClearCookieHeader(): string {
-  const parts = [`${SESSION_COOKIE_NAME}=`, "HttpOnly", "SameSite=Strict", "Path=/", "Max-Age=0"];
-  if (isSecureCookie()) parts.push("Secure");
-  return parts.join("; ");
+// Returns an array of Set-Cookie headers that clear the session cookie.
+// Two headers are emitted so that both:
+//   1. the Domain-scoped cookie (set by the current config, e.g. Domain=aldous.info), AND
+//   2. any host-only cookie (set by older configs that had no SESSION_COOKIE_DOMAIN)
+// are cleared from the browser. This covers users who had a session cookie set
+// before SESSION_COOKIE_DOMAIN was introduced.
+function buildClearCookieHeaders(): string[] {
+  const base = [`${SESSION_COOKIE_NAME}=`, "HttpOnly", "SameSite=Strict", "Path=/", "Max-Age=0"];
+  if (isSecureCookie()) base.push("Secure");
+  const hostOnly = [...base].join("; ");
+  const domain = getSessionCookieDomain();
+  if (!domain) return [hostOnly];
+  // Domain-scoped clear (matches cookies set with Domain=${domain})
+  const domainScoped = [...base, `Domain=${domain}`].join("; ");
+  return [hostOnly, domainScoped];
 }
 
 const PRE_AUTH_COOKIE = "auth_state_token";
@@ -317,18 +328,106 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
 };
 
 // ---------------------------------------------------------------------------
+// GET /auth/logout?returnTo=/login
+//
+// Browser-navigation logout. Preferred over the POST endpoint for UI flows:
+//   1. Destroys the platform Redis session.
+//   2. Clears the platform_session cookie (host-only + domain-scoped headers).
+//   3. Redirects the browser to the Keycloak RP-Initiated Logout endpoint,
+//      which terminates the SSO session for the realm.
+//   4. Keycloak then redirects to post_logout_redirect_uri (the returnTo URL).
+//
+// NOTE: KC 18+ may show a logout confirmation page unless the client is
+// configured with skip_logout_confirmation or id_token_hint is provided.
+// The platform realm should set this in the KC admin (Realm > Clients > BFF >
+// Advanced > "Skip Logout Confirmation"). Alternatively, store id_token at
+// callback time and pass it here — tracked as a future hardening item.
+//
+// For fixture sessions (LOCAL_FIXTURE_SESSION set), Keycloak is not running;
+// in that case we redirect directly to the returnTo URL.
+// ---------------------------------------------------------------------------
+
+export const handleAuthLogoutRedirect: PipelineHandler = async (req, res) => {
+  const sessionId = parseSessionCookie(req.raw.headers["cookie"]);
+
+  // Determine the realm before destroying the session
+  let realmName: string = getKeycloakConfig().realm; // platform realm default (sysadmin)
+  if (sessionId) {
+    try {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (tenantCtx?.realmName) realmName = tenantCtx.realmName;
+    } catch {
+      // Ignore resolution failures — fall back to platform realm
+    }
+    await destroySession(sessionId, { sessions: getSessionStore() }).catch(() => undefined);
+  }
+
+  const url = new URL(req.raw.url ?? "/", "http://localhost");
+  const returnTo = url.searchParams.get("returnTo") ?? "/login";
+
+  const clearHeaders = buildClearCookieHeaders();
+
+  // In fixture / dev mode (no real Keycloak), redirect directly to returnTo
+  if (process.env["LOCAL_FIXTURE_SESSION"]) {
+    // Reconstruct returnTo as full URL using the request host
+    const host =
+      (req.raw.headers["x-forwarded-host"] as string | undefined) ??
+      req.raw.headers["host"] ??
+      "localhost";
+    const scheme = (req.raw.headers["x-forwarded-proto"] as string | undefined) ?? "http";
+    const redirectTarget = returnTo.startsWith("http")
+      ? returnTo
+      : `${scheme}://${host}${returnTo}`;
+    res.raw.writeHead(302, {
+      "Set-Cookie": clearHeaders,
+      Location: redirectTarget,
+      "Cache-Control": "no-store",
+    });
+    res.raw.end();
+    return;
+  }
+
+  // Construct Keycloak RP-Initiated Logout URL
+  const host =
+    (req.raw.headers["x-forwarded-host"] as string | undefined) ??
+    req.raw.headers["host"] ??
+    "localhost";
+  const scheme = (req.raw.headers["x-forwarded-proto"] as string | undefined) ?? "http";
+  const postLogoutRedirectUri = returnTo.startsWith("http")
+    ? returnTo
+    : `${scheme}://${host}${returnTo}`;
+
+  const kcCfg = getKeycloakConfig();
+  const kcPublicBase = getKeycloakPublicUrl();
+  const endSessionParams = new URLSearchParams({
+    client_id: kcCfg.clientId,
+    post_logout_redirect_uri: postLogoutRedirectUri,
+  });
+  const endSessionUrl = `${kcPublicBase}/realms/${realmName}/protocol/openid-connect/logout?${endSessionParams.toString()}`;
+
+  res.raw.writeHead(302, {
+    "Set-Cookie": clearHeaders,
+    Location: endSessionUrl,
+    "Cache-Control": "no-store",
+  });
+  res.raw.end();
+};
+
+// ---------------------------------------------------------------------------
 // POST /auth/logout
 //
-// Destroys the server-side session and clears the cookie.
-// Keycloak global logout is deferred (ADR-ACT-0119 follow-up).
+// API / fetch-based logout. Destroys the session and clears cookies.
+// Does NOT redirect to Keycloak end_session (cannot do browser-navigation
+// from a fetch response). Use GET /auth/logout?returnTo=... for UI flows
+// that need full SSO logout.
 // ---------------------------------------------------------------------------
 
 export const handleAuthLogout: PipelineHandler = async (req, res) => {
   const sessionId = parseSessionCookie(req.raw.headers["cookie"]);
   if (sessionId) {
-    await destroySession(sessionId, { sessions: getSessionStore() });
+    await destroySession(sessionId, { sessions: getSessionStore() }).catch(() => undefined);
   }
-  res.raw.writeHead(204, { "Set-Cookie": buildClearCookieHeader() });
+  res.raw.writeHead(204, { "Set-Cookie": buildClearCookieHeaders() });
   res.raw.end();
 };
 

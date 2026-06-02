@@ -464,6 +464,11 @@ services:
       CADDY_INTERNAL_SECRET: ${CADDY_INTERNAL_SECRET:-}
       # Apex domain for FQDN-based tenant slug resolution (ADR-0029, ADR-0031).
       APEX_DOMAIN: ${APEX_DOMAIN:-aldous.info}
+      # SESSION_COOKIE_DOMAIN must match APEX_DOMAIN so the platform_session cookie
+      # is sent to all subdomains (e.g. sentry.aldous.info for forward_auth checks).
+      # Domain=aldous.info means the cookie travels to every *.aldous.info; the
+      # pipeline's FQDN cross-check (canAccessTenantFqdn) prevents cross-tenant data access.
+      SESSION_COOKIE_DOMAIN: ${APEX_DOMAIN:-aldous.info}
       # Keycloak ? internal Docker hostname for server-side calls (token exchange, JWKS, provisioning).
       # The browser redirect URL is derived from APP_BASE_URL + /kc (via Caddy path prefix).
       # /kc suffix matches KC_HTTP_RELATIVE_PATH set in the keycloak service.

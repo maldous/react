@@ -6,6 +6,7 @@ import {
   handleAuthLogin,
   handleAuthCallback,
   handleAuthLogout,
+  handleAuthLogoutRedirect,
   parseSessionCookie,
 } from "./auth.ts";
 import { handleForwardAuth } from "./forward-auth.ts";
@@ -151,6 +152,18 @@ export const routes: Route[] = [
     path: "/auth/logout",
     operationName: "auth.logout",
     handler: handleAuthLogout,
+  },
+  {
+    // GET /auth/logout?returnTo=/login
+    // Preferred for UI — performs full browser-navigation logout:
+    //   1. destroys platform Redis session
+    //   2. clears platform_session cookie (host-only + domain-scoped)
+    //   3. redirects browser to Keycloak RP-Initiated Logout endpoint
+    // After KC logout, browser is sent to post_logout_redirect_uri (returnTo).
+    method: "GET",
+    path: "/auth/logout",
+    operationName: "auth.logout.redirect",
+    handler: handleAuthLogoutRedirect,
   },
   // ---------------------------------------------------------------------------
   // Theme / branding (ADR-0029 ?4) ? unauthenticated, keyed by Host header.

@@ -1,7 +1,6 @@
-import { createRoute, useNavigate } from "@tanstack/react-router";
+import { createRoute } from "@tanstack/react-router";
 import { Route as rootRoute } from "./__root";
-import { useSession, sessionQueryKey } from "../hooks/use-session";
-import { useQueryClient } from "@tanstack/react-query";
+import { useSession } from "../hooks/use-session";
 import { useTranslation } from "@platform/i18n-runtime";
 import { LoadingState, Card, CardBody, Badge, Button } from "@platform/ui-design-system";
 
@@ -95,13 +94,13 @@ const STATUS_LINKS: { label: string; href: string }[] = [
 function IndexPage() {
   const { actor, isLoading } = useSession();
   const t = useTranslation();
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
 
-  async function handleLogout() {
-    await fetch("/auth/logout", { method: "POST", credentials: "include" });
-    await queryClient.invalidateQueries({ queryKey: sessionQueryKey });
-    void navigate({ to: "/" });
+  function handleLogout() {
+    // Full-page navigation to GET /auth/logout?returnTo=/login so the browser
+    // follows the redirect chain to Keycloak RP-Initiated Logout, which
+    // terminates the SSO session. Using fetch() cannot perform the browser-
+    // level redirect that Keycloak needs to clear its own session cookies.
+    window.location.href = "/auth/logout?returnTo=/login";
   }
 
   if (isLoading) {
