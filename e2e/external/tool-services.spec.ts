@@ -186,6 +186,28 @@ test.describe(`${TARGET_HOST}: admin tool services load after sysadmin login`, (
     const wiremockLink = page.locator('[data-testid="tool-link-wiremock"]');
     await expect(wiremockLink).toHaveCount(0, { timeout: 5_000 });
   });
+
+  test("Sentry link must not appear on staging — prodOnly gate hides it when not on aldous.info", async ({
+    page,
+  }, testInfo) => {
+    // This test is only meaningful on staging (where the link should be hidden).
+    // On prod (aldous.info), Sentry SHOULD be visible — that's tested in the
+    // Sentry subdomain describe block below.
+    if (isProd()) {
+      testInfo.skip(true, "Sentry visibility on prod is tested in the subdomain block below");
+      return;
+    }
+    await page.goto(getExternalBaseUrl(page).toString(), {
+      waitUntil: "domcontentloaded",
+      timeout: 15_000,
+    });
+    // Sentry has prodOnly:true in TOOL_LINKS — must be filtered out on staging.
+    const sentryLink = page.locator('[data-testid="tool-link-sentry"]');
+    await expect(
+      sentryLink,
+      "Sentry link must be hidden on staging (sentry.staging.aldous.info lacks SSL)"
+    ).toHaveCount(0, { timeout: 5_000 });
+  });
 });
 
 // ---------------------------------------------------------------------------

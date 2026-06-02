@@ -24,15 +24,28 @@ interface ToolLink {
   description: string;
   /** Compose profile required; link is shown but may return 502 if not running */
   profileGated?: string;
+  /**
+   * If true, this link is only rendered on the production apex host (aldous.info).
+   * On staging.aldous.info or dev environments, the link is hidden entirely.
+   *
+   * Rationale: some service subdomains (e.g. sentry.aldous.info) require
+   * *.aldous.info Cloudflare Universal SSL, which does NOT cover the second-level
+   * wildcard *.staging.aldous.info. Showing a broken link is worse than hiding it.
+   */
+  prodOnly?: boolean;
   testId: string;
 }
 
-// Sentry lives on a subdomain to avoid /auth/* path conflicts.
-// Derive the URL from the current hostname: sentry.{hostname}.
-// e.g. aldous.info → sentry.aldous.info; staging.aldous.info → sentry.staging.aldous.info
+// Returns true only on the production apex host (aldous.info).
+// Used to gate prodOnly tool links that require *.aldous.info TLS coverage.
+function isApexProd(): boolean {
+  if (typeof window === "undefined") return false; // SSR — don't show in pre-render
+  return window.location.hostname === "aldous.info";
+}
+
+// Sentry lives on sentry.aldous.info (prod only — see prodOnly flag).
 function getSentryHref(): string {
-  if (typeof window === "undefined") return "//sentry.aldous.info/";
-  return `//sentry.${window.location.hostname}/`;
+  return "//sentry.aldous.info/";
 }
 
 const TOOL_LINKS: ToolLink[] = [
@@ -67,6 +80,7 @@ const TOOL_LINKS: ToolLink[] = [
     href: getSentryHref(),
     description: "Error and performance monitoring",
     profileGated: "sentry",
+    prodOnly: true, // sentry.staging.aldous.info lacks *.staging.aldous.info TLS
     testId: "tool-link-sentry",
   },
   // WireMock intentionally absent — NOT_EXPOSED as a user-facing clickthrough.
@@ -210,7 +224,7 @@ function IndexPage() {
             {t("landing.tools")}
           </h2>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {TOOL_LINKS.map((tool) => (
+            {TOOL_LINKS.filter((t) => !t.prodOnly || isApexProd()).map((tool) => (
               <a
                 key={tool.href}
                 href={tool.href}
