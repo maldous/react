@@ -398,7 +398,10 @@ export const handleAuthLogoutRedirect: PipelineHandler = async (req, res) => {
     : `${scheme}://${host}${returnTo}`;
 
   const kcCfg = getKeycloakConfig();
-  const kcPublicBase = getKeycloakPublicUrl();
+  // Pass host+scheme so getKeycloakPublicUrl returns the host-derived URL
+  // (e.g. https://aldous.info/kc) rather than falling back to KEYCLOAK_PUBLIC_URL
+  // which may be set to https://aldous.info (without /kc) in some environments.
+  const kcPublicBase = getKeycloakPublicUrl(host, scheme);
   const endSessionParams = new URLSearchParams({
     client_id: kcCfg.clientId,
     post_logout_redirect_uri: postLogoutRedirectUri,
