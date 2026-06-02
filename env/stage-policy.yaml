@@ -1,0 +1,61 @@
+dev:
+  executor: tilt
+  dataPolicy: destructive
+  buildMode: live
+  authMode: fixture
+  tenants: none
+  teardownDefault: true
+  requiredTests:
+    - minimal-smoke
+    - unit
+
+test:
+  executor: compose
+  dataPolicy: destructive
+  buildMode: containers
+  authMode: fixture
+  tenants: none
+  teardownDefault: true
+  requiredTests:
+    - unit
+    - contract
+    - port
+    - interface
+    - compose-smoke
+    - e2e-smoke
+
+staging:
+  executor: compose
+  dataPolicy: preserve
+  buildMode: production
+  authMode: real
+  tenants: none
+  teardownDefault: false
+  requiredTests:
+    - integration
+    - compose-smoke
+    - external-smoke
+    - e2e-smoke
+  excludedTests:
+    - tenant-data
+    - destructive
+    - production-customer-data
+
+prod:
+  executor: compose
+  dataPolicy: preserve
+  buildMode: production
+  authMode: real
+  tenants: real
+  teardownDefault: false
+  requiredTests:
+    - unit
+    - contract
+    - port
+    - interface
+    - integration
+    - tenant
+    - compose-smoke
+    - external-smoke
+    - auth-e2e
+    - production-e2e
