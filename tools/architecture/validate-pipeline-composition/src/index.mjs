@@ -168,6 +168,30 @@ function checkMustNotContain(recipe, target, mustNotContain, errors) {
   }
 }
 
+function countTestBreadth(recipe) {
+  let count = 0;
+  if (/e2e-internal/.test(recipe.content)) count++;
+  if (/run-stage-e2e|e2e-external/.test(recipe.content)) count++;
+  if (/test:e2e:prod/.test(recipe.content)) count++;
+  return count;
+}
+
+function checkHierarchyProgression(recipes, warnings) {
+  const scopeOrder = ["stage-dev", "stage-test", "stage-staging", "stage-prod"];
+  for (let i = 0; i < scopeOrder.length - 1; i++) {
+    const current = scopeOrder[i];
+    const next = scopeOrder[i + 1];
+    if (!recipes[current].found || !recipes[next].found) continue;
+    const currentCount = countTestBreadth(recipes[current]);
+    const nextCount = countTestBreadth(recipes[next]);
+    if (currentCount > nextCount) {
+      warnings.push(
+        `HIERARCHY: ${current} (breadth=${currentCount}) has more test types than ${next} (breadth=${nextCount}). Expected non-decreasing breadth per ADR-0034.`
+      );
+    }
+  }
+}
+
 function validatePipeline(recipes) {
   const allErrors = [];
   const allWarnings = [];
@@ -177,45 +201,67 @@ function validatePipeline(recipes) {
       allErrors.push(...recipe.errors);
       continue;
     }
-
     const rule = RULES[target];
     checkMustContain(recipe, target, rule.mustContain, allErrors);
     checkMustNotContain(recipe, target, rule.mustNotContain, allErrors);
   }
 
-  // Hierarchy progression check: test scope should broaden from dev to prod
-  const scopeOrder = ["stage-dev", "stage-test", "stage-staging", "stage-prod"];
-
-  for (let i = 0; i < scopeOrder.length - 1; i++) {
-    const current = scopeOrder[i];
-    const next = scopeOrder[i + 1];
-    const currentRecipe = recipes[current];
-    const nextRecipe = recipes[next];
-
-    if (!currentRecipe.found || !nextRecipe.found) {
-      continue;
-    }
-
-    // Count distinct E2E test types present
-    const countTests = (recipe) => {
-      let count = 0;
-      if (/e2e-internal/.test(recipe.content)) count++;
-      if (/run-stage-e2e|e2e-external/.test(recipe.content)) count++;
-      if (/test:e2e:prod/.test(recipe.content)) count++;
-      return count;
-    };
-
-    const currentCount = countTests(currentRecipe);
-    const nextCount = countTests(nextRecipe);
-
-    if (currentCount > nextCount) {
-      allWarnings.push(
-        `HIERARCHY: ${current} (breadth=${currentCount}) has more test types than ${next} (breadth=${nextCount}). Expected non-decreasing breadth per ADR-0034.`
-      );
-    }
-  }
+  checkHierarchyProgression(recipes, allWarnings);
 
   return { errors: allErrors, warnings: allWarnings };
+}
+
+function printTextResults(recipes, errors, warnings, exitCode) {
+  console.log(`\nPipeline composition validation (ADR-0034):\n`);
+  for (const target of Object.keys(RULES)) {
+    const recipe = recipes[target];
+    if (!recipe?.found) {
+      console.log(`  ? ${target}: TARGET NOT FOUND`);
+      continue;
+    }
+    const hasErrors = errors.some((e) => e.includes(target));
+    const icon = hasErrors ? "\u2717" : "\u2713";
+    console.log(`  ${icon} ${target}: ${RULES[target].label}`);
+    if (!hasErrors) {
+      console.log(`      (${RULES[target].description})`);
+    }
+  }
+  console.log("");
+  if (errors.length > 0) {
+    console.log("Errors:");
+    for (const err of errors) console.log(`  \u2717 ${err}`);
+    console.log("");
+  }
+  if (warnings.length > 0) {
+    console.log("Warnings:");
+    for (const warn of warnings) console.log(`  \u26a0 ${warn}`);
+    console.log("");
+  }
+  if (errors.length === 0 && warnings.length === 0) {
+    console.log("  All pipeline composition checks passed.");
+  }
+  console.log(`  Exit code: ${exitCode}\n`);
+}
+
+function printJsonResults(toolName, recipes, errors, warnings, exitCode) {
+  console.log(
+    JSON.stringify(
+      {
+        tool: toolName,
+        targets: Object.keys(RULES).map((name) => ({
+          name,
+          label: RULES[name].label,
+          found: recipes[name]?.found ?? false,
+        })),
+        errors,
+        warnings,
+        passed: errors.length === 0,
+        exitCode,
+      },
+      null,
+      2
+    )
+  );
 }
 
 function main() {
@@ -237,75 +283,32 @@ function main() {
         })
       );
     } else {
-      console.error(`${msg}`);
+      console.error(msg);
     }
     process.exit(1);
   }
 
-  const makefileContent = fs.readFileSync(makefilePath, "utf8");
+  // Concatenate root Makefile with all make/*.mk included files so that
+  // targets defined in make/stages.mk are visible to the parser.
+  const makeDir = path.join(repoRoot, "make");
+  const mkFiles = fs.existsSync(makeDir)
+    ? fs
+        .readdirSync(makeDir)
+        .filter((f) => f.endsWith(".mk"))
+        .sort()
+        .map((f) => path.join(makeDir, f))
+    : [];
+  const makefileContent = [makefilePath, ...mkFiles]
+    .map((f) => fs.readFileSync(f, "utf8"))
+    .join("\n");
   const recipes = extractStageRecipes(makefileContent);
   const { errors, warnings } = validatePipeline(recipes);
   const exitCode = errors.length > 0 ? 1 : 0;
 
   if (options.format === "json") {
-    console.log(
-      JSON.stringify(
-        {
-          tool: toolName,
-          targets: Object.keys(RULES).map((name) => ({
-            name,
-            label: RULES[name].label,
-            found: recipes[name]?.found ?? false,
-          })),
-          errors,
-          warnings,
-          passed: errors.length === 0,
-          exitCode,
-        },
-        null,
-        2
-      )
-    );
+    printJsonResults(toolName, recipes, errors, warnings, exitCode);
   } else {
-    console.log(`\nPipeline composition validation (ADR-0034):\n`);
-
-    for (const target of Object.keys(RULES)) {
-      const recipe = recipes[target];
-      if (!recipe?.found) {
-        console.log(`  ? ${target}: TARGET NOT FOUND`);
-        continue;
-      }
-      const hasErrors = errors.some((e) => e.includes(target));
-      const icon = hasErrors ? "\u2717" : "\u2713";
-      console.log(`  ${icon} ${target}: ${RULES[target].label}`);
-      if (!hasErrors) {
-        console.log(`      (${RULES[target].description})`);
-      }
-    }
-
-    console.log("");
-
-    if (errors.length > 0) {
-      console.log("Errors:");
-      for (const err of errors) {
-        console.log(`  \u2717 ${err}`);
-      }
-      console.log("");
-    }
-
-    if (warnings.length > 0) {
-      console.log("Warnings:");
-      for (const warn of warnings) {
-        console.log(`  \u26a0 ${warn}`);
-      }
-      console.log("");
-    }
-
-    if (errors.length === 0 && warnings.length === 0) {
-      console.log("  All pipeline composition checks passed.");
-    }
-
-    console.log(`  Exit code: ${exitCode}\n`);
+    printTextResults(recipes, errors, warnings, exitCode);
   }
 
   process.exit(exitCode);
