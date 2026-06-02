@@ -1,0 +1,23 @@
+{
+  "stage": "dev",
+  "gitSha": "457de3d",
+  "timestamp": "2026-06-02T13:40:32.119Z",
+  "envFile": ".env.dev",
+  "composeProject": "react-dev",
+  "profiles": [
+    "default"
+  ],
+  "dataPolicy": "destructive",
+  "testGroupsRun": [
+    "minimal-smoke",
+    "unit"
+  ],
+  "testGroupsSkipped": [],
+  "e2eCommand": "make e2e-internal",
+  "urlsChecked": [
+    "http://localhost:3001/healthz"
+  ],
+  "result": "passed",
+  "durationSeconds": -26368,
+  "failureSummary": null
+}
