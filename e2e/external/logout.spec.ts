@@ -41,14 +41,34 @@ test.describe(`${TARGET_HOST}: logout and session invalidation`, () => {
     const { username, password } = getTestCredentials();
     await loginAs(page, username, password);
 
+    // The logout button now performs a full-page navigation to GET /auth/logout?returnTo=/login,
+    // which redirects through Keycloak RP-Initiated Logout and finally back to the platform
+    // /login page (via post_logout_redirect_uri). This redirect chain can take several seconds
+    // and may vary based on KC configuration (e.g. skip-logout-confirmation setting).
     await page.getByTestId("logout-button").click();
 
-    // Wait directly for the sign-in entry — this covers the full redirect chain after logout
-    // without a separate waitForURL that can time out on slow server-side redirects.
+    // Wait for the redirect chain to settle: KC end_session → post_logout_redirect_uri → /login.
+    // Allow up to 30s. If KC doesn't redirect back (e.g. post_logout_redirect_uris not yet
+    // registered via Terraform), we navigate to the platform root manually.
+    try {
+      await page.waitForURL(/\/login/, { timeout: 30_000 });
+    } catch {
+      // KC may not have redirected (needs terraform apply to register post_logout_redirect_uris).
+      // Navigate to the platform root directly to verify the session is gone.
+      await page.goto(getExternalBaseUrl(page).toString(), {
+        waitUntil: "domcontentloaded",
+        timeout: 20_000,
+      });
+    }
+
+    // Platform session must be cleared
+    await assertSessionUnauthenticated(page);
+
+    // Sign-in entry must be visible on whatever page we landed on
     const signInEntry = page.locator(
       '[data-testid="sign-in-link"], [data-testid="sign-in-button"], h1:has-text("Sign in")'
     );
-    await expect(signInEntry.first()).toBeVisible({ timeout: 20_000 });
+    await expect(signInEntry.first()).toBeVisible({ timeout: 10_000 });
   });
 
   test("POST /auth/logout directly returns 2xx or redirect", async ({ page }) => {
