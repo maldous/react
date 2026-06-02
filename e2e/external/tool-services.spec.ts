@@ -43,17 +43,9 @@ const RUNNING_TOOLS = [
     label: "SonarQube",
     expectTitle: /SonarQube/i,
   },
-  {
-    path: "/sentry/",
-    label: "Sentry",
-    // Sentry has its own multi-hop auth redirect chain — only verify forward_auth passes
-  },
-  {
-    path: "/wiremock/",
-    label: "WireMock",
-    // WireMock /__admin/ is a JSON REST API — no HTML title; check JSON body instead
-    expectBodyContains: "mappings",
-  },
+  // Sentry is now on sentry.{apex} subdomain — verified separately below.
+  // WireMock is intentionally absent — NOT_EXPOSED as a clickthrough service.
+  // Access WireMock directly via WIREMOCK_PORT in local dev.
   {
     path: "/pgadmin/",
     label: "pgAdmin",
@@ -181,5 +173,101 @@ test.describe(`${TARGET_HOST}: admin tool services load after sysadmin login`, (
       failedImages,
       `MinIO preloader images must load — failed: ${failedImages.join(", ")}`
     ).toHaveLength(0);
+  });
+
+  test("WireMock link must not appear on landing page — WireMock is NOT_EXPOSED", async ({
+    page,
+  }) => {
+    await page.goto(getExternalBaseUrl(page).toString(), {
+      waitUntil: "domcontentloaded",
+      timeout: 15_000,
+    });
+    // The WireMock tool-link was removed from TOOL_LINKS; its testId must not exist.
+    const wiremockLink = page.locator('[data-testid="tool-link-wiremock"]');
+    await expect(wiremockLink).toHaveCount(0, { timeout: 5_000 });
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Sentry subdomain tests — Sentry was moved from /sentry/* path-prefix to
+// sentry.{apex} subdomain to prevent its /auth/login/ redirect from colliding
+// with the platform BFF's /auth/* routes.
+// ---------------------------------------------------------------------------
+
+test.describe(`${TARGET_HOST}: Sentry subdomain routing`, () => {
+  let isSysadmin = false;
+
+  test.beforeEach(async ({ page }, testInfo) => {
+    try {
+      getTestCredentials();
+    } catch {
+      testInfo.skip();
+      return;
+    }
+    const { username, password } = getTestCredentials();
+    await loginAs(page, username, password);
+    const sessionRes = await page.request.get(
+      new URL("/api/session", getExternalBaseUrl(page)).toString()
+    );
+    const session = (await sessionRes.json()) as { roles?: string[] };
+    isSysadmin = session.roles?.includes("system-admin") ?? false;
+    if (!isSysadmin) testInfo.skip(true, "Test user lacks system-admin role");
+  });
+
+  test("Sentry link on landing page uses subdomain href, not /sentry/ path", async ({ page }) => {
+    await page.goto(getExternalBaseUrl(page).toString(), {
+      waitUntil: "domcontentloaded",
+      timeout: 15_000,
+    });
+    const sentryLink = page.locator('[data-testid="tool-link-sentry"]');
+    await expect(sentryLink).toBeVisible({ timeout: 5_000 });
+    const href = await sentryLink.getAttribute("href");
+    expect(href, "Sentry link must use sentry.{host} subdomain format").toMatch(/^\/\/sentry\./);
+    expect(href, "Sentry link must not be the old /sentry/ path").not.toContain("/sentry/");
+  });
+
+  test("Sentry subdomain does not return platform NOT_FOUND — /auth/login/ collision must be gone", async ({
+    page,
+    request,
+  }) => {
+    const apexUrl = getExternalBaseUrl(page);
+    const apexHost = new URL(apexUrl.toString()).hostname;
+    const sentryBase = `${new URL(apexUrl.toString()).protocol}//sentry.${apexHost}`;
+
+    // Unauthenticated hit must return 401 JSON (forward_auth), NOT platform NOT_FOUND
+    const unauthRes = await request.get(sentryBase, {
+      maxRedirects: 0,
+      failOnStatusCode: false,
+    });
+    expect(unauthRes.status(), "unauthenticated sentry must return 401").toBe(401);
+
+    const unauthBody = await unauthRes.text().catch(() => "");
+    expect(
+      unauthBody,
+      "sentry 401 must not contain '/auth/login/ not found' (old BFF path collision)"
+    ).not.toContain("/auth/login/ not found");
+
+    // Authenticated hit must not contain the old BFF NOT_FOUND error
+    const authRes = await page.goto(sentryBase, {
+      waitUntil: "domcontentloaded",
+      timeout: 20_000,
+    });
+    const status = authRes?.status() ?? 0;
+    // If Sentry profile is not running, 502 is acceptable (profile-gated)
+    // but we must NOT see a platform BFF 4xx response
+    if (status === 502) {
+      // Sentry service not running — this is acceptable in CI without sentry profile
+      return;
+    }
+    expect(status, "Sentry must not be 401/403 for sysadmin").not.toBe(401);
+    expect(status, "Sentry must not be 403 for sysadmin").not.toBe(403);
+
+    const body = (await authRes?.text()) ?? "";
+    expect(body, "Sentry must not return platform NOT_FOUND").not.toContain(
+      "/auth/login/ not found"
+    );
+    expect(body, "Sentry must not contain platform BFF NOT_FOUND JSON").not.toContain(
+      '"code":"NOT_FOUND"'
+    );
   });
 });

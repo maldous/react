@@ -435,4 +435,4 @@ export const handleAuthLogout: PipelineHandler = async (req, res) => {
 // Exported cookie parser for pipeline use
 // ---------------------------------------------------------------------------
 
-export { parseSessionCookie };
+export { parseSessionCookie, buildClearCookieHeaders };

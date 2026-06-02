@@ -62,4 +62,75 @@ test.describe(`${TARGET_HOST}: logout and session invalidation`, () => {
     // Accepts 200, 302, or 204
     expect([200, 204, 302]).toContain(res.status());
   });
+
+  test("GET /auth/logout redirects to Keycloak end_session, not platform 404", async ({ page }) => {
+    const { username, password } = getTestCredentials();
+    await loginAs(page, username, password);
+
+    // Navigate to GET /auth/logout?returnTo=/login — must redirect to KC end_session
+    const res = await page.request.get(
+      new URL("/auth/logout?returnTo=/login", getExternalBaseUrl(page)).toString(),
+      { maxRedirects: 0, failOnStatusCode: false }
+    );
+    expect(res.status(), "GET /auth/logout must redirect (302)").toBe(302);
+
+    const location = res.headers()["location"] ?? "";
+    // Must redirect to Keycloak end_session endpoint, not the platform app
+    expect(location, "redirect must point to Keycloak end_session endpoint").toMatch(
+      /\/protocol\/openid-connect\/logout/
+    );
+    expect(location, "end_session URL must include client_id").toContain("client_id=");
+    expect(location, "end_session URL must include post_logout_redirect_uri").toContain(
+      "post_logout_redirect_uri="
+    );
+  });
+
+  test("after full GET logout, visiting /login requires Keycloak credentials — no silent re-auth", async ({
+    page,
+  }) => {
+    const { username, password } = getTestCredentials();
+    await loginAs(page, username, password);
+
+    // Perform browser-navigation logout (follows redirect chain through KC end_session)
+    await page.goto(new URL("/auth/logout?returnTo=/login", getExternalBaseUrl(page)).toString(), {
+      waitUntil: "domcontentloaded",
+      timeout: 30_000,
+    });
+
+    // After KC logout, we should land on /login (via post_logout_redirect_uri)
+    // OR on a Keycloak login page. Both are acceptable; what is NOT acceptable is
+    // being silently returned to the platform as the same user.
+    await page.waitForLoadState("domcontentloaded", { timeout: 15_000 });
+
+    // Platform session must be gone — /api/session must return 401
+    await assertSessionUnauthenticated(page);
+
+    // The page must NOT show the authenticated landing (user data)
+    const pageText = await page.textContent("body").catch(() => "");
+    expect(pageText, "landing after logout must not show authenticated user content").not.toMatch(
+      /sign out|logout-button/i
+    );
+
+    // If we're on the platform /login, attempting to proceed must redirect to KC,
+    // NOT silently return as the same user. This verifies the KC SSO session is gone.
+    const currentUrl = page.url();
+    if (currentUrl.includes("/login") && !currentUrl.includes("keycloak")) {
+      // Click sign-in on the platform login page — must reach KC login form
+      const signInBtn = page.locator(
+        '[data-testid="sign-in-link"], [data-testid="sign-in-button"], a[href*="/auth/login"]'
+      );
+      if (await signInBtn.count()) {
+        await signInBtn.first().click();
+        await page.waitForLoadState("domcontentloaded", { timeout: 15_000 });
+        // KC login page must show username/password fields — NOT silently re-authenticate
+        const hasUsernameField = await page
+          .locator('input[name="username"], input[type="text"], input[id="username"]')
+          .count();
+        expect(
+          hasUsernameField,
+          "KC login page must show credential form — SSO session must be cleared"
+        ).toBeGreaterThan(0);
+      }
+    }
+  });
 });
