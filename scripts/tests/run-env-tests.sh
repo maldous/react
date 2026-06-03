@@ -67,6 +67,7 @@ run_group() {
         ;;
 
       contract)
+        POSTGRES_URL="$_pg_url" POSTGRES_APP_URL="$_pg_app_url" REDIS_URL="$_rd_url" \
         npm run test:architecture
         ;;
       port)
@@ -91,7 +92,7 @@ run_group() {
         make run-stage-tests ENV="$STAGE"
         ;;
       tenant)
-        npx playwright test --config playwright.external.config.ts \
+        PROD_BASE_URL="$_app_url" npx playwright test --config playwright.external.config.ts \
             e2e/external/tenant-prod.spec.ts
         ;;
       e2e-smoke)
@@ -122,7 +123,7 @@ run_group() {
         PROD_BASE_URL="$_app_url" make e2e-external-auth
         ;;
       production-e2e)
-        npm run test:e2e:prod
+        PROD_BASE_URL="$_app_url" npm run test:e2e:prod
         ;;
       observability-smoke)
         bash scripts/smoke/observability-smoke.sh "$STAGE"

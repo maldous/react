@@ -119,13 +119,20 @@ if [ "$STAGE_RESULT" -eq 0 ]; then
 fi
 
 # ── 8. Migrations + seed ──────────────────────────────────────────────────────
+# Always use the stage-specific POSTGRES_URL (derived from .env.$STAGE) so migrations
+# target the correct environment. The migrate script silently exits 0 on ECONNREFUSED
+# without this override — without it staging/prod would silently migrate the wrong DB.
+
+_pg_port_m="$(grep -oP 'POSTGRES_PORT=\K\d+' ".env.${STAGE}" 2>/dev/null | head -1 || true)"
+_pg_port_m="${_pg_port_m:-5433}"
+_pg_url_m="postgresql://platform:platformpassword@localhost:${_pg_port_m}/platform"
 
 if [ "$STAGE_RESULT" -eq 0 ]; then
-    npm run db:migrate || STAGE_RESULT=1
+    POSTGRES_URL="$_pg_url_m" npm run db:migrate || STAGE_RESULT=1
 fi
 
 if [ "$STAGE_RESULT" -eq 0 ] && [ "$DATA_POLICY" = "destructive" ]; then
-    npm run db:seed || STAGE_RESULT=1
+    POSTGRES_URL="$_pg_url_m" npm run db:seed || STAGE_RESULT=1
 fi
 
 # ── 9. Test groups ────────────────────────────────────────────────────────────
