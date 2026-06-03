@@ -125,14 +125,27 @@ run_group() {
         PROD_BASE_URL="$_app_url" make e2e-external-smoke
         ;;
       auth-e2e)
-        # Skip if PROD_BASE_URL is localhost — KC redirect flow requires real DNS.
-        # Real auth E2E should be run explicitly via 'make test-real-auth' with
-        # a fully provisioned KC realm (keycloak-provision + fixture users).
+        # auth-e2e requires a real KC redirect flow — only works when PROD_BASE_URL
+        # is a real domain (not localhost). Behaviour differs by stage:
+        #   prod:    FAIL — prod cannot silently skip required auth confidence.
+        #            Use 'make test-real-auth' after 'make keycloak-provision ENV=prod'.
+        #   staging: SKIP gracefully — staging may be tested locally without full KC.
         if echo "$_app_url" | grep -q "localhost"; then
-          printf '%s↷ auth-e2e skipped — PROD_BASE_URL=%s is localhost (no real KC redirect)%s\n' \
-            "$YELLOW" "$_app_url" "$RESET"
+            if [ "$STAGE" = "prod" ]; then
+                printf '%s✗ auth-e2e cannot run: PROD_BASE_URL=%s is localhost%s\n' \
+                    "$RED" "$_app_url" "$RESET"
+                printf '%s  Prod requires real KC redirect. Options:%s\n' "$YELLOW" "$RESET"
+                printf '%s  1. Run against real DNS: PROD_BASE_URL=https://aldous.info make stage-prod%s\n' \
+                    "$YELLOW" "$RESET"
+                printf '%s  2. Provision KC first:  make keycloak-provision ENV=prod%s\n' \
+                    "$YELLOW" "$RESET"
+                printf '%s  3. Run auth E2E alone:  make test-real-auth%s\n' "$YELLOW" "$RESET"
+                exit 1
+            fi
+            printf '%s↷ auth-e2e skipped — PROD_BASE_URL=%s is localhost (staging only)%s\n' \
+                "$YELLOW" "$_app_url" "$RESET"
         else
-          PROD_BASE_URL="$_app_url" make e2e-external-auth
+            PROD_BASE_URL="$_app_url" make e2e-external-auth
         fi
         ;;
       production-e2e)
@@ -142,7 +155,9 @@ run_group() {
         bash scripts/smoke/observability-smoke.sh "$STAGE"
         ;;
       *)
-        printf '%s⚠ unknown test group "%s" — skipping%s\n' "$YELLOW" "$group" "$RESET"
+        printf '%s✗ unknown test group "%s" — check stage-policy.yaml for typos%s\n' \
+            "$RED" "$group" "$RESET"
+        exit 1
         ;;
     esac
 }

@@ -27,27 +27,28 @@ const RULES = {
     mustNotContain: ["e2e-external", "test:e2e:prod", "run-stage-e2e"],
     label: "Dev - internal E2E only",
     description:
-      "Dev runs internal fixture tests. External tests require Keycloak (not provisioned by Tilt).",
+      "Dev runs minimal-smoke + unit + e2e-internal via Tilt. External tests are not run at this stage.",
   },
   "stage-test": {
     mustContain: ["e2e-internal", "run-stage-tests"],
     mustNotContain: ["$(MAKE) e2e-external", "test:e2e:prod", "run-stage-e2e"],
     label: "Test - internal E2E only",
     description:
-      "Test runs unit/API tests (run-stage-tests) and internal E2E with fixture sessions. External E2E starts from staging.",
+      "Test runs the full local unit suite (run-stage-tests) and internal E2E with fixture sessions. External E2E starts from staging.",
   },
   "stage-staging": {
-    mustContain: ["e2e-external"],
+    mustContain: ["external-smoke"],
     mustNotContain: ["e2e-internal", "test:e2e:prod", "run-stage-e2e"],
-    label: "Staging - full external E2E only",
-    description: "Staging validates the deployed stack through Cloudflare. No fixture-based tests.",
+    label: "Staging - external smoke only (no tenants)",
+    description:
+      "Staging runs integration + compose-smoke + external-smoke. No fixture sessions, no tenant tests.",
   },
   "stage-prod": {
-    mustContain: ["e2e-external", "test:e2e:prod"],
+    mustContain: ["external-smoke", "test:e2e:prod"],
     mustNotContain: ["e2e-internal", "run-stage-e2e"],
     label: "Prod - full external + exhaustive",
     description:
-      "Prod runs full external suite followed by exhaustive prod tests (security, performance, contracts).",
+      "Prod runs all production-safe test groups including tenant, auth-e2e, and production-e2e.",
   },
 };
 
@@ -171,7 +172,7 @@ function checkMustNotContain(recipe, target, mustNotContain, errors) {
 function countTestBreadth(recipe) {
   let count = 0;
   if (/e2e-internal/.test(recipe.content)) count++;
-  if (/run-stage-e2e|e2e-external/.test(recipe.content)) count++;
+  if (/run-stage-e2e|e2e-external|external-smoke/.test(recipe.content)) count++;
   if (/test:e2e:prod/.test(recipe.content)) count++;
   return count;
 }

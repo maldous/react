@@ -106,9 +106,12 @@ if [ "$STAGE_RESULT" -eq 0 ]; then
         bash scripts/compose/up.sh "$STAGE" default || STAGE_RESULT=1
         [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" web || STAGE_RESULT=1; }
     else
-        # Preserve stages (staging, prod) are HA — default services are already
-        # running. Rebuild/update only the web tier.
-        bash scripts/compose/up.sh "$STAGE" web || STAGE_RESULT=1
+        # Preserve stages (staging, prod): start default services first (idempotent —
+        # no-op if already running on an HA stack), then rebuild the web tier.
+        # This ensures minio/mailpit/otel/clickhouse are reachable for compose-smoke
+        # even on a clean machine that has never had staging/prod bootstrapped.
+        bash scripts/compose/up.sh "$STAGE" default || STAGE_RESULT=1
+        [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" web || STAGE_RESULT=1; }
     fi
 fi
 
@@ -142,30 +145,7 @@ if [ "$STAGE_RESULT" -eq 0 ] && [ -n "$REQUIRED_CSV" ]; then
         || STAGE_RESULT=1
 fi
 
-# ── 10. E2E equivalent (staging/prod only) ───────────────────────────────────
-#
-# dev/test: e2e-smoke in requiredTests already invokes e2e-internal with
-# proper port isolation (see run-env-tests.sh). Calling it again here would
-# cause a double-invocation that hits port conflicts with the compose API.
-#
-# staging/prod: run-stage-tests.sh runs e2e-external-smoke via e2e-smoke /
-# external-smoke groups, but step 10 additionally runs the full e2e-external
-# suite (all specs, not just smoke) for broader pre-merge confidence.
-
-if [ "$STAGE_RESULT" -eq 0 ]; then
-    case "$STAGE" in
-      dev|test)
-        # E2E owned by e2e-smoke in requiredTests — no second invocation here.
-        :
-        ;;
-      staging|prod)
-        # Full e2e-external requires KC test users provisioned in the realm.
-        # e2e-smoke/external-smoke groups in requiredTests already run e2e-external-smoke.
-        # Step 10 is a no-op for staging/prod — policy groups own all E2E coverage here.
-        :
-        ;;
-    esac
-fi
+# ── 10. (reserved — E2E coverage owned by policy test groups in step 9) ─────
 
 # ── 11 + 12. Teardown ─────────────────────────────────────────────────────────
 

@@ -8,6 +8,7 @@ dev:
   requiredTests:
     - minimal-smoke
     - unit
+    - e2e-smoke # runs make e2e-internal ENV=dev — reuses Tilt servers on 3001/5173
 
 test:
   executor: compose
@@ -17,12 +18,12 @@ test:
   tenants: none
   teardownDefault: true
   requiredTests:
-    - unit
-    - contract
-    - port
-    - interface
-    - compose-smoke
-    - e2e-smoke
+    - unit # test:platform-api (254) + test:frontend:run (26) — full local suite
+    - contract # test:architecture (638) — governance + package contracts
+    - port # validate-compose-ports — no cross-env collisions
+    - interface # compose-smoke.sh — docker container reachability
+    - compose-smoke # compose-smoke.test.mjs — full integration smoke (resets DB)
+    - e2e-smoke # make e2e-internal ENV=test — Playwright fixture session, isolated ports
 
 staging:
   executor: compose
@@ -32,10 +33,9 @@ staging:
   tenants: none
   teardownDefault: false
   requiredTests:
-    - integration
-    - compose-smoke
-    - external-smoke
-    - e2e-smoke
+    - integration # run-stage-tests (unit-safe 206 + frontend 26) — no fixture-DB substrate
+    - compose-smoke # compose-smoke.test.mjs DATA_POLICY=preserve — infra health, no resets
+    - external-smoke # make e2e-external-smoke — 14 Playwright tests against localhost:82
   excludedTests:
     - tenant-data
     - destructive
@@ -49,13 +49,13 @@ prod:
   tenants: real
   teardownDefault: false
   requiredTests:
-    - unit
-    - contract
+    - unit # test:platform-api (254, fixture-org present) + frontend
+    - contract # test:architecture (638)
     - port
     - interface
-    - integration
-    - tenant
-    - compose-smoke
-    - external-smoke
-    - auth-e2e
-    - production-e2e
+    - integration # run-stage-tests (full 254 via NODE_ENV=production)
+    - tenant # tenant-prod.spec.ts — skips unless PROD_BASE_URL=aldous.info
+    - compose-smoke # DATA_POLICY=preserve
+    - external-smoke # make e2e-external-smoke against localhost:83
+    - auth-e2e # FAILS if localhost — prod cannot silently skip auth confidence
+    - production-e2e # npm run test:e2e:prod
