@@ -120,12 +120,16 @@ external-caddy-down:
 
 # ── Environment-specific stacks ──────────────────────────────────────────────
 
-## dev-up — Full dev stack: default + identity + web (dev.localhost)
+## dev-up — Full dev stack: all profiles (Compose-based; for Tilt dev use tilt-up then env-up-all)
 dev-up:
 	$(call STEP,dev: full stack)
 	$(MAKE) compose-up-default ENV=dev
 	$(MAKE) compose-up-identity ENV=dev
 	$(MAKE) keycloak-provision ENV=dev
+	$(MAKE) compose-up-quality ENV=dev
+	$(MAKE) compose-up-sentry ENV=dev
+	$(MAKE) compose-up-external-mocks ENV=dev
+	$(MAKE) compose-up-observability ENV=dev
 	$(MAKE) compose-up-web ENV=dev
 
 ## dev-up-minimal — Start only default infra for dev (no web, no Keycloak)
@@ -133,15 +137,19 @@ dev-up-minimal:
 	$(call STEP,dev: up minimal)
 	$(MAKE) compose-up-default ENV=dev
 
-## test-up — Full test stack: default + identity + web (test.localhost)
+## test-up — Full test stack: all profiles
 test-up:
 	$(call STEP,test: full stack)
 	$(MAKE) compose-up-default ENV=test
 	$(MAKE) compose-up-identity ENV=test
 	$(MAKE) keycloak-provision ENV=test
+	$(MAKE) compose-up-quality ENV=test
+	$(MAKE) compose-up-sentry ENV=test
+	$(MAKE) compose-up-external-mocks ENV=test
+	$(MAKE) compose-up-observability ENV=test
 	$(MAKE) compose-up-web ENV=test
 
-## staging-up — Full staging stack (staging.aldous.info, port 82)
+## staging-up — Full staging stack: all profiles
 staging-up:
 	$(call STEP,staging: full stack)
 	$(MAKE) compose-up-default ENV=staging
@@ -150,9 +158,10 @@ staging-up:
 	$(MAKE) compose-up-quality ENV=staging
 	$(MAKE) compose-up-sentry ENV=staging
 	$(MAKE) compose-up-external-mocks ENV=staging
+	$(MAKE) compose-up-observability ENV=staging
 	$(MAKE) compose-up-web ENV=staging
 
-## prod-up — Full production-like stack (aldous.info, port 83)
+## prod-up — Full production-like stack: all profiles
 prod-up:
 	$(call STEP,prod: full stack)
 	$(MAKE) compose-up-default ENV=prod
@@ -161,6 +170,7 @@ prod-up:
 	$(MAKE) compose-up-quality ENV=prod
 	$(MAKE) compose-up-sentry ENV=prod
 	$(MAKE) compose-up-external-mocks ENV=prod
+	$(MAKE) compose-up-observability ENV=prod
 	$(MAKE) compose-up-web ENV=prod
 
 ## dev-down — Stop dev stack

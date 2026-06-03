@@ -41,17 +41,23 @@ stage-prod:
 
 # ── Persistent environment lifecycle ─────────────────────────────────────────
 
-## env-up-all — Start all four isolated environments and leave them running
-## Project names: react-dev, react-test, react-staging, react-prod
+## env-up-all — Start all four isolated environments with all profiles and leave them running
+## Project names: react-dev (Tilt core + Compose profiles), react-test, react-staging, react-prod
+## All environments are capability-identical: default+identity+quality+sentry+external-mocks+observability+web
 env-up-all:
 	$(call STEP,env-up-all: starting all environments)
-	@printf '$(BOLD)▶ Starting react-dev (Tilt)...$(RESET)\n'
+	@printf '$(BOLD)▶ Starting react-dev — Tilt core services...$(RESET)\n'
 	$(MAKE) tilt-up
-	@printf '$(BOLD)▶ Starting react-test (Compose)...$(RESET)\n'
+	@printf '$(BOLD)▶ Starting react-dev — additional profiles (quality/sentry/ext-mocks/observability)...$(RESET)\n'
+	$(MAKE) compose-up-quality ENV=dev
+	$(MAKE) compose-up-sentry ENV=dev
+	$(MAKE) compose-up-external-mocks ENV=dev
+	$(MAKE) compose-up-observability ENV=dev
+	@printf '$(BOLD)▶ Starting react-test (all profiles)...$(RESET)\n'
 	$(MAKE) test-up
-	@printf '$(BOLD)▶ Starting react-staging (Compose)...$(RESET)\n'
+	@printf '$(BOLD)▶ Starting react-staging (all profiles)...$(RESET)\n'
 	$(MAKE) staging-up
-	@printf '$(BOLD)▶ Starting react-prod (Compose)...$(RESET)\n'
+	@printf '$(BOLD)▶ Starting react-prod (all profiles)...$(RESET)\n'
 	$(MAKE) prod-up
 	$(call OK,all environments running: react-dev / react-test / react-staging / react-prod)
 
