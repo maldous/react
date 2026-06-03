@@ -1,0 +1,31 @@
+{
+  "stage": "prod",
+  "gitSha": "729df52",
+  "timestamp": "2026-06-03T11:21:20.944Z",
+  "envFile": ".env.prod",
+  "composeProject": "react-prod",
+  "profiles": [
+    "default"
+  ],
+  "dataPolicy": "preserve",
+  "testGroupsRun": [
+    "unit",
+    "contract",
+    "port",
+    "interface",
+    "integration",
+    "tenant",
+    "compose-smoke",
+    "external-smoke",
+    "auth-e2e",
+    "production-e2e"
+  ],
+  "testGroupsSkipped": [],
+  "e2eCommand": "make e2e-external PROD_BASE_URL=https://aldous.info && npm run test:e2e:prod",
+  "urlsChecked": [
+    "http://localhost:3004/healthz"
+  ],
+  "result": "passed",
+  "durationSeconds": 158,
+  "failureSummary": null
+}

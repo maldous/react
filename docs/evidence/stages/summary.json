@@ -1,0 +1,115 @@
+{
+  "generatedAt": "2026-06-03T11:21:20.967Z",
+  "stages": {
+    "dev": {
+      "stage": "dev",
+      "gitSha": "729df52",
+      "timestamp": "2026-06-03T11:15:36.515Z",
+      "envFile": ".env.dev",
+      "composeProject": "react-dev",
+      "profiles": [
+        "default"
+      ],
+      "dataPolicy": "destructive",
+      "testGroupsRun": [
+        "minimal-smoke",
+        "unit"
+      ],
+      "testGroupsSkipped": [],
+      "e2eCommand": "make e2e-internal",
+      "urlsChecked": [
+        "http://localhost:3001/healthz"
+      ],
+      "result": "passed",
+      "durationSeconds": 60,
+      "failureSummary": null
+    },
+    "test": {
+      "stage": "test",
+      "gitSha": "729df52",
+      "timestamp": "2026-06-03T11:18:10.740Z",
+      "envFile": ".env.test",
+      "composeProject": "react-test",
+      "profiles": [
+        "default"
+      ],
+      "dataPolicy": "destructive",
+      "testGroupsRun": [
+        "unit",
+        "contract",
+        "port",
+        "interface",
+        "compose-smoke",
+        "e2e-smoke"
+      ],
+      "testGroupsSkipped": [],
+      "e2eCommand": "make e2e-internal",
+      "urlsChecked": [
+        "http://localhost:3002/healthz"
+      ],
+      "result": "passed",
+      "durationSeconds": 155,
+      "failureSummary": null
+    },
+    "staging": {
+      "stage": "staging",
+      "gitSha": "729df52",
+      "timestamp": "2026-06-03T11:18:43.982Z",
+      "envFile": ".env.staging",
+      "composeProject": "react-staging",
+      "profiles": [
+        "default"
+      ],
+      "dataPolicy": "preserve",
+      "testGroupsRun": [
+        "integration",
+        "compose-smoke",
+        "external-smoke",
+        "e2e-smoke"
+      ],
+      "testGroupsSkipped": [
+        "tenant-data",
+        "destructive",
+        "production-customer-data"
+      ],
+      "e2eCommand": "make e2e-external PROD_BASE_URL=https://staging.aldous.info",
+      "urlsChecked": [
+        "http://localhost:3003/healthz"
+      ],
+      "result": "passed",
+      "durationSeconds": 34,
+      "failureSummary": null
+    },
+    "prod": {
+      "stage": "prod",
+      "gitSha": "729df52",
+      "timestamp": "2026-06-03T11:21:20.944Z",
+      "envFile": ".env.prod",
+      "composeProject": "react-prod",
+      "profiles": [
+        "default"
+      ],
+      "dataPolicy": "preserve",
+      "testGroupsRun": [
+        "unit",
+        "contract",
+        "port",
+        "interface",
+        "integration",
+        "tenant",
+        "compose-smoke",
+        "external-smoke",
+        "auth-e2e",
+        "production-e2e"
+      ],
+      "testGroupsSkipped": [],
+      "e2eCommand": "make e2e-external PROD_BASE_URL=https://aldous.info && npm run test:e2e:prod",
+      "urlsChecked": [
+        "http://localhost:3004/healthz"
+      ],
+      "result": "passed",
+      "durationSeconds": 158,
+      "failureSummary": null
+    }
+  }
+}

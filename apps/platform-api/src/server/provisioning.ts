@@ -544,7 +544,9 @@ async function createInitialMembership(
   await withSystemAdmin(pool, async (client) => {
     const schema = tenantSchemaIdentifier(client, organisationId);
     await client.query(`SET LOCAL search_path = ${schema}, public`);
-    await client.query("SET LOCAL app.current_tenant_id = $1", [organisationId]);
+    // Use set_config() to set app.current_tenant_id — SET LOCAL does not
+    // support bind parameters in PostgreSQL ($1 is treated as a literal).
+    await client.query("SELECT set_config('app.current_tenant_id', $1, true)", [organisationId]);
     // Look up the user in public.users (they may not exist yet ? JIT on first login)
     const { rows } = await client.query<{ id: string }>(
       "SELECT id FROM public.users WHERE email = $1",

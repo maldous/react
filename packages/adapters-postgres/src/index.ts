@@ -196,21 +196,23 @@ export async function withSystemAdmin<T>(
 // ---------------------------------------------------------------------------
 
 export async function createTenantSchema(pool: pg.Pool, organisationId: string): Promise<void> {
-  const client = await pool.connect();
-  try {
+  // Use withSystemAdmin to elevate privileges via SET LOCAL ROLE rls_bypass.
+  // The platform_app user does not have CREATE privilege on the database;
+  // only rls_bypass (via GRANT CREATE ON DATABASE) can create tenant schemas.
+  // The rls_bypass NOLOGIN role cannot be used directly — SET LOCAL ROLE
+  // within withSystemAdmin is the correct, pool-safe approach.
+  await withSystemAdmin(pool, async (client) => {
     const schema = tenantSchemaIdentifier(client, organisationId);
     await client.query(`CREATE SCHEMA IF NOT EXISTS ${schema}`);
-  } finally {
-    client.release();
-  }
+  });
 }
 
 export async function dropTenantSchema(pool: pg.Pool, organisationId: string): Promise<void> {
-  const client = await pool.connect();
-  try {
+  // Use withSystemAdmin so DROP SCHEMA runs as rls_bypass (the schema owner).
+  // The schema was created by rls_bypass via withSystemAdmin in createTenantSchema,
+  // so dropping it as platform_app would fail with a permission error.
+  await withSystemAdmin(pool, async (client) => {
     const schema = tenantSchemaIdentifier(client, organisationId);
     await client.query(`DROP SCHEMA IF EXISTS ${schema} CASCADE`);
-  } finally {
-    client.release();
-  }
+  });
 }

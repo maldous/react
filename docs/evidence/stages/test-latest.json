@@ -1,0 +1,27 @@
+{
+  "stage": "test",
+  "gitSha": "729df52",
+  "timestamp": "2026-06-03T11:18:10.740Z",
+  "envFile": ".env.test",
+  "composeProject": "react-test",
+  "profiles": [
+    "default"
+  ],
+  "dataPolicy": "destructive",
+  "testGroupsRun": [
+    "unit",
+    "contract",
+    "port",
+    "interface",
+    "compose-smoke",
+    "e2e-smoke"
+  ],
+  "testGroupsSkipped": [],
+  "e2eCommand": "make e2e-internal",
+  "urlsChecked": [
+    "http://localhost:3002/healthz"
+  ],
+  "result": "passed",
+  "durationSeconds": 155,
+  "failureSummary": null
+}

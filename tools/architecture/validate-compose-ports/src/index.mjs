@@ -93,17 +93,19 @@ for (const [port, uses] of allPorts) {
 
 const checkedEnvs = Object.keys(resolved);
 const skipped = ENVS.filter((e) => !checkedEnvs.includes(e));
+const skippedSuffix = skipped.length ? `; skipped: ${skipped.join(", ")}` : "";
 
 if (jsonMode) {
+  const summary =
+    errors.length === 0
+      ? `No port clashes detected (checked: ${checkedEnvs.join(", ")}${skippedSuffix}).`
+      : `${errors.length} port clash(es) found.`;
   const result = {
     tool: "validate-compose-ports",
     passed: errors.length === 0,
     errors,
     warnings,
-    summary:
-      errors.length === 0
-        ? `No port clashes detected (checked: ${checkedEnvs.join(", ")}${skipped.length ? `; skipped: ${skipped.join(", ")}` : ""}).`
-        : `${errors.length} port clash(es) found.`,
+    summary,
   };
   process.stdout.write(JSON.stringify(result, null, 2) + "\n");
   process.exit(errors.length > 0 ? 1 : 0);
@@ -118,6 +120,4 @@ if (errors.length > 0) {
 if (warnings.length > 0) {
   for (const w of warnings) console.warn(`  ⚠ ${w}`);
 }
-console.log(
-  `validate-compose-ports: passed (checked: ${checkedEnvs.join(", ")}${skipped.length ? `; skipped: ${skipped.join(", ")}` : ""})`
-);
+console.log(`validate-compose-ports: passed (checked: ${checkedEnvs.join(", ")}${skippedSuffix})`);

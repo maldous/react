@@ -194,6 +194,7 @@ resource "keycloak_openid_client_service_account_realm_role" "provisioner_create
   role = "create-realm"
 }
 
+
 # ---------------------------------------------------------------------------
 # platform-claims client scope ? organisationId claim mapper
 #
@@ -429,4 +430,60 @@ resource "keycloak_user_roles" "sysadmin_roles" {
   user_id  = keycloak_user.sysadmin[0].id
 
   role_ids = [keycloak_role.system_admin.id]
+}
+
+# ---------------------------------------------------------------------------
+# Authorization resources and policies (UMA 2.0) — ADR-ACT-0145
+#
+# Defines protected resources managed by the BFF client's Authorization
+# Services. Resources are evaluated at runtime with ENFORCING policy mode.
+# Role-based policies grant system-admin access to global admin resources.
+# ---------------------------------------------------------------------------
+
+# admin:tenants — global tenant provisioning resource
+resource "keycloak_openid_client_authorization_resource" "admin_tenants" {
+  resource_server_id = keycloak_openid_client.bff.resource_server_id
+  realm_id           = keycloak_realm.platform.id
+  name               = "admin:tenants"
+  display_name       = "Admin — Tenant Provisioning"
+  scopes             = ["create", "read"]
+}
+
+# Role-based policy — system-admin role grants access
+resource "keycloak_openid_client_role_policy" "system_admin" {
+  resource_server_id = keycloak_openid_client.bff.resource_server_id
+  realm_id           = keycloak_realm.platform.id
+  name               = "system-admin-role-policy"
+  description        = "Grants access to users with the system-admin realm role"
+  type               = "role"
+  logic              = "POSITIVE"
+  decision_strategy  = "UNANIMOUS"
+
+  role {
+    id       = keycloak_role.system_admin.id
+    required = true
+  }
+}
+
+# Scope-based permissions — bind resource + scope to role policy
+resource "keycloak_openid_client_authorization_permission" "admin_tenants_create" {
+  resource_server_id = keycloak_openid_client.bff.resource_server_id
+  realm_id           = keycloak_realm.platform.id
+  name               = "admin:tenants-create-permission"
+  description        = "System-admin may create new tenants"
+
+  resources = [keycloak_openid_client_authorization_resource.admin_tenants.id]
+  scopes    = ["create"]
+  policies  = [keycloak_openid_client_role_policy.system_admin.id]
+}
+
+resource "keycloak_openid_client_authorization_permission" "admin_tenants_read" {
+  resource_server_id = keycloak_openid_client.bff.resource_server_id
+  realm_id           = keycloak_realm.platform.id
+  name               = "admin:tenants-read-permission"
+  description        = "System-admin may read tenant resource configurations"
+
+  resources = [keycloak_openid_client_authorization_resource.admin_tenants.id]
+  scopes    = ["read"]
+  policies  = [keycloak_openid_client_role_policy.system_admin.id]
 }

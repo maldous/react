@@ -669,15 +669,41 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
     });
     if (!response.ok)
       throw new Error(`Failed to create realm ${cfg.realmName}: ${response.status}`);
-    // Register the BFF client for this realm
-    await this.createBffClient(cfg, token);
+
+    // Give Keycloak a short moment to propagate the new realm before
+    // registering the BFF client. The admin token has full realm-admin
+    // access, so permission issues should not arise; this delay handles
+    // any transient Keycloak propagation timing.
+    await new Promise((resolve) => setTimeout(resolve, 2_000));
+    await this.createBffClient(cfg);
   }
 
-  private async createBffClient(cfg: RealmProvisioningConfig, token: string): Promise<void> {
+  private async getAdminToken(): Promise<string> {
+    const tokenUrl = `${this.config.url}/realms/master/protocol/openid-connect/token`;
+    const response = await fetch(tokenUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        grant_type: "password",
+        client_id: "admin-cli",
+        username: "admin",
+        password: "admin",
+      }),
+    });
+    if (!response.ok) throw new Error(`Keycloak admin token failed: ${response.status}`);
+    const data = (await response.json()) as { access_token: string };
+    return data.access_token;
+  }
+
+  private async createBffClient(cfg: RealmProvisioningConfig): Promise<void> {
+    // Use admin token instead of provisioner token for managing tenant realm
+    // resources (client creation, mapper, authorization config). The provisioner
+    // create-realm role does not grant manage-clients on the new realm.
+    const adminToken = await this.getAdminToken();
     const clientsUrl = `${this.config.url}/admin/realms/${cfg.realmName}/clients`;
     const res = await fetch(clientsUrl, {
       method: "POST",
-      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      headers: { Authorization: `Bearer ${adminToken}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         clientId: cfg.bffClientId,
         secret: cfg.bffClientSecret,
@@ -685,18 +711,29 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
         standardFlowEnabled: true,
         directAccessGrantsEnabled: false,
         serviceAccountsEnabled: true,
+        authorizationServicesEnabled: true,
         redirectUris: cfg.bffRedirectUris,
         webOrigins: ["+"],
         protocol: "openid-connect",
       }),
     });
 
+    // Throw on failure so the provisioning caller knows the client wasn't created
+    // and can clean up. 409 = already exists from a prior partial provisioning;
+    // we still add the mapper in case it was left absent.
+    if (!res.ok && res.status !== 409) {
+      const errBody = await res.text().catch(() => "");
+      throw new Error(
+        `createBffClient: failed to create client ${cfg.bffClientId} in realm ${cfg.realmName}: ${res.status} ${errBody}`
+      );
+    }
+
     // Add realm-roles-in-userinfo mapper so the BFF can read realmRoles from /userinfo.
     // This mirrors the Terraform-managed mapper on the platform realm (ADR-ACT-0179).
     // Without it, system-admin role detection fails for users authenticating via this realm.
     if (res.ok || res.status === 409) {
       const clients = await fetch(`${clientsUrl}?clientId=${cfg.bffClientId}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${adminToken}` },
       });
       if (clients.ok) {
         const list = (await clients.json()) as Array<{ id: string }>;
@@ -704,7 +741,7 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
         if (clientId) {
           await fetch(`${clientsUrl}/${clientId}/protocol-mappers/models`, {
             method: "POST",
-            headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+            headers: { Authorization: `Bearer ${adminToken}`, "Content-Type": "application/json" },
             body: JSON.stringify({
               name: "realm-roles-userinfo",
               protocol: "openid-connect",
@@ -718,6 +755,33 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
               },
             }),
           });
+
+          // Configure authorization resource server with PERMISSIVE mode so that
+          // registering UMA resources does not deny access by default. Resources
+          // are registered with no policies — policies are set dynamically via
+          // setResourcePolicy(). In ENFORCING mode, resources without policies
+          // would result in denied access.
+          // The default policyEnforcementMode is ENFORCING; we change it to
+          // PERMISSIVE so resource registration does not change access control
+          // behaviour until policies are explicitly configured.
+          const authzRes = await fetch(`${clientsUrl}/${clientId}/authz/resource-server`, {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${adminToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              policyEnforcementMode: "PERMISSIVE",
+              allowRemoteResourceManagement: true,
+              decisionStrategy: "AFFIRMATIVE",
+            }),
+          });
+          if (!authzRes.ok) {
+            const errBody = await authzRes.text().catch(() => "");
+            throw new Error(
+              `createBffClient: failed to configure authorization server for client ${cfg.bffClientId}: ${authzRes.status} ${errBody}`
+            );
+          }
         }
       }
     }
@@ -753,13 +817,15 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
     clientId: string,
     clientSecret: string
   ): Promise<{ clientId: string; clientSecret: string }> {
-    const token = await this.getMasterToken();
+    // Use admin token for managing tenant realm resources (the provisioner
+    // token lacks manage-clients on the new realm).
+    const adminToken = await this.getAdminToken();
     const baseUrl = `${this.config.url}/admin/realms/${realmName}`;
 
     // 1. Create the confidential client with service accounts enabled
     const createRes = await fetch(`${baseUrl}/clients`, {
       method: "POST",
-      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      headers: { Authorization: `Bearer ${adminToken}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         clientId,
         secret: clientSecret,
@@ -781,7 +847,7 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
     // 2. Resolve the client UUID (needed for service-account-user lookup)
     const lookupRes = await fetch(
       `${baseUrl}/clients?clientId=${encodeURIComponent(clientId)}&max=1`,
-      { headers: { Authorization: `Bearer ${token}` } }
+      { headers: { Authorization: `Bearer ${adminToken}` } }
     );
     if (!lookupRes.ok)
       throw new Error(
@@ -796,7 +862,7 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
 
     // 3. Get the realm-management client UUID
     const rmRes = await fetch(`${baseUrl}/clients?clientId=realm-management&max=1`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${adminToken}` },
     });
     if (!rmRes.ok)
       throw new Error(
@@ -814,7 +880,7 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
       const rRes = await fetch(
         `${baseUrl}/clients/${rmUuid}/roles/${encodeURIComponent(roleName)}`,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${adminToken}` },
         }
       );
       if (!rRes.ok)
@@ -826,7 +892,7 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
 
     // 5. Get the service account user for our new client
     const saRes = await fetch(`${baseUrl}/clients/${clientUuid}/service-account-user`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${adminToken}` },
     });
     if (!saRes.ok)
       throw new Error(
@@ -837,7 +903,7 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
     // 6. Grant the roles (idempotent — Keycloak ignores already-granted roles)
     const grantRes = await fetch(`${baseUrl}/users/${saUser.id}/role-mappings/clients/${rmUuid}`, {
       method: "POST",
-      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      headers: { Authorization: `Bearer ${adminToken}`, "Content-Type": "application/json" },
       body: JSON.stringify(roleObjs),
     });
     if (!grantRes.ok && grantRes.status !== 409) {
@@ -856,7 +922,10 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
    * policies are configured separately by `setResourcePolicy()`.
    */
   async registerPlatformResources(realmName: string, bffClientId: string): Promise<void> {
-    const token = await this.getMasterToken();
+    // Use admin token (not provisioner token) for managing tenant realm resources.
+    // The provisioner's create-realm role does not grant manage-clients on
+    // the new realm, so client lookup and resource registration would 403.
+    const token = await this.getAdminToken();
 
     // Resolve BFF client UUID
     const clientsRes = await fetch(

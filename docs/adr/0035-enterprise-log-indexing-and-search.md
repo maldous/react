@@ -1,8 +1,16 @@
-# ADR-0032 — Enterprise Log Indexing and Search
+# ADR-0035: Enterprise Log Indexing and Search
 
-**Status:** Accepted  
-**Date:** 2026-06-02  
-**Deciders:** Architecture owner / technical lead
+## Status
+
+Accepted
+
+## Date
+
+2026-06-02
+
+## Decision owner
+
+Architecture owner / technical lead
 
 ---
 

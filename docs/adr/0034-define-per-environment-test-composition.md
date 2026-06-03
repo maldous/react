@@ -146,62 +146,76 @@ No config targets multiple directories. Each config declares `testDir` scoped to
 
 ### 5. Stage target implementation
 
-Each stage target in `Makefile` composes the tests listed in section 2 above:
-
-**`stage-dev`:**
+Each stage target in `make/stages.mk` delegates to the policy-driven stage runner
+(`scripts/stages/run-stage.sh`) which reads `env/stage-policy.yaml` to determine the
+executor (Tilt or Compose), data policy, auth mode, teardown behaviour, and required
+test groups for each environment:
 
 ```makefile
 stage-dev:
-    compose-down-reset ENV=dev
-    tilt up
-    db:migrate && db:seed
-    run-stage-tests ENV=dev
-    e2e-internal                          # internal E2E only
-    tilt down
-    compose-down-reset ENV=dev
-```
+    bash scripts/stages/run-stage.sh dev
 
-**`stage-test`:**
-
-```makefile
 stage-test:
-    compose-down-reset ENV=test
-    test-up
-    db:migrate && db:seed
-    run-stage-tests ENV=test
-    e2e-internal                          # internal E2E (common with dev)
-    run-stage-e2e ENV=test                # external smoke against Compose stack
-    compose-down-reset ENV=test
-```
+    bash scripts/stages/run-stage.sh test
 
-**`stage-staging`:**
-
-```makefile
 stage-staging:
-    compose-down ENV=staging
-    staging-up
-    external-caddy-up
-    db:migrate
-    run-stage-tests ENV=staging
-    e2e-external                          # full external E2E via Cloudflare
-    external-caddy-down
-    compose-down ENV=staging
-```
+    bash scripts/stages/run-stage.sh staging
 
-**`stage-prod`:**
-
-```makefile
 stage-prod:
-    compose-down ENV=prod
-    prod-up
-    external-caddy-up
-    db:migrate
-    run-stage-tests ENV=prod
-    e2e-external                          # full external E2E via Cloudflare
-    npm run test:e2e:prod                 # exhaustive prod tests
-    external-caddy-down
-    compose-down ENV=prod
+    bash scripts/stages/run-stage.sh prod
 ```
+
+The policy file (`env/stage-policy.yaml`) defines per-environment configuration:
+
+```yaml
+# stage-policy.yaml — example structure
+dev:
+  executor: tilt
+  dataPolicy: destructive
+  authMode: fixture
+  teardownDefault: true
+  requiredTests:
+    - e2e-smoke
+    # plus others via run-env-tests.sh policy groups
+```
+
+The `run-stage.sh` script:
+
+1. Reads policy for the target stage.
+2. Sources the environment file (`.env.${STAGE}`).
+3. Enforces policy guards (no fixture auth in staging/prod, no destructive ops in preserve stages).
+4. Runs preflight checks.
+5. Resets data (destructive stages) or preserves (preserving stages).
+6. Starts the executor (Tilt) or Compose stack.
+7. Waits for readiness.
+8. Runs migrations and seed (destructive stages).
+9. Executes test groups via `scripts/tests/run-env-tests.sh`, which reads the stage policy's
+   `requiredTests` list and dispatches each group to the appropriate test runner.
+10. Runs the E2E equivalent (`e2e-internal` for dev/test, `e2e-external` for staging/prod).
+11. Tears down the stack (unless `teardownDefault: false` or `KEEP_STACKS_UP=true`).
+12. Writes stage evidence to `docs/evidence/stages/`.
+
+Test groups are dispatched by `scripts/tests/run-env-tests.sh` which receives the
+stage name and a CSV of required test groups from the policy file:
+
+| Test group      | Runner                                                                     | Stages        |
+| --------------- | -------------------------------------------------------------------------- | ------------- |
+| `unit`          | `npm run test:platform-api` + `npm run test:frontend:run`                  | Dev, Test     |
+| `contract`      | `npm run test:architecture`                                                | Dev, Test     |
+| `port`          | `node tools/architecture/validate-compose-ports/src/index.mjs`             | Dev, Test     |
+| `interface`     | `bash scripts/smoke/compose-smoke.sh`                                      | Dev, Test     |
+| `compose-smoke` | `npm run test:compose`                                                     | Dev, Test     |
+| `integration`   | `make run-stage-tests`                                                     | Staging, Prod |
+| `e2e-smoke`     | `make e2e-internal` (dev/test) or `make e2e-external-smoke` (staging/prod) | All           |
+
+For dev and test stages, `e2e-smoke` runs internal fixture-based E2E tests via
+`playwright.internal.config.ts`. For the test stage specifically, the script:
+
+- Cleans up stale platform-api/Vite processes from previous stages.
+- Uses separate ports (`PLATFORM_API_PORT=3012`, `APP_PORT=5183`) to avoid conflict
+  with the Compose-started platform-api (on port 3002 for test).
+- Passes `LOCAL_FIXTURE_SESSION=tenant-admin` to ensure fresh platform-api processes
+  start with the correct fixture session configuration.
 
 ## Rationale
 
