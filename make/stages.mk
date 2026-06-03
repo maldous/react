@@ -46,13 +46,8 @@ stage-prod:
 ## All environments are capability-identical: default+identity+quality+sentry+external-mocks+observability+web
 env-up-all:
 	$(call STEP,env-up-all: starting all environments)
-	@printf '$(BOLD)▶ Starting react-dev — Tilt core services...$(RESET)\n'
+	@printf '$(BOLD)▶ Starting react-dev (Tilt — all profiles via Tiltfile)...$(RESET)\n'
 	$(MAKE) tilt-up
-	@printf '$(BOLD)▶ Starting react-dev — additional profiles (quality/sentry/ext-mocks/observability)...$(RESET)\n'
-	$(MAKE) compose-up-quality ENV=dev
-	$(MAKE) compose-up-sentry ENV=dev
-	$(MAKE) compose-up-external-mocks ENV=dev
-	$(MAKE) compose-up-observability ENV=dev
 	@printf '$(BOLD)▶ Starting react-test (all profiles)...$(RESET)\n'
 	$(MAKE) test-up
 	@printf '$(BOLD)▶ Starting react-staging (all profiles)...$(RESET)\n'
