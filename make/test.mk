@@ -16,7 +16,7 @@ run-stage-tests:
 		POSTGRES_URL="$$_pg_url" POSTGRES_APP_URL="$$_pg_app_url" REDIS_URL="$$_rd_url" \
 		npm run test:platform-api:unit-safe; \
 	fi
-	npm run test:frontend:run
+	NODE_ENV=test npm run test:frontend:run
 	$(call OK,stage tests passed for $(ENV))
 
 ## e2e-internal — Internal E2E: fixture session against localhost (Vite dev server)
