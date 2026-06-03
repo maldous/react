@@ -1,18 +1,24 @@
 .PHONY: run-stage-tests e2e-internal e2e-internal-build test-real-auth
 
 ## run-stage-tests — Run the standard test suite against the active environment.
-## Always derives URLs from .env.$(ENV). For staging/prod (no LOCAL_FIXTURE_SESSION),
-## runs test:platform-api:unit-safe (unit + non-fixture substrate tests) instead of
-## the full suite, since fixture organisations don't exist in unseeded environments.
+## Always derives URLs from .env.$(ENV) to avoid cross-env contamination from root .env.
+## Test selection:
+##   dev/test (LOCAL_FIXTURE_SESSION set):  full test:platform-api (254 tests, fixture org in DB)
+##   prod    (NODE_ENV=production):          full test:platform-api (254 tests, fixture org seeded)
+##   staging (preserve, no fixture session): test:platform-api:unit-safe (206 tests —
+##            10 substrate tests need fixture-org UUID which staging never seeds)
+## NODE_ENV=test is forced for the frontend suite to protect against NODE_ENV=production
+## from .env.prod breaking Vitest.
 run-stage-tests:
 	$(call STEP,run-stage-tests ($(ENV)))
 	@$(call CONN_URLS,.env.$(ENV)); \
 	_fixture="$$(grep -oP 'LOCAL_FIXTURE_SESSION=\K\S+' .env.$(ENV) 2>/dev/null | head -1 || true)"; \
-	if [ -n "$$_fixture" ]; then \
+	_node_env="$$(grep -oP 'NODE_ENV=\K\S+' .env.$(ENV) 2>/dev/null | head -1 || true)"; \
+	if [ -n "$$_fixture" ] || [ "$$_node_env" = "production" ]; then \
 		POSTGRES_URL="$$_pg_url" POSTGRES_APP_URL="$$_pg_app_url" REDIS_URL="$$_rd_url" \
 		npm run test:platform-api; \
 	else \
-		printf '$(YELLOW)⚠ No fixture session — running unit-safe subset (staging/prod)$(RESET)\n'; \
+		printf '$(YELLOW)⚠ Staging: running unit-safe subset (fixture-org absent in staging DB)$(RESET)\n'; \
 		POSTGRES_URL="$$_pg_url" POSTGRES_APP_URL="$$_pg_app_url" REDIS_URL="$$_rd_url" \
 		npm run test:platform-api:unit-safe; \
 	fi
