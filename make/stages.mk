@@ -80,8 +80,8 @@ env-status:
 	@printf '\n'
 	$(call OK,env-status complete)
 
-## promote — Run the full confidence ladder without tearing down any environment
-## Assumes environments are already running (env-up-all). Each stage validates
-## its environment and leaves it running. Data is reset for destructive stages.
+## promote — Run the full confidence ladder: dev → test → staging → prod.
+## Each stage starts or refreshes its own environment according to stage-policy.yaml.
+## Environments remain running after completion (teardownDefault: false).
 promote: stage-dev stage-test stage-staging stage-prod
 	$(call OK,promotion complete — all environments validated and running)
