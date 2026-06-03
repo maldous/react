@@ -30,8 +30,13 @@ pre-commit:
 pre-push:
   parallel: false
   jobs:
+    # unit-safe: unit tests + substrate tests that start their own servers
+    # (api-pipeline, health-handlers, observability-smoke). No running Postgres
+    # or Redis required — substrate tests use dependency injection / in-process
+    # servers. Full test:platform-api (including fixture-DB substrate tests)
+    # runs in CI and via 'make run-stage-tests' against a live environment.
     - name: platform-api-tests
-      run: npm run test:platform-api
+      run: npm run test:platform-api:unit-safe
 
     - name: frontend-tests
-      run: npm run test:frontend:run
+      run: NODE_ENV=test npm run test:frontend:run
