@@ -151,14 +151,12 @@ if [ "$STAGE_RESULT" -eq 0 ]; then
         # E2E owned by e2e-smoke in requiredTests — no second invocation here.
         :
         ;;
-      staging)
-        PROD_BASE_URL="${PROD_BASE_URL:-https://staging.aldous.info}" \
+      staging|prod)
+        _web_port="$(grep -oP 'WEB_HTTP_PORT=\K\d+' ".env.${STAGE}" 2>/dev/null | head -1 || true)"
+        _web_port="${_web_port:-80}"
+        PROD_BASE_URL="${PROD_BASE_URL:-http://localhost:${_web_port}}" \
         make e2e-external || STAGE_RESULT=1
-        ;;
-      prod)
-        PROD_BASE_URL="${PROD_BASE_URL:-https://aldous.info}" \
-        make e2e-external || STAGE_RESULT=1
-        [ "$STAGE_RESULT" -eq 0 ] && { npm run test:e2e:prod || STAGE_RESULT=1; }
+        [ "$STAGE" = "prod" ] && [ "$STAGE_RESULT" -eq 0 ] && { npm run test:e2e:prod || STAGE_RESULT=1; }
         ;;
     esac
 fi

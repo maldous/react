@@ -51,6 +51,11 @@ run_group() {
     _pg_url="postgresql://platform:platformpassword@localhost:${_pg_port}/platform"
     _pg_app_url="postgresql://platform_app:platformapppassword@localhost:${_pg_port}/platform"
     _rd_url="redis://localhost:${_rd_port}"
+    # Derive local base URL from WEB_HTTP_PORT — uses the compose stack directly,
+    # avoiding DNS + external-caddy dependency (staging.aldous.info → cloudflare → local).
+    _web_port="$(grep -oP 'WEB_HTTP_PORT=\K\d+' ".env.${STAGE}" 2>/dev/null | head -1 || true)"
+    _web_port="${_web_port:-80}"
+    _app_url="http://localhost:${_web_port}"
 
     case "$group" in
       minimal-smoke)
@@ -106,15 +111,15 @@ run_group() {
               make e2e-internal ENV="$STAGE"
             ;;
           *)
-            make e2e-external-smoke
+            PROD_BASE_URL="$_app_url" make e2e-external-smoke
             ;;
         esac
         ;;
       external-smoke)
-        make e2e-external-smoke
+        PROD_BASE_URL="$_app_url" make e2e-external-smoke
         ;;
       auth-e2e)
-        make e2e-external-auth
+        PROD_BASE_URL="$_app_url" make e2e-external-auth
         ;;
       production-e2e)
         npm run test:e2e:prod
