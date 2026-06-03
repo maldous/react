@@ -17,7 +17,11 @@
 
 os.environ['KC_HOSTNAME'] = 'http://dev.localhost/kc'
 
-docker_compose('./compose.yaml')
+# project_name='react-dev' aligns Tilt with docker/compose-wrapper.sh (--project-name react-dev).
+# Without this, Tilt uses compose.yaml's `name: react-platform`, which conflicts with the
+# react-dev containers started by the local_resource entries (make compose-up-* ENV=dev).
+# Both would try to bind the same ports → Tilt's docker_compose startup fails.
+docker_compose('./compose.yaml', project_name='react-dev')
 
 dc_resource('postgres',       labels=['infra'])
 dc_resource('redis',          labels=['infra'])
