@@ -127,12 +127,21 @@ if [ "$STAGE_RESULT" -eq 0 ] && [ -n "$REQUIRED_CSV" ]; then
         || STAGE_RESULT=1
 fi
 
-# ── 10. E2E equivalent ────────────────────────────────────────────────────────
+# ── 10. E2E equivalent (staging/prod only) ───────────────────────────────────
+#
+# dev/test: e2e-smoke in requiredTests already invokes e2e-internal with
+# proper port isolation (see run-env-tests.sh). Calling it again here would
+# cause a double-invocation that hits port conflicts with the compose API.
+#
+# staging/prod: run-stage-tests.sh runs e2e-external-smoke via e2e-smoke /
+# external-smoke groups, but step 10 additionally runs the full e2e-external
+# suite (all specs, not just smoke) for broader pre-merge confidence.
 
 if [ "$STAGE_RESULT" -eq 0 ]; then
     case "$STAGE" in
       dev|test)
-        make e2e-internal ENV="$STAGE" || STAGE_RESULT=1
+        # E2E owned by e2e-smoke in requiredTests — no second invocation here.
+        :
         ;;
       staging)
         PROD_BASE_URL="${PROD_BASE_URL:-https://staging.aldous.info}" \
