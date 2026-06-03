@@ -38,18 +38,20 @@ printf 'Starting Tilt...\n'
 tilt up &
 echo $! > .tilt.pid
 
-printf 'Waiting for platform-api at http://localhost:%s/healthz (up to 120s)...\n' "$_api_port"
-timeout 120 bash -c "
+# 360s: postgres initialises from scratch while SonarQube, Sentry, and Keycloak
+# all compete for it concurrently. Observed startup time ~225s on this machine.
+printf 'Waiting for platform-api at http://localhost:%s/healthz (up to 360s)...\n' "$_api_port"
+timeout 360 bash -c "
     _pid=\$(cat .tilt.pid 2>/dev/null)
     until curl -fsS http://localhost:${_api_port}/healthz >/dev/null 2>&1; do
         kill -0 \"\$_pid\" 2>/dev/null || { printf '${RED}✗ Tilt exited unexpectedly${RESET}\n'; exit 1; }
         sleep 2
     done
-" || die "platform-api not healthy after 120s"
+" || die "platform-api not healthy after 360s"
 
-printf 'Waiting for Vite dev server at http://localhost:5173/ (up to 120s)...\n'
-timeout 120 bash -c \
+printf 'Waiting for Vite dev server at http://localhost:5173/ (up to 360s)...\n'
+timeout 360 bash -c \
     "until curl -fsS http://localhost:5173/ >/dev/null 2>&1; do sleep 2; done" \
-    || die "Vite dev server not healthy after 120s"
+    || die "Vite dev server not healthy after 360s"
 
 printf '%s✓ Tilt dev stack healthy (API + Vite)%s\n' "$GREEN" "$RESET"
