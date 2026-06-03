@@ -36,11 +36,12 @@ SKIP  = @printf '$(YELLOW)↷ %s$(RESET)\n' "$(1)"
 # Reads KEYCLOAK_PORT and SONAR_PORT from .env.$(ENV) to spare JVM services.
 JVM_PORTS_EXCLUDE = _jvm_ports="$$(grep -oP '(?:KEYCLOAK|SONAR)_PORT=\K\d+' .env.$(ENV) 2>/dev/null | tr '\n' '|' | sed 's/|$$//')"
 
-# CONN_URLS(envfile) — sets _pg_port, _rd_port, _pg_url, _rd_url
+# CONN_URLS(envfile) — sets _pg_port, _rd_port, _pg_url, _pg_app_url, _rd_url
 define CONN_URLS
 _pg_port="$$(grep -oP 'POSTGRES_PORT=\K\d+' $(1) 2>/dev/null | head -1)"; _pg_port=$${_pg_port:-5433}; \
 _rd_port="$$(grep -oP 'REDIS_PORT=\K\d+' $(1) 2>/dev/null | head -1)"; _rd_port=$${_rd_port:-6379}; \
 _pg_url="postgresql://platform:platformpassword@localhost:$${_pg_port}/platform"; \
+_pg_app_url="postgresql://platform_app:platformapppassword@localhost:$${_pg_port}/platform"; \
 _rd_url="redis://localhost:$${_rd_port}"
 endef
 

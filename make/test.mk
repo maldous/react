@@ -1,20 +1,21 @@
 .PHONY: run-stage-tests e2e-internal e2e-internal-build test-real-auth
 
 ## run-stage-tests — Run the standard test suite against the active environment
-## Requires: postgres + platform-api to be reachable.
-## Accepts environment overrides: POSTGRES_URL, REDIS_URL.
+## Always derives connection URLs from .env.$(ENV) to avoid cross-env contamination
+## from the root .env (e.g. REDIS_URL=localhost:6379 overriding staging's port 6381).
 run-stage-tests:
 	$(call STEP,run-stage-tests ($(ENV)))
 	@$(call CONN_URLS,.env.$(ENV)); \
-	POSTGRES_URL="$(or $(POSTGRES_URL),$$_pg_url)" \
-	REDIS_URL="$(or $(REDIS_URL),$$_rd_url)" \
+	POSTGRES_URL="$$_pg_url" \
+	POSTGRES_APP_URL="$$_pg_app_url" \
+	REDIS_URL="$$_rd_url" \
 	npm run test:platform-api
 	npm run test:frontend:run
 	$(call OK,stage tests passed for $(ENV))
 
 ## e2e-internal — Internal E2E: fixture session against localhost (Vite dev server)
 ## playwright.internal.config.ts starts platform-api + Vite dev server automatically.
-## Accepts POSTGRES_URL and REDIS_URL overrides (e.g. from stage-test).
+## URLs always derived from .env.$(ENV) to avoid cross-env contamination.
 e2e-internal:
 	$(call STEP,e2e:internal \(localhost fixture session\))
 	@if ! npx playwright --version > /dev/null 2>&1; then \
@@ -22,8 +23,9 @@ e2e-internal:
 		exit 1; \
 	fi
 	@$(call CONN_URLS,.env.$(ENV)); \
-	POSTGRES_URL="$(or $(POSTGRES_URL),$$_pg_url)" \
-	REDIS_URL="$(or $(REDIS_URL),$$_rd_url)" \
+	POSTGRES_URL="$$_pg_url" \
+	POSTGRES_APP_URL="$$_pg_app_url" \
+	REDIS_URL="$$_rd_url" \
 	LOCAL_FIXTURE_SESSION=tenant-admin npx playwright test --config playwright.internal.config.ts
 	$(call OK,internal E2E passed)
 
