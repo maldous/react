@@ -1,6 +1,11 @@
 // Grafana Alloy config for platform log collection.
-// Discovers containers in the react-platform compose project,
-// parses Pino JSON fields, and forwards to Loki.
+// Discovers containers belonging to this environment's compose project,
+// parses Pino JSON fields, and forwards to the co-located Loki instance.
+//
+// Isolation: each environment (react-dev, react-test, react-staging, react-prod)
+// runs its own Alloy container. COMPOSE_PROJECT_FILTER env var controls which
+// Docker project labels are accepted, ensuring logs from different environments
+// never mix even when all four stacks run concurrently.
 //
 // Label policy (ADR-0032):
 //   LOW-cardinality → Loki labels:    service, environment, level
@@ -21,10 +26,15 @@ discovery.docker "containers" {
 discovery.relabel "platform_containers" {
   targets = discovery.docker.containers.targets
 
-  // Keep only containers from this compose project
+  // Keep only containers from this environment's compose project(s).
+  // COMPOSE_PROJECT_FILTER is a regex set per-environment in .env.<env>:
+  //   dev:     "react(-dev)?"       — matches Tilt project "react" and wrapper "react-dev"
+  //   test:    "react-test"
+  //   staging: "react-staging"
+  //   prod:    "react-prod"
   rule {
     source_labels = ["__meta_docker_container_label_com_docker_compose_project"]
-    regex         = "react-platform"
+    regex         = sys.env("COMPOSE_PROJECT_FILTER")
     action        = "keep"
   }
 
@@ -118,7 +128,9 @@ loki.write "platform_loki" {
     url = "http://loki:3100/loki/api/v1/push"
   }
 
+  // platform label is per-environment so Grafana queries can filter by env
+  // even if multiple Loki instances share a dashboard template.
   external_labels = {
-    platform = "enterprise-react-platform",
+    platform = sys.env("PLATFORM_ENV"),
   }
 }

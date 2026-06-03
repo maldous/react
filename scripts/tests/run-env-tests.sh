@@ -81,10 +81,15 @@ run_group() {
         # staging/prod — never truncate real data in preserve environments.
         _data_policy="destructive"
         [ "$STAGE" = "staging" ] || [ "$STAGE" = "prod" ] && _data_policy="preserve"
+        # COMPOSE_PROJECT: container name prefix used by compose-smoke to inspect health.
+        # Dev Tilt containers use project "react" (e.g. react-postgres-1).
+        # All others use the react-<env> project name from compose-wrapper.sh.
+        _compose_proj="react-${STAGE}"
+        [ "$STAGE" = "dev" ] && _compose_proj="react"
         POSTGRES_URL="$_pg_url" \
         POSTGRES_APP_URL="$_pg_app_url" \
         REDIS_URL="$_rd_url" \
-        COMPOSE_PROJECT="$STAGE" \
+        COMPOSE_PROJECT="$_compose_proj" \
         DATA_POLICY="$_data_policy" \
         MINIO_ENDPOINT="http://localhost:${_minio_port}" \
         CLICKHOUSE_HTTP="http://localhost:${_ch_port}" \

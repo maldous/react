@@ -497,6 +497,10 @@ services:
       - "${ALLOY_PORT:-12345}:12345"
     environment:
       PLATFORM_ENV: ${PLATFORM_ENV:-development}
+      # Per-environment container discovery filter — set in .env.<env> files.
+      # Regex matching com.docker.compose.project label to isolate this env's logs.
+      # dev: "react(-dev)?"  test: "react-test"  staging: "react-staging"  prod: "react-prod"
+      COMPOSE_PROJECT_FILTER: ${COMPOSE_PROJECT_FILTER:-react}
     volumes:
       - ./docker/alloy/config.alloy:/etc/alloy/config.alloy:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro

@@ -43,18 +43,27 @@ architecture:
 	$(ORCHESTRATOR) all --no-reports --strict
 	$(call OK,all architecture gates passed)
 
-## sonar — SonarQube scan + quality gate (requires SONAR_TOKEN)
+## sonar — SonarQube scan + quality gate, isolated per ENV (requires SONAR_TOKEN)
+## Project key: maldous-react-$(ENV)  Host: SONAR_HOST_URL from .env.$(ENV)
 sonar:
-	$(call STEP,sonar)
+	$(call STEP,sonar ($(ENV)))
 	@if [ -z "$$SONAR_TOKEN" ]; then \
 		printf '$(YELLOW)⚠ SONAR_TOKEN not set — skipping Sonar scan.\n'; \
 		printf '  Set SONAR_TOKEN in .env or environment to enable.\n$(RESET)'; \
 	else \
+		_sonar_url="$$(grep -oP 'SONAR_HOST_URL=\K\S+' .env.$(ENV) 2>/dev/null | head -1 || true)"; \
+		_sonar_url="$${_sonar_url:-http://localhost:9064}"; \
 		$(COMPOSE_CMD) --profile quality up -d --wait --wait-timeout 420 sonarqube 2>/dev/null \
 			|| docker compose --profile quality up -d --wait --wait-timeout 420 sonarqube \
 			|| { printf '$(RED)✗ SonarQube did not become healthy$(RESET)\n'; exit 1; }; \
-		printf '$(GREEN)SonarQube is UP.$(RESET)\n'; \
-		npm run sonar:clean \
+		printf '$(GREEN)SonarQube is UP at %s (project: maldous-react-$(ENV))$(RESET)\n' "$$_sonar_url"; \
+		npm run test:coverage && \
+		npm run coverage:normalize && \
+		SONAR_HOST_URL="$$_sonar_url" sonar-scanner \
+			-Dsonar.projectKey=maldous-react-$(ENV) \
+			-Dsonar.projectName="maldous-react ($(ENV))" \
+			-Dsonar.host.url="$$_sonar_url" && \
+		SONAR_HOST_URL="$$_sonar_url" node tools/quality/sonar-quality-gate.mjs \
 			|| { printf '$(RED)✗ Sonar quality gate failed$(RESET)\n'; exit 1; }; \
 		printf '$(GREEN)✓ Sonar quality gate passed$(RESET)\n'; \
 	fi
