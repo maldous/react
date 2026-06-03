@@ -30,14 +30,67 @@ dc_resource('mailpit',        labels=['infra'],
 dc_resource('otel-collector', labels=['infra'])
 
 # ---------------------------------------------------------------------------
-# Optional Keycloak (manual trigger ? make compose-up-identity first)
+# Identity (Keycloak) — auto-start on tilt up
+# keycloak-provision (Terraform realm apply) runs after Keycloak is healthy.
 # ---------------------------------------------------------------------------
 
 local_resource(
-  'identity-profile',
-  cmd='make compose-up-identity',
+  'identity',
+  cmd='make compose-up-identity ENV=dev',
   labels=['auth'],
-  trigger_mode=TRIGGER_MODE_MANUAL,
+  links=[link('http://localhost:8090/kc', 'Keycloak admin')],
+)
+
+local_resource(
+  'keycloak-provision',
+  cmd='make keycloak-provision ENV=dev',
+  labels=['auth'],
+  resource_deps=['identity'],
+)
+
+# ---------------------------------------------------------------------------
+# Quality (SonarQube)
+# ---------------------------------------------------------------------------
+
+local_resource(
+  'quality',
+  cmd='make compose-up-quality ENV=dev',
+  labels=['quality'],
+  links=[link('http://localhost:9064/sonar', 'SonarQube')],
+)
+
+# ---------------------------------------------------------------------------
+# Sentry
+# ---------------------------------------------------------------------------
+
+local_resource(
+  'sentry',
+  cmd='make compose-up-sentry ENV=dev',
+  labels=['observability'],
+  links=[link('http://localhost:9060', 'Sentry')],
+)
+
+# ---------------------------------------------------------------------------
+# External mocks (WireMock)
+# ---------------------------------------------------------------------------
+
+local_resource(
+  'external-mocks',
+  cmd='make compose-up-external-mocks ENV=dev',
+  labels=['mocks'],
+  links=[link('http://localhost:8085/__admin', 'WireMock admin')],
+)
+
+# ---------------------------------------------------------------------------
+# Observability (Grafana + Loki + Alloy)
+# ---------------------------------------------------------------------------
+
+local_resource(
+  'observability',
+  cmd='make compose-up-observability ENV=dev',
+  labels=['observability'],
+  links=[link('http://localhost:3200', 'Grafana')],
+  resource_deps=['otel-collector'],
 )
 
 # ---------------------------------------------------------------------------
