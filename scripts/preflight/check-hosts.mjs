@@ -9,6 +9,10 @@ const HOSTS = [
     note: "auto-resolves via RFC 6761",
   },
   {
+    host: "test.localhost",
+    note: "auto-resolves via RFC 6761",
+  },
+  {
     host: "aldous.info",
     note: "staging/prod — needs /etc/hosts or real DNS",
   },
