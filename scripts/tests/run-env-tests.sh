@@ -36,10 +36,15 @@ run_group() {
     _minio_port="${_minio_port:-9000}"
     _ch_port="$(grep -oP 'CLICKHOUSE_HTTP_PORT=\K\d+' ".env.${STAGE}" 2>/dev/null | head -1)"
     _ch_port="${_ch_port:-8124}"
-    _mp_api_port="$(grep -oP 'MAILPIT_UI_PORT=\K\d+' ".env.${STAGE}" 2>/dev/null | head -1)"
-    _mp_api_port="${_mp_api_port:-8025}"
+    _mp_ui_port="$(grep -oP 'MAILPIT_UI_PORT=\K\d+' ".env.${STAGE}" 2>/dev/null | head -1)"
+    _mp_ui_port="${_mp_ui_port:-8025}"
     _mp_smtp="$(grep -oP 'MAILPIT_SMTP_PORT=\K\d+' ".env.${STAGE}" 2>/dev/null | head -1)"
     _mp_smtp="${_mp_smtp:-1025}"
+    _mp_root="$(grep -oP 'MAILPIT_ROOT_URL=\K\S+' ".env.${STAGE}" 2>/dev/null | head -1)"
+    _mp_root="${_mp_root:-/mailpit}"
+    # Use explicit MAILPIT_API from env file if defined; otherwise compose from UI port + webroot.
+    _mp_api="$(grep -oP 'MAILPIT_API=\K\S+' ".env.${STAGE}" 2>/dev/null | head -1)"
+    _mp_api="${_mp_api:-http://localhost:${_mp_ui_port}${_mp_root}}"
     _otel_http="$(grep -oP 'OTEL_HTTP_PORT=\K\d+' ".env.${STAGE}" 2>/dev/null | head -1)"
     _otel_http="${_otel_http:-4318}"
     _pg_url="postgresql://platform:platformpassword@localhost:${_pg_port}/platform"
@@ -71,7 +76,7 @@ run_group() {
         COMPOSE_PROJECT="$STAGE" \
         MINIO_ENDPOINT="http://localhost:${_minio_port}" \
         CLICKHOUSE_HTTP="http://localhost:${_ch_port}" \
-        MAILPIT_API="http://localhost:${_mp_api_port}" \
+        MAILPIT_API="${_mp_api}" \
         MAILPIT_SMTP_PORT="${_mp_smtp}" \
         OTEL_HTTP="http://localhost:${_otel_http}" \
         npm run test:compose
