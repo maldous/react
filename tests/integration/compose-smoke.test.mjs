@@ -41,17 +41,26 @@ import {
 import nodemailer from "nodemailer";
 
 // ---------------------------------------------------------------------------
-// Constants
+// Constants — read from env when available (supports per-stage overrides)
 // ---------------------------------------------------------------------------
 
-const POSTGRES_URL = "postgresql://platform:platformpassword@localhost:5433/platform";
+const POSTGRES_URL =
+  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
 // Non-superuser app role URL used for RLS enforcement tests (ADR-ACT-0189)
-const POSTGRES_APP_URL = "postgresql://platform_app:platformapppassword@localhost:5433/platform";
-const REDIS_URL = "redis://localhost:6379";
-const MINIO_ENDPOINT = "http://localhost:9000";
-const CLICKHOUSE_HTTP = "http://localhost:8124";
-const MAILPIT_API = "http://localhost:8025";
-const OTEL_HTTP = "http://localhost:4318";
+const POSTGRES_APP_URL =
+  process.env["POSTGRES_APP_URL"] ??
+  "postgresql://platform_app:platformapppassword@localhost:5433/platform";
+const REDIS_URL = process.env["REDIS_URL"] ?? "redis://localhost:6379";
+const COMPOSE_PROJECT = process.env["COMPOSE_PROJECT"] ?? "react-platform";
+const MINIO_ENDPOINT = process.env["MINIO_ENDPOINT"] ?? "http://localhost:9000";
+const CLICKHOUSE_HTTP = process.env["CLICKHOUSE_HTTP"] ?? "http://localhost:8124";
+const MAILPIT_API = process.env["MAILPIT_API"] ?? "http://localhost:8025";
+const MAILPIT_SMTP_PORT = parseInt(process.env["MAILPIT_SMTP_PORT"] || "1025", 10);
+const OTEL_HTTP = process.env["OTEL_HTTP"] ?? "http://localhost:4318";
+
+// DATA_POLICY=preserve means staging/prod — never truncate real data.
+// Only destructive-mode runs (dev/test) may call resetDatabase().
+const ALLOW_RESET = process.env["DATA_POLICY"] !== "preserve";
 
 const smokeKey = `platform-smoke-${Date.now()}`;
 const smokeBucket = `smoke-${Date.now()}`;
@@ -82,8 +91,8 @@ const s3 = new S3Client({
   forcePathStyle: true,
 });
 const smtp = nodemailer.createTransport({
-  host: "localhost",
-  port: 1025,
+  host: process.env["MAILPIT_SMTP_HOST"] ?? "localhost",
+  port: MAILPIT_SMTP_PORT,
   secure: false,
   ignoreTLS: true,
 });
@@ -115,7 +124,7 @@ after(async () => {
 // ---------------------------------------------------------------------------
 
 test("postgres: container is healthy", () => {
-  const status = dockerInspect("react-platform-postgres-1", "{{.State.Health.Status}}");
+  const status = dockerInspect(`${COMPOSE_PROJECT}-postgres-1`, "{{.State.Health.Status}}");
   assert.equal(status, "healthy");
 });
 
@@ -155,7 +164,7 @@ test("database: migration creates identity schema tables", async () => {
 });
 
 test("database: seed creates fixture actors and organisation", async () => {
-  await resetDatabase();
+  if (ALLOW_RESET) await resetDatabase();
   await runMigrations();
   await seedFixtures();
 
@@ -184,7 +193,7 @@ test("database: seed creates fixture actors and organisation", async () => {
 });
 
 test("database: migration runner creates schema_migrations table", async () => {
-  await resetDatabase();
+  if (ALLOW_RESET) await resetDatabase();
   await runMigrations();
   const { rows } = await pgClient.query(
     "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'schema_migrations'"
@@ -192,7 +201,11 @@ test("database: migration runner creates schema_migrations table", async () => {
   assert.equal(rows.length, 1, "schema_migrations table created");
 });
 
-test("database: migration is idempotent (skips already applied)", async () => {
+test("database: migration is idempotent (skips already applied)", async (t) => {
+  if (!ALLOW_RESET) {
+    t.skip("preserve mode — requires clean DB state from resetDatabase()");
+    return;
+  }
   await resetDatabase();
   const first = await runMigrations();
   const second = await runMigrations();
@@ -201,7 +214,11 @@ test("database: migration is idempotent (skips already applied)", async () => {
   assert.ok(second.skipped.length > 0, "second run reports skipped");
 });
 
-test("database: seed requires migrated schema", async () => {
+test("database: seed requires migrated schema", async (t) => {
+  if (!ALLOW_RESET) {
+    t.skip("preserve mode — requires clean DB state from resetDatabase()");
+    return;
+  }
   await resetDatabase();
   await assert.rejects(
     () => seedFixtures(),
@@ -213,7 +230,11 @@ test("database: seed requires migrated schema", async () => {
   );
 });
 
-test("database: migration fails if committed file has changed checksum", async () => {
+test("database: migration fails if committed file has changed checksum", async (t) => {
+  if (!ALLOW_RESET) {
+    t.skip("preserve mode — requires clean DB state from resetDatabase()");
+    return;
+  }
   await resetDatabase();
   await runMigrations();
 
@@ -236,7 +257,7 @@ test("database: migration fails if committed file has changed checksum", async (
   );
 
   // Leave schema clean for subsequent tests
-  await resetDatabase();
+  if (ALLOW_RESET) await resetDatabase();
 });
 
 // ---------------------------------------------------------------------------
@@ -244,7 +265,7 @@ test("database: migration fails if committed file has changed checksum", async (
 // ---------------------------------------------------------------------------
 
 test("redis: container is healthy", () => {
-  const status = dockerInspect("react-platform-redis-1", "{{.State.Health.Status}}");
+  const status = dockerInspect(`${COMPOSE_PROJECT}-redis-1`, "{{.State.Health.Status}}");
   assert.equal(status, "healthy");
 });
 
@@ -288,7 +309,7 @@ async function chQuery(query) {
 }
 
 test("clickhouse: container is healthy", () => {
-  const status = dockerInspect("react-platform-clickhouse-1", "{{.State.Health.Status}}");
+  const status = dockerInspect(`${COMPOSE_PROJECT}-clickhouse-1`, "{{.State.Health.Status}}");
   assert.equal(status, "healthy");
 });
 
@@ -381,7 +402,7 @@ test("mailpit: nodemailer SMTP send and retrieve via API", async () => {
 // ---------------------------------------------------------------------------
 
 test("otel-collector: container is running", () => {
-  const status = dockerInspect("react-platform-otel-collector-1", "{{.State.Status}}");
+  const status = dockerInspect(`${COMPOSE_PROJECT}-otel-collector-1`, "{{.State.Status}}");
   assert.equal(status, "running");
 });
 
@@ -390,7 +411,7 @@ test("otel-collector: container is running", () => {
 // ---------------------------------------------------------------------------
 
 test("organisation: getOrganisationProfile returns fixture org", async () => {
-  await resetDatabase();
+  if (ALLOW_RESET) await resetDatabase();
   await runMigrations();
   await seedFixtures();
   const profile = await getOrganisationProfile(
@@ -404,7 +425,7 @@ test("organisation: getOrganisationProfile returns fixture org", async () => {
 });
 
 test("organisation: updateOrganisationDisplayName updates and returns updated record", async () => {
-  await resetDatabase();
+  if (ALLOW_RESET) await resetDatabase();
   await runMigrations();
   await seedFixtures();
   const updated = await updateOrganisationDisplayName(
@@ -495,7 +516,7 @@ test("pgadmin_sysadmin retains rls_bypass membership (regression guard)", async 
 });
 
 test("RLS: platform_app sees only own-tenant memberships", async () => {
-  await resetDatabase();
+  if (ALLOW_RESET) await resetDatabase();
   await runMigrations();
 
   await pgClient.query(

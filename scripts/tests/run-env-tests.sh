@@ -77,10 +77,15 @@ run_group() {
         bash scripts/smoke/compose-smoke.sh "$STAGE"
         ;;
       compose-smoke)
+        # Pass DATA_POLICY so compose-smoke.test.mjs skips resetDatabase() on
+        # staging/prod — never truncate real data in preserve environments.
+        _data_policy="destructive"
+        [ "$STAGE" = "staging" ] || [ "$STAGE" = "prod" ] && _data_policy="preserve"
         POSTGRES_URL="$_pg_url" \
         POSTGRES_APP_URL="$_pg_app_url" \
         REDIS_URL="$_rd_url" \
         COMPOSE_PROJECT="$STAGE" \
+        DATA_POLICY="$_data_policy" \
         MINIO_ENDPOINT="http://localhost:${_minio_port}" \
         CLICKHOUSE_HTTP="http://localhost:${_ch_port}" \
         MAILPIT_API="${_mp_api}" \
