@@ -1,15 +1,21 @@
 .PHONY: run-stage-tests e2e-internal e2e-internal-build test-real-auth
 
-## run-stage-tests — Run the standard test suite against the active environment
-## Always derives connection URLs from .env.$(ENV) to avoid cross-env contamination
-## from the root .env (e.g. REDIS_URL=localhost:6379 overriding staging's port 6381).
+## run-stage-tests — Run the standard test suite against the active environment.
+## Always derives URLs from .env.$(ENV). For staging/prod (no LOCAL_FIXTURE_SESSION),
+## runs test:platform-api:unit-safe (unit + non-fixture substrate tests) instead of
+## the full suite, since fixture organisations don't exist in unseeded environments.
 run-stage-tests:
 	$(call STEP,run-stage-tests ($(ENV)))
 	@$(call CONN_URLS,.env.$(ENV)); \
-	POSTGRES_URL="$$_pg_url" \
-	POSTGRES_APP_URL="$$_pg_app_url" \
-	REDIS_URL="$$_rd_url" \
-	npm run test:platform-api
+	_fixture="$$(grep -oP 'LOCAL_FIXTURE_SESSION=\K\S+' .env.$(ENV) 2>/dev/null | head -1 || true)"; \
+	if [ -n "$$_fixture" ]; then \
+		POSTGRES_URL="$$_pg_url" POSTGRES_APP_URL="$$_pg_app_url" REDIS_URL="$$_rd_url" \
+		npm run test:platform-api; \
+	else \
+		printf '$(YELLOW)⚠ No fixture session — running unit-safe subset (staging/prod)$(RESET)\n'; \
+		POSTGRES_URL="$$_pg_url" POSTGRES_APP_URL="$$_pg_app_url" REDIS_URL="$$_rd_url" \
+		npm run test:platform-api:unit-safe; \
+	fi
 	npm run test:frontend:run
 	$(call OK,stage tests passed for $(ENV))
 
