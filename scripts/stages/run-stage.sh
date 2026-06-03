@@ -99,7 +99,15 @@ fi
 if [ "$STAGE_RESULT" -eq 0 ]; then
     if [ "$EXECUTOR" = "tilt" ]; then
         bash scripts/tilt/up-dev.sh || STAGE_RESULT=1
+    elif [ "$DATA_POLICY" = "destructive" ]; then
+        # Destructive stages (test) start from scratch — bring up default services
+        # (postgres, redis, clickhouse, minio, mailpit, otel) first so compose-smoke
+        # and other test groups can reach them, then the web profile on top.
+        bash scripts/compose/up.sh "$STAGE" default || STAGE_RESULT=1
+        [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" web || STAGE_RESULT=1; }
     else
+        # Preserve stages (staging, prod) are HA — default services are already
+        # running. Rebuild/update only the web tier.
         bash scripts/compose/up.sh "$STAGE" web || STAGE_RESULT=1
     fi
 fi
