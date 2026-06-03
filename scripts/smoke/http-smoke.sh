@@ -8,7 +8,7 @@ RED=$(tput setaf 1 2>/dev/null || true)
 GREEN=$(tput setaf 2 2>/dev/null || true)
 RESET=$(tput sgr0 2>/dev/null || true)
 
-_port="$(grep -oP 'PLATFORM_API_PORT=\K\d+' ".env.${ENV}" 2>/dev/null | head -1)"
+_port="$(grep -oP 'PLATFORM_API_PORT=\K\d+' ".env.${ENV}" 2>/dev/null | head -1 || true)"
 _port="${_port:-3001}"
 BASE="http://localhost:${_port}"
 ERRORS=0
@@ -27,7 +27,7 @@ check_url() {
 
 check_url "${BASE}/healthz"
 check_url "${BASE}/readyz"
-check_url "${BASE}/api/version"
+check_url "${BASE}/version"
 
 [ "$ERRORS" -gt 0 ] && { printf '%s✗ http smoke failed for %s (%d errors)%s\n' "$RED" "$ENV" "$ERRORS" "$RESET"; exit 1; }
 printf '%s✓ http smoke passed for %s%s\n' "$GREEN" "$ENV" "$RESET"

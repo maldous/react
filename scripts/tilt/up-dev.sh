@@ -8,7 +8,7 @@ RED=$(tput setaf 1 2>/dev/null || true)
 GREEN=$(tput setaf 2 2>/dev/null || true)
 RESET=$(tput sgr0 2>/dev/null || true)
 
-_api_port="$(grep -oP 'PLATFORM_API_PORT=\K\d+' .env.dev 2>/dev/null | head -1)"
+_api_port="$(grep -oP 'PLATFORM_API_PORT=\K\d+' .env.dev 2>/dev/null | head -1 || true)"
 _api_port="${_api_port:-3001}"
 
 die() {
@@ -16,6 +16,13 @@ die() {
     bash scripts/tilt/down-dev.sh 2>/dev/null || true
     exit 1
 }
+
+# Kill any stale Tilt process that might be holding port 10350
+if pkill -f 'tilt up' 2>/dev/null; then
+    printf 'Killed stale Tilt process...\n'
+    # Wait for port 10350 to be released (up to 15s)
+    timeout 15 bash -c 'while ss -tlnp "sport = :10350" 2>/dev/null | grep -q .; do sleep 1; done' 2>/dev/null || true
+fi
 
 printf 'Starting Tilt...\n'
 tilt up &
