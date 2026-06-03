@@ -125,7 +125,15 @@ run_group() {
         PROD_BASE_URL="$_app_url" make e2e-external-smoke
         ;;
       auth-e2e)
-        PROD_BASE_URL="$_app_url" make e2e-external-auth
+        # Skip if PROD_BASE_URL is localhost — KC redirect flow requires real DNS.
+        # Real auth E2E should be run explicitly via 'make test-real-auth' with
+        # a fully provisioned KC realm (keycloak-provision + fixture users).
+        if echo "$_app_url" | grep -q "localhost"; then
+          printf '%s↷ auth-e2e skipped — PROD_BASE_URL=%s is localhost (no real KC redirect)%s\n' \
+            "$YELLOW" "$_app_url" "$RESET"
+        else
+          PROD_BASE_URL="$_app_url" make e2e-external-auth
+        fi
         ;;
       production-e2e)
         PROD_BASE_URL="$_app_url" npm run test:e2e:prod
