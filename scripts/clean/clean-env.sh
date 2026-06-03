@@ -21,8 +21,8 @@ $COMPOSE_CMD --profile web --profile cloud-mocks \
     down --timeout 30 2>/dev/null || true
 $COMPOSE_CMD down --timeout 30 2>/dev/null || true
 
-# Force-remove any remaining containers by project label
-docker ps -q --filter "label=com.docker.compose.project=${ENV}" \
+# Force-remove any remaining containers by project label (react-<env>)
+docker ps -q --filter "label=com.docker.compose.project=react-${ENV}" \
     | xargs -r docker rm -f 2>/dev/null || true
 
 # Stop default Tilt project containers (project name "react")

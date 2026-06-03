@@ -17,6 +17,16 @@ die() {
     exit 1
 }
 
+# Idempotency check — skip restart if Tilt is already running and healthy.
+# Supports persistent model where all environments remain running after validation.
+if pgrep -f 'tilt up' >/dev/null 2>&1; then
+    if curl -fsS "http://localhost:${_api_port}/healthz" >/dev/null 2>&1 && \
+       curl -fsS http://localhost:5173/ >/dev/null 2>&1; then
+        printf '%s✓ Tilt already running and healthy — skipping startup%s\n' "$GREEN" "$RESET"
+        exit 0
+    fi
+fi
+
 # Kill any stale Tilt process that might be holding port 10350
 if pkill -f 'tilt up' 2>/dev/null; then
     printf 'Killed stale Tilt process...\n'

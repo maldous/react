@@ -16,7 +16,10 @@
 #   docker/compose-wrapper.sh test up -d postgres
 #
 # Equivalent to:
-#   source .env.test && docker compose --project-name test --env-file .env.test up -d postgres
+#   source .env.test && docker compose --project-name react-test --env-file .env.test up -d postgres
+#
+# Project naming convention: react-<env> (react-dev, react-test, react-staging, react-prod).
+# All four environments can run concurrently with fully isolated container/volume/network namespaces.
 
 set -euo pipefail
 
@@ -39,6 +42,6 @@ set +a
 # container runtime env vars. The shell-exported vars above handle compose.yaml
 # interpolation; --env-file handles container-level env.
 exec docker compose \
-    --project-name "$ENV" \
+    --project-name "react-$ENV" \
     --env-file "$ENV_FILE" \
     "$@"

@@ -4,7 +4,7 @@ dev:
   buildMode: live
   authMode: fixture
   tenants: none
-  teardownDefault: true
+  teardownDefault: false # persistent — dev remains running after stage-dev
   requiredTests:
     - minimal-smoke
     - unit
@@ -16,7 +16,7 @@ test:
   buildMode: containers
   authMode: fixture
   tenants: none
-  teardownDefault: true
+  teardownDefault: false # persistent — test remains running after stage-test
   requiredTests:
     - unit # test:platform-api (254) + test:frontend:run (26) — full local suite
     - contract # test:architecture (638) — governance + package contracts

@@ -1,7 +1,11 @@
 # ── maldous/react Platform Makefile ─────────────────────────────────────────
 #
 # Usage:
-#   make all           Full confidence ladder: preflight → quality → 4 stages → evidence
+#   make all           Full confidence ladder — all environments remain running after completion
+#   make env-up-all    Start all isolated environments (react-dev/test/staging/prod)
+#   make promote       Run validation on all running environments (no teardown)
+#   make env-status    Show container health for all environments
+#   make env-down-all  Stop all environments when done
 #   make check         Fast local check (no sonar, no compose smoke tests)
 #   make help          Show all available targets
 #
@@ -28,15 +32,17 @@ include make/stages.mk
 include make/evidence.mk
 include make/help.mk
 
-# ── Confidence ladder ────────────────────────────────────────────────────────
+# ── Persistent confidence ladder ─────────────────────────────────────────────
+# Environments remain running after `make all`. Each stage validates its
+# isolated stack (react-dev / react-test / react-staging / react-prod) and
+# writes evidence. Use `make env-down-all` to stop everything when done.
 .PHONY: all
-## all — Complete promotion pipeline: preflight → quality → env-validate → 4 stages → evidence
+## all — Full confidence ladder: preflight → quality → env-up-all → promote → evidence → env-status
 all: preflight \
      quality \
      env-validate-all \
      env-drift-check \
-     stage-dev \
-     stage-test \
-     stage-staging \
-     stage-prod \
-     evidence
+     env-up-all \
+     promote \
+     evidence \
+     env-status

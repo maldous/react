@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted — updated 2026-06-03 (policy-driven pipeline, confidence ladder)
+Accepted — updated 2026-06-03 (persistent isolated progressive environment promotion)
 
 ## Date
 
@@ -35,16 +35,28 @@ verification appropriate to that environment's runtime characteristics.
 
 ## Decision
 
-### 1. Core model — progressive confidence ladder
+### 1. Core model — persistent isolated progressive environment promotion
+
+All four environments run concurrently with fully isolated Docker project namespaces
+(`react-dev`, `react-test`, `react-staging`, `react-prod`). They are started once via
+`make env-up-all`, validated in order via `make promote`, and remain running after
+`make all` completes. Isolation covers containers, volumes, networks, ports, databases,
+Redis, ClickHouse, MinIO, Mailpit, Keycloak, SonarQube, Grafana, Loki, Alloy, Sentry,
+WireMock, and Caddy routes. Use `make env-down-all` to stop everything when done.
 
 Each stage validates what the previous stage cannot:
 
-| Stage   | What it proves                                                               |
-| ------- | ---------------------------------------------------------------------------- |
-| Dev     | The live development loop works. Code under active edit runs and tests pass. |
-| Test    | The built artefacts work in isolation. All local quality gates pass.         |
-| Staging | The deployed stack works end-to-end on real infrastructure (no tenants).     |
-| Prod    | The tenant-bearing production environment is healthy and fully verified.     |
+| Stage   | Docker project  | What it proves                                                               |
+| ------- | --------------- | ---------------------------------------------------------------------------- |
+| Dev     | `react-dev`     | The live development loop works. Code under active edit runs and tests pass. |
+| Test    | `react-test`    | The built artefacts work in isolation. All local quality gates pass.         |
+| Staging | `react-staging` | The deployed stack works end-to-end on real infrastructure (no tenants).     |
+| Prod    | `react-prod`    | The tenant-bearing production environment is healthy and fully verified.     |
+
+No environment is torn down after its stage completes. All `teardownDefault` values are
+`false` in `env/stage-policy.yaml`. Destructive stages (dev, test) reset their database
+data at the start of each validation run, then leave the environment running with the
+freshly-validated state.
 
 ### 2. Test tiers
 
@@ -169,14 +181,14 @@ dev:
   executor: tilt
   dataPolicy: destructive
   authMode: fixture
-  teardownDefault: true
+  teardownDefault: false # remains running after stage-dev
   requiredTests: [minimal-smoke, unit, e2e-smoke]
 
 test:
   executor: compose
   dataPolicy: destructive
   authMode: fixture
-  teardownDefault: true
+  teardownDefault: false # remains running after stage-test
   requiredTests: [unit, contract, port, interface, compose-smoke, e2e-smoke]
 
 staging:
@@ -216,12 +228,13 @@ prod:
    blocked for preserve stages unless `ALLOW_PROD_MUTATION=true`.
 4. Runs stage-scoped preflight checks.
 5. Resets data (destructive stages) or skips (preserve stages).
-6. Starts executor: Tilt for dev; `default` + `web` Compose profiles for all others.
-   Preserve stages start `default` first (idempotent on running stacks, safe on clean machines).
+6. Starts executor: Tilt for dev (idempotent — skips restart if already healthy); `default` + `web`
+   Compose profiles for all others (idempotent — no-op if already running).
 7. Waits for `/healthz` readiness.
 8. Runs `db:migrate` (always) and `db:seed` (destructive stages only).
 9. Dispatches test groups via `scripts/tests/run-env-tests.sh`.
-10. Tears down stack if `teardownDefault: true`.
+10. **Does not tear down.** All `teardownDefault` values are `false`. The environment remains
+    running for subsequent inspection, debugging, or re-validation.
 11. Writes stage evidence to `docs/evidence/stages/${stage}-latest.json`.
 
 Test group dispatch table (as implemented in `scripts/tests/run-env-tests.sh`):
@@ -260,7 +273,23 @@ health checks (postgres, redis, minio, mailpit, otel, clickhouse, pgadmin) still
 - Prod: hard `exit 1` if `PROD_BASE_URL` is localhost. Prod cannot silently drop required
   auth confidence gates.
 
-### 6. Meta-test: pipeline composition validation
+### 6. Makefile lifecycle targets
+
+The following targets manage the persistent multi-environment topology:
+
+| Target         | Purpose                                                                        |
+| -------------- | ------------------------------------------------------------------------------ |
+| `env-up-all`   | Start all four environments (`react-dev/test/staging/prod`) and leave running  |
+| `env-down-all` | Stop all four environments                                                     |
+| `env-status`   | Show container health for all four environments                                |
+| `promote`      | Run the full confidence ladder (stage-dev → prod) without teardown             |
+| `make all`     | `preflight` + `quality` + `env-up-all` + `promote` + `evidence` + `env-status` |
+
+`make all` is idempotent: if environments are already running from a previous run,
+`env-up-all` is a no-op (Compose `up` is idempotent; Tilt startup checks `/healthz`
+before restarting). `promote` then re-runs validation against the live stacks.
+
+### 7. Meta-test: pipeline composition validation
 
 `validate-pipeline-composition` (part of `make check` and `make all`) validates that the
 Makefile stage recipe comments follow the ADR-0034 hierarchy. The validator reads
@@ -318,8 +347,16 @@ auth-negative, Caddy forward_auth), and exhaustive prod tests (security headers,
 API contracts, cookie security, performance budgets). These gates are only meaningful on a
 tenant-bearing prod-configured stack.
 
+**Persistent environments enable realistic inspection.** Because environments remain running after
+`make all`, developers can inspect the live state of each environment, run ad-hoc queries, replay
+requests against a known-good stack, and diff behaviour across environments. This is not possible
+when environments are torn down immediately after validation.
+
 ## Consequences
 
+- All four environments run concurrently under isolated Docker project names.
+  No shared container names, volume names, network names, or ports.
+- All `teardownDefault` values are `false`. Environments persist after `make all` completes.
 - Dev runs `minimal-smoke` + `unit` + `e2e-internal` (via `e2e-smoke`). No external tests.
 - Test runs the full local quality suite: all 254 platform-api tests, 638 architecture tests,
   port validation, interface smoke, integration smoke (with DB resets), and internal E2E.
@@ -333,19 +370,30 @@ tenant-bearing prod-configured stack.
   This guard is already implemented.
 - New test files must be placed in the correct tier directory (`e2e/internal/`, `e2e/external/`,
   or `e2e/prod/`) based on their auth model and environment scope.
+- `preflight` does not check clean state. All four environments may be running when
+  `make all` starts. Use `make env-down-all` to stop everything, then `make clean-all` if a
+  fully fresh start is needed.
 
 ## History
 
 - 2026-05-30: Accepted — initial per-stage composition decision.
-- 2026-06-03: Updated — aligned with policy-driven pipeline (ADR-ACT-0198):
-  - Composition now declared in `env/stage-policy.yaml`, not inline Makefile targets.
+- 2026-06-03 (first update): Aligned with policy-driven pipeline (ADR-ACT-0198):
+  - Composition declared in `env/stage-policy.yaml`, not inline Makefile targets.
   - Dev gains `e2e-smoke` (e2e-internal via Tilt servers).
-  - Staging composition tightened to `integration` + `compose-smoke` + `external-smoke`
-    (removed duplicate `e2e-smoke`; external smoke is not the full `e2e-external` suite).
-  - Prod `auth-e2e` changed from graceful-skip to hard-fail on localhost.
+  - Staging composition tightened; external smoke not full `e2e-external` suite.
+  - Prod `auth-e2e` hard-fails on localhost.
   - Staging tenant/destructive exclusions made explicit.
-  - Meta-test rules updated to match `external-smoke` naming and current validator logic.
-  - ADR-0033 reference corrected (domain config, not pipeline definition).
+  - Meta-test rules updated to `external-smoke` naming.
+- 2026-06-03 (second update): Persistent isolated progressive environment promotion:
+  - All four environments run concurrently under `react-dev/test/staging/prod` project names.
+  - `teardownDefault: false` for dev and test (previously `true`).
+  - `docker/compose-wrapper.sh` now uses `--project-name "react-$ENV"`.
+  - All project label filters updated to `react-$ENV` across shell scripts.
+  - Port conflict checker validates all 6 concurrent pairs (was only 2).
+  - `scripts/tilt/up-dev.sh` is idempotent (skips restart if already healthy).
+  - New lifecycle targets: `env-up-all`, `env-down-all`, `env-status`, `promote`.
+  - `make all` = preflight + quality + env-up-all + promote + evidence + env-status.
+  - `preflight` no longer checks clean state (stale containers are expected).
 
 ## AI-assistance record
 

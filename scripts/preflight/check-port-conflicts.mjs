@@ -27,9 +27,14 @@ for (const stage of stages) {
 }
 
 let errors = 0;
-// Environments that can run simultaneously
+// All four environments run concurrently (react-dev, react-test, react-staging, react-prod).
+// Check every pair for port collisions.
 const CONCURRENT_PAIRS = [
   ["dev", "test"],
+  ["dev", "staging"],
+  ["dev", "prod"],
+  ["test", "staging"],
+  ["test", "prod"],
   ["staging", "prod"],
 ];
 
@@ -39,7 +44,9 @@ for (const [port, users] of Object.entries(portMap)) {
     const aUser = users.find((u) => u.stage === a);
     const bUser = users.find((u) => u.stage === b);
     if (aUser && bUser) {
-      console.error(`✗ Port ${port} collision: ${a}/${aUser.key} and ${b}/${bUser.key}`);
+      console.error(
+        `✗ Port ${port} collision: react-${a}/${aUser.key} and react-${b}/${bUser.key}`
+      );
       errors++;
     }
   }

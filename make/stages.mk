@@ -1,6 +1,10 @@
-.PHONY: preflight stage-dev stage-test stage-staging stage-prod
+.PHONY: preflight stage-dev stage-test stage-staging stage-prod \
+        env-up-all env-down-all env-status promote
 
-## preflight — Check required binaries, Docker, env files, ports, and clean state
+## preflight — Check required binaries, Docker, env files, and port definitions
+## Note: clean-state is NOT checked here because all four environments are expected
+## to be running persistently. Use `make env-down-all` + `make clean-all` if you
+## need a completely fresh start.
 preflight:
 	$(call STEP,preflight)
 	bash scripts/preflight/check-binaries.sh
@@ -8,7 +12,6 @@ preflight:
 	node scripts/preflight/check-env-files.mjs
 	node scripts/preflight/check-port-conflicts.mjs
 	node scripts/preflight/check-hosts.mjs
-	node scripts/preflight/check-clean-state.mjs
 	$(call OK,preflight passed)
 
 ## stage-dev — Dev stage: Tilt executor, destructive data, minimal-smoke + unit + e2e-internal
@@ -34,3 +37,49 @@ stage-prod:
 	# ADR-0034: stage-prod runs external-smoke + auth-e2e + test:e2e:prod — auth-e2e fails if localhost
 	$(call STEP,stage:prod)
 	bash scripts/stages/run-stage.sh prod
+
+# ── Persistent environment lifecycle ─────────────────────────────────────────
+
+## env-up-all — Start all four isolated environments and leave them running
+## Project names: react-dev, react-test, react-staging, react-prod
+env-up-all:
+	$(call STEP,env-up-all: starting all environments)
+	@printf '$(BOLD)▶ Starting react-dev (Tilt)...$(RESET)\n'
+	$(MAKE) tilt-up
+	@printf '$(BOLD)▶ Starting react-test (Compose)...$(RESET)\n'
+	$(MAKE) test-up
+	@printf '$(BOLD)▶ Starting react-staging (Compose)...$(RESET)\n'
+	$(MAKE) staging-up
+	@printf '$(BOLD)▶ Starting react-prod (Compose)...$(RESET)\n'
+	$(MAKE) prod-up
+	$(call OK,all environments running: react-dev / react-test / react-staging / react-prod)
+
+## env-down-all — Stop all four environments
+env-down-all:
+	$(call STEP,env-down-all: stopping all environments)
+	-$(MAKE) tilt-down
+	-$(MAKE) compose-down ENV=dev
+	-$(MAKE) compose-down ENV=test
+	-$(MAKE) compose-down ENV=staging
+	-$(MAKE) compose-down ENV=prod
+	$(call OK,all environments stopped)
+
+## env-status — Show container health for all four environments
+env-status:
+	$(call STEP,env-status)
+	@printf '\n$(BOLD)── react-dev ────────────────────────────────────────$(RESET)\n'
+	@docker/compose-wrapper.sh dev ps 2>/dev/null || printf '  (not running)\n'
+	@printf '\n$(BOLD)── react-test ───────────────────────────────────────$(RESET)\n'
+	@docker/compose-wrapper.sh test ps 2>/dev/null || printf '  (not running)\n'
+	@printf '\n$(BOLD)── react-staging ────────────────────────────────────$(RESET)\n'
+	@docker/compose-wrapper.sh staging ps 2>/dev/null || printf '  (not running)\n'
+	@printf '\n$(BOLD)── react-prod ───────────────────────────────────────$(RESET)\n'
+	@docker/compose-wrapper.sh prod ps 2>/dev/null || printf '  (not running)\n'
+	@printf '\n'
+	$(call OK,env-status complete)
+
+## promote — Run the full confidence ladder without tearing down any environment
+## Assumes environments are already running (env-up-all). Each stage validates
+## its environment and leaves it running. Data is reset for destructive stages.
+promote: stage-dev stage-test stage-staging stage-prod
+	$(call OK,promotion complete — all environments validated and running)

@@ -8,11 +8,11 @@ RED=$(tput setaf 1 2>/dev/null || true)
 GREEN=$(tput setaf 2 2>/dev/null || true)
 RESET=$(tput sgr0 2>/dev/null || true)
 
-# Wait for ENV project containers to be gone
+# Wait for ENV project containers to be gone (project name: react-<env>)
 timeout 60 bash -c \
-    "while docker ps -q --filter 'label=com.docker.compose.project=${ENV}' 2>/dev/null | grep -q .; do sleep 1; done" \
-    || { printf '%s✗ containers still running for project %s after down%s\n' "$RED" "$ENV" "$RESET"
-         docker ps --filter "label=com.docker.compose.project=${ENV}"
+    "while docker ps -q --filter 'label=com.docker.compose.project=react-${ENV}' 2>/dev/null | grep -q .; do sleep 1; done" \
+    || { printf '%s✗ containers still running for project react-%s after down%s\n' "$RED" "$ENV" "$RESET"
+         docker ps --filter "label=com.docker.compose.project=react-${ENV}"
          exit 1; }
 
 # Wait for Tilt default project containers to be gone (warn only)

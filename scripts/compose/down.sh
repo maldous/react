@@ -16,9 +16,9 @@ RESET=$(tput sgr0 2>/dev/null || true)
 $COMPOSE_CMD down --timeout 30 $VOLUMES_FLAG
 
 timeout 60 bash -c \
-    "while docker ps -q --filter 'label=com.docker.compose.project=${ENV}' 2>/dev/null | grep -q .; do sleep 1; done" \
-    || { printf '%s✗ containers still running for project %s%s\n' "$RED" "$ENV" "$RESET"
-         docker ps --filter "label=com.docker.compose.project=${ENV}"
+    "while docker ps -q --filter 'label=com.docker.compose.project=react-${ENV}' 2>/dev/null | grep -q .; do sleep 1; done" \
+    || { printf '%s✗ containers still running for project react-%s%s\n' "$RED" "$ENV" "$RESET"
+         docker ps --filter "label=com.docker.compose.project=react-${ENV}"
          exit 1; }
 
 printf '%s✓ compose down complete for %s%s\n' "$GREEN" "$ENV" "$RESET"

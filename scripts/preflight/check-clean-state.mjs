@@ -33,8 +33,10 @@ for (const project of PROJECTS) {
 }
 
 if (warnings > 0) {
+  console.error(`\n⚠ ${warnings} project(s) have stale containers from a previous run`);
+  console.error("  If this is unexpected, run 'make env-down-all' to stop all environments.");
   console.error(
-    `\n⚠ ${warnings} project(s) have stale containers — run 'make clean-all' before 'make all'`
+    "  If you intentionally left environments running, use 'make promote' to re-validate."
   );
   process.exit(1);
 }

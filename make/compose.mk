@@ -66,12 +66,12 @@ compose-up-web:
 ## compose-down — Stop all running compose services for ENV
 compose-down:
 	bash scripts/compose/down.sh $(ENV)
-	@$(call CONFIRM_DOWN,$(ENV))
+	@$(call CONFIRM_DOWN,react-$(ENV))
 
 ## compose-down-web — Stop web profile containers for ENV
 compose-down-web:
 	$(COMPOSE_CMD) --profile web down --timeout 30
-	@$(call CONFIRM_DOWN,$(ENV))
+	@$(call CONFIRM_DOWN,react-$(ENV))
 
 ## compose-down-volumes — Stop services and remove ALL named volumes for ENV
 compose-down-volumes:
@@ -84,13 +84,13 @@ compose-down-reset:
 	$(call STEP,compose-down-reset: resetting app data ($(ENV)))
 	@if [ "$(PRESERVE_JVM_VOLUMES)" = "true" ]; then \
 		$(COMPOSE_CMD) down --timeout 30 2>/dev/null || true; \
-		_jvm_vols="$$(docker volume ls -q --filter label=com.docker.compose.project=$(ENV) 2>/dev/null \
+		_jvm_vols="$$(docker volume ls -q --filter label=com.docker.compose.project=react-$(ENV) 2>/dev/null \
 		    | grep -vE 'keycloak|sonar' || true)"; \
 		[ -n "$$_jvm_vols" ] && echo "$$_jvm_vols" | xargs docker volume rm 2>/dev/null || true; \
 	else \
 		bash scripts/compose/down.sh $(ENV) --volumes; \
 	fi
-	@$(call CONFIRM_DOWN,$(ENV))
+	@$(call CONFIRM_DOWN,react-$(ENV))
 	$(call OK,app data reset for $(ENV))
 
 ## compose-ps — Show compose service status for ENV
