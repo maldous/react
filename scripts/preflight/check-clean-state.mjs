@@ -4,7 +4,22 @@
 import { spawnSync } from "node:child_process";
 import process from "node:process";
 
-const PROJECTS = ["react-dev", "react-test", "react-staging", "react-prod", "react"];
+// Current project names (react-* prefix, set by compose-wrapper.sh).
+// Also check legacy bare names (dev/test/staging/prod) in case a machine was
+// not migrated — those containers would hold the same ports and block startup.
+const PROJECTS = [
+  "react-dev",
+  "react-test",
+  "react-staging",
+  "react-prod",
+  "react",
+  // Legacy names from before compose-wrapper.sh used react-$ENV prefix.
+  // Stop these with: docker compose --project-name <name> down
+  "dev",
+  "test",
+  "staging",
+  "prod",
+];
 
 let warnings = 0;
 
@@ -23,9 +38,16 @@ for (const project of PROJECTS) {
   const running = (result.stdout ?? "").trim().split("\n").filter(Boolean);
   if (running.length > 0) {
     console.warn(`⚠ ${running.length} stale container(s) found for project "${project}"`);
-    // "react" is the Tilt default project (no env suffix); "react-dev" → "dev" etc.
-    const env = project === "react" ? "dev" : project.replace("react-", "") || "dev";
-    console.warn(`  Run: make clean ENV=${env} or make clean-all`);
+    const isLegacy = ["dev", "test", "staging", "prod"].includes(project);
+    if (isLegacy) {
+      console.warn(
+        `  Legacy project name (pre react-* rename). Stop with:` +
+          ` docker compose --project-name ${project} down`
+      );
+    } else {
+      const env = project === "react" ? "dev" : project.replace("react-", "") || "dev";
+      console.warn(`  Run: make clean ENV=${env} or make clean-all`);
+    }
     warnings++;
   } else {
     console.log(`✓ no stale containers for "${project}"`);
