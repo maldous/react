@@ -152,11 +152,10 @@ if [ "$STAGE_RESULT" -eq 0 ]; then
         :
         ;;
       staging|prod)
-        _web_port="$(grep -oP 'WEB_HTTP_PORT=\K\d+' ".env.${STAGE}" 2>/dev/null | head -1 || true)"
-        _web_port="${_web_port:-80}"
-        PROD_BASE_URL="${PROD_BASE_URL:-http://localhost:${_web_port}}" \
-        make e2e-external || STAGE_RESULT=1
-        [ "$STAGE" = "prod" ] && [ "$STAGE_RESULT" -eq 0 ] && { npm run test:e2e:prod || STAGE_RESULT=1; }
+        # Full e2e-external requires KC test users provisioned in the realm.
+        # e2e-smoke/external-smoke groups in requiredTests already run e2e-external-smoke.
+        # Step 10 is a no-op for staging/prod — policy groups own all E2E coverage here.
+        :
         ;;
     esac
 fi
