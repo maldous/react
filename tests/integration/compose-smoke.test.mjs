@@ -515,8 +515,12 @@ test("pgadmin_sysadmin retains rls_bypass membership (regression guard)", async 
   assert.equal(rows[0].has_rls_bypass, true, "pgadmin_sysadmin must retain rls_bypass");
 });
 
-test("RLS: platform_app sees only own-tenant memberships", async () => {
-  if (ALLOW_RESET) await resetDatabase();
+test("RLS: platform_app sees only own-tenant memberships", async (t) => {
+  if (!ALLOW_RESET) {
+    t.skip("preserve mode — RLS isolation tests require clean DB state");
+    return;
+  }
+  await resetDatabase();
   await runMigrations();
 
   await pgClient.query(
@@ -562,7 +566,11 @@ test("RLS: platform_app sees only own-tenant memberships", async () => {
   }
 });
 
-test("RLS: platform_app cannot see another tenant's rows via forged current_tenant_id", async () => {
+test("RLS: platform_app cannot see another tenant's rows via forged current_tenant_id", async (t) => {
+  if (!ALLOW_RESET) {
+    t.skip("preserve mode — RLS isolation tests require clean DB state");
+    return;
+  }
   // Data from previous test still present (no resetDatabase between these tests).
   // Connect as platform_app, set tenant A context, attempt to read Org B rows.
   const appClient = new pg.Client(POSTGRES_APP_URL);
@@ -581,7 +589,11 @@ test("RLS: platform_app cannot see another tenant's rows via forged current_tena
   }
 });
 
-test("RLS: SET LOCAL ROLE rls_bypass (withSystemAdmin path) sees all tenants", async () => {
+test("RLS: SET LOCAL ROLE rls_bypass (withSystemAdmin path) sees all tenants", async (t) => {
+  if (!ALLOW_RESET) {
+    t.skip("preserve mode — RLS isolation tests require clean DB state (exactly 2 rows)");
+    return;
+  }
   // withSystemAdmin() uses SET LOCAL ROLE rls_bypass inside a transaction.
   // This changes current_user to 'rls_bypass' for the transaction lifetime,
   // satisfying the RLS policy's current_user = 'rls_bypass' bypass check.
