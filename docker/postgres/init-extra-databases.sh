@@ -64,6 +64,13 @@ BEGIN
 END
 \$\$;
 
+-- Grant CREATE privilege on the database to rls_bypass so withSystemAdmin()
+-- can execute CREATE SCHEMA during tenant provisioning (ADR-ACT-0142).
+-- Without this, platform_app (which SET LOCAL ROLE to rls_bypass) cannot
+-- create tenant schemas — only the database owner/superuser can.
+GRANT CREATE ON DATABASE "${PGADMIN_DB}" TO rls_bypass;
+
+
 -- Grant rls_bypass to the platform app user so withSystemAdmin() works without a GUC.
 -- Migration 008 also does this for existing databases; this covers fresh initdb installs.
 DO \$\$

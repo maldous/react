@@ -25,8 +25,16 @@ describe("createLogger", () => {
   });
 
   it("defaults to info level", () => {
-    const logger = createLogger({ name: "test-logger-default" });
-    assert.equal(logger.level, "info");
+    const originalLevel = process.env["LOG_LEVEL"];
+    delete process.env["LOG_LEVEL"];
+    try {
+      const logger = createLogger({ name: "test-logger-default" });
+      assert.equal(logger.level, "info");
+    } finally {
+      if (originalLevel !== undefined) {
+        process.env["LOG_LEVEL"] = originalLevel;
+      }
+    }
   });
 });
 

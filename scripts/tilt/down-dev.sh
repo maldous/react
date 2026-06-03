@@ -10,7 +10,7 @@ if [ -f .tilt.pid ]; then
     _pid="$(cat .tilt.pid)"
 else
     printf '%s⚠ .tilt.pid not found — trying pgrep%s\n' "$YELLOW" "$RESET"
-    _pid="$(pgrep -f '^tilt ' 2>/dev/null | head -1 || true)"
+    _pid="$(pgrep -f 'tilt' 2>/dev/null | head -1 || true)"
 fi
 
 tilt down 2>/dev/null || true

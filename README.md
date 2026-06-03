@@ -123,13 +123,13 @@ Optional profiles add Keycloak, LocalStack, SonarQube, and Sentry. Terraform/Ope
 
 The following are structurally complete but have explicit caveats. Each is tracked in `docs/adr/ACTION-REGISTER.md`.
 
-**UMA dynamic policy enforcement (ADR-ACT-0145):** The BFF uses a static `requiredPermission` bridge that checks session-resolved permissions from Redis. Keycloak Authorization Services UMA ticket evaluation is not yet wired. ADR-0030's "no-deploy policy changes" claim is NOT satisfied until ADR-ACT-0145 is complete. The Auth Settings API (`/api/auth/settings/*`) manages realm configuration but does not substitute for runtime UMA evaluation.
+**UMA dynamic policy enforcement (ADR-ACT-0145):** Implemented and Done 2026-06-02. The BFF pipeline evaluates UMA tickets for all protected routes with `resource`+`umaScope` declared. Uses `resolveAccessToken()` for token refresh and `KeycloakAuthorisationAdapter` as the authorisation port. Fixture sessions without `accessTokenEnc` fall through to the static `requiredPermission` backstop. Degraded mode (Keycloak unavailable) falls back to static permission. Routes with `resource`+`umaScope` but no `requiredPermission` fail closed.
 
-**RLS requires a non-superuser production DB role (ADR-ACT-0153):** Migration 004 adds FORCE ROW LEVEL SECURITY and the `withTenant`/`withSystemAdmin` helpers correctly set `app.current_tenant_id` / `app.bypass_rls`. However, the Docker Compose dev setup creates `platform` as a PostgreSQL superuser ? superusers bypass FORCE RLS unconditionally. RLS will only enforce in production when a non-superuser application DB role is used.
+**RLS non-superuser DB role (ADR-ACT-0189):** Implemented and Done 2026-06-02. Migration 010 creates `platform_app` (NOSUPERUSER, NOBYPASSRLS, LOGIN, NOINHERIT). Runtime repos use `getPostgresAppUrl()` which connects with this role. `withSystemAdmin()` uses `SET LOCAL ROLE rls_bypass` (transaction-scoped). RLS now enforces at runtime — see `packages/adapters-postgres/tests/adapters-postgres.test.ts` for 11 integration/unit tests proving isolation.
 
-**Auth Settings API audit (ADR-ACT-0154):** The POST/PATCH `/api/auth/settings/*` routes validate bodies and proxy to Keycloak, but do not yet emit persistent audit events. Deferred pending a persistent `AuditEventPort` adapter (ADR-ACT-0148).
+**Auth Settings API audit (ADR-ACT-0154):** Implemented and Done 2026-06-02. All five Auth Settings mutations (IdP, MFA, session, sysadmin-brokering, resource-policies) emit persistent audit events to Postgres before mutating Keycloak. Audit failure aborts the mutation. See `apps/platform-api/tests/unit/auth-settings-audit.test.ts` (12 tests).
 
-**Persistent audit events (ADR-ACT-0148):** Provisioning emits audit events to an in-memory port. A ClickHouse- or Postgres-backed adapter is required for durable audit trails before tenant-admin UI release.
+**Persistent audit events (ADR-ACT-0148):** Done. Postgres-backed `AuditEventPort` adapter wired into provisioning and all Auth Settings mutations. See `packages/adapters-postgres/src/index.ts` and `apps/platform-api/src/server/provisioning.ts`.
 
 **Live Keycloak browser E2E:** The current E2E test suite uses `LOCAL_FIXTURE_SESSION`. Browser-driven login through a real Keycloak realm requires `KEYCLOAK_CLIENT_SECRET` env var and the identity Compose profile running.
 

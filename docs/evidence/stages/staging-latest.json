@@ -1,0 +1,29 @@
+{
+  "stage": "staging",
+  "gitSha": "729df52",
+  "timestamp": "2026-06-03T11:18:43.982Z",
+  "envFile": ".env.staging",
+  "composeProject": "react-staging",
+  "profiles": [
+    "default"
+  ],
+  "dataPolicy": "preserve",
+  "testGroupsRun": [
+    "integration",
+    "compose-smoke",
+    "external-smoke",
+    "e2e-smoke"
+  ],
+  "testGroupsSkipped": [
+    "tenant-data",
+    "destructive",
+    "production-customer-data"
+  ],
+  "e2eCommand": "make e2e-external PROD_BASE_URL=https://staging.aldous.info",
+  "urlsChecked": [
+    "http://localhost:3003/healthz"
+  ],
+  "result": "passed",
+  "durationSeconds": 34,
+  "failureSummary": null
+}

@@ -24,7 +24,13 @@
  */
 
 import { test, expect } from "@playwright/test";
-import { isProd, getExternalBaseUrl, getTestCredentials, loginAs } from "./helpers.ts";
+import {
+  isProd,
+  getExternalBaseUrl,
+  getTestCredentials,
+  loginAs,
+  assertSessionAuthenticated,
+} from "./helpers.ts";
 
 const E2E_TENANT_SLUG = process.env["E2E_TENANT_SLUG"] ?? "e2e-tenant";
 const TARGET_HOST = new URL(process.env["PROD_BASE_URL"] ?? "https://aldous.info").hostname;
@@ -131,6 +137,29 @@ test.describe(`${TARGET_HOST}: tenant FQDN routing (prod-only)`, () => {
 
     // Step 1: login as sysadmin on the apex host
     await loginAs(page, credentials.username, credentials.password);
+    await assertSessionAuthenticated(page);
+
+    const sessionRes = await page.request.get(`${baseUrl}/api/session`, {
+      failOnStatusCode: false,
+      timeout: 15_000,
+    });
+    expect(sessionRes.status(), "sysadmin session must be established").toBe(200);
+    const session = (await sessionRes.json()) as { roles?: string[]; permissions?: string[] };
+    if (!session.roles?.includes("system-admin")) {
+      testInfo.skip(
+        true,
+        "Skipped: test user does not resolve to system-admin in the production session"
+      );
+      return;
+    }
+    if (!session.permissions?.includes("platform.tenants.create")) {
+      testInfo.skip(
+        true,
+        "Skipped: system-admin session does not include platform.tenants.create, " +
+          "so tenant provisioning is not available in this environment"
+      );
+      return;
+    }
 
     // Step 2: provision the test tenant (idempotent — 409 means already exists)
     const provisionRes = await page.request.post(`${baseUrl}/api/admin/tenants`, {

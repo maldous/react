@@ -86,7 +86,9 @@ The `slug` is the tenant's `organisations.slug` value ? a lowercase alphanumeric
 
 **Tenant resolution in platform-api:**
 
-The BFF reads the `Host` request header to determine which tenant is being served. On every request, before session validation:
+The BFF reads the `X-Forwarded-Host` request header (set by the external Caddy reverse-proxy to the original client hostname) to determine which tenant is being served, falling back to the `Host` header when the platform is accessed directly. On every request, before session validation:
+
+> **Trust boundary:** `X-Forwarded-Host` is only accepted from the internal network. The external Caddy is the sole entry point; it strips any client-supplied `X-Forwarded-Host` and replaces it with the real client hostname before forwarding. Application code must never be updated to trust `X-Forwarded-Host` from an unauthenticated network boundary.
 
 ```typescript
 function resolveTenantFromHost(host: string): string | null {
@@ -580,7 +582,7 @@ All user sessions for the tenant are invalidated. Keycloak realm is disabled (no
 
 ### 10. Invariants ? never violate without ADR amendment
 
-1. **Tenant is determined from FQDN.** The BFF reads `Host` header on every request. `organisationId` is never accepted from the request body as the tenant selector.
+1. **Tenant is determined from FQDN.** The BFF reads `X-Forwarded-Host` (Caddy-set, trusted internal header) with `Host` as fallback. `organisationId` is never accepted from the request body as the tenant selector.
 
 2. **Session is verified against FQDN tenant.** A session issued for tenant A is rejected when presented on tenant B's FQDN. Mismatch = `ForbiddenError`.
 

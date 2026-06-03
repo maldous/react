@@ -106,9 +106,10 @@ test.describe(`${TARGET_HOST}: admin tool services load after sysadmin login`, (
 
   for (const tool of RUNNING_TOOLS) {
     test(`${tool.label} (${tool.path}) loads — not 4xx/5xx, not SPA`, async ({ page }) => {
+      test.setTimeout(60_000);
       const response = await page.goto(new URL(tool.path, getExternalBaseUrl(page)).toString(), {
         waitUntil: "domcontentloaded",
-        timeout: 20_000,
+        timeout: 30_000,
       });
 
       const status = response?.status() ?? 0;

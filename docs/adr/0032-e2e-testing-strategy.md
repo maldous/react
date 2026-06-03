@@ -2,11 +2,16 @@
 
 ## Status
 
-Accepted — updated 2026-05-30 (internal/external split)
+Accepted
 
 ## Date
 
 2026-05-29
+
+## History
+
+- 2026-05-29: Accepted — initial E2E strategy (internal/external split)
+- 2026-05-30: Updated — staging/prod routing split; `isProd()` guard added for Sentry subdomain and tenant FQDN tests; prod-only external tests moved to `e2e/external/tenant-prod.spec.ts`
 
 ---
 
