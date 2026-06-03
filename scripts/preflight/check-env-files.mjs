@@ -17,17 +17,24 @@ const REQUIRED_ALL = [
   "WEB_HTTP_PORT",
   "APEX_DOMAIN",
   "LOG_LEVEL",
+  // Compose project isolation — all four envs must declare their project name.
+  "COMPOSE_PROJECT",
+  "COMPOSE_PROJECT_FILTER",
+  // Node environment — controls test behaviour and Vitest mode.
+  "NODE_ENV",
 ];
 
 const REQUIRED_BY_STAGE = {
   staging: ["KEYCLOAK_PORT"],
-  prod: ["KEYCLOAK_PORT", "NODE_ENV"],
+  prod: ["KEYCLOAK_PORT"],
 };
 
-const FORBIDDEN_IN_PROD_STAGING = [
+// These keys must be completely absent (not just empty) in staging/prod.
+// Their presence — even with an empty value — is a misconfiguration.
+const MUST_BE_ABSENT_IN_PROD_STAGING = [
   {
     key: "LOCAL_FIXTURE_SESSION",
-    reason: "fixture sessions must not exist in staging/prod",
+    reason: "fixture sessions must not exist in staging/prod — remove the key entirely",
   },
 ];
 
@@ -90,17 +97,23 @@ for (const stage of STAGES) {
     ok(`APEX_DOMAIN="${env.APEX_DOMAIN}" matches expected`);
   }
 
-  // forbidden keys in prod/staging
+  // These keys must be completely absent from staging/prod.
+  // Even an empty value (KEY=) is rejected — the key must not appear in the file.
   if (stage === "prod" || stage === "staging") {
-    for (const { key, reason } of FORBIDDEN_IN_PROD_STAGING) {
-      if (env[key] !== undefined) fail(`${key} must not be set in ${stage}: ${reason}`);
-      else ok(`${key} absent (required)`);
+    for (const { key, reason } of MUST_BE_ABSENT_IN_PROD_STAGING) {
+      if (env[key] !== undefined) fail(`${key} must be absent from ${stage}: ${reason}`);
+      else ok(`${key} absent (correct)`);
     }
   }
 
-  // NODE_ENV must be "production" in prod (checked via REQUIRED_BY_STAGE + drift check)
-  if (stage === "prod" && env.NODE_ENV && env.NODE_ENV !== "production") {
+  // NODE_ENV must be "production" in prod
+  if (stage === "prod" && env.NODE_ENV !== "production") {
     fail(`NODE_ENV="${env.NODE_ENV}" must be "production" in prod`);
+  }
+
+  // NODE_ENV must not be "production" in dev/test (breaks Vitest)
+  if ((stage === "dev" || stage === "test") && env.NODE_ENV === "production") {
+    fail(`NODE_ENV="production" must not be set in ${stage} — breaks Vitest`);
   }
 }
 

@@ -1,7 +1,8 @@
 .PHONY: preflight stage-dev stage-test stage-staging stage-prod \
         env-up-all env-down-all env-status promote
 
-## preflight — Check required binaries, Docker, env files, and port definitions
+## preflight — Check required binaries, Docker, all env files, and port definitions
+## All four env files (dev/test/staging/prod) are validated at preflight time.
 ## Note: clean-state is NOT checked here because all four environments are expected
 ## to be running persistently. Use `make env-down-all` + `make clean-all` if you
 ## need a completely fresh start.
@@ -9,7 +10,7 @@ preflight:
 	$(call STEP,preflight)
 	bash scripts/preflight/check-binaries.sh
 	bash scripts/preflight/check-docker.sh
-	node scripts/preflight/check-env-files.mjs
+	node scripts/preflight/check-env-files.mjs --all
 	node scripts/preflight/check-port-conflicts.mjs
 	node scripts/preflight/check-hosts.mjs
 	$(call OK,preflight passed)
