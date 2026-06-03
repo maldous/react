@@ -37,10 +37,10 @@ include make/help.mk
 # stage-policy.yaml. Environments remain running after completion (teardownDefault: false).
 # Use `make env-down-all` to stop everything when done.
 .PHONY: all
-## all — Full confidence ladder: env-down-all → preflight → quality → env-validate-all → env-drift-check → promote → evidence → env-status
-## env-down-all runs first so the ladder always starts from a clean known state,
-## regardless of what was running from a previous session.
-all: env-down-all \
+## all — Full confidence ladder: clean-all → preflight → quality → env-validate-all → env-drift-check → promote → evidence → env-status
+## clean-all tears down dev and test (ephemeral — destructive data policy, fine to wipe).
+## Staging and prod are left as-is if running, or started by stage-staging/stage-prod if not.
+all: clean-all \
      preflight \
      quality \
      env-validate-all \
