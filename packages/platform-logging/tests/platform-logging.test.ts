@@ -1,5 +1,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
+import { Writable } from "node:stream";
+import pino from "pino";
 import {
   createLogger,
   createChildLogger,
@@ -7,6 +9,7 @@ import {
   safeErrorMeta,
   safeContextMeta,
   createBrowserLogger,
+  normaliseError,
   redactionPaths,
 } from "../src/index.ts";
 
@@ -34,6 +37,24 @@ describe("createLogger", () => {
       if (originalLevel !== undefined) {
         process.env["LOG_LEVEL"] = originalLevel;
       }
+    }
+  });
+});
+
+describe("createLogger — configuration", () => {
+  it("returns a pino logger with the requested level", () => {
+    const logger = createLogger({ name: "config-test", level: "debug" });
+    assert.equal(logger.level, "debug");
+  });
+
+  it("defaults level to info when no option or env var", () => {
+    const orig = process.env["LOG_LEVEL"];
+    delete process.env["LOG_LEVEL"];
+    try {
+      const logger = createLogger({ name: "config-default" });
+      assert.equal(logger.level, "info");
+    } finally {
+      if (orig !== undefined) process.env["LOG_LEVEL"] = orig;
     }
   });
 });
@@ -183,5 +204,254 @@ describe("redactionPaths", () => {
 
   it("includes wildcard token path", () => {
     assert.ok(redactionPaths.includes("*.token"));
+  });
+
+  it("includes SENTRY_DSN", () => {
+    assert.ok(redactionPaths.includes("SENTRY_DSN"));
+  });
+
+  it("includes cookie path", () => {
+    assert.ok(redactionPaths.includes("cookie"));
+  });
+
+  it("includes token path", () => {
+    assert.ok(redactionPaths.includes("token"));
+  });
+});
+
+describe("createLogger — all six log levels", () => {
+  it("has trace and fatal methods in addition to debug/info/warn/error", () => {
+    const logger = createLogger({ name: "six-levels-test" });
+    assert.equal(typeof logger.trace, "function");
+    assert.equal(typeof logger.debug, "function");
+    assert.equal(typeof logger.info, "function");
+    assert.equal(typeof logger.warn, "function");
+    assert.equal(typeof logger.error, "function");
+    assert.equal(typeof logger.fatal, "function");
+  });
+
+  it("emits at trace level when level is set to trace", () => {
+    const logger = createLogger({ name: "trace-level-test", level: "trace" });
+    assert.equal(logger.level, "trace");
+  });
+
+  it("emits at fatal level (fatal method exists and does not throw)", () => {
+    const logger = createLogger({ name: "fatal-level-test", level: "fatal" });
+    assert.equal(logger.level, "fatal");
+    assert.doesNotThrow(() => logger.fatal("fatal test message"));
+  });
+});
+
+describe("pino base fields — service/packageName/boundedContext/environment/version/gitSha present in output", () => {
+  it("includes service, packageName, boundedContext, environment, version, gitSha in every log entry", () => {
+    const output: string[] = [];
+    const dest = new Writable({
+      write(chunk: Buffer, _enc: BufferEncoding, cb: () => void) {
+        output.push(chunk.toString());
+        cb();
+      },
+    });
+    const logger = pino(
+      {
+        level: "info",
+        base: {
+          service: "test-svc",
+          packageName: "@platform/test",
+          boundedContext: "test-context",
+          environment: "test",
+          version: "1.0.0",
+          gitSha: "abc123",
+        },
+        redact: { paths: redactionPaths, censor: "[REDACTED]" },
+      },
+      dest
+    );
+    logger.info("base fields check");
+    assert.ok(output.length > 0, "expected at least one log line");
+    const parsed = JSON.parse(output[0] as string);
+    assert.equal(parsed["service"], "test-svc");
+    assert.equal(parsed["packageName"], "@platform/test");
+    assert.equal(parsed["boundedContext"], "test-context");
+    assert.equal(parsed["environment"], "test");
+    assert.equal(parsed["version"], "1.0.0");
+    assert.equal(parsed["gitSha"], "abc123");
+  });
+});
+
+describe("redactionPaths — sensitive values are censored in pino output", () => {
+  it("redacts password field in log output", () => {
+    const output: string[] = [];
+    const dest = new Writable({
+      write(chunk: Buffer, _enc: BufferEncoding, cb: () => void) {
+        output.push(chunk.toString());
+        cb();
+      },
+    });
+    const logger = pino(
+      {
+        level: "info",
+        redact: { paths: redactionPaths, censor: "[REDACTED]" },
+      },
+      dest
+    );
+    logger.info({ password: "super-secret", user: "alice" }, "test redaction");
+    assert.ok(output.length > 0, "expected at least one log line");
+    const parsed = JSON.parse(output[0] as string);
+    assert.equal(parsed["password"], "[REDACTED]");
+    assert.equal(parsed["user"], "alice");
+  });
+
+  it("redacts token field in log output", () => {
+    const output: string[] = [];
+    const dest = new Writable({
+      write(chunk: Buffer, _enc: BufferEncoding, cb: () => void) {
+        output.push(chunk.toString());
+        cb();
+      },
+    });
+    const logger = pino(
+      {
+        level: "info",
+        redact: { paths: redactionPaths, censor: "[REDACTED]" },
+      },
+      dest
+    );
+    logger.info({ token: "my-auth-token-xyz", userId: "u1" }, "token redaction");
+    assert.ok(output.length > 0, "expected at least one log line");
+    const parsed = JSON.parse(output[0] as string);
+    assert.equal(parsed["token"], "[REDACTED]");
+    assert.equal(parsed["userId"], "u1");
+  });
+
+  it("redacts cookie field in log output", () => {
+    const output: string[] = [];
+    const dest = new Writable({
+      write(chunk: Buffer, _enc: BufferEncoding, cb: () => void) {
+        output.push(chunk.toString());
+        cb();
+      },
+    });
+    const logger = pino(
+      {
+        level: "info",
+        redact: { paths: redactionPaths, censor: "[REDACTED]" },
+      },
+      dest
+    );
+    logger.info({ cookie: "session=abc123", path: "/api" }, "cookie redaction");
+    assert.ok(output.length > 0, "expected at least one log line");
+    const parsed = JSON.parse(output[0] as string);
+    assert.equal(parsed["cookie"], "[REDACTED]");
+    assert.equal(parsed["path"], "/api");
+  });
+
+  it("redacts SENTRY_DSN field in log output", () => {
+    const output: string[] = [];
+    const dest = new Writable({
+      write(chunk: Buffer, _enc: BufferEncoding, cb: () => void) {
+        output.push(chunk.toString());
+        cb();
+      },
+    });
+    const logger = pino(
+      {
+        level: "info",
+        redact: { paths: redactionPaths, censor: "[REDACTED]" },
+      },
+      dest
+    );
+    logger.info({ SENTRY_DSN: "https://key@sentry.io/123", env: "prod" }, "dsn redaction");
+    assert.ok(output.length > 0, "expected at least one log line");
+    const parsed = JSON.parse(output[0] as string);
+    assert.equal(parsed["SENTRY_DSN"], "[REDACTED]");
+    assert.equal(parsed["env"], "prod");
+  });
+});
+
+describe("normaliseError", () => {
+  it("returns name, message, and stack for Error instances", () => {
+    const err = new Error("something went wrong");
+    const result = normaliseError(err);
+    assert.equal(result["name"], "Error");
+    assert.equal(result["message"], "something went wrong");
+    assert.ok(typeof result["stack"] === "string" || result["stack"] === undefined);
+  });
+
+  it("handles non-Error values (strings)", () => {
+    const result = normaliseError("plain string error");
+    assert.equal(result["name"], "UnknownError");
+    assert.equal(result["message"], "plain string error");
+  });
+
+  it("handles non-Error values (objects)", () => {
+    const result = normaliseError({ weird: true });
+    assert.equal(result["name"], "UnknownError");
+    assert.ok(typeof result["message"] === "string");
+  });
+
+  it("includes cause when present as an Error", () => {
+    const cause = new Error("root cause");
+    const err = new Error("outer error", { cause });
+    const result = normaliseError(err);
+    assert.ok(result["cause"] !== undefined, "cause should be present");
+    const causeObj = result["cause"] as Record<string, unknown>;
+    assert.equal(causeObj["name"], "Error");
+    assert.equal(causeObj["message"], "root cause");
+  });
+
+  it("includes cause when present as a non-Error value", () => {
+    const err = new Error("outer error");
+    (err as unknown as { cause: unknown }).cause = "string cause";
+    const result = normaliseError(err);
+    assert.equal(result["cause"], "string cause");
+  });
+
+  // Smoke test (deferred — infrastructure-dependent):
+  // ADR-ACT-0196 also requires: Loki receives a platform-api log with requestId
+  // after a /healthz hit. This requires Loki running in the compose stack.
+  // To verify: `make compose-up-default && curl -fsS http://localhost:3001/healthz`
+  // then query Loki for {service="platform-api"} | json | requestId != "".
+});
+
+describe("createRequestLogger — bound fields", () => {
+  it("binds all optional fields when provided", () => {
+    const parent = createLogger({ name: "req-full-parent" });
+    const logger = createRequestLogger(parent, {
+      requestId: "req-full",
+      traceId: "trace-full",
+      spanId: "span-full",
+      actorId: "actor-1",
+      tenantId: "tenant-1",
+      organisationId: "org-1",
+      operationName: "FullOp",
+      method: "POST",
+      path: "/api/test",
+    });
+    assert.equal(typeof logger.info, "function");
+    assert.notEqual(logger, parent);
+  });
+
+  it("bound fields (requestId, traceId, spanId, operationName) appear in serialised log output", () => {
+    const output: string[] = [];
+    const dest = new Writable({
+      write(chunk: Buffer, _enc: BufferEncoding, cb: () => void) {
+        output.push(chunk.toString());
+        cb();
+      },
+    });
+    const parent = pino({ level: "info" }, dest);
+    const logger = createRequestLogger(parent, {
+      requestId: "req-bound-test",
+      traceId: "trace-bound-test",
+      spanId: "span-bound-test",
+      operationName: "BoundFieldsOp",
+    });
+    logger.info("bound fields check");
+    assert.ok(output.length > 0, "expected at least one log line");
+    const parsed = JSON.parse(output[0] as string);
+    assert.equal(parsed["requestId"], "req-bound-test");
+    assert.equal(parsed["traceId"], "trace-bound-test");
+    assert.equal(parsed["spanId"], "span-bound-test");
+    assert.equal(parsed["operationName"], "BoundFieldsOp");
   });
 });

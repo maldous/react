@@ -56,6 +56,12 @@ export async function seedFixtures(): Promise<void> {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   seedFixtures()
-    .then(() => console.log("Seed complete"))
-    .catch(console.error);
+    .then(() => {
+      process.stdout.write("Seed complete\n");
+    })
+    .catch((err: unknown) => {
+      const msg = err instanceof Error ? (err.stack ?? err.message) : String(err);
+      process.stderr.write(`\nFatal error: ${msg}\n`);
+      process.exitCode = 1;
+    });
 }

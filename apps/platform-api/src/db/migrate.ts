@@ -98,8 +98,14 @@ export async function isMigrated(): Promise<boolean> {
 if (import.meta.url === `file://${process.argv[1]}`) {
   runMigrations()
     .then(({ applied, skipped }) => {
-      console.log(`Migrations applied: ${applied.length}, skipped: ${skipped.length}`);
-      if (applied.length) console.log("Applied:", applied.join(", "));
+      process.stdout.write(`Migrations applied: ${applied.length}, skipped: ${skipped.length}\n`);
+      if (applied.length) {
+        process.stdout.write(`Applied: ${applied.join(", ")}\n`);
+      }
     })
-    .catch(console.error);
+    .catch((err: unknown) => {
+      const msg = err instanceof Error ? (err.stack ?? err.message) : String(err);
+      process.stderr.write(`\nFatal error: ${msg}\n`);
+      process.exitCode = 1;
+    });
 }
