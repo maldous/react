@@ -25,9 +25,13 @@ $COMPOSE_CMD down --timeout 30 2>/dev/null || true
 docker ps -q --filter "label=com.docker.compose.project=react-${ENV}" \
     | xargs -r docker rm -f 2>/dev/null || true
 
-# Stop default Tilt project containers (project name "react")
-docker compose down --volumes --timeout 30 2>/dev/null || true
+# Stop Tilt default project containers (project name "react") — but NOT via bare
+# `docker compose down` which would also kill the external-caddy container (which
+# serves as the Cloudflare-facing proxy for aldous.info and staging.aldous.info
+# and belongs to no per-environment project).
+# Force-remove only non-external-caddy containers from the react project.
 docker ps -q --filter "label=com.docker.compose.project=react" \
+    --filter "label=com.docker.compose.service!=external-caddy" \
     | xargs -r docker rm -f 2>/dev/null || true
 docker volume ls -q --filter "label=com.docker.compose.project=react" \
     | xargs -r docker volume rm 2>/dev/null || true
