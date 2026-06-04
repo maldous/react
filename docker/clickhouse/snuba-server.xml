@@ -1,8 +1,0 @@
-<!-- Server-level ClickHouse settings for Snuba 26.x compatibility.
-     Mounted to /etc/clickhouse-server/config.d/. -->
-<clickhouse>
-  <merge_tree>
-    <!-- Allow creation of tables with JSON columns. -->
-    <enable_json_type>1</enable_json_type>
-  </merge_tree>
-</clickhouse>
