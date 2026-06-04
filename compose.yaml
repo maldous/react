@@ -538,6 +538,8 @@ services:
         condition: service_completed_successfully
       sentry-snuba-migrate:
         condition: service_completed_successfully
+      sentry-snuba-api:
+        condition: service_started
       redis:
         condition: service_healthy
       sentry-memcached:
@@ -575,11 +577,63 @@ services:
       start_period: 300s
     restart: unless-stopped
 
-  # NOTE: sentry-events-consumer and sentry-post-process-forwarder are omitted.
-  # These services are for the Relay managed-mode Kafka ingestion pipeline.
-  # In proxy mode, sentry-web receives events directly from Relay via HTTP and
-  # writes to Kafka itself via KafkaEventStream for Snuba. No separate consumer
-  # is needed for event ingestion — sentry-web handles it inline.
+  sentry-events-consumer:
+    image: ghcr.io/getsentry/sentry:26.5.2
+    profiles: [sentry]
+    command: >-
+      run consumer ingest-events
+      --consumer-group ingest-consumer
+      --healthcheck-file-path /tmp/health.txt
+    depends_on:
+      sentry-migrate:
+        condition: service_completed_successfully
+      sentry-kafka:
+        condition: service_healthy
+    environment:
+      SENTRY_CONF: /etc/sentry
+      SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY}
+      SENTRY_POSTGRES_HOST: postgres
+      SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
+      SENTRY_DB_USER: ${SENTRY_DB_USER:-sentry}
+      SENTRY_DB_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
+      SENTRY_REDIS_HOST: redis
+      SENTRY_REDIS_PORT: "6379"
+      KAFKA_BROKERS: sentry-kafka:9092
+      SNUBA: http://sentry-snuba-api:1218
+    volumes:
+      - sentry-data:/data
+      - ./docker/sentry:/etc/sentry:ro
+    restart: unless-stopped
+
+  sentry-post-process-forwarder:
+    image: ghcr.io/getsentry/sentry:26.5.2
+    profiles: [sentry]
+    command: >-
+      run consumer --no-strict-offset-reset post-process-forwarder-errors
+      --consumer-group post-process-forwarder
+      --synchronize-commit-log-topic=snuba-commit-log
+      --synchronize-commit-group=snuba-consumers
+      --healthcheck-file-path /tmp/health.txt
+    depends_on:
+      sentry-migrate:
+        condition: service_completed_successfully
+      sentry-kafka:
+        condition: service_healthy
+    environment:
+      SENTRY_CONF: /etc/sentry
+      SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY}
+      SENTRY_POSTGRES_HOST: postgres
+      SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
+      SENTRY_DB_USER: ${SENTRY_DB_USER:-sentry}
+      SENTRY_DB_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
+      SENTRY_REDIS_HOST: redis
+      SENTRY_REDIS_PORT: "6379"
+      KAFKA_BROKERS: sentry-kafka:9092
+      SNUBA: http://sentry-snuba-api:1218
+    volumes:
+      - sentry-data:/data
+      - ./docker/sentry:/etc/sentry:ro
+    restart: unless-stopped
 
   sentry-taskbroker:
     image: ghcr.io/getsentry/taskbroker:26.5.2
