@@ -1,0 +1,11 @@
+<!-- Enable ClickHouse native JSON type for Snuba 26.x schema migrations.
+     Snuba creates columns of type JSON(max_dynamic_paths=128) which requires
+     this setting. Mounted to /etc/clickhouse-server/users.d/ so it applies
+     to all user profiles at server startup. -->
+<clickhouse>
+  <profiles>
+    <default>
+      <enable_json_type>1</enable_json_type>
+    </default>
+  </profiles>
+</clickhouse>
