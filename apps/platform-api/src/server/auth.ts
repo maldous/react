@@ -55,7 +55,12 @@ export function isSecureCookie(): boolean {
 }
 
 function buildSetCookieHeader(sessionId: string): string {
-  const parts = [`${SESSION_COOKIE_NAME}=${sessionId}`, "HttpOnly", "SameSite=Strict", "Path=/"];
+  // SameSite=Lax (not Strict): the session cookie must be included in the top-level
+  // GET redirect that follows the Keycloak OAuth callback. With SameSite=Strict the
+  // cookie is not sent during the cross-site redirect chain (KC → callback → /),
+  // so the React app never sees an authenticated session. Lax is appropriate here
+  // because the cookie is HttpOnly and the login flow is a deliberate top-level nav.
+  const parts = [`${SESSION_COOKIE_NAME}=${sessionId}`, "HttpOnly", "SameSite=Lax", "Path=/"];
   if (isSecureCookie()) parts.push("Secure");
   const domain = getSessionCookieDomain();
   if (domain) parts.push(`Domain=${domain}`);
