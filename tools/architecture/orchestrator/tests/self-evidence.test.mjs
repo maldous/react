@@ -38,9 +38,12 @@ const requiredOrchestratorFields = [
   "evidenceGenerated",
 ];
 
+const SKIP_DIRS = new Set(["node_modules", ".git", "reports"]);
+
 function copyDir(source, target) {
   fs.mkdirSync(target, { recursive: true });
   for (const entry of fs.readdirSync(source, { withFileTypes: true })) {
+    if (SKIP_DIRS.has(entry.name)) continue;
     const sourcePath = path.join(source, entry.name);
     const targetPath = path.join(target, entry.name);
     if (entry.isDirectory()) copyDir(sourcePath, targetPath);
@@ -51,7 +54,8 @@ function copyDir(source, target) {
 function makeRepo() {
   const target = fs.mkdtempSync(path.join(os.tmpdir(), "architecture-self-evidence-"));
   copyDir(repoRoot, target);
-  fs.rmSync(path.join(target, "reports"), { recursive: true, force: true });
+  // Symlink node_modules so spawned tools resolve deps without copying 570+ dirs.
+  fs.symlinkSync(path.join(repoRoot, "node_modules"), path.join(target, "node_modules"));
   return target;
 }
 
