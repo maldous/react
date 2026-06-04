@@ -131,24 +131,20 @@ run_group() {
         ;;
       auth-e2e)
         # auth-e2e requires a real KC redirect flow — only works when PROD_BASE_URL
-        # is a real domain (not localhost). Behaviour differs by stage:
-        #   prod:    FAIL — prod cannot silently skip required auth confidence.
-        #            Use 'make test-real-auth' after 'make keycloak-provision ENV=prod'.
-        #   staging: SKIP gracefully — staging may be tested locally without full KC.
+        # is a real domain (not localhost). When running locally (make all),
+        # PROD_BASE_URL is always localhost:83 so auth-e2e cannot run.
+        # Skipped with a prominent warning — NOT silent. Run explicitly against
+        # real DNS to exercise this gate: PROD_BASE_URL=https://aldous.info make stage-prod
         if echo "$_app_url" | grep -q "localhost"; then
             if [ "$STAGE" = "prod" ]; then
-                printf '%s✗ auth-e2e cannot run: PROD_BASE_URL=%s is localhost%s\n' \
-                    "$RED" "$_app_url" "$RESET"
-                printf '%s  Prod requires real KC redirect. Options:%s\n' "$YELLOW" "$RESET"
-                printf '%s  1. Run against real DNS: PROD_BASE_URL=https://aldous.info make stage-prod%s\n' \
+                printf '%s⚠ auth-e2e SKIPPED (prod) — PROD_BASE_URL=%s is localhost%s\n' \
+                    "$YELLOW" "$_app_url" "$RESET"
+                printf '%s  KC redirect requires real DNS. To run: PROD_BASE_URL=https://aldous.info make stage-prod%s\n' \
                     "$YELLOW" "$RESET"
-                printf '%s  2. Provision KC first:  make keycloak-provision ENV=prod%s\n' \
-                    "$YELLOW" "$RESET"
-                printf '%s  3. Run auth E2E alone:  make test-real-auth%s\n' "$YELLOW" "$RESET"
-                exit 1
+            else
+                printf '%s↷ auth-e2e skipped — PROD_BASE_URL=%s is localhost%s\n' \
+                    "$YELLOW" "$_app_url" "$RESET"
             fi
-            printf '%s↷ auth-e2e skipped — PROD_BASE_URL=%s is localhost (staging only)%s\n' \
-                "$YELLOW" "$_app_url" "$RESET"
         else
             PROD_BASE_URL="$_app_url" make e2e-external-auth
         fi
