@@ -44,6 +44,21 @@ SENTRY_OPTIONS["redis.clusters"] = {
     }
 }
 
+# ── Redis-backed services — must override server.py base class defaults ───
+# The default implementations (RateLimiter, Buffer, Quota, DummyDigests)
+# raise NotImplementedError on validate() or warn as unsupported for prod.
+SENTRY_RATELIMITER = "sentry.ratelimits.redis.RedisRateLimiter"
+SENTRY_RATELIMITER_OPTIONS = {"cluster": "default"}
+
+SENTRY_BUFFER = "sentry.buffer.redis.RedisBuffer"
+SENTRY_BUFFER_OPTIONS = {}
+
+SENTRY_QUOTAS = "sentry.quotas.redis.RedisQuota"
+SENTRY_QUOTAS_OPTIONS = {}
+
+SENTRY_DIGESTS = "sentry.digests.backends.redis.RedisBackend"
+SENTRY_DIGESTS_OPTIONS = {"cluster": "default"}
+
 # ── Kafka / EventStream ───────────────────────────────────────────────────
 _kafka_brokers = os.environ.get("KAFKA_BROKERS", "sentry-kafka:9092")
 _kafka_opts = {
@@ -60,12 +75,10 @@ SENTRY_SEARCH = "sentry.search.snuba.EventsDatasetSnubaSearchBackend"
 SENTRY_TSDB = "sentry.tsdb.redissnuba.RedisSnubaTSDB"
 
 # ── Errors-only mode ─────────────────────────────────────────────────────
-# Disables performance tracing, profiling, and session replays. Only error
-# events are ingested and stored. Set to False to enable full feature set.
+# Disables performance tracing, profiling, and session replays.
 SENTRY_SELF_HOSTED_ERRORS_ONLY = True
 
 # ── Node storage — DjangoNodeStorage stores event blobs in postgres ───────
-# Avoids the SeaweedFS dependency. Suitable for self-hosted at this scale.
 SENTRY_NODESTORE = "sentry.nodestore.django.DjangoNodeStorage"
 
 # ── File storage (attachments, sourcemaps) ────────────────────────────────

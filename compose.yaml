@@ -399,7 +399,8 @@ services:
   sentry-snuba-migrate:
     image: ghcr.io/getsentry/snuba:26.5.2
     profiles: [sentry]
-    command: snuba migrations migrate --force
+    # No 'snuba' prefix — entrypoint is ./docker_entrypoint.sh which prepends it.
+    command: migrations migrate --force
     depends_on:
       clickhouse:
         condition: service_healthy
