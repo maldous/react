@@ -35,7 +35,11 @@ if pkill -f 'tilt up' 2>/dev/null; then
 fi
 
 printf 'Starting Tilt...\n'
-tilt up &
+# Redirect Tilt stdout/stderr to a dedicated log so it does not inherit the
+# parent process's stdout. Without this, `make all > all.txt 2>&1` (or any
+# pipe/redirect) keeps the fd open indefinitely — Tilt streams container logs
+# forever, blocking the shell waiting for EOF after Make has already finished.
+tilt up > .tilt.log 2>&1 &
 echo $! > .tilt.pid
 
 # 360s: postgres initialises from scratch while SonarQube, Sentry, and Keycloak
