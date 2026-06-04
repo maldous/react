@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "FILE=$(jq -r '.tool_input.file_path // empty' 2>/dev/null); [ -z \"$FILE\" ] && exit 2; echo \"$FILE\" | grep -qE '(\\.env(\\..*)?)$' && echo 'BLOCK: refusing to edit .env files - constraint #8 in CLAUDE.md' && exit 2 || exit 0"
+            "command": "FILE=$(jq -r '.tool_input.file_path // empty' 2>/dev/null); [ -z \"$FILE\" ] && exit 2; echo \"$FILE\" | grep -qE '\\.env(\\..+)?$' && echo \"$FILE\" | grep -qvF '.env.example' && echo 'BLOCK: refusing to edit .env files - constraint #8 in CLAUDE.md' && exit 2 || exit 0"
           }
         ]
       }
