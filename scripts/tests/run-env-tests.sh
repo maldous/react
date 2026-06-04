@@ -131,15 +131,27 @@ run_group() {
         ;;
       auth-e2e)
         # auth-e2e requires a real KC redirect flow — only works when PROD_BASE_URL
-        # is a real domain (not localhost). When running locally (make all),
-        # PROD_BASE_URL is always localhost:83 so auth-e2e cannot run.
-        # Skipped with a prominent warning — NOT silent. Run explicitly against
-        # real DNS to exercise this gate: PROD_BASE_URL=https://aldous.info make stage-prod
+        # is a real domain (not localhost).
+        #
+        # Default (no ALLOW_SKIP_AUTH_E2E): prod hard-fails when localhost so the
+        # gate is never silently dropped. Set ALLOW_SKIP_AUTH_E2E=1 to skip with a
+        # prominent warning — make all sets this so the local confidence ladder works.
+        # Direct 'make stage-prod' without the var enforces the full gate.
         if echo "$_app_url" | grep -q "localhost"; then
+            if [ "$STAGE" = "prod" ] && [ "${ALLOW_SKIP_AUTH_E2E:-}" != "1" ]; then
+                printf '%s✗ auth-e2e cannot run: PROD_BASE_URL=%s is localhost%s\n' \
+                    "$RED" "$_app_url" "$RESET"
+                printf '%s  Prod requires real KC redirect. Options:%s\n' "$YELLOW" "$RESET"
+                printf '%s  1. Run against real DNS: PROD_BASE_URL=https://aldous.info make stage-prod%s\n' \
+                    "$YELLOW" "$RESET"
+                printf '%s  2. Local confidence ladder: make all  (sets ALLOW_SKIP_AUTH_E2E=1)%s\n' \
+                    "$YELLOW" "$RESET"
+                exit 1
+            fi
             if [ "$STAGE" = "prod" ]; then
-                printf '%s⚠ auth-e2e SKIPPED (prod) — PROD_BASE_URL=%s is localhost%s\n' \
+                printf '%s⚠ auth-e2e SKIPPED (prod, ALLOW_SKIP_AUTH_E2E=1) — PROD_BASE_URL=%s is localhost%s\n' \
                     "$YELLOW" "$_app_url" "$RESET"
-                printf '%s  KC redirect requires real DNS. To run: PROD_BASE_URL=https://aldous.info make stage-prod%s\n' \
+                printf '%s  KC redirect requires real DNS. To run the full gate: PROD_BASE_URL=https://aldous.info make stage-prod%s\n' \
                     "$YELLOW" "$RESET"
             else
                 printf '%s↷ auth-e2e skipped — PROD_BASE_URL=%s is localhost%s\n' \

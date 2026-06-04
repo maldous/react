@@ -34,8 +34,11 @@ stage-staging:
 	bash scripts/stages/run-stage.sh staging
 
 ## stage-prod — Production stage: Compose HA, preserve data, all production-safe tests + external-smoke + auth-e2e + production E2E (no teardown)
+## auth-e2e hard-fails if PROD_BASE_URL is localhost unless ALLOW_SKIP_AUTH_E2E=1 is set.
+## make all sets ALLOW_SKIP_AUTH_E2E=1 (local runs). Direct make stage-prod enforces the gate.
 stage-prod:
-	# ADR-0034: stage-prod runs external-smoke + auth-e2e + test:e2e:prod — auth-e2e fails if localhost
+	# ADR-0034: stage-prod runs external-smoke + auth-e2e + test:e2e:prod
+	# auth-e2e: hard-fails on localhost unless ALLOW_SKIP_AUTH_E2E=1; use real DNS for full gate
 	$(call STEP,stage:prod)
 	bash scripts/stages/run-stage.sh prod
 
