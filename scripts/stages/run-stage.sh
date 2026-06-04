@@ -32,7 +32,7 @@ parse_list() {
     awk -v stage="${STAGE}:" -v key="  ${key}:" '
         /^[a-z]/ { in_stage = ($0 == stage); in_list = 0 }
         in_stage && $0 == key { in_list = 1; next }
-        in_list && /^    - / { sub(/^    - /, ""); print }
+        in_list && /^    - / { sub(/^    - /, ""); sub(/[[:space:]]+#.*$/, ""); print }
         in_list && /^  [^ ]/ { in_list = 0 }
     ' "$POLICY_FILE"
 }
