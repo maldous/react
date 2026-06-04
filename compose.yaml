@@ -405,6 +405,8 @@ services:
     depends_on:
       clickhouse:
         condition: service_healthy
+      redis:
+        condition: service_healthy
       sentry-kafka:
         condition: service_healthy
     environment:
@@ -421,13 +423,7 @@ services:
     image: ghcr.io/getsentry/sentry:26.5.2
     profiles: [sentry]
     command: >-
-      /bin/bash -c "
-        sentry upgrade --noinput &&
-        (sentry createuser
-          --email $$SENTRY_ADMIN_EMAIL
-          --password $$SENTRY_ADMIN_PASSWORD
-          --superuser --no-input 2>/dev/null || true)
-      "
+      /bin/bash -c "sentry upgrade --noinput && (sentry createuser --email $$SENTRY_ADMIN_EMAIL --password $$SENTRY_ADMIN_PASSWORD --superuser --no-input 2>/dev/null || true)"
     depends_on:
       postgres:
         condition: service_healthy
@@ -470,6 +466,8 @@ services:
     depends_on:
       sentry-snuba-migrate:
         condition: service_completed_successfully
+      redis:
+        condition: service_healthy
       sentry-kafka:
         condition: service_healthy
     environment:
@@ -495,6 +493,8 @@ services:
     depends_on:
       sentry-snuba-migrate:
         condition: service_completed_successfully
+      redis:
+        condition: service_healthy
       sentry-kafka:
         condition: service_healthy
     environment:
@@ -516,6 +516,8 @@ services:
     depends_on:
       sentry-snuba-migrate:
         condition: service_completed_successfully
+      redis:
+        condition: service_healthy
       sentry-kafka:
         condition: service_healthy
     environment:
@@ -536,6 +538,8 @@ services:
         condition: service_completed_successfully
       sentry-snuba-migrate:
         condition: service_completed_successfully
+      redis:
+        condition: service_healthy
       sentry-memcached:
         condition: service_started
     environment:
@@ -556,72 +560,26 @@ services:
       - sentry-data:/data
       - ./docker/sentry:/etc/sentry:ro
     healthcheck:
-      test: ["CMD-SHELL", "curl -sf http://localhost:9000/_health/ > /dev/null"]
+      # The official getsentry/sentry image does not ship curl/wget. Use Python
+      # (always present) to probe the granian /_health/ endpoint. urlopen raises
+      # on non-2xx and on connection/timeout failures, so no explicit status check
+      # is needed.
+      test:
+        [
+          "CMD-SHELL",
+          'python -c ''import urllib.request; urllib.request.urlopen("http://localhost:9000/_health/", timeout=5)''',
+        ]
       interval: 30s
       timeout: 10s
       retries: 20
       start_period: 300s
     restart: unless-stopped
 
-  sentry-events-consumer:
-    image: ghcr.io/getsentry/sentry:26.5.2
-    profiles: [sentry]
-    command: >-
-      run consumer ingest-events
-      --consumer-group ingest-consumer
-      --healthcheck-file-path /tmp/health.txt
-    depends_on:
-      sentry-migrate:
-        condition: service_completed_successfully
-      sentry-kafka:
-        condition: service_healthy
-    environment:
-      SENTRY_CONF: /etc/sentry
-      SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY}
-      SENTRY_POSTGRES_HOST: postgres
-      SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
-      SENTRY_DB_USER: ${SENTRY_DB_USER:-sentry}
-      SENTRY_DB_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
-      SENTRY_REDIS_HOST: redis
-      SENTRY_REDIS_PORT: "6379"
-      KAFKA_BROKERS: sentry-kafka:9092
-      SNUBA: http://sentry-snuba-api:1218
-      SENTRY_PORT: "${SENTRY_PORT:-9000}"
-    volumes:
-      - sentry-data:/data
-      - ./docker/sentry:/etc/sentry:ro
-    restart: unless-stopped
-
-  sentry-post-process-forwarder:
-    image: ghcr.io/getsentry/sentry:26.5.2
-    profiles: [sentry]
-    command: >-
-      run consumer --no-strict-offset-reset post-process-forwarder-errors
-      --consumer-group post-process-forwarder
-      --synchronize-commit-log-topic=snuba-commit-log
-      --synchronize-commit-group=snuba-consumers
-      --healthcheck-file-path /tmp/health.txt
-    depends_on:
-      sentry-migrate:
-        condition: service_completed_successfully
-      sentry-kafka:
-        condition: service_healthy
-    environment:
-      SENTRY_CONF: /etc/sentry
-      SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY}
-      SENTRY_POSTGRES_HOST: postgres
-      SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
-      SENTRY_DB_USER: ${SENTRY_DB_USER:-sentry}
-      SENTRY_DB_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
-      SENTRY_REDIS_HOST: redis
-      SENTRY_REDIS_PORT: "6379"
-      KAFKA_BROKERS: sentry-kafka:9092
-      SNUBA: http://sentry-snuba-api:1218
-      SENTRY_PORT: "${SENTRY_PORT:-9000}"
-    volumes:
-      - sentry-data:/data
-      - ./docker/sentry:/etc/sentry:ro
-    restart: unless-stopped
+  # NOTE: sentry-events-consumer and sentry-post-process-forwarder are omitted.
+  # These services are for the Relay managed-mode Kafka ingestion pipeline.
+  # In proxy mode, sentry-web receives events directly from Relay via HTTP and
+  # writes to Kafka itself via KafkaEventStream for Snuba. No separate consumer
+  # is needed for event ingestion — sentry-web handles it inline.
 
   sentry-taskbroker:
     image: ghcr.io/getsentry/taskbroker:26.5.2
@@ -646,6 +604,8 @@ services:
     depends_on:
       sentry-migrate:
         condition: service_completed_successfully
+      redis:
+        condition: service_healthy
       sentry-taskbroker:
         condition: service_started
     environment:
@@ -672,6 +632,8 @@ services:
     depends_on:
       sentry-migrate:
         condition: service_completed_successfully
+      redis:
+        condition: service_healthy
       sentry-taskbroker:
         condition: service_started
     environment:
@@ -704,6 +666,8 @@ services:
     depends_on:
       sentry-migrate:
         condition: service_completed_successfully
+      redis:
+        condition: service_healthy
     environment:
       SENTRY_CONF: /etc/sentry
       SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY}
