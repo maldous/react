@@ -99,18 +99,17 @@ fi
 if [ "$STAGE_RESULT" -eq 0 ]; then
     if [ "$EXECUTOR" = "tilt" ]; then
         bash scripts/tilt/up-dev.sh || STAGE_RESULT=1
-    elif [ "$DATA_POLICY" = "destructive" ]; then
-        # Destructive stages (test) start from scratch — bring up default services
-        # (postgres, redis, clickhouse, minio, mailpit, otel) first so compose-smoke
-        # and other test groups can reach them, then the web profile on top.
-        bash scripts/compose/up.sh "$STAGE" default || STAGE_RESULT=1
-        [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" web || STAGE_RESULT=1; }
     else
-        # Preserve stages (staging, prod): start default services first (idempotent —
-        # no-op if already running on an HA stack), then rebuild the web tier.
-        # This ensures minio/mailpit/otel/clickhouse are reachable for compose-smoke
-        # even on a clean machine that has never had staging/prod bootstrapped.
+        # All compose stages (destructive + preserve) start the full profile set so
+        # every environment is capability-identical: default + all profiles + web.
+        # up.sh calls are idempotent — already-running preserve containers are no-ops.
         bash scripts/compose/up.sh "$STAGE" default || STAGE_RESULT=1
+        [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" identity || STAGE_RESULT=1; }
+        [ "$STAGE_RESULT" -eq 0 ] && { make keycloak-provision ENV="$STAGE" || STAGE_RESULT=1; }
+        [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" quality || STAGE_RESULT=1; }
+        [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" sentry || STAGE_RESULT=1; }
+        [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" external-mocks || STAGE_RESULT=1; }
+        [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" observability || STAGE_RESULT=1; }
         [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" web || STAGE_RESULT=1; }
     fi
 fi
