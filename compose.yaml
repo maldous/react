@@ -409,6 +409,8 @@ services:
     environment:
       SNUBA_SETTINGS: self_hosted
       CLICKHOUSE_HOST: clickhouse
+      CLICKHOUSE_USER: ${CLICKHOUSE_USER:-platform}
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:-clickhousepassword}
       DEFAULT_BROKERS: sentry-kafka:9092
       REDIS_HOST: redis
     restart: "no"
@@ -472,6 +474,8 @@ services:
     environment:
       SNUBA_SETTINGS: self_hosted
       CLICKHOUSE_HOST: clickhouse
+      CLICKHOUSE_USER: ${CLICKHOUSE_USER:-platform}
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:-clickhousepassword}
       DEFAULT_BROKERS: sentry-kafka:9092
       REDIS_HOST: redis
       UWSGI_MAX_REQUESTS: "10000"
@@ -495,6 +499,8 @@ services:
     environment:
       SNUBA_SETTINGS: self_hosted
       CLICKHOUSE_HOST: clickhouse
+      CLICKHOUSE_USER: ${CLICKHOUSE_USER:-platform}
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:-clickhousepassword}
       DEFAULT_BROKERS: sentry-kafka:9092
       REDIS_HOST: redis
     restart: unless-stopped
@@ -514,6 +520,8 @@ services:
     environment:
       SNUBA_SETTINGS: self_hosted
       CLICKHOUSE_HOST: clickhouse
+      CLICKHOUSE_USER: ${CLICKHOUSE_USER:-platform}
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:-clickhousepassword}
       DEFAULT_BROKERS: sentry-kafka:9092
       REDIS_HOST: redis
     restart: unless-stopped
