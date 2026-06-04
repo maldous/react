@@ -25,7 +25,8 @@
       "@platform/adapters-clickhouse": ["../../packages/adapters-clickhouse/src/index.ts"],
       "@platform/storage-runtime": ["../../packages/storage-runtime/src/index.ts"],
       "@platform/email-runtime": ["../../packages/email-runtime/src/index.ts"],
-      "@platform/audit-events": ["../../packages/audit-events/src/index.ts"]
+      "@platform/audit-events": ["../../packages/audit-events/src/index.ts"],
+      "@platform/adapters-sentry": ["../../packages/adapters-sentry/src/index.ts"]
     }
   },
   "include": ["src/**/*.ts"],

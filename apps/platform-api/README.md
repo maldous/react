@@ -116,6 +116,7 @@ production
 @platform/authorisation-runtime
 @platform/adapters-object-storage
 @platform/audit-events
+@platform/adapters-sentry
 ```
 
 ### Provides APIs

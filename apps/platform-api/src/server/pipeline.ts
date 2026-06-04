@@ -7,6 +7,7 @@ import {
   ValidationError,
   toSafeResponse,
 } from "@platform/platform-errors";
+import { type SentryErrorAdapter } from "@platform/adapters-sentry";
 import { type SessionActor } from "@platform/contracts-auth";
 import { createRequestContext, type RuntimeContext } from "@platform/platform-runtime-context";
 import { type SessionStore } from "@platform/session-runtime";
@@ -191,7 +192,8 @@ function getTraceContext(req: http.IncomingMessage): {
 // Create the HTTP request handler from a route list
 export function createRouter(
   routes: Route[],
-  _testDeps?: RouterTestDeps
+  _testDeps?: RouterTestDeps,
+  sentry: SentryErrorAdapter | null = null
 ): (req: http.IncomingMessage, res: http.ServerResponse) => Promise<void> {
   const logger = createLogger({
     name: "platform-api",
@@ -526,6 +528,7 @@ export function createRouter(
     } catch (err) {
       const durationMs = Number(process.hrtime.bigint() - startedAt) / 1_000_000;
       enrichedLogger.error({ err, ...routeMeta, status: 500, durationMs }, "http.request.failed");
+      sentry?.captureError(err instanceof Error ? err : new Error(String(err)));
       const safe = toSafeResponse(err);
       jsonResponse(res, 500, safe, requestId);
     }
