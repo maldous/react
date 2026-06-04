@@ -1,7 +1,7 @@
 {
   "stage": "staging",
-  "gitSha": "729df52",
-  "timestamp": "2026-06-03T11:18:43.982Z",
+  "gitSha": "043c13c",
+  "timestamp": "2026-06-04T00:50:58.472Z",
   "envFile": ".env.staging",
   "composeProject": "react-staging",
   "profiles": [
@@ -11,8 +11,7 @@
   "testGroupsRun": [
     "integration",
     "compose-smoke",
-    "external-smoke",
-    "e2e-smoke"
+    "external-smoke"
   ],
   "testGroupsSkipped": [
     "tenant-data",
@@ -24,6 +23,6 @@
     "http://localhost:3003/healthz"
   ],
   "result": "passed",
-  "durationSeconds": 34,
+  "durationSeconds": 22,
   "failureSummary": null
 }

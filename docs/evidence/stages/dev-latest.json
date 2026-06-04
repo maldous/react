@@ -1,7 +1,7 @@
 {
   "stage": "dev",
-  "gitSha": "729df52",
-  "timestamp": "2026-06-03T11:15:36.515Z",
+  "gitSha": "043c13c",
+  "timestamp": "2026-06-04T00:48:02.585Z",
   "envFile": ".env.dev",
   "composeProject": "react-dev",
   "profiles": [
@@ -10,7 +10,8 @@
   "dataPolicy": "destructive",
   "testGroupsRun": [
     "minimal-smoke",
-    "unit"
+    "unit",
+    "e2e-smoke"
   ],
   "testGroupsSkipped": [],
   "e2eCommand": "make e2e-internal",
@@ -18,6 +19,6 @@
     "http://localhost:3001/healthz"
   ],
   "result": "passed",
-  "durationSeconds": 60,
+  "durationSeconds": 250,
   "failureSummary": null
 }

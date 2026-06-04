@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-03T11:21:20.967Z",
+  "generatedAt": "2026-06-04T00:53:31.967Z",
   "stages": {
     "dev": {
       "stage": "dev",
-      "gitSha": "729df52",
-      "timestamp": "2026-06-03T11:15:36.515Z",
+      "gitSha": "043c13c",
+      "timestamp": "2026-06-04T00:48:02.585Z",
       "envFile": ".env.dev",
       "composeProject": "react-dev",
       "profiles": [
@@ -13,7 +13,8 @@
       "dataPolicy": "destructive",
       "testGroupsRun": [
         "minimal-smoke",
-        "unit"
+        "unit",
+        "e2e-smoke"
       ],
       "testGroupsSkipped": [],
       "e2eCommand": "make e2e-internal",
@@ -21,13 +22,13 @@
         "http://localhost:3001/healthz"
       ],
       "result": "passed",
-      "durationSeconds": 60,
+      "durationSeconds": 250,
       "failureSummary": null
     },
     "test": {
       "stage": "test",
-      "gitSha": "729df52",
-      "timestamp": "2026-06-03T11:18:10.740Z",
+      "gitSha": "043c13c",
+      "timestamp": "2026-06-04T00:50:36.009Z",
       "envFile": ".env.test",
       "composeProject": "react-test",
       "profiles": [
@@ -48,13 +49,13 @@
         "http://localhost:3002/healthz"
       ],
       "result": "passed",
-      "durationSeconds": 155,
+      "durationSeconds": 154,
       "failureSummary": null
     },
     "staging": {
       "stage": "staging",
-      "gitSha": "729df52",
-      "timestamp": "2026-06-03T11:18:43.982Z",
+      "gitSha": "043c13c",
+      "timestamp": "2026-06-04T00:50:58.472Z",
       "envFile": ".env.staging",
       "composeProject": "react-staging",
       "profiles": [
@@ -64,8 +65,7 @@
       "testGroupsRun": [
         "integration",
         "compose-smoke",
-        "external-smoke",
-        "e2e-smoke"
+        "external-smoke"
       ],
       "testGroupsSkipped": [
         "tenant-data",
@@ -77,13 +77,13 @@
         "http://localhost:3003/healthz"
       ],
       "result": "passed",
-      "durationSeconds": 34,
+      "durationSeconds": 22,
       "failureSummary": null
     },
     "prod": {
       "stage": "prod",
-      "gitSha": "729df52",
-      "timestamp": "2026-06-03T11:21:20.944Z",
+      "gitSha": "043c13c",
+      "timestamp": "2026-06-04T00:53:31.935Z",
       "envFile": ".env.prod",
       "composeProject": "react-prod",
       "profiles": [
@@ -108,7 +108,7 @@
         "http://localhost:3004/healthz"
       ],
       "result": "passed",
-      "durationSeconds": 158,
+      "durationSeconds": 154,
       "failureSummary": null
     }
   }
