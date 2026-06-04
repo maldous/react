@@ -1,0 +1,16 @@
+# docker/sentry/config.yml — Sentry 26.x static settings.
+# Non-secret, non-env-specific configuration. Secret key and env-specific
+# overrides are handled in sentry.conf.py via environment variables.
+
+mail.host: "mailpit"
+mail.port: 1025
+mail.from: "sentry@localhost"
+
+# Internal URL used by services communicating container-to-container.
+system.internal-url-prefix: "http://sentry-web:9000"
+
+# Symbolicator not deployed — native crash symbolication disabled.
+symbolicator.enabled: false
+
+# Performance features disabled (errors-only mode).
+transaction-events.force-disable-internal-project: true

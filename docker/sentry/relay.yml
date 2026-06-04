@@ -1,0 +1,18 @@
+# docker/sentry/relay.yml — Relay 26.x configuration.
+# Mounted read-only as /work/.relay/config.yml inside the relay container.
+# Relay is the event ingestion gateway: SDK events arrive at relay, are
+# filtered and rate-limited, then forwarded to sentry-web via Kafka.
+relay:
+  upstream: "http://sentry-web:9000/"
+  host: "0.0.0.0"
+  port: 3000
+
+logging:
+  level: WARN
+
+processing:
+  enabled: true
+  kafka_config:
+    - { name: "bootstrap.servers", value: "sentry-kafka:9092" }
+    - { name: "message.max.bytes", value: "50000000" }
+  redis: "redis://redis:6379/6"

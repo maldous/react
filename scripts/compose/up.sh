@@ -46,7 +46,9 @@ case "$PROFILE" in
   sentry)
     SERVICES=""
     PROFILE_FLAG="--profile sentry"
-    TIMEOUT=900
+    # Kafka KRaft init + Snuba CH migrations + Sentry postgres migrations chain
+    # can take 15–20 min on cold start with no cached images.
+    TIMEOUT=1200
     ;;
   external-mocks)
     SERVICES="wiremock"

@@ -7,7 +7,7 @@ name: react-platform
 #   identity         ? keycloak + keycloak-postgres
 #   cloud-mocks      ? localstack
 #   external-mocks   ? wiremock for deterministic external HTTP API mocks
-#   sentry           ? sentry-web + sentry-worker + sentry-cron (uses shared postgres + redis)
+#   sentry           ? full self-hosted Sentry 26.5.2, errors-only (kafka, snuba, relay, taskworker)
 #
 # Port map ? defaults shown; override any via .env (e.g. POSTGRES_PORT=5434):
 #   POSTGRES_PORT=5433          REDIS_PORT=6379
@@ -339,88 +339,377 @@ services:
     restart: unless-stopped
 
   # ---------------------------------------------------------------------------
-  # SENTRY PROFILE ? `docker compose --profile sentry up -d`
+  # SENTRY PROFILE — `docker compose --profile sentry up -d`
   # ---------------------------------------------------------------------------
-  # EXPERIMENTAL ? SDK smoke testing only. Not a full self-hosted Sentry stack.
-  # Does not replace external Sentry or Grafana Cloud observability.
-  # Adapter validation must not depend on this profile until proven stable.
-  # See ADR-ACT-0089 for validation/replacement tracking.
+  # Full self-hosted Sentry 26.5.2, errors-only mode (ADR-0017, ADR-ACT-0089).
+  # Shares per-env postgres, redis, and clickhouse. Adds per-env kafka + memcached.
+  #
+  # Service dependency chain:
+  #   [postgres, redis, clickhouse, kafka] → sentry-migrate / sentry-snuba-migrate
+  #     → sentry-web + snuba-api + sentry-relay
+  #       → consumers + taskworker/scheduler/broker
+  #
+  # Config files mounted from docker/sentry/:
+  #   sentry.conf.py  — Python overrides (database, cache, kafka, snuba wiring)
+  #   config.yml      — Static YAML settings (mail, url-prefix, symbolicator off)
+  #   relay.yml       — Relay event gateway config
 
-  sentry-web:
-    image: sentry:9.1.2
+  sentry-kafka:
+    image: confluentinc/cp-kafka:7.6.6
     profiles: [sentry]
-    command: /bin/sh -c "sleep 3 && sentry upgrade --noinput && exec sentry run web"
+    environment:
+      KAFKA_NODE_ID: "1"
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@sentry-kafka:29093"
+      KAFKA_LISTENERS: "PLAINTEXT://sentry-kafka:9092,CONTROLLER://sentry-kafka:29093"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://sentry-kafka:9092"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT"
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "1"
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "1"
+      KAFKA_DEFAULT_REPLICATION_FACTOR: "1"
+      KAFKA_MIN_IN_SYNC_REPLICAS: "1"
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+      KAFKA_MESSAGE_MAX_BYTES: "50000000"
+      KAFKA_SOCKET_REQUEST_MAX_BYTES: "50000000"
+      KAFKA_REPLICA_FETCH_MAX_BYTES: "50000000"
+      # Stable cluster ID — must not change after first start (KRaft storage is
+      # formatted with this ID on first boot; subsequent starts must match).
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+    volumes:
+      - sentry-kafka-data:/var/lib/kafka/data
+    healthcheck:
+      test:
+        ["CMD-SHELL", "kafka-topics --bootstrap-server sentry-kafka:9092 --list > /dev/null 2>&1"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 60s
+    restart: unless-stopped
+
+  sentry-memcached:
+    image: memcached:1.6.26-alpine
+    profiles: [sentry]
+    restart: unless-stopped
+
+  # One-shot: run Snuba ClickHouse migrations. Idempotent — skips already-applied.
+  sentry-snuba-migrate:
+    image: ghcr.io/getsentry/snuba:26.5.2
+    profiles: [sentry]
+    command: snuba migrations migrate --force
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+      sentry-kafka:
+        condition: service_healthy
+    environment:
+      SNUBA_SETTINGS: self_hosted
+      CLICKHOUSE_HOST: clickhouse
+      DEFAULT_BROKERS: sentry-kafka:9092
+      REDIS_HOST: redis
+    restart: "no"
+
+  # One-shot: run Sentry postgres migrations and create admin user. Idempotent.
+  sentry-migrate:
+    image: ghcr.io/getsentry/sentry:26.5.2
+    profiles: [sentry]
+    command: >-
+      /bin/bash -c "
+        sentry upgrade --noinput &&
+        (sentry createuser
+          --email $$SENTRY_ADMIN_EMAIL
+          --password $$SENTRY_ADMIN_PASSWORD
+          --superuser --no-input 2>/dev/null || true)
+      "
     depends_on:
       postgres:
         condition: service_healthy
       redis:
         condition: service_healthy
+      sentry-kafka:
+        condition: service_healthy
     environment:
-      SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY:-change-this-secret-key-in-dot-env}
+      SENTRY_CONF: /etc/sentry
+      SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY}
       SENTRY_POSTGRES_HOST: postgres
+      SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
       SENTRY_DB_USER: ${SENTRY_DB_USER:-sentry}
       SENTRY_DB_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
-      SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
       SENTRY_REDIS_HOST: redis
       SENTRY_REDIS_PORT: "6379"
-      SENTRY_SINGLE_ORGANIZATION: "true"
-      # which is not part of this standalone deployment.
+      KAFKA_BROKERS: sentry-kafka:9092
+      SNUBA: http://sentry-snuba-api:1218
+      SENTRY_PORT: "${SENTRY_PORT:-9000}"
+      SENTRY_ADMIN_EMAIL: ${SENTRY_ADMIN_EMAIL:-admin@sentry.local}
+      SENTRY_ADMIN_PASSWORD: ${SENTRY_ADMIN_PASSWORD:-admin}
+    volumes:
+      - sentry-data:/data
+      - ./docker/sentry:/etc/sentry:ro
+    restart: "no"
+
+  sentry-relay:
+    image: ghcr.io/getsentry/relay:26.5.2
+    profiles: [sentry]
+    volumes:
+      - ./docker/sentry/relay.yml:/work/.relay/config.yml:ro
+    depends_on:
+      sentry-web:
+        condition: service_healthy
+    restart: unless-stopped
+
+  sentry-snuba-api:
+    image: ghcr.io/getsentry/snuba:26.5.2
+    profiles: [sentry]
+    depends_on:
+      sentry-snuba-migrate:
+        condition: service_completed_successfully
+      sentry-kafka:
+        condition: service_healthy
+    environment:
+      SNUBA_SETTINGS: self_hosted
+      CLICKHOUSE_HOST: clickhouse
+      DEFAULT_BROKERS: sentry-kafka:9092
+      REDIS_HOST: redis
+      UWSGI_MAX_REQUESTS: "10000"
+      UWSGI_DISABLE_LOGGING: "true"
+    restart: unless-stopped
+
+  sentry-snuba-errors:
+    image: ghcr.io/getsentry/snuba:26.5.2
+    profiles: [sentry]
+    command: >-
+      rust-consumer --storage errors
+      --consumer-group snuba-consumers
+      --auto-offset-reset=latest
+      --max-batch-time-ms 750
+      --no-strict-offset-reset
+    depends_on:
+      sentry-snuba-migrate:
+        condition: service_completed_successfully
+      sentry-kafka:
+        condition: service_healthy
+    environment:
+      SNUBA_SETTINGS: self_hosted
+      CLICKHOUSE_HOST: clickhouse
+      DEFAULT_BROKERS: sentry-kafka:9092
+      REDIS_HOST: redis
+    restart: unless-stopped
+
+  sentry-snuba-replacer:
+    image: ghcr.io/getsentry/snuba:26.5.2
+    profiles: [sentry]
+    command: >-
+      replacer --storage errors
+      --auto-offset-reset=latest
+      --no-strict-offset-reset
+    depends_on:
+      sentry-snuba-migrate:
+        condition: service_completed_successfully
+      sentry-kafka:
+        condition: service_healthy
+    environment:
+      SNUBA_SETTINGS: self_hosted
+      CLICKHOUSE_HOST: clickhouse
+      DEFAULT_BROKERS: sentry-kafka:9092
+      REDIS_HOST: redis
+    restart: unless-stopped
+
+  sentry-web:
+    image: ghcr.io/getsentry/sentry:26.5.2
+    profiles: [sentry]
+    command: run web
+    depends_on:
+      sentry-migrate:
+        condition: service_completed_successfully
+      sentry-snuba-migrate:
+        condition: service_completed_successfully
+      sentry-memcached:
+        condition: service_started
+    environment:
+      SENTRY_CONF: /etc/sentry
+      SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY}
+      SENTRY_POSTGRES_HOST: postgres
+      SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
+      SENTRY_DB_USER: ${SENTRY_DB_USER:-sentry}
+      SENTRY_DB_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
+      SENTRY_REDIS_HOST: redis
+      SENTRY_REDIS_PORT: "6379"
+      KAFKA_BROKERS: sentry-kafka:9092
+      SNUBA: http://sentry-snuba-api:1218
+      SENTRY_PORT: "${SENTRY_PORT:-9000}"
     ports:
       - "${SENTRY_PORT:-9010}:9000"
     volumes:
-      - sentry-data:/var/lib/sentry/files
+      - sentry-data:/data
+      - ./docker/sentry:/etc/sentry:ro
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          'python -c "import urllib2; assert urllib2.urlopen(''http://localhost:9000/_health/'').read().strip() == ''ok''"',
-        ]
+      test: ["CMD-SHELL", "curl -sf http://localhost:9000/_health/ > /dev/null"]
       interval: 30s
       timeout: 10s
       retries: 20
       start_period: 300s
     restart: unless-stopped
 
-  sentry-worker:
-    # Unvalidated long-running background worker. Process-only liveness (no
-    # HTTP health endpoint). Profile-only; not started by default. ADR-ACT-0089.
-    image: sentry:9.1.2
+  sentry-events-consumer:
+    image: ghcr.io/getsentry/sentry:26.5.2
     profiles: [sentry]
-    command: sentry run worker
+    command: >-
+      run consumer ingest-events
+      --consumer-group ingest-consumer
+      --healthcheck-file-path /tmp/health.txt
     depends_on:
-      sentry-web:
+      sentry-migrate:
+        condition: service_completed_successfully
+      sentry-kafka:
         condition: service_healthy
     environment:
-      SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY:-change-this-secret-key-in-dot-env}
+      SENTRY_CONF: /etc/sentry
+      SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY}
       SENTRY_POSTGRES_HOST: postgres
+      SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
       SENTRY_DB_USER: ${SENTRY_DB_USER:-sentry}
       SENTRY_DB_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
-      SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
       SENTRY_REDIS_HOST: redis
       SENTRY_REDIS_PORT: "6379"
+      KAFKA_BROKERS: sentry-kafka:9092
+      SNUBA: http://sentry-snuba-api:1218
+      SENTRY_PORT: "${SENTRY_PORT:-9000}"
     volumes:
-      - sentry-data:/var/lib/sentry/files
+      - sentry-data:/data
+      - ./docker/sentry:/etc/sentry:ro
     restart: unless-stopped
 
-  sentry-cron:
-    # Unvalidated long-running cron process. Process-only liveness (no
-    # HTTP health endpoint). Profile-only; not started by default. ADR-ACT-0089.
-    image: sentry:9.1.2
+  sentry-post-process-forwarder:
+    image: ghcr.io/getsentry/sentry:26.5.2
     profiles: [sentry]
-    command: sentry run cron
+    command: >-
+      run consumer --no-strict-offset-reset post-process-forwarder-errors
+      --consumer-group post-process-forwarder
+      --synchronize-commit-log-topic=snuba-commit-log
+      --synchronize-commit-group=snuba-consumers
+      --healthcheck-file-path /tmp/health.txt
     depends_on:
-      sentry-web:
+      sentry-migrate:
+        condition: service_completed_successfully
+      sentry-kafka:
         condition: service_healthy
     environment:
-      SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY:-change-this-secret-key-in-dot-env}
+      SENTRY_CONF: /etc/sentry
+      SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY}
       SENTRY_POSTGRES_HOST: postgres
+      SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
       SENTRY_DB_USER: ${SENTRY_DB_USER:-sentry}
       SENTRY_DB_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
-      SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
       SENTRY_REDIS_HOST: redis
       SENTRY_REDIS_PORT: "6379"
+      KAFKA_BROKERS: sentry-kafka:9092
+      SNUBA: http://sentry-snuba-api:1218
+      SENTRY_PORT: "${SENTRY_PORT:-9000}"
     volumes:
-      - sentry-data:/var/lib/sentry/files
+      - sentry-data:/data
+      - ./docker/sentry:/etc/sentry:ro
+    restart: unless-stopped
+
+  sentry-taskbroker:
+    image: ghcr.io/getsentry/taskbroker:26.5.2
+    profiles: [sentry]
+    depends_on:
+      sentry-kafka:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      TASKBROKER_KAFKA_CLUSTER: sentry-kafka:9092
+      TASKBROKER_REDIS_URL: redis://redis:6379/5
+    restart: unless-stopped
+
+  sentry-taskworker:
+    image: ghcr.io/getsentry/sentry:26.5.2
+    profiles: [sentry]
+    command: >-
+      run taskworker
+      --rpc-host=sentry-taskbroker:50051
+      --health-check-file-path=/tmp/health.txt
+    depends_on:
+      sentry-migrate:
+        condition: service_completed_successfully
+      sentry-taskbroker:
+        condition: service_started
+    environment:
+      SENTRY_CONF: /etc/sentry
+      SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY}
+      SENTRY_POSTGRES_HOST: postgres
+      SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
+      SENTRY_DB_USER: ${SENTRY_DB_USER:-sentry}
+      SENTRY_DB_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
+      SENTRY_REDIS_HOST: redis
+      SENTRY_REDIS_PORT: "6379"
+      KAFKA_BROKERS: sentry-kafka:9092
+      SNUBA: http://sentry-snuba-api:1218
+      SENTRY_PORT: "${SENTRY_PORT:-9000}"
+    volumes:
+      - sentry-data:/data
+      - ./docker/sentry:/etc/sentry:ro
+    restart: unless-stopped
+
+  sentry-taskscheduler:
+    image: ghcr.io/getsentry/sentry:26.5.2
+    profiles: [sentry]
+    command: run taskworker-scheduler
+    depends_on:
+      sentry-migrate:
+        condition: service_completed_successfully
+      sentry-taskbroker:
+        condition: service_started
+    environment:
+      SENTRY_CONF: /etc/sentry
+      SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY}
+      SENTRY_POSTGRES_HOST: postgres
+      SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
+      SENTRY_DB_USER: ${SENTRY_DB_USER:-sentry}
+      SENTRY_DB_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
+      SENTRY_REDIS_HOST: redis
+      SENTRY_REDIS_PORT: "6379"
+      KAFKA_BROKERS: sentry-kafka:9092
+      SNUBA: http://sentry-snuba-api:1218
+      SENTRY_PORT: "${SENTRY_PORT:-9000}"
+    volumes:
+      - sentry-data:/data
+      - ./docker/sentry:/etc/sentry:ro
+    restart: unless-stopped
+
+  sentry-cleanup:
+    image: ghcr.io/getsentry/sentry:26.5.2
+    profiles: [sentry]
+    command: >-
+      /bin/bash -c "
+        while true; do
+          sleep 86400 &&
+          sentry cleanup --days $${SENTRY_EVENT_RETENTION_DAYS} 2>&1;
+        done
+      "
+    depends_on:
+      sentry-migrate:
+        condition: service_completed_successfully
+    environment:
+      SENTRY_CONF: /etc/sentry
+      SENTRY_SECRET_KEY: ${SENTRY_SECRET_KEY}
+      SENTRY_POSTGRES_HOST: postgres
+      SENTRY_DB_NAME: ${SENTRY_DB_NAME:-sentry}
+      SENTRY_DB_USER: ${SENTRY_DB_USER:-sentry}
+      SENTRY_DB_PASSWORD: ${SENTRY_DB_PASSWORD:-sentrypassword}
+      SENTRY_REDIS_HOST: redis
+      SENTRY_REDIS_PORT: "6379"
+      KAFKA_BROKERS: sentry-kafka:9092
+      SNUBA: http://sentry-snuba-api:1218
+      SENTRY_PORT: "${SENTRY_PORT:-9000}"
+      SENTRY_EVENT_RETENTION_DAYS: "${SENTRY_EVENT_RETENTION_DAYS:-90}"
+    volumes:
+      - sentry-data:/data
+      - ./docker/sentry:/etc/sentry:ro
     restart: unless-stopped
 
   # ---------------------------------------------------------------------------
@@ -686,6 +975,7 @@ volumes:
   keycloak-postgres-data:
   localstack-data:
   sentry-data:
+  sentry-kafka-data:
   pgadmin-data:
   loki-data:
   grafana-data:
