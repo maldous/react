@@ -21,16 +21,19 @@ $COMPOSE_CMD --profile web --profile cloud-mocks \
     down --timeout 30 2>/dev/null || true
 $COMPOSE_CMD down --timeout 30 2>/dev/null || true
 
-# Force-remove any remaining containers by project label (react-<env>)
-docker ps -q --filter "label=com.docker.compose.project=react-${ENV}" \
+# Force-remove containers for this env's project, but never external-caddy regardless
+# of which project it ended up in. external-caddy is the Cloudflare-facing reverse proxy
+# for aldous.info / staging.aldous.info — killing it takes down production traffic.
+# With project_name='react-dev' in the Tiltfile, external-caddy lands in react-dev when
+# Tilt is running, so the exception must be applied to react-${ENV} as well as react.
+docker ps -q \
+    --filter "label=com.docker.compose.project=react-${ENV}" \
+    --filter "label=com.docker.compose.service!=external-caddy" \
     | xargs -r docker rm -f 2>/dev/null || true
 
-# Stop Tilt default project containers (project name "react") — but NOT via bare
-# `docker compose down` which would also kill the external-caddy container (which
-# serves as the Cloudflare-facing proxy for aldous.info and staging.aldous.info
-# and belongs to no per-environment project).
-# Force-remove only non-external-caddy containers from the react project.
-docker ps -q --filter "label=com.docker.compose.project=react" \
+# Also clean stale containers from the legacy bare "react" project name (pre-rename).
+docker ps -q \
+    --filter "label=com.docker.compose.project=react" \
     --filter "label=com.docker.compose.service!=external-caddy" \
     | xargs -r docker rm -f 2>/dev/null || true
 docker volume ls -q --filter "label=com.docker.compose.project=react" \
