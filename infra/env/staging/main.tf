@@ -102,6 +102,11 @@ provider "keycloak" {
   username  = var.keycloak_admin_user
   password  = var.keycloak_admin_password
   url       = var.keycloak_url
+  # realm must be "master" for provider authentication regardless of KEYCLOAK_REALM env var.
+  # run-stage.sh sources .env.staging which exports KEYCLOAK_REALM=platform-staging; the
+  # mrparkers/keycloak provider reads this and tries realms/platform-staging for its own
+  # auth — which doesn't exist on first boot. Explicit realm = "master" takes precedence.
+  realm = "master"
 }
 
 module "keycloak" {

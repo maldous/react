@@ -5,9 +5,8 @@
 # ADR-0033: APEX_DOMAIN = staging.aldous.info
 #   KC_HOSTNAME = https://staging.aldous.info/kc
 
-keycloak_url    = "http://localhost:8092/kc"
-keycloak_realm  = "platform-staging"
-keycloak_client = "platform-spa-staging"
+keycloak_url   = "http://localhost:8092/kc"
+keycloak_realm = "platform-staging"
 
 # Environment-specific redirect URIs
 redirect_uris = ["http://localhost:5173/*", "https://staging.aldous.info/auth/callback"]
