@@ -37,11 +37,10 @@ include make/help.mk
 # stage-policy.yaml. Environments remain running after completion (teardownDefault: false).
 # Use `make env-down-all` to stop everything when done.
 #
-# ALLOW_SKIP_AUTH_E2E=1: make all sets this so auth-e2e on prod skips with a
-# prominent warning when PROD_BASE_URL is localhost (always the case locally).
-# Direct `make stage-prod` without this var hard-fails — the prod gate is never
-# silently bypassed. Use `PROD_BASE_URL=https://aldous.info make stage-prod` to
-# exercise the full gate against real infrastructure.
+# Staging and prod E2E tests run against the real external domains (APP_BASE_URL
+# in each env file: http://staging.aldous.info and https://aldous.info). If the
+# domains are unreachable, make all fails — this is intentional. The confidence
+# ladder must confirm the entire stack, not just local containers.
 .PHONY: all all-promote
 ## all — Full confidence ladder: clean-all → preflight → quality → env-validate-all → env-drift-check → promote → evidence → env-status
 ## clean-all tears down dev and test (ephemeral). Staging and prod are preserved or started.
@@ -54,6 +53,6 @@ all: clean-all \
      evidence \
      env-status
 
-## all-promote — promote with ALLOW_SKIP_AUTH_E2E=1 (used by make all for local runs)
+## all-promote — run the full promote ladder including real-domain E2E for staging/prod
 all-promote:
-	ALLOW_SKIP_AUTH_E2E=1 $(MAKE) promote
+	$(MAKE) promote
