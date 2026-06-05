@@ -107,6 +107,15 @@ run_group() {
         make run-stage-tests ENV="$STAGE"
         ;;
       tenant)
+        # Guard: the apex domain must be reachable via the real origin (Cloudflare → external-caddy).
+        # A 521 here means external-caddy is not running — likely killed by a prior compose-down-reset.
+        _tenant_base="$(echo "$_app_url" | sed 's|^https://aldous\.info.*|https://aldous.info|;s|^http://staging\.aldous\.info.*|http://staging.aldous.info|')"
+        if ! curl -fsS --max-time 15 "${_tenant_base}/healthz" > /dev/null 2>&1; then
+            printf '%s✗ tenant E2E guard: %s/healthz not reachable — is external-caddy running?%s\n' \
+                "$RED" "$_tenant_base" "$RESET"
+            printf '%s  Run: make external-caddy-up%s\n' "$YELLOW" "$RESET"
+            exit 1
+        fi
         PROD_BASE_URL="$_app_url" npx playwright test --config playwright.external.config.ts \
             e2e/external/tenant-prod.spec.ts
         ;;

@@ -42,18 +42,23 @@ include make/help.mk
 # domains are unreachable, make all fails — this is intentional. The confidence
 # ladder must confirm the entire stack, not just local containers.
 .PHONY: all all-promote
-## all — Full confidence ladder: clean-all → preflight → quality → env-validate-all → env-drift-check → promote → evidence → env-status
+## all — Full confidence ladder: clean-all → preflight → quality → env-validate-all → env-drift-check → all-promote → evidence → env-status
 ## clean-all tears down dev and test (ephemeral). Staging and prod are preserved or started.
 all: clean-all \
      preflight \
      quality \
      env-validate-all \
      env-drift-check \
-     external-caddy-up \
      all-promote \
      evidence \
      env-status
 
-## all-promote — run the full promote ladder including real-domain E2E for staging/prod
+## all-promote — run the full promote ladder with external-caddy (re)started after destructive stages
+## stage-dev and stage-test run compose-down-reset which tears down react-dev including
+## external-caddy. Restart it after destructive stages so staging/prod E2E have a live origin.
 all-promote:
-	$(MAKE) promote
+	$(MAKE) stage-dev
+	$(MAKE) stage-test
+	$(MAKE) external-caddy-up
+	$(MAKE) stage-staging
+	$(MAKE) stage-prod
