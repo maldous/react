@@ -425,10 +425,7 @@ services:
     command: >-
       /bin/bash -c "
         sentry upgrade --noinput &&
-        (sentry createuser --email $$SENTRY_ADMIN_EMAIL --password $$SENTRY_ADMIN_PASSWORD --superuser --no-input 2>/dev/null || true) &&
-        for topic in ingest-events ingest-transactions ingest-attachments ingest-monitors ingest-replays events snuba-commit-log snuba-metrics snuba-generic-metrics snuba-profiles; do
-          kafka-topics --bootstrap-server sentry-kafka:9092 --create --if-not-exists --topic $$topic --partitions 1 --replication-factor 1 2>/dev/null || true;
-        done"
+        (sentry createuser --email $$SENTRY_ADMIN_EMAIL --password $$SENTRY_ADMIN_PASSWORD --superuser --no-input 2>/dev/null || true)"
     depends_on:
       postgres:
         condition: service_healthy
@@ -453,6 +450,19 @@ services:
     volumes:
       - sentry-data:/data
       - ./docker/sentry:/etc/sentry:ro
+    restart: "no"
+
+  sentry-kafka-init:
+    image: confluentinc/cp-kafka:7.6.6
+    profiles: [sentry]
+    depends_on:
+      sentry-kafka:
+        condition: service_healthy
+    command: >-
+      bash -c "
+        for topic in ingest-events ingest-transactions ingest-attachments ingest-monitors ingest-replays events snuba-commit-log snuba-metrics snuba-generic-metrics snuba-profiles; do
+          kafka-topics --bootstrap-server sentry-kafka:9092 --create --if-not-exists --topic $$topic --partitions 1 --replication-factor 1;
+        done"
     restart: "no"
 
   sentry-relay:
@@ -498,6 +508,8 @@ services:
     depends_on:
       sentry-snuba-migrate:
         condition: service_completed_successfully
+      sentry-kafka-init:
+        condition: service_completed_successfully
       redis:
         condition: service_healthy
       sentry-kafka:
@@ -520,6 +532,8 @@ services:
       --no-strict-offset-reset
     depends_on:
       sentry-snuba-migrate:
+        condition: service_completed_successfully
+      sentry-kafka-init:
         condition: service_completed_successfully
       redis:
         condition: service_healthy
@@ -592,6 +606,8 @@ services:
     depends_on:
       sentry-migrate:
         condition: service_completed_successfully
+      sentry-kafka-init:
+        condition: service_completed_successfully
       sentry-kafka:
         condition: service_healthy
     environment:
@@ -621,6 +637,8 @@ services:
       --healthcheck-file-path /tmp/health.txt
     depends_on:
       sentry-migrate:
+        condition: service_completed_successfully
+      sentry-kafka-init:
         condition: service_completed_successfully
       sentry-kafka:
         condition: service_healthy
