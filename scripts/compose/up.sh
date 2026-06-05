@@ -50,6 +50,15 @@ case "$PROFILE" in
     # can take 15–20 min on cold start with no cached images.
     TIMEOUT=1200
     ;;
+  external-web)
+    SERVICES="external-caddy"
+    PROFILE_FLAG="--profile external-web"
+    TIMEOUT=60
+    # external-caddy always lives in the react-dev project (network_mode: host,
+    # binds port 80) and routes aldous.info → localhost:83 and
+    # staging.aldous.info → localhost:82 for Cloudflare origin requests.
+    COMPOSE_CMD="docker/compose-wrapper.sh dev"
+    ;;
   external-mocks)
     SERVICES="wiremock"
     PROFILE_FLAG="--profile external-mocks"

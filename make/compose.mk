@@ -105,12 +105,11 @@ compose-logs:
 
 ## external-caddy-up — Start external Caddy on host port 80 (Cloudflare-facing)
 ## Routes staging.aldous.info → localhost:82, aldous.info → localhost:83.
+## Always uses the react-dev project (network_mode: host requires it).
 external-caddy-up:
 	$(call STEP,external-caddy: startup)
-	docker compose --profile external-web up -d external-caddy
-	@timeout 30 bash -c 'until docker compose --profile external-web ps external-caddy 2>/dev/null | grep -q "Up"; do sleep 1; done' \
-		|| { printf '$(RED)✗ external-caddy did not start$(RESET)\n'; exit 1; }
-	$(call OK,external Caddy ready on port 80)
+	bash scripts/compose/up.sh dev external-web
+	$(call OK,external Caddy ready on port 80 — Cloudflare origin is live)
 
 ## external-caddy-down — Stop external Caddy
 external-caddy-down:

@@ -49,6 +49,7 @@ all: clean-all \
      quality \
      env-validate-all \
      env-drift-check \
+     external-caddy-up \
      all-promote \
      evidence \
      env-status
