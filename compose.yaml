@@ -599,7 +599,7 @@ services:
   sentry-web:
     image: ghcr.io/getsentry/sentry:26.5.2
     profiles: [external-sentry]
-    command: run web
+    command: run web --bind 0.0.0.0:9000
     depends_on:
       sentry-migrate:
         condition: service_completed_successfully
@@ -629,6 +629,11 @@ services:
     volumes:
       - sentry-data:/data
       - ./docker/sentry:/etc/sentry:ro
+    networks:
+      default: {}
+      sentry-bridge:
+        aliases:
+          - sentry-web
     healthcheck:
       # The official getsentry/sentry image does not ship curl/wget. Use Python
       # (always present) to probe the granian /_health/ endpoint. urlopen raises
@@ -991,6 +996,9 @@ services:
       # Allows Caddy to reach host-machine services (e.g. Tilt UI on :10350).
       # host-gateway resolves to the host's Docker bridge IP automatically.
       - "host-gateway:host-gateway"
+    networks:
+      default: {}
+      sentry-bridge: {}
     depends_on:
       platform-api:
         condition: service_healthy
@@ -1063,6 +1071,11 @@ services:
 # ---------------------------------------------------------------------------
 # VOLUMES ? all named; no anonymous volumes
 # ---------------------------------------------------------------------------
+
+networks:
+  sentry-bridge:
+    external: true
+    name: sentry-bridge
 
 volumes:
   postgres-data:

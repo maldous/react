@@ -120,6 +120,7 @@ external-caddy-down:
 ## Idempotent — fast no-op when already healthy.
 sentry-up:
 	$(call STEP,sentry: startup)
+	docker network create sentry-bridge 2>/dev/null || true
 	bash scripts/compose/up.sh sentry external-sentry
 	$(call OK,sentry up)
 
