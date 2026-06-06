@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-04T00:53:31.967Z",
+  "generatedAt": "2026-06-06T07:21:14.424Z",
   "stages": {
     "dev": {
       "stage": "dev",
-      "gitSha": "043c13c",
-      "timestamp": "2026-06-04T00:48:02.585Z",
+      "gitSha": "d8c33db",
+      "timestamp": "2026-06-06T07:13:16.287Z",
       "envFile": ".env.dev",
       "composeProject": "react-dev",
       "profiles": [
@@ -22,13 +22,13 @@
         "http://localhost:3001/healthz"
       ],
       "result": "passed",
-      "durationSeconds": 250,
+      "durationSeconds": 147,
       "failureSummary": null
     },
     "test": {
       "stage": "test",
-      "gitSha": "043c13c",
-      "timestamp": "2026-06-04T00:50:36.009Z",
+      "gitSha": "d8c33db",
+      "timestamp": "2026-06-06T07:17:02.656Z",
       "envFile": ".env.test",
       "composeProject": "react-test",
       "profiles": [
@@ -49,13 +49,13 @@
         "http://localhost:3002/healthz"
       ],
       "result": "passed",
-      "durationSeconds": 154,
+      "durationSeconds": 227,
       "failureSummary": null
     },
     "staging": {
       "stage": "staging",
-      "gitSha": "043c13c",
-      "timestamp": "2026-06-04T00:50:58.472Z",
+      "gitSha": "d8c33db",
+      "timestamp": "2026-06-06T07:17:34.440Z",
       "envFile": ".env.staging",
       "composeProject": "react-staging",
       "profiles": [
@@ -77,13 +77,13 @@
         "http://localhost:3003/healthz"
       ],
       "result": "passed",
-      "durationSeconds": 22,
+      "durationSeconds": 26,
       "failureSummary": null
     },
     "prod": {
       "stage": "prod",
-      "gitSha": "043c13c",
-      "timestamp": "2026-06-04T00:53:31.935Z",
+      "gitSha": "d8c33db",
+      "timestamp": "2026-06-06T07:21:14.393Z",
       "envFile": ".env.prod",
       "composeProject": "react-prod",
       "profiles": [
@@ -108,7 +108,7 @@
         "http://localhost:3004/healthz"
       ],
       "result": "passed",
-      "durationSeconds": 154,
+      "durationSeconds": 220,
       "failureSummary": null
     }
   }

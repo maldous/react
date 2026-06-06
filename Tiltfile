@@ -72,6 +72,9 @@ local_resource(
   cmd='make compose-up-sentry ENV=dev',
   labels=['observability'],
   links=[link('http://localhost:9060', 'Sentry')],
+  # Sentry profile shares per-env postgres, redis, and clickhouse (ADR-0017).
+  # Snuba migrations and sentry-web fail to start until these are healthy.
+  resource_deps=['postgres', 'redis', 'clickhouse'],
 )
 
 # ---------------------------------------------------------------------------
