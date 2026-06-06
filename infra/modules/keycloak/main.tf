@@ -158,7 +158,14 @@ resource "keycloak_openid_client" "bff" {
   # Keycloak RP-Initiated Logout (RFC 7591) — required so post_logout_redirect_uri
   # is accepted when platform-api redirects to the KC end_session endpoint.
   # "+" matches all valid_redirect_uris; explicit list also accepted.
-  valid_post_logout_redirect_uris = ["+"]
+  valid_post_logout_redirect_uris = [
+    "https://${var.apex_domain}/*",
+    "http://${var.apex_domain}/*",
+    "http://localhost/*",
+    "http://dev.localhost/*",
+    "http://test.localhost/*",
+    "https://*.${var.apex_domain}/*",
+  ]
 }
 
 # ---------------------------------------------------------------------------
