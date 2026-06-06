@@ -104,7 +104,7 @@
 # ---------------------------------------------------------------------------
 http://sentry.aldous.info http://sentry.staging.aldous.info http://sentry.dev.localhost http://sentry.test.localhost http://sentry.localhost {
 	import forward_auth_check admin:sentry read
-	reverse_proxy sentry-web:9000
+	reverse_proxy host-gateway:9060
 }
 
 # ---------------------------------------------------------------------------

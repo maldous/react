@@ -28,12 +28,8 @@ SONAR_DB_USER="${SONAR_DB_USER:-sonar}"
 SONAR_DB_PASSWORD="${SONAR_DB_PASSWORD:-sonarpassword}"
 SONAR_DB_NAME="${SONAR_DB_NAME:-sonar}"
 
-SENTRY_DB_USER="${SENTRY_DB_USER:-sentry}"
-SENTRY_DB_PASSWORD="${SENTRY_DB_PASSWORD:-sentrypassword}"
-SENTRY_DB_NAME="${SENTRY_DB_NAME:-sentry}"
 
 create_db_and_user "$SONAR_DB_NAME" "$SONAR_DB_USER" "$SONAR_DB_PASSWORD"
-create_db_and_user "$SENTRY_DB_NAME" "$SENTRY_DB_USER" "$SENTRY_DB_PASSWORD"
 
 # ---------------------------------------------------------------------------
 # pgadmin_sysadmin — RLS-aware pgAdmin connection role (ADR-0029, ADR-0031)

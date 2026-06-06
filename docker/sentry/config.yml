@@ -2,7 +2,7 @@
 # Non-secret, non-env-specific configuration. Secret key and env-specific
 # overrides are handled in sentry.conf.py via environment variables.
 
-mail.host: "mailpit"
+mail.host: "host-gateway"
 mail.port: 1025
 mail.from: "sentry@localhost"
 

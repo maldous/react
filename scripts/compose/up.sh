@@ -43,12 +43,14 @@ case "$PROFILE" in
     PROFILE_FLAG="--profile cloud-mocks"
     TIMEOUT=120
     ;;
-  sentry)
+  external-sentry)
     SERVICES=""
-    PROFILE_FLAG="--profile sentry"
+    PROFILE_FLAG="--profile external-sentry"
     # Kafka KRaft init + Snuba CH migrations + Sentry postgres migrations chain
-    # can take 15–20 min on cold start with no cached images.
+    # can take 15-20 min on cold start with no cached images.
     TIMEOUT=1200
+    # Sentry lives in react-sentry project — immune to per-env compose-down-reset.
+    COMPOSE_CMD="docker/compose-wrapper.sh sentry"
     ;;
   external-web)
     SERVICES="external-caddy"

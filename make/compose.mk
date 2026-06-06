@@ -4,6 +4,7 @@
         compose-down compose-down-web compose-down-volumes compose-down-reset \
         compose-ps compose-logs \
         external-caddy-up external-caddy-down \
+        sentry-up sentry-down \
         dev-up dev-up-minimal test-up staging-up prod-up \
         dev-down test-down staging-down prod-down \
         reset-local seed-demo db-migrate db-shell redis-flush-local \
@@ -45,9 +46,9 @@ compose-up-identity:
 compose-up-cloud:
 	bash scripts/compose/up.sh $(ENV) cloud
 
-## compose-up-sentry — Start Sentry stack (sentry profile)
+## compose-up-sentry — Start shared Sentry (delegates to sentry-up; ENV ignored)
 compose-up-sentry:
-	bash scripts/compose/up.sh $(ENV) sentry
+	$(MAKE) sentry-up
 
 ## compose-up-external-mocks — Start WireMock (external-mocks profile)
 compose-up-external-mocks:
@@ -114,6 +115,19 @@ external-caddy-up:
 ## external-caddy-down — Stop external Caddy
 external-caddy-down:
 	docker compose --profile external-web down --timeout 30
+
+## sentry-up — Start shared Sentry instance (external-sentry profile, react-sentry project)
+## Idempotent — fast no-op when already healthy.
+sentry-up:
+	$(call STEP,sentry: startup)
+	bash scripts/compose/up.sh sentry external-sentry
+	$(call OK,sentry up)
+
+## sentry-down — Stop shared Sentry instance
+sentry-down:
+	$(call STEP,sentry: stopping)
+	docker/compose-wrapper.sh sentry --profile external-sentry down --timeout 60
+	$(call OK,sentry down)
 	@$(call CONFIRM_DOWN,react)
 	$(call OK,external Caddy stopped)
 
@@ -126,7 +140,6 @@ dev-up:
 	$(MAKE) compose-up-identity ENV=dev
 	$(MAKE) keycloak-provision ENV=dev
 	$(MAKE) compose-up-quality ENV=dev
-	$(MAKE) compose-up-sentry ENV=dev
 	$(MAKE) compose-up-external-mocks ENV=dev
 	$(MAKE) compose-up-observability ENV=dev
 	$(MAKE) compose-up-web ENV=dev
@@ -143,7 +156,6 @@ test-up:
 	$(MAKE) compose-up-identity ENV=test
 	$(MAKE) keycloak-provision ENV=test
 	$(MAKE) compose-up-quality ENV=test
-	$(MAKE) compose-up-sentry ENV=test
 	$(MAKE) compose-up-external-mocks ENV=test
 	$(MAKE) compose-up-observability ENV=test
 	$(MAKE) compose-up-web ENV=test
@@ -155,7 +167,6 @@ staging-up:
 	$(MAKE) compose-up-identity ENV=staging
 	$(MAKE) keycloak-provision ENV=staging
 	$(MAKE) compose-up-quality ENV=staging
-	$(MAKE) compose-up-sentry ENV=staging
 	$(MAKE) compose-up-external-mocks ENV=staging
 	$(MAKE) compose-up-observability ENV=staging
 	$(MAKE) compose-up-web ENV=staging
@@ -167,7 +178,6 @@ prod-up:
 	$(MAKE) compose-up-identity ENV=prod
 	$(MAKE) keycloak-provision ENV=prod
 	$(MAKE) compose-up-quality ENV=prod
-	$(MAKE) compose-up-sentry ENV=prod
 	$(MAKE) compose-up-external-mocks ENV=prod
 	$(MAKE) compose-up-observability ENV=prod
 	$(MAKE) compose-up-web ENV=prod

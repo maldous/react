@@ -53,10 +53,11 @@ all: clean-all \
      evidence \
      env-status
 
-## all-promote — run the full promote ladder with external-caddy (re)started after destructive stages
-## stage-dev and stage-test run compose-down-reset which tears down react-dev including
-## external-caddy. Restart it after destructive stages so staging/prod E2E have a live origin.
+## all-promote — run the full promote ladder
+## Sentry starts first (own project, survives env resets). external-caddy restarts after
+## destructive stages (dev+test kill react-dev). staging/prod E2E need both live.
 all-promote:
+	$(MAKE) sentry-up
 	$(MAKE) stage-dev
 	$(MAKE) stage-test
 	$(MAKE) external-caddy-up

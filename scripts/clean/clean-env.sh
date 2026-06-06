@@ -17,7 +17,7 @@ printf '\n%s▶ clean: stopping %s services ◀%s\n' "${BOLD}${BLUE}" "$ENV" "$R
 
 # Stop all profiles for this env
 $COMPOSE_CMD --profile web --profile cloud-mocks \
-    --profile sentry --profile external-mocks \
+    --profile external-mocks \
     down --timeout 30 2>/dev/null || true
 $COMPOSE_CMD down --timeout 30 2>/dev/null || true
 

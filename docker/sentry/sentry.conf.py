@@ -12,7 +12,7 @@ DATABASES["default"].update(
         "NAME": os.environ.get("SENTRY_DB_NAME", "sentry"),
         "USER": os.environ.get("SENTRY_DB_USER", "sentry"),
         "PASSWORD": os.environ.get("SENTRY_DB_PASSWORD", "sentrypassword"),
-        "HOST": os.environ.get("SENTRY_POSTGRES_HOST", "postgres"),
+        "HOST": os.environ.get("SENTRY_POSTGRES_HOST", "sentry-postgres"),
         "PORT": os.environ.get("SENTRY_POSTGRES_PORT", "5432"),
         "CONN_MAX_AGE": 0,
     }
@@ -29,7 +29,7 @@ CACHES["default"] = {
 SENTRY_CACHE = "sentry.cache.redis.RedisCache"
 
 # ── Redis ─────────────────────────────────────────────────────────────────
-_redis_host = os.environ.get("SENTRY_REDIS_HOST", "redis")
+_redis_host = os.environ.get("SENTRY_REDIS_HOST", "sentry-redis")
 _redis_port = int(os.environ.get("SENTRY_REDIS_PORT", "6379"))
 SENTRY_OPTIONS["redis.clusters"] = {
     "default": {

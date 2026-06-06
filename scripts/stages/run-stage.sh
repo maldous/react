@@ -107,7 +107,6 @@ if [ "$STAGE_RESULT" -eq 0 ]; then
         [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" identity || STAGE_RESULT=1; }
         [ "$STAGE_RESULT" -eq 0 ] && { make keycloak-provision ENV="$STAGE" || STAGE_RESULT=1; }
         [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" quality || STAGE_RESULT=1; }
-        [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" sentry || STAGE_RESULT=1; }
         [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" external-mocks || STAGE_RESULT=1; }
         [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" observability || STAGE_RESULT=1; }
         [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" web || STAGE_RESULT=1; }
