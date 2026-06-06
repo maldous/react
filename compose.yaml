@@ -623,6 +623,7 @@ services:
       KAFKA_BROKERS: sentry-kafka:9092
       SNUBA: http://sentry-snuba-api:1218
       SENTRY_PORT: "9060"
+      SENTRY_URL_PREFIX: ${SENTRY_URL_PREFIX:-https://aldous.info/sentry}
     ports:
       - "9060:9000"
     volumes:

@@ -88,7 +88,9 @@ SENTRY_OPTIONS["filestore.options"] = {"location": "/data/files"}
 # ── Secret key ────────────────────────────────────────────────────────────
 SENTRY_OPTIONS["system.secret-key"] = os.environ["SENTRY_SECRET_KEY"]
 
-# ── Public URL (used in alert emails and issue links) ─────────────────────
-SENTRY_OPTIONS["system.url-prefix"] = "http://localhost:{}".format(
-    os.environ.get("SENTRY_PORT", "9000")
+# ── Public URL (used in alert emails, issue links, and redirect generation) ──
+# Set SENTRY_URL_PREFIX to the full path-prefixed public URL so Sentry generates
+# /sentry/... links and redirect targets instead of bare /... paths.
+SENTRY_OPTIONS["system.url-prefix"] = os.environ.get(
+    "SENTRY_URL_PREFIX", "http://localhost:9060"
 )

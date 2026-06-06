@@ -89,25 +89,6 @@
 }
 
 # ---------------------------------------------------------------------------
-# Sentry error-monitoring subdomain
-#
-# Sentry performs internal redirects to absolute paths like /auth/login/ which
-# conflicts with the platform BFF's /auth/* routes if served as /sentry/* path-
-# prefix. Moving to a dedicated subdomain avoids this routing collision entirely.
-#
-# protected by forward_auth (system-admin only via admin:sentry).
-# All paths proxied to sentry-web:9000 without strip_prefix so Sentry's own
-# auth flow (/auth/login/, /auth/register/, etc.) resolves within its origin.
-#
-# Session cookie must carry Domain=<apex> (SESSION_COOKIE_DOMAIN env var) so
-# platform_session is sent to the sentry.* subdomain and forward_auth passes.
-# ---------------------------------------------------------------------------
-http://sentry.aldous.info http://sentry.staging.aldous.info http://sentry.dev.localhost http://sentry.test.localhost http://sentry.localhost {
-	import forward_auth_check admin:sentry read
-	reverse_proxy host-gateway:9060
-}
-
-# ---------------------------------------------------------------------------
 # Super-global admin ? aldous.info, localhost, dev.localhost, test.localhost
 # Hosts the platform admin SPA, all developer tooling, and operational UIs.
 #
@@ -147,6 +128,21 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 		reverse_proxy sonarqube:9000
 	}
 
+	# Sentry error monitoring
+	# system.url-prefix = https://aldous.info/sentry so Sentry generates prefixed
+	# redirect URLs. handle_response rewrites any bare /path redirects to /sentry/path
+	# as a safety net — prevents conflict with the platform BFF /auth/* handler.
+	handle /sentry/* {
+		import forward_auth_check admin:sentry read
+		uri strip_prefix /sentry
+		reverse_proxy host-gateway:9060 {
+			@redirect status 301 302 303 307 308
+			handle_response @redirect {
+				redir * /sentry{http.reverse_proxy.header.Location} {http.response.status_code}
+			}
+		}
+	}
+
 	# MinIO ? object storage console
 	# MINIO_BROWSER_REDIRECT_URL sets <base href="/minio/"> so relative asset paths
 	# resolve back through /minio/*. Strip the prefix: MinIO serves assets at root
@@ -157,10 +153,7 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 		reverse_proxy minio:9001
 	}
 
-	# Sentry ? moved to sentry.aldous.info subdomain (above).
-	# The /sentry/* path-prefix approach was removed because Sentry emits absolute
-	# redirects (e.g. /auth/login/) that conflict with the platform BFF /auth/*.
-	# Use http://sentry.aldous.info / sentry.staging.aldous.info instead.
+	# Sentry ? see handle /sentry/* above (apex block).
 
 	# WireMock ? dev-only mock server; NOT exposed as a clickthrough.
 	# Access WireMock directly via http://localhost:${WIREMOCK_PORT:-8089}/__admin/
@@ -287,7 +280,7 @@ http://*.aldous.info http://*.dev.localhost http://*.test.localhost http://*.sta
 		reverse_proxy mailpit:8025
 	}
 
-	# Sentry ? served on sentry.{apex} subdomain, not path-prefixed here.
+	# Sentry ? accessed via aldous.info/sentry (apex block only, not per-tenant).
 
 	# Content-hashed static assets
 	@tenantAssets path /assets/*
