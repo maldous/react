@@ -12,9 +12,7 @@ export const Route = createRoute({
 
 // ---------------------------------------------------------------------------
 // Tool link definitions — source of truth: docker/caddy/Caddyfile
-// Most routes are path-prefixed behind Caddy on aldous.info (ADR-0029 §1a).
-// Sentry is served on a dedicated subdomain (sentry.<apex>) to avoid its
-// internal /auth/login/ redirects colliding with the platform BFF /auth/*.
+// All routes are path-prefixed behind Caddy on aldous.info (ADR-0029 §1a).
 // WireMock is NOT exposed as a clickthrough — access directly via port in dev.
 // ---------------------------------------------------------------------------
 
@@ -24,28 +22,7 @@ interface ToolLink {
   description: string;
   /** Compose profile required; link is shown but may return 502 if not running */
   profileGated?: string;
-  /**
-   * If true, this link is only rendered on the production apex host (aldous.info).
-   * On staging.aldous.info or dev environments, the link is hidden entirely.
-   *
-   * Rationale: some service subdomains (e.g. sentry.aldous.info) require
-   * *.aldous.info Cloudflare Universal SSL, which does NOT cover the second-level
-   * wildcard *.staging.aldous.info. Showing a broken link is worse than hiding it.
-   */
-  prodOnly?: boolean;
   testId: string;
-}
-
-// Returns true only on the production apex host (aldous.info).
-// Used to gate prodOnly tool links that require *.aldous.info TLS coverage.
-function isApexProd(): boolean {
-  if (typeof window === "undefined") return false; // SSR — don't show in pre-render
-  return window.location.hostname === "aldous.info";
-}
-
-// Sentry lives on sentry.aldous.info (prod only — see prodOnly flag).
-function getSentryHref(): string {
-  return "//sentry.aldous.info/";
 }
 
 const TOOL_LINKS: ToolLink[] = [
@@ -77,10 +54,9 @@ const TOOL_LINKS: ToolLink[] = [
   },
   {
     label: "Sentry",
-    href: getSentryHref(),
+    href: "/sentry/",
     description: "Error and performance monitoring",
-    profileGated: "sentry",
-    prodOnly: true, // sentry.staging.aldous.info lacks *.staging.aldous.info TLS
+    profileGated: "external-sentry",
     testId: "tool-link-sentry",
   },
   // WireMock intentionally absent — NOT_EXPOSED as a user-facing clickthrough.
@@ -231,7 +207,7 @@ function IndexPage() {
             {t("landing.tools")}
           </h2>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {TOOL_LINKS.filter((t) => !t.prodOnly || isApexProd()).map((tool) => (
+            {TOOL_LINKS.map((tool) => (
               <a
                 key={tool.href}
                 href={tool.href}
