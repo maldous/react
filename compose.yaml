@@ -373,12 +373,13 @@ services:
     restart: unless-stopped
 
   sentry-clickhouse:
-    image: clickhouse/clickhouse-server:24.8-alpine
+    image: clickhouse/clickhouse-server:24.12-alpine
     profiles: [external-sentry]
     environment:
       CLICKHOUSE_PASSWORD: sentrypassword
     volumes:
       - sentry-clickhouse-data:/var/lib/clickhouse
+      - ./docker/clickhouse/enable-json-type.xml:/etc/clickhouse-server/users.d/enable-json-type.xml:ro
     healthcheck:
       test: ["CMD-SHELL", "clickhouse-client --query='SELECT 1'"]
       interval: 10s
