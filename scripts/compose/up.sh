@@ -44,7 +44,10 @@ case "$PROFILE" in
     TIMEOUT=120
     ;;
   external-sentry)
-    SERVICES=""
+    # List every sentry-* service explicitly so docker compose only starts those.
+    # Without explicit names, --profile external-sentry also starts all no-profile
+    # default services (postgres, redis, clickhouse...) causing port conflicts.
+    SERVICES="sentry-postgres sentry-redis sentry-clickhouse sentry-kafka sentry-memcached sentry-snuba-migrate sentry-migrate sentry-kafka-init sentry-relay sentry-snuba-api sentry-snuba-errors sentry-snuba-replacer sentry-web sentry-events-consumer sentry-post-process-forwarder sentry-taskbroker sentry-taskworker sentry-taskscheduler sentry-cleanup"
     PROFILE_FLAG="--profile external-sentry"
     # Kafka KRaft init + Snuba CH migrations + Sentry postgres migrations chain
     # can take 15-20 min on cold start with no cached images.
