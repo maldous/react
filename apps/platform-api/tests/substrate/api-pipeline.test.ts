@@ -19,19 +19,38 @@ function makeServer(
   routes: Route[],
   testDeps?: RouterTestDeps
 ): Promise<{ server: http.Server; url: string }> {
-  return new Promise((resolve, reject) => {
-    const router = createRouter(routes, testDeps);
-    const server = http.createServer(router);
-    server.listen(0, "127.0.0.1", () => {
-      const addr = server.address();
-      if (!addr || typeof addr === "string") {
-        reject(new Error("Could not get server address"));
-        return;
-      }
-      resolve({ server, url: `http://127.0.0.1:${addr.port}` });
+  // Node 25 test runner starts describe blocks concurrently. Under that pressure
+  // server.address().port occasionally returns 0 before the OS finalises the
+  // ephemeral port assignment. Yield one event-loop tick with setImmediate before
+  // reading the address, and retry up to 3 times to make the helper robust.
+  const attempt = (): Promise<{ server: http.Server; url: string }> =>
+    new Promise((resolve, reject) => {
+      const router = createRouter(routes, testDeps);
+      const server = http.createServer(router);
+      server.listen(0, "127.0.0.1", () => {
+        setImmediate(() => {
+          const addr = server.address();
+          if (!addr || typeof addr === "string" || !addr.port) {
+            server.close(() =>
+              reject(new Error(`Server bound to invalid port: ${JSON.stringify(addr)}`))
+            );
+            return;
+          }
+          resolve({ server, url: `http://127.0.0.1:${addr.port}` });
+        });
+      });
+      server.on("error", reject);
     });
-    server.on("error", reject);
-  });
+
+  const retry = async (n: number): Promise<{ server: http.Server; url: string }> => {
+    try {
+      return await attempt();
+    } catch (e) {
+      if (n <= 1) throw e;
+      return retry(n - 1);
+    }
+  };
+  return retry(3);
 }
 
 function closeServer(server: http.Server): Promise<void> {
