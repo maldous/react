@@ -1,3 +1,4 @@
+import { ConflictError } from "@platform/platform-errors";
 import type { Route } from "./pipeline.ts";
 import { getHealth, getReadiness, getVersion } from "./health.ts";
 import { getFixtureSession } from "./session.ts";
@@ -556,8 +557,16 @@ export const routes: Route[] = [
         res.json(400, { code: "VALIDATION_ERROR", message: msg });
         return;
       }
-      const result = await provisionTenant(parsed.data, req.actor!.userId);
-      res.json(201, result);
+      try {
+        const result = await provisionTenant(parsed.data, req.actor!.userId);
+        res.json(201, result);
+      } catch (err) {
+        if (err instanceof ConflictError) {
+          res.json(409, { code: "CONFLICT", message: err.message });
+          return;
+        }
+        throw err;
+      }
     },
   },
   {
