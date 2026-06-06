@@ -122,6 +122,7 @@ sentry-up:
 	$(call STEP,sentry: startup)
 	docker network create sentry-bridge 2>/dev/null || true
 	bash scripts/compose/up.sh sentry external-sentry
+	@bash scripts/smoke/sentry-smoke.sh
 	$(call OK,sentry up)
 
 ## sentry-down — Stop shared Sentry instance

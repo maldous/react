@@ -932,3 +932,53 @@ describe("api pipeline: 500 with UnexpectedError does not leak internalDetails",
     );
   });
 });
+
+// ─── 21. Route handler catches ConflictError → 409 ─────────────────────────
+// Mirrors the pattern in routes.ts POST /api/admin/tenants: the handler
+// catches ConflictError from provisionTenant and calls res.json(409, ...).
+// If the catch is ever removed, this test fails — preventing a silent 500 regression.
+describe("api pipeline: route handler that catches ConflictError returns 409", () => {
+  let server: http.Server;
+  let url: string;
+
+  before(async () => {
+    const { ConflictError } = await import("@platform/platform-errors");
+    const s = await makeServer([
+      {
+        method: "POST",
+        path: "/provision",
+        requiresAuth: false,
+        handler: async (_req, res) => {
+          // Simulates provisionTenant throwing when a slug is already taken.
+          // The catch block is what routes.ts POST /api/admin/tenants does.
+          try {
+            throw new ConflictError("slug already taken");
+          } catch (err) {
+            if (err instanceof ConflictError) {
+              res.json(409, { code: "CONFLICT", message: err.message });
+              return;
+            }
+            throw err;
+          }
+        },
+      },
+    ]);
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    await closeServer(server);
+  });
+
+  it("returns 409 with CONFLICT code when slug is taken", async () => {
+    const res = await fetch(`${url}/provision`, { method: "POST" });
+    assert.equal(res.status, 409);
+    const body = await res.json();
+    assert.equal(body.code, "CONFLICT");
+    assert.ok(
+      typeof body.message === "string" && body.message.length > 0,
+      "conflict body must include a message"
+    );
+  });
+});

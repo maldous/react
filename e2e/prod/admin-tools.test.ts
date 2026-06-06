@@ -21,6 +21,7 @@ const ADMIN_TOOLS = [
   { path: "/minio/", label: "MinIO console", resource: "admin:minio" },
   { path: "/clickhouse/", label: "ClickHouse", resource: "admin:clickhouse" },
   { path: "/pgadmin/", label: "pgAdmin", resource: "admin:pgadmin" },
+  { path: "/sentry/", label: "Sentry", resource: "admin:sentry" },
 ];
 
 // ---------------------------------------------------------------------------

@@ -163,10 +163,12 @@ run_group() {
                 exit 1
             fi
             if [ "$STAGE" = "prod" ]; then
-                printf '%s⚠ auth-e2e SKIPPED (prod, ALLOW_SKIP_AUTH_E2E=1) — PROD_BASE_URL=%s is localhost%s\n' \
-                    "$YELLOW" "$_app_url" "$RESET"
-                printf '%s  KC redirect requires real DNS. To run the full gate: PROD_BASE_URL=https://aldous.info make stage-prod%s\n' \
-                    "$YELLOW" "$RESET"
+                printf '%s╔══════════════════════════════════════════════════════════════╗%s\n' "$RED" "$RESET"
+                printf '%s║  ⚠ CONFIDENCE DEGRADED: auth-e2e SKIPPED on prod            ║%s\n' "$RED" "$RESET"
+                printf '%s║  PROD_BASE_URL=%s is localhost — Keycloak redirect requires  ║%s\n' "$RED" "$_app_url" "$RESET"
+                printf '%s║  real DNS. Set PROD_BASE_URL=https://aldous.info to run full ║%s\n' "$RED" "$RESET"
+                printf '%s║  gate. KEYCLOAK_TEST_PASSWORD must also be set.              ║%s\n' "$RED" "$RESET"
+                printf '%s╚══════════════════════════════════════════════════════════════╝%s\n' "$RED" "$RESET"
             else
                 printf '%s↷ auth-e2e skipped — PROD_BASE_URL=%s is localhost%s\n' \
                     "$YELLOW" "$_app_url" "$RESET"

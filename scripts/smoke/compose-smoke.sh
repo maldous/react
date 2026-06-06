@@ -20,7 +20,7 @@ check_service() {
     fi
 }
 
-for svc in postgres redis; do
+for svc in postgres redis clickhouse minio mailpit otel-collector; do
     check_service "$svc"
 done
 
