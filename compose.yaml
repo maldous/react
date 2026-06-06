@@ -375,6 +375,8 @@ services:
   sentry-clickhouse:
     image: clickhouse/clickhouse-server:24.8-alpine
     profiles: [external-sentry]
+    environment:
+      CLICKHOUSE_PASSWORD: sentrypassword
     volumes:
       - sentry-clickhouse-data:/var/lib/clickhouse
     healthcheck:
@@ -457,6 +459,8 @@ services:
     environment:
       SNUBA_SETTINGS: self_hosted
       CLICKHOUSE_HOST: sentry-clickhouse
+      CLICKHOUSE_USER: default
+      CLICKHOUSE_PASSWORD: sentrypassword
       DEFAULT_BROKERS: sentry-kafka:9092
       REDIS_HOST: sentry-redis
     restart: "no"
@@ -531,6 +535,8 @@ services:
     environment:
       SNUBA_SETTINGS: self_hosted
       CLICKHOUSE_HOST: sentry-clickhouse
+      CLICKHOUSE_USER: default
+      CLICKHOUSE_PASSWORD: sentrypassword
       DEFAULT_BROKERS: sentry-kafka:9092
       REDIS_HOST: sentry-redis
       UWSGI_MAX_REQUESTS: "10000"
@@ -558,6 +564,8 @@ services:
     environment:
       SNUBA_SETTINGS: self_hosted
       CLICKHOUSE_HOST: sentry-clickhouse
+      CLICKHOUSE_USER: default
+      CLICKHOUSE_PASSWORD: sentrypassword
       DEFAULT_BROKERS: sentry-kafka:9092
       REDIS_HOST: sentry-redis
     restart: unless-stopped
@@ -581,6 +589,8 @@ services:
     environment:
       SNUBA_SETTINGS: self_hosted
       CLICKHOUSE_HOST: sentry-clickhouse
+      CLICKHOUSE_USER: default
+      CLICKHOUSE_PASSWORD: sentrypassword
       DEFAULT_BROKERS: sentry-kafka:9092
       REDIS_HOST: sentry-redis
     restart: unless-stopped
