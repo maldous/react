@@ -127,7 +127,7 @@ function IndexPage() {
             <h1 className="text-2xl font-bold tracking-tight text-gray-900">
               {t("platform.name")}
             </h1>
-            <p className="mt-1 text-sm text-gray-500">{t("platform.tagline")}</p>
+            <p className="mt-1 text-sm text-gray-600">{t("platform.tagline")}</p>
           </div>
           {/* Link to the React-rendered login entry page (/login), not the BFF endpoint */}
           <a
@@ -179,7 +179,7 @@ function IndexPage() {
         <section aria-labelledby="status-heading" className="mb-8">
           <h2
             id="status-heading"
-            className="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-400"
+            className="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-600"
           >
             {t("landing.status")}
           </h2>
@@ -202,7 +202,7 @@ function IndexPage() {
         <section aria-labelledby="tools-heading">
           <h2
             id="tools-heading"
-            className="mb-4 text-xs font-semibold uppercase tracking-wide text-gray-400"
+            className="mb-4 text-xs font-semibold uppercase tracking-wide text-gray-600"
           >
             {t("landing.tools")}
           </h2>
@@ -219,7 +219,7 @@ function IndexPage() {
                     <span className="font-medium text-gray-900 group-hover:text-indigo-600">
                       {tool.label}
                     </span>
-                    <span className="mt-0.5 block text-xs text-gray-500">{tool.description}</span>
+                    <span className="mt-0.5 block text-xs text-gray-600">{tool.description}</span>
                     {tool.profileGated && (
                       <Badge className="mt-2 bg-amber-50 text-amber-700 ring-1 ring-amber-200">
                         profile: {tool.profileGated}

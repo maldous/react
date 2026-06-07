@@ -44,6 +44,9 @@ const DEFAULT_POSTGRES_APP_URL =
 // Superuser URL — used only by migration runner, seed, and reset scripts.
 // Never use this for the runtime application pool.
 export function getPostgresUrl(): string {
+  if (process.env["NODE_ENV"] === "production" && !process.env["POSTGRES_URL"]) {
+    throw new Error("POSTGRES_URL must be set in production");
+  }
   return process.env["POSTGRES_URL"] ?? DEFAULT_POSTGRES_URL;
 }
 
@@ -51,6 +54,9 @@ export function getPostgresUrl(): string {
 // Falls back to DEFAULT_POSTGRES_APP_URL for local dev without POSTGRES_APP_URL set.
 // Production must set POSTGRES_APP_URL to the platform_app role connection string.
 export function getPostgresAppUrl(): string {
+  if (process.env["NODE_ENV"] === "production" && !process.env["POSTGRES_APP_URL"]) {
+    throw new Error("POSTGRES_APP_URL must be set in production");
+  }
   return process.env["POSTGRES_APP_URL"] ?? DEFAULT_POSTGRES_APP_URL;
 }
 

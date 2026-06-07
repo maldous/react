@@ -678,28 +678,11 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
     await this.createBffClient(cfg);
   }
 
-  private async getAdminToken(): Promise<string> {
-    const tokenUrl = `${this.config.url}/realms/master/protocol/openid-connect/token`;
-    const response = await fetch(tokenUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
-        grant_type: "password",
-        client_id: "admin-cli",
-        username: "admin",
-        password: "admin",
-      }),
-    });
-    if (!response.ok) throw new Error(`Keycloak admin token failed: ${response.status}`);
-    const data = (await response.json()) as { access_token: string };
-    return data.access_token;
-  }
-
   private async createBffClient(cfg: RealmProvisioningConfig): Promise<void> {
     // Use admin token instead of provisioner token for managing tenant realm
     // resources (client creation, mapper, authorization config). The provisioner
     // create-realm role does not grant manage-clients on the new realm.
-    const adminToken = await this.getAdminToken();
+    const adminToken = await this.getMasterToken();
     const clientsUrl = `${this.config.url}/admin/realms/${cfg.realmName}/clients`;
     const res = await fetch(clientsUrl, {
       method: "POST",
@@ -819,7 +802,7 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
   ): Promise<{ clientId: string; clientSecret: string }> {
     // Use admin token for managing tenant realm resources (the provisioner
     // token lacks manage-clients on the new realm).
-    const adminToken = await this.getAdminToken();
+    const adminToken = await this.getMasterToken();
     const baseUrl = `${this.config.url}/admin/realms/${realmName}`;
 
     // 1. Create the confidential client with service accounts enabled
@@ -925,7 +908,7 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
     // Use admin token (not provisioner token) for managing tenant realm resources.
     // The provisioner's create-realm role does not grant manage-clients on
     // the new realm, so client lookup and resource registration would 403.
-    const token = await this.getAdminToken();
+    const token = await this.getMasterToken();
 
     // Resolve BFF client UUID
     const clientsRes = await fetch(

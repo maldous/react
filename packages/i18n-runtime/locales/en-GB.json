@@ -46,7 +46,8 @@
               "invalid": "Display name must not contain control characters"
             }
           }
-        }
+        },
+        "pageTitle": "Organisation Profile"
       }
     }
   },
@@ -59,7 +60,11 @@
       "loadProfileTitle": "Could not load profile",
       "loadProfileDescription": "Please try again.",
       "saveFailed": "Failed to save. Please try again.",
-      "profileUpdated": "Profile updated."
+      "profileUpdated": "Profile updated.",
+      "title": "Something went wrong",
+      "retry": "Try again",
+      "sessionUnavailable": "Unable to load your session. Please refresh the page.",
+      "updateFailed": "Failed to save changes. Please try again."
     },
     "label": {
       "displayName": "Display name",
@@ -68,6 +73,12 @@
     },
     "action": {
       "save": "Save"
+    },
+    "success": {
+      "profileUpdated": "Profile saved."
+    },
+    "loading": {
+      "session": "Loading session…"
     }
   },
   "api": {

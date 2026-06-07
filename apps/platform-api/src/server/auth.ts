@@ -24,6 +24,11 @@ import {
 import { resolveTenantFromRequest } from "./tenant-resolver.ts";
 import type { PipelineHandler } from "./pipeline.ts";
 
+function safeRelativeRedirect(raw: string): string {
+  if (!raw.startsWith("/") || raw.startsWith("//")) return "/login";
+  return raw;
+}
+
 // ---------------------------------------------------------------------------
 // PKCE helpers
 // ---------------------------------------------------------------------------
@@ -380,9 +385,7 @@ export const handleAuthLogoutRedirect: PipelineHandler = async (req, res) => {
       req.raw.headers["host"] ??
       "localhost";
     const scheme = (req.raw.headers["x-forwarded-proto"] as string | undefined) ?? "http";
-    const redirectTarget = returnTo.startsWith("http")
-      ? returnTo
-      : `${scheme}://${host}${returnTo}`;
+    const redirectTarget = `${scheme}://${host}${safeRelativeRedirect(returnTo)}`;
     res.raw.writeHead(302, {
       "Set-Cookie": clearHeaders,
       Location: redirectTarget,
@@ -398,9 +401,7 @@ export const handleAuthLogoutRedirect: PipelineHandler = async (req, res) => {
     req.raw.headers["host"] ??
     "localhost";
   const scheme = (req.raw.headers["x-forwarded-proto"] as string | undefined) ?? "http";
-  const postLogoutRedirectUri = returnTo.startsWith("http")
-    ? returnTo
-    : `${scheme}://${host}${returnTo}`;
+  const postLogoutRedirectUri = `${scheme}://${host}${safeRelativeRedirect(returnTo)}`;
 
   const kcCfg = getKeycloakConfig();
   // Pass host+scheme so getKeycloakPublicUrl returns the host-derived URL

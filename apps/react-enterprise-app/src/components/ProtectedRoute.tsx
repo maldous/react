@@ -10,10 +10,11 @@ interface ProtectedRouteProps {
 }
 
 export function ProtectedRoute({ permission, children }: ProtectedRouteProps) {
-  const { actor, isLoading, isAuthenticated, hasPermission } = useSession();
+  const { actor: _actor, isLoading, isAuthenticated, hasPermission, error } = useSession();
   const t = useTranslation();
 
   if (isLoading) return <LoadingState message={t("auth.status.checkingAuthentication")} />;
+  if (error) return <div role="alert">{t("ui.error.sessionUnavailable")}</div>;
   // Redirect to the React-rendered login entry page; /auth/login is BFF-only (Caddy-proxied)
   if (!isAuthenticated) return <Navigate to="/login" />;
   if (permission && !hasPermission(permission)) {
@@ -24,6 +25,5 @@ export function ProtectedRoute({ permission, children }: ProtectedRouteProps) {
       />
     );
   }
-  void actor;
   return <>{children}</>;
 }

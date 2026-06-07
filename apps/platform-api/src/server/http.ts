@@ -4,6 +4,7 @@ import { createLogger, type PlatformLogLevel } from "@platform/platform-logging"
 import { createRouter } from "./pipeline.ts";
 import { routes } from "./routes.ts";
 import { connectRedis, disconnectRedis } from "./dependencies.ts";
+import { assertEncryptionKeyConfigured } from "./token-crypto.ts";
 import { createSentryAdapter } from "./observability.ts";
 
 const LOG_LEVEL = (process.env["LOG_LEVEL"] ?? "info") as PlatformLogLevel;
@@ -14,6 +15,7 @@ const sentry = createSentryAdapter();
 async function start(): Promise<void> {
   // Connect Redis before the server starts accepting requests.
   // The auth flow (PKCE state store, session store) requires an active client.
+  assertEncryptionKeyConfigured();
   await connectRedis();
   log.info("Redis connected");
 

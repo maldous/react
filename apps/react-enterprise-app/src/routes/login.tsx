@@ -38,7 +38,7 @@ function LoginPage() {
           <h1 className="mt-4 text-2xl font-bold tracking-tight text-gray-900">
             {t("platform.name")}
           </h1>
-          <p className="mt-1 text-sm text-gray-500">{t("platform.tagline")}</p>
+          <p className="mt-1 text-sm text-gray-600">{t("platform.tagline")}</p>
         </div>
 
         {/* Sign-in card */}
@@ -46,7 +46,7 @@ function LoginPage() {
           <CardBody className="space-y-4 p-8">
             <div>
               <h2 className="text-base font-semibold text-gray-900">{t("auth.login.title")}</h2>
-              <p className="mt-1 text-sm text-gray-500">{t("auth.login.body")}</p>
+              <p className="mt-1 text-sm text-gray-600">{t("auth.login.body")}</p>
             </div>
 
             {/* Full-page <a>: Caddy proxies /auth/login to the BFF PKCE flow */}
@@ -60,7 +60,7 @@ function LoginPage() {
           </CardBody>
         </Card>
 
-        <p className="text-center text-xs text-gray-400">{t("auth.login.footer")}</p>
+        <p className="text-center text-xs text-gray-600">{t("auth.login.footer")}</p>
       </div>
     </div>
   );

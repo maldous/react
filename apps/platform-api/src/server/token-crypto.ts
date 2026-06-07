@@ -62,3 +62,22 @@ export function decryptToken(stored: string): string {
   decipher.setAuthTag(tag);
   return decipher.update(ct).toString("utf8") + decipher.final("utf8");
 }
+
+/**
+ * Called at startup. Throws in production if the encryption key is absent or malformed.
+ */
+export function assertEncryptionKeyConfigured(): void {
+  const keyHex = process.env["TENANT_SECRET_ENCRYPTION_KEY"];
+  const valid = typeof keyHex === "string" && keyHex.length === 64;
+  if (!valid && process.env["NODE_ENV"] === "production") {
+    throw new Error(
+      "TENANT_SECRET_ENCRYPTION_KEY must be a 64-char hex string (32 bytes). " +
+        "Session tokens cannot be stored encrypted without it."
+    );
+  }
+  if (!valid) {
+    log.warn(
+      "TENANT_SECRET_ENCRYPTION_KEY not set or invalid — token encryption disabled. Set this before deploying to production."
+    );
+  }
+}

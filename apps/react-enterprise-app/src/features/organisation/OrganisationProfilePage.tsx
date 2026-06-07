@@ -39,7 +39,7 @@ export function OrganisationProfilePage() {
   const onSubmit = (data: UpdateOrganisationProfileRequest) => mutation.mutate(data);
 
   return (
-    <div className="p-8 max-w-xl" data-testid="organisation-profile">
+    <main id="main-content" className="p-8 max-w-xl" data-testid="organisation-profile">
       <h1 className="text-2xl font-semibold mb-6">{t("feature.organisation.profile.title")}</h1>
 
       {canEdit ? (
@@ -50,11 +50,17 @@ export function OrganisationProfilePage() {
           <input
             id="displayName"
             className="border rounded px-3 py-2 w-full"
+            aria-describedby={errors.displayName ? "displayName-error" : undefined}
+            aria-invalid={errors.displayName ? true : undefined}
+            autoComplete="organization"
             {...register("displayName")}
             data-testid="display-name-input"
           />
           {errors.displayName && (
-            <p className="text-red-600 text-sm mt-1">{errors.displayName.message}</p>
+            <p id="displayName-error" role="alert" className="text-red-600 text-sm mt-1">
+              <span className="font-medium">Error: </span>
+              {errors.displayName.message}
+            </p>
           )}
           <button
             type="submit"
@@ -64,12 +70,30 @@ export function OrganisationProfilePage() {
           >
             {mutation.isPending ? t("auth.status.saving") : t("ui.action.save")}
           </button>
-          {mutation.isSuccess && (
-            <p className="text-green-600 mt-2" data-testid="success-message">
-              {t("ui.error.profileUpdated")}
-            </p>
-          )}
-          {mutation.isError && <p className="text-red-600 mt-2">{t("ui.error.saveFailed")}</p>}
+          <div
+            role="status"
+            aria-live="polite"
+            className="text-green-700 text-sm mt-2 min-h-[1.25rem]"
+          >
+            {mutation.isSuccess && (
+              <>
+                <span aria-hidden="true">✓ </span>
+                {t("ui.success.profileUpdated")}
+              </>
+            )}
+          </div>
+          <div
+            role="alert"
+            aria-live="assertive"
+            className="text-red-700 text-sm mt-2 min-h-[1.25rem]"
+          >
+            {mutation.isError && (
+              <>
+                <span aria-hidden="true">⚠ </span>
+                {t("ui.error.saveFailed")}
+              </>
+            )}
+          </div>
         </form>
       ) : (
         <div data-testid="profile-read-only">
@@ -88,6 +112,6 @@ export function OrganisationProfilePage() {
         </p>
         {actor && <p>{t("ui.label.signedInAs", { name: actor.displayName })}</p>}
       </div>
-    </div>
+    </main>
   );
 }

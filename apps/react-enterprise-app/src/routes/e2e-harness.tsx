@@ -11,6 +11,7 @@ export const Route = createRoute({
 });
 
 function E2EHarnessPage() {
+  if (!import.meta.env.DEV) return null;
   return (
     <ProtectedRoute permission="organisation.read">
       <div data-testid="protected-content">
