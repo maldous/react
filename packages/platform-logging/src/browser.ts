@@ -37,6 +37,7 @@ export function createBrowserLogger(options: {
   function log(level: BrowserLogLevel, msg: string, fields?: Record<string, unknown>): void {
     if (!shouldLog(level)) return;
     const entry = { name: options.name, level, msg, ...fields };
+    // eslint-disable-next-line no-console -- exempt: browser logger leaf; no alternative to console in browser (ADR-ACT-0196)
     switch (level) {
       case "trace":
       case "debug":
