@@ -14,41 +14,35 @@ import {
 } from "../../src/server/pipeline.ts";
 import type { SessionRecord } from "@platform/session-runtime";
 
-// Helper: create a test server with given routes, return {server, url}
+// Helper: create a test server with given routes, return {server, url}.
+// Uses an explicit random port in 50000-59999 instead of port 0 to avoid the
+// Node 25 race where server.address().port returns 0 when many describe blocks
+// start listen() simultaneously. Retries on EADDRINUSE with a new random port.
 function makeServer(
   routes: Route[],
   testDeps?: RouterTestDeps
 ): Promise<{ server: http.Server; url: string }> {
-  // Node 25 test runner starts describe blocks concurrently. Under that pressure
-  // server.address().port occasionally returns 0 before the OS finalises the
-  // ephemeral port assignment. Yield one event-loop tick with setImmediate before
-  // reading the address, and retry up to 3 times to make the helper robust.
+  const randomPort = () => Math.floor(Math.random() * 10000) + 50000;
+
   const attempt = (): Promise<{ server: http.Server; url: string }> =>
     new Promise((resolve, reject) => {
+      const port = randomPort();
       const router = createRouter(routes, testDeps);
       const server = http.createServer(router);
-      server.listen(0, "127.0.0.1", () => {
-        setImmediate(() => {
-          const addr = server.address();
-          if (!addr || typeof addr === "string" || !addr.port) {
-            server.close(() =>
-              reject(new Error(`Server bound to invalid port: ${JSON.stringify(addr)}`))
-            );
-            return;
-          }
-          resolve({ server, url: `http://127.0.0.1:${addr.port}` });
-        });
+      server.once("error", (err: NodeJS.ErrnoException) => {
+        server.close(() => reject(err));
       });
-      server.on("error", reject);
+      server.listen(port, "127.0.0.1", () => {
+        resolve({ server, url: `http://127.0.0.1:${port}` });
+      });
     });
 
-  const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
   const retry = async (n: number): Promise<{ server: http.Server; url: string }> => {
     try {
       return await attempt();
     } catch (e) {
-      if (n <= 1) throw e;
-      await delay(20);
+      const err = e as NodeJS.ErrnoException;
+      if (n <= 1 || err.code !== "EADDRINUSE") throw e;
       return retry(n - 1);
     }
   };
