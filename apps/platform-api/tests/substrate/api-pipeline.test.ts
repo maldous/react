@@ -42,15 +42,17 @@ function makeServer(
       server.on("error", reject);
     });
 
+  const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
   const retry = async (n: number): Promise<{ server: http.Server; url: string }> => {
     try {
       return await attempt();
     } catch (e) {
       if (n <= 1) throw e;
+      await delay(20);
       return retry(n - 1);
     }
   };
-  return retry(3);
+  return retry(10);
 }
 
 function closeServer(server: http.Server): Promise<void> {
