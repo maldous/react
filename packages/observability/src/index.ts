@@ -51,11 +51,9 @@ function makeConsoleLogger(fields: LogFields = {}): ObservabilityLogger {
   function log(level: string, msg: string, extra?: LogFields): void {
     const entry = { level, msg, ...fields, ...extra };
     if (level === "error" || level === "fatal") {
-      // eslint-disable-next-line no-console -- intentional: this IS the console logger leaf (test/dev only)
-      console.error(JSON.stringify(entry));
+      console.error(JSON.stringify(entry)); // intentional: this IS the console logger leaf (test/dev only; ADR-ACT-0196 gate will exempt this file)
     } else {
-      // eslint-disable-next-line no-console -- intentional: this IS the console logger leaf (test/dev only)
-      console.log(JSON.stringify(entry));
+      console.log(JSON.stringify(entry)); // intentional: this IS the console logger leaf (test/dev only; ADR-ACT-0196 gate will exempt this file)
     }
   }
   return {
