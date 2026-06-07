@@ -69,7 +69,10 @@ export function decryptToken(stored: string): string {
 export function assertEncryptionKeyConfigured(): void {
   const keyHex = process.env["TENANT_SECRET_ENCRYPTION_KEY"];
   const valid = typeof keyHex === "string" && keyHex.length === 64;
-  if (!valid && process.env["PLATFORM_ENV"] === "production") {
+  if (
+    !valid &&
+    (process.env["NODE_ENV"] === "production" || process.env["PLATFORM_ENV"] === "production")
+  ) {
     throw new Error(
       "TENANT_SECRET_ENCRYPTION_KEY must be a 64-char hex string (32 bytes). " +
         "Session tokens cannot be stored encrypted without it."

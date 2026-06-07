@@ -922,6 +922,9 @@ services:
     profiles: [web]
     environment:
       NODE_ENV: production
+      # AES-256-GCM key for session token encryption. Must be a 64-char hex string (32 bytes).
+      # Set in .env.{dev,test,staging,prod}. Required at startup in production (PLATFORM_ENV=production).
+      TENANT_SECRET_ENCRYPTION_KEY: ${TENANT_SECRET_ENCRYPTION_KEY:-}
       PLATFORM_API_PORT: "3001"
       # Superuser URL — used only by migration runner, seed, and reset scripts.
       POSTGRES_URL: postgresql://${POSTGRES_USER:-platform}:${POSTGRES_PASSWORD:-platformpassword}@postgres:5432/${POSTGRES_DB:-platform}
