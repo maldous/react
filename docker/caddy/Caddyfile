@@ -110,6 +110,13 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 		reverse_proxy keycloak:8080
 	}
 
+
+	# Keycloak theme resources ? CSS, JS, fonts, images loaded by the login page.
+	# Must be public: the browser has no session cookie during the auth flow.
+	handle /kc/resources/* {
+		reverse_proxy keycloak:8080
+	}
+
 	# Keycloak admin console ? protected by platform forward_auth.
 	handle /kc/* {
 		import forward_auth_check admin:keycloak read
@@ -233,6 +240,13 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 	}
 	handle /version {
 		import platform_api_proxy
+	}
+
+	# Sentry static bundles ? app.js and sentry.css use root-relative /_static/ paths
+	# (no /sentry prefix) so they bypass handle /sentry/* and must be proxied here.
+	# No forward_auth: these are public CSS/JS assets needed by the Sentry login page.
+	handle /_static/* {
+		reverse_proxy sentry-web:9000
 	}
 
 	# Super-admin React SPA (platform admin console)
