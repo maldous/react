@@ -3,11 +3,99 @@
 
 ## help — Show all documented targets
 help:
-	@printf '\n$(BOLD)maldous/react — platform Makefile$(RESET)\n\n'
-	@grep -hE '^## ' $(MAKEFILE_LIST) \
-		| sed 's/^## //' \
-		| awk '{printf "  $(GREEN)%-28s$(RESET) %s\n", $$1, substr($$0, index($$0,$$2))}'
-	@printf '\n$(BOLD)ENV selector:$(RESET) make <target> ENV=dev|test|staging|prod  (default: dev)\n\n'
+	@printf '\n$(BOLD)maldous/react — platform Makefile$(RESET)\n'
+	@printf '$(BOLD)make <target> [ENV=dev|test|staging|prod]$(RESET)   default ENV: dev\n'
+	@printf '\n'
+	@printf '$(BOLD)── DAILY WORKFLOW ───────────────────────────────────────────────────$(RESET)\n'
+	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
+	  check        'Fast local gate: format / lint / typecheck / architecture' \
+	  all          'Full confidence ladder: preflight → dev → test → staging → prod' \
+	  fix          'Auto-fix Prettier formatting' \
+	  install      'Install all npm dependencies (root + governance tools)'
+	@printf '\n'
+	@printf '$(BOLD)── DEVELOPMENT ──────────────────────────────────────────────────────$(RESET)\n'
+	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
+	  tilt-up          'Hot-reload dev loop (Vite + API, blocks until healthy)' \
+	  tilt-down        'Stop Tilt dev stack' \
+	  dev-up           'Full dev Compose stack (all profiles)' \
+	  dev-up-minimal   'Core infra only (Postgres / Redis / ClickHouse / MinIO)' \
+	  dev-down         'Stop dev stack'
+	@printf '\n'
+	@printf '$(BOLD)── COMPOSE SERVICES  [ENV=dev|test|staging|prod] ────────────────────$(RESET)\n'
+	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
+	  compose-up-default        'postgres redis clickhouse minio mailpit otel-collector' \
+	  compose-up-identity       '+ Keycloak SSO (identity profile)' \
+	  compose-up-observability  '+ Loki + Grafana + Alloy (observability profile)' \
+	  compose-up-quality        '+ SonarQube (quality profile)' \
+	  compose-up-cloud          '+ LocalStack / AWS mocks (cloud-mocks profile)' \
+	  compose-up-external-mocks '+ WireMock (external-mocks profile)' \
+	  compose-up-sentry         '+ Sentry self-hosted (shared react-sentry project)' \
+	  compose-up-web            '+ Caddy SPA + containerised platform-api' \
+	  compose-down              'Stop all services for ENV' \
+	  compose-down-reset        'Stop + reset app data (preserves Keycloak / SonarQube volumes)' \
+	  compose-ps                'Service health status for ENV' \
+	  compose-logs              'Tail service logs for ENV'
+	@printf '\n'
+	@printf '$(BOLD)── DATABASE ─────────────────────────────────────────────────────────$(RESET)\n'
+	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
+	  db-migrate        'Run pending migrations (idempotent)' \
+	  db-shell          'Open psql shell for ENV Postgres' \
+	  seed-demo         'Seed fixture organisations and users (idempotent)' \
+	  reset-local       'Full reset: destroy + migrate + seed (destructive)' \
+	  redis-flush-local 'Flush all Redis keys for ENV'
+	@printf '\n'
+	@printf '$(BOLD)── TESTING ──────────────────────────────────────────────────────────$(RESET)\n'
+	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
+	  run-stage-tests     'Unit / integration / E2E suite for ENV' \
+	  e2e-internal        'E2E — fixture session, Vite dev server' \
+	  e2e-internal-build  'E2E — fixture session, production build' \
+	  e2e-external        'E2E — real Keycloak, PROD_BASE_URL (default: aldous.info)' \
+	  e2e-external-smoke  'Smoke only, no auth required' \
+	  e2e-external-auth   'Auth E2E — requires KEYCLOAK_TEST_PASSWORD'
+	@printf '\n'
+	@printf '$(BOLD)── STAGE PROMOTION ──────────────────────────────────────────────────$(RESET)\n'
+	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
+	  all           'Full ladder: preflight → dev → test → staging → prod + evidence' \
+	  preflight     'Check binaries, Docker, env files, port conflicts' \
+	  stage-dev     'Dev stage (Tilt, volatile data, all test groups)' \
+	  stage-test    'Test stage (Compose, volatile data, all test groups)' \
+	  stage-staging 'Staging stage (Compose, seeded data, all test groups)' \
+	  stage-prod    'Prod stage (Compose, seeded data, smoke only)' \
+	  promote       'Promote dev → test → staging → prod (no preflight)' \
+	  evidence      'Write docs/evidence/stages/summary.json' \
+	  env-up-all    'Start all 4 environments simultaneously' \
+	  env-down-all  'Stop all 4 environments' \
+	  env-status    'Container health for all 4 environments'
+	@printf '\n'
+	@printf '$(BOLD)── QUALITY GATES ────────────────────────────────────────────────────$(RESET)\n'
+	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
+	  quality      'Full quality gate (format + lint + typecheck + audit + security + arch)' \
+	  format       'Prettier — write then verify' \
+	  lint         'Markdown lint + ESLint flat config' \
+	  typecheck    'TypeScript strict (app + all packages)' \
+	  audit        'npm audit (high/critical) + OSV vulnerability scan' \
+	  security     'Secret scan via gitleaks' \
+	  architecture 'Full architecture governance suite (--strict)' \
+	  sonar        'SonarQube scan + quality gate (requires SONAR_TOKEN)' \
+	  sbom         'Generate CycloneDX 1.6 SBOM'
+	@printf '\n'
+	@printf '$(BOLD)── IDENTITY / INFRA ─────────────────────────────────────────────────$(RESET)\n'
+	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
+	  keycloak-provision  'Apply Terraform: provision Keycloak realm for ENV' \
+	  keycloak-plan-dev   'Terraform plan against dev Keycloak (dry-run, no secrets)' \
+	  infra-check         'Validate Terraform syntax + format (no credentials needed)' \
+	  sentry-up           'Start shared Sentry instance (react-sentry project)' \
+	  sentry-down         'Stop shared Sentry instance' \
+	  external-caddy-up   'Start Caddy on port 80 (Cloudflare / aldous.info routing)' \
+	  external-caddy-down 'Stop external Caddy'
+	@printf '\n'
+	@printf '$(BOLD)── MAINTENANCE ──────────────────────────────────────────────────────$(RESET)\n'
+	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
+	  readmes  'Regenerate all package READMEs from metadata' \
+	  generate 'Regenerate READMEs + inventory + lifecycle reports' \
+	  license  'Show license policy status' \
+	  help     'Show this help'
+	@printf '\n'
 
 ## infra-check — Validate Terraform/OpenTofu syntax, format, init, and validate (no cloud credentials needed)
 infra-check:
