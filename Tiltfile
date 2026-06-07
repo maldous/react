@@ -15,7 +15,8 @@
 # Compose infra (default profile)
 # ---------------------------------------------------------------------------
 
-os.environ['KC_HOSTNAME'] = 'http://dev.localhost/kc'
+os.environ['KC_HOSTNAME'] = 'http://localhost:8090/kc'
+os.environ['MINIO_BROWSER_REDIRECT_URL'] = 'http://localhost:9001'
 
 # project_name='react-dev' aligns Tilt with docker/compose-wrapper.sh (--project-name react-dev).
 # Without this, Tilt uses compose.yaml's `name: react-platform`, which conflicts with the
@@ -28,10 +29,12 @@ dc_resource('redis',          labels=['infra'])
 dc_resource('clickhouse',     labels=['infra'],
   links=[link('http://localhost:8124/play', 'ClickHouse play')])
 dc_resource('minio',          labels=['infra'],
-  links=[link('http://localhost:9001', 'MinIO console')])
+  links=[link('http://localhost:9001/', 'MinIO console')])
 dc_resource('mailpit',        labels=['infra'],
-  links=[link('http://localhost:8025', 'Mailpit UI')])
+  links=[link('http://localhost:8025/mailpit/', 'Mailpit UI')])
 dc_resource('otel-collector', labels=['infra'])
+dc_resource('pgadmin',        labels=['infra'],
+  links=[link('http://localhost:5050/pgadmin/', 'pgAdmin')])
 
 # ---------------------------------------------------------------------------
 # Identity (Keycloak) — auto-start on tilt up
@@ -42,7 +45,7 @@ local_resource(
   'identity',
   cmd='make compose-up-identity ENV=dev',
   labels=['auth'],
-  links=[link('http://localhost:8090/kc', 'Keycloak admin')],
+  links=[link('http://localhost:8090/kc/admin/', 'Keycloak admin')],
 )
 
 local_resource(
@@ -96,7 +99,7 @@ local_resource(
   'observability',
   cmd='make compose-up-observability ENV=dev',
   labels=['observability'],
-  links=[link('http://localhost:3200', 'Grafana')],
+  links=[link('http://localhost:3200/grafana/', 'Grafana')],
   resource_deps=['otel-collector'],
 )
 
