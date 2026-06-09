@@ -30,6 +30,7 @@ import {
   createAllowAllAuthorisationPort,
   type AuthorisationPort,
 } from "@platform/authorisation-runtime";
+import { createLokiLogQueryAdapter, type LokiLogQueryAdapter } from "@platform/adapters-loki";
 import type { OrganisationRepository } from "../ports/organisation-repository.ts";
 import type { IdentityRepository } from "../ports/identity-repository.ts";
 import type { SessionStore } from "@platform/session-runtime";
@@ -340,6 +341,26 @@ export function getAuthorisationPort(fqdnTenant: TenantContext | null): Authoris
   if (getFixtureSession()) return createAllowAllAuthorisationPort();
   const cfg = fqdnTenant ? getKeycloakConfigForRealm(fqdnTenant.realmName) : getKeycloakConfig();
   return new KeycloakAuthorisationAdapter(cfg);
+}
+
+// Loki log-query adapter (ADR-0035, ADR-ACT-0194). Read-only; stateless HTTP
+// client, so a fresh instance per call is fine.
+//
+// LOKI_URL resolution is environment-unique without per-env hardcoding:
+//   1. LOKI_URL explicit  → used as-is. The compose platform-api container sets
+//      http://loki:3100 (internal Docker hostname; isolated per project).
+//   2. otherwise          → http://localhost:${LOKI_PORT}. Each environment's
+//      .env.<env> already defines a unique host-exposed LOKI_PORT (dev 3100,
+//      test 3101, staging 3102, prod 3103), so the host-run dev BFF and host
+//      smoke tests each reach their own environment's Loki.
+export function getLokiUrl(): string {
+  const explicit = process.env["LOKI_URL"];
+  if (explicit && explicit.trim().length > 0) return explicit;
+  return `http://localhost:${process.env["LOKI_PORT"] ?? "3100"}`;
+}
+
+export function getLokiAdapter(): LokiLogQueryAdapter {
+  return createLokiLogQueryAdapter({ url: getLokiUrl() });
 }
 
 // ---------------------------------------------------------------------------

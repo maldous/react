@@ -90,7 +90,8 @@
         "@platform/adapters-sentry",
         "@platform/contracts-graphql",
         "@platform/adapters-graphql",
-        "@platform/graphql-api-runtime"
+        "@platform/graphql-api-runtime",
+        "@platform/adapters-loki"
       ],
       "providesApis": [
         "healthz",
@@ -99,6 +100,7 @@
         "session-fixture",
         "organisation-profile",
         "graphql",
+        "admin-logs-search",
         "auth-login",
         "auth-callback",
         "auth-logout"

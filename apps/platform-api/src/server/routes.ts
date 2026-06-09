@@ -4,6 +4,7 @@ import { getHealth, getReadiness, getVersion } from "./health.ts";
 import { getFixtureSession } from "./session.ts";
 import { handleGetOrganisationProfile, handlePatchOrganisationProfile } from "./organisation.ts";
 import { handleGraphql } from "./graphql.ts";
+import { handleSearchLogs } from "./admin-logs.ts";
 import {
   handleAuthLogin,
   handleAuthCallback,
@@ -1618,5 +1619,17 @@ export const routes: Route[] = [
     operationName: "graphql",
     requiresAuth: true,
     handler: handleGraphql,
+  },
+  // Operator log search (ADR-0035, ADR-ACT-0194). Global-host, system-admin only.
+  // Static RBAC (platform.logs.read) — no UMA resource: log search is a global
+  // platform-admin capability with no per-tenant policy surface.
+  {
+    method: "GET",
+    path: "/api/admin/logs/search",
+    operationName: "admin.logs.search",
+    requiresAuth: true,
+    requiredPermission: "platform.logs.read",
+    scope: "global",
+    handler: handleSearchLogs,
   },
 ];

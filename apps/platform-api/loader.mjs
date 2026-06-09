@@ -39,6 +39,7 @@ const PLATFORM_MAP = {
     "packages/adapters-clickhouse/src/index.ts"
   ),
   "@platform/adapters-graphql": resolvePath(repoRoot, "packages/adapters-graphql/src/index.ts"),
+  "@platform/adapters-loki": resolvePath(repoRoot, "packages/adapters-loki/src/index.ts"),
   "@platform/adapters-ingestion": resolvePath(repoRoot, "packages/adapters-ingestion/src/index.ts"),
   "@platform/adapters-object-storage": resolvePath(
     repoRoot,

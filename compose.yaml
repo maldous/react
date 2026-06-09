@@ -985,6 +985,13 @@ services:
       KEYCLOAK_CLIENT_SECRET: ${KEYCLOAK_CLIENT_SECRET:-local-dev-bff-secret}
       KEYCLOAK_PROVISIONER_CLIENT_ID: ${KEYCLOAK_PROVISIONER_CLIENT_ID:-platform-provisioner}
       KEYCLOAK_PROVISIONER_CLIENT_SECRET: ${KEYCLOAK_PROVISIONER_CLIENT_SECRET:-local-dev-provisioner-secret}
+      # Loki base URL for the admin log search API (ADR-0035, ADR-ACT-0194).
+      # Hardcoded internal Docker hostname (like POSTGRES_URL/REDIS_URL above): each
+      # compose project (react-dev/test/staging/prod) has its own `loki` service on
+      # internal port 3100, so this is correct and isolated per environment. The
+      # host-perspective LOKI_URL in .env.<env> (localhost:<offset>) is NOT used
+      # here — it is for the host-run dev BFF (Tilt) and host smoke tests.
+      LOKI_URL: http://loki:3100
     ports:
       - "${PLATFORM_API_PORT:-3001}:3001"
     depends_on:

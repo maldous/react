@@ -120,6 +120,7 @@ production
 @platform/contracts-graphql
 @platform/adapters-graphql
 @platform/graphql-api-runtime
+@platform/adapters-loki
 ```
 
 ### Provides APIs
@@ -131,6 +132,7 @@ version
 session-fixture
 organisation-profile
 graphql
+admin-logs-search
 auth-login
 auth-callback
 auth-logout

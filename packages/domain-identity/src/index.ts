@@ -115,6 +115,7 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     "platform.clickthrough.wiremock",
     "platform.clickhouse",
     "platform.audit.read_all",
+    "platform.logs.read",
   ],
   "tenant-admin": [
     "organisation.read",

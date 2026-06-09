@@ -1,0 +1,107 @@
+{
+  "name": "@platform/adapters-loki",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Loki adapter package for read-only structured log search via LogQL (operator log search backend, ADR-0035).",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "library",
+      "name": "adapters-loki",
+      "system": "enterprise-react-platform",
+      "domain": "operations",
+      "boundedContext": "loki-runtime",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "active",
+      "role": "adapter",
+      "class": "active.adapter",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "quarterly"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0017",
+        "ADR-0020",
+        "ADR-0035"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": true
+    },
+    "runtime": {
+      "production": true,
+      "testOnly": false,
+      "serviceName": "adapters-loki",
+      "serviceNamespace": "enterprise-react-platform",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test",
+        "staging",
+        "production"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "adapter",
+        "api-runtime",
+        "platform"
+      ],
+      "forbiddenConsumers": [
+        "react-runtime",
+        "ui",
+        "feature",
+        "domain",
+        "contract"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "loki-log-query-adapter",
+        "log-search"
+      ],
+      "consumesApis": [
+        "loki-query-range-http"
+      ]
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "library",
+      "stage": "active",
+      "role": "adapter",
+      "layer": "adapter"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Loki adapter package for read-only structured log search via LogQL (operator log search backend, ADR-0035).",
+      "responsibilities": [
+        "Build LogQL queries from structured log-search criteria",
+        "Query the Loki HTTP query_range API and parse structured results",
+        "Expose a read-only log-query port for the BFF admin log search API"
+      ],
+      "nonResponsibilities": [
+        "Does not ingest or push logs (Alloy owns ingestion per ADR-0035)",
+        "Does not own log retention or storage configuration",
+        "Does not render React components"
+      ],
+      "usage": [
+        "Consumed by apps/platform-api for GET /api/admin/logs/search (platform.logs.read)"
+      ],
+      "operationalNotes": [
+        "High-cardinality fields (requestId/traceId/tenantId/actorId) are queried as JSON filters, never Loki labels, per ADR-0035 label policy"
+      ]
+    }
+  }
+}

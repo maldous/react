@@ -35,6 +35,7 @@ export type Permission =
   | "platform.clickthrough.wiremock"
   | "platform.clickthrough.clickhouse"
   | "platform.audit.read_all"
+  | "platform.logs.read"
   // Tenant-scoped permissions (tenant-admin only)
   | "tenant.admin.access"
   | "tenant.members.read"
