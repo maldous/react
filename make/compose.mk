@@ -4,7 +4,7 @@
         compose-down compose-down-web compose-down-volumes compose-down-reset \
         compose-ps compose-logs \
         external-caddy-up external-caddy-down \
-        sentry-up sentry-down sonar-up sonar-down \
+        sentry-up sentry-down sonar-up sonar-down identity-mocks-down \
         dev-up dev-down test-up staging-up prod-up test-down staging-down prod-down \
         reset-local seed-demo db-migrate db-shell redis-flush-local \
         keycloak-provision seed-idps
@@ -122,11 +122,11 @@ external-caddy-up:
 	bash scripts/compose/up.sh dev external-web
 	$(call OK,external Caddy ready on port 80 — Cloudflare origin is live)
 
-## external-caddy-down — Stop external Caddy
+## external-caddy-down — Stop external Caddy (react-shared project)
 external-caddy-down:
-	docker compose --profile external-web down --timeout 30
+	PROJECT=react-shared docker/compose-wrapper.sh dev --profile external-web down --timeout 30
 
-## sentry-up — Start shared Sentry instance (external-sentry profile, react-sentry project)
+## sentry-up — Start shared Sentry instance (external-sentry profile, react-shared project)
 ## Idempotent — fast no-op when already healthy.
 sentry-up:
 	$(call STEP,sentry: startup)
@@ -135,12 +135,18 @@ sentry-up:
 	@bash scripts/smoke/sentry-smoke.sh
 	$(call OK,sentry up)
 
-## sentry-down — Stop shared Sentry instance
+## sentry-down — Stop shared Sentry instance (react-shared project)
 sentry-down:
 	$(call STEP,sentry: stopping)
-	docker/compose-wrapper.sh sentry --profile external-sentry down --timeout 60
+	PROJECT=react-shared docker/compose-wrapper.sh sentry --profile external-sentry down --timeout 60
 	$(call OK,sentry down)
-	@$(call CONFIRM_DOWN,react-sentry)
+	@$(call CONFIRM_DOWN,react-shared)
+
+## identity-mocks-down — Stop the shared mock-oidc fixture (react-shared project)
+identity-mocks-down:
+	$(call STEP,mock-oidc: stopping)
+	PROJECT=react-shared docker/compose-wrapper.sh dev --profile identity-mocks down --timeout 30
+	$(call OK,mock-oidc down)
 
 ## sonar-up — Start shared SonarQube instance (external-sonar profile, react-sonar project)
 ## Idempotent — fast no-op when already healthy. Single instance shared across all envs.

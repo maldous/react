@@ -168,15 +168,15 @@ describe("buildMockIdpDefinitions", () => {
   test("splits front (public) and back (internal) channel endpoints", () => {
     const defs = buildMockIdpDefinitions({
       publicUrl: "http://localhost:9080",
-      internalUrl: "http://mock-oidc:8080",
+      internalUrl: "http://host.docker.internal:9080",
       clientSecret: "shh",
     });
     assert.deepEqual(defs.map((d) => d.alias).sort(), ["mock-apple", "mock-azure", "mock-google"]);
     const google = defs.find((d) => d.alias === "mock-google")!;
     assert.equal(google.providerId, "oidc");
     assert.equal(google.config["authorizationUrl"], "http://localhost:9080/google/auth");
-    assert.equal(google.config["tokenUrl"], "http://mock-oidc:8080/google/token");
-    assert.equal(google.config["jwksUrl"], "http://mock-oidc:8080/google/jwks");
+    assert.equal(google.config["tokenUrl"], "http://host.docker.internal:9080/google/token");
+    assert.equal(google.config["jwksUrl"], "http://host.docker.internal:9080/google/jwks");
     assert.equal(google.config["issuer"], "http://localhost:9080/google");
     assert.equal(google.config["clientId"], "kc-broker-google");
     assert.equal(google.config["pkceEnabled"], "false");

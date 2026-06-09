@@ -20,6 +20,11 @@
 #
 # Project naming convention: react-<env> (react-dev, react-test, react-staging, react-prod).
 # All four environments can run concurrently with fully isolated container/volume/network namespaces.
+#
+# Cross-environment SHARED services (Caddy, Sentry, mock-oidc) live in the single
+# react-shared project. They source a per-service .env file for interpolation but
+# share one project namespace. Set PROJECT to override the derived project name:
+#   PROJECT=react-shared docker/compose-wrapper.sh sentry --profile external-sentry up -d
 
 set -euo pipefail
 
@@ -27,6 +32,7 @@ ENV="${1:?Usage: compose-wrapper.sh <env> [args...]}"
 shift
 
 ENV_FILE=".env.${ENV}"
+PROJECT_NAME="${PROJECT:-react-$ENV}"
 
 if [ ! -f "$ENV_FILE" ]; then
     echo "ERROR: Environment file not found: $ENV_FILE" >&2
@@ -42,6 +48,6 @@ set +a
 # container runtime env vars. The shell-exported vars above handle compose.yaml
 # interpolation; --env-file handles container-level env.
 exec docker compose \
-    --project-name "react-$ENV" \
+    --project-name "$PROJECT_NAME" \
     --env-file "$ENV_FILE" \
     "$@"

@@ -43,13 +43,19 @@ upstream IdP fixture is therefore a real OIDC server (`services/mock-oidc`, wrap
 
 | Provider | Keycloak alias | Browser issuer (`MOCK_OIDC_PUBLIC_URL`) | Keycloak backchannel (`MOCK_OIDC_INTERNAL_URL`) |
 | -------- | -------------- | --------------------------------------- | ----------------------------------------------- |
-| google   | `mock-google`  | `http://localhost:9080/google`          | `http://mock-oidc:8080/google`                  |
-| azure    | `mock-azure`   | `http://localhost:9080/azure`           | `http://mock-oidc:8080/azure`                   |
-| apple    | `mock-apple`   | `http://localhost:9080/apple`           | `http://mock-oidc:8080/apple`                   |
+| google   | `mock-google`  | `http://localhost:9080/google`          | `http://host.docker.internal:9080/google`       |
+| azure    | `mock-azure`   | `http://localhost:9080/azure`           | `http://host.docker.internal:9080/azure`        |
+| apple    | `mock-apple`   | `http://localhost:9080/apple`           | `http://host.docker.internal:9080/apple`        |
+
+mock-oidc is a **cross-environment shared service** in the `react-shared` Compose
+project (container `react-shared-mock-oidc-1`), alongside the shared Caddy and Sentry.
+It is published once on the host (`:9080`); every per-environment Keycloak reaches it
+over the host gateway (`host.docker.internal`, via the Keycloak `extra_hosts` entry), so
+no cross-project Docker network is required.
 
 The split-horizon (browser vs. Keycloak-container reachability) is handled with
 **explicit Keycloak endpoint config**: `authorizationUrl` is the public issuer while
-`token`/`jwks`/`userinfo`/`issuer` are the backchannel base. The ID-token `iss` equals
+`token`/`jwks`/`userinfo`/`issuer` use the backchannel base. The ID-token `iss` equals
 the public issuer and Keycloak validates it as a string, so no `/etc/hosts` entry is
 needed. See `services/mock-oidc/README.md` for scenarios (verified / unverified / denied
 / provider-error / disabled).

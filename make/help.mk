@@ -43,13 +43,15 @@ help:
 	@printf '\n'
 	@printf '$(BOLD)── SHARED SERVICES ───────────────────────────────────────────────────$(RESET)\n'
 	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
-	  sentry-up           'Start shared Sentry (react-sentry project, all envs)' \
+	  sentry-up           'Start shared Sentry (react-shared project, all envs)' \
 	  sentry-down         'Stop shared Sentry' \
 	  sonar-up            'Start shared SonarQube (react-sonar project, all envs)' \
 	  sonar-provision     'Ensure a valid SonarQube analysis token (auto-gen from scratch)' \
 	  sonar-down          'Stop shared SonarQube' \
-	  external-caddy-up   'Start Caddy on port 80 (staging + prod Cloudflare routing)' \
-	  external-caddy-down 'Stop external Caddy'
+	  external-caddy-up   'Start Caddy on port 80 (react-shared, Cloudflare routing)' \
+	  external-caddy-down 'Stop external Caddy' \
+	  compose-up-identity-mocks 'Start shared mock-oidc IdP fixture (react-shared)' \
+	  identity-mocks-down 'Stop shared mock-oidc fixture'
 	@printf '\n'
 	@printf '$(BOLD)── DATABASE ─────────────────────────────────────────────────────────$(RESET)\n'
 	@printf '  $(GREEN)%-28s$(RESET) %s\n' \

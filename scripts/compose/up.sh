@@ -56,17 +56,19 @@ case "$PROFILE" in
     # Kafka KRaft init + Snuba CH migrations + Sentry postgres migrations chain
     # can take 15-20 min on cold start with no cached images.
     TIMEOUT=1200
-    # Sentry lives in react-sentry project — immune to per-env compose-down-reset.
-    COMPOSE_CMD="docker/compose-wrapper.sh sentry"
+    # Sentry is a cross-env shared service — lives in the react-shared project,
+    # immune to per-env compose-down-reset. Sources .env.sentry for interpolation.
+    COMPOSE_CMD="env PROJECT=react-shared docker/compose-wrapper.sh sentry"
     ;;
   external-web)
     SERVICES="external-caddy"
     PROFILE_FLAG="--profile external-web"
     TIMEOUT=60
-    # external-caddy always lives in the react-dev project (network_mode: host,
-    # binds port 80) and routes aldous.info → localhost:83 and
-    # staging.aldous.info → localhost:82 for Cloudflare origin requests.
-    COMPOSE_CMD="docker/compose-wrapper.sh dev"
+    # external-caddy is a cross-env shared service (network_mode: host, binds port
+    # 80) routing aldous.info → localhost:83 and staging.aldous.info → localhost:82
+    # for Cloudflare origin requests. Lives in the react-shared project; sources
+    # .env.dev for interpolation.
+    COMPOSE_CMD="env PROJECT=react-shared docker/compose-wrapper.sh dev"
     ;;
   external-mocks)
     SERVICES="wiremock"
@@ -75,10 +77,14 @@ case "$PROFILE" in
     ;;
   identity-mocks)
     # mock-oidc upstream IdP fixture (ADR-ACT-0157). Built from services/mock-oidc.
+    # Cross-env shared service in the react-shared project; reached by every
+    # per-env Keycloak over the host gateway (host.docker.internal). Sources the
+    # given env file (e.g. .env.dev) for MOCK_OIDC_* interpolation.
     SERVICES="mock-oidc"
     PROFILE_FLAG="--profile identity-mocks"
     TIMEOUT=180
     EXTRA_FLAGS="--build"
+    COMPOSE_CMD="env PROJECT=react-shared docker/compose-wrapper.sh ${ENV}"
     ;;
   web)
     SERVICES=""

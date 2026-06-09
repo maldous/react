@@ -39,7 +39,11 @@ os.environ['COMPOSE_PROJECT_FILTER'] = 'react-dev'
 # their lifecycle via dc_resource. Sentry and SonarQube are NOT included — they
 # live in separate react-sentry / react-sonar projects shared across all envs
 # and are started via local_resource entries below (make sentry-up / sonar-up).
-docker_compose('./compose.yaml', project_name='react-dev', profiles=['external-mocks', 'identity', 'identity-mocks', 'observability'])
+# mock-oidc is NOT in this list: it is a cross-env shared service in the
+# react-shared project, started via the `mock-oidc` local_resource below.
+# Keycloak reaches it over the host gateway (compose extra_hosts), so no shared
+# Docker network is needed here.
+docker_compose('./compose.yaml', project_name='react-dev', profiles=['external-mocks', 'identity', 'observability'])
 
 dc_resource('postgres',       labels=['infra'])
 dc_resource('redis',          labels=['infra'])
@@ -61,9 +65,14 @@ local_resource(
   resource_deps=['keycloak'],
 )
 
-# mock-oidc — NON-PRODUCTION upstream IdP fixture (ADR-ACT-0157), Tilt-managed
-# compose service. Keycloak brokers it as mock-google/mock-azure/mock-apple.
-dc_resource('mock-oidc', labels=['auth'],
+# mock-oidc — NON-PRODUCTION upstream IdP fixture (ADR-ACT-0157). Cross-env shared
+# service in the react-shared project (container react-shared-mock-oidc-1), reached
+# by every per-env Keycloak over the shared react-shared bridge. Started via its own
+# project like Sentry/SonarQube, not as a react-dev dc_resource.
+local_resource(
+  'mock-oidc',
+  cmd='make compose-up-identity-mocks ENV=dev',
+  labels=['auth'],
   links=[link('http://localhost:9080/', 'mock-oidc')],
 )
 

@@ -53,10 +53,12 @@ Playwright drives a scenario by clicking the `data-testid="scenario-<name>"` but
   issuer. The authorization endpoint and interaction picker live here; node-oidc-provider's
   interaction redirects are relative, so the front channel never leaves the browser host.
 - Keycloak (in its container) reaches the **backchannel** endpoints (`token`/`jwks`/`userinfo`)
-  at the compose-internal `http://mock-oidc:8080/<p>`. The Keycloak IdP is configured with
-  **explicit endpoints** (no discovery import), so the issuer host and the backchannel host
-  never need to be the same machine. The ID-token `iss` is always the public issuer and
-  Keycloak validates it as a string against the configured `issuer` — no `/etc/hosts` needed.
+  over the host gateway at `http://host.docker.internal:9080/<p>` (this fixture is a shared
+  service in the `react-shared` project, published once on the host). The Keycloak IdP is
+  configured with **explicit endpoints** (no discovery import), so the issuer host and the
+  backchannel host never need to be the same machine. The ID-token `iss` is always the public
+  issuer and Keycloak validates it as a string against the configured `issuer` — no `/etc/hosts`
+  needed.
 
 ## Environment variables
 

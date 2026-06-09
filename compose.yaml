@@ -309,6 +309,12 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
     ports:
       - "${KEYCLOAK_PORT:-8090}:8080"
+    # Reach the shared mock-oidc fixture (react-shared project, published on the
+    # host) over the host gateway for the OIDC broker backchannel (ADR-ACT-0157).
+    # This keeps Keycloak on its per-environment default network — no cross-project
+    # network is required — while still resolving the shared upstream IdP.
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     healthcheck:
       # curl/wget are not in the Keycloak UBI9 image; use bash TCP.
       # Health is on the management port (9000), not the HTTP port (8080).
@@ -357,6 +363,9 @@ services:
       # host:container ? host port MUST equal the port in MOCK_OIDC_PUBLIC_URL so
       # the browser-facing issuer and the published port agree.
       - "${MOCK_OIDC_PORT:-9080}:8080"
+    # Runs in the shared react-shared project. Every per-environment Keycloak
+    # reaches it via the host gateway at MOCK_OIDC_INTERNAL_URL (host.docker.internal),
+    # so no cross-project Docker network is needed.
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:8080/healthz"]
       interval: 10s
