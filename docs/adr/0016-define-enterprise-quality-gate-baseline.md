@@ -148,7 +148,7 @@ These run on every push and PR. Failure blocks merge:
 | Security analysis      | CodeQL             | action@v3             | `.github/workflows/codeql.yml`          |
 | Code quality baseline  | SonarQube          | lts-community (local) | `npm run sonar:clean` (local pre-slice) |
 
-SonarQube is required locally as a pre-slice hard gate using a custom "Governance Tooling" quality gate (bugs=0, vulnerabilities=0, security_hotspots_reviewed=100%, reliability_rating=A, security_rating=A, maintainability_rating=A, code_smells=0). Coverage and duplication thresholds are not enforced because: (1) architecture tooling uses `node --test` without LCOV generation, and (2) similar argument-parsing patterns across tools are intentional and architecturally consistent. Coverage tooling (ADR-ACT-0092) and Sonar CI wiring (ADR-ACT-0092) are tracked separately.
+SonarQube is required locally as a pre-slice hard gate using a custom "Governance Tooling" quality gate (bugs=0, vulnerabilities=0, security_hotspots_reviewed=100%, reliability_rating=A, security_rating=A, maintainability_rating=A, code_smells=0). Coverage and duplication thresholds are not enforced because: (1) architecture tooling uses `node --test` without LCOV generation, and (2) similar argument-parsing patterns across tools are intentional and architecturally consistent. Coverage tooling is tracked separately. Sonar runs as a **test-stage** promotion gate (`scripts/stages/run-stage.sh` step 9), not in CI — see ADR-ACT-0092 (Done, 2026-06-09): CI runs the architecture orchestrator and the Tier-2 hard gates; SonarQube stays in the test environment by design.
 
 ESLint is configured with two buckets (Node.js tooling; TypeScript packages and apps). It must not encode ADR import-boundary rules ? validate-source-imports owns that logic exclusively.
 
@@ -211,7 +211,7 @@ Option C is chosen because:
 
 - CI becomes stricter before feature delivery begins.
 - Advisory tools must be explicitly promoted; this requires ongoing discipline post-first-slice.
-- SonarQube is a required local gate before slicing; CI wiring requires SONAR_TOKEN secret (tracked in ADR-ACT-0092).
+- SonarQube is a required **test-stage** promotion gate (run-stage.sh step 9), run against the shared instance with an auto-provisioned token; it is intentionally not a CI gate (ADR-ACT-0092, Done).
 
 **Neutral / operational:**
 

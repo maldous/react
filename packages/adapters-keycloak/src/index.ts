@@ -288,6 +288,28 @@ export function hasUserinfoRealmRolesMapper(mappers: unknown[]): boolean {
   });
 }
 
+// ---------------------------------------------------------------------------
+// authorizationServerConfig — UMA resource-server configuration (ADR-ACT-0200)
+//
+// policyEnforcementMode is ENFORCING (not PERMISSIVE): a UMA resource with no
+// granting permission is denied by default. This is the deny-by-default posture
+// required by ADR-0021/ADR-0029 — new tenants are NOT fail-open. Every UMA-gated
+// route also carries a static `requiredPermission`, so when UMA denies, the BFF
+// pipeline falls back to the role-based check rather than locking users out.
+// ---------------------------------------------------------------------------
+
+export function authorizationServerConfig(): {
+  policyEnforcementMode: "ENFORCING";
+  allowRemoteResourceManagement: boolean;
+  decisionStrategy: "AFFIRMATIVE";
+} {
+  return {
+    policyEnforcementMode: "ENFORCING",
+    allowRemoteResourceManagement: true,
+    decisionStrategy: "AFFIRMATIVE",
+  };
+}
+
 export class KeycloakRealmAdminAdapter implements RealmAdminPort {
   private readonly config: KeycloakAdminConfig;
 
@@ -739,25 +761,26 @@ export class KeycloakProvisioningAdapter implements RealmProvisioningPort {
             }),
           });
 
-          // Configure authorization resource server with PERMISSIVE mode so that
-          // registering UMA resources does not deny access by default. Resources
-          // are registered with no policies — policies are set dynamically via
-          // setResourcePolicy(). In ENFORCING mode, resources without policies
-          // would result in denied access.
-          // The default policyEnforcementMode is ENFORCING; we change it to
-          // PERMISSIVE so resource registration does not change access control
-          // behaviour until policies are explicitly configured.
+          // Configure the authorization resource server in ENFORCING mode
+          // (ADR-ACT-0200, security fix). In ENFORCING mode any UMA resource
+          // without an explicit granting permission is denied by default —
+          // closing the prior fail-open hole where PERMISSIVE mode auto-granted
+          // every policy-less resource to any authenticated tenant user.
+          //
+          // This is safe because every UMA-gated route (resource+umaScope) also
+          // declares a static `requiredPermission`; when UMA denies, the BFF
+          // pipeline falls back to the role-based permission check
+          // (apps/platform-api/src/server/pipeline.ts). Sensitive resources
+          // (admin:auth, platform:support#enter, organisation:members#delete)
+          // therefore deny-by-default until an admin grants a policy via
+          // setResourcePolicy().
           const authzRes = await fetch(`${clientsUrl}/${clientId}/authz/resource-server`, {
             method: "PUT",
             headers: {
               Authorization: `Bearer ${adminToken}`,
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-              policyEnforcementMode: "PERMISSIVE",
-              allowRemoteResourceManagement: true,
-              decisionStrategy: "AFFIRMATIVE",
-            }),
+            body: JSON.stringify(authorizationServerConfig()),
           });
           if (!authzRes.ok) {
             const errBody = await authzRes.text().catch(() => "");

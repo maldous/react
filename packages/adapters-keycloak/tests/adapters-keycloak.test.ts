@@ -6,6 +6,7 @@ import {
   getUserInfo,
   buildAuthorizationUrl,
   verifyKeycloakToken,
+  authorizationServerConfig,
   type KeycloakClientConfig,
   KeycloakRealmAdminAdapter,
   type KeycloakAdminConfig,
@@ -266,6 +267,24 @@ describe("verifyKeycloakToken", () => {
   it("returns null (stub ? use getUserInfo for identity resolution)", async () => {
     const result = await verifyKeycloakToken("any-token");
     assert.equal(result, null);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// authorizationServerConfig (ADR-ACT-0200 — deny-by-default / fail-closed)
+// ---------------------------------------------------------------------------
+
+describe("authorizationServerConfig", () => {
+  it("uses ENFORCING policy enforcement (not PERMISSIVE — no fail-open)", () => {
+    // Regression guard for ADR-ACT-0200: PERMISSIVE auto-granted every
+    // policy-less UMA resource to any authenticated tenant user.
+    assert.equal(authorizationServerConfig().policyEnforcementMode, "ENFORCING");
+  });
+
+  it("keeps AFFIRMATIVE decision strategy and remote resource management", () => {
+    const cfg = authorizationServerConfig();
+    assert.equal(cfg.decisionStrategy, "AFFIRMATIVE");
+    assert.equal(cfg.allowRemoteResourceManagement, true);
   });
 });
 
