@@ -5,7 +5,13 @@
  * platform-api Keycloak client, so the real OAuth code flow is accepted. Uses
  * the Keycloak master admin (admin-cli password grant) — dev/test only. Raw
  * fetch only (no @platform imports) so Playwright's loader can run it directly.
+ *
+ * It GETs the FULL client representation and PUTs a non-destructive merge back
+ * (see mergeClientRedirects), preserving every existing client field. Idempotent:
+ * when the redirect URIs are already present, no PUT is made.
  */
+import { mergeClientRedirects, type KeycloakClientRep } from "./redirect-merge.ts";
+
 const KC_URL = (process.env["KEYCLOAK_URL"] ?? "http://localhost:8090/kc").replace(/\/+$/, "");
 const REALM = process.env["KEYCLOAK_REALM"] ?? "platform";
 const ADMIN_USER = process.env["KEYCLOAK_ADMIN_USER"] ?? "admin";
@@ -29,29 +35,53 @@ async function adminToken(): Promise<string> {
   return ((await res.json()) as { access_token: string }).access_token;
 }
 
+async function safeBody(res: Response): Promise<string> {
+  try {
+    return (await res.text()).replace(/\s+/g, " ").trim().slice(0, 300);
+  } catch {
+    return "<unreadable body>";
+  }
+}
+
 export default async function globalSetup(): Promise<void> {
   const token = await adminToken();
   const headers = { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
 
-  const list = (await (
-    await fetch(`${KC_URL}/admin/realms/${REALM}/clients?clientId=${BFF_CLIENT_ID}`, { headers })
-  ).json()) as Array<{ id: string; redirectUris?: string[] }>;
-  const client = list[0];
-  if (!client) throw new Error(`Keycloak client ${BFF_CLIENT_ID} not found in realm ${REALM}`);
+  // 1. Find the platform-api client id.
+  const listRes = await fetch(
+    `${KC_URL}/admin/realms/${REALM}/clients?clientId=${encodeURIComponent(BFF_CLIENT_ID)}`,
+    { headers }
+  );
+  if (!listRes.ok) {
+    throw new Error(`list clients failed: ${listRes.status} ${await safeBody(listRes)}`);
+  }
+  const list = (await listRes.json()) as Array<{ id: string }>;
+  const id = list[0]?.id;
+  if (!id) throw new Error(`Keycloak client ${BFF_CLIENT_ID} not found in realm ${REALM}`);
 
+  // 2. GET the FULL client representation so the PUT preserves every field.
+  const getRes = await fetch(`${KC_URL}/admin/realms/${REALM}/clients/${id}`, { headers });
+  if (!getRes.ok) {
+    throw new Error(`get client failed: ${getRes.status} ${await safeBody(getRes)}`);
+  }
+  const client = (await getRes.json()) as KeycloakClientRep;
+
+  // 3. Merge the E2E origin's redirect URIs (+ web origin) into the full rep.
   const want = [`${APP_ORIGIN}/*`, `${APP_ORIGIN}/auth/callback`];
-  const current = new Set(client.redirectUris ?? []);
-  const missing = want.filter((u) => !current.has(u));
-  if (missing.length === 0) {
+  const { merged, changed } = mergeClientRedirects(client, want, [APP_ORIGIN]);
+  if (!changed) {
     console.log(`[identity-e2e] redirect URIs already registered for ${APP_ORIGIN}`);
     return;
   }
-  const redirectUris = [...current, ...missing];
-  const res = await fetch(`${KC_URL}/admin/realms/${REALM}/clients/${client.id}`, {
+
+  // 4. PUT the full merged representation back.
+  const putRes = await fetch(`${KC_URL}/admin/realms/${REALM}/clients/${id}`, {
     method: "PUT",
     headers,
-    body: JSON.stringify({ redirectUris }),
+    body: JSON.stringify(merged),
   });
-  if (!res.ok) throw new Error(`Failed to register redirect URIs: ${res.status}`);
-  console.log(`[identity-e2e] registered redirect URIs for ${APP_ORIGIN}: ${missing.join(", ")}`);
+  if (!putRes.ok) {
+    throw new Error(`register redirect URIs failed: ${putRes.status} ${await safeBody(putRes)}`);
+  }
+  console.log(`[identity-e2e] registered redirect URIs for ${APP_ORIGIN}`);
 }

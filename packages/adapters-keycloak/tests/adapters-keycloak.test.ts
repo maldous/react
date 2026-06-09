@@ -505,3 +505,136 @@ describe("KeycloakRealmAdminAdapter — deleteGroup", () => {
     await assert.rejects(() => adapter.deleteGroup("gone"), /deleteGroup: failed 404/);
   });
 });
+
+// ---------------------------------------------------------------------------
+// KeycloakRealmAdminAdapter — identity-provider write hardening (ADR-ACT-0157)
+// Failed Keycloak admin writes must throw (with method, alias, status, body),
+// never silently succeed. The first fetch is always the admin token; subsequent
+// calls are branched by HTTP method (GET existence-check vs POST/PUT/DELETE).
+// ---------------------------------------------------------------------------
+
+/** First fetch → admin token; all others delegate to `handler`. */
+function adminApiFetch(handler: FetchMock): FetchMock {
+  return async (input, init) => {
+    const url = typeof input === "string" ? input : (input as URL).toString();
+    if (url.endsWith("/token")) return jsonResponse(TOKEN_RESPONSE);
+    return handler(input, init);
+  };
+}
+
+const IDP = {
+  alias: "mock-google",
+  displayName: "Mock Google",
+  providerId: "oidc",
+  enabled: true,
+  config: { clientId: "kc-broker-google" },
+};
+
+describe("KeycloakRealmAdminAdapter — upsertIdentityProvider (write hardening)", () => {
+  let restore: () => void;
+  afterEach(() => restore?.());
+
+  it("creates (POST) when the provider does not exist and the write succeeds", async () => {
+    let writeMethod = "";
+    restore = mockFetch(
+      adminApiFetch(async (_input, init) => {
+        const m = init?.method ?? "GET";
+        if (m === "GET") return new Response(null, { status: 404 });
+        writeMethod = m;
+        return new Response(null, { status: 201 });
+      })
+    );
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await adapter.upsertIdentityProvider(IDP);
+    assert.equal(writeMethod, "POST");
+  });
+
+  it("updates (PUT) when the provider exists and the write succeeds", async () => {
+    let writeMethod = "";
+    restore = mockFetch(
+      adminApiFetch(async (_input, init) => {
+        const m = init?.method ?? "GET";
+        if (m === "GET") return jsonResponse(IDP);
+        writeMethod = m;
+        return new Response(null, { status: 204 });
+      })
+    );
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await adapter.upsertIdentityProvider(IDP);
+    assert.equal(writeMethod, "PUT");
+  });
+
+  it("throws when the POST create fails (does not silently succeed)", async () => {
+    restore = mockFetch(
+      adminApiFetch(async (_input, init) => {
+        const m = init?.method ?? "GET";
+        if (m === "GET") return new Response(null, { status: 404 });
+        return jsonResponse({ error: "boom" }, 500);
+      })
+    );
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await assert.rejects(
+      () => adapter.upsertIdentityProvider(IDP),
+      /upsertIdentityProvider\(POST mock-google\): Keycloak admin write failed: 500.*boom/
+    );
+  });
+
+  it("throws when the PUT update fails", async () => {
+    restore = mockFetch(
+      adminApiFetch(async (_input, init) => {
+        const m = init?.method ?? "GET";
+        if (m === "GET") return jsonResponse(IDP);
+        return new Response("bad request", { status: 400 });
+      })
+    );
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await assert.rejects(
+      () => adapter.upsertIdentityProvider(IDP),
+      /upsertIdentityProvider\(PUT mock-google\): Keycloak admin write failed: 400/
+    );
+  });
+
+  it("throws when the existence check itself fails (e.g. 503), not treating it as create", async () => {
+    let sawWrite = false;
+    restore = mockFetch(
+      adminApiFetch(async (_input, init) => {
+        const m = init?.method ?? "GET";
+        if (m === "GET") return new Response(null, { status: 503 });
+        sawWrite = true;
+        return new Response(null, { status: 201 });
+      })
+    );
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await assert.rejects(
+      () => adapter.upsertIdentityProvider(IDP),
+      /upsertIdentityProvider\(mock-google\): existence check failed: 503/
+    );
+    assert.equal(sawWrite, false, "must not attempt a write after a failed existence check");
+  });
+});
+
+describe("KeycloakRealmAdminAdapter — removeIdentityProvider (idempotent delete)", () => {
+  let restore: () => void;
+  afterEach(() => restore?.());
+
+  it("succeeds on 204", async () => {
+    restore = mockFetch(adminApiFetch(async () => new Response(null, { status: 204 })));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await adapter.removeIdentityProvider("mock-google"); // resolves
+  });
+
+  it("treats 404 as success (idempotent — already absent)", async () => {
+    restore = mockFetch(adminApiFetch(async () => new Response(null, { status: 404 })));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await adapter.removeIdentityProvider("mock-google"); // resolves, no throw
+  });
+
+  it("throws on a real failure (e.g. 500)", async () => {
+    restore = mockFetch(adminApiFetch(async () => jsonResponse({ error: "nope" }, 500)));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await assert.rejects(
+      () => adapter.removeIdentityProvider("mock-google"),
+      /removeIdentityProvider\(mock-google\): Keycloak admin delete failed: 500.*nope/
+    );
+  });
+});

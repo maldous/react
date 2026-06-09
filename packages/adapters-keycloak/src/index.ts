@@ -366,6 +366,18 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
     return `${this.config.url}/admin/realms/${this.config.realm}${path}`;
   }
 
+  // Read a bounded, single-line slice of an error response body for diagnostics.
+  // Keycloak admin errors are small JSON ({error, error_description}); we cap the
+  // length and collapse whitespace so nothing large or multi-line leaks into logs.
+  private async readSafeBody(response: Response): Promise<string> {
+    try {
+      const text = await response.text();
+      return text.replace(/\s+/g, " ").trim().slice(0, 300);
+    } catch {
+      return "<unreadable body>";
+    }
+  }
+
   async listIdentityProviders(): Promise<IdentityProvider[]> {
     const token = await this.getAdminToken();
     const response = await fetch(this.adminUrl("/identity-provider/instances"), {
@@ -377,26 +389,47 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
 
   async upsertIdentityProvider(idp: IdentityProvider): Promise<void> {
     const token = await this.getAdminToken();
-    const existing = await fetch(this.adminUrl(`/identity-provider/instances/${idp.alias}`), {
+    const instanceUrl = this.adminUrl(`/identity-provider/instances/${idp.alias}`);
+    const existing = await fetch(instanceUrl, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    // 404 → create (POST); 200 → update (PUT). Any other status is an admin-side
+    // failure (auth, realm, Keycloak down) and must not be silently treated as "create".
+    if (!existing.ok && existing.status !== 404) {
+      throw new Error(
+        `upsertIdentityProvider(${idp.alias}): existence check failed: ` +
+          `${existing.status} ${await this.readSafeBody(existing)}`
+      );
+    }
     const method = existing.ok ? "PUT" : "POST";
-    const url = existing.ok
-      ? this.adminUrl(`/identity-provider/instances/${idp.alias}`)
-      : this.adminUrl("/identity-provider/instances");
-    await fetch(url, {
+    const url = existing.ok ? instanceUrl : this.adminUrl("/identity-provider/instances");
+    const res = await fetch(url, {
       method,
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       body: JSON.stringify(idp),
     });
+    if (!res.ok) {
+      throw new Error(
+        `upsertIdentityProvider(${method} ${idp.alias}): Keycloak admin write failed: ` +
+          `${res.status} ${await this.readSafeBody(res)}`
+      );
+    }
   }
 
   async removeIdentityProvider(alias: string): Promise<void> {
     const token = await this.getAdminToken();
-    await fetch(this.adminUrl(`/identity-provider/instances/${alias}`), {
+    const res = await fetch(this.adminUrl(`/identity-provider/instances/${alias}`), {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
+    // 404 is intentionally idempotent: the provider is already absent. Any other
+    // non-OK status is a real failure and must surface rather than silently pass.
+    if (!res.ok && res.status !== 404) {
+      throw new Error(
+        `removeIdentityProvider(${alias}): Keycloak admin delete failed: ` +
+          `${res.status} ${await this.readSafeBody(res)}`
+      );
+    }
   }
 
   async getMfaPolicy(): Promise<MfaPolicy> {
