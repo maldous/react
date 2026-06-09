@@ -53,7 +53,7 @@ platform-api session   http://localhost:3001/api/session
 Keycloak admin         http://localhost:8080/kc/admin
 Mailpit UI             http://localhost:8025
 MinIO console          http://localhost:9001
-SonarQube              http://localhost:9003
+SonarQube              http://localhost:9064/sonar
 WireMock admin         http://localhost:8089/__admin/
 ClickHouse play        http://localhost:8124/play
 Tilt UI                http://localhost:10350
@@ -158,10 +158,10 @@ postgres redis clickhouse minio mailpit otel-collector
 Profiles:
 
 ```text
-quality          SonarQube
+external-sonar   SonarQube (shared instance, react-sonar project)
 identity         Keycloak
 cloud-mocks      LocalStack
-sentry           Sentry smoke-test stack
+external-sentry  Sentry (shared instance, react-sentry project)
 web              platform-api container + Caddy React SPA
 external-mocks   WireMock
 ```

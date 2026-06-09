@@ -16,7 +16,7 @@ import http from "node:http";
 import process from "node:process";
 import fs from "node:fs";
 
-const HOST = process.env.SONAR_HOST_URL ?? "http://localhost:9003";
+const HOST = process.env.SONAR_HOST_URL ?? "http://localhost:9064/sonar";
 const TOKEN = process.env.SONAR_TOKEN ?? "";
 const PROJECT = process.env.SONAR_PROJECT_KEY ?? "maldous-react";
 const LCOV_PATH = "coverage/lcov.info";

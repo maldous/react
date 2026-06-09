@@ -11,6 +11,11 @@ const MINIO_PORT = process.env["MINIO_CONSOLE_PORT"] ?? "9001";
 const SONAR_PORT = process.env["SONAR_PORT"] ?? "9003";
 const WIREMOCK_PORT = process.env["WIREMOCK_PORT"] ?? "8089";
 const CH_PORT = process.env["CLICKHOUSE_HTTP_PORT"] ?? "8124";
+const GRAFANA_PORT = process.env["GRAFANA_PORT"] ?? "3200";
+const PGADMIN_PORT = process.env["PGADMIN_PORT"] ?? "5050";
+// Sentry runs in its own compose project (react-sentry, profile external-sentry)
+// on a fixed host port (compose.yaml: "9060:9000"). Override only if you remap.
+const SENTRY_PORT = process.env["SENTRY_HOST_PORT"] ?? "9060";
 
 // Shared BFF proxy entries — used by both server (dev) and preview (prod build) modes.
 // /auth proxy is required for POST /auth/logout to reach platform-api in dev mode
@@ -19,6 +24,18 @@ const CH_PORT = process.env["CLICKHOUSE_HTTP_PORT"] ?? "8124";
 // so they work in dev mode without Caddy. Caddy handles path-stripping in deployment;
 // Vite mirrors this via the rewrite function where needed.
 const bffProxy = {
+  // Sentry auth login — must appear BEFORE the /auth catch-all so
+  // /auth/login/sentry/ routes to sentry, not platform-api.
+  "/auth/login": {
+    target: `http://localhost:${SENTRY_PORT}`,
+    changeOrigin: true,
+  },
+  // Sentry static assets — Django's STATIC_URL is /_static/<version>/
+  // and these are referenced without the /sentry prefix in page HTML.
+  "/_static": {
+    target: `http://localhost:${SENTRY_PORT}`,
+    changeOrigin: true,
+  },
   "/auth": {
     target: `http://localhost:${API_PORT}`,
     changeOrigin: true,
@@ -44,24 +61,55 @@ const bffProxy = {
     target: `http://localhost:${KC_PORT}`,
     changeOrigin: true,
   },
+  // Mailpit serves its UI under /mailpit (MP_WEBROOT=/mailpit in compose.yaml),
+  // so the prefix must be preserved — do NOT rewrite/strip it.
   "/mailpit": {
     target: `http://localhost:${MAILPIT_PORT}`,
     changeOrigin: true,
-    rewrite: (p: string) => p.replace(/^\/mailpit/, ""),
   },
+  // MinIO serves at root in dev (MINIO_BROWSER_REDIRECT_URL=http://localhost:9001);
+  // strip the /minio prefix so MinIO receives / instead of /minio/.
   "/minio": {
     target: `http://localhost:${MINIO_PORT}`,
     changeOrigin: true,
+    rewrite: (p: string) => p.replace(/^\/minio/, ""),
   },
+  // MinIO Console assets — the SPA references /static/js/... even when
+  // served from a path-prefixed URL, so these must be proxied to MinIO.
+  "/static": {
+    target: `http://localhost:${MINIO_PORT}`,
+    changeOrigin: true,
+  },
+  // SonarQube serves under /sonar (SONAR_WEB_CONTEXT=/sonar) — preserve the prefix.
   "/sonar": {
     target: `http://localhost:${SONAR_PORT}`,
     changeOrigin: true,
+  },
+  // pgAdmin serves under /pgadmin (SCRIPT_NAME=/pgadmin) — preserve the prefix.
+  "/pgadmin": {
+    target: `http://localhost:${PGADMIN_PORT}`,
+    changeOrigin: true,
+  },
+  // Grafana serves under /grafana/ (GF_SERVER_ROOT_URL + GF_SERVER_SERVE_FROM_SUB_PATH).
+  "/grafana": {
+    target: `http://localhost:${GRAFANA_PORT}`,
+    changeOrigin: true,
+  },
+  // Sentry serves under /sentry (SENTRY_URL_PREFIX) on the shared react-sentry stack.
+  // Strip the prefix before proxying — Sentry doesn't know about /sentry internally;
+  // the Vite proxy handles path-prefix transparently. Sentry auth redirects to
+  // /auth/login/sentry/ (no prefix), which is handled by the /auth/login/ rule above.
+  "/sentry": {
+    target: `http://localhost:${SENTRY_PORT}`,
+    changeOrigin: true,
+    rewrite: (p: string) => p.replace(/^\/sentry/, ""),
   },
   "/wiremock": {
     target: `http://localhost:${WIREMOCK_PORT}`,
     changeOrigin: true,
     rewrite: (p: string) => p.replace(/^\/wiremock/, ""),
   },
+  // ClickHouse serves /play at root (no path prefix in container); strip /clickhouse.
   "/clickhouse": {
     target: `http://localhost:${CH_PORT}`,
     changeOrigin: true,

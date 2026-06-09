@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 # Tears down Tilt, waits for the process to exit, removes .tilt.pid.
+# All compose services (default + external-mocks + identity +
+# observability) are managed by Tilt's docker_compose() → tilt down handles them.
 
 GREEN=$(tput setaf 2 2>/dev/null || true)
 YELLOW=$(tput setaf 3 2>/dev/null || true)

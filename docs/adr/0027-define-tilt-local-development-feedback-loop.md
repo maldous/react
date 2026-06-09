@@ -319,7 +319,7 @@ The Tiltfile produced as part of ADR-ACT-0127 must satisfy:
    - platform-api readiness: `http://localhost:3001/readyz`
    - Mailpit UI: `http://localhost:8025`
    - Keycloak admin (if identity profile active): `http://localhost:8080`
-   - SonarQube (if quality profile active): `http://localhost:9003`
+   - SonarQube (shared instance, `make sonar-up`): `http://localhost:9064/sonar`
    - Tilt UI: `http://localhost:10350`
 8. **Readiness probes:** platform-api and keycloak must use
    `readiness_probe(http_get="/healthz", ...)` or equivalent so dependent

@@ -39,8 +39,8 @@ docker ps -q \
 docker volume ls -q --filter "label=com.docker.compose.project=react" \
     | xargs -r docker volume rm 2>/dev/null || true
 
-# Kill stale port holders (spare JVM services: Keycloak, SonarQube)
-_jvm_ports="$(grep -oP '(?:KEYCLOAK|SONAR)_PORT=\K\d+' ".env.${ENV}" 2>/dev/null \
+# Kill stale port holders (spare JVM services: Keycloak)
+_jvm_ports="$(grep -oP 'KEYCLOAK_PORT=\K\d+' ".env.${ENV}" 2>/dev/null \
     | tr '\n' '|' | sed 's/|$//')"
 
 _all_ports="5173 10350 $(grep -oP '_PORT=\K\d+' ".env.${ENV}" 2>/dev/null \

@@ -1,4 +1,4 @@
-.PHONY: help infra-check keycloak-plan-dev readmes generate \
+.PHONY: help infra-check readmes generate \
         pre-slice-gate local-substrate-check
 
 ## help — Show all documented targets
@@ -15,26 +15,41 @@ help:
 	@printf '\n'
 	@printf '$(BOLD)── DEVELOPMENT ──────────────────────────────────────────────────────$(RESET)\n'
 	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
-	  tilt-up          'Hot-reload dev loop (Vite + API, blocks until healthy)' \
-	  tilt-down        'Stop Tilt dev stack' \
-	  dev-up           'Full dev Compose stack (all profiles)' \
-	  dev-up-minimal   'Core infra only (Postgres / Redis / ClickHouse / MinIO)' \
-	  dev-down         'Stop dev stack'
+	  dev-up           'Start Tilt dev loop (Vite + API, blocks until healthy)' \
+	  dev-down         'Stop Tilt dev stack'
 	@printf '\n'
-	@printf '$(BOLD)── COMPOSE SERVICES  [ENV=dev|test|staging|prod] ────────────────────$(RESET)\n'
+	@printf '$(BOLD)── ENVIRONMENTS  [ENV=test|staging|prod] ────────────────────────────$(RESET)\n'
+	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
+	  test-up           'Full test stack: all compose profiles + web' \
+	  test-down         'Stop test stack' \
+	  staging-up        'Full staging stack: all compose profiles + web' \
+	  staging-down      'Stop staging stack' \
+	  prod-up           'Full production stack: all compose profiles + web' \
+	  prod-down         'Stop prod stack' \
+	  keycloak-provision 'Apply Terraform: provision Keycloak realm for ENV'
+	@printf '\n'
+	@printf '$(BOLD)── COMPOSE SERVICES  [ENV=test|staging|prod] ─────────────────────────$(RESET)\n'
 	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
 	  compose-up-default        'postgres redis clickhouse minio mailpit otel-collector' \
 	  compose-up-identity       '+ Keycloak SSO (identity profile)' \
 	  compose-up-observability  '+ Loki + Grafana + Alloy (observability profile)' \
-	  compose-up-quality        '+ SonarQube (quality profile)' \
 	  compose-up-cloud          '+ LocalStack / AWS mocks (cloud-mocks profile)' \
 	  compose-up-external-mocks '+ WireMock (external-mocks profile)' \
-	  compose-up-sentry         '+ Sentry self-hosted (shared react-sentry project)' \
 	  compose-up-web            '+ Caddy SPA + containerised platform-api' \
 	  compose-down              'Stop all services for ENV' \
-	  compose-down-reset        'Stop + reset app data (preserves Keycloak / SonarQube volumes)' \
+	  compose-down-reset        'Stop + reset app data (preserves Keycloak volume)' \
 	  compose-ps                'Service health status for ENV' \
 	  compose-logs              'Tail service logs for ENV'
+	@printf '\n'
+	@printf '$(BOLD)── SHARED SERVICES ───────────────────────────────────────────────────$(RESET)\n'
+	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
+	  sentry-up           'Start shared Sentry (react-sentry project, all envs)' \
+	  sentry-down         'Stop shared Sentry' \
+	  sonar-up            'Start shared SonarQube (react-sonar project, all envs)' \
+	  sonar-provision     'Ensure a valid SonarQube analysis token (auto-gen from scratch)' \
+	  sonar-down          'Stop shared SonarQube' \
+	  external-caddy-up   'Start Caddy on port 80 (staging + prod Cloudflare routing)' \
+	  external-caddy-down 'Stop external Caddy'
 	@printf '\n'
 	@printf '$(BOLD)── DATABASE ─────────────────────────────────────────────────────────$(RESET)\n'
 	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
@@ -76,18 +91,9 @@ help:
 	  audit        'npm audit (high/critical) + OSV vulnerability scan' \
 	  security     'Secret scan via gitleaks' \
 	  architecture 'Full architecture governance suite (--strict)' \
-	  sonar        'SonarQube scan + quality gate (requires SONAR_TOKEN)' \
-	  sbom         'Generate CycloneDX 1.6 SBOM'
-	@printf '\n'
-	@printf '$(BOLD)── IDENTITY / INFRA ─────────────────────────────────────────────────$(RESET)\n'
-	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
-	  keycloak-provision  'Apply Terraform: provision Keycloak realm for ENV' \
-	  keycloak-plan-dev   'Terraform plan against dev Keycloak (dry-run, no secrets)' \
-	  infra-check         'Validate Terraform syntax + format (no credentials needed)' \
-	  sentry-up           'Start shared Sentry instance (react-sentry project)' \
-	  sentry-down         'Stop shared Sentry instance' \
-	  external-caddy-up   'Start Caddy on port 80 (Cloudflare / aldous.info routing)' \
-	  external-caddy-down 'Stop external Caddy'
+	  sonar        'Sonar scan + quality gate against shared instance (.env.sonar)' \
+	  sbom         'Generate CycloneDX 1.6 SBOM' \
+	  infra-check  'Validate Terraform syntax + format (no credentials needed)'
 	@printf '\n'
 	@printf '$(BOLD)── MAINTENANCE ──────────────────────────────────────────────────────$(RESET)\n'
 	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
@@ -112,29 +118,6 @@ infra-check:
 		|| { printf '$(RED)✗ infra/env/dev validate failed$(RESET)\n'; exit 1; }
 	$(call OK,infra check complete)
 
-## keycloak-plan-dev — Plan Keycloak provisioning against dev Compose Keycloak
-##   Requires: docker compose --profile identity up -d keycloak (port from KEYCLOAK_PORT in .env.$ENV)
-##   Uses: infra/env/dev/dev.tfvars.example (placeholder secrets — safe to plan)
-keycloak-plan-dev:
-	$(call STEP,keycloak:plan:dev)
-	@chmod +x infra/bin/tf
-	@printf '$(BOLD)Requires: docker compose --profile identity up -d keycloak$(RESET)\n'
-	@_kc_port="$$(grep -oP 'KEYCLOAK_PORT=\K\d+' .env.$(ENV) 2>/dev/null | head -1)"; _kc_port=$${_kc_port:-8090}; \
-	curl -sf http://localhost:$${_kc_port}/kc/realms/master > /dev/null 2>&1 \
-		|| { printf '$(RED)✗ Keycloak not reachable at http://localhost:%s/kc\n  Run: make compose-up-identity ENV=$(ENV)$(RESET)\n' "$$_kc_port"; exit 1; }; \
-	printf '$(GREEN)✓ Keycloak reachable at http://localhost:%s/kc$(RESET)\n' "$$_kc_port"
-	@infra/bin/tf -chdir=infra/env/dev init -backend=false -input=false > /dev/null 2>&1 \
-		&& printf '$(GREEN)✓ init ok$(RESET)\n' \
-		|| { printf '$(RED)✗ init failed$(RESET)\n'; exit 1; }
-	@infra/bin/tf -chdir=infra/env/dev validate -no-color \
-		&& printf '$(GREEN)✓ validate ok$(RESET)\n' \
-		|| { printf '$(RED)✗ validate failed$(RESET)\n'; exit 1; }
-	@infra/bin/tf -chdir=infra/env/dev plan \
-		-var-file=dev.tfvars.example \
-		-input=false \
-		-no-color
-	$(call OK,keycloak plan complete — review above before running apply)
-
 ## readmes — Regenerate all package READMEs from metadata
 readmes:
 	$(ORCHESTRATOR) generate-readmes
@@ -143,7 +126,7 @@ readmes:
 generate:
 	$(ORCHESTRATOR) all --strict
 
-## pre-slice-gate — Required gate before ADR-ACT-0008 first vertical slice (requires SONAR_TOKEN)
+## pre-slice-gate — Required gate before ADR-ACT-0008 first vertical slice (requires .env.sonar with SONAR_TOKEN)
 pre-slice-gate: compose format lint typecheck test test-compose audit security architecture
 	$(call STEP,pre-slice-gate: validate slice readiness)
 	npm run validate:slices
@@ -155,9 +138,9 @@ pre-slice-gate: compose format lint typecheck test test-compose audit security a
 	$(call STEP,pre-slice-gate: frontend smoke)
 	npm run test:frontend:run
 	$(call STEP,pre-slice-gate: Sonar quality gate)
-	@if [ -z "$$SONAR_TOKEN" ]; then \
-		printf '$(RED)✗ SONAR_TOKEN not set. pre-slice-gate requires Sonar.\n'; \
-		printf '  Set SONAR_TOKEN in .env or environment, then re-run.\n$(RESET)'; \
+	@if [ ! -f .env.sonar ]; then \
+		printf '$(RED)✗ .env.sonar not found. pre-slice-gate requires the shared Sonar instance.\n'; \
+		printf '  Copy .env.sonar.example to .env.sonar and set SONAR_TOKEN, then re-run.\n$(RESET)'; \
 		exit 1; \
 	fi
 	$(MAKE) sonar
@@ -180,4 +163,4 @@ local-substrate-check: compose format lint typecheck test test-compose audit arc
 	npm run test:frontend:run
 	$(call OK,local-substrate-check complete)
 	@printf '$(YELLOW)⚠ Sonar not run — this check is NOT sufficient for ADR-ACT-0008.\n'
-	@printf '  Run: SONAR_TOKEN=<token> make pre-slice-gate$(RESET)\n'
+	@printf '  Run: make sonar-up && make pre-slice-gate$(RESET)\n'

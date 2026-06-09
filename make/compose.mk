@@ -1,12 +1,11 @@
-.PHONY: compose-up compose-up-default compose-up-quality compose-up-identity \
-        compose-up-cloud compose-up-sentry compose-up-external-mocks \
+.PHONY: compose-up compose-up-default compose-up-identity \
+        compose-up-cloud compose-up-external-mocks \
         compose-up-web compose-up-observability \
         compose-down compose-down-web compose-down-volumes compose-down-reset \
         compose-ps compose-logs \
         external-caddy-up external-caddy-down \
-        sentry-up sentry-down \
-        dev-up dev-up-minimal test-up staging-up prod-up \
-        dev-down test-down staging-down prod-down \
+        sentry-up sentry-down sonar-up sonar-down \
+        dev-up dev-down test-up staging-up prod-up test-down staging-down prod-down \
         reset-local seed-demo db-migrate db-shell redis-flush-local \
         keycloak-provision
 
@@ -17,7 +16,7 @@ compose-up:
 	bash scripts/compose/up.sh $(ENV) default
 
 ## compose-up-default — Start exactly the 6 default services (idempotent)
-## Accepts ENV=dev|test|staging|prod (default: dev)
+## Accepts ENV=test|staging|prod
 compose-up-default:
 	$(call STEP,compose:up:default ($(ENV)))
 	bash scripts/compose/up.sh $(ENV) default
@@ -30,12 +29,6 @@ compose-up-observability:
 	bash scripts/compose/up.sh $(ENV) observability
 	$(call OK,Observability stack ready for $(ENV))
 
-## compose-up-quality — Start SonarQube (quality profile)
-compose-up-quality:
-	$(call STEP,compose: starting SonarQube ($(ENV)))
-	bash scripts/compose/up.sh $(ENV) quality
-	$(call OK,SonarQube ready for $(ENV))
-
 ## compose-up-identity — Start Keycloak (identity profile)
 compose-up-identity:
 	$(call STEP,compose: starting Keycloak ($(ENV)))
@@ -46,16 +39,17 @@ compose-up-identity:
 compose-up-cloud:
 	bash scripts/compose/up.sh $(ENV) cloud
 
-## compose-up-sentry — Start shared Sentry (delegates to sentry-up; ENV ignored)
-compose-up-sentry:
-	$(MAKE) sentry-up
-
 ## compose-up-external-mocks — Start WireMock (external-mocks profile)
 compose-up-external-mocks:
 	bash scripts/compose/up.sh $(ENV) external-mocks
 
-## compose-up-web — Build and start the web profile for ENV
+## compose-up-web — Build and start the web profile for ENV (test/staging/prod only)
+## dev does not use compose web — it uses Tilt. This target hard-fails for ENV=dev.
 compose-up-web:
+	@if [ "$(ENV)" = "dev" ]; then \
+		printf '$(RED)✗ dev does not use compose web. Use `make dev-up`.$(RESET)\n'; \
+		exit 1; \
+	fi
 	$(call STEP,web:up ($(ENV)))
 	bash scripts/compose/up.sh $(ENV) web
 	@_port=$$(grep '^WEB_HTTP_PORT=' .env.$(ENV) 2>/dev/null | head -1 | cut -d= -f2 || echo "80"); \
@@ -78,15 +72,16 @@ compose-down-web:
 compose-down-volumes:
 	bash scripts/compose/down.sh $(ENV) --volumes
 
-## compose-down-reset — Stop services and reset app data (preserves JVM volumes by default)
-## PRESERVE_JVM_VOLUMES=true (default): preserves Keycloak and SonarQube volumes.
+## compose-down-reset — Stop services and reset app data (preserves Keycloak volume by default)
+## PRESERVE_JVM_VOLUMES=true (default): preserves the Keycloak volume in this env.
 ## PRESERVE_JVM_VOLUMES=false: destroys ALL volumes (same as compose-down-volumes).
+## SonarQube lives in the react-sonar shared project — unaffected by this target.
 compose-down-reset:
 	$(call STEP,compose-down-reset: resetting app data ($(ENV)))
 	@if [ "$(PRESERVE_JVM_VOLUMES)" = "true" ]; then \
 		$(COMPOSE_CMD) down --timeout 30 2>/dev/null || true; \
 		_jvm_vols="$$(docker volume ls -q --filter label=com.docker.compose.project=react-$(ENV) 2>/dev/null \
-		    | grep -vE 'keycloak|sonar' || true)"; \
+		    | grep -vE 'keycloak' || true)"; \
 		[ -n "$$_jvm_vols" ] && echo "$$_jvm_vols" | xargs docker volume rm 2>/dev/null || true; \
 	else \
 		bash scripts/compose/down.sh $(ENV) --volumes; \
@@ -130,63 +125,74 @@ sentry-down:
 	$(call STEP,sentry: stopping)
 	docker/compose-wrapper.sh sentry --profile external-sentry down --timeout 60
 	$(call OK,sentry down)
-	@$(call CONFIRM_DOWN,react)
-	$(call OK,external Caddy stopped)
+	@$(call CONFIRM_DOWN,react-sentry)
+
+## sonar-up — Start shared SonarQube instance (external-sonar profile, react-sonar project)
+## Idempotent — fast no-op when already healthy. Single instance shared across all envs.
+sonar-up:
+	$(call STEP,sonar: startup)
+	bash scripts/compose/up.sh sonar external-sonar
+	@_url=$$(grep -oP 'SONAR_HOST_URL=\K\S+' .env.sonar 2>/dev/null | head -1 || echo http://localhost:9064/sonar); \
+	printf '$(GREEN)✓ SonarQube up at %s (project: maldous-react)$(RESET)\n' "$$_url"
+
+## sonar-provision — Ensure a valid SonarQube analysis token exists (idempotent)
+## Auto-generates a token from scratch when the shared instance is fresh.
+## Requires admin/admin credentials on first run; set SONAR_ADMIN_PASSWORD in
+## .env.sonar if the default password has been changed.
+sonar-provision:
+	bash scripts/sonar/provision-token.sh
+
+## sonar-down — Stop shared SonarQube instance
+sonar-down:
+	$(call STEP,sonar: stopping)
+	docker/compose-wrapper.sh sonar --profile external-sonar down --timeout 60
+	$(call OK,sonar down)
+	@$(call CONFIRM_DOWN,react-sonar)
 
 # ── Environment-specific stacks ──────────────────────────────────────────────
 
-## dev-up — Full dev stack: all profiles (Compose-based; for Tilt dev use tilt-up then env-up-all)
+## dev-up — Start the dev environment using Tilt only.
+## dev is the only Tilt-backed environment. test, staging and prod use Compose.
 dev-up:
-	$(call STEP,dev: full stack)
-	$(MAKE) compose-up-default ENV=dev
-	$(MAKE) compose-up-identity ENV=dev
-	$(MAKE) keycloak-provision ENV=dev
-	$(MAKE) compose-up-quality ENV=dev
-	$(MAKE) compose-up-external-mocks ENV=dev
-	$(MAKE) compose-up-observability ENV=dev
-	$(MAKE) compose-up-web ENV=dev
+	$(call STEP,tilt:up)
+	bash scripts/tilt/up-dev.sh
+	$(call OK,Tilt dev stack ready)
 
-## dev-up-minimal — Start only default infra for dev (no web, no Keycloak)
-dev-up-minimal:
-	$(call STEP,dev: up minimal)
-	$(MAKE) compose-up-default ENV=dev
-
-## test-up — Full test stack: all profiles
+## test-up — Full test stack: all profiles. Sonar is shared (sonar-up) — not part of per-env stacks.
 test-up:
 	$(call STEP,test: full stack)
 	$(MAKE) compose-up-default ENV=test
 	$(MAKE) compose-up-identity ENV=test
 	$(MAKE) keycloak-provision ENV=test
-	$(MAKE) compose-up-quality ENV=test
 	$(MAKE) compose-up-external-mocks ENV=test
 	$(MAKE) compose-up-observability ENV=test
 	$(MAKE) compose-up-web ENV=test
 
-## staging-up — Full staging stack: all profiles
+## staging-up — Full staging stack: all profiles. Sonar is shared (sonar-up) — not part of per-env stacks.
 staging-up:
 	$(call STEP,staging: full stack)
 	$(MAKE) compose-up-default ENV=staging
 	$(MAKE) compose-up-identity ENV=staging
 	$(MAKE) keycloak-provision ENV=staging
-	$(MAKE) compose-up-quality ENV=staging
 	$(MAKE) compose-up-external-mocks ENV=staging
 	$(MAKE) compose-up-observability ENV=staging
 	$(MAKE) compose-up-web ENV=staging
 
-## prod-up — Full production-like stack: all profiles
+## prod-up — Full production-like stack: all profiles. Sonar is shared (sonar-up) — not part of per-env stacks.
 prod-up:
 	$(call STEP,prod: full stack)
 	$(MAKE) compose-up-default ENV=prod
 	$(MAKE) compose-up-identity ENV=prod
 	$(MAKE) keycloak-provision ENV=prod
-	$(MAKE) compose-up-quality ENV=prod
 	$(MAKE) compose-up-external-mocks ENV=prod
 	$(MAKE) compose-up-observability ENV=prod
 	$(MAKE) compose-up-web ENV=prod
 
-## dev-down — Stop dev stack
+## dev-down — Stop dev environment
 dev-down:
-	$(MAKE) compose-down ENV=dev
+	$(call STEP,tilt:down)
+	bash scripts/tilt/down-dev.sh
+	$(call OK,Tilt stopped)
 
 ## test-down — Stop test stack
 test-down:

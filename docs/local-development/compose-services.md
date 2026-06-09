@@ -17,15 +17,15 @@ docker compose logs -f
 
 ## Profiles
 
-| Profile        | Command                                      | Services                                                                  |
-| -------------- | -------------------------------------------- | ------------------------------------------------------------------------- |
-| (default)      | `docker compose up -d`                       | postgres, redis, clickhouse, minio, mailpit, otel-collector               |
-| web            | `docker compose --profile web up -d --build` | platform-api container + react-app (Caddy) on :80                         |
-| quality        | `npm run compose:quality`                    | sonarqube + sonar-postgres                                                |
-| identity       | `npm run compose:identity`                   | keycloak + keycloak-postgres                                              |
-| cloud-mocks    | `npm run compose:cloud`                      | localstack                                                                |
-| external-mocks | `npm run compose:external-mocks`             | wiremock                                                                  |
-| sentry         | `npm run compose:sentry`                     | sentry-web + sentry-worker + sentry-cron + sentry-postgres + sentry-redis |
+| Profile        | Command                                      | Services                                                                                    |
+| -------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| (default)      | `docker compose up -d`                       | postgres, redis, clickhouse, minio, mailpit, otel-collector                                 |
+| web            | `docker compose --profile web up -d --build` | platform-api container + react-app (Caddy) on :80                                           |
+| external-sonar | `make sonar-up`                              | sonarqube + sonar-postgres (shared instance)                                                |
+| identity       | `npm run compose:identity`                   | keycloak + keycloak-postgres                                                                |
+| cloud-mocks    | `npm run compose:cloud`                      | localstack                                                                                  |
+| external-mocks | `npm run compose:external-mocks`             | wiremock                                                                                    |
+| sentry         | `make sentry-up`                             | sentry-web + sentry-worker + sentry-cron + sentry-postgres + sentry-redis (shared instance) |
 
 > **web profile note:** `SESSION_COOKIE_SECURE` must be `false` (the default in `.env.example`) when serving over `http://localhost:80`. Set it to `true` only when behind HTTPS (e.g. production or Cloudflare).
 > Stop any system Caddy process before starting the web profile to free port 80.
@@ -40,7 +40,7 @@ docker compose logs -f
 | minio          | default        | 9000 (API), 9001 (console)                   | `@platform/adapters-object-storage`                      |
 | mailpit        | default        | 1025 (SMTP), 8025 (UI)                       | `@platform/adapters-brevo` (SMTP transport)              |
 | otel-collector | default        | 4317 (gRPC), 4318 (HTTP), 13133 (health API) | `@platform/adapters-opentelemetry`                       |
-| sonarqube      | quality        | 9003                                         | code quality analysis                                    |
+| sonarqube      | external-sonar | 9064                                         | code quality analysis (shared instance)                  |
 | keycloak       | identity       | 8080                                         | `@platform/adapters-keycloak`                            |
 | localstack     | cloud-mocks    | 4566                                         | `@platform/adapters-object-storage` (S3), queue testing  |
 | sentry-web     | sentry         | 9010                                         | `@platform/adapters-sentry`                              |
@@ -48,15 +48,15 @@ docker compose logs -f
 
 ## Web UIs
 
-| Service       | URL                     | Default credentials                   |
-| ------------- | ----------------------- | ------------------------------------- |
-| MinIO console | <http://localhost:9001> | minioadmin / miniopassword            |
-| Mailpit       | <http://localhost:8025> | (no auth)                             |
-| SonarQube     | <http://localhost:9003> | admin / admin (change on first login) |
-| Keycloak      | <http://localhost:8080> | admin / admin                         |
-| Sentry        | <http://localhost:9010> | see setup below                       |
-| LocalStack    | <http://localhost:4566> | (no auth for S3/SQS)                  |
-| WireMock      | <http://localhost:8089> | admin UI: `/__admin/`                 |
+| Service       | URL                           | Default credentials                   |
+| ------------- | ----------------------------- | ------------------------------------- |
+| MinIO console | <http://localhost:9001>       | minioadmin / miniopassword            |
+| Mailpit       | <http://localhost:8025>       | (no auth)                             |
+| SonarQube     | <http://localhost:9064/sonar> | admin / admin (change on first login) |
+| Keycloak      | <http://localhost:8080>       | admin / admin                         |
+| Sentry        | <http://localhost:9010>       | see setup below                       |
+| LocalStack    | <http://localhost:4566>       | (no auth for S3/SQS)                  |
+| WireMock      | <http://localhost:8089>       | admin UI: `/__admin/`                 |
 
 ## Configuration
 
@@ -91,19 +91,21 @@ Committed mappings live in `docker/wiremock/mappings/`. Static response files li
 
 > **Security:** Mappings and `__files` must never contain real credentials, tokens, production API responses, or customer data. Safe fixtures only.
 
-## SonarQube setup (quality profile)
+## SonarQube setup (shared instance)
+
+Single SonarQube instance shared across all environments (like Sentry). Lives in its own compose project (`react-sonar`, profile `external-sonar`) with a dedicated postgres.
 
 ```bash
-npm run compose:quality
-# Wait for Sonar to start (1?2 minutes first run)
-docker compose --profile quality ps
+make sonar-up
+# Wait for Sonar to start (1-2 minutes first run)
+docker/compose-wrapper.sh sonar --profile external-sonar ps
 
-# Configure sonar-project.properties token:
-# 1. Log in at http://localhost:9003 with admin/admin
+# Configure analysis token:
+# 1. Log in at http://localhost:9064/sonar with admin/admin
 # 2. Change password when prompted
-# 3. Go to Account ? Security ? Generate Token
-# 4. Set SONAR_TOKEN=<token> in .env
-npm run sonar:scan
+# 3. Go to Account / Security / Generate Token
+# 4. Set SONAR_TOKEN=<token> in .env.sonar
+make sonar
 ```
 
 ## Sentry setup (sentry profile ? experimental)
@@ -111,7 +113,7 @@ npm run sonar:scan
 > **Experimental:** SDK smoke testing only. Not a full self-hosted Sentry stack. `sentry-worker` and `sentry-cron` are included but unvalidated. Do not depend on this profile for adapter validation until ADR-ACT-0089 is resolved.
 
 ```bash
-npm run compose:sentry
+make sentry-up
 # Wait for sentry-web to run the upgrade (2?3 minutes first run)
 docker compose --profile sentry ps
 
@@ -153,17 +155,17 @@ All port variables and defaults are documented in `.env.example`.
 
 ## npm scripts
 
-| Script                         | Action                                         |
-| ------------------------------ | ---------------------------------------------- |
-| `npm run compose:config`       | Validate compose.yaml syntax (default profile) |
-| `npm run compose:config:all`   | Validate compose.yaml syntax (all profiles)    |
-| `npm run compose:up:default`   | Start exactly the 6 default services           |
-| `npm run compose:down:volumes` | Stop all services and remove volumes           |
-| `npm run compose:up`           | Start default services                         |
-| `npm run compose:down`         | Stop all services                              |
-| `npm run compose:logs`         | Follow all service logs                        |
-| `npm run compose:ps`           | Show service status                            |
-| `npm run compose:quality`      | Start SonarQube                                |
-| `npm run compose:identity`     | Start Keycloak                                 |
-| `npm run compose:cloud`        | Start LocalStack                               |
-| `npm run compose:sentry`       | Start Sentry                                   |
+| Script                         | Action                                                                  |
+| ------------------------------ | ----------------------------------------------------------------------- |
+| `npm run compose:config`       | Validate compose.yaml syntax (default profile)                          |
+| `npm run compose:config:all`   | Validate compose.yaml syntax (all profiles, including shared instances) |
+| `npm run compose:up:default`   | Start exactly the 6 default services                                    |
+| `npm run compose:down:volumes` | Stop all services and remove volumes                                    |
+| `npm run compose:up`           | Start default services                                                  |
+| `npm run compose:down`         | Stop all services                                                       |
+| `npm run compose:logs`         | Follow all service logs                                                 |
+| `npm run compose:ps`           | Show service status                                                     |
+| `make sonar-up`                | Start shared SonarQube instance                                         |
+| `npm run compose:identity`     | Start Keycloak                                                          |
+| `npm run compose:cloud`        | Start LocalStack                                                        |
+| `make sentry-up`               | Start shared Sentry instance                                            |

@@ -199,12 +199,14 @@ The 4 environments form a confidence progression, each testing a distinct proper
 - **Before the stage:** app data volumes (Postgres, Redis, ClickHouse, MinIO) are removed via
   `make compose-down-reset`. Keycloak and SonarQube volumes are preserved by default.
 - **After the stage:** same selective reset — app data destroyed, JVM data preserved.
-- **JVM volume preservation:** Keycloak and SonarQube are JVM services that take 2-4 minutes
-  to initialize from scratch. Their data volumes are preserved across destructive stages to
+- **JVM volume preservation:** Keycloak is a JVM service that takes 2-4 minutes
+  to initialize from scratch. Its data volumes are preserved across destructive stages to
   keep pipeline run times practical. Controlled by `PRESERVE_JVM_VOLUMES`:
   - `PRESERVE_JVM_VOLUMES=true` (default): `docker compose down` + selective `docker volume rm`
     for `postgres-data`, `redis-data`, `clickhouse-data`, `minio-data`
   - `PRESERVE_JVM_VOLUMES=false`: `docker compose down --volumes` (destroys everything)
+    SonarQube lives in the shared `react-sonar` project with its own dedicated postgres — it is
+    unaffected by per-environment resets regardless of `PRESERVE_JVM_VOLUMES`.
 - **Purpose:** verify that the application bootstraps, migrates, seeds, and operates correctly
   from a bare starting point. This catches missing migrations, broken seed scripts, and
   assumptions about pre-existing data.

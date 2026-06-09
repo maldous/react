@@ -44,13 +44,13 @@ stage-prod:
 
 # ── Persistent environment lifecycle ─────────────────────────────────────────
 
-## env-up-all — Start all four isolated environments with all profiles and leave them running
-## Project names: react-dev (Tilt core + Compose profiles), react-test, react-staging, react-prod
-## All environments are capability-identical: default+identity+quality+sentry+external-mocks+observability+web
+## env-up-all — Start all four isolated environments and leave them running
+## Project names: react-dev (Tilt), react-test, react-staging, react-prod (Compose).
+## Sentry is shared across all environments — started once via sentry-up.
 env-up-all:
 	$(call STEP,env-up-all: starting all environments)
 	@printf '$(BOLD)▶ Starting react-dev (Tilt — all profiles via Tiltfile)...$(RESET)\n'
-	$(MAKE) tilt-up
+	$(MAKE) dev-up
 	@printf '$(BOLD)▶ Starting react-test (all profiles)...$(RESET)\n'
 	$(MAKE) test-up
 	@printf '$(BOLD)▶ Starting react-staging (all profiles)...$(RESET)\n'
@@ -62,8 +62,7 @@ env-up-all:
 ## env-down-all — Stop all four environments
 env-down-all:
 	$(call STEP,env-down-all: stopping all environments)
-	-$(MAKE) tilt-down
-	-$(MAKE) compose-down ENV=dev
+	-$(MAKE) dev-down
 	-$(MAKE) compose-down ENV=test
 	-$(MAKE) compose-down ENV=staging
 	-$(MAKE) compose-down ENV=prod
@@ -73,7 +72,7 @@ env-down-all:
 env-status:
 	$(call STEP,env-status)
 	@printf '\n$(BOLD)── react-dev ────────────────────────────────────────$(RESET)\n'
-	@docker/compose-wrapper.sh dev ps 2>/dev/null || printf '  (not running)\n'
+	@printf '  Dev uses Tilt — check http://localhost:10350 for status.\n'
 	@printf '\n$(BOLD)── react-test ───────────────────────────────────────$(RESET)\n'
 	@docker/compose-wrapper.sh test ps 2>/dev/null || printf '  (not running)\n'
 	@printf '\n$(BOLD)── react-staging ────────────────────────────────────$(RESET)\n'

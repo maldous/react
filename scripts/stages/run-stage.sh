@@ -106,7 +106,6 @@ if [ "$STAGE_RESULT" -eq 0 ]; then
         bash scripts/compose/up.sh "$STAGE" default || STAGE_RESULT=1
         [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" identity || STAGE_RESULT=1; }
         [ "$STAGE_RESULT" -eq 0 ] && { make keycloak-provision ENV="$STAGE" || STAGE_RESULT=1; }
-        [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" quality || STAGE_RESULT=1; }
         [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" external-mocks || STAGE_RESULT=1; }
         [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" observability || STAGE_RESULT=1; }
         [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" web || STAGE_RESULT=1; }
@@ -136,14 +135,24 @@ if [ "$STAGE_RESULT" -eq 0 ] && [ "$DATA_POLICY" = "destructive" ]; then
     POSTGRES_URL="$_pg_url_m" npm run db:seed || STAGE_RESULT=1
 fi
 
-# ── 9. Test groups ────────────────────────────────────────────────────────────
+# ── 9. SonarQube quality gate (test stage only) ──────────────────────────────
+# test is the gating stage: every issue must be clean before promoting to
+# staging/prod.  The shared SonarQube instance token is auto-provisioned from
+# scratch if needed, so this works on first-ever run after a DB reset.
+
+if [ "$STAGE_RESULT" -eq 0 ] && [ "$STAGE" = "test" ]; then
+    printf '%s▶ SonarQube quality gate (test stage)…%s\n' "$YELLOW" "$RESET"
+    make sonar || STAGE_RESULT=1
+fi
+
+# ── 10. Test groups ────────────────────────────────────────────────────────────
 
 if [ "$STAGE_RESULT" -eq 0 ] && [ -n "$REQUIRED_CSV" ]; then
     bash scripts/tests/run-env-tests.sh "$STAGE" "$REQUIRED_CSV" "$EXCLUDED_CSV" \
         || STAGE_RESULT=1
 fi
 
-# ── 10. (reserved — E2E coverage owned by policy test groups in step 9) ─────
+# ── (reserved — E2E coverage owned by policy test groups in step 10) ─────
 
 # ── 11 + 12. Teardown ─────────────────────────────────────────────────────────
 

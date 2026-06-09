@@ -38,7 +38,7 @@ tilt up
 | web            | `make compose-up-web`            | platform-api + React SPA on :80                   |
 | identity       | `make compose-up-identity`       | Keycloak                                          |
 | external-mocks | `make compose-up-external-mocks` | WireMock                                          |
-| quality        | `make compose-up-quality`        | SonarQube                                         |
+| external-sonar | `make sonar-up`                  | SonarQube (shared instance)                       |
 
 ## Tilt feedback loop
 
@@ -111,4 +111,4 @@ node tools/architecture/orchestrator/src/index.mjs all --no-reports --strict
 | Mailpit             | 8025 | <http://localhost:8025>              |
 | WireMock            | 8089 | <http://localhost:8089/__admin/>     |
 | Keycloak            | 8080 | <http://localhost:8080>              |
-| SonarQube           | 9003 | <http://localhost:9003>              |
+| SonarQube           | 9064 | <http://localhost:9064/sonar>        |

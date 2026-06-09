@@ -100,14 +100,14 @@ Use Docker Compose with profile-gated services.
 
 ### Profiles
 
-| Profile        | Services                                                                                                                                                                                                                                                                                      | Adapter(s)                                                                                                              |
-| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| (default)      | postgres, redis, clickhouse, minio, mailpit, otel-collector                                                                                                                                                                                                                                   | adapters-postgres, adapters-redis, adapters-clickhouse, adapters-object-storage, adapters-brevo, adapters-opentelemetry |
-| quality        | sonarqube, sonar-postgres                                                                                                                                                                                                                                                                     | code quality (report-only)                                                                                              |
-| identity       | keycloak, keycloak-postgres                                                                                                                                                                                                                                                                   | adapters-keycloak                                                                                                       |
-| cloud-mocks    | localstack                                                                                                                                                                                                                                                                                    | adapters-object-storage (S3), queue testing                                                                             |
-| external-mocks | wiremock                                                                                                                                                                                                                                                                                      | external HTTP API adapters / service virtualisation / future adapter contract tests                                     |
-| sentry         | sentry-kafka, sentry-memcached, sentry-relay, sentry-snuba-api, sentry-snuba-errors, sentry-snuba-replacer, sentry-web, sentry-events-consumer, sentry-post-process-forwarder, sentry-taskbroker, sentry-taskworker, sentry-taskscheduler, sentry-cleanup (+ two one-shot migration services) | adapters-sentry, error monitoring                                                                                       |
+| Profile         | Services                                                                                                                                                                                                                                                                                      | Adapter(s)                                                                                                              |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| (default)       | postgres, redis, clickhouse, minio, mailpit, otel-collector                                                                                                                                                                                                                                   | adapters-postgres, adapters-redis, adapters-clickhouse, adapters-object-storage, adapters-brevo, adapters-opentelemetry |
+| external-sonar  | sonarqube, sonar-postgres                                                                                                                                                                                                                                                                     | code quality (shared instance)                                                                                          |
+| identity        | keycloak, keycloak-postgres                                                                                                                                                                                                                                                                   | adapters-keycloak                                                                                                       |
+| cloud-mocks     | localstack                                                                                                                                                                                                                                                                                    | adapters-object-storage (S3), queue testing                                                                             |
+| external-mocks  | wiremock                                                                                                                                                                                                                                                                                      | external HTTP API adapters / service virtualisation / future adapter contract tests                                     |
+| external-sentry | sentry-kafka, sentry-memcached, sentry-relay, sentry-snuba-api, sentry-snuba-errors, sentry-snuba-replacer, sentry-web, sentry-events-consumer, sentry-post-process-forwarder, sentry-taskbroker, sentry-taskworker, sentry-taskscheduler, sentry-cleanup (+ two one-shot migration services) | adapters-sentry, error monitoring                                                                                       |
 
 ### Image pinning
 
@@ -120,14 +120,13 @@ All credentials use environment variable substitution with safe development defa
 ### Port assignments
 
 | Service        | Host port(s)               | Note                                                   |
-| -------------- | -------------------------- | ------------------------------------------------------ |
+| -------------- | -------------------------- | ------------------------------------------------------ | --- | --------- | ---- | ------------------------------------------------ |
 | postgres       | 5433                       | System postgresql disabled; port 5432 in use           |
 | redis          | 6379                       | System redis-server disabled                           |
 | clickhouse     | 8124 (HTTP), 9002 (native) | 8123 in use (homeassistant); 9000 conflicts with minio |
 | minio          | 9000 (API), 9001 (console) |                                                        |
 | mailpit        | 1025 (SMTP), 8025 (UI)     |                                                        |
-| otel-collector | 4317 (gRPC), 4318 (HTTP)   |                                                        |
-| sonarqube      | 9003                       | 9000 conflicts with minio                              |
+| otel-collector | 4317 (gRPC), 4318 (HTTP)   |                                                        |     | sonarqube | 9064 | Dedicated sonar-postgres; shared across all envs |
 | keycloak       | 8080                       |                                                        |
 | localstack     | 4566                       |                                                        |
 | sentry-web     | 9010                       | 9000 conflicts with minio                              |
@@ -165,7 +164,7 @@ curl http://localhost:${WIREMOCK_PORT:-8089}/__platform/mock/ping
 
 ### Sonar profile note
 
-The SonarQube instance in the `quality` profile supersedes the `/opt/sonar-scanner-7.3` installation for local development. `sonar-project.properties` is updated to target `http://localhost:9003`.
+The SonarQube instance in the `external-sonar` profile is a single shared instance (like Sentry) that serves all environments. It lives in its own compose project (`react-sonar`) with a dedicated `sonar-postgres`, immune to per-environment resets. `sonar-project.properties` targets `http://localhost:9064/sonar`. Start with `make sonar-up`; scan with `make sonar`.
 
 ## Rationale
 
@@ -196,7 +195,7 @@ The `cloud-mocks` profile mounts the Docker socket (`/var/run/docker.sock`). Thi
 
 **Neutral / operational:**
 
-- `docker compose config` (default profile) and `docker compose config --profile quality --profile identity --profile cloud-mocks --profile sentry` (all-profiles) are added to the CI `quality-gates` job as syntax gates. No services start in CI.
+- `docker compose config` (default profile) and `docker compose config --profile external-sonar --profile identity --profile cloud-mocks --profile external-sentry` (all-profiles) are added to the CI `quality-gates` job as syntax gates. No services start in CI.
 - On the validation host, system `postgresql`, `redis-server`, and `mailhog` were stopped to free ports during evidence collection. This is a description of the validation environment, not a repository requirement. Developers may instead set `POSTGRES_PORT`, `REDIS_PORT`, etc. in `.env` to use non-conflicting host ports.
 - Adding a new adapter package should be accompanied by a matching service in `compose.yaml`.
 

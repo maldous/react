@@ -15,7 +15,7 @@ SHELL := /bin/bash
 .SHELLFLAGS := -eu -o pipefail -c
 .DEFAULT_GOAL := all
 
-# Load .env if present (provides SONAR_TOKEN, SONAR_HOST_URL, etc.)
+# Load .env if present (provides env vars for local development)
 -include .env
 export
 
@@ -25,7 +25,6 @@ include make/env.mk
 include make/clean.mk
 include make/quality.mk
 include make/compose.mk
-include make/tilt.mk
 include make/test.mk
 include make/e2e.mk
 include make/stages.mk

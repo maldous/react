@@ -2,8 +2,9 @@
 set -euo pipefail
 # Usage: up.sh <ENV> <PROFILE> [extra docker-compose args...]
 # Starts the given compose profile for ENV with retry on failure.
-# PROFILE values: default | identity | quality | observability |
-#                 cloud | sentry | external-mocks | web
+# PROFILE values: default | identity | observability |
+#                 cloud | external-sentry | external-sonar |
+#                 external-mocks | external-web | web
 
 ENV="${1:?ENV required}"
 PROFILE="${2:?PROFILE required}"
@@ -28,11 +29,6 @@ case "$PROFILE" in
     PROFILE_FLAG="--profile identity"
     TIMEOUT=360
     ;;
-  quality)
-    SERVICES="sonarqube"
-    PROFILE_FLAG="--profile quality"
-    TIMEOUT=420
-    ;;
   observability)
     SERVICES="loki grafana alloy"
     PROFILE_FLAG="--profile observability"
@@ -42,6 +38,14 @@ case "$PROFILE" in
     SERVICES="localstack"
     PROFILE_FLAG="--profile cloud-mocks"
     TIMEOUT=120
+    ;;
+  external-sonar)
+    # Shared SonarQube instance, dedicated postgres. Lives in react-sonar project
+    # so it is immune to per-env compose-down-reset.
+    SERVICES="sonar-postgres sonarqube"
+    PROFILE_FLAG="--profile external-sonar"
+    TIMEOUT=420
+    COMPOSE_CMD="docker/compose-wrapper.sh sonar"
     ;;
   external-sentry)
     # List every sentry-* service explicitly so docker compose only starts those.

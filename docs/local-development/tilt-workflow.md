@@ -1,7 +1,18 @@
 # Tilt local development workflow
 
-Tilt provides a real-time local development feedback loop (ADR-0027).
-It orchestrates Compose services, dev servers, and quality checks through a single `tilt up` command.
+Tilt is the **only** executor for the dev environment (ADR-0027, ADR-ACT-0201).
+`make dev-up` delegates to Tilt. Compose is used for test, staging, and prod.
+
+**Environment model:**
+
+| Environment | Executor | App access                          |
+| ----------- | -------- | ----------------------------------- |
+| dev         | Tilt     | Direct localhost ports (5173, 3001) |
+| test        | Compose  | Caddy web profile                   |
+| staging     | Compose  | Caddy web profile                   |
+| prod        | Compose  | Caddy web profile                   |
+
+Tilt orchestrates Compose infra (default profile), dev servers with hot-reload, and quality checks.
 
 ## Prerequisites
 

@@ -91,6 +91,10 @@ SENTRY_OPTIONS["system.secret-key"] = os.environ["SENTRY_SECRET_KEY"]
 # ── Public URL (used in alert emails, issue links, and redirect generation) ──
 # Set SENTRY_URL_PREFIX to the full path-prefixed public URL so Sentry generates
 # /sentry/... links and redirect targets instead of bare /... paths.
+# Note: Do NOT set FORCE_SCRIPT_NAME — it causes redirect loops because Django's
+# auth middleware compares request.path (includes /sentry/) with LOGIN_URL
+# (does not include /sentry/), so the "already on login page" check fails.
+# The Vite proxy handles path-prefix stripping transparently.
 SENTRY_OPTIONS["system.url-prefix"] = os.environ.get(
     "SENTRY_URL_PREFIX", "http://localhost:9060"
 )

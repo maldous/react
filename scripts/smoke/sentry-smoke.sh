@@ -10,11 +10,14 @@ YELLOW=$(tput setaf 3 2>/dev/null || true)
 RED=$(tput setaf 1 2>/dev/null || true)
 RESET=$(tput sgr0 2>/dev/null || true)
 
-# sentry-web must answer its own health endpoint first
+# sentry-web must answer its own health endpoint first.
+# Uses /api/0/ instead of /_health/ because FORCE_SCRIPT_NAME=/sentry in
+# sentry.conf.py causes granian's /_health/ to redirect (Django treats
+# "_health" as an org slug). /api/0/ returns 200 without auth.
 if ! docker/compose-wrapper.sh sentry exec sentry-web \
-    python3 -c "import urllib.request; urllib.request.urlopen('http://localhost:9000/_health/',timeout=5)" \
+    python3 -c "import urllib.request; urllib.request.urlopen('http://localhost:9000/api/0/',timeout=5)" \
     > /dev/null 2>&1; then
-    printf '%s✗ sentry-smoke: sentry-web /_health/ not responding%s\n' "$RED" "$RESET"
+    printf '%s✗ sentry-smoke: sentry-web /api/0/ not responding%s\n' "$RED" "$RESET"
     exit 1
 fi
 

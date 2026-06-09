@@ -21,7 +21,7 @@ timeout 60 bash -c \
     || true
 
 # Verify ports free (spare JVM ports)
-_jvm_ports="$(grep -oP '(?:KEYCLOAK|SONAR)_PORT=\K\d+' ".env.${ENV}" 2>/dev/null \
+_jvm_ports="$(grep -oP 'KEYCLOAK_PORT=\K\d+' ".env.${ENV}" 2>/dev/null \
     | tr '\n' '|' | sed 's/|$//')"
 
 for port in 5173 10350 $(grep -oP '_PORT=\K\d+' ".env.${ENV}" 2>/dev/null \

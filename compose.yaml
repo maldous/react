@@ -3,11 +3,11 @@ name: react-platform
 # Profile guide:
 #   (none)           ? default: postgres, redis, clickhouse, minio, mailpit, otel-collector
 #   web              ? platform-api BFF + react SPA (Caddy); wires the full app on :80
-#   quality          ? sonarqube + sonar-postgres
 #   identity         ? keycloak + keycloak-postgres
 #   cloud-mocks      ? localstack
 #   external-mocks   ? wiremock for deterministic external HTTP API mocks
-#   sentry           ? full self-hosted Sentry 26.5.2, errors-only (kafka, snuba, relay, taskworker)
+#   external-sonar   ? sonarqube + sonar-postgres (shared instance, react-sonar project)
+#   external-sentry  ? full self-hosted Sentry 26.5.2 (shared instance, react-sentry project)
 #
 # Port map ? defaults shown; override any via .env (e.g. POSTGRES_PORT=5434):
 #   POSTGRES_PORT=5433          REDIS_PORT=6379
@@ -15,7 +15,7 @@ name: react-platform
 #   MINIO_API_PORT=9000         MINIO_CONSOLE_PORT=9001
 #   MAILPIT_SMTP_PORT=1025      MAILPIT_UI_PORT=8025
 #   OTEL_GRPC_PORT=4317         OTEL_HTTP_PORT=4318    OTEL_HEALTH_PORT=13133
-#   SONAR_PORT=9003             KEYCLOAK_PORT=8090
+#   SONAR_PORT=9064             KEYCLOAK_PORT=8090
 #   LOCALSTACK_PORT=4566
 #   WIREMOCK_PORT=8089          WEB_HTTP_PORT=80
 #   PGADMIN_PORT=5050
@@ -31,10 +31,6 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-platform}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-platformpassword}
       POSTGRES_DB: ${POSTGRES_DB:-platform}
-      # Extra database for SonarQube (init script creates it)
-      SONAR_DB_USER: ${SONAR_DB_USER:-sonar}
-      SONAR_DB_PASSWORD: ${SONAR_DB_PASSWORD:-sonarpassword}
-      SONAR_DB_NAME: ${SONAR_DB_NAME:-sonar}
       # pgAdmin roles — non-superuser so RLS applies (init script creates them)
       PGADMIN_DB_PASSWORD: ${PGADMIN_DB_PASSWORD:-pgadmin-sysadmin-password}
       PGADMIN_TENANT_DB_PASSWORD: ${PGADMIN_TENANT_DB_PASSWORD:-pgadmin-tenant-password}
@@ -194,27 +190,47 @@ services:
     restart: unless-stopped
 
   # ---------------------------------------------------------------------------
-  # QUALITY PROFILE ? `docker compose --profile quality up -d sonarqube`
-  # SonarQube uses the shared postgres instance (sonar db created by init script).
+  # EXTERNAL-SONAR PROFILE — single shared instance; `make sonar-up`
+  # Lives in compose project `react-sonar` (independent of per-env stacks),
+  # mirroring the Sentry shared-service pattern. Started/stopped via
+  # `docker/compose-wrapper.sh sonar --profile external-sonar`.
+  # Has its own dedicated sonar-postgres so it survives per-env down/reset.
   # ---------------------------------------------------------------------------
+
+  sonar-postgres:
+    image: postgres:16.6-alpine
+    profiles: [external-sonar]
+    environment:
+      POSTGRES_USER: ${SONAR_DB_USER:-sonar}
+      POSTGRES_PASSWORD: ${SONAR_DB_PASSWORD:-sonarpassword}
+      POSTGRES_DB: ${SONAR_DB_NAME:-sonar}
+    volumes:
+      - sonar-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${SONAR_DB_USER:-sonar} -d ${SONAR_DB_NAME:-sonar}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
 
   sonarqube:
     image: sonarqube:lts-community
-    profiles: [quality]
+    profiles: [external-sonar]
     depends_on:
-      postgres:
+      sonar-postgres:
         condition: service_healthy
     environment:
-      SONAR_JDBC_URL: jdbc:postgresql://postgres:5432/${SONAR_DB_NAME:-sonar}
+      SONAR_JDBC_URL: jdbc:postgresql://sonar-postgres:5432/${SONAR_DB_NAME:-sonar}
       SONAR_JDBC_USERNAME: ${SONAR_DB_USER:-sonar}
       SONAR_JDBC_PASSWORD: ${SONAR_DB_PASSWORD:-sonarpassword}
       # Disable ES bootstrap checks (required without vm.max_map_count sysctl)
       SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
-      # Serve SonarQube under /sonar so Caddy can proxy it at aldous.info/sonar/*
+      # Serve SonarQube under /sonar so Caddy / Vite can proxy it at <host>/sonar/*
       SONAR_WEB_CONTEXT: ${SONAR_WEB_CONTEXT:-/sonar}
-      # Default credentials: admin / admin ? change on first login; do not commit tokens
+      # Default credentials: admin / admin — change on first login; do not commit tokens
     ports:
-      - "${SONAR_PORT:-9003}:9000"
+      - "${SONAR_PORT:-9064}:9000"
     volumes:
       - sonarqube-data:/opt/sonarqube/data
       - sonarqube-extensions:/opt/sonarqube/extensions
@@ -636,13 +652,14 @@ services:
           - sentry-web
     healthcheck:
       # The official getsentry/sentry image does not ship curl/wget. Use Python
-      # (always present) to probe the granian /_health/ endpoint. urlopen raises
-      # on non-2xx and on connection/timeout failures, so no explicit status check
-      # is needed.
+      # Use /api/0/ instead of /_health/ because FORCE_SCRIPT_NAME=/sentry in
+      # sentry.conf.py causes granian's /_health/ to redirect (Django treats
+      # "_health" as an org slug). /api/0/ is a Sentry API endpoint that returns
+      # 200 without auth — works correctly regardless of SCRIPT_NAME.
       test:
         [
           "CMD-SHELL",
-          'python -c ''import urllib.request; urllib.request.urlopen("http://localhost:9000/_health/", timeout=5)''',
+          'python -c ''import urllib.request; urllib.request.urlopen("http://localhost:9000/api/0/", timeout=5)''',
         ]
       interval: 30s
       timeout: 10s
@@ -1085,6 +1102,7 @@ volumes:
   redis-data:
   clickhouse-data:
   minio-data:
+  sonar-postgres-data:
   sonarqube-data:
   sonarqube-extensions:
   sonarqube-logs:
