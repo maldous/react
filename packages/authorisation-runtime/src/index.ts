@@ -70,6 +70,14 @@ export interface IdentityProvider {
   providerId: string;
   config: Record<string, string>;
   enabled: boolean;
+  /**
+   * Keycloak top-level "trust email" flag. When true, Keycloak marks the brokered
+   * user's email verified (appropriate for trusted upstream IdPs such as Google/
+   * Microsoft/Apple, which only release verified emails). Keycloak does not import
+   * the per-token email_verified claim otherwise, so this governs whether the
+   * brokered user's emailVerified is set. Optional; defaults to Keycloak's false.
+   */
+  trustEmail?: boolean;
 }
 
 export interface MfaPolicy {

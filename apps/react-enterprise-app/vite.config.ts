@@ -38,13 +38,20 @@ const bffProxy = {
     target: `http://localhost:${SENTRY_PORT}`,
     changeOrigin: true,
   },
+  // changeOrigin:false — preserve the browser Host (localhost:5173) so the BFF
+  // derives its self-referential URLs (Keycloak public URL, OAuth redirect_uri,
+  // post-login redirect base) from the origin the user is actually on, not the
+  // proxy target. With changeOrigin:true the BFF would emit localhost:<API_PORT>/kc
+  // (which it does not serve) and the broker login chain would 404. The /kc proxy
+  // below keeps changeOrigin:true so Keycloak still sees its strict KC_HOSTNAME.
+  // (ADR-ACT-0157)
   "/auth": {
     target: `http://localhost:${API_PORT}`,
-    changeOrigin: true,
+    changeOrigin: false,
   },
   "/api": {
     target: `http://localhost:${API_PORT}`,
-    changeOrigin: true,
+    changeOrigin: false,
   },
   "/healthz": {
     target: `http://localhost:${API_PORT}`,

@@ -86,7 +86,32 @@ tilt up                            # or run the BFF + SPA directly
 ```
 
 Then open `http://localhost:5173/login`, click a provider, choose a scenario on the mock
-picker, and you are brokered back into the app. `npm run test:e2e:identity` automates this.
+picker, and you are brokered back into the app.
+
+## Broker E2E (`npm run test:e2e:identity`)
+
+With the stack above running, `npm run test:e2e:identity` drives the full real browser flow
+(8 tests, all green): the three verified success flows (google/azure/apple), denied,
+provider-error, the invalid-provider injection guard, and the provider-list secret-leak check.
+
+The suite (`playwright.identity.config.ts`) starts its **own real-auth BFF and Vite on dedicated
+ports (3099 / 5180)** rather than reusing the Tilt dev loop — the Tilt BFF runs with
+`LOCAL_FIXTURE_SESSION`, which would make `/api/session` always return 200 and mask the real
+broker result. `global-setup` registers the test origin as a redirect URI on the `platform-api`
+Keycloak client. It coexists with `tilt up` (different ports); no manual browser setup is needed.
+
+Two alignment details make the chain work on one origin:
+
+- **Vite proxy**: `/auth` and `/api` use `changeOrigin:false` so the BFF derives its Keycloak
+  public URL and OAuth `redirect_uri` from the browser origin; `/kc` uses `changeOrigin:true` so
+  Keycloak keeps its strict `KC_HOSTNAME`. (`/auth/login/sentry` is the only `/auth/*` path not
+  routed to the BFF — it goes to Sentry, matching the deployed Caddy split; everything else,
+  including `/auth/login?provider=`, reaches the BFF.)
+- **`trustEmail=true`** on the seeded mock IdPs: Keycloak's brokered `emailVerified` is governed by
+  this flag, not the per-token `email_verified` claim. `trustEmail=true` is the production-correct
+  setting for trusted upstreams (Google/Microsoft/Apple only release verified emails), so brokered
+  logins succeed. The BFF's `email_verified` rejection gate (`mapKeycloakClaims`) is unit-tested in
+  `packages/adapters-keycloak`; it protects the direct/untrusted path, not trusted brokers.
 
 ## Switching to real providers
 

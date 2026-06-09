@@ -6,27 +6,42 @@ import { defineConfig, devices } from "@playwright/test";
  *   React /login → BFF /auth/login?provider → Keycloak (broker) → mock-oidc
  *               → Keycloak callback → BFF /auth/callback → app session.
  *
- * Unlike playwright.internal.config.ts, the BFF here runs WITHOUT
- * LOCAL_FIXTURE_SESSION so real Keycloak brokering is exercised.
+ * This harness runs its OWN real-auth BFF + Vite on dedicated ports so it does
+ * NOT collide with (or reuse) the Tilt dev loop, which runs the BFF with
+ * LOCAL_FIXTURE_SESSION (that fixture would make /api/session always 200 and
+ * mask the real broker result). Dedicated ports:
+ *   - BFF  : E2E_API_PORT (default 3099), real auth, AUTH_PROVIDER_MODE=mock
+ *   - app  : E2E_APP_PORT (default 5180), Vite, proxying /auth+/api to the BFF
+ * global-setup registers the app origin as a redirect URI on the platform-api
+ * Keycloak client. The Vite proxy keeps /auth+/api on the browser origin
+ * (changeOrigin:false) and /kc on Keycloak (changeOrigin:true), so the whole
+ * chain stays anchored on the app origin and KC_HOSTNAME stays strict.
  *
- * Prerequisites (not started by this config):
- *   make compose-up-default          # redis (+ postgres)
- *   make compose-up-identity         # Keycloak
- *   make keycloak-provision ENV=dev  # platform realm + BFF client
- *   make compose-up-identity-mocks   # mock-oidc fixture
- *   make seed-idps ENV=dev           # register mock-google/azure/apple
+ * Prerequisites (see docs/local-development/mock-identity.md):
+ *   make compose-up-default            # redis + postgres (migrated)
+ *   make compose-up-identity           # Keycloak
+ *   make keycloak-provision ENV=dev    # platform realm + BFF client
+ *   make compose-up-identity-mocks     # mock-oidc fixture
+ *   make seed-idps ENV=dev             # register mock-google/azure/apple
  * Then: npm run test:e2e:identity
  */
-const API_PORT = process.env["PLATFORM_API_PORT"] ?? "3001";
-const APP_PORT = process.env["APP_PORT"] ?? "5174";
+const API_PORT = process.env["E2E_API_PORT"] ?? "3099";
+const APP_PORT = process.env["E2E_APP_PORT"] ?? "5180";
+
+// Load .env.dev (gitignored) into the BFF + Vite servers so they get the same
+// Postgres/Redis/Keycloak/encryption config the dev stack uses — then override
+// the port, force real auth (clear LOCAL_FIXTURE_SESSION) and mock provider mode.
+const loadDevEnv = "set -a; [ -f .env.dev ] && . ./.env.dev; set +a;";
 
 export default defineConfig({
   testDir: "./e2e/identity",
   testMatch: ["**/*.spec.ts"],
+  globalSetup: "./e2e/identity/global-setup.ts",
   fullyParallel: false,
   forbidOnly: !!process.env["CI"],
-  retries: 0,
+  retries: process.env["CI"] ? 1 : 0,
   workers: 1,
+  timeout: 60_000,
   reporter: [["html", { outputFolder: "playwright-report/identity", open: "never" }], ["list"]],
   use: {
     baseURL: `http://localhost:${APP_PORT}`,
@@ -38,21 +53,16 @@ export default defineConfig({
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: [
     {
-      // Real auth (no LOCAL_FIXTURE_SESSION). Inherits KEYCLOAK_*, AUTH_PROVIDER_MODE,
-      // MOCK_OIDC_*, TENANT_SECRET_ENCRYPTION_KEY, REDIS_URL from the environment.
-      command: `node --loader ./apps/platform-api/loader.mjs ./apps/platform-api/src/server/http.ts`,
+      command: `bash -c '${loadDevEnv} exec env PLATFORM_API_PORT=${API_PORT} AUTH_PROVIDER_MODE=mock LOCAL_FIXTURE_SESSION= node --loader ./apps/platform-api/loader.mjs ./apps/platform-api/src/server/http.ts'`,
       url: `http://localhost:${API_PORT}/healthz`,
-      timeout: 30000,
-      reuseExistingServer: !process.env["CI"],
-      env: { PLATFORM_API_PORT: API_PORT, AUTH_PROVIDER_MODE: "mock" },
+      timeout: 30_000,
+      reuseExistingServer: false,
     },
     {
-      command: `cd apps/react-enterprise-app && npx vite --port ${APP_PORT}`,
+      command: `${loadDevEnv} cd apps/react-enterprise-app && PLATFORM_API_PORT=${API_PORT} VITE_E2E=true npx vite --port ${APP_PORT} --strictPort`,
       url: `http://localhost:${APP_PORT}`,
-      timeout: 30000,
-      reuseExistingServer: !process.env["CI"],
-      stderr: "ignore",
-      env: { PLATFORM_API_PORT: API_PORT, VITE_E2E: "true" },
+      timeout: 30_000,
+      reuseExistingServer: false,
     },
   ],
 });

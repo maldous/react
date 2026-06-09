@@ -28,13 +28,13 @@ export function accountId(provider: ProviderKey, scenario: Scenario): string {
 
 export function claimsFor(provider: ProviderKey, scenario: Scenario): FixtureClaims {
   const label = PROVIDER_LABEL[provider];
-  const verified = scenario !== "unverified";
-  const local = scenario === "unverified" ? "unverified" : "verified";
+  const unverified = scenario === "unverified";
+  const local = unverified ? "unverified" : "verified";
   return {
     sub: accountId(provider, scenario),
     email: `${local}.${provider}@mock-idp.test`,
-    email_verified: verified,
-    name: `${label} ${verified ? "Verified" : "Unverified"} User`,
+    email_verified: !unverified,
+    name: `${label} ${unverified ? "Unverified" : "Verified"} User`,
     preferred_username: `${local}.${provider}`,
   };
 }

@@ -223,6 +223,10 @@ export function buildMockIdpDefinitions(settings = getMockOidcSettings()): Ident
       displayName: `Mock ${p.label.replace(/^Continue with /, "")}`,
       providerId: "oidc",
       enabled: true,
+      // Trusted upstream IdPs (Google/Microsoft/Apple) only release verified
+      // emails, so Keycloak marks the brokered email verified. Keycloak does not
+      // import the per-token email_verified claim without this. (ADR-ACT-0157)
+      trustEmail: true,
       config: {
         clientId: `kc-broker-${seg}`,
         clientSecret: settings.clientSecret,
