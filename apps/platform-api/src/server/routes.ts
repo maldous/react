@@ -13,6 +13,7 @@ import {
   parseSessionCookie,
 } from "./auth.ts";
 import { handleForwardAuth } from "./forward-auth.ts";
+import { listEnabledProviders } from "./auth-providers.ts";
 import { getSessionStore, getApplicationPool, getKeycloakConfigForRealm } from "./dependencies.ts";
 import { queryTenantSchema } from "@platform/adapters-postgres";
 import { serverT } from "./i18n.ts";
@@ -167,6 +168,21 @@ export const routes: Route[] = [
     path: "/auth/logout",
     operationName: "auth.logout.redirect",
     handler: handleAuthLogoutRedirect,
+  },
+  // ---------------------------------------------------------------------------
+  // Login provider list (ADR-ACT-0157) — unauthenticated.
+  // Returns the brokered third-party + platform login options the React /login
+  // selector should render. Environment/mode aware; contains NO secrets or
+  // Keycloak credentials. Each item links to the BFF handoff (/auth/login?provider=),
+  // never directly to Keycloak or the mock-oidc fixture.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/auth/providers",
+    operationName: "auth.providers.list",
+    handler: async (_req, res) => {
+      res.json(200, listEnabledProviders());
+    },
   },
   // ---------------------------------------------------------------------------
   // Theme / branding (ADR-0029 ?4) ? unauthenticated, keyed by Host header.

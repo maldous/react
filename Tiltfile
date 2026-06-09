@@ -39,7 +39,7 @@ os.environ['COMPOSE_PROJECT_FILTER'] = 'react-dev'
 # their lifecycle via dc_resource. Sentry and SonarQube are NOT included — they
 # live in separate react-sentry / react-sonar projects shared across all envs
 # and are started via local_resource entries below (make sentry-up / sonar-up).
-docker_compose('./compose.yaml', project_name='react-dev', profiles=['external-mocks', 'identity', 'observability'])
+docker_compose('./compose.yaml', project_name='react-dev', profiles=['external-mocks', 'identity', 'identity-mocks', 'observability'])
 
 dc_resource('postgres',       labels=['infra'])
 dc_resource('redis',          labels=['infra'])
@@ -59,6 +59,21 @@ local_resource(
   cmd='make keycloak-provision ENV=dev',
   labels=['auth'],
   resource_deps=['keycloak'],
+)
+
+# mock-oidc — NON-PRODUCTION upstream IdP fixture (ADR-ACT-0157), Tilt-managed
+# compose service. Keycloak brokers it as mock-google/mock-azure/mock-apple.
+dc_resource('mock-oidc', labels=['auth'],
+  links=[link('http://localhost:9080/', 'mock-oidc')],
+)
+
+# Register the mock broker IdPs on the platform realm once Keycloak is provisioned
+# and mock-oidc is up. Idempotent and safe to re-run.
+local_resource(
+  'seed-idps',
+  cmd='make seed-idps ENV=dev',
+  labels=['auth'],
+  resource_deps=['keycloak-provision', 'mock-oidc'],
 )
 
 

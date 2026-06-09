@@ -9,6 +9,9 @@ export default tseslint.config(
       "**/node_modules/**",
       "reports/**",
       "docs/**",
+      // Standalone NON-PRODUCTION fixture services (own package.json + tsconfig,
+      // built/run in Docker). Not part of the platform lint scope (ADR-ACT-0157).
+      "services/**",
       // Test fixtures contain intentionally broken/varied code
       "tools/architecture/**/tests/fixtures/**",
       // Generated GraphQL artifacts (TypedDocumentNode) — owned by graphql-codegen,

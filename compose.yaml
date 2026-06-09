@@ -325,6 +325,47 @@ services:
     restart: unless-stopped
 
   # ---------------------------------------------------------------------------
+  # IDENTITY-MOCKS PROFILE ? `docker compose --profile identity-mocks up -d mock-oidc`
+  #
+  # mock-oidc: NON-PRODUCTION upstream OIDC identity-provider fixture. Keycloak
+  # brokers it as mock-google / mock-azure / mock-apple (ADR-ACT-0157). Runs on
+  # the default network alongside Keycloak so the backchannel (token/jwks/userinfo)
+  # is reachable at http://mock-oidc:8080/<provider>; the browser uses the published
+  # MOCK_OIDC_PUBLIC_URL (localhost:9080) for authorize + the scenario picker.
+  #
+  # GUARDRAIL: this profile must NEVER be started silently in staging/prod. It is
+  # only valid there as an explicit, temporary pre-real-provider bootstrap
+  # (AUTH_PROVIDER_MODE=mock + ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS=true),
+  # which the BFF startup check logs loudly. WireMock is NOT an OIDC provider
+  # (Keycloak runs a real auth-code flow and validates signed ID tokens with a
+  # dynamic nonce). See docs/local-development/mock-identity.md.
+  # ---------------------------------------------------------------------------
+
+  mock-oidc:
+    build:
+      context: ./services/mock-oidc
+      dockerfile: Dockerfile
+    profiles: [identity-mocks]
+    environment:
+      PORT: "8080"
+      MOCK_OIDC_PUBLIC_URL: ${MOCK_OIDC_PUBLIC_URL:-http://localhost:9080}
+      MOCK_OIDC_REALM: ${KEYCLOAK_REALM:-platform}
+      MOCK_OIDC_KC_BROKER_BASE: ${MOCK_OIDC_KC_BROKER_BASE:-http://localhost:8090/kc/realms/platform/broker}
+      MOCK_OIDC_EXTRA_REDIRECT_URIS: ${MOCK_OIDC_EXTRA_REDIRECT_URIS:-}
+      MOCK_OIDC_CLIENT_SECRET: ${MOCK_OIDC_CLIENT_SECRET:-mock-oidc-shared-secret}
+    ports:
+      # host:container ? host port MUST equal the port in MOCK_OIDC_PUBLIC_URL so
+      # the browser-facing issuer and the published port agree.
+      - "${MOCK_OIDC_PORT:-9080}:8080"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
   # CLOUD-MOCKS PROFILE ? `docker compose --profile cloud-mocks up -d localstack`
   # ---------------------------------------------------------------------------
 

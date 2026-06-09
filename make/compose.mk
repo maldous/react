@@ -1,5 +1,5 @@
 .PHONY: compose-up compose-up-default compose-up-identity \
-        compose-up-cloud compose-up-external-mocks \
+        compose-up-cloud compose-up-external-mocks compose-up-identity-mocks \
         compose-up-web compose-up-observability \
         compose-down compose-down-web compose-down-volumes compose-down-reset \
         compose-ps compose-logs \
@@ -7,7 +7,7 @@
         sentry-up sentry-down sonar-up sonar-down \
         dev-up dev-down test-up staging-up prod-up test-down staging-down prod-down \
         reset-local seed-demo db-migrate db-shell redis-flush-local \
-        keycloak-provision
+        keycloak-provision seed-idps
 
 # ── Compose up ───────────────────────────────────────────────────────────────
 
@@ -42,6 +42,21 @@ compose-up-cloud:
 ## compose-up-external-mocks — Start WireMock (external-mocks profile)
 compose-up-external-mocks:
 	bash scripts/compose/up.sh $(ENV) external-mocks
+
+## compose-up-identity-mocks — Start mock-oidc upstream IdP fixture (identity-mocks profile)
+## Pair with `make compose-up-identity` (Keycloak) and `make seed-idps`. Dev/test only;
+## in staging/prod requires AUTH_PROVIDER_MODE=mock + the explicit bootstrap override.
+compose-up-identity-mocks:
+	$(call STEP,compose: starting mock-oidc ($(ENV)))
+	bash scripts/compose/up.sh $(ENV) identity-mocks
+	$(call OK,mock-oidc ready for $(ENV) — run `make seed-idps` to register broker IdPs)
+
+## seed-idps — Register mock broker IdPs (mock-google/azure/apple) on the platform realm.
+## Idempotent. Requires Keycloak (compose-up-identity) + mock-oidc (compose-up-identity-mocks).
+seed-idps:
+	$(call STEP,seed:idps ($(ENV)))
+	npm run seed:idps
+	$(call OK,mock broker IdPs registered on the platform realm)
 
 ## compose-up-web — Build and start the web profile for ENV (test/staging/prod only)
 ## dev does not use compose web — it uses Tilt. This target hard-fails for ENV=dev.

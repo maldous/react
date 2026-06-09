@@ -73,6 +73,13 @@ case "$PROFILE" in
     PROFILE_FLAG="--profile external-mocks"
     TIMEOUT=60
     ;;
+  identity-mocks)
+    # mock-oidc upstream IdP fixture (ADR-ACT-0157). Built from services/mock-oidc.
+    SERVICES="mock-oidc"
+    PROFILE_FLAG="--profile identity-mocks"
+    TIMEOUT=180
+    EXTRA_FLAGS="--build"
+    ;;
   web)
     SERVICES=""
     PROFILE_FLAG="--profile web"

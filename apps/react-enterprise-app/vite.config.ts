@@ -25,8 +25,10 @@ const SENTRY_PORT = process.env["SENTRY_HOST_PORT"] ?? "9060";
 // Vite mirrors this via the rewrite function where needed.
 const bffProxy = {
   // Sentry auth login — must appear BEFORE the /auth catch-all so
-  // /auth/login/sentry/ routes to sentry, not platform-api.
-  "/auth/login": {
+  // /auth/login/sentry/ routes to sentry, not platform-api. Scoped to the
+  // /auth/login/sentry sub-path so the platform/brokered login handoff
+  // (/auth/login?provider=…) still reaches platform-api (ADR-ACT-0157).
+  "/auth/login/sentry": {
     target: `http://localhost:${SENTRY_PORT}`,
     changeOrigin: true,
   },

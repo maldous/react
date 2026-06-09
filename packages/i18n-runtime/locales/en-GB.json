@@ -18,7 +18,17 @@
       "title": "Sign in",
       "body": "Use your platform account to continue.",
       "signInButton": "Sign in with your account",
-      "footer": "Secure sign-in powered by Keycloak"
+      "footer": "Secure sign-in powered by Keycloak",
+      "chooseProvider": "Choose how to sign in",
+      "loading": "Loading sign-in options…",
+      "error": "Sign-in options are unavailable. Try again shortly.",
+      "empty": "No sign-in options are currently available.",
+      "providers": {
+        "platform": "Continue with platform account",
+        "google": "Continue with Google",
+        "azure": "Continue with Microsoft",
+        "apple": "Continue with Apple"
+      }
     },
     "logout": {
       "label": "Sign out"
@@ -175,6 +185,7 @@
       "emailUnverified": "Your email address has not been verified",
       "authStateMismatch": "Authentication flow error ? please try again",
       "keycloakError": "Keycloak error: {error}",
+      "invalidProvider": "Unknown or unavailable sign-in provider",
       "missingCodeOrState": "Missing code or state parameter",
       "missingPreAuthCookie": "Missing pre-auth cookie",
       "invalidOrExpiredState": "Invalid or expired state parameter",

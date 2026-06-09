@@ -53,8 +53,9 @@ test.describe(`${TARGET_HOST}: wrong credentials`, () => {
 test.describe(`${TARGET_HOST}: deferred auth models (provisioning not yet available)`, () => {
   test.skip(
     true,
-    "OIDC broker login (ADR-ACT-0157): Requires OIDC IdP configured in platform realm. " +
-      "See ACTION-REGISTER for provisioning steps."
+    "OIDC broker login (ADR-ACT-0157): now covered locally by the mock broker suite " +
+      "(e2e/identity/broker-login.spec.ts, `npm run test:e2e:identity`). Stays skipped here " +
+      "because production has no mock providers; un-skip once a real external IdP is configured."
   );
   test("OIDC broker login", async () => {
     /* intentionally empty */

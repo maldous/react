@@ -3,7 +3,7 @@
   "info": {
     "title": "Enterprise Platform REST API",
     "version": "0.1.0",
-    "description": "REST supplementary routes for the enterprise React platform BFF. GraphQL is the primary client boundary per ADR-0013; these routes cover health probes, auth, session management, FQDN-based tenant routing, per-tenant branding, auth settings self-service, and tenant provisioning. ADRs 0028\u20130031 govern the multi-tenant architecture."
+    "description": "REST supplementary routes for the enterprise React platform BFF. GraphQL is the primary client boundary per ADR-0013; these routes cover health probes, auth, session management, FQDN-based tenant routing, per-tenant branding, auth settings self-service, and tenant provisioning. ADRs 0028–0031 govern the multi-tenant architecture."
   },
   "servers": [
     {
@@ -417,10 +417,10 @@
     },
     "/internal/auth/forward": {
       "get": {
-        "summary": "Caddy forward_auth gate \u2014 internal only",
+        "summary": "Caddy forward_auth gate — internal only",
         "operationId": "forwardAuth",
         "tags": ["Internal"],
-        "description": "Called by Caddy before proxying admin/tool UIs. NOT externally reachable \u2014 blocked in Caddyfile public blocks. Requires X-Internal-Secret header. Returns 200 (allow), 401 (no session), 403 (forbidden), or 503 (misconfigured). ADR-0029, ADR-0030, ADR-0031.",
+        "description": "Called by Caddy before proxying admin/tool UIs. NOT externally reachable — blocked in Caddyfile public blocks. Requires X-Internal-Secret header. Returns 200 (allow), 401 (no session), 403 (forbidden), or 503 (misconfigured). ADR-0029, ADR-0030, ADR-0031.",
         "parameters": [
           {
             "name": "resource",
@@ -457,12 +457,57 @@
         }
       }
     },
+    "/api/auth/providers": {
+      "get": {
+        "summary": "Brokered login providers",
+        "operationId": "getAuthProviders",
+        "tags": ["Auth"],
+        "description": "Unauthenticated. Lists the enabled login options the React /login selector should render (platform plus any enabled brokered third-party providers). Environment/mode aware; contains no secrets. Each item links to the BFF handoff /auth/login?provider=. ADR-ACT-0157.",
+        "responses": {
+          "200": {
+            "description": "Enabled login providers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "label": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": ["oidc", "keycloak"]
+                      },
+                      "loginUrl": {
+                        "type": "string"
+                      },
+                      "enabled": {
+                        "type": "boolean"
+                      },
+                      "mode": {
+                        "type": "string",
+                        "enum": ["mock", "real", "internal"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/theme": {
       "get": {
         "summary": "Per-tenant branding configuration",
         "operationId": "getTheme",
         "tags": ["Tenant"],
-        "description": "Returns theme config (logo, colours, displayName) resolved from the tenant schema via Host header. Falls back to platform defaults if tenant not found or schema not seeded. ADR-0029 \u00a74.",
+        "description": "Returns theme config (logo, colours, displayName) resolved from the tenant schema via Host header. Falls back to platform defaults if tenant not found or schema not seeded. ADR-0029 §4.",
         "responses": {
           "200": {
             "description": "Theme config",
@@ -496,7 +541,7 @@
         "summary": "List tenant identity providers",
         "operationId": "listIdps",
         "tags": ["Auth Settings"],
-        "description": "Returns configured IdPs for the tenant realm derived from the Host header. Requires admin.access permission. ADR-0030 \u00a71b.",
+        "description": "Returns configured IdPs for the tenant realm derived from the Host header. Requires admin.access permission. ADR-0030 §1b.",
         "security": [
           {
             "sessionCookie": []
@@ -518,7 +563,7 @@
         "summary": "Create or update identity provider",
         "operationId": "upsertIdp",
         "tags": ["Auth Settings"],
-        "description": "Creates or updates an IdP in the tenant Keycloak realm. Realm derived from Host header \u2014 never from body. ADR-0030 \u00a71b.",
+        "description": "Creates or updates an IdP in the tenant Keycloak realm. Realm derived from Host header — never from body. ADR-0030 §1b.",
         "security": [
           {
             "sessionCookie": []
@@ -806,7 +851,7 @@
         "summary": "Provision a sub-tenant (not yet implemented)",
         "operationId": "createSubTenant",
         "tags": ["Admin"],
-        "description": "Hierarchical tenant provisioning \u2014 tracked in ADR-ACT-0143. Returns 501 until implemented.",
+        "description": "Hierarchical tenant provisioning — tracked in ADR-ACT-0143. Returns 501 until implemented.",
         "security": [
           {
             "sessionCookie": []

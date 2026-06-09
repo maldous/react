@@ -4,6 +4,9 @@ apps/**/node_modules/
 packages/**/node_modules/
 tools/**/node_modules/
 
+# Standalone fixture service build output (services/mock-oidc — ADR-ACT-0157)
+services/**/dist/
+
 # Generated reports (gitignored)
 reports/
 

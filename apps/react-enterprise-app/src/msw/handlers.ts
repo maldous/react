@@ -1,6 +1,8 @@
 import { http, HttpResponse } from "msw";
 import { sessionFixtures, type SessionPersona } from "./fixtures/session.ts";
 import { defaultThemeFixture, type ThemeFixture } from "./fixtures/theme.ts";
+import { providersFixture } from "./fixtures/providers.ts";
+import type { LoginProvider } from "../auth/login-providers.ts";
 import { createGraphqlHandler } from "./graphql/handlers.ts";
 
 // Complete MSW baseline for the SPA (ADR-0019). Every endpoint the app touches
@@ -32,6 +34,23 @@ export function themeErrorHandler(status = 500) {
   return http.get("/api/theme", () => new HttpResponse(null, { status }));
 }
 
+// --- /api/auth/providers ----------------------------------------------------
+
+/** Login provider list (defaults to the mock-mode platform + 3 upstreams). */
+export function providersHandler(providers: LoginProvider[] = providersFixture) {
+  return http.get("/api/auth/providers", () => HttpResponse.json(providers));
+}
+
+/** Empty provider list — drives the "no sign-in options" UI state. */
+export function providersEmptyHandler() {
+  return http.get("/api/auth/providers", () => HttpResponse.json([]));
+}
+
+/** Provider list failure — drives the error UI state. */
+export function providersErrorHandler(status = 503) {
+  return http.get("/api/auth/providers", () => new HttpResponse(null, { status }));
+}
+
 // --- generic helpers --------------------------------------------------------
 
 /** Simulated network failure for any GET endpoint. */
@@ -45,6 +64,7 @@ export function networkErrorHandler(method: "get" | "post", path: string) {
 export const handlers = [
   sessionHandler(null),
   themeHandler(),
+  providersHandler(),
   createGraphqlHandler(),
   http.get("/healthz", () => HttpResponse.json({ status: "ok" })),
   http.get("/readyz", () => HttpResponse.json({ status: "ok" })),

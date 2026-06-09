@@ -5,6 +5,7 @@ import { createRouter } from "./pipeline.ts";
 import { routes } from "./routes.ts";
 import { connectRedis, disconnectRedis } from "./dependencies.ts";
 import { assertEncryptionKeyConfigured } from "./token-crypto.ts";
+import { validateProviderModeAtStartup } from "./auth-providers.ts";
 import { createSentryAdapter } from "./observability.ts";
 
 const LOG_LEVEL = (process.env["LOG_LEVEL"] ?? "info") as PlatformLogLevel;
@@ -16,6 +17,15 @@ async function start(): Promise<void> {
   // Connect Redis before the server starts accepting requests.
   // The auth flow (PKCE state store, session store) requires an active client.
   assertEncryptionKeyConfigured();
+
+  // Identity-provider mode guardrail (ADR-ACT-0157): fail-fast on dangerous
+  // misconfiguration (mock IdPs in staging/prod without the explicit override,
+  // or an explicit real mode with no real provider configured). Throwing here
+  // aborts startup via the start().catch handler below.
+  for (const w of validateProviderModeAtStartup()) {
+    log.warn(w.fields, w.message);
+  }
+
   await connectRedis();
   log.info("Redis connected");
 

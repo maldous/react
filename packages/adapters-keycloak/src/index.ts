@@ -153,6 +153,13 @@ export function buildAuthorizationUrl(
     codeChallenge: string;
     redirectUri: string;
     scope?: string;
+    /**
+     * Keycloak `kc_idp_hint`: routes the user straight to a brokered upstream
+     * identity provider (e.g. mock-google) instead of the Keycloak login form.
+     * MUST be a validated Keycloak IdP alias — never raw user input. The BFF
+     * resolves it from a fixed product→alias map before calling this.
+     */
+    idpHint?: string;
   },
   config: KeycloakClientConfig
 ): string {
@@ -166,6 +173,7 @@ export function buildAuthorizationUrl(
     code_challenge: params.codeChallenge,
     code_challenge_method: "S256",
   });
+  if (params.idpHint) query.set("kc_idp_hint", params.idpHint);
   return `${base}?${query.toString()}`;
 }
 
@@ -251,9 +259,19 @@ export class KeycloakAuthorisationAdapter implements AuthorisationPort {
 export interface KeycloakAdminConfig {
   url: string;
   realm: string;
-  /** Service account client ID with realm-admin role */
+  /** Service account client ID with realm-admin role (client_credentials grant). */
   adminClientId: string;
   adminClientSecret: string;
+  /**
+   * Optional master-realm admin username/password (e.g. the bootstrap `admin`
+   * user via the public `admin-cli` client). When present, getAdminToken uses
+   * the password grant instead of client_credentials. This is the dev/test
+   * seeding path (ADR-ACT-0157) — it needs no pre-provisioned service-account
+   * client and is never used by the production runtime, which configures a
+   * confidential service account with a secret.
+   */
+  adminUsername?: string;
+  adminPassword?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -319,14 +337,25 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
 
   private async getAdminToken(): Promise<string> {
     const tokenUrl = `${this.config.url}/realms/master/protocol/openid-connect/token`;
+    // Password grant via admin-cli (dev/test seeding) when admin user creds are
+    // supplied; otherwise the production client_credentials service-account grant.
+    const body =
+      this.config.adminUsername && this.config.adminPassword
+        ? new URLSearchParams({
+            grant_type: "password",
+            client_id: this.config.adminClientId || "admin-cli",
+            username: this.config.adminUsername,
+            password: this.config.adminPassword,
+          })
+        : new URLSearchParams({
+            grant_type: "client_credentials",
+            client_id: this.config.adminClientId,
+            client_secret: this.config.adminClientSecret,
+          });
     const response = await fetch(tokenUrl, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
-        grant_type: "client_credentials",
-        client_id: this.config.adminClientId,
-        client_secret: this.config.adminClientSecret,
-      }),
+      body,
     });
     if (!response.ok) throw new Error(`Keycloak admin token fetch failed: ${response.status}`);
     const data = (await response.json()) as { access_token: string };

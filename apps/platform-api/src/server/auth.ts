@@ -22,6 +22,7 @@ import {
   isAllowedHost,
 } from "./dependencies.ts";
 import { resolveTenantFromRequest } from "./tenant-resolver.ts";
+import { resolveProviderHint } from "./auth-providers.ts";
 import type { PipelineHandler } from "./pipeline.ts";
 
 function safeRelativeRedirect(raw: string): string {
@@ -148,6 +149,18 @@ export const handleAuthLogin: PipelineHandler = async (req, res) => {
   // Sanitise returnTo: only relative paths are allowed (open-redirect protection)
   const returnTo = rawReturnTo.startsWith("/") ? rawReturnTo : "/";
 
+  // Resolve the requested product provider (google/azure/apple/platform) to a
+  // validated Keycloak kc_idp_hint. Unknown/disabled providers are rejected here
+  // so arbitrary kc_idp_hint values can never be injected via the query string.
+  const providerResult = resolveProviderHint(url.searchParams.get("provider"));
+  if (!providerResult.ok) {
+    res.json(
+      400,
+      toSafeResponse(new ValidationError("api.error.invalidProvider"), (msg) => serverT(msg))
+    );
+    return;
+  }
+
   // Derive the request host for dynamic callback URL and Keycloak public URL.
   // X-Forwarded-Host / X-Forwarded-Proto are set by Caddy and Cloudflare.
   const host =
@@ -172,7 +185,14 @@ export const handleAuthLogin: PipelineHandler = async (req, res) => {
   await getAuthStateStore().put(state, { codeVerifier, returnTo, nonce });
 
   const authUrl = buildAuthorizationUrl(
-    { state, codeChallenge, redirectUri: getAuthCallbackUrl(host, forwardedProto) },
+    {
+      state,
+      codeChallenge,
+      redirectUri: getAuthCallbackUrl(host, forwardedProto),
+      // null for the platform account (normal Keycloak login); a validated broker
+      // alias (e.g. mock-google) for third-party providers.
+      ...(providerResult.idpHint ? { idpHint: providerResult.idpHint } : {}),
+    },
     keycloakCfg
   );
 
