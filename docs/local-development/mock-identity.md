@@ -94,6 +94,10 @@ tilt up                            # or run the BFF + SPA directly
 Then open `http://localhost:5173/login`, click a provider, choose a scenario on the mock
 picker, and you are brokered back into the app.
 
+For a **staging/prod stakeholder demo** (including exposing the mock fixture to external
+browsers via `mock-idp.staging.aldous.info` / `mock-idp.aldous.info` through external Caddy),
+see `docs/local-development/mock-idp-staging-prod-runbook.md`.
+
 ## Broker E2E (`npm run test:e2e:identity`)
 
 With the stack above running, `npm run test:e2e:identity` drives the full real browser flow

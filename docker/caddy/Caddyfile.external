@@ -57,21 +57,59 @@
 # ---------------------------------------------------------------------------
 # Production — aldous.info (port 83 internal Caddy)
 # ---------------------------------------------------------------------------
+# Routing uses `handle` blocks (ordered, mutually exclusive, first match wins),
+# so the mock-idp.* hosts are matched BEFORE the *.staging / *.aldous wildcards
+# below, which would otherwise swallow them.
 :80 {
+	# =========================================================================
+	# NON-PRODUCTION / TEMPORARY DEMO ONLY (ADR-ACT-0157)
+	# -------------------------------------------------------------------------
+	# mock-idp.* reverse-proxy the SHARED mock-oidc fixture so external
+	# stakeholders can complete the brokered MOCK Google/Microsoft/Apple flow
+	# from their own browser. external-caddy is network_mode:host, so the shared
+	# mock-oidc (react-shared project) is reached at the host-published port 9080.
+	#
+	#   * These are MOCK identity providers — never real Google/Microsoft/Apple.
+	#   * Only valid while AUTH_PROVIDER_MODE=mock AND
+	#     ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS=true on the target env.
+	#   * Never put real provider credentials behind these hosts.
+	#   * REMOVE the Cloudflare DNS for mock-idp.staging.aldous.info /
+	#     mock-idp.aldous.info, and delete these two handle blocks, after the demo.
+	# =========================================================================
+	@mock_idp_staging host mock-idp.staging.aldous.info
+	handle @mock_idp_staging {
+		reverse_proxy localhost:9080 {
+			header_up X-Forwarded-Host {host}
+			header_up X-Forwarded-Proto https
+		}
+	}
+
+	@mock_idp_prod host mock-idp.aldous.info
+	handle @mock_idp_prod {
+		reverse_proxy localhost:9080 {
+			header_up X-Forwarded-Host {host}
+			header_up X-Forwarded-Proto https
+		}
+	}
+
 	# Staging — staging.aldous.info -> localhost:82 (staging internal Caddy)
 	# X-Forwarded-Proto is hardcoded https: these domains are ALWAYS behind
 	# Cloudflare which terminates TLS. {scheme} here is always http (external
 	# Caddy receives plain HTTP from Cloudflare) so it cannot be used.
 	@staging host staging.aldous.info *.staging.aldous.info
-	reverse_proxy @staging localhost:82 {
-		header_up X-Forwarded-Host {host}
-		header_up X-Forwarded-Proto https
+	handle @staging {
+		reverse_proxy localhost:82 {
+			header_up X-Forwarded-Host {host}
+			header_up X-Forwarded-Proto https
+		}
 	}
 
 	# Production — aldous.info -> localhost:83 (prod internal Caddy)
 	@prod host aldous.info *.aldous.info
-	reverse_proxy @prod localhost:83 {
-		header_up X-Forwarded-Host {host}
-		header_up X-Forwarded-Proto https
+	handle @prod {
+		reverse_proxy localhost:83 {
+			header_up X-Forwarded-Host {host}
+			header_up X-Forwarded-Proto https
+		}
 	}
 }
