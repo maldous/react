@@ -51,6 +51,7 @@ printf '  requestId = %s\n' "$REQ_ID"
 QUERY="{service=\"platform-api\"} | json | requestId=\"${REQ_ID}\""
 DEADLINE=$(( $(date +%s) + 30 ))
 
+FOUND=0
 while [ "$(date +%s)" -lt "$DEADLINE" ]; do
   END=$(( $(date +%s) * 1000000000 ))
   START=$(( END - 600000000000 ))   # last 10 minutes
@@ -63,12 +64,41 @@ while [ "$(date +%s)" -lt "$DEADLINE" ]; do
   if [ "${COUNT:-0}" -gt 0 ]; then
     printf '%s✓ loki-smoke: Loki has %s platform-api line(s) with requestId %s%s\n' \
       "$GREEN" "$COUNT" "$REQ_ID" "$RESET"
-    exit 0
+    FOUND=1
+    break
   fi
   sleep 3
 done
 
-printf '%s✗ loki-smoke: requestId %s not found in Loki within 30s%s\n' "$RED" "$REQ_ID" "$RESET"
-printf '%s  (Alloy scrape lag, or this env does not ingest platform-api logs)%s\n' \
-  "$YELLOW" "$RESET"
-exit 1
+if [ "$FOUND" -ne 1 ]; then
+  printf '%s✗ loki-smoke: requestId %s not found in Loki within 30s%s\n' "$RED" "$REQ_ID" "$RESET"
+  printf '%s  (Alloy scrape lag; this env does not ingest platform-api request logs; or%s\n' \
+    "$YELLOW" "$RESET"
+  printf '%s   LOG_LEVEL > info suppresses http.request.complete — ADR-0035 needs info)%s\n' \
+    "$YELLOW" "$RESET"
+  exit 1
+fi
+
+# ── 3. Label-cardinality guard (ADR-0035 / ADR-ACT-0202) ───────────────────────
+# High-cardinality fields must be JSON / structured metadata, NEVER Loki labels.
+# Fail if any forbidden field has been promoted to an indexed label.
+_NOW=$(date +%s)
+LABELS=$(curl -fsS -G "${LOKI}/loki/api/v1/labels" \
+  --data-urlencode "start=$(( _NOW - 3600 ))" --data-urlencode "end=${_NOW}" 2>/dev/null \
+  | python3 -c "import sys,json; print(' '.join(json.load(sys.stdin).get('data',[])))" 2>/dev/null || true)
+printf '  loki labels: %s\n' "$LABELS"
+FORBIDDEN="requestId traceId spanId actorId tenantId organisationId route path method status durationMs operationName errorCode"
+VIOLATIONS=""
+for f in $FORBIDDEN; do
+  for l in $LABELS; do
+    [ "$l" = "$f" ] && VIOLATIONS="${VIOLATIONS} ${f}"
+  done
+done
+if [ -n "$VIOLATIONS" ]; then
+  printf '%s✗ loki-smoke: high-cardinality field(s) promoted to Loki labels:%s%s\n' \
+    "$RED" "$VIOLATIONS" "$RESET"
+  exit 1
+fi
+printf '%s✓ loki-smoke: label cardinality OK — no high-cardinality fields are labels%s\n' \
+  "$GREEN" "$RESET"
+exit 0

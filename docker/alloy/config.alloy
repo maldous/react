@@ -7,10 +7,12 @@
 // Docker project labels are accepted, ensuring logs from different environments
 // never mix even when all four stacks run concurrently.
 //
-// Label policy (ADR-0032):
+// Label policy (ADR-0035):
 //   LOW-cardinality → Loki labels:    service, environment, level
-//   HIGH-cardinality → structured metadata: requestId, traceId, actorId,
-//                                             tenantId, organisationId, path
+//   HIGH-cardinality → structured metadata (searchable via `| json | field="v"`,
+//     never indexed labels): requestId, traceId, spanId, actorId, tenantId,
+//     organisationId, route, path, method, status, durationMs, operationName,
+//     errorCode. Promoting any of these to a label causes Loki index bloat.
 
 logging {
   level  = "warn"
@@ -82,6 +84,7 @@ loki.process "platform_logs" {
       operation      = "operation",
       operationName  = "operationName",
       method         = "method",
+      route          = "route",
       path           = "path",
       status         = "status",
       durationMs     = "durationMs",
@@ -110,6 +113,7 @@ loki.process "platform_logs" {
       organisationId = "",
       operationName  = "",
       method         = "",
+      route          = "",
       path           = "",
       status         = "",
       durationMs     = "",
