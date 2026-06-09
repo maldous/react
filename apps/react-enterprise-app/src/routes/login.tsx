@@ -90,7 +90,7 @@ function ProviderRow({ provider }: { provider: LoginProvider }) {
             </Badge>
           )}
         </span>
-        {help && <span className="mt-0.5 block truncate text-xs text-fg-muted">{help}</span>}
+        {help && <span className="mt-0.5 block text-xs text-fg-muted">{help}</span>}
       </span>
 
       <span
