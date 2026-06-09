@@ -444,7 +444,10 @@ describe("KeycloakRealmAdminAdapter — createGroup", () => {
   it("throws on non-201 response", async () => {
     restore = mockFetch(twoStepFetch(async () => new Response(null, { status: 500 })));
     const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
-    await assert.rejects(() => adapter.createGroup("Bad"), /createGroup: failed 500/);
+    await assert.rejects(
+      () => adapter.createGroup("Bad"),
+      /createGroup\(Bad\): Keycloak admin request failed: 500/
+    );
   });
 });
 
@@ -474,7 +477,7 @@ describe("KeycloakRealmAdminAdapter — updateGroup", () => {
     const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
     await assert.rejects(
       () => adapter.updateGroup("g1", "New", existing),
-      /updateGroup: failed 403/
+      /updateGroup\(g1\): Keycloak admin request failed: 403/
     );
   });
 });
@@ -502,7 +505,10 @@ describe("KeycloakRealmAdminAdapter — deleteGroup", () => {
   it("throws on non-OK response", async () => {
     restore = mockFetch(twoStepFetch(async () => new Response(null, { status: 404 })));
     const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
-    await assert.rejects(() => adapter.deleteGroup("gone"), /deleteGroup: failed 404/);
+    await assert.rejects(
+      () => adapter.deleteGroup("gone"),
+      /deleteGroup\(gone\): Keycloak admin request failed: 404/
+    );
   });
 });
 
@@ -575,7 +581,7 @@ describe("KeycloakRealmAdminAdapter — upsertIdentityProvider (write hardening)
     const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
     await assert.rejects(
       () => adapter.upsertIdentityProvider(IDP),
-      /upsertIdentityProvider\(POST mock-google\): Keycloak admin write failed: 500.*boom/
+      /upsertIdentityProvider\(POST mock-google\): Keycloak admin request failed: 500.*boom/
     );
   });
 
@@ -590,7 +596,7 @@ describe("KeycloakRealmAdminAdapter — upsertIdentityProvider (write hardening)
     const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
     await assert.rejects(
       () => adapter.upsertIdentityProvider(IDP),
-      /upsertIdentityProvider\(PUT mock-google\): Keycloak admin write failed: 400/
+      /upsertIdentityProvider\(PUT mock-google\): Keycloak admin request failed: 400/
     );
   });
 
@@ -634,7 +640,137 @@ describe("KeycloakRealmAdminAdapter — removeIdentityProvider (idempotent delet
     const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
     await assert.rejects(
       () => adapter.removeIdentityProvider("mock-google"),
-      /removeIdentityProvider\(mock-google\): Keycloak admin delete failed: 500.*nope/
+      /removeIdentityProvider\(mock-google\): Keycloak admin request failed: 500.*nope/
+    );
+  });
+});
+
+// ---------------------------------------------------------------------------
+// KeycloakRealmAdminAdapter — realm-policy write hardening (ADR-ACT-0157)
+// Every mutator (MFA, session, resource policy) must throw on a non-OK admin
+// response rather than silently succeeding.
+// ---------------------------------------------------------------------------
+
+describe("KeycloakRealmAdminAdapter — setMfaPolicy / setSessionPolicy (write hardening)", () => {
+  let restore: () => void;
+  afterEach(() => restore?.());
+
+  it("setMfaPolicy resolves on a successful PUT", async () => {
+    restore = mockFetch(adminApiFetch(async () => new Response(null, { status: 204 })));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await adapter.setMfaPolicy({ required: "required", type: "totp" });
+  });
+
+  it("setMfaPolicy throws when the realm PUT fails", async () => {
+    restore = mockFetch(adminApiFetch(async () => jsonResponse({ error: "denied" }, 403)));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await assert.rejects(
+      () => adapter.setMfaPolicy({ required: "required", type: "totp" }),
+      /setMfaPolicy\(realm tenant-abc\): Keycloak admin request failed: 403.*denied/
+    );
+  });
+
+  it("setSessionPolicy throws when the realm PUT fails", async () => {
+    restore = mockFetch(adminApiFetch(async () => new Response("boom", { status: 500 })));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await assert.rejects(
+      () =>
+        adapter.setSessionPolicy({
+          accessTokenLifespanSeconds: 900,
+          ssoSessionIdleTimeoutSeconds: 1800,
+          ssoSessionMaxLifespanSeconds: 36000,
+          rememberMe: false,
+        }),
+      /setSessionPolicy\(realm tenant-abc\): Keycloak admin request failed: 500/
+    );
+  });
+});
+
+// Branch the admin API by URL/method: client lookup, policy search, policy write.
+function policyFetch(handlers: {
+  post?: () => Promise<Response>;
+  search?: () => Promise<Response>;
+  del?: () => Promise<Response>;
+}): FetchMock {
+  return adminApiFetch(async (input, init) => {
+    const url = typeof input === "string" ? input : (input as URL).toString();
+    const m = init?.method ?? "GET";
+    if (url.includes("/clients?")) return jsonResponse([{ id: "client-uuid" }]);
+    if (url.includes("/policy?"))
+      return (handlers.search ?? (async () => jsonResponse([{ id: "pol1" }])))();
+    if (m === "DELETE")
+      return (handlers.del ?? (async () => new Response(null, { status: 204 })))();
+    if (m === "POST") return (handlers.post ?? (async () => new Response(null, { status: 201 })))();
+    return jsonResponse({});
+  });
+}
+
+const ROLE_POLICY = { type: "role", name: "p", logic: "POSITIVE", roles: [] };
+type PolicyArg = Parameters<KeycloakRealmAdminAdapter["setResourcePolicy"]>[1];
+
+describe("KeycloakRealmAdminAdapter — setResourcePolicy (write hardening)", () => {
+  let restore: () => void;
+  afterEach(() => restore?.());
+
+  it("resolves on a successful POST", async () => {
+    restore = mockFetch(policyFetch({ post: async () => new Response(null, { status: 201 }) }));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await adapter.setResourcePolicy("admin:auth", ROLE_POLICY as PolicyArg);
+  });
+
+  it("treats 409 as acceptable (policy already exists)", async () => {
+    restore = mockFetch(policyFetch({ post: async () => new Response(null, { status: 409 }) }));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await adapter.setResourcePolicy("admin:auth", ROLE_POLICY as PolicyArg);
+  });
+
+  it("throws when the POST fails", async () => {
+    restore = mockFetch(policyFetch({ post: async () => jsonResponse({ error: "bad" }, 500) }));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await assert.rejects(
+      () => adapter.setResourcePolicy("admin:auth", ROLE_POLICY as PolicyArg),
+      /setResourcePolicy\(admin:auth\/role\): Keycloak admin request failed: 500.*bad/
+    );
+  });
+});
+
+describe("KeycloakRealmAdminAdapter — removeResourcePolicy (idempotent delete + hardening)", () => {
+  let restore: () => void;
+  afterEach(() => restore?.());
+
+  it("deletes a found policy on 204", async () => {
+    restore = mockFetch(policyFetch({ del: async () => new Response(null, { status: 204 }) }));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await adapter.removeResourcePolicy("admin:auth", "p");
+  });
+
+  it("is a no-op when the policy is already absent", async () => {
+    restore = mockFetch(policyFetch({ search: async () => jsonResponse([]) }));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await adapter.removeResourcePolicy("admin:auth", "missing");
+  });
+
+  it("treats DELETE 404 as idempotent success", async () => {
+    restore = mockFetch(policyFetch({ del: async () => new Response(null, { status: 404 }) }));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await adapter.removeResourcePolicy("admin:auth", "p");
+  });
+
+  it("throws when the policy lookup fails (does not silently skip the delete)", async () => {
+    restore = mockFetch(policyFetch({ search: async () => new Response(null, { status: 503 }) }));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await assert.rejects(
+      () => adapter.removeResourcePolicy("admin:auth", "p"),
+      /removeResourcePolicy\(p\) lookup: Keycloak admin request failed: 503/
+    );
+  });
+
+  it("throws when the DELETE fails", async () => {
+    restore = mockFetch(policyFetch({ del: async () => jsonResponse({ error: "x" }, 500) }));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await assert.rejects(
+      () => adapter.removeResourcePolicy("admin:auth", "p"),
+      /removeResourcePolicy\(p\): Keycloak admin request failed: 500/
     );
   });
 });

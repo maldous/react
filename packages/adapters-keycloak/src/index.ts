@@ -378,6 +378,18 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
     }
   }
 
+  // Shared guard for every admin MUTATION (POST/PUT/DELETE). A non-OK response
+  // must throw — never silently succeed — with the operation label (method +
+  // target resource/alias), HTTP status, and a bounded safe body. `allow` lists
+  // status codes that are acceptable for the operation (e.g. 404 for idempotent
+  // deletes, 409 for create-if-absent).
+  private async assertAdminOk(response: Response, op: string, allow: number[] = []): Promise<void> {
+    if (response.ok || allow.includes(response.status)) return;
+    throw new Error(
+      `${op}: Keycloak admin request failed: ${response.status} ${await this.readSafeBody(response)}`
+    );
+  }
+
   async listIdentityProviders(): Promise<IdentityProvider[]> {
     const token = await this.getAdminToken();
     const response = await fetch(this.adminUrl("/identity-provider/instances"), {
@@ -408,12 +420,7 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       body: JSON.stringify(idp),
     });
-    if (!res.ok) {
-      throw new Error(
-        `upsertIdentityProvider(${method} ${idp.alias}): Keycloak admin write failed: ` +
-          `${res.status} ${await this.readSafeBody(res)}`
-      );
-    }
+    await this.assertAdminOk(res, `upsertIdentityProvider(${method} ${idp.alias})`);
   }
 
   async removeIdentityProvider(alias: string): Promise<void> {
@@ -422,14 +429,8 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
-    // 404 is intentionally idempotent: the provider is already absent. Any other
-    // non-OK status is a real failure and must surface rather than silently pass.
-    if (!res.ok && res.status !== 404) {
-      throw new Error(
-        `removeIdentityProvider(${alias}): Keycloak admin delete failed: ` +
-          `${res.status} ${await this.readSafeBody(res)}`
-      );
-    }
+    // 404 is intentionally idempotent: the provider is already absent.
+    await this.assertAdminOk(res, `removeIdentityProvider(${alias})`, [404]);
   }
 
   async getMfaPolicy(): Promise<MfaPolicy> {
@@ -448,11 +449,12 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
 
   async setMfaPolicy(policy: MfaPolicy): Promise<void> {
     const token = await this.getAdminToken();
-    await fetch(this.adminUrl(""), {
+    const res = await fetch(this.adminUrl(""), {
       method: "PUT",
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       body: JSON.stringify({ otpPolicyType: policy.required }),
     });
+    await this.assertAdminOk(res, `setMfaPolicy(realm ${this.config.realm})`);
   }
 
   async getSessionPolicy(): Promise<SessionPolicy> {
@@ -471,7 +473,7 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
 
   async setSessionPolicy(policy: SessionPolicy): Promise<void> {
     const token = await this.getAdminToken();
-    await fetch(this.adminUrl(""), {
+    const res = await fetch(this.adminUrl(""), {
       method: "PUT",
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -481,6 +483,7 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
         rememberMe: policy.rememberMe,
       }),
     });
+    await this.assertAdminOk(res, `setSessionPolicy(realm ${this.config.realm})`);
   }
 
   async getResourcePolicy(resourceName: string): Promise<ResourcePolicy[]> {
@@ -517,27 +520,31 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-    if (!res.ok && res.status !== 409) {
-      throw new Error(`setResourcePolicy: failed ${res.status}`);
-    }
+    // 409 is acceptable: a policy of that name already exists (create-if-absent).
+    await this.assertAdminOk(res, `setResourcePolicy(${resourceName}/${policy.type})`, [409]);
   }
 
   async removeResourcePolicy(resourceName: string, policyName: string): Promise<void> {
     const token = await this.getAdminToken();
     const clientUuid = await this._getBffClientUuid(token);
+    // No BFF client → no policies to remove (idempotent no-op).
     if (!clientUuid) return;
     const searchRes = await fetch(
       `${this.config.url}/admin/realms/${this.config.realm}/clients/${clientUuid}/authz/resource-server/policy?name=${encodeURIComponent(policyName)}&max=1`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    if (!searchRes.ok) return;
+    // A failed lookup is an admin-side error, not "policy absent" — surface it so
+    // the delete is not silently skipped.
+    await this.assertAdminOk(searchRes, `removeResourcePolicy(${policyName}) lookup`);
     const policies = (await searchRes.json()) as Array<{ id: string }>;
     const policyId = policies[0]?.id;
+    // Policy already absent → idempotent success.
     if (!policyId) return;
-    await fetch(
+    const delRes = await fetch(
       `${this.config.url}/admin/realms/${this.config.realm}/clients/${clientUuid}/authz/resource-server/policy/${policyId}`,
       { method: "DELETE", headers: { Authorization: `Bearer ${token}` } }
     );
+    await this.assertAdminOk(delRes, `removeResourcePolicy(${policyName})`, [404]);
     void resourceName;
   }
 
@@ -658,7 +665,7 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       body: JSON.stringify({ name }),
     });
-    if (!res.ok) throw new Error(`createGroup: failed ${res.status}`);
+    await this.assertAdminOk(res, `createGroup(${name})`);
     // Keycloak returns 201 with Location: .../groups/{id}
     const location = res.headers.get("location") ?? "";
     const id = location.split("/").pop() ?? "";
@@ -675,7 +682,7 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-    if (!res.ok) throw new Error(`updateGroup: failed ${res.status}`);
+    await this.assertAdminOk(res, `updateGroup(${groupId})`);
   }
 
   async deleteGroup(groupId: string): Promise<void> {
@@ -684,7 +691,7 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
-    if (!res.ok) throw new Error(`deleteGroup: failed ${res.status}`);
+    await this.assertAdminOk(res, `deleteGroup(${groupId})`);
   }
 }
 
