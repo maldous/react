@@ -7,6 +7,7 @@ import { Toaster } from "@platform/ui-design-system";
 import { I18nProvider, enGB } from "@platform/i18n-runtime";
 import { queryClient } from "./app/query-client";
 import { router } from "./app/router";
+import { ThemeProvider } from "./theme/ThemeProvider";
 
 const root = document.getElementById("root");
 if (!root) throw new Error("Root element not found");
@@ -14,10 +15,12 @@ if (!root) throw new Error("Root element not found");
 createRoot(root).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <I18nProvider locale="en-GB" messages={enGB}>
-        <RouterProvider router={router} />
-        <Toaster />
-      </I18nProvider>
+      <ThemeProvider>
+        <I18nProvider locale="en-GB" messages={enGB}>
+          <RouterProvider router={router} />
+          <Toaster />
+        </I18nProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   </StrictMode>
 );

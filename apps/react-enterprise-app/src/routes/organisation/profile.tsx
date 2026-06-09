@@ -1,18 +1,18 @@
 import { createRoute } from "@tanstack/react-router";
-import { Route as rootRoute } from "../__root";
-import { ProtectedRoute } from "../../components/ProtectedRoute";
+import { Route as AuthenticatedRoute } from "../_authenticated";
+import { RequirePermission } from "../../components/RequirePermission";
 import { OrganisationProfilePage } from "../../features/organisation/OrganisationProfilePage";
 
 export const Route = createRoute({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthenticatedRoute,
   path: "/organisation/profile",
   component: OrganisationProfileRoute,
 });
 
 function OrganisationProfileRoute() {
   return (
-    <ProtectedRoute permission="organisation.read">
+    <RequirePermission permission="organisation.read">
       <OrganisationProfilePage />
-    </ProtectedRoute>
+    </RequirePermission>
   );
 }

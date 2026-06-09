@@ -11,6 +11,8 @@
       "@platform/contracts-auth": ["../../packages/contracts-auth/src/index.ts"],
       "@platform/platform-errors": ["../../packages/platform-errors/src/index.ts"],
       "@platform/contracts-organisation": ["../../packages/contracts-organisation/src/index.ts"],
+      "@platform/contracts-graphql": ["../../packages/contracts-graphql/src/index.ts"],
+      "@platform/graphql-browser-client": ["../../packages/graphql-browser-client/src/index.ts"],
       "@platform/i18n-runtime": ["../../packages/i18n-runtime/src/index.ts"],
       "@platform/i18n-runtime/react": ["../../packages/i18n-runtime/src/react.ts"],
       "@platform/i18n-runtime/locales/en-GB.json": [
@@ -19,5 +21,11 @@
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules", "dist", "src/**/*.test.ts", "src/**/*.test.tsx"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/features/_template"
+  ]
 }

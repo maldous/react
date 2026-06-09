@@ -1,4 +1,4 @@
-import { defineConfig } from "vitest/config";
+import { defineConfig, configDefaults } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import path from "node:path";
 
@@ -26,6 +26,14 @@ export default defineConfig({
         __dirname,
         "../../packages/contracts-organisation/src/index.ts"
       ),
+      "@platform/contracts-graphql": path.resolve(
+        __dirname,
+        "../../packages/contracts-graphql/src/index.ts"
+      ),
+      "@platform/graphql-browser-client": path.resolve(
+        __dirname,
+        "../../packages/graphql-browser-client/src/index.ts"
+      ),
       "@platform/i18n-runtime": path.resolve(__dirname, "../../packages/i18n-runtime/src/index.ts"),
       "@platform/i18n-runtime/react": path.resolve(
         __dirname,
@@ -45,7 +53,10 @@ export default defineConfig({
     include: [
       "apps/react-enterprise-app/src/**/*.test.{ts,tsx}",
       "packages/ui-design-system/tests/**/*.test.{ts,tsx}",
+      "packages/graphql-browser-client/tests/**/*.test.{ts,tsx}",
     ],
+    // Canonical feature template is reference scaffolding — never executed.
+    exclude: [...configDefaults.exclude, "**/features/_template/**"],
     coverage: {
       provider: "v8",
       include: [

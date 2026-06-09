@@ -42,3 +42,11 @@ export interface GraphQLResult<T = unknown> {
   data?: T;
   errors?: Array<{ message: string; locations?: unknown[]; path?: unknown[] }>;
 }
+
+// Generated TypedDocumentNode operation artifacts (ADR-ACT-0203). Authored in
+// ./operations/*.graphql, emitted by `npm run codegen`. Browser-safe: the
+// generated module imports only the type-only @graphql-typed-document-node/core
+// and inlines the operation AST — it never pulls in the `graphql` runtime.
+// Feature hooks import these documents and pass them to the approved browser
+// client (@platform/graphql-browser-client); feature components never touch them.
+export * from "./generated/graphql.ts";

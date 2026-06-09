@@ -1,11 +1,11 @@
 // E2E substrate harness route. Not part of product navigation.
 // Excluded from production builds via NODE_ENV check would be a future enhancement.
 import { createRoute } from "@tanstack/react-router";
-import { Route as rootRoute } from "./__root";
-import { ProtectedRoute } from "../components/ProtectedRoute";
+import { Route as AuthenticatedRoute } from "./_authenticated";
+import { RequirePermission } from "../components/RequirePermission";
 
 export const Route = createRoute({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthenticatedRoute,
   path: "/e2e-harness",
   component: E2EHarnessPage,
 });
@@ -13,11 +13,11 @@ export const Route = createRoute({
 function E2EHarnessPage() {
   if (!import.meta.env.DEV) return null;
   return (
-    <ProtectedRoute permission="organisation.read">
+    <RequirePermission permission="organisation.read">
       <div data-testid="protected-content">
         <h1>E2E Harness Route</h1>
         <p>You are authenticated with organisation.read permission.</p>
       </div>
-    </ProtectedRoute>
+    </RequirePermission>
   );
 }

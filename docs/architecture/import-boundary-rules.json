@@ -447,6 +447,23 @@
       "rationale": "ADR-0022: contracts-auth is a pure contract package (Zod schemas only). It must not import adapters, domain packages, session runtime, logging, or Keycloak SDK. It exports SessionActor, auth request/response shapes, and AuthError subtypes only."
     },
     {
+      "id": "graphql-browser-client-no-server-graphql",
+      "appliesTo": ["@platform/graphql-browser-client"],
+      "forbiddenPrefixes": [
+        "graphql/execution",
+        "graphql/type",
+        "graphql/utilities",
+        "graphql/validation",
+        "graphql/subscription",
+        "@platform/adapters-",
+        "@platform/api-runtime",
+        "@platform/graphql-api-runtime",
+        "@platform/platform-api"
+      ],
+      "forbiddenExact": ["graphql"],
+      "rationale": "ADR-ACT-0203: the browser GraphQL client converts documents to query strings using only the graphql/language/printer subpath. It must not import the bare `graphql` entry (pulls execution/schema), graphql execution/schema/validation subpaths, server runtime, adapters, or platform-api."
+    },
+    {
       "id": "no-server-packages-in-react-spa",
       "appliesTo": ["@platform/react-enterprise-app"],
       "forbiddenPrefixes": [
@@ -455,10 +472,12 @@
         "@platform/platform-observability",
         "@platform/platform-runtime-context",
         "@platform/adapters-",
-        "@platform/platform-api"
+        "@platform/platform-api",
+        "graphql/",
+        "@graphql-codegen/"
       ],
-      "forbiddenExact": ["pg", "pino"],
-      "rationale": "ADR-0022: apps/react-enterprise-app is a browser-only Vite SPA. It must not import Node-only packages, server runtime packages, or database clients. Server/BFF logic belongs in apps/platform-api. Allowed exceptions: @platform/platform-errors (browser-safe typed errors), @platform/contracts-auth (Zod schemas), @platform/contracts-organisation (Zod schemas), @platform/ui-design-system."
+      "forbiddenExact": ["pg", "pino", "graphql"],
+      "rationale": "ADR-0022: apps/react-enterprise-app is a browser-only Vite SPA. It must not import Node-only packages, server runtime packages, or database clients. Server/BFF logic belongs in apps/platform-api. ADR-ACT-0203: the SPA must not import graphql/* directly — GraphQL transport goes through @platform/graphql-browser-client and generated operations come from @platform/contracts-graphql. Allowed exceptions: @platform/platform-errors (browser-safe typed errors), @platform/contracts-auth, @platform/contracts-organisation, @platform/contracts-graphql (Zod schemas + generated TypedDocumentNode), @platform/graphql-browser-client, @platform/ui-design-system."
     }
   ]
 }

@@ -10,6 +10,12 @@ reports/
 # Committed governance evidence ? byte-stable, do not reformat
 docs/evidence/
 
+# Generated GraphQL artifacts (TypedDocumentNode) - owned by graphql-codegen (ADR-ACT-0203)
+packages/contracts-graphql/src/generated/
+
+# Canonical UI feature template - reference scaffolding (ADR-ACT-0203)
+apps/react-enterprise-app/src/features/_template/
+
 # Generated package READMEs ? owned by generate-package-readmes, not edited manually
 apps/**/README.md
 packages/**/README.md

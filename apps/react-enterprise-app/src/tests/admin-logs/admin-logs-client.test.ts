@@ -1,12 +1,7 @@
-import { describe, it, expect, beforeAll, afterAll, afterEach } from "vitest";
+import { describe, it, expect } from "vitest";
 import { http, HttpResponse } from "msw";
-import { setupServer } from "msw/node";
 import { searchLogs } from "../../features/admin-logs/admin-logs-client";
-
-const server = setupServer();
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
+import { server } from "../../msw";
 
 describe("admin-logs-client (ADR-ACT-0195)", () => {
   it("sends non-empty filters as query params and returns entries", async () => {

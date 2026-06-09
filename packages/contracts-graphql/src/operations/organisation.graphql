@@ -1,0 +1,25 @@
+# GraphQL operations — the single canonical source for client-facing organisation
+# operations (ADR-0013, ADR-0028). GraphQL Code Generator reads these against
+# BASE_SCHEMA_SDL and emits browser-safe TypedDocumentNode artifacts into
+# ../generated/graphql.ts. Never hand-write operation strings in feature code —
+# author them here and run `npm run codegen`.
+
+fragment OrganisationProfileFields on Organisation {
+  id
+  slug
+  displayName
+  createdAt
+  updatedAt
+}
+
+query OrganisationProfile {
+  organisationProfile {
+    ...OrganisationProfileFields
+  }
+}
+
+mutation UpdateOrganisationProfile($displayName: String!) {
+  updateOrganisationProfile(displayName: $displayName) {
+    ...OrganisationProfileFields
+  }
+}

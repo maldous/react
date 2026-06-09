@@ -193,6 +193,49 @@ The architecture validator enforces that every `t()` key exists in `en-GB.json` 
 
 ---
 
+## UI development is now open
+
+The pre-UI platform baseline is hardened (ADR-ACT-0203). New screens are built from one
+canonical pattern — see **`docs/patterns/ui-feature-template.md`** — so they conform
+automatically to ADRs, architecture boundaries, accessibility, theming, the generated
+GraphQL contract flow, MSW testing, and the route/layout conventions.
+
+What is in place:
+
+- **Generated GraphQL contracts.** Operations are authored as `.graphql` documents in
+  `@platform/contracts-graphql`; `npm run codegen` emits browser-safe `TypedDocumentNode`
+  artifacts. Features pass them to `@platform/graphql-browser-client` (the only module that
+  prints a document) — no inline GraphQL, no `graphql/*` in the SPA. Drift is gated by
+  `npm run codegen:check`.
+- **Authenticated layout.** The `_authenticated` pathless route owns the auth gate and the
+  single `<main id="main-content">` via AppShell; per-route `RequirePermission`.
+- **MSW substrate.** Personas + GraphQL factories + theme/session handlers in `src/msw`;
+  feature tests never hand-roll fetch mocks.
+- **Theme tokens.** Semantic CSS-variable tokens drive colour; the tenant theme
+  (`/api/theme`) overrides `--color-primary` at bootstrap.
+- **Reference implementation.** The organisation profile feature
+  (`src/features/organisation/`) is the live example.
+
+Scaffold a feature:
+
+```bash
+npm run generate:feature -- --name=<name> --type=form-edit|read-only-detail|table-search|admin-settings
+```
+
+Gates for UI work:
+
+```bash
+npm run codegen:check
+npm run tsc:check
+npm run test:frontend:run
+npm run test:platform-api
+npm run test:architecture
+npm run validate:slices
+make check
+```
+
+---
+
 ## Authentication
 
 ### Zero tokens in the browser

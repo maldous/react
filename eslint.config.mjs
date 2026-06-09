@@ -11,6 +11,11 @@ export default tseslint.config(
       "docs/**",
       // Test fixtures contain intentionally broken/varied code
       "tools/architecture/**/tests/fixtures/**",
+      // Generated GraphQL artifacts (TypedDocumentNode) — owned by graphql-codegen,
+      // type-checked by tsc but not linted/formatted (ADR-ACT-0203).
+      "packages/contracts-graphql/src/generated/**",
+      // Canonical feature template — reference scaffolding, not compiled app code.
+      "apps/react-enterprise-app/src/features/_template/**",
       // Generated READMEs
       "apps/**/README.md",
       "packages/**/README.md",

@@ -41,6 +41,8 @@ compose:
 architecture:
 	$(call STEP,architecture governance)
 	$(ORCHESTRATOR) all --no-reports --strict
+	npm run codegen:check
+	npm run frontend:conventions
 	$(call OK,all architecture gates passed)
 
 ## sonar — SonarQube scan + quality gate against the shared instance

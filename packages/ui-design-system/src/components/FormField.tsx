@@ -5,8 +5,12 @@ import {
   FieldError,
   Text,
   type TextFieldProps,
+  type InputProps as AriaInputProps,
 } from "react-aria-components";
 import { cn } from "../lib/utils";
+
+/** Allow data-* attributes (e.g. data-testid) on the forwarded input. */
+type DataAttributes = { [key: `data-${string}`]: string | number | boolean | undefined };
 
 export interface FormFieldProps extends Omit<TextFieldProps, "children"> {
   label?: string;
@@ -14,6 +18,12 @@ export interface FormFieldProps extends Omit<TextFieldProps, "children"> {
   errorMessage?: string;
   placeholder?: string;
   className?: string;
+  /**
+   * Props forwarded to the underlying input (e.g. data-testid, autoComplete).
+   * Lets the field carry attributes without re-implementing the control — pairs
+   * with react-hook-form Controller (pass value/onChange/onBlur on the field).
+   */
+  inputProps?: AriaInputProps & DataAttributes;
 }
 
 export function FormField({
@@ -23,6 +33,7 @@ export function FormField({
   placeholder,
   className,
   isInvalid,
+  inputProps,
   ...props
 }: FormFieldProps) {
   return (
@@ -31,17 +42,18 @@ export function FormField({
       isInvalid={isInvalid || !!errorMessage}
       {...props}
     >
-      {label && <Label className="text-sm font-medium text-gray-900">{label}</Label>}
+      {label && <Label className="text-sm font-medium text-fg">{label}</Label>}
       <Input
         placeholder={placeholder}
-        className="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm outline-none transition-colors placeholder:text-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-50 invalid:border-red-500"
+        {...inputProps}
+        className="flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-fg outline-none transition-colors placeholder:text-fg-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50 invalid:border-danger"
       />
       {description && (
-        <Text slot="description" className="text-xs text-gray-500">
+        <Text slot="description" className="text-xs text-fg-muted">
           {description}
         </Text>
       )}
-      <FieldError className="text-xs text-red-600">{errorMessage}</FieldError>
+      <FieldError className="text-xs text-danger">{errorMessage}</FieldError>
     </TextField>
   );
 }

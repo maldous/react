@@ -1,0 +1,104 @@
+{
+  "name": "@architecture/validate-frontend-conventions",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Validates SPA feature conventions: no feature-owned main landmark, no inline GraphQL, no raw /api/graphql fetch.",
+  "main": "src/index.mjs",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "tool",
+      "name": "validate-frontend-conventions",
+      "system": "enterprise-react-platform",
+      "domain": "architecture",
+      "boundedContext": "architecture-governance",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "stable",
+      "role": "tooling",
+      "class": "stable.tooling",
+      "catalogLifecycle": "production",
+      "visibility": "internal",
+      "supportLevel": "standard",
+      "reviewCadence": "on-change"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0011",
+        "ADR-0019"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": false
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": true,
+      "serviceName": "validate-frontend-conventions",
+      "serviceNamespace": "architecture",
+      "deploymentEnvironments": [
+        "local",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "architecture"
+      ],
+      "forbiddenConsumers": [
+        "domain",
+        "contract",
+        "adapter",
+        "feature",
+        "ui",
+        "application",
+        "platform"
+      ]
+    },
+    "relations": {
+      "dependsOn": [
+        "@architecture/validate-package-metadata"
+      ],
+      "providesApis": [
+        "frontend-conventions-validation"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "governance",
+      "type": "tool",
+      "stage": "stable",
+      "role": "tooling",
+      "layer": "tooling"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Validates SPA feature conventions for the canonical UI baseline.",
+      "responsibilities": [
+        "Fail the build when feature code renders the main#main-content landmark",
+        "Fail the build on inline GraphQL operation strings in feature code",
+        "Fail the build on raw /api/graphql fetch outside the approved browser client"
+      ],
+      "nonResponsibilities": [
+        "Does not validate import boundaries (validate-source-imports owns that)",
+        "Does not validate i18n keys (validate-i18n owns that)"
+      ],
+      "usage": [
+        "node tools/architecture/validate-frontend-conventions/src/index.mjs"
+      ],
+      "operationalNotes": [
+        "Run npm run frontend:conventions; enforced via test:architecture and make check (ADR-ACT-0203)."
+      ]
+    }
+  },
+  "scripts": {
+    "test": "node --test tests/"
+  }
+}

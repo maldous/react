@@ -5,10 +5,10 @@ import { cn } from "../lib/utils";
 const alertVariants = cva("relative flex w-full items-start gap-3 rounded-lg border p-4", {
   variants: {
     variant: {
-      default: "border-gray-200 bg-white text-gray-900",
-      destructive: "border-red-200 bg-red-50 text-red-900",
-      warning: "border-yellow-200 bg-yellow-50 text-yellow-900",
-      success: "border-green-200 bg-green-50 text-green-900",
+      default: "border-border bg-surface text-fg",
+      destructive: "border-danger/40 bg-danger-surface text-danger",
+      warning: "border-warning/40 bg-warning-surface text-warning",
+      success: "border-success/40 bg-success-surface text-success",
     },
   },
   defaultVariants: {

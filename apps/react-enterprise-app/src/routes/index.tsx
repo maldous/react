@@ -51,13 +51,14 @@ function IndexPage() {
   // Unauthenticated entry screen (pre-shell): sign-in prompt.
   if (!actor) {
     return (
-      <div
-        className="app-safe-area flex min-h-screen flex-col items-center justify-center bg-gray-50 p-8"
+      <main
+        id="main-content"
+        className="app-safe-x flex min-h-screen flex-col items-center justify-center bg-gray-50 p-8"
         data-testid="sign-in-entry"
       >
         <div className="w-full max-w-sm space-y-6 text-center">
           <div
-            className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-2xl text-white shadow-md"
+            className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-2xl text-primary-foreground shadow-md"
             aria-hidden="true"
           >
             ⬡
@@ -70,13 +71,13 @@ function IndexPage() {
           </div>
           <a
             href="/login"
-            className="inline-flex items-center rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
+            className="inline-flex items-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             data-testid="sign-in-link"
           >
             {t("auth.login.signInButton")}
           </a>
         </div>
-      </div>
+      </main>
     );
   }
 
@@ -84,6 +85,8 @@ function IndexPage() {
 
   return (
     <AppShell>
+      <SectionHeader heading={t("landing.title")} level={1} className="mb-6" />
+
       {/* Internal platform admin features (SPA routes) */}
       {canReadLogs && (
         <section aria-labelledby="admin-heading" className="mb-8">

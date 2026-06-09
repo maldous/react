@@ -3,29 +3,26 @@ import { Link } from "@tanstack/react-router";
 import { Badge, Button } from "@platform/ui-design-system";
 import { useTranslation } from "@platform/i18n-runtime";
 import { useSession } from "../hooks/use-session";
+import { useTheme } from "../theme/ThemeProvider";
 
 export interface AppShellProps {
   children: ReactNode;
 }
 
 /**
- * Reusable authenticated app shell (ADR-0019, ADR-ACT-0195).
+ * Reusable authenticated app shell (ADR-0019, ADR-ACT-0195, ADR-ACT-0203).
  *
- * Owns the shared chrome — header, brand, actor display, logout — and the
- * safe-area padding so feature pages never re-implement page structure. Feature
- * pages render their content as children; the shell provides #main-content.
- * Responsive + safe-area aware so the same markup works in browser, PWA, and a
- * future Capacitor webview.
- *
- * PROMOTION CRITERIA (ADR-0019): this is intentionally a composed component, not
- * a router layout, while there is only one admin route. Once the admin shell is
- * shared across several routes, promote it to a pathless TanStack layout route
- * that renders <AppShell><Outlet/></AppShell>, so shared shell state/loaders live
- * in one place instead of being wrapped per page.
+ * Owns the shared chrome — brand, actor display, logout — the safe-area padding,
+ * and the single `<main id="main-content">`. Rendered by the `_authenticated`
+ * pathless layout route around the route Outlet, so feature pages render content
+ * only and never re-implement page structure. Responsive + safe-area aware so the
+ * same markup works in browser, PWA, and a future Capacitor webview. Brand colour
+ * and logo come from the tenant theme (ADR-0029).
  */
 export function AppShell({ children }: AppShellProps) {
   const t = useTranslation();
   const { actor } = useSession();
+  const theme = useTheme();
 
   function handleLogout() {
     // Full-page navigation to the BFF RP-initiated logout — intentionally NOT
@@ -35,8 +32,8 @@ export function AppShell({ children }: AppShellProps) {
   }
 
   return (
-    <div className="app-safe-x min-h-screen bg-gray-50">
-      <header className="app-safe-top border-b border-gray-200 bg-white shadow-sm">
+    <div className="app-safe-x min-h-screen bg-surface-muted">
+      <header className="app-safe-top border-b border-border bg-surface shadow-sm">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
           <Link
             to="/"
@@ -44,19 +41,26 @@ export function AppShell({ children }: AppShellProps) {
             data-testid="app-shell-home"
             aria-label={t("app.shell.home")}
           >
-            <span
-              aria-hidden="true"
-              className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-base text-white"
-            >
-              ⬡
-            </span>
-            <span className="text-base font-semibold text-gray-900 sm:text-lg">
-              {t("platform.name")}
-            </span>
+            {theme.logoUrl ? (
+              <img
+                src={theme.logoUrl}
+                alt=""
+                aria-hidden="true"
+                className="h-8 w-8 rounded-lg object-contain"
+              />
+            ) : (
+              <span
+                aria-hidden="true"
+                className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-base text-primary-foreground"
+              >
+                ⬡
+              </span>
+            )}
+            <span className="text-base font-semibold text-fg sm:text-lg">{t("platform.name")}</span>
           </Link>
           {actor && (
             <div className="flex items-center gap-3">
-              <span className="hidden text-sm text-gray-600 sm:inline" data-testid="actor-display">
+              <span className="hidden text-sm text-fg-muted sm:inline" data-testid="actor-display">
                 {actor.displayName}
                 {actor.roles[0] && <Badge className="ml-2">{actor.roles[0]}</Badge>}
               </span>

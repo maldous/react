@@ -1,13 +1,60 @@
 @import "tailwindcss";
 
 /*
+ * Design tokens (ADR-0019, ADR-ACT-0203).
+ *
+ * Semantic CSS-variable tokens are the single source of colour/spacing/radius
+ * intent. They are exposed through Tailwind v4 `@theme`, which both (a) emits
+ * each token as a CSS custom property on :root and (b) generates the matching
+ * utilities (bg-primary, text-fg, ring-primary, rounded-card, …). Feature and
+ * design-system code should prefer these semantic utilities over raw palette
+ * classes so a single token change re-themes the app.
+ *
+ * Runtime theming: the tenant theme client (src/theme) overrides --color-primary
+ * (and friends) on documentElement at bootstrap, so branding flows through every
+ * `*-primary` utility without rebuilding.
+ *
+ * Dark-mode READINESS only (no user-facing dark mode without an ADR): the token
+ * names are theme-neutral, so a future dark theme can override the same vars
+ * under a `:root[data-theme="dark"]` / prefers-color-scheme block. No such block
+ * is activated here.
+ */
+@theme {
+  /* Brand — the tenant theme client overrides only --color-primary at runtime;
+   * the hover shade derives from it so every *-primary utility re-themes. */
+  --color-primary: #4f46e5;
+  --color-primary-hover: color-mix(in srgb, var(--color-primary) 88%, black);
+  --color-primary-foreground: #ffffff;
+
+  /* Surfaces & text (light theme). */
+  --color-surface: #ffffff;
+  --color-surface-muted: #f9fafb;
+  --color-fg: #111827;
+  --color-fg-muted: #4b5563;
+  --color-border: #e5e7eb;
+
+  /* Status — semantic foreground/surface pairs meeting WCAG 2.2 AA on white. */
+  --color-danger: #b91c1c;
+  --color-danger-surface: #fef2f2;
+  --color-success: #15803d;
+  --color-success-surface: #f0fdf4;
+  --color-warning: #b45309;
+  --color-warning-surface: #fffbeb;
+  --color-info: #1d4ed8;
+
+  /* Radius & elevation scale. */
+  --radius-card: 0.5rem;
+  --shadow-card: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+/*
  * Safe-area support (ADR-ACT-0195 mobile/Capacitor requirement).
  *
  * The same SPA must render in browser, PWA, and a future Capacitor webview.
  * Capacitor's SystemBars plugin injects --safe-area-inset-* CSS variables as a
  * fallback for Android WebView; in a normal browser those are undefined, so we
- * fall back to the CSS env() insets, then to 0px. Applied once at the app shell
- * (.app-safe-area) rather than scattered through feature pages.
+ * fall back to the CSS env() insets, then to 0px. Applied at the app shell via
+ * the .app-safe-* utilities rather than scattered through feature pages.
  */
 :root {
   --app-safe-top: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
@@ -30,4 +77,37 @@
 /* Bottom inset — applied to the main region / sticky bottom actions. */
 .app-safe-bottom {
   padding-bottom: var(--app-safe-bottom);
+}
+
+/*
+ * Accessibility baseline (ADR-0019 WCAG 2.2 AA).
+ */
+
+/* Consistent keyboard focus indicator everywhere, independent of component
+ * styling. Components add stronger focus-visible rings; this guarantees a
+ * baseline outline for any focusable element that does not. */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Windows High Contrast / forced-colors: keep focus visible using system
+ * colours (component ring colours are flattened by the OS in this mode). */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 2px solid CanvasText;
+    outline-offset: 2px;
+  }
+}
+
+/* Respect reduced-motion preferences for transitions/animations. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

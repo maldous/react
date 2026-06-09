@@ -103,7 +103,8 @@ production
 @platform/ui-design-system
 @platform/feature-workflow
 @platform/access-control
-@platform/adapters-graphql
+@platform/contracts-graphql
+@platform/graphql-browser-client
 @platform/contracts-auth
 @platform/contracts-organisation
 @platform/platform-errors

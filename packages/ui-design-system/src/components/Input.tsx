@@ -8,14 +8,14 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/utils";
 
 const inputVariants = cva(
-  "flex h-10 w-full rounded-md border bg-white px-3 py-2 text-sm outline-none transition-colors placeholder:text-gray-400 disabled:cursor-not-allowed disabled:opacity-50",
+  "flex h-10 w-full rounded-md border bg-surface px-3 py-2 text-sm text-fg outline-none transition-colors placeholder:text-fg-muted disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
         default:
-          "border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0",
+          "border-border focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-0",
         error:
-          "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500 focus:ring-offset-0",
+          "border-danger focus-visible:border-danger focus-visible:ring-2 focus-visible:ring-danger focus-visible:ring-offset-0",
       },
     },
     defaultVariants: {

@@ -136,3 +136,33 @@ Codebuff hardening (ADR-ACT-0118) reviewed against canonical slice architecture.
 - `validate-source-imports --strict` passes
 - `make check` passes
 - `make pre-slice-gate` passes
+
+## Canonical UI baseline refactor (ADR-ACT-0203, 2026-06-09)
+
+The organisation profile slice was promoted to the **canonical UI feature reference** as
+part of the pre-UI platform hardening (ADR-ACT-0203). The end-to-end shape is unchanged
+(React → feature hook → BFF GraphQL → use case → repo port → Postgres); the frontend now
+demonstrates the canonical patterns every future feature follows:
+
+- **Generated GraphQL contract flow.** Inline operation strings + the local `graphqlRequest`
+  helper were removed. Operations live in
+  `packages/contracts-graphql/src/operations/organisation.graphql`; `npm run codegen` emits
+  browser-safe `TypedDocumentNode` artifacts. The feature hooks
+  (`organisation.queries.ts` / `organisation.mutations.ts`) pass those documents to
+  `@platform/graphql-browser-client` — the only module that prints a document to a query
+  string (`graphql/language/printer`). No `graphql/*` import reaches the SPA bundle.
+- **Route/layout.** `/organisation/profile` is a child of the `_authenticated` pathless
+  layout route; authentication is enforced once at the layout (AppShell owns the single
+  `<main id="main-content">`), permission via `RequirePermission`. The page renders content
+  only — no duplicate landmark.
+- **Design system + tokens + a11y.** The page uses `SectionHeader`, `Card`, `FormField`
+  (react-hook-form `Controller`), `Button`, and `LiveRegion`; all colour comes from semantic
+  tokens. i18n-only text.
+- **MSW-backed tests.** `features/organisation/__tests__/OrganisationProfilePage.test.tsx`
+  covers admin/viewer permission variants, save success, load error, and an axe pass — using
+  shared personas + GraphQL factories from `src/msw` (no hand-rolled fetch mocks). Transport
+  behaviour is covered by `@platform/graphql-browser-client` tests.
+
+Pattern reference: `docs/patterns/ui-feature-template.md`. Convention enforcement:
+`@architecture/validate-frontend-conventions` + `npm run codegen:check` (wired into
+`make check` / `npm run test:architecture`).

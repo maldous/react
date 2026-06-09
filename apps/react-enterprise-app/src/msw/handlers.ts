@@ -1,3 +1,53 @@
 import { http, HttpResponse } from "msw";
+import { sessionFixtures, type SessionPersona } from "./fixtures/session.ts";
+import { defaultThemeFixture, type ThemeFixture } from "./fixtures/theme.ts";
+import { createGraphqlHandler } from "./graphql/handlers.ts";
 
-export const handlers = [http.get("/healthz", () => HttpResponse.json({ status: "ok" }))];
+// Complete MSW baseline for the SPA (ADR-0019). Every endpoint the app touches
+// has a default handler so no feature test hand-rolls low-level fetch mocks.
+// Tests override per-case with `server.use(...)` using the factories below.
+
+// --- /api/session ----------------------------------------------------------
+
+/** Authenticated as a persona, or 401 when persona is null. */
+export function sessionHandler(persona: SessionPersona | null) {
+  return http.get("/api/session", () =>
+    persona ? HttpResponse.json(sessionFixtures[persona]) : new HttpResponse(null, { status: 401 })
+  );
+}
+
+/** Non-401 session failure (drives the session-error UI state). */
+export function sessionErrorHandler(status = 503) {
+  return http.get("/api/session", () => new HttpResponse(null, { status }));
+}
+
+// --- /api/theme -------------------------------------------------------------
+
+export function themeHandler(theme: ThemeFixture = defaultThemeFixture) {
+  return http.get("/api/theme", () => HttpResponse.json(theme));
+}
+
+/** Theme endpoint failure — drives the default-theme fallback path. */
+export function themeErrorHandler(status = 500) {
+  return http.get("/api/theme", () => new HttpResponse(null, { status }));
+}
+
+// --- generic helpers --------------------------------------------------------
+
+/** Simulated network failure for any GET endpoint. */
+export function networkErrorHandler(method: "get" | "post", path: string) {
+  return http[method](path, () => HttpResponse.error());
+}
+
+// --- baseline ---------------------------------------------------------------
+// Defaults are intentionally unauthenticated: a test must opt into a persona via
+// server.use(sessionHandler("tenantAdmin")). This keeps authorisation explicit.
+export const handlers = [
+  sessionHandler(null),
+  themeHandler(),
+  createGraphqlHandler(),
+  http.get("/healthz", () => HttpResponse.json({ status: "ok" })),
+  http.get("/readyz", () => HttpResponse.json({ status: "ok" })),
+  http.get("/version", () => HttpResponse.json({ version: "test", commit: "test" })),
+  http.get("/api/admin/logs/search", () => HttpResponse.json({ entries: [] })),
+];

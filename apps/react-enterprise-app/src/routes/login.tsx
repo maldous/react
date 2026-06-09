@@ -25,12 +25,15 @@ export const Route = createRoute({
 function LoginPage() {
   const t = useTranslation();
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 p-8">
+    <main
+      id="main-content"
+      className="app-safe-x flex min-h-screen flex-col items-center justify-center bg-gray-50 p-8"
+    >
       <div className="w-full max-w-sm space-y-8">
         {/* Platform branding */}
         <div className="text-center">
           <div
-            className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-2xl text-white shadow-md"
+            className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-2xl text-primary-foreground shadow-md"
             aria-hidden="true"
           >
             ⬡
@@ -52,7 +55,7 @@ function LoginPage() {
             {/* Full-page <a>: Caddy proxies /auth/login to the BFF PKCE flow */}
             <a
               href="/auth/login"
-              className="flex w-full items-center justify-center rounded-md bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+              className="flex w-full items-center justify-center rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               data-testid="sign-in-button"
             >
               {t("auth.login.signInButton")}
@@ -62,6 +65,6 @@ function LoginPage() {
 
         <p className="text-center text-xs text-gray-600">{t("auth.login.footer")}</p>
       </div>
-    </div>
+    </main>
   );
 }

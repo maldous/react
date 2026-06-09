@@ -142,6 +142,14 @@ export default defineConfig({
         __dirname,
         "../../packages/contracts-organisation/src/index.ts"
       ),
+      "@platform/contracts-graphql": path.resolve(
+        __dirname,
+        "../../packages/contracts-graphql/src/index.ts"
+      ),
+      "@platform/graphql-browser-client": path.resolve(
+        __dirname,
+        "../../packages/graphql-browser-client/src/index.ts"
+      ),
       "@platform/i18n-runtime": path.resolve(__dirname, "../../packages/i18n-runtime/src/index.ts"),
       "@platform/i18n-runtime/react": path.resolve(
         __dirname,

@@ -53,6 +53,9 @@ export type { BadgeProps } from "./components/Badge";
 export { Alert, AlertTitle, AlertDescription } from "./components/Alert";
 export type { AlertProps } from "./components/Alert";
 
+export { LiveRegion } from "./components/LiveRegion";
+export type { LiveRegionProps } from "./components/LiveRegion";
+
 export { Toaster, toast } from "./components/Toast";
 
 export { FormField } from "./components/FormField";
