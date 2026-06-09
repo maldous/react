@@ -103,7 +103,11 @@
       "methodNotAllowed": "Method {method} not allowed for {path}",
       "authenticationRequired": "Authentication required",
       "permissionRequired": "Permission required: {permission}",
-      "notImplemented": "This feature is not yet available"
+      "notImplemented": "This feature is not yet available",
+      "graphqlQueryRequired": "A GraphQL query is required",
+      "graphqlInvalidDocument": "The GraphQL document could not be parsed",
+      "graphqlIntrospectionDisabled": "GraphQL introspection is disabled",
+      "graphqlUnknownOperation": "Unknown GraphQL operation"
     }
   }
 }

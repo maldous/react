@@ -26,7 +26,10 @@
       "@platform/storage-runtime": ["../../packages/storage-runtime/src/index.ts"],
       "@platform/email-runtime": ["../../packages/email-runtime/src/index.ts"],
       "@platform/audit-events": ["../../packages/audit-events/src/index.ts"],
-      "@platform/adapters-sentry": ["../../packages/adapters-sentry/src/index.ts"]
+      "@platform/adapters-sentry": ["../../packages/adapters-sentry/src/index.ts"],
+      "@platform/contracts-graphql": ["../../packages/contracts-graphql/src/index.ts"],
+      "@platform/adapters-graphql": ["../../packages/adapters-graphql/src/index.ts"],
+      "@platform/graphql-api-runtime": ["../../packages/graphql-api-runtime/src/index.ts"]
     }
   },
   "include": ["src/**/*.ts"],

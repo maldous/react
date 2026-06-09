@@ -117,6 +117,9 @@ production
 @platform/adapters-object-storage
 @platform/audit-events
 @platform/adapters-sentry
+@platform/contracts-graphql
+@platform/adapters-graphql
+@platform/graphql-api-runtime
 ```
 
 ### Provides APIs
@@ -127,6 +130,7 @@ readyz
 version
 session-fixture
 organisation-profile
+graphql
 auth-login
 auth-callback
 auth-logout

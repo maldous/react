@@ -1,6 +1,41 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { buildExecutableSchema, executeOperation } from "../src/index.ts";
+import { buildExecutableSchema, executeOperation, extractOperationFields } from "../src/index.ts";
+
+describe("extractOperationFields", () => {
+  it("returns top-level fields of a query", () => {
+    assert.deepEqual(extractOperationFields(`query { organisationProfile { id } }`), [
+      "organisationProfile",
+    ]);
+  });
+
+  it("returns top-level fields of a mutation", () => {
+    assert.deepEqual(
+      extractOperationFields(`mutation { updateOrganisationProfile(displayName: "x") { id } }`),
+      ["updateOrganisationProfile"]
+    );
+  });
+
+  it("detects introspection fields", () => {
+    assert.deepEqual(extractOperationFields(`{ __schema { types { name } } }`), ["__schema"]);
+  });
+
+  it("selects the named operation when multiple are present", () => {
+    const doc = `query A { health { status } } query B { organisationProfile { id } }`;
+    assert.deepEqual(extractOperationFields(doc, "B"), ["organisationProfile"]);
+  });
+
+  it("returns multiple top-level fields", () => {
+    assert.deepEqual(extractOperationFields(`{ health { status } organisationProfile { id } }`), [
+      "health",
+      "organisationProfile",
+    ]);
+  });
+
+  it("throws on a malformed document", () => {
+    assert.throws(() => extractOperationFields(`query { organisationProfile {`));
+  });
+});
 
 describe("buildExecutableSchema", () => {
   it("builds a schema from SDL and resolvers", () => {

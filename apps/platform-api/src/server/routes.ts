@@ -3,6 +3,7 @@ import type { Route } from "./pipeline.ts";
 import { getHealth, getReadiness, getVersion } from "./health.ts";
 import { getFixtureSession } from "./session.ts";
 import { handleGetOrganisationProfile, handlePatchOrganisationProfile } from "./organisation.ts";
+import { handleGraphql } from "./graphql.ts";
 import {
   handleAuthLogin,
   handleAuthCallback,
@@ -1607,5 +1608,15 @@ export const routes: Route[] = [
     resource: "organisation:profile",
     umaScope: "write" as const,
     handler: handlePatchOrganisationProfile,
+  },
+  // GraphQL boundary (ADR-0013, ADR-ACT-0199). Authentication + tenant-FQDN are
+  // enforced here (requiresAuth); per-operation UMA authz is enforced inside the
+  // handler since one path serves both the read query and the write mutation.
+  {
+    method: "POST",
+    path: "/api/graphql",
+    operationName: "graphql",
+    requiresAuth: true,
+    handler: handleGraphql,
   },
 ];

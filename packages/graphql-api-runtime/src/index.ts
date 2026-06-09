@@ -1,6 +1,37 @@
-import { buildSchema, graphql, type GraphQLSchema, type GraphQLResolveInfo } from "graphql";
+import {
+  buildSchema,
+  graphql,
+  parse,
+  type GraphQLSchema,
+  type GraphQLResolveInfo,
+  type OperationDefinitionNode,
+  type FieldNode,
+} from "graphql";
 
 export const packageName = "@platform/graphql-api-runtime";
+
+/**
+ * Return the top-level selection field names of a GraphQL operation.
+ *
+ * Used by hardened HTTP endpoints to enforce an operation allowlist and to
+ * detect introspection (`__schema` / `__type`) before execution. Returns the
+ * fields of the named operation, or the first operation when no name is given.
+ *
+ * Throws if the document cannot be parsed (callers should map this to HTTP 400).
+ */
+export function extractOperationFields(query: string, operationName?: string): string[] {
+  const doc = parse(query);
+  const operations = doc.definitions.filter(
+    (d): d is OperationDefinitionNode => d.kind === "OperationDefinition"
+  );
+  const op = operationName
+    ? (operations.find((o) => o.name?.value === operationName) ?? operations[0])
+    : operations[0];
+  if (!op) return [];
+  return op.selectionSet.selections
+    .filter((s): s is FieldNode => s.kind === "Field")
+    .map((s) => s.name.value);
+}
 
 export type Resolver<
   TParent = unknown,

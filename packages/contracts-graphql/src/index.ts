@@ -1,13 +1,18 @@
 export const packageName = "@platform/contracts-graphql";
 
+// Application data flows through GraphQL per ADR-0013. Profile operations are
+// session-scoped (ADR-ACT-0199): the BFF derives the organisation from the
+// authenticated session, so neither query nor mutation accepts a client-supplied
+// id — this prevents cross-tenant IDOR. The Organisation type mirrors
+// @platform/contracts-organisation OrganisationProfileSchema exactly.
 export const BASE_SCHEMA_SDL = `
   type Query {
     health: HealthStatus!
-    organisation(id: ID!): Organisation
+    organisationProfile: Organisation
   }
 
   type Mutation {
-    updateOrganisationDisplayName(id: ID!, displayName: String!): Organisation
+    updateOrganisationProfile(displayName: String!): Organisation
   }
 
   type HealthStatus {

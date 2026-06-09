@@ -244,11 +244,17 @@ Evidence used:
 - `@platform/api-runtime` package exists with platform role metadata.
 - Import boundary rules document the client API boundary.
 
+Implemented (2026-06-09, ADR-ACT-0199):
+
+- First GraphQL endpoint live: `POST /api/graphql` in apps/platform-api (server/graphql.ts), serving the session-scoped `organisationProfile` query and `updateOrganisationProfile` mutation.
+- Contract/adapter split exercised end-to-end: SDL in `@platform/contracts-graphql`, schema build/execution via `@platform/graphql-api-runtime`/`@platform/adapters-graphql`, resolvers in the BFF over the existing use-cases.
+- Access control integrated at the endpoint: per-operation UMA authorisation (UMA-first → static fallback → fail-closed) mirroring the REST route gate; endpoint hardened with an operation allowlist and introspection disabled outside development.
+- The browser SPA consumes the boundary over plain fetch (it must not import graphql/adapters per ADR-0022); response types come from `@platform/contracts-organisation`.
+
 Further validation required:
 
-- Implement GraphQL schema and validate contract/adapter split.
-- Confirm access-control integration at resolver layer.
-- Validate import rules against first vertical slice.
+- Extend the GraphQL boundary to remaining application data as further slices land.
+- Define schema versioning / persisted-operation policy before GA (ADR-ACT-0015).
 
 ## Impacted areas
 
