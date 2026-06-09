@@ -33,8 +33,10 @@ npx swagger-ui-watcher docs/api/openapi.json
 `docs/api/openapi.json` is **static documentation** maintained manually alongside route changes.
 When adding a new route to `apps/platform-api/src/server/routes.ts`, update this file in the same commit.
 
-Automated drift validation (checking every route in `routes.ts` against `openapi.json`) is not yet implemented.
-This is tracked by **ADR-ACT-0139** (Open ? before next REST route addition).
+Automated drift validation is implemented via `npm run openapi:drift` and is also covered by the
+architecture test suite. Run it whenever you edit either the route table or the OpenAPI spec.
+
+This is tracked by **ADR-ACT-0139**.
 
 ## Not in scope
 

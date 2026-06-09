@@ -112,7 +112,8 @@ None
 
 ## Operational notes
 
-- This tool is report-only until the OpenAPI documentation process is expanded.
+- Run npm run openapi:drift from the repository root to validate routes against docs/api/openapi.json.
+- The validation is enforced through the architecture test suite, so drift fails the normal workspace checks.
 
 ## Governance
 

@@ -7,7 +7,7 @@
 
 ## Summary
 
-Added a lightweight report-only drift check that compares route declarations in
+Added a drift check that compares route declarations in
 `apps/platform-api/src/server/routes.ts` against the documented REST surface in
 `docs/api/openapi.json`.
 
@@ -16,6 +16,7 @@ Added a lightweight report-only drift check that compares route declarations in
 - Tool: `tools/architecture/validate-openapi-drift/src/index.mjs`
 - Tests: `tools/architecture/validate-openapi-drift/tests/validate-openapi-drift.test.mjs`
 - Package entry added under `tools/architecture/validate-openapi-drift/package.json`
+- Root helper script: `npm run openapi:drift`
 
 ## Result
 

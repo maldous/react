@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Report-only OpenAPI drift validation between platform-api routes.ts and docs/api/openapi.json.",
+  "description": "OpenAPI drift validation between platform-api routes.ts and docs/api/openapi.json.",
   "main": "src/index.mjs",
   "exports": {
     ".": "./src/index.mjs"
@@ -94,7 +94,8 @@
         "node tools/architecture/validate-openapi-drift/src/index.mjs ."
       ],
       "operationalNotes": [
-        "This tool is report-only until the OpenAPI documentation process is expanded."
+        "Run npm run openapi:drift from the repository root to validate routes against docs/api/openapi.json.",
+        "The validation is enforced through the architecture test suite, so drift fails the normal workspace checks."
       ]
     }
   },
