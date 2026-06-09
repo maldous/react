@@ -51,12 +51,15 @@ compose-up-identity-mocks:
 	bash scripts/compose/up.sh $(ENV) identity-mocks
 	$(call OK,mock-oidc ready for $(ENV) — run `make seed-idps` to register broker IdPs)
 
-## seed-idps — Register mock broker IdPs (mock-google/azure/apple) on the platform realm.
+## seed-idps — Register mock broker IdPs (mock-google/azure/apple) on the ENV realm.
 ## Idempotent. Requires Keycloak (compose-up-identity) + mock-oidc (compose-up-identity-mocks).
+## Sources .env.$(ENV) (realm, admin creds, AUTH_PROVIDER_MODE, MOCK_OIDC_*) and targets the
+## host-published Keycloak port so it works for test/staging/prod, not just dev.
 seed-idps:
 	$(call STEP,seed:idps ($(ENV)))
-	npm run seed:idps
-	$(call OK,mock broker IdPs registered on the platform realm)
+	set -a; if [ -f .env.$(ENV) ]; then . ./.env.$(ENV); fi; set +a; \
+	KEYCLOAK_URL="http://localhost:$${KEYCLOAK_PORT:-8090}/kc" npm run seed:idps
+	$(call OK,mock broker IdPs registered on the $(ENV) realm)
 
 ## compose-up-web — Build and start the web profile for ENV (test/staging/prod only)
 ## dev does not use compose web — it uses Tilt. This target hard-fails for ENV=dev.
