@@ -23,6 +23,11 @@ export function providerLabelKey(id: string): string | null {
   return KNOWN_IDS.has(id) ? `auth.login.providers.${id}` : null;
 }
 
+/** i18n key for a provider's helper text, or null for unknown ids. */
+export function providerHelpKey(id: string): string | null {
+  return KNOWN_IDS.has(id) ? `auth.login.providerHelp.${id}` : null;
+}
+
 /**
  * Defence in depth: only render providers whose loginUrl is the relative BFF
  * handoff. This guarantees a button can never deep-link to Keycloak or the

@@ -59,6 +59,28 @@ describe("LoginPage (provider selector)", () => {
     }
   });
 
+  it("shows a 'Mock provider' badge for mock-mode providers but not the platform option", async () => {
+    server.use(providersHandler());
+    renderLogin();
+
+    await screen.findByTestId("login-providers");
+    // providersFixture: google/azure/apple are mode:"mock"; platform is mode:"internal".
+    expect(screen.getByTestId("login-provider-mock-google")).toBeInTheDocument();
+    expect(screen.getByTestId("login-provider-mock-azure")).toBeInTheDocument();
+    expect(screen.getByTestId("login-provider-mock-apple")).toBeInTheDocument();
+    expect(screen.queryByTestId("login-provider-mock-platform")).not.toBeInTheDocument();
+    // The badge text is present for mock providers.
+    expect(screen.getAllByText("Mock provider").length).toBeGreaterThanOrEqual(3);
+  });
+
+  it("renders provider helper text from i18n", async () => {
+    server.use(providersHandler());
+    renderLogin();
+    await screen.findByTestId("login-providers");
+    expect(screen.getByText("Continue with your Google account.")).toBeInTheDocument();
+    expect(screen.getByText("Use your platform account.")).toBeInTheDocument();
+  });
+
   it("routes the platform button to the platform handoff", async () => {
     server.use(providersHandler());
     renderLogin();

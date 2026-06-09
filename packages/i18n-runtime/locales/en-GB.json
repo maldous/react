@@ -19,15 +19,22 @@
       "body": "Use your platform account to continue.",
       "signInButton": "Sign in with your account",
       "footer": "Secure sign-in powered by Keycloak",
-      "chooseProvider": "Choose how to sign in",
+      "chooseProvider": "Choose how you want to continue.",
       "loading": "Loading sign-in options…",
-      "error": "Sign-in options are unavailable. Try again shortly.",
-      "empty": "No sign-in options are currently available.",
+      "error": "Sign-in methods could not be loaded.",
+      "empty": "No sign-in methods are currently available.",
+      "mockBadge": "Mock provider",
       "providers": {
         "platform": "Continue with platform account",
         "google": "Continue with Google",
         "azure": "Continue with Microsoft",
         "apple": "Continue with Apple"
+      },
+      "providerHelp": {
+        "platform": "Use your platform account.",
+        "google": "Continue with your Google account.",
+        "azure": "Continue with your Microsoft work or school account.",
+        "apple": "Continue with your Apple ID."
       }
     },
     "logout": {

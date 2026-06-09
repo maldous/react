@@ -1,10 +1,18 @@
 import { createRoute } from "@tanstack/react-router";
 import { Route as RootRoute } from "./__root";
 import { useTranslation } from "@platform/i18n-runtime";
-import { Card, CardBody } from "@platform/ui-design-system";
+import {
+  Card,
+  CardBody,
+  Badge,
+  LoadingState,
+  EmptyState,
+  ErrorState,
+} from "@platform/ui-design-system";
 import {
   useLoginProviders,
   providerLabelKey,
+  providerHelpKey,
   type LoginProvider,
 } from "../auth/login-providers.ts";
 
@@ -22,26 +30,75 @@ export const Route = createRoute({
   component: LoginPage,
 });
 
-function ProviderButton({ provider }: { provider: LoginProvider }) {
+/** Simple, brand-neutral glyph placeholder per provider (no brand colours). */
+function providerGlyph(id: string): string {
+  switch (id) {
+    case "platform":
+      return "⬡";
+    case "google":
+      return "G";
+    case "azure":
+      return "M"; // Microsoft
+    case "apple":
+      return "A";
+    default:
+      return (id[0] ?? "?").toUpperCase();
+  }
+}
+
+function ProviderRow({ provider }: { provider: LoginProvider }) {
   const t = useTranslation();
-  const key = providerLabelKey(provider.id);
-  const label = key ? t(key) : provider.label;
+  const labelKey = providerLabelKey(provider.id);
+  const helpKey = providerHelpKey(provider.id);
+  const label = labelKey ? t(labelKey) : provider.label;
+  const help = helpKey ? t(helpKey) : "";
+  const isPlatform = provider.type === "keycloak";
+  const isMock = provider.mode === "mock";
   // The platform option keeps the legacy testid so existing E2E helpers (which
   // click "sign-in-button" to drive the platform login) continue to work.
-  const testId = provider.id === "platform" ? "sign-in-button" : `login-provider-${provider.id}`;
-  const isPlatform = provider.type === "keycloak";
+  const testId = isPlatform ? "sign-in-button" : `login-provider-${provider.id}`;
+
   return (
     <a
       href={provider.loginUrl}
       data-testid={testId}
       data-provider={provider.id}
-      className={
+      className={[
+        "group flex items-center gap-3 rounded-lg border px-4 py-3 transition-colors",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
         isPlatform
-          ? "flex w-full items-center justify-center rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-          : "flex w-full items-center justify-center rounded-md border border-border bg-surface px-4 py-2.5 text-sm font-medium text-fg shadow-sm hover:bg-surface-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-      }
+          ? "border-primary/30 bg-primary/5 hover:bg-primary/10"
+          : "border-border bg-surface hover:bg-surface-muted",
+      ].join(" ")}
     >
-      {label}
+      <span
+        aria-hidden="true"
+        className={[
+          "flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-semibold",
+          isPlatform ? "bg-primary text-primary-foreground" : "bg-surface-muted text-fg",
+        ].join(" ")}
+      >
+        {providerGlyph(provider.id)}
+      </span>
+
+      <span className="min-w-0 flex-1">
+        <span className="flex items-center gap-2">
+          <span className="truncate text-sm font-medium text-fg">{label}</span>
+          {isMock && (
+            <Badge variant="secondary" data-testid={`login-provider-mock-${provider.id}`}>
+              {t("auth.login.mockBadge")}
+            </Badge>
+          )}
+        </span>
+        {help && <span className="mt-0.5 block truncate text-xs text-fg-muted">{help}</span>}
+      </span>
+
+      <span
+        aria-hidden="true"
+        className="text-fg-muted transition-transform group-hover:translate-x-0.5"
+      >
+        ›
+      </span>
     </a>
   );
 }
@@ -70,34 +127,34 @@ export function LoginPage() {
 
         {/* Sign-in card */}
         <Card>
-          <CardBody className="space-y-4 p-8">
+          <CardBody className="space-y-5 p-8">
             <div>
               <h2 className="text-base font-semibold text-fg">{t("auth.login.title")}</h2>
               <p className="mt-1 text-sm text-fg-muted">{t("auth.login.chooseProvider")}</p>
             </div>
 
             {isLoading && (
-              <p data-testid="login-loading" className="text-sm text-fg-muted">
-                {t("auth.login.loading")}
-              </p>
+              <div data-testid="login-loading">
+                <LoadingState message={t("auth.login.loading")} className="py-8" />
+              </div>
             )}
 
             {isError && (
-              <div role="alert" data-testid="login-error" className="text-sm text-danger">
-                {t("auth.login.error")}
+              <div data-testid="login-error">
+                <ErrorState title={t("auth.login.error")} className="py-8" />
               </div>
             )}
 
             {!isLoading && !isError && providers && providers.length === 0 && (
-              <p data-testid="login-empty" className="text-sm text-fg-muted">
-                {t("auth.login.empty")}
-              </p>
+              <div data-testid="login-empty">
+                <EmptyState title={t("auth.login.empty")} className="py-8" />
+              </div>
             )}
 
             {!isLoading && !isError && providers && providers.length > 0 && (
               <div data-testid="login-providers" className="space-y-3">
                 {providers.map((p) => (
-                  <ProviderButton key={p.id} provider={p} />
+                  <ProviderRow key={p.id} provider={p} />
                 ))}
               </div>
             )}
