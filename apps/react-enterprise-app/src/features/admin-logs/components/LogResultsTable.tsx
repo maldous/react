@@ -64,6 +64,13 @@ export function LogResultsTable({ entries }: { entries: LogEntry[] }) {
     [t]
   );
 
+  // Mobile strategy (ADR-ACT-0195): DataTable wraps results in a horizontally
+  // safe scroll container (overflow-auto), which keeps a single rendering path.
+  // PROMOTION CRITERIA: add a dedicated card/stacked fallback for narrow screens
+  // ONLY if real-device testing shows the scrolling table is genuinely hard to
+  // use (e.g. key cells unreadable) — do not duplicate table+card rendering
+  // pre-emptively. Row expansion is a real keyboard-accessible button (no
+  // hover-only affordance), so it works on touch and keyboard.
   return (
     <div data-testid="logs-results">
       <DataTable

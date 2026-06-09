@@ -16,6 +16,12 @@ export interface AppShellProps {
  * pages render their content as children; the shell provides #main-content.
  * Responsive + safe-area aware so the same markup works in browser, PWA, and a
  * future Capacitor webview.
+ *
+ * PROMOTION CRITERIA (ADR-0019): this is intentionally a composed component, not
+ * a router layout, while there is only one admin route. Once the admin shell is
+ * shared across several routes, promote it to a pathless TanStack layout route
+ * that renders <AppShell><Outlet/></AppShell>, so shared shell state/loaders live
+ * in one place instead of being wrapped per page.
  */
 export function AppShell({ children }: AppShellProps) {
   const t = useTranslation();

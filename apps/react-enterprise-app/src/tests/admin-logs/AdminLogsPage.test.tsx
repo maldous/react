@@ -100,9 +100,40 @@ describe("AdminLogsPage", () => {
 
     const expand = screen.getByTestId("logs-row-expand");
     expect(expand).toHaveAttribute("aria-expanded", "false");
+    // The toggle carries an accessible name (not just the ▸ glyph) and is a real button.
+    expect(expand).toHaveAccessibleName(enGB.feature.adminLogs.toggleDetails);
     await user.click(expand);
     expect(await screen.findByTestId("logs-row-details")).toBeInTheDocument();
     expect(screen.getByTestId("logs-row-expand")).toHaveAttribute("aria-expanded", "true");
+  });
+
+  it("expands a row from the keyboard (Enter on the focused toggle)", async () => {
+    server.use(http.get("/api/admin/logs/search", () => HttpResponse.json({ entries: [ENTRY] })));
+    const { user } = renderPage();
+    await user.click(screen.getByTestId("logs-search-button"));
+    await screen.findByTestId("logs-results");
+
+    const expand = screen.getByTestId("logs-row-expand");
+    expand.focus();
+    expect(expand).toHaveFocus();
+    await user.keyboard("{Enter}");
+    expect(await screen.findByTestId("logs-row-details")).toBeInTheDocument();
+    expect(screen.getByTestId("logs-row-expand")).toHaveAttribute("aria-expanded", "true");
+  });
+
+  it("keeps a horizontally-safe results container on a narrow (mobile) viewport", async () => {
+    Object.defineProperty(window, "innerWidth", { value: 375, configurable: true });
+    window.dispatchEvent(new Event("resize"));
+    server.use(http.get("/api/admin/logs/search", () => HttpResponse.json({ entries: [ENTRY] })));
+    const { user } = renderPage();
+    await user.click(screen.getByTestId("logs-search-button"));
+    const results = await screen.findByTestId("logs-results");
+    // Results stay in an overflow-auto scroll container rather than overflowing the page.
+    expect(results.querySelector(".overflow-auto")).not.toBeNull();
+    // Touch/keyboard control retains its accessible name at narrow widths.
+    expect(screen.getByTestId("logs-row-expand")).toHaveAccessibleName(
+      enGB.feature.adminLogs.toggleDetails
+    );
   });
 
   it("copies the query context (URL + filter state)", async () => {
