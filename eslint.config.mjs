@@ -50,5 +50,22 @@ export default tseslint.config(
       "no-unreachable": "error",
       "no-duplicate-imports": "error",
     },
+  },
+
+  // Bucket 3: no raw console in runtime code (ADR-0020 §, ADR-ACT-0196).
+  // BFF, adapters, and platform-* runtime packages must log via
+  // @platform/platform-logging, never console.*. Scoped to src/ (not tests).
+  // The browser logger (platform-logging/src/browser.ts) is the one allowed
+  // place console output is intentional.
+  {
+    files: [
+      "apps/platform-api/src/**/*.ts",
+      "packages/adapters-*/src/**/*.ts",
+      "packages/platform-*/src/**/*.ts",
+    ],
+    ignores: ["packages/platform-logging/src/browser.ts"],
+    rules: {
+      "no-console": "error",
+    },
   }
 );
