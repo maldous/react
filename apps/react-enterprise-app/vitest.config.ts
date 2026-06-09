@@ -5,6 +5,10 @@ import path from "node:path";
 export default defineConfig({
   plugins: [react()],
   resolve: {
+    // Ensure a single React instance across the app, ui-design-system, and
+    // react-aria-components — otherwise components mounting React Aria primitives
+    // resolve a second copy and hit a null hooks dispatcher under jsdom.
+    dedupe: ["react", "react-dom", "react/jsx-runtime"],
     alias: {
       "@platform/ui-design-system": path.resolve(
         __dirname,

@@ -2,12 +2,14 @@ import {
   type ColumnDef,
   flexRender,
   getCoreRowModel,
+  getExpandedRowModel,
   getSortedRowModel,
+  type Row,
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { useRef, useState } from "react";
+import { Fragment, type ReactNode, useRef, useState } from "react";
 import { cn } from "../lib/utils";
 
 export interface DataTableProps<TData> {
@@ -16,9 +18,26 @@ export interface DataTableProps<TData> {
   /** Height of the scrollable container in px (enables virtual scrolling). */
   height?: number;
   className?: string;
+  /**
+   * Optional expandable-row content. When provided, the table enables row
+   * expansion and renders this beneath an expanded row (full-width). Features
+   * define a column whose cell toggles `row.toggleExpanded()` via an accessible
+   * control. Expansion is supported in the non-virtualised path (no `height`),
+   * which suits bounded result sets.
+   */
+  renderSubComponent?: (row: Row<TData>) => ReactNode;
+  /** Optional stable data-testid applied to every body row (for E2E selectors). */
+  rowTestId?: string;
 }
 
-export function DataTable<TData>({ data, columns, height, className }: DataTableProps<TData>) {
+export function DataTable<TData>({
+  data,
+  columns,
+  height,
+  className,
+  renderSubComponent,
+  rowTestId,
+}: DataTableProps<TData>) {
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
@@ -28,6 +47,8 @@ export function DataTable<TData>({ data, columns, height, className }: DataTable
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
+    getRowCanExpand: () => !!renderSubComponent,
   });
 
   const rows = table.getRowModel().rows;
@@ -77,7 +98,11 @@ export function DataTable<TData>({ data, columns, height, className }: DataTable
                   const row = rows[vRow.index];
                   if (!row) return null;
                   return (
-                    <tr key={row.id} className="border-b transition-colors hover:bg-gray-50">
+                    <tr
+                      key={row.id}
+                      data-testid={rowTestId}
+                      className="border-b transition-colors hover:bg-gray-50"
+                    >
                       {row.getVisibleCells().map((cell) => (
                         <td key={cell.id} className="px-3 py-2 align-middle">
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -92,13 +117,25 @@ export function DataTable<TData>({ data, columns, height, className }: DataTable
               </>
             ) : (
               rows.map((row) => (
-                <tr key={row.id} className="border-b transition-colors hover:bg-gray-50">
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="px-3 py-2 align-middle">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  ))}
-                </tr>
+                <Fragment key={row.id}>
+                  <tr
+                    data-testid={rowTestId}
+                    className="border-b transition-colors hover:bg-gray-50"
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <td key={cell.id} className="px-3 py-2 align-middle">
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </td>
+                    ))}
+                  </tr>
+                  {renderSubComponent && row.getIsExpanded() && (
+                    <tr className="border-b bg-gray-50">
+                      <td colSpan={row.getVisibleCells().length} className="px-3 py-2">
+                        {renderSubComponent(row)}
+                      </td>
+                    </tr>
+                  )}
+                </Fragment>
               ))
             )}
           </tbody>

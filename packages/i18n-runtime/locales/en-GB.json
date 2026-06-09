@@ -1,6 +1,7 @@
 {
   "app": {
     "shell": {
+      "home": "Go to home",
       "nav": {
         "organisationProfile": "Organisation profile"
       }
@@ -30,7 +31,53 @@
   },
   "landing": {
     "status": "Platform status",
-    "tools": "Admin tools"
+    "tools": "Admin tools",
+    "adminTools": "Platform administration",
+    "profileGated": "profile: {profile}",
+    "statusLink": {
+      "health": "Health",
+      "readiness": "Readiness",
+      "version": "Version",
+      "session": "Session"
+    },
+    "tool": {
+      "logSearch": {
+        "label": "Log search",
+        "description": "Search structured platform logs by request, trace, tenant, or text"
+      },
+      "keycloak": {
+        "label": "Keycloak",
+        "description": "Identity and SSO — all realms"
+      },
+      "mailpit": {
+        "label": "Mailpit",
+        "description": "Caught email (all tenants)"
+      },
+      "minio": {
+        "label": "MinIO",
+        "description": "Object storage console"
+      },
+      "sonarqube": {
+        "label": "SonarQube",
+        "description": "Code quality dashboard"
+      },
+      "sentry": {
+        "label": "Sentry",
+        "description": "Error and performance monitoring"
+      },
+      "grafana": {
+        "label": "Grafana",
+        "description": "Log search and dashboards (observability profile)"
+      },
+      "clickhouse": {
+        "label": "ClickHouse",
+        "description": "Analytics HTTP play UI"
+      },
+      "pgadmin": {
+        "label": "pgAdmin",
+        "description": "PostgreSQL database admin"
+      }
+    }
   },
   "feature": {
     "organisation": {
@@ -52,12 +99,16 @@
     },
     "adminLogs": {
       "title": "Log search",
+      "subtitle": "Search structured platform logs by request, trace, tenant, actor, or text.",
       "search": "Search",
       "searching": "Searching…",
       "copyQueryContext": "Copy query context",
       "copied": "Copied",
-      "noResults": "No logs matched the query.",
+      "copyRequestId": "Copy request ID",
+      "copyTraceId": "Copy trace ID",
+      "toggleDetails": "Toggle log details",
       "error": "Log search is unavailable. Try again shortly.",
+      "errorGeneric": "Unknown error",
       "filter": {
         "service": "Service",
         "level": "Level",
@@ -70,10 +121,19 @@
         "text": "Text contains"
       },
       "column": {
+        "expand": "Details",
         "time": "Time",
         "service": "Service",
         "level": "Level",
         "message": "Message"
+      },
+      "prompt": {
+        "title": "Search platform logs",
+        "description": "Set filters and run a search to see matching log entries."
+      },
+      "empty": {
+        "title": "No logs matched",
+        "description": "No log entries matched the current filters and time range."
       }
     }
   },

@@ -1,1 +1,33 @@
 @import "tailwindcss";
+
+/*
+ * Safe-area support (ADR-ACT-0195 mobile/Capacitor requirement).
+ *
+ * The same SPA must render in browser, PWA, and a future Capacitor webview.
+ * Capacitor's SystemBars plugin injects --safe-area-inset-* CSS variables as a
+ * fallback for Android WebView; in a normal browser those are undefined, so we
+ * fall back to the CSS env() insets, then to 0px. Applied once at the app shell
+ * (.app-safe-area) rather than scattered through feature pages.
+ */
+:root {
+  --app-safe-top: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
+  --app-safe-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+  --app-safe-left: var(--safe-area-inset-left, env(safe-area-inset-left, 0px));
+  --app-safe-right: var(--safe-area-inset-right, env(safe-area-inset-right, 0px));
+}
+
+/* Horizontal insets — applied to the shell root so content clears notches. */
+.app-safe-x {
+  padding-left: var(--app-safe-left);
+  padding-right: var(--app-safe-right);
+}
+
+/* Top inset — applied to the header so the bar paints up into the inset. */
+.app-safe-top {
+  padding-top: var(--app-safe-top);
+}
+
+/* Bottom inset — applied to the main region / sticky bottom actions. */
+.app-safe-bottom {
+  padding-bottom: var(--app-safe-bottom);
+}

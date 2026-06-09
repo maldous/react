@@ -15,6 +15,7 @@ export interface LogSearchFilters {
   start?: string;
   end?: string;
   limit?: number;
+  direction?: "forward" | "backward";
 }
 
 export interface LogEntry {
