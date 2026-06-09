@@ -14,7 +14,7 @@ RESET=$(tput sgr0 2>/dev/null || true)
 # Uses /api/0/ instead of /_health/ because FORCE_SCRIPT_NAME=/sentry in
 # sentry.conf.py causes granian's /_health/ to redirect (Django treats
 # "_health" as an org slug). /api/0/ returns 200 without auth.
-if ! docker/compose-wrapper.sh sentry exec sentry-web \
+if ! PROJECT=react-shared docker/compose-wrapper.sh sentry exec sentry-web \
     python3 -c "import urllib.request; urllib.request.urlopen('http://localhost:9000/api/0/',timeout=5)" \
     > /dev/null 2>&1; then
     printf '%s✗ sentry-smoke: sentry-web /api/0/ not responding%s\n' "$RED" "$RESET"

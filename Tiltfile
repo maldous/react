@@ -37,8 +37,9 @@ os.environ['COMPOSE_PROJECT_FILTER'] = 'react-dev'
 # profiles=['external-mocks', 'identity', 'observability'] activates the dev
 # profile-gated services (WireMock, Keycloak, Grafana/Loki/Alloy) so Tilt owns
 # their lifecycle via dc_resource. Sentry and SonarQube are NOT included — they
-# live in separate react-sentry / react-sonar projects shared across all envs
-# and are started via local_resource entries below (make sentry-up / sonar-up).
+# live in the shared react-shared (Sentry) / react-sonar (SonarQube) projects,
+# shared across all envs, started via local_resource entries below
+# (make sentry-up / sonar-up).
 # mock-oidc is NOT in this list: it is a cross-env shared service in the
 # react-shared project, started via the `mock-oidc` local_resource below.
 # Keycloak reaches it over the host gateway (compose extra_hosts), so no shared
