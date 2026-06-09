@@ -107,10 +107,11 @@ export function getMockOidcSettings(): MockOidcSettings {
   const strip = (u: string) => u.replace(/\/+$/, "");
   return {
     publicUrl: strip(process.env["MOCK_OIDC_PUBLIC_URL"] ?? "http://localhost:9080"),
-    // Keycloak backchannel (token/jwks/userinfo). The shared mock-oidc fixture
-    // runs in its own (react-shared) project and is reached from per-env Keycloak
-    // over the host gateway at its published port — not a cross-project DNS name.
-    internalUrl: strip(process.env["MOCK_OIDC_INTERNAL_URL"] ?? "http://host.docker.internal:9080"),
+    // Keycloak backchannel (token/jwks/userinfo). mock-oidc runs PER-ENV in the
+    // same project as Keycloak, so the backchannel is the in-network service name
+    // http://mock-oidc:8080 (resolved on the shared project network), while the
+    // browser-facing issuer (publicUrl) stays host/Cloudflare-reachable.
+    internalUrl: strip(process.env["MOCK_OIDC_INTERNAL_URL"] ?? "http://mock-oidc:8080"),
     clientSecret: process.env["MOCK_OIDC_CLIENT_SECRET"] ?? "mock-oidc-shared-secret",
   };
 }

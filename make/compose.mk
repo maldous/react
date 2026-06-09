@@ -145,11 +145,13 @@ sentry-down:
 	$(call OK,sentry down)
 	@$(call CONFIRM_DOWN,react-shared)
 
-## identity-mocks-down — Stop the shared mock-oidc fixture (react-shared project)
+## identity-mocks-down — Stop this env's mock-oidc fixture (react-$(ENV) project)
+## Removes ONLY the mock-oidc service (rm -sf), never `down` — `down` would tear
+## down the whole react-$(ENV) project (Keycloak, postgres, …), not just the fixture.
 identity-mocks-down:
-	$(call STEP,mock-oidc: stopping)
-	PROJECT=react-shared docker/compose-wrapper.sh dev --profile identity-mocks down --timeout 30
-	$(call OK,mock-oidc down)
+	$(call STEP,mock-oidc: stopping ($(ENV)))
+	docker/compose-wrapper.sh $(ENV) --profile identity-mocks rm -sf mock-oidc
+	$(call OK,mock-oidc down for $(ENV))
 
 ## sonar-up — Start shared SonarQube instance (external-sonar profile, react-sonar project)
 ## Idempotent — fast no-op when already healthy. Single instance shared across all envs.

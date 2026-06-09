@@ -41,24 +41,29 @@ upstream IdP fixture is therefore a real OIDC server (`services/mock-oidc`, wrap
 
 ### mock-oidc personas, ports, issuers
 
-| Provider | Keycloak alias | Browser issuer (`MOCK_OIDC_PUBLIC_URL`) | Keycloak backchannel (`MOCK_OIDC_INTERNAL_URL`) |
-| -------- | -------------- | --------------------------------------- | ----------------------------------------------- |
-| google   | `mock-google`  | `http://localhost:9080/google`          | `http://host.docker.internal:9080/google`       |
-| azure    | `mock-azure`   | `http://localhost:9080/azure`           | `http://host.docker.internal:9080/azure`        |
-| apple    | `mock-apple`   | `http://localhost:9080/apple`           | `http://host.docker.internal:9080/apple`        |
+| Provider | Keycloak alias | Browser issuer (`MOCK_OIDC_PUBLIC_URL`, dev) | Keycloak backchannel (`MOCK_OIDC_INTERNAL_URL`) |
+| -------- | -------------- | -------------------------------------------- | ----------------------------------------------- |
+| google   | `mock-google`  | `http://localhost:9080/google`               | `http://mock-oidc:8080/google`                  |
+| azure    | `mock-azure`   | `http://localhost:9080/azure`                | `http://mock-oidc:8080/azure`                   |
+| apple    | `mock-apple`   | `http://localhost:9080/apple`                | `http://mock-oidc:8080/apple`                   |
 
-mock-oidc is a **cross-environment shared service** in the `react-shared` Compose
-project (container `react-shared-mock-oidc-1`), alongside the shared Caddy and Sentry.
-It is published once on the host (`:9080`); every per-environment Keycloak reaches it
-over the host gateway (`host.docker.internal`, via the Keycloak `extra_hosts` entry), so
-no cross-project Docker network is required.
+mock-oidc is a **per-environment** service: it runs in each env's own Compose project
+(`react-dev` / `react-test` / `react-staging` / `react-prod`) alongside that env's
+Keycloak. A single `node-oidc-provider` instance can only emit **one issuer**, so each
+env gets its own instance on its own host port and emits its own `MOCK_OIDC_PUBLIC_URL`
+issuer — letting **all environments run concurrently** (e.g. the dev broker E2E and a
+live prod demo at the same time). Per-env host ports: **dev 9080 / test 9081 /
+staging 9082 / prod 9083** (`MOCK_OIDC_PORT` in `.env.<env>`). Because it is co-located
+with Keycloak in the same project network, the backchannel is the in-network service
+name `http://mock-oidc:8080` — no host gateway or cross-project network is needed.
 
 The split-horizon (browser vs. Keycloak-container reachability) is handled with
-**explicit Keycloak endpoint config**: `authorizationUrl` is the public issuer while
-`token`/`jwks`/`userinfo`/`issuer` use the backchannel base. The ID-token `iss` equals
-the public issuer and Keycloak validates it as a string, so no `/etc/hosts` entry is
-needed. See `services/mock-oidc/README.md` for scenarios (verified / unverified / denied
-/ provider-error / disabled).
+**explicit Keycloak endpoint config**: `authorizationUrl` is the public issuer
+(`MOCK_OIDC_PUBLIC_URL`, browser-reachable) while `token`/`jwks`/`userinfo`/`issuer` use
+the backchannel base (`mock-oidc:8080`). The ID-token `iss` equals the public issuer and
+Keycloak validates it as a string, so no `/etc/hosts` entry is needed. See
+`services/mock-oidc/README.md` for scenarios (verified / unverified / denied /
+provider-error / disabled).
 
 ## Environment / provider mode policy
 

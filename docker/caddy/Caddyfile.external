@@ -62,31 +62,36 @@
 # below, which would otherwise swallow them.
 :80 {
 	# =========================================================================
-	# NON-PRODUCTION / TEMPORARY DEMO ONLY (ADR-ACT-0157)
+	# NON-PRODUCTION pre-real-provider BOOTSTRAP (ADR-ACT-0157)
 	# -------------------------------------------------------------------------
-	# mock-idp.* reverse-proxy the SHARED mock-oidc fixture so external
-	# stakeholders can complete the brokered MOCK Google/Microsoft/Apple flow
-	# from their own browser. external-caddy is network_mode:host, so the shared
-	# mock-oidc (react-shared project) is reached at the host-published port 9080.
+	# mock-idp.* reverse-proxy this env's PER-ENV mock-oidc fixture so external
+	# stakeholders can complete the brokered MOCK Google/Microsoft/Apple flow from
+	# their own browser. external-caddy is network_mode:host, so each env's
+	# host-published mock-oidc port is reached directly (prod 9083 / staging 9082).
 	#
 	#   * These are MOCK identity providers — never real Google/Microsoft/Apple.
 	#   * Only valid while AUTH_PROVIDER_MODE=mock AND
-	#     ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS=true on the target env.
-	#   * Never put real provider credentials behind these hosts.
-	#   * REMOVE the Cloudflare DNS for mock-idp.staging.aldous.info /
-	#     mock-idp.aldous.info, and delete these two handle blocks, after the demo.
+	#     ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS=true on that env (.env.<env>).
+	#   * Never put real provider credentials behind these hosts. REMOVE the handle
+	#     block AND the Cloudflare DNS once real providers are configured (mode=real).
 	# =========================================================================
-	@mock_idp_staging host mock-idp.staging.aldous.info
-	handle @mock_idp_staging {
-		reverse_proxy localhost:9080 {
+	@mock_idp_prod host mock-idp.aldous.info
+	handle @mock_idp_prod {
+		reverse_proxy localhost:9083 {
 			header_up X-Forwarded-Host {host}
 			header_up X-Forwarded-Proto https
 		}
 	}
 
-	@mock_idp_prod host mock-idp.aldous.info
-	handle @mock_idp_prod {
-		reverse_proxy localhost:9080 {
+	# Staging mock-idp — NOT ACTIVE until Cloudflare TLS covers the second-level
+	# wildcard. mock-idp.staging.aldous.info is under *.staging.aldous.info, which
+	# Cloudflare Universal SSL does NOT cover; it needs a paid Advanced Certificate
+	# for *.staging.aldous.info (ADR-ACT-0190). The route below is ready for when
+	# that cert + DNS exist and staging flips MOCK_OIDC_PUBLIC_URL to this host;
+	# until then staging uses host-local mode (MOCK_OIDC_PUBLIC_URL=localhost:9082).
+	@mock_idp_staging host mock-idp.staging.aldous.info
+	handle @mock_idp_staging {
+		reverse_proxy localhost:9082 {
 			header_up X-Forwarded-Host {host}
 			header_up X-Forwarded-Proto https
 		}

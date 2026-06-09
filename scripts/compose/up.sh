@@ -77,14 +77,16 @@ case "$PROFILE" in
     ;;
   identity-mocks)
     # mock-oidc upstream IdP fixture (ADR-ACT-0157). Built from services/mock-oidc.
-    # Cross-env shared service in the react-shared project; reached by every
-    # per-env Keycloak over the host gateway (host.docker.internal). Sources the
-    # given env file (e.g. .env.dev) for MOCK_OIDC_* interpolation.
+    # PER-ENV service: it runs in this env's own project (react-${ENV}) on the env's
+    # MOCK_OIDC_PORT, alongside that env's Keycloak (reached backchannel at the
+    # in-network service name http://mock-oidc:8080). A single node-oidc-provider
+    # instance can only emit ONE issuer, so each env gets its own instance with its
+    # own MOCK_OIDC_PUBLIC_URL — dev/test/staging/prod can all run concurrently.
+    # Sources the given env file (e.g. .env.prod) for MOCK_OIDC_* interpolation.
     SERVICES="mock-oidc"
     PROFILE_FLAG="--profile identity-mocks"
     TIMEOUT=180
     EXTRA_FLAGS="--build"
-    COMPOSE_CMD="env PROJECT=react-shared docker/compose-wrapper.sh ${ENV}"
     ;;
   web)
     SERVICES=""

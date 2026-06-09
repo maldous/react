@@ -309,10 +309,10 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
     ports:
       - "${KEYCLOAK_PORT:-8090}:8080"
-    # Reach the shared mock-oidc fixture (react-shared project, published on the
-    # host) over the host gateway for the OIDC broker backchannel (ADR-ACT-0157).
-    # This keeps Keycloak on its per-environment default network — no cross-project
-    # network is required — while still resolving the shared upstream IdP.
+    # mock-oidc now runs PER-ENV in this same project (react-<env>), so Keycloak
+    # reaches the OIDC broker backchannel directly at the in-network service name
+    # http://mock-oidc:8080 (MOCK_OIDC_INTERNAL_URL). host.docker.internal is kept
+    # as a host-gateway escape hatch for host-published fixtures (ADR-ACT-0157).
     extra_hosts:
       - "host.docker.internal:host-gateway"
     healthcheck:
@@ -334,10 +334,15 @@ services:
   # IDENTITY-MOCKS PROFILE ? `docker compose --profile identity-mocks up -d mock-oidc`
   #
   # mock-oidc: NON-PRODUCTION upstream OIDC identity-provider fixture. Keycloak
-  # brokers it as mock-google / mock-azure / mock-apple (ADR-ACT-0157). Runs on
-  # the default network alongside Keycloak so the backchannel (token/jwks/userinfo)
-  # is reachable at http://mock-oidc:8080/<provider>; the browser uses the published
-  # MOCK_OIDC_PUBLIC_URL (localhost:9080) for authorize + the scenario picker.
+  # brokers it as mock-google / mock-azure / mock-apple (ADR-ACT-0157).
+  #
+  # PER-ENV (not shared): one instance per project (react-dev/test/staging/prod),
+  # each on its own host MOCK_OIDC_PORT (dev 9080 / test 9081 / staging 9082 /
+  # prod 9083) emitting its own MOCK_OIDC_PUBLIC_URL issuer. A single
+  # node-oidc-provider instance can only emit ONE issuer, so per-env instances let
+  # all environments run concurrently. Keycloak (same project network) reaches the
+  # backchannel (token/jwks/userinfo) at http://mock-oidc:8080/<provider>; the
+  # browser uses the published MOCK_OIDC_PUBLIC_URL for authorize + the picker.
   #
   # GUARDRAIL: this profile must NEVER be started silently in staging/prod. It is
   # only valid there as an explicit, temporary pre-real-provider bootstrap
@@ -361,11 +366,11 @@ services:
       MOCK_OIDC_CLIENT_SECRET: ${MOCK_OIDC_CLIENT_SECRET:-mock-oidc-shared-secret}
     ports:
       # host:container ? host port MUST equal the port in MOCK_OIDC_PUBLIC_URL so
-      # the browser-facing issuer and the published port agree.
+      # the browser-facing issuer and the published port agree. Per-env offset:
+      # dev 9080 / test 9081 / staging 9082 / prod 9083 (set MOCK_OIDC_PORT in .env.<env>).
       - "${MOCK_OIDC_PORT:-9080}:8080"
-    # Runs in the shared react-shared project. Every per-environment Keycloak
-    # reaches it via the host gateway at MOCK_OIDC_INTERNAL_URL (host.docker.internal),
-    # so no cross-project Docker network is needed.
+    # Runs in this env's own project (react-<env>) alongside that env's Keycloak,
+    # which reaches it in-network at http://mock-oidc:8080 (MOCK_OIDC_INTERNAL_URL).
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:8080/healthz"]
       interval: 10s
@@ -1035,6 +1040,18 @@ services:
       KEYCLOAK_CLIENT_SECRET: ${KEYCLOAK_CLIENT_SECRET:-local-dev-bff-secret}
       KEYCLOAK_PROVISIONER_CLIENT_ID: ${KEYCLOAK_PROVISIONER_CLIENT_ID:-platform-provisioner}
       KEYCLOAK_PROVISIONER_CLIENT_SECRET: ${KEYCLOAK_PROVISIONER_CLIENT_SECRET:-local-dev-provisioner-secret}
+      # Brokered third-party identity provider mode (ADR-ACT-0157). Read by the BFF
+      # (apps/platform-api/src/server/auth-providers.ts). Unset => "real" in prod-like
+      # envs (PLATFORM_ENV=staging|prod), which lists ONLY the platform login until
+      # real providers exist. "mock" is a TEMPORARY pre-real-provider bootstrap and
+      # ALSO requires ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS=true, or the BFF
+      # refuses to start (validateProviderModeAtStartup). MOCK_OIDC_* point the BFF
+      # seed at the shared mock-oidc fixture (browser issuer vs Keycloak backchannel).
+      AUTH_PROVIDER_MODE: ${AUTH_PROVIDER_MODE:-}
+      ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS: ${ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS:-}
+      MOCK_OIDC_PUBLIC_URL: ${MOCK_OIDC_PUBLIC_URL:-http://localhost:9080}
+      MOCK_OIDC_INTERNAL_URL: ${MOCK_OIDC_INTERNAL_URL:-http://mock-oidc:8080}
+      MOCK_OIDC_CLIENT_SECRET: ${MOCK_OIDC_CLIENT_SECRET:-mock-oidc-shared-secret}
       # Loki base URL for the admin log search API (ADR-0035, ADR-ACT-0194).
       # Hardcoded internal Docker hostname (like POSTGRES_URL/REDIS_URL above): each
       # compose project (react-dev/test/staging/prod) has its own `loki` service on

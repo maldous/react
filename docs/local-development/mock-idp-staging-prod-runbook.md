@@ -1,18 +1,42 @@
-# Runbook: temporary mock IdP brokered login in staging / prod
+# Runbook: mock IdP brokered login in staging / prod (per-env)
 
-> **Purpose:** demonstrate the third-party login selector + brokered mock IdP flow
-> (Google / Microsoft / Apple) to stakeholders in staging/prod **before** real
-> providers are configured. **Temporary, explicit, noisy bootstrap only.**
+> **Purpose:** run the third-party login selector + brokered mock IdP flow
+> (Google / Microsoft / Apple) in staging/prod **before** real providers are
+> configured. **Temporary, explicit, noisy pre-real-provider bootstrap only.**
 >
 > ADR-ACT-0157 · ADR-0035. See `docs/local-development/mock-identity.md` for the
 > architecture. This runbook does **not** implement real IdPs, change the brokered
 > architecture, or remove any guardrail.
 
-## Read first — safety & guardrails
+## Per-env mock-oidc (read first)
+
+A single `node-oidc-provider` instance can emit only **one issuer**, so mock-oidc is a
+**per-environment** service: it runs in each env's own Compose project (`react-dev` /
+`react-test` / `react-staging` / `react-prod`) alongside that env's Keycloak, on its own
+host port, emitting its own `MOCK_OIDC_PUBLIC_URL` issuer. All environments can therefore
+run **concurrently** (the dev broker E2E and a live prod demo at the same time).
+
+| Env     | `MOCK_OIDC_PORT` | `MOCK_OIDC_PUBLIC_URL` (browser issuer)         | `AUTH_PROVIDER_MODE` (default)  |
+| ------- | ---------------- | ----------------------------------------------- | ------------------------------- |
+| dev     | 9080             | `http://localhost:9080`                         | `mock`                          |
+| test    | 9081             | `http://localhost:9081`                         | `mock`                          |
+| staging | 9082             | `http://localhost:9082` (host-local; see below) | `real`                          |
+| prod    | 9083             | `https://mock-idp.aldous.info`                  | `mock` (bootstrap, **enabled**) |
+
+- Backchannel (Keycloak → token/jwks/userinfo) is the in-network service name
+  `http://mock-oidc:8080` for every env (co-located with Keycloak; no host gateway).
+- **Prod is permanently enabled** as a pre-real-provider bootstrap (`.env.prod`:
+  `AUTH_PROVIDER_MODE=mock` + `ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS=true`).
+- **Staging mock is host-local only for now.** The external host
+  `mock-idp.staging.aldous.info` is a _second-level_ wildcard (`*.staging.aldous.info`)
+  which Cloudflare Universal SSL does **not** cover — it needs a paid **Advanced
+  Certificate** (ADR-ACT-0190). Until that exists, staging stays `real` (platform login
+  only) externally; use host-local mode A to demo on staging.
+
+## Safety & guardrails
 
 - Mock IdPs are a **non-production fixture**. Do **not** present them as real
-  Google/Microsoft/Apple authentication. Do **not** put real provider credentials
-  into the `MOCK_OIDC_*` settings.
+  Google/Microsoft/Apple. Do **not** put real provider credentials in `MOCK_OIDC_*`.
 - In staging/prod the BFF **fails fast** unless the override is explicit
   (`apps/platform-api/src/server/auth-providers.ts → validateProviderModeAtStartup`):
   - `AUTH_PROVIDER_MODE=mock` **without** `ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS=true`
@@ -22,211 +46,157 @@
     `⚠ TEMPORARY … mock identity providers are ENABLED` warning (the visible evidence).
 - **Remove the override the moment real providers are configured** (see Rollback).
 
-## Demo modes (pick one) — how the browser reaches the mock fixture
+## Demo reachability modes
 
 During the broker flow the browser is redirected to `MOCK_OIDC_PUBLIC_URL/<provider>/auth`,
 so `MOCK_OIDC_PUBLIC_URL` must be reachable **by the stakeholder's browser** and must equal
-the issuer Keycloak validates. Three modes:
+the issuer Keycloak validates.
 
-**A. Host-local demo (no public DNS)** — `MOCK_OIDC_PUBLIC_URL=http://localhost:9080`.
-The browser must run **on the demo host** (where `staging.aldous.info`/`aldous.info` resolve
-to loopback and `localhost:9080` is the host's mock-oidc), or via an SSH local-forward
-(`ssh -L 8080:localhost:80 -L 9080:localhost:9080 <host>`). Good for a screen-shared demo.
+- **A. Host-local** — `MOCK_OIDC_PUBLIC_URL=http://localhost:<port>`. The browser must run
+  **on the demo host** (where the apex resolves to loopback) or via an SSH local-forward
+  (`ssh -L 8080:localhost:80 -L <port>:localhost:<port> <host>`). Works for any env now,
+  including staging.
+- **C. External prod** — `MOCK_OIDC_PUBLIC_URL=https://mock-idp.aldous.info`. External Caddy
+  publishes a dedicated host that reverse-proxies prod's mock-oidc (`localhost:9083`) so a
+  stakeholder completes the flow from **their own browser**. This is the **current live**
+  prod configuration.
+- **B. External staging** — `https://mock-idp.staging.aldous.info` → `localhost:9082`. The
+  Caddy route is pre-wired but **inactive until** a Cloudflare Advanced Certificate covers
+  `*.staging.aldous.info` (see above).
 
-**B. External staging demo** — `MOCK_OIDC_PUBLIC_URL=https://mock-idp.staging.aldous.info`.
-External Caddy publishes a dedicated host that reverse-proxies the shared mock-oidc, so a
-stakeholder can complete the flow from **their own browser**. Requires the Cloudflare DNS +
-cert for `mock-idp.staging.aldous.info` (see DNS/Cloudflare assumptions).
+> External Caddy (`network_mode: host`) reverse-proxies `mock-idp.aldous.info` →
+> `localhost:9083` and `mock-idp.staging.aldous.info` → `localhost:9082`
+> (`docker/caddy/Caddyfile.external`, `handle` blocks ordered before the
+> `*.staging`/`*.` wildcards). These hosts are **NON-PRODUCTION** — remove their
+> Cloudflare DNS + handle block once real providers exist.
 
-**C. External prod demo** — `MOCK_OIDC_PUBLIC_URL=https://mock-idp.aldous.info`.
-Same as B for the prod apex. Use **only** if a prod-domain demo is explicitly required.
+## DNS / Cloudflare assumptions
 
-> The external Caddy (`network_mode: host`) reverse-proxies `mock-idp.staging.aldous.info`
-> and `mock-idp.aldous.info` to the host-published mock-oidc port `localhost:9080`
-> (`docker/caddy/Caddyfile.external`, `handle` blocks ordered before the `*.staging`/`*.`
-> wildcards). These hosts are **NON-PRODUCTION / TEMPORARY DEMO ONLY** — remove their
-> Cloudflare DNS after the demo.
-
-## DNS / Cloudflare assumptions (external modes B & C)
-
-- Add a Cloudflare DNS record pointing the demo host:
-  `mock-idp.staging.aldous.info` (mode B) / `mock-idp.aldous.info` (mode C), proxied (orange-cloud)
-  so Cloudflare terminates TLS and forwards plain HTTP to external Caddy on `:80`.
-- **TLS coverage caveat:** Cloudflare Universal SSL covers `aldous.info` and **one** wildcard
-  level (`*.aldous.info`). So **`mock-idp.aldous.info` (mode C) is covered**, but
-  **`mock-idp.staging.aldous.info` (mode B) is a second-level name** (`*.staging.aldous.info`)
-  and is **not** covered by Universal SSL — it needs a Cloudflare **Advanced Certificate** (or a
-  dedicated cert) for `*.staging.aldous.info`, consistent with the existing staging-subdomain TLS
-  limitation (ADR-ACT-0190). Without it, the staging mock-idp host has no valid HTTPS — fall back
-  to mode A for staging.
-- Remove these DNS records (and the Caddyfile `handle` blocks) once the demo is over.
+- Add a proxied (orange-cloud) Cloudflare DNS record for the demo host so Cloudflare
+  terminates TLS and forwards plain HTTP to external Caddy on `:80`.
+- **TLS coverage:** Universal SSL covers `aldous.info` and **one** wildcard level
+  (`*.aldous.info`) — so **`mock-idp.aldous.info` (prod) is covered**. A second-level name
+  like `mock-idp.staging.aldous.info` is **not** covered and needs an Advanced Certificate
+  for `*.staging.aldous.info`.
 
 ## Prerequisites
 
-- Docker + the repo checkout on the demo host.
-- `infra/env/<env>/<env>.tfvars` present (Terraform realm provisioning is operator-supplied;
-  `make keycloak-provision` fails without it).
-- `/etc/hosts` on the demo host maps the apex (and `*.`) to loopback, e.g.
-  `127.0.0.1 staging.aldous.info` / `127.0.0.1 aldous.info`.
-- `.env.staging` / `.env.prod` already define the correct domains
-  (`APEX_DOMAIN`, `APP_BASE_URL`, `KC_HOSTNAME`, `PLATFORM_API_URL`),
-  `SESSION_COOKIE_SECURE=true`, and `LOG_LEVEL=info` — **leave those as they are**.
+- Docker + the repo checkout on the host.
+- `infra/env/<env>/<env>.tfvars` present (`make keycloak-provision` needs it).
+- `/etc/hosts` (or DNS) maps the apex (and `*.`) appropriately.
+- `.env.<env>` already defines the domains, `SESSION_COOKIE_SECURE=true`,
+  `LOG_LEVEL=info`, and the `MOCK_OIDC_*` block above — **leave those as they are**.
 
 ---
 
-## Staging
+## Production (currently enabled — this is the live config)
 
-### 1. Edit `.env.staging` (append the mock-IdP block; keep existing domain values)
+`.env.prod` already contains:
 
 ```bash
 AUTH_PROVIDER_MODE=mock
 ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS=true
-MOCK_OIDC_PORT=9080
-# External stakeholder demo (mode B). For a host-local demo (mode A) use
-# MOCK_OIDC_PUBLIC_URL=http://localhost:9080 instead.
-MOCK_OIDC_PUBLIC_URL=https://mock-idp.staging.aldous.info
-MOCK_OIDC_INTERNAL_URL=http://host.docker.internal:9080
-MOCK_OIDC_CLIENT_SECRET=mock-oidc-shared-secret
-# REQUIRED for staging — the mock must accept the staging realm's broker callback.
-# (Default is a dev value; without this, Keycloak's redirect_uri is rejected.)
-MOCK_OIDC_KC_BROKER_BASE=https://staging.aldous.info/kc/realms/platform-staging/broker
-# LOG_LEVEL=info and SESSION_COOKIE_SECURE=true are already set in .env.staging — no change.
-# MOCK_OIDC_REALM is auto-derived from KEYCLOAK_REALM (platform-staging) — no need to set.
-```
-
-> **After changing `MOCK_OIDC_PUBLIC_URL`** you must rerun **both**
-> `make compose-up-identity-mocks ENV=staging` (so the fixture issues tokens with the new
-> issuer) **and** `make seed-idps ENV=staging` (so the Keycloak IdP `issuer` config matches) —
-> the mock issuer and Keycloak's expected issuer must be identical or token validation fails.
-
-### 2. Start / refresh staging
-
-```bash
-make compose-up-default ENV=staging        # postgres, redis, etc.
-make compose-up-identity ENV=staging       # Keycloak (host port 8092)
-make keycloak-provision ENV=staging        # realm platform-staging + BFF client (needs tfvars)
-make compose-up-identity-mocks ENV=staging # shared mock-oidc (react-shared) on :9080
-make seed-idps ENV=staging                 # registers mock-google/azure/apple on platform-staging
-make compose-up-observability ENV=staging  # Loki/Grafana/Alloy (optional)
-make compose-up-web ENV=staging            # platform-api container + web Caddy (:82)
-make external-caddy-up                      # apex router on :80 (staging.aldous.info → :82)
-make env-status                             # sanity: list running containers
-```
-
-### 3. Verify staging
-
-```bash
-# Mock fixture, reached through external Caddy (mode B):
-curl -fsS https://mock-idp.staging.aldous.info/healthz
-curl -fsS https://mock-idp.staging.aldous.info/google/.well-known/openid-configuration | jq .
-# App + broker:
-curl -fsS https://staging.aldous.info/api/auth/providers | jq .
-curl -I "https://staging.aldous.info/auth/login?provider=google"
-bash scripts/smoke/loki-smoke.sh staging      # ingestion + label-cardinality (optional)
-
-# Local route smoke without public DNS (proves external Caddy → mock-oidc):
-curl -fsS -H "Host: mock-idp.staging.aldous.info" http://localhost/healthz
-```
-
-Expected:
-
-- `https://mock-idp.staging.aldous.info/healthz` → `{"status":"ok",...}`.
-- discovery `issuer` is `https://mock-idp.staging.aldous.info/google`.
-- `/api/auth/providers` lists `platform`, `google`, `azure`, `apple`; the three
-  third-party entries show `"mode":"mock"`; **no secrets** in the payload.
-- `/auth/login?provider=google` → `302` with `Location:`
-  `https://staging.aldous.info/kc/realms/platform-staging/protocol/openid-connect/auth?…&kc_idp_hint=mock-google`.
-- `https://staging.aldous.info/login` shows the provider selector with a **Mock provider** badge.
-- Clicking Google/Microsoft/Apple lands on `https://mock-idp.staging.aldous.info/<provider>/interaction/…`
-  (mode A: `http://localhost:9080/<provider>/interaction/…`, host browser only).
-
----
-
-## Production
-
-### 1. Edit `.env.prod` (append the mock-IdP block; keep existing domain values)
-
-```bash
-AUTH_PROVIDER_MODE=mock
-ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS=true
-MOCK_OIDC_PORT=9080
-# External stakeholder demo (mode C). For a host-local demo (mode A) use
-# MOCK_OIDC_PUBLIC_URL=http://localhost:9080 instead.
+MOCK_OIDC_PORT=9083
 MOCK_OIDC_PUBLIC_URL=https://mock-idp.aldous.info
-MOCK_OIDC_INTERNAL_URL=http://host.docker.internal:9080
-MOCK_OIDC_CLIENT_SECRET=mock-oidc-shared-secret
+MOCK_OIDC_INTERNAL_URL=http://mock-oidc:8080
 MOCK_OIDC_KC_BROKER_BASE=https://aldous.info/kc/realms/platform-production/broker
-# LOG_LEVEL=info and SESSION_COOKIE_SECURE=true are already set in .env.prod — no change.
+# LOG_LEVEL=info, SESSION_COOKIE_SECURE=true already set — no change.
+# MOCK_OIDC_REALM auto-derives from KEYCLOAK_REALM (platform-production).
 ```
 
-> **After changing `MOCK_OIDC_PUBLIC_URL`** rerun **both** `make compose-up-identity-mocks ENV=prod`
-> and `make seed-idps ENV=prod` so the fixture issuer and the Keycloak IdP `issuer` config match.
-
-### 2. Start / refresh prod
+Bring up / refresh:
 
 ```bash
 make compose-up-default ENV=prod
 make compose-up-identity ENV=prod          # Keycloak (host port 8093)
 make keycloak-provision ENV=prod           # realm platform-production (needs tfvars)
-make compose-up-identity-mocks ENV=prod    # shared mock-oidc (react-shared) on :9080
-make seed-idps ENV=prod                    # registers mock-* on platform-production
-make compose-up-observability ENV=prod     # optional
+make compose-up-identity-mocks ENV=prod    # PER-ENV mock-oidc in react-prod (:9083)
+make seed-idps ENV=prod                    # mock-google/azure/apple on platform-production
 make compose-up-web ENV=prod               # platform-api + web Caddy (:83)
-make external-caddy-up                      # apex router on :80 (aldous.info → :83)
-make env-status
+make external-caddy-up                      # apex router on :80 (aldous.info → :83, mock-idp → :9083)
 ```
 
-### 3. Verify prod
+> **After changing `MOCK_OIDC_PUBLIC_URL`** rerun **both** `make compose-up-identity-mocks ENV=prod`
+> and `make seed-idps ENV=prod` so the fixture issuer and the Keycloak IdP `issuer` match.
+
+### Verify prod
 
 ```bash
+# mock-oidc through external Caddy (mode C):
 curl -fsS https://mock-idp.aldous.info/healthz
 curl -fsS https://mock-idp.aldous.info/google/.well-known/openid-configuration | jq .
+# app + broker:
 curl -fsS https://aldous.info/api/auth/providers | jq .
 curl -I "https://aldous.info/auth/login?provider=google"
-bash scripts/smoke/loki-smoke.sh prod                     # optional
+# local route smoke without public DNS (Host header → external Caddy → prod mock-oidc):
+curl -fsS -H "Host: mock-idp.aldous.info" http://localhost/google/.well-known/openid-configuration | jq .issuer
 ```
 
-Expected: same as staging, with `issuer` `https://mock-idp.aldous.info/google`, realm
-`platform-production`, `kc_idp_hint=mock-google` in the `/auth/login` redirect, and the
-provider picker landing on `https://mock-idp.aldous.info/<provider>/interaction/…`.
+Expected:
 
-> **Note — single shared mock-oidc.** mock-oidc runs once in the `react-shared`
-> project. `make compose-up-identity-mocks ENV=<env>` (re)starts it with **that env's**
-> `MOCK_OIDC_KC_BROKER_BASE`, so its allowed redirect_uris reflect the **last** env you
-> started it for. To demo more than one env concurrently, list the others in
-> `MOCK_OIDC_EXTRA_REDIRECT_URIS` (comma-separated full broker-endpoint URLs).
+- discovery `issuer` = `https://mock-idp.aldous.info/google`.
+- `/api/auth/providers` lists `platform`, `google`, `azure`, `apple`; the three
+  third-party entries show `"mode":"mock"`; **no secrets** in the payload.
+- `/auth/login?provider=google` → `302` to
+  `…/realms/platform-production/protocol/openid-connect/auth?…&kc_idp_hint=mock-google`.
+- `/auth/login?provider=evil` → `400` (no injection / open redirect).
+- the prod BFF logs the loud `⚠ TEMPORARY … mock identity providers are ENABLED` warning.
 
 ---
 
-## Rollback / flip-back (do this after the demo)
+## Staging (host-local now; external when the cert lands)
+
+Staging defaults to `AUTH_PROVIDER_MODE=real` (platform login only). To demo the mock
+brokered flow **on the staging host** (mode A), temporarily set in `.env.staging`:
 
 ```bash
-# staging — edit .env.staging:
-AUTH_PROVIDER_MODE=real
-ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS=false
-make compose-up-web ENV=staging        # restart the BFF with real mode
-make identity-mocks-down               # stop the shared mock-oidc fixture
-
-# prod — edit .env.prod:
-AUTH_PROVIDER_MODE=real
-ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS=false
-make compose-up-web ENV=prod
-make identity-mocks-down
+AUTH_PROVIDER_MODE=mock
+ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS=true
+# host-local issuer (already the default MOCK_OIDC_PUBLIC_URL in .env.staging):
+MOCK_OIDC_PUBLIC_URL=http://localhost:9082
 ```
 
-Then, for external (mode B/C) demos, also:
+Then:
 
-- **Remove the Cloudflare DNS** records for `mock-idp.staging.aldous.info` /
-  `mock-idp.aldous.info` so the demo hosts are no longer publicly resolvable.
-- Optionally delete the two `mock-idp` `handle` blocks in `docker/caddy/Caddyfile.external`
-  and `make external-caddy-up` to reload (the routes are inert without DNS + a running
-  mock-oidc, but removing them is the clean end state).
-- Run `make identity-mocks-down` if no environment still needs the mock fixture.
+```bash
+make compose-up-identity ENV=staging
+make keycloak-provision ENV=staging
+make compose-up-identity-mocks ENV=staging   # PER-ENV mock-oidc in react-staging (:9082)
+make seed-idps ENV=staging
+make compose-up-web ENV=staging
+# verify from the staging host / SSH-forward:
+curl -fsS http://localhost:9082/google/.well-known/openid-configuration | jq .issuer
+curl -fsS -H "Host: staging.aldous.info" http://localhost/api/auth/providers | jq .
+```
+
+**External staging** (stakeholder's own browser) is only possible once a Cloudflare
+Advanced Certificate covers `*.staging.aldous.info`. Then switch
+`MOCK_OIDC_PUBLIC_URL=https://mock-idp.staging.aldous.info`, add the Cloudflare DNS for
+that host, rerun `compose-up-identity-mocks` + `seed-idps` for staging, and the pre-wired
+`mock-idp.staging.aldous.info` Caddy route (→ `:9082`) goes live.
+
+---
+
+## Rollback / flip-back (the eventual mock → real migration)
+
+```bash
+# edit .env.<env>:
+AUTH_PROVIDER_MODE=real
+ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS=false
+make compose-up-web ENV=<env>          # restart the BFF with real mode
+make identity-mocks-down ENV=<env>     # remove ONLY this env's mock-oidc (rm -sf, not down)
+```
+
+Then, for external (prod / future staging):
+
+- **Remove the Cloudflare DNS** for `mock-idp.aldous.info` (and `mock-idp.staging.aldous.info`)
+  so the demo hosts are no longer publicly resolvable.
+- Optionally delete the `mock-idp` `handle` block(s) in `docker/caddy/Caddyfile.external`
+  and `make external-caddy-up` to reload.
 - Confirm `/api/auth/providers` no longer lists the mock third-party providers.
 
-With `AUTH_PROVIDER_MODE=real` and no real provider configured yet,
-`/api/auth/providers` returns **platform only** (the third-party rows disappear) — this is
-the correct interim state until real `REAL_<PROVIDER>_*` config is added.
+With `AUTH_PROVIDER_MODE=real` and no real provider configured yet, `/api/auth/providers`
+returns **platform only** — the correct interim state until `REAL_<PROVIDER>_*` is added.
 
 Platform-account-only login (hide third-party entirely without `real`):
 
@@ -240,23 +210,23 @@ make compose-up-web ENV=<env>
 
 ## Troubleshooting
 
-| Symptom                                                     | Check / fix                                                                                                                                                                                                               |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Third-party providers don't appear in `/api/auth/providers` | `AUTH_PROVIDER_MODE=mock` **and** `ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS=true`; restart `make compose-up-web ENV=<env>`.                                                                                            |
-| BFF won't start (exits immediately)                         | Guardrail: mock in prod-like without the override, or explicit `real` with no real config. Check the startup log line.                                                                                                    |
-| `/auth/login?provider=google` → `400`                       | IdP not registered or provider disabled: `make seed-idps ENV=<env>` and confirm mock mode.                                                                                                                                |
-| Keycloak rejects `redirect_uri` after the picker            | `MOCK_OIDC_KC_BROKER_BASE` must equal `<KC_HOSTNAME>/realms/<realm>/broker`; restart `make compose-up-identity-mocks ENV=<env>`. Re-run `make keycloak-provision ENV=<env>` if `APP_BASE_URL`/`KC_HOSTNAME` are wrong.    |
-| Mock picker doesn't load (mode A)                           | `make compose-up-identity-mocks ENV=<env>`; confirm `localhost:9080` is reachable **from the browser** (host/tunnel).                                                                                                     |
-| Mock picker doesn't load (mode B/C)                         | Check `make external-caddy-up` is running and `curl -H "Host: mock-idp.<env-host>" http://localhost/healthz` returns ok; confirm Cloudflare DNS + cert for the `mock-idp.*` host (staging needs an Advanced Certificate). |
-| Keycloak token exchange fails                               | From the Keycloak container, `MOCK_OIDC_INTERNAL_URL` (`host.docker.internal:9080`) must be reachable (Keycloak's compose `extra_hosts: host.docker.internal:host-gateway`).                                              |
-| `iss` / signature validation fails                          | `MOCK_OIDC_PUBLIC_URL` must match what the seed wrote as the IdP `issuer` (re-run `make seed-idps ENV=<env>` after changing it).                                                                                          |
-| No platform-api logs in Loki                                | `LOG_LEVEL=info` (already default in staging/prod); run `scripts/smoke/loki-smoke.sh <env>`.                                                                                                                              |
+| Symptom                                                     | Check / fix                                                                                                                                                                                                              |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Third-party providers don't appear in `/api/auth/providers` | `AUTH_PROVIDER_MODE=mock` **and** `ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS=true` in `.env.<env>`; recreate the BFF: `make compose-up-web ENV=<env>` (the container env must carry the vars — see `compose.yaml`).    |
+| BFF won't start (exits immediately)                         | Guardrail: mock in prod-like without the override, or explicit `real` with no real config. Check the startup log line.                                                                                                   |
+| `/auth/login?provider=google` → `400`                       | IdP not registered or provider disabled: `make seed-idps ENV=<env>` and confirm mock mode.                                                                                                                               |
+| Keycloak rejects `redirect_uri` after the picker            | `MOCK_OIDC_KC_BROKER_BASE` must equal `<KC_HOSTNAME>/realms/<realm>/broker`; rerun `make compose-up-identity-mocks ENV=<env>` (+ `keycloak-provision` if `KC_HOSTNAME` is wrong).                                        |
+| Mock picker / discovery doesn't load                        | `make compose-up-identity-mocks ENV=<env>`; confirm the env's `MOCK_OIDC_PORT` is reachable from the browser; for external, check `make external-caddy-up` + `curl -H "Host: mock-idp.<host>" http://localhost/healthz`. |
+| Keycloak token exchange fails                               | mock-oidc is co-located with Keycloak; the backchannel `MOCK_OIDC_INTERNAL_URL=http://mock-oidc:8080` must resolve on the project network (it's the same `react-<env>` project).                                         |
+| `iss` / signature validation fails                          | `MOCK_OIDC_PUBLIC_URL` must match what the seed wrote as the IdP `issuer` (re-run `make seed-idps ENV=<env>` after changing it).                                                                                         |
+| Wrong env's issuer served on a port                         | Each env has its OWN port now (dev 9080 / test 9081 / staging 9082 / prod 9083) — no shared instance to re-point. Confirm the container is `react-<env>-mock-oidc-1`.                                                    |
 
-## Verification scope of this runbook
+## Verification scope
 
 The make targets, env-var names, and guardrail behaviour were verified against the repo
 (`make/compose.mk`, `scripts/compose/up.sh`, `compose.yaml`, `.env.example`,
-`apps/platform-api/src/server/auth-providers.ts`, `services/mock-oidc/src/config.ts`), and the
-full flow is verified end-to-end in **dev/test** (`npm run test:e2e:identity`). The
-staging/prod commands are statically correct but assume operator-supplied Terraform tfvars,
-Cloudflare/TLS, and `/etc/hosts` — exercise them on the demo host before the stakeholder session.
+`apps/platform-api/src/server/auth-providers.ts`, `services/mock-oidc/src/config.ts`).
+The dev broker E2E (`npm run test:e2e:identity`, 8/8) runs against the per-env dev
+mock-oidc **while the prod instance is live**, proving env isolation. The live prod
+flow (`https://mock-idp.aldous.info` issuer, `platform-production` realm,
+`kc_idp_hint=mock-google`, injection guard) was verified end-to-end at the HTTP layer.
