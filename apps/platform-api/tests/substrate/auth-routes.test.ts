@@ -180,48 +180,52 @@ describe("GET /auth/callback ? error paths", () => {
     restoreAuthEnv();
   });
 
-  it("returns 400 when pre-auth cookie is missing (no user-agent binding)", async () => {
-    // Without the pre-auth cookie the callback must reject the request
-    const res = await fetch(`${url}/auth/callback?code=c&state=s`);
-    assert.equal(res.status, 400);
-    const body = (await res.json()) as { code: string };
-    assert.equal(body.code, "VALIDATION_ERROR");
+  // Every non-success callback bounces (302) to the app /login?authError=signin_failed
+  // rather than returning a JSON error — Keycloak stays invisible (ADR-ACT-0157).
+  const expectBounceToLogin = (res: Response): void => {
+    assert.equal(res.status, 302);
+    const loc = res.headers.get("location") ?? "";
+    assert.ok(
+      loc.includes("/login?authError=signin_failed"),
+      `expected bounce to /login?authError=signin_failed, got ${loc}`
+    );
+  };
+
+  it("bounces to /login when pre-auth cookie is missing (no user-agent binding)", async () => {
+    const res = await fetch(`${url}/auth/callback?code=c&state=s`, { redirect: "manual" });
+    expectBounceToLogin(res);
   });
 
-  it("returns 400 when code is missing", async () => {
+  it("bounces to /login when code is missing", async () => {
     const res = await fetch(`${url}/auth/callback?state=abc`, {
       headers: { Cookie: "auth_state_token=nonce" },
+      redirect: "manual",
     });
-    assert.equal(res.status, 400);
-    const body = (await res.json()) as { code: string };
-    assert.equal(body.code, "VALIDATION_ERROR");
+    expectBounceToLogin(res);
   });
 
-  it("returns 400 when state is missing", async () => {
+  it("bounces to /login when state is missing", async () => {
     const res = await fetch(`${url}/auth/callback?code=abc`, {
       headers: { Cookie: "auth_state_token=nonce" },
+      redirect: "manual",
     });
-    assert.equal(res.status, 400);
-    const body = (await res.json()) as { code: string };
-    assert.equal(body.code, "VALIDATION_ERROR");
+    expectBounceToLogin(res);
   });
 
-  it("returns 400 when state is unknown or expired", async () => {
+  it("bounces to /login when state is unknown or expired", async () => {
     const res = await fetch(`${url}/auth/callback?code=c&state=nonexistent-state-xyz`, {
       headers: { Cookie: "auth_state_token=nonce" },
+      redirect: "manual",
     });
-    assert.equal(res.status, 400);
-    const body = (await res.json()) as { code: string };
-    assert.equal(body.code, "VALIDATION_ERROR");
+    expectBounceToLogin(res);
   });
 
-  it("returns 400 when Keycloak reports an error", async () => {
+  it("bounces to /login when Keycloak reports an error", async () => {
     const res = await fetch(`${url}/auth/callback?error=access_denied&state=s`, {
       headers: { Cookie: "auth_state_token=nonce" },
+      redirect: "manual",
     });
-    assert.equal(res.status, 400);
-    const body = (await res.json()) as { code: string };
-    assert.equal(body.code, "VALIDATION_ERROR");
+    expectBounceToLogin(res);
   });
 });
 

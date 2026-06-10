@@ -239,52 +239,47 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
     ? getKeycloakConfigForRealm(callbackTenantCtx.realmName)
     : getKeycloakConfig();
 
-  if (errorParam) {
-    res.json(
-      400,
-      toSafeResponse(new ValidationError("api.error.keycloakError"), (msg) =>
-        serverT(msg, { error: errorParam })
-      )
-    );
+  // The app must never see a raw Keycloak/BFF JSON error from the callback. Any
+  // non-success way of landing here returns the user to the app's /login with ONE generic
+  // error so Keycloak stays invisible (ADR-ACT-0157). callbackHost/Proto are set above.
+  const callbackAppProto = callbackProto ?? schemeFor(callbackHost);
+  const callbackAppBase = isAllowedHost(callbackHost)
+    ? `${callbackAppProto}://${callbackHost}`
+    : getAppBaseUrl();
+  const bounceToLogin = (): void => {
+    res.raw.writeHead(302, {
+      "Set-Cookie": buildClearPreAuthCookieHeader(),
+      Location: `${callbackAppBase}/login?authError=signin_failed`,
+      "Cache-Control": "no-store",
+    });
+    res.raw.end();
+  };
+
+  // Keycloak bounced back with an ?error=, or without a usable code/state (e.g. a flow
+  // restart after a brokered failure while the user was already authenticated).
+  if (errorParam || !code || !state) {
+    bounceToLogin();
     return;
   }
 
-  if (!code || !state) {
-    res.json(
-      400,
-      toSafeResponse(new ValidationError("api.error.missingCodeOrState"), (msg) => serverT(msg))
-    );
-    return;
-  }
-
-  // Verify pre-auth nonce cookie (user-agent binding)
+  // Verify pre-auth nonce cookie (user-agent binding). Failures here are security checks
+  // (CSRF/replay); returning to /login restarts the flow without granting a session.
   const preAuthNonce = parsePreAuthCookie(req.raw.headers["cookie"]);
   if (!preAuthNonce) {
-    res.json(
-      400,
-      toSafeResponse(new ValidationError("api.error.missingPreAuthCookie"), (msg) => serverT(msg))
-    );
+    bounceToLogin();
     return;
   }
 
   // Consume auth state (one-time use ? prevents replay)
   const authState = await getAuthStateStore().take(state);
   if (!authState) {
-    res.json(
-      400,
-      toSafeResponse(new ValidationError("api.error.invalidOrExpiredState"), (msg) => serverT(msg))
-    );
+    bounceToLogin();
     return;
   }
 
   // Verify the pre-auth nonce matches the one bound at login time
   if (preAuthNonce !== authState.nonce) {
-    res.json(
-      400,
-      toSafeResponse(new ValidationError("api.error.authFlowBindingMismatch"), (msg) =>
-        serverT(msg)
-      )
-    );
+    bounceToLogin();
     return;
   }
 
@@ -299,20 +294,9 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
     callbackKeycloakCfg
   );
   if (!tokens) {
-    res.json(
-      502,
-      toSafeResponse(new ValidationError("api.error.tokenExchangeFailed"), (msg) => serverT(msg))
-    );
+    bounceToLogin();
     return;
   }
-
-  // Browser-facing redirect base + Keycloak public base — used by the success redirect
-  // below and by the rejection-cleanup redirect.
-  const cbProto = callbackProto ?? schemeFor(callbackHost);
-  const cbRedirectBase = isAllowedHost(callbackHost)
-    ? `${cbProto}://${callbackHost}`
-    : getAppBaseUrl();
-  const cbKcPublicBase = getKeycloakPublicUrl(callbackHost, cbProto);
 
   // A brokered login that the BFF refuses AFTER Keycloak authenticated the user (KC has
   // already issued the code, i.e. created an SSO session) must tear down that KC session.
@@ -321,10 +305,11 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
   // log in as anyone". We have the brokered id_token here, so use it as id_token_hint for
   // a clean RP-logout, clear our cookies, and return the browser to /login?authError=…
   // (no bare JSON error page). ADR-ACT-0157.
+  const cbKcPublicBase = getKeycloakPublicUrl(callbackHost, callbackAppProto);
   const clearKcAndReturnToLogin = (authError: string): void => {
     const params = new URLSearchParams({
       client_id: callbackKeycloakCfg.clientId,
-      post_logout_redirect_uri: `${cbRedirectBase}/login?authError=${authError}`,
+      post_logout_redirect_uri: `${callbackAppBase}/login?authError=${authError}`,
     });
     if (tokens.idToken) params.set("id_token_hint", tokens.idToken);
     res.raw.writeHead(302, {
@@ -376,11 +361,11 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
   }
 
   // Set session cookie, clear pre-auth cookie, redirect to React app.
-  // cbRedirectBase (derived above from the request host) makes multi-tenant and
+  // callbackAppBase (derived above from the request host) makes multi-tenant and
   // .localhost domains work without per-domain APP_BASE_URL config.
   res.raw.writeHead(302, {
     "Set-Cookie": [buildSetCookieHeader(session.sessionId), buildClearPreAuthCookieHeader()],
-    Location: `${cbRedirectBase}${authState.returnTo}`,
+    Location: `${callbackAppBase}${authState.returnTo}`,
   });
   res.raw.end();
 };

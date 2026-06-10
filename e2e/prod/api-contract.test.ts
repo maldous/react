@@ -149,9 +149,13 @@ test.describe("API contract: auth boundary", () => {
     expect([200, 204, 302]).toContain(res.status());
   });
 
-  // Auth callback without required params returns 400 (missing code/state)
-  test("GET /auth/callback without params returns 400, 404, or 405", async ({ request }) => {
+  // Auth callback without required params bounces to /login (302) so Keycloak stays
+  // invisible (ADR-ACT-0157); a non-redirect 400/404/405 is also acceptable.
+  test("GET /auth/callback without params bounces to /login (302) or 4xx", async ({ request }) => {
     const res = await request.get("/auth/callback", { maxRedirects: 0, failOnStatusCode: false });
-    expect([400, 404, 405]).toContain(res.status());
+    expect([302, 400, 404, 405]).toContain(res.status());
+    if (res.status() === 302) {
+      expect(res.headers()["location"] ?? "").toContain("/login");
+    }
   });
 });

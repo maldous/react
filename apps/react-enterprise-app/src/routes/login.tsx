@@ -103,20 +103,18 @@ function ProviderRow({ provider }: { provider: LoginProvider }) {
   );
 }
 
-/** Map a BFF `?authError=` code (set when a brokered login is refused at the callback)
- * to a friendly i18n key. Unknown codes fall back to a generic message. */
-function authErrorKey(): string | null {
-  if (typeof window === "undefined") return null;
-  const code = new URLSearchParams(window.location.search).get("authError");
-  if (!code) return null;
-  const known = ["email_unverified", "account_conflict", "signin_failed"];
-  return `auth.login.rejected.${known.includes(code) ? code : "generic"}`;
+/** True when the BFF or the Keycloak theme bounced the browser back to /login after a
+ * failed sign-in (any `?authError=` code). All failure modes show one generic message —
+ * we never surface Keycloak-specific or per-reason detail to the user. */
+function hasSignInError(): boolean {
+  if (typeof window === "undefined") return false;
+  return new URLSearchParams(window.location.search).has("authError");
 }
 
 export function LoginPage() {
   const t = useTranslation();
   const { data: providers, isLoading, isError } = useLoginProviders();
-  const rejectedKey = authErrorKey();
+  const signInFailed = hasSignInError();
 
   return (
     <main
@@ -144,13 +142,13 @@ export function LoginPage() {
               <p className="mt-1 text-sm text-fg-muted">{t("auth.login.chooseProvider")}</p>
             </div>
 
-            {rejectedKey && (
+            {signInFailed && (
               <div
                 role="alert"
                 data-testid="login-auth-error"
                 className="rounded-lg border border-danger/30 bg-danger/5 px-4 py-3 text-sm text-danger"
               >
-                {t(rejectedKey)}
+                {t("auth.login.signInFailed")}
               </div>
             )}
 
