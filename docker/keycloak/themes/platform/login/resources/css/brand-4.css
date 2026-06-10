@@ -209,3 +209,15 @@ input::placeholder {
   border-radius: 0.5rem;
   font-size: 0.875rem;
 }
+
+/* 12. Trim Keycloak's stock copy the app's auth pages don't show. The brand header above
+   the card already identifies the page, so the card needs no "Sign in to your account"
+   title; and the IdP buttons stand on their own without the "Or sign in with" band. The
+   username/password form and the social buttons themselves stay. */
+#kc-page-title,
+.pf-v5-c-login__main-header {
+  display: none !important;
+}
+.pf-v5-c-login__main-footer-band {
+  display: none !important;
+}

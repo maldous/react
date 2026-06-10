@@ -61,25 +61,22 @@ export function LoginPage() {
         </div>
 
         <Card>
-          <CardBody className="space-y-5 p-8">
+          <CardBody className="p-8">
             {failed ? (
-              <>
-                <h2 className="text-base font-semibold text-fg">{t("auth.login.title")}</h2>
-                <div
-                  role="alert"
-                  data-testid="login-auth-error"
-                  className="rounded-lg border border-danger/30 bg-danger/5 px-4 py-3 text-sm text-danger"
-                >
+              <div className="space-y-6 text-center">
+                {/* One generic message as plain text (no banner box) + a single retry action,
+                    so the failure card reads as cleanly as the Keycloak login it returns to. */}
+                <p role="alert" data-testid="login-auth-error" className="text-sm text-danger">
                   {t("auth.login.signInFailed")}
-                </div>
+                </p>
                 <a
                   href={KC_LOGIN_URL}
                   data-testid="sign-in-button"
                   className="flex items-center justify-center rounded-lg bg-primary px-4 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                 >
-                  {t("auth.login.signInButton")}
+                  {t("auth.login.tryAgain")}
                 </a>
-              </>
+              </div>
             ) : (
               <div data-testid="login-redirecting">
                 <LoadingState message={t("auth.login.loading")} className="py-8" />
@@ -87,8 +84,6 @@ export function LoginPage() {
             )}
           </CardBody>
         </Card>
-
-        <p className="text-center text-xs text-fg-muted">{t("auth.login.footer")}</p>
       </div>
     </main>
   );
