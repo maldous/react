@@ -169,6 +169,14 @@ export function buildAuthorizationUrl(
      * resolves it from a fixed product→alias map before calling this.
      */
     idpHint?: string;
+    /**
+     * OIDC `prompt` (e.g. "login"). With "login" Keycloak forces re-authentication
+     * rather than reusing an SSO session, so the user can sign in as a different
+     * account after logout. When brokering, Keycloak forwards `prompt` to the
+     * upstream IdP only if that IdP has it in its forwarded-parameters config
+     * (set for the mock IdPs in buildMockIdpDefinitions). ADR-ACT-0157.
+     */
+    prompt?: string;
   },
   config: KeycloakClientConfig
 ): string {
@@ -183,6 +191,7 @@ export function buildAuthorizationUrl(
     code_challenge_method: "S256",
   });
   if (params.idpHint) query.set("kc_idp_hint", params.idpHint);
+  if (params.prompt) query.set("prompt", params.prompt);
   return `${base}?${query.toString()}`;
 }
 

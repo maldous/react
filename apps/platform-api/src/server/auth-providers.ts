@@ -246,6 +246,10 @@ export function buildMockIdpDefinitions(settings = getMockOidcSettings()): Ident
         useJwksUrl: "true",
         syncMode: "IMPORT",
         pkceEnabled: "false",
+        // Forward `prompt` to the upstream so prompt=login reaches mock-oidc and it
+        // re-shows the account picker — lets a user log in as a different account
+        // after logout instead of a silent upstream-session re-login. (ADR-ACT-0157)
+        forwardParameters: "prompt",
       },
     };
   });

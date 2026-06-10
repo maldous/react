@@ -193,6 +193,11 @@ export const handleAuthLogin: PipelineHandler = async (req, res) => {
       // null for the platform account (normal Keycloak login); a validated broker
       // alias (e.g. mock-google) for third-party providers.
       ...(providerResult.idpHint ? { idpHint: providerResult.idpHint } : {}),
+      // Force a fresh authentication so a user can sign in as a DIFFERENT account
+      // after logout (rather than being silently re-authenticated by a lingering
+      // Keycloak/upstream SSO session). Keycloak forwards prompt=login to the mock
+      // upstream via its forwarded-parameters config. ADR-ACT-0157.
+      prompt: "login",
     },
     keycloakCfg
   );

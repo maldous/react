@@ -131,6 +131,27 @@ describe("buildAuthorizationUrl", () => {
     );
     assert.ok(url.startsWith("http://localhost:8080/realms/platform/protocol/openid-connect/auth"));
   });
+
+  it("appends prompt when provided (forces re-auth so users can switch account)", () => {
+    const url = buildAuthorizationUrl(
+      {
+        state: "s",
+        codeChallenge: "c",
+        redirectUri: "http://localhost:3001/auth/callback",
+        prompt: "login",
+      },
+      CONFIG
+    );
+    assert.equal(new URL(url).searchParams.get("prompt"), "login");
+  });
+
+  it("omits prompt when not provided", () => {
+    const url = buildAuthorizationUrl(
+      { state: "s", codeChallenge: "c", redirectUri: "http://localhost:3001/auth/callback" },
+      CONFIG
+    );
+    assert.equal(new URL(url).searchParams.get("prompt"), null);
+  });
 });
 
 // ---------------------------------------------------------------------------
