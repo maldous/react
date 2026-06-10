@@ -1,0 +1,105 @@
+/*
+ * Platform brand override for the Keycloak login page (ADR-ACT-0157 / ADR-ACT-0156).
+ *
+ * Loaded ON TOP of the stock keycloak.v2 stylesheet (see theme.properties `styles`).
+ * Re-skins Keycloak's own (PatternFly) login to match the app's /login: light
+ * surface, white rounded card, indigo (#4f46e5) primary, system font, and a hexagon
+ * brand badge — so the platform username/password page looks like part of the app,
+ * not like Keycloak. Tokens mirror apps/react-enterprise-app/src/styles/globals.css.
+ */
+:root {
+  --pf-brand-primary: #4f46e5;
+  --pf-brand-primary-hover: #4138c4;
+  --pf-brand-surface: #ffffff;
+  --pf-brand-surface-muted: #f9fafb;
+  --pf-brand-fg: #111827;
+  --pf-brand-fg-muted: #4b5563;
+  --pf-brand-border: #e5e7eb;
+  --pf-brand-font: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+html,
+body#keycloak-bg {
+  font-family: var(--pf-brand-font) !important;
+  background: var(--pf-brand-surface-muted) !important;
+  background-image: none !important;
+  color: var(--pf-brand-fg) !important;
+}
+
+/* The PatternFly login card → app card (white, bordered, soft shadow, rounded). */
+.pf-v5-c-login__main {
+  background: var(--pf-brand-surface) !important;
+  border: 1px solid var(--pf-brand-border) !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) !important;
+  overflow: hidden; /* clip children to the rounded corners */
+}
+/* Remove keycloak.v2's bright-blue 4px brand accent bar on the card header. */
+.pf-v5-c-login__main-header {
+  border-top: none !important;
+}
+
+/* Brand header → hexagon badge + platform name, centred (mirrors the app header). */
+.pf-v5-c-login__header,
+#kc-header-wrapper {
+  text-align: center !important;
+  color: var(--pf-brand-fg) !important;
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em;
+}
+#kc-header-wrapper::before {
+  content: "\2B21"; /* ⬡ */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: 0 auto 0.75rem;
+  border-radius: 1rem;
+  background: var(--pf-brand-primary);
+  color: #fff;
+  font-size: 1.75rem;
+  line-height: 1;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+#kc-page-title {
+  color: var(--pf-brand-fg) !important;
+}
+
+/* Primary action → indigo, app radius. */
+.pf-v5-c-button.pf-m-primary,
+#kc-login {
+  background-color: var(--pf-brand-primary) !important;
+  border-color: var(--pf-brand-primary) !important;
+  color: #fff !important;
+  border-radius: 0.5rem !important;
+}
+.pf-v5-c-button.pf-m-primary:hover,
+#kc-login:hover {
+  background-color: var(--pf-brand-primary-hover) !important;
+  border-color: var(--pf-brand-primary-hover) !important;
+}
+
+/* Links + secondary/social buttons in the brand colour. */
+.pf-v5-c-login__main a,
+.pf-v5-c-button.pf-m-link {
+  color: var(--pf-brand-primary) !important;
+}
+.pf-v5-c-button.pf-m-control,
+.pf-v5-c-button.pf-m-secondary {
+  border-radius: 0.5rem !important;
+}
+
+/* Inputs → app radius/border. */
+.pf-v5-c-form-control,
+input[type="text"],
+input[type="password"] {
+  border-radius: 0.5rem !important;
+}
+
+/* Error alert → app danger tokens. */
+.pf-v5-c-alert.pf-m-danger {
+  border-radius: 0.5rem;
+}
