@@ -233,4 +233,14 @@ describe("validateProviderModeAtStartup (guardrails)", () => {
     process.env["PLATFORM_ENV"] = "development";
     assert.deepEqual(validateProviderModeAtStartup(), []);
   });
+
+  test("empty AUTH_PROVIDER_MODE is treated as unset, not explicit real (prod-like)", () => {
+    // compose passes AUTH_PROVIDER_MODE="" for envs that don't set it. With
+    // PLATFORM_ENV/NODE_ENV prod-like the default mode is "real", but because the
+    // value is blank (not explicit) the "real with no provider" guard must NOT fire,
+    // matching an absent variable — otherwise test/staging containers crash on boot.
+    process.env["PLATFORM_ENV"] = "production";
+    process.env["AUTH_PROVIDER_MODE"] = "";
+    assert.deepEqual(validateProviderModeAtStartup(), []);
+  });
 });

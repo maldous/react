@@ -73,9 +73,14 @@ export function mockOverrideEnabled(): boolean {
   return process.env[MOCK_OVERRIDE_FLAG] === "true";
 }
 
-/** True only when the operator explicitly pinned the mode (vs. an env default). */
+/** True only when the operator explicitly pinned the mode (vs. an env default).
+ * An empty/blank value does NOT count: compose passes `AUTH_PROVIDER_MODE=""`
+ * (from `${AUTH_PROVIDER_MODE:-}`) for envs that don't set it, which must behave
+ * exactly like an absent variable — otherwise the "real with no provider" guard
+ * fires for test/staging containers (NODE_ENV=production → default mode "real"). */
 function modeExplicitlySet(): boolean {
-  return typeof process.env["AUTH_PROVIDER_MODE"] === "string";
+  const raw = process.env["AUTH_PROVIDER_MODE"];
+  return typeof raw === "string" && raw.trim() !== "";
 }
 
 export function getProviderMode(): ProviderMode {
