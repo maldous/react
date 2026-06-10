@@ -1,5 +1,5 @@
 import { createRoute } from "@tanstack/react-router";
-import { Route as AuthenticatedRoute } from "../_authenticated";
+import { Route as AdminLayoutRoute } from "./layout";
 import { RequirePermission } from "../../components/RequirePermission";
 import { AdminLogsPage } from "../../features/admin-logs/AdminLogsPage";
 import {
@@ -8,8 +8,8 @@ import {
 } from "../../features/admin-logs/admin-logs.schema";
 
 export const Route = createRoute({
-  getParentRoute: () => AuthenticatedRoute,
-  path: "/admin/logs",
+  getParentRoute: () => AdminLayoutRoute,
+  path: "logs",
   // Typed, bookmarkable search params (ADR-0019 §2). Lenient parse applies
   // defaults and never throws on a hand-edited URL.
   validateSearch: (search: Record<string, unknown>): LogSearchParams =>

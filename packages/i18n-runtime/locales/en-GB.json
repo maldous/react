@@ -155,6 +155,121 @@
         "title": "No logs matched",
         "description": "No log entries matched the current filters and time range."
       }
+    },
+    "admin": {
+      "title": "Administration",
+      "navLabel": "Administration sections",
+      "nav": {
+        "overview": "Overview",
+        "members": "Members",
+        "authentication": "Authentication",
+        "features": "Features",
+        "logs": "Log search"
+      },
+      "card": {
+        "membersDescription": "Invite people, change roles, and remove members.",
+        "authenticationDescription": "Configure login providers, identity providers, MFA, and sessions.",
+        "featuresDescription": "Enable or disable platform capabilities for this tenant.",
+        "logsDescription": "Search structured platform logs."
+      },
+      "overview": {
+        "title": "Administration",
+        "description": "Manage your organisation's members, authentication, and features.",
+        "empty": "You do not have access to any administration sections."
+      },
+      "members": {
+        "title": "Members",
+        "description": "People with access to this organisation.",
+        "invite": "Invite member",
+        "remove": "Remove",
+        "cancel": "Cancel",
+        "saved": "Changes saved.",
+        "error": "Members could not be loaded.",
+        "empty": "No members yet.",
+        "pendingTitle": "Pending invitations",
+        "emailLabel": "Email address",
+        "roleLabel": "Role",
+        "inviteError": "The invitation could not be sent. Please try again.",
+        "removeConfirmTitle": "Remove member",
+        "removeConfirmBody": "Remove {name} from this organisation?",
+        "changeRoleFor": "Change role for {name}",
+        "column": {
+          "member": "Member",
+          "role": "Role",
+          "actions": "Actions"
+        },
+        "role": {
+          "tenant-admin": "Admin",
+          "manager": "Manager",
+          "member": "Member",
+          "viewer": "Viewer"
+        }
+      },
+      "features": {
+        "title": "Features",
+        "description": "Enable or disable platform capabilities for this tenant.",
+        "error": "Features could not be loaded.",
+        "empty": "No features are available.",
+        "saved": "Feature updated.",
+        "key": {
+          "analytics": "Analytics",
+          "advanced_auth": "Advanced authentication",
+          "audit_export": "Audit export",
+          "webhooks": "Webhooks"
+        },
+        "keyDescription": {
+          "analytics": "Usage analytics and dashboards.",
+          "advanced_auth": "Step-up and policy-based authentication.",
+          "audit_export": "Export audit events to external systems.",
+          "webhooks": "Outbound event webhooks."
+        }
+      },
+      "auth": {
+        "title": "Authentication",
+        "description": "Login options and security policy for this organisation.",
+        "notConfigured": "This is not configured for your organisation yet.",
+        "tab": {
+          "providers": "Providers",
+          "idps": "Identity providers",
+          "mfa": "Multi-factor",
+          "session": "Sessions"
+        },
+        "providers": {
+          "modeLabel": "Provider mode",
+          "enabledLabel": "Sign-in options offered to your users",
+          "saved": "Authentication options saved.",
+          "unavailable": "Provider configuration is unavailable.",
+          "noneAvailable": "No third-party sign-in providers are available in this environment.",
+          "mode": {
+            "default": "Environment default ({mode})",
+            "mock": "Mock providers",
+            "real": "Real providers",
+            "disabled": "Third-party sign-in disabled"
+          },
+          "name": {
+            "google": "Google",
+            "azure": "Microsoft",
+            "apple": "Apple"
+          }
+        },
+        "idps": {
+          "empty": "No identity providers are configured.",
+          "enabled": "Enabled",
+          "disabled": "Disabled"
+        },
+        "mfa": {
+          "required": "Requirement",
+          "type": "Method"
+        },
+        "session": {
+          "accessTokenLifespan": "Access token lifespan",
+          "idleTimeout": "SSO idle timeout",
+          "maxLifespan": "SSO max lifespan",
+          "rememberMe": "Remember me",
+          "on": "On",
+          "off": "Off"
+        }
+      }
     }
   },
   "ui": {

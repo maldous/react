@@ -82,33 +82,54 @@ function IndexPage() {
   }
 
   const canReadLogs = hasPermission("platform.logs.read");
+  const canAdmin = hasPermission("tenant.admin.access");
 
   return (
     <AppShell>
       <SectionHeader heading={t("landing.title")} level={1} className="mb-6" />
 
       {/* Internal platform admin features (SPA routes) */}
-      {canReadLogs && (
+      {(canReadLogs || canAdmin) && (
         <section aria-labelledby="admin-heading" className="mb-8">
           <SectionHeader heading={t("landing.adminTools")} className="mb-4" />
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            <Link
-              to="/admin/logs"
-              search={DEFAULT_LOG_SEARCH_PARAMS}
-              className="group block no-underline"
-              data-testid="admin-link-logs"
-            >
-              <Card className="h-full transition hover:border-indigo-300 hover:shadow">
-                <CardBody>
-                  <span className="font-medium text-gray-900 group-hover:text-indigo-600">
-                    {t("landing.tool.logSearch.label")}
-                  </span>
-                  <span className="mt-0.5 block text-sm text-gray-600">
-                    {t("landing.tool.logSearch.description")}
-                  </span>
-                </CardBody>
-              </Card>
-            </Link>
+            {canAdmin && (
+              <Link
+                to="/admin"
+                className="group block no-underline"
+                data-testid="admin-link-console"
+              >
+                <Card className="h-full transition hover:border-indigo-300 hover:shadow">
+                  <CardBody>
+                    <span className="font-medium text-gray-900 group-hover:text-indigo-600">
+                      {t("feature.admin.title")}
+                    </span>
+                    <span className="mt-0.5 block text-sm text-gray-600">
+                      {t("feature.admin.overview.description")}
+                    </span>
+                  </CardBody>
+                </Card>
+              </Link>
+            )}
+            {canReadLogs && (
+              <Link
+                to="/admin/logs"
+                search={DEFAULT_LOG_SEARCH_PARAMS}
+                className="group block no-underline"
+                data-testid="admin-link-logs"
+              >
+                <Card className="h-full transition hover:border-indigo-300 hover:shadow">
+                  <CardBody>
+                    <span className="font-medium text-gray-900 group-hover:text-indigo-600">
+                      {t("landing.tool.logSearch.label")}
+                    </span>
+                    <span className="mt-0.5 block text-sm text-gray-600">
+                      {t("landing.tool.logSearch.description")}
+                    </span>
+                  </CardBody>
+                </Card>
+              </Link>
+            )}
           </div>
         </section>
       )}

@@ -107,6 +107,7 @@ production
 @platform/graphql-browser-client
 @platform/contracts-auth
 @platform/contracts-organisation
+@platform/contracts-admin
 @platform/platform-errors
 @platform/i18n-runtime
 ```
