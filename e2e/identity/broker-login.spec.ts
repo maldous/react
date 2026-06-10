@@ -18,9 +18,13 @@ async function pickScenario(page: Page, scenario: string): Promise<void> {
   await page.getByTestId(`scenario-${scenario}`).click();
 }
 
-/** GET /api/session through the app origin (real session cookie, not a fixture). */
+/** GET /api/session against the APP origin explicitly (not relative to the current page).
+ * A brokered-IdP failure can leave the browser on Keycloak's own origin (the platform
+ * login theme then bounces it to /login, which is same-origin as the app on a real
+ * Caddy/Cloudflare deployment but a different port in this split test harness), so a
+ * relative /api/session would hit the wrong origin. */
 async function sessionStatus(page: Page): Promise<number> {
-  const res = await page.request.get("/api/session");
+  const res = await page.request.get(`http://localhost:${APP_PORT}/api/session`);
   return res.status();
 }
 

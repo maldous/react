@@ -25,6 +25,11 @@ resource "keycloak_realm" "platform" {
   enabled      = true
   display_name = var.realm_display_name
 
+  # Custom login theme (ADR-ACT-0157): bounces brokered-IdP failures back to the app
+  # /login so Keycloak stays invisible to end users. Mounted into the KC container at
+  # /opt/keycloak/themes/platform (see compose.yaml keycloak volume).
+  login_theme = "platform"
+
   # Token lifetimes suitable for local development and CI
   access_token_lifespan                = "15m"
   sso_session_idle_timeout             = "30m"

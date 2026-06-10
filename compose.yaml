@@ -309,6 +309,11 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
     ports:
       - "${KEYCLOAK_PORT:-8090}:8080"
+    volumes:
+      # Custom "platform" login theme (ADR-ACT-0157): keeps Keycloak invisible by
+      # bouncing brokered-IdP failures back to the app /login. Read-only; start-dev
+      # has theme caching off so edits are picked up (new themes need a KC restart).
+      - ./docker/keycloak/themes:/opt/keycloak/themes:ro
     # mock-oidc now runs PER-ENV in this same project (react-<env>), so Keycloak
     # reaches the OIDC broker backchannel directly at the in-network service name
     # http://mock-oidc:8080 (MOCK_OIDC_INTERNAL_URL). host.docker.internal is kept

@@ -109,7 +109,7 @@ function authErrorKey(): string | null {
   if (typeof window === "undefined") return null;
   const code = new URLSearchParams(window.location.search).get("authError");
   if (!code) return null;
-  const known = ["email_unverified", "account_conflict"];
+  const known = ["email_unverified", "account_conflict", "signin_failed"];
   return `auth.login.rejected.${known.includes(code) ? code : "generic"}`;
 }
 
