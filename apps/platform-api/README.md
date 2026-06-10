@@ -107,6 +107,7 @@ production
 @platform/platform-errors
 @platform/contracts-auth
 @platform/contracts-organisation
+@platform/contracts-admin
 @platform/domain-identity
 @platform/session-runtime
 @platform/i18n-runtime

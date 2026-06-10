@@ -16,6 +16,7 @@
  * product IDs, the /login contract, and the /api/auth/providers shape never move.
  */
 import type { IdentityProvider } from "@platform/authorisation-runtime";
+import type { TenantAuthProvidersConfig } from "@platform/contracts-admin";
 
 export type ProviderMode = "mock" | "real" | "disabled";
 
@@ -90,6 +91,18 @@ export function getProviderMode(): ProviderMode {
   return isProdLikeEnv() ? "real" : "mock";
 }
 
+/** The environment-wide default mode — the fallback a tenant's "default" inherits (ADR-0037). */
+export function environmentDefaultMode(): ProviderMode {
+  return getProviderMode();
+}
+
+/** Resolve the effective mode for a request, honouring an optional per-tenant override.
+ * "default"/absent ⇒ the environment default (ADR-0037). */
+export function resolveEffectiveMode(setting?: TenantAuthProvidersConfig["mode"]): ProviderMode {
+  if (setting === "mock" || setting === "real" || setting === "disabled") return setting;
+  return environmentDefaultMode();
+}
+
 /** Mock providers may run here? Always in dev/test; in prod-like only with the override. */
 export function mockAllowedHere(): boolean {
   return !isProdLikeEnv() || mockOverrideEnabled();
@@ -162,12 +175,33 @@ function thirdPartyEnabled(id: ProductProviderId, mode: ProviderMode): boolean {
   return getRealProviderConfig(id) !== null; // real: only if configured
 }
 
+/** Third-party product providers that COULD be offered for a mode in this environment
+ * (mock allowed, or real configured). Platform is excluded — it is always available and
+ * never tenant-gated, so it is not a togglable option. Used to bound a tenant's choices. */
+export function availableThirdPartyIds(mode = environmentDefaultMode()): ProductProviderId[] {
+  return THIRD_PARTY.filter((p) => thirdPartyEnabled(p.id, mode)).map((p) => p.id);
+}
+
+/** True when a third-party provider is enabled for the tenant: enabled in the environment
+ * for the effective mode AND (when the tenant has an allowlist) present in it. */
+function tenantThirdPartyEnabled(
+  id: ProductProviderId,
+  mode: ProviderMode,
+  tenantConfig?: TenantAuthProvidersConfig
+): boolean {
+  if (!thirdPartyEnabled(id, mode)) return false;
+  // An explicit allowlist gates third-party providers; absent ⇒ all env-enabled show.
+  if (tenantConfig?.enabledProviders) return tenantConfig.enabledProviders.includes(id);
+  return true;
+}
+
 /**
- * Providers to render on /login. Platform (internal Keycloak) is always present;
- * third-party providers appear only when enabled for the current mode/env.
+ * Providers to render on /login. Platform (internal Keycloak) is always present; third-party
+ * providers appear only when enabled for the effective mode and the tenant's allowlist (ADR-0037).
+ * With no `tenantConfig` this is the prior environment-global behaviour.
  */
-export function listEnabledProviders(): ProviderListItem[] {
-  const mode = getProviderMode();
+export function listEnabledProviders(tenantConfig?: TenantAuthProvidersConfig): ProviderListItem[] {
+  const mode = resolveEffectiveMode(tenantConfig?.mode);
   const items: ProviderListItem[] = [];
   for (const p of PRODUCT_PROVIDERS) {
     if (p.id === "platform") {
@@ -181,7 +215,7 @@ export function listEnabledProviders(): ProviderListItem[] {
       });
       continue;
     }
-    if (!thirdPartyEnabled(p.id, mode)) continue;
+    if (!tenantThirdPartyEnabled(p.id, mode, tenantConfig)) continue;
     items.push({
       id: p.id,
       label: p.label,
@@ -202,13 +236,14 @@ export function listEnabledProviders(): ProviderListItem[] {
  * become Keycloak aliases, so arbitrary kc_idp_hint injection is impossible.
  */
 export function resolveProviderHint(
-  raw: string | null | undefined
+  raw: string | null | undefined,
+  tenantConfig?: TenantAuthProvidersConfig
 ): { ok: true; id: ProductProviderId; idpHint: string | null } | { ok: false } {
   const id = (raw ?? "platform") as ProductProviderId;
   if (!PRODUCT_PROVIDER_IDS.includes(id)) return { ok: false };
   if (id === "platform") return { ok: true, id, idpHint: null };
-  const mode = getProviderMode();
-  if (!thirdPartyEnabled(id, mode)) return { ok: false };
+  const mode = resolveEffectiveMode(tenantConfig?.mode);
+  if (!tenantThirdPartyEnabled(id, mode, tenantConfig)) return { ok: false };
   return { ok: true, id, idpHint: brokerAliasFor(id, mode) };
 }
 

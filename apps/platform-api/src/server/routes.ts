@@ -13,7 +13,13 @@ import {
   parseSessionCookie,
 } from "./auth.ts";
 import { handleForwardAuth } from "./forward-auth.ts";
-import { listEnabledProviders } from "./auth-providers.ts";
+import {
+  listEnabledProviders,
+  environmentDefaultMode,
+  availableThirdPartyIds,
+} from "./auth-providers.ts";
+import { getStoredTenantAuthProviders } from "../usecases/auth-provider-config.ts";
+import type { TenantAuthProvidersConfig } from "@platform/contracts-admin";
 import { getSessionStore, getApplicationPool, getKeycloakConfigForRealm } from "./dependencies.ts";
 import { queryTenantSchema } from "@platform/adapters-postgres";
 import { serverT } from "./i18n.ts";
@@ -180,8 +186,19 @@ export const routes: Route[] = [
     method: "GET",
     path: "/api/auth/providers",
     operationName: "auth.providers.list",
-    handler: async (_req, res) => {
-      res.json(200, listEnabledProviders());
+    handler: async (req, res) => {
+      // Tenant-aware (ADR-0037): merge the tenant's stored provider config over the
+      // environment defaults. Unauthenticated + pre-session: tenant resolved from FQDN.
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool()).catch(
+        () => null
+      );
+      const tenantConfig: TenantAuthProvidersConfig | undefined = tenantCtx
+        ? ((await getStoredTenantAuthProviders(
+            tenantCtx.organisationId,
+            getApplicationPool()
+          ).catch(() => null)) ?? undefined)
+        : undefined;
+      res.json(200, listEnabledProviders(tenantConfig));
     },
   },
   // ---------------------------------------------------------------------------
@@ -233,6 +250,88 @@ export const routes: Route[] = [
   // Reads resolve the credential then build the adapter; returns 503 NO_CREDENTIAL
   // if the tenant was provisioned before ADR-ACT-0186 landed.
   // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // Per-tenant authentication provider config (ADR-0037). Stored in tenant_settings
+  // (auth.providers) — no Keycloak credential needed (unlike the idp/mfa/session
+  // routes). Controls which product providers/login options the tenant offers.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/auth/settings/providers",
+    operationName: "auth.settings.providers.get",
+    requiresAuth: true,
+    requiredPermission: "tenant.auth.settings.read",
+    resource: "admin:auth",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const availableProviders = availableThirdPartyIds();
+      const stored = await getStoredTenantAuthProviders(
+        tenantCtx.organisationId,
+        getApplicationPool()
+      );
+      const config = stored ?? { mode: "default" as const, enabledProviders: availableProviders };
+      res.json(200, {
+        config,
+        environmentDefaultMode: environmentDefaultMode(),
+        availableProviders,
+      });
+    },
+  },
+  {
+    method: "PATCH",
+    path: "/api/auth/settings/providers",
+    operationName: "auth.settings.providers.set",
+    requiresAuth: true,
+    requiredPermission: "tenant.auth.settings.write",
+    resource: "admin:auth",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const availableProviders = availableThirdPartyIds();
+      const stored = await getStoredTenantAuthProviders(
+        tenantCtx.organisationId,
+        getApplicationPool()
+      );
+      const currentConfig = stored ?? {
+        mode: "default" as const,
+        enabledProviders: availableProviders,
+      };
+      const { setTenantAuthProviders } = await import("../usecases/auth-provider-config.ts");
+      const result = await setTenantAuthProviders(
+        {
+          rawBody: req.body,
+          organisationId: tenantCtx.organisationId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          currentConfig,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          pool: getApplicationPool(),
+        }
+      );
+      if (result.kind === "invalid_body") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      res.json(200, {
+        config: result.config,
+        environmentDefaultMode: environmentDefaultMode(),
+        availableProviders,
+      });
+    },
+  },
   {
     method: "GET",
     path: "/api/auth/settings/idps",

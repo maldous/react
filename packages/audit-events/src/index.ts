@@ -27,6 +27,7 @@ export const AuditAction = {
   AuthSettingsMfaChanged: "auth_settings.mfa.changed",
   AuthSettingsSessionChanged: "auth_settings.session.changed",
   AuthSettingsSysadminBrokeringChanged: "auth_settings.sysadmin_brokering.changed",
+  AuthSettingsProvidersChanged: "auth_settings.providers.changed",
 } as const;
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction];

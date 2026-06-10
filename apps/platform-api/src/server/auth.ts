@@ -24,6 +24,7 @@ import {
 } from "./dependencies.ts";
 import { resolveTenantFromRequest } from "./tenant-resolver.ts";
 import { resolveProviderHint } from "./auth-providers.ts";
+import { getStoredTenantAuthProviders } from "../usecases/auth-provider-config.ts";
 import type { PipelineHandler } from "./pipeline.ts";
 
 function safeRelativeRedirect(raw: string): string {
@@ -150,10 +151,22 @@ export const handleAuthLogin: PipelineHandler = async (req, res) => {
   // Sanitise returnTo: only relative paths are allowed (open-redirect protection)
   const returnTo = rawReturnTo.startsWith("/") ? rawReturnTo : "/";
 
+  // Resolve the tenant (FQDN) first so its stored provider config can gate which
+  // product providers are offered (ADR-0037). Pre-session, so resolved from Host.
+  const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool()).catch(() => null);
+  const tenantProviderConfig = tenantCtx
+    ? ((await getStoredTenantAuthProviders(tenantCtx.organisationId, getApplicationPool()).catch(
+        () => null
+      )) ?? undefined)
+    : undefined;
+
   // Resolve the requested product provider (google/azure/apple/platform) to a
-  // validated Keycloak kc_idp_hint. Unknown/disabled providers are rejected here
-  // so arbitrary kc_idp_hint values can never be injected via the query string.
-  const providerResult = resolveProviderHint(url.searchParams.get("provider"));
+  // validated Keycloak kc_idp_hint. Unknown / disabled / not-enabled-for-this-tenant
+  // providers are rejected here, so arbitrary kc_idp_hint values can never be injected.
+  const providerResult = resolveProviderHint(
+    url.searchParams.get("provider"),
+    tenantProviderConfig
+  );
   if (!providerResult.ok) {
     res.json(
       400,
@@ -168,9 +181,8 @@ export const handleAuthLogin: PipelineHandler = async (req, res) => {
     (req.raw.headers["x-forwarded-host"] as string | undefined) ?? req.raw.headers["host"];
   const forwardedProto = req.raw.headers["x-forwarded-proto"] as string | undefined;
 
-  // Resolve the Keycloak realm for this tenant's FQDN (ADR-0029 ?2b).
+  // Keycloak realm for this tenant's FQDN (ADR-0029 ?2b) — tenantCtx resolved above.
   // Falls back to the global platform realm when on aldous.info root or dev mode.
-  const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool()).catch(() => null);
   const keycloakCfg = {
     ...(tenantCtx ? getKeycloakConfigForRealm(tenantCtx.realmName) : getKeycloakConfig()),
     // Override publicUrl with host-derived URL so every tenant gets the correct
