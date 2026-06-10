@@ -69,6 +69,16 @@
   padding-right: var(--app-safe-right);
 }
 
+/* Full-screen auth pages (e.g. /login): a base 2rem horizontal gutter so the card never
+   reaches the viewport edge on mobile, expanded by any device safe-area inset. Plain
+   .app-safe-x collapses to 0 in a normal browser, which let the card run edge-to-edge on
+   narrow screens. 2rem mirrors the Keycloak login's page padding so every auth page has
+   identical margins on web and mobile. */
+.auth-gutter-x {
+  padding-left: max(2rem, var(--app-safe-left));
+  padding-right: max(2rem, var(--app-safe-right));
+}
+
 /* Top inset — applied to the header so the bar paints up into the inset. */
 .app-safe-top {
   padding-top: var(--app-safe-top);

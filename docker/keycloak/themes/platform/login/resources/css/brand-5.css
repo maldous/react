@@ -68,10 +68,14 @@ body#keycloak-bg {
   color: var(--pf-brand-fg) !important;
   font-size: 1.5rem !important;
   font-weight: 700 !important;
+  /* line-height 2rem matches the app h1 (Tailwind text-2xl) EXACTLY so the name box is 32px
+     tall on both pages and "Enterprise Platform" lands on the same baseline. With the stock
+     ~1.2 line-height the box was ~29px, pulling the KC card up 3px and the name up ~1px. */
+  line-height: 2rem !important;
   letter-spacing: -0.025em !important;
 }
 #kc-header-wrapper::before {
-  content: "\2B21"; /* ⬡ */
+  content: "\2B21"; /* ⬡ U+2B21 WHITE HEXAGON — same glyph as the app badge */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -82,20 +86,32 @@ body#keycloak-bg {
   background: var(--pf-brand-primary);
   color: #fff;
   font-size: 1.5rem;
+  /* normal weight: the header is 700 for the NAME, but the app badge glyph is weight 400.
+     Inheriting 700 thickened the hexagon's stroke ("thicker inner hexagon"). Reset to 400
+     so the badge renders identically on both pages. */
+  font-weight: 400 !important;
   line-height: 1;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 
-/* 5. Card — white, 24rem, bordered, rounded, soft shadow (app card). */
+/* 5. Card — white, 24rem, bordered, rounded, soft shadow (app card). The card owns a single
+   uniform 2rem inset (like the app CardBody p-8); the per-section paddings keycloak.v2 puts
+   on body/footer are zeroed so the content isn't double-padded. This gives 32px above the
+   first field AND 32px below the last button — symmetric, no orphan gap. */
 .pf-v5-c-login__main {
   margin: 0 !important;
   width: 100% !important;
   max-width: 24rem !important;
+  padding: 2rem !important;
   background: var(--pf-brand-surface) !important;
   border: 1px solid var(--pf-brand-border) !important;
   border-radius: 0.5rem !important;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) !important;
   overflow: hidden !important;
+}
+.pf-v5-c-login__main-body,
+.pf-v5-c-login__main-footer {
+  padding: 0 !important;
 }
 .pf-v5-c-login__main-header {
   border-top: none !important; /* drop keycloak.v2's blue accent bar */
@@ -220,4 +236,13 @@ input::placeholder {
 }
 .pf-v5-c-login__main-footer-band {
   display: none !important;
+}
+
+/* 13. Horizontal divider between the password form and the brokered IdP buttons — a clean
+   rule (no "Or sign in with" text) with even 1.5rem breathing room each side, so the social
+   options read as a separate-but-equal group instead of butting against the Sign In button. */
+#kc-social-providers {
+  margin-top: 1.5rem !important;
+  padding-top: 1.5rem !important;
+  border-top: 1px solid var(--pf-brand-border) !important;
 }

@@ -45,7 +45,7 @@ export function LoginPage() {
   return (
     <main
       id="main-content"
-      className="app-safe-x flex min-h-screen flex-col items-center justify-start bg-surface-muted px-8 pb-8 pt-20"
+      className="auth-gutter-x flex min-h-screen flex-col items-center justify-start bg-surface-muted pb-8 pt-20"
     >
       <div className="w-full max-w-sm space-y-8">
         {/* Platform branding — top-anchored (pt-20) so the badge + name sit at the same
