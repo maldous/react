@@ -40,11 +40,13 @@ os.environ['COMPOSE_PROJECT_FILTER'] = 'react-dev'
 # live in the shared react-shared (Sentry) / react-sonar (SonarQube) projects,
 # shared across all envs, started via local_resource entries below
 # (make sentry-up / sonar-up).
-# mock-oidc is NOT in this list: it is a cross-env shared service in the
-# react-shared project, started via the `mock-oidc` local_resource below.
-# Keycloak reaches it over the host gateway (compose extra_hosts), so no shared
-# Docker network is needed here.
-docker_compose('./compose.yaml', project_name='react-dev', profiles=['external-mocks', 'identity', 'observability'])
+# mock-oidc IS included here (identity-mocks profile): it is now a PER-ENV service
+# in the react-dev project (ADR-ACT-0157), so Tilt owns its lifecycle as a
+# dc_resource below. It must NOT be a local_resource `docker compose up` shell-out —
+# that double-manages a react-dev container with Tilt and recreates siblings like
+# Keycloak mid-provision (see the WireMock note further down). Keycloak reaches it
+# in-network at http://mock-oidc:8080.
+docker_compose('./compose.yaml', project_name='react-dev', profiles=['external-mocks', 'identity', 'identity-mocks', 'observability'])
 
 dc_resource('postgres',       labels=['infra'])
 dc_resource('redis',          labels=['infra'])
@@ -66,16 +68,13 @@ local_resource(
   resource_deps=['keycloak'],
 )
 
-# mock-oidc — NON-PRODUCTION upstream IdP fixture (ADR-ACT-0157). Cross-env shared
-# service in the react-shared project (container react-shared-mock-oidc-1), reached
-# by every per-env Keycloak over the shared react-shared bridge. Started via its own
-# project like Sentry/SonarQube, not as a react-dev dc_resource.
-local_resource(
-  'mock-oidc',
-  cmd='make compose-up-identity-mocks ENV=dev',
-  labels=['auth'],
-  links=[link('http://localhost:9080/', 'mock-oidc')],
-)
+# mock-oidc — NON-PRODUCTION upstream IdP fixture (ADR-ACT-0157). PER-ENV service in
+# the react-dev project, built from services/mock-oidc and managed by Tilt as a
+# dc_resource via the identity-mocks profile above. (For non-Tilt envs it is started
+# with `make compose-up-identity-mocks ENV=<env>`.) Keycloak reaches it in-network at
+# http://mock-oidc:8080; the browser uses the published http://localhost:9080.
+dc_resource('mock-oidc', labels=['auth'],
+  links=[link('http://localhost:9080/', 'mock-oidc')])
 
 # Register the mock broker IdPs on the platform realm once Keycloak is provisioned
 # and mock-oidc is up. Idempotent and safe to re-run.
