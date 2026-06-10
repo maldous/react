@@ -41,6 +41,100 @@ const KC_URL = (process.env["KEYCLOAK_URL"] ?? "http://localhost:8090/kc").repla
 const REALM = process.env["KEYCLOAK_REALM"] ?? "platform";
 const ADMIN_USER = process.env["KEYCLOAK_ADMIN_USER"] ?? "admin";
 const ADMIN_PASSWORD = process.env["KEYCLOAK_ADMIN_PASSWORD"] ?? "admin";
+const BFF_CLIENT_ID = process.env["KEYCLOAK_CLIENT_ID"] ?? "platform-api";
+// Claim/attribute carrying the UPSTREAM email_verified (see mapKeycloakClaims).
+const UPSTREAM_ATTR = "email_verified_upstream";
+
+async function adminToken(): Promise<string> {
+  const res = await fetch(`${KC_URL}/realms/master/protocol/openid-connect/token`, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      grant_type: "password",
+      client_id: "admin-cli",
+      username: ADMIN_USER,
+      password: ADMIN_PASSWORD,
+    }),
+  });
+  if (!res.ok) throw new Error(`admin token failed: ${res.status}`);
+  return ((await res.json()) as { access_token: string }).access_token;
+}
+
+/**
+ * IdP attribute-importer mapper: import the upstream `email_verified` claim into a
+ * user attribute (FORCE = refreshed on every login). Keycloak's own email_verified
+ * is governed by the IdP trustEmail flag and cannot carry a per-token false; this
+ * preserves the upstream value so the BFF can reject unverified brokered logins.
+ * Idempotent (keyed by mapper name). ADR-ACT-0157.
+ */
+async function ensureIdpEmailVerifiedMapper(token: string, alias: string): Promise<void> {
+  const base = `${KC_URL}/admin/realms/${REALM}/identity-provider/instances/${alias}/mappers`;
+  const headers = { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
+  const name = `upstream-${UPSTREAM_ATTR}`;
+  const rep = {
+    name,
+    identityProviderAlias: alias,
+    identityProviderMapper: "oidc-user-attribute-idp-mapper",
+    config: { syncMode: "FORCE", claim: "email_verified", "user.attribute": UPSTREAM_ATTR },
+  };
+  const existing = (await (await fetch(base, { headers })).json()) as Array<{
+    id: string;
+    name: string;
+  }>;
+  const found = existing.find((m) => m.name === name);
+  const res = found
+    ? await fetch(`${base}/${found.id}`, {
+        method: "PUT",
+        headers,
+        body: JSON.stringify({ ...rep, id: found.id }),
+      })
+    : await fetch(base, { method: "POST", headers, body: JSON.stringify(rep) });
+  if (!res.ok && res.status !== 409) throw new Error(`idp mapper ${alias} failed: ${res.status}`);
+}
+
+/**
+ * platform-api client protocol mapper: emit the user attribute as the
+ * `email_verified_upstream` claim in id/access/userinfo so the BFF sees it.
+ * Idempotent. ADR-ACT-0157.
+ */
+async function ensureClientEmailVerifiedMapper(token: string): Promise<void> {
+  const headers = { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
+  const clients = (await (
+    await fetch(
+      `${KC_URL}/admin/realms/${REALM}/clients?clientId=${encodeURIComponent(BFF_CLIENT_ID)}`,
+      { headers }
+    )
+  ).json()) as Array<{ id: string }>;
+  const clientId = clients[0]?.id;
+  if (!clientId) throw new Error(`client ${BFF_CLIENT_ID} not found`);
+  const base = `${KC_URL}/admin/realms/${REALM}/clients/${clientId}/protocol-mappers/models`;
+  const rep = {
+    name: UPSTREAM_ATTR,
+    protocol: "openid-connect",
+    protocolMapper: "oidc-usermodel-attribute-mapper",
+    config: {
+      "user.attribute": UPSTREAM_ATTR,
+      "claim.name": UPSTREAM_ATTR,
+      "jsonType.label": "String",
+      "id.token.claim": "true",
+      "access.token.claim": "true",
+      "userinfo.token.claim": "true",
+    },
+  };
+  const existing = (await (await fetch(base, { headers })).json()) as Array<{
+    id: string;
+    name: string;
+  }>;
+  const found = existing.find((m) => m.name === UPSTREAM_ATTR);
+  const res = found
+    ? await fetch(`${base}/${found.id}`, {
+        method: "PUT",
+        headers,
+        body: JSON.stringify({ ...rep, id: found.id }),
+      })
+    : await fetch(base, { method: "POST", headers, body: JSON.stringify(rep) });
+  if (!res.ok && res.status !== 409) throw new Error(`client mapper failed: ${res.status}`);
+}
 
 async function waitForKeycloak(timeoutMs = 120_000): Promise<void> {
   const discovery = `${KC_URL}/realms/master/.well-known/openid-configuration`;
@@ -120,6 +214,19 @@ async function main(): Promise<void> {
       }
     );
   }
+
+  // Surface the upstream email_verified so the BFF rejects unverified brokered
+  // logins (Keycloak trustEmail=true would otherwise mask them). ADR-ACT-0157.
+  const token = await adminToken();
+  for (const def of defs) {
+    await ensureIdpEmailVerifiedMapper(token, def.alias);
+  }
+  await ensureClientEmailVerifiedMapper(token);
+  log("info", "upstream email_verified mappers ensured", {
+    attribute: UPSTREAM_ATTR,
+    client: BFF_CLIENT_ID,
+    aliases: defs.map((d) => d.alias),
+  });
 
   log("info", "mock identity provider seed complete", { aliases: defs.map((d) => d.alias) });
 }

@@ -81,6 +81,28 @@ describe("mapKeycloakClaims", () => {
     assert.equal(result, null, "Should return null when email_verified is missing");
   });
 
+  it("returns null when the brokered upstream email is unverified (string 'false')", () => {
+    // Keycloak trustEmail=true reports email_verified true, but the upstream IdP
+    // said the email was unverified — surfaced as email_verified_upstream. (ADR-ACT-0157)
+    const result = mapKeycloakClaims({
+      sub: "s",
+      email: "user@example.com",
+      email_verified: true,
+      email_verified_upstream: "false",
+    });
+    assert.equal(result, null, "Should reject an unverified brokered email");
+  });
+
+  it("accepts when email_verified_upstream is 'true'", () => {
+    const result = mapKeycloakClaims({
+      sub: "s",
+      email: "user@example.com",
+      email_verified: true,
+      email_verified_upstream: "true",
+    });
+    assert.ok(result, "Should accept a verified brokered email");
+  });
+
   it("uses preferred_username for displayName (not email)", () => {
     const result = mapKeycloakClaims({
       sub: "s",

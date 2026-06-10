@@ -98,6 +98,20 @@ test.describe("brokered mock identity providers", () => {
     }).toPass({ timeout: 15_000 });
   });
 
+  test("unverified email is rejected by the BFF callback (no session)", async ({ page }) => {
+    // The broker flow completes (Keycloak trustEmail=true imports the user), but the
+    // upstream email_verified=false is surfaced as email_verified_upstream and the BFF
+    // callback refuses the login. ADR-ACT-0157.
+    expect(await sessionStatus(page)).toBe(401);
+    await startLogin(page, "google");
+    await pickScenario(page, "unverified");
+    await expect(async () => {
+      expect(await sessionStatus(page)).toBe(401);
+    }).toPass({ timeout: 15_000 });
+    const body = await page.content();
+    expect(body).not.toMatch(/stack trace|at Object\.|internalDetails/i);
+  });
+
   test("sign-out clears the session and returns to the app (no Keycloak confirmation page)", async ({
     page,
   }) => {

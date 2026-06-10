@@ -6,6 +6,14 @@ interface KeycloakTokenClaims {
   preferred_username?: string;
   email?: string;
   email_verified?: boolean;
+  /**
+   * Upstream (brokered IdP) email_verified, surfaced via an IdP attribute-importer
+   * mapper + a platform-api client mapper (seed-idps). Keycloak's own
+   * `email_verified` is governed by the IdP `trustEmail` flag (all-or-nothing) and
+   * would otherwise report an unverified brokered email as verified. A user
+   * attribute is a string, so this arrives as "true"/"false". (ADR-ACT-0157)
+   */
+  email_verified_upstream?: boolean | string;
   realm_access?: { roles: string[] };
   [key: string]: unknown;
 }
@@ -37,8 +45,9 @@ export interface KeycloakClientConfig {
  * Maps Keycloak userinfo claims to internal identity fields.
  *
  * Security rules:
- * - Returns null (refuses login) if `email` is absent or `email_verified !== true`.
- *   An unverified email could belong to someone else; provisioning on it enables
+ * - Returns null (refuses login) if `email` is absent or `email_verified !== true`,
+ *   or if the brokered upstream reported `email_verified_upstream` false. An
+ *   unverified email could belong to someone else; provisioning on it enables
  *   account takeover via email-squatting.
  * - `preferred_username` is user-controlled and NOT used for the email field.
  *   It is used only for the display name where accuracy is not security-critical.
@@ -49,6 +58,10 @@ export function mapKeycloakClaims(claims: Record<string, unknown>): KeycloakIden
 
   if (!kc.email) return null;
   if (kc.email_verified !== true) return null;
+  // Reject when the brokered upstream IdP reported the email as unverified, even
+  // though Keycloak (trustEmail=true) marks it verified. Absent ⇒ not a brokered
+  // login (or no mapper) ⇒ rely on email_verified above.
+  if (kc.email_verified_upstream === false || kc.email_verified_upstream === "false") return null;
 
   return {
     providerSubject: kc.sub,
