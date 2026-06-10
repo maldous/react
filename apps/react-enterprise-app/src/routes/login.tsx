@@ -45,10 +45,11 @@ export function LoginPage() {
   return (
     <main
       id="main-content"
-      className="app-safe-x flex min-h-screen flex-col items-center justify-center bg-surface-muted p-8"
+      className="app-safe-x flex min-h-screen flex-col items-center justify-start bg-surface-muted px-8 pb-8 pt-20"
     >
       <div className="w-full max-w-sm space-y-8">
-        {/* Platform branding */}
+        {/* Platform branding — top-anchored (pt-20) so the badge + name sit at the same
+            place as the Keycloak login page (visual consistency across auth pages). */}
         <div className="text-center">
           <div
             className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-2xl text-primary-foreground shadow-md"
@@ -57,7 +58,6 @@ export function LoginPage() {
             ⬡
           </div>
           <h1 className="mt-4 text-2xl font-bold tracking-tight text-fg">{t("platform.name")}</h1>
-          <p className="mt-1 text-sm text-fg-muted">{t("platform.tagline")}</p>
         </div>
 
         <Card>
