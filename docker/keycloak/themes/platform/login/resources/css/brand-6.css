@@ -246,3 +246,25 @@ input::placeholder {
   padding-top: 1.5rem !important;
   border-top: 1px solid var(--pf-brand-border) !important;
 }
+
+/* 14. Autofill. Chrome/Safari and password managers repaint a filled username/password
+   field with their own colours (e.g. light text on a pale grey/green fill), breaking the
+   black-on-white look. Force the app foreground and mask the fill with a full-bleed white
+   inset shadow. Keep -webkit-autofill and the standard :autofill in SEPARATE rules — an
+   unrecognised pseudo-class invalidates the whole selector list. */
+.pf-v5-c-form-control input:-webkit-autofill,
+.pf-v5-c-form-control input:-webkit-autofill:hover,
+.pf-v5-c-form-control input:-webkit-autofill:focus,
+.pf-v5-c-form-control input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--pf-brand-fg) !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--pf-brand-surface) inset !important;
+  box-shadow: 0 0 0 1000px var(--pf-brand-surface) inset !important;
+  caret-color: var(--pf-brand-fg) !important;
+  transition: background-color 9999s ease-out 0s !important;
+}
+.pf-v5-c-form-control input:autofill {
+  color: var(--pf-brand-fg) !important;
+  -webkit-text-fill-color: var(--pf-brand-fg) !important;
+  box-shadow: 0 0 0 1000px var(--pf-brand-surface) inset !important;
+  caret-color: var(--pf-brand-fg) !important;
+}
