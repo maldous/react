@@ -3,7 +3,7 @@
   "info": {
     "title": "Enterprise Platform REST API",
     "version": "0.1.0",
-    "description": "REST supplementary routes for the enterprise React platform BFF. GraphQL is the primary client boundary per ADR-0013; these routes cover health probes, auth, session management, FQDN-based tenant routing, per-tenant branding, auth settings self-service, and tenant provisioning. ADRs 0028–0031 govern the multi-tenant architecture."
+    "description": "REST supplementary routes for the enterprise React platform BFF. GraphQL is the primary client boundary per ADR-0013; these routes cover health probes, auth, session management, FQDN-based tenant routing, per-tenant branding, auth settings self-service, and tenant provisioning. ADRs 0028\u20130031 govern the multi-tenant architecture."
   },
   "servers": [
     {
@@ -417,10 +417,10 @@
     },
     "/internal/auth/forward": {
       "get": {
-        "summary": "Caddy forward_auth gate — internal only",
+        "summary": "Caddy forward_auth gate \u2014 internal only",
         "operationId": "forwardAuth",
         "tags": ["Internal"],
-        "description": "Called by Caddy before proxying admin/tool UIs. NOT externally reachable — blocked in Caddyfile public blocks. Requires X-Internal-Secret header. Returns 200 (allow), 401 (no session), 403 (forbidden), or 503 (misconfigured). ADR-0029, ADR-0030, ADR-0031.",
+        "description": "Called by Caddy before proxying admin/tool UIs. NOT externally reachable \u2014 blocked in Caddyfile public blocks. Requires X-Internal-Secret header. Returns 200 (allow), 401 (no session), 403 (forbidden), or 503 (misconfigured). ADR-0029, ADR-0030, ADR-0031.",
         "parameters": [
           {
             "name": "resource",
@@ -507,7 +507,7 @@
         "summary": "Per-tenant branding configuration",
         "operationId": "getTheme",
         "tags": ["Tenant"],
-        "description": "Returns theme config (logo, colours, displayName) resolved from the tenant schema via Host header. Falls back to platform defaults if tenant not found or schema not seeded. ADR-0029 §4.",
+        "description": "Returns theme config (logo, colours, displayName) resolved from the tenant schema via Host header. Falls back to platform defaults if tenant not found or schema not seeded. ADR-0029 \u00a74.",
         "responses": {
           "200": {
             "description": "Theme config",
@@ -541,7 +541,7 @@
         "summary": "List tenant identity providers",
         "operationId": "listIdps",
         "tags": ["Auth Settings"],
-        "description": "Returns configured IdPs for the tenant realm derived from the Host header. Requires admin.access permission. ADR-0030 §1b.",
+        "description": "Returns configured IdPs for the tenant realm derived from the Host header. Requires admin.access permission. ADR-0030 \u00a71b.",
         "security": [
           {
             "sessionCookie": []
@@ -563,7 +563,7 @@
         "summary": "Create or update identity provider",
         "operationId": "upsertIdp",
         "tags": ["Auth Settings"],
-        "description": "Creates or updates an IdP in the tenant Keycloak realm. Realm derived from Host header — never from body. ADR-0030 §1b.",
+        "description": "Creates or updates an IdP in the tenant Keycloak realm. Realm derived from Host header \u2014 never from body. ADR-0030 \u00a71b.",
         "security": [
           {
             "sessionCookie": []
@@ -851,7 +851,7 @@
         "summary": "Provision a sub-tenant (not yet implemented)",
         "operationId": "createSubTenant",
         "tags": ["Admin"],
-        "description": "Hierarchical tenant provisioning — tracked in ADR-ACT-0143. Returns 501 until implemented.",
+        "description": "Hierarchical tenant provisioning \u2014 tracked in ADR-ACT-0143. Returns 501 until implemented.",
         "security": [
           {
             "sessionCookie": []
@@ -1529,6 +1529,64 @@
           },
           "404": {
             "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/auth/settings/providers": {
+      "get": {
+        "summary": "Get tenant authentication provider config",
+        "operationId": "getAuthProviders",
+        "tags": ["Auth Settings"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tenant authentication provider config"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update tenant authentication provider config",
+        "operationId": "setAuthProviders",
+        "tags": ["Auth Settings"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "mode": {
+                    "type": "string",
+                    "enum": ["mock", "real", "disabled", "default"]
+                  },
+                  "enabledProviders": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": ["google", "azure", "apple", "platform"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated config"
+          },
+          "400": {
+            "description": "Validation error"
           }
         }
       }
