@@ -2,9 +2,10 @@
  * Brokered third-party identity provider E2E (ADR-ACT-0157).
  *
  * Exercises the production-true flow against the mock-oidc fixture with a REAL
- * BFF session (no LOCAL_FIXTURE_SESSION):
- *   /login selector → BFF /auth/login?provider → Keycloak broker → mock-oidc
- *   picker → Keycloak callback → BFF /auth/callback → app session.
+ * BFF session (no LOCAL_FIXTURE_SESSION). Keycloak is the single login surface:
+ *   /login → BFF /auth/login → Keycloak login page (username/password + brokered IdP
+ *   buttons) → pick an IdP → mock-oidc picker → Keycloak callback → BFF /auth/callback
+ *   → app session.
  *
  * See playwright.identity.config.ts for the dedicated real-auth harness.
  */
@@ -28,22 +29,23 @@ async function sessionStatus(page: Page): Promise<number> {
   return res.status();
 }
 
+/** Start a brokered login: /login hands off to the Keycloak login page, then we pick the
+ * brokered IdP from Keycloak's "Or sign in with" list (KC is the single login surface). */
 async function startLogin(page: Page, provider: string): Promise<void> {
-  await page.goto("/login");
-  await expect(page.getByTestId("login-providers")).toBeVisible({ timeout: 10_000 });
-  await page
-    .getByTestId(provider === "platform" ? "sign-in-button" : `login-provider-${provider}`)
-    .click();
+  await page.goto("/login"); // hands off (client redirect) to the Keycloak login page
+  const idpLink = page.locator(`a[href*="broker/mock-${provider}/login"]`).first();
+  await idpLink.waitFor({ state: "visible", timeout: 20_000 });
+  await idpLink.click();
 }
 
 test.describe("brokered mock identity providers", () => {
-  test("/login renders the configured providers", async ({ page }) => {
-    await page.goto("/login");
-    await expect(page.getByTestId("login-providers")).toBeVisible({ timeout: 10_000 });
-    await expect(page.getByTestId("sign-in-button")).toBeVisible(); // platform
-    await expect(page.getByTestId("login-provider-google")).toBeVisible();
-    await expect(page.getByTestId("login-provider-azure")).toBeVisible();
-    await expect(page.getByTestId("login-provider-apple")).toBeVisible();
+  test("the Keycloak login lists the brokered identity providers", async ({ page }) => {
+    await page.goto("/login"); // redirects to the Keycloak login page
+    for (const provider of ["google", "azure", "apple"]) {
+      await expect(page.locator(`a[href*="broker/mock-${provider}/login"]`).first()).toBeVisible({
+        timeout: 20_000,
+      });
+    }
   });
 
   test("provider list exposes no secrets", async ({ page }) => {
@@ -123,9 +125,7 @@ test.describe("brokered mock identity providers", () => {
     expect(body).not.toMatch(/stack trace|at Object\.|internalDetails/i);
   });
 
-  test("sign-out clears the session and returns to the app (no Keycloak confirmation page)", async ({
-    page,
-  }) => {
+  test("sign-out clears the session — no silent re-auth", async ({ page }) => {
     // Establish a real authenticated session.
     await startLogin(page, "google");
     await pickScenario(page, "verified");
@@ -136,17 +136,13 @@ test.describe("brokered mock identity providers", () => {
       expect(await sessionStatus(page)).toBe(200);
     }).toPass({ timeout: 15_000 });
 
-    // Sign out. With id_token_hint (ADR-ACT-0157) Keycloak skips the
-    // "Do you want to log out?" confirmation and redirects straight back to the
-    // app /login; without it the browser would strand on a /kc/... page and this
-    // waitForURL would time out.
+    // Sign out. With id_token_hint (ADR-ACT-0157) Keycloak skips its "Do you want to log
+    // out?" confirmation and ends the SSO session; /login then hands back to the Keycloak
+    // login (the single login surface). The session must be gone — no silent re-auth.
     await page.getByTestId("logout-button").click();
-    await page.waitForURL((url) => url.port === APP_PORT && url.pathname === "/login", {
-      timeout: 20_000,
-    });
     await expect(async () => {
       expect(await sessionStatus(page)).toBe(401);
-    }).toPass({ timeout: 15_000 });
+    }).toPass({ timeout: 20_000 });
   });
 
   test("an invalid provider hint cannot be used for broker injection or open redirect", async ({

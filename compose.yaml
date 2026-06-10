@@ -305,6 +305,9 @@ services:
       # Override via env: KC_HOSTNAME=http://dev.localhost/kc for Tilt dev mode.
       KC_HOSTNAME: ${KC_HOSTNAME:-http://localhost/kc}
       KC_METRICS_ENABLED: "false"
+      # Don't cache theme static resources (ADR-ACT-0156): emit no-cache so the platform
+      # login CSS isn't pinned by browsers/CDN at Keycloak's otherwise-stable resource URL.
+      KC_SPI_THEME_STATIC_MAX_AGE: "-1"
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN_USER:-admin}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
     ports:
