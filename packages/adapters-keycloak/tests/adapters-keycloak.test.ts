@@ -144,9 +144,14 @@ describe("exchangeCodeForTokens", () => {
   });
   afterEach(() => restore());
 
-  it("returns tokens on 200 response", async () => {
+  it("returns tokens (incl. id_token) on 200 response", async () => {
     restore = mockFetch(async () =>
-      jsonResponse({ access_token: "at-123", refresh_token: "rt-456", expires_in: 900 })
+      jsonResponse({
+        access_token: "at-123",
+        refresh_token: "rt-456",
+        expires_in: 900,
+        id_token: "idt-789",
+      })
     );
     const result = await exchangeCodeForTokens(
       { code: "code1", redirectUri: "http://localhost:3001/auth/callback", codeVerifier: "cv1" },
@@ -156,6 +161,20 @@ describe("exchangeCodeForTokens", () => {
     assert.equal(result.accessToken, "at-123");
     assert.equal(result.refreshToken, "rt-456");
     assert.equal(result.expiresIn, 900);
+    // id_token is captured for the logout id_token_hint (ADR-ACT-0157).
+    assert.equal(result.idToken, "idt-789");
+  });
+
+  it("defaults idToken to empty string when id_token is absent", async () => {
+    restore = mockFetch(async () =>
+      jsonResponse({ access_token: "at", refresh_token: "rt", expires_in: 300 })
+    );
+    const result = await exchangeCodeForTokens(
+      { code: "c", redirectUri: "http://localhost:3001/auth/callback", codeVerifier: "cv" },
+      CONFIG
+    );
+    assert.ok(result !== null);
+    assert.equal(result.idToken, "");
   });
 
   it("returns null on 401 response", async () => {

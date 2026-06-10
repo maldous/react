@@ -71,7 +71,12 @@ export function mapKeycloakClaims(claims: Record<string, unknown>): KeycloakIden
 export async function exchangeCodeForTokens(
   input: { code: string; redirectUri: string; codeVerifier: string },
   config: KeycloakClientConfig
-): Promise<{ accessToken: string; refreshToken: string; expiresIn: number } | null> {
+): Promise<{
+  accessToken: string;
+  refreshToken: string;
+  expiresIn: number;
+  idToken: string;
+} | null> {
   const tokenUrl = `${config.url}/realms/${config.realm}/protocol/openid-connect/token`;
 
   const body = new URLSearchParams({
@@ -103,6 +108,7 @@ export async function exchangeCodeForTokens(
     access_token?: string;
     refresh_token?: string;
     expires_in?: number;
+    id_token?: string;
   };
 
   if (!data.access_token) return null;
@@ -111,6 +117,9 @@ export async function exchangeCodeForTokens(
     accessToken: data.access_token,
     refreshToken: data.refresh_token ?? "",
     expiresIn: data.expires_in ?? 900,
+    // id_token is needed as `id_token_hint` for RP-initiated logout so Keycloak
+    // skips the logout-confirmation prompt and terminates the SSO session.
+    idToken: data.id_token ?? "",
   };
 }
 

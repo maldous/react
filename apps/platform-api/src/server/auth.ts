@@ -7,6 +7,7 @@ import {
 } from "@platform/adapters-keycloak";
 import { SESSION_COOKIE_NAME } from "@platform/adapters-redis";
 import { resolveSessionFromIdentity, destroySession } from "../usecases/auth.ts";
+import { decryptToken } from "./token-crypto.ts";
 import { serverT } from "./i18n.ts";
 import {
   getKeycloakConfig,
@@ -323,11 +324,13 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
         sessions: getSessionStore(),
       },
       ttlSeconds,
-      // Pass tokens for encrypted storage (ADR-ACT-0153)
+      // Pass tokens for encrypted storage (ADR-ACT-0153). idToken is kept for the
+      // logout id_token_hint (ADR-ACT-0157).
       {
         accessToken: tokens.accessToken,
         refreshToken: tokens.refreshToken,
         expiresIn: tokens.expiresIn,
+        idToken: tokens.idToken,
       }
     );
   } catch (err) {
@@ -380,14 +383,25 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
 export const handleAuthLogoutRedirect: PipelineHandler = async (req, res) => {
   const sessionId = parseSessionCookie(req.raw.headers["cookie"]);
 
-  // Determine the realm before destroying the session
+  // Determine the realm and capture the id_token (for id_token_hint) BEFORE
+  // destroying the session.
   let realmName: string = getKeycloakConfig().realm; // platform realm default (sysadmin)
+  let idTokenHint = "";
   if (sessionId) {
     try {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
       if (tenantCtx?.realmName) realmName = tenantCtx.realmName;
     } catch {
       // Ignore resolution failures — fall back to platform realm
+    }
+    // Read the stored id_token so the RP-initiated logout can pass id_token_hint —
+    // without it Keycloak shows a "Do you want to log out?" confirmation page and
+    // leaves the SSO session alive (so re-login is silent). ADR-ACT-0157.
+    try {
+      const record = await getSessionStore().find(sessionId);
+      if (record?.idTokenEnc) idTokenHint = decryptToken(record.idTokenEnc);
+    } catch {
+      // Best-effort: fall back to logout without the hint (confirmation page).
     }
     await destroySession(sessionId, { sessions: getSessionStore() }).catch(() => undefined);
   }
@@ -432,6 +446,9 @@ export const handleAuthLogoutRedirect: PipelineHandler = async (req, res) => {
     client_id: kcCfg.clientId,
     post_logout_redirect_uri: postLogoutRedirectUri,
   });
+  // id_token_hint makes Keycloak skip the logout-confirmation prompt and end the
+  // SSO session, then redirect straight to post_logout_redirect_uri (ADR-ACT-0157).
+  if (idTokenHint) endSessionParams.set("id_token_hint", idTokenHint);
   const endSessionUrl = `${kcPublicBase}/realms/${realmName}/protocol/openid-connect/logout?${endSessionParams.toString()}`;
 
   res.raw.writeHead(302, {

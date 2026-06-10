@@ -20,6 +20,9 @@ export interface SessionRecord {
   accessTokenEnc?: string;
   refreshTokenEnc?: string;
   accessTokenExpiresAt?: Date;
+  // OIDC id_token (AES-256-GCM encrypted) — used as `id_token_hint` for RP-initiated
+  // logout so Keycloak skips the confirmation prompt and ends the SSO session.
+  idTokenEnc?: string;
 }
 
 // Commands for session lifecycle
@@ -39,6 +42,8 @@ export interface CreateSessionCommand {
   accessTokenEnc?: string;
   refreshTokenEnc?: string;
   accessTokenExpiresAt?: Date;
+  // OIDC id_token (encrypted) for logout `id_token_hint` (ADR-ACT-0157).
+  idTokenEnc?: string;
 }
 
 export interface SessionStore {

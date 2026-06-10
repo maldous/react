@@ -14,6 +14,7 @@ export interface TokenSet {
   accessToken: string;
   refreshToken: string;
   expiresIn: number; // seconds
+  idToken?: string; // OIDC id_token — stored for logout id_token_hint (ADR-ACT-0157)
 }
 
 export interface SessionResolution {
@@ -107,6 +108,7 @@ export async function resolveSessionFromIdentity(
           accessTokenEnc: encryptToken(tokens.accessToken),
           refreshTokenEnc: encryptToken(tokens.refreshToken),
           accessTokenExpiresAt: new Date(Date.now() + tokens.expiresIn * 1000),
+          ...(tokens.idToken ? { idTokenEnc: encryptToken(tokens.idToken) } : {}),
         }
       : {}),
   };

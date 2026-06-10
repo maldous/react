@@ -65,6 +65,9 @@ export class RedisSessionStore implements SessionStore {
             accessTokenExpiresAt: command.accessTokenExpiresAt,
           }
         : {}),
+      // OIDC id_token (encrypted) for logout id_token_hint (ADR-ACT-0157).
+      // find() returns it automatically via the `...parsed` spread (plain string).
+      ...(command.idTokenEnc ? { idTokenEnc: command.idTokenEnc } : {}),
     };
     await this.client.set(this.keyPrefix + sessionId, JSON.stringify(record), {
       EX: command.ttlSeconds,

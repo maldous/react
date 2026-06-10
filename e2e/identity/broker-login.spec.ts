@@ -98,6 +98,32 @@ test.describe("brokered mock identity providers", () => {
     }).toPass({ timeout: 15_000 });
   });
 
+  test("sign-out clears the session and returns to the app (no Keycloak confirmation page)", async ({
+    page,
+  }) => {
+    // Establish a real authenticated session.
+    await startLogin(page, "google");
+    await pickScenario(page, "verified");
+    await page.waitForURL((url) => url.port === APP_PORT && !url.pathname.startsWith("/auth"), {
+      timeout: 20_000,
+    });
+    await expect(async () => {
+      expect(await sessionStatus(page)).toBe(200);
+    }).toPass({ timeout: 15_000 });
+
+    // Sign out. With id_token_hint (ADR-ACT-0157) Keycloak skips the
+    // "Do you want to log out?" confirmation and redirects straight back to the
+    // app /login; without it the browser would strand on a /kc/... page and this
+    // waitForURL would time out.
+    await page.getByTestId("logout-button").click();
+    await page.waitForURL((url) => url.port === APP_PORT && url.pathname === "/login", {
+      timeout: 20_000,
+    });
+    await expect(async () => {
+      expect(await sessionStatus(page)).toBe(401);
+    }).toPass({ timeout: 15_000 });
+  });
+
   test("an invalid provider hint cannot be used for broker injection or open redirect", async ({
     page,
   }) => {
