@@ -103,9 +103,20 @@ function ProviderRow({ provider }: { provider: LoginProvider }) {
   );
 }
 
+/** Map a BFF `?authError=` code (set when a brokered login is refused at the callback)
+ * to a friendly i18n key. Unknown codes fall back to a generic message. */
+function authErrorKey(): string | null {
+  if (typeof window === "undefined") return null;
+  const code = new URLSearchParams(window.location.search).get("authError");
+  if (!code) return null;
+  const known = ["email_unverified", "account_conflict"];
+  return `auth.login.rejected.${known.includes(code) ? code : "generic"}`;
+}
+
 export function LoginPage() {
   const t = useTranslation();
   const { data: providers, isLoading, isError } = useLoginProviders();
+  const rejectedKey = authErrorKey();
 
   return (
     <main
@@ -132,6 +143,16 @@ export function LoginPage() {
               <h2 className="text-base font-semibold text-fg">{t("auth.login.title")}</h2>
               <p className="mt-1 text-sm text-fg-muted">{t("auth.login.chooseProvider")}</p>
             </div>
+
+            {rejectedKey && (
+              <div
+                role="alert"
+                data-testid="login-auth-error"
+                className="rounded-lg border border-danger/30 bg-danger/5 px-4 py-3 text-sm text-danger"
+              >
+                {t(rejectedKey)}
+              </div>
+            )}
 
             {isLoading && (
               <div data-testid="login-loading">

@@ -306,15 +306,40 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
     return;
   }
 
+  // Browser-facing redirect base + Keycloak public base — used by the success redirect
+  // below and by the rejection-cleanup redirect.
+  const cbProto = callbackProto ?? schemeFor(callbackHost);
+  const cbRedirectBase = isAllowedHost(callbackHost)
+    ? `${cbProto}://${callbackHost}`
+    : getAppBaseUrl();
+  const cbKcPublicBase = getKeycloakPublicUrl(callbackHost, cbProto);
+
+  // A brokered login that the BFF refuses AFTER Keycloak authenticated the user (KC has
+  // already issued the code, i.e. created an SSO session) must tear down that KC session.
+  // Otherwise the browser stays logged into Keycloak as the rejected user and the next
+  // login as a DIFFERENT user fails with KC "different_user_authenticated" — i.e. "I can't
+  // log in as anyone". We have the brokered id_token here, so use it as id_token_hint for
+  // a clean RP-logout, clear our cookies, and return the browser to /login?authError=…
+  // (no bare JSON error page). ADR-ACT-0157.
+  const clearKcAndReturnToLogin = (authError: string): void => {
+    const params = new URLSearchParams({
+      client_id: callbackKeycloakCfg.clientId,
+      post_logout_redirect_uri: `${cbRedirectBase}/login?authError=${authError}`,
+    });
+    if (tokens.idToken) params.set("id_token_hint", tokens.idToken);
+    res.raw.writeHead(302, {
+      "Set-Cookie": [...buildClearCookieHeaders(), buildClearPreAuthCookieHeader()],
+      Location: `${cbKcPublicBase}/realms/${callbackKeycloakCfg.realm}/protocol/openid-connect/logout?${params.toString()}`,
+      "Cache-Control": "no-store",
+    });
+    res.raw.end();
+  };
+
   // Get user identity from Keycloak /userinfo (using tenant-aware realm config)
   const identity = await getUserInfo(tokens.accessToken, callbackKeycloakCfg);
   if (!identity) {
-    res.json(
-      401,
-      toSafeResponse(new ValidationError("api.error.unverifiedOrMissingEmail"), (msg) =>
-        serverT(msg)
-      )
-    );
+    // Rejected (unverified upstream email or missing email). Clear the KC session.
+    clearKcAndReturnToLogin("email_unverified");
     return;
   }
 
@@ -340,27 +365,22 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
     );
   } catch (err) {
     if (err instanceof ConflictError) {
-      // Email already registered under a different identity ? 409 Conflict.
-      // The raw ConflictError from the identity adapter reaches here because the
-      // pipeline's unhandled-error branch always emits 500; catching it here
-      // gives the user-agent the semantically correct HTTP status.
-      res.json(409, toSafeResponse(err));
+      // Email already registered under a different identity. Same dangling-KC-session
+      // hazard as the unverified case (KC authenticated the user before the BFF refused),
+      // so clear the KC session and return to /login with an error rather than stranding
+      // the browser on a 409 JSON page. ADR-ACT-0157.
+      clearKcAndReturnToLogin("account_conflict");
       return;
     }
     throw err;
   }
 
   // Set session cookie, clear pre-auth cookie, redirect to React app.
-  // Use the request host to derive the redirect base URL ? this makes
-  // multi-tenant and .localhost domains work without per-domain APP_BASE_URL config.
-  // Falls back to APP_BASE_URL env var when host is not available or allowed.
-  const redirectProto = callbackProto ?? schemeFor(callbackHost);
-  const redirectBase = isAllowedHost(callbackHost)
-    ? `${redirectProto}://${callbackHost}`
-    : getAppBaseUrl();
+  // cbRedirectBase (derived above from the request host) makes multi-tenant and
+  // .localhost domains work without per-domain APP_BASE_URL config.
   res.raw.writeHead(302, {
     "Set-Cookie": [buildSetCookieHeader(session.sessionId), buildClearPreAuthCookieHeader()],
-    Location: `${redirectBase}${authState.returnTo}`,
+    Location: `${cbRedirectBase}${authState.returnTo}`,
   });
   res.raw.end();
 };

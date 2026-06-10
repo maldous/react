@@ -105,6 +105,13 @@ test.describe("brokered mock identity providers", () => {
     expect(await sessionStatus(page)).toBe(401);
     await startLogin(page, "google");
     await pickScenario(page, "unverified");
+    // The BFF refuses at the callback and tears down the Keycloak SSO session, returning
+    // the browser to /login?authError=… (NOT a bare JSON page, and NOT a stuck KC session
+    // that would later cause "different_user_authenticated"). ADR-ACT-0157.
+    await page.waitForURL((url) => url.port === APP_PORT && url.pathname === "/login", {
+      timeout: 20_000,
+    });
+    await expect(page.getByTestId("login-auth-error")).toBeVisible();
     await expect(async () => {
       expect(await sessionStatus(page)).toBe(401);
     }).toPass({ timeout: 15_000 });
