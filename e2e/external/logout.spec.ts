@@ -134,10 +134,11 @@ test.describe(`${TARGET_HOST}: logout and session invalidation`, () => {
     // NOT silently return as the same user. This verifies the KC SSO session is gone.
     const currentUrl = page.url();
     if (currentUrl.includes("/login") && !currentUrl.includes("keycloak")) {
-      // Click sign-in on the platform login page — must reach KC login form
-      const signInBtn = page.locator(
-        '[data-testid="sign-in-link"], [data-testid="sign-in-button"], a[href*="/auth/login"]'
-      );
+      // Click the PLATFORM sign-in specifically (testid "sign-in-button"). When mock
+      // IdPs are enabled the /login page also lists google/azure/apple, whose
+      // /auth/login links would otherwise be matched first and route to the broker
+      // picker instead of the Keycloak credential form (ADR-ACT-0157).
+      const signInBtn = page.getByTestId("sign-in-button");
       if (await signInBtn.count()) {
         await signInBtn.first().click();
         await page.waitForLoadState("domcontentloaded", { timeout: 15_000 });
