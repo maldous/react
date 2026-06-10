@@ -153,6 +153,18 @@
       "rationale": "Contract packages must remain runtime-free; adapters-clickhouse is the analytical persistence runtime."
     },
     {
+      "id": "no-runtime-in-contracts-admin",
+      "appliesTo": ["@platform/contracts-admin"],
+      "forbiddenPrefixes": ["@platform/adapters-", "@platform/contracts-"],
+      "forbiddenExact": [
+        "react",
+        "react-dom",
+        "@platform/domain-identity",
+        "@platform/ui-design-system"
+      ],
+      "rationale": "ADR-0036/0037: contracts-admin is a pure zod contract package. It must remain runtime- and framework-free and must not import adapters, other contracts, domain, or React. Role/provider-id literals are kept in lock-step with domain-identity by review, not by import."
+    },
+    {
       "id": "no-adapters-in-feature",
       "appliesTo": ["@platform/feature-workflow"],
       "forbiddenPrefixes": [],

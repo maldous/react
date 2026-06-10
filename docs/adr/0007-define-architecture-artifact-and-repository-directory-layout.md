@@ -263,6 +263,7 @@ docs/
   evidence/
     lifecycle/
     architecture/
+    admin/
     security/
     operations/
     testing/

@@ -151,6 +151,10 @@ export default defineConfig({
         __dirname,
         "../../packages/contracts-organisation/src/index.ts"
       ),
+      "@platform/contracts-admin": path.resolve(
+        __dirname,
+        "../../packages/contracts-admin/src/index.ts"
+      ),
       "@platform/contracts-graphql": path.resolve(
         __dirname,
         "../../packages/contracts-graphql/src/index.ts"

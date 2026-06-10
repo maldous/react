@@ -1,0 +1,113 @@
+{
+  "name": "@platform/contracts-admin",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Tenant administration contract package: members, features, auth-settings, and per-tenant authentication provider config schemas shared by the BFF and React control plane.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "architecture": {
+    "schemaVersion": "1.0",
+    "component": {
+      "type": "api",
+      "name": "contracts-admin",
+      "system": "enterprise-react-platform",
+      "domain": "core",
+      "boundedContext": "tenant-administration",
+      "owner": "team-platform"
+    },
+    "lifecycle": {
+      "stage": "experimental",
+      "role": "contract",
+      "class": "experimental.contract",
+      "catalogLifecycle": "experimental",
+      "visibility": "internal",
+      "supportLevel": "experimental",
+      "reviewCadence": "on-change"
+    },
+    "governance": {
+      "decisionRefs": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0005",
+        "ADR-0013",
+        "ADR-0014",
+        "ADR-0021",
+        "ADR-0022",
+        "ADR-0036",
+        "ADR-0037"
+      ],
+      "semverPolicy": "internal-traceable",
+      "changeControl": "owner-review",
+      "promotionEligible": false
+    },
+    "runtime": {
+      "production": false,
+      "testOnly": false,
+      "serviceName": "contracts-admin",
+      "serviceNamespace": "enterprise-react-platform",
+      "deploymentEnvironments": [
+        "local",
+        "development",
+        "test"
+      ]
+    },
+    "boundaries": {
+      "publicExportsOnly": true,
+      "deepImportsAllowed": false,
+      "allowedConsumers": [
+        "application",
+        "platform",
+        "adapter"
+      ],
+      "forbiddenConsumers": [
+        "domain",
+        "ui"
+      ]
+    },
+    "relations": {
+      "dependsOn": [],
+      "providesApis": [
+        "admin-members",
+        "admin-features",
+        "auth-settings",
+        "tenant-auth-providers"
+      ],
+      "consumesApis": []
+    },
+    "tags": {
+      "scope": "initial",
+      "type": "api",
+      "stage": "experimental",
+      "role": "contract",
+      "layer": "contract"
+    },
+    "readme": {
+      "generated": true,
+      "summary": "Tenant administration contract package: members, features, auth-settings, and per-tenant authentication provider config schemas shared by the BFF and React control plane.",
+      "responsibilities": [
+        "Own member management schemas: MemberSummary, MemberListResponse, InviteMemberRequest, UpdateMemberRoleRequest",
+        "Own feature-flag schemas: FeatureSummary, FeatureListResponse, ToggleFeatureRequest",
+        "Own auth-settings read shapes the admin UI consumes: IdpSummary, MfaPolicy, SessionPolicy",
+        "Own per-tenant authentication provider config schemas: TenantAuthProvidersConfig and update/response shapes (ADR-0037)"
+      ],
+      "nonResponsibilities": [
+        "Does not implement member, feature, or auth-settings persistence or Keycloak access",
+        "Does not import React or any framework-specific packages",
+        "Does not own session, permission resolution, or audit logic",
+        "Does not import @platform/* packages"
+      ],
+      "usage": [
+        "Imported by application and platform packages that need admin contract types",
+        "Used at the BFF boundary to validate admin mutation bodies and by the React control plane to type its REST clients"
+      ],
+      "operationalNotes": [
+        "All schemas use Zod for runtime validation",
+        "Zero @platform/* dependencies — this is a pure contract package",
+        "Role and provider-id literals must stay in lock-step with @platform/domain-identity and the BFF auth-providers module"
+      ]
+    }
+  }
+}
