@@ -6,9 +6,9 @@ import type { ReactNode } from "react";
 import { LoginPage } from "../login";
 
 /*
- * Login entry tests (ADR-ACT-0157). Keycloak is the single login surface, so /login
- * either hands straight off to the BFF login start (no ?authError) or shows ONE generic
- * error + a retry button (with ?authError). No app-side provider chooser.
+ * Login entry tests (ADR-ACT-0157). Keycloak is the single login surface, but /login
+ * keeps a visible CTA that hands off to the BFF login start. With ?authError it shows
+ * one generic error and a retry button. No app-side provider chooser.
  */
 function renderLogin() {
   function Wrapper({ children }: { children: ReactNode }) {
@@ -40,8 +40,12 @@ describe("LoginPage", () => {
   it("hands straight off to the Keycloak login when there is no error", async () => {
     stubLocation("");
     renderLogin();
-    expect(screen.getByTestId("login-redirecting")).toBeInTheDocument();
-    await waitFor(() => expect(replace).toHaveBeenCalledWith("/auth/login?provider=platform"));
+    expect(screen.getByText("Loading sign-in options…")).toBeInTheDocument();
+    expect(screen.getByTestId("sign-in-button")).toHaveAttribute(
+      "href",
+      "/auth/login?provider=platform"
+    );
+    expect(replace).not.toHaveBeenCalled();
   });
 
   it("shows one generic error + a retry button on ?authError and does NOT redirect", () => {

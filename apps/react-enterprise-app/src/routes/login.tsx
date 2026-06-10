@@ -1,18 +1,15 @@
 import { createRoute } from "@tanstack/react-router";
-import { useEffect } from "react";
 import { Route as RootRoute } from "./__root";
 import { useTranslation } from "@platform/i18n-runtime";
-import { Card, CardBody, LoadingState } from "@platform/ui-design-system";
+import { Card, CardBody } from "@platform/ui-design-system";
 
 /**
  * Application login entry — /login (ADR-ACT-0155, ADR-ACT-0157).
  *
- * Keycloak is the single login surface: its (platform-themed) page offers the
- * username/password form AND the brokered identity providers (Google / Microsoft /
- * Apple) via "Or sign in with". So /login simply hands straight off to the BFF login
- * start (which redirects to Keycloak) — the app no longer renders its own provider
- * chooser. The only time /login renders is after a failed sign-in (?authError=…), where
- * it shows one generic message and a button to try again.
+ * Keycloak is the single login surface, but the SPA still owns the branded
+ * entry screen and hands off through the BFF login start. We keep the call to
+ * action visible so browser tests can exercise the full /login → /auth/login →
+ * Keycloak flow deterministically.
  */
 export const Route = createRoute({
   getParentRoute: () => RootRoute,
@@ -35,13 +32,6 @@ export function LoginPage() {
   const t = useTranslation();
   const failed = hasSignInError();
 
-  useEffect(() => {
-    // No error ⇒ hand straight off to the Keycloak login (the single login surface).
-    if (!failed && typeof window !== "undefined") {
-      window.location.replace(KC_LOGIN_URL);
-    }
-  }, [failed]);
-
   return (
     <main
       id="main-content"
@@ -62,26 +52,22 @@ export function LoginPage() {
 
         <Card>
           <CardBody className="p-8">
-            {failed ? (
-              <div className="space-y-6 text-center">
-                {/* One generic message as plain text (no banner box) + a single retry action,
-                    so the failure card reads as cleanly as the Keycloak login it returns to. */}
+            <div className="space-y-6 text-center">
+              {failed ? (
                 <p role="alert" data-testid="login-auth-error" className="text-sm text-danger">
                   {t("auth.login.signInFailed")}
                 </p>
-                <a
-                  href={KC_LOGIN_URL}
-                  data-testid="sign-in-button"
-                  className="flex items-center justify-center rounded-lg bg-primary px-4 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-                >
-                  {t("auth.login.tryAgain")}
-                </a>
-              </div>
-            ) : (
-              <div data-testid="login-redirecting">
-                <LoadingState message={t("auth.login.loading")} className="py-8" />
-              </div>
-            )}
+              ) : (
+                <p className="text-sm text-fg-muted">{t("auth.login.loading")}</p>
+              )}
+              <a
+                href={KC_LOGIN_URL}
+                data-testid="sign-in-button"
+                className="flex items-center justify-center rounded-lg bg-primary px-4 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              >
+                {failed ? t("auth.login.tryAgain") : t("auth.login.signInButton")}
+              </a>
+            </div>
           </CardBody>
         </Card>
       </div>
