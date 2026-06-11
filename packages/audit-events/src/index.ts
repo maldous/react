@@ -58,6 +58,7 @@ export interface AuditEventQuery {
   actorId?: string;
   action?: string;
   resource?: string;
+  resourceId?: string;
   from?: Date;
   to?: Date;
   limit?: number;
@@ -110,6 +111,7 @@ export function createPostgresAuditEventPort(pool: PgPool): AuditEventPort {
       actorId,
       action,
       resource,
+      resourceId,
       from,
       to,
       limit = 100,
@@ -128,6 +130,10 @@ export function createPostgresAuditEventPort(pool: PgPool): AuditEventPort {
       if (resource) {
         conditions.push(`resource = $${idx++}`);
         params.push(resource);
+      }
+      if (resourceId) {
+        conditions.push(`resource_id = $${idx++}`);
+        params.push(resourceId);
       }
       if (from) {
         conditions.push(`timestamp >= $${idx++}`);
@@ -172,17 +178,19 @@ export function createInMemoryAuditEventPort(): AuditEventPort {
     async emit(event) {
       events.push(event);
     },
-    async query({ tenantId, actorId, action, resource, from, to, limit = 100 }) {
+    async query({ tenantId, actorId, action, resource, resourceId, from, to, limit = 100 }) {
       return events
         .filter((e) => {
           if (e.tenantId !== tenantId) return false;
           if (actorId && e.actorId !== actorId) return false;
           if (action && e.action !== action) return false;
           if (resource && e.resource !== resource) return false;
+          if (resourceId && e.resourceId !== resourceId) return false;
           if (from && new Date(e.timestamp) < from) return false;
           if (to && new Date(e.timestamp) > to) return false;
           return true;
         })
+        .sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1))
         .slice(0, limit);
     },
   };

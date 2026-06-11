@@ -278,6 +278,31 @@ export type ConfigListResponse = z.infer<typeof ConfigListResponseSchema>;
 export const UpdateConfigValueRequestSchema = z.object({ value: z.unknown() }).strict();
 export type UpdateConfigValueRequest = z.infer<typeof UpdateConfigValueRequestSchema>;
 
+// ---------------------------------------------------------------------------
+// Administrative audit trail (ADR-0040) — GET /api/org/audit
+// ---------------------------------------------------------------------------
+
+/** Logical audit resources the SPA may query; mapped server-side to stored resource
+ * strings + the context read permission (the SPA never passes internal strings). */
+export const AUDIT_RESOURCES = ["member", "config", "feature", "auth_settings"] as const;
+export const AuditResourceSchema = z.enum(AUDIT_RESOURCES);
+export type AuditResource = z.infer<typeof AuditResourceSchema>;
+
+/** Safe, read-only audit event shape (no ipAddress/userAgent; secret-ish metadata redacted). */
+export const AuditEventDtoSchema = z.object({
+  id: z.string(),
+  action: z.string(),
+  actorId: z.string(),
+  resource: z.string(),
+  resourceId: z.string(),
+  timestamp: z.string(),
+  metadata: z.record(z.string(), z.unknown()).nullable(),
+});
+export type AuditEventDto = z.infer<typeof AuditEventDtoSchema>;
+
+export const AuditListResponseSchema = z.object({ events: z.array(AuditEventDtoSchema) });
+export type AuditListResponse = z.infer<typeof AuditListResponseSchema>;
+
 /** Validate a value against a definition's type + allowed values. Pure; returns error
  * messages (empty ⇒ valid). Shared by the BFF (write) and available to the SPA. */
 export function validateConfigValue(input: {

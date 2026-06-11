@@ -1752,6 +1752,57 @@ export const routes: Route[] = [
     },
   },
   // ---------------------------------------------------------------------------
+  // Administrative audit trail (ADR-0040). Tenant-scoped contextual query over the
+  // durable audit_events store. Coarse gate tenant.audit.read; the usecase enforces
+  // the per-context read permission for the requested logical resource.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/org/audit",
+    operationName: "org.audit.list",
+    requiresAuth: true,
+    requiredPermission: "tenant.audit.read",
+    resource: "organisation:audit",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const q = new URL(req.raw.url ?? "/", "http://localhost").searchParams;
+      const limitRaw = q.get("limit");
+      const { listContextualAuditEvents } = await import("../usecases/audit.ts");
+      const result = await listContextualAuditEvents(
+        {
+          organisationId: tenantCtx.organisationId,
+          actorPermissions: req.actor!.permissions,
+          resource: q.get("resource") ?? "",
+          resourceId: q.get("resourceId") ?? undefined,
+          action: q.get("action") ?? undefined,
+          actorId: q.get("actorId") ?? undefined,
+          from: q.get("from") ? new Date(q.get("from")!) : undefined,
+          to: q.get("to") ? new Date(q.get("to")!) : undefined,
+          limit: limitRaw ? Number(limitRaw) : undefined,
+        },
+        { audit: createPostgresAuditEventPort(getApplicationPool()) }
+      );
+      if (result.kind === "invalid") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      if (result.kind === "forbidden") {
+        res.json(403, {
+          code: "FORBIDDEN",
+          message: "Insufficient permission for this audit context",
+        });
+        return;
+      }
+      res.json(200, { events: result.events });
+    },
+  },
+  // ---------------------------------------------------------------------------
   // Sub-organisation management (ADR-ACT-0143 Slice 3)
   // Tenant admin manages sub-organisations inside their own tenant.
   // Sub-orgs are Tier 2: share parent Keycloak realm, no new infrastructure.
