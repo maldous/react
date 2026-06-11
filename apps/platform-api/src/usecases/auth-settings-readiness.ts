@@ -94,7 +94,25 @@ export interface AttachCredentialDeps extends ReadinessDeps {
   audit: AuditEventPort;
 }
 
-export async function attachAuthSettingsCredential(
+/** attach = first credential; rotate = replace a working one; repair = restore a
+ * missing/broken one. All share the validate-before-store primitive (ADR-0044). */
+export type CredentialOperation = "attach" | "rotate" | "repair";
+
+const OPERATION_AUDIT_ACTION: Record<CredentialOperation, string> = {
+  attach: AuditAction.AuthSettingsCredentialAttached,
+  rotate: AuditAction.AuthSettingsCredentialRotated,
+  repair: AuditAction.AuthSettingsCredentialRepaired,
+};
+
+/**
+ * Validate a candidate credential against the tenant realm and, only if it
+ * passes, store it (encrypted) with lifecycle metadata. On any non-`ok` probe
+ * the existing credential is PRESERVED (nothing is written) and the classified
+ * status is returned. Audit-first; the secret never reaches audit, logs, or the
+ * result. Shared by attach/rotate/repair — they differ only in the audit action.
+ */
+export async function applyCredentialLifecycle(
+  operation: CredentialOperation,
   input: AttachCredentialInput,
   deps: AttachCredentialDeps
 ): Promise<AttachCredentialResult> {
@@ -104,30 +122,40 @@ export async function attachAuthSettingsCredential(
     return { kind: "invalid_body", message: "clientId and clientSecret are required" };
   }
 
-  // Validate BEFORE persisting — never store a credential that cannot reach the realm.
+  // Validate BEFORE persisting — never store (or replace) with a credential that
+  // cannot reach the realm. A failure here leaves any existing credential intact.
   const candidate: TenantAdminCredential = { clientId, clientSecret };
   const probe = await deps.makeProbe(candidate, input.realmName).probeReadiness();
   if (probe !== "ok") {
-    // mapProbe on a non-ok probe yields exactly the three realm-failure kinds,
-    // all of which are valid AttachCredentialResult kinds.
     return { kind: mapProbe(probe) } as AttachCredentialResult;
   }
 
-  // Audit-first: record the attach attempt (clientId only — NEVER the secret).
+  // Audit-first: record the lifecycle write (clientId only — NEVER the secret).
   await deps.audit.emit(
     createAuditEvent({
       actorId: input.actorId,
       actorRoles: input.actorRoles,
       tenantId: input.organisationId,
-      action: AuditAction.AuthSettingsCredentialAttached,
+      action: OPERATION_AUDIT_ACTION[operation],
       resource: "auth_settings",
       resourceId: input.realmName,
-      metadata: { realmName: input.realmName, clientId },
+      metadata: { realmName: input.realmName, clientId, operation, readiness: "configured" },
       sourceHost: input.sourceHost,
       ipAddress: input.ipAddress,
     })
   );
 
-  await deps.credentialStore.setAuthSettingsCredential(input.organisationId, candidate);
+  await deps.credentialStore.setAuthSettingsCredential(input.organisationId, candidate, {
+    rotatedBy: input.actorId,
+    validated: true,
+  });
   return { kind: "configured" };
+}
+
+/** Operator attach (ADR-0041) — the first-credential case of the lifecycle. */
+export function attachAuthSettingsCredential(
+  input: AttachCredentialInput,
+  deps: AttachCredentialDeps
+): Promise<AttachCredentialResult> {
+  return applyCredentialLifecycle("attach", input, deps);
 }

@@ -17,10 +17,11 @@ import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { z } from "zod";
 import type { RealmReadinessProbe } from "@platform/authorisation-runtime";
-import { type AuditEventPort, type AuditEvent } from "@platform/audit-events";
+import { AuditAction, type AuditEventPort, type AuditEvent } from "@platform/audit-events";
 import {
   getAuthSettingsReadiness,
   attachAuthSettingsCredential,
+  applyCredentialLifecycle,
   type ReadinessProbe,
 } from "../../src/usecases/auth-settings-readiness.ts";
 import { classifyRealmError } from "../../src/usecases/realm-error.ts";
@@ -53,16 +54,28 @@ function probeAdapter(result: RealmReadinessProbe): ReadinessProbe {
   };
 }
 
-/** Records every credential set so isolation/no-store assertions are possible. */
+/** Records every credential set (with lifecycle) so isolation/no-store/metadata
+ * assertions are possible. */
 function credentialStore(initial: TenantAdminCredential | null) {
-  const sets: Array<{ orgId: string; credential: TenantAdminCredential }> = [];
+  const sets: Array<{
+    orgId: string;
+    credential: TenantAdminCredential;
+    lifecycle?: { rotatedBy?: string; validated?: boolean };
+  }> = [];
   return {
     sets,
     async getAuthSettingsCredential() {
       return initial;
     },
-    async setAuthSettingsCredential(orgId: string, credential: TenantAdminCredential) {
-      sets.push({ orgId, credential });
+    async setAuthSettingsCredential(
+      orgId: string,
+      credential: TenantAdminCredential,
+      lifecycle?: { rotatedBy?: string; validated?: boolean }
+    ) {
+      sets.push({ orgId, credential, lifecycle });
+    },
+    async getAuthSettingsCredentialMetadata() {
+      return null;
     },
   };
 }
@@ -307,6 +320,105 @@ describe("attachAuthSettingsCredential", () => {
     const store = credentialStore(null);
     const result = await attachAuthSettingsCredential(
       { ...valid, clientSecret: "   " },
+      {
+        audit: auditPort(),
+        credentialStore: store,
+        makeProbe: () => ({
+          async probeReadiness() {
+            probed = true;
+            return "ok";
+          },
+        }),
+      }
+    );
+    assert.equal(result.kind, "invalid_body");
+    assert.equal(probed, false);
+    assert.equal(store.sets.length, 0);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// E. applyCredentialLifecycle (rotate / repair) — ADR-0044
+// ---------------------------------------------------------------------------
+
+describe("applyCredentialLifecycle", () => {
+  const base = {
+    organisationId: ORG,
+    realmName: REALM,
+    clientId: "svc-account",
+    clientSecret: "rotate-secret-value",
+    actorId: ACTOR,
+    actorRoles: ROLES,
+  };
+
+  it("rotate validates then stores with lifecycle metadata; audits the rotate action (no secret)", async () => {
+    const audit = auditPort();
+    const store = credentialStore({ clientId: "old", clientSecret: "old-secret" });
+    const result = await applyCredentialLifecycle("rotate", base, {
+      audit,
+      credentialStore: store,
+      makeProbe: () => probeAdapter("ok"),
+    });
+    assert.equal(result.kind, "configured");
+    // stored with validation + actor metadata
+    assert.equal(store.sets.length, 1);
+    assert.equal(store.sets[0].lifecycle?.validated, true);
+    assert.equal(store.sets[0].lifecycle?.rotatedBy, ACTOR);
+    // audited as a rotate, clientId only, never the secret
+    assert.equal(audit.events.length, 1);
+    assert.equal(audit.events[0].action, AuditAction.AuthSettingsCredentialRotated);
+    const serialised = JSON.stringify(audit.events[0]);
+    assert.ok(serialised.includes("svc-account"));
+    assert.ok(!serialised.includes("rotate-secret-value"));
+  });
+
+  it("PRESERVES the existing credential when validation fails (no store, no audit)", async () => {
+    const audit = auditPort();
+    const store = credentialStore({ clientId: "old", clientSecret: "old-secret" });
+    const result = await applyCredentialLifecycle("rotate", base, {
+      audit,
+      credentialStore: store,
+      makeProbe: () => probeAdapter("invalid_credential"),
+    });
+    assert.equal(result.kind, "invalid_credential");
+    assert.equal(store.sets.length, 0); // old credential untouched
+    assert.equal(audit.events.length, 0);
+  });
+
+  it("repair uses the repaired audit action", async () => {
+    const audit = auditPort();
+    const store = credentialStore(null);
+    await applyCredentialLifecycle("repair", base, {
+      audit,
+      credentialStore: store,
+      makeProbe: () => probeAdapter("ok"),
+    });
+    assert.equal(audit.events[0]?.action, AuditAction.AuthSettingsCredentialRepaired);
+  });
+
+  it("maps forbidden / unreachable probes without storing", async () => {
+    const store = credentialStore({ clientId: "old", clientSecret: "old-secret" });
+    const forbidden = await applyCredentialLifecycle("rotate", base, {
+      audit: auditPort(),
+      credentialStore: store,
+      makeProbe: () => probeAdapter("forbidden"),
+    });
+    assert.equal(forbidden.kind, "forbidden_realm_operation");
+    const unreachable = await applyCredentialLifecycle("rotate", base, {
+      audit: auditPort(),
+      credentialStore: store,
+      makeProbe: () => probeAdapter("unreachable"),
+    });
+    assert.equal(unreachable.kind, "realm_unreachable");
+    assert.equal(store.sets.length, 0);
+  });
+
+  it("rejects an empty secret without probing or storing", async () => {
+    let probed = false;
+    const store = credentialStore(null);
+    const result = await applyCredentialLifecycle(
+      "rotate",
+      { ...base, clientSecret: "   " },
       {
         audit: auditPort(),
         credentialStore: store,

@@ -25,6 +25,8 @@ import { withSystemAdmin } from "@platform/adapters-postgres";
 import type {
   TenantAdminCredential,
   TenantCredentialStore,
+  CredentialLifecycle,
+  CredentialMetadata,
 } from "../ports/tenant-credential-store.ts";
 
 const log = createLogger({ name: "tenant-credential-store" });
@@ -117,20 +119,64 @@ export class PostgresTenantCredentialStore implements TenantCredentialStore {
 
   async setAuthSettingsCredential(
     organisationId: string,
-    credential: TenantAdminCredential
+    credential: TenantAdminCredential,
+    lifecycle?: CredentialLifecycle
   ): Promise<void> {
     const encrypted = encryptSecret(credential.clientSecret);
+    const validated = lifecycle?.validated ?? false;
+    const rotatedBy = lifecycle?.rotatedBy ?? null;
     await withSystemAdmin(this.pool as never, async (client) => {
       await client.query(
         `INSERT INTO public.tenant_auth_settings_credentials
-           (organisation_id, client_id, client_secret_enc)
-         VALUES ($1, $2, $3)
+           (organisation_id, client_id, client_secret_enc,
+            last_validated_at, last_rotated_at, rotated_by, validation_error_kind)
+         VALUES ($1, $2, $3,
+            CASE WHEN $4 THEN now() ELSE NULL END,
+            now(), $5, NULL)
          ON CONFLICT (organisation_id) DO UPDATE SET
-           client_id         = EXCLUDED.client_id,
-           client_secret_enc = EXCLUDED.client_secret_enc,
-           updated_at        = now()`,
-        [organisationId, credential.clientId, encrypted]
+           client_id             = EXCLUDED.client_id,
+           client_secret_enc     = EXCLUDED.client_secret_enc,
+           updated_at            = now(),
+           last_validated_at     = CASE WHEN $4 THEN now()
+                                        ELSE public.tenant_auth_settings_credentials.last_validated_at END,
+           last_rotated_at       = now(),
+           rotated_by            = $5,
+           validation_error_kind = NULL`,
+        [organisationId, credential.clientId, encrypted, validated, rotatedBy]
       );
     });
+  }
+
+  async getAuthSettingsCredentialMetadata(
+    organisationId: string
+  ): Promise<CredentialMetadata | null> {
+    const rows = await withSystemAdmin(this.pool as never, async (client) => {
+      const result = await client.query<{
+        client_id: string;
+        created_at: string | null;
+        updated_at: string | null;
+        last_validated_at: string | null;
+        last_rotated_at: string | null;
+        rotated_by: string | null;
+      }>(
+        `SELECT client_id, created_at, updated_at,
+                last_validated_at, last_rotated_at, rotated_by
+           FROM public.tenant_auth_settings_credentials
+          WHERE organisation_id = $1`,
+        [organisationId]
+      );
+      return result.rows;
+    });
+    if (!rows.length) return null;
+    const row = rows[0]!;
+    // Note: the secret column is deliberately NOT selected here.
+    return {
+      clientId: row.client_id,
+      createdAt: row.created_at,
+      updatedAt: row.updated_at,
+      lastValidatedAt: row.last_validated_at,
+      lastRotatedAt: row.last_rotated_at,
+      rotatedBy: row.rotated_by,
+    };
   }
 }

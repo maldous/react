@@ -15,13 +15,38 @@ export interface TenantAdminCredential {
   clientSecret: string; // plaintext in memory, encrypted at rest
 }
 
+/** Lifecycle metadata recorded on attach/rotate/repair (ADR-0044). No secret. */
+export interface CredentialLifecycle {
+  /** Actor id (system-admin) performing the lifecycle write. */
+  rotatedBy?: string;
+  /** True when the credential was validated against the realm before storing. */
+  validated?: boolean;
+}
+
+/** Safe, secret-free view of the stored credential for the lifecycle surface. */
+export interface CredentialMetadata {
+  clientId: string;
+  createdAt: string | null;
+  updatedAt: string | null;
+  lastValidatedAt: string | null;
+  lastRotatedAt: string | null;
+  rotatedBy: string | null;
+}
+
 export interface TenantCredentialStore {
   /** Retrieve the auth-settings credential for a tenant, or null if not provisioned. */
   getAuthSettingsCredential(organisationId: string): Promise<TenantAdminCredential | null>;
 
-  /** Persist the auth-settings credential for a tenant. */
+  /**
+   * Persist the auth-settings credential for a tenant. The optional `lifecycle`
+   * records validation/rotation metadata (ADR-0044) — never a secret.
+   */
   setAuthSettingsCredential(
     organisationId: string,
-    credential: TenantAdminCredential
+    credential: TenantAdminCredential,
+    lifecycle?: CredentialLifecycle
   ): Promise<void>;
+
+  /** Secret-free lifecycle metadata for a tenant, or null if not provisioned. */
+  getAuthSettingsCredentialMetadata(organisationId: string): Promise<CredentialMetadata | null>;
 }
