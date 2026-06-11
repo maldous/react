@@ -19,6 +19,7 @@ export {
   adminMfaHandler,
   adminSessionPolicyHandler,
   adminExternalIdentitiesHandler,
+  adminConfigHandler,
   adminGetErrorHandler,
   adminWriteOkHandlers,
 } from "./handlers.ts";
@@ -30,6 +31,7 @@ export {
   mfaFixture,
   sessionPolicyFixture,
   externalIdentitiesFixture,
+  configFixture,
 } from "./fixtures/admin.ts";
 export {
   createGraphqlHandler,

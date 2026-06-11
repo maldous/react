@@ -47,6 +47,11 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     labelKey: "feature.admin.nav.features",
     permission: "tenant.features.read",
   },
+  {
+    to: "/admin/config",
+    labelKey: "feature.admin.nav.configuration",
+    permission: "tenant.config.read",
+  },
   { to: "/admin/logs", labelKey: "feature.admin.nav.logs", permission: "platform.logs.read" },
 ];
 

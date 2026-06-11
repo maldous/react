@@ -6,6 +6,7 @@ import type {
   MfaPolicyDto,
   SessionPolicyDto,
   ExternalIdentityListResponse,
+  ConfigListResponse,
 } from "@platform/contracts-admin";
 
 // Canonical admin control-plane fixtures for frontend tests (ADR-0036). Pure data;
@@ -73,6 +74,62 @@ export const externalIdentitiesFixture: ExternalIdentityListResponse = {
       email: "admin@example.com",
       linkedAt: "2026-01-02T00:00:00.000Z",
       lastSeenAt: "2026-06-01T09:00:00.000Z",
+    },
+  ],
+};
+
+export const configFixture: ConfigListResponse = {
+  items: [
+    {
+      definition: {
+        key: "features.analytics",
+        category: "features",
+        labelKey: "feature.admin.features.key.analytics",
+        descriptionKey: "feature.admin.features.keyDescription.analytics",
+        valueType: "boolean",
+        defaultValue: false,
+        allowedValues: null,
+        tenantOverridable: true,
+        requiredPermissionRead: "tenant.features.read",
+        requiredPermissionWrite: "tenant.features.update",
+        lifecycle: "active",
+      },
+      value: true,
+      source: "tenant_override",
+    },
+    {
+      definition: {
+        key: "branding.app_name",
+        category: "branding",
+        labelKey: "feature.admin.config.def.branding.appName.label",
+        descriptionKey: "feature.admin.config.def.branding.appName.description",
+        valueType: "string",
+        defaultValue: "Enterprise Platform",
+        allowedValues: null,
+        tenantOverridable: true,
+        requiredPermissionRead: "tenant.config.read",
+        requiredPermissionWrite: "tenant.config.write",
+        lifecycle: "active",
+      },
+      value: "Enterprise Platform",
+      source: "default",
+    },
+    {
+      definition: {
+        key: "branding.theme",
+        category: "branding",
+        labelKey: "feature.admin.config.def.branding.theme.label",
+        descriptionKey: "feature.admin.config.def.branding.theme.description",
+        valueType: "enum",
+        defaultValue: "system",
+        allowedValues: ["system", "light", "dark"],
+        tenantOverridable: true,
+        requiredPermissionRead: "tenant.config.read",
+        requiredPermissionWrite: "tenant.config.write",
+        lifecycle: "active",
+      },
+      value: "system",
+      source: "default",
     },
   ],
 };

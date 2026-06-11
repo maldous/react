@@ -12,6 +12,7 @@ import {
   mfaFixture,
   sessionPolicyFixture,
   externalIdentitiesFixture,
+  configFixture,
 } from "./fixtures/admin.ts";
 
 // Complete MSW baseline for the SPA (ADR-0019). Every endpoint the app touches
@@ -98,6 +99,11 @@ export function adminExternalIdentitiesHandler(response = externalIdentitiesFixt
   );
 }
 
+/** GET /api/org/config (Platform Configuration Registry). */
+export function adminConfigHandler(response = configFixture) {
+  return http.get("/api/org/config", () => HttpResponse.json(response));
+}
+
 /** All admin write endpoints succeeding — POST/PATCH/DELETE return 200/204. */
 export function adminWriteOkHandlers() {
   return [
@@ -112,6 +118,8 @@ export function adminWriteOkHandlers() {
       HttpResponse.json({ key: params["featureKey"], enabled: true, updatedAt: null })
     ),
     http.patch("/api/auth/settings/providers", () => HttpResponse.json(authProvidersFixture)),
+    http.patch("/api/org/config/:key", () => new HttpResponse(null, { status: 204 })),
+    http.delete("/api/org/config/:key", () => new HttpResponse(null, { status: 204 })),
   ];
 }
 
@@ -142,5 +150,6 @@ export const handlers = [
   adminMfaHandler(),
   adminSessionPolicyHandler(),
   adminExternalIdentitiesHandler(),
+  adminConfigHandler(),
   ...adminWriteOkHandlers(),
 ];

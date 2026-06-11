@@ -170,13 +170,59 @@
         "members": "Members",
         "authentication": "Authentication",
         "features": "Features",
+        "configuration": "Configuration",
         "logs": "Log search"
       },
       "card": {
         "membersDescription": "Invite people, change roles, and remove members.",
         "authenticationDescription": "Configure login providers, identity providers, MFA, and sessions.",
         "featuresDescription": "Enable or disable platform capabilities for this tenant.",
+        "configurationDescription": "Manage typed platform configuration for this tenant.",
         "logsDescription": "Search structured platform logs."
+      },
+      "config": {
+        "title": "Configuration",
+        "description": "Typed platform configuration for this organisation.",
+        "empty": "No configuration is available.",
+        "saved": "Configuration saved.",
+        "save": "Save",
+        "reset": "Reset to default",
+        "source": {
+          "default": "Default",
+          "override": "Overridden"
+        },
+        "category": {
+          "auth": "Authentication",
+          "features": "Features",
+          "integrations": "Integrations",
+          "security": "Security",
+          "branding": "Branding",
+          "system": "System"
+        },
+        "def": {
+          "branding": {
+            "appName": {
+              "label": "Application name",
+              "description": "Display name shown to this tenant's users."
+            },
+            "theme": {
+              "label": "Theme",
+              "description": "Default colour theme for this tenant."
+            }
+          },
+          "security": {
+            "sessionWarning": {
+              "label": "Session expiry warning",
+              "description": "Warn users before their session expires."
+            }
+          },
+          "integrations": {
+            "webhookHeaders": {
+              "label": "Webhook headers",
+              "description": "Default headers attached to outbound webhooks (JSON)."
+            }
+          }
+        }
       },
       "overview": {
         "title": "Administration",
