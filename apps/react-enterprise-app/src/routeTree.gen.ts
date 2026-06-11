@@ -6,6 +6,7 @@ import { Route as E2EHarnessRoute } from "./routes/e2e-harness";
 import { Route as OrganisationProfileRoute } from "./routes/organisation/profile";
 import { Route as AdminLayoutRoute } from "./routes/admin/layout";
 import { Route as AdminOverviewRoute } from "./routes/admin/index";
+import { Route as AdminReadinessRoute } from "./routes/admin/readiness";
 import { Route as AdminMembersRoute } from "./routes/admin/members";
 import { Route as AdminAuthRoute } from "./routes/admin/auth";
 import { Route as AdminFeaturesRoute } from "./routes/admin/features";
@@ -26,6 +27,7 @@ const routeTree = RootRoute.addChildren([
     OrganisationProfileRoute,
     AdminLayoutRoute.addChildren([
       AdminOverviewRoute,
+      AdminReadinessRoute,
       AdminMembersRoute,
       AdminAuthRoute,
       AdminFeaturesRoute,

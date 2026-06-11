@@ -9,6 +9,11 @@ import type {
   ExternalIdentityListResponse,
   ConfigListResponse,
   AuditListResponse,
+  TenantReadinessResponse,
+  CapabilitySummary,
+  CapabilityCategory,
+  CapabilityImplementationStatus,
+  CapabilityReadiness,
 } from "@platform/contracts-admin";
 
 // Canonical admin control-plane fixtures for frontend tests (ADR-0036). Pure data;
@@ -187,3 +192,82 @@ export const sessionPolicyFixture: SessionPolicyDto = {
 };
 
 export const authReadinessFixture: AuthSettingsReadiness = { status: "configured" };
+
+// --- tenant readiness / capability map (ADR-0045) ---------------------------
+function makeCap(
+  key: string,
+  category: CapabilityCategory,
+  readiness: CapabilityReadiness,
+  opts: {
+    adminRoute?: string | null;
+    implementationStatus?: CapabilityImplementationStatus;
+    required?: boolean;
+    detailKey?: string | null;
+  } = {}
+): CapabilitySummary {
+  return {
+    key,
+    category,
+    labelKey: `feature.admin.readiness.cap.${key}.label`,
+    descriptionKey: `feature.admin.readiness.cap.${key}.description`,
+    adminRoute: opts.adminRoute ?? null,
+    implementationStatus: opts.implementationStatus ?? "implemented",
+    readiness,
+    required: opts.required ?? false,
+    detailKey: opts.detailKey ?? null,
+  };
+}
+
+/** A representative, healthy capability map spanning every category + status. */
+export const tenantReadinessFixture: TenantReadinessResponse = {
+  overall: "ready",
+  capabilities: [
+    makeCap("tenant_admin", "identity", "ready", {
+      adminRoute: "/admin/members",
+      required: true,
+      detailKey: "feature.admin.readiness.cap.tenant_admin.action",
+    }),
+    makeCap("auth_credential", "authentication", "ready", { required: true }),
+    makeCap("auth_providers", "authentication", "ready", {
+      adminRoute: "/admin/auth",
+      required: true,
+    }),
+    makeCap("idp_configuration", "authentication", "ready", {
+      adminRoute: "/admin/auth",
+      detailKey: "feature.admin.readiness.cap.idp_configuration.action",
+    }),
+    makeCap("oidc_discovery", "authentication", "deferred", {
+      implementationStatus: "deferred",
+    }),
+    makeCap("feature_config", "configuration", "ready", { adminRoute: "/admin/config" }),
+    makeCap("branding", "configuration", "ready", {
+      adminRoute: "/admin/config",
+      implementationStatus: "partial",
+    }),
+    makeCap("audit", "operations", "ready", { adminRoute: "/admin/logs" }),
+    makeCap("storage", "operations", "deferred", { implementationStatus: "deferred" }),
+    makeCap("integrations_webhooks", "integrations", "deferred", {
+      implementationStatus: "deferred",
+    }),
+  ],
+};
+
+/** A blocked tenant (missing credential + no admin) for negative-path tests. */
+export const tenantReadinessBlockedFixture: TenantReadinessResponse = {
+  overall: "blocked",
+  capabilities: [
+    makeCap("tenant_admin", "identity", "blocked", {
+      adminRoute: "/admin/members",
+      required: true,
+      detailKey: "feature.admin.readiness.cap.tenant_admin.action",
+    }),
+    makeCap("auth_credential", "authentication", "blocked", {
+      required: true,
+      detailKey: "feature.admin.readiness.cap.auth_credential.action",
+    }),
+    makeCap("idp_configuration", "authentication", "incomplete", {
+      adminRoute: "/admin/auth",
+      detailKey: "feature.admin.readiness.cap.idp_configuration.action",
+    }),
+  ],
+};

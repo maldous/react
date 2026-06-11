@@ -33,6 +33,11 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     exact: true,
   },
   {
+    to: "/admin/readiness",
+    labelKey: "feature.admin.nav.readiness",
+    permission: "tenant.admin.access",
+  },
+  {
     to: "/admin/members",
     labelKey: "feature.admin.nav.members",
     permission: "tenant.members.read",

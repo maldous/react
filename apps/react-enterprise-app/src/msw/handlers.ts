@@ -15,6 +15,7 @@ import {
   externalIdentitiesFixture,
   configFixture,
   auditFixture,
+  tenantReadinessFixture,
 } from "./fixtures/admin.ts";
 import type { AuthSettingsReadiness } from "@platform/contracts-admin";
 
@@ -116,6 +117,11 @@ export function adminAuditHandler(response = auditFixture) {
   return http.get("/api/org/audit", () => HttpResponse.json(response));
 }
 
+/** GET /api/org/readiness (capability map + tenant readiness, ADR-0045). */
+export function adminReadinessHandler(response = tenantReadinessFixture) {
+  return http.get("/api/org/readiness", () => HttpResponse.json(response));
+}
+
 /** All admin write endpoints succeeding — POST/PATCH/DELETE return 200/204. */
 export function adminWriteOkHandlers() {
   return [
@@ -170,5 +176,6 @@ export const handlers = [
   adminExternalIdentitiesHandler(),
   adminConfigHandler(),
   adminAuditHandler(),
+  adminReadinessHandler(),
   ...adminWriteOkHandlers(),
 ];

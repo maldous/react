@@ -175,14 +175,16 @@
         "authentication": "Authentication",
         "features": "Features",
         "configuration": "Configuration",
-        "logs": "Log search"
+        "logs": "Log search",
+        "readiness": "Readiness"
       },
       "card": {
         "membersDescription": "Invite people, change roles, and remove members.",
         "authenticationDescription": "Configure login providers, identity providers, MFA, and sessions.",
         "featuresDescription": "Enable or disable platform capabilities for this tenant.",
         "configurationDescription": "Manage typed platform configuration for this tenant.",
-        "logsDescription": "Search structured platform logs."
+        "logsDescription": "Search structured platform logs.",
+        "readinessDescription": "See what's configured and what's left to set up."
       },
       "config": {
         "title": "Configuration",
@@ -409,6 +411,148 @@
           "invalid_credential": "Editing is unavailable: the identity credential was rejected. Please contact your system administrator to rotate it.",
           "forbidden_realm_operation": "Editing is unavailable: the identity credential lacks the required permissions. Please contact your system administrator.",
           "realm_unreachable": "Editing is unavailable: the identity service could not be reached. Please try again later, or contact your system administrator if this persists."
+        }
+      },
+      "readiness": {
+        "title": "Tenant readiness",
+        "description": "Track every control-plane capability and drive this tenant to fully configured.",
+        "unavailable": "Readiness information is unavailable.",
+        "overall": "Overall readiness",
+        "manage": "Manage",
+        "status": {
+          "ready": "Ready",
+          "incomplete": "Incomplete",
+          "blocked": "Blocked",
+          "degraded": "Degraded",
+          "unknown": "Unknown",
+          "deferred": "Planned"
+        },
+        "overallHint": {
+          "ready": "This tenant is fully configured and usable.",
+          "incomplete": "Some optional setup steps remain.",
+          "blocked": "Required setup is missing — the tenant is not yet usable.",
+          "degraded": "A required capability is misconfigured and needs attention.",
+          "unknown": "Some capabilities could not be checked."
+        },
+        "impl": {
+          "partial": "Partial",
+          "deferred": "Planned"
+        },
+        "category": {
+          "identity": "Identity",
+          "authentication": "Authentication",
+          "configuration": "Configuration",
+          "operations": "Operations",
+          "integrations": "Integrations"
+        },
+        "cap": {
+          "tenant_record": {
+            "label": "Tenant record",
+            "description": "The organisation exists in the platform."
+          },
+          "tenant_fqdn": {
+            "label": "Tenant domain",
+            "description": "The tenant's hostname is known and resolvable."
+          },
+          "tenant_admin": {
+            "label": "Tenant administrators",
+            "description": "At least one active administrator can manage the tenant.",
+            "action": "Invite an administrator from the Members section."
+          },
+          "member_administration": {
+            "label": "Member administration",
+            "description": "Invite people, change roles, and remove members."
+          },
+          "roles_permissions": {
+            "label": "Roles & permissions",
+            "description": "Role-based access control for tenant members."
+          },
+          "auth_credential": {
+            "label": "Identity credential",
+            "description": "The realm-admin credential that lets this tenant manage its own authentication.",
+            "action": "Contact your system administrator to provision or rotate the credential."
+          },
+          "auth_providers": {
+            "label": "Login providers",
+            "description": "Which sign-in options are offered to your users."
+          },
+          "session_policy": {
+            "label": "Session policy",
+            "description": "Token lifespans and session timeouts."
+          },
+          "mfa_policy": {
+            "label": "Multi-factor authentication",
+            "description": "Whether and how a second factor is required."
+          },
+          "idp_configuration": {
+            "label": "Identity providers",
+            "description": "External OIDC / social identity providers for single sign-on.",
+            "action": "Add an identity provider if external login is expected."
+          },
+          "feature_config": {
+            "label": "Features & configuration",
+            "description": "Feature flags and governed configuration values."
+          },
+          "branding": {
+            "label": "Branding",
+            "description": "Tenant branding and theme (defaults applied)."
+          },
+          "tenant_domains": {
+            "label": "Custom domains",
+            "description": "Vanity domains for the tenant."
+          },
+          "email_sender": {
+            "label": "Email & sender",
+            "description": "Transactional email sender configuration."
+          },
+          "audit": {
+            "label": "Audit trail",
+            "description": "Who changed what, when, across the control plane."
+          },
+          "storage": {
+            "label": "Object storage",
+            "description": "Per-tenant object storage."
+          },
+          "observability": {
+            "label": "Observability",
+            "description": "Logs, traces, and dashboards for the tenant."
+          },
+          "integrations_webhooks": {
+            "label": "Integrations & webhooks",
+            "description": "Outbound webhooks and third-party integrations."
+          },
+          "oidc_discovery": {
+            "label": "OIDC discovery",
+            "description": "Configure providers from an OIDC discovery URL."
+          },
+          "oidc_issuer_validation": {
+            "label": "Issuer validation",
+            "description": "Validate the OIDC issuer."
+          },
+          "oidc_jwks_validation": {
+            "label": "JWKS validation",
+            "description": "Validate signing keys via JWKS."
+          },
+          "oidc_claim_mapping": {
+            "label": "Claim mapping",
+            "description": "Map provider claims to user attributes."
+          },
+          "oidc_group_role_mapping": {
+            "label": "Group / role mapping",
+            "description": "Map provider groups to tenant roles."
+          },
+          "oidc_test_connection": {
+            "label": "Test connection",
+            "description": "Verify a provider configuration before saving."
+          },
+          "oidc_callback_display": {
+            "label": "Callback URL",
+            "description": "Show the redirect/callback URL to configure at the provider."
+          },
+          "oidc_login_simulation": {
+            "label": "Login simulation",
+            "description": "Simulate a login to validate the end-to-end flow."
+          }
         }
       }
     }

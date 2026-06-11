@@ -22,6 +22,7 @@ export {
   adminExternalIdentitiesHandler,
   adminConfigHandler,
   adminAuditHandler,
+  adminReadinessHandler,
   adminGetErrorHandler,
   adminWriteOkHandlers,
 } from "./handlers.ts";
@@ -36,6 +37,8 @@ export {
   externalIdentitiesFixture,
   configFixture,
   auditFixture,
+  tenantReadinessFixture,
+  tenantReadinessBlockedFixture,
 } from "./fixtures/admin.ts";
 export {
   createGraphqlHandler,
