@@ -34,6 +34,10 @@ export function getMfaPolicy(): Promise<MfaPolicyDto> {
   return adminGet<MfaPolicyDto>("/api/auth/settings/mfa");
 }
 
+export function setMfaPolicy(input: MfaPolicyDto): Promise<void> {
+  return adminSend<void>("PATCH", "/api/auth/settings/mfa", input);
+}
+
 export function getSessionPolicy(): Promise<SessionPolicyDto> {
   return adminGet<SessionPolicyDto>("/api/auth/settings/session");
 }

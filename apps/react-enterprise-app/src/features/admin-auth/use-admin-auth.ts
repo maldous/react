@@ -1,10 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { UpdateTenantAuthProvidersRequest, SessionPolicyDto } from "@platform/contracts-admin";
+import type {
+  UpdateTenantAuthProvidersRequest,
+  SessionPolicyDto,
+  MfaPolicyDto,
+} from "@platform/contracts-admin";
 import {
   getAuthProviders,
   setAuthProviders,
   listIdps,
   getMfaPolicy,
+  setMfaPolicy,
   getSessionPolicy,
   setSessionPolicy,
   getAuthReadiness,
@@ -36,8 +41,20 @@ export function useIdps() {
   return useQuery({ queryKey: authIdpsQueryKey, queryFn: listIdps, retry: false });
 }
 
-export function useMfaPolicy() {
-  return useQuery({ queryKey: authMfaQueryKey, queryFn: getMfaPolicy, retry: false });
+export function useMfaPolicy(enabled = true) {
+  return useQuery({ queryKey: authMfaQueryKey, queryFn: getMfaPolicy, retry: false, enabled });
+}
+
+export function useSetMfaPolicy() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (input: MfaPolicyDto) => setMfaPolicy(input),
+    onSuccess: (_void, input) => {
+      queryClient.setQueryData(authMfaQueryKey, input);
+      void queryClient.invalidateQueries({ queryKey: authReadinessQueryKey });
+      void queryClient.invalidateQueries({ queryKey: ["admin", "audit"] });
+    },
+  });
 }
 
 export function useSessionPolicy(enabled = true) {

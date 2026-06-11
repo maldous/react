@@ -20,6 +20,11 @@ async function openSessionTab() {
   await userEvent.click(screen.getByRole("tab", { name: enGB.feature.admin.auth.tab.session }));
 }
 
+async function openMfaTab() {
+  await screen.findByTestId("auth-provider-mode");
+  await userEvent.click(screen.getByRole("tab", { name: enGB.feature.admin.auth.tab.mfa }));
+}
+
 function renderPage() {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   function Wrapper({ children }: { children: ReactNode }) {
@@ -151,6 +156,79 @@ describe("AdminAuthPage", () => {
     const { container } = renderPage();
     await openSessionTab();
     await screen.findByTestId("auth-session-form");
+    expect(await axe(container)).toHaveNoViolations();
+  });
+
+  // --- MFA tab (ADR-0042): readiness-gated writable required level ------------
+
+  it("renders an editable MFA form when the credential is configured", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminAuthProvidersHandler(),
+      adminAuthReadinessHandler({ status: "configured" })
+    );
+    renderPage();
+    await openMfaTab();
+    expect(await screen.findByTestId("auth-mfa-form")).toBeInTheDocument();
+    expect(screen.getByTestId("auth-mfa-required")).toBeInTheDocument();
+    expect(screen.queryByTestId("auth-mfa-readiness")).not.toBeInTheDocument();
+  });
+
+  it("saving the MFA policy announces success", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminAuthProvidersHandler(),
+      adminAuthReadinessHandler({ status: "configured" })
+    );
+    renderPage();
+    await openMfaTab();
+    const trigger = within(await screen.findByTestId("auth-mfa-required")).getByRole("button");
+    await userEvent.click(trigger);
+    await userEvent.click(
+      await screen.findByRole("option", {
+        name: enGB.feature.admin.auth.mfa.requiredOption.required,
+      })
+    );
+    await userEvent.click(screen.getByTestId("auth-mfa-submit"));
+    await waitFor(() => expect(screen.getByTestId("auth-mfa-status")).toHaveTextContent(/saved/i));
+  });
+
+  it("shows a readiness notice and no MFA form when the credential is invalid", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminAuthProvidersHandler(),
+      adminAuthReadinessHandler({ status: "invalid_credential" }),
+      adminGetErrorHandler("/api/auth/settings/mfa", 502)
+    );
+    renderPage();
+    await openMfaTab();
+    expect(await screen.findByTestId("auth-mfa-readiness")).toHaveTextContent(
+      enGB.feature.admin.auth.readiness.invalid_credential
+    );
+    expect(screen.queryByTestId("auth-mfa-form")).not.toBeInTheDocument();
+  });
+
+  it("keeps the MFA policy read-only for a user without write permission", async () => {
+    server.use(
+      sessionHandler("viewer"),
+      adminAuthProvidersHandler(),
+      adminAuthReadinessHandler({ status: "configured" })
+    );
+    renderPage();
+    await openMfaTab();
+    expect(await screen.findByTestId("auth-mfa-readonly")).toBeInTheDocument();
+    expect(screen.queryByTestId("auth-mfa-form")).not.toBeInTheDocument();
+  });
+
+  it("MFA form has no accessibility violations", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminAuthProvidersHandler(),
+      adminAuthReadinessHandler({ status: "configured" })
+    );
+    const { container } = renderPage();
+    await openMfaTab();
+    await screen.findByTestId("auth-mfa-form");
     expect(await axe(container)).toHaveNoViolations();
   });
 });

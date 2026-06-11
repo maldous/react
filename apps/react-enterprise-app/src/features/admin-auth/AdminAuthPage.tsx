@@ -20,8 +20,10 @@ import {
 import { useTranslation } from "@platform/i18n-runtime";
 import {
   PRODUCT_PROVIDER_IDS,
+  MfaPolicySchema,
   type ProductProviderId,
   type SessionPolicyDto,
+  type MfaPolicyDto,
 } from "@platform/contracts-admin";
 import { useSession } from "../../hooks/use-session";
 import { AdminSectionHeader } from "../../components/AdminLayout";
@@ -32,10 +34,13 @@ import {
   useSetAuthProviders,
   useIdps,
   useMfaPolicy,
+  useSetMfaPolicy,
   useSessionPolicy,
   useAuthReadiness,
   useSetSessionPolicy,
 } from "./use-admin-auth";
+
+const MFA_REQUIRED_LEVELS = ["none", "optional", "required"] as const;
 
 // Client-side validation mirrors the BFF SessionBodySchema ranges so the form
 // fails fast with a clear message; the server remains the enforcement point.
@@ -256,18 +261,144 @@ function Detail({ label, value }: { label: string; value: string }) {
   );
 }
 
+/**
+ * MFA policy tab (ADR-0042) — the second writable Auth tab, reusing the Session
+ * readiness gate verbatim. Only the `required` level is editable; the factor
+ * `type` is read-only (TOTP) and `gracePeriodSeconds` is not exposed this slice.
+ */
 function MfaTab() {
   const t = useTranslation();
-  const { data, isLoading, isError, error } = useMfaPolicy();
+  const { hasPermission } = useSession();
+  const canWrite = hasPermission("tenant.auth.settings.write");
+  const readiness = useAuthReadiness();
+
+  if (readiness.isLoading) return <LoadingState message={t("auth.status.loading")} />;
+  if (readiness.isError) return <AdminQueryError error={readiness.error} />;
+
+  const status = readiness.data?.status;
+  const editable = status === "configured" && canWrite;
+
   return (
-    <ReadTab isLoading={isLoading} isError={isError} error={error} hasData={!!data}>
-      <Card>
-        <CardBody className="divide-y divide-border" data-testid="auth-mfa">
-          <Detail label={t("feature.admin.auth.mfa.required")} value={data?.required ?? ""} />
-          <Detail label={t("feature.admin.auth.mfa.type")} value={data?.type ?? ""} />
-        </CardBody>
-      </Card>
-    </ReadTab>
+    <div className="space-y-4" data-testid="auth-mfa">
+      {status && status !== "configured" && (
+        <Card>
+          <CardBody>
+            <p role="status" className="text-sm text-fg-muted" data-testid="auth-mfa-readiness">
+              {t(`feature.admin.auth.readiness.${status}` as const)}
+            </p>
+          </CardBody>
+        </Card>
+      )}
+      <MfaPolicyView editable={editable} />
+      <div className="border-t border-border pt-4">
+        <AuditTrailPanel
+          resource="auth_settings"
+          action="auth_settings.mfa.changed"
+          heading={t("feature.admin.auth.mfa.recentChanges")}
+          testId="auth-mfa-audit"
+        />
+      </div>
+    </div>
+  );
+}
+
+function MfaPolicyView({ editable }: { editable: boolean }) {
+  const t = useTranslation();
+  const { data, isLoading, isError, error } = useMfaPolicy();
+
+  if (isLoading) return <LoadingState message={t("auth.status.loading")} />;
+  if (isError) return <AdminQueryError error={error} />;
+  if (!data) return <EmptyState title={t("feature.admin.auth.notConfigured")} />;
+  if (editable) return <MfaPolicyForm policy={data} />;
+
+  return (
+    <Card>
+      <CardBody className="divide-y divide-border">
+        <div data-testid="auth-mfa-readonly" className="divide-y divide-border">
+          <Detail
+            label={t("feature.admin.auth.mfa.required")}
+            value={t(`feature.admin.auth.mfa.requiredOption.${data.required}` as const)}
+          />
+          <Detail
+            label={t("feature.admin.auth.mfa.type")}
+            value={t(`feature.admin.auth.mfa.typeName.${data.type}` as const)}
+          />
+        </div>
+      </CardBody>
+    </Card>
+  );
+}
+
+function MfaPolicyForm({ policy }: { policy: MfaPolicyDto }) {
+  const t = useTranslation();
+  const mutation = useSetMfaPolicy();
+  const { control, handleSubmit, formState } = useForm<MfaPolicyDto>({
+    resolver: zodResolver(MfaPolicySchema),
+    defaultValues: policy,
+  });
+
+  const requiredItems: SelectItem[] = MFA_REQUIRED_LEVELS.map((level) => ({
+    id: level,
+    label: t(`feature.admin.auth.mfa.requiredOption.${level}` as const),
+  }));
+
+  function onSubmit(values: MfaPolicyDto) {
+    mutation.mutate(values);
+  }
+
+  return (
+    <Card>
+      <CardBody>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" data-testid="auth-mfa-form">
+          <Controller
+            name="required"
+            control={control}
+            render={({ field }) => (
+              <div className="max-w-xs">
+                <label className="mb-1 block text-sm font-medium text-fg" id="mfa-required-label">
+                  {t("feature.admin.auth.mfa.required")}
+                </label>
+                <Select
+                  items={requiredItems}
+                  placeholder={t("feature.admin.auth.mfa.required")}
+                  selectedKey={field.value}
+                  aria-labelledby="mfa-required-label"
+                  onSelectionChange={(key) => field.onChange(String(key))}
+                  data-testid="auth-mfa-required"
+                />
+              </div>
+            )}
+          />
+          {/* Factor type is read-only this slice (TOTP authoritative). */}
+          <Detail
+            label={t("feature.admin.auth.mfa.type")}
+            value={t(`feature.admin.auth.mfa.typeName.${policy.type}` as const)}
+          />
+          {mutation.isError && (
+            <p role="alert" className="text-sm text-danger" data-testid="auth-mfa-error">
+              {t("feature.admin.auth.mfa.saveError")}
+            </p>
+          )}
+          <div className="flex items-center justify-between gap-4">
+            <LiveRegion
+              tone="polite"
+              className="text-sm text-success"
+              data-testid="auth-mfa-status"
+            >
+              {mutation.isSuccess ? t("feature.admin.auth.mfa.saved") : ""}
+            </LiveRegion>
+            <Button
+              size="sm"
+              type="submit"
+              isDisabled={mutation.isPending || !formState.isDirty}
+              data-testid="auth-mfa-submit"
+            >
+              {t("feature.admin.auth.mfa.save")}
+            </Button>
+          </div>
+        </form>
+      </CardBody>
+    </Card>
   );
 }
 

@@ -131,6 +131,7 @@ export function adminWriteOkHandlers() {
     ),
     http.patch("/api/auth/settings/providers", () => HttpResponse.json(authProvidersFixture)),
     http.patch("/api/auth/settings/session", () => new HttpResponse(null, { status: 204 })),
+    http.patch("/api/auth/settings/mfa", () => new HttpResponse(null, { status: 204 })),
     http.patch("/api/org/config/:key", () => new HttpResponse(null, { status: 204 })),
     http.delete("/api/org/config/:key", () => new HttpResponse(null, { status: 204 })),
   ];

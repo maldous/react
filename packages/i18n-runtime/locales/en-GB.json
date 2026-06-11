@@ -342,7 +342,20 @@
         },
         "mfa": {
           "required": "Requirement",
-          "type": "Method"
+          "type": "Method",
+          "requiredOption": {
+            "none": "Not required",
+            "optional": "Optional",
+            "required": "Required"
+          },
+          "typeName": {
+            "totp": "Authenticator app (TOTP)",
+            "webauthn": "Security key (WebAuthn)"
+          },
+          "save": "Save changes",
+          "saved": "MFA policy saved.",
+          "saveError": "Could not save the MFA policy. Please try again.",
+          "recentChanges": "Recent MFA changes"
         },
         "session": {
           "accessTokenLifespan": "Access token lifespan",
