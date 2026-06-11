@@ -264,6 +264,7 @@ docs/
     lifecycle/
     architecture/
     admin/
+    configuration/
     security/
     operations/
     testing/
