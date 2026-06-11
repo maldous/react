@@ -39,6 +39,7 @@ assert.deepEqual(payload.dependencyOrder, [
   "validate-i18n",
   "validate-pipeline-composition",
   "validate-compose-ports",
+  "validate-action-register",
 ]);
 
 assert.equal(payload.exitCode, 0);
