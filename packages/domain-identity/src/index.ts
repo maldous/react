@@ -35,7 +35,10 @@ export interface Membership {
   updatedAt: Date;
 }
 
-export type TenantRole = "tenant-admin" | "manager" | "member" | "viewer";
+/** Tenant-scoped roles. Single runtime source of truth; the type derives from it so
+ * the two cannot drift (consumed by @platform/contracts-admin via a drift test). */
+export const TENANT_ROLES = ["tenant-admin", "manager", "member", "viewer"] as const;
+export type TenantRole = (typeof TENANT_ROLES)[number];
 export type GlobalRole = "system-admin";
 export type AnyRole = TenantRole | GlobalRole;
 
