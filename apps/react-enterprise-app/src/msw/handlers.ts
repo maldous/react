@@ -11,10 +11,12 @@ import {
   idpsFixture,
   mfaFixture,
   sessionPolicyFixture,
+  authReadinessFixture,
   externalIdentitiesFixture,
   configFixture,
   auditFixture,
 } from "./fixtures/admin.ts";
+import type { AuthSettingsReadiness } from "@platform/contracts-admin";
 
 // Complete MSW baseline for the SPA (ADR-0019). Every endpoint the app touches
 // has a default handler so no feature test hand-rolls low-level fetch mocks.
@@ -87,6 +89,10 @@ export function adminMfaHandler(response = mfaFixture) {
 export function adminSessionPolicyHandler(response = sessionPolicyFixture) {
   return http.get("/api/auth/settings/session", () => HttpResponse.json(response));
 }
+/** GET /api/auth/settings/readiness (ADR-0041 credential readiness). */
+export function adminAuthReadinessHandler(response: AuthSettingsReadiness = authReadinessFixture) {
+  return http.get("/api/auth/settings/readiness", () => HttpResponse.json(response));
+}
 
 /** A failing GET for an admin endpoint (drives error/empty UI states). */
 export function adminGetErrorHandler(path: string, status = 503) {
@@ -124,6 +130,7 @@ export function adminWriteOkHandlers() {
       HttpResponse.json({ key: params["featureKey"], enabled: true, updatedAt: null })
     ),
     http.patch("/api/auth/settings/providers", () => HttpResponse.json(authProvidersFixture)),
+    http.patch("/api/auth/settings/session", () => new HttpResponse(null, { status: 204 })),
     http.patch("/api/org/config/:key", () => new HttpResponse(null, { status: 204 })),
     http.delete("/api/org/config/:key", () => new HttpResponse(null, { status: 204 })),
   ];
@@ -155,6 +162,7 @@ export const handlers = [
   adminIdpsHandler(),
   adminMfaHandler(),
   adminSessionPolicyHandler(),
+  adminAuthReadinessHandler(),
   adminExternalIdentitiesHandler(),
   adminConfigHandler(),
   adminAuditHandler(),

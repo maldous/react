@@ -12,18 +12,21 @@ import { useAudit } from "./use-audit";
 export function AuditTrailPanel({
   resource,
   resourceId,
+  action,
   heading,
   testId,
   enabled = true,
 }: {
   resource: AuditResource;
   resourceId?: string;
+  /** Optional exact audit-action filter (e.g. "auth_settings.session.changed"). */
+  action?: string;
   heading: string;
   testId: string;
   enabled?: boolean;
 }) {
   const t = useTranslation();
-  const { data, isLoading, isError, error } = useAudit({ resource, resourceId }, enabled);
+  const { data, isLoading, isError, error } = useAudit({ resource, resourceId, action }, enabled);
   const events = data?.events ?? [];
 
   return (

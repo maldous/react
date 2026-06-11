@@ -350,7 +350,22 @@
           "maxLifespan": "SSO max lifespan",
           "rememberMe": "Remember me",
           "on": "On",
-          "off": "Off"
+          "off": "Off",
+          "edit": "Edit session policy",
+          "save": "Save changes",
+          "saved": "Session policy saved.",
+          "saveError": "Could not save the session policy. Please try again.",
+          "invalid": "Enter a whole number within the allowed range.",
+          "seconds": "seconds",
+          "recentChanges": "Recent session policy changes"
+        },
+        "readiness": {
+          "heading": "Authentication settings status",
+          "configured": "Editing is enabled — the realm-admin credential is active.",
+          "missing_credential": "Editing is unavailable: no realm-admin credential is configured for this organisation. An operator must provision one.",
+          "invalid_credential": "Editing is unavailable: the realm-admin credential was rejected. An operator must rotate it.",
+          "forbidden_realm_operation": "Editing is unavailable: the realm-admin credential lacks the permissions required to manage this realm.",
+          "realm_unreachable": "Editing is unavailable: the identity service could not be reached. Please try again later."
         }
       }
     }

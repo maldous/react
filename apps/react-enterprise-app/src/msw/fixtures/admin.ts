@@ -5,6 +5,7 @@ import type {
   IdpSummary,
   MfaPolicyDto,
   SessionPolicyDto,
+  AuthSettingsReadiness,
   ExternalIdentityListResponse,
   ConfigListResponse,
   AuditListResponse,
@@ -166,3 +167,5 @@ export const sessionPolicyFixture: SessionPolicyDto = {
   ssoSessionMaxLifespanSeconds: 36000,
   rememberMe: true,
 };
+
+export const authReadinessFixture: AuthSettingsReadiness = { status: "configured" };

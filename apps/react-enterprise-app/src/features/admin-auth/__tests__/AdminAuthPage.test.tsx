@@ -10,9 +10,15 @@ import {
   sessionHandler,
   adminAuthProvidersHandler,
   adminIdpsHandler,
+  adminAuthReadinessHandler,
   adminGetErrorHandler,
 } from "../../../msw";
 import { AdminAuthPage } from "../AdminAuthPage";
+
+async function openSessionTab() {
+  await screen.findByTestId("auth-provider-mode");
+  await userEvent.click(screen.getByRole("tab", { name: enGB.feature.admin.auth.tab.session }));
+}
 
 function renderPage() {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
@@ -75,6 +81,76 @@ describe("AdminAuthPage", () => {
     server.use(sessionHandler("tenantAdmin"), adminAuthProvidersHandler());
     const { container } = renderPage();
     await screen.findByTestId("auth-provider-mode");
+    expect(await axe(container)).toHaveNoViolations();
+  });
+
+  // --- Session tab (ADR-0041): readiness-gated writable policy ---------------
+
+  it("renders an editable Session form when the credential is configured", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminAuthProvidersHandler(),
+      adminAuthReadinessHandler({ status: "configured" })
+    );
+    renderPage();
+    await openSessionTab();
+    expect(await screen.findByTestId("auth-session-form")).toBeInTheDocument();
+    expect(screen.queryByTestId("auth-session-readiness")).not.toBeInTheDocument();
+  });
+
+  it("saving the Session policy announces success", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminAuthProvidersHandler(),
+      adminAuthReadinessHandler({ status: "configured" })
+    );
+    renderPage();
+    await openSessionTab();
+    const input = await screen.findByTestId("auth-session-accessTokenLifespanSeconds");
+    await userEvent.clear(input);
+    await userEvent.type(input, "600");
+    await userEvent.click(screen.getByTestId("auth-session-submit"));
+    await waitFor(() =>
+      expect(screen.getByTestId("auth-session-status")).toHaveTextContent(/saved/i)
+    );
+  });
+
+  it("shows a readiness notice and no form when the credential is missing", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminAuthProvidersHandler(),
+      adminAuthReadinessHandler({ status: "missing_credential" }),
+      adminGetErrorHandler("/api/auth/settings/session", 503)
+    );
+    renderPage();
+    await openSessionTab();
+    expect(await screen.findByTestId("auth-session-readiness")).toHaveTextContent(
+      enGB.feature.admin.auth.readiness.missing_credential
+    );
+    expect(screen.queryByTestId("auth-session-form")).not.toBeInTheDocument();
+  });
+
+  it("keeps the Session policy read-only for a user without write permission", async () => {
+    server.use(
+      sessionHandler("viewer"),
+      adminAuthProvidersHandler(),
+      adminAuthReadinessHandler({ status: "configured" })
+    );
+    renderPage();
+    await openSessionTab();
+    expect(await screen.findByTestId("auth-session-readonly")).toBeInTheDocument();
+    expect(screen.queryByTestId("auth-session-form")).not.toBeInTheDocument();
+  });
+
+  it("Session form has no accessibility violations", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminAuthProvidersHandler(),
+      adminAuthReadinessHandler({ status: "configured" })
+    );
+    const { container } = renderPage();
+    await openSessionTab();
+    await screen.findByTestId("auth-session-form");
     expect(await axe(container)).toHaveNoViolations();
   });
 });
