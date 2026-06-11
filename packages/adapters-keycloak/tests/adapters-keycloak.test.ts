@@ -717,19 +717,63 @@ describe("KeycloakRealmAdminAdapter — setMfaPolicy / setSessionPolicy (write h
   let restore: () => void;
   afterEach(() => restore?.());
 
-  it("setMfaPolicy resolves on a successful PUT", async () => {
-    restore = mockFetch(adminApiFetch(async () => new Response(null, { status: 204 })));
+  // ADR-0042: setMfaPolicy now GETs the required-action representation then PUTs
+  // it back with enabled/defaultAction flipped — so the mock must serve both.
+  const CONFIGURE_TOTP_ACTION = {
+    alias: "CONFIGURE_TOTP",
+    name: "Configure OTP",
+    providerId: "CONFIGURE_TOTP",
+    enabled: true,
+    defaultAction: false,
+    priority: 10,
+    config: {},
+  };
+
+  it("setMfaPolicy resolves on a successful GET+PUT", async () => {
+    restore = mockFetch(
+      adminApiFetch(async (_input, init) =>
+        (init?.method ?? "GET") === "GET"
+          ? jsonResponse(CONFIGURE_TOTP_ACTION)
+          : new Response(null, { status: 204 })
+      )
+    );
     const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
     await adapter.setMfaPolicy({ required: "required", type: "totp" });
   });
 
   it("setMfaPolicy throws when the realm PUT fails", async () => {
-    restore = mockFetch(adminApiFetch(async () => jsonResponse({ error: "denied" }, 403)));
+    restore = mockFetch(
+      adminApiFetch(async (_input, init) =>
+        (init?.method ?? "GET") === "GET"
+          ? jsonResponse(CONFIGURE_TOTP_ACTION)
+          : jsonResponse({ error: "denied" }, 403)
+      )
+    );
     const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
     await assert.rejects(
       () => adapter.setMfaPolicy({ required: "required", type: "totp" }),
       /setMfaPolicy\(realm tenant-abc\): Keycloak admin request failed: 403.*denied/
     );
+  });
+
+  it("setMfaPolicy PUTs the CONFIGURE_TOTP alias with enabled/defaultAction derived from level", async () => {
+    let captured: { url: string; body: Record<string, unknown> } | null = null;
+    restore = mockFetch(
+      adminApiFetch(async (input, init) => {
+        if ((init?.method ?? "GET") === "GET") return jsonResponse(CONFIGURE_TOTP_ACTION);
+        captured = {
+          url: typeof input === "string" ? input : (input as URL).toString(),
+          body: JSON.parse(String(init?.body ?? "{}")),
+        };
+        return new Response(null, { status: 204 });
+      })
+    );
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await adapter.setMfaPolicy({ required: "optional", type: "totp" });
+    assert.ok(captured, "PUT was issued");
+    assert.match(captured!.url, /\/authentication\/required-actions\/CONFIGURE_TOTP$/);
+    assert.equal(captured!.body["enabled"], true);
+    assert.equal(captured!.body["defaultAction"], false);
   });
 
   it("setSessionPolicy throws when the realm PUT fails", async () => {
@@ -876,5 +920,69 @@ describe("KeycloakRealmAdminAdapter — probeReadiness", () => {
     });
     const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
     assert.equal(await adapter.probeReadiness(), "unreachable");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// KeycloakRealmAdminAdapter — getMfaPolicy (ADR-0042 required-action mapping)
+// ---------------------------------------------------------------------------
+
+describe("KeycloakRealmAdminAdapter — getMfaPolicy", () => {
+  let restore: () => void;
+  afterEach(() => restore?.());
+
+  function requiredActionsFetch(
+    actions: Record<string, { enabled: boolean; defaultAction: boolean }>
+  ) {
+    return adminApiFetch(async (input) => {
+      const url = typeof input === "string" ? input : (input as URL).toString();
+      const alias = Object.keys(actions).find((a) => url.endsWith(`/required-actions/${a}`));
+      if (alias) return jsonResponse({ alias, ...actions[alias] });
+      return new Response(null, { status: 404 });
+    });
+  }
+
+  it("maps enabled+defaultAction CONFIGURE_TOTP to required/totp", async () => {
+    restore = mockFetch(
+      requiredActionsFetch({
+        CONFIGURE_TOTP: { enabled: true, defaultAction: true },
+        "webauthn-register": { enabled: false, defaultAction: false },
+      })
+    );
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    assert.deepEqual(await adapter.getMfaPolicy(), { required: "required", type: "totp" });
+  });
+
+  it("maps enabled-only CONFIGURE_TOTP to optional/totp", async () => {
+    restore = mockFetch(
+      requiredActionsFetch({
+        CONFIGURE_TOTP: { enabled: true, defaultAction: false },
+        "webauthn-register": { enabled: false, defaultAction: false },
+      })
+    );
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    assert.deepEqual(await adapter.getMfaPolicy(), { required: "optional", type: "totp" });
+  });
+
+  it("reports the stronger-enforced factor (webauthn) when it outranks totp", async () => {
+    restore = mockFetch(
+      requiredActionsFetch({
+        CONFIGURE_TOTP: { enabled: false, defaultAction: false },
+        "webauthn-register": { enabled: true, defaultAction: true },
+      })
+    );
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    assert.deepEqual(await adapter.getMfaPolicy(), { required: "required", type: "webauthn" });
+  });
+
+  it("maps a disabled action to none", async () => {
+    restore = mockFetch(
+      requiredActionsFetch({
+        CONFIGURE_TOTP: { enabled: false, defaultAction: false },
+        "webauthn-register": { enabled: false, defaultAction: false },
+      })
+    );
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    assert.deepEqual(await adapter.getMfaPolicy(), { required: "none", type: "totp" });
   });
 });

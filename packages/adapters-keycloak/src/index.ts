@@ -465,28 +465,68 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
     await this.assertAdminOk(res, `removeIdentityProvider(${alias})`, [404]);
   }
 
+  // MFA policy maps to Keycloak realm REQUIRED-ACTIONS (ADR-0042), which actually
+  // govern whether users are prompted to register a second factor and which
+  // round-trip reliably — unlike the prior mapping that mis-wrote `required` into
+  // the `otpPolicyType` (OTP algorithm) field. `type` selects the action alias.
+  private mfaActionAlias(type: MfaPolicy["type"]): string {
+    return type === "webauthn" ? "webauthn-register" : "CONFIGURE_TOTP";
+  }
+
+  private requiredActionUrl(alias: string): string {
+    return this.adminUrl(`/authentication/required-actions/${encodeURIComponent(alias)}`);
+  }
+
+  // enabled + defaultAction → requirement level. defaultAction means every new
+  // user is asked to configure it (our "required"); merely enabled is "optional".
+  private actionLevel(action: {
+    enabled?: boolean;
+    defaultAction?: boolean;
+  }): MfaPolicy["required"] {
+    if (action.defaultAction) return "required";
+    if (action.enabled) return "optional";
+    return "none";
+  }
+
   async getMfaPolicy(): Promise<MfaPolicy> {
     const token = await this.getAdminToken();
-    const response = await fetch(this.adminUrl(""), {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const realm = (await response.json()) as Record<string, unknown>;
+    const read = async (alias: string) => {
+      const res = await fetch(this.requiredActionUrl(alias), {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) return null;
+      return (await res.json()) as { enabled?: boolean; defaultAction?: boolean };
+    };
+    const [totp, webauthn] = await Promise.all([read("CONFIGURE_TOTP"), read("webauthn-register")]);
+    const rank: Record<MfaPolicy["required"], number> = { none: 0, optional: 1, required: 2 };
+    const totpLevel = totp ? this.actionLevel(totp) : "none";
+    const webauthnLevel = webauthn ? this.actionLevel(webauthn) : "none";
+    // Report the stronger-enforced factor; ties resolve to TOTP (the editable one).
+    const useWebauthn = rank[webauthnLevel] > rank[totpLevel];
     return {
-      required: (realm["otpPolicyType"] as MfaPolicy["required"]) ?? "optional",
-      type: String(realm["otpPolicyAlgorithm"] ?? "totp").includes("webauthn")
-        ? "webauthn"
-        : "totp",
+      required: useWebauthn ? webauthnLevel : totpLevel,
+      type: useWebauthn ? "webauthn" : "totp",
     };
   }
 
   async setMfaPolicy(policy: MfaPolicy): Promise<void> {
     const token = await this.getAdminToken();
-    const res = await fetch(this.adminUrl(""), {
+    const alias = this.mfaActionAlias(policy.type);
+    // Fetch the full representation so the PUT preserves name/providerId/priority,
+    // then flip only enabled/defaultAction to the requested level.
+    const getRes = await fetch(this.requiredActionUrl(alias), {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    await this.assertAdminOk(getRes, `getMfaPolicy(realm ${this.config.realm})`);
+    const action = (await getRes.json()) as Record<string, unknown>;
+    action["enabled"] = policy.required !== "none";
+    action["defaultAction"] = policy.required === "required";
+    const putRes = await fetch(this.requiredActionUrl(alias), {
       method: "PUT",
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ otpPolicyType: policy.required }),
+      body: JSON.stringify(action),
     });
-    await this.assertAdminOk(res, `setMfaPolicy(realm ${this.config.realm})`);
+    await this.assertAdminOk(putRes, `setMfaPolicy(realm ${this.config.realm})`);
   }
 
   async getSessionPolicy(): Promise<SessionPolicy> {
