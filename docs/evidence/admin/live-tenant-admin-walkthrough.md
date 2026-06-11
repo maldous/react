@@ -93,3 +93,22 @@ and the full identity stack on resolvable tenant hostnames — beyond this harde
 behaviours are unit-tested, the UI behaviours are MSW-integration-tested, and the two unauthenticated
 runtime paths (provider list, login guard) are verified live above. The remaining manual browser
 confirmation is the procedure in this file.
+
+## Audit-visibility verification (ADR-0040)
+
+As a tenant admin, after each mutation confirm the matching contextual audit panel updates:
+
+1. Members → expand a member → "Recent activity": edit the username, then disable/enable the member,
+   then change the role — each appears as a `member.username_changed` / `member.status_changed` /
+   `member.role_changed` row (actor + timestamp). (Invite/resend are keyed by email — deferred from the
+   per-member panel.)
+2. `/admin/config` → change a value and reset it → "Recent configuration changes" shows
+   `config.value_changed` / `config.value_cleared`.
+3. `/admin/auth` → Providers → change the mode/allowlist → "Recent provider changes" shows
+   `auth_settings.providers.changed`.
+4. Sign in as a viewer/member: the audit panels return 403 (no `tenant.audit.read`).
+5. Confirm no cross-tenant events appear (the query is tenant-scoped from the session).
+
+These behaviours are covered by `apps/platform-api/tests/unit/audit.test.ts` (isolation, forbidden,
+filters, redaction) and `apps/react-enterprise-app/src/features/admin/__tests__/AuditTrailPanel.test.tsx`
+(render/empty/error/forbidden/axe); the steps above are the live confirmation.

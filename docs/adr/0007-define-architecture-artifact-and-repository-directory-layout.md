@@ -264,6 +264,7 @@ docs/
     lifecycle/
     architecture/
     admin/
+    audit/
     configuration/
     security/
     operations/
