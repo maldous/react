@@ -367,8 +367,16 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
     this.config = config;
   }
 
+  // Token endpoint per grant type (ADR-0044): the dev/seed admin-cli PASSWORD
+  // grant lives in the master realm, but the per-tenant service account is a
+  // client IN THE TENANT realm, so its CLIENT_CREDENTIALS grant must hit the
+  // tenant realm token endpoint — authenticating against master returns 401.
+  private tokenRealm(): string {
+    return this.config.adminUsername && this.config.adminPassword ? "master" : this.config.realm;
+  }
+
   private async getAdminToken(): Promise<string> {
-    const tokenUrl = `${this.config.url}/realms/master/protocol/openid-connect/token`;
+    const tokenUrl = `${this.config.url}/realms/${this.tokenRealm()}/protocol/openid-connect/token`;
     // Password grant via admin-cli (dev/test seeding) when admin user creds are
     // supplied; otherwise the production client_credentials service-account grant.
     const body =
@@ -608,7 +616,9 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
   async probeReadiness(): Promise<RealmReadinessProbe> {
     let token: string;
     try {
-      const tokenUrl = `${this.config.url}/realms/master/protocol/openid-connect/token`;
+      // Same grant/realm rule as getAdminToken (ADR-0044): client_credentials →
+      // tenant realm, admin-cli password → master.
+      const tokenUrl = `${this.config.url}/realms/${this.tokenRealm()}/protocol/openid-connect/token`;
       const grant =
         this.config.adminUsername && this.config.adminPassword
           ? new URLSearchParams({

@@ -1060,3 +1060,50 @@ describe("KeycloakRealmAdminAdapter — IdP CRUD", () => {
     await new KeycloakRealmAdminAdapter(ADMIN_CONFIG).deleteIdentityProvider("gone");
   });
 });
+
+// ---------------------------------------------------------------------------
+// KeycloakRealmAdminAdapter — token endpoint realm per grant type (ADR-0044)
+// ---------------------------------------------------------------------------
+
+describe("KeycloakRealmAdminAdapter — token realm", () => {
+  let restore: () => void;
+  afterEach(() => restore?.());
+
+  function captureTokenUrl(handler: FetchMock): { urls: string[]; fetch: FetchMock } {
+    const urls: string[] = [];
+    return {
+      urls,
+      fetch: async (input, init) => {
+        const url = typeof input === "string" ? input : (input as URL).toString();
+        if (url.endsWith("/token")) urls.push(url);
+        return handler(input, init);
+      },
+    };
+  }
+
+  it("client_credentials (per-tenant service account) authenticates against the TENANT realm", async () => {
+    const cap = captureTokenUrl(twoStepFetch(async () => jsonResponse({ realm: "tenant-abc" })));
+    restore = mockFetch(cap.fetch);
+    // ADMIN_CONFIG has adminClientId/adminClientSecret only → client_credentials.
+    await new KeycloakRealmAdminAdapter(ADMIN_CONFIG).probeReadiness();
+    assert.ok(
+      cap.urls[0]?.includes("/realms/tenant-abc/protocol/openid-connect/token"),
+      `expected tenant-realm token endpoint, got ${cap.urls[0]}`
+    );
+  });
+
+  it("admin-cli password grant (dev/seed) authenticates against the MASTER realm", async () => {
+    const cap = captureTokenUrl(twoStepFetch(async () => jsonResponse({ realm: "tenant-abc" })));
+    restore = mockFetch(cap.fetch);
+    await new KeycloakRealmAdminAdapter({
+      url: "http://localhost:8080",
+      realm: "tenant-abc",
+      adminUsername: "admin",
+      adminPassword: "admin",
+    }).probeReadiness();
+    assert.ok(
+      cap.urls[0]?.includes("/realms/master/protocol/openid-connect/token"),
+      `expected master token endpoint, got ${cap.urls[0]}`
+    );
+  });
+});
