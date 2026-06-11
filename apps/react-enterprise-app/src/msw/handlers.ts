@@ -11,6 +11,7 @@ import {
   idpsFixture,
   mfaFixture,
   sessionPolicyFixture,
+  externalIdentitiesFixture,
 } from "./fixtures/admin.ts";
 
 // Complete MSW baseline for the SPA (ADR-0019). Every endpoint the app touches
@@ -90,10 +91,21 @@ export function adminGetErrorHandler(path: string, status = 503) {
   return http.get(path, () => new HttpResponse(null, { status }));
 }
 
-/** All admin write endpoints succeeding — POST/PATCH/DELETE return 200. */
+/** GET /api/org/members/:userId/external-identities. */
+export function adminExternalIdentitiesHandler(response = externalIdentitiesFixture) {
+  return http.get("/api/org/members/:userId/external-identities", () =>
+    HttpResponse.json(response)
+  );
+}
+
+/** All admin write endpoints succeeding — POST/PATCH/DELETE return 200/204. */
 export function adminWriteOkHandlers() {
   return [
     http.post("/api/org/members/invite", () => HttpResponse.json({ kind: "added" })),
+    http.post("/api/org/members/resend-invite", () => new HttpResponse(null, { status: 204 })),
+    // Specific member sub-paths must precede the bare :userId PATCH.
+    http.patch("/api/org/members/:userId/username", () => new HttpResponse(null, { status: 204 })),
+    http.patch("/api/org/members/:userId/status", () => new HttpResponse(null, { status: 204 })),
     http.patch("/api/org/members/:userId", () => HttpResponse.json({ ok: true })),
     http.delete("/api/org/members/:userId", () => HttpResponse.json({ ok: true })),
     http.patch("/api/org/features/:featureKey", ({ params }) =>
@@ -129,5 +141,6 @@ export const handlers = [
   adminIdpsHandler(),
   adminMfaHandler(),
   adminSessionPolicyHandler(),
+  adminExternalIdentitiesHandler(),
   ...adminWriteOkHandlers(),
 ];

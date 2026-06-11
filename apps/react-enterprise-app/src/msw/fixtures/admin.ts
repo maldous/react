@@ -5,6 +5,7 @@ import type {
   IdpSummary,
   MfaPolicyDto,
   SessionPolicyDto,
+  ExternalIdentityListResponse,
 } from "@platform/contracts-admin";
 
 // Canonical admin control-plane fixtures for frontend tests (ADR-0036). Pure data;
@@ -62,6 +63,19 @@ export const idpsFixture: IdpSummary[] = [
   { alias: "mock-google", displayName: "Mock Google", providerId: "oidc", enabled: true },
   { alias: "mock-azure", displayName: "Mock Microsoft", providerId: "oidc", enabled: false },
 ];
+
+export const externalIdentitiesFixture: ExternalIdentityListResponse = {
+  identities: [
+    {
+      id: "ei-1",
+      provider: "mock-google",
+      subject: "google-sub-1",
+      email: "admin@example.com",
+      linkedAt: "2026-01-02T00:00:00.000Z",
+      lastSeenAt: "2026-06-01T09:00:00.000Z",
+    },
+  ],
+};
 
 export const mfaFixture: MfaPolicyDto = { required: "optional", type: "totp" };
 

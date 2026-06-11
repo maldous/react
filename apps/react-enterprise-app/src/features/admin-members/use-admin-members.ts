@@ -1,6 +1,21 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { InviteMemberRequest, UpdateMemberRoleRequest } from "@platform/contracts-admin";
-import { listMembers, inviteMember, updateMemberRole, removeMember } from "./admin-members-client";
+import type {
+  InviteMemberRequest,
+  UpdateMemberRoleRequest,
+  EditUsernameRequest,
+  SetMemberStatusRequest,
+  ResendInviteRequest,
+} from "@platform/contracts-admin";
+import {
+  listMembers,
+  inviteMember,
+  updateMemberRole,
+  removeMember,
+  setMemberUsername,
+  setMemberStatus,
+  resendInvite,
+  listExternalIdentities,
+} from "./admin-members-client";
 
 export const adminMembersQueryKey = ["admin", "members"] as const;
 
@@ -35,5 +50,38 @@ export function useRemoveMember() {
   return useMutation({
     mutationFn: (userId: string) => removeMember(userId),
     onSuccess: () => void invalidate(),
+  });
+}
+
+export function useEditUsername() {
+  const invalidate = useInvalidateMembers();
+  return useMutation({
+    mutationFn: ({ userId, input }: { userId: string; input: EditUsernameRequest }) =>
+      setMemberUsername(userId, input),
+    onSuccess: () => void invalidate(),
+  });
+}
+
+export function useSetMemberStatus() {
+  const invalidate = useInvalidateMembers();
+  return useMutation({
+    mutationFn: ({ userId, input }: { userId: string; input: SetMemberStatusRequest }) =>
+      setMemberStatus(userId, input),
+    onSuccess: () => void invalidate(),
+  });
+}
+
+export function useResendInvite() {
+  return useMutation({
+    mutationFn: (input: ResendInviteRequest) => resendInvite(input),
+  });
+}
+
+export function useExternalIdentities(userId: string, enabled: boolean) {
+  return useQuery({
+    queryKey: ["admin", "members", userId, "external-identities"] as const,
+    queryFn: () => listExternalIdentities(userId),
+    enabled,
+    retry: false,
   });
 }
