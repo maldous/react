@@ -2041,6 +2041,90 @@
         }
       }
     },
+    "/api/auth/settings/idps/oidc/discover": {
+      "post": {
+        "summary": "Import and validate an OIDC discovery document",
+        "operationId": "discoverOidc",
+        "description": "Fetches the issuer/discovery URL (bounded timeout + size cap, HTTPS-only outside local) and returns a minimal redacted projection + classified validation. Never returns the raw document or a secret. ADR-0046.",
+        "tags": ["Auth Settings"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Discovery result (metadata + classified validation)" },
+          "400": { "description": "Validation error or no tenant context" }
+        }
+      }
+    },
+    "/api/auth/settings/idps/:alias/callback-url": {
+      "get": {
+        "summary": "Get the brokered callback URL for an identity provider",
+        "operationId": "getIdpCallbackUrl",
+        "description": "Returns the Keycloak broker callback URL derived from the tenant realm + alias. No secret. ADR-0046.",
+        "tags": ["Auth Settings"],
+        "security": [{ "sessionCookie": [] }],
+        "parameters": [
+          { "name": "alias", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Callback URL" },
+          "400": { "description": "No tenant context" }
+        }
+      }
+    },
+    "/api/auth/settings/idps/:alias/test-connection": {
+      "post": {
+        "summary": "Test an identity provider connection",
+        "operationId": "testIdpConnection",
+        "description": "Non-interactive probe: re-validates the stored issuer's discovery + JWKS and audits the classified result. Not a login simulation. ADR-0046.",
+        "tags": ["Auth Settings"],
+        "security": [{ "sessionCookie": [] }],
+        "parameters": [
+          { "name": "alias", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Classified validation result" },
+          "404": { "description": "Identity provider not found" }
+        }
+      }
+    },
+    "/api/auth/settings/idps/:alias/mapping": {
+      "get": {
+        "summary": "Read the managed claim/group-role mapping",
+        "operationId": "getIdpMapping",
+        "description": "Returns the bounded claim and group/role mapping managed for the IdP. No secret. ADR-0046.",
+        "tags": ["Auth Settings"],
+        "security": [{ "sessionCookie": [] }],
+        "parameters": [
+          { "name": "alias", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Mapping config" },
+          "404": { "description": "Identity provider not found" }
+        }
+      },
+      "patch": {
+        "summary": "Replace the managed claim/group-role mapping",
+        "operationId": "updateIdpMapping",
+        "description": "Full-replace of the managed (oidc-ent:) IdP mappers (audit-first). Role targets allowlisted to tenant roles. ADR-0046.",
+        "tags": ["Auth Settings"],
+        "security": [{ "sessionCookie": [] }],
+        "parameters": [
+          { "name": "alias", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Updated mapping" },
+          "400": { "description": "Validation error" },
+          "404": { "description": "Identity provider not found" }
+        }
+      }
+    },
     "/api/admin/tenants/:tenantId/auth-settings-credential/readiness": {
       "get": {
         "summary": "Get a tenant's auth-settings credential readiness + metadata",

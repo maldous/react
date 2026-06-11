@@ -46,21 +46,25 @@ describe("CAPABILITIES registry", () => {
     }
   });
 
-  it("includes the deferred OIDC-enterprise sub-capabilities in the map", () => {
+  it("exposes the OIDC-enterprise sub-capabilities with honest statuses (ADR-0046)", () => {
+    const expected: Record<string, "implemented" | "partial" | "deferred"> = {
+      oidc_discovery: "implemented",
+      oidc_issuer_validation: "implemented",
+      oidc_jwks_validation: "implemented",
+      oidc_callback_display: "implemented",
+      oidc_test_connection: "implemented",
+      oidc_claim_mapping: "partial",
+      oidc_group_role_mapping: "partial",
+      oidc_login_simulation: "deferred",
+    };
     const keys = new Set(CAPABILITIES.map((c) => c.key));
-    for (const k of [
-      "oidc_discovery",
-      "oidc_issuer_validation",
-      "oidc_jwks_validation",
-      "oidc_claim_mapping",
-      "oidc_group_role_mapping",
-      "oidc_test_connection",
-      "oidc_callback_display",
-      "oidc_login_simulation",
-    ]) {
+    for (const [k, status] of Object.entries(expected)) {
       assert.ok(keys.has(k), `missing OIDC capability ${k}`);
-      const c = CAPABILITIES.find((x) => x.key === k)!;
-      assert.equal(c.implementationStatus, "deferred");
+      assert.equal(
+        CAPABILITIES.find((x) => x.key === k)!.implementationStatus,
+        status,
+        `${k} should be ${status}`
+      );
     }
   });
 
@@ -119,7 +123,16 @@ describe("buildTenantReadiness — aggregation", () => {
       { authCredential: "missing_credential" as const, activeAdminCount: 0, idpCount: null },
     ]) {
       const r = buildTenantReadiness(signals);
-      for (const key of ["storage", "tenant_domains", "email_sender", "oidc_discovery"]) {
+      // login simulation + claim/group-role mapping have no live check, so their
+      // readiness must stay `deferred` regardless of signals (never faked).
+      for (const key of [
+        "storage",
+        "tenant_domains",
+        "email_sender",
+        "oidc_login_simulation",
+        "oidc_claim_mapping",
+        "oidc_group_role_mapping",
+      ]) {
         assert.equal(cap(r, key)?.readiness, "deferred", `${key} must stay deferred`);
       }
     }

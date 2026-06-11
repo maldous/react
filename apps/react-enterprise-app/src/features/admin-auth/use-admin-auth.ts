@@ -5,6 +5,8 @@ import type {
   MfaPolicyDto,
   CreateIdpRequest,
   UpdateIdpRequest,
+  OidcDiscoverRequest,
+  IdpMappingConfig,
 } from "@platform/contracts-admin";
 import {
   getAuthProviders,
@@ -18,6 +20,11 @@ import {
   getSessionPolicy,
   setSessionPolicy,
   getAuthReadiness,
+  discoverOidc,
+  getIdpCallbackUrl,
+  testIdpConnection,
+  getIdpMapping,
+  updateIdpMapping,
 } from "./admin-auth-client";
 
 export const authProvidersQueryKey = ["admin", "auth", "providers"] as const;
@@ -71,6 +78,60 @@ export function useUpdateIdp() {
 
 export function useDeleteIdp() {
   return useIdpMutation((alias: string) => deleteIdp(alias));
+}
+
+// --- OIDC enterprise hardening (ADR-0046) ---
+
+export const idpMappingQueryKey = (alias: string) =>
+  ["admin", "auth", "idp-mapping", alias] as const;
+export const idpCallbackUrlQueryKey = (alias: string) =>
+  ["admin", "auth", "idp-callback", alias] as const;
+
+/** Discovery import is a preview/validation — it mutates nothing, so no invalidation. */
+export function useDiscoverOidc() {
+  return useMutation({ mutationFn: (input: OidcDiscoverRequest) => discoverOidc(input) });
+}
+
+export function useIdpCallbackUrl(alias: string | null) {
+  return useQuery({
+    queryKey: idpCallbackUrlQueryKey(alias ?? ""),
+    queryFn: () => getIdpCallbackUrl(alias!),
+    retry: false,
+    enabled: !!alias,
+  });
+}
+
+/** Test connection audits the result server-side; refresh the audit panel on success. */
+export function useTestIdpConnection() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (alias: string) => testIdpConnection(alias),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ["admin", "audit"] });
+    },
+  });
+}
+
+export function useIdpMapping(alias: string | null) {
+  return useQuery({
+    queryKey: idpMappingQueryKey(alias ?? ""),
+    queryFn: () => getIdpMapping(alias!),
+    retry: false,
+    enabled: !!alias,
+  });
+}
+
+export function useUpdateIdpMapping() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ alias, input }: { alias: string; input: IdpMappingConfig }) =>
+      updateIdpMapping(alias, input),
+    onSuccess: (_data, { alias }) => {
+      void queryClient.invalidateQueries({ queryKey: idpMappingQueryKey(alias) });
+      void queryClient.invalidateQueries({ queryKey: authReadinessQueryKey });
+      void queryClient.invalidateQueries({ queryKey: ["admin", "audit"] });
+    },
+  });
 }
 
 export function useMfaPolicy(enabled = true) {

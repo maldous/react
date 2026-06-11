@@ -7,6 +7,11 @@ import type {
   MfaPolicyDto,
   SessionPolicyDto,
   AuthSettingsReadiness,
+  OidcDiscoverRequest,
+  OidcDiscoverResponse,
+  OidcTestConnectionResponse,
+  IdpCallbackUrlResponse,
+  IdpMappingConfig,
 } from "@platform/contracts-admin";
 import { adminGet, adminSend } from "../admin/admin-fetch";
 
@@ -18,6 +23,11 @@ export type {
   MfaPolicyDto,
   SessionPolicyDto,
   AuthSettingsReadiness,
+  OidcDiscoverRequest,
+  OidcDiscoverResponse,
+  OidcTestConnectionResponse,
+  IdpCallbackUrlResponse,
+  IdpMappingConfig,
 };
 
 export function getAuthProviders(): Promise<TenantAuthProvidersResponse> {
@@ -65,4 +75,38 @@ export function setSessionPolicy(input: SessionPolicyDto): Promise<void> {
 /** Auth-settings credential readiness (ADR-0041) — tells the UI whether editing is safe. */
 export function getAuthReadiness(): Promise<AuthSettingsReadiness> {
   return adminGet<AuthSettingsReadiness>("/api/auth/settings/readiness");
+}
+
+// --- OIDC enterprise hardening (ADR-0046) ---
+
+export function discoverOidc(input: OidcDiscoverRequest): Promise<OidcDiscoverResponse> {
+  return adminSend<OidcDiscoverResponse>("POST", "/api/auth/settings/idps/oidc/discover", input);
+}
+
+export function getIdpCallbackUrl(alias: string): Promise<IdpCallbackUrlResponse> {
+  return adminGet<IdpCallbackUrlResponse>(
+    `/api/auth/settings/idps/${encodeURIComponent(alias)}/callback-url`
+  );
+}
+
+export function testIdpConnection(alias: string): Promise<OidcTestConnectionResponse> {
+  return adminSend<OidcTestConnectionResponse>(
+    "POST",
+    `/api/auth/settings/idps/${encodeURIComponent(alias)}/test-connection`
+  );
+}
+
+export function getIdpMapping(alias: string): Promise<IdpMappingConfig> {
+  return adminGet<IdpMappingConfig>(`/api/auth/settings/idps/${encodeURIComponent(alias)}/mapping`);
+}
+
+export function updateIdpMapping(
+  alias: string,
+  input: IdpMappingConfig
+): Promise<IdpMappingConfig> {
+  return adminSend<IdpMappingConfig>(
+    "PATCH",
+    `/api/auth/settings/idps/${encodeURIComponent(alias)}/mapping`,
+    input
+  );
 }

@@ -370,7 +370,35 @@
             "google": "Google",
             "microsoft": "Microsoft",
             "apple": "Apple"
-          }
+          },
+          "callbackUrl": "Callback URL",
+          "copy": "Copy",
+          "testConnection": "Test connection",
+          "testError": "Could not run the connection test. Please try again.",
+          "testResult": {
+            "ok": "Connection OK — issuer and signing keys validated.",
+            "issuer_mismatch": "Issuer mismatch — the discovery issuer does not match.",
+            "jwks_invalid": "No usable signing keys were found at the JWKS endpoint.",
+            "unreachable": "The provider endpoint could not be reached.",
+            "invalid_document": "The discovery document was invalid or incomplete.",
+            "not_configured": "No issuer is configured for this provider yet."
+          },
+          "discoveryLabel": "OIDC issuer or discovery URL",
+          "discoveryHelper": "Paste the provider's issuer; we validate it and fill the endpoints below.",
+          "discoveryImport": "Import & validate",
+          "discoveryError": "Could not import the discovery document. Check the URL and try again.",
+          "mapping": "Mapping",
+          "mappingHelper": "Map upstream claims to user attributes and to tenant roles. Applied to the identity provider; not yet exercised through a live login.",
+          "claimMappings": "Claim mappings",
+          "roleMappings": "Group / role mappings",
+          "upstreamClaim": "Upstream claim",
+          "userAttribute": "User attribute",
+          "claimValue": "Claim value",
+          "realmRole": "Tenant role",
+          "removeRow": "Remove",
+          "addClaimMapping": "Add claim mapping",
+          "addRoleMapping": "Add role mapping",
+          "mappingError": "Could not save the mapping. Please try again."
         },
         "mfa": {
           "required": "Requirement",

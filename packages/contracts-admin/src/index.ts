@@ -313,6 +313,120 @@ export const UpdateIdpRequestSchema = z
   .strict();
 export type UpdateIdpRequest = z.infer<typeof UpdateIdpRequestSchema>;
 
+// ---------------------------------------------------------------------------
+// OIDC enterprise hardening (ADR-0046 / ADR-ACT-0215)
+// Discovery import, issuer/JWKS validation, callback display, test connection,
+// and bounded claim/group-role mapping. Strict + no-passthrough: responses carry
+// a MINIMAL redacted view only — never the raw discovery/JWKS document and never
+// a client secret. SAML and login simulation are out of scope.
+// ---------------------------------------------------------------------------
+
+/** `POST /api/auth/settings/idps/oidc/discover` — at least one of issuer/discoveryUrl. */
+export const OidcDiscoverRequestSchema = z
+  .object({
+    issuer: SafeUrlSchema.optional(),
+    discoveryUrl: SafeUrlSchema.optional(),
+  })
+  .strict()
+  .refine((b) => !!b.issuer || !!b.discoveryUrl, {
+    message: "issuer or discoveryUrl is required",
+    path: ["issuer"],
+  });
+export type OidcDiscoverRequest = z.infer<typeof OidcDiscoverRequestSchema>;
+
+/** Minimal redacted projection of the discovery document — never the raw doc. */
+export const OidcDiscoveryMetadataSchema = z
+  .object({
+    issuer: z.string(),
+    authorizationEndpoint: z.string(),
+    tokenEndpoint: z.string(),
+    userInfoEndpoint: z.string().nullable(),
+    jwksUri: z.string(),
+  })
+  .strict();
+export type OidcDiscoveryMetadata = z.infer<typeof OidcDiscoveryMetadataSchema>;
+
+/** Classified result of a discovery/test probe — booleans + counts only. */
+export const OIDC_CONNECTION_RESULTS = [
+  "ok",
+  "issuer_mismatch",
+  "jwks_invalid",
+  "unreachable",
+  "invalid_document",
+  "not_configured",
+] as const;
+export const OidcConnectionResultSchema = z.enum(OIDC_CONNECTION_RESULTS);
+export type OidcConnectionResult = z.infer<typeof OidcConnectionResultSchema>;
+
+export const OidcValidationResultSchema = z
+  .object({
+    result: OidcConnectionResultSchema,
+    issuerValid: z.boolean(),
+    jwksValid: z.boolean(),
+    jwksKeyCount: z.number().int().nonnegative(),
+  })
+  .strict();
+export type OidcValidationResult = z.infer<typeof OidcValidationResultSchema>;
+
+/** `POST /api/auth/settings/idps/oidc/discover` response. */
+export const OidcDiscoverResponseSchema = z
+  .object({
+    metadata: OidcDiscoveryMetadataSchema.nullable(),
+    validation: OidcValidationResultSchema,
+  })
+  .strict();
+export type OidcDiscoverResponse = z.infer<typeof OidcDiscoverResponseSchema>;
+
+/** `GET /api/auth/settings/idps/:alias/callback-url` — derived from tenant context. */
+export const IdpCallbackUrlResponseSchema = z
+  .object({
+    alias: z.string(),
+    callbackUrl: z.string(),
+  })
+  .strict();
+export type IdpCallbackUrlResponse = z.infer<typeof IdpCallbackUrlResponseSchema>;
+
+/** `POST /api/auth/settings/idps/:alias/test-connection` response. */
+export const OidcTestConnectionResponseSchema = OidcValidationResultSchema;
+export type OidcTestConnectionResponse = z.infer<typeof OidcTestConnectionResponseSchema>;
+
+// --- Claim / group-role mapping (bounded + typed; reject dangerous/empty) ---
+
+const OidcClaimNameSchema = z
+  .string()
+  .regex(/^[A-Za-z0-9_.:-]{1,64}$/, "claim must be 1-64 chars: letters, digits, . _ : -");
+const OidcAttributeNameSchema = z
+  .string()
+  .regex(/^[A-Za-z0-9_.-]{1,64}$/, "attribute must be 1-64 chars: letters, digits, . _ -");
+
+/** Map an upstream OIDC claim into a Keycloak user attribute. */
+export const OidcClaimMappingSchema = z
+  .object({
+    upstreamClaim: OidcClaimNameSchema,
+    userAttribute: OidcAttributeNameSchema,
+  })
+  .strict();
+export type OidcClaimMapping = z.infer<typeof OidcClaimMappingSchema>;
+
+/** Map an upstream claim value to a realm role — role allowlisted to tenant roles. */
+export const OidcRoleMappingSchema = z
+  .object({
+    upstreamClaim: OidcClaimNameSchema,
+    claimValue: z.string().min(1).max(128),
+    realmRole: TenantRoleSchema,
+  })
+  .strict();
+export type OidcRoleMapping = z.infer<typeof OidcRoleMappingSchema>;
+
+/** `GET/PATCH /api/auth/settings/idps/:alias/mapping` — full-replace semantics. */
+export const IdpMappingConfigSchema = z
+  .object({
+    claimMappings: z.array(OidcClaimMappingSchema).max(20),
+    roleMappings: z.array(OidcRoleMappingSchema).max(20),
+  })
+  .strict();
+export type IdpMappingConfig = z.infer<typeof IdpMappingConfigSchema>;
+
 export const MfaRequirementSchema = z.enum(["none", "optional", "required"]);
 export const MfaTypeSchema = z.enum(["totp", "webauthn"]);
 

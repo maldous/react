@@ -60,6 +60,13 @@ import {
   buildIdpUpdateAuditMetadata,
   buildIdpDeleteAuditMetadata,
 } from "../usecases/idp-management.ts";
+import {
+  importOidcDiscovery,
+  testIdpConnection,
+  buildIdpCallbackUrl,
+} from "../usecases/oidc-discovery.ts";
+import { readIdpMapping, applyIdpMapping } from "../usecases/idp-mapping.ts";
+import { createOidcHttpFetcher } from "./oidc-http-fetcher.ts";
 import { createPostgresAuditEventPort, AuditAction } from "@platform/audit-events";
 import { resolveTenantFromRequest } from "./tenant-resolver.ts";
 import { KeycloakRealmAdminAdapter } from "@platform/adapters-keycloak";
@@ -602,6 +609,196 @@ export const routes: Route[] = [
       );
       if (sendAuthSettingsFailure(res, result)) return;
       res.json(204, null);
+    },
+  },
+  // ADR-0046: OIDC discovery import. BFF fetches the discovery document itself
+  // (bounded timeout + size cap + HTTPS-only-outside-local) and returns only a
+  // minimal redacted projection + a classified validation — never the raw doc.
+  {
+    method: "POST",
+    path: "/api/auth/settings/idps/oidc/discover",
+    operationName: "auth.settings.idps.oidc.discover",
+    requiresAuth: true,
+    requiredPermission: "tenant.auth.settings.write",
+    resource: "admin:auth",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const result = await importOidcDiscovery(req.body, { fetcher: createOidcHttpFetcher() });
+      if (result.kind === "invalid_body") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      res.json(200, result.response);
+    },
+  },
+  // ADR-0046: the brokered callback URL for an IdP alias — derived from the tenant
+  // realm + alias (FQDN-resolved), never a secret. Read-only.
+  {
+    method: "GET",
+    path: "/api/auth/settings/idps/:alias/callback-url",
+    operationName: "auth.settings.idps.callbackUrl",
+    requiresAuth: true,
+    requiredPermission: "tenant.auth.settings.read",
+    resource: "admin:auth",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const alias = req.params["alias"] ?? "";
+      res.json(
+        200,
+        buildIdpCallbackUrl(
+          getKeycloakConfigForRealm(tenantCtx.realmName).url,
+          tenantCtx.realmName,
+          alias
+        )
+      );
+    },
+  },
+  // ADR-0046: non-interactive connection test — re-validate the stored issuer's
+  // discovery + JWKS. Audit records alias + classified result only. NOT a login.
+  {
+    method: "POST",
+    path: "/api/auth/settings/idps/:alias/test-connection",
+    operationName: "auth.settings.idps.testConnection",
+    requiresAuth: true,
+    requiredPermission: "tenant.auth.settings.write",
+    resource: "admin:auth",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const cred = await new PostgresTenantCredentialStore(
+        getApplicationPool()
+      ).getAuthSettingsCredential(tenantCtx.organisationId);
+      if (!cred) {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
+        return;
+      }
+      const adapter = new KeycloakRealmAdminAdapter({
+        url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
+        realm: tenantCtx.realmName,
+        adminClientId: cred.clientId,
+        adminClientSecret: cred.clientSecret,
+      });
+      const result = await testIdpConnection(
+        {
+          alias: req.params["alias"] ?? "",
+          organisationId: tenantCtx.organisationId,
+          realmName: tenantCtx.realmName,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+        },
+        {
+          reader: adapter,
+          fetcher: createOidcHttpFetcher(),
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+        }
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Identity provider not found" });
+        return;
+      }
+      res.json(200, result.validation);
+    },
+  },
+  // ADR-0046: read the managed claim/group-role mapping for an IdP.
+  {
+    method: "GET",
+    path: "/api/auth/settings/idps/:alias/mapping",
+    operationName: "auth.settings.idps.mapping.get",
+    requiresAuth: true,
+    requiredPermission: "tenant.auth.settings.read",
+    resource: "admin:auth",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const cred = await new PostgresTenantCredentialStore(
+        getApplicationPool()
+      ).getAuthSettingsCredential(tenantCtx.organisationId);
+      if (!cred) {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
+        return;
+      }
+      const adapter = new KeycloakRealmAdminAdapter({
+        url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
+        realm: tenantCtx.realmName,
+        adminClientId: cred.clientId,
+        adminClientSecret: cred.clientSecret,
+      });
+      const result = await readIdpMapping(req.params["alias"] ?? "", { mapperPort: adapter });
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Identity provider not found" });
+        return;
+      }
+      res.json(200, result.config);
+    },
+  },
+  // ADR-0046: full-replace the managed claim/group-role mapping (audit-first).
+  {
+    method: "PATCH",
+    path: "/api/auth/settings/idps/:alias/mapping",
+    operationName: "auth.settings.idps.mapping.update",
+    requiresAuth: true,
+    requiredPermission: "tenant.auth.settings.write",
+    resource: "admin:auth",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const cred = await new PostgresTenantCredentialStore(
+        getApplicationPool()
+      ).getAuthSettingsCredential(tenantCtx.organisationId);
+      if (!cred) {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
+        return;
+      }
+      const adapter = new KeycloakRealmAdminAdapter({
+        url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
+        realm: tenantCtx.realmName,
+        adminClientId: cred.clientId,
+        adminClientSecret: cred.clientSecret,
+      });
+      const result = await applyIdpMapping(
+        {
+          alias: req.params["alias"] ?? "",
+          rawBody: req.body,
+          organisationId: tenantCtx.organisationId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+        },
+        { mapperPort: adapter, audit: createPostgresAuditEventPort(getApplicationPool()) }
+      );
+      if (sendAuthSettingsFailure(res, result)) return;
+      if (result.kind === "ok") {
+        res.json(200, result.config);
+        return;
+      }
     },
   },
   {

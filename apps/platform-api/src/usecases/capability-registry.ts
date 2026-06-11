@@ -182,34 +182,50 @@ export const CAPABILITIES: readonly CapabilityDefinition[] = [
     readinessKind: "deferred",
   }),
 
-  // --- OIDC enterprise sub-capabilities (visible, deferred) ---
+  // --- OIDC enterprise sub-capabilities (ADR-0046 / ADR-ACT-0215) ---
+  // discovery/issuer/JWKS/callback/test are delivered: the feature + its live
+  // validation exist and are unit + runtime proven, so they are `invariant-ready`
+  // (available by construction; the actual probe runs on demand). claim/group-role
+  // mapping is `partial` — configured on the IdP but not yet exercised through a
+  // real brokered login, so its readiness stays `deferred` (never faked). Login
+  // simulation stays fully `deferred`: no honest non-interactive proof exists.
   cap("oidc_discovery", "authentication", {
-    implementationStatus: "deferred",
-    readinessKind: "deferred",
+    adminRoute: "/admin/auth",
+    requiredPermission: "tenant.auth.settings.write",
+    implementationStatus: "implemented",
+    readinessKind: "invariant-ready",
   }),
   cap("oidc_issuer_validation", "authentication", {
-    implementationStatus: "deferred",
-    readinessKind: "deferred",
+    implementationStatus: "implemented",
+    readinessKind: "invariant-ready",
   }),
   cap("oidc_jwks_validation", "authentication", {
-    implementationStatus: "deferred",
-    readinessKind: "deferred",
+    implementationStatus: "implemented",
+    readinessKind: "invariant-ready",
   }),
   cap("oidc_claim_mapping", "authentication", {
-    implementationStatus: "deferred",
+    adminRoute: "/admin/auth",
+    requiredPermission: "tenant.auth.settings.write",
+    implementationStatus: "partial",
     readinessKind: "deferred",
   }),
   cap("oidc_group_role_mapping", "authentication", {
-    implementationStatus: "deferred",
+    adminRoute: "/admin/auth",
+    requiredPermission: "tenant.auth.settings.write",
+    implementationStatus: "partial",
     readinessKind: "deferred",
   }),
   cap("oidc_test_connection", "authentication", {
-    implementationStatus: "deferred",
-    readinessKind: "deferred",
+    adminRoute: "/admin/auth",
+    requiredPermission: "tenant.auth.settings.write",
+    implementationStatus: "implemented",
+    readinessKind: "invariant-ready",
   }),
   cap("oidc_callback_display", "authentication", {
-    implementationStatus: "deferred",
-    readinessKind: "deferred",
+    adminRoute: "/admin/auth",
+    requiredPermission: "tenant.auth.settings.read",
+    implementationStatus: "implemented",
+    readinessKind: "invariant-ready",
   }),
   cap("oidc_login_simulation", "authentication", {
     implementationStatus: "deferred",

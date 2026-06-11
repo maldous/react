@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import {
@@ -19,12 +19,25 @@ import {
 import { useTranslation } from "@platform/i18n-runtime";
 import {
   IDP_PROVIDER_IDS,
+  TENANT_ROLES,
   type IdpSummary,
   type CreateIdpRequest,
   type UpdateIdpRequest,
+  type IdpMappingConfig,
+  type OidcDiscoveryMetadata,
 } from "@platform/contracts-admin";
 import { AdminQueryError } from "../admin/AdminQueryError";
-import { useIdps, useCreateIdp, useUpdateIdp, useDeleteIdp } from "./use-admin-auth";
+import {
+  useIdps,
+  useCreateIdp,
+  useUpdateIdp,
+  useDeleteIdp,
+  useDiscoverOidc,
+  useTestIdpConnection,
+  useIdpCallbackUrl,
+  useIdpMapping,
+  useUpdateIdpMapping,
+} from "./use-admin-auth";
 
 // Local lenient form schemas: text inputs are strings ("" for unset), validated
 // here for UX; empty optional fields are stripped before hitting the typed client,
@@ -38,8 +51,10 @@ const CreateIdpFormSchema = z
     providerId: z.enum(IDP_PROVIDER_IDS),
     clientId: z.string().min(1).max(255),
     clientSecret: z.string().min(1).max(4096),
+    issuer: z.string(),
     authorizationUrl: z.string(),
     tokenUrl: z.string(),
+    userInfoUrl: z.string(),
     scopes: z.string(),
     trustEmail: z.boolean(),
   })
@@ -74,6 +89,7 @@ type DialogState =
   | { mode: "create" }
   | { mode: "edit"; idp: IdpSummary }
   | { mode: "delete"; idp: IdpSummary }
+  | { mode: "mapping"; idp: IdpSummary }
   | null;
 
 /**
@@ -111,48 +127,14 @@ export function IdpManager({ editable }: { editable: boolean }) {
           <CardBody className="divide-y divide-border">
             <div className="divide-y divide-border" data-testid="auth-idps-list">
               {idps.map((idp) => (
-                <div
+                <IdpRow
                   key={idp.alias}
-                  className="flex flex-wrap items-center justify-between gap-3 py-3 first:pt-0 last:pb-0"
-                  data-testid={`auth-idp-row-${idp.alias}`}
-                >
-                  <div>
-                    <p className="text-sm font-medium text-fg">{idp.displayName}</p>
-                    <p className="text-xs text-fg-muted">
-                      {idp.alias} · {idp.providerId} ·{" "}
-                      {idp.hasClientSecret
-                        ? t("feature.admin.auth.idps.secretSet")
-                        : t("feature.admin.auth.idps.noSecret")}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Badge variant={idp.enabled ? "default" : "secondary"}>
-                      {idp.enabled
-                        ? t("feature.admin.auth.idps.enabled")
-                        : t("feature.admin.auth.idps.disabled")}
-                    </Badge>
-                    {editable && (
-                      <>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onPress={() => setDialog({ mode: "edit", idp })}
-                          data-testid={`auth-idp-edit-${idp.alias}`}
-                        >
-                          {t("feature.admin.auth.idps.edit")}
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onPress={() => setDialog({ mode: "delete", idp })}
-                          data-testid={`auth-idp-delete-${idp.alias}`}
-                        >
-                          {t("feature.admin.auth.idps.delete")}
-                        </Button>
-                      </>
-                    )}
-                  </div>
-                </div>
+                  idp={idp}
+                  editable={editable}
+                  onEdit={() => setDialog({ mode: "edit", idp })}
+                  onDelete={() => setDialog({ mode: "delete", idp })}
+                  onMapping={() => setDialog({ mode: "mapping", idp })}
+                />
               ))}
             </div>
           </CardBody>
@@ -166,6 +148,138 @@ export function IdpManager({ editable }: { editable: boolean }) {
       {dialog?.mode === "delete" && (
         <DeleteIdpDialog idp={dialog.idp} onClose={() => setDialog(null)} />
       )}
+      {dialog?.mode === "mapping" && (
+        <MappingDialog idp={dialog.idp} editable={editable} onClose={() => setDialog(null)} />
+      )}
+    </div>
+  );
+}
+
+/**
+ * One IdP row plus its enterprise actions (ADR-0046): the brokered callback URL
+ * (with copy), a non-interactive connection test with a classified result badge,
+ * and — when editable — edit / mapping / delete. Secrets are never shown.
+ */
+function IdpRow({
+  idp,
+  editable,
+  onEdit,
+  onDelete,
+  onMapping,
+}: {
+  idp: IdpSummary;
+  editable: boolean;
+  onEdit: () => void;
+  onDelete: () => void;
+  onMapping: () => void;
+}) {
+  const t = useTranslation();
+  const [showCallback, setShowCallback] = useState(false);
+  const callback = useIdpCallbackUrl(showCallback ? idp.alias : null);
+  const test = useTestIdpConnection();
+  const testResult = test.data?.result;
+
+  return (
+    <div
+      className="flex flex-col gap-2 py-3 first:pt-0 last:pb-0"
+      data-testid={`auth-idp-row-${idp.alias}`}
+    >
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="text-sm font-medium text-fg">{idp.displayName}</p>
+          <p className="text-xs text-fg-muted">
+            {idp.alias} · {idp.providerId} ·{" "}
+            {idp.hasClientSecret
+              ? t("feature.admin.auth.idps.secretSet")
+              : t("feature.admin.auth.idps.noSecret")}
+          </p>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <Badge variant={idp.enabled ? "default" : "secondary"}>
+            {idp.enabled
+              ? t("feature.admin.auth.idps.enabled")
+              : t("feature.admin.auth.idps.disabled")}
+          </Badge>
+          <Button
+            size="sm"
+            variant="outline"
+            onPress={() => setShowCallback((v) => !v)}
+            data-testid={`auth-idp-callback-${idp.alias}`}
+          >
+            {t("feature.admin.auth.idps.callbackUrl")}
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            isDisabled={test.isPending}
+            onPress={() => test.mutate(idp.alias)}
+            data-testid={`auth-idp-test-${idp.alias}`}
+          >
+            {t("feature.admin.auth.idps.testConnection")}
+          </Button>
+          {editable && (
+            <>
+              <Button
+                size="sm"
+                variant="outline"
+                onPress={onMapping}
+                data-testid={`auth-idp-mapping-${idp.alias}`}
+              >
+                {t("feature.admin.auth.idps.mapping")}
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                onPress={onEdit}
+                data-testid={`auth-idp-edit-${idp.alias}`}
+              >
+                {t("feature.admin.auth.idps.edit")}
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                onPress={onDelete}
+                data-testid={`auth-idp-delete-${idp.alias}`}
+              >
+                {t("feature.admin.auth.idps.delete")}
+              </Button>
+            </>
+          )}
+        </div>
+      </div>
+
+      {showCallback && callback.data && (
+        <div className="flex items-center gap-2 rounded-md border border-border p-2">
+          <code
+            className="flex-1 break-all text-xs text-fg-muted"
+            data-testid={`auth-idp-callback-url-${idp.alias}`}
+          >
+            {callback.data.callbackUrl}
+          </code>
+          <Button
+            size="sm"
+            variant="outline"
+            onPress={() => void navigator.clipboard?.writeText(callback.data!.callbackUrl)}
+            data-testid={`auth-idp-callback-copy-${idp.alias}`}
+          >
+            {t("feature.admin.auth.idps.copy")}
+          </Button>
+        </div>
+      )}
+
+      <LiveRegion
+        tone="polite"
+        className="text-xs"
+        data-testid={`auth-idp-test-result-${idp.alias}`}
+      >
+        {test.isPending
+          ? t("auth.status.loading")
+          : test.isError
+            ? t("feature.admin.auth.idps.testError")
+            : testResult
+              ? t(`feature.admin.auth.idps.testResult.${testResult}`)
+              : ""}
+      </LiveRegion>
     </div>
   );
 }
@@ -180,7 +294,7 @@ function providerItems(t: (k: string) => string): SelectItem[] {
 function CreateIdpDialog({ onClose }: { onClose: () => void }) {
   const t = useTranslation();
   const create = useCreateIdp();
-  const { control, handleSubmit, watch } = useForm<CreateIdpForm>({
+  const { control, handleSubmit, watch, setValue } = useForm<CreateIdpForm>({
     resolver: zodResolver(CreateIdpFormSchema),
     defaultValues: {
       alias: "",
@@ -188,8 +302,10 @@ function CreateIdpDialog({ onClose }: { onClose: () => void }) {
       providerId: "oidc",
       clientId: "",
       clientSecret: "",
+      issuer: "",
       authorizationUrl: "",
       tokenUrl: "",
+      userInfoUrl: "",
       scopes: "",
       trustEmail: false,
     },
@@ -205,8 +321,10 @@ function CreateIdpDialog({ onClose }: { onClose: () => void }) {
       clientSecret: v.clientSecret,
       trustEmail: v.trustEmail,
       enabled: true,
+      ...(v.issuer ? { issuer: v.issuer } : {}),
       ...(v.authorizationUrl ? { authorizationUrl: v.authorizationUrl } : {}),
       ...(v.tokenUrl ? { tokenUrl: v.tokenUrl } : {}),
+      ...(v.userInfoUrl ? { userInfoUrl: v.userInfoUrl } : {}),
       ...(v.scopes ? { scopes: v.scopes } : {}),
     };
     create.mutate(payload, { onSuccess: onClose });
@@ -262,6 +380,14 @@ function CreateIdpDialog({ onClose }: { onClose: () => void }) {
         />
         {providerId === "oidc" && (
           <>
+            <DiscoveryImport
+              onImported={(m) => {
+                setValue("issuer", m.issuer, { shouldValidate: true });
+                setValue("authorizationUrl", m.authorizationEndpoint, { shouldValidate: true });
+                setValue("tokenUrl", m.tokenEndpoint, { shouldValidate: true });
+                setValue("userInfoUrl", m.userInfoEndpoint ?? "", { shouldValidate: true });
+              }}
+            />
             <TextField
               control={control}
               name="authorizationUrl"
@@ -449,6 +575,256 @@ function DeleteIdpDialog({ idp, onClose }: { idp: IdpSummary; onClose: () => voi
           {t("feature.admin.auth.idps.delete")}
         </Button>
       </div>
+    </Dialog>
+  );
+}
+
+/**
+ * OIDC discovery import (ADR-0046). Paste an issuer; the BFF fetches + validates
+ * the discovery document and JWKS, and on success the parent populates the URL
+ * fields from the returned minimal metadata. No secret involved.
+ */
+function DiscoveryImport({ onImported }: { onImported: (m: OidcDiscoveryMetadata) => void }) {
+  const t = useTranslation();
+  const discover = useDiscoverOidc();
+  const [issuer, setIssuer] = useState("");
+  const result = discover.data?.validation.result;
+
+  function run() {
+    const value = issuer.trim();
+    if (!value) return;
+    discover.mutate(
+      { issuer: value },
+      {
+        onSuccess: (r) => {
+          if (r.metadata) onImported(r.metadata);
+        },
+      }
+    );
+  }
+
+  return (
+    <div className="rounded-md border border-border p-3" data-testid="auth-idp-discovery">
+      <FormField
+        label={t("feature.admin.auth.idps.discoveryLabel")}
+        description={t("feature.admin.auth.idps.discoveryHelper")}
+        value={issuer}
+        onChange={setIssuer}
+        inputProps={{ "data-testid": "auth-idp-discovery-issuer" }}
+      />
+      <div className="mt-2 flex items-center gap-2">
+        <Button
+          size="sm"
+          variant="outline"
+          type="button"
+          isDisabled={discover.isPending || !issuer.trim()}
+          onPress={run}
+          data-testid="auth-idp-discovery-import"
+        >
+          {t("feature.admin.auth.idps.discoveryImport")}
+        </Button>
+        <LiveRegion tone="polite" className="text-xs" data-testid="auth-idp-discovery-status">
+          {discover.isPending
+            ? t("auth.status.loading")
+            : discover.isError
+              ? t("feature.admin.auth.idps.discoveryError")
+              : result
+                ? t(`feature.admin.auth.idps.testResult.${result}`)
+                : ""}
+        </LiveRegion>
+      </div>
+    </div>
+  );
+}
+
+const MappingFormSchema = z.object({
+  claimMappings: z.array(
+    z.object({ upstreamClaim: z.string().min(1), userAttribute: z.string().min(1) })
+  ),
+  roleMappings: z.array(
+    z.object({
+      upstreamClaim: z.string().min(1),
+      claimValue: z.string().min(1),
+      realmRole: z.enum(TENANT_ROLES),
+    })
+  ),
+});
+
+/**
+ * Claim + group/role mapping editor (ADR-0046). Full-replace semantics; role
+ * targets are limited to the tenant roles. Read-only unless `editable`.
+ */
+function MappingDialog({
+  idp,
+  editable,
+  onClose,
+}: {
+  idp: IdpSummary;
+  editable: boolean;
+  onClose: () => void;
+}) {
+  const t = useTranslation();
+  const mapping = useIdpMapping(idp.alias);
+  const update = useUpdateIdpMapping();
+  const { control, handleSubmit } = useForm<IdpMappingConfig>({
+    resolver: zodResolver(MappingFormSchema),
+    values: mapping.data ?? { claimMappings: [], roleMappings: [] },
+  });
+  const claims = useFieldArray({ control, name: "claimMappings" });
+  const roles = useFieldArray({ control, name: "roleMappings" });
+  const roleItems: SelectItem[] = TENANT_ROLES.map((r) => ({ id: r, label: r }));
+
+  function onSubmit(v: IdpMappingConfig) {
+    update.mutate({ alias: idp.alias, input: v }, { onSuccess: onClose });
+  }
+
+  return (
+    <Dialog
+      isOpen
+      onOpenChange={(o) => !o && onClose()}
+      aria-label={`${t("feature.admin.auth.idps.mapping")} ${idp.alias}`}
+    >
+      <h2 className="text-base font-semibold text-fg">
+        {t("feature.admin.auth.idps.mapping")} · {idp.alias}
+      </h2>
+      <p className="mt-1 text-xs text-fg-muted">{t("feature.admin.auth.idps.mappingHelper")}</p>
+      {mapping.isLoading ? (
+        <LoadingState message={t("auth.status.loading")} />
+      ) : (
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="mt-4 space-y-4"
+          data-testid="auth-idp-mapping-form"
+        >
+          <section className="space-y-2">
+            <h3 className="text-sm font-medium text-fg">
+              {t("feature.admin.auth.idps.claimMappings")}
+            </h3>
+            {claims.fields.map((f, i) => (
+              <div key={f.id} className="flex items-end gap-2" data-testid={`auth-idp-claim-${i}`}>
+                <TextField
+                  control={control}
+                  name={`claimMappings.${i}.upstreamClaim`}
+                  label={t("feature.admin.auth.idps.upstreamClaim")}
+                />
+                <TextField
+                  control={control}
+                  name={`claimMappings.${i}.userAttribute`}
+                  label={t("feature.admin.auth.idps.userAttribute")}
+                />
+                {editable && (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    type="button"
+                    onPress={() => claims.remove(i)}
+                    data-testid={`auth-idp-claim-remove-${i}`}
+                  >
+                    {t("feature.admin.auth.idps.removeRow")}
+                  </Button>
+                )}
+              </div>
+            ))}
+            {editable && (
+              <Button
+                size="sm"
+                variant="outline"
+                type="button"
+                onPress={() => claims.append({ upstreamClaim: "", userAttribute: "" })}
+                data-testid="auth-idp-claim-add"
+              >
+                {t("feature.admin.auth.idps.addClaimMapping")}
+              </Button>
+            )}
+          </section>
+
+          <section className="space-y-2">
+            <h3 className="text-sm font-medium text-fg">
+              {t("feature.admin.auth.idps.roleMappings")}
+            </h3>
+            {roles.fields.map((f, i) => (
+              <div key={f.id} className="flex items-end gap-2" data-testid={`auth-idp-role-${i}`}>
+                <TextField
+                  control={control}
+                  name={`roleMappings.${i}.upstreamClaim`}
+                  label={t("feature.admin.auth.idps.upstreamClaim")}
+                />
+                <TextField
+                  control={control}
+                  name={`roleMappings.${i}.claimValue`}
+                  label={t("feature.admin.auth.idps.claimValue")}
+                />
+                <Controller
+                  control={control}
+                  name={`roleMappings.${i}.realmRole`}
+                  render={({ field }) => (
+                    <div>
+                      <label
+                        id={`role-label-${i}`}
+                        className="mb-1 block text-sm font-medium text-fg"
+                      >
+                        {t("feature.admin.auth.idps.realmRole")}
+                      </label>
+                      <Select
+                        items={roleItems}
+                        placeholder={t("feature.admin.auth.idps.realmRole")}
+                        selectedKey={field.value}
+                        aria-labelledby={`role-label-${i}`}
+                        onSelectionChange={(k) => field.onChange(String(k))}
+                        data-testid={`auth-idp-role-select-${i}`}
+                      />
+                    </div>
+                  )}
+                />
+                {editable && (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    type="button"
+                    onPress={() => roles.remove(i)}
+                    data-testid={`auth-idp-role-remove-${i}`}
+                  >
+                    {t("feature.admin.auth.idps.removeRow")}
+                  </Button>
+                )}
+              </div>
+            ))}
+            {editable && (
+              <Button
+                size="sm"
+                variant="outline"
+                type="button"
+                onPress={() =>
+                  roles.append({ upstreamClaim: "", claimValue: "", realmRole: "member" })
+                }
+                data-testid="auth-idp-role-add"
+              >
+                {t("feature.admin.auth.idps.addRoleMapping")}
+              </Button>
+            )}
+          </section>
+
+          {update.isError && (
+            <p role="alert" className="text-sm text-danger" data-testid="auth-idp-mapping-error">
+              {t("feature.admin.auth.idps.mappingError")}
+            </p>
+          )}
+          {editable ? (
+            <DialogActions
+              onClose={onClose}
+              pending={update.isPending}
+              submitLabel={t("feature.admin.auth.idps.save")}
+              submitTestId="auth-idp-mapping-submit"
+            />
+          ) : (
+            <div className="flex justify-end pt-2">
+              <Button variant="outline" size="sm" type="button" onPress={onClose}>
+                {t("feature.admin.auth.idps.cancel")}
+              </Button>
+            </div>
+          )}
+        </form>
+      )}
     </Dialog>
   );
 }

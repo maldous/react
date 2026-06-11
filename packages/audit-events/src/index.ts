@@ -34,6 +34,8 @@ export const AuditAction = {
   AuthSettingsCredentialAttached: "auth_settings.credential.attached",
   AuthSettingsCredentialRotated: "auth_settings.credential.rotated",
   AuthSettingsCredentialRepaired: "auth_settings.credential.repaired",
+  AuthSettingsIdpTested: "auth_settings.idp.tested",
+  AuthSettingsIdpMappingChanged: "auth_settings.idp.mapping.changed",
   ConfigValueChanged: "config.value_changed",
   ConfigValueCleared: "config.value_cleared",
 } as const;

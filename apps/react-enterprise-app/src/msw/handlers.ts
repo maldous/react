@@ -83,6 +83,48 @@ export function adminAuthProvidersHandler(response = authProvidersFixture) {
 export function adminIdpsHandler(response = idpsFixture) {
   return http.get("/api/auth/settings/idps", () => HttpResponse.json(response));
 }
+// --- OIDC enterprise hardening (ADR-0046) ---
+/** POST /api/auth/settings/idps/oidc/discover. */
+export function adminIdpDiscoverHandler(
+  response = {
+    metadata: {
+      issuer: "https://idp.example.com",
+      authorizationEndpoint: "https://idp.example.com/authorize",
+      tokenEndpoint: "https://idp.example.com/token",
+      userInfoEndpoint: "https://idp.example.com/userinfo",
+      jwksUri: "https://idp.example.com/jwks",
+    },
+    validation: { result: "ok", issuerValid: true, jwksValid: true, jwksKeyCount: 2 },
+  }
+) {
+  return http.post("/api/auth/settings/idps/oidc/discover", () => HttpResponse.json(response));
+}
+/** GET /api/auth/settings/idps/:alias/callback-url. */
+export function adminIdpCallbackUrlHandler(
+  callbackUrl = "https://kc.test/realms/tenant-1/broker/mock-google/endpoint"
+) {
+  return http.get("/api/auth/settings/idps/:alias/callback-url", ({ params }) =>
+    HttpResponse.json({ alias: String(params["alias"]), callbackUrl })
+  );
+}
+/** POST /api/auth/settings/idps/:alias/test-connection. */
+export function adminIdpTestConnectionHandler(
+  response = { result: "ok", issuerValid: true, jwksValid: true, jwksKeyCount: 2 }
+) {
+  return http.post("/api/auth/settings/idps/:alias/test-connection", () =>
+    HttpResponse.json(response)
+  );
+}
+/** GET + PATCH /api/auth/settings/idps/:alias/mapping. */
+export function adminIdpMappingHandler(response = { claimMappings: [], roleMappings: [] }) {
+  return http.get("/api/auth/settings/idps/:alias/mapping", () => HttpResponse.json(response));
+}
+export function adminIdpMappingUpdateHandler() {
+  return http.patch("/api/auth/settings/idps/:alias/mapping", async ({ request }) =>
+    HttpResponse.json(await request.json())
+  );
+}
+
 /** GET /api/auth/settings/mfa + /session. */
 export function adminMfaHandler(response = mfaFixture) {
   return http.get("/api/auth/settings/mfa", () => HttpResponse.json(response));

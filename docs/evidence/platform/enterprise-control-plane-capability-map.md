@@ -42,14 +42,14 @@ visible.
 | storage | operations | — | deferred | | deferred |
 | observability | operations | /admin/logs | partial | | deferred |
 | integrations_webhooks | integrations | — | deferred | | deferred |
-| oidc_discovery | authentication | — | deferred | | deferred |
-| oidc_issuer_validation | authentication | — | deferred | | deferred |
-| oidc_jwks_validation | authentication | — | deferred | | deferred |
-| oidc_claim_mapping | authentication | — | deferred | | deferred |
-| oidc_group_role_mapping | authentication | — | deferred | | deferred |
-| oidc_test_connection | authentication | — | deferred | | deferred |
-| oidc_callback_display | authentication | — | deferred | | deferred |
-| oidc_login_simulation | authentication | — | deferred | | deferred |
+| oidc_discovery | authentication | /admin/auth | implemented | | invariant (discover usecase + live proof, ADR-0046) |
+| oidc_issuer_validation | authentication | — | implemented | | invariant (issuer-match validation + live proof, ADR-0046) |
+| oidc_jwks_validation | authentication | — | implemented | | invariant (JWKS-usability validation + live proof, ADR-0046) |
+| oidc_claim_mapping | authentication | /admin/auth | partial | | deferred (configured, not login-exercised) |
+| oidc_group_role_mapping | authentication | /admin/auth | partial | | deferred (configured, not login-exercised) |
+| oidc_test_connection | authentication | /admin/auth | implemented | | invariant (test-connection usecase + live proof, ADR-0046) |
+| oidc_callback_display | authentication | /admin/auth | implemented | | invariant (pure derivation from tenant context, ADR-0046) |
+| oidc_login_simulation | authentication | — | deferred | | deferred (no honest non-interactive proof) |
 
 **Required (block tenant usability):** tenant_record, tenant_fqdn, tenant_admin, auth_credential,
 auth_providers, session_policy, mfa_policy. IdP is optional (only when external login is expected).

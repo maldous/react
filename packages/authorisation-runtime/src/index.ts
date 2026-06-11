@@ -129,6 +129,11 @@ export interface RealmAdminPort {
   updateIdentityProvider(alias: string, idp: IdentityProvider): Promise<void>;
   deleteIdentityProvider(alias: string): Promise<void>;
 
+  // IdP claim/group-role mappers for OIDC enterprise hardening (ADR-0046).
+  listIdentityProviderMappers(alias: string): Promise<IdentityProviderMapper[]>;
+  upsertIdentityProviderMapper(alias: string, mapper: IdentityProviderMapper): Promise<void>;
+  deleteIdentityProviderMapper(alias: string, mapperId: string): Promise<void>;
+
   // MFA policy
   getMfaPolicy(): Promise<MfaPolicy>;
   setMfaPolicy(policy: MfaPolicy): Promise<void>;
@@ -152,6 +157,16 @@ export interface RealmAdminPort {
   createGroup(name: string): Promise<string>; // returns new group ID
   updateGroup(groupId: string, name: string, existing: KeycloakGroup): Promise<void>;
   deleteGroup(groupId: string): Promise<void>;
+}
+
+/** Keycloak identity-provider mapper (claim → attribute, or claim → realm role). */
+export interface IdentityProviderMapper {
+  id?: string;
+  name: string;
+  identityProviderAlias: string;
+  /** e.g. "oidc-user-attribute-idp-mapper", "oidc-role-idp-mapper". */
+  identityProviderMapper: string;
+  config: Record<string, string>;
 }
 
 /** Keycloak group representation (top-level groups in a tenant realm). */
