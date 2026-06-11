@@ -220,3 +220,99 @@ export const TenantAuthProvidersResponseSchema = z.object({
   availableProviders: z.array(ProductProviderIdSchema),
 });
 export type TenantAuthProvidersResponse = z.infer<typeof TenantAuthProvidersResponseSchema>;
+
+// ---------------------------------------------------------------------------
+// Platform Configuration Registry (ADR-0039) — GET/PATCH/DELETE /api/org/config
+// Definitions live server-side; these are the serialised shapes the SPA consumes.
+// ---------------------------------------------------------------------------
+
+export const CONFIG_VALUE_TYPES = ["boolean", "string", "number", "json", "enum"] as const;
+export const ConfigValueTypeSchema = z.enum(CONFIG_VALUE_TYPES);
+export type ConfigValueType = z.infer<typeof ConfigValueTypeSchema>;
+
+export const CONFIG_CATEGORIES = [
+  "auth",
+  "features",
+  "integrations",
+  "security",
+  "branding",
+  "system",
+] as const;
+export const ConfigCategorySchema = z.enum(CONFIG_CATEGORIES);
+export type ConfigCategory = z.infer<typeof ConfigCategorySchema>;
+
+export const ConfigLifecycleSchema = z.enum(["active", "deprecated", "internal"]);
+export type ConfigLifecycle = z.infer<typeof ConfigLifecycleSchema>;
+
+/** Serialised config definition (the registry entry the SPA renders from). */
+export const ConfigDefinitionDtoSchema = z.object({
+  key: z.string(),
+  category: ConfigCategorySchema,
+  labelKey: z.string(),
+  descriptionKey: z.string(),
+  valueType: ConfigValueTypeSchema,
+  defaultValue: z.unknown(),
+  allowedValues: z.array(z.string()).nullable(),
+  tenantOverridable: z.boolean(),
+  requiredPermissionRead: z.string(),
+  requiredPermissionWrite: z.string(),
+  lifecycle: ConfigLifecycleSchema,
+});
+export type ConfigDefinitionDto = z.infer<typeof ConfigDefinitionDtoSchema>;
+
+export const ConfigSourceSchema = z.enum(["default", "tenant_override"]);
+export type ConfigSource = z.infer<typeof ConfigSourceSchema>;
+
+export const EffectiveConfigItemSchema = z.object({
+  definition: ConfigDefinitionDtoSchema,
+  value: z.unknown(),
+  source: ConfigSourceSchema,
+});
+export type EffectiveConfigItem = z.infer<typeof EffectiveConfigItemSchema>;
+
+export const ConfigListResponseSchema = z.object({ items: z.array(EffectiveConfigItemSchema) });
+export type ConfigListResponse = z.infer<typeof ConfigListResponseSchema>;
+
+/** `PATCH /api/org/config/:key` — set a tenant override. The value is validated against
+ * the definition server-side via validateConfigValue. */
+export const UpdateConfigValueRequestSchema = z.object({ value: z.unknown() }).strict();
+export type UpdateConfigValueRequest = z.infer<typeof UpdateConfigValueRequestSchema>;
+
+/** Validate a value against a definition's type + allowed values. Pure; returns error
+ * messages (empty ⇒ valid). Shared by the BFF (write) and available to the SPA. */
+export function validateConfigValue(input: {
+  valueType: ConfigValueType;
+  allowedValues?: readonly string[] | null;
+  value: unknown;
+}): string[] {
+  const { valueType, allowedValues, value } = input;
+  const errors: string[] = [];
+  switch (valueType) {
+    case "boolean":
+      if (typeof value !== "boolean") errors.push("value must be a boolean");
+      break;
+    case "string":
+      if (typeof value !== "string") errors.push("value must be a string");
+      break;
+    case "number":
+      if (typeof value !== "number" || Number.isNaN(value)) errors.push("value must be a number");
+      break;
+    case "enum":
+      if (typeof value !== "string" || !allowedValues || !allowedValues.includes(value)) {
+        errors.push("value must be one of the allowed values");
+      }
+      break;
+    case "json":
+      if (value === undefined) {
+        errors.push("value is required");
+      } else {
+        try {
+          JSON.stringify(value);
+        } catch {
+          errors.push("value must be JSON-serialisable");
+        }
+      }
+      break;
+  }
+  return errors;
+}
