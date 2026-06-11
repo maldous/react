@@ -1623,6 +1623,135 @@ export const routes: Route[] = [
     },
   },
   // ---------------------------------------------------------------------------
+  // Platform Configuration Registry (ADR-0039). Generic typed config: effective
+  // value = tenant override → default. Route gate is the coarse tenant.config.*;
+  // the usecase additionally enforces each definition's requiredPermissionWrite.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/org/config",
+    operationName: "org.config.list",
+    requiresAuth: true,
+    requiredPermission: "tenant.config.read",
+    resource: "organisation:config",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const category =
+        new URL(req.raw.url ?? "/", "http://localhost").searchParams.get("category") ?? undefined;
+      const { listEffectiveTenantConfig } = await import("../usecases/platform-config.ts");
+      const items = await listEffectiveTenantConfig(
+        {
+          organisationId: tenantCtx.organisationId,
+          actorPermissions: req.actor!.permissions,
+          category,
+        },
+        getApplicationPool()
+      );
+      res.json(200, { items });
+    },
+  },
+  {
+    method: "PATCH",
+    path: "/api/org/config/:key",
+    operationName: "org.config.set",
+    requiresAuth: true,
+    requiredPermission: "tenant.config.write",
+    resource: "organisation:config",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const key = req.params["key"] ?? "";
+      const { setTenantConfigValue } = await import("../usecases/platform-config.ts");
+      const result = await setTenantConfigValue(
+        {
+          organisationId: tenantCtx.organisationId,
+          key,
+          rawBody: req.body,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          actorPermissions: req.actor!.permissions,
+        },
+        { audit: createPostgresAuditEventPort(getApplicationPool()), pool: getApplicationPool() }
+      );
+      if (result.kind === "invalid_body") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Unknown configuration key" });
+        return;
+      }
+      if (result.kind === "not_overridable") {
+        res.json(422, {
+          code: "VALIDATION_ERROR",
+          message: "This setting is not tenant-overridable",
+        });
+        return;
+      }
+      if (result.kind === "forbidden") {
+        res.json(403, { code: "FORBIDDEN", message: "Insufficient permission for this setting" });
+        return;
+      }
+      res.json(204, null);
+    },
+  },
+  {
+    method: "DELETE",
+    path: "/api/org/config/:key",
+    operationName: "org.config.clear",
+    requiresAuth: true,
+    requiredPermission: "tenant.config.write",
+    resource: "organisation:config",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const key = req.params["key"] ?? "";
+      const { clearTenantConfigOverride } = await import("../usecases/platform-config.ts");
+      const result = await clearTenantConfigOverride(
+        {
+          organisationId: tenantCtx.organisationId,
+          key,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          actorPermissions: req.actor!.permissions,
+        },
+        { audit: createPostgresAuditEventPort(getApplicationPool()), pool: getApplicationPool() }
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Unknown configuration key" });
+        return;
+      }
+      if (result.kind === "not_overridable") {
+        res.json(422, {
+          code: "VALIDATION_ERROR",
+          message: "This setting is not tenant-overridable",
+        });
+        return;
+      }
+      if (result.kind === "forbidden") {
+        res.json(403, { code: "FORBIDDEN", message: "Insufficient permission for this setting" });
+        return;
+      }
+      res.json(204, null);
+    },
+  },
+  // ---------------------------------------------------------------------------
   // Sub-organisation management (ADR-ACT-0143 Slice 3)
   // Tenant admin manages sub-organisations inside their own tenant.
   // Sub-orgs are Tier 2: share parent Keycloak realm, no new infrastructure.

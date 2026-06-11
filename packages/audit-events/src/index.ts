@@ -31,6 +31,8 @@ export const AuditAction = {
   AuthSettingsSessionChanged: "auth_settings.session.changed",
   AuthSettingsSysadminBrokeringChanged: "auth_settings.sysadmin_brokering.changed",
   AuthSettingsProvidersChanged: "auth_settings.providers.changed",
+  ConfigValueChanged: "config.value_changed",
+  ConfigValueCleared: "config.value_cleared",
 } as const;
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction];

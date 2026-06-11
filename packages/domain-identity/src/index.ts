@@ -203,6 +203,8 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     "tenant.features.update",
     "tenant.auth.settings.read",
     "tenant.auth.settings.write",
+    "tenant.config.read",
+    "tenant.config.write",
     "tenant.audit.read",
     "tenant.clickthrough.keycloak",
     "tenant.clickthrough.mailpit",
