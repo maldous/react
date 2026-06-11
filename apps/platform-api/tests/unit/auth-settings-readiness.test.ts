@@ -16,6 +16,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { z } from "zod";
+import { CredentialSecretRequestSchema } from "@platform/contracts-admin";
 import type { RealmReadinessProbe } from "@platform/authorisation-runtime";
 import { AuditAction, type AuditEventPort, type AuditEvent } from "@platform/audit-events";
 import {
@@ -433,5 +434,25 @@ describe("applyCredentialLifecycle", () => {
     assert.equal(result.kind, "invalid_body");
     assert.equal(probed, false);
     assert.equal(store.sets.length, 0);
+  });
+});
+
+describe("CredentialSecretRequestSchema — body cannot carry tenant authority", () => {
+  it("accepts only clientId + clientSecret", () => {
+    assert.equal(
+      CredentialSecretRequestSchema.safeParse({ clientId: "c", clientSecret: "s" }).success,
+      true
+    );
+  });
+
+  it("rejects a body that tries to smuggle a tenantId/organisationId", () => {
+    assert.equal(
+      CredentialSecretRequestSchema.safeParse({
+        clientId: "c",
+        clientSecret: "s",
+        organisationId: "00000000-0000-0000-0000-000000000099",
+      }).success,
+      false
+    );
   });
 });

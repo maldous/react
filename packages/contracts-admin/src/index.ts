@@ -300,6 +300,37 @@ export const AttachAuthCredentialRequestSchema = z
   .strict();
 export type AttachAuthCredentialRequest = z.infer<typeof AttachAuthCredentialRequestSchema>;
 
+/**
+ * Rotate/repair body for the path-scoped lifecycle routes (ADR-0044). The target
+ * tenant comes from the URL path (system-admin, global scope) — NOT the body —
+ * so the body carries only the write-only credential. The secret is never echoed.
+ */
+export const CredentialSecretRequestSchema = z
+  .object({
+    clientId: z.string().min(1).max(255),
+    clientSecret: z.string().min(1).max(4096),
+  })
+  .strict();
+export type CredentialSecretRequest = z.infer<typeof CredentialSecretRequestSchema>;
+
+/** Secret-free credential lifecycle metadata (ADR-0044). */
+export const CredentialMetadataSchema = z.object({
+  clientId: z.string(),
+  createdAt: z.string().nullable(),
+  updatedAt: z.string().nullable(),
+  lastValidatedAt: z.string().nullable(),
+  lastRotatedAt: z.string().nullable(),
+  rotatedBy: z.string().nullable(),
+});
+export type CredentialMetadataDto = z.infer<typeof CredentialMetadataSchema>;
+
+/** `GET /api/admin/tenants/:tenantId/auth-settings-credential/readiness`. */
+export const CredentialReadinessResponseSchema = z.object({
+  status: AuthReadinessStatusSchema,
+  metadata: CredentialMetadataSchema.nullable(),
+});
+export type CredentialReadinessResponse = z.infer<typeof CredentialReadinessResponseSchema>;
+
 // ---------------------------------------------------------------------------
 // Per-tenant authentication provider config (ADR-0037) — greenfield
 // GET/PATCH /api/auth/settings/providers

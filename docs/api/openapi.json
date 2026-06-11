@@ -2040,6 +2040,151 @@
           }
         }
       }
+    },
+    "/api/admin/tenants/:tenantId/auth-settings-credential/readiness": {
+      "get": {
+        "summary": "Get a tenant's auth-settings credential readiness + metadata",
+        "operationId": "getTenantCredentialReadiness",
+        "description": "System-admin (global). Returns readiness status + secret-free lifecycle metadata (clientId, last validated/rotated, rotated by). ADR-0044.",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Readiness + metadata"
+          }
+        }
+      }
+    },
+    "/api/admin/tenants/:tenantId/auth-settings-credential/rotate": {
+      "post": {
+        "summary": "Rotate a tenant's auth-settings credential",
+        "operationId": "rotateTenantCredential",
+        "description": "System-admin (global). Validates the new credential against the tenant realm BEFORE storing; on failure the existing credential is preserved. Secret never returned/logged/audited. ADR-0044.",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["clientId", "clientSecret"],
+                "properties": {
+                  "clientId": {
+                    "type": "string"
+                  },
+                  "clientSecret": {
+                    "type": "string",
+                    "description": "Write-only; validated then stored encrypted, never returned."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Rotated"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "422": {
+            "description": "Credential lacks realm-management permission"
+          },
+          "502": {
+            "description": "Credential rejected or realm unreachable"
+          }
+        }
+      }
+    },
+    "/api/admin/tenants/:tenantId/auth-settings-credential/repair": {
+      "post": {
+        "summary": "Repair a tenant's auth-settings credential",
+        "operationId": "repairTenantCredential",
+        "description": "System-admin (global). Operator-provided repair for a missing/broken credential; validates before storing. Secret never returned/logged/audited. ADR-0044.",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["clientId", "clientSecret"],
+                "properties": {
+                  "clientId": {
+                    "type": "string"
+                  },
+                  "clientSecret": {
+                    "type": "string",
+                    "description": "Write-only; validated then stored encrypted, never returned."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Repaired"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "422": {
+            "description": "Credential lacks realm-management permission"
+          },
+          "502": {
+            "description": "Credential rejected or realm unreachable"
+          }
+        }
+      }
     }
   },
   "components": {

@@ -21,6 +21,7 @@ import {
 import { getStoredTenantAuthProviders } from "../usecases/auth-provider-config.ts";
 import {
   AttachAuthCredentialRequestSchema,
+  CredentialSecretRequestSchema,
   CreateIdpRequestSchema,
   UpdateIdpRequestSchema,
   type TenantAuthProvidersConfig,
@@ -45,6 +46,8 @@ import {
 import {
   getAuthSettingsReadiness,
   attachAuthSettingsCredential,
+  applyCredentialLifecycle,
+  type AttachCredentialResult,
 } from "../usecases/auth-settings-readiness.ts";
 import {
   toIdpSummary,
@@ -112,6 +115,42 @@ function sendAuthSettingsFailure(
     case "not_found":
       res.json(404, { code: "NOT_FOUND", message: "Identity provider not found" });
       return true;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Shared mapping of a credential lifecycle result (attach/rotate/repair) to an
+// HTTP response (ADR-0044). The secret never appears in any message.
+// ---------------------------------------------------------------------------
+function sendCredentialResult(
+  res: { json: (status: number, body: unknown) => void },
+  result: AttachCredentialResult
+): void {
+  switch (result.kind) {
+    case "configured":
+      res.json(204, null);
+      return;
+    case "invalid_body":
+      res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+      return;
+    case "invalid_credential":
+      res.json(502, {
+        code: "INVALID_CREDENTIAL",
+        message: "The supplied credential was rejected by the realm",
+      });
+      return;
+    case "forbidden_realm_operation":
+      res.json(422, {
+        code: "FORBIDDEN_REALM_OPERATION",
+        message: "The supplied credential lacks realm-management permission",
+      });
+      return;
+    case "realm_unreachable":
+      res.json(502, {
+        code: "REALM_UNREACHABLE",
+        message: "The identity realm could not be reached",
+      });
+      return;
   }
 }
 
@@ -897,32 +936,132 @@ export const routes: Route[] = [
             }),
         }
       );
-      switch (result.kind) {
-        case "configured":
-          res.json(204, null);
-          return;
-        case "invalid_body":
-          res.json(400, { code: "VALIDATION_ERROR", message: result.message });
-          return;
-        case "invalid_credential":
-          res.json(502, {
-            code: "INVALID_CREDENTIAL",
-            message: "The supplied credential was rejected by the realm",
-          });
-          return;
-        case "forbidden_realm_operation":
-          res.json(422, {
-            code: "FORBIDDEN_REALM_OPERATION",
-            message: "The supplied credential lacks realm-management permission",
-          });
-          return;
-        case "realm_unreachable":
-          res.json(502, {
-            code: "REALM_UNREACHABLE",
-            message: "The identity realm could not be reached",
-          });
-          return;
+      sendCredentialResult(res, result);
+    },
+  },
+  // ADR-0044: credential lifecycle (rotate / repair / readiness) for a SPECIFIC
+  // tenant. Global scope, system-admin only. The target tenant comes from the URL
+  // path; the realm name is derived deterministically; the body carries ONLY the
+  // write-only credential and can never confer tenant authority. Secret is never
+  // returned, logged, or audited.
+  {
+    method: "GET",
+    path: "/api/admin/tenants/:tenantId/auth-settings-credential/readiness",
+    operationName: "admin.tenants.authSettingsCredential.readiness",
+    requiresAuth: true,
+    requiredPermission: "platform.tenants.read",
+    resource: "admin:tenants",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      const realmName = `tenant-${tenantId}`;
+      const store = new PostgresTenantCredentialStore(getApplicationPool());
+      const readiness = await getAuthSettingsReadiness(
+        { organisationId: tenantId, realmName },
+        {
+          credentialStore: store,
+          makeProbe: (cred, realm) =>
+            new KeycloakRealmAdminAdapter({
+              url: getKeycloakConfigForRealm(realm).url,
+              realm,
+              adminClientId: cred.clientId,
+              adminClientSecret: cred.clientSecret,
+            }),
+        }
+      );
+      const metadata = await store.getAuthSettingsCredentialMetadata(tenantId);
+      res.json(200, { status: readiness.status, metadata });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/tenants/:tenantId/auth-settings-credential/rotate",
+    operationName: "admin.tenants.authSettingsCredential.rotate",
+    requiresAuth: true,
+    requiredPermission: "platform.tenants.create",
+    resource: "admin:tenants",
+    umaScope: "create" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const parsed = CredentialSecretRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid request body",
+        });
+        return;
       }
+      const tenantId = req.params["tenantId"] ?? "";
+      const result = await applyCredentialLifecycle(
+        "rotate",
+        {
+          organisationId: tenantId,
+          realmName: `tenant-${tenantId}`,
+          clientId: parsed.data.clientId,
+          clientSecret: parsed.data.clientSecret,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          credentialStore: new PostgresTenantCredentialStore(getApplicationPool()),
+          makeProbe: (cred, realm) =>
+            new KeycloakRealmAdminAdapter({
+              url: getKeycloakConfigForRealm(realm).url,
+              realm,
+              adminClientId: cred.clientId,
+              adminClientSecret: cred.clientSecret,
+            }),
+        }
+      );
+      sendCredentialResult(res, result);
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/tenants/:tenantId/auth-settings-credential/repair",
+    operationName: "admin.tenants.authSettingsCredential.repair",
+    requiresAuth: true,
+    requiredPermission: "platform.tenants.create",
+    resource: "admin:tenants",
+    umaScope: "create" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const parsed = CredentialSecretRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid request body",
+        });
+        return;
+      }
+      const tenantId = req.params["tenantId"] ?? "";
+      const result = await applyCredentialLifecycle(
+        "repair",
+        {
+          organisationId: tenantId,
+          realmName: `tenant-${tenantId}`,
+          clientId: parsed.data.clientId,
+          clientSecret: parsed.data.clientSecret,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          credentialStore: new PostgresTenantCredentialStore(getApplicationPool()),
+          makeProbe: (cred, realm) =>
+            new KeycloakRealmAdminAdapter({
+              url: getKeycloakConfigForRealm(realm).url,
+              realm,
+              adminClientId: cred.clientId,
+              adminClientSecret: cred.clientSecret,
+            }),
+        }
+      );
+      sendCredentialResult(res, result);
     },
   },
   {
