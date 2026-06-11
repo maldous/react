@@ -13,6 +13,73 @@ import { z } from "zod";
 export const packageName = "@platform/contracts-admin";
 
 // ---------------------------------------------------------------------------
+// Enterprise control-plane capability map + tenant readiness (ADR-0045)
+// GET /api/org/readiness — self-describing capability inventory + tenant status.
+// ---------------------------------------------------------------------------
+
+export const CAPABILITY_CATEGORIES = [
+  "identity",
+  "authentication",
+  "configuration",
+  "operations",
+  "integrations",
+] as const;
+export const CapabilityCategorySchema = z.enum(CAPABILITY_CATEGORIES);
+export type CapabilityCategory = z.infer<typeof CapabilityCategorySchema>;
+
+/** How complete the platform's implementation of a capability is. */
+export const CAPABILITY_IMPLEMENTATION_STATUSES = ["implemented", "partial", "deferred"] as const;
+export const CapabilityImplementationStatusSchema = z.enum(CAPABILITY_IMPLEMENTATION_STATUSES);
+export type CapabilityImplementationStatus = z.infer<typeof CapabilityImplementationStatusSchema>;
+
+/** Per-capability readiness for a given tenant. `deferred` = not yet checkable;
+ * `unknown` = check could not run. Neither is ever reported as `ready`. */
+export const CAPABILITY_READINESS_STATUSES = [
+  "ready",
+  "incomplete",
+  "blocked",
+  "degraded",
+  "unknown",
+  "deferred",
+] as const;
+export const CapabilityReadinessSchema = z.enum(CAPABILITY_READINESS_STATUSES);
+export type CapabilityReadiness = z.infer<typeof CapabilityReadinessSchema>;
+
+/** Aggregated tenant readiness over the `required` capabilities. */
+export const TENANT_READINESS_STATUSES = [
+  "ready",
+  "incomplete",
+  "blocked",
+  "degraded",
+  "unknown",
+] as const;
+export const TenantReadinessStatusSchema = z.enum(TENANT_READINESS_STATUSES);
+export type TenantReadinessStatus = z.infer<typeof TenantReadinessStatusSchema>;
+
+export const CapabilitySummarySchema = z.object({
+  key: z.string(),
+  category: CapabilityCategorySchema,
+  /** i18n keys; SPA translates. Keeps admin text out of the BFF (ADR-0026). */
+  labelKey: z.string(),
+  descriptionKey: z.string(),
+  /** Admin route that manages this capability, or null (no UI / system-admin). */
+  adminRoute: z.string().nullable(),
+  implementationStatus: CapabilityImplementationStatusSchema,
+  readiness: CapabilityReadinessSchema,
+  /** Whether the tenant is unusable without this capability (drives `overall`). */
+  required: z.boolean(),
+  /** Optional i18n key for a missing-action hint when not ready. */
+  detailKey: z.string().nullable(),
+});
+export type CapabilitySummary = z.infer<typeof CapabilitySummarySchema>;
+
+export const TenantReadinessResponseSchema = z.object({
+  overall: TenantReadinessStatusSchema,
+  capabilities: z.array(CapabilitySummarySchema),
+});
+export type TenantReadinessResponse = z.infer<typeof TenantReadinessResponseSchema>;
+
+// ---------------------------------------------------------------------------
 // Shared
 // ---------------------------------------------------------------------------
 

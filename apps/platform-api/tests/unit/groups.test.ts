@@ -556,10 +556,14 @@ describe("permission model — groups", () => {
 
   it("DELETE /api/org/groups/:groupId uses tenant.groups.delete (not tenant.admin.access)", () => {
     const src = readFileSync(join(_dir, "../../src/server/routes.ts"), "utf8");
-    const deleteGroupBlock = src
-      .split("org.groups.delete")
-      .find((seg) => seg.includes("tenant.groups.delete"));
-    assert.ok(deleteGroupBlock, "DELETE group route block must use tenant.groups.delete");
+    // Scope to JUST the groups-delete route block (up to the next route's
+    // operationName) so unrelated later routes can't leak into the assertion.
+    const afterDelete = src.split('operationName: "org.groups.delete"')[1] ?? "";
+    const deleteGroupBlock = afterDelete.split("operationName:")[0];
+    assert.ok(
+      deleteGroupBlock?.includes("tenant.groups.delete"),
+      "DELETE group route block must use tenant.groups.delete"
+    );
     assert.ok(
       !deleteGroupBlock?.includes('"tenant.admin.access"'),
       "DELETE group route must NOT use tenant.admin.access"

@@ -39,7 +39,9 @@ const PROBE_TO_STATUS: Record<
   unreachable: "realm_unreachable",
 };
 
-function mapProbe(probe: RealmReadinessProbe): Exclude<AuthReadinessStatus, "missing_credential"> {
+export function mapProbe(
+  probe: RealmReadinessProbe
+): Exclude<AuthReadinessStatus, "missing_credential"> {
   return probe === "ok" ? "configured" : PROBE_TO_STATUS[probe];
 }
 

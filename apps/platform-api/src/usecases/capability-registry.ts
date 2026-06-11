@@ -1,0 +1,298 @@
+import type {
+  CapabilityCategory,
+  CapabilityImplementationStatus,
+  CapabilityReadiness,
+  CapabilitySummary,
+  TenantReadinessResponse,
+  TenantReadinessStatus,
+} from "@platform/contracts-admin";
+import type { AuthReadinessStatus } from "./auth-settings-readiness.ts";
+
+// ---------------------------------------------------------------------------
+// Enterprise control-plane Capability Registry (ADR-0045 / ADR-ACT-0213)
+//
+// A single, server-owned inventory of every enterprise control-plane capability,
+// with its implementation status and how its per-tenant readiness is determined.
+// Readiness is NEVER faked: a capability is `ready` only via a live check
+// (`readinessKind` that consumes a real signal) or a documented local invariant
+// (`invariant-ready`). Anything not yet verifiable is `deferred`/`unknown`.
+//
+// Live IO (probing the credential, counting admins, listing IdPs) happens in the
+// route; `buildTenantReadiness` is a PURE function of the gathered signals so the
+// mapping + aggregation are deterministic and unit-tested.
+// ---------------------------------------------------------------------------
+
+/** How a capability's per-tenant readiness is computed from the signals. */
+export type ReadinessKind =
+  | "tenant-context" // ready by virtue of a resolved tenant
+  | "auth-credential" // from the auth-settings credential readiness probe
+  | "credential-derived" // depends on the credential being configured
+  | "idp-count" // optional; ready when ≥1 IdP, else incomplete
+  | "admin-count" // ready when ≥1 active tenant-admin, else blocked
+  | "providers" // resolved (env default or tenant override) → ready
+  | "invariant-ready" // ready by construction (documented local invariant)
+  | "deferred"; // not yet checkable — never reported ready
+
+export interface CapabilityDefinition {
+  key: string;
+  category: CapabilityCategory;
+  adminRoute: string | null;
+  /** Permission required to manage it (documentation; route gating is separate). */
+  requiredPermission: string | null;
+  implementationStatus: CapabilityImplementationStatus;
+  required: boolean;
+  readinessKind: ReadinessKind;
+  /** Optional i18n key for a missing-action hint when not ready. */
+  detailKey: string | null;
+}
+
+function cap(
+  key: string,
+  category: CapabilityCategory,
+  opts: Partial<Omit<CapabilityDefinition, "key" | "category">>
+): CapabilityDefinition {
+  return {
+    key,
+    category,
+    adminRoute: opts.adminRoute ?? null,
+    requiredPermission: opts.requiredPermission ?? null,
+    implementationStatus: opts.implementationStatus ?? "implemented",
+    required: opts.required ?? false,
+    readinessKind: opts.readinessKind ?? "deferred",
+    detailKey: opts.detailKey ?? null,
+  };
+}
+
+const A = "feature.admin.readiness.cap"; // i18n key prefix
+const labelKey = (key: string): string => `${A}.${key}.label`;
+const descriptionKey = (key: string): string => `${A}.${key}.description`;
+
+export const CAPABILITIES: readonly CapabilityDefinition[] = [
+  // --- Identity ---
+  cap("tenant_record", "identity", {
+    implementationStatus: "implemented",
+    required: true,
+    readinessKind: "tenant-context",
+  }),
+  cap("tenant_fqdn", "identity", {
+    implementationStatus: "implemented",
+    required: true,
+    readinessKind: "tenant-context",
+  }),
+  cap("tenant_admin", "identity", {
+    adminRoute: "/admin/members",
+    requiredPermission: "tenant.members.read",
+    implementationStatus: "implemented",
+    required: true,
+    readinessKind: "admin-count",
+    detailKey: `${A}.tenant_admin.action`,
+  }),
+  cap("member_administration", "identity", {
+    adminRoute: "/admin/members",
+    requiredPermission: "tenant.members.read",
+    implementationStatus: "implemented",
+    readinessKind: "invariant-ready",
+  }),
+  cap("roles_permissions", "identity", {
+    adminRoute: "/admin/members",
+    implementationStatus: "implemented",
+    readinessKind: "invariant-ready",
+  }),
+
+  // --- Authentication (OIDC-first) ---
+  cap("auth_credential", "authentication", {
+    adminRoute: null, // system-admin / API-first (ADR-0044)
+    implementationStatus: "implemented",
+    required: true,
+    readinessKind: "auth-credential",
+    detailKey: `${A}.auth_credential.action`,
+  }),
+  cap("auth_providers", "authentication", {
+    adminRoute: "/admin/auth",
+    requiredPermission: "tenant.auth.settings.read",
+    implementationStatus: "implemented",
+    required: true,
+    readinessKind: "providers",
+  }),
+  cap("session_policy", "authentication", {
+    adminRoute: "/admin/auth",
+    requiredPermission: "tenant.auth.settings.read",
+    implementationStatus: "implemented",
+    required: true,
+    readinessKind: "credential-derived",
+  }),
+  cap("mfa_policy", "authentication", {
+    adminRoute: "/admin/auth",
+    requiredPermission: "tenant.auth.settings.read",
+    implementationStatus: "implemented",
+    required: true,
+    readinessKind: "credential-derived",
+  }),
+  cap("idp_configuration", "authentication", {
+    adminRoute: "/admin/auth",
+    requiredPermission: "tenant.auth.settings.read",
+    implementationStatus: "implemented",
+    required: false,
+    readinessKind: "idp-count",
+    detailKey: `${A}.idp_configuration.action`,
+  }),
+
+  // --- Configuration ---
+  cap("feature_config", "configuration", {
+    adminRoute: "/admin/config",
+    requiredPermission: "tenant.config.read",
+    implementationStatus: "implemented",
+    readinessKind: "invariant-ready",
+  }),
+  cap("branding", "configuration", {
+    adminRoute: "/admin/config",
+    requiredPermission: "tenant.config.read",
+    implementationStatus: "partial",
+    readinessKind: "invariant-ready",
+  }),
+  cap("tenant_domains", "configuration", {
+    implementationStatus: "deferred",
+    readinessKind: "deferred",
+  }),
+  cap("email_sender", "configuration", {
+    implementationStatus: "deferred",
+    readinessKind: "deferred",
+  }),
+
+  // --- Operations ---
+  cap("audit", "operations", {
+    adminRoute: "/admin/logs",
+    requiredPermission: "tenant.audit.read",
+    implementationStatus: "implemented",
+    readinessKind: "invariant-ready",
+  }),
+  cap("storage", "operations", {
+    implementationStatus: "deferred",
+    readinessKind: "deferred",
+  }),
+  cap("observability", "operations", {
+    adminRoute: "/admin/logs",
+    implementationStatus: "partial",
+    readinessKind: "deferred",
+  }),
+
+  // --- Integrations ---
+  cap("integrations_webhooks", "integrations", {
+    implementationStatus: "deferred",
+    readinessKind: "deferred",
+  }),
+
+  // --- OIDC enterprise sub-capabilities (visible, deferred) ---
+  cap("oidc_discovery", "authentication", {
+    implementationStatus: "deferred",
+    readinessKind: "deferred",
+  }),
+  cap("oidc_issuer_validation", "authentication", {
+    implementationStatus: "deferred",
+    readinessKind: "deferred",
+  }),
+  cap("oidc_jwks_validation", "authentication", {
+    implementationStatus: "deferred",
+    readinessKind: "deferred",
+  }),
+  cap("oidc_claim_mapping", "authentication", {
+    implementationStatus: "deferred",
+    readinessKind: "deferred",
+  }),
+  cap("oidc_group_role_mapping", "authentication", {
+    implementationStatus: "deferred",
+    readinessKind: "deferred",
+  }),
+  cap("oidc_test_connection", "authentication", {
+    implementationStatus: "deferred",
+    readinessKind: "deferred",
+  }),
+  cap("oidc_callback_display", "authentication", {
+    implementationStatus: "deferred",
+    readinessKind: "deferred",
+  }),
+  cap("oidc_login_simulation", "authentication", {
+    implementationStatus: "deferred",
+    readinessKind: "deferred",
+  }),
+];
+
+/** Live signals gathered by the route; consumed purely here. */
+export interface ReadinessSignals {
+  /** Auth-settings credential readiness (ADR-0041 probe). */
+  authCredential: AuthReadinessStatus;
+  /** Count of active tenant-admin members. */
+  activeAdminCount: number;
+  /** Configured IdP count, or null when it could not be determined (e.g. the
+   * credential is not configured so the realm cannot be listed). */
+  idpCount: number | null;
+}
+
+function capabilityReadiness(kind: ReadinessKind, s: ReadinessSignals): CapabilityReadiness {
+  switch (kind) {
+    case "tenant-context":
+      return "ready";
+    case "auth-credential":
+      switch (s.authCredential) {
+        case "configured":
+          return "ready";
+        case "missing_credential":
+          return "blocked";
+        case "invalid_credential":
+        case "forbidden_realm_operation":
+        case "realm_unreachable":
+          return "degraded";
+        default:
+          return "unknown";
+      }
+    case "credential-derived":
+      return s.authCredential === "configured" ? "ready" : "unknown";
+    case "idp-count":
+      if (s.idpCount === null) return "unknown";
+      return s.idpCount > 0 ? "ready" : "incomplete";
+    case "admin-count":
+      return s.activeAdminCount > 0 ? "ready" : "blocked";
+    case "providers":
+      return "ready";
+    case "invariant-ready":
+      return "ready";
+    case "deferred":
+      return "deferred";
+  }
+}
+
+// Worst-status-wins precedence over the REQUIRED capabilities.
+const SEVERITY: Record<CapabilityReadiness, number> = {
+  blocked: 5,
+  degraded: 4,
+  incomplete: 3,
+  unknown: 2,
+  ready: 1,
+  deferred: 0,
+};
+
+function aggregate(required: CapabilityReadiness[]): TenantReadinessStatus {
+  let worst: CapabilityReadiness = "ready";
+  for (const r of required) {
+    if (SEVERITY[r] > SEVERITY[worst]) worst = r;
+  }
+  // `deferred` never appears among required capabilities; clamp defensively to ready.
+  return (worst === "deferred" ? "ready" : worst) as TenantReadinessStatus;
+}
+
+/** Pure: map the registry + signals → the tenant readiness response. */
+export function buildTenantReadiness(signals: ReadinessSignals): TenantReadinessResponse {
+  const capabilities: CapabilitySummary[] = CAPABILITIES.map((c) => ({
+    key: c.key,
+    category: c.category,
+    labelKey: labelKey(c.key),
+    descriptionKey: descriptionKey(c.key),
+    adminRoute: c.adminRoute,
+    implementationStatus: c.implementationStatus,
+    readiness: capabilityReadiness(c.readinessKind, signals),
+    required: c.required,
+    detailKey: c.detailKey,
+  }));
+  const overall = aggregate(capabilities.filter((c) => c.required).map((c) => c.readiness));
+  return { overall, capabilities };
+}

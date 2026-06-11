@@ -2185,6 +2185,27 @@
           }
         }
       }
+    },
+    "/api/org/readiness": {
+      "get": {
+        "summary": "Tenant control-plane readiness + capability map",
+        "operationId": "getTenantReadiness",
+        "description": "Returns the enterprise control-plane capability inventory (implementation status) with each capability's per-tenant readiness + the aggregated overall status. Tenant-scoped (FQDN/session). Readiness is live-checked or invariant \u2014 never faked. ADR-0045.",
+        "tags": ["Organisation"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Capability map + readiness"
+          },
+          "400": {
+            "description": "No tenant context"
+          }
+        }
+      }
     }
   },
   "components": {

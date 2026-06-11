@@ -27,7 +27,7 @@ import {
   type TenantAuthProvidersConfig,
 } from "@platform/contracts-admin";
 import { getSessionStore, getApplicationPool, getKeycloakConfigForRealm } from "./dependencies.ts";
-import { queryTenantSchema } from "@platform/adapters-postgres";
+import { queryTenantSchema, withTenant } from "@platform/adapters-postgres";
 import { serverT } from "./i18n.ts";
 import { DEFAULT_THEME } from "@platform/authorisation-runtime";
 import {
@@ -47,8 +47,11 @@ import {
   getAuthSettingsReadiness,
   attachAuthSettingsCredential,
   applyCredentialLifecycle,
+  mapProbe,
   type AttachCredentialResult,
+  type AuthReadinessStatus,
 } from "../usecases/auth-settings-readiness.ts";
+import { buildTenantReadiness } from "../usecases/capability-registry.ts";
 import {
   toIdpSummary,
   buildCreateRepresentation,
@@ -2178,6 +2181,64 @@ export const routes: Route[] = [
         return;
       }
       res.json(200, { events: result.events });
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Enterprise control-plane capability map + tenant readiness (ADR-0045).
+  // Tenant-scoped; tenant comes from the FQDN/session, never the body. Readiness
+  // is computed from live signals (credential probe, active-admin count, IdP
+  // count) + documented invariants — never faked.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/org/readiness",
+    operationName: "org.readiness.get",
+    requiresAuth: true,
+    requiredPermission: "tenant.admin.access",
+    resource: "organisation:readiness",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const pool = getApplicationPool();
+      const store = new PostgresTenantCredentialStore(pool);
+
+      // Signal 1+3: auth-settings credential readiness + IdP count (only when the
+      // credential actually works — otherwise the realm cannot be listed).
+      let authCredential: AuthReadinessStatus = "missing_credential";
+      let idpCount: number | null = null;
+      const cred = await store.getAuthSettingsCredential(tenantCtx.organisationId);
+      if (cred) {
+        const adapter = new KeycloakRealmAdminAdapter({
+          url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
+          realm: tenantCtx.realmName,
+          adminClientId: cred.clientId,
+          adminClientSecret: cred.clientSecret,
+        });
+        try {
+          const probe = await adapter.probeReadiness();
+          authCredential = mapProbe(probe);
+          if (probe === "ok") idpCount = (await adapter.listIdentityProviders()).length;
+        } catch {
+          authCredential = "realm_unreachable";
+        }
+      }
+
+      // Signal 2: active tenant-admin count (RLS-scoped to this tenant).
+      const activeAdminCount = await withTenant(pool, tenantCtx.organisationId, async (client) => {
+        const result = await client.query<{ cnt: number }>(
+          `SELECT count(*)::int AS cnt FROM memberships
+            WHERE organisation_id = $1 AND role = 'tenant-admin' AND status = 'active'`,
+          [tenantCtx.organisationId]
+        );
+        return result.rows[0]?.cnt ?? 0;
+      });
+
+      res.json(200, buildTenantReadiness({ authCredential, activeAdminCount, idpCount }));
     },
   },
   // ---------------------------------------------------------------------------
