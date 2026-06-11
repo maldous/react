@@ -2328,6 +2328,81 @@
         }
       }
     },
+    "/api/org/domains": {
+      "get": {
+        "summary": "List tenant custom domains",
+        "operationId": "listOrgDomains",
+        "description": "Lists the tenant's custom domains with honest per-domain verification, TLS, and routing status (FQDN/session). ADR-0048.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Domain list" },
+          "400": { "description": "No tenant context" }
+        }
+      },
+      "post": {
+        "summary": "Add a tenant custom domain (create ownership challenge)",
+        "operationId": "createOrgDomain",
+        "description": "Creates a DNS-TXT ownership challenge for a domain (audit-first). Returns the PUBLIC TXT record + token to publish. Tenant authority is FQDN/session, never the body. ADR-0048.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "201": { "description": "Challenge created" },
+          "400": { "description": "Validation error or no tenant context" }
+        }
+      }
+    },
+    "/api/org/domains/readiness": {
+      "get": {
+        "summary": "Get tenant custom-domain readiness",
+        "operationId": "getOrgDomainsReadiness",
+        "description": "Returns the classified custom-domain readiness (no_domains / pending_verification / verified / degraded). Never faked. ADR-0048.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Readiness status" },
+          "400": { "description": "No tenant context" }
+        }
+      }
+    },
+    "/api/org/domains/:domain/verify": {
+      "post": {
+        "summary": "Verify a tenant custom domain via DNS",
+        "operationId": "verifyOrgDomain",
+        "description": "Performs a bounded DNS-TXT lookup and classifies the result (verified / dns_mismatch / pending_dns); audit-first on success. ADR-0048.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "parameters": [
+          { "name": "domain", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Classified verification result" },
+          "404": { "description": "No active challenge" },
+          "422": { "description": "Challenge expired" }
+        }
+      }
+    },
+    "/api/org/domains/:domain": {
+      "delete": {
+        "summary": "Remove a tenant custom domain",
+        "operationId": "removeOrgDomain",
+        "description": "Removes the domain from the tenant auth client (audit-first). Tenant authority is FQDN/session. ADR-0048.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "parameters": [
+          { "name": "domain", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "204": { "description": "Removed" },
+          "400": { "description": "Validation error or no tenant context" },
+          "503": { "description": "No realm-admin credential configured" }
+        }
+      }
+    },
     "/api/org/readiness": {
       "get": {
         "summary": "Tenant control-plane readiness + capability map",

@@ -12,6 +12,7 @@ import { Route as AdminAuthRoute } from "./routes/admin/auth";
 import { Route as AdminFeaturesRoute } from "./routes/admin/features";
 import { Route as AdminConfigRoute } from "./routes/admin/config";
 import { Route as AdminEmailRoute } from "./routes/admin/email";
+import { Route as AdminDomainsRoute } from "./routes/admin/domains";
 import { Route as AdminLogsRoute } from "./routes/admin/logs";
 
 // Hand-maintained route tree (no router codegen plugin is configured). Public
@@ -34,6 +35,7 @@ const routeTree = RootRoute.addChildren([
       AdminFeaturesRoute,
       AdminConfigRoute,
       AdminEmailRoute,
+      AdminDomainsRoute,
       AdminLogsRoute,
     ]),
   ]),

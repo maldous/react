@@ -4,6 +4,7 @@ import type {
   CapabilityReadiness,
   CapabilitySummary,
   EmailSenderReadinessStatus,
+  TenantDomainReadinessStatus,
   TenantReadinessResponse,
   TenantReadinessStatus,
 } from "@platform/contracts-admin";
@@ -32,6 +33,7 @@ export type ReadinessKind =
   | "admin-count" // ready when ≥1 active tenant-admin, else blocked
   | "providers" // resolved (env default or tenant override) → ready
   | "email-sender" // from the tenant email sender readiness (ADR-0047)
+  | "tenant-domains" // from the tenant custom-domain readiness (ADR-0048)
   | "invariant-ready" // ready by construction (documented local invariant)
   | "deferred"; // not yet checkable — never reported ready
 
@@ -152,9 +154,15 @@ export const CAPABILITIES: readonly CapabilityDefinition[] = [
     implementationStatus: "partial",
     readinessKind: "invariant-ready",
   }),
+  // Custom domains: DNS-ownership proof + add/remove on the tenant auth client are
+  // implemented (ADR-0048). TLS issuance and live end-to-end routing/canonical
+  // cutover are NOT verified, so the capability is honestly `partial`.
   cap("tenant_domains", "configuration", {
-    implementationStatus: "deferred",
-    readinessKind: "deferred",
+    adminRoute: "/admin/domains",
+    requiredPermission: "tenant.domains.read",
+    implementationStatus: "partial",
+    readinessKind: "tenant-domains",
+    detailKey: `${A}.tenant_domains.action`,
   }),
   cap("email_sender", "configuration", {
     adminRoute: "/admin/email",
@@ -249,6 +257,8 @@ export interface ReadinessSignals {
   idpCount: number | null;
   /** Tenant email sender readiness (ADR-0047). */
   emailSender: EmailSenderReadinessStatus;
+  /** Tenant custom-domain readiness (ADR-0048). */
+  domainReadiness: TenantDomainReadinessStatus;
 }
 
 function capabilityReadiness(kind: ReadinessKind, s: ReadinessSignals): CapabilityReadiness {
@@ -286,6 +296,18 @@ function capabilityReadiness(kind: ReadinessKind, s: ReadinessSignals): Capabili
           return "incomplete";
         case "invalid_credential":
         case "provider_unreachable":
+          return "degraded";
+        default:
+          return "unknown";
+      }
+    case "tenant-domains":
+      switch (s.domainReadiness) {
+        case "verified":
+          return "ready";
+        case "no_domains":
+        case "pending_verification":
+          return "incomplete";
+        case "degraded":
           return "degraded";
         default:
           return "unknown";

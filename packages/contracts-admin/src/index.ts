@@ -529,6 +529,106 @@ export const TestEmailResponseSchema = z
   .strict();
 export type TestEmailResponse = z.infer<typeof TestEmailResponseSchema>;
 
+// ---------------------------------------------------------------------------
+// Tenant custom domains + DNS/TLS readiness (ADR-0048 / ADR-ACT-0217)
+// Read + readiness surface over the existing vanity-domain ownership-challenge
+// plumbing (ADR-ACT-0162 add/remove + ADR-ACT-0188 DNS-TXT verification).
+// Strict + no-passthrough. The verification `token` is a PUBLIC value the tenant
+// publishes in a DNS TXT record — it is not a secret. TLS issuance and live
+// end-to-end routing are NOT verified in this pass: `tls` is always `tls_unknown`
+// and `routing` is `routing_active` only when the domain has been recorded as
+// added to the tenant auth client (a real, persisted fact), else `routing_unknown`.
+// Readiness is never faked.
+// ---------------------------------------------------------------------------
+
+/** Per-domain ownership/verification status (honest; DNS-TXT proven). */
+export const TENANT_DOMAIN_STATUSES = [
+  "pending_dns", // a challenge exists but DNS ownership is not yet proven
+  "dns_mismatch", // a verify attempt found a TXT record that did not match (transient)
+  "verified", // DNS-TXT ownership proven
+  "degraded", // the domain store/DNS resolver could not be reached
+] as const;
+export const TenantDomainStatusSchema = z.enum(TENANT_DOMAIN_STATUSES);
+export type TenantDomainStatus = z.infer<typeof TenantDomainStatusSchema>;
+
+/** TLS readiness — never claimed without a real check; deferred this pass. */
+export const TENANT_DOMAIN_TLS_STATUSES = ["tls_unknown", "tls_ready"] as const;
+export const TenantDomainTlsStatusSchema = z.enum(TENANT_DOMAIN_TLS_STATUSES);
+export type TenantDomainTlsStatus = z.infer<typeof TenantDomainTlsStatusSchema>;
+
+/** Canonical-routing readiness — `routing_active` only when added to the auth client. */
+export const TENANT_DOMAIN_ROUTING_STATUSES = ["routing_unknown", "routing_active"] as const;
+export const TenantDomainRoutingStatusSchema = z.enum(TENANT_DOMAIN_ROUTING_STATUSES);
+export type TenantDomainRoutingStatus = z.infer<typeof TenantDomainRoutingStatusSchema>;
+
+/** Aggregate domain capability readiness for the tenant. */
+export const TENANT_DOMAIN_READINESS_STATUSES = [
+  "no_domains", // no custom domain configured (the shared domain still works)
+  "pending_verification", // ≥1 domain exists, none verified yet
+  "verified", // ≥1 domain has proven DNS ownership
+  "degraded", // the domain store could not be read
+] as const;
+export const TenantDomainReadinessStatusSchema = z.enum(TENANT_DOMAIN_READINESS_STATUSES);
+export type TenantDomainReadinessStatus = z.infer<typeof TenantDomainReadinessStatusSchema>;
+
+/** `GET /api/org/domains` — one entry per configured domain. */
+export const TenantDomainSummarySchema = z
+  .object({
+    domain: z.string(),
+    status: TenantDomainStatusSchema,
+    tls: TenantDomainTlsStatusSchema,
+    routing: TenantDomainRoutingStatusSchema,
+    txtRecord: z.string(),
+    createdAt: z.string().nullable(),
+    verifiedAt: z.string().nullable(),
+    expiresAt: z.string().nullable(),
+  })
+  .strict();
+export type TenantDomainSummary = z.infer<typeof TenantDomainSummarySchema>;
+
+export const TenantDomainListResponseSchema = z
+  .object({ domains: z.array(TenantDomainSummarySchema) })
+  .strict();
+export type TenantDomainListResponse = z.infer<typeof TenantDomainListResponseSchema>;
+
+/** Hostname rule mirrors the BFF vanity-domain validator (lowercase, labelled, has a dot). */
+const DomainZ = z
+  .string()
+  .min(3)
+  .max(253)
+  .regex(/^(?=.*\.)[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?(\.[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)+$/, {
+    message: "domain must be a valid lowercase hostname with a TLD",
+  });
+
+/** `POST /api/org/domains` — body never carries a tenant id (authority is FQDN/session). */
+export const CreateTenantDomainRequestSchema = z.object({ domain: DomainZ }).strict();
+export type CreateTenantDomainRequest = z.infer<typeof CreateTenantDomainRequestSchema>;
+
+/** `POST /api/org/domains` (201) and `POST /api/org/domains/:domain/verify`. */
+export const TenantDomainVerificationResponseSchema = z
+  .object({
+    domain: z.string(),
+    status: TenantDomainStatusSchema,
+    txtRecord: z.string(),
+    /** The PUBLIC DNS-TXT token to publish. Present on create; null after verify. */
+    token: z.string().nullable(),
+  })
+  .strict();
+export type TenantDomainVerificationResponse = z.infer<
+  typeof TenantDomainVerificationResponseSchema
+>;
+
+/** `GET /api/org/domains/readiness`. */
+export const TenantDomainReadinessResponseSchema = z
+  .object({
+    status: TenantDomainReadinessStatusSchema,
+    total: z.number().int().nonnegative(),
+    verified: z.number().int().nonnegative(),
+    pending: z.number().int().nonnegative(),
+  })
+  .strict();
+export type TenantDomainReadinessResponse = z.infer<typeof TenantDomainReadinessResponseSchema>;
+
 export const MfaRequirementSchema = z.enum(["none", "optional", "required"]);
 export const MfaTypeSchema = z.enum(["totp", "webauthn"]);
 

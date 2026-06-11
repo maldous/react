@@ -1,0 +1,315 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Card,
+  CardBody,
+  Badge,
+  Button,
+  FormField,
+  LoadingState,
+  LiveRegion,
+} from "@platform/ui-design-system";
+import { useTranslation } from "@platform/i18n-runtime";
+import {
+  CreateTenantDomainRequestSchema,
+  type TenantDomainSummary,
+} from "@platform/contracts-admin";
+import { useSession } from "../../hooks/use-session";
+import { AdminQueryError } from "../admin/AdminQueryError";
+import {
+  useDomains,
+  useDomainsReadiness,
+  useAddDomain,
+  useVerifyDomain,
+  useRemoveDomain,
+} from "./use-admin-domains";
+import type { TenantDomainVerificationResponse } from "./admin-domains-client";
+
+interface AddDomainForm {
+  domain: string;
+}
+
+/**
+ * Tenant custom domains management page (ADR-0048). Read-only unless the actor
+ * holds `tenant.domains.write`. The DNS TXT token is a public DNS value and is
+ * safe to display.
+ */
+export function AdminDomainsPage() {
+  const t = useTranslation();
+  const { hasPermission } = useSession();
+  const canWrite = hasPermission("tenant.domains.write");
+  const { data, isLoading, isError, error, refetch } = useDomains();
+
+  if (isLoading) return <LoadingState message={t("auth.status.loading")} />;
+  if (isError) return <AdminQueryError error={error} onRetry={() => void refetch()} />;
+
+  return (
+    <div className="space-y-6" data-testid="admin-domains">
+      <header>
+        <h1 className="text-lg font-semibold text-fg">{t("feature.admin.domains.title")}</h1>
+        <p className="text-sm text-fg-muted">{t("feature.admin.domains.description")}</p>
+      </header>
+
+      <ReadinessBanner />
+      {canWrite && <AddDomainCard />}
+      <DomainListCard domains={data!.domains} canWrite={canWrite} />
+    </div>
+  );
+}
+
+function ReadinessBanner() {
+  const t = useTranslation();
+  const { data, isLoading } = useDomainsReadiness();
+
+  if (isLoading || !data) return null;
+
+  const tone =
+    data.status === "verified" ? "success" : data.status === "degraded" ? "warning" : "secondary";
+
+  return (
+    <Card>
+      <CardBody>
+        <p className="text-sm font-medium text-fg">{t("feature.admin.domains.readinessHeading")}</p>
+        <div className="mt-1 flex items-center gap-2">
+          <Badge
+            variant={tone === "success" ? "default" : "secondary"}
+            data-testid="admin-domains-readiness-badge"
+          >
+            {data.status}
+          </Badge>
+          <span className="text-sm text-fg-muted" data-testid="admin-domains-readiness-text">
+            {t(`feature.admin.domains.readiness.${data.status}`)}
+          </span>
+        </div>
+      </CardBody>
+    </Card>
+  );
+}
+
+function AddDomainCard() {
+  const t = useTranslation();
+  const addDomain = useAddDomain();
+  const [pendingRecord, setPendingRecord] = useState<TenantDomainVerificationResponse | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<AddDomainForm>({
+    resolver: zodResolver(CreateTenantDomainRequestSchema),
+  });
+
+  function onSubmit(values: AddDomainForm) {
+    addDomain.mutate(
+      { domain: values.domain },
+      {
+        onSuccess: (result) => {
+          setPendingRecord(result);
+          reset();
+        },
+      }
+    );
+  }
+
+  return (
+    <Card>
+      <CardBody className="space-y-3">
+        <p className="text-sm font-medium text-fg">{t("feature.admin.domains.addHeading")}</p>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-3"
+          data-testid="admin-domains-add-form"
+        >
+          <FormField
+            label={t("feature.admin.domains.domainLabel")}
+            placeholder={t("feature.admin.domains.domainPlaceholder")}
+            isInvalid={!!errors.domain}
+            errorMessage={errors.domain?.message}
+            inputProps={{ "data-testid": "admin-domains-domain-input", ...register("domain") }}
+          />
+          {addDomain.isError && (
+            <p role="alert" className="text-sm text-danger" data-testid="admin-domains-add-error">
+              {t("feature.admin.domains.addError")}
+            </p>
+          )}
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              type="submit"
+              isDisabled={addDomain.isPending}
+              data-testid="admin-domains-add-button"
+            >
+              {t("feature.admin.domains.addButton")}
+            </Button>
+            <LiveRegion
+              tone="polite"
+              className="text-sm text-success"
+              data-testid="admin-domains-added"
+            >
+              {addDomain.isSuccess ? t("feature.admin.domains.added") : ""}
+            </LiveRegion>
+          </div>
+        </form>
+
+        {pendingRecord && <TxtRecordPanel record={pendingRecord} />}
+      </CardBody>
+    </Card>
+  );
+}
+
+function TxtRecordPanel({ record }: { record: TenantDomainVerificationResponse }) {
+  const t = useTranslation();
+  return (
+    <div
+      className="rounded-md border border-border bg-surface-muted p-3 space-y-2"
+      data-testid="admin-domains-txt-panel"
+    >
+      <p className="text-sm font-medium text-fg">{t("feature.admin.domains.txtHeading")}</p>
+      <p className="text-xs text-fg-muted">{t("feature.admin.domains.txtHelper")}</p>
+      <dl className="space-y-1 text-xs">
+        <div className="flex gap-2">
+          <dt className="font-medium text-fg">{t("feature.admin.domains.txtName")}:</dt>
+          <dd className="font-mono text-fg-muted" data-testid="admin-domains-txt-name">
+            {record.txtRecord}
+          </dd>
+        </div>
+        {record.token && (
+          <div className="flex gap-2">
+            <dt className="font-medium text-fg">{t("feature.admin.domains.txtValue")}:</dt>
+            <dd className="font-mono text-fg-muted" data-testid="admin-domains-txt-value">
+              {record.token}
+            </dd>
+          </div>
+        )}
+      </dl>
+    </div>
+  );
+}
+
+function DomainListCard({
+  domains,
+  canWrite,
+}: {
+  domains: TenantDomainSummary[];
+  canWrite: boolean;
+}) {
+  const t = useTranslation();
+
+  return (
+    <Card>
+      <CardBody>
+        <p className="text-sm font-medium text-fg">{t("feature.admin.domains.listHeading")}</p>
+        {domains.length === 0 ? (
+          <p className="mt-2 text-sm text-fg-muted" data-testid="admin-domains-empty">
+            {t("feature.admin.domains.empty")}
+          </p>
+        ) : (
+          <div className="mt-3 overflow-x-auto">
+            <table className="w-full text-sm" data-testid="admin-domains-table">
+              <thead>
+                <tr className="border-b border-border text-left text-xs font-semibold text-fg-muted">
+                  <th className="pb-2 pr-4">{t("feature.admin.domains.columnDomain")}</th>
+                  <th className="pb-2 pr-4">{t("feature.admin.domains.columnStatus")}</th>
+                  <th className="pb-2 pr-4">{t("feature.admin.domains.columnTls")}</th>
+                  <th className="pb-2 pr-4">{t("feature.admin.domains.columnRouting")}</th>
+                  {canWrite && <th className="pb-2">{t("feature.admin.domains.recentChanges")}</th>}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {domains.map((d) => (
+                  <DomainRow key={d.domain} domain={d} canWrite={canWrite} />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </CardBody>
+    </Card>
+  );
+}
+
+function DomainRow({ domain, canWrite }: { domain: TenantDomainSummary; canWrite: boolean }) {
+  const t = useTranslation();
+  const verify = useVerifyDomain();
+  const remove = useRemoveDomain();
+
+  const statusTone =
+    domain.status === "verified"
+      ? "success"
+      : domain.status === "degraded"
+        ? "warning"
+        : "secondary";
+
+  return (
+    <tr data-testid={`admin-domains-row-${domain.domain}`}>
+      <td
+        className="py-2 pr-4 font-mono text-xs"
+        data-testid={`admin-domains-domain-${domain.domain}`}
+      >
+        {domain.domain}
+      </td>
+      <td className="py-2 pr-4">
+        <Badge variant={statusTone === "success" ? "default" : "secondary"}>
+          {t(`feature.admin.domains.status.${domain.status}`)}
+        </Badge>
+      </td>
+      <td className="py-2 pr-4">
+        <Badge variant="secondary">{t(`feature.admin.domains.tls.${domain.tls}`)}</Badge>
+      </td>
+      <td className="py-2 pr-4">
+        <Badge variant="secondary">{t(`feature.admin.domains.routing.${domain.routing}`)}</Badge>
+      </td>
+      {canWrite && (
+        <td className="py-2">
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              type="button"
+              isDisabled={verify.isPending}
+              onPress={() => verify.mutate(domain.domain)}
+              data-testid={`admin-domains-verify-${domain.domain}`}
+            >
+              {t("feature.admin.domains.verifyButton")}
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              type="button"
+              isDisabled={remove.isPending}
+              onPress={() => remove.mutate(domain.domain)}
+              data-testid={`admin-domains-remove-${domain.domain}`}
+            >
+              {t("feature.admin.domains.removeButton")}
+            </Button>
+            <LiveRegion
+              tone="polite"
+              className="sr-only"
+              data-testid={`admin-domains-verify-announce-${domain.domain}`}
+            >
+              {verify.isSuccess ? t("feature.admin.domains.verifyButton") : ""}
+            </LiveRegion>
+            <LiveRegion
+              tone="polite"
+              className="sr-only"
+              data-testid={`admin-domains-remove-announce-${domain.domain}`}
+            >
+              {remove.isSuccess ? t("feature.admin.domains.removed") : ""}
+            </LiveRegion>
+          </div>
+          {verify.isError && (
+            <p
+              role="alert"
+              className="mt-1 text-xs text-danger"
+              data-testid={`admin-domains-verify-error-${domain.domain}`}
+            >
+              {t("feature.admin.domains.verifyError")}
+            </p>
+          )}
+        </td>
+      )}
+    </tr>
+  );
+}

@@ -176,6 +176,7 @@
         "features": "Features",
         "configuration": "Configuration",
         "email": "Email",
+        "domains": "Domains",
         "logs": "Log search",
         "readiness": "Readiness"
       },
@@ -184,6 +185,7 @@
         "authenticationDescription": "Configure login providers, identity providers, MFA, and sessions.",
         "featuresDescription": "Enable or disable platform capabilities for this tenant.",
         "configurationDescription": "Manage typed platform configuration for this tenant.",
+        "domainsDescription": "Add custom domains and prove ownership via DNS.",
         "logsDescription": "Search structured platform logs.",
         "readinessDescription": "See what's configured and what's left to set up."
       },
@@ -282,6 +284,53 @@
           "invalid_credential": "The credential was rejected by the provider.",
           "provider_unreachable": "The provider could not be reached.",
           "disabled": "The email sender is disabled."
+        }
+      },
+      "domains": {
+        "title": "Custom domains",
+        "description": "Add a custom domain, prove ownership via a DNS TXT record, and track its readiness.",
+        "error": "Custom domains could not be loaded.",
+        "addHeading": "Add a custom domain",
+        "domainLabel": "Domain",
+        "domainPlaceholder": "app.example.com",
+        "addButton": "Add domain",
+        "addError": "Could not add the domain. Check the format and try again.",
+        "added": "Domain added — publish the DNS record below, then verify.",
+        "verifyButton": "Verify",
+        "verifyError": "Could not verify the domain. Please try again.",
+        "removeButton": "Remove",
+        "removed": "Domain removed.",
+        "txtHeading": "DNS verification record",
+        "txtHelper": "Create this DNS TXT record at your DNS provider, then click Verify.",
+        "txtName": "Record name",
+        "txtValue": "Record value",
+        "listHeading": "Your domains",
+        "empty": "No custom domains yet. Add one above.",
+        "recentChanges": "Recent domain changes",
+        "columnDomain": "Domain",
+        "columnStatus": "Status",
+        "columnTls": "TLS",
+        "columnRouting": "Routing",
+        "status": {
+          "pending_dns": "Pending DNS verification",
+          "dns_mismatch": "DNS record mismatch",
+          "verified": "Verified",
+          "degraded": "Unavailable"
+        },
+        "tls": {
+          "tls_unknown": "Not checked",
+          "tls_ready": "Ready"
+        },
+        "routing": {
+          "routing_unknown": "Not active",
+          "routing_active": "Active"
+        },
+        "readinessHeading": "Custom domain status",
+        "readiness": {
+          "no_domains": "No custom domain is configured. Your tenant works on the shared domain.",
+          "pending_verification": "A domain is awaiting DNS verification. Publish the TXT record and verify.",
+          "verified": "At least one custom domain has proven DNS ownership.",
+          "degraded": "Custom domain status could not be determined right now."
         }
       },
       "overview": {
@@ -580,7 +629,8 @@
           },
           "tenant_domains": {
             "label": "Custom domains",
-            "description": "Vanity domains for the tenant."
+            "description": "Vanity domains for the tenant.",
+            "action": "Add a custom domain and verify it via DNS."
           },
           "email_sender": {
             "label": "Email & sender",

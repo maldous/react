@@ -24,6 +24,7 @@ import {
   CredentialSecretRequestSchema,
   CreateIdpRequestSchema,
   UpdateIdpRequestSchema,
+  CreateTenantDomainRequestSchema,
   type TenantAuthProvidersConfig,
 } from "@platform/contracts-admin";
 import { getSessionStore, getApplicationPool, getKeycloakConfigForRealm } from "./dependencies.ts";
@@ -2486,9 +2487,20 @@ export const routes: Route[] = [
         })
       ).status;
 
+      // Signal 5: custom-domain readiness (ADR-0048).
+      const { getTenantDomainReadiness } = await import("../usecases/tenant-domains.ts");
+      const domainReadiness = (await getTenantDomainReadiness(tenantCtx.organisationId, pool))
+        .status;
+
       res.json(
         200,
-        buildTenantReadiness({ authCredential, activeAdminCount, idpCount, emailSender })
+        buildTenantReadiness({
+          authCredential,
+          activeAdminCount,
+          idpCount,
+          emailSender,
+          domainReadiness,
+        })
       );
     },
   },
@@ -2615,6 +2627,205 @@ export const routes: Route[] = [
         return;
       }
       res.json(200, { result: result.result, messageId: result.messageId });
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Tenant custom domains + DNS/TLS readiness (ADR-0048 / ADR-ACT-0217).
+  // Dedicated read + readiness + lifecycle surface (permission tenant.domains.*)
+  // that delegates to the existing vanity-domain plumbing: ADR-ACT-0188 ownership
+  // challenge / DNS-TXT verify and ADR-ACT-0162 add/remove on the auth client.
+  // Tenant authority is FQDN/session only; the verification token is a PUBLIC
+  // DNS value, not a secret. Readiness is never faked.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/org/domains",
+    operationName: "org.domains.list",
+    requiresAuth: true,
+    requiredPermission: "tenant.domains.read",
+    resource: "admin:domains",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { listTenantDomains } = await import("../usecases/tenant-domains.ts");
+      const domains = await listTenantDomains(tenantCtx.organisationId, getApplicationPool());
+      res.json(200, { domains });
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/org/domains/readiness",
+    operationName: "org.domains.readiness",
+    requiresAuth: true,
+    requiredPermission: "tenant.domains.read",
+    resource: "admin:domains",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { getTenantDomainReadiness } = await import("../usecases/tenant-domains.ts");
+      const readiness = await getTenantDomainReadiness(
+        tenantCtx.organisationId,
+        getApplicationPool()
+      );
+      res.json(200, readiness);
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/org/domains",
+    operationName: "org.domains.create",
+    requiresAuth: true,
+    requiredPermission: "tenant.domains.write",
+    resource: "admin:domains",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const parsed = CreateTenantDomainRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid domain",
+        });
+        return;
+      }
+      const { createDomainChallenge } = await import("../usecases/vanity-domain-challenge.ts");
+      const result = await createDomainChallenge(
+        {
+          domain: parsed.data.domain,
+          organisationId: tenantCtx.organisationId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          pool: getApplicationPool(),
+        }
+      );
+      if (result.kind === "invalid_domain") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      res.json(201, {
+        domain: parsed.data.domain,
+        status: "pending_dns",
+        txtRecord: result.txtRecord,
+        token: result.token,
+      });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/org/domains/:domain/verify",
+    operationName: "org.domains.verify",
+    requiresAuth: true,
+    requiredPermission: "tenant.domains.write",
+    resource: "admin:domains",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const url = new URL(req.raw.url ?? "", "http://localhost");
+      const domain = decodeURIComponent(
+        url.pathname.split("/").slice(-2, -1)[0] ?? ""
+      ).toLowerCase();
+      const txtRecord = `_aldous-verify.${domain}`;
+      const { verifyDomainChallenge } = await import("../usecases/vanity-domain-challenge.ts");
+      const result = await verifyDomainChallenge(
+        {
+          domain,
+          organisationId: tenantCtx.organisationId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          pool: getApplicationPool(),
+        }
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "No active challenge for this domain" });
+        return;
+      }
+      if (result.kind === "expired") {
+        res.json(422, { code: "VALIDATION_ERROR", message: "Challenge has expired" });
+        return;
+      }
+      const status =
+        result.kind === "ok" || result.kind === "already_verified"
+          ? "verified"
+          : result.kind === "dns_mismatch"
+            ? "dns_mismatch"
+            : "pending_dns"; // dns_not_found — keep waiting on DNS propagation
+      res.json(200, { domain, status, txtRecord, token: null });
+    },
+  },
+  {
+    method: "DELETE",
+    path: "/api/org/domains/:domain",
+    operationName: "org.domains.remove",
+    requiresAuth: true,
+    requiredPermission: "tenant.domains.write",
+    resource: "admin:domains",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const url = new URL(req.raw.url ?? "", "http://localhost");
+      const domain = decodeURIComponent(url.pathname.split("/").pop() ?? "").toLowerCase();
+      if (!/^[a-z0-9.-]+$/.test(domain) || !domain.includes(".")) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "invalid domain format" });
+        return;
+      }
+      const cred = await new PostgresTenantCredentialStore(
+        getApplicationPool()
+      ).getAuthSettingsCredential(tenantCtx.organisationId);
+      if (!cred) {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
+        return;
+      }
+      const { removeVanityDomain } = await import("../usecases/vanity-domain.ts");
+      await removeVanityDomain(
+        {
+          organisationId: tenantCtx.organisationId,
+          realmName: tenantCtx.realmName,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          domain,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          adminConfig: {
+            url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
+            realm: tenantCtx.realmName,
+            adminClientId: cred.clientId,
+            adminClientSecret: cred.clientSecret,
+          },
+        }
+      );
+      res.json(204, null);
     },
   },
   // ---------------------------------------------------------------------------

@@ -125,6 +125,63 @@ export function adminIdpMappingUpdateHandler() {
   );
 }
 
+// --- Tenant custom domains (ADR-0048) ---
+const domainsListFixture = {
+  domains: [
+    {
+      domain: "app.example.com",
+      status: "pending_dns",
+      tls: "tls_unknown",
+      routing: "routing_unknown",
+      txtRecord: "_platform-verify.app.example.com",
+      createdAt: "2026-06-12T00:00:00Z",
+      verifiedAt: null,
+      expiresAt: null,
+    },
+  ],
+};
+const domainsReadinessFixture = {
+  status: "pending_verification",
+  total: 1,
+  verified: 0,
+  pending: 1,
+};
+export function adminDomainsListHandler(response: Record<string, unknown> = domainsListFixture) {
+  return http.get("/api/org/domains", () => HttpResponse.json(response));
+}
+export function adminDomainsReadinessHandler(
+  response: Record<string, unknown> = domainsReadinessFixture
+) {
+  return http.get("/api/org/domains/readiness", () => HttpResponse.json(response));
+}
+export function adminDomainsCreateHandler() {
+  return http.post("/api/org/domains", async ({ request }) => {
+    const body = (await request.json()) as { domain: string };
+    return HttpResponse.json(
+      {
+        domain: body.domain,
+        status: "pending_dns",
+        txtRecord: `_platform-verify.${body.domain}`,
+        token: "verify-token-abc123",
+      },
+      { status: 201 }
+    );
+  });
+}
+export function adminDomainsVerifyHandler() {
+  return http.post("/api/org/domains/:domain/verify", ({ params }) =>
+    HttpResponse.json({
+      domain: decodeURIComponent(String(params["domain"])),
+      status: "verified",
+      txtRecord: `_platform-verify.${decodeURIComponent(String(params["domain"]))}`,
+      token: null,
+    })
+  );
+}
+export function adminDomainsRemoveHandler() {
+  return http.delete("/api/org/domains/:domain", () => new HttpResponse(null, { status: 204 }));
+}
+
 // --- Tenant email sender (ADR-0047) ---
 const emailSenderFixture = {
   provider: "local",
@@ -254,5 +311,7 @@ export const handlers = [
   adminConfigHandler(),
   adminAuditHandler(),
   adminReadinessHandler(),
+  adminDomainsListHandler(),
+  adminDomainsReadinessHandler(),
   ...adminWriteOkHandlers(),
 ];

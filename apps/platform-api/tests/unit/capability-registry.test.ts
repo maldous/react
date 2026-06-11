@@ -16,6 +16,7 @@ const FULLY_READY: ReadinessSignals = {
   activeAdminCount: 2,
   idpCount: 1,
   emailSender: "configured",
+  domainReadiness: "verified",
 };
 
 function cap(resp: ReturnType<typeof buildTenantReadiness>, key: string) {
@@ -155,6 +156,37 @@ describe("buildTenantReadiness — aggregation", () => {
     );
   });
 
+  it("custom-domain readiness reflects its signal honestly (ADR-0048)", () => {
+    const verified = buildTenantReadiness({ ...FULLY_READY, domainReadiness: "verified" });
+    assert.equal(cap(verified, "tenant_domains")?.readiness, "ready");
+    // honestly partial: TLS issuance + live routing are not verified this pass.
+    assert.equal(cap(verified, "tenant_domains")?.implementationStatus, "partial");
+    assert.equal(cap(verified, "tenant_domains")?.required, false);
+
+    assert.equal(
+      cap(buildTenantReadiness({ ...FULLY_READY, domainReadiness: "no_domains" }), "tenant_domains")
+        ?.readiness,
+      "incomplete"
+    );
+    assert.equal(
+      cap(
+        buildTenantReadiness({ ...FULLY_READY, domainReadiness: "pending_verification" }),
+        "tenant_domains"
+      )?.readiness,
+      "incomplete"
+    );
+    assert.equal(
+      cap(buildTenantReadiness({ ...FULLY_READY, domainReadiness: "degraded" }), "tenant_domains")
+        ?.readiness,
+      "degraded"
+    );
+    // optional capability → never drags the overall status down.
+    assert.equal(
+      buildTenantReadiness({ ...FULLY_READY, domainReadiness: "degraded" }).overall,
+      "ready"
+    );
+  });
+
   it("never fakes readiness: deferred capabilities are always 'deferred'", () => {
     for (const signals of [
       FULLY_READY,
@@ -163,6 +195,7 @@ describe("buildTenantReadiness — aggregation", () => {
         activeAdminCount: 0,
         idpCount: null,
         emailSender: "missing_sender" as const,
+        domainReadiness: "no_domains" as const,
       },
     ]) {
       const r = buildTenantReadiness(signals);
@@ -170,7 +203,6 @@ describe("buildTenantReadiness — aggregation", () => {
       // readiness must stay `deferred` regardless of signals (never faked).
       for (const key of [
         "storage",
-        "tenant_domains",
         "oidc_login_simulation",
         "oidc_claim_mapping",
         "oidc_group_role_mapping",
