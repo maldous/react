@@ -836,3 +836,45 @@ describe("KeycloakRealmAdminAdapter — removeResourcePolicy (idempotent delete 
     );
   });
 });
+
+// ---------------------------------------------------------------------------
+// KeycloakRealmAdminAdapter — probeReadiness (ADR-0041)
+// Source-level readiness classification by HTTP status (never message parsing).
+// ---------------------------------------------------------------------------
+
+describe("KeycloakRealmAdminAdapter — probeReadiness", () => {
+  let restore: () => void;
+  afterEach(() => restore?.());
+
+  it("returns ok when the token grant and realm read both succeed", async () => {
+    restore = mockFetch(twoStepFetch(async () => jsonResponse({ realm: "tenant-abc" })));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    assert.equal(await adapter.probeReadiness(), "ok");
+  });
+
+  it("returns invalid_credential when the token grant is rejected (401)", async () => {
+    restore = mockFetch(async () => new Response(null, { status: 401 }));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    assert.equal(await adapter.probeReadiness(), "invalid_credential");
+  });
+
+  it("returns forbidden when the realm read is 403 (token ok, missing realm rights)", async () => {
+    restore = mockFetch(twoStepFetch(async () => new Response(null, { status: 403 })));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    assert.equal(await adapter.probeReadiness(), "forbidden");
+  });
+
+  it("returns unreachable on a 5xx realm read", async () => {
+    restore = mockFetch(twoStepFetch(async () => new Response(null, { status: 503 })));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    assert.equal(await adapter.probeReadiness(), "unreachable");
+  });
+
+  it("returns unreachable on a transport failure", async () => {
+    restore = mockFetch(async () => {
+      throw new TypeError("fetch failed");
+    });
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    assert.equal(await adapter.probeReadiness(), "unreachable");
+  });
+});

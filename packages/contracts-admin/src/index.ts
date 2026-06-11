@@ -178,6 +178,40 @@ export const SessionPolicySchema = z.object({
 export type SessionPolicyDto = z.infer<typeof SessionPolicySchema>;
 
 // ---------------------------------------------------------------------------
+// Auth settings credential readiness (ADR-0041)
+// GET /api/auth/settings/readiness — tells the SPA whether the per-tenant
+// realm-admin credential is present and working, so editing can be offered only
+// when safe. Never carries the credential itself.
+// ---------------------------------------------------------------------------
+
+export const AUTH_READINESS_STATUSES = [
+  "configured",
+  "missing_credential",
+  "invalid_credential",
+  "forbidden_realm_operation",
+  "realm_unreachable",
+] as const;
+export const AuthReadinessStatusSchema = z.enum(AUTH_READINESS_STATUSES);
+export type AuthReadinessStatusValue = z.infer<typeof AuthReadinessStatusSchema>;
+
+export const AuthSettingsReadinessSchema = z.object({ status: AuthReadinessStatusSchema });
+export type AuthSettingsReadiness = z.infer<typeof AuthSettingsReadinessSchema>;
+
+/**
+ * Operator-seeded credential attach (system-admin, global scope).
+ * The secret is write-only: it is validated then stored encrypted, and never
+ * returned, logged, or audited. organisationId identifies the target tenant.
+ */
+export const AttachAuthCredentialRequestSchema = z
+  .object({
+    organisationId: z.string().uuid(),
+    clientId: z.string().min(1).max(255),
+    clientSecret: z.string().min(1).max(4096),
+  })
+  .strict();
+export type AttachAuthCredentialRequest = z.infer<typeof AttachAuthCredentialRequestSchema>;
+
+// ---------------------------------------------------------------------------
 // Per-tenant authentication provider config (ADR-0037) — greenfield
 // GET/PATCH /api/auth/settings/providers
 // ---------------------------------------------------------------------------

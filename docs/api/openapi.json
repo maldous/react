@@ -1898,6 +1898,78 @@
           }
         }
       }
+    },
+    "/api/auth/settings/readiness": {
+      "get": {
+        "summary": "Get auth settings credential readiness",
+        "operationId": "getAuthSettingsReadiness",
+        "description": "Classifies the per-tenant realm-admin credential (configured / missing_credential / invalid_credential / forbidden_realm_operation / realm_unreachable) so the admin UI can offer editing only when safe. Tenant-scoped; never returns the credential. ADR-0041.",
+        "tags": ["Auth Settings"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Readiness status"
+          },
+          "400": {
+            "description": "No tenant context"
+          }
+        }
+      }
+    },
+    "/api/admin/tenants/auth-settings-credential": {
+      "post": {
+        "summary": "Attach a per-tenant auth settings credential",
+        "operationId": "attachAuthSettingsCredential",
+        "description": "Operator-seeded attach/rotate of a per-tenant Keycloak realm-admin service-account credential, for tenants that predate automated provisioning. System-admin only (global scope), separate from the tenant-admin mutation path. The credential is validated against the realm before storage and is never returned, logged, or audited. ADR-0041.",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["organisationId", "clientId", "clientSecret"],
+                "properties": {
+                  "organisationId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "clientId": {
+                    "type": "string"
+                  },
+                  "clientSecret": {
+                    "type": "string",
+                    "description": "Write-only; validated then stored encrypted, never returned."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Credential validated and stored"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "422": {
+            "description": "Credential lacks realm-management permission"
+          },
+          "502": {
+            "description": "Credential rejected or realm unreachable"
+          }
+        }
+      }
     }
   },
   "components": {

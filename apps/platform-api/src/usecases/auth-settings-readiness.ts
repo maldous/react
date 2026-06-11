@@ -1,0 +1,133 @@
+import { createAuditEvent, type AuditEventPort, AuditAction } from "@platform/audit-events";
+import type { RealmReadinessProbe } from "@platform/authorisation-runtime";
+import type {
+  TenantAdminCredential,
+  TenantCredentialStore,
+} from "../ports/tenant-credential-store.ts";
+
+// ---------------------------------------------------------------------------
+// Auth Settings readiness + operator credential attach (ADR-0041 / ADR-ACT-0209)
+//
+// Readiness lets the SPA distinguish a credential that is configured and working
+// from one that is missing, invalid, lacks realm-management rights, or whose
+// realm is unreachable — so the Auth section can offer editing only when it is
+// actually safe, and otherwise show a precise "why not" instead of an opaque 503.
+//
+// The probe vocabulary comes from the RealmAdminPort (`RealmReadinessProbe`),
+// decided by HTTP status at the Keycloak boundary. We map it to the tenant-facing
+// status here. The credential secret is never returned, logged, or audited.
+// ---------------------------------------------------------------------------
+
+export type AuthReadinessStatus =
+  | "configured"
+  | "missing_credential"
+  | "invalid_credential"
+  | "forbidden_realm_operation"
+  | "realm_unreachable";
+
+/** Minimal port surface the readiness/attach usecases need from a realm adapter. */
+export interface ReadinessProbe {
+  probeReadiness(): Promise<RealmReadinessProbe>;
+}
+
+const PROBE_TO_STATUS: Record<
+  Exclude<RealmReadinessProbe, "ok">,
+  Exclude<AuthReadinessStatus, "configured" | "missing_credential">
+> = {
+  invalid_credential: "invalid_credential",
+  forbidden: "forbidden_realm_operation",
+  unreachable: "realm_unreachable",
+};
+
+function mapProbe(probe: RealmReadinessProbe): Exclude<AuthReadinessStatus, "missing_credential"> {
+  return probe === "ok" ? "configured" : PROBE_TO_STATUS[probe];
+}
+
+export interface ReadinessDeps {
+  credentialStore: TenantCredentialStore;
+  /** Build a probe-capable adapter scoped to this credential + realm. */
+  makeProbe: (credential: TenantAdminCredential, realmName: string) => ReadinessProbe;
+}
+
+/**
+ * Classify the per-tenant Auth Settings credential. Tenant context (organisationId,
+ * realmName) must come from the resolved FQDN/session — never the request body.
+ */
+export async function getAuthSettingsReadiness(
+  input: { organisationId: string; realmName: string },
+  deps: ReadinessDeps
+): Promise<{ status: AuthReadinessStatus }> {
+  const credential = await deps.credentialStore.getAuthSettingsCredential(input.organisationId);
+  if (!credential) return { status: "missing_credential" };
+  const probe = await deps.makeProbe(credential, input.realmName).probeReadiness();
+  return { status: mapProbe(probe) };
+}
+
+// ---------------------------------------------------------------------------
+// Operator-seeded attach (system-admin, global scope)
+//
+// For tenants that predate automated provisioning. The credential is VALIDATED
+// via the readiness probe BEFORE it is stored, so we never persist a credential
+// that cannot reach the realm. The secret is never returned, logged, or placed
+// in audit metadata — the audit records the clientId only.
+// ---------------------------------------------------------------------------
+
+export type AttachCredentialResult =
+  | { kind: "invalid_body"; message: string }
+  | { kind: "configured" }
+  | { kind: "invalid_credential" }
+  | { kind: "forbidden_realm_operation" }
+  | { kind: "realm_unreachable" };
+
+export interface AttachCredentialInput {
+  organisationId: string;
+  realmName: string;
+  clientId: string;
+  clientSecret: string;
+  actorId: string;
+  actorRoles: string[];
+  sourceHost?: string;
+  ipAddress?: string;
+}
+
+export interface AttachCredentialDeps extends ReadinessDeps {
+  audit: AuditEventPort;
+}
+
+export async function attachAuthSettingsCredential(
+  input: AttachCredentialInput,
+  deps: AttachCredentialDeps
+): Promise<AttachCredentialResult> {
+  const clientId = input.clientId?.trim();
+  const clientSecret = input.clientSecret?.trim();
+  if (!clientId || !clientSecret) {
+    return { kind: "invalid_body", message: "clientId and clientSecret are required" };
+  }
+
+  // Validate BEFORE persisting — never store a credential that cannot reach the realm.
+  const candidate: TenantAdminCredential = { clientId, clientSecret };
+  const probe = await deps.makeProbe(candidate, input.realmName).probeReadiness();
+  if (probe !== "ok") {
+    // mapProbe on a non-ok probe yields exactly the three realm-failure kinds,
+    // all of which are valid AttachCredentialResult kinds.
+    return { kind: mapProbe(probe) } as AttachCredentialResult;
+  }
+
+  // Audit-first: record the attach attempt (clientId only — NEVER the secret).
+  await deps.audit.emit(
+    createAuditEvent({
+      actorId: input.actorId,
+      actorRoles: input.actorRoles,
+      tenantId: input.organisationId,
+      action: AuditAction.AuthSettingsCredentialAttached,
+      resource: "auth_settings",
+      resourceId: input.realmName,
+      metadata: { realmName: input.realmName, clientId },
+      sourceHost: input.sourceHost,
+      ipAddress: input.ipAddress,
+    })
+  );
+
+  await deps.credentialStore.setAuthSettingsCredential(input.organisationId, candidate);
+  return { kind: "configured" };
+}

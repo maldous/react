@@ -109,7 +109,15 @@ export interface SysadminBrokeringConfig {
   auditAllAccess: boolean;
 }
 
+// Source-level readiness classification for a realm-admin credential (ADR-0041).
+// Decided by HTTP status at the Keycloak boundary, never by parsing error text.
+export type RealmReadinessProbe = "ok" | "invalid_credential" | "forbidden" | "unreachable";
+
 export interface RealmAdminPort {
+  // Auth-settings readiness probe (ADR-0041): validates the per-tenant service-account
+  // credential + realm reachability without returning or logging the secret.
+  probeReadiness(): Promise<RealmReadinessProbe>;
+
   // Identity providers
   listIdentityProviders(): Promise<IdentityProvider[]>;
   upsertIdentityProvider(idp: IdentityProvider): Promise<void>;

@@ -19,7 +19,10 @@ import {
   availableThirdPartyIds,
 } from "./auth-providers.ts";
 import { getStoredTenantAuthProviders } from "../usecases/auth-provider-config.ts";
-import type { TenantAuthProvidersConfig } from "@platform/contracts-admin";
+import {
+  AttachAuthCredentialRequestSchema,
+  type TenantAuthProvidersConfig,
+} from "@platform/contracts-admin";
 import { getSessionStore, getApplicationPool, getKeycloakConfigForRealm } from "./dependencies.ts";
 import { queryTenantSchema } from "@platform/adapters-postgres";
 import { serverT } from "./i18n.ts";
@@ -36,12 +39,63 @@ import {
   buildMfaAuditMetadata,
   buildSessionAuditMetadata,
   buildSysadminBrokeringAuditMetadata,
+  type AuthSettingsMutationResult,
 } from "../usecases/auth-settings.ts";
+import {
+  getAuthSettingsReadiness,
+  attachAuthSettingsCredential,
+} from "../usecases/auth-settings-readiness.ts";
 import { createPostgresAuditEventPort, AuditAction } from "@platform/audit-events";
 import { resolveTenantFromRequest } from "./tenant-resolver.ts";
 import { KeycloakRealmAdminAdapter } from "@platform/adapters-keycloak";
 import { PostgresTenantCredentialStore } from "../adapters/postgres-tenant-credential-store.ts";
 import { z } from "zod";
+
+// ---------------------------------------------------------------------------
+// Shared mapping of an Auth Settings mutation result to an HTTP response
+// (ADR-0041). Returns true when it sent a failure response; false on "ok" so the
+// caller emits its own success. Realm-failure codes mirror the readiness model so
+// the SPA shows a precise reason. Secrets never appear in any message.
+// ---------------------------------------------------------------------------
+function sendAuthSettingsFailure(
+  res: { json: (status: number, body: unknown) => void },
+  result: AuthSettingsMutationResult
+): boolean {
+  switch (result.kind) {
+    case "ok":
+      return false;
+    case "invalid_body":
+      res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+      return true;
+    case "no_tenant":
+      res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+      return true;
+    case "no_credential":
+      res.json(503, {
+        code: "NO_CREDENTIAL",
+        message: "Auth settings credential is not configured for this tenant",
+      });
+      return true;
+    case "invalid_credential":
+      res.json(502, {
+        code: "INVALID_CREDENTIAL",
+        message: "The auth settings credential was rejected by the realm",
+      });
+      return true;
+    case "forbidden_realm_operation":
+      res.json(403, {
+        code: "FORBIDDEN_REALM_OPERATION",
+        message: "The auth settings credential lacks realm-management permission",
+      });
+      return true;
+    case "realm_unreachable":
+      res.json(502, {
+        code: "REALM_UNREACHABLE",
+        message: "The identity realm could not be reached",
+      });
+      return true;
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Auth Settings body schemas (ADR-0030 ?1b safety)
@@ -477,18 +531,7 @@ export const routes: Route[] = [
           credentialStore: new PostgresTenantCredentialStore(getApplicationPool()),
         }
       );
-      if (result.kind === "invalid_body") {
-        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
-        return;
-      }
-      if (result.kind === "no_tenant") {
-        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
-        return;
-      }
-      if (result.kind === "no_credential") {
-        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
-        return;
-      }
+      if (sendAuthSettingsFailure(res, result)) return;
       res.json(204, null);
     },
   },
@@ -557,19 +600,42 @@ export const routes: Route[] = [
           credentialStore: new PostgresTenantCredentialStore(getApplicationPool()),
         }
       );
-      if (result.kind === "invalid_body") {
-        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
-        return;
-      }
-      if (result.kind === "no_tenant") {
+      if (sendAuthSettingsFailure(res, result)) return;
+      res.json(204, null);
+    },
+  },
+  // ADR-0041: classify the tenant's auth-settings credential so the SPA knows
+  // whether editing is possible (configured) or why not (missing/invalid/
+  // forbidden/unreachable). Read permission — never exposes the credential.
+  {
+    method: "GET",
+    path: "/api/auth/settings/readiness",
+    operationName: "auth.settings.readiness.get",
+    requiresAuth: true,
+    requiredPermission: "tenant.auth.settings.read",
+    resource: "admin:auth",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
         res.json(400, { code: "NO_TENANT", message: "No tenant context" });
         return;
       }
-      if (result.kind === "no_credential") {
-        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
-        return;
-      }
-      res.json(204, null);
+      const result = await getAuthSettingsReadiness(
+        { organisationId: tenantCtx.organisationId, realmName: tenantCtx.realmName },
+        {
+          credentialStore: new PostgresTenantCredentialStore(getApplicationPool()),
+          makeProbe: (cred, realmName) =>
+            new KeycloakRealmAdminAdapter({
+              url: getKeycloakConfigForRealm(realmName).url,
+              realm: realmName,
+              adminClientId: cred.clientId,
+              adminClientSecret: cred.clientSecret,
+            }),
+        }
+      );
+      res.json(200, result);
     },
   },
   {
@@ -683,6 +749,83 @@ export const routes: Route[] = [
           return;
         }
         throw err;
+      }
+    },
+  },
+  // ADR-0041: operator-seeded attach/rotate of a per-tenant auth-settings
+  // credential, for tenants that predate automated provisioning. SEPARATE from
+  // the tenant-admin mutation path: global scope, system-admin only. The secret
+  // is validated against the realm before storage and is never returned, logged,
+  // or audited (audit records the clientId only). The target tenant comes from
+  // the body's organisationId (a global endpoint has no tenant FQDN); the realm
+  // name is derived deterministically, never taken from the body.
+  {
+    method: "POST",
+    path: "/api/admin/tenants/auth-settings-credential",
+    operationName: "admin.tenants.authSettingsCredential.attach",
+    requiresAuth: true,
+    requiredPermission: "platform.tenants.create",
+    resource: "admin:tenants",
+    umaScope: "create" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const parsed = AttachAuthCredentialRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid request body",
+        });
+        return;
+      }
+      const { organisationId, clientId, clientSecret } = parsed.data;
+      const realmName = `tenant-${organisationId}`;
+      const result = await attachAuthSettingsCredential(
+        {
+          organisationId,
+          realmName,
+          clientId,
+          clientSecret,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          credentialStore: new PostgresTenantCredentialStore(getApplicationPool()),
+          makeProbe: (cred, realm) =>
+            new KeycloakRealmAdminAdapter({
+              url: getKeycloakConfigForRealm(realm).url,
+              realm,
+              adminClientId: cred.clientId,
+              adminClientSecret: cred.clientSecret,
+            }),
+        }
+      );
+      switch (result.kind) {
+        case "configured":
+          res.json(204, null);
+          return;
+        case "invalid_body":
+          res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+          return;
+        case "invalid_credential":
+          res.json(502, {
+            code: "INVALID_CREDENTIAL",
+            message: "The supplied credential was rejected by the realm",
+          });
+          return;
+        case "forbidden_realm_operation":
+          res.json(422, {
+            code: "FORBIDDEN_REALM_OPERATION",
+            message: "The supplied credential lacks realm-management permission",
+          });
+          return;
+        case "realm_unreachable":
+          res.json(502, {
+            code: "REALM_UNREACHABLE",
+            message: "The identity realm could not be reached",
+          });
+          return;
       }
     },
   },

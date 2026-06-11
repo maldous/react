@@ -231,6 +231,7 @@ import type {
   Resource,
   AccessDecision,
   RealmAdminPort,
+  RealmReadinessProbe,
   IdentityProvider,
   MfaPolicy,
   SessionPolicy,
@@ -515,6 +516,52 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
       }),
     });
     await this.assertAdminOk(res, `setSessionPolicy(realm ${this.config.realm})`);
+  }
+
+  // Auth-settings readiness probe (ADR-0041). Classifies the credential + realm at
+  // the SOURCE by HTTP status — never by message parsing — so the caller can map to
+  // a stable readiness status. Two cheap calls: a service-account token grant, then a
+  // single realm read. No secret is ever returned, logged, or thrown in the result.
+  async probeReadiness(): Promise<RealmReadinessProbe> {
+    let token: string;
+    try {
+      const tokenUrl = `${this.config.url}/realms/master/protocol/openid-connect/token`;
+      const grant =
+        this.config.adminUsername && this.config.adminPassword
+          ? new URLSearchParams({
+              grant_type: "password",
+              client_id: this.config.adminClientId || "admin-cli",
+              username: this.config.adminUsername,
+              password: this.config.adminPassword,
+            })
+          : new URLSearchParams({
+              grant_type: "client_credentials",
+              client_id: this.config.adminClientId,
+              client_secret: this.config.adminClientSecret,
+            });
+      const res = await fetch(tokenUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: grant,
+      });
+      if (res.status === 400 || res.status === 401) return "invalid_credential";
+      if (res.status === 403) return "forbidden";
+      if (!res.ok) return "unreachable";
+      token = ((await res.json()) as { access_token: string }).access_token;
+    } catch {
+      return "unreachable";
+    }
+    try {
+      const res = await fetch(this.adminUrl(""), {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.status === 401) return "invalid_credential";
+      if (res.status === 403) return "forbidden";
+      if (!res.ok) return "unreachable";
+      return "ok";
+    } catch {
+      return "unreachable";
+    }
   }
 
   async getResourcePolicy(resourceName: string): Promise<ResourcePolicy[]> {

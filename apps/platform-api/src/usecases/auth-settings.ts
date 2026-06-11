@@ -4,6 +4,7 @@ import type {
   TenantAdminCredential,
   TenantCredentialStore,
 } from "../ports/tenant-credential-store.ts";
+import { classifyRealmError } from "./realm-error.ts";
 
 // Re-export so callers can type the credential without importing the port directly
 export type { TenantAdminCredential };
@@ -26,6 +27,9 @@ export type AuthSettingsMutationResult =
   | { kind: "invalid_body"; message: string }
   | { kind: "no_tenant" }
   | { kind: "no_credential" }
+  | { kind: "invalid_credential" }
+  | { kind: "forbidden_realm_operation" }
+  | { kind: "realm_unreachable" }
   | { kind: "ok" };
 
 export interface AuthSettingsMutationInput<T> {
@@ -104,8 +108,18 @@ export async function mutateAuthSetting<T>(
     })
   );
 
-  // Step 5: Call the Keycloak adapter with the tenant credential
-  await input.mutate(body, credential);
+  // Step 5: Call the Keycloak adapter with the tenant credential.
+  // A realm failure here is classified (ADR-0041) so the route can surface a
+  // precise status instead of an opaque 500. The audit above already recorded the
+  // attempt; classification only changes how the failure is reported. An
+  // unclassifiable error is rethrown so it still surfaces as a 500.
+  try {
+    await input.mutate(body, credential);
+  } catch (err) {
+    const classified = classifyRealmError(err);
+    if (classified === "unknown") throw err;
+    return { kind: classified };
+  }
 
   return { kind: "ok" };
 }
