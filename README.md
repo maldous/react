@@ -21,20 +21,20 @@ The result is no longer just a React shell. It is a governed enterprise applicat
 
 ## What is built
 
-| Layer                       | Technology / Pattern                                      | Role                                                                 |
-| --------------------------- | --------------------------------------------------------- | -------------------------------------------------------------------- |
-| **React SPA**               | React 19, TanStack Router, TanStack Query, React Aria     | Typed routes, server-state cache, accessible admin and app surfaces  |
-| **Admin control plane**     | `/admin` shell, permission-gated routes, design system    | Members, Auth, Features, Config, Logs, contextual audit panels       |
-| **BFF / API**               | Node.js, TypeScript, route pipeline, use cases            | Session resolution, tenant context, permission checks, orchestration |
-| **Identity**                | Keycloak per-tenant realms, PKCE/OIDC, UMA, BFF sessions  | SSO, realm isolation, policy-backed authorisation                    |
-| **Tenant identity model**   | Global users + tenant-scoped memberships                  | Username, role, status, last login, external identities per tenant   |
-| **Configuration registry**  | Typed registry definitions + effective tenant values      | Governed feature/config settings with audit-first mutation           |
-| **Database**                | PostgreSQL schema-per-tenant + RLS, Redis, ClickHouse     | Transactional data, sessions, analytics                              |
-| **Storage**                 | MinIO / S3-compatible                                     | Object storage with per-tenant prefix isolation                      |
-| **Email**                   | Brevo / SMTP, Mailpit locally                             | Transactional email with local inbox preview                         |
-| **Observability**           | OpenTelemetry, Loki, Grafana, Alloy, Sentry               | Structured logs, traces, dashboards, error capture                   |
-| **Infrastructure**          | Caddy, Docker Compose, Terraform, AWS, Cloudflare         | Local substrate, reverse proxy, declarative cloud provisioning       |
-| **Quality / Governance**    | Vitest, Playwright, ESLint, OpenAPI drift, ADR validators | Unit, integration, architecture, accessibility, and evidence gates   |
+| Layer                      | Technology / Pattern                                      | Role                                                                 |
+| -------------------------- | --------------------------------------------------------- | -------------------------------------------------------------------- |
+| **React SPA**              | React 19, TanStack Router, TanStack Query, React Aria     | Typed routes, server-state cache, accessible admin and app surfaces  |
+| **Admin control plane**    | `/admin` shell, permission-gated routes, design system    | Members, Auth, Features, Config, Logs, contextual audit panels       |
+| **BFF / API**              | Node.js, TypeScript, route pipeline, use cases            | Session resolution, tenant context, permission checks, orchestration |
+| **Identity**               | Keycloak per-tenant realms, PKCE/OIDC, UMA, BFF sessions  | SSO, realm isolation, policy-backed authorisation                    |
+| **Tenant identity model**  | Global users + tenant-scoped memberships                  | Username, role, status, last login, external identities per tenant   |
+| **Configuration registry** | Typed registry definitions + effective tenant values      | Governed feature/config settings with audit-first mutation           |
+| **Database**               | PostgreSQL schema-per-tenant + RLS, Redis, ClickHouse     | Transactional data, sessions, analytics                              |
+| **Storage**                | MinIO / S3-compatible                                     | Object storage with per-tenant prefix isolation                      |
+| **Email**                  | Brevo / SMTP, Mailpit locally                             | Transactional email with local inbox preview                         |
+| **Observability**          | OpenTelemetry, Loki, Grafana, Alloy, Sentry               | Structured logs, traces, dashboards, error capture                   |
+| **Infrastructure**         | Caddy, Docker Compose, Terraform, AWS, Cloudflare         | Local substrate, reverse proxy, declarative cloud provisioning       |
+| **Quality / Governance**   | Vitest, Playwright, ESLint, OpenAPI drift, ADR validators | Unit, integration, architecture, accessibility, and evidence gates   |
 
 ---
 
@@ -44,14 +44,14 @@ The result is no longer just a React shell. It is a governed enterprise applicat
 
 The platform has a real tenant administration cockpit under `/admin`, not a placeholder settings page.
 
-| Surface                  | Capability                                                                 |
-| ------------------------ | -------------------------------------------------------------------------- |
-| **Overview**             | Permission-filtered admin landing page                                     |
-| **Members**              | Invite, role change, remove, username edit, status enable/disable, resend  |
-| **Authentication**       | Provider controls, readiness-aware Session editing, MFA/IdP read models    |
-| **Features**             | Tenant feature toggles backed by shared configuration storage              |
-| **Config**               | Typed effective config grouped by category with overrides and reset        |
-| **Logs / Audit**         | Tenant-scoped admin logs and contextual audit panels                       |
+| Surface            | Capability                                                                |
+| ------------------ | ------------------------------------------------------------------------- |
+| **Overview**       | Permission-filtered admin landing page                                    |
+| **Members**        | Invite, role change, remove, username edit, status enable/disable, resend |
+| **Authentication** | Provider controls, readiness-aware Session editing, MFA/IdP read models   |
+| **Features**       | Tenant feature toggles backed by shared configuration storage             |
+| **Config**         | Typed effective config grouped by category with overrides and reset       |
+| **Logs / Audit**   | Tenant-scoped admin logs and contextual audit panels                      |
 
 Every admin surface follows the same React stack: TanStack Router, TanStack Query, Zod contracts, BFF REST clients, design-system components, MSW tests, accessibility assertions, and permission-aware rendering.
 
@@ -93,11 +93,11 @@ The first slice includes feature flags plus representative branding, security, a
 
 Audit is visible where administrators need it.
 
-| Context       | Audit surface                                               |
-| ------------- | ----------------------------------------------------------- |
-| **Members**   | Per-member recent activity in the expanded detail panel     |
-| **Config**    | Recent configuration changes on `/admin/config`             |
-| **Auth**      | Provider configuration changes on the Auth Providers tab    |
+| Context     | Audit surface                                            |
+| ----------- | -------------------------------------------------------- |
+| **Members** | Per-member recent activity in the expanded detail panel  |
+| **Config**  | Recent configuration changes on `/admin/config`          |
+| **Auth**    | Provider configuration changes on the Auth Providers tab |
 
 The tenant-scoped audit query supports logical resource, resource id, action, actor, timestamp filters, and metadata redaction. The frontend cannot pass tenant authority; the BFF derives tenant context from session/FQDN.
 
@@ -145,28 +145,28 @@ Every package carries machine-validated metadata: lifecycle class, bounded conte
 
 Representative packages:
 
-| Package                    | Role                                                        |
-| -------------------------- | ----------------------------------------------------------- |
-| `domain-core`              | Pure domain primitives                                      |
-| `domain-identity`          | User, Organisation, Membership, ExternalIdentity            |
-| `contracts-auth`           | Auth session and actor contracts                            |
-| `contracts-admin`          | Admin/control-plane DTOs and validation schemas             |
-| `contracts-graphql`        | GraphQL type definitions shared across the boundary         |
-| `adapters-keycloak`        | Keycloak realm admin, readiness, provisioning, UMA          |
-| `adapters-postgres`        | SQL repositories, RLS, tenant schema helpers                |
-| `adapters-redis`           | Session store and PKCE state                                |
-| `adapters-loki`            | Log query/runtime adapter                                   |
-| `platform-logging`         | Pino-backed server and browser structured logging           |
-| `platform-errors`          | Typed error hierarchy                                       |
-| `session-runtime`          | Session store abstraction                                   |
-| `audit-events`             | Typed audit event definitions and port                      |
-| `authorisation-runtime`    | Permission model, UMA types, resource policies              |
-| `i18n-runtime`             | `I18nProvider`, `useTranslation`, locale loading            |
-| `ui-design-system`         | React Aria + Tailwind component library                     |
-| `api-runtime`              | BFF request/response pipeline helpers                       |
-| `graphql-api-runtime`      | Schema execution, resolver types, context                   |
-| `config-runtime`           | Environment configuration helpers                           |
-| `test-support`             | Shared test fixtures and substrate helpers                  |
+| Package                 | Role                                                |
+| ----------------------- | --------------------------------------------------- |
+| `domain-core`           | Pure domain primitives                              |
+| `domain-identity`       | User, Organisation, Membership, ExternalIdentity    |
+| `contracts-auth`        | Auth session and actor contracts                    |
+| `contracts-admin`       | Admin/control-plane DTOs and validation schemas     |
+| `contracts-graphql`     | GraphQL type definitions shared across the boundary |
+| `adapters-keycloak`     | Keycloak realm admin, readiness, provisioning, UMA  |
+| `adapters-postgres`     | SQL repositories, RLS, tenant schema helpers        |
+| `adapters-redis`        | Session store and PKCE state                        |
+| `adapters-loki`         | Log query/runtime adapter                           |
+| `platform-logging`      | Pino-backed server and browser structured logging   |
+| `platform-errors`       | Typed error hierarchy                               |
+| `session-runtime`       | Session store abstraction                           |
+| `audit-events`          | Typed audit event definitions and port              |
+| `authorisation-runtime` | Permission model, UMA types, resource policies      |
+| `i18n-runtime`          | `I18nProvider`, `useTranslation`, locale loading    |
+| `ui-design-system`      | React Aria + Tailwind component library             |
+| `api-runtime`           | BFF request/response pipeline helpers               |
+| `graphql-api-runtime`   | Schema execution, resolver types, context           |
+| `config-runtime`        | Environment configuration helpers                   |
+| `test-support`          | Shared test fixtures and substrate helpers          |
 
 ---
 
@@ -312,15 +312,15 @@ The Session policy tab is readiness-aware and writable when the tenant is config
 
 ### Session security
 
-| Protection       | Implementation                                                                             |
-| ---------------- | ------------------------------------------------------------------------------------------ |
-| Token encryption | AES-256-GCM, random IV, GCM auth tag; startup throws in production if key absent           |
-| Cookie flags     | `HttpOnly`, `SameSite=Lax`, `Secure`                                                       |
-| Logout           | Dual-cookie clear plus RP-Initiated Logout to Keycloak end-session                         |
-| Redirect safety  | `safeRelativeRedirect()` rejects absolute URLs in `returnTo`                               |
-| PKCE             | Random verifier, S256 challenge, one-use Redis state, nonce bound to user-agent            |
-| Forward-auth     | `CADDY_INTERNAL_SECRET` required in staging/production; startup throws if absent           |
-| Realm admin      | Per-tenant credential encrypted at rest; secret never returned, logged, or audited         |
+| Protection       | Implementation                                                                     |
+| ---------------- | ---------------------------------------------------------------------------------- |
+| Token encryption | AES-256-GCM, random IV, GCM auth tag; startup throws in production if key absent   |
+| Cookie flags     | `HttpOnly`, `SameSite=Lax`, `Secure`                                               |
+| Logout           | Dual-cookie clear plus RP-Initiated Logout to Keycloak end-session                 |
+| Redirect safety  | `safeRelativeRedirect()` rejects absolute URLs in `returnTo`                       |
+| PKCE             | Random verifier, S256 challenge, one-use Redis state, nonce bound to user-agent    |
+| Forward-auth     | `CADDY_INTERNAL_SECRET` required in staging/production; startup throws if absent   |
+| Realm admin      | Per-tenant credential encrypted at rest; secret never returned, logged, or audited |
 
 ---
 
@@ -388,18 +388,18 @@ Every protected API route declares resource, scope, and static permission. The B
 
 ### Permissioned control surfaces
 
-| Permission                      | Surface / Capability                                  |
-| ------------------------------- | ----------------------------------------------------- |
-| `tenant.admin.access`           | Admin shell entry                                     |
-| `tenant.members.read`           | Members list, member detail, external identities      |
-| `tenant.members.invite`         | Invite and resend invitation                          |
-| `tenant.members.update_role`    | Role, username, and status updates                    |
-| `tenant.auth.settings.read`     | Auth settings, provider config, readiness             |
-| `tenant.auth.settings.write`    | Provider config and writable auth settings            |
-| `tenant.config.read`            | Platform configuration registry                       |
-| `tenant.config.write`           | Config overrides and reset                            |
-| `tenant.audit.read`             | Contextual audit panels                               |
-| `platform.tenants.create`       | System-admin tenant provisioning and credential attach |
+| Permission                   | Surface / Capability                                   |
+| ---------------------------- | ------------------------------------------------------ |
+| `tenant.admin.access`        | Admin shell entry                                      |
+| `tenant.members.read`        | Members list, member detail, external identities       |
+| `tenant.members.invite`      | Invite and resend invitation                           |
+| `tenant.members.update_role` | Role, username, and status updates                     |
+| `tenant.auth.settings.read`  | Auth settings, provider config, readiness              |
+| `tenant.auth.settings.write` | Provider config and writable auth settings             |
+| `tenant.config.read`         | Platform configuration registry                        |
+| `tenant.config.write`        | Config overrides and reset                             |
+| `tenant.audit.read`          | Contextual audit panels                                |
+| `platform.tenants.create`    | System-admin tenant provisioning and credential attach |
 
 ### Support mode
 
@@ -464,14 +464,14 @@ Per-environment OTel collector ports avoid cross-environment telemetry bleed: de
 
 ### Coverage by layer
 
-| Suite            | Latest documented result | What it covers                                                                                                          |
-| ---------------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
-| **Architecture** | 768 passing              | Import boundaries, package metadata, lifecycle evidence, i18n coverage, OpenAPI drift, action-register governance       |
-| **Platform API** | 388 passing              | Use cases, domain logic, auth pipeline, PKCE, session cookies, RLS, audit ordering, config registry, auth readiness     |
-| **Frontend**     | 115 passing              | Vitest + RTL, MSW-backed admin surfaces, accessibility, error semantics, audit refresh, auth settings forms             |
-| **E2E dev**      | `make e2e-dev`           | Playwright — full browser, real TanStack Router, fixture session                                                        |
-| **E2E prod**     | `make e2e-prod`          | Playwright — real Keycloak, live `aldous.info`, external routes                                                         |
-| **Compose**      | `npm run test:compose`   | Docker Compose profile validation and port conflict detection                                                           |
+| Suite            | Latest documented result | What it covers                                                                                                      |
+| ---------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| **Architecture** | 768 passing              | Import boundaries, package metadata, lifecycle evidence, i18n coverage, OpenAPI drift, action-register governance   |
+| **Platform API** | 388 passing              | Use cases, domain logic, auth pipeline, PKCE, session cookies, RLS, audit ordering, config registry, auth readiness |
+| **Frontend**     | 115 passing              | Vitest + RTL, MSW-backed admin surfaces, accessibility, error semantics, audit refresh, auth settings forms         |
+| **E2E dev**      | `make e2e-dev`           | Playwright — full browser, real TanStack Router, fixture session                                                    |
+| **E2E prod**     | `make e2e-prod`          | Playwright — real Keycloak, live `aldous.info`, external routes                                                     |
+| **Compose**      | `npm run test:compose`   | Docker Compose profile validation and port conflict detection                                                       |
 
 > Latest documented gates: orchestrator `all --strict`, OpenAPI drift, contract-drift, ADR-reference validation, platform-api 388/388, frontend 115/115, architecture 768/768.
 
@@ -483,14 +483,14 @@ Audit-before-mutation ordering is verified explicitly with mock call-order asser
 
 Evidence lives with the repo:
 
-| Evidence file                                                             | What it proves                                               |
-| ------------------------------------------------------------------------- | ------------------------------------------------------------ |
-| `docs/evidence/admin/tenant-administration-control-plane.md`              | Admin shell, Members/Auth/Features, typed contracts          |
-| `docs/evidence/admin/live-tenant-admin-walkthrough.md`                    | Runtime provider/login probes and manual admin walkthrough   |
-| `docs/evidence/identity/tenant-identity-membership-v2.md`                 | User vs membership model, username/status/last-login         |
-| `docs/evidence/configuration/platform-configuration-registry.md`          | Typed config registry, feature compatibility, `/admin/config`|
-| `docs/evidence/audit/admin-contextual-audit-trail.md`                     | Tenant-scoped contextual audit panels and metadata redaction |
-| `docs/evidence/auth/per-tenant-auth-settings-credential-provisioning.md`  | Auth settings readiness, credential provisioning, Session UI |
+| Evidence file                                                            | What it proves                                                |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------- |
+| `docs/evidence/admin/tenant-administration-control-plane.md`             | Admin shell, Members/Auth/Features, typed contracts           |
+| `docs/evidence/admin/live-tenant-admin-walkthrough.md`                   | Runtime provider/login probes and manual admin walkthrough    |
+| `docs/evidence/identity/tenant-identity-membership-v2.md`                | User vs membership model, username/status/last-login          |
+| `docs/evidence/configuration/platform-configuration-registry.md`         | Typed config registry, feature compatibility, `/admin/config` |
+| `docs/evidence/audit/admin-contextual-audit-trail.md`                    | Tenant-scoped contextual audit panels and metadata redaction  |
+| `docs/evidence/auth/per-tenant-auth-settings-credential-provisioning.md` | Auth settings readiness, credential provisioning, Session UI  |
 
 ---
 
@@ -515,19 +515,19 @@ Each stage has its own Compose project, credentials, data policy, and OTel port 
 
 ## Security posture
 
-| Surface                         | Control                                                                                                          |
-| ------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| **Token storage**               | AES-256-GCM in Redis; startup throws in production if key absent                                                 |
-| **Cookies**                     | `HttpOnly`, `SameSite=Lax`, `Secure`; dual-clear on logout                                                       |
-| **Open redirects**              | `safeRelativeRedirect()` rejects absolute URLs                                                                   |
-| **CSP**                         | `default-src 'self'` + hardened base/form/object/frame policies                                                  |
-| **SQL injection**               | Parameterised queries; schema identifiers via escaped adapter helpers                                             |
-| **RLS**                         | Runtime role is `NOSUPERUSER`, `NOBYPASSRLS`; RLS bypass uses controlled role membership only                    |
-| **Keycloak credentials**        | Per-tenant realm-admin credential is write-only, encrypted at rest, never returned/logged/audited                |
-| **Tenant authority**            | Tenant context comes from FQDN/session, not frontend body values                                                  |
-| **Forward-auth**                | `CADDY_INTERNAL_SECRET` required in staging/production; startup throws if absent                                 |
-| **Audit**                       | Persistent Postgres record before every mutation; audit failure aborts execution                                 |
-| **Secret scanning**             | gitleaks pre-commit hook, OSV scanner, `npm audit`, CodeQL, SonarQube                                             |
+| Surface                  | Control                                                                                           |
+| ------------------------ | ------------------------------------------------------------------------------------------------- |
+| **Token storage**        | AES-256-GCM in Redis; startup throws in production if key absent                                  |
+| **Cookies**              | `HttpOnly`, `SameSite=Lax`, `Secure`; dual-clear on logout                                        |
+| **Open redirects**       | `safeRelativeRedirect()` rejects absolute URLs                                                    |
+| **CSP**                  | `default-src 'self'` + hardened base/form/object/frame policies                                   |
+| **SQL injection**        | Parameterised queries; schema identifiers via escaped adapter helpers                             |
+| **RLS**                  | Runtime role is `NOSUPERUSER`, `NOBYPASSRLS`; RLS bypass uses controlled role membership only     |
+| **Keycloak credentials** | Per-tenant realm-admin credential is write-only, encrypted at rest, never returned/logged/audited |
+| **Tenant authority**     | Tenant context comes from FQDN/session, not frontend body values                                  |
+| **Forward-auth**         | `CADDY_INTERNAL_SECRET` required in staging/production; startup throws if absent                  |
+| **Audit**                | Persistent Postgres record before every mutation; audit failure aborts execution                  |
+| **Secret scanning**      | gitleaks pre-commit hook, OSV scanner, `npm audit`, CodeQL, SonarQube                             |
 
 ---
 
