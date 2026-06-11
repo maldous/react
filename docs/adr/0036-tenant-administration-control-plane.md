@@ -85,10 +85,22 @@ targets ≥ 40px; `DataTable` scrolls horizontally on narrow viewports.
   (request validation + the new provider endpoints) rather than in a single rewrite.
 - Adds a second navigation surface (admin nav) that must be kept responsive and accessible.
 
+### Auth settings editability boundary (intentional, this slice)
+
+The Authentication section's **Providers** tab is writable (per-tenant mode + provider allowlist,
+ADR-0037). The **Identity providers**, **MFA**, and **Session** tabs are intentionally **read-only**
+for now: editing them mutates the tenant's Keycloak realm through a per-tenant service-account
+credential, and per-tenant credential provisioning is deferred (ADR-0037, "out of scope"). Until that
+lands, the read tabs surface current realm state and show a "not configured" state when the tenant has
+no credential (503 `NO_CREDENTIAL`). Making IdPs/MFA/Session writable is a follow-up slice gated on
+credential provisioning — not a gap in this one.
+
 ### Deferred (follow-up actions)
 
 - Sections: Groups, Sub-organisations, custom Domains, sysadmin-brokering, resource-policies.
+- Editable IdPs/MFA/Session (gated on per-tenant credential provisioning, ADR-0037).
 - System-admin **global** tooling: tenant provisioning (`/api/admin/tenants`), support sessions.
+- Tenant identity & membership v2 (ADR-ACT-0206).
 - These are tracked under the ACTION-REGISTER, not built in this slice.
 
 ---
