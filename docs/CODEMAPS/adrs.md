@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-06-11
 
-40 Architecture Decision Records (ADR-0001 through ADR-0040). ADR-0018 is intentionally absent. All status: **Accepted**.
+41 Architecture Decision Records (ADR-0001 through ADR-0041). ADR-0018 is intentionally absent. All status: **Accepted**.
 
 ## Foundation & Governance (8)
 
@@ -74,7 +74,7 @@
 | -------- | ---------------------------------- | ---------- | ------------------------------------------ |
 | ADR-0035 | Enterprise Log Indexing and Search | 2026-06-02 | 0035-enterprise-log-indexing-and-search.md |
 
-## Tenant Administration & Identity (5)
+## Tenant Administration & Identity (6)
 
 | ID       | Title                                            | Date       | File                                                              |
 | -------- | ------------------------------------------------ | ---------- | ----------------------------------------------------------------- |
@@ -83,6 +83,7 @@
 | ADR-0038 | Tenant Identity and Membership v2                | 2026-06-11 | 0038-tenant-identity-and-membership-v2.md                         |
 | ADR-0039 | Platform Configuration Registry                  | 2026-06-11 | 0039-platform-configuration-registry.md                           |
 | ADR-0040 | Administrative Audit Trail and Verification      | 2026-06-11 | 0040-administrative-audit-trail-and-control-plane-verification.md |
+| ADR-0041 | Per-tenant Auth Settings Credential Provisioning | 2026-06-11 | 0041-per-tenant-auth-settings-credential-provisioning.md          |
 
 ---
 
@@ -96,7 +97,7 @@
 ## Governance
 
 - All ADRs are **Accepted** (no superceded or pending)
-- Next ADR: **ADR-0041**
+- Next ADR: **ADR-0042**
 - Action register: `docs/adr/ACTION-REGISTER.md`
 - Lifecycle evidence: `docs/evidence/`
 
