@@ -68,10 +68,23 @@ describe("AdminMembersPage", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("renders the error state when members fail to load", async () => {
-    server.use(sessionHandler("tenantAdmin"), adminGetErrorHandler("/api/org/members", 503));
+  it("renders a retryable error state when members fail to load", async () => {
+    server.use(sessionHandler("tenantAdmin"), adminGetErrorHandler("/api/org/members", 500));
     renderPage();
-    await screen.findByText(enGB.feature.admin.members.error);
+    await screen.findByTestId("admin-error-error");
+  });
+
+  it("renders the forbidden state on a 403", async () => {
+    server.use(sessionHandler("tenantAdmin"), adminGetErrorHandler("/api/org/members", 403));
+    renderPage();
+    await screen.findByTestId("admin-error-forbidden");
+  });
+
+  it("renders the session-expired state on a 401", async () => {
+    server.use(sessionHandler("tenantAdmin"), adminGetErrorHandler("/api/org/members", 401));
+    renderPage();
+    await screen.findByTestId("admin-error-unauthorized");
+    expect(screen.getByTestId("admin-error-signin")).toHaveAttribute("href", "/login");
   });
 
   it("has no accessibility violations", async () => {

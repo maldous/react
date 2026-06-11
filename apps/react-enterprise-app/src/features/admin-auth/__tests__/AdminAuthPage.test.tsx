@@ -62,13 +62,13 @@ describe("AdminAuthPage", () => {
     expect(await screen.findByText("Mock Google", {}, { timeout: 3000 })).toBeInTheDocument();
   });
 
-  it("shows an unavailable state when provider config cannot be read", async () => {
+  it("shows a retryable error when provider config cannot be read", async () => {
     server.use(
       sessionHandler("tenantAdmin"),
-      adminGetErrorHandler("/api/auth/settings/providers", 503)
+      adminGetErrorHandler("/api/auth/settings/providers", 500)
     );
     renderPage();
-    await screen.findByText(enGB.feature.admin.auth.providers.unavailable);
+    await screen.findByTestId("admin-error-error");
   });
 
   it("has no accessibility violations", async () => {

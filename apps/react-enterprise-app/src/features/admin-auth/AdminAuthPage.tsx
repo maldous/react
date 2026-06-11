@@ -16,6 +16,7 @@ import { useTranslation } from "@platform/i18n-runtime";
 import { PRODUCT_PROVIDER_IDS, type ProductProviderId } from "@platform/contracts-admin";
 import { useSession } from "../../hooks/use-session";
 import { AdminSectionHeader } from "../../components/AdminLayout";
+import { AdminQueryError } from "../admin/AdminQueryError";
 import {
   useAuthProviders,
   useSetAuthProviders,
@@ -64,7 +65,7 @@ export function AdminAuthPage() {
 
 function ProvidersTab({ canWrite }: { canWrite: boolean }) {
   const t = useTranslation();
-  const { data, isLoading, isError } = useAuthProviders();
+  const { data, isLoading, isError, error, refetch } = useAuthProviders();
   const mutation = useSetAuthProviders();
 
   const modeItems: SelectItem[] = MODE_OPTIONS.map((m) => ({
@@ -78,7 +79,8 @@ function ProvidersTab({ canWrite }: { canWrite: boolean }) {
   }));
 
   if (isLoading) return <LoadingState message={t("auth.status.loading")} />;
-  if (isError || !data) return <EmptyState title={t("feature.admin.auth.providers.unavailable")} />;
+  if (isError) return <AdminQueryError error={error} onRetry={() => void refetch()} />;
+  if (!data) return <EmptyState title={t("feature.admin.auth.providers.unavailable")} />;
 
   const enabled = new Set(data.config.enabledProviders);
   // Available third-party providers (platform is always on, never a toggle).
@@ -148,30 +150,34 @@ function ProvidersTab({ canWrite }: { canWrite: boolean }) {
   );
 }
 
-/** Shared graceful wrapper for the read-only realm tabs: a missing per-tenant
- * service-account credential (503) shows an informational, not error, state. */
+/** Shared graceful wrapper for the read-only realm tabs. A missing per-tenant
+ * service-account credential (503 NO_CREDENTIAL) classifies as "not configured";
+ * 401/403/other failures get their proper states via AdminQueryError. */
 function ReadTab({
   isLoading,
   isError,
+  error,
   hasData,
   children,
 }: {
   isLoading: boolean;
   isError: boolean;
+  error: unknown;
   hasData: boolean;
   children: React.ReactNode;
 }) {
   const t = useTranslation();
   if (isLoading) return <LoadingState message={t("auth.status.loading")} />;
-  if (isError || !hasData) return <EmptyState title={t("feature.admin.auth.notConfigured")} />;
+  if (isError) return <AdminQueryError error={error} />;
+  if (!hasData) return <EmptyState title={t("feature.admin.auth.notConfigured")} />;
   return <>{children}</>;
 }
 
 function IdpsTab() {
   const t = useTranslation();
-  const { data, isLoading, isError } = useIdps();
+  const { data, isLoading, isError, error } = useIdps();
   return (
-    <ReadTab isLoading={isLoading} isError={isError} hasData={!!data}>
+    <ReadTab isLoading={isLoading} isError={isError} error={error} hasData={!!data}>
       {data && data.length === 0 ? (
         <EmptyState title={t("feature.admin.auth.idps.empty")} />
       ) : (
@@ -213,9 +219,9 @@ function Detail({ label, value }: { label: string; value: string }) {
 
 function MfaTab() {
   const t = useTranslation();
-  const { data, isLoading, isError } = useMfaPolicy();
+  const { data, isLoading, isError, error } = useMfaPolicy();
   return (
-    <ReadTab isLoading={isLoading} isError={isError} hasData={!!data}>
+    <ReadTab isLoading={isLoading} isError={isError} error={error} hasData={!!data}>
       <Card>
         <CardBody className="divide-y divide-border" data-testid="auth-mfa">
           <Detail label={t("feature.admin.auth.mfa.required")} value={data?.required ?? ""} />
@@ -228,9 +234,9 @@ function MfaTab() {
 
 function SessionTab() {
   const t = useTranslation();
-  const { data, isLoading, isError } = useSessionPolicy();
+  const { data, isLoading, isError, error } = useSessionPolicy();
   return (
-    <ReadTab isLoading={isLoading} isError={isError} hasData={!!data}>
+    <ReadTab isLoading={isLoading} isError={isError} error={error} hasData={!!data}>
       <Card>
         <CardBody className="divide-y divide-border" data-testid="auth-session">
           <Detail

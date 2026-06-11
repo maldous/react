@@ -13,7 +13,6 @@ import {
   type SelectItem,
   Badge,
   LoadingState,
-  ErrorState,
   EmptyState,
   LiveRegion,
 } from "@platform/ui-design-system";
@@ -26,6 +25,7 @@ import {
 } from "@platform/contracts-admin";
 import { useSession } from "../../hooks/use-session";
 import { AdminSectionHeader } from "../../components/AdminLayout";
+import { AdminQueryError } from "../admin/AdminQueryError";
 import {
   useMembers,
   useInviteMember,
@@ -46,7 +46,7 @@ export function AdminMembersPage() {
   const canUpdate = hasPermission("tenant.members.update_role");
   const canRemove = hasPermission("tenant.members.delete");
 
-  const { data, isLoading, isError } = useMembers();
+  const { data, isLoading, isError, error, refetch } = useMembers();
   const updateRole = useUpdateMemberRole();
   const remove = useRemoveMember();
 
@@ -131,7 +131,7 @@ export function AdminMembersPage() {
       {isLoading ? (
         <LoadingState message={t("auth.status.loading")} />
       ) : isError ? (
-        <ErrorState title={t("feature.admin.members.error")} description={t("ui.error.retry")} />
+        <AdminQueryError error={error} onRetry={() => void refetch()} />
       ) : !data || data.members.length === 0 ? (
         <EmptyState title={t("feature.admin.members.empty")} />
       ) : (

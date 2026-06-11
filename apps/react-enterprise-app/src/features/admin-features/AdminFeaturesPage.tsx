@@ -3,13 +3,13 @@ import {
   CardBody,
   Switch,
   LoadingState,
-  ErrorState,
   EmptyState,
   LiveRegion,
 } from "@platform/ui-design-system";
 import { useTranslation } from "@platform/i18n-runtime";
 import { useSession } from "../../hooks/use-session";
 import { AdminSectionHeader } from "../../components/AdminLayout";
+import { AdminQueryError } from "../admin/AdminQueryError";
 import { useFeatures, useToggleFeature } from "./use-admin-features";
 
 /**
@@ -21,7 +21,7 @@ export function AdminFeaturesPage() {
   const t = useTranslation();
   const { hasPermission } = useSession();
   const canUpdate = hasPermission("tenant.features.update");
-  const { data, isLoading, isError } = useFeatures();
+  const { data, isLoading, isError, error, refetch } = useFeatures();
   const mutation = useToggleFeature();
 
   return (
@@ -34,7 +34,7 @@ export function AdminFeaturesPage() {
       {isLoading ? (
         <LoadingState message={t("auth.status.loading")} />
       ) : isError ? (
-        <ErrorState title={t("feature.admin.features.error")} description={t("ui.error.retry")} />
+        <AdminQueryError error={error} onRetry={() => void refetch()} />
       ) : !data || data.features.length === 0 ? (
         <EmptyState title={t("feature.admin.features.empty")} />
       ) : (

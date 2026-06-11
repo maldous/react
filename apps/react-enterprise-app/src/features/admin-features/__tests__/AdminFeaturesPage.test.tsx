@@ -58,10 +58,10 @@ describe("AdminFeaturesPage", () => {
     expect(toggle).toBeDisabled();
   });
 
-  it("renders the error state when features fail to load", async () => {
-    server.use(sessionHandler("tenantAdmin"), adminGetErrorHandler("/api/org/features", 503));
+  it("renders a retryable error state when features fail to load", async () => {
+    server.use(sessionHandler("tenantAdmin"), adminGetErrorHandler("/api/org/features", 500));
     renderPage();
-    await screen.findByText(enGB.feature.admin.features.error);
+    await screen.findByTestId("admin-error-error");
   });
 
   it("has no accessibility violations", async () => {
