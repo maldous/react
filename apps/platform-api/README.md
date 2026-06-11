@@ -117,6 +117,8 @@ production
 @platform/authorisation-runtime
 @platform/adapters-object-storage
 @platform/audit-events
+@platform/email-runtime
+@platform/adapters-brevo
 @platform/adapters-sentry
 @platform/contracts-graphql
 @platform/adapters-graphql

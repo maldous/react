@@ -3,7 +3,9 @@ import { randomUUID } from "node:crypto";
 export const packageName = "@platform/email-runtime";
 
 export class EmailError extends Error {
-  readonly cause?: unknown;
+  // `override`: ES2022 Error already declares `cause`. This is checked under the
+  // ES2022 lib used by the platform-api project (noImplicitOverride).
+  override readonly cause?: unknown;
   constructor(message: string, cause?: unknown) {
     super(message);
     this.name = "EmailError";

@@ -34,6 +34,8 @@ export const sessionFixtures: Record<SessionPersona, SessionActor> = {
       "tenant.features.update",
       "tenant.config.read",
       "tenant.config.write",
+      "tenant.email.settings.read",
+      "tenant.email.settings.write",
     ],
     displayName: "Tenant Admin",
   },

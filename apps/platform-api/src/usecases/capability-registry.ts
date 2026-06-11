@@ -3,6 +3,7 @@ import type {
   CapabilityImplementationStatus,
   CapabilityReadiness,
   CapabilitySummary,
+  EmailSenderReadinessStatus,
   TenantReadinessResponse,
   TenantReadinessStatus,
 } from "@platform/contracts-admin";
@@ -30,6 +31,7 @@ export type ReadinessKind =
   | "idp-count" // optional; ready when ≥1 IdP, else incomplete
   | "admin-count" // ready when ≥1 active tenant-admin, else blocked
   | "providers" // resolved (env default or tenant override) → ready
+  | "email-sender" // from the tenant email sender readiness (ADR-0047)
   | "invariant-ready" // ready by construction (documented local invariant)
   | "deferred"; // not yet checkable — never reported ready
 
@@ -155,8 +157,11 @@ export const CAPABILITIES: readonly CapabilityDefinition[] = [
     readinessKind: "deferred",
   }),
   cap("email_sender", "configuration", {
-    implementationStatus: "deferred",
-    readinessKind: "deferred",
+    adminRoute: "/admin/email",
+    requiredPermission: "tenant.email.settings.read",
+    implementationStatus: "implemented",
+    readinessKind: "email-sender",
+    detailKey: `${A}.email_sender.action`,
   }),
 
   // --- Operations ---
@@ -242,6 +247,8 @@ export interface ReadinessSignals {
   /** Configured IdP count, or null when it could not be determined (e.g. the
    * credential is not configured so the realm cannot be listed). */
   idpCount: number | null;
+  /** Tenant email sender readiness (ADR-0047). */
+  emailSender: EmailSenderReadinessStatus;
 }
 
 function capabilityReadiness(kind: ReadinessKind, s: ReadinessSignals): CapabilityReadiness {
@@ -270,6 +277,19 @@ function capabilityReadiness(kind: ReadinessKind, s: ReadinessSignals): Capabili
       return s.activeAdminCount > 0 ? "ready" : "blocked";
     case "providers":
       return "ready";
+    case "email-sender":
+      switch (s.emailSender) {
+        case "configured":
+          return "ready";
+        case "missing_sender":
+        case "missing_credential":
+          return "incomplete";
+        case "invalid_credential":
+        case "provider_unreachable":
+          return "degraded";
+        default:
+          return "unknown";
+      }
     case "invariant-ready":
       return "ready";
     case "deferred":

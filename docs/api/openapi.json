@@ -2270,6 +2270,64 @@
         }
       }
     },
+    "/api/org/email-sender": {
+      "get": {
+        "summary": "Get tenant email sender settings",
+        "operationId": "getEmailSender",
+        "description": "Returns the redacted email sender settings + readiness for the tenant (FQDN/session). Never returns the secret. ADR-0047.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Email sender settings" },
+          "400": { "description": "No tenant context" }
+        }
+      },
+      "patch": {
+        "summary": "Update tenant email sender settings",
+        "operationId": "updateEmailSender",
+        "description": "Updates the sender config (audit-first). smtpPassword/apiKey are write-only; a blank/absent secret preserves the stored one. ADR-0047.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Updated settings" },
+          "400": { "description": "Validation error or no tenant context" }
+        }
+      }
+    },
+    "/api/org/email-sender/readiness": {
+      "get": {
+        "summary": "Get tenant email sender readiness",
+        "operationId": "getEmailSenderReadiness",
+        "description": "Returns the classified email sender readiness status. Never faked. ADR-0047.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Readiness status" },
+          "400": { "description": "No tenant context" }
+        }
+      }
+    },
+    "/api/org/email-sender/test": {
+      "post": {
+        "summary": "Send a test email via the tenant sender",
+        "operationId": "testEmailSender",
+        "description": "Sends a test message to a supplied recipient via the configured provider; audit-first; classified result; never exposes the secret. ADR-0047.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Classified test result" },
+          "400": { "description": "Validation error or no tenant context" }
+        }
+      }
+    },
     "/api/org/readiness": {
       "get": {
         "summary": "Tenant control-plane readiness + capability map",

@@ -175,6 +175,7 @@
         "authentication": "Authentication",
         "features": "Features",
         "configuration": "Configuration",
+        "email": "Email",
         "logs": "Log search",
         "readiness": "Readiness"
       },
@@ -229,6 +230,58 @@
               "description": "Default headers attached to outbound webhooks (JSON)."
             }
           }
+        }
+      },
+      "email": {
+        "title": "Email sender",
+        "description": "Configure the address transactional email is sent from, and verify it.",
+        "error": "Email sender settings could not be loaded.",
+        "saved": "Email sender settings saved.",
+        "save": "Save settings",
+        "providerLabel": "Provider",
+        "provider": {
+          "disabled": "Disabled",
+          "local": "Local (dev mailbox)",
+          "smtp": "SMTP",
+          "brevo": "Brevo"
+        },
+        "fromNameLabel": "From name",
+        "fromEmailLabel": "From email",
+        "replyToLabel": "Reply-to email",
+        "enabledLabel": "Enabled",
+        "smtpHostLabel": "SMTP host",
+        "smtpPortLabel": "SMTP port",
+        "smtpSecureLabel": "Use TLS",
+        "smtpUsernameLabel": "SMTP username",
+        "smtpPasswordLabel": "SMTP password",
+        "apiKeyLabel": "API key",
+        "secretHelper": "Leave blank to keep the existing secret.",
+        "credentialSet": "credential configured",
+        "noCredential": "no credential",
+        "saveError": "Could not save the email sender settings. Please try again.",
+        "recentChanges": "Recent email sender changes",
+        "testHeading": "Send a test email",
+        "testRecipientLabel": "Send test to",
+        "testButton": "Send test email",
+        "testError": "Could not send the test email. Please try again.",
+        "readinessHeading": "Email sender status",
+        "readiness": {
+          "configured": "Your email sender is configured and verified.",
+          "missing_sender": "No sender is configured yet. Choose a provider and set a from address.",
+          "missing_credential": "A credential is required for this provider. Add it to continue.",
+          "invalid_credential": "The stored credential was rejected. Update it and test again.",
+          "provider_unreachable": "The email provider could not be reached. Check the settings and try again.",
+          "sender_unverified": "The sender domain is not yet verified.",
+          "unknown": "The sender has not been verified yet — send a test email to confirm it works."
+        },
+        "testResult": {
+          "sent": "Test email sent — check the destination mailbox.",
+          "invalid_recipient": "Enter a valid recipient email address.",
+          "missing_sender": "Configure a from address before sending a test.",
+          "missing_credential": "Add the provider credential before sending a test.",
+          "invalid_credential": "The credential was rejected by the provider.",
+          "provider_unreachable": "The provider could not be reached.",
+          "disabled": "The email sender is disabled."
         }
       },
       "overview": {
@@ -531,7 +584,8 @@
           },
           "email_sender": {
             "label": "Email & sender",
-            "description": "Transactional email sender configuration."
+            "description": "Transactional email sender configuration.",
+            "action": "Configure an email sender and send a test message."
           },
           "audit": {
             "label": "Audit trail",

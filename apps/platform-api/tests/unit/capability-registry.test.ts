@@ -15,6 +15,7 @@ const FULLY_READY: ReadinessSignals = {
   authCredential: "configured",
   activeAdminCount: 2,
   idpCount: 1,
+  emailSender: "configured",
 };
 
 function cap(resp: ReturnType<typeof buildTenantReadiness>, key: string) {
@@ -117,10 +118,52 @@ describe("buildTenantReadiness — aggregation", () => {
     assert.equal(r.overall, "ready"); // optional → does not drag overall down
   });
 
+  it("email sender readiness reflects its signal honestly (ADR-0047)", () => {
+    const ready = buildTenantReadiness({ ...FULLY_READY, emailSender: "configured" });
+    assert.equal(cap(ready, "email_sender")?.readiness, "ready");
+    assert.equal(cap(ready, "email_sender")?.implementationStatus, "implemented");
+    assert.equal(cap(ready, "email_sender")?.required, false);
+
+    assert.equal(
+      cap(buildTenantReadiness({ ...FULLY_READY, emailSender: "missing_sender" }), "email_sender")
+        ?.readiness,
+      "incomplete"
+    );
+    assert.equal(
+      cap(
+        buildTenantReadiness({ ...FULLY_READY, emailSender: "missing_credential" }),
+        "email_sender"
+      )?.readiness,
+      "incomplete"
+    );
+    assert.equal(
+      cap(
+        buildTenantReadiness({ ...FULLY_READY, emailSender: "invalid_credential" }),
+        "email_sender"
+      )?.readiness,
+      "degraded"
+    );
+    assert.equal(
+      cap(buildTenantReadiness({ ...FULLY_READY, emailSender: "unknown" }), "email_sender")
+        ?.readiness,
+      "unknown"
+    );
+    // optional capability → never drags the overall status down.
+    assert.equal(
+      buildTenantReadiness({ ...FULLY_READY, emailSender: "missing_credential" }).overall,
+      "ready"
+    );
+  });
+
   it("never fakes readiness: deferred capabilities are always 'deferred'", () => {
     for (const signals of [
       FULLY_READY,
-      { authCredential: "missing_credential" as const, activeAdminCount: 0, idpCount: null },
+      {
+        authCredential: "missing_credential" as const,
+        activeAdminCount: 0,
+        idpCount: null,
+        emailSender: "missing_sender" as const,
+      },
     ]) {
       const r = buildTenantReadiness(signals);
       // login simulation + claim/group-role mapping have no live check, so their
@@ -128,7 +171,6 @@ describe("buildTenantReadiness — aggregation", () => {
       for (const key of [
         "storage",
         "tenant_domains",
-        "email_sender",
         "oidc_login_simulation",
         "oidc_claim_mapping",
         "oidc_group_role_mapping",

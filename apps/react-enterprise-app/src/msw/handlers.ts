@@ -125,6 +125,41 @@ export function adminIdpMappingUpdateHandler() {
   );
 }
 
+// --- Tenant email sender (ADR-0047) ---
+const emailSenderFixture = {
+  provider: "local",
+  fromName: "Acme",
+  fromEmail: "noreply@acme.test",
+  replyToEmail: "",
+  enabled: true,
+  smtpHost: "",
+  smtpPort: 0,
+  smtpSecure: false,
+  smtpUsername: "",
+  hasCredential: false,
+  updatedAt: "2026-06-12T00:00:00Z",
+  readiness: "configured",
+};
+export function adminEmailSenderHandler(response: Record<string, unknown> = emailSenderFixture) {
+  return http.get("/api/org/email-sender", () => HttpResponse.json(response));
+}
+export function adminEmailSenderUpdateHandler() {
+  return http.patch("/api/org/email-sender", async ({ request }) => {
+    const body = (await request.json()) as Record<string, unknown>;
+    return HttpResponse.json({
+      ...emailSenderFixture,
+      ...body,
+      hasCredential: true,
+      readiness: "unknown",
+    });
+  });
+}
+export function adminEmailSenderTestHandler(
+  response: Record<string, unknown> = { result: "sent", messageId: "mid-1" }
+) {
+  return http.post("/api/org/email-sender/test", () => HttpResponse.json(response));
+}
+
 /** GET /api/auth/settings/mfa + /session. */
 export function adminMfaHandler(response = mfaFixture) {
   return http.get("/api/auth/settings/mfa", () => HttpResponse.json(response));

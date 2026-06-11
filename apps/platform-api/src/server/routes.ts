@@ -67,6 +67,16 @@ import {
 } from "../usecases/oidc-discovery.ts";
 import { readIdpMapping, applyIdpMapping } from "../usecases/idp-mapping.ts";
 import { createOidcHttpFetcher } from "./oidc-http-fetcher.ts";
+import {
+  getEmailSenderSettings,
+  getEmailSenderReadiness,
+  updateEmailSenderSettings,
+  testEmailSender,
+  type EmailSenderFactory,
+} from "../usecases/email-sender.ts";
+import { PostgresEmailSenderSecretStore } from "../adapters/postgres-email-sender-store.ts";
+import { SmtpEmailAdapter } from "../adapters/smtp-email-adapter.ts";
+import { BrevoEmailAdapter } from "@platform/adapters-brevo";
 import { createPostgresAuditEventPort, AuditAction } from "@platform/audit-events";
 import { resolveTenantFromRequest } from "./tenant-resolver.ts";
 import { KeycloakRealmAdminAdapter } from "@platform/adapters-keycloak";
@@ -126,6 +136,39 @@ function sendAuthSettingsFailure(
       res.json(404, { code: "NOT_FOUND", message: "Identity provider not found" });
       return true;
   }
+}
+
+// Build a concrete EmailPort per provider (ADR-0047). `local` targets the Mailpit
+// dev sink (env-overridable); `smtp` uses the tenant config + decrypted secret as
+// the password; `brevo` needs an API key. Returns null when sending is impossible.
+function createEmailSenderFactory(): EmailSenderFactory {
+  return (provider, config, secret) => {
+    if (provider === "local") {
+      return new SmtpEmailAdapter({
+        host: process.env["MAIL_SMTP_HOST"] ?? "localhost",
+        port: Number(process.env["MAIL_SMTP_PORT"] ?? 1025),
+        secure: false,
+      });
+    }
+    if (provider === "smtp") {
+      if (!config.smtpHost) return null;
+      return new SmtpEmailAdapter({
+        host: config.smtpHost,
+        port: config.smtpPort || 587,
+        secure: config.smtpSecure,
+        ...(config.smtpUsername ? { user: config.smtpUsername, pass: secret ?? "" } : {}),
+      });
+    }
+    if (provider === "brevo") {
+      if (!secret) return null;
+      return new BrevoEmailAdapter({
+        apiKey: secret,
+        defaultFromAddress: config.fromEmail,
+        ...(config.fromName ? { defaultFromName: config.fromName } : {}),
+      });
+    }
+    return null;
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -2435,7 +2478,143 @@ export const routes: Route[] = [
         return result.rows[0]?.cnt ?? 0;
       });
 
-      res.json(200, buildTenantReadiness({ authCredential, activeAdminCount, idpCount }));
+      // Signal 4: email sender readiness (ADR-0047).
+      const emailSender = (
+        await getEmailSenderReadiness(tenantCtx.organisationId, {
+          pool,
+          secretStore: new PostgresEmailSenderSecretStore(pool),
+        })
+      ).status;
+
+      res.json(
+        200,
+        buildTenantReadiness({ authCredential, activeAdminCount, idpCount, emailSender })
+      );
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Tenant email sender configuration + readiness (ADR-0047 / ADR-ACT-0216).
+  // Non-secret config in tenant_settings; the secret is write-only + encrypted.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/org/email-sender",
+    operationName: "org.emailSender.get",
+    requiresAuth: true,
+    requiredPermission: "tenant.email.settings.read",
+    resource: "admin:email",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const pool = getApplicationPool();
+      const settings = await getEmailSenderSettings(tenantCtx.organisationId, {
+        pool,
+        secretStore: new PostgresEmailSenderSecretStore(pool),
+      });
+      res.json(200, settings);
+    },
+  },
+  {
+    method: "PATCH",
+    path: "/api/org/email-sender",
+    operationName: "org.emailSender.update",
+    requiresAuth: true,
+    requiredPermission: "tenant.email.settings.write",
+    resource: "admin:email",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const pool = getApplicationPool();
+      const result = await updateEmailSenderSettings(
+        {
+          rawBody: req.body,
+          organisationId: tenantCtx.organisationId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+        },
+        {
+          pool,
+          secretStore: new PostgresEmailSenderSecretStore(pool),
+          audit: createPostgresAuditEventPort(pool),
+        }
+      );
+      if (result.kind === "invalid_body") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      res.json(200, result.settings);
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/org/email-sender/readiness",
+    operationName: "org.emailSender.readiness",
+    requiresAuth: true,
+    requiredPermission: "tenant.email.settings.read",
+    resource: "admin:email",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const pool = getApplicationPool();
+      const result = await getEmailSenderReadiness(tenantCtx.organisationId, {
+        pool,
+        secretStore: new PostgresEmailSenderSecretStore(pool),
+      });
+      res.json(200, result);
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/org/email-sender/test",
+    operationName: "org.emailSender.test",
+    requiresAuth: true,
+    requiredPermission: "tenant.email.settings.write",
+    resource: "admin:email",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const pool = getApplicationPool();
+      const result = await testEmailSender(
+        {
+          rawBody: req.body,
+          organisationId: tenantCtx.organisationId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+        },
+        {
+          pool,
+          secretStore: new PostgresEmailSenderSecretStore(pool),
+          audit: createPostgresAuditEventPort(pool),
+          makeSender: createEmailSenderFactory(),
+        }
+      );
+      if (result.kind === "invalid_body") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      res.json(200, { result: result.result, messageId: result.messageId });
     },
   },
   // ---------------------------------------------------------------------------

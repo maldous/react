@@ -37,7 +37,7 @@ visible.
 | feature_config | configuration | /admin/config | implemented | | invariant (defaults) |
 | branding | configuration | /admin/config | partial | | invariant (defaults) |
 | tenant_domains | configuration | — | deferred | | deferred |
-| email_sender | configuration | — | deferred | | deferred |
+| email_sender | configuration | /admin/email | implemented | | live (email sender readiness + Mailpit test-send, ADR-0047) |
 | audit | operations | /admin/logs | implemented | | invariant (durable store) |
 | storage | operations | — | deferred | | deferred |
 | observability | operations | /admin/logs | partial | | deferred |

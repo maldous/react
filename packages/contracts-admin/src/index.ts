@@ -427,6 +427,108 @@ export const IdpMappingConfigSchema = z
   .strict();
 export type IdpMappingConfig = z.infer<typeof IdpMappingConfigSchema>;
 
+// ---------------------------------------------------------------------------
+// Tenant email sender configuration (ADR-0047 / ADR-ACT-0216)
+// Strict + no-passthrough. The SMTP password / provider API key is write-only:
+// it appears only in the update request, never in a response. Domain/DNS
+// verification is NOT implemented (sender_unverified is reserved, never returned).
+// ---------------------------------------------------------------------------
+
+export const EMAIL_SENDER_PROVIDERS = ["disabled", "local", "smtp", "brevo"] as const;
+export const EmailSenderProviderSchema = z.enum(EMAIL_SENDER_PROVIDERS);
+export type EmailSenderProvider = z.infer<typeof EmailSenderProviderSchema>;
+
+export const EMAIL_SENDER_READINESS_STATUSES = [
+  "configured",
+  "missing_sender",
+  "missing_credential",
+  "invalid_credential",
+  "provider_unreachable",
+  "sender_unverified",
+  "unknown",
+] as const;
+export const EmailSenderReadinessStatusSchema = z.enum(EMAIL_SENDER_READINESS_STATUSES);
+export type EmailSenderReadinessStatus = z.infer<typeof EmailSenderReadinessStatusSchema>;
+
+const EmailZ = z.string().email().max(254);
+
+/** `GET /api/org/email-sender` — redacted; never carries the secret. */
+export const EmailSenderSettingsSchema = z
+  .object({
+    provider: EmailSenderProviderSchema,
+    fromName: z.string(),
+    fromEmail: z.string(),
+    replyToEmail: z.string(),
+    enabled: z.boolean(),
+    smtpHost: z.string(),
+    smtpPort: z.number().int().nonnegative(),
+    smtpSecure: z.boolean(),
+    smtpUsername: z.string(),
+    hasCredential: z.boolean(),
+    updatedAt: z.string().nullable(),
+    readiness: EmailSenderReadinessStatusSchema,
+  })
+  .strict();
+export type EmailSenderSettings = z.infer<typeof EmailSenderSettingsSchema>;
+
+/** `PATCH /api/org/email-sender`. smtpPassword/apiKey are write-only; a blank/absent
+ * secret preserves the stored one. */
+export const UpdateEmailSenderSettingsSchema = z
+  .object({
+    provider: EmailSenderProviderSchema,
+    fromName: z.string().max(120),
+    fromEmail: z.string().max(254),
+    replyToEmail: z.string().max(254),
+    enabled: z.boolean(),
+    smtpHost: z.string().max(255).optional(),
+    smtpPort: z.number().int().min(1).max(65535).optional(),
+    smtpSecure: z.boolean().optional(),
+    smtpUsername: z.string().max(255).optional(),
+    smtpPassword: z.string().min(1).max(1024).optional(),
+    apiKey: z.string().min(1).max(1024).optional(),
+  })
+  .strict()
+  .refine((b) => b.provider === "disabled" || EmailZ.safeParse(b.fromEmail).success, {
+    message: "a valid fromEmail is required unless the provider is disabled",
+    path: ["fromEmail"],
+  })
+  .refine((b) => b.replyToEmail === "" || EmailZ.safeParse(b.replyToEmail).success, {
+    message: "replyToEmail must be a valid email or empty",
+    path: ["replyToEmail"],
+  })
+  .refine((b) => b.provider !== "smtp" || !!(b.smtpHost && b.smtpHost.length > 0), {
+    message: "smtpHost is required for the smtp provider",
+    path: ["smtpHost"],
+  });
+export type UpdateEmailSenderSettings = z.infer<typeof UpdateEmailSenderSettingsSchema>;
+
+/** `GET /api/org/email-sender/readiness`. */
+export const EmailSenderReadinessResponseSchema = z
+  .object({ status: EmailSenderReadinessStatusSchema })
+  .strict();
+export type EmailSenderReadinessResponse = z.infer<typeof EmailSenderReadinessResponseSchema>;
+
+/** `POST /api/org/email-sender/test`. */
+export const TestEmailRequestSchema = z.object({ to: EmailZ }).strict();
+export type TestEmailRequest = z.infer<typeof TestEmailRequestSchema>;
+
+export const EMAIL_TEST_RESULTS = [
+  "sent",
+  "invalid_recipient",
+  "missing_sender",
+  "missing_credential",
+  "invalid_credential",
+  "provider_unreachable",
+  "disabled",
+] as const;
+export const EmailTestResultSchema = z.enum(EMAIL_TEST_RESULTS);
+export type EmailTestResult = z.infer<typeof EmailTestResultSchema>;
+
+export const TestEmailResponseSchema = z
+  .object({ result: EmailTestResultSchema, messageId: z.string().nullable() })
+  .strict();
+export type TestEmailResponse = z.infer<typeof TestEmailResponseSchema>;
+
 export const MfaRequirementSchema = z.enum(["none", "optional", "required"]);
 export const MfaTypeSchema = z.enum(["totp", "webauthn"]);
 
