@@ -183,6 +183,13 @@ export function buildStepCatalog(options, repoRoot) {
       repoRoot,
       true
     ),
+    actionRegister: step(
+      "validate-action-register",
+      "tools/architecture/validate-action-register",
+      [],
+      repoRoot,
+      true
+    ),
   };
 }
 
@@ -205,6 +212,7 @@ export function planFor(command, options, repoRoot) {
       s.i18nValidation,
       s.pipelineComposition,
       s.composePorts,
+      s.actionRegister,
     ];
   }
 

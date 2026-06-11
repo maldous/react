@@ -1,8 +1,8 @@
 # ADRs Codemap
 
-**Last Updated:** 2026-06-07
+**Last Updated:** 2026-06-11
 
-35 Architecture Decision Records (ADR-0001 through ADR-0035). ADR-0018 is intentionally absent. All status: **Accepted**.
+37 Architecture Decision Records (ADR-0001 through ADR-0037). ADR-0018 is intentionally absent. All status: **Accepted**.
 
 ## Foundation & Governance (8)
 
@@ -74,6 +74,13 @@
 | -------- | ---------------------------------- | ---------- | ------------------------------------------ |
 | ADR-0035 | Enterprise Log Indexing and Search | 2026-06-02 | 0035-enterprise-log-indexing-and-search.md |
 
+## Tenant Administration (2)
+
+| ID       | Title                                            | Date       | File                                                     |
+| -------- | ------------------------------------------------ | ---------- | -------------------------------------------------------- |
+| ADR-0036 | Tenant Administration Control Plane              | 2026-06-11 | 0036-tenant-administration-control-plane.md              |
+| ADR-0037 | Per-tenant Authentication Provider Configuration | 2026-06-11 | 0037-per-tenant-authentication-provider-configuration.md |
+
 ---
 
 ## Key Dependency Edges
@@ -86,7 +93,7 @@
 ## Governance
 
 - All ADRs are **Accepted** (no superceded or pending)
-- Next ADR: **ADR-0036**
+- Next ADR: **ADR-0038**
 - Action register: `docs/adr/ACTION-REGISTER.md`
 - Lifecycle evidence: `docs/evidence/`
 
