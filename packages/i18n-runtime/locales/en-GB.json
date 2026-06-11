@@ -405,10 +405,10 @@
         "readiness": {
           "heading": "Authentication settings status",
           "configured": "Editing is enabled — the realm-admin credential is active.",
-          "missing_credential": "Editing is unavailable: no realm-admin credential is configured for this organisation. An operator must provision one.",
-          "invalid_credential": "Editing is unavailable: the realm-admin credential was rejected. An operator must rotate it.",
-          "forbidden_realm_operation": "Editing is unavailable: the realm-admin credential lacks the permissions required to manage this realm.",
-          "realm_unreachable": "Editing is unavailable: the identity service could not be reached. Please try again later."
+          "missing_credential": "Editing is unavailable: no identity credential is configured for your organisation. Please contact your system administrator to provision one.",
+          "invalid_credential": "Editing is unavailable: the identity credential was rejected. Please contact your system administrator to rotate it.",
+          "forbidden_realm_operation": "Editing is unavailable: the identity credential lacks the required permissions. Please contact your system administrator.",
+          "realm_unreachable": "Editing is unavailable: the identity service could not be reached. Please try again later, or contact your system administrator if this persists."
         }
       }
     }
