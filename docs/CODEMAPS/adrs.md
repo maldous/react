@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-06-11
 
-44 Architecture Decision Records (ADR-0001 through ADR-0044). ADR-0018 is intentionally absent. All status: **Accepted**.
+45 Architecture Decision Records (ADR-0001 through ADR-0045). ADR-0018 is intentionally absent. All status: **Accepted**.
 
 ## Foundation & Governance (8)
 
@@ -74,7 +74,7 @@
 | -------- | ---------------------------------- | ---------- | ------------------------------------------ |
 | ADR-0035 | Enterprise Log Indexing and Search | 2026-06-02 | 0035-enterprise-log-indexing-and-search.md |
 
-## Tenant Administration & Identity (9)
+## Tenant Administration & Identity (10)
 
 | ID       | Title                                                           | Date       | File                                                              |
 | -------- | --------------------------------------------------------------- | ---------- | ----------------------------------------------------------------- |
@@ -87,6 +87,7 @@
 | ADR-0042 | Writable MFA Policy and Auth Settings Runtime Proof             | 2026-06-11 | 0042-writable-mfa-policy-and-auth-settings-runtime-proof.md       |
 | ADR-0043 | Writable Identity Provider Management with Secret Redaction     | 2026-06-11 | 0043-writable-idp-management-secret-redaction.md                  |
 | ADR-0044 | Auth Settings Credential Lifecycle (Rotation, Repair, Recovery) | 2026-06-11 | 0044-auth-settings-credential-lifecycle.md                        |
+| ADR-0045 | Enterprise Tenant Onboarding and Control-Plane Capability Map   | 2026-06-11 | 0045-enterprise-tenant-onboarding-capability-map.md               |
 
 ---
 
@@ -100,7 +101,7 @@
 ## Governance
 
 - All ADRs are **Accepted** (no superceded or pending)
-- Next ADR: **ADR-0045**
+- Next ADR: **ADR-0046**
 - Action register: `docs/adr/ACTION-REGISTER.md`
 - Lifecycle evidence: `docs/evidence/`
 
