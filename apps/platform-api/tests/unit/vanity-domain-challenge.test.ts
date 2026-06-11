@@ -123,7 +123,7 @@ describe("createDomainChallenge", () => {
     );
     assert.ok(insertCall, "insert must be called");
     assert.ok(
-      (insertCall?.values ?? []).includes("example.com"),
+      (insertCall?.values ?? []).some((v) => v === "example.com"),
       "domain must be lowercased in insert"
     );
   });

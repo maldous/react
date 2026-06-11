@@ -1,0 +1,44 @@
+{
+  "_comment": "Reference template documenting the env-var contract for the servers wired in the committed .mcp.json. The real .mcp.json uses ${ENV} references — NEVER literal tokens. Required env vars: CONTEXT7_API_KEY (Context7), GITHUB_PERSONAL_ACCESS_TOKEN (read-only GitHub). Serena and platform-governor need no key. NEVER point an MCP at production Keycloak/Postgres/Sentry or a live customer tenant.",
+  "_security": [
+    "Secrets resolve from environment at launch via ${VAR} — not stored in any committed file.",
+    "GitHub uses the official github-mcp-server with --read-only (no write/PR-create).",
+    "Context7 = network doc-fetch (read-only); Serena + platform-governor are fully local.",
+    "Contributors without a given key see that network server fail gracefully; local servers still work."
+  ],
+  "mcpServers": {
+    "platform-governor": {
+      "_status": "Active (local, no key). Repo-native governance tools.",
+      "command": "node",
+      "args": ["tools/mcp/platform-governor/src/index.mjs"]
+    },
+    "context7": {
+      "_status": "Active. Needs CONTEXT7_API_KEY in env.",
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "env": { "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}" }
+    },
+    "serena": {
+      "_status": "Active (local, no key). Install: uvx pulls oraios/serena on first run.",
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/oraios/serena",
+        "serena",
+        "start-mcp-server",
+        "--context",
+        "ide-assistant",
+        "--project",
+        ".",
+        "--transport",
+        "stdio"
+      ]
+    },
+    "github": {
+      "_status": "Active (read-only). Build once: go install github.com/github/github-mcp-server/cmd/github-mcp-server@latest. Needs GITHUB_PERSONAL_ACCESS_TOKEN in env.",
+      "command": "github-mcp-server",
+      "args": ["stdio", "--read-only"],
+      "env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}" }
+    }
+  }
+}

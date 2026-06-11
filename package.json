@@ -153,7 +153,16 @@
     "test:e2e:identity": "playwright test --config playwright.identity.config.ts",
     "test:e2e:prod": "playwright test --config playwright.prod.config.ts",
     "validate:slices": "node tools/architecture/validate-slice-readiness/src/index.mjs",
-    "build:spa": "cd apps/react-enterprise-app && ../../node_modules/.bin/vite build"
+    "build:spa": "cd apps/react-enterprise-app && ../../node_modules/.bin/vite build",
+    "semgrep": "semgrep scan --config tools/semgrep/rules.yml --metrics=off",
+    "semgrep:json": "semgrep scan --config tools/semgrep/rules.yml --metrics=off --json",
+    "semgrep:gate": "semgrep scan --config tools/semgrep/rules.yml --metrics=off --severity ERROR --error",
+    "openapi:lint": "npx --yes @stoplight/spectral-cli@6.16.0 lint docs/api/openapi.json --ruleset .spectral.yaml",
+    "codeql:db": "codeql database create .codeql/db --language=javascript-typescript --source-root=. --overwrite --codescanning-config=.github/codeql/codeql-config.yml",
+    "codeql:analyze": "codeql database analyze .codeql/db codeql/javascript-queries:codeql-suites/javascript-security-and-quality.qls --format=sarif-latest --output=.codeql/react.sarif",
+    "codeql": "npm run codeql:db && npm run codeql:analyze",
+    "mcp:governor": "node tools/mcp/platform-governor/src/index.mjs",
+    "mcp:governor:selftest": "node tools/mcp/platform-governor/tests/handshake.test.mjs"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "3.1056.0",

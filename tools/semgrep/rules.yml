@@ -1,0 +1,188 @@
+# Repo-specific Semgrep rules for the hexagonal multi-tenant platform.
+# These encode the hard constraints from CLAUDE.md and ADR-0001/0013/0029/0030/0037/0043.
+# Run: npm run semgrep   (offline, --metrics=off; never `semgrep login` / --upload from this repo)
+# These are a REVIEW AID. They are NOT wired into `make check` and do not weaken any existing gate.
+rules:
+  # --- Constraint #3 / #7: no adapter or server-only imports in the React SPA ---
+  - id: no-adapter-import-in-spa
+    languages: [generic]
+    severity: ERROR
+    paths:
+      include:
+        - "**/apps/react-enterprise-app/**/*.ts"
+        - "**/apps/react-enterprise-app/**/*.tsx"
+      exclude:
+        - "**/*.test.ts"
+        - "**/*.test.tsx"
+        - "**/tests/**"
+    patterns:
+      - pattern-regex: "from\\s+['\"]@platform/adapters-[a-z0-9-]+['\"]"
+    message: >-
+      React SPA must not import adapter packages (@platform/adapters-*). Server data goes through the
+      BFF only (CLAUDE.md constraint #1/#3/#7, ADR-0001/0013).
+
+  - id: no-server-runtime-import-in-spa
+    languages: [generic]
+    severity: ERROR
+    paths:
+      include:
+        - "**/apps/react-enterprise-app/**/*.ts"
+        - "**/apps/react-enterprise-app/**/*.tsx"
+      exclude:
+        - "**/*.test.ts"
+        - "**/*.test.tsx"
+        - "**/tests/**"
+    patterns:
+      - pattern-regex: "from\\s+['\"](pg|ioredis|redis|keycloak-connect|@keycloak/[a-z-]+|@opentelemetry/[a-z-]+|pino)['\"]"
+    message: >-
+      React SPA must not import server-only runtime (db/redis/keycloak/otel/pino). Use the BFF
+      (CLAUDE.md constraint #2/#7).
+
+  # --- Constraint #1: no BFF bypass — SPA must not call arbitrary remote hosts directly ---
+  - id: no-bff-bypass-absolute-url-fetch-in-spa
+    languages: [generic]
+    severity: WARNING
+    paths:
+      include:
+        - "**/apps/react-enterprise-app/**/*.ts"
+        - "**/apps/react-enterprise-app/**/*.tsx"
+      exclude:
+        - "**/*.test.ts"
+        - "**/*.test.tsx"
+        - "**/tests/**"
+        - "**/mocks/**"
+    patterns:
+      - pattern-regex: "fetch\\(\\s*[`'\"]https?://"
+    message: >-
+      Possible BFF bypass: SPA fetch() to an absolute remote URL. Server data must go through the BFF
+      (CLAUDE.md constraint #1, ADR-0013). Confirm this is not server data.
+
+  # --- Constraint #3: adapters must not be imported into domain/feature/ui/contract packages ---
+  - id: no-adapter-import-in-pure-layers
+    languages: [generic]
+    severity: ERROR
+    paths:
+      include:
+        - "**/packages/domain-*/**/*.ts"
+        - "**/packages/feature-*/**/*.ts"
+        - "**/packages/ui-*/**/*.ts"
+        - "**/packages/ui-*/**/*.tsx"
+        - "**/packages/contracts-*/**/*.ts"
+      exclude:
+        - "**/*.test.ts"
+        - "**/tests/**"
+    patterns:
+      - pattern-regex: "from\\s+['\"]@platform/adapters-[a-z0-9-]+['\"]"
+    message: >-
+      domain/feature/ui/contract packages must not import adapter packages (CLAUDE.md constraint #3,
+      ADR-0001 hexagonal layering).
+
+  # --- Constraint #4: no pino in domain/feature/ui/contract packages ---
+  - id: no-pino-in-pure-layers
+    languages: [generic]
+    severity: ERROR
+    paths:
+      include:
+        - "**/packages/domain-*/**/*.ts"
+        - "**/packages/feature-*/**/*.ts"
+        - "**/packages/ui-*/**/*.ts"
+        - "**/packages/contracts-*/**/*.ts"
+      exclude:
+        - "**/*.test.ts"
+        - "**/tests/**"
+    patterns:
+      - pattern-regex: "from\\s+['\"]pino['\"]"
+    message: >-
+      pino must not be imported in domain/feature/ui/contract packages. Use @platform/platform-logging
+      at the API/adapter layer (CLAUDE.md constraint #4).
+
+  # --- Constraint #5: no OpenTelemetry SDK in platform-observability ---
+  - id: no-otel-sdk-in-platform-observability
+    languages: [generic]
+    severity: ERROR
+    paths:
+      include:
+        - "**/packages/platform-observability/**/*.ts"
+      exclude:
+        - "**/*.test.ts"
+        - "**/tests/**"
+    patterns:
+      - pattern-regex: "from\\s+['\"]@opentelemetry/sdk[a-z-]*['\"]"
+    message: >-
+      platform-observability must not import OpenTelemetry SDK packages (CLAUDE.md constraint #5,
+      ADR-0020). SDK wiring belongs in adapters-opentelemetry.
+
+  # --- Constraint #7: no console.log/error in BFF or adapter runtime; use platform-logging ---
+  - id: no-console-in-bff-and-adapters
+    languages: [typescript]
+    severity: WARNING
+    paths:
+      include:
+        - "**/apps/platform-api/src/**/*.ts"
+        - "**/packages/adapters-*/src/**/*.ts"
+      exclude:
+        - "**/*.test.ts"
+        - "**/tests/**"
+        - "**/scripts/**"
+    pattern-either:
+      - pattern: console.log(...)
+      - pattern: console.error(...)
+      - pattern: console.warn(...)
+      - pattern: console.info(...)
+    message: >-
+      No console.* in BFF/adapter runtime. Use @platform/platform-logging (CLAUDE.md constraint #7).
+
+  # --- Constraint #6: no raw Error on expected failure paths in routes/usecases ---
+  - id: no-raw-error-in-routes-and-usecases
+    languages: [typescript]
+    severity: INFO
+    paths:
+      include:
+        - "**/apps/platform-api/src/**/*route*.ts"
+        - "**/apps/platform-api/src/**/*usecase*.ts"
+        - "**/apps/platform-api/src/**/*use-case*.ts"
+      exclude:
+        - "**/*.test.ts"
+        - "**/tests/**"
+    pattern: throw new Error(...)
+    message: >-
+      Expected failure paths should throw a typed @platform/platform-errors error, not raw Error
+      (CLAUDE.md constraint #6). Review whether this path is expected.
+
+  # --- ADR-0037/0043: no raw Keycloak representation types outside the keycloak adapter ---
+  - id: no-raw-keycloak-representation-outside-adapter
+    languages: [generic]
+    severity: WARNING
+    paths:
+      include:
+        - "**/apps/platform-api/**/*.ts"
+        - "**/packages/contracts-*/**/*.ts"
+        - "**/apps/react-enterprise-app/**/*.ts"
+        - "**/apps/react-enterprise-app/**/*.tsx"
+      exclude:
+        - "**/packages/adapters-keycloak/**"
+        - "**/*.test.ts"
+        - "**/tests/**"
+    patterns:
+      - pattern-regex: "(RealmRepresentation|IdentityProviderRepresentation|ClientRepresentation|UserRepresentation)\\b"
+    message: >-
+      Raw Keycloak *Representation types must not leak outside packages/adapters-keycloak. Expose
+      explicit redacted DTOs instead (ADR-0037/0043, no raw Keycloak config).
+
+  # --- ADR-0043: client secrets must not be logged or placed in audit metadata ---
+  - id: no-secret-in-log-or-audit
+    languages: [typescript]
+    severity: ERROR
+    paths:
+      include:
+        - "**/apps/platform-api/src/**/*.ts"
+        - "**/packages/adapters-*/src/**/*.ts"
+      exclude:
+        - "**/*.test.ts"
+        - "**/tests/**"
+    pattern-either:
+      - pattern-regex: "(logger|log|console)\\.[a-z]+\\([^)]*\\b(clientSecret|client_secret|privateKey|private_key|password|apiKey|api_key)\\b"
+      - pattern-regex: "(audit|metadata|details)\\s*[:=]\\s*\\{[^}]*\\b(clientSecret|client_secret|password|privateKey)\\b"
+    message: >-
+      Secret-bearing field referenced in a log or audit/metadata payload. Secrets are write-only and
+      must never be logged or audited (ADR-0043, CLAUDE.md constraint #8).

@@ -38,6 +38,16 @@ else
   echo "  Tilt already installed: $(tilt version 2>/dev/null)"
 fi
 
+echo "Installing Semgrep (ERROR-severity constraint gate in 'make check' — tools/semgrep)..."
+# pipx keeps it isolated; ~/.local/bin must be on PATH (devcontainer images include it).
+if ! command -v semgrep &>/dev/null; then
+  python3 -m pip install --user pipx >/dev/null 2>&1 || true
+  pipx install semgrep >/dev/null 2>&1 && echo "  Semgrep installed: $(semgrep --version 2>/dev/null | head -1)" \
+    || echo "  WARN: semgrep install failed — 'make check' will skip the semgrep gate locally."
+else
+  echo "  Semgrep already installed: $(semgrep --version 2>/dev/null | head -1)"
+fi
+
 echo ""
 echo "Dev container ready."
 echo "  npm run test:platform-api       ? platform-api tests (requires Postgres)"

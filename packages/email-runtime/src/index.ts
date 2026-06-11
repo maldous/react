@@ -44,7 +44,16 @@ export interface EmailPort {
 }
 
 export function isValidEmailAddress(email: string): boolean {
-  return typeof email === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  // Structural validation (no backtracking regex) to avoid polynomial-time ReDoS on
+  // attacker-supplied input. Equivalent to /^[^\s@]+@[^\s@]+\.[^\s@]+$/ but linear-time.
+  if (typeof email !== "string") return false;
+  if (/\s/.test(email)) return false;
+  const at = email.indexOf("@");
+  if (at <= 0 || at !== email.lastIndexOf("@")) return false; // exactly one "@", non-empty local part
+  const domain = email.slice(at + 1);
+  const lastDot = domain.lastIndexOf(".");
+  // domain must contain a "." with a non-empty label on each side
+  return lastDot > 0 && lastDot < domain.length - 1;
 }
 
 export function createNoopEmailPort(): EmailPort {

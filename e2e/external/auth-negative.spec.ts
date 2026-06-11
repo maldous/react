@@ -31,7 +31,9 @@ test.describe(`${TARGET_HOST}: wrong credentials`, () => {
     await page.waitForTimeout(2_000);
     const currentUrl = page.url();
     // Must NOT have redirected back to aldous.info with a valid session
-    const hasSession = currentUrl.startsWith(BASE_URL) && !currentUrl.includes("/kc/");
+    const current = new URL(currentUrl);
+    const hasSession =
+      current.origin === new URL(BASE_URL).origin && !current.pathname.startsWith("/kc/");
     if (hasSession) {
       // If somehow we're back at aldous.info, session must NOT be authenticated
       const res = await page.request.get(

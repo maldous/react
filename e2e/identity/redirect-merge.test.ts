@@ -24,8 +24,8 @@ describe("mergeClientRedirects", () => {
   it("adds the new redirect URIs while preserving the existing ones", () => {
     const { merged, changed } = mergeClientRedirects(baseClient(), WANT);
     assert.equal(changed, true);
-    assert.ok(merged.redirectUris?.includes("http://localhost:5173/*"));
-    assert.ok(merged.redirectUris?.includes("http://dev.localhost/auth/callback"));
+    assert.ok(merged.redirectUris?.some((u) => u === "http://localhost:5173/*"));
+    assert.ok(merged.redirectUris?.some((u) => u === "http://dev.localhost/auth/callback"));
     for (const u of WANT) assert.ok(merged.redirectUris?.includes(u), `missing ${u}`);
   });
 

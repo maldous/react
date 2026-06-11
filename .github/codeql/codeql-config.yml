@@ -1,0 +1,21 @@
+name: "CodeQL config — react platform (javascript-typescript)"
+
+# Used by .github/workflows/codeql.yml and the local `npm run codeql:*` scripts.
+# security-and-quality = the security-extended suite plus maintainability/correctness queries.
+queries:
+  - uses: security-and-quality
+
+# Keep generated/vendored/large trees out of extraction and analysis (speed + signal).
+paths-ignore:
+  - "**/node_modules"
+  - "**/dist"
+  - "**/build"
+  - "**/.next"
+  - "coverage"
+  - "reports"
+  - "e2e-results"
+  - "playwright-report"
+  - "**/*.min.js"
+  - "**/tests/fixtures/**"
+  - "docker/wiremock/__files"
+  - "packages/contracts-graphql/src/generated"

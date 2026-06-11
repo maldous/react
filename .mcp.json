@@ -1,0 +1,37 @@
+{
+  "mcpServers": {
+    "platform-governor": {
+      "command": "node",
+      "args": ["tools/mcp/platform-governor/src/index.mjs"]
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "env": {
+        "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
+      }
+    },
+    "serena": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/oraios/serena",
+        "serena",
+        "start-mcp-server",
+        "--context",
+        "ide-assistant",
+        "--project",
+        ".",
+        "--transport",
+        "stdio"
+      ]
+    },
+    "github": {
+      "command": "github-mcp-server",
+      "args": ["stdio", "--read-only"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
+    }
+  }
+}

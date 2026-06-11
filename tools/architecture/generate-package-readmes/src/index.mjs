@@ -379,7 +379,12 @@ function resolvePackageStatus(fresh) {
 
 function checkPackageReadme(packageJson, packageFile, readmePath) {
   const expected = renderReadme(packageJson);
-  const current = fs.existsSync(readmePath) ? fs.readFileSync(readmePath, "utf8") : null;
+  let current = null;
+  try {
+    current = fs.readFileSync(readmePath, "utf8"); // read directly; avoids existsSync TOCTOU
+  } catch (err) {
+    if (err.code !== "ENOENT") throw err;
+  }
   const expectedStructureErrors = validateReadmeStructure(expected);
   const currentStructureErrors =
     current === null ? ["README.md is missing"] : validateReadmeStructure(current);

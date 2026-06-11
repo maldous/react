@@ -130,7 +130,6 @@ test.describe("cross-cutting: response header consistency", () => {
 test.describe("cross-cutting: observability", () => {
   test("API responses are collectable (Content-Type is stable)", async ({ request }) => {
     const res = await request.get("/healthz");
-    const ct = res.headers()["content-type"] ?? "";
     // Must be parseable JSON
     const body = await res.json();
     expect(body).toHaveProperty("status");
@@ -139,7 +138,6 @@ test.describe("cross-cutting: observability", () => {
   test("error responses include trace identifier for debugging", async ({ request }) => {
     // Trigger a 401 error
     const res = await request.get("/api/session");
-    const body = await res.text();
     // Must either include request ID in body or it's already in headers
     const requestId = res.headers()["x-request-id"];
     expect(requestId).toBeTruthy();

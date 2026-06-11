@@ -1,0 +1,14 @@
+{
+  "name": "@platform/mcp-platform-governor",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local, credential-free MCP server exposing this repo's native governance tools (read-mostly).",
+  "bin": {
+    "platform-governor-mcp": "src/index.mjs"
+  },
+  "scripts": {
+    "start": "node src/index.mjs",
+    "selftest": "node tests/handshake.test.mjs"
+  }
+}

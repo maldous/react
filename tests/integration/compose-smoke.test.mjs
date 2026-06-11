@@ -21,7 +21,7 @@ import pg from "pg";
 import { createClient as createRedisClient } from "redis";
 
 // DB substrate ? TypeScript modules (Node 25.8 strips types natively)
-import { runMigrations, isMigrated } from "../../apps/platform-api/src/db/migrate.ts";
+import { runMigrations } from "../../apps/platform-api/src/db/migrate.ts";
 import { seedFixtures, FIXTURE } from "../../apps/platform-api/src/db/seed.ts";
 import { resetDatabase } from "../../apps/platform-api/src/db/reset.ts";
 import {

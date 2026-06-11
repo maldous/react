@@ -72,7 +72,6 @@ test.describe("performance: resource counts", () => {
     let totalBytes = 0;
     page.on("response", (res) => {
       const url = res.url();
-      const ct = res.headers()["content-type"] ?? "";
       const isPageContent = url.endsWith(".html") || url.endsWith(".js") || url.endsWith(".css");
       if (isPageContent) {
         totalBytes += parseInt(res.headers()["content-length"] ?? "0", 10);

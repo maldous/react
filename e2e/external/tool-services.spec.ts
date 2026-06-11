@@ -11,7 +11,7 @@
  * - MinIO preloader images are not broken (assets route correctly)
  */
 import { test, expect } from "@playwright/test";
-import { loginAs, getTestCredentials, getExternalBaseUrl, isProd } from "./helpers.ts";
+import { loginAs, getTestCredentials, getExternalBaseUrl } from "./helpers.ts";
 
 const TARGET_HOST = new URL(process.env["PROD_BASE_URL"] || "http://aldous.info").hostname;
 const BASE = process.env["PROD_BASE_URL"] || "http://aldous.info";

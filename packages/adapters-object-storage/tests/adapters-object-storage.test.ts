@@ -11,7 +11,7 @@ describe("S3ObjectStorageAdapter", () => {
       forcePathStyle: true,
       credentials: { accessKeyId: "minio", secretAccessKey: "minio123" },
     });
-    assert.ok(adapter !== null);
+    assert.ok(adapter instanceof S3ObjectStorageAdapter);
   });
 
   it("put delegates to S3Client", async () => {

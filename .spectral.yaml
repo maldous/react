@@ -1,0 +1,14 @@
+# Spectral OpenAPI style governance for docs/api/openapi.json.
+# Complements (does NOT replace) `npm run openapi:drift` — drift is the authoritative contract check;
+# this adds style/consistency advice. Run: npm run openapi:lint
+# Advisory only: not wired into `make check`. Promotion to a gate needs an ADR amendment (ADR-0013).
+extends:
+  - "spectral:oas"
+rules:
+  # The supplementary BFF baseline is documentation-grade; keep descriptive rules advisory, not blocking.
+  info-contact: off
+  info-description: warn
+  operation-description: warn
+  operation-tag-defined: warn
+  oas3-unused-component: warn
+  # Keep the structural/security-relevant rules at their default (error) severity.

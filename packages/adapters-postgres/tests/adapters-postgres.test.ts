@@ -66,7 +66,7 @@ describe("PostgresOrganisationRepository", () => {
 describe("PostgresReadinessAdapter", () => {
   it("constructs without error", () => {
     const adapter = new PostgresReadinessAdapter("postgresql://localhost/test");
-    assert.ok(adapter !== null);
+    assert.ok(adapter instanceof PostgresReadinessAdapter);
   });
 });
 

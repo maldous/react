@@ -138,7 +138,10 @@ export class LokiLogQueryAdapter {
   private readonly fetchImpl: typeof fetch;
 
   constructor(config: LokiConfig = {}, fetchImpl: typeof fetch = fetch) {
-    this.baseUrl = (config.url ?? "http://localhost:3100").replace(/\/+$/, "");
+    // Strip trailing slashes without a backtracking regex (avoids polynomial-time ReDoS).
+    let url = config.url ?? "http://localhost:3100";
+    while (url.endsWith("/")) url = url.slice(0, -1);
+    this.baseUrl = url;
     this.fetchImpl = fetchImpl;
   }
 

@@ -12,7 +12,7 @@ import {
 } from "./helpers.ts";
 
 const TARGET_HOST = new URL(process.env["PROD_BASE_URL"] || "http://aldous.info").hostname;
-const TARGET_HOST_RE = new RegExp(TARGET_HOST.replace(/\./g, "\\."));
+const TARGET_HOST_RE = new RegExp(TARGET_HOST.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
 
 test.describe(`${TARGET_HOST}: logout and session invalidation`, () => {
   test.beforeEach(({}, testInfo) => {

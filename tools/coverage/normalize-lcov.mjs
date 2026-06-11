@@ -20,12 +20,16 @@ const TOOLS_MARKER = "tools/architecture/";
 
 const repoRoot = process.cwd();
 
-if (!fs.existsSync(LCOV_PATH)) {
-  console.error(`normalize-lcov: ${LCOV_PATH} not found ? run test:coverage first`);
-  process.exit(1);
+let content;
+try {
+  content = fs.readFileSync(LCOV_PATH, "utf8");
+} catch (e) {
+  if (e.code === "ENOENT") {
+    console.error(`normalize-lcov: ${LCOV_PATH} not found — run test:coverage first`);
+    process.exit(1);
+  }
+  throw e;
 }
-
-const content = fs.readFileSync(LCOV_PATH, "utf8");
 const records = content.split("end_of_record\n");
 
 // First pass: find all canonical paths that already have a real-path entry.

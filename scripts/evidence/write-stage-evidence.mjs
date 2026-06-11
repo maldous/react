@@ -90,11 +90,14 @@ const e2eCommands = {
   prod: "make e2e-external PROD_BASE_URL=https://aldous.info && npm run test:e2e:prod",
 };
 
-const apiPort =
-  shell("bash", [
-    "-c",
-    `grep -oP 'PLATFORM_API_PORT=\\K\\d+' '${envPath}' 2>/dev/null | head -1`,
-  ]) || "3001";
+// Read the API port from the env file directly (no shell -> avoids command injection via $stage).
+let apiPort = "3001";
+try {
+  const m = readFileSync(envPath, "utf8").match(/^\s*PLATFORM_API_PORT=(\d+)/m);
+  if (m) apiPort = m[1];
+} catch {
+  /* env file absent - keep default */
+}
 
 const evidence = {
   stage,

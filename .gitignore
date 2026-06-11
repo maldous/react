@@ -59,3 +59,17 @@ docs/superpowers/plans/
 
 # Playwright MCP session artifacts (snapshots/console logs)
 .playwright-mcp/
+
+# CodeQL local database + SARIF (never commit scan output)
+.codeql/
+*.sarif
+
+# Serena MCP per-developer project cache
+.serena/
+
+# Agent tooling state/DB artifacts (ruflo / claude-flow / agentdb / ruvector) — never commit
+.claude/memory.db
+.swarm/
+*.rvf
+*.rvf.lock
+ruvector.db

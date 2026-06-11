@@ -7,6 +7,18 @@
           {
             "type": "command",
             "command": "FILE=$(jq -r '.tool_input.file_path // empty' 2>/dev/null); [ -z \"$FILE\" ] && exit 0; echo \"$FILE\" | grep -qE '\\.(ts|tsx|js|jsx|mjs|cjs|json|md|css|html|yaml|yml)$' && npx prettier --write \"$FILE\" 2>/dev/null || true"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(jq -r '.tool_input.file_path // empty' 2>/dev/null); echo \"$FILE\" | grep -qE 'docs/adr/|docs/CODEMAPS/' && { node tools/architecture/validate-action-register/src/index.mjs >/tmp/cc-areg.log 2>&1 && echo 'governance: validate-action-register OK' || echo 'governance: validate-action-register FAILED — see /tmp/cc-areg.log'; } || true"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(jq -r '.tool_input.file_path // empty' 2>/dev/null); echo \"$FILE\" | grep -qE 'apps/platform-api/.*(route|usecase|use-case|contract|handler)' && { ( npm run --silent openapi:drift >/tmp/cc-openapi.log 2>&1 & ); echo 'openapi:drift started (bg) -> /tmp/cc-openapi.log'; } || true"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(jq -r '.tool_input.file_path // empty' 2>/dev/null); echo \"$FILE\" | grep -qE 'apps/react-enterprise-app/.*(admin|auth)/' && { ( npm run --silent frontend:conventions >/tmp/cc-fe.log 2>&1 & ); echo 'frontend:conventions started (bg) -> /tmp/cc-fe.log'; } || true"
           }
         ]
       }
@@ -17,7 +29,26 @@
         "hooks": [
           {
             "type": "command",
-            "command": "FILE=$(jq -r '.tool_input.file_path // empty' 2>/dev/null); [ -z \"$FILE\" ] && exit 2; echo \"$FILE\" | grep -qE '\\.env(\\..+)?$' && echo \"$FILE\" | grep -qvF '.env.example' && echo 'BLOCK: refusing to edit .env files - constraint #8 in CLAUDE.md' && exit 2 || exit 0"
+            "command": "FILE=$(jq -r '.tool_input.file_path // empty' 2>/dev/null); [ -z \"$FILE\" ] && exit 0; echo \"$FILE\" | grep -qE '(\\.env($|\\..+)|\\.pem$|\\.key$|id_rsa|\\.p12$|\\.pfx$|credentials(\\.json)?$|\\.tfvars$|\\.tfstate)' && echo \"$FILE\" | grep -qvF '.env.example' && { echo 'BLOCK: refusing to edit secret-bearing path (CLAUDE.md constraint #8)'; exit 2; }; exit 0"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "CMD=$(jq -r '.tool_input.command // empty' 2>/dev/null); echo \"$CMD\" | grep -qE '(rm[[:space:]]+-[a-z]*r[a-z]*f?[[:space:]]+(/|~|\\$HOME|\\*)|git[[:space:]]+push[[:space:]]+.*--force|git[[:space:]]+reset[[:space:]]+--hard[[:space:]]+origin|mkfs|truncate[[:space:]]+-s[[:space:]]*0)' && { echo 'BLOCK: destructive command — confirm with operator first'; exit 2; }; exit 0"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Reminder: report gate results (make check), evidence updates, ADR/ACTION-REGISTER status, and any deferrals. Do not claim live/prod verification without running the command.'"
           }
         ]
       }

@@ -1,4 +1,4 @@
-.PHONY: test test-compose audit security compose architecture \
+.PHONY: test test-compose audit security compose architecture semgrep \
         sonar advisory sbom license \
         quality check ci full
 
@@ -44,6 +44,16 @@ architecture:
 	npm run codegen:check
 	npm run frontend:conventions
 	$(call OK,all architecture gates passed)
+
+## semgrep — ERROR-severity constraint rules (tools/semgrep). Hard gate; advisory WARNING/INFO excluded.
+## Enforced in CI and the dev container (semgrep is provisioned there). Locally it skips with a
+## warning if semgrep is not installed, so a missing binary never blocks an ad-hoc checkout.
+semgrep:
+	$(call STEP,semgrep (ERROR-severity constraints))
+	@command -v semgrep >/dev/null 2>&1 \
+		|| { printf '$(YELLOW)⚠ semgrep not installed — skipping (install: pipx install semgrep). Enforced in CI/devcontainer.$(RESET)\n'; exit 0; }
+	npm run semgrep:gate
+	$(call OK,semgrep constraint gate passed)
 
 ## sonar — SonarQube scan + quality gate against the shared instance
 ## Auto-provisions a valid SONAR_TOKEN on first run (or after DB reset).
@@ -94,15 +104,15 @@ license:
 # ── Composite quality targets ────────────────────────────────────────────────
 
 ## quality — Full quality gate (used by make all)
-quality: install format lint typecheck audit security compose architecture license
+quality: install format lint typecheck audit security compose architecture semgrep license
 	$(call OK,quality gate passed)
 
-## check — Fast local check: format/lint/typecheck/audit/compose/architecture
-check: format lint typecheck audit compose architecture
+## check — Fast local check: format/lint/typecheck/audit/compose/architecture/semgrep
+check: format lint typecheck audit compose architecture semgrep
 	$(call OK,check complete)
 
 ## ci — CI-safe subset
-ci: install format lint typecheck test audit security compose architecture
+ci: install format lint typecheck test audit security compose architecture semgrep
 	$(call OK,ci complete)
 
 ## full — Alias for all

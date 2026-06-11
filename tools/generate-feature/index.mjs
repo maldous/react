@@ -452,17 +452,22 @@ function main() {
 
   for (const [filePath, content] of files) {
     const rel = path.relative(REPO_ROOT, filePath);
-    if (fs.existsSync(filePath)) {
-      console.log("  skip (exists): " + rel);
-      continue;
-    }
     if (opts.dryRun) {
-      console.log("  would write: " + rel);
+      console.log((fs.existsSync(filePath) ? "  skip (exists): " : "  would write: ") + rel);
       continue;
     }
     fs.mkdirSync(path.dirname(filePath), { recursive: true });
-    fs.writeFileSync(filePath, content);
-    console.log("  write: " + rel);
+    try {
+      // Exclusive write: atomic create, no time-of-check/time-of-use race on existence.
+      fs.writeFileSync(filePath, content, { flag: "wx" });
+      console.log("  write: " + rel);
+    } catch (err) {
+      if (err.code === "EEXIST") {
+        console.log("  skip (exists): " + rel);
+        continue;
+      }
+      throw err;
+    }
   }
   mergeI18n(n, opts.type, opts.dryRun);
 
