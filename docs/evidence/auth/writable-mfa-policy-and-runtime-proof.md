@@ -69,7 +69,7 @@ KC_PROOF_REALM=platform npm run proof:auth-settings
 
 Executed output (Keycloak 26.2, dev identity profile, realm `platform`, 2026-06-11):
 
-```
+```text
 # Auth Settings runtime proof — realm "platform" @ http://localhost:8090/kc
 
 PASS  readiness (valid credentials) === ok — got "ok"

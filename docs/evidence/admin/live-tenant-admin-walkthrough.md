@@ -25,7 +25,7 @@ The seeded tenant `fixture-org` (id `00000000-0000-0000-0000-000000000001`) exis
 
 ### Tenant-aware provider list (ADR-0037)
 
-```
+```bash
 $ curl -s -H "Host: fixture-org.aldous.info" http://localhost:3001/api/auth/providers
 [{"id":"google",...,"mode":"mock"},{"id":"azure",...},{"id":"apple",...},
  {"id":"platform",...,"mode":"internal"}]
@@ -39,7 +39,7 @@ filtered list) is unit-tested in `auth-provider-config.test.ts`.
 
 ### `/auth/login` provider enablement guard
 
-```
+```bash
 $ curl -s -o /dev/null -w "%{http_code}" -H "Host: fixture-org.aldous.info" \
     "http://localhost:3001/auth/login?provider=<p>"
 provider=platform     -> 302   (valid, internal Keycloak)

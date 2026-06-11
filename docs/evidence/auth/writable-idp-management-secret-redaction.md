@@ -77,7 +77,7 @@ KC_PROOF_REALM=platform npm run proof:auth-idps
 
 Executed output (Keycloak 26.2, dev identity profile, realm `platform`, 2026-06-11):
 
-```
+```text
 # IdP runtime proof — realm "platform" @ http://localhost:8090/kc
 
 PASS  readiness === ok — got "ok"
@@ -107,7 +107,7 @@ raw secret masked → non-secret update with blank secret preserves it → secre
   secret-mask preservation against Keycloak 26.2.
 - **node:test:** `toIdpSummary` redaction, `applyUpdate` secret preservation, audit-metadata
   no-secret, request validation (alias/provider/URL) — `idp-management.test.ts` (17); adapter IdP CRUD
-  + error classification — `adapters-keycloak.test.ts` (74).
+  - error classification — `adapters-keycloak.test.ts` (74).
 - **MSW integration (`AdminAuthPage.test.tsx`):** create/edit/delete controls, create flow, secret
   field never prefilled, delete confirm, read-only without write, readiness notice, axe (23 total).
 - **Not driven in one live HTTP call:** the full BFF route + per-tenant credential store + FQDN

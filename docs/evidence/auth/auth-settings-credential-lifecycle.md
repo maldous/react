@@ -46,12 +46,12 @@ realm (`probeReadiness`); **store only on `ok`**; on any failure return the clas
 the audit action (`auth_settings.credential.{attached,rotated,repaired}`) + `operation` metadata.
 Repair is the **operator-provided** path; **automated repair** (platform-minted client) is deferred.
 
-| Method | Path                                                              | Result                              |
-| ------ | ---------------------------------------------------------------- | ----------------------------------- |
-| GET    | `/api/admin/tenants/:tenantId/auth-settings-credential/readiness`| status + secret-free metadata       |
-| POST   | `/api/admin/tenants/:tenantId/auth-settings-credential/rotate`   | 204; bad cred → 502/422; preserve   |
-| POST   | `/api/admin/tenants/:tenantId/auth-settings-credential/repair`   | 204; bad cred → 502/422; preserve   |
-| POST   | `/api/admin/tenants/auth-settings-credential` (ADR-0041)         | attach (organisationId in body)     |
+| Method | Path                                                              | Result                            |
+| ------ | ----------------------------------------------------------------- | --------------------------------- |
+| GET    | `/api/admin/tenants/:tenantId/auth-settings-credential/readiness` | status + secret-free metadata     |
+| POST   | `/api/admin/tenants/:tenantId/auth-settings-credential/rotate`    | 204; bad cred → 502/422; preserve |
+| POST   | `/api/admin/tenants/:tenantId/auth-settings-credential/repair`    | 204; bad cred → 502/422; preserve |
+| POST   | `/api/admin/tenants/auth-settings-credential` (ADR-0041)          | attach (organisationId in body)   |
 
 `tenantId` comes from the URL path; permission is global; the body is strict `{clientId, clientSecret}`
 and can never carry tenant authority (unit-tested). Readiness vocabulary is unchanged (ADR-0041).
@@ -83,7 +83,7 @@ KC_PROOF_REALM=platform npm run proof:auth-credential-lifecycle
 
 Executed output (Keycloak 26.2, dev identity profile, realm `platform`, 2026-06-11):
 
-```
+```text
 # Credential lifecycle runtime proof — realm "platform" @ http://localhost:8090/kc
 
   minted a throwaway tenant-realm service account

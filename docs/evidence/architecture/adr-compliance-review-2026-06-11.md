@@ -20,7 +20,7 @@ enforcers do not cover.
 ## Objective backbone (hard evidence)
 
 | Enforcer | Command | Result | ADR coverage |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Architecture orchestrator | `node tools/architecture/orchestrator/src/index.mjs all --no-reports --strict` | **11/11 gates pass**, exit 0 | 0001–0012, 0024, 0026, action-register |
 | Semgrep constraint gate | `npm run semgrep:gate` | **0 findings / 188 files**, 6 ERROR rules, exit 0 | constraints 2,3,4,5,7 + secret-in-log/audit |
 | Architecture test suite | `npm run test:architecture` | **781/781 pass**, 0 fail | 0011, 0012, import boundaries |
@@ -36,7 +36,7 @@ evidence) is satisfied across the register.
 ## Per-group verdict
 
 | ADR group | ADRs | Verdict | Basis |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Architecture & packaging | 0001–0012, 0024 | ✅ Compliant | import boundaries machine-clean; metadata/README/inventory/lifecycle/slice gates pass; 781 tests |
 | API & data boundaries | 0013, 0014, 0015, 0028 | ✅ Compliant | no GraphQL client/schema in SPA or domain; admin uses documented REST-over-BFF (relative `fetch` with `credentials:"include"`), not a bypass |
 | Frontend & i18n | 0019, 0026 | ✅ Compliant | `validate-i18n` passes; semgrep `no-server-runtime-import-in-spa` = 0 |
@@ -47,7 +47,7 @@ evidence) is satisfied across the register.
 ## Constraint checks (CLAUDE.md "Critical constraints")
 
 | # | Constraint | Result |
-|---|---|---|
+| --- | --- | --- |
 | 1 | No BFF bypass from React | ✅ admin data via relative BFF paths only |
 | 2 | No DB/Redis/Keycloak SDK/etc. in React | ✅ clean |
 | 3 | No adapter imports in domain/feature/UI/contract | ✅ semgrep + grep clean |
@@ -62,6 +62,7 @@ evidence) is satisfied across the register.
 ## Findings
 
 ### ⚠️ Finding 1 — Constraint #8 gitignore gap (RESOLVED in this review)
+
 Session-generated agent-tooling DB/state artifacts were untracked but **not**
 gitignored: `.claude/memory.db`, `.swarm/` (memory.db/-shm/-wal/schema.sql),
 `agentdb.rvf`, `agentdb.rvf.lock`, `ruvector.db`. A `git add -A` would have staged
@@ -69,6 +70,7 @@ them. **Fixed** by appending an "Agent tooling state/DB artifacts" block to
 `.gitignore`; verified all paths now return `git check-ignore` = ignored.
 
 ### ℹ️ Note 2 — Semgrep glob anchoring (RESOLVED in this review)
+
 All 6 rules in `tools/semgrep/rules.yml` emitted Semgrepignore-v2 deprecation
 warnings (`apps/...` → `**/apps/...`). **Fixed** by prefixing every `apps/` and
 `packages/` include glob with `**/` (permanently-unanchored form). Re-ran
@@ -77,6 +79,7 @@ forward-compatible with the upcoming Semgrep glob-anchoring change. This is a
 cosmetic forward-compat fix within the scope of ADR-ACT-0214 (no behavior change).
 
 ### ℹ️ Note 3 — Static review, not live-verified
+
 This review is static + gate-based. E2E, compose runtime, and production smoke
 (ADR-0025 / 0032 / 0034) were **not** executed; no live or production compliance
 is claimed (constraint #10). Deep auth-redaction runtime behavior (ADR-0043 secret
