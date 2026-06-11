@@ -2,6 +2,8 @@ import type {
   TenantAuthProvidersResponse,
   UpdateTenantAuthProvidersRequest,
   IdpSummary,
+  CreateIdpRequest,
+  UpdateIdpRequest,
   MfaPolicyDto,
   SessionPolicyDto,
   AuthSettingsReadiness,
@@ -11,6 +13,8 @@ import { adminGet, adminSend } from "../admin/admin-fetch";
 export type {
   TenantAuthProvidersResponse,
   IdpSummary,
+  CreateIdpRequest,
+  UpdateIdpRequest,
   MfaPolicyDto,
   SessionPolicyDto,
   AuthSettingsReadiness,
@@ -28,6 +32,18 @@ export function setAuthProviders(
 
 export function listIdps(): Promise<IdpSummary[]> {
   return adminGet<IdpSummary[]>("/api/auth/settings/idps");
+}
+
+export function createIdp(input: CreateIdpRequest): Promise<void> {
+  return adminSend<void>("POST", "/api/auth/settings/idps", input);
+}
+
+export function updateIdp(alias: string, input: UpdateIdpRequest): Promise<void> {
+  return adminSend<void>("PATCH", `/api/auth/settings/idps/${encodeURIComponent(alias)}`, input);
+}
+
+export function deleteIdp(alias: string): Promise<void> {
+  return adminSend<void>("DELETE", `/api/auth/settings/idps/${encodeURIComponent(alias)}`);
 }
 
 export function getMfaPolicy(): Promise<MfaPolicyDto> {

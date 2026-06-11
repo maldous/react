@@ -25,6 +25,11 @@ async function openMfaTab() {
   await userEvent.click(screen.getByRole("tab", { name: enGB.feature.admin.auth.tab.mfa }));
 }
 
+async function openIdpsTab() {
+  await screen.findByTestId("auth-provider-mode");
+  await userEvent.click(screen.getByRole("tab", { name: enGB.feature.admin.auth.tab.idps }));
+}
+
 function renderPage() {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   function Wrapper({ children }: { children: ReactNode }) {
@@ -229,6 +234,122 @@ describe("AdminAuthPage", () => {
     const { container } = renderPage();
     await openMfaTab();
     await screen.findByTestId("auth-mfa-form");
+    expect(await axe(container)).toHaveNoViolations();
+  });
+
+  // --- Identity Providers tab (ADR-0043): writable with secret redaction ------
+
+  it("shows create/edit/delete controls when configured + write permission", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminAuthProvidersHandler(),
+      adminIdpsHandler(),
+      adminAuthReadinessHandler({ status: "configured" })
+    );
+    renderPage();
+    await openIdpsTab();
+    expect(await screen.findByTestId("auth-idp-create")).toBeInTheDocument();
+    expect(screen.getByTestId("auth-idp-edit-mock-google")).toBeInTheDocument();
+    expect(screen.getByTestId("auth-idp-delete-mock-google")).toBeInTheDocument();
+  });
+
+  it("creates an oidc IdP and closes the dialog on success", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminAuthProvidersHandler(),
+      adminIdpsHandler(),
+      adminAuthReadinessHandler({ status: "configured" })
+    );
+    renderPage();
+    await openIdpsTab();
+    await userEvent.click(await screen.findByTestId("auth-idp-create"));
+    await userEvent.type(screen.getByTestId("auth-idp-field-alias"), "acme-oidc");
+    await userEvent.type(screen.getByTestId("auth-idp-field-displayName"), "Acme");
+    await userEvent.type(screen.getByTestId("auth-idp-field-clientId"), "acme-client");
+    await userEvent.type(screen.getByTestId("auth-idp-field-clientSecret"), "s3cr3t");
+    await userEvent.type(
+      screen.getByTestId("auth-idp-field-authorizationUrl"),
+      "https://idp.acme.test/auth"
+    );
+    await userEvent.type(
+      screen.getByTestId("auth-idp-field-tokenUrl"),
+      "https://idp.acme.test/token"
+    );
+    await userEvent.click(screen.getByTestId("auth-idp-submit"));
+    await waitFor(() => expect(screen.queryByTestId("auth-idp-form")).not.toBeInTheDocument());
+  });
+
+  it("edit dialog never prefills the client secret", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminAuthProvidersHandler(),
+      adminIdpsHandler(),
+      adminAuthReadinessHandler({ status: "configured" })
+    );
+    renderPage();
+    await openIdpsTab();
+    await userEvent.click(await screen.findByTestId("auth-idp-edit-mock-google"));
+    const secret = await screen.findByTestId("auth-idp-field-clientSecret");
+    expect(secret).toHaveValue("");
+  });
+
+  it("delete shows a confirmation and removes on confirm", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminAuthProvidersHandler(),
+      adminIdpsHandler(),
+      adminAuthReadinessHandler({ status: "configured" })
+    );
+    renderPage();
+    await openIdpsTab();
+    await userEvent.click(await screen.findByTestId("auth-idp-delete-mock-google"));
+    expect(await screen.findByTestId("auth-idp-delete-body")).toBeInTheDocument();
+    await userEvent.click(screen.getByTestId("auth-idp-delete-confirm"));
+    await waitFor(() =>
+      expect(screen.queryByTestId("auth-idp-delete-body")).not.toBeInTheDocument()
+    );
+  });
+
+  it("renders read-only (no controls) for a user without write permission", async () => {
+    server.use(
+      sessionHandler("viewer"),
+      adminAuthProvidersHandler(),
+      adminIdpsHandler(),
+      adminAuthReadinessHandler({ status: "configured" })
+    );
+    renderPage();
+    await openIdpsTab();
+    expect(await screen.findByTestId("auth-idps-list")).toBeInTheDocument();
+    expect(screen.queryByTestId("auth-idp-create")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("auth-idp-edit-mock-google")).not.toBeInTheDocument();
+  });
+
+  it("shows a readiness notice when the credential is missing", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminAuthProvidersHandler(),
+      adminAuthReadinessHandler({ status: "missing_credential" }),
+      adminGetErrorHandler("/api/auth/settings/idps", 503)
+    );
+    renderPage();
+    await openIdpsTab();
+    expect(await screen.findByTestId("auth-idps-readiness")).toHaveTextContent(
+      enGB.feature.admin.auth.readiness.missing_credential
+    );
+    expect(screen.queryByTestId("auth-idp-create")).not.toBeInTheDocument();
+  });
+
+  it("IdP create form has no accessibility violations", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminAuthProvidersHandler(),
+      adminIdpsHandler(),
+      adminAuthReadinessHandler({ status: "configured" })
+    );
+    const { container } = renderPage();
+    await openIdpsTab();
+    await userEvent.click(await screen.findByTestId("auth-idp-create"));
+    await screen.findByTestId("auth-idp-form");
     expect(await axe(container)).toHaveNoViolations();
   });
 });

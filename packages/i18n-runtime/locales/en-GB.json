@@ -338,7 +338,37 @@
         "idps": {
           "empty": "No identity providers are configured.",
           "enabled": "Enabled",
-          "disabled": "Disabled"
+          "disabled": "Disabled",
+          "add": "Add identity provider",
+          "create": "Create",
+          "edit": "Edit",
+          "delete": "Delete",
+          "deleteConfirm": "Delete the identity provider \"{alias}\"? Users will no longer be able to sign in through it.",
+          "cancel": "Cancel",
+          "save": "Save changes",
+          "recentChanges": "Recent identity provider changes",
+          "createError": "Could not create the identity provider. Check the fields and try again.",
+          "updateError": "Could not update the identity provider. Please try again.",
+          "deleteError": "Could not delete the identity provider. Please try again.",
+          "secretSet": "secret configured",
+          "noSecret": "no secret",
+          "aliasLabel": "Alias",
+          "displayNameLabel": "Display name",
+          "providerIdLabel": "Provider type",
+          "clientIdLabel": "Client ID",
+          "clientSecretLabel": "Client secret",
+          "clientSecretEditHelper": "Leave blank to keep the existing secret.",
+          "authUrlLabel": "Authorization URL",
+          "tokenUrlLabel": "Token URL",
+          "scopesLabel": "Scopes",
+          "trustEmailLabel": "Trust email from this provider",
+          "enabledLabel": "Enabled",
+          "providerName": {
+            "oidc": "Generic OpenID Connect",
+            "google": "Google",
+            "microsoft": "Microsoft",
+            "apple": "Apple"
+          }
         },
         "mfa": {
           "required": "Requirement",

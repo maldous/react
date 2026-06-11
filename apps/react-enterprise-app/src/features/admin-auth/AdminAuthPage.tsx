@@ -10,7 +10,6 @@ import {
   Select,
   type SelectItem,
   Switch,
-  Badge,
   Button,
   FormField,
   LoadingState,
@@ -29,10 +28,10 @@ import { useSession } from "../../hooks/use-session";
 import { AdminSectionHeader } from "../../components/AdminLayout";
 import { AdminQueryError } from "../admin/AdminQueryError";
 import { AuditTrailPanel } from "../admin/AuditTrailPanel";
+import { IdpManager } from "./IdpManager";
 import {
   useAuthProviders,
   useSetAuthProviders,
-  useIdps,
   useMfaPolicy,
   useSetMfaPolicy,
   useSessionPolicy,
@@ -197,58 +196,45 @@ function ProvidersTab({ canWrite }: { canWrite: boolean }) {
 /** Shared graceful wrapper for the read-only realm tabs. A missing per-tenant
  * service-account credential (503 NO_CREDENTIAL) classifies as "not configured";
  * 401/403/other failures get their proper states via AdminQueryError. */
-function ReadTab({
-  isLoading,
-  isError,
-  error,
-  hasData,
-  children,
-}: {
-  isLoading: boolean;
-  isError: boolean;
-  error: unknown;
-  hasData: boolean;
-  children: React.ReactNode;
-}) {
-  const t = useTranslation();
-  if (isLoading) return <LoadingState message={t("auth.status.loading")} />;
-  if (isError) return <AdminQueryError error={error} />;
-  if (!hasData) return <EmptyState title={t("feature.admin.auth.notConfigured")} />;
-  return <>{children}</>;
-}
-
+/**
+ * Identity Providers tab (ADR-0043) — readiness-gated realm IdP management.
+ * Editable (create/update/enable-disable/delete) only when readiness is
+ * `configured` and the user has write permission; otherwise a read-only list or
+ * the precise readiness notice. Secrets are never displayed.
+ */
 function IdpsTab() {
   const t = useTranslation();
-  const { data, isLoading, isError, error } = useIdps();
+  const { hasPermission } = useSession();
+  const canWrite = hasPermission("tenant.auth.settings.write");
+  const readiness = useAuthReadiness();
+
+  if (readiness.isLoading) return <LoadingState message={t("auth.status.loading")} />;
+  if (readiness.isError) return <AdminQueryError error={readiness.error} />;
+
+  const status = readiness.data?.status;
+  const editable = status === "configured" && canWrite;
+
   return (
-    <ReadTab isLoading={isLoading} isError={isError} error={error} hasData={!!data}>
-      {data && data.length === 0 ? (
-        <EmptyState title={t("feature.admin.auth.idps.empty")} />
-      ) : (
+    <div className="space-y-4" data-testid="auth-idps-tab">
+      {status && status !== "configured" && (
         <Card>
-          <CardBody className="divide-y divide-border" data-testid="auth-idps-list">
-            {(data ?? []).map((idp) => (
-              <div
-                key={idp.alias}
-                className="flex items-center justify-between gap-4 py-3 first:pt-0 last:pb-0"
-              >
-                <div>
-                  <p className="text-sm font-medium text-fg">{idp.displayName}</p>
-                  <p className="text-xs text-fg-muted">
-                    {idp.alias} · {idp.providerId}
-                  </p>
-                </div>
-                <Badge variant={idp.enabled ? "default" : "secondary"}>
-                  {idp.enabled
-                    ? t("feature.admin.auth.idps.enabled")
-                    : t("feature.admin.auth.idps.disabled")}
-                </Badge>
-              </div>
-            ))}
+          <CardBody>
+            <p role="status" className="text-sm text-fg-muted" data-testid="auth-idps-readiness">
+              {t(`feature.admin.auth.readiness.${status}` as const)}
+            </p>
           </CardBody>
         </Card>
       )}
-    </ReadTab>
+      <IdpManager editable={editable} />
+      <div className="border-t border-border pt-4">
+        <AuditTrailPanel
+          resource="auth_settings"
+          action="auth_settings.idp.changed"
+          heading={t("feature.admin.auth.idps.recentChanges")}
+          testId="auth-idps-audit"
+        />
+      </div>
+    </div>
   );
 }
 

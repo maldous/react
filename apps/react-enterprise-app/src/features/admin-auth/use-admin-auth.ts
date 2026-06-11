@@ -3,11 +3,16 @@ import type {
   UpdateTenantAuthProvidersRequest,
   SessionPolicyDto,
   MfaPolicyDto,
+  CreateIdpRequest,
+  UpdateIdpRequest,
 } from "@platform/contracts-admin";
 import {
   getAuthProviders,
   setAuthProviders,
   listIdps,
+  createIdp,
+  updateIdp,
+  deleteIdp,
   getMfaPolicy,
   setMfaPolicy,
   getSessionPolicy,
@@ -37,8 +42,35 @@ export function useSetAuthProviders() {
   });
 }
 
-export function useIdps() {
-  return useQuery({ queryKey: authIdpsQueryKey, queryFn: listIdps, retry: false });
+export function useIdps(enabled = true) {
+  return useQuery({ queryKey: authIdpsQueryKey, queryFn: listIdps, retry: false, enabled });
+}
+
+/** Shared invalidation after an IdP mutation: list + readiness + audit panels. */
+function useIdpMutation<TArgs>(fn: (args: TArgs) => Promise<void>) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: fn,
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: authIdpsQueryKey });
+      void queryClient.invalidateQueries({ queryKey: authReadinessQueryKey });
+      void queryClient.invalidateQueries({ queryKey: ["admin", "audit"] });
+    },
+  });
+}
+
+export function useCreateIdp() {
+  return useIdpMutation((input: CreateIdpRequest) => createIdp(input));
+}
+
+export function useUpdateIdp() {
+  return useIdpMutation(({ alias, input }: { alias: string; input: UpdateIdpRequest }) =>
+    updateIdp(alias, input)
+  );
+}
+
+export function useDeleteIdp() {
+  return useIdpMutation((alias: string) => deleteIdp(alias));
 }
 
 export function useMfaPolicy(enabled = true) {
