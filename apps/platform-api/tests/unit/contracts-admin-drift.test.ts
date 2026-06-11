@@ -9,9 +9,13 @@
  */
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { TENANT_ROLES as DOMAIN_ROLES } from "@platform/domain-identity";
+import {
+  TENANT_ROLES as DOMAIN_ROLES,
+  MEMBERSHIP_STATUSES as DOMAIN_STATUSES,
+} from "@platform/domain-identity";
 import {
   TENANT_ROLES as CONTRACT_ROLES,
+  MEMBERSHIP_STATUSES as CONTRACT_STATUSES,
   PRODUCT_PROVIDER_IDS as CONTRACT_PROVIDERS,
 } from "@platform/contracts-admin";
 import { PRODUCT_PROVIDER_IDS as SERVER_PROVIDERS } from "../../src/server/auth-providers.ts";
@@ -24,6 +28,14 @@ describe("contracts-admin drift", () => {
       sorted(CONTRACT_ROLES),
       sorted(DOMAIN_ROLES),
       "contracts-admin TENANT_ROLES diverged from domain-identity — update one to match the other"
+    );
+  });
+
+  it("MEMBERSHIP_STATUSES matches @platform/domain-identity", () => {
+    assert.deepEqual(
+      sorted(CONTRACT_STATUSES),
+      sorted(DOMAIN_STATUSES),
+      "contracts-admin MEMBERSHIP_STATUSES diverged from domain-identity"
     );
   });
 

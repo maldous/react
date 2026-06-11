@@ -13,6 +13,9 @@ import {
   isSlugReserved,
   RESERVED_SLUGS,
   resolvePermissions,
+  validateTenantUsername,
+  canTransitionMembershipStatus,
+  MEMBERSHIP_STATUSES,
   type Membership,
 } from "../src/index.ts";
 
@@ -389,5 +392,41 @@ describe("resolvePermissions — split admin permissions", () => {
 
   it("system-admin has platform.clickthrough.pgadmin", () => {
     assert.ok(resolvePermissions("system-admin").includes("platform.clickthrough.pgadmin"));
+  });
+});
+
+describe("validateTenantUsername (ADR-ACT-0206)", () => {
+  it("accepts valid handles", () => {
+    for (const u of ["jane", "jane.doe", "j_doe-1", "a1b"]) {
+      assert.deepEqual(validateTenantUsername(u), [], `expected ${u} to be valid`);
+    }
+  });
+  it("rejects empty / too short / too long", () => {
+    assert.ok(validateTenantUsername("").length > 0);
+    assert.ok(validateTenantUsername("ab").length > 0);
+    assert.ok(validateTenantUsername("a".repeat(33)).length > 0);
+  });
+  it("rejects illegal characters and edge separators", () => {
+    assert.ok(validateTenantUsername("has space").length > 0);
+    assert.ok(validateTenantUsername(".leading").length > 0);
+    assert.ok(validateTenantUsername("trailing-").length > 0);
+    assert.ok(validateTenantUsername("white@space").length > 0);
+  });
+});
+
+describe("canTransitionMembershipStatus (ADR-ACT-0206)", () => {
+  it("allows enable/disable and invited→active", () => {
+    assert.equal(canTransitionMembershipStatus("active", "disabled"), true);
+    assert.equal(canTransitionMembershipStatus("disabled", "active"), true);
+    assert.equal(canTransitionMembershipStatus("invited", "active"), true);
+  });
+  it("allows idempotent no-ops", () => {
+    for (const s of MEMBERSHIP_STATUSES) {
+      assert.equal(canTransitionMembershipStatus(s, s), true);
+    }
+  });
+  it("rejects illegal transitions (active/disabled → invited)", () => {
+    assert.equal(canTransitionMembershipStatus("active", "invited"), false);
+    assert.equal(canTransitionMembershipStatus("disabled", "invited"), false);
   });
 });

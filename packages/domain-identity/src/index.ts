@@ -2,10 +2,15 @@ export const packageName = "@platform/domain-identity";
 
 // --- Value types (pure TypeScript, no Zod) ---
 
+/** Account status is GLOBAL: a user is one record (one email) across all tenants. */
+export type UserStatus = "active" | "disabled";
+
 export interface User {
   id: string;
   email: string;
   displayName: string;
+  /** Optional global account status; absent ⇒ treated as "active". */
+  status?: UserStatus;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -15,7 +20,11 @@ export interface ExternalIdentity {
   userId: string;
   provider: string; // "keycloak" | "github" etc.
   providerSubject: string;
+  /** Upstream email at link/last-seen time (informational; never overwrites tenant username). */
+  email?: string | null;
+  /** When the upstream identity was linked (maps to created_at). */
   createdAt: Date;
+  lastSeenAt?: Date | null;
 }
 
 export interface Organisation {
@@ -26,13 +35,23 @@ export interface Organisation {
   updatedAt: Date;
 }
 
+/** Tenant-scoped membership lifecycle. Runtime source of truth; type derives from it. */
+export const MEMBERSHIP_STATUSES = ["invited", "active", "disabled"] as const;
+export type MembershipStatus = (typeof MEMBERSHIP_STATUSES)[number];
+
 export interface Membership {
   id: string;
   userId: string;
   organisationId: string;
   role: TenantRole;
+  /** Tenant-scoped handle; null when unset. Case-insensitively unique within the org. */
+  username?: string | null;
+  status: MembershipStatus;
+  /** Maps to created_at — when the membership was created (member joined). */
   createdAt: Date;
   updatedAt: Date;
+  lastLoginAt?: Date | null;
+  invitedBy?: string | null;
 }
 
 /** Tenant-scoped roles. Single runtime source of truth; the type derives from it so
@@ -66,6 +85,47 @@ export function canUpdateMemberRole(role: TenantRole | GlobalRole): boolean {
 
 export function canAccessAdmin(role: TenantRole | GlobalRole): boolean {
   return role === "system-admin" || role === "tenant-admin";
+}
+
+// --- Tenant username (ADR-ACT-0206) ---
+
+/** Tenant-scoped username rules: 3–32 chars of [a-z0-9._-], not leading/trailing
+ * separator. Stored as entered; uniqueness is case-insensitive within the org. The
+ * username is owned by the tenant and is NEVER auto-derived/overwritten from IdP claims. */
+export function validateTenantUsername(username: string): string[] {
+  const errors: string[] = [];
+  if (typeof username !== "string" || username.trim().length === 0) {
+    errors.push("username is required");
+    return errors;
+  }
+  if (username.length < 3 || username.length > 32) {
+    errors.push("username must be between 3 and 32 characters");
+  }
+  if (!/^[a-z0-9](?:[a-z0-9._-]*[a-z0-9])?$/i.test(username)) {
+    errors.push(
+      "username may contain only letters, digits, dot, underscore and hyphen, and must start and end with a letter or digit"
+    );
+  }
+  return errors;
+}
+
+// --- Membership status transitions (ADR-ACT-0206) ---
+
+/** Allowed explicit tenant-membership status transitions. 'invited' resolves to 'active'
+ * on first login; admins enable/disable between 'active' and 'disabled'. Re-inviting a
+ * disabled member is not a status transition (it issues a fresh invitation). */
+const MEMBERSHIP_STATUS_TRANSITIONS: Record<MembershipStatus, MembershipStatus[]> = {
+  invited: ["active", "disabled"],
+  active: ["disabled"],
+  disabled: ["active"],
+};
+
+export function canTransitionMembershipStatus(
+  from: MembershipStatus,
+  to: MembershipStatus
+): boolean {
+  if (from === to) return true; // idempotent no-op is allowed
+  return MEMBERSHIP_STATUS_TRANSITIONS[from]?.includes(to) ?? false;
 }
 
 // Validates that a Membership's role is tenant-scoped (not global)

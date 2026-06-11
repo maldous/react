@@ -1,5 +1,12 @@
 import pg from "pg";
-import type { User, ExternalIdentity, Membership, TenantRole } from "@platform/domain-identity";
+import type {
+  User,
+  ExternalIdentity,
+  Membership,
+  TenantRole,
+  MembershipStatus,
+  UserStatus,
+} from "@platform/domain-identity";
 import { ConflictError } from "@platform/platform-errors";
 import type { IdentityRepository } from "./ports.ts";
 import { withSystemAdmin, tenantSchemaIdentifier } from "./index.ts";
@@ -9,6 +16,7 @@ function rowToUser(row: Record<string, unknown>): User {
     id: row["id"] as string,
     email: row["email"] as string,
     displayName: row["display_name"] as string,
+    status: (row["status"] as UserStatus | undefined) ?? "active",
     createdAt: row["created_at"] as Date,
     updatedAt: row["updated_at"] as Date,
   };
@@ -20,18 +28,26 @@ function rowToExternalIdentity(row: Record<string, unknown>): ExternalIdentity {
     userId: row["user_id"] as string,
     provider: row["provider"] as string,
     providerSubject: row["provider_subject"] as string,
+    email: (row["email"] as string | null | undefined) ?? null,
     createdAt: row["created_at"] as Date,
+    lastSeenAt: (row["last_seen_at"] as Date | null | undefined) ?? null,
   };
 }
 
+// Defensive defaults: SELECTs predating migration 016 may not project the new
+// columns; absent status ⇒ "active", absent username/last-login/invited-by ⇒ null.
 function rowToMembership(row: Record<string, unknown>): Membership & { role: TenantRole } {
   return {
     id: row["id"] as string,
     userId: row["user_id"] as string,
     organisationId: row["organisation_id"] as string,
     role: row["role"] as TenantRole,
+    username: (row["username"] as string | null | undefined) ?? null,
+    status: (row["status"] as MembershipStatus | undefined) ?? "active",
     createdAt: row["created_at"] as Date,
     updatedAt: row["updated_at"] as Date,
+    lastLoginAt: (row["last_login_at"] as Date | null | undefined) ?? null,
+    invitedBy: (row["invited_by"] as string | null | undefined) ?? null,
   };
 }
 

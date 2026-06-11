@@ -25,16 +25,26 @@ export const TENANT_ROLES = ["tenant-admin", "manager", "member", "viewer"] as c
 export const TenantRoleSchema = z.enum(TENANT_ROLES);
 export type TenantRoleValue = z.infer<typeof TenantRoleSchema>;
 
+/** Tenant-scoped membership lifecycle. Mirrors domain-identity MEMBERSHIP_STATUSES
+ * (kept literal here to stay dependency-free; guarded by a drift test). */
+export const MEMBERSHIP_STATUSES = ["invited", "active", "disabled"] as const;
+export const MembershipStatusSchema = z.enum(MEMBERSHIP_STATUSES);
+export type MembershipStatusValue = z.infer<typeof MembershipStatusSchema>;
+
 // ---------------------------------------------------------------------------
-// Members — GET/POST/PATCH/DELETE /api/org/members*
+// Members — GET/POST/PATCH/DELETE /api/org/members* (ADR-0036, ADR-ACT-0206)
 // ---------------------------------------------------------------------------
 
 export const MemberSummarySchema = z.object({
   userId: z.string(),
   email: z.string(),
   displayName: z.string(),
+  /** Tenant-scoped username; null when unset. */
+  username: z.string().nullable(),
   role: TenantRoleSchema,
+  status: MembershipStatusSchema,
   joinedAt: z.string(),
+  lastLoginAt: z.string().nullable(),
 });
 export type MemberSummary = z.infer<typeof MemberSummarySchema>;
 
@@ -63,6 +73,51 @@ export type InviteMemberRequest = z.infer<typeof InviteMemberRequestSchema>;
 
 export const UpdateMemberRoleRequestSchema = z.object({ role: TenantRoleSchema }).strict();
 export type UpdateMemberRoleRequest = z.infer<typeof UpdateMemberRoleRequestSchema>;
+
+/** PATCH /api/org/members/:userId/username — tenant-scoped username. Bounds mirror
+ * domain-identity validateTenantUsername; keep in lock-step. */
+export const EditUsernameRequestSchema = z
+  .object({
+    username: z
+      .string()
+      .min(3, "Username must be between 3 and 32 characters")
+      .max(32, "Username must be between 3 and 32 characters")
+      .regex(
+        /^[a-z0-9](?:[a-z0-9._-]*[a-z0-9])?$/i,
+        "Letters, digits, dot, underscore and hyphen only; must start and end with a letter or digit"
+      ),
+  })
+  .strict();
+export type EditUsernameRequest = z.infer<typeof EditUsernameRequestSchema>;
+
+/** PATCH /api/org/members/:userId/status — enable/disable a member. Only the
+ * admin-settable states are accepted here ('invited' is set by the invite flow). */
+export const SetMemberStatusRequestSchema = z
+  .object({ status: z.enum(["active", "disabled"]) })
+  .strict();
+export type SetMemberStatusRequest = z.infer<typeof SetMemberStatusRequestSchema>;
+
+/** POST /api/org/members/resend-invite — re-issue a pending invitation by email. */
+export const ResendInviteRequestSchema = z
+  .object({ email: z.string().email("Enter a valid email address") })
+  .strict();
+export type ResendInviteRequest = z.infer<typeof ResendInviteRequestSchema>;
+
+/** One row of GET /api/org/members/:userId/external-identities. */
+export const ExternalIdentitySummarySchema = z.object({
+  id: z.string(),
+  provider: z.string(),
+  subject: z.string(),
+  email: z.string().nullable(),
+  linkedAt: z.string(),
+  lastSeenAt: z.string().nullable(),
+});
+export type ExternalIdentitySummary = z.infer<typeof ExternalIdentitySummarySchema>;
+
+export const ExternalIdentityListResponseSchema = z.object({
+  identities: z.array(ExternalIdentitySummarySchema),
+});
+export type ExternalIdentityListResponse = z.infer<typeof ExternalIdentityListResponseSchema>;
 
 // ---------------------------------------------------------------------------
 // Features — GET /api/org/features, PATCH /api/org/features/:key
