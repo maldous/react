@@ -15,6 +15,17 @@ import {
   buildIdpUpdateAuditMetadata,
   buildIdpDeleteAuditMetadata,
 } from "../../src/usecases/idp-management.ts";
+import { CreateIdpRequestSchema } from "@platform/contracts-admin";
+
+const VALID_OIDC = {
+  alias: "acme-oidc",
+  displayName: "Acme",
+  providerId: "oidc",
+  clientId: "c",
+  clientSecret: "s3cr3t",
+  authorizationUrl: "https://idp.acme.test/auth",
+  tokenUrl: "https://idp.acme.test/token",
+};
 
 // What Keycloak actually returns on read: clientSecret masked, plus many extra fields.
 const RAW: IdentityProvider = {
@@ -144,5 +155,53 @@ describe("audit metadata — no secret leakage", () => {
       operation: "delete",
       alias: "acme-oidc",
     });
+  });
+});
+
+describe("CreateIdpRequestSchema — validation", () => {
+  it("accepts a valid oidc request", () => {
+    assert.equal(CreateIdpRequestSchema.safeParse(VALID_OIDC).success, true);
+  });
+
+  it("rejects a reserved alias", () => {
+    const r = CreateIdpRequestSchema.safeParse({ ...VALID_OIDC, alias: "platform" });
+    assert.equal(r.success, false);
+  });
+
+  it("rejects an alias with illegal characters", () => {
+    assert.equal(
+      CreateIdpRequestSchema.safeParse({ ...VALID_OIDC, alias: "Bad Alias!" }).success,
+      false
+    );
+  });
+
+  it("rejects a non-allowlisted providerId (e.g. saml)", () => {
+    assert.equal(
+      CreateIdpRequestSchema.safeParse({ ...VALID_OIDC, providerId: "saml" }).success,
+      false
+    );
+  });
+
+  it("rejects an unsafe URL scheme", () => {
+    assert.equal(
+      CreateIdpRequestSchema.safeParse({
+        ...VALID_OIDC,
+        authorizationUrl: "javascript:alert(1)",
+      }).success,
+      false
+    );
+  });
+
+  it("rejects an oidc request missing the required URLs", () => {
+    const { authorizationUrl: _a, tokenUrl: _t, ...noUrls } = VALID_OIDC;
+    assert.equal(CreateIdpRequestSchema.safeParse(noUrls).success, false);
+  });
+
+  it("allows a social provider (google) without URLs", () => {
+    const { authorizationUrl: _a, tokenUrl: _t, ...base } = VALID_OIDC;
+    assert.equal(
+      CreateIdpRequestSchema.safeParse({ ...base, alias: "goog", providerId: "google" }).success,
+      true
+    );
   });
 });

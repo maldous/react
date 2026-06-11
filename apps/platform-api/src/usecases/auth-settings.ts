@@ -30,6 +30,8 @@ export type AuthSettingsMutationResult =
   | { kind: "invalid_credential" }
   | { kind: "forbidden_realm_operation" }
   | { kind: "realm_unreachable" }
+  | { kind: "conflict" }
+  | { kind: "not_found" }
   | { kind: "ok" };
 
 export interface AuthSettingsMutationInput<T> {

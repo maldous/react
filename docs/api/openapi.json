@@ -1970,6 +1970,76 @@
           }
         }
       }
+    },
+    "/api/auth/settings/idps/:alias": {
+      "patch": {
+        "summary": "Update an identity provider",
+        "operationId": "updateIdentityProvider",
+        "description": "Updates a realm IdP. clientSecret is write-only; a blank/absent clientSecret preserves the existing secret. Never returns the secret. ADR-0043.",
+        "tags": ["Auth Settings"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "alias",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Updated"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "404": {
+            "description": "Identity provider not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an identity provider",
+        "operationId": "deleteIdentityProvider",
+        "description": "Deletes a realm IdP (audit-first). ADR-0043.",
+        "tags": ["Auth Settings"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "alias",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted"
+          }
+        }
+      }
     }
   },
   "components": {

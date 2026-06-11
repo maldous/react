@@ -17,6 +17,8 @@ export type RealmWriteError =
   | "invalid_credential"
   | "forbidden_realm_operation"
   | "realm_unreachable"
+  | "conflict"
+  | "not_found"
   | "unknown";
 
 export function classifyRealmError(err: unknown): RealmWriteError {
@@ -24,6 +26,10 @@ export function classifyRealmError(err: unknown): RealmWriteError {
   const status = /failed: (\d{3})/.exec(msg)?.[1];
   if (status === "400" || status === "401") return "invalid_credential";
   if (status === "403") return "forbidden_realm_operation";
+  // 404 = the targeted realm resource does not exist (e.g. unknown IdP alias).
+  if (status === "404") return "not_found";
+  // 409 = the realm already has a resource with this identifier (e.g. IdP alias).
+  if (status === "409") return "conflict";
   if (status && Number(status) >= 500) return "realm_unreachable";
   if (/fetch failed|ECONNREFUSED|ENOTFOUND|EAI_AGAIN|getaddrinfo|network|socket/i.test(msg)) {
     return "realm_unreachable";

@@ -21,6 +21,8 @@ import {
 import { getStoredTenantAuthProviders } from "../usecases/auth-provider-config.ts";
 import {
   AttachAuthCredentialRequestSchema,
+  CreateIdpRequestSchema,
+  UpdateIdpRequestSchema,
   type TenantAuthProvidersConfig,
 } from "@platform/contracts-admin";
 import { getSessionStore, getApplicationPool, getKeycloakConfigForRealm } from "./dependencies.ts";
@@ -35,7 +37,6 @@ import {
 import { enterSupportMode } from "../usecases/support.ts";
 import {
   mutateAuthSetting,
-  buildIdpAuditMetadata,
   buildMfaAuditMetadata,
   buildSessionAuditMetadata,
   buildSysadminBrokeringAuditMetadata,
@@ -45,6 +46,14 @@ import {
   getAuthSettingsReadiness,
   attachAuthSettingsCredential,
 } from "../usecases/auth-settings-readiness.ts";
+import {
+  toIdpSummary,
+  buildCreateRepresentation,
+  applyUpdate,
+  buildIdpCreateAuditMetadata,
+  buildIdpUpdateAuditMetadata,
+  buildIdpDeleteAuditMetadata,
+} from "../usecases/idp-management.ts";
 import { createPostgresAuditEventPort, AuditAction } from "@platform/audit-events";
 import { resolveTenantFromRequest } from "./tenant-resolver.ts";
 import { KeycloakRealmAdminAdapter } from "@platform/adapters-keycloak";
@@ -94,6 +103,15 @@ function sendAuthSettingsFailure(
         message: "The identity realm could not be reached",
       });
       return true;
+    case "conflict":
+      res.json(409, {
+        code: "CONFLICT",
+        message: "An identity provider with this alias already exists",
+      });
+      return true;
+    case "not_found":
+      res.json(404, { code: "NOT_FOUND", message: "Identity provider not found" });
+      return true;
   }
 }
 
@@ -102,14 +120,6 @@ function sendAuthSettingsFailure(
 // Client-supplied bodies are validated; admin secrets/clientIds are stripped.
 // Realm is always derived from the Host header ? never from the request body.
 // ---------------------------------------------------------------------------
-
-const IdpBodySchema = z.object({
-  alias: z.string().min(1).max(64),
-  displayName: z.string().min(1).max(120),
-  providerId: z.enum(["oidc", "saml", "keycloak-oidc"]),
-  config: z.record(z.string(), z.string()).default({}),
-  enabled: z.boolean().default(true),
-});
 
 const MfaBodySchema = z.object({
   required: z.enum(["none", "optional", "required"]),
@@ -386,6 +396,8 @@ export const routes: Route[] = [
       });
     },
   },
+  // ADR-0043: redacted IdP list — explicit DTO mapping, never the raw Keycloak
+  // representation (which carries config + the masked clientSecret).
   {
     method: "GET",
     path: "/api/auth/settings/idps",
@@ -414,13 +426,16 @@ export const routes: Route[] = [
         adminClientId: cred.clientId,
         adminClientSecret: cred.clientSecret,
       });
-      res.json(200, await adapter.listIdentityProviders());
+      const raw = await adapter.listIdentityProviders();
+      res.json(200, raw.map(toIdpSummary));
     },
   },
+  // ADR-0043: create a realm IdP. clientSecret is write-only; audit records the
+  // clientId + safe fields only. Duplicate alias → 409 via classifyRealmError.
   {
     method: "POST",
     path: "/api/auth/settings/idps",
-    operationName: "auth.settings.idps.upsert",
+    operationName: "auth.settings.idps.create",
     requiresAuth: true,
     requiredPermission: "tenant.auth.settings.write",
     resource: "admin:auth",
@@ -435,15 +450,15 @@ export const routes: Route[] = [
           actorId: req.actor!.userId,
           actorRoles: req.actor!.roles,
           auditAction: AuditAction.AuthSettingsIdpChanged,
-          buildAuditMetadata: buildIdpAuditMetadata,
-          schema: IdpBodySchema,
+          buildAuditMetadata: buildIdpCreateAuditMetadata,
+          schema: CreateIdpRequestSchema,
           mutate: (body, cred) =>
             new KeycloakRealmAdminAdapter({
               url: getKeycloakConfigForRealm(tenantCtx!.realmName).url,
               realm: tenantCtx!.realmName,
               adminClientId: cred.clientId,
               adminClientSecret: cred.clientSecret,
-            }).upsertIdentityProvider(body),
+            }).createIdentityProvider(buildCreateRepresentation(body)),
           sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
         },
         {
@@ -451,18 +466,99 @@ export const routes: Route[] = [
           credentialStore: new PostgresTenantCredentialStore(getApplicationPool()),
         }
       );
-      if (result.kind === "invalid_body") {
-        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
-        return;
-      }
-      if (result.kind === "no_tenant") {
-        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
-        return;
-      }
-      if (result.kind === "no_credential") {
-        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
-        return;
-      }
+      if (sendAuthSettingsFailure(res, result)) return;
+      res.json(201, null);
+    },
+  },
+  // ADR-0043: update a realm IdP. A blank/absent clientSecret preserves the
+  // existing secret (read-merge-write keeps Keycloak's secret mask). The merge
+  // GET happens inside mutate so it uses the tenant credential; a missing alias
+  // surfaces as 404 via classifyRealmError.
+  {
+    method: "PATCH",
+    path: "/api/auth/settings/idps/:alias",
+    operationName: "auth.settings.idps.update",
+    requiresAuth: true,
+    requiredPermission: "tenant.auth.settings.write",
+    resource: "admin:auth",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const alias = req.params["alias"] ?? "";
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      const result = await mutateAuthSetting(
+        {
+          rawBody: req.body,
+          tenantCtx,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          auditAction: AuditAction.AuthSettingsIdpChanged,
+          buildAuditMetadata: (body) => buildIdpUpdateAuditMetadata(alias, body),
+          schema: UpdateIdpRequestSchema,
+          mutate: async (body, cred) => {
+            const adapter = new KeycloakRealmAdminAdapter({
+              url: getKeycloakConfigForRealm(tenantCtx!.realmName).url,
+              realm: tenantCtx!.realmName,
+              adminClientId: cred.clientId,
+              adminClientSecret: cred.clientSecret,
+            });
+            const existing = await adapter.getIdentityProvider(alias);
+            if (!existing) {
+              // Classified to 404 by sendAuthSettingsFailure (not_found).
+              throw new Error(
+                `updateIdentityProvider(${alias}): Keycloak admin request failed: 404`
+              );
+            }
+            await adapter.updateIdentityProvider(alias, applyUpdate(existing, body));
+          },
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          credentialStore: new PostgresTenantCredentialStore(getApplicationPool()),
+        }
+      );
+      if (sendAuthSettingsFailure(res, result)) return;
+      res.json(204, null);
+    },
+  },
+  // ADR-0043: delete a realm IdP (audit-first; idempotent on the realm side).
+  {
+    method: "DELETE",
+    path: "/api/auth/settings/idps/:alias",
+    operationName: "auth.settings.idps.delete",
+    requiresAuth: true,
+    requiredPermission: "tenant.auth.settings.write",
+    resource: "admin:auth",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const alias = req.params["alias"] ?? "";
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      const result = await mutateAuthSetting(
+        {
+          rawBody: {},
+          tenantCtx,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          auditAction: AuditAction.AuthSettingsIdpChanged,
+          buildAuditMetadata: () => buildIdpDeleteAuditMetadata(alias),
+          schema: z.object({}).strip(),
+          mutate: (_body, cred) =>
+            new KeycloakRealmAdminAdapter({
+              url: getKeycloakConfigForRealm(tenantCtx!.realmName).url,
+              realm: tenantCtx!.realmName,
+              adminClientId: cred.clientId,
+              adminClientSecret: cred.clientSecret,
+            }).deleteIdentityProvider(alias),
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          credentialStore: new PostgresTenantCredentialStore(getApplicationPool()),
+        }
+      );
+      if (sendAuthSettingsFailure(res, result)) return;
       res.json(204, null);
     },
   },
