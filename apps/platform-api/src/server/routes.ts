@@ -1181,6 +1181,175 @@ export const routes: Route[] = [
     },
   },
   // ---------------------------------------------------------------------------
+  // Membership v2 (ADR-ACT-0206): tenant-scoped username, status (enable/disable),
+  // resend invitation, and external-identity read. Username/status edits reuse the
+  // tenant.members.update_role permission (member-attribute updates a tenant-admin
+  // already holds — see ADR-0036); resend reuses invite; external-ids reuse read.
+  // ---------------------------------------------------------------------------
+  {
+    method: "PATCH",
+    path: "/api/org/members/:userId/username",
+    operationName: "org.members.set_username",
+    requiresAuth: true,
+    requiredPermission: "tenant.members.update_role",
+    resource: "organisation:members",
+    umaScope: "update_role" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const targetUserId = req.params["userId"] ?? "";
+      if (!targetUserId) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "userId path parameter is required" });
+        return;
+      }
+      const { editMemberUsername } = await import("../usecases/members.ts");
+      const result = await editMemberUsername(
+        {
+          rawBody: req.body,
+          organisationId: tenantCtx.organisationId,
+          targetUserId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        { audit: createPostgresAuditEventPort(getApplicationPool()), pool: getApplicationPool() }
+      );
+      if (result.kind === "invalid_body") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: serverT("api.error.organisationNotFound") });
+        return;
+      }
+      if (result.kind === "conflict") {
+        res.json(409, { code: "CONFLICT", message: "That username is already taken" });
+        return;
+      }
+      res.json(204, null);
+    },
+  },
+  {
+    method: "PATCH",
+    path: "/api/org/members/:userId/status",
+    operationName: "org.members.set_status",
+    requiresAuth: true,
+    requiredPermission: "tenant.members.update_role",
+    resource: "organisation:members",
+    umaScope: "update_role" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const targetUserId = req.params["userId"] ?? "";
+      if (!targetUserId) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "userId path parameter is required" });
+        return;
+      }
+      const { setMemberStatus } = await import("../usecases/members.ts");
+      const result = await setMemberStatus(
+        {
+          rawBody: req.body,
+          organisationId: tenantCtx.organisationId,
+          targetUserId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        { audit: createPostgresAuditEventPort(getApplicationPool()), pool: getApplicationPool() }
+      );
+      if (result.kind === "invalid_body") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: serverT("api.error.organisationNotFound") });
+        return;
+      }
+      if (result.kind === "invalid_transition") {
+        res.json(422, { code: "VALIDATION_ERROR", message: "Invalid status transition" });
+        return;
+      }
+      if (result.kind === "last_admin_cannot_be_disabled") {
+        res.json(422, {
+          code: "VALIDATION_ERROR",
+          message: "Cannot disable the last tenant-admin",
+        });
+        return;
+      }
+      res.json(204, null);
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/org/members/resend-invite",
+    operationName: "org.members.resend_invite",
+    requiresAuth: true,
+    requiredPermission: "tenant.members.invite",
+    resource: "organisation:members",
+    umaScope: "invite" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { resendInvite } = await import("../usecases/members.ts");
+      const result = await resendInvite(
+        {
+          rawBody: req.body,
+          organisationId: tenantCtx.organisationId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        { audit: createPostgresAuditEventPort(getApplicationPool()), pool: getApplicationPool() }
+      );
+      if (result.kind === "invalid_body") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "No pending invitation for that email" });
+        return;
+      }
+      res.json(204, null);
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/org/members/:userId/external-identities",
+    operationName: "org.members.external_identities",
+    requiresAuth: true,
+    requiredPermission: "tenant.members.read",
+    resource: "organisation:members",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const targetUserId = req.params["userId"] ?? "";
+      if (!targetUserId) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "userId path parameter is required" });
+        return;
+      }
+      const { listMemberExternalIdentities } = await import("../usecases/members.ts");
+      const identities = await listMemberExternalIdentities(
+        { organisationId: tenantCtx.organisationId, targetUserId },
+        getApplicationPool()
+      );
+      res.json(200, { identities });
+    },
+  },
+  // ---------------------------------------------------------------------------
   // Group management (ADR-ACT-0143 Slice 2)
   // Tenant admin manages groups in their own Keycloak realm.
   // All routes: scope "tenant" — must arrive at {slug}.aldous.info.
