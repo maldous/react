@@ -26,6 +26,7 @@ import {
 import { useSession } from "../../hooks/use-session";
 import { AdminSectionHeader } from "../../components/AdminLayout";
 import { AdminQueryError } from "../admin/AdminQueryError";
+import { AuditTrailPanel } from "../admin/AuditTrailPanel";
 import {
   useMembers,
   useInviteMember,
@@ -363,9 +364,14 @@ function MemberDetail({ member, canUpdate }: { member: MemberSummary; canUpdate:
             ))}
           </ul>
         )}
-        <p className="pt-2 text-xs text-fg-muted">
-          {t("feature.admin.members.auditTrailDeferred")}
-        </p>
+        <div className="pt-4">
+          <AuditTrailPanel
+            resource="member"
+            resourceId={member.userId}
+            heading={t("feature.admin.members.recentActivity")}
+            testId={`member-audit-${member.userId}`}
+          />
+        </div>
       </div>
     </div>
   );

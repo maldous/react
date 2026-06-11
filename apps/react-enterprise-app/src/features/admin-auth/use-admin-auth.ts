@@ -23,6 +23,8 @@ export function useSetAuthProviders() {
     mutationFn: (input: UpdateTenantAuthProvidersRequest) => setAuthProviders(input),
     onSuccess: (data) => {
       queryClient.setQueryData(authProvidersQueryKey, data);
+      // Refresh the provider-config audit panel (ADR-0040).
+      void queryClient.invalidateQueries({ queryKey: ["admin", "audit"] });
     },
   });
 }

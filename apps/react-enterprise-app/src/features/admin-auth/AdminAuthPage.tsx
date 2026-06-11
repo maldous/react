@@ -17,6 +17,7 @@ import { PRODUCT_PROVIDER_IDS, type ProductProviderId } from "@platform/contract
 import { useSession } from "../../hooks/use-session";
 import { AdminSectionHeader } from "../../components/AdminLayout";
 import { AdminQueryError } from "../admin/AdminQueryError";
+import { AuditTrailPanel } from "../admin/AuditTrailPanel";
 import {
   useAuthProviders,
   useSetAuthProviders,
@@ -145,6 +146,15 @@ function ProvidersTab({ canWrite }: { canWrite: boolean }) {
         >
           {mutation.isSuccess ? t("feature.admin.auth.providers.saved") : ""}
         </LiveRegion>
+
+        <div className="border-t border-border pt-4">
+          <AuditTrailPanel
+            resource="auth_settings"
+            resourceId="providers"
+            heading={t("feature.admin.auth.providers.recentChanges")}
+            testId="auth-providers-audit"
+          />
+        </div>
       </CardBody>
     </Card>
   );

@@ -21,6 +21,7 @@ import {
 import { useSession } from "../../hooks/use-session";
 import { AdminSectionHeader } from "../../components/AdminLayout";
 import { AdminQueryError } from "../admin/AdminQueryError";
+import { AuditTrailPanel } from "../admin/AuditTrailPanel";
 import { useConfig, useSetConfigValue, useClearConfigValue } from "./use-admin-config";
 
 /**
@@ -80,6 +81,16 @@ export function AdminConfigPage() {
               </Card>
             </div>
           ))}
+
+          <Card>
+            <CardBody>
+              <AuditTrailPanel
+                resource="config"
+                heading={t("feature.admin.config.recentChanges")}
+                testId="config-audit"
+              />
+            </CardBody>
+          </Card>
         </div>
       )}
 

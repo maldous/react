@@ -118,6 +118,8 @@ describe("AdminMembersPage", () => {
     // external identities loaded
     await within(detail).findByTestId(`member-external-${ADMIN_ID}`);
     expect(within(detail).getByText("mock-google")).toBeInTheDocument();
+    // contextual audit trail (ADR-0040) present in the member detail
+    await within(detail).findByTestId(`member-audit-${ADMIN_ID}-list`);
     // edit username
     const input = within(detail).getByTestId(`member-username-input-${ADMIN_ID}`);
     await userEvent.clear(input);

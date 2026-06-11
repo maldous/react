@@ -13,6 +13,7 @@ import {
   sessionPolicyFixture,
   externalIdentitiesFixture,
   configFixture,
+  auditFixture,
 } from "./fixtures/admin.ts";
 
 // Complete MSW baseline for the SPA (ADR-0019). Every endpoint the app touches
@@ -104,6 +105,11 @@ export function adminConfigHandler(response = configFixture) {
   return http.get("/api/org/config", () => HttpResponse.json(response));
 }
 
+/** GET /api/org/audit (contextual audit trail). */
+export function adminAuditHandler(response = auditFixture) {
+  return http.get("/api/org/audit", () => HttpResponse.json(response));
+}
+
 /** All admin write endpoints succeeding — POST/PATCH/DELETE return 200/204. */
 export function adminWriteOkHandlers() {
   return [
@@ -151,5 +157,6 @@ export const handlers = [
   adminSessionPolicyHandler(),
   adminExternalIdentitiesHandler(),
   adminConfigHandler(),
+  adminAuditHandler(),
   ...adminWriteOkHandlers(),
 ];

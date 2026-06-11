@@ -29,6 +29,8 @@ describe("AdminConfigPage", () => {
     await screen.findByTestId("config-category-features");
     expect(screen.getByTestId("config-category-branding")).toBeInTheDocument();
     expect(screen.getByTestId("config-row-branding.app_name")).toBeInTheDocument();
+    // Contextual audit panel (ADR-0040) is present on the config page.
+    expect(await screen.findByTestId("config-audit-list")).toBeInTheDocument();
     expect(screen.getByTestId("config-source-features.analytics")).toHaveTextContent(/overridden/i);
     expect(screen.getByTestId("config-source-branding.app_name")).toHaveTextContent(/default/i);
   });

@@ -165,6 +165,10 @@
         "forbidden": "You do not have permission to view this.",
         "generic": "Something went wrong. Please try again."
       },
+      "audit": {
+        "empty": "No recent activity.",
+        "by": "by {actor}"
+      },
       "nav": {
         "overview": "Overview",
         "members": "Members",
@@ -185,6 +189,7 @@
         "description": "Typed platform configuration for this organisation.",
         "empty": "No configuration is available.",
         "saved": "Configuration saved.",
+        "recentChanges": "Recent configuration changes",
         "save": "Save",
         "reset": "Reset to default",
         "source": {
@@ -258,6 +263,7 @@
         "externalIdentities": "External identities",
         "noExternalIdentities": "No linked external identities.",
         "auditTrailDeferred": "Per-member audit trail: search the admin log by actor (deferred).",
+        "recentActivity": "Recent activity",
         "resend": "Resend",
         "resendSent": "Invitation resent.",
         "column": {
@@ -314,6 +320,7 @@
           "modeLabel": "Provider mode",
           "enabledLabel": "Sign-in options offered to your users",
           "saved": "Authentication options saved.",
+          "recentChanges": "Recent provider changes",
           "unavailable": "Provider configuration is unavailable.",
           "noneAvailable": "No third-party sign-in providers are available in this environment.",
           "mode": {

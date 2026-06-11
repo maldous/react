@@ -7,6 +7,7 @@ import type {
   SessionPolicyDto,
   ExternalIdentityListResponse,
   ConfigListResponse,
+  AuditListResponse,
 } from "@platform/contracts-admin";
 
 // Canonical admin control-plane fixtures for frontend tests (ADR-0036). Pure data;
@@ -130,6 +131,29 @@ export const configFixture: ConfigListResponse = {
       },
       value: "system",
       source: "default",
+    },
+  ],
+};
+
+export const auditFixture: AuditListResponse = {
+  events: [
+    {
+      id: "ae-1",
+      action: "member.status_changed",
+      actorId: "00000000-0000-0000-0000-0000000000a1",
+      resource: "organisation:members",
+      resourceId: "00000000-0000-0000-0000-0000000000b2",
+      timestamp: "2026-06-01T10:00:00.000Z",
+      metadata: { status: "disabled" },
+    },
+    {
+      id: "ae-2",
+      action: "config.value_changed",
+      actorId: "00000000-0000-0000-0000-0000000000a1",
+      resource: "organisation:config",
+      resourceId: "branding.app_name",
+      timestamp: "2026-06-01T11:00:00.000Z",
+      metadata: { key: "branding.app_name", value: "Acme" },
     },
   ],
 };

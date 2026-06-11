@@ -9,7 +9,11 @@ export function useConfig() {
 
 function useInvalidateConfig() {
   const queryClient = useQueryClient();
-  return () => queryClient.invalidateQueries({ queryKey: adminConfigQueryKey });
+  return () => {
+    void queryClient.invalidateQueries({ queryKey: adminConfigQueryKey });
+    // Refresh the config audit panel (ADR-0040).
+    void queryClient.invalidateQueries({ queryKey: ["admin", "audit"] });
+  };
 }
 
 export function useSetConfigValue() {

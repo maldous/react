@@ -25,7 +25,11 @@ export function useMembers() {
 
 function useInvalidateMembers() {
   const queryClient = useQueryClient();
-  return () => queryClient.invalidateQueries({ queryKey: adminMembersQueryKey });
+  return () => {
+    void queryClient.invalidateQueries({ queryKey: adminMembersQueryKey });
+    // Refresh any open contextual audit panels (ADR-0040).
+    void queryClient.invalidateQueries({ queryKey: ["admin", "audit"] });
+  };
 }
 
 export function useInviteMember() {
