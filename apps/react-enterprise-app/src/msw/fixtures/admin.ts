@@ -63,8 +63,26 @@ export const authProvidersFixture: TenantAuthProvidersResponse = {
 };
 
 export const idpsFixture: IdpSummary[] = [
-  { alias: "mock-google", displayName: "Mock Google", providerId: "oidc", enabled: true },
-  { alias: "mock-azure", displayName: "Mock Microsoft", providerId: "oidc", enabled: false },
+  {
+    alias: "mock-google",
+    displayName: "Mock Google",
+    providerId: "google",
+    enabled: true,
+    hasClientSecret: true,
+    trustEmail: true,
+    clientId: "mock-google-client",
+    scopes: "openid email profile",
+  },
+  {
+    alias: "mock-azure",
+    displayName: "Mock Microsoft",
+    providerId: "oidc",
+    enabled: false,
+    hasClientSecret: false,
+    trustEmail: false,
+    clientId: null,
+    scopes: null,
+  },
 ];
 
 export const externalIdentitiesFixture: ExternalIdentityListResponse = {

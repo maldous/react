@@ -465,6 +465,49 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
     await this.assertAdminOk(res, `removeIdentityProvider(${alias})`, [404]);
   }
 
+  // Explicit IdP CRUD for tenant-admin management (ADR-0043). Distinct from the
+  // provisioning-only upsert above: callers build a validated representation and
+  // the secret-preserving merge happens in the usecase layer. Keycloak returns
+  // clientSecret masked as "**********" on read; re-PUTing the mask preserves it.
+  async getIdentityProvider(alias: string): Promise<IdentityProvider | null> {
+    const token = await this.getAdminToken();
+    const res = await fetch(this.adminUrl(`/identity-provider/instances/${alias}`), {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (res.status === 404) return null;
+    await this.assertAdminOk(res, `getIdentityProvider(${alias})`);
+    return (await res.json()) as IdentityProvider;
+  }
+
+  async createIdentityProvider(idp: IdentityProvider): Promise<void> {
+    const token = await this.getAdminToken();
+    const res = await fetch(this.adminUrl("/identity-provider/instances"), {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify(idp),
+    });
+    await this.assertAdminOk(res, `createIdentityProvider(${idp.alias})`);
+  }
+
+  async updateIdentityProvider(alias: string, idp: IdentityProvider): Promise<void> {
+    const token = await this.getAdminToken();
+    const res = await fetch(this.adminUrl(`/identity-provider/instances/${alias}`), {
+      method: "PUT",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify(idp),
+    });
+    await this.assertAdminOk(res, `updateIdentityProvider(${alias})`);
+  }
+
+  async deleteIdentityProvider(alias: string): Promise<void> {
+    const token = await this.getAdminToken();
+    const res = await fetch(this.adminUrl(`/identity-provider/instances/${alias}`), {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    await this.assertAdminOk(res, `deleteIdentityProvider(${alias})`, [404]);
+  }
+
   // MFA policy maps to Keycloak realm REQUIRED-ACTIONS (ADR-0042), which actually
   // govern whether users are prompted to register a second factor and which
   // round-trip reliably — unlike the prior mapping that mis-wrote `required` into

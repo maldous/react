@@ -986,3 +986,77 @@ describe("KeycloakRealmAdminAdapter — getMfaPolicy", () => {
     assert.deepEqual(await adapter.getMfaPolicy(), { required: "none", type: "totp" });
   });
 });
+
+// ---------------------------------------------------------------------------
+// KeycloakRealmAdminAdapter — IdP CRUD (ADR-0043)
+// ---------------------------------------------------------------------------
+
+describe("KeycloakRealmAdminAdapter — IdP CRUD", () => {
+  let restore: () => void;
+  afterEach(() => restore?.());
+
+  const OIDC = {
+    alias: "acme-oidc",
+    displayName: "Acme",
+    providerId: "oidc",
+    enabled: true,
+    config: { clientId: "c", clientSecret: "**********" },
+  };
+
+  it("getIdentityProvider returns the representation on 200", async () => {
+    restore = mockFetch(adminApiFetch(async () => jsonResponse(OIDC)));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    const rep = await adapter.getIdentityProvider("acme-oidc");
+    assert.equal(rep?.alias, "acme-oidc");
+  });
+
+  it("getIdentityProvider returns null on 404", async () => {
+    restore = mockFetch(adminApiFetch(async () => new Response(null, { status: 404 })));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    assert.equal(await adapter.getIdentityProvider("missing"), null);
+  });
+
+  it("getIdentityProvider throws (classifiable) on 403", async () => {
+    restore = mockFetch(adminApiFetch(async () => jsonResponse({ error: "denied" }, 403)));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await assert.rejects(
+      () => adapter.getIdentityProvider("x"),
+      /getIdentityProvider\(x\): Keycloak admin request failed: 403/
+    );
+  });
+
+  it("createIdentityProvider POSTs to the instances collection and resolves on 201", async () => {
+    let captured: { url: string; method: string } | null = null;
+    restore = mockFetch(
+      adminApiFetch(async (input, init) => {
+        captured = {
+          url: typeof input === "string" ? input : (input as URL).toString(),
+          method: init?.method ?? "GET",
+        };
+        return new Response(null, { status: 201 });
+      })
+    );
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await adapter.createIdentityProvider(OIDC);
+    assert.equal(captured!.method, "POST");
+    assert.match(captured!.url, /\/identity-provider\/instances$/);
+  });
+
+  it("updateIdentityProvider PUTs the alias instance and throws on 403", async () => {
+    restore = mockFetch(adminApiFetch(async () => jsonResponse({ error: "denied" }, 403)));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await assert.rejects(
+      () => adapter.updateIdentityProvider("acme-oidc", OIDC),
+      /updateIdentityProvider\(acme-oidc\): Keycloak admin request failed: 403/
+    );
+  });
+
+  it("deleteIdentityProvider resolves on 204 and is idempotent on 404", async () => {
+    restore = mockFetch(adminApiFetch(async () => new Response(null, { status: 204 })));
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await adapter.deleteIdentityProvider("acme-oidc");
+    restore();
+    restore = mockFetch(adminApiFetch(async () => new Response(null, { status: 404 })));
+    await new KeycloakRealmAdminAdapter(ADMIN_CONFIG).deleteIdentityProvider("gone");
+  });
+});

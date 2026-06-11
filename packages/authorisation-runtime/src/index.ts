@@ -123,6 +123,12 @@ export interface RealmAdminPort {
   upsertIdentityProvider(idp: IdentityProvider): Promise<void>;
   removeIdentityProvider(alias: string): Promise<void>;
 
+  // Explicit IdP CRUD for tenant-admin management (ADR-0043).
+  getIdentityProvider(alias: string): Promise<IdentityProvider | null>;
+  createIdentityProvider(idp: IdentityProvider): Promise<void>;
+  updateIdentityProvider(alias: string, idp: IdentityProvider): Promise<void>;
+  deleteIdentityProvider(alias: string): Promise<void>;
+
   // MFA policy
   getMfaPolicy(): Promise<MfaPolicy>;
   setMfaPolicy(policy: MfaPolicy): Promise<void>;

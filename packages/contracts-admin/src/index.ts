@@ -145,17 +145,106 @@ export type ToggleFeatureRequest = z.infer<typeof ToggleFeatureRequestSchema>;
 // Auth settings (read shapes the admin UI consumes)
 // ---------------------------------------------------------------------------
 
-/** One row of `GET /api/auth/settings/idps`. Tolerant of extra realm fields
- * (e.g. `config`, `trustEmail`) the UI does not display. */
+// ---------------------------------------------------------------------------
+// Identity Provider management (ADR-0043) — realm IdP definitions.
+// SEPARATE from the product login allowlist (ADR-0037, TenantAuthProviders*).
+// Secrets are write-only: requests may carry clientSecret; responses never do.
+// ---------------------------------------------------------------------------
+
+/** Allowlisted realm IdP provider types. SAML/others deferred (ADR-0043). */
+export const IDP_PROVIDER_IDS = ["oidc", "google", "microsoft", "apple"] as const;
+export const IdpProviderIdSchema = z.enum(IDP_PROVIDER_IDS);
+export type IdpProviderId = z.infer<typeof IdpProviderIdSchema>;
+
+/** Aliases reserved for platform/system IdPs — a tenant admin may not use them. */
+export const RESERVED_IDP_ALIASES = [
+  "platform",
+  "platform-realm",
+  "master",
+  "admin",
+  "account",
+  "security-admin-console",
+  "broker",
+] as const;
+
+const IdpAliasSchema = z
+  .string()
+  .regex(
+    /^[a-z0-9][a-z0-9_-]{1,62}$/,
+    "alias must be 2-63 chars: lowercase letters, digits, - or _"
+  )
+  .refine((a) => !(RESERVED_IDP_ALIASES as readonly string[]).includes(a), {
+    message: "alias is reserved",
+  });
+
+/** Only http/https URLs — rejects javascript:, data:, file:, etc. */
+const SafeUrlSchema = z
+  .string()
+  .url()
+  .refine((u) => /^https?:\/\//i.test(u), { message: "URL must use http or https" });
+
+/**
+ * One row of `GET /api/auth/settings/idps` — explicitly mapped + redacted.
+ * `hasClientSecret` indicates a secret is configured; the value is never returned.
+ * `.strict()` so no raw Keycloak field can leak through.
+ */
 export const IdpSummarySchema = z
   .object({
     alias: z.string(),
     displayName: z.string(),
     providerId: z.string(),
     enabled: z.boolean(),
+    hasClientSecret: z.boolean(),
+    trustEmail: z.boolean(),
+    clientId: z.string().nullable(),
+    scopes: z.string().nullable(),
   })
-  .passthrough();
+  .strict();
 export type IdpSummary = z.infer<typeof IdpSummarySchema>;
+
+export const IdpListResponseSchema = z.object({ idps: z.array(IdpSummarySchema) });
+export type IdpListResponse = z.infer<typeof IdpListResponseSchema>;
+
+/** `POST /api/auth/settings/idps`. clientSecret is write-only. oidc needs URLs. */
+export const CreateIdpRequestSchema = z
+  .object({
+    alias: IdpAliasSchema,
+    displayName: z.string().min(1).max(120),
+    providerId: IdpProviderIdSchema,
+    clientId: z.string().min(1).max(255),
+    clientSecret: z.string().min(1).max(4096),
+    authorizationUrl: SafeUrlSchema.optional(),
+    tokenUrl: SafeUrlSchema.optional(),
+    userInfoUrl: SafeUrlSchema.optional(),
+    issuer: SafeUrlSchema.optional(),
+    scopes: z.string().max(255).optional(),
+    trustEmail: z.boolean().default(false),
+    enabled: z.boolean().default(true),
+  })
+  .strict()
+  .refine((b) => b.providerId !== "oidc" || (!!b.authorizationUrl && !!b.tokenUrl), {
+    message: "oidc providers require authorizationUrl and tokenUrl",
+    path: ["authorizationUrl"],
+  });
+export type CreateIdpRequest = z.infer<typeof CreateIdpRequestSchema>;
+
+/** `PATCH /api/auth/settings/idps/:alias`. A blank/absent clientSecret PRESERVES
+ * the existing secret (handled server-side via Keycloak's secret-mask round-trip). */
+export const UpdateIdpRequestSchema = z
+  .object({
+    displayName: z.string().min(1).max(120).optional(),
+    clientId: z.string().min(1).max(255).optional(),
+    clientSecret: z.string().max(4096).optional(),
+    authorizationUrl: SafeUrlSchema.optional(),
+    tokenUrl: SafeUrlSchema.optional(),
+    userInfoUrl: SafeUrlSchema.optional(),
+    issuer: SafeUrlSchema.optional(),
+    scopes: z.string().max(255).optional(),
+    trustEmail: z.boolean().optional(),
+    enabled: z.boolean().optional(),
+  })
+  .strict();
+export type UpdateIdpRequest = z.infer<typeof UpdateIdpRequestSchema>;
 
 export const MfaRequirementSchema = z.enum(["none", "optional", "required"]);
 export const MfaTypeSchema = z.enum(["totp", "webauthn"]);
