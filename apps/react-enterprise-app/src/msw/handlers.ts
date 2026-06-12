@@ -220,6 +220,99 @@ export function adminStorageProbeHandler(response: Record<string, unknown> = sto
   return http.post("/api/org/storage/probe", () => HttpResponse.json(response));
 }
 
+// --- Tenant webhooks (ADR-0051) ---
+const webhooksListFixture = {
+  subscriptions: [
+    {
+      id: "wh-1",
+      url: "https://example.com/hooks/platform",
+      enabled: true,
+      eventTypes: ["platform.test", "tenant.member.invited"],
+      hasSecret: true,
+      createdAt: "2026-06-12T00:00:00Z",
+      updatedAt: null,
+    },
+  ],
+};
+const webhooksReadinessFixture = {
+  status: "configured",
+  total: 1,
+  enabled: 1,
+};
+export function adminWebhooksListHandler(response: Record<string, unknown> = webhooksListFixture) {
+  return http.get("/api/org/webhooks", () => HttpResponse.json(response));
+}
+export function adminWebhooksReadinessHandler(
+  response: Record<string, unknown> = webhooksReadinessFixture
+) {
+  return http.get("/api/org/webhooks/readiness", () => HttpResponse.json(response));
+}
+export function adminWebhooksCreateHandler() {
+  return http.post("/api/org/webhooks", async ({ request }) => {
+    const body = (await request.json()) as { url: string; eventTypes: string[]; enabled?: boolean };
+    return HttpResponse.json(
+      {
+        subscription: {
+          id: "wh-new",
+          url: body.url,
+          enabled: body.enabled ?? true,
+          eventTypes: body.eventTypes,
+          hasSecret: true,
+          createdAt: "2026-06-12T00:00:00Z",
+          updatedAt: null,
+        },
+        secret: "whsec_msw",
+      },
+      { status: 201 }
+    );
+  });
+}
+export function adminWebhooksUpdateHandler() {
+  return http.patch("/api/org/webhooks/:id", async ({ request, params }) => {
+    const body = (await request.json()) as Record<string, unknown>;
+    return HttpResponse.json({
+      id: String(params["id"]),
+      url: "https://example.com/hooks/platform",
+      enabled: true,
+      eventTypes: ["platform.test"],
+      hasSecret: true,
+      createdAt: "2026-06-12T00:00:00Z",
+      updatedAt: "2026-06-12T01:00:00Z",
+      ...body,
+    });
+  });
+}
+export function adminWebhooksDeleteHandler() {
+  return http.delete("/api/org/webhooks/:id", () => new HttpResponse(null, { status: 204 }));
+}
+export function adminWebhooksRotateHandler() {
+  return http.post("/api/org/webhooks/:id/rotate-secret", ({ params }) =>
+    HttpResponse.json({ id: String(params["id"]), secret: "whsec_rotated" })
+  );
+}
+export function adminWebhooksTestHandler(
+  response: Record<string, unknown> = { status: "delivered", responseStatus: 200 }
+) {
+  return http.post("/api/org/webhooks/:id/test", () => HttpResponse.json(response));
+}
+export function adminWebhooksDeliveriesHandler() {
+  return http.get("/api/org/webhooks/:id/deliveries", () =>
+    HttpResponse.json({
+      deliveries: [
+        {
+          id: `del-1`,
+          event: "platform.test",
+          status: "delivered",
+          responseStatus: 200,
+          attempt: 1,
+          error: null,
+          createdAt: "2026-06-12T00:00:00Z",
+        },
+      ],
+    })
+  );
+}
+
 // --- Tenant observability readiness (ADR-0050) ---
 const observabilityReadinessFixture = {
   status: "configured",
@@ -352,5 +445,7 @@ export const handlers = [
   adminDomainsReadinessHandler(),
   adminStorageReadinessHandler(),
   adminObservabilityReadinessHandler(),
+  adminWebhooksListHandler(),
+  adminWebhooksReadinessHandler(),
   ...adminWriteOkHandlers(),
 ];

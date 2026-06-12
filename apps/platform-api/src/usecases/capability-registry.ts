@@ -7,6 +7,7 @@ import type {
   TenantDomainReadinessStatus,
   TenantStorageReadinessStatus,
   TenantObservabilityReadinessStatus,
+  WebhookReadinessStatus,
   TenantReadinessResponse,
   TenantReadinessStatus,
 } from "@platform/contracts-admin";
@@ -38,6 +39,7 @@ export type ReadinessKind =
   | "tenant-domains" // from the tenant custom-domain readiness (ADR-0048)
   | "tenant-storage" // from the tenant storage readiness (ADR-0049)
   | "tenant-observability" // from the tenant observability readiness (ADR-0050)
+  | "tenant-webhooks" // from the tenant webhooks readiness (ADR-0051)
   | "invariant-ready" // ready by construction (documented local invariant)
   | "deferred"; // not yet checkable — never reported ready
 
@@ -206,9 +208,15 @@ export const CAPABILITIES: readonly CapabilityDefinition[] = [
   }),
 
   // --- Integrations ---
+  // Webhooks: subscription CRUD, HMAC-signed reveal-once secret, immediate test
+  // dispatch, and a delivery log are implemented (ADR-0051). The async retry worker
+  // is deferred, so the capability is honestly `partial`.
   cap("integrations_webhooks", "integrations", {
-    implementationStatus: "deferred",
-    readinessKind: "deferred",
+    adminRoute: "/admin/webhooks",
+    requiredPermission: "tenant.webhooks.read",
+    implementationStatus: "partial",
+    readinessKind: "tenant-webhooks",
+    detailKey: `${A}.integrations_webhooks.action`,
   }),
 
   // --- OIDC enterprise sub-capabilities (ADR-0046 / ADR-ACT-0215) ---
@@ -279,6 +287,8 @@ export interface ReadinessSignals {
   storageReadiness: TenantStorageReadinessStatus;
   /** Tenant observability readiness (ADR-0050) — a bounded Loki probe. */
   observabilityReadiness: TenantObservabilityReadinessStatus;
+  /** Tenant webhooks readiness (ADR-0051) — subscription counts. */
+  webhooksReadiness: WebhookReadinessStatus;
 }
 
 function capabilityReadiness(kind: ReadinessKind, s: ReadinessSignals): CapabilityReadiness {
@@ -351,6 +361,17 @@ function capabilityReadiness(kind: ReadinessKind, s: ReadinessSignals): Capabili
         case "not_configured":
           return "incomplete";
         case "provider_unreachable":
+        case "degraded":
+          return "degraded";
+        default:
+          return "unknown";
+      }
+    case "tenant-webhooks":
+      switch (s.webhooksReadiness) {
+        case "configured":
+          return "ready";
+        case "no_subscriptions":
+          return "incomplete";
         case "degraded":
           return "degraded";
         default:

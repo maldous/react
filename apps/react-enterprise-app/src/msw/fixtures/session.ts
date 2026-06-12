@@ -41,6 +41,8 @@ export const sessionFixtures: Record<SessionPersona, SessionActor> = {
       "tenant.storage.read",
       "tenant.storage.write",
       "tenant.observability.read",
+      "tenant.webhooks.read",
+      "tenant.webhooks.write",
     ],
     displayName: "Tenant Admin",
   },

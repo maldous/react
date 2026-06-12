@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-06-11
 
-50 Architecture Decision Records (ADR-0001 through ADR-0050). ADR-0018 is intentionally absent. All status: **Accepted**.
+51 Architecture Decision Records (ADR-0001 through ADR-0051). ADR-0018 is intentionally absent. All status: **Accepted**.
 
 ## Foundation & Governance (8)
 
@@ -105,7 +105,7 @@
 ## Governance
 
 - All ADRs are **Accepted** (no superceded or pending)
-- Next ADR: **ADR-0051**
+- Next ADR: **ADR-0052**
 - Action register: `docs/adr/ACTION-REGISTER.md`
 - Lifecycle evidence: `docs/evidence/`
 

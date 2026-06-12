@@ -266,6 +266,7 @@ docs/
     admin/
     audit/
     configuration/
+    integrations/
     security/
     operations/
     testing/
@@ -494,6 +495,7 @@ Canonical source locations:
 | Architecture review evidence                          | `docs/evidence/architecture/`                        | Committed governance evidence                                                 |
 | Security review evidence                              | `docs/evidence/security/`                            | Committed governance evidence                                                 |
 | Operations readiness evidence                         | `docs/evidence/operations/`                          | Committed governance evidence                                                 |
+| Integrations / webhooks evidence                      | `docs/evidence/integrations/`                        | Committed governance evidence                                                 |
 | Architecture-level test evidence                      | `docs/evidence/testing/`                             | Committed governance evidence                                                 |
 | Release or promotion evidence                         | `docs/evidence/release/`                             | Committed governance evidence                                                 |
 | Accepted exceptions                                   | `docs/evidence/exceptions/`                          | Committed governance evidence                                                 |

@@ -727,6 +727,157 @@ export type TenantObservabilityReadinessResponse = z.infer<
   typeof TenantObservabilityReadinessResponseSchema
 >;
 
+// ---------------------------------------------------------------------------
+// Integrations / webhooks (ADR-0051 / ADR-ACT-0221)
+// Per-tenant outbound webhook subscriptions. Strict + no-passthrough. The signing
+// secret is reveal-once: it is returned ONLY by create + rotate, stored AES-256-GCM
+// encrypted, and never returned by any read (only `hasSecret`). Payloads are signed
+// HMAC-SHA-256 over `<timestamp>.<body>` (replay-protected). The request body never
+// carries a tenant id (authority is FQDN/session). The async retry worker is NOT
+// implemented this pass: a test dispatch is a single immediate attempt, recorded in
+// the delivery log; the retry policy is documented config only.
+// ---------------------------------------------------------------------------
+
+export const WEBHOOK_EVENT_TYPES = [
+  "platform.test",
+  "tenant.member.invited",
+  "tenant.config.changed",
+] as const;
+export const WebhookEventTypeSchema = z.enum(WEBHOOK_EVENT_TYPES);
+export type WebhookEventType = z.infer<typeof WebhookEventTypeSchema>;
+
+export const WEBHOOK_DELIVERY_STATUSES = ["delivered", "failed", "pending"] as const;
+export const WebhookDeliveryStatusSchema = z.enum(WEBHOOK_DELIVERY_STATUSES);
+export type WebhookDeliveryStatus = z.infer<typeof WebhookDeliveryStatusSchema>;
+
+export const WEBHOOK_READINESS_STATUSES = [
+  "no_subscriptions", // none configured (optional capability)
+  "configured", // ≥1 enabled subscription
+  "degraded", // store unreachable
+  "unknown",
+] as const;
+export const WebhookReadinessStatusSchema = z.enum(WEBHOOK_READINESS_STATUSES);
+export type WebhookReadinessStatus = z.infer<typeof WebhookReadinessStatusSchema>;
+
+/**
+ * Endpoint URL: https only, except http is allowed for localhost/127.0.0.1 (local
+ * receiver/proof). Any non-http(s) scheme (file:, gopher:, ftp:, …) is rejected.
+ */
+const WebhookUrlZ = z
+  .string()
+  .url()
+  .max(2048)
+  .refine(
+    (raw) => {
+      let u: URL;
+      try {
+        u = new URL(raw);
+      } catch {
+        return false;
+      }
+      if (u.protocol === "https:") return true;
+      if (u.protocol === "http:") {
+        return u.hostname === "localhost" || u.hostname === "127.0.0.1" || u.hostname === "::1";
+      }
+      return false;
+    },
+    { message: "url must be https (http allowed only for localhost)" }
+  );
+
+/** `GET /api/org/webhooks` — never carries the secret (only `hasSecret`). */
+export const WebhookSubscriptionSummarySchema = z
+  .object({
+    id: z.string(),
+    url: z.string(),
+    enabled: z.boolean(),
+    eventTypes: z.array(WebhookEventTypeSchema),
+    hasSecret: z.boolean(),
+    createdAt: z.string().nullable(),
+    updatedAt: z.string().nullable(),
+  })
+  .strict();
+export type WebhookSubscriptionSummary = z.infer<typeof WebhookSubscriptionSummarySchema>;
+
+export const WebhookSubscriptionListResponseSchema = z
+  .object({ subscriptions: z.array(WebhookSubscriptionSummarySchema) })
+  .strict();
+export type WebhookSubscriptionListResponse = z.infer<typeof WebhookSubscriptionListResponseSchema>;
+
+/** `POST /api/org/webhooks` — body never carries a tenant id. */
+export const CreateWebhookSubscriptionRequestSchema = z
+  .object({
+    url: WebhookUrlZ,
+    eventTypes: z.array(WebhookEventTypeSchema).min(1).max(20),
+    enabled: z.boolean().optional(),
+  })
+  .strict();
+export type CreateWebhookSubscriptionRequest = z.infer<
+  typeof CreateWebhookSubscriptionRequestSchema
+>;
+
+/** `PATCH /api/org/webhooks/:id`. */
+export const UpdateWebhookSubscriptionRequestSchema = z
+  .object({
+    url: WebhookUrlZ.optional(),
+    eventTypes: z.array(WebhookEventTypeSchema).min(1).max(20).optional(),
+    enabled: z.boolean().optional(),
+  })
+  .strict();
+export type UpdateWebhookSubscriptionRequest = z.infer<
+  typeof UpdateWebhookSubscriptionRequestSchema
+>;
+
+/** `POST /api/org/webhooks` (201) — the secret is revealed ONCE here. */
+export const CreateWebhookSubscriptionResponseSchema = z
+  .object({ subscription: WebhookSubscriptionSummarySchema, secret: z.string() })
+  .strict();
+export type CreateWebhookSubscriptionResponse = z.infer<
+  typeof CreateWebhookSubscriptionResponseSchema
+>;
+
+/** `POST /api/org/webhooks/:id/rotate-secret` — reveals the new secret ONCE. */
+export const WebhookSecretRotationResponseSchema = z
+  .object({ id: z.string(), secret: z.string() })
+  .strict();
+export type WebhookSecretRotationResponse = z.infer<typeof WebhookSecretRotationResponseSchema>;
+
+export const WebhookDeliverySummarySchema = z
+  .object({
+    id: z.string(),
+    event: WebhookEventTypeSchema,
+    status: WebhookDeliveryStatusSchema,
+    responseStatus: z.number().int().nullable(),
+    attempt: z.number().int().nonnegative(),
+    error: z.string().nullable(),
+    createdAt: z.string().nullable(),
+  })
+  .strict();
+export type WebhookDeliverySummary = z.infer<typeof WebhookDeliverySummarySchema>;
+
+export const WebhookDeliveryListResponseSchema = z
+  .object({ deliveries: z.array(WebhookDeliverySummarySchema) })
+  .strict();
+export type WebhookDeliveryListResponse = z.infer<typeof WebhookDeliveryListResponseSchema>;
+
+/** `POST /api/org/webhooks/:id/test`. */
+export const WebhookTestResultSchema = z
+  .object({
+    status: WebhookDeliveryStatusSchema,
+    responseStatus: z.number().int().nullable(),
+  })
+  .strict();
+export type WebhookTestResult = z.infer<typeof WebhookTestResultSchema>;
+
+/** `GET /api/org/webhooks/readiness`. */
+export const WebhookReadinessResponseSchema = z
+  .object({
+    status: WebhookReadinessStatusSchema,
+    total: z.number().int().nonnegative(),
+    enabled: z.number().int().nonnegative(),
+  })
+  .strict();
+export type WebhookReadinessResponse = z.infer<typeof WebhookReadinessResponseSchema>;
+
 export const MfaRequirementSchema = z.enum(["none", "optional", "required"]);
 export const MfaTypeSchema = z.enum(["totp", "webauthn"]);
 

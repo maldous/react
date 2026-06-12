@@ -179,6 +179,7 @@
         "domains": "Domains",
         "storage": "Storage",
         "observability": "Observability",
+        "webhooks": "Webhooks",
         "logs": "Log search",
         "readiness": "Readiness"
       },
@@ -190,6 +191,7 @@
         "domainsDescription": "Add custom domains and prove ownership via DNS.",
         "storageDescription": "Check object-storage readiness and tenant isolation.",
         "observabilityDescription": "Check log ingestion, tenant-scoped query, and label hygiene.",
+        "webhooksDescription": "Subscribe endpoints to events with signed, logged deliveries.",
         "logsDescription": "Search structured platform logs.",
         "readinessDescription": "See what's configured and what's left to set up."
       },
@@ -380,6 +382,52 @@
           "provider_unreachable": "The log backend could not be reached.",
           "degraded": "Logging is reachable but a signal is not healthy.",
           "unknown": "Observability readiness is unknown right now."
+        }
+      },
+      "webhooks": {
+        "title": "Webhooks",
+        "description": "Send signed event notifications to your own endpoints.",
+        "error": "Webhooks could not be loaded.",
+        "addHeading": "Add a webhook",
+        "urlLabel": "Endpoint URL",
+        "urlPlaceholder": "https://example.com/hooks/platform",
+        "eventsLabel": "Events",
+        "enabledLabel": "Enabled",
+        "addButton": "Add webhook",
+        "addError": "Could not add the webhook. Check the URL and events.",
+        "added": "Webhook created.",
+        "secretHeading": "Signing secret (shown once)",
+        "secretHelper": "Copy this secret now — it is shown only once and cannot be retrieved later.",
+        "secretDone": "Done",
+        "listHeading": "Your webhooks",
+        "empty": "No webhooks yet. Add one above.",
+        "recentChanges": "Recent webhook changes",
+        "columnUrl": "Endpoint",
+        "columnEvents": "Events",
+        "columnEnabled": "Enabled",
+        "columnSecret": "Secret",
+        "secretSet": "configured",
+        "rotateButton": "Rotate secret",
+        "rotated": "Signing secret rotated — copy the new value.",
+        "rotateError": "Could not rotate the secret. Please try again.",
+        "testButton": "Send test",
+        "tested": "Test event dispatched.",
+        "testError": "Could not send the test event. Please try again.",
+        "removeButton": "Remove",
+        "removed": "Webhook removed.",
+        "deliveriesHeading": "Recent deliveries",
+        "noDeliveries": "No deliveries yet.",
+        "deliveryStatus": {
+          "delivered": "Delivered",
+          "failed": "Failed",
+          "pending": "Pending"
+        },
+        "readinessHeading": "Webhooks status",
+        "readiness": {
+          "no_subscriptions": "No webhook is configured yet.",
+          "configured": "At least one enabled webhook is configured.",
+          "degraded": "Webhook configuration could not be read right now.",
+          "unknown": "Webhooks readiness is unknown right now."
         }
       },
       "overview": {
@@ -702,7 +750,8 @@
           },
           "integrations_webhooks": {
             "label": "Integrations & webhooks",
-            "description": "Outbound webhooks and third-party integrations."
+            "description": "Outbound webhooks and third-party integrations.",
+            "action": "Add a webhook endpoint and send a test event."
           },
           "oidc_discovery": {
             "label": "OIDC discovery",

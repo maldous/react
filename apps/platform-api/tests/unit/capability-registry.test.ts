@@ -19,6 +19,7 @@ const FULLY_READY: ReadinessSignals = {
   domainReadiness: "verified",
   storageReadiness: "configured",
   observabilityReadiness: "configured",
+  webhooksReadiness: "configured",
 };
 
 function cap(resp: ReturnType<typeof buildTenantReadiness>, key: string) {
@@ -248,6 +249,33 @@ describe("buildTenantReadiness — aggregation", () => {
     );
   });
 
+  it("webhooks readiness reflects its signal honestly (ADR-0051)", () => {
+    const ready = buildTenantReadiness({ ...FULLY_READY, webhooksReadiness: "configured" });
+    assert.equal(cap(ready, "integrations_webhooks")?.readiness, "ready");
+    assert.equal(cap(ready, "integrations_webhooks")?.implementationStatus, "partial");
+    assert.equal(cap(ready, "integrations_webhooks")?.required, false);
+
+    assert.equal(
+      cap(
+        buildTenantReadiness({ ...FULLY_READY, webhooksReadiness: "no_subscriptions" }),
+        "integrations_webhooks"
+      )?.readiness,
+      "incomplete"
+    );
+    assert.equal(
+      cap(
+        buildTenantReadiness({ ...FULLY_READY, webhooksReadiness: "degraded" }),
+        "integrations_webhooks"
+      )?.readiness,
+      "degraded"
+    );
+    // optional capability → never drags the overall status down.
+    assert.equal(
+      buildTenantReadiness({ ...FULLY_READY, webhooksReadiness: "degraded" }).overall,
+      "ready"
+    );
+  });
+
   it("never fakes readiness: deferred capabilities are always 'deferred'", () => {
     for (const signals of [
       FULLY_READY,
@@ -259,6 +287,7 @@ describe("buildTenantReadiness — aggregation", () => {
         domainReadiness: "no_domains" as const,
         storageReadiness: "not_configured" as const,
         observabilityReadiness: "provider_unreachable" as const,
+        webhooksReadiness: "no_subscriptions" as const,
       },
     ]) {
       const r = buildTenantReadiness(signals);

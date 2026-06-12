@@ -77,6 +77,11 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     labelKey: "feature.admin.nav.observability",
     permission: "tenant.observability.read",
   },
+  {
+    to: "/admin/webhooks",
+    labelKey: "feature.admin.nav.webhooks",
+    permission: "tenant.webhooks.read",
+  },
   { to: "/admin/logs", labelKey: "feature.admin.nav.logs", permission: "platform.logs.read" },
 ];
 

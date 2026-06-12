@@ -2442,6 +2442,131 @@
         }
       }
     },
+    "/api/org/webhooks": {
+      "get": {
+        "summary": "List tenant webhook subscriptions",
+        "operationId": "listOrgWebhooks",
+        "description": "Lists the tenant's webhook subscriptions (FQDN/session). Never returns the signing secret (only hasSecret). ADR-0051.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Webhook list" },
+          "400": { "description": "No tenant context" }
+        }
+      },
+      "post": {
+        "summary": "Create a tenant webhook subscription",
+        "operationId": "createOrgWebhook",
+        "description": "Creates a subscription (audit-first) and returns the signing secret ONCE. Body carries no tenant id; url must be https (http only for localhost). ADR-0051.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "201": { "description": "Created (secret revealed once)" },
+          "400": { "description": "Validation error or no tenant context" }
+        }
+      }
+    },
+    "/api/org/webhooks/readiness": {
+      "get": {
+        "summary": "Get tenant webhooks readiness",
+        "operationId": "getOrgWebhooksReadiness",
+        "description": "Returns the classified webhooks readiness (no_subscriptions / configured / degraded). Never faked. ADR-0051.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Readiness status" },
+          "400": { "description": "No tenant context" }
+        }
+      }
+    },
+    "/api/org/webhooks/:id": {
+      "patch": {
+        "summary": "Update a tenant webhook subscription",
+        "operationId": "updateOrgWebhook",
+        "description": "Updates url/events/enabled (audit-first). Never returns the secret. ADR-0051.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Updated subscription" },
+          "400": { "description": "Validation error or no tenant context" },
+          "404": { "description": "Webhook not found" }
+        }
+      },
+      "delete": {
+        "summary": "Delete a tenant webhook subscription",
+        "operationId": "deleteOrgWebhook",
+        "description": "Deletes the subscription (audit-first). ADR-0051.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "204": { "description": "Deleted" },
+          "400": { "description": "Validation error or no tenant context" },
+          "404": { "description": "Webhook not found" }
+        }
+      }
+    },
+    "/api/org/webhooks/:id/rotate-secret": {
+      "post": {
+        "summary": "Rotate a webhook signing secret",
+        "operationId": "rotateOrgWebhookSecret",
+        "description": "Generates a new signing secret (audit-first) and returns it ONCE. ADR-0051.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "New secret revealed once" },
+          "404": { "description": "Webhook not found" }
+        }
+      }
+    },
+    "/api/org/webhooks/:id/test": {
+      "post": {
+        "summary": "Send a test event to a webhook",
+        "operationId": "testOrgWebhook",
+        "description": "Dispatches a signed platform.test event (single immediate attempt; audit-first; recorded in the delivery log). Classified result; never exposes the secret. ADR-0051.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Classified test result" },
+          "404": { "description": "Webhook not found" }
+        }
+      }
+    },
+    "/api/org/webhooks/:id/deliveries": {
+      "get": {
+        "summary": "List recent webhook deliveries",
+        "operationId": "listOrgWebhookDeliveries",
+        "description": "Lists the most recent delivery attempts for a subscription. ADR-0051.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Delivery list" },
+          "404": { "description": "Webhook not found" }
+        }
+      }
+    },
     "/api/org/readiness": {
       "get": {
         "summary": "Tenant control-plane readiness + capability map",

@@ -25,6 +25,8 @@ import {
   CreateIdpRequestSchema,
   UpdateIdpRequestSchema,
   CreateTenantDomainRequestSchema,
+  CreateWebhookSubscriptionRequestSchema,
+  UpdateWebhookSubscriptionRequestSchema,
   type TenantAuthProvidersConfig,
 } from "@platform/contracts-admin";
 import {
@@ -251,6 +253,25 @@ function buildObservabilityPort(timeoutMs = 2000): ObservabilityProbePort {
           setTimeout(() => reject(new Error("loki probe timeout")), timeoutMs)
         ),
       ]),
+  };
+}
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/** Extract the `:id` segment after `/api/org/webhooks/` from the request path (ADR-0051). */
+function webhookIdFromPath(rawUrl: string | undefined): string | null {
+  const segments = new URL(rawUrl ?? "", "http://localhost").pathname.split("/");
+  const i = segments.indexOf("webhooks");
+  const id = i >= 0 ? (segments[i + 1] ?? "") : "";
+  return UUID_RE.test(id) ? id : null;
+}
+
+// Build the webhook usecase deps (store + audit). The dispatcher is added per-call.
+async function buildWebhookDeps() {
+  const { PostgresWebhookStore } = await import("../adapters/postgres-webhook-store.ts");
+  return {
+    store: new PostgresWebhookStore(getApplicationPool()),
+    audit: createPostgresAuditEventPort(getApplicationPool()),
   };
 }
 
@@ -2591,6 +2612,12 @@ export const routes: Route[] = [
         })
       ).status;
 
+      // Signal 8: webhooks readiness (ADR-0051) — cheap subscription-count check.
+      const { getWebhookReadiness } = await import("../usecases/webhooks.ts");
+      const { store: webhookStore } = await buildWebhookDeps();
+      const webhooksReadiness = (await getWebhookReadiness(tenantCtx.organisationId, webhookStore))
+        .status;
+
       res.json(
         200,
         buildTenantReadiness({
@@ -2601,6 +2628,7 @@ export const routes: Route[] = [
           domainReadiness,
           storageReadiness,
           observabilityReadiness,
+          webhooksReadiness,
         })
       );
     },
@@ -3029,6 +3057,292 @@ export const routes: Route[] = [
         port: buildObservabilityPort(),
       });
       res.json(200, readiness);
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Integrations / outbound webhooks (ADR-0051 / ADR-ACT-0221).
+  // Tenant-scoped subscriptions + delivery log. The signing secret is reveal-once
+  // (create + rotate) and otherwise write-only; payloads are HMAC-SHA-256 signed with
+  // a replay timestamp. Tenant authority is FQDN/session; the body has no tenant id.
+  // The async retry worker is deferred — a test is a single immediate attempt logged.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/org/webhooks",
+    operationName: "org.webhooks.list",
+    requiresAuth: true,
+    requiredPermission: "tenant.webhooks.read",
+    resource: "admin:webhooks",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { listWebhooks } = await import("../usecases/webhooks.ts");
+      const { store } = await buildWebhookDeps();
+      res.json(200, { subscriptions: await listWebhooks(tenantCtx.organisationId, store) });
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/org/webhooks/readiness",
+    operationName: "org.webhooks.readiness",
+    requiresAuth: true,
+    requiredPermission: "tenant.webhooks.read",
+    resource: "admin:webhooks",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { getWebhookReadiness } = await import("../usecases/webhooks.ts");
+      const { store } = await buildWebhookDeps();
+      res.json(200, await getWebhookReadiness(tenantCtx.organisationId, store));
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/org/webhooks",
+    operationName: "org.webhooks.create",
+    requiresAuth: true,
+    requiredPermission: "tenant.webhooks.write",
+    resource: "admin:webhooks",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const parsed = CreateWebhookSubscriptionRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid webhook",
+        });
+        return;
+      }
+      const { createWebhook } = await import("../usecases/webhooks.ts");
+      const result = await createWebhook(
+        {
+          organisationId: tenantCtx.organisationId,
+          data: parsed.data,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildWebhookDeps()
+      );
+      res.json(201, result);
+    },
+  },
+  {
+    method: "PATCH",
+    path: "/api/org/webhooks/:id",
+    operationName: "org.webhooks.update",
+    requiresAuth: true,
+    requiredPermission: "tenant.webhooks.write",
+    resource: "admin:webhooks",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const id = webhookIdFromPath(req.raw.url);
+      if (!id) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "invalid webhook id" });
+        return;
+      }
+      const parsed = UpdateWebhookSubscriptionRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid webhook",
+        });
+        return;
+      }
+      const { updateWebhook } = await import("../usecases/webhooks.ts");
+      const result = await updateWebhook(
+        {
+          organisationId: tenantCtx.organisationId,
+          id,
+          data: parsed.data,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildWebhookDeps()
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Webhook not found" });
+        return;
+      }
+      res.json(200, result.subscription);
+    },
+  },
+  {
+    method: "DELETE",
+    path: "/api/org/webhooks/:id",
+    operationName: "org.webhooks.delete",
+    requiresAuth: true,
+    requiredPermission: "tenant.webhooks.write",
+    resource: "admin:webhooks",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const id = webhookIdFromPath(req.raw.url);
+      if (!id) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "invalid webhook id" });
+        return;
+      }
+      const { deleteWebhook } = await import("../usecases/webhooks.ts");
+      const result = await deleteWebhook(
+        {
+          organisationId: tenantCtx.organisationId,
+          id,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildWebhookDeps()
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Webhook not found" });
+        return;
+      }
+      res.json(204, null);
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/org/webhooks/:id/rotate-secret",
+    operationName: "org.webhooks.rotateSecret",
+    requiresAuth: true,
+    requiredPermission: "tenant.webhooks.write",
+    resource: "admin:webhooks",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const id = webhookIdFromPath(req.raw.url);
+      if (!id) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "invalid webhook id" });
+        return;
+      }
+      const { rotateWebhookSecret } = await import("../usecases/webhooks.ts");
+      const result = await rotateWebhookSecret(
+        {
+          organisationId: tenantCtx.organisationId,
+          id,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildWebhookDeps()
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Webhook not found" });
+        return;
+      }
+      res.json(200, { id, secret: result.secret });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/org/webhooks/:id/test",
+    operationName: "org.webhooks.test",
+    requiresAuth: true,
+    requiredPermission: "tenant.webhooks.write",
+    resource: "admin:webhooks",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const id = webhookIdFromPath(req.raw.url);
+      if (!id) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "invalid webhook id" });
+        return;
+      }
+      const { testWebhook } = await import("../usecases/webhooks.ts");
+      const { HttpWebhookDispatcher } = await import("../adapters/http-webhook-dispatcher.ts");
+      const result = await testWebhook(
+        {
+          organisationId: tenantCtx.organisationId,
+          id,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        { ...(await buildWebhookDeps()), dispatch: new HttpWebhookDispatcher() }
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Webhook not found" });
+        return;
+      }
+      res.json(200, result.result);
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/org/webhooks/:id/deliveries",
+    operationName: "org.webhooks.deliveries",
+    requiresAuth: true,
+    requiredPermission: "tenant.webhooks.read",
+    resource: "admin:webhooks",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const id = webhookIdFromPath(req.raw.url);
+      if (!id) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "invalid webhook id" });
+        return;
+      }
+      const { listWebhookDeliveries } = await import("../usecases/webhooks.ts");
+      const { store } = await buildWebhookDeps();
+      const result = await listWebhookDeliveries(tenantCtx.organisationId, id, store);
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Webhook not found" });
+        return;
+      }
+      res.json(200, { deliveries: result.deliveries });
     },
   },
   // ---------------------------------------------------------------------------
