@@ -12,9 +12,10 @@ can be closed in this pass:
 - `oidc_group_role_mapping` — **partial** (configured, not login-exercised)
 - `oidc_login_simulation` — **deferred** (no honest repeatable proof)
 
-**Outcome of this pass: the gap is NARROWED and documented, NOT closed.** No status is
-upgraded; `oidc_login_simulation` stays `deferred` and the two mapping capabilities stay
-`partial`. ADR-ACT-0220 is recorded as **Deferred** (not Done) — readiness is never faked.
+**Outcome: the gap is documented and BLOCKED on an external dependency (real IdP
+configuration), NOT closed.** No status is upgraded; `oidc_login_simulation` stays
+`deferred` and the two mapping capabilities stay `partial`. ADR-ACT-0220 is recorded as
+**Blocked** (not Done) — mock-oidc cannot prove tenant-OIDC mapping; readiness is never faked.
 
 ## What IS proven today
 
@@ -45,49 +46,51 @@ actor/session carries the expected mapped claims and tenant roles**. Until that 
 
 - `oidc_claim_mapping` and `oidc_group_role_mapping` remain **partial** — configured and
   unit-verified, but not login-exercised.
-- `oidc_login_simulation` remains **deferred** — there is no honest, repeatable
-  browser/auth proof of the tenant-OIDC mapping outcome. Unit/MSW evidence must not be used
-  to claim login simulation.
+- `oidc_login_simulation` remains **deferred / blocked** — there is no honest, repeatable
+  browser/auth proof of the tenant-OIDC mapping outcome, and one cannot be built in the
+  current environment (see below). Unit/MSW evidence must not be used to claim it.
 
-## Why it is not closed in this pass
+## Why it is BLOCKED (not merely "not done yet")
 
-A faithful proof requires standing up, repeatably and with teardown:
+The local stack brokers the **mock-oidc** fixture (mock-google/azure/apple) as Keycloak
+IdPs for `broker-login.spec.ts`. Mock-oidc is a login-flow fixture: it proves the brokered
+login *mechanism*, but it is **not** a real upstream OIDC provider issuing tenant-controlled
+claims/groups through the ADR-0046 tenant-IdP discovery + mapping path. There is therefore
+no way to honestly prove that a tenant-configured OIDC IdP's claim/group mappers produce the
+expected mapped platform session **until real IdPs are configured** for the environment.
 
-1. a fixture tenant OIDC IdP registered through the ADR-0046 discovery flow, pointed at the
-   `mock-oidc` fixture as the upstream;
-2. claim mappers (e.g. `email`, a custom attribute) and group/role mappers (group → an
-   allowlisted tenant role) applied via `PATCH .../idps/:alias/mapping`;
-3. mock-oidc fixture users whose tokens carry those claims/groups;
-4. a browser-driven brokered login through Keycloak (extending the
-   `playwright.identity.config.ts` real-auth harness used by `broker-login.spec.ts`);
-5. assertions that the resulting BFF session/actor carries the mapped claims and the mapped
-   tenant role — then full IdP/user/mapper teardown.
+This is an **external prerequisite**, not a harness we can write around: pointing the
+ADR-0046 tenant-IdP flow at mock-oidc would not exercise real claim/group mapping, so any
+"proof" built on it would be misleading. Per the no-fake-readiness rule we leave it blocked.
 
-This is a multi-component, fixture-heavy harness (Keycloak broker + mock-oidc fixture
-identities + tenant-IdP mapper provisioning + browser assertions) whose correctness is
-security-sensitive. Standing it up reliably is its own focused slice; doing it hastily would
-risk a flaky or misleading "proof", which would violate the honesty rule. It is therefore
-deferred with the prerequisites above rather than faked.
+## Exact next step to close it (once real IdPs exist)
 
-## Exact next step to close it
+Prerequisite (external): configure ≥1 **real** OIDC IdP (e.g. a real Entra/Okta/Google
+tenant, or a self-hosted real OIDC provider that is not the mock fixture) reachable by the
+environment, with test identities carrying known claims/groups.
 
-Add `npm run proof:auth-oidc-login-simulation` (or an `e2e/identity/oidc-tenant-mapping.spec.ts`
-under the identity harness) implementing steps 1–5 above. Only when that proof is repeatable:
+Then add `npm run proof:auth-oidc-login-simulation` (or `e2e/identity/oidc-tenant-mapping.spec.ts`):
+register the IdP via the ADR-0046 discovery flow, apply claim + group/role mappers via
+`PATCH .../idps/:alias/mapping`, drive a real brokered login, assert the resulting BFF
+session/actor carries the mapped claims + tenant role, then tear down. Only when that proof
+is repeatable:
 
 - upgrade `oidc_claim_mapping` → implemented (login-proven),
 - upgrade `oidc_group_role_mapping` → implemented (login-proven),
 - upgrade `oidc_login_simulation` → implemented,
 
-and mark a new ACTION-REGISTER row Done with this evidence file updated to show the executed
-proof output. Not before.
+and mark a new ACTION-REGISTER row Done with this evidence file showing the executed proof.
+Not before.
 
 ## Capability map
 
 Unchanged — already honest: `oidc_claim_mapping` / `oidc_group_role_mapping` = `partial`
 (readiness `deferred`); `oidc_login_simulation` = `deferred` (readiness `deferred`). Pinned by
 the never-fake-readiness guard in `apps/platform-api/tests/unit/capability-registry.test.ts`.
+The deferral reason is the real-IdP blocker above, not incomplete implementation.
 
 ## ACTION-REGISTER linkage
 
-ADR-ACT-0220 (Source ADR-0046), status **Deferred** — mapping login-exercise + login
-simulation remain open with the prerequisites above. Evidence: this file.
+ADR-ACT-0220 (Source ADR-0046), status **Blocked** — blocked on an external dependency
+(real IdP configuration); mock-oidc cannot substitute. Mapping login-exercise + login
+simulation remain open with the prerequisite above. Evidence: this file.
