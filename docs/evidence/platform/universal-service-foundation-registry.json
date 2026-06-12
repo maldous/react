@@ -1593,6 +1593,10 @@
     "requiredUiPrecedence": [
       { "capability": "search-indexing", "truth": "search indexing precedes product search UI" }
     ],
+    "phaseGates": {
+      "$comment": "A phase's planned capabilities may not advance to a delivered-ish status until its gating ADRs are Accepted or implementation-ready. Enforced by validate-universal-foundation (ADR-ACT-0253).",
+      "phase-1": { "requiresAdrsReady": ["ADR-0055", "ADR-0058"] }
+    },
     "dependencies": [
       { "capability": "usf-scope-boundary", "phase": "phase-0", "track": "planning", "dependsOn": [], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": true, "riskIfDelayed": "Without a scope boundary the foundation drifts into fake readiness and scope creep." },
       { "capability": "build-vs-compose-framework", "phase": "phase-0", "track": "planning", "dependsOn": ["usf-scope-boundary"], "parallelWith": ["environment-service-classification"], "mustPrecedeUi": false, "mustPrecedeCompose": true, "riskIfDelayed": "Build/compose decisions made ad hoc; accidental rewrites of mature capabilities." },
@@ -1621,7 +1625,7 @@
       { "capability": "data-governance-catalog-lineage-pii-dsr", "phase": "phase-8", "track": "planned", "dependsOn": ["service-catalog-provider-model", "workflow-engine-scheduled-jobs", "import-export"], "parallelWith": ["pitr-retention-legalhold-residency"], "mustPrecedeUi": true, "mustPrecedeCompose": true, "riskIfDelayed": "No DSR/GDPR; tenant deletion unsafe; compliance gap." },
       { "capability": "compliance-evidence-access-reviews", "phase": "phase-8", "track": "planned", "dependsOn": ["privileged-access-audit"], "parallelWith": [], "mustPrecedeUi": true, "mustPrecedeCompose": false, "riskIfDelayed": "No access reviews or compliance evidence packs." },
       { "capability": "tenant-lifecycle-suspend-delete-export", "phase": "phase-8", "track": "planned", "dependsOn": ["backup-restore", "data-governance-catalog-lineage-pii-dsr", "import-export"], "parallelWith": [], "mustPrecedeUi": true, "mustPrecedeCompose": false, "riskIfDelayed": "No safe suspend/delete; compliance and offboarding risk." },
-      { "capability": "runtime-secrets", "phase": "phase-8", "track": "planned", "dependsOn": ["secret-setting-writeonly"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": true, "riskIfDelayed": "Secrets remain env/db only; no central rotation or audit; LocalStack secretsmanager is mock-only." },
+      { "capability": "runtime-secrets", "phase": "phase-8", "track": "planned", "dependsOn": ["secret-setting-writeonly", "service-catalog-provider-model"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": true, "riskIfDelayed": "Secrets remain env/db only; no central rotation or audit; LocalStack secretsmanager is mock-only." },
       { "capability": "product-catalog-plans-prices", "phase": "phase-9", "track": "planned", "dependsOn": ["entitlements", "metering-usage-meters"], "parallelWith": [], "mustPrecedeUi": true, "mustPrecedeCompose": true, "riskIfDelayed": "No sellable catalog; monetization blocked." },
       { "capability": "subscriptions-invoices-payments", "phase": "phase-9", "track": "planned", "dependsOn": ["product-catalog-plans-prices", "quota-enforcement", "workflow-engine-scheduled-jobs"], "parallelWith": [], "mustPrecedeUi": true, "mustPrecedeCompose": true, "riskIfDelayed": "No monetization. Payment capture is the only production-external paid dependency and cannot be proven locally end-to-end." },
       { "capability": "object-storage", "phase": "phase-10", "track": "planned", "dependsOn": ["quota-enforcement"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "Storage stays readiness-only; no file product, quotas, lifecycle, AV scan, or legal hold." },

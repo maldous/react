@@ -109,6 +109,17 @@ export function adrStatus(repoRoot, num) {
   return m ? m[1].trim() : "";
 }
 
+// An ADR is ready to back implementation if it is Accepted or explicitly marked implementation-ready.
+export function adrImplementationReady(repoRoot, ref) {
+  const num = /(\d{4})/.exec(`${ref}`)?.[1];
+  if (!num) return false;
+  const status = adrStatus(repoRoot, num);
+  return /accepted/i.test(status) || /implementation-ready/i.test(status);
+}
+
+// Capability statuses that represent concrete delivery progress (i.e. "implementation started").
+const ADVANCED_STATUSES = new Set(["delivered", "locally proven", "ui-only", "compose-only"]);
+
 // Tokens matching a path prefix (e.g. /api/, /admin/), trimmed of trailing wildcards/punctuation.
 function pathTokens(value, prefix) {
   const re = new RegExp(`${prefix.replace(/\//g, "\\/")}[a-z0-9/_-]+`, "g");
@@ -373,19 +384,106 @@ export function validate(repoRoot = REPO_ROOT) {
     }
   }
 
-  // Non-failing reports: ADR maturity. These ADRs set direction but are not yet Accepted.
-  const proposedAdrs = [...referencedAdrs]
-    .sort((a, b) => a - b)
-    .filter((n) => /^proposed/i.test(adrStatus(repoRoot, String(n).padStart(4, "0"))));
-  if (proposedAdrs.length) {
+  // 14-17. Phase-gate + dependency-consistency honesty checks (ADR-ACT-0253). These need capability
+  // metadata (domain/decision/status) + ADR readiness, so they live here rather than in validateDelivery.
+  const delivery = reg.delivery ?? {};
+  const byCap = new Map((delivery.dependencies ?? []).map((d) => [d.capability, d]));
+  const statusOf = new Map(reg.capabilities.map((c) => [c.capability, c.status]));
+  const decisionOf = new Map(reg.capabilities.map((c) => [c.capability, c.decision]));
+  const domainOf = new Map(reg.capabilities.map((c) => [c.capability, c.domain]));
+  const reaches = (from, target, seen = new Set()) => {
+    for (const t of byCap.get(from)?.dependsOn ?? []) {
+      if (t === target) return true;
+      if (!seen.has(t)) {
+        seen.add(t);
+        if (reaches(t, target, seen)) return true;
+      }
+    }
+    return false;
+  };
+
+  // 14. Phase gates: a phase's planned capabilities may not advance to a delivered-ish status until
+  //     its gating ADRs are Accepted / implementation-ready.
+  for (const [phase, gate] of Object.entries(delivery.phaseGates ?? {})) {
+    if (phase.startsWith("$")) continue;
+    const required = gate.requiresAdrsReady ?? [];
+    const notReady = required.filter((a) => !adrImplementationReady(repoRoot, a));
+    const advanced = (delivery.dependencies ?? []).filter(
+      (d) =>
+        d.phase === phase &&
+        d.track === "planned" &&
+        ADVANCED_STATUSES.has(statusOf.get(d.capability))
+    );
+    if (advanced.length && notReady.length)
+      problems.push(
+        `delivery: ${phase} has advanced capabilities (${advanced
+          .map((d) => d.capability)
+          .join(
+            ", "
+          )}) but gating ADR(s) ${notReady.join(", ")} are not Accepted/implementation-ready`
+      );
+    else if (notReady.length)
+      warnings.push(
+        `${phase} is gated on ${required.join(", ")}; not yet ready: ${notReady.join(
+          ", "
+        )}. Implementation must not start until these are Accepted or implementation-ready.`
+      );
+  }
+
+  // 15. Entitlement consistency: every billing/entitlement capability (except entitlements itself)
+  //     must reference `entitlements` in the delivery graph.
+  for (const cap of reg.capabilities) {
+    if (
+      domainOf.get(cap.capability) === "billing-entitlements" &&
+      cap.capability !== "entitlements" &&
+      byCap.has(cap.capability) &&
+      !reaches(cap.capability, "entitlements")
+    )
+      problems.push(
+        `delivery: entitlement-gated capability ${cap.capability} does not depend on \`entitlements\``
+      );
+  }
+
+  // 16. Provider consistency: every compose/adapter capability must reference the service catalog.
+  for (const cap of reg.capabilities) {
+    if (
+      ["compose", "adapter"].includes(decisionOf.get(cap.capability)) &&
+      cap.capability !== "service-catalog-provider-model" &&
+      byCap.has(cap.capability) &&
+      !reaches(cap.capability, "service-catalog-provider-model")
+    )
+      problems.push(
+        `delivery: provider-backed capability ${cap.capability} does not depend on \`service-catalog-provider-model\``
+      );
+  }
+
+  // 17. Quota honesty: quota enforcement is Phase 2 — it must not be claimed delivered before then.
+  if (isDeliveredish({ status: statusOf.get("quota-enforcement") }))
+    problems.push(
+      "delivery: quota-enforcement claims a delivered status, but quota enforcement is Phase 2 (only a Phase-1 hook is permitted)"
+    );
+
+  // Non-failing reports: ADR maturity. Separate not-yet-ready from implementation-ready.
+  const refs = [...referencedAdrs].sort((a, b) => a - b).map((n) => String(n).padStart(4, "0"));
+  const proposedNotReady = refs.filter(
+    (n) =>
+      /^proposed/i.test(adrStatus(repoRoot, n)) && !adrImplementationReady(repoRoot, `ADR-${n}`)
+  );
+  const ready = refs.filter((n) => adrImplementationReady(repoRoot, `ADR-${n}`));
+  if (proposedNotReady.length)
     warnings.push(
-      `${proposedAdrs.length} referenced ADR(s) are still Proposed (not Accepted): ${proposedAdrs
-        .map((n) => `ADR-${String(n).padStart(4, "0")}`)
+      `${proposedNotReady.length} referenced ADR(s) are still Proposed and not implementation-ready: ${proposedNotReady
+        .map((n) => `ADR-${n}`)
         .join(
           ", "
-        )}. Capabilities behind a Proposed ADR are not implementation-ready until the ADR is hardened and Accepted.`
+        )}. Capabilities behind these are not implementation-ready until the ADR is hardened.`
     );
-  }
+  if (ready.length)
+    warnings.push(
+      `${ready.length} referenced ADR(s) are Accepted or implementation-ready: ${ready
+        .map((n) => `ADR-${n}`)
+        .join(", ")}.`
+    );
 
   return {
     ok: problems.length === 0,

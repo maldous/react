@@ -2,7 +2,13 @@ import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { loadRegistry, validate, renderTables, validateDelivery } from "../src/index.mjs";
+import {
+  loadRegistry,
+  validate,
+  renderTables,
+  validateDelivery,
+  adrImplementationReady,
+} from "../src/index.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "../../../..");
@@ -39,6 +45,45 @@ describe("universal-service-foundation registry", () => {
     const keys = new Set(reg.capabilities.map((c) => c.capability));
     const problems = validateDelivery(reg.delivery, keys);
     assert.deepEqual(problems, [], `delivery problems:\n${problems.join("\n")}`);
+  });
+
+  it("Phase-1 gating ADRs (0055, 0058) are Accepted or implementation-ready", () => {
+    assert.equal(adrImplementationReady(REPO_ROOT, "ADR-0055"), true);
+    assert.equal(adrImplementationReady(REPO_ROOT, "ADR-0058"), true);
+  });
+
+  it("a still-Proposed, un-hardened USF ADR is not implementation-ready", () => {
+    // ADR-0057 (billing) is deliberately left Proposed and not yet hardened.
+    assert.equal(adrImplementationReady(REPO_ROOT, "ADR-0057"), false);
+  });
+
+  it("every billing/entitlement capability depends on `entitlements` (except itself)", () => {
+    const reg = loadRegistry(REPO_ROOT);
+    const byCap = new Map(reg.delivery.dependencies.map((d) => [d.capability, d]));
+    const reaches = (f, t, s = new Set()) => {
+      for (const x of byCap.get(f)?.dependsOn ?? []) {
+        if (x === t) return true;
+        if (!s.has(x)) {
+          s.add(x);
+          if (reaches(x, t, s)) return true;
+        }
+      }
+      return false;
+    };
+    for (const c of reg.capabilities) {
+      if (c.domain === "billing-entitlements" && c.capability !== "entitlements") {
+        assert.ok(
+          reaches(c.capability, "entitlements"),
+          `${c.capability} must depend on entitlements`
+        );
+      }
+    }
+  });
+
+  it("quota-enforcement is not claimed delivered before Phase 2", () => {
+    const reg = loadRegistry(REPO_ROOT);
+    const q = reg.capabilities.find((c) => c.capability === "quota-enforcement");
+    assert.ok(!["delivered", "locally proven"].includes(q.status), "quota enforcement is Phase 2");
   });
 });
 
