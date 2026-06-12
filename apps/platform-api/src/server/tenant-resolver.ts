@@ -28,9 +28,13 @@ export interface TenantContext {
  * Returns null for the super-global root (aldous.info) or non-matching hosts.
  */
 export function extractSlugFromHost(host: string, apexDomain = APEX_DOMAIN): string | null {
-  if (!host.endsWith(`.${apexDomain}`) && host !== apexDomain) return null;
-  if (host === apexDomain) return null;
-  const slug = host.slice(0, host.length - apexDomain.length - 1);
+  // Strip any port (e.g. `{slug}.test.localhost:8081` in local/test on a non-standard
+  // port) before matching — consistent with isGlobalHost. Production (:80/:443 via
+  // Cloudflare) sends no port, so this is a no-op there. ADR-ACT-0225.
+  const bare = host.split(":")[0] ?? host;
+  if (!bare.endsWith(`.${apexDomain}`) && bare !== apexDomain) return null;
+  if (bare === apexDomain) return null;
+  const slug = bare.slice(0, bare.length - apexDomain.length - 1);
   if (isSlugReserved(slug)) return null;
   return slug.length > 0 && /^[a-z0-9-]+$/.test(slug) ? slug : null;
 }

@@ -57,13 +57,17 @@ export function mapDomainRows(rows: readonly DomainChallengeRow[]): TenantDomain
     const representative = verifiedConsumed ?? verified ?? domainRows[0]!;
 
     const isVerified = !!representative.verified_at;
-    const isLive = !!verifiedConsumed;
 
     summaries.push({
       domain,
       status: isVerified ? "verified" : "pending_dns",
-      tls: "tls_unknown", // not checked this pass — never claimed
-      routing: isLive ? "routing_active" : "routing_unknown",
+      // TLS is not checked here; the local web Caddy is HTTP-only (Cloudflare terminates
+      // public TLS), so neither tls_local_ready nor tls_ready is claimed from DB state.
+      tls: "tls_unknown",
+      // Routing is NOT inferred from DB state: being added to the auth client
+      // (consumed) is not proof that traffic routes. routing_local_active is proven only
+      // by proof:tenant-domains-routing; routing_active (public) stays deferred (ADR-ACT-0225).
+      routing: "routing_unknown",
       txtRecord: txtRecordFor(domain),
       createdAt: iso(representative.created_at),
       verifiedAt: iso(representative.verified_at),
@@ -88,6 +92,26 @@ export function computeDomainReadiness(
   else if (verified > 0) status = "verified";
   else status = "pending_verification";
   return { status, total, verified, pending };
+}
+
+/** A local-routing probe outcome (ADR-ACT-0225): did the tenant FQDN reach the right
+ * tenant context through the local reverse proxy? */
+export interface LocalRoutingProbe {
+  /** The local proxy (Caddy) returned an HTTP response for the tenant FQDN. */
+  reachable: boolean;
+  /** The response reflected the EXPECTED tenant context (not the apex / another tenant). */
+  tenantContextMatched: boolean;
+}
+
+/**
+ * Pure: classify a local-routing probe. `routing_local_active` ONLY when the proxy is
+ * reachable AND the response proved the correct tenant context; otherwise
+ * `routing_unknown`. Public `routing_active` is never inferred locally (ADR-ACT-0225).
+ */
+export function classifyLocalRouting(
+  p: LocalRoutingProbe
+): import("@platform/contracts-admin").TenantDomainRoutingStatus {
+  return p.reachable && p.tenantContextMatched ? "routing_local_active" : "routing_unknown";
 }
 
 async function loadDomainRows(

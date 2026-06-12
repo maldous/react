@@ -8,8 +8,10 @@ import assert from "node:assert/strict";
 import {
   mapDomainRows,
   computeDomainReadiness,
+  classifyLocalRouting,
   type DomainChallengeRow,
 } from "../../src/usecases/tenant-domains.ts";
+import { extractSlugFromHost } from "../../src/server/tenant-resolver.ts";
 
 const T0 = new Date("2026-06-01T00:00:00.000Z");
 const T1 = new Date("2026-06-02T00:00:00.000Z");
@@ -42,10 +44,12 @@ describe("mapDomainRows (ADR-0048)", () => {
     assert.equal(d?.verifiedAt, T1.toISOString());
   });
 
-  it("a verified + consumed challenge is verified and routing_active (added to auth client)", () => {
+  it("a verified + consumed challenge is verified; routing stays unknown (ADR-ACT-0225)", () => {
+    // Being added to the auth client (consumed) is NOT proof that traffic routes;
+    // routing_active (public) is never inferred from DB state.
     const [d] = mapDomainRows([row({ domain: "app.acme.test", verified_at: T1, consumed_at: T1 })]);
     assert.equal(d?.status, "verified");
-    assert.equal(d?.routing, "routing_active");
+    assert.equal(d?.routing, "routing_unknown");
   });
 
   it("never claims TLS readiness — always tls_unknown", () => {
@@ -65,7 +69,7 @@ describe("mapDomainRows (ADR-0048)", () => {
     const mapped = mapDomainRows(rows);
     assert.equal(mapped.length, 1);
     assert.equal(mapped[0]?.status, "verified");
-    assert.equal(mapped[0]?.routing, "routing_active");
+    assert.equal(mapped[0]?.routing, "routing_unknown");
   });
 
   it("returns one stable, alphabetically-ordered entry per domain", () => {
@@ -109,5 +113,35 @@ describe("computeDomainReadiness (ADR-0048)", () => {
     assert.equal(r.total, 2);
     assert.equal(r.verified, 1);
     assert.equal(r.pending, 1);
+  });
+});
+
+describe("classifyLocalRouting (ADR-ACT-0225)", () => {
+  it("routing_local_active only when reachable AND tenant context matched", () => {
+    assert.equal(
+      classifyLocalRouting({ reachable: true, tenantContextMatched: true }),
+      "routing_local_active"
+    );
+  });
+  it("routing_unknown when unreachable or the wrong/absent tenant context", () => {
+    assert.equal(
+      classifyLocalRouting({ reachable: false, tenantContextMatched: false }),
+      "routing_unknown"
+    );
+    assert.equal(
+      classifyLocalRouting({ reachable: true, tenantContextMatched: false }),
+      "routing_unknown"
+    );
+  });
+});
+
+describe("extractSlugFromHost — port handling (ADR-ACT-0225)", () => {
+  it("strips a :port before matching the apex (local/test on non-standard ports)", () => {
+    assert.equal(extractSlugFromHost("acme.test.localhost:8081", "test.localhost"), "acme");
+    assert.equal(extractSlugFromHost("acme.aldous.info", "aldous.info"), "acme");
+  });
+  it("returns null for the apex itself (with or without port) and unknown apex", () => {
+    assert.equal(extractSlugFromHost("test.localhost:8081", "test.localhost"), null);
+    assert.equal(extractSlugFromHost("evil.example.com:8081", "test.localhost"), null);
   });
 });

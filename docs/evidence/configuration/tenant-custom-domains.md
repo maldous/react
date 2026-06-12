@@ -103,13 +103,53 @@ PASS  proof challenge rows cleaned up
 signal `domainReadiness` gathered in `GET /api/org/readiness`). Optional → never blocks
 overall readiness.
 
+## Local routing proof (ADR-ACT-0225)
+
+Local tenant-FQDN routing through the **web-profile Caddy** is now live-proven.
+
+- Status vocabulary (honest, local vs public): routing `routing_unknown` /
+  `routing_local_active` (local proxy proven) / `routing_active` (public, deferred);
+  tls `tls_unknown` / `tls_local_ready` / `tls_ready` (both deferred — see below).
+- **Resolver fix:** `extractSlugFromHost` now strips a `:port` from the Host (it
+  previously matched only port-less hosts, so tenant resolution silently fell back to
+  apex on non-standard local/test ports like `:8081`). Production (`:80`/`:443` via
+  Cloudflare, no port) is unaffected. Unit-tested.
+- `mapDomainRows` no longer infers `routing_active` from auth-client membership
+  (consumed) — that is not proof traffic routes. The DB-derived `routing` is always
+  `routing_unknown`; `routing_local_active` is established only by the live proof.
+
+Runtime proof — `npm run proof:tenant-domains-routing` (requires
+`make compose-up-web ENV=test`; SKIPs honestly if the local Caddy is down). It seeds a
+temp tenant + per-tenant schema + a UNIQUE theme marker, creates + DNS-TXT-verifies a
+domain challenge for the tenant FQDN, then GETs the tenant FQDN `/api/theme` THROUGH
+Caddy and asserts the unique marker is returned (apex returns the default):
+
+```text
+# Tenant domains local routing runtime proof
+
+PASS  local Caddy reachable @ http://test.localhost:8081
+PASS  seeded temp tenant + schema + unique theme marker — routing-proof-….test.localhost
+PASS  domain ownership verified via DNS-TXT (existing proof path)
+PASS  tenant FQDN routed to the CORRECT tenant context through local Caddy — tenant=ROUTING-PROOF-… apex=Enterprise Platform
+PASS  classified routing_local_active (local routing proven)
+PASS  tls stays tls_unknown locally (no local Caddy TLS to claim tls_local_ready)
+INFO  public routing_active + public tls_ready remain DEFERRED — not provable locally
+
+# ALL CHECKS PASSED
+```
+
+- **TLS:** the web-profile Caddy listens on `:80` (HTTP) — Cloudflare terminates public
+  TLS in production. There is no local Caddy internal-CA TLS to exercise, so
+  `tls_local_ready` is **not** claimed and `tls` stays `tls_unknown` locally.
+
 ## Known deferrals
 
-- TLS-issuance readiness probe — not implemented; `tls` is always `tls_unknown`.
-- Live end-to-end routing / canonical-domain cutover verification — `routing_active`
-  means "added to the tenant auth client", not "traffic flows".
-- DNS-provider automation — out of scope; verification is manual TXT publication.
-- Live public-DNS resolution proof — needs a controllable public domain.
+- **Public** `routing_active` + `tls_ready` — public DNS, Cloudflare TLS issuance, and
+  canonical-domain cutover; not provable locally.
+- **Custom (vanity) domain** local routing through Caddy — the web Caddy wildcards match
+  `*.{apex}` (tenant slug FQDNs), not arbitrary customer domains; a custom domain would
+  need an explicit Caddy route + hosts entry (production cutover territory).
+- TLS-issuance readiness probe and DNS-provider automation — out of scope.
 
 ## No-secret guarantee
 
@@ -119,9 +159,11 @@ existing `PostgresTenantCredentialStore` and never returned, logged, or printed.
 
 ## No-fake-readiness guarantee
 
-`verified` requires a real DNS-TXT match; `routing_active` requires a persisted
-add-to-auth-client fact; `tls` is never reported ready. Asserted by
-`tenant-domains.test.ts` and `capability-registry.test.ts`.
+`verified` requires a real DNS-TXT match; `routing_local_active` requires a live proof
+that the tenant FQDN reaches the correct tenant context through the local proxy; public
+`routing_active` / `tls_ready` and `tls_local_ready` are never claimed without a real
+check (none exists locally). Asserted by `tenant-domains.test.ts`,
+`capability-registry.test.ts`, and `proof:tenant-domains-routing`.
 
 ## ACTION-REGISTER linkage
 

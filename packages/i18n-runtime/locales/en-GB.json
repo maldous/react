@@ -325,11 +325,13 @@
         },
         "tls": {
           "tls_unknown": "Not checked",
-          "tls_ready": "Ready"
+          "tls_local_ready": "Local TLS ready",
+          "tls_ready": "Ready (public)"
         },
         "routing": {
           "routing_unknown": "Not active",
-          "routing_active": "Active"
+          "routing_local_active": "Local routing active",
+          "routing_active": "Active (public)"
         },
         "readinessHeading": "Custom domain status",
         "readiness": {

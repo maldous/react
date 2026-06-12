@@ -551,13 +551,28 @@ export const TENANT_DOMAIN_STATUSES = [
 export const TenantDomainStatusSchema = z.enum(TENANT_DOMAIN_STATUSES);
 export type TenantDomainStatus = z.infer<typeof TenantDomainStatusSchema>;
 
-/** TLS readiness — never claimed without a real check; deferred this pass. */
-export const TENANT_DOMAIN_TLS_STATUSES = ["tls_unknown", "tls_ready"] as const;
+/**
+ * TLS readiness (ADR-0048 / ADR-ACT-0225). `tls_local_ready` is set only when local
+ * Caddy/internal-CA TLS is actually proven; the local web Caddy is HTTP-only (TLS is
+ * terminated by Cloudflare in production), so it is NOT claimed in the local stack.
+ * `tls_ready` is reserved for proven PUBLIC TLS issuance (deferred).
+ */
+export const TENANT_DOMAIN_TLS_STATUSES = ["tls_unknown", "tls_local_ready", "tls_ready"] as const;
 export const TenantDomainTlsStatusSchema = z.enum(TENANT_DOMAIN_TLS_STATUSES);
 export type TenantDomainTlsStatus = z.infer<typeof TenantDomainTlsStatusSchema>;
 
-/** Canonical-routing readiness — `routing_active` only when added to the auth client. */
-export const TENANT_DOMAIN_ROUTING_STATUSES = ["routing_unknown", "routing_active"] as const;
+/**
+ * Routing readiness (ADR-0048 / ADR-ACT-0225).
+ * - `routing_local_active`: the tenant FQDN routes to the correct tenant context through
+ *   the LOCAL reverse proxy (Caddy web profile) — proven by `proof:tenant-domains-routing`.
+ * - `routing_active`: reserved for proven PUBLIC canonical routing/cutover (deferred).
+ * - `routing_unknown`: not proven.
+ */
+export const TENANT_DOMAIN_ROUTING_STATUSES = [
+  "routing_unknown",
+  "routing_local_active",
+  "routing_active",
+] as const;
 export const TenantDomainRoutingStatusSchema = z.enum(TENANT_DOMAIN_ROUTING_STATUSES);
 export type TenantDomainRoutingStatus = z.infer<typeof TenantDomainRoutingStatusSchema>;
 
