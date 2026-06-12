@@ -956,6 +956,18 @@
           "tenant_service_clickthrough": {
             "label": "Operational tool access policy",
             "description": "Tool clickthroughs follow an explicit policy: Keycloak is tenant-scoped (own slug, Keycloak-authenticated console); all other tools are platform-operator only or not exposed."
+          },
+          "tenant_groups": {
+            "label": "Groups",
+            "description": "Tenant group management is available through the API; an admin UI has not been built yet."
+          },
+          "tenant_suborgs": {
+            "label": "Sub-organisations",
+            "description": "Sub-organisation management is available through the API; an admin UI has not been built yet."
+          },
+          "delegated_admin_roles": {
+            "label": "Delegated admin roles",
+            "description": "Narrow delegated roles (domain manager, auth manager, integration manager, observability reader) are not yet available — administration uses the built-in tenant roles."
           }
         }
       }

@@ -108,6 +108,31 @@ export const CAPABILITIES: readonly CapabilityDefinition[] = [
     implementationStatus: "implemented",
     readinessKind: "invariant-ready",
   }),
+  // Groups + sub-organisations (ADR-ACT-0234 honesty rows): full CRUD APIs
+  // exist (/api/org/groups*, /api/org/sub-organisations*) with permissions and
+  // UMA metadata and unit tests — but NO admin UI route and no runtime proof.
+  // Honestly `partial` (API-only) until a UI slice lands; never UI-claimed.
+  cap("tenant_groups", "identity", {
+    adminRoute: null,
+    requiredPermission: "tenant.groups.read",
+    implementationStatus: "partial",
+    readinessKind: "invariant-ready",
+  }),
+  cap("tenant_suborgs", "identity", {
+    adminRoute: null,
+    requiredPermission: "tenant.suborgs.read",
+    implementationStatus: "partial",
+    readinessKind: "invariant-ready",
+  }),
+  // Delegated admin roles (domain-reader/manager, auth-reader/manager,
+  // integration-manager, observability-reader, support-operator): NOT
+  // implemented — tenant roles remain exactly tenant-admin/manager/member/
+  // viewer (@platform/domain-identity). Deliberately deferred: new roles need
+  // an ADR (role bundles are an authorisation surface, not a registry tweak).
+  cap("delegated_admin_roles", "identity", {
+    implementationStatus: "deferred",
+    readinessKind: "deferred",
+  }),
 
   // --- Authentication (OIDC-first) ---
   cap("auth_credential", "authentication", {
