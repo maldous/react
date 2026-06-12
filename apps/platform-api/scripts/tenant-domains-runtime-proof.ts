@@ -25,7 +25,7 @@ import {
   computeDomainReadiness,
   getTenantDomainReadiness,
   listTenantDomains,
-  mapDomainRows,
+  mapRegistryRecords,
 } from "../src/usecases/tenant-domains.ts";
 import {
   createDomainChallenge,
@@ -50,19 +50,35 @@ async function main(): Promise<void> {
 
   // 1. Pure classifier — honest verdicts (no DB).
   check(
-    "pending challenge → pending_dns / routing_unknown / tls_unknown",
+    "pending registry row → pending_dns / inactive / routing_unknown / tls_unknown",
     (() => {
-      const [d] = mapDomainRows([
+      const [d] = mapRegistryRecords([
         {
+          organisationId: "org",
           domain: "x.proof.test",
-          created_at: new Date(),
-          expires_at: new Date(),
-          verified_at: null,
-          consumed_at: null,
+          source: "custom",
+          ownershipStatus: "pending_dns",
+          authClientStatus: "inactive",
+          routingStatus: "routing_unknown",
+          tlsStatus: "tls_unknown",
+          canonical: false,
+          redirectPolicy: "no_redirect",
+          createdAt: new Date(),
+          verifiedAt: null,
+          authClientActivatedAt: null,
+          routingLocalProvenAt: null,
+          routingPublicProvenAt: null,
+          tlsLocalProvenAt: null,
+          tlsPublicProvenAt: null,
+          canonicalAt: null,
+          disabledAt: null,
         },
       ]);
       return (
-        d?.status === "pending_dns" && d?.routing === "routing_unknown" && d?.tls === "tls_unknown"
+        d?.status === "pending_dns" &&
+        d?.authClient === "inactive" &&
+        d?.routing === "routing_unknown" &&
+        d?.tls === "tls_unknown"
       );
     })()
   );
@@ -112,6 +128,10 @@ async function main(): Promise<void> {
       const domains = await listTenantDomains(organisationId, pool);
       const entry = domains.find((d) => d.domain === proofDomain);
       check("listed as verified after ownership proof", entry?.status === "verified");
+      check(
+        "auth client stays inactive until explicit activation (ADR-ACT-0232)",
+        entry?.authClient === "inactive" && entry?.routing === "routing_unknown"
+      );
 
       const readiness = await getTenantDomainReadiness(organisationId, pool);
       check("readiness aggregates to verified", readiness.status === "verified", readiness.status);
@@ -120,6 +140,7 @@ async function main(): Promise<void> {
       await pool.query("DELETE FROM public.vanity_domain_challenges WHERE domain = $1", [
         proofDomain,
       ]);
+      await pool.query("DELETE FROM public.tenant_domains WHERE domain = $1", [proofDomain]);
       const left = await pool.query(
         "SELECT 1 FROM public.vanity_domain_challenges WHERE domain = $1",
         [proofDomain]
@@ -130,6 +151,9 @@ async function main(): Promise<void> {
     check("live DB lifecycle", false, err instanceof Error ? err.message : String(err));
     await pool
       .query("DELETE FROM public.vanity_domain_challenges WHERE domain = $1", [proofDomain])
+      .catch(() => {});
+    await pool
+      .query("DELETE FROM public.tenant_domains WHERE domain = $1", [proofDomain])
       .catch(() => {});
   } finally {
     await pool.end();

@@ -23,6 +23,11 @@ import {
   useAddDomain,
   useVerifyDomain,
   useRemoveDomain,
+  useActivateDomain,
+  useDeactivateDomain,
+  useProbeDomainRoutingLocal,
+  useSetCanonicalDomain,
+  useUnsetCanonicalDomain,
 } from "./use-admin-domains";
 import type { TenantDomainVerificationResponse } from "./admin-domains-client";
 
@@ -212,8 +217,10 @@ function DomainListCard({
                 <tr className="border-b border-border text-left text-xs font-semibold text-fg-muted">
                   <th className="pb-2 pr-4">{t("feature.admin.domains.columnDomain")}</th>
                   <th className="pb-2 pr-4">{t("feature.admin.domains.columnStatus")}</th>
-                  <th className="pb-2 pr-4">{t("feature.admin.domains.columnTls")}</th>
+                  <th className="pb-2 pr-4">{t("feature.admin.domains.columnAuthClient")}</th>
                   <th className="pb-2 pr-4">{t("feature.admin.domains.columnRouting")}</th>
+                  <th className="pb-2 pr-4">{t("feature.admin.domains.columnTls")}</th>
+                  <th className="pb-2 pr-4">{t("feature.admin.domains.columnCanonical")}</th>
                   {canWrite && <th className="pb-2">{t("feature.admin.domains.recentChanges")}</th>}
                 </tr>
               </thead>
@@ -234,6 +241,11 @@ function DomainRow({ domain, canWrite }: { domain: TenantDomainSummary; canWrite
   const t = useTranslation();
   const verify = useVerifyDomain();
   const remove = useRemoveDomain();
+  const activate = useActivateDomain();
+  const deactivate = useDeactivateDomain();
+  const probe = useProbeDomainRoutingLocal();
+  const setCanonical = useSetCanonicalDomain();
+  const unsetCanonical = useUnsetCanonicalDomain();
 
   const statusTone =
     domain.status === "verified"
@@ -241,6 +253,28 @@ function DomainRow({ domain, canWrite }: { domain: TenantDomainSummary; canWrite
       : domain.status === "degraded"
         ? "warning"
         : "secondary";
+
+  // Action availability mirrors the server-side guards (ADR-ACT-0232) so the
+  // UI never offers an operation the BFF would reject. Unsupported actions are
+  // hidden, not disabled.
+  const canVerify = domain.status !== "verified";
+  const canActivate = domain.status === "verified" && domain.authClient === "inactive";
+  const canDeactivate = domain.authClient === "active";
+  const canProbe = domain.authClient === "active";
+  const canMakeCanonical =
+    domain.status === "verified" &&
+    domain.authClient === "active" &&
+    domain.routing !== "routing_unknown" &&
+    !domain.canonical;
+
+  const anyPending =
+    verify.isPending ||
+    remove.isPending ||
+    activate.isPending ||
+    deactivate.isPending ||
+    probe.isPending ||
+    setCanonical.isPending ||
+    unsetCanonical.isPending;
 
   return (
     <tr data-testid={`admin-domains-row-${domain.domain}`}>
@@ -256,29 +290,108 @@ function DomainRow({ domain, canWrite }: { domain: TenantDomainSummary; canWrite
         </Badge>
       </td>
       <td className="py-2 pr-4">
-        <Badge variant="secondary">{t(`feature.admin.domains.tls.${domain.tls}`)}</Badge>
+        <Badge
+          variant={domain.authClient === "active" ? "default" : "secondary"}
+          data-testid={`admin-domains-authclient-${domain.domain}`}
+        >
+          {t(`feature.admin.domains.authClient.${domain.authClient}`)}
+        </Badge>
       </td>
       <td className="py-2 pr-4">
-        <Badge variant="secondary">{t(`feature.admin.domains.routing.${domain.routing}`)}</Badge>
+        <Badge variant="secondary" data-testid={`admin-domains-routing-${domain.domain}`}>
+          {t(`feature.admin.domains.routing.${domain.routing}`)}
+        </Badge>
+      </td>
+      <td className="py-2 pr-4">
+        <Badge variant="secondary">{t(`feature.admin.domains.tls.${domain.tls}`)}</Badge>
+      </td>
+      <td className="py-2 pr-4" data-testid={`admin-domains-canonical-${domain.domain}`}>
+        {domain.canonical ? (
+          <Badge variant="default">{t("feature.admin.domains.canonicalBadge")}</Badge>
+        ) : (
+          <span className="text-xs text-fg-muted">—</span>
+        )}
       </td>
       {canWrite && (
         <td className="py-2">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            {canVerify && (
+              <Button
+                size="sm"
+                variant="outline"
+                type="button"
+                isDisabled={anyPending}
+                onPress={() => verify.mutate(domain.domain)}
+                data-testid={`admin-domains-verify-${domain.domain}`}
+              >
+                {t("feature.admin.domains.verifyButton")}
+              </Button>
+            )}
+            {canActivate && (
+              <Button
+                size="sm"
+                variant="outline"
+                type="button"
+                isDisabled={anyPending}
+                onPress={() => activate.mutate(domain.domain)}
+                data-testid={`admin-domains-activate-${domain.domain}`}
+              >
+                {t("feature.admin.domains.activateButton")}
+              </Button>
+            )}
+            {canProbe && (
+              <Button
+                size="sm"
+                variant="outline"
+                type="button"
+                isDisabled={anyPending}
+                onPress={() => probe.mutate(domain.domain)}
+                data-testid={`admin-domains-probe-${domain.domain}`}
+              >
+                {t("feature.admin.domains.probeButton")}
+              </Button>
+            )}
+            {canMakeCanonical && (
+              <Button
+                size="sm"
+                variant="outline"
+                type="button"
+                isDisabled={anyPending}
+                onPress={() => setCanonical.mutate(domain.domain)}
+                data-testid={`admin-domains-set-canonical-${domain.domain}`}
+              >
+                {t("feature.admin.domains.setCanonicalButton")}
+              </Button>
+            )}
+            {domain.canonical && (
+              <Button
+                size="sm"
+                variant="outline"
+                type="button"
+                isDisabled={anyPending}
+                onPress={() => unsetCanonical.mutate(domain.domain)}
+                data-testid={`admin-domains-unset-canonical-${domain.domain}`}
+              >
+                {t("feature.admin.domains.unsetCanonicalButton")}
+              </Button>
+            )}
+            {canDeactivate && (
+              <Button
+                size="sm"
+                variant="outline"
+                type="button"
+                isDisabled={anyPending}
+                onPress={() => deactivate.mutate(domain.domain)}
+                data-testid={`admin-domains-deactivate-${domain.domain}`}
+              >
+                {t("feature.admin.domains.deactivateButton")}
+              </Button>
+            )}
             <Button
               size="sm"
               variant="outline"
               type="button"
-              isDisabled={verify.isPending}
-              onPress={() => verify.mutate(domain.domain)}
-              data-testid={`admin-domains-verify-${domain.domain}`}
-            >
-              {t("feature.admin.domains.verifyButton")}
-            </Button>
-            <Button
-              size="sm"
-              variant="outline"
-              type="button"
-              isDisabled={remove.isPending}
+              isDisabled={anyPending}
               onPress={() => remove.mutate(domain.domain)}
               data-testid={`admin-domains-remove-${domain.domain}`}
             >
@@ -294,11 +407,35 @@ function DomainRow({ domain, canWrite }: { domain: TenantDomainSummary; canWrite
             <LiveRegion
               tone="polite"
               className="sr-only"
+              data-testid={`admin-domains-lifecycle-announce-${domain.domain}`}
+            >
+              {activate.isSuccess
+                ? t("feature.admin.domains.activated")
+                : deactivate.isSuccess
+                  ? t("feature.admin.domains.deactivated")
+                  : probe.isSuccess
+                    ? probe.data?.tenantContextMatched
+                      ? t("feature.admin.domains.probeMatched")
+                      : t("feature.admin.domains.probeUnmatched")
+                    : setCanonical.isSuccess
+                      ? t("feature.admin.domains.canonicalSet")
+                      : unsetCanonical.isSuccess
+                        ? t("feature.admin.domains.canonicalUnset")
+                        : ""}
+            </LiveRegion>
+            <LiveRegion
+              tone="polite"
+              className="sr-only"
               data-testid={`admin-domains-remove-announce-${domain.domain}`}
             >
               {remove.isSuccess ? t("feature.admin.domains.removed") : ""}
             </LiveRegion>
           </div>
+          {domain.canonical && (
+            <p className="mt-1 text-xs text-fg-muted">
+              {t("feature.admin.domains.canonicalLocalNote")}
+            </p>
+          )}
           {verify.isError && (
             <p
               role="alert"
@@ -306,6 +443,24 @@ function DomainRow({ domain, canWrite }: { domain: TenantDomainSummary; canWrite
               data-testid={`admin-domains-verify-error-${domain.domain}`}
             >
               {t("feature.admin.domains.verifyError")}
+            </p>
+          )}
+          {activate.isError && (
+            <p
+              role="alert"
+              className="mt-1 text-xs text-danger"
+              data-testid={`admin-domains-activate-error-${domain.domain}`}
+            >
+              {t("feature.admin.domains.activateError")}
+            </p>
+          )}
+          {setCanonical.isError && (
+            <p
+              role="alert"
+              className="mt-1 text-xs text-danger"
+              data-testid={`admin-domains-set-canonical-error-${domain.domain}`}
+            >
+              {t("feature.admin.domains.setCanonicalError")}
             </p>
           )}
         </td>

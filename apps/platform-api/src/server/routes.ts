@@ -97,10 +97,61 @@ import {
   createAuditEvent,
   AuditAction,
 } from "@platform/audit-events";
-import { resolveTenantFromRequest } from "./tenant-resolver.ts";
+import { resolveTenantFromRequest, requestHostFromHeaders } from "./tenant-resolver.ts";
+import { classifyHostIdentity } from "@platform/domain-identity";
 import { KeycloakRealmAdminAdapter } from "@platform/adapters-keycloak";
 import { PostgresTenantCredentialStore } from "../adapters/postgres-tenant-credential-store.ts";
+import { PostgresTenantDomainRegistry } from "../adapters/postgres-tenant-domain-registry.ts";
+import { CaddyLocalRoutingProbe } from "../adapters/caddy-local-routing-probe.ts";
+import {
+  activateDomainAuthClient,
+  deactivateDomainAuthClient,
+  probeDomainLocalRouting,
+  setCanonicalDomain,
+  unsetCanonicalDomain,
+  type AuthClientDomainPort,
+} from "../usecases/tenant-domain-lifecycle.ts";
 import { z } from "zod";
+
+// ---------------------------------------------------------------------------
+// AuthClientDomainPort over the existing vanity-domain Keycloak plumbing
+// (ADR-ACT-0232): domain lifecycle operations run under tenant.domains.write;
+// the Keycloak client mutation uses the tenant's auth-settings credential.
+// ---------------------------------------------------------------------------
+function buildAuthClientDomainPort(
+  tenantCtx: { organisationId: string; realmName: string },
+  cred: { clientId: string; clientSecret: string },
+  actor: { userId: string; roles: string[] }
+): AuthClientDomainPort {
+  const adminConfig = {
+    url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
+    realm: tenantCtx.realmName,
+    adminClientId: cred.clientId,
+    adminClientSecret: cred.clientSecret,
+  };
+  const base = {
+    organisationId: tenantCtx.organisationId,
+    realmName: tenantCtx.realmName,
+    actorId: actor.userId,
+    actorRoles: actor.roles,
+  };
+  return {
+    async addRedirectOrigin(domain: string): Promise<void> {
+      const { addVanityDomain } = await import("../usecases/vanity-domain.ts");
+      await addVanityDomain(
+        { ...base, domain },
+        { audit: createPostgresAuditEventPort(getApplicationPool()), adminConfig }
+      );
+    },
+    async removeRedirectOrigin(domain: string): Promise<void> {
+      const { removeVanityDomain } = await import("../usecases/vanity-domain.ts");
+      await removeVanityDomain(
+        { ...base, domain },
+        { audit: createPostgresAuditEventPort(getApplicationPool()), adminConfig }
+      );
+    },
+  };
+}
 
 // ---------------------------------------------------------------------------
 // Shared mapping of an Auth Settings mutation result to an HTTP response
@@ -541,6 +592,31 @@ export const routes: Route[] = [
         // Schema not yet created or settings not seeded ? fall through to defaults
       }
       res.json(200, DEFAULT_THEME);
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Host identity (ADR-ACT-0231/0232) ? unauthenticated, keyed by Host header.
+  // Returns the host classification and, when the host resolves, the tenant
+  // slug + how it resolved (slug subdomain vs active custom domain). Public
+  // values only ? the slug is already visible in any tenant URL; no ids, no
+  // secrets. Used by the local routing probe and the routing proof scripts to
+  // verify END-TO-END that a host reaches the correct tenant context through
+  // the reverse proxy.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/host-identity",
+    operationName: "host.identity",
+    handler: async (req, res) => {
+      const host = requestHostFromHeaders(req.raw);
+      const identity = classifyHostIdentity(host, process.env["APEX_DOMAIN"] ?? "aldous.info");
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool()).catch(
+        () => null
+      );
+      res.json(200, {
+        kind: identity.kind,
+        tenant: tenantCtx ? { slug: tenantCtx.slug, hostSource: tenantCtx.hostSource } : null,
+      });
     },
   },
   // ---------------------------------------------------------------------------
@@ -1703,6 +1779,20 @@ export const routes: Route[] = [
         res.json(400, { code: "VALIDATION_ERROR", message: parsed.error.issues[0]?.message });
         return;
       }
+      const domain = parsed.data.domain.toLowerCase();
+      // ADR-ACT-0232 hardening: the documented lifecycle (migration 014) always
+      // required a verified, unconsumed ownership challenge before the domain
+      // is added to the auth client — but no caller ever enforced it. Enforce
+      // it here so this legacy surface matches /api/org/domains/:domain/activate.
+      const { checkDomainOwnership, consumeChallenge } =
+        await import("../usecases/vanity-domain-challenge.ts");
+      if (!(await checkDomainOwnership(domain, tenantCtx.organisationId, getApplicationPool()))) {
+        res.json(422, {
+          code: "OWNERSHIP_NOT_VERIFIED",
+          message: "DNS ownership must be verified before activation",
+        });
+        return;
+      }
       const cred = await new PostgresTenantCredentialStore(
         getApplicationPool()
       ).getAuthSettingsCredential(tenantCtx.organisationId);
@@ -1717,7 +1807,7 @@ export const routes: Route[] = [
           realmName: tenantCtx.realmName,
           actorId: req.actor!.userId,
           actorRoles: req.actor!.roles,
-          domain: parsed.data.domain,
+          domain,
         },
         {
           audit: createPostgresAuditEventPort(getApplicationPool()),
@@ -1729,7 +1819,13 @@ export const routes: Route[] = [
           },
         }
       );
-      res.json(201, { domain: parsed.data.domain });
+      // Lifecycle registry sync + challenge consumption (ADR-ACT-0232).
+      await new PostgresTenantDomainRegistry(getApplicationPool()).markAuthClientActive(
+        tenantCtx.organisationId,
+        domain
+      );
+      await consumeChallenge(domain, tenantCtx.organisationId, getApplicationPool());
+      res.json(201, { domain });
     },
   },
   {
@@ -1778,6 +1874,12 @@ export const routes: Route[] = [
             adminClientSecret: cred.clientSecret,
           },
         }
+      );
+      // Lifecycle registry sync (ADR-ACT-0232): the auth client no longer
+      // serves this domain — clears canonical and resets routing claims too.
+      await new PostgresTenantDomainRegistry(getApplicationPool()).markAuthClientInactive(
+        tenantCtx.organisationId,
+        domain.toLowerCase()
       );
       res.json(204, null);
     },
@@ -2987,6 +3089,64 @@ export const routes: Route[] = [
         res.json(400, { code: "VALIDATION_ERROR", message: "invalid domain format" });
         return;
       }
+      // ADR-ACT-0232: only an auth-client-ACTIVE domain needs the Keycloak
+      // mutation (and therefore the tenant credential). An inactive domain is
+      // a registry-only delete — credential not required.
+      const registry = new PostgresTenantDomainRegistry(getApplicationPool());
+      const record = await registry.getDomain(tenantCtx.organisationId, domain);
+      if (record?.authClientStatus === "active") {
+        const cred = await new PostgresTenantCredentialStore(
+          getApplicationPool()
+        ).getAuthSettingsCredential(tenantCtx.organisationId);
+        if (!cred) {
+          res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
+          return;
+        }
+        const result = await deactivateDomainAuthClient(
+          {
+            organisationId: tenantCtx.organisationId,
+            domain,
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+          },
+          {
+            registry,
+            audit: createPostgresAuditEventPort(getApplicationPool()),
+            authClient: buildAuthClientDomainPort(tenantCtx, cred, req.actor!),
+          }
+        );
+        if (result.kind === "not_found") {
+          res.json(404, { code: "NOT_FOUND", message: "Unknown domain" });
+          return;
+        }
+      }
+      await registry.disable(tenantCtx.organisationId, domain);
+      res.json(204, null);
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Domain lifecycle (ADR-ACT-0232): auth-client activation, local routing
+  // probe, and canonical management — all under tenant.domains.write. Tenant
+  // authority is FQDN/session only. routing_local_active is only ever written
+  // from a LIVE local probe (no fake readiness); canonical NEVER changes
+  // redirect behaviour (redirect_policy stays no_redirect).
+  // ---------------------------------------------------------------------------
+  {
+    method: "POST",
+    path: "/api/org/domains/:domain/activate",
+    operationName: "org.domains.activate",
+    requiresAuth: true,
+    requiredPermission: "tenant.domains.write",
+    resource: "admin:domains",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const domain = decodeURIComponent(req.params["domain"] ?? "").toLowerCase();
       const cred = await new PostgresTenantCredentialStore(
         getApplicationPool()
       ).getAuthSettingsCredential(tenantCtx.organisationId);
@@ -2994,26 +3154,220 @@ export const routes: Route[] = [
         res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
         return;
       }
-      const { removeVanityDomain } = await import("../usecases/vanity-domain.ts");
-      await removeVanityDomain(
+      const result = await activateDomainAuthClient(
         {
           organisationId: tenantCtx.organisationId,
-          realmName: tenantCtx.realmName,
+          domain,
           actorId: req.actor!.userId,
           actorRoles: req.actor!.roles,
-          domain,
         },
         {
+          registry: new PostgresTenantDomainRegistry(getApplicationPool()),
           audit: createPostgresAuditEventPort(getApplicationPool()),
-          adminConfig: {
-            url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
-            realm: tenantCtx.realmName,
-            adminClientId: cred.clientId,
-            adminClientSecret: cred.clientSecret,
-          },
+          authClient: buildAuthClientDomainPort(tenantCtx, cred, req.actor!),
         }
       );
-      res.json(204, null);
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Unknown domain" });
+        return;
+      }
+      if (result.kind === "not_verified") {
+        res.json(422, {
+          code: "OWNERSHIP_NOT_VERIFIED",
+          message: "DNS ownership must be verified before activation",
+        });
+        return;
+      }
+      if (result.kind === "already_active") {
+        res.json(409, { code: "CONFLICT", message: "Domain is already active" });
+        return;
+      }
+      // Consume the ownership challenge — the verified challenge has now been
+      // applied to the auth client (the original meaning of consumed_at).
+      const { consumeChallenge } = await import("../usecases/vanity-domain-challenge.ts");
+      await consumeChallenge(domain, tenantCtx.organisationId, getApplicationPool());
+      res.json(200, {
+        domain,
+        authClient: result.record.authClientStatus,
+        authClientActivatedAt: result.record.authClientActivatedAt?.toISOString() ?? null,
+      });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/org/domains/:domain/deactivate",
+    operationName: "org.domains.deactivate",
+    requiresAuth: true,
+    requiredPermission: "tenant.domains.write",
+    resource: "admin:domains",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const domain = decodeURIComponent(req.params["domain"] ?? "").toLowerCase();
+      const cred = await new PostgresTenantCredentialStore(
+        getApplicationPool()
+      ).getAuthSettingsCredential(tenantCtx.organisationId);
+      if (!cred) {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
+        return;
+      }
+      const result = await deactivateDomainAuthClient(
+        {
+          organisationId: tenantCtx.organisationId,
+          domain,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        {
+          registry: new PostgresTenantDomainRegistry(getApplicationPool()),
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          authClient: buildAuthClientDomainPort(tenantCtx, cred, req.actor!),
+        }
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Unknown domain" });
+        return;
+      }
+      if (result.kind === "not_active") {
+        res.json(409, { code: "CONFLICT", message: "Domain is not active" });
+        return;
+      }
+      res.json(200, { domain, authClient: "inactive", authClientActivatedAt: null });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/org/domains/:domain/probe-routing-local",
+    operationName: "org.domains.probeRoutingLocal",
+    requiresAuth: true,
+    requiredPermission: "tenant.domains.write",
+    resource: "admin:domains",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const domain = decodeURIComponent(req.params["domain"] ?? "").toLowerCase();
+      const outcome = await probeDomainLocalRouting(
+        {
+          organisationId: tenantCtx.organisationId,
+          domain,
+          expectedSlug: tenantCtx.slug,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        {
+          registry: new PostgresTenantDomainRegistry(getApplicationPool()),
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          probe: new CaddyLocalRoutingProbe(),
+        }
+      );
+      if ("kind" in outcome) {
+        res.json(404, { code: "NOT_FOUND", message: "Unknown domain" });
+        return;
+      }
+      res.json(200, {
+        domain,
+        reachable: outcome.reachable,
+        tenantContextMatched: outcome.tenantContextMatched,
+        routing: outcome.record?.routingStatus ?? outcome.routing,
+        routingLocalProvenAt: outcome.record?.routingLocalProvenAt?.toISOString() ?? null,
+      });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/org/domains/:domain/canonical",
+    operationName: "org.domains.canonical.set",
+    requiresAuth: true,
+    requiredPermission: "tenant.domains.write",
+    resource: "admin:domains",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const domain = decodeURIComponent(req.params["domain"] ?? "").toLowerCase();
+      const result = await setCanonicalDomain(
+        {
+          organisationId: tenantCtx.organisationId,
+          domain,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        {
+          registry: new PostgresTenantDomainRegistry(getApplicationPool()),
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+        }
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Unknown domain" });
+        return;
+      }
+      if (result.kind !== "ok") {
+        res.json(422, {
+          code: "CANONICAL_GUARD_FAILED",
+          message: `Canonical requires verified ownership, an active auth client, and proven routing (${result.kind})`,
+        });
+        return;
+      }
+      res.json(200, {
+        domain,
+        canonical: result.record.canonical,
+        canonicalAt: result.record.canonicalAt?.toISOString() ?? null,
+        redirectPolicy: result.record.redirectPolicy,
+      });
+    },
+  },
+  {
+    method: "DELETE",
+    path: "/api/org/domains/:domain/canonical",
+    operationName: "org.domains.canonical.unset",
+    requiresAuth: true,
+    requiredPermission: "tenant.domains.write",
+    resource: "admin:domains",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const domain = decodeURIComponent(req.params["domain"] ?? "").toLowerCase();
+      const result = await unsetCanonicalDomain(
+        {
+          organisationId: tenantCtx.organisationId,
+          domain,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        {
+          registry: new PostgresTenantDomainRegistry(getApplicationPool()),
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+        }
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Unknown domain" });
+        return;
+      }
+      res.json(200, {
+        domain,
+        canonical: result.record.canonical,
+        canonicalAt: null,
+        redirectPolicy: result.record.redirectPolicy,
+      });
     },
   },
   // ---------------------------------------------------------------------------

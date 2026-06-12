@@ -274,8 +274,19 @@ export function isAllowedHost(host: string): boolean {
   return h === apex || h.endsWith(`.${apex}`);
 }
 
-export function getAuthCallbackUrl(host?: string, forwardedProto?: string): string {
-  if (host && isAllowedHost(host)) {
+/**
+ * `verifiedTenantHost` (ADR-ACT-0232): pass true when the host was resolved to
+ * a tenant via the tenant_domains registry (an ACTIVE custom domain). Such a
+ * host is DB-verified — strictly stronger than the static apex allowlist — so
+ * it is a legitimate auth-callback origin even though it is outside the apex
+ * zone. Never pass true based on the raw header alone.
+ */
+export function getAuthCallbackUrl(
+  host?: string,
+  forwardedProto?: string,
+  verifiedTenantHost = false
+): string {
+  if (host && (verifiedTenantHost || isAllowedHost(host))) {
     return `${schemeFor(host, forwardedProto)}://${host}/auth/callback`;
   }
   const apiUrl = process.env["PLATFORM_API_URL"] ?? "http://localhost:3001";
@@ -289,8 +300,12 @@ export function getAuthCallbackUrl(host?: string, forwardedProto?: string): stri
  * Host is validated against the apex domain allowlist before use.
  * Falls back to KEYCLOAK_PUBLIC_URL env var when no host is provided or allowed.
  */
-export function getKeycloakPublicUrl(host?: string, forwardedProto?: string): string {
-  if (host && isAllowedHost(host)) {
+export function getKeycloakPublicUrl(
+  host?: string,
+  forwardedProto?: string,
+  verifiedTenantHost = false
+): string {
+  if (host && (verifiedTenantHost || isAllowedHost(host))) {
     return `${schemeFor(host, forwardedProto)}://${host}/kc`;
   }
   return (

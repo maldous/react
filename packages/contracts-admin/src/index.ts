@@ -586,17 +586,51 @@ export const TENANT_DOMAIN_READINESS_STATUSES = [
 export const TenantDomainReadinessStatusSchema = z.enum(TENANT_DOMAIN_READINESS_STATUSES);
 export type TenantDomainReadinessStatus = z.infer<typeof TenantDomainReadinessStatusSchema>;
 
-/** `GET /api/org/domains` — one entry per configured domain. */
+/** Whether the domain is registered on the tenant auth client (ADR-ACT-0232).
+ * `active` means the Keycloak redirect URI + web origin were actually written. */
+export const TENANT_DOMAIN_AUTH_CLIENT_STATUSES = ["inactive", "active"] as const;
+export const TenantDomainAuthClientStatusSchema = z.enum(TENANT_DOMAIN_AUTH_CLIENT_STATUSES);
+export type TenantDomainAuthClientStatus = z.infer<typeof TenantDomainAuthClientStatusSchema>;
+
+/** How the domain came to exist: the built-in slug FQDN or a custom domain. */
+export const TENANT_DOMAIN_SOURCES = ["slug", "custom"] as const;
+export const TenantDomainSourceSchema = z.enum(TENANT_DOMAIN_SOURCES);
+export type TenantDomainSource = z.infer<typeof TenantDomainSourceSchema>;
+
+/** Canonical-domain redirect policy (ADR-ACT-0232). Defaults to no_redirect;
+ * the redirect behaviours are future-safe vocabulary and are NOT implemented —
+ * marking a domain canonical never forces a redirect until explicitly proven. */
+export const TENANT_DOMAIN_REDIRECT_POLICIES = [
+  "no_redirect",
+  "redirect_slug_to_canonical",
+  "redirect_all_to_canonical",
+] as const;
+export const TenantDomainRedirectPolicySchema = z.enum(TENANT_DOMAIN_REDIRECT_POLICIES);
+export type TenantDomainRedirectPolicy = z.infer<typeof TenantDomainRedirectPolicySchema>;
+
+/** `GET /api/org/domains` — one entry per configured domain (full lifecycle,
+ * ADR-ACT-0232). Every timestamp is the moment the corresponding state was
+ * PROVEN (probe/mutation time), never inferred. */
 export const TenantDomainSummarySchema = z
   .object({
     domain: z.string(),
+    source: TenantDomainSourceSchema,
     status: TenantDomainStatusSchema,
+    authClient: TenantDomainAuthClientStatusSchema,
     tls: TenantDomainTlsStatusSchema,
     routing: TenantDomainRoutingStatusSchema,
+    canonical: z.boolean(),
+    redirectPolicy: TenantDomainRedirectPolicySchema,
     txtRecord: z.string(),
     createdAt: z.string().nullable(),
     verifiedAt: z.string().nullable(),
     expiresAt: z.string().nullable(),
+    authClientActivatedAt: z.string().nullable(),
+    routingLocalProvenAt: z.string().nullable(),
+    routingPublicProvenAt: z.string().nullable(),
+    tlsLocalProvenAt: z.string().nullable(),
+    tlsPublicProvenAt: z.string().nullable(),
+    canonicalAt: z.string().nullable(),
   })
   .strict();
 export type TenantDomainSummary = z.infer<typeof TenantDomainSummarySchema>;
@@ -643,6 +677,69 @@ export const TenantDomainReadinessResponseSchema = z
   })
   .strict();
 export type TenantDomainReadinessResponse = z.infer<typeof TenantDomainReadinessResponseSchema>;
+
+/** `POST /api/org/domains/:domain/activate` — auth-client activation result.
+ * Requires DNS-verified ownership; performed under tenant.domains.write. */
+export const TenantDomainActivationResponseSchema = z
+  .object({
+    domain: z.string(),
+    authClient: TenantDomainAuthClientStatusSchema,
+    authClientActivatedAt: z.string().nullable(),
+  })
+  .strict();
+export type TenantDomainActivationResponse = z.infer<typeof TenantDomainActivationResponseSchema>;
+
+/** `POST /api/org/domains/:domain/probe-routing-local` — LOCAL routing probe.
+ * `routing` upgrades to routing_local_active ONLY when the local proxy was
+ * reachable AND the response proved the expected tenant context. Never claims
+ * public routing. */
+export const TenantDomainRoutingProbeResponseSchema = z
+  .object({
+    domain: z.string(),
+    reachable: z.boolean(),
+    tenantContextMatched: z.boolean(),
+    routing: TenantDomainRoutingStatusSchema,
+    routingLocalProvenAt: z.string().nullable(),
+  })
+  .strict();
+export type TenantDomainRoutingProbeResponse = z.infer<
+  typeof TenantDomainRoutingProbeResponseSchema
+>;
+
+/** `POST` / `DELETE /api/org/domains/:domain/canonical`. */
+export const TenantDomainCanonicalResponseSchema = z
+  .object({
+    domain: z.string(),
+    canonical: z.boolean(),
+    canonicalAt: z.string().nullable(),
+    redirectPolicy: TenantDomainRedirectPolicySchema,
+  })
+  .strict();
+export type TenantDomainCanonicalResponse = z.infer<typeof TenantDomainCanonicalResponseSchema>;
+
+/** `GET /api/host-identity` — public, host-keyed (ADR-ACT-0231/0232).
+ * Returns the host classification + the resolved tenant slug (public values
+ * only — the slug is already visible in the tenant URL; no ids, no secrets). */
+export const HostIdentityResponseSchema = z
+  .object({
+    kind: z.enum([
+      "apex",
+      "tenant_slug",
+      "reserved_subdomain",
+      "invalid_subdomain",
+      "custom_domain_candidate",
+      "malformed",
+    ]),
+    tenant: z
+      .object({
+        slug: z.string(),
+        hostSource: z.enum(["slug", "custom_domain"]),
+      })
+      .strict()
+      .nullable(),
+  })
+  .strict();
+export type HostIdentityResponse = z.infer<typeof HostIdentityResponseSchema>;
 
 // ---------------------------------------------------------------------------
 // Tenant storage readiness + isolation proof (ADR-0049 / ADR-ACT-0218)

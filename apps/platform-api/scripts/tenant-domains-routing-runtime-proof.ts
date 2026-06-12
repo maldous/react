@@ -19,6 +19,7 @@
  *   Overrides: CADDY_BASE_URL, ROUTING_PROOF_PG_URL, ROUTING_PROOF_APP_ROLE.
  */
 
+import { request as httpGet } from "node:http";
 import pg from "pg";
 import type { AuditEventPort } from "@platform/audit-events";
 import {
@@ -134,6 +135,65 @@ async function main(): Promise<void> {
       routing === "routing_local_active"
     );
 
+    // 4b. CUSTOM domain leg (ADR-ACT-0232): an ACTIVE custom domain (outside the
+    // apex zone) must route through the Caddy catch-all vhost to the SAME
+    // tenant context, and an unregistered custom host must resolve NO tenant.
+    const customDomain = `custom-${Date.now()}.routing-proof.example`;
+    await pool.query(
+      `INSERT INTO public.tenant_domains
+         (organisation_id, domain, ownership_status, auth_client_status, verified_at, auth_client_activated_at)
+       VALUES ($1, $2, 'verified', 'active', now(), now())`,
+      [orgId, customDomain]
+    );
+    // .example does not resolve in DNS — connect to the proxy directly and set
+    // Host explicitly via node:http (undici fetch silently DROPS a host override).
+    const hostIdentity = (
+      host: string
+    ): Promise<{ kind?: string; tenant?: { slug?: string; hostSource?: string } | null }> =>
+      new Promise((resolve, reject) => {
+        const base = new URL(CADDY_BASE);
+        const req = httpGet(
+          {
+            host: base.hostname,
+            port: base.port || 80,
+            path: "/api/host-identity",
+            method: "GET",
+            headers: { Host: host, Accept: "application/json" },
+            setHost: false,
+            timeout: 4000,
+          },
+          (res) => {
+            let data = "";
+            res.on("data", (c: Buffer) => {
+              data += c.toString();
+            });
+            res.on("end", () => {
+              try {
+                resolve(JSON.parse(data) as never);
+              } catch (e) {
+                reject(e as Error);
+              }
+            });
+          }
+        );
+        req.on("error", reject);
+        req.end();
+      });
+    const customId = await hostIdentity(customDomain);
+    check(
+      "ACTIVE custom domain routes to the CORRECT tenant via the Caddy catch-all",
+      customId.kind === "custom_domain_candidate" &&
+        customId.tenant?.slug === slug &&
+        customId.tenant?.hostSource === "custom_domain",
+      JSON.stringify(customId)
+    );
+    const unknownId = await hostIdentity(`unregistered-${Date.now()}.routing-proof.example`);
+    check(
+      "unregistered custom host resolves NO tenant through the proxy",
+      unknownId.tenant === null,
+      JSON.stringify(unknownId)
+    );
+
     // TLS: local Caddy is HTTP-only — Cloudflare terminates PUBLIC TLS. Do NOT claim TLS.
     let tlsLocal = false;
     try {
@@ -152,6 +212,10 @@ async function main(): Promise<void> {
   } finally {
     // 5. Cleanup.
     if (schema) await pool.query(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`).catch(() => {});
+    if (orgId)
+      await pool
+        .query(`DELETE FROM public.tenant_domains WHERE organisation_id = $1`, [orgId])
+        .catch(() => {});
     if (orgId)
       await pool.query(`DELETE FROM public.organisations WHERE id = $1`, [orgId]).catch(() => {});
     await pool.end();

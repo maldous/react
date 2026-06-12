@@ -341,7 +341,30 @@
           "pending_verification": "A domain is awaiting DNS verification. Publish the TXT record and verify.",
           "verified": "At least one custom domain has proven DNS ownership.",
           "degraded": "Custom domain status could not be determined right now."
-        }
+        },
+        "columnAuthClient": "Auth client",
+        "columnCanonical": "Canonical",
+        "authClient": {
+          "inactive": "Not activated",
+          "active": "Active"
+        },
+        "canonicalBadge": "Canonical",
+        "canonicalLocalNote": "Canonical is based on locally proven routing only — no redirect is applied.",
+        "activateButton": "Activate",
+        "activateError": "Could not activate the domain. Verify DNS ownership first.",
+        "activated": "Domain activated on the auth client.",
+        "deactivateButton": "Deactivate",
+        "deactivateError": "Could not deactivate the domain.",
+        "deactivated": "Domain deactivated.",
+        "probeButton": "Probe local routing",
+        "probeError": "The local routing probe failed to run.",
+        "probeMatched": "Local routing proven — the domain reaches this tenant through the local proxy.",
+        "probeUnmatched": "Probe completed: routing is NOT proven (proxy unreachable or wrong tenant context).",
+        "setCanonicalButton": "Set canonical",
+        "setCanonicalError": "Canonical requires verified ownership, an active auth client, and proven routing.",
+        "canonicalSet": "Canonical domain set. No redirect is applied (policy: no_redirect).",
+        "unsetCanonicalButton": "Unset canonical",
+        "canonicalUnset": "Canonical flag removed."
       },
       "storage": {
         "title": "Object storage",
@@ -506,27 +529,57 @@
           "quality": "Quality"
         },
         "svc": {
-          "postgres": { "label": "Postgres" },
-          "redis": { "label": "Redis" },
-          "clickhouse": { "label": "ClickHouse" },
-          "minio": { "label": "MinIO" },
-          "mailpit": { "label": "Mailpit" },
-          "otel_collector": { "label": "OTel collector" },
-          "loki": { "label": "Loki" },
-          "grafana": { "label": "Grafana" },
-          "keycloak": { "label": "Keycloak" },
+          "postgres": {
+            "label": "Postgres"
+          },
+          "redis": {
+            "label": "Redis"
+          },
+          "clickhouse": {
+            "label": "ClickHouse"
+          },
+          "minio": {
+            "label": "MinIO"
+          },
+          "mailpit": {
+            "label": "Mailpit"
+          },
+          "otel_collector": {
+            "label": "OTel collector"
+          },
+          "loki": {
+            "label": "Loki"
+          },
+          "grafana": {
+            "label": "Grafana"
+          },
+          "keycloak": {
+            "label": "Keycloak"
+          },
           "mock_oidc": {
             "label": "Mock OIDC",
             "detail": "Local login fixture — not a real identity provider."
           },
-          "pgadmin": { "label": "pgAdmin" },
-          "wiremock": { "label": "WireMock" },
-          "localstack": { "label": "LocalStack" },
-          "sonarqube": { "label": "SonarQube" },
-          "web_caddy": { "label": "Web (Caddy)" }
+          "pgadmin": {
+            "label": "pgAdmin"
+          },
+          "wiremock": {
+            "label": "WireMock"
+          },
+          "localstack": {
+            "label": "LocalStack"
+          },
+          "sonarqube": {
+            "label": "SonarQube"
+          },
+          "web_caddy": {
+            "label": "Web (Caddy)"
+          }
         },
         "worker": {
-          "webhook-delivery": { "label": "Webhook delivery worker" }
+          "webhook-delivery": {
+            "label": "Webhook delivery worker"
+          }
         }
       },
       "overview": {
@@ -883,6 +936,22 @@
           "oidc_login_simulation": {
             "label": "Login simulation",
             "description": "Simulate a login to validate the end-to-end flow."
+          },
+          "tenant_host_identity_resolution": {
+            "label": "Host identity resolution",
+            "description": "Every request host is classified (apex, tenant, reserved, custom, malformed) and resolved to a tenant only via DB-verified slug or active custom domain."
+          },
+          "tenant_domain_activation": {
+            "label": "Custom domain activation",
+            "description": "DNS-verified custom domains can be activated on the tenant auth client under the domains permission, with audit and explicit lifecycle state."
+          },
+          "tenant_canonical_domain": {
+            "label": "Canonical domain",
+            "description": "One canonical domain per tenant, allowed only after ownership, activation, and routing are proven. No redirect is applied (local-only proof; public cutover deferred)."
+          },
+          "tenant_auth_custom_domain_callback": {
+            "label": "Custom domain sign-in origin",
+            "description": "Sign-in on an active custom domain derives the correct tenant realm and callback URL (locally proven derivation; real IdP login remains deferred)."
           }
         }
       }

@@ -1,6 +1,7 @@
 import crypto from "node:crypto";
 import pg from "pg";
 import { AuditAction, createAuditEvent, type AuditEventPort } from "@platform/audit-events";
+import { PostgresTenantDomainRegistry } from "../adapters/postgres-tenant-domain-registry.ts";
 
 // ---------------------------------------------------------------------------
 // Vanity domain ownership challenge (ADR-ACT-0188)
@@ -106,6 +107,11 @@ export async function createDomainChallenge(
     [input.organisationId, domain, token]
   );
 
+  // Lifecycle registry sync (ADR-ACT-0232): ensure an enabled tenant_domains
+  // row exists. Never downgrades an already-verified row; never overwrites a
+  // domain enabled for another tenant (the partial unique index no-ops it).
+  await new PostgresTenantDomainRegistry(deps.pool).ensurePending(input.organisationId, domain);
+
   return { kind: "ok", token, txtRecord: `_aldous-verify.${domain}` };
 }
 
@@ -141,10 +147,23 @@ export async function verifyDomainChallenge(
   if (new Date(challenge.expires_at) < new Date()) return { kind: "expired" };
   if (challenge.verified_at) return { kind: "already_verified" };
 
+  const registry = new PostgresTenantDomainRegistry(deps.pool);
   const txtRecords = await resolver.resolveTxt(`_aldous-verify.${domain}`).catch(() => []);
   const flatRecords = txtRecords.flat();
   if (flatRecords.length === 0) return { kind: "dns_not_found" };
-  if (!flatRecords.some((r) => r.includes(challenge.token))) return { kind: "dns_mismatch" };
+  if (!flatRecords.some((r) => r.includes(challenge.token))) {
+    // Persist the transient mismatch so the admin surface can show it
+    // honestly (ADR-ACT-0232). Never downgrades a verified row.
+    await registry
+      .getDomain(input.organisationId, domain)
+      .then(async (rec) => {
+        if (rec && rec.ownershipStatus !== "verified") {
+          await registry.markOwnership(input.organisationId, domain, "dns_mismatch");
+        }
+      })
+      .catch(() => undefined);
+    return { kind: "dns_mismatch" };
+  }
 
   await deps.audit.emit(
     createAuditEvent({
@@ -161,6 +180,13 @@ export async function verifyDomainChallenge(
   await deps.pool.query(
     "UPDATE public.vanity_domain_challenges SET verified_at = now() WHERE id = $1",
     [challenge.id]
+  );
+
+  // Lifecycle registry sync (ADR-ACT-0232): DNS ownership proven.
+  await new PostgresTenantDomainRegistry(deps.pool).markOwnership(
+    input.organisationId,
+    domain,
+    "verified"
   );
 
   return { kind: "ok" };

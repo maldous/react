@@ -1,86 +1,123 @@
 /**
- * Unit tests for ADR-0048 / ADR-ACT-0217 — tenant custom domains read + readiness.
- * Pure: mapDomainRows + computeDomainReadiness are deterministic functions of rows.
+ * Unit tests for ADR-0048 / ADR-ACT-0217 / ADR-ACT-0232 — tenant custom
+ * domains read + readiness over the tenant_domains lifecycle registry.
+ * Pure: mapRegistryRecords + computeDomainReadiness are deterministic.
  */
 
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import {
-  mapDomainRows,
+  mapRegistryRecords,
   computeDomainReadiness,
   classifyLocalRouting,
-  type DomainChallengeRow,
 } from "../../src/usecases/tenant-domains.ts";
+import {
+  canActivateAuthClient,
+  canSetCanonical,
+} from "../../src/usecases/tenant-domain-lifecycle.ts";
+import type { TenantDomainRecord } from "../../src/ports/tenant-domain-registry.ts";
 import { extractSlugFromHost } from "../../src/server/tenant-resolver.ts";
 
 const T0 = new Date("2026-06-01T00:00:00.000Z");
 const T1 = new Date("2026-06-02T00:00:00.000Z");
 const EXPIRES = new Date("2026-06-03T00:00:00.000Z");
 
-function row(over: Partial<DomainChallengeRow> & { domain: string }): DomainChallengeRow {
+function record(over: Partial<TenantDomainRecord> & { domain: string }): TenantDomainRecord {
   return {
-    created_at: T0,
-    expires_at: EXPIRES,
-    verified_at: null,
-    consumed_at: null,
+    organisationId: "org-1",
+    source: "custom",
+    ownershipStatus: "pending_dns",
+    authClientStatus: "inactive",
+    routingStatus: "routing_unknown",
+    tlsStatus: "tls_unknown",
+    canonical: false,
+    redirectPolicy: "no_redirect",
+    createdAt: T0,
+    verifiedAt: null,
+    authClientActivatedAt: null,
+    routingLocalProvenAt: null,
+    routingPublicProvenAt: null,
+    tlsLocalProvenAt: null,
+    tlsPublicProvenAt: null,
+    canonicalAt: null,
+    disabledAt: null,
     ...over,
   };
 }
 
-describe("mapDomainRows (ADR-0048)", () => {
-  it("an unverified challenge is pending_dns, routing_unknown, tls_unknown", () => {
-    const [d] = mapDomainRows([row({ domain: "app.acme.test" })]);
+describe("mapRegistryRecords (ADR-ACT-0232)", () => {
+  it("a pending registry row is pending_dns / inactive / routing_unknown / tls_unknown", () => {
+    const [d] = mapRegistryRecords([record({ domain: "app.acme.test" })]);
     assert.equal(d?.status, "pending_dns");
+    assert.equal(d?.authClient, "inactive");
     assert.equal(d?.routing, "routing_unknown");
     assert.equal(d?.tls, "tls_unknown");
+    assert.equal(d?.canonical, false);
+    assert.equal(d?.redirectPolicy, "no_redirect");
     assert.equal(d?.txtRecord, "_aldous-verify.app.acme.test");
     assert.equal(d?.verifiedAt, null);
   });
 
-  it("a verified (unconsumed) challenge is verified but routing stays unknown", () => {
-    const [d] = mapDomainRows([row({ domain: "app.acme.test", verified_at: T1 })]);
+  it("a verified row is verified but routing stays unknown (no inference)", () => {
+    const [d] = mapRegistryRecords([
+      record({ domain: "app.acme.test", ownershipStatus: "verified", verifiedAt: T1 }),
+    ]);
     assert.equal(d?.status, "verified");
     assert.equal(d?.routing, "routing_unknown");
     assert.equal(d?.verifiedAt, T1.toISOString());
   });
 
-  it("a verified + consumed challenge is verified; routing stays unknown (ADR-ACT-0225)", () => {
-    // Being added to the auth client (consumed) is NOT proof that traffic routes;
-    // routing_active (public) is never inferred from DB state.
-    const [d] = mapDomainRows([row({ domain: "app.acme.test", verified_at: T1, consumed_at: T1 })]);
-    assert.equal(d?.status, "verified");
-    assert.equal(d?.routing, "routing_unknown");
-  });
-
-  it("never claims TLS readiness — always tls_unknown", () => {
-    for (const r of mapDomainRows([
-      row({ domain: "a.acme.test", verified_at: T1, consumed_at: T1 }),
-      row({ domain: "b.acme.test" }),
-    ])) {
-      assert.equal(r.tls, "tls_unknown");
-    }
-  });
-
-  it("collapses multiple rows per domain — a verified row wins over a pending re-challenge", () => {
-    const rows = [
-      row({ domain: "app.acme.test", verified_at: T1, consumed_at: T1 }),
-      row({ domain: "app.acme.test" }), // a later pending re-challenge
-    ];
-    const mapped = mapDomainRows(rows);
-    assert.equal(mapped.length, 1);
-    assert.equal(mapped[0]?.status, "verified");
-    assert.equal(mapped[0]?.routing, "routing_unknown");
-  });
-
-  it("returns one stable, alphabetically-ordered entry per domain", () => {
-    const mapped = mapDomainRows([
-      row({ domain: "zeta.acme.test" }),
-      row({ domain: "alpha.acme.test", verified_at: T1 }),
+  it("auth-client activation does NOT imply routing (ADR-ACT-0225 honesty rule)", () => {
+    const [d] = mapRegistryRecords([
+      record({
+        domain: "app.acme.test",
+        ownershipStatus: "verified",
+        verifiedAt: T1,
+        authClientStatus: "active",
+        authClientActivatedAt: T1,
+      }),
     ]);
-    assert.deepEqual(
-      mapped.map((d) => d.domain),
-      ["alpha.acme.test", "zeta.acme.test"]
+    assert.equal(d?.authClient, "active");
+    assert.equal(d?.routing, "routing_unknown");
+    assert.equal(d?.tls, "tls_unknown");
+  });
+
+  it("a persisted local routing proof surfaces as routing_local_active with its proven-at", () => {
+    const [d] = mapRegistryRecords([
+      record({
+        domain: "app.acme.test",
+        ownershipStatus: "verified",
+        authClientStatus: "active",
+        routingStatus: "routing_local_active",
+        routingLocalProvenAt: T1,
+      }),
+    ]);
+    assert.equal(d?.routing, "routing_local_active");
+    assert.equal(d?.routingLocalProvenAt, T1.toISOString());
+    assert.equal(d?.routingPublicProvenAt, null);
+  });
+
+  it("dns_mismatch is surfaced honestly", () => {
+    const [d] = mapRegistryRecords([
+      record({ domain: "app.acme.test", ownershipStatus: "dns_mismatch" }),
+    ]);
+    assert.equal(d?.status, "dns_mismatch");
+  });
+
+  it("challenge expiry is joined per domain", () => {
+    const [d] = mapRegistryRecords(
+      [record({ domain: "app.acme.test" })],
+      new Map([["app.acme.test", EXPIRES]])
     );
+    assert.equal(d?.expiresAt, EXPIRES.toISOString());
+  });
+
+  it("canonical flag + timestamp pass through", () => {
+    const [d] = mapRegistryRecords([
+      record({ domain: "app.acme.test", canonical: true, canonicalAt: T1 }),
+    ]);
+    assert.equal(d?.canonical, true);
+    assert.equal(d?.canonicalAt, T1.toISOString());
   });
 });
 
@@ -95,7 +132,7 @@ describe("computeDomainReadiness (ADR-0048)", () => {
   });
 
   it("domains exist but none verified → pending_verification", () => {
-    const domains = mapDomainRows([row({ domain: "app.acme.test" })]);
+    const domains = mapRegistryRecords([record({ domain: "app.acme.test" })]);
     const r = computeDomainReadiness(domains);
     assert.equal(r.status, "pending_verification");
     assert.equal(r.total, 1);
@@ -104,9 +141,9 @@ describe("computeDomainReadiness (ADR-0048)", () => {
   });
 
   it("at least one verified domain → verified", () => {
-    const domains = mapDomainRows([
-      row({ domain: "app.acme.test", verified_at: T1 }),
-      row({ domain: "other.acme.test" }),
+    const domains = mapRegistryRecords([
+      record({ domain: "app.acme.test", ownershipStatus: "verified", verifiedAt: T1 }),
+      record({ domain: "other.acme.test" }),
     ]);
     const r = computeDomainReadiness(domains);
     assert.equal(r.status, "verified");
@@ -132,6 +169,77 @@ describe("classifyLocalRouting (ADR-ACT-0225)", () => {
       classifyLocalRouting({ reachable: true, tenantContextMatched: false }),
       "routing_unknown"
     );
+  });
+});
+
+describe("canActivateAuthClient (ADR-ACT-0232 pure guard)", () => {
+  it("requires an existing, enabled row", () => {
+    assert.deepEqual(canActivateAuthClient(null), { ok: false, reason: "not_found" });
+    assert.deepEqual(canActivateAuthClient(record({ domain: "a.t", disabledAt: T1 })), {
+      ok: false,
+      reason: "not_found",
+    });
+  });
+  it("requires DNS-verified ownership", () => {
+    assert.deepEqual(canActivateAuthClient(record({ domain: "a.t" })), {
+      ok: false,
+      reason: "not_verified",
+    });
+    assert.deepEqual(
+      canActivateAuthClient(record({ domain: "a.t", ownershipStatus: "dns_mismatch" })),
+      { ok: false, reason: "not_verified" }
+    );
+  });
+  it("rejects double activation", () => {
+    assert.deepEqual(
+      canActivateAuthClient(
+        record({ domain: "a.t", ownershipStatus: "verified", authClientStatus: "active" })
+      ),
+      { ok: false, reason: "already_active" }
+    );
+  });
+  it("allows verified + inactive", () => {
+    assert.deepEqual(
+      canActivateAuthClient(record({ domain: "a.t", ownershipStatus: "verified" })),
+      {
+        ok: true,
+      }
+    );
+  });
+});
+
+describe("canSetCanonical (ADR-ACT-0232 pure guard)", () => {
+  it("requires verified ownership, active auth client, and proven routing — in that order", () => {
+    assert.deepEqual(canSetCanonical(null), { ok: false, reason: "not_found" });
+    assert.deepEqual(canSetCanonical(record({ domain: "a.t" })), {
+      ok: false,
+      reason: "not_verified",
+    });
+    assert.deepEqual(canSetCanonical(record({ domain: "a.t", ownershipStatus: "verified" })), {
+      ok: false,
+      reason: "auth_client_inactive",
+    });
+    assert.deepEqual(
+      canSetCanonical(
+        record({ domain: "a.t", ownershipStatus: "verified", authClientStatus: "active" })
+      ),
+      { ok: false, reason: "routing_not_proven" }
+    );
+  });
+  it("allows locally proven routing (labelled local) and public routing", () => {
+    for (const routingStatus of ["routing_local_active", "routing_active"] as const) {
+      assert.deepEqual(
+        canSetCanonical(
+          record({
+            domain: "a.t",
+            ownershipStatus: "verified",
+            authClientStatus: "active",
+            routingStatus,
+          })
+        ),
+        { ok: true }
+      );
+    }
   });
 });
 

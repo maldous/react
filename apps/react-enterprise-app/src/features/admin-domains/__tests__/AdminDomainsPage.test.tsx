@@ -13,6 +13,10 @@ import {
   adminDomainsCreateHandler,
   adminDomainsVerifyHandler,
   adminDomainsRemoveHandler,
+  adminDomainsActivateHandler,
+  adminDomainsProbeRoutingHandler,
+  adminDomainsSetCanonicalHandler,
+  adminDomainsUnsetCanonicalHandler,
 } from "../../../msw";
 import { AdminDomainsPage } from "../AdminDomainsPage";
 
@@ -123,5 +127,148 @@ describe("AdminDomainsPage (ADR-0048)", () => {
     const { container } = renderPage();
     await screen.findByTestId("admin-domains-table");
     expect(await axe(container)).toHaveNoViolations();
+  });
+});
+
+// --- ADR-ACT-0232 lifecycle fixtures -----------------------------------------
+
+function domainFixture(over: Record<string, unknown> = {}) {
+  return {
+    domain: "app.example.com",
+    source: "custom",
+    status: "pending_dns",
+    authClient: "inactive",
+    tls: "tls_unknown",
+    routing: "routing_unknown",
+    canonical: false,
+    redirectPolicy: "no_redirect",
+    txtRecord: "_platform-verify.app.example.com",
+    createdAt: "2026-06-12T00:00:00Z",
+    verifiedAt: null,
+    expiresAt: null,
+    authClientActivatedAt: null,
+    routingLocalProvenAt: null,
+    routingPublicProvenAt: null,
+    tlsLocalProvenAt: null,
+    tlsPublicProvenAt: null,
+    canonicalAt: null,
+    ...over,
+  };
+}
+
+describe("AdminDomainsPage lifecycle actions (ADR-ACT-0232)", () => {
+  it("offers Activate only for a verified, inactive domain and announces activation", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminDomainsListHandler({
+        domains: [domainFixture({ status: "verified", verifiedAt: "2026-06-12T00:00:00Z" })],
+      }),
+      adminDomainsReadinessHandler(),
+      adminDomainsActivateHandler()
+    );
+    renderPage();
+    const activateBtn = await screen.findByTestId("admin-domains-activate-app.example.com");
+    // verify is hidden for an already-verified domain
+    expect(screen.queryByTestId("admin-domains-verify-app.example.com")).toBeNull();
+    // probe/canonical/deactivate hidden while inactive
+    expect(screen.queryByTestId("admin-domains-probe-app.example.com")).toBeNull();
+    expect(screen.queryByTestId("admin-domains-set-canonical-app.example.com")).toBeNull();
+    expect(screen.queryByTestId("admin-domains-deactivate-app.example.com")).toBeNull();
+    await userEvent.click(activateBtn);
+    await waitFor(() =>
+      expect(
+        screen.getByTestId("admin-domains-lifecycle-announce-app.example.com")
+      ).not.toBeEmptyDOMElement()
+    );
+  });
+
+  it("offers the local routing probe + deactivate for an active domain; canonical stays hidden until routing is proven", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminDomainsListHandler({
+        domains: [
+          domainFixture({
+            status: "verified",
+            authClient: "active",
+            authClientActivatedAt: "2026-06-12T00:00:00Z",
+          }),
+        ],
+      }),
+      adminDomainsReadinessHandler(),
+      adminDomainsProbeRoutingHandler()
+    );
+    renderPage();
+    expect(await screen.findByTestId("admin-domains-probe-app.example.com")).toBeInTheDocument();
+    expect(screen.getByTestId("admin-domains-deactivate-app.example.com")).toBeInTheDocument();
+    // routing not proven -> set-canonical hidden (mirrors the server guard)
+    expect(screen.queryByTestId("admin-domains-set-canonical-app.example.com")).toBeNull();
+    await userEvent.click(screen.getByTestId("admin-domains-probe-app.example.com"));
+    await waitFor(() =>
+      expect(
+        screen.getByTestId("admin-domains-lifecycle-announce-app.example.com")
+      ).not.toBeEmptyDOMElement()
+    );
+  });
+
+  it("offers Set canonical once routing is locally proven, and unset for a canonical domain", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminDomainsListHandler({
+        domains: [
+          domainFixture({
+            domain: "app.example.com",
+            status: "verified",
+            authClient: "active",
+            routing: "routing_local_active",
+            routingLocalProvenAt: "2026-06-12T00:00:00Z",
+          }),
+          domainFixture({
+            domain: "canon.example.com",
+            status: "verified",
+            authClient: "active",
+            routing: "routing_local_active",
+            canonical: true,
+            canonicalAt: "2026-06-12T00:00:00Z",
+            txtRecord: "_platform-verify.canon.example.com",
+          }),
+        ],
+      }),
+      adminDomainsReadinessHandler(),
+      adminDomainsSetCanonicalHandler(),
+      adminDomainsUnsetCanonicalHandler()
+    );
+    renderPage();
+    expect(
+      await screen.findByTestId("admin-domains-set-canonical-app.example.com")
+    ).toBeInTheDocument();
+    expect(screen.getByTestId("admin-domains-canonical-canon.example.com")).toHaveTextContent(
+      "Canonical"
+    );
+    expect(
+      screen.getByTestId("admin-domains-unset-canonical-canon.example.com")
+    ).toBeInTheDocument();
+    // an already-canonical domain is not offered set-canonical again
+    expect(screen.queryByTestId("admin-domains-set-canonical-canon.example.com")).toBeNull();
+  });
+
+  it("hides every lifecycle action without tenant.domains.write", async () => {
+    server.use(
+      sessionHandler("viewer"),
+      adminDomainsListHandler({
+        domains: [
+          domainFixture({
+            status: "verified",
+            authClient: "active",
+            routing: "routing_local_active",
+          }),
+        ],
+      }),
+      adminDomainsReadinessHandler()
+    );
+    renderPage();
+    await screen.findByTestId("admin-domains-table");
+    for (const action of ["activate", "probe", "set-canonical", "deactivate", "remove"]) {
+      expect(screen.queryByTestId(`admin-domains-${action}-app.example.com`)).toBeNull();
+    }
   });
 });

@@ -340,3 +340,71 @@ http://*.aldous.info http://*.dev.localhost http://*.test.localhost http://*.sta
 		file_server
 	}
 }
+
+# ---------------------------------------------------------------------------
+# Custom tenant domains ? catch-all (ADR-ACT-0232)
+#
+# A verified + auth-client-activated custom domain (tenant_domains registry)
+# arrives with a Host header outside the apex zone, so no named vhost above
+# matches. This catch-all (lowest precedence ? Caddy prefers exact and
+# wildcard host matches first) gives such hosts the same tenant-app surface
+# as {slug}.aldous.info. Safe for unknown hosts: the BFF resolves tenants
+# ONLY from the DB-verified registry ? an unregistered host gets the public
+# SPA shell and `tenant: null` from /api/host-identity, never tenant data.
+# Public DNS/TLS for custom domains is Cloudflare-terminated (external).
+# ---------------------------------------------------------------------------
+http:// {
+	# Keycloak realm endpoints ? publicly accessible (Keycloak handles its own auth)
+	handle /kc/realms/* {
+		reverse_proxy keycloak:8080
+	}
+
+	# Keycloak theme resources ? public (no session during the auth flow)
+	handle /kc/resources/* {
+		reverse_proxy keycloak:8080
+	}
+
+	# Content-hashed static assets
+	@customAssets path /assets/*
+	handle @customAssets {
+		header Cache-Control "public, max-age=31536000, immutable"
+		root * /srv
+		file_server
+	}
+
+	# BFF ? /internal/* intentionally NOT listed (same reason as the blocks above)
+	handle /api/* {
+		import platform_api_proxy
+	}
+	handle /auth/* {
+		header X-Content-Type-Options nosniff
+		header X-Frame-Options DENY
+		header Referrer-Policy strict-origin-when-cross-origin
+		header Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=()"
+		header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'"
+		header Cache-Control "no-cache, no-store, must-revalidate"
+		import platform_api_proxy
+	}
+	handle /healthz {
+		import platform_api_proxy
+	}
+	handle /readyz {
+		import platform_api_proxy
+	}
+	handle /version {
+		import platform_api_proxy
+	}
+
+	# Tenant React SPA
+	handle {
+		header X-Content-Type-Options nosniff
+		header X-Frame-Options DENY
+		header Referrer-Policy strict-origin-when-cross-origin
+		header Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=()"
+		header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'"
+		header Cache-Control "no-cache, no-store, must-revalidate"
+		root * /srv
+		try_files {path} /index.html
+		file_server
+	}
+}

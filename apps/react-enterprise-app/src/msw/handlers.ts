@@ -125,18 +125,28 @@ export function adminIdpMappingUpdateHandler() {
   );
 }
 
-// --- Tenant custom domains (ADR-0048) ---
+// --- Tenant custom domains (ADR-0048 / ADR-ACT-0232 full lifecycle) ---
 const domainsListFixture = {
   domains: [
     {
       domain: "app.example.com",
+      source: "custom",
       status: "pending_dns",
+      authClient: "inactive",
       tls: "tls_unknown",
       routing: "routing_unknown",
+      canonical: false,
+      redirectPolicy: "no_redirect",
       txtRecord: "_platform-verify.app.example.com",
       createdAt: "2026-06-12T00:00:00Z",
       verifiedAt: null,
       expiresAt: null,
+      authClientActivatedAt: null,
+      routingLocalProvenAt: null,
+      routingPublicProvenAt: null,
+      tlsLocalProvenAt: null,
+      tlsPublicProvenAt: null,
+      canonicalAt: null,
     },
   ],
 };
@@ -180,6 +190,55 @@ export function adminDomainsVerifyHandler() {
 }
 export function adminDomainsRemoveHandler() {
   return http.delete("/api/org/domains/:domain", () => new HttpResponse(null, { status: 204 }));
+}
+export function adminDomainsActivateHandler() {
+  return http.post("/api/org/domains/:domain/activate", ({ params }) =>
+    HttpResponse.json({
+      domain: decodeURIComponent(String(params["domain"])),
+      authClient: "active",
+      authClientActivatedAt: "2026-06-12T00:00:00Z",
+    })
+  );
+}
+export function adminDomainsDeactivateHandler() {
+  return http.post("/api/org/domains/:domain/deactivate", ({ params }) =>
+    HttpResponse.json({
+      domain: decodeURIComponent(String(params["domain"])),
+      authClient: "inactive",
+      authClientActivatedAt: null,
+    })
+  );
+}
+export function adminDomainsProbeRoutingHandler(matched = true) {
+  return http.post("/api/org/domains/:domain/probe-routing-local", ({ params }) =>
+    HttpResponse.json({
+      domain: decodeURIComponent(String(params["domain"])),
+      reachable: matched,
+      tenantContextMatched: matched,
+      routing: matched ? "routing_local_active" : "routing_unknown",
+      routingLocalProvenAt: matched ? "2026-06-12T00:00:00Z" : null,
+    })
+  );
+}
+export function adminDomainsSetCanonicalHandler() {
+  return http.post("/api/org/domains/:domain/canonical", ({ params }) =>
+    HttpResponse.json({
+      domain: decodeURIComponent(String(params["domain"])),
+      canonical: true,
+      canonicalAt: "2026-06-12T00:00:00Z",
+      redirectPolicy: "no_redirect",
+    })
+  );
+}
+export function adminDomainsUnsetCanonicalHandler() {
+  return http.delete("/api/org/domains/:domain/canonical", ({ params }) =>
+    HttpResponse.json({
+      domain: decodeURIComponent(String(params["domain"])),
+      canonical: false,
+      canonicalAt: null,
+      redirectPolicy: "no_redirect",
+    })
+  );
 }
 
 // --- Tenant email sender (ADR-0047) ---
@@ -539,6 +598,11 @@ export const handlers = [
   adminReadinessHandler(),
   adminDomainsListHandler(),
   adminDomainsReadinessHandler(),
+  adminDomainsActivateHandler(),
+  adminDomainsDeactivateHandler(),
+  adminDomainsProbeRoutingHandler(),
+  adminDomainsSetCanonicalHandler(),
+  adminDomainsUnsetCanonicalHandler(),
   adminStorageReadinessHandler(),
   adminObservabilityReadinessHandler(),
   adminPlatformServicesHandler(),

@@ -2047,14 +2047,28 @@
         "operationId": "discoverOidc",
         "description": "Fetches the issuer/discovery URL (bounded timeout + size cap, HTTPS-only outside local) and returns a minimal redacted projection + classified validation. Never returns the raw document or a secret. ADR-0046.",
         "tags": ["Auth Settings"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Discovery result (metadata + classified validation)" },
-          "400": { "description": "Validation error or no tenant context" }
+          "200": {
+            "description": "Discovery result (metadata + classified validation)"
+          },
+          "400": {
+            "description": "Validation error or no tenant context"
+          }
         }
       }
     },
@@ -2064,13 +2078,28 @@
         "operationId": "getIdpCallbackUrl",
         "description": "Returns the Keycloak broker callback URL derived from the tenant realm + alias. No secret. ADR-0046.",
         "tags": ["Auth Settings"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "parameters": [
-          { "name": "alias", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "alias",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
-          "200": { "description": "Callback URL" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "Callback URL"
+          },
+          "400": {
+            "description": "No tenant context"
+          }
         }
       }
     },
@@ -2080,13 +2109,28 @@
         "operationId": "testIdpConnection",
         "description": "Non-interactive probe: re-validates the stored issuer's discovery + JWKS and audits the classified result. Not a login simulation. ADR-0046.",
         "tags": ["Auth Settings"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "parameters": [
-          { "name": "alias", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "alias",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
-          "200": { "description": "Classified validation result" },
-          "404": { "description": "Identity provider not found" }
+          "200": {
+            "description": "Classified validation result"
+          },
+          "404": {
+            "description": "Identity provider not found"
+          }
         }
       }
     },
@@ -2096,13 +2140,28 @@
         "operationId": "getIdpMapping",
         "description": "Returns the bounded claim and group/role mapping managed for the IdP. No secret. ADR-0046.",
         "tags": ["Auth Settings"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "parameters": [
-          { "name": "alias", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "alias",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
-          "200": { "description": "Mapping config" },
-          "404": { "description": "Identity provider not found" }
+          "200": {
+            "description": "Mapping config"
+          },
+          "404": {
+            "description": "Identity provider not found"
+          }
         }
       },
       "patch": {
@@ -2110,18 +2169,41 @@
         "operationId": "updateIdpMapping",
         "description": "Full-replace of the managed (oidc-ent:) IdP mappers (audit-first). Role targets allowlisted to tenant roles. ADR-0046.",
         "tags": ["Auth Settings"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "parameters": [
-          { "name": "alias", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "alias",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Updated mapping" },
-          "400": { "description": "Validation error" },
-          "404": { "description": "Identity provider not found" }
+          "200": {
+            "description": "Updated mapping"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "404": {
+            "description": "Identity provider not found"
+          }
         }
       }
     },
@@ -2276,10 +2358,18 @@
         "operationId": "getEmailSender",
         "description": "Returns the redacted email sender settings + readiness for the tenant (FQDN/session). Never returns the secret. ADR-0047.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Email sender settings" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "Email sender settings"
+          },
+          "400": {
+            "description": "No tenant context"
+          }
         }
       },
       "patch": {
@@ -2287,14 +2377,28 @@
         "operationId": "updateEmailSender",
         "description": "Updates the sender config (audit-first). smtpPassword/apiKey are write-only; a blank/absent secret preserves the stored one. ADR-0047.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Updated settings" },
-          "400": { "description": "Validation error or no tenant context" }
+          "200": {
+            "description": "Updated settings"
+          },
+          "400": {
+            "description": "Validation error or no tenant context"
+          }
         }
       }
     },
@@ -2304,10 +2408,18 @@
         "operationId": "getEmailSenderReadiness",
         "description": "Returns the classified email sender readiness status. Never faked. ADR-0047.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Readiness status" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "Readiness status"
+          },
+          "400": {
+            "description": "No tenant context"
+          }
         }
       }
     },
@@ -2317,14 +2429,28 @@
         "operationId": "testEmailSender",
         "description": "Sends a test message to a supplied recipient via the configured provider; audit-first; classified result; never exposes the secret. ADR-0047.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Classified test result" },
-          "400": { "description": "Validation error or no tenant context" }
+          "200": {
+            "description": "Classified test result"
+          },
+          "400": {
+            "description": "Validation error or no tenant context"
+          }
         }
       }
     },
@@ -2334,10 +2460,18 @@
         "operationId": "listOrgDomains",
         "description": "Lists the tenant's custom domains with honest per-domain verification, TLS, and routing status (FQDN/session). ADR-0048.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Domain list" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "Domain list"
+          },
+          "400": {
+            "description": "No tenant context"
+          }
         }
       },
       "post": {
@@ -2345,14 +2479,28 @@
         "operationId": "createOrgDomain",
         "description": "Creates a DNS-TXT ownership challenge for a domain (audit-first). Returns the PUBLIC TXT record + token to publish. Tenant authority is FQDN/session, never the body. ADR-0048.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "201": { "description": "Challenge created" },
-          "400": { "description": "Validation error or no tenant context" }
+          "201": {
+            "description": "Challenge created"
+          },
+          "400": {
+            "description": "Validation error or no tenant context"
+          }
         }
       }
     },
@@ -2362,10 +2510,18 @@
         "operationId": "getOrgDomainsReadiness",
         "description": "Returns the classified custom-domain readiness (no_domains / pending_verification / verified / degraded). Never faked. ADR-0048.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Readiness status" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "Readiness status"
+          },
+          "400": {
+            "description": "No tenant context"
+          }
         }
       }
     },
@@ -2375,14 +2531,31 @@
         "operationId": "verifyOrgDomain",
         "description": "Performs a bounded DNS-TXT lookup and classifies the result (verified / dns_mismatch / pending_dns); audit-first on success. ADR-0048.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "parameters": [
-          { "name": "domain", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "domain",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
-          "200": { "description": "Classified verification result" },
-          "404": { "description": "No active challenge" },
-          "422": { "description": "Challenge expired" }
+          "200": {
+            "description": "Classified verification result"
+          },
+          "404": {
+            "description": "No active challenge"
+          },
+          "422": {
+            "description": "Challenge expired"
+          }
         }
       }
     },
@@ -2392,14 +2565,31 @@
         "operationId": "removeOrgDomain",
         "description": "Removes the domain from the tenant auth client (audit-first). Tenant authority is FQDN/session. ADR-0048.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "parameters": [
-          { "name": "domain", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "domain",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
-          "204": { "description": "Removed" },
-          "400": { "description": "Validation error or no tenant context" },
-          "503": { "description": "No realm-admin credential configured" }
+          "204": {
+            "description": "Removed"
+          },
+          "400": {
+            "description": "Validation error or no tenant context"
+          },
+          "503": {
+            "description": "No realm-admin credential configured"
+          }
         }
       }
     },
@@ -2409,10 +2599,18 @@
         "operationId": "getOrgStorageReadiness",
         "description": "Returns the classified storage readiness (configured / not_configured / provider_unreachable / isolation_failed). Runs a live write/read/delete probe when configured; never returns a credential; never faked. ADR-0049.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Storage readiness" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "Storage readiness"
+          },
+          "400": {
+            "description": "No tenant context"
+          }
         }
       }
     },
@@ -2422,10 +2620,18 @@
         "operationId": "probeOrgStorage",
         "description": "Operator-triggered live write/read/delete probe under the tenant key prefix plus a foreign-key isolation check (audit-first). Returns the per-step result; never returns a credential. ADR-0049.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Probe result" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "Probe result"
+          },
+          "400": {
+            "description": "No tenant context"
+          }
         }
       }
     },
@@ -2435,10 +2641,18 @@
         "operationId": "getOrgObservabilityReadiness",
         "description": "Returns the classified observability readiness from a bounded, tenant-scoped Loki log query plus a structural high-cardinality-label guard. No log line or label value is returned; never faked. ADR-0050.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Observability readiness" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "Observability readiness"
+          },
+          "400": {
+            "description": "No tenant context"
+          }
         }
       }
     },
@@ -2448,10 +2662,18 @@
         "operationId": "listOrgWebhooks",
         "description": "Lists the tenant's webhook subscriptions (FQDN/session). Never returns the signing secret (only hasSecret). ADR-0051.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Webhook list" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "Webhook list"
+          },
+          "400": {
+            "description": "No tenant context"
+          }
         }
       },
       "post": {
@@ -2459,14 +2681,28 @@
         "operationId": "createOrgWebhook",
         "description": "Creates a subscription (audit-first) and returns the signing secret ONCE. Body carries no tenant id; url must be https (http only for localhost). ADR-0051.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "201": { "description": "Created (secret revealed once)" },
-          "400": { "description": "Validation error or no tenant context" }
+          "201": {
+            "description": "Created (secret revealed once)"
+          },
+          "400": {
+            "description": "Validation error or no tenant context"
+          }
         }
       }
     },
@@ -2476,10 +2712,18 @@
         "operationId": "getOrgWebhooksReadiness",
         "description": "Returns the classified webhooks readiness (no_subscriptions / configured / degraded). Never faked. ADR-0051.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Readiness status" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "Readiness status"
+          },
+          "400": {
+            "description": "No tenant context"
+          }
         }
       }
     },
@@ -2489,18 +2733,41 @@
         "operationId": "updateOrgWebhook",
         "description": "Updates url/events/enabled (audit-first). Never returns the secret. ADR-0051.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Updated subscription" },
-          "400": { "description": "Validation error or no tenant context" },
-          "404": { "description": "Webhook not found" }
+          "200": {
+            "description": "Updated subscription"
+          },
+          "400": {
+            "description": "Validation error or no tenant context"
+          },
+          "404": {
+            "description": "Webhook not found"
+          }
         }
       },
       "delete": {
@@ -2508,14 +2775,31 @@
         "operationId": "deleteOrgWebhook",
         "description": "Deletes the subscription (audit-first). ADR-0051.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
-          "204": { "description": "Deleted" },
-          "400": { "description": "Validation error or no tenant context" },
-          "404": { "description": "Webhook not found" }
+          "204": {
+            "description": "Deleted"
+          },
+          "400": {
+            "description": "Validation error or no tenant context"
+          },
+          "404": {
+            "description": "Webhook not found"
+          }
         }
       }
     },
@@ -2525,13 +2809,28 @@
         "operationId": "rotateOrgWebhookSecret",
         "description": "Generates a new signing secret (audit-first) and returns it ONCE. ADR-0051.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
-          "200": { "description": "New secret revealed once" },
-          "404": { "description": "Webhook not found" }
+          "200": {
+            "description": "New secret revealed once"
+          },
+          "404": {
+            "description": "Webhook not found"
+          }
         }
       }
     },
@@ -2541,13 +2840,28 @@
         "operationId": "testOrgWebhook",
         "description": "Dispatches a signed platform.test event (single immediate attempt; audit-first; recorded in the delivery log). Classified result; never exposes the secret. ADR-0051.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
-          "200": { "description": "Classified test result" },
-          "404": { "description": "Webhook not found" }
+          "200": {
+            "description": "Classified test result"
+          },
+          "404": {
+            "description": "Webhook not found"
+          }
         }
       }
     },
@@ -2557,13 +2871,28 @@
         "operationId": "listOrgWebhookDeliveries",
         "description": "Lists the most recent delivery attempts for a subscription. ADR-0051.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
-          "200": { "description": "Delivery list" },
-          "404": { "description": "Webhook not found" }
+          "200": {
+            "description": "Delivery list"
+          },
+          "404": {
+            "description": "Webhook not found"
+          }
         }
       }
     },
@@ -2571,15 +2900,30 @@
       "get": {
         "summary": "Get per-subscription webhook delivery metrics",
         "operationId": "getOrgWebhookMetrics",
-        "description": "Returns delivery health counts (total/delivered/failed/dead/pending) + last status/timestamps. Safe metadata only — never payload, headers, or the signing secret. ADR-ACT-0226.",
+        "description": "Returns delivery health counts (total/delivered/failed/dead/pending) + last status/timestamps. Safe metadata only \u2014 never payload, headers, or the signing secret. ADR-ACT-0226.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
-          "200": { "description": "Subscription delivery metrics" },
-          "404": { "description": "Webhook not found" }
+          "200": {
+            "description": "Subscription delivery metrics"
+          },
+          "404": {
+            "description": "Webhook not found"
+          }
         }
       }
     },
@@ -2589,14 +2933,36 @@
         "operationId": "redriveOrgWebhookDelivery",
         "description": "Requeues a single DEAD delivery as pending (attempt reset, due now); audit-first; idempotent (a non-dead delivery requeues 0). ADR-ACT-0226.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } },
-          { "name": "deliveryId", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deliveryId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
-          "200": { "description": "Redrive result (count requeued)" },
-          "404": { "description": "Webhook not found" }
+          "200": {
+            "description": "Redrive result (count requeued)"
+          },
+          "404": {
+            "description": "Webhook not found"
+          }
         }
       }
     },
@@ -2606,26 +2972,49 @@
         "operationId": "redriveOrgWebhookDead",
         "description": "Bulk requeue of all DEAD deliveries for the subscription as pending; audit-first. ADR-ACT-0226.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
-          "200": { "description": "Redrive result (count requeued)" },
-          "404": { "description": "Webhook not found" }
+          "200": {
+            "description": "Redrive result (count requeued)"
+          },
+          "404": {
+            "description": "Webhook not found"
+          }
         }
       }
     },
     "/api/org/platform/services/readiness": {
       "get": {
-        "summary": "Platform operations — local service readiness + workers",
+        "summary": "Platform operations \u2014 local service readiness + workers",
         "operationId": "getOrgPlatformServicesReadiness",
-        "description": "Read-only operator cockpit data: bounded health probes over a safe local-service allowlist + background-worker heartbeats + environment/version. Never returns secrets, DSNs, or raw env — only known-safe localhost console URLs. ADR-ACT-0228.",
+        "description": "Read-only operator cockpit data: bounded health probes over a safe local-service allowlist + background-worker heartbeats + environment/version. Never returns secrets, DSNs, or raw env \u2014 only known-safe localhost console URLs. ADR-ACT-0228.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Platform service + worker readiness" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "Platform service + worker readiness"
+          },
+          "400": {
+            "description": "No tenant context"
+          }
         }
       }
     },
@@ -2646,6 +3035,190 @@
           },
           "400": {
             "description": "No tenant context"
+          }
+        }
+      }
+    },
+    "/api/host-identity": {
+      "get": {
+        "summary": "Classify the request host and resolve its tenant",
+        "operationId": "getHostIdentity",
+        "description": "Public, host-keyed. Returns the host identity classification (apex / tenant_slug / reserved_subdomain / invalid_subdomain / custom_domain_candidate / malformed) and, when the host resolves, the tenant slug + hostSource (slug | custom_domain). Public values only. ADR-ACT-0231/0232.",
+        "tags": ["Public"],
+        "responses": {
+          "200": {
+            "description": "Host identity classification"
+          }
+        }
+      }
+    },
+    "/api/org/domains/:domain/activate": {
+      "post": {
+        "summary": "Activate a verified custom domain on the tenant auth client",
+        "operationId": "activateOrgDomain",
+        "description": "Requires DNS-verified ownership; adds the redirect URI + web origin to the tenant Keycloak client, marks auth_client_status active, and consumes the ownership challenge. tenant.domains.write. ADR-ACT-0232.",
+        "tags": ["Organisation"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Activated"
+          },
+          "404": {
+            "description": "Unknown domain"
+          },
+          "409": {
+            "description": "Already active"
+          },
+          "422": {
+            "description": "Ownership not verified"
+          },
+          "503": {
+            "description": "Auth settings credential not configured"
+          }
+        }
+      }
+    },
+    "/api/org/domains/:domain/deactivate": {
+      "post": {
+        "summary": "Deactivate a custom domain on the tenant auth client",
+        "operationId": "deactivateOrgDomain",
+        "description": "Removes the redirect URI + web origin from the tenant Keycloak client; clears canonical and resets routing claims. tenant.domains.write. ADR-ACT-0232.",
+        "tags": ["Organisation"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deactivated"
+          },
+          "404": {
+            "description": "Unknown domain"
+          },
+          "409": {
+            "description": "Not active"
+          },
+          "503": {
+            "description": "Auth settings credential not configured"
+          }
+        }
+      }
+    },
+    "/api/org/domains/:domain/probe-routing-local": {
+      "post": {
+        "summary": "Run the LOCAL reverse-proxy routing probe for a custom domain",
+        "operationId": "probeOrgDomainRoutingLocal",
+        "description": "Live probe through the local Caddy: routing_local_active is recorded ONLY when the proxy was reachable AND the response proved the expected tenant context. Local-only; never claims public routing. tenant.domains.write. ADR-ACT-0232.",
+        "tags": ["Organisation"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Probe outcome (honest; may be routing_unknown)"
+          },
+          "404": {
+            "description": "Unknown domain"
+          }
+        }
+      }
+    },
+    "/api/org/domains/:domain/canonical": {
+      "post": {
+        "summary": "Mark a custom domain canonical for the tenant",
+        "operationId": "setOrgDomainCanonical",
+        "description": "Guards: verified ownership + active auth client + proven routing. At most one canonical domain per tenant; redirect_policy stays no_redirect (no redirect behaviour is implemented). tenant.domains.write. ADR-ACT-0232.",
+        "tags": ["Organisation"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Canonical set"
+          },
+          "404": {
+            "description": "Unknown domain"
+          },
+          "422": {
+            "description": "Canonical guards failed"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Unset the canonical flag for a custom domain",
+        "operationId": "unsetOrgDomainCanonical",
+        "description": "tenant.domains.write. ADR-ACT-0232.",
+        "tags": ["Organisation"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Canonical unset"
+          },
+          "404": {
+            "description": "Unknown domain"
           }
         }
       }

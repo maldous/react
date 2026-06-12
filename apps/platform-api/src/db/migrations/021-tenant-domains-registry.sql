@@ -87,6 +87,10 @@ SELECT DISTINCT ON (c.organisation_id, c.domain)
   c.verified_at,
   CASE WHEN c.verified_at IS NOT NULL THEN c.consumed_at ELSE NULL END
 FROM public.vanity_domain_challenges c
+-- Long-lived local databases may hold orphan challenge rows (the table predates
+-- the FK in some environments and old proof runs deleted their organisations).
+-- Only organisations that still exist are backfilled.
+JOIN public.organisations o ON o.id = c.organisation_id
 ORDER BY
   c.organisation_id,
   c.domain,

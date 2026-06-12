@@ -161,7 +161,7 @@ export const CAPABILITIES: readonly CapabilityDefinition[] = [
     readinessKind: "invariant-ready",
   }),
   // Custom domains: DNS-ownership proof + add/remove on the tenant auth client are
-  // implemented (ADR-0048). TLS issuance and live end-to-end routing/canonical
+  // implemented (ADR-0048). TLS issuance and PUBLIC end-to-end routing/canonical
   // cutover are NOT verified, so the capability is honestly `partial`.
   cap("tenant_domains", "configuration", {
     adminRoute: "/admin/domains",
@@ -169,6 +169,39 @@ export const CAPABILITIES: readonly CapabilityDefinition[] = [
     implementationStatus: "partial",
     readinessKind: "tenant-domains",
     detailKey: `${A}.tenant_domains.action`,
+  }),
+  // Host identity resolution (ADR-ACT-0231): pure classification + slug AND
+  // active-custom-domain tenant resolution, unit + live proven
+  // (proof:domain-identity-matrix, proof:tenant-custom-domain-resolution).
+  cap("tenant_host_identity_resolution", "identity", {
+    implementationStatus: "implemented",
+    readinessKind: "invariant-ready",
+  }),
+  // Domain auth-client activation under tenant.domains.write (ADR-ACT-0232):
+  // ownership-gated, audit-first, registry-persisted; locally proven
+  // (proof:tenant-domain-canonical exercises the activation guard chain).
+  cap("tenant_domain_activation", "configuration", {
+    adminRoute: "/admin/domains",
+    requiredPermission: "tenant.domains.write",
+    implementationStatus: "implemented",
+    readinessKind: "invariant-ready",
+  }),
+  // Canonical domain (ADR-ACT-0232): guarded set/unset with no_redirect policy.
+  // PARTIAL: only LOCAL routing proof can gate it in this stack; public
+  // canonical cutover + redirects stay deferred — readiness is never claimed.
+  cap("tenant_canonical_domain", "configuration", {
+    adminRoute: "/admin/domains",
+    requiredPermission: "tenant.domains.write",
+    implementationStatus: "partial",
+    readinessKind: "deferred",
+  }),
+  // Custom-domain auth callback (ADR-ACT-0232): realm/redirect-URI/KC-origin
+  // derivation for ACTIVE custom domains is locally proven
+  // (proof:tenant-custom-domain-auth-origin); a real brokered login on a
+  // custom domain remains blocked with login simulation (ADR-ACT-0220).
+  cap("tenant_auth_custom_domain_callback", "authentication", {
+    implementationStatus: "partial",
+    readinessKind: "deferred",
   }),
   cap("email_sender", "configuration", {
     adminRoute: "/admin/email",

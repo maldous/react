@@ -180,6 +180,9 @@ export const handleAuthLogin: PipelineHandler = async (req, res) => {
   const host =
     (req.raw.headers["x-forwarded-host"] as string | undefined) ?? req.raw.headers["host"];
   const forwardedProto = req.raw.headers["x-forwarded-proto"] as string | undefined;
+  // An ACTIVE custom domain resolved this tenant from the registry — the host
+  // is DB-verified and is a legitimate auth origin (ADR-ACT-0232).
+  const customTenantHost = tenantCtx?.hostSource === "custom_domain";
 
   // Keycloak realm for this tenant's FQDN (ADR-0029 ?2b) — tenantCtx resolved above.
   // Falls back to the global platform realm when on aldous.info root or dev mode.
@@ -187,7 +190,7 @@ export const handleAuthLogin: PipelineHandler = async (req, res) => {
     ...(tenantCtx ? getKeycloakConfigForRealm(tenantCtx.realmName) : getKeycloakConfig()),
     // Override publicUrl with host-derived URL so every tenant gets the correct
     // Keycloak origin in the authorization redirect (ADR-0029, ADR-0032).
-    publicUrl: getKeycloakPublicUrl(host, forwardedProto),
+    publicUrl: getKeycloakPublicUrl(host, forwardedProto, customTenantHost),
   };
 
   const state = crypto.randomUUID();
@@ -201,7 +204,7 @@ export const handleAuthLogin: PipelineHandler = async (req, res) => {
     {
       state,
       codeChallenge,
-      redirectUri: getAuthCallbackUrl(host, forwardedProto),
+      redirectUri: getAuthCallbackUrl(host, forwardedProto, customTenantHost),
       // null for the platform account (normal Keycloak login); a validated broker
       // alias (e.g. mock-google) for third-party providers.
       ...(providerResult.idpHint ? { idpHint: providerResult.idpHint } : {}),
@@ -254,10 +257,13 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
   // The app must never see a raw Keycloak/BFF JSON error from the callback. Any
   // non-success way of landing here returns the user to the app's /login with ONE generic
   // error so Keycloak stays invisible (ADR-ACT-0157). callbackHost/Proto are set above.
+  // An ACTIVE custom domain (registry-resolved) is a DB-verified origin (ADR-ACT-0232).
+  const callbackCustomTenantHost = callbackTenantCtx?.hostSource === "custom_domain";
   const callbackAppProto = callbackProto ?? schemeFor(callbackHost);
-  const callbackAppBase = isAllowedHost(callbackHost)
-    ? `${callbackAppProto}://${callbackHost}`
-    : getAppBaseUrl();
+  const callbackAppBase =
+    isAllowedHost(callbackHost) || callbackCustomTenantHost
+      ? `${callbackAppProto}://${callbackHost}`
+      : getAppBaseUrl();
   const bounceToLogin = (): void => {
     res.raw.writeHead(302, {
       "Set-Cookie": buildClearPreAuthCookieHeader(),
@@ -300,7 +306,7 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
   const tokens = await exchangeCodeForTokens(
     {
       code,
-      redirectUri: getAuthCallbackUrl(callbackHost, callbackProto),
+      redirectUri: getAuthCallbackUrl(callbackHost, callbackProto, callbackCustomTenantHost),
       codeVerifier: authState.codeVerifier,
     },
     callbackKeycloakCfg
@@ -317,7 +323,11 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
   // log in as anyone". We have the brokered id_token here, so use it as id_token_hint for
   // a clean RP-logout, clear our cookies, and return the browser to /login?authError=…
   // (no bare JSON error page). ADR-ACT-0157.
-  const cbKcPublicBase = getKeycloakPublicUrl(callbackHost, callbackAppProto);
+  const cbKcPublicBase = getKeycloakPublicUrl(
+    callbackHost,
+    callbackAppProto,
+    callbackCustomTenantHost
+  );
   const clearKcAndReturnToLogin = (authError: string): void => {
     const params = new URLSearchParams({
       client_id: callbackKeycloakCfg.clientId,
@@ -409,10 +419,12 @@ export const handleAuthLogoutRedirect: PipelineHandler = async (req, res) => {
   // destroying the session.
   let realmName: string = getKeycloakConfig().realm; // platform realm default (sysadmin)
   let idTokenHint = "";
+  let logoutCustomTenantHost = false; // ACTIVE custom domain → verified origin (ADR-ACT-0232)
   if (sessionId) {
     try {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
       if (tenantCtx?.realmName) realmName = tenantCtx.realmName;
+      logoutCustomTenantHost = tenantCtx?.hostSource === "custom_domain";
     } catch {
       // Ignore resolution failures — fall back to platform realm
     }
@@ -463,7 +475,7 @@ export const handleAuthLogoutRedirect: PipelineHandler = async (req, res) => {
   // Pass host+scheme so getKeycloakPublicUrl returns the host-derived URL
   // (e.g. https://aldous.info/kc) rather than falling back to KEYCLOAK_PUBLIC_URL
   // which may be set to https://aldous.info (without /kc) in some environments.
-  const kcPublicBase = getKeycloakPublicUrl(host, scheme);
+  const kcPublicBase = getKeycloakPublicUrl(host, scheme, logoutCustomTenantHost);
   const endSessionParams = new URLSearchParams({
     client_id: kcCfg.clientId,
     post_logout_redirect_uri: postLogoutRedirectUri,
