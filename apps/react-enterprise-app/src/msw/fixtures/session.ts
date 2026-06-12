@@ -67,6 +67,8 @@ export const sessionFixtures: Record<SessionPersona, SessionActor> = {
       "member.write",
       "platform.logs.read",
       "platform.admin",
+      // Platform operations cockpit (ADR-ACT-0235) — mirrors resolvePermissions("system-admin").
+      "tenant.platform.read",
     ],
     displayName: "System Admin",
   },

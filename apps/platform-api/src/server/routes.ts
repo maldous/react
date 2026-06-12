@@ -3873,9 +3873,15 @@ export const routes: Route[] = [
     },
   },
   // ---------------------------------------------------------------------------
-  // Platform operations cockpit — service readiness + workers (ADR-ACT-0228).
-  // Read-only, tenant-scoped (FQDN/session), tenant.platform.read. Bounded health
-  // probes over a safe local-service allowlist; never returns secrets/DSNs/raw env.
+  // Platform operations cockpit — service readiness + workers (ADR-ACT-0228,
+  // hardened ADR-ACT-0235). Read-only, tenant.platform.read. Bounded service-
+  // specific health checks over a safe local-service allowlist; never returns
+  // secrets/DSNs/raw env. Console links follow the ADR-ACT-0233 clickthrough
+  // policy: global-only consoles are emitted ONLY for system-admin viewers.
+  //
+  // No FQDN scope: the payload is platform-global infra, not tenant data. A
+  // tenant-admin must still arrive with tenant context (tenant FQDN) — only a
+  // system-admin may read it from the apex host.
   // ---------------------------------------------------------------------------
   {
     method: "GET",
@@ -3885,10 +3891,10 @@ export const routes: Route[] = [
     requiredPermission: "tenant.platform.read",
     resource: "admin:platform",
     umaScope: "read" as const,
-    scope: "tenant" as const,
     handler: async (req, res) => {
+      const viewerIsSystemAdmin = req.actor!.roles.includes("system-admin");
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
-      if (!tenantCtx) {
+      if (!tenantCtx && !viewerIsSystemAdmin) {
         res.json(400, { code: "NO_TENANT", message: "No tenant context" });
         return;
       }
@@ -3898,10 +3904,14 @@ export const routes: Route[] = [
       const readiness = await buildPlatformServicesReadiness({
         httpProbe: async (url) => {
           try {
-            await fetch(url, { method: "GET", signal: AbortSignal.timeout(1500) });
-            return true; // any HTTP response = reachable
+            const response = await fetch(url, {
+              method: "GET",
+              signal: AbortSignal.timeout(1500),
+            });
+            const body = ((await response.text().catch(() => "")) || "").slice(0, 4096);
+            return { statusCode: response.status, body };
           } catch {
-            return false;
+            return null;
           }
         },
         pgProbe: async () => {
@@ -3913,6 +3923,7 @@ export const routes: Route[] = [
           }
         },
         redisConfigured: () => !!process.env["REDIS_URL"],
+        viewerIsSystemAdmin,
         getHeartbeat: getWorkerHeartbeat,
       });
       res.json(200, readiness);

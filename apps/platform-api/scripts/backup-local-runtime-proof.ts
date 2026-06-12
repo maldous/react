@@ -1,13 +1,17 @@
 /**
- * Local backup integrity runtime proof (ADR-ACT-0229). Local-only.
+ * Local backup integrity runtime proof (ADR-ACT-0229, hardened ADR-ACT-0235). Local-only.
  *
  *   1. seed a temp org with a UNIQUE marker
  *   2. run scripts/backup/postgres-backup.sh → a gzipped dump under an ignored dir
  *   3. the dump CONTAINS the marker (backup integrity) — without printing dump contents
- *   4. the restore script REFUSES without ENV=dev|test + CONFIRM_RESTORE (guard proven)
- *   5. cleanup (delete the org, remove the temp backup dir)
+ *      AND the dump file is owner-only (mode 600)
+ *   4. the BACKUP script REFUSES ENV=staging/prod without explicit ALLOW_BACKUP_ENV
+ *   5. the restore script REFUSES without ENV=dev|test + CONFIRM_RESTORE (both guards)
+ *   6. restore safety flags present (-v ON_ERROR_STOP=1 --single-transaction) — static
+ *      check, labelled as such (a full restore would overwrite the DB)
+ *   7. cleanup (delete the org, remove the temp backup dir)
  *
- * A full restore is intentionally NOT exercised here (it overwrites the DB); the guard +
+ * A full restore is intentionally NOT exercised here (it overwrites the DB); the guards +
  * backup integrity are proven instead. No dump contents / secrets are printed.
  *
  * Usage: npm run proof:backup-local   (Postgres up; pg_dump on PATH)
@@ -15,7 +19,7 @@
 
 import { execFileSync } from "node:child_process";
 import { gunzipSync } from "node:zlib";
-import { readFileSync, rmSync } from "node:fs";
+import { readFileSync, rmSync, statSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import pg from "pg";
@@ -44,9 +48,14 @@ async function main(): Promise<void> {
     orgId = ins.rows[0]!.id;
     check("seeded temp org with unique marker", !!orgId);
 
+    // Guard tests must not inherit ambient overrides that would defeat them.
+    const cleanEnv = { ...process.env };
+    delete cleanEnv["ALLOW_BACKUP_ENV"];
+    delete cleanEnv["CONFIRM_RESTORE"];
+
     // 2. Run the real backup script.
     const out = execFileSync("bash", ["scripts/backup/postgres-backup.sh"], {
-      env: { ...process.env, ENV: "dev", BACKUP_DIR: backupDir, POSTGRES_URL: url },
+      env: { ...cleanEnv, ENV: "dev", BACKUP_DIR: backupDir, POSTGRES_URL: url },
       encoding: "utf8",
     }).trim();
     check("backup script produced a gzipped dump", out.endsWith(".sql.gz"));
@@ -55,20 +64,47 @@ async function main(): Promise<void> {
     const dump = gunzipSync(readFileSync(out)).toString("utf8");
     check("backup contains the seeded marker (integrity)", dump.includes(marker));
     check("backup is non-trivial in size", dump.length > 1000, `${dump.length} bytes`);
+    const mode = statSync(out).mode & 0o777;
+    check("dump file is owner-only (mode 600)", mode === 0o600, `mode=${mode.toString(8)}`);
 
-    // 4. Restore guard: refuses without ENV=dev|test + CONFIRM_RESTORE.
-    let refused = false;
-    try {
-      execFileSync("bash", ["scripts/backup/postgres-restore.sh", out], {
-        env: { ...process.env, ENV: "prod" }, // wrong env + no confirm → must refuse
-        encoding: "utf8",
-        stdio: "pipe",
-      });
-    } catch (err) {
-      const msg = (err as { stderr?: string }).stderr ?? String(err);
-      refused = /refusing/.test(msg);
-    }
-    check("restore script REFUSES without ENV=dev|test + CONFIRM_RESTORE", refused);
+    // 4. Backup guard: ENV=prod without ALLOW_BACKUP_ENV must refuse (nothing dumped).
+    const refusedRun = (script: string, env: Record<string, string | undefined>): boolean => {
+      try {
+        execFileSync("bash", [script, out], { env, encoding: "utf8", stdio: "pipe" });
+        return false;
+      } catch (err) {
+        const msg = (err as { stderr?: string }).stderr ?? String(err);
+        return /refusing/.test(msg);
+      }
+    };
+    check(
+      "backup script REFUSES ENV=prod without ALLOW_BACKUP_ENV",
+      refusedRun("scripts/backup/postgres-backup.sh", {
+        ...cleanEnv,
+        ENV: "prod",
+        BACKUP_DIR: backupDir,
+        POSTGRES_URL: url,
+      })
+    );
+
+    // 5. Restore guards: wrong env refuses; right env without CONFIRM_RESTORE refuses.
+    check(
+      "restore script REFUSES ENV=prod (env guard)",
+      refusedRun("scripts/backup/postgres-restore.sh", { ...cleanEnv, ENV: "prod" })
+    );
+    check(
+      "restore script REFUSES ENV=dev without CONFIRM_RESTORE (confirm guard)",
+      refusedRun("scripts/backup/postgres-restore.sh", { ...cleanEnv, ENV: "dev" })
+    );
+
+    // 6. Restore safety flags (static check — a live restore would overwrite the DB).
+    const restoreSrc = readFileSync("scripts/backup/postgres-restore.sh", "utf8");
+    check(
+      "restore runs psql with -v ON_ERROR_STOP=1 --single-transaction (static)",
+      restoreSrc.includes("-v ON_ERROR_STOP=1") && restoreSrc.includes("--single-transaction")
+    );
+    const backupSrc = readFileSync("scripts/backup/postgres-backup.sh", "utf8");
+    check("backup script sets umask 077 (static)", backupSrc.includes("umask 077"));
   } catch (err) {
     check("backup lifecycle", false, err instanceof Error ? err.message : String(err));
   } finally {

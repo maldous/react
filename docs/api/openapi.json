@@ -3001,7 +3001,7 @@
       "get": {
         "summary": "Platform operations \u2014 local service readiness + workers",
         "operationId": "getOrgPlatformServicesReadiness",
-        "description": "Read-only operator cockpit data: bounded health probes over a safe local-service allowlist + background-worker heartbeats + environment/version. Never returns secrets, DSNs, or raw env \u2014 only known-safe localhost console URLs. ADR-ACT-0228.",
+        "description": "Read-only operator cockpit data: bounded service-specific health checks over a safe local-service allowlist (non-2xx responses classify as degraded, no response as unreachable) + background-worker heartbeats + environment/version. Never returns secrets, DSNs, or raw env \u2014 only known-safe localhost console URLs, classified per the ADR-ACT-0233 clickthrough policy: global-only console links are emitted ONLY for system-admin viewers; not-exposed services are never linked. Tenant context is required unless the viewer is system-admin (apex allowed). ADR-ACT-0228 / ADR-ACT-0235.",
         "tags": ["Organisation"],
         "security": [
           {
@@ -3013,7 +3013,7 @@
             "description": "Platform service + worker readiness"
           },
           "400": {
-            "description": "No tenant context"
+            "description": "No tenant context (non-system-admin viewer)"
           }
         }
       }

@@ -38,5 +38,7 @@ fi
 URL="${URL:-postgresql://platform:platformpassword@localhost:5433/platform}"
 
 echo "restoring ${FILE} into ${ENV} database…" >&2
-gunzip -c "$FILE" | psql "$URL" >/dev/null
+# ON_ERROR_STOP + --single-transaction: a failing statement aborts the whole restore
+# instead of leaving the database half-overwritten.
+gunzip -c "$FILE" | psql -v ON_ERROR_STOP=1 --single-transaction "$URL" >/dev/null
 echo "restored ${FILE}"

@@ -122,3 +122,91 @@ production readiness. Asserted by the unit test + the live proof.
 ## ACTION-REGISTER linkage
 
 ADR-ACT-0228 (Source: ADR-ACT-0227 review). Evidence: this file.
+
+---
+
+## Hardening tranche (ADR-ACT-0235, 2026-06-12)
+
+AI assistance: Claude (Fable 5), human-reviewed. Closes the review gaps on the
+ADR-ACT-0227/0228/0229 tranche.
+
+### Console visibility now follows the clickthrough policy
+
+- New contract field `consoleAccess: tenant_safe | global_only | not_exposed`
+  (`PlatformConsoleAccessSchema`), derived in `usecases/platform-services.ts` from the
+  ADR-ACT-0233 policy module (`CLICKTHROUGH_SERVICES` — single source of truth;
+  cockpit-only services fall back closed to `not_exposed`, `web_caddy` explicitly
+  `global_only`).
+- The BFF withholds global-only console URLs (pgAdmin, MinIO, Grafana, Mailpit,
+  ClickHouse, SonarQube, web/Caddy) from non-system-admin viewers; `not_exposed`
+  (WireMock — ADR-ACT-0233 "never linked") carries no URL for anyone; the tenant-safe
+  Keycloak link remains. The UI renders "System operator only" in place of withheld
+  global-only links.
+- `tenant.platform.read` added to the system-admin bundle (the payload is
+  platform-global infra); the route's FQDN scope was relaxed so a system-admin can read
+  it from the apex — a non-system-admin without tenant context still gets 400.
+- Tests: `platform-services.test.ts` proves tenant viewers never receive
+  pgAdmin/MinIO/Grafana/Mailpit/ClickHouse/Sonar links, system-admin viewers do,
+  WireMock never links, and registry classifications mirror the policy module.
+  `AdminPlatformPage.test.tsx` proves the same at the UI layer (tenant-admin
+  suppression + "System operator only"; Grafana/pgAdmin links on the system-admin
+  fixture).
+
+### Honest health semantics
+
+- "Any HTTP response = healthy" removed. `httpProbe` now returns `{statusCode, body}`:
+  non-2xx ⇒ `degraded`; no response ⇒ `unreachable`; 2xx + service-specific body check ⇒
+  `healthy`. Body checks: Grafana `/api/health` `database` must be ok (else degraded);
+  LocalStack `/_localstack/health` with any `error` service ⇒ degraded. Loki `/ready`,
+  ClickHouse `/ping`, MinIO `/minio/health/live`, Mailpit info all require 2xx.
+- Tests: 500/503 ⇒ degraded (never healthy), network error ⇒ unreachable, Grafana
+  failing-database ⇒ degraded on 200, LocalStack failed service ⇒ degraded,
+  unparseable 2xx body stays healthy.
+- Live: the hardened proof classified `web_caddy` as `degraded` (a non-2xx responder on
+  the configured port) — previously this would have read `healthy`.
+
+### MSW fixture accuracy
+
+The fixture mirrors the real `SERVICE_REGISTRY` (all 15 services, real categories and
+console URLs; postgres no longer carries a Grafana console URL). Default fixture =
+tenant-admin view (global-only links nulled); exported
+`platformServicesReadinessSystemAdminFixture` = system-admin view used by the
+console-link rendering test (Grafana).
+
+### Proof-ladder registry
+
+`PROOF_LADDER` in `@platform/contracts-admin` (`proof-registry.ts`) is the single
+registry consumed by `/admin/platform` and referenced by the README;
+`proof-registry.test.ts` reconciles it against `package.json` `proof:*` scripts (both
+directions) and asserts every entry is mentioned in the README. `proof:backup-local` is
+now in the ladder, the UI, and the README.
+
+### Proof env loading
+
+`proof:platform-services` resolves `POSTGRES_URL` **after** `loadLocalEnv()`, so
+`ENV=test` probes the `.env.test` stack. It also live-proves the tenant-view console
+gating (no global-only link in the tenant view; Keycloak retained).
+
+### Backup hardening
+
+- `postgres-backup.sh`: refuses any ENV outside dev|test unless explicit
+  `ALLOW_BACKUP_ENV=<ENV>`; `umask 077` + `chmod 600` on the dump.
+- `postgres-restore.sh`: `psql -v ON_ERROR_STOP=1 --single-transaction` (a failing
+  statement aborts instead of half-overwriting); dev/test + `CONFIRM_RESTORE` guards
+  unchanged.
+- `proof:backup-local` (all PASS live): dump integrity + mode 600, backup refusal for
+  ENV=prod without `ALLOW_BACKUP_ENV`, restore refusal for wrong env AND for missing
+  `CONFIRM_RESTORE`, plus static checks for the psql safety flags and umask (labelled
+  static — a live restore would overwrite the DB).
+
+### Gates run (all green)
+
+`tsc:check`, `test:platform-api` (645), `test:frontend:run` (179),
+`test:architecture` (792), `openapi:drift` (99 routes), `frontend:conventions`,
+`semgrep:gate`, `proof:platform-services` (live), `proof:backup-local` (live),
+`make check`.
+
+### ACTION-REGISTER linkage (hardening)
+
+ADR-ACT-0235 (Source: ADR-0029/ADR-0030; depends on ADR-ACT-0228). Evidence: this
+section.

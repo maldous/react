@@ -1,4 +1,5 @@
 import { Card, CardBody, Badge, LoadingState, LiveRegion } from "@platform/ui-design-system";
+import { PROOF_LADDER } from "@platform/contracts-admin";
 import { useTranslation } from "@platform/i18n-runtime";
 import { AdminQueryError } from "../admin/AdminQueryError";
 import { useSession } from "../../hooks/use-session";
@@ -108,20 +109,6 @@ export function AdminPlatformPage() {
   );
 }
 
-/** Static proof-ladder documentation index (NOT from the API). */
-const PROOF_LADDER = [
-  "proof:auth-oidc-enterprise",
-  "proof:email-sender",
-  "proof:tenant-domains",
-  "proof:tenant-storage",
-  "proof:tenant-observability",
-  "proof:webhooks",
-  "proof:webhook-worker",
-  "proof:tenant-domains-routing",
-  "proof:webhook-redrive",
-  "proof:platform-services",
-] as const;
-
 function SummaryItem({ label, value, testId }: { label: string; value: string; testId: string }) {
   return (
     <div className="flex items-center gap-2">
@@ -159,6 +146,11 @@ function ServiceRow({ service, t }: { service: PlatformServiceSummary; t: Transl
         >
           {t("feature.admin.platform.openConsole")}
         </a>
+      ) : service.consoleAccess === "global_only" ? (
+        // The BFF withholds global-only console links from non-system-admin viewers.
+        <span className="text-sm text-fg-muted">
+          {t("feature.admin.platform.systemOperatorOnly")}
+        </span>
       ) : null}
     </li>
   );

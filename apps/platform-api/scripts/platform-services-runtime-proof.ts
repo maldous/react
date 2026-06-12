@@ -1,22 +1,26 @@
 /**
- * Platform operations service-readiness runtime proof (ADR-ACT-0228).
+ * Platform operations service-readiness runtime proof (ADR-ACT-0228 / ADR-ACT-0235).
  *
- * Probes the SERVICE_REGISTRY against the live local stack (loads local .env):
+ * Probes the SERVICE_REGISTRY against the live local stack (loads local .env FIRST,
+ * so POSTGRES_URL honours .env.<ENV> when ENV is set):
  *   - Postgres via SELECT 1
- *   - HTTP services via bounded GET to their health URLs
+ *   - HTTP services via bounded GET to their health URLs (status + body classified —
+ *     a non-2xx response is degraded, never healthy)
  *   - Redis structurally (wired) — honest caveat (no per-call ping)
  * Asserts honest classification: default-up services are healthy; profile-gated
  * services that are not running are unreachable (NOT faked healthy); no secret printed.
+ * Also asserts the ADR-ACT-0233 console gating: a tenant-admin viewer never receives
+ * global-only console links (pgAdmin/MinIO/Grafana/…); WireMock is never linked.
  *
  * Usage: npm run proof:platform-services   (make compose-up-default for the base stack)
  */
 
 import pg from "pg";
-import { buildPlatformServicesReadiness } from "../src/usecases/platform-services.ts";
+import {
+  buildPlatformServicesReadiness,
+  type HttpProbeResult,
+} from "../src/usecases/platform-services.ts";
 import { loadLocalEnv } from "./lib/local-env.ts";
-
-const POSTGRES_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
@@ -26,27 +30,35 @@ function check(label: string, ok: boolean, detail = ""): void {
 
 async function main(): Promise<void> {
   console.log("# Platform operations service-readiness runtime proof\n");
+  // Env files load BEFORE any connection-string resolution (ADR-ACT-0235 fix):
+  // with ENV=test this proof probes the .env.test stack, not the dev default.
   loadLocalEnv();
+  const POSTGRES_URL =
+    process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
   const pool = new pg.Pool({ connectionString: POSTGRES_URL });
+  const httpProbe = async (url: string): Promise<HttpProbeResult | null> => {
+    try {
+      const response = await fetch(url, { method: "GET", signal: AbortSignal.timeout(2000) });
+      const body = ((await response.text().catch(() => "")) || "").slice(0, 4096);
+      return { statusCode: response.status, body };
+    } catch {
+      return null;
+    }
+  };
+  const pgProbe = async (): Promise<boolean> => {
+    try {
+      await pool.query("SELECT 1");
+      return true;
+    } catch {
+      return false;
+    }
+  };
   try {
     const readiness = await buildPlatformServicesReadiness({
-      httpProbe: async (url) => {
-        try {
-          await fetch(url, { method: "GET", signal: AbortSignal.timeout(2000) });
-          return true;
-        } catch {
-          return false;
-        }
-      },
-      pgProbe: async () => {
-        try {
-          await pool.query("SELECT 1");
-          return true;
-        } catch {
-          return false;
-        }
-      },
+      httpProbe,
+      pgProbe,
       redisConfigured: () => !!process.env["REDIS_URL"],
+      viewerIsSystemAdmin: true, // operator view — all exposed console links present
       getHeartbeat: () => null, // standalone proof: no running worker process
     });
 
@@ -81,6 +93,32 @@ async function main(): Promise<void> {
       readiness.services.every(
         (s) => s.consoleUrl === null || s.consoleUrl.startsWith("http://localhost:")
       )
+    );
+    check(
+      "WireMock is never linked (not_exposed, ADR-ACT-0233)",
+      readiness.services.find((s) => s.key === "wiremock")?.consoleUrl === null
+    );
+
+    // Console gating (ADR-ACT-0235): the same registry rendered for a TENANT-ADMIN
+    // viewer must withhold every global-only console link.
+    const tenantView = await buildPlatformServicesReadiness({
+      httpProbe,
+      pgProbe,
+      redisConfigured: () => !!process.env["REDIS_URL"],
+      viewerIsSystemAdmin: false,
+      getHeartbeat: () => null,
+    });
+    const leaked = tenantView.services.filter(
+      (s) => s.consoleAccess !== "tenant_safe" && s.consoleUrl !== null
+    );
+    check(
+      "tenant-admin view withholds ALL global-only console links (pgAdmin/MinIO/Grafana/…)",
+      leaked.length === 0,
+      leaked.map((s) => s.key).join(",")
+    );
+    check(
+      "tenant-admin view keeps the tenant-safe Keycloak link",
+      tenantView.services.find((s) => s.key === "keycloak")?.consoleUrl !== null
     );
   } catch (err) {
     check("platform services readiness", false, err instanceof Error ? err.message : String(err));

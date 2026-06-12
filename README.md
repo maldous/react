@@ -65,10 +65,16 @@ Every admin surface follows the same React stack: TanStack Router, TanStack Quer
 #### Local proof ladder
 
 Each capability has a repeatable local runtime proof (`npm run proof:*`) — all honest-skip
-(they `SKIP`, never fake, when a service is down) and **local-only**:
+(they `SKIP`, never fake, when a service is down) and **local-only**. The registry
+(`PROOF_LADDER` in `@platform/contracts-admin`, surfaced at `/admin/platform` and
+reconciled against `package.json` by `proof-registry.test.ts`):
+`proof:auth-settings`, `proof:auth-idps`, `proof:auth-credential-lifecycle`,
 `proof:auth-oidc-enterprise`, `proof:email-sender`, `proof:tenant-domains`,
 `proof:tenant-domains-routing`, `proof:tenant-storage`, `proof:tenant-observability`,
-`proof:webhooks`, `proof:webhook-worker`, `proof:webhook-redrive`, `proof:platform-services`.
+`proof:webhooks`, `proof:webhook-worker`, `proof:webhook-redrive`, `proof:platform-services`,
+`proof:backup-local`, `proof:domain-identity-matrix`, `proof:tenant-custom-domain-resolution`,
+`proof:tenant-domain-canonical`, `proof:tenant-custom-domain-auth-origin`,
+`proof:service-clickthrough-policy`.
 Public DNS/TLS, real-IdP OIDC login mapping, and real Cloudflare/AWS-IAM/Brevo/Sentry
 remain partial/deferred/blocked. See `docs/evidence/platform/platform-bedrock-foundation-review.md`.
 

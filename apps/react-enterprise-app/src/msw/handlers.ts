@@ -428,54 +428,85 @@ export function adminObservabilityReadinessHandler(
   return http.get("/api/org/observability/readiness", () => HttpResponse.json(response));
 }
 
+// Mirrors the platform-api SERVICE_REGISTRY + ADR-ACT-0233 console classifications
+// (keys, categories, console URLs). The platform-api unit suite owns the registry
+// truth; this fixture must track it — postgres/redis/loki/etc. carry NO console URL.
+const platformService = (
+  key: string,
+  category: string,
+  status: string,
+  consoleAccess: "tenant_safe" | "global_only" | "not_exposed",
+  consoleUrl: string | null,
+  detailKey: string | null = null
+) => ({
+  key,
+  labelKey: `feature.admin.platform.svc.${key}.label`,
+  category,
+  status,
+  localOnly: true,
+  consoleUrl,
+  consoleAccess,
+  checkedAt: "2026-06-12T00:00:00.000Z",
+  detailKey,
+});
+
+/** The full registry as the BFF returns it to a SYSTEM-ADMIN (global-only links present). */
+const platformServicesSystemAdminView = [
+  platformService("postgres", "data", "healthy", "not_exposed", null),
+  platformService("redis", "data", "configured", "not_exposed", null),
+  platformService("clickhouse", "data", "healthy", "global_only", "http://localhost:8124/play"),
+  platformService("minio", "storage", "healthy", "global_only", "http://localhost:9001"),
+  platformService("mailpit", "mail", "healthy", "global_only", "http://localhost:8025/mailpit"),
+  platformService("otel_collector", "observability", "healthy", "not_exposed", null),
+  platformService("loki", "observability", "healthy", "not_exposed", null),
+  platformService("grafana", "observability", "healthy", "global_only", "http://localhost:3200"),
+  platformService("keycloak", "auth", "healthy", "tenant_safe", "http://localhost:8090/kc"),
+  platformService(
+    "mock_oidc",
+    "auth",
+    "not_configured",
+    "not_exposed",
+    null,
+    "feature.admin.platform.svc.mock_oidc.detail"
+  ),
+  platformService("pgadmin", "data", "unreachable", "global_only", "http://localhost:5050/pgadmin"),
+  platformService("wiremock", "mocks", "unreachable", "not_exposed", null),
+  platformService("localstack", "mocks", "unreachable", "global_only", null),
+  platformService("sonarqube", "quality", "degraded", "global_only", "http://localhost:9064/sonar"),
+  platformService("web_caddy", "web", "unreachable", "global_only", "http://localhost:80"),
+];
+
+const platformWorkersFixture = [
+  {
+    key: "webhook-delivery",
+    labelKey: "feature.admin.platform.worker.webhook-delivery.label",
+    enabled: true,
+    intervalMs: 5000,
+    lastTickAt: null,
+    lastError: null,
+    status: "idle",
+    inMemory: true,
+  },
+];
+
+/** Default fixture = the TENANT-ADMIN view: the BFF nulls global-only console links. */
 const platformServicesReadinessFixture = {
   environment: "test",
   appVersion: "abc123",
-  services: [
-    {
-      key: "postgres",
-      labelKey: "feature.admin.platform.svc.postgres.label",
-      category: "data",
-      status: "healthy",
-      localOnly: true,
-      consoleUrl: "http://localhost:3200",
-      checkedAt: "2026-06-12T00:00:00.000Z",
-      detailKey: null,
-    },
-    {
-      key: "redis",
-      labelKey: "feature.admin.platform.svc.redis.label",
-      category: "data",
-      status: "unreachable",
-      localOnly: true,
-      consoleUrl: null,
-      checkedAt: "2026-06-12T00:00:00.000Z",
-      detailKey: null,
-    },
-    {
-      key: "mock_oidc",
-      labelKey: "feature.admin.platform.svc.mock_oidc.label",
-      category: "auth",
-      status: "not_configured",
-      localOnly: true,
-      consoleUrl: null,
-      checkedAt: "2026-06-12T00:00:00.000Z",
-      detailKey: "feature.admin.platform.svc.mock_oidc.detail",
-    },
-  ],
-  workers: [
-    {
-      key: "webhook-delivery",
-      labelKey: "feature.admin.platform.worker.webhook-delivery.label",
-      enabled: true,
-      intervalMs: 5000,
-      lastTickAt: null,
-      lastError: null,
-      status: "idle",
-      inMemory: true,
-    },
-  ],
+  services: platformServicesSystemAdminView.map((s) =>
+    s.consoleAccess === "tenant_safe" ? s : { ...s, consoleUrl: null }
+  ),
+  workers: platformWorkersFixture,
 };
+
+/** System-admin view: global-only console links present (e.g. Grafana/pgAdmin/MinIO). */
+export const platformServicesReadinessSystemAdminFixture = {
+  environment: "test",
+  appVersion: "abc123",
+  services: platformServicesSystemAdminView,
+  workers: platformWorkersFixture,
+};
+
 export function adminPlatformServicesHandler(
   response: Record<string, unknown> = platformServicesReadinessFixture
 ) {

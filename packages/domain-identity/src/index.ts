@@ -182,6 +182,10 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     "platform.clickthrough.grafana",
     "platform.audit.read_all",
     "platform.logs.read",
+    // Platform operations cockpit (ADR-ACT-0235): the readiness payload is
+    // platform-global infra, readable by both operator roles. System-admin gets
+    // global-only console links; tenant-admin gets tenant-safe links only.
+    "tenant.platform.read",
   ],
   "tenant-admin": [
     "organisation.read",

@@ -12,6 +12,8 @@ import { z } from "zod";
  */
 export const packageName = "@platform/contracts-admin";
 
+export { PROOF_LADDER, type ProofLadderEntry } from "./proof-registry.ts";
+
 // ---------------------------------------------------------------------------
 // Enterprise control-plane capability map + tenant readiness (ADR-0045)
 // GET /api/org/readiness — self-describing capability inventory + tenant status.
@@ -1068,6 +1070,13 @@ export const PLATFORM_SERVICE_CATEGORIES = [
 export const PlatformServiceCategorySchema = z.enum(PLATFORM_SERVICE_CATEGORIES);
 export type PlatformServiceCategory = z.infer<typeof PlatformServiceCategorySchema>;
 
+// Console-link exposure classification (ADR-ACT-0233 clickthrough policy projected
+// onto the cockpit). tenant_safe = link may be shown to tenant-admin (a REAL isolation
+// invariant exists); global_only = system operator only; not_exposed = never linked.
+export const PLATFORM_CONSOLE_ACCESS = ["tenant_safe", "global_only", "not_exposed"] as const;
+export const PlatformConsoleAccessSchema = z.enum(PLATFORM_CONSOLE_ACCESS);
+export type PlatformConsoleAccess = z.infer<typeof PlatformConsoleAccessSchema>;
+
 export const PlatformServiceSummarySchema = z
   .object({
     key: z.string(),
@@ -1076,8 +1085,13 @@ export const PlatformServiceSummarySchema = z
     status: PlatformServiceStatusSchema,
     /** True for local-only dev services (never implies production readiness). */
     localOnly: z.boolean(),
-    /** A known-safe LOCAL operator console URL (localhost), or null. Never a secret. */
+    /**
+     * A known-safe LOCAL operator console URL (localhost), or null. Never a secret.
+     * The BFF nulls this for global-only consoles unless the viewer is system-admin.
+     */
     consoleUrl: z.string().nullable(),
+    /** Who may see this service's console link (server-enforced, UI-informative). */
+    consoleAccess: PlatformConsoleAccessSchema,
     checkedAt: z.string(),
     detailKey: z.string().nullable(),
   })

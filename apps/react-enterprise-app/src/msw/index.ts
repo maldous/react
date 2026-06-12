@@ -35,6 +35,7 @@ export {
   adminStorageProbeHandler,
   adminObservabilityReadinessHandler,
   adminPlatformServicesHandler,
+  platformServicesReadinessSystemAdminFixture,
   adminWebhooksListHandler,
   adminWebhooksReadinessHandler,
   adminWebhooksCreateHandler,
