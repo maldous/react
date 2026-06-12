@@ -6,6 +6,7 @@ import type {
   EmailSenderReadinessStatus,
   TenantDomainReadinessStatus,
   TenantStorageReadinessStatus,
+  TenantObservabilityReadinessStatus,
   TenantReadinessResponse,
   TenantReadinessStatus,
 } from "@platform/contracts-admin";
@@ -36,6 +37,7 @@ export type ReadinessKind =
   | "email-sender" // from the tenant email sender readiness (ADR-0047)
   | "tenant-domains" // from the tenant custom-domain readiness (ADR-0048)
   | "tenant-storage" // from the tenant storage readiness (ADR-0049)
+  | "tenant-observability" // from the tenant observability readiness (ADR-0050)
   | "invariant-ready" // ready by construction (documented local invariant)
   | "deferred"; // not yet checkable — never reported ready
 
@@ -192,10 +194,15 @@ export const CAPABILITIES: readonly CapabilityDefinition[] = [
     readinessKind: "tenant-storage",
     detailKey: `${A}.storage.action`,
   }),
+  // Observability: log search + a bounded tenant-scoped readiness probe + the
+  // high-cardinality-label guard are implemented (ADR-0050). Traces, dashboards, and
+  // metrics readiness are not wired, so the capability is honestly `partial`.
   cap("observability", "operations", {
-    adminRoute: "/admin/logs",
+    adminRoute: "/admin/observability",
+    requiredPermission: "tenant.observability.read",
     implementationStatus: "partial",
-    readinessKind: "deferred",
+    readinessKind: "tenant-observability",
+    detailKey: `${A}.observability.action`,
   }),
 
   // --- Integrations ---
@@ -270,6 +277,8 @@ export interface ReadinessSignals {
   domainReadiness: TenantDomainReadinessStatus;
   /** Tenant storage readiness (ADR-0049) — a cheap configured-check for the aggregate. */
   storageReadiness: TenantStorageReadinessStatus;
+  /** Tenant observability readiness (ADR-0050) — a bounded Loki probe. */
+  observabilityReadiness: TenantObservabilityReadinessStatus;
 }
 
 function capabilityReadiness(kind: ReadinessKind, s: ReadinessSignals): CapabilityReadiness {
@@ -331,6 +340,18 @@ function capabilityReadiness(kind: ReadinessKind, s: ReadinessSignals): Capabili
           return "incomplete";
         case "provider_unreachable":
         case "isolation_failed":
+          return "degraded";
+        default:
+          return "unknown";
+      }
+    case "tenant-observability":
+      switch (s.observabilityReadiness) {
+        case "configured":
+          return "ready";
+        case "not_configured":
+          return "incomplete";
+        case "provider_unreachable":
+        case "degraded":
           return "degraded";
         default:
           return "unknown";

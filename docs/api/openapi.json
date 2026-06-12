@@ -2429,6 +2429,19 @@
         }
       }
     },
+    "/api/org/observability/readiness": {
+      "get": {
+        "summary": "Get tenant observability readiness",
+        "operationId": "getOrgObservabilityReadiness",
+        "description": "Returns the classified observability readiness from a bounded, tenant-scoped Loki log query plus a structural high-cardinality-label guard. No log line or label value is returned; never faked. ADR-0050.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Observability readiness" },
+          "400": { "description": "No tenant context" }
+        }
+      }
+    },
     "/api/org/readiness": {
       "get": {
         "summary": "Tenant control-plane readiness + capability map",

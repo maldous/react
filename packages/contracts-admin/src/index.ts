@@ -676,6 +676,57 @@ export const TenantStorageProbeResultSchema = z
   .strict();
 export type TenantStorageProbeResult = z.infer<typeof TenantStorageProbeResultSchema>;
 
+// ---------------------------------------------------------------------------
+// Tenant observability readiness (ADR-0050 / ADR-ACT-0219)
+// Read-only readiness over the existing Loki log-search plumbing
+// (@platform/adapters-loki + searchLogs). Strict + no-passthrough. A bounded,
+// tenant-scoped log query is the live check; the high-cardinality-label guard
+// (low-cardinality service/level → Loki labels; tenant/trace/request ids →
+// `| json` field filters) is asserted structurally so it cannot regress.
+// No log line or label value is ever returned — only signal statuses.
+// ---------------------------------------------------------------------------
+
+export const OBSERVABILITY_SIGNAL_STATUSES = [
+  "ok", // the signal was exercised successfully
+  "unreachable", // the backend could not be reached
+  "not_applicable", // intentionally not checked in this pass
+  "unknown",
+] as const;
+export const ObservabilitySignalStatusSchema = z.enum(OBSERVABILITY_SIGNAL_STATUSES);
+export type ObservabilitySignalStatus = z.infer<typeof ObservabilitySignalStatusSchema>;
+
+export const TENANT_OBSERVABILITY_READINESS_STATUSES = [
+  "configured", // log ingestion reachable + tenant-scoped query ok + guard intact
+  "not_configured", // no log backend wired
+  "provider_unreachable", // the log backend could not be reached
+  "degraded", // reachable but a signal is not healthy
+  "unknown",
+] as const;
+export const TenantObservabilityReadinessStatusSchema = z.enum(
+  TENANT_OBSERVABILITY_READINESS_STATUSES
+);
+export type TenantObservabilityReadinessStatus = z.infer<
+  typeof TenantObservabilityReadinessStatusSchema
+>;
+
+/** `GET /api/org/observability/readiness`. */
+export const TenantObservabilityReadinessResponseSchema = z
+  .object({
+    status: TenantObservabilityReadinessStatusSchema,
+    /** Whether a bounded log query against the backend succeeded. */
+    logIngestion: ObservabilitySignalStatusSchema,
+    /** Whether a bounded tenant-scoped log query succeeded. */
+    tenantScopedQuery: ObservabilitySignalStatusSchema,
+    /** Trace/log correlation readiness — `not_applicable` until traces are wired. */
+    traceCorrelation: ObservabilitySignalStatusSchema,
+    /** True when high-cardinality fields stay `| json` filters, not Loki labels. */
+    highCardinalityGuard: z.boolean(),
+  })
+  .strict();
+export type TenantObservabilityReadinessResponse = z.infer<
+  typeof TenantObservabilityReadinessResponseSchema
+>;
+
 export const MfaRequirementSchema = z.enum(["none", "optional", "required"]);
 export const MfaTypeSchema = z.enum(["totp", "webauthn"]);
 

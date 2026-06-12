@@ -40,6 +40,7 @@ export const sessionFixtures: Record<SessionPersona, SessionActor> = {
       "tenant.domains.write",
       "tenant.storage.read",
       "tenant.storage.write",
+      "tenant.observability.read",
     ],
     displayName: "Tenant Admin",
   },

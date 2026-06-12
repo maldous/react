@@ -18,6 +18,7 @@ const FULLY_READY: ReadinessSignals = {
   emailSender: "configured",
   domainReadiness: "verified",
   storageReadiness: "configured",
+  observabilityReadiness: "configured",
 };
 
 function cap(resp: ReturnType<typeof buildTenantReadiness>, key: string) {
@@ -219,6 +220,34 @@ describe("buildTenantReadiness — aggregation", () => {
     );
   });
 
+  it("observability readiness reflects its signal honestly (ADR-0050)", () => {
+    const ready = buildTenantReadiness({ ...FULLY_READY, observabilityReadiness: "configured" });
+    assert.equal(cap(ready, "observability")?.readiness, "ready");
+    assert.equal(cap(ready, "observability")?.implementationStatus, "partial");
+    assert.equal(cap(ready, "observability")?.required, false);
+
+    assert.equal(
+      cap(
+        buildTenantReadiness({ ...FULLY_READY, observabilityReadiness: "provider_unreachable" }),
+        "observability"
+      )?.readiness,
+      "degraded"
+    );
+    assert.equal(
+      cap(
+        buildTenantReadiness({ ...FULLY_READY, observabilityReadiness: "not_configured" }),
+        "observability"
+      )?.readiness,
+      "incomplete"
+    );
+    // optional capability → never drags the overall status down.
+    assert.equal(
+      buildTenantReadiness({ ...FULLY_READY, observabilityReadiness: "provider_unreachable" })
+        .overall,
+      "ready"
+    );
+  });
+
   it("never fakes readiness: deferred capabilities are always 'deferred'", () => {
     for (const signals of [
       FULLY_READY,
@@ -229,6 +258,7 @@ describe("buildTenantReadiness — aggregation", () => {
         emailSender: "missing_sender" as const,
         domainReadiness: "no_domains" as const,
         storageReadiness: "not_configured" as const,
+        observabilityReadiness: "provider_unreachable" as const,
       },
     ]) {
       const r = buildTenantReadiness(signals);

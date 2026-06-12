@@ -220,6 +220,20 @@ export function adminStorageProbeHandler(response: Record<string, unknown> = sto
   return http.post("/api/org/storage/probe", () => HttpResponse.json(response));
 }
 
+// --- Tenant observability readiness (ADR-0050) ---
+const observabilityReadinessFixture = {
+  status: "configured",
+  logIngestion: "ok",
+  tenantScopedQuery: "ok",
+  traceCorrelation: "not_applicable",
+  highCardinalityGuard: true,
+};
+export function adminObservabilityReadinessHandler(
+  response: Record<string, unknown> = observabilityReadinessFixture
+) {
+  return http.get("/api/org/observability/readiness", () => HttpResponse.json(response));
+}
+
 export function adminEmailSenderHandler(response: Record<string, unknown> = emailSenderFixture) {
   return http.get("/api/org/email-sender", () => HttpResponse.json(response));
 }
@@ -337,5 +351,6 @@ export const handlers = [
   adminDomainsListHandler(),
   adminDomainsReadinessHandler(),
   adminStorageReadinessHandler(),
+  adminObservabilityReadinessHandler(),
   ...adminWriteOkHandlers(),
 ];

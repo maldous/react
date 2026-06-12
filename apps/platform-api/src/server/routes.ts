@@ -32,8 +32,10 @@ import {
   getApplicationPool,
   getKeycloakConfigForRealm,
   getProvisioningConfig,
+  getLokiAdapter,
 } from "./dependencies.ts";
 import { S3ObjectStorageAdapter } from "@platform/adapters-object-storage";
+import type { ObservabilityProbePort } from "../usecases/tenant-observability.ts";
 import { queryTenantSchema, withTenant } from "@platform/adapters-postgres";
 import { serverT } from "./i18n.ts";
 import { DEFAULT_THEME } from "@platform/authorisation-runtime";
@@ -233,6 +235,22 @@ function buildStorageReadinessDeps(organisationId: string): {
         },
       };
     },
+  };
+}
+
+// Build a timeout-bounded observability probe port (ADR-0050). Each Loki query is
+// raced against a hard timeout so a slow/unreachable backend cannot stall the
+// readiness response; a timeout surfaces as `provider_unreachable`, never faked.
+function buildObservabilityPort(timeoutMs = 2000): ObservabilityProbePort {
+  const loki = getLokiAdapter();
+  return {
+    search: (query) =>
+      Promise.race([
+        loki.search(query),
+        new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error("loki probe timeout")), timeoutMs)
+        ),
+      ]),
   };
 }
 
@@ -2563,6 +2581,16 @@ export const routes: Route[] = [
         ? "configured"
         : "not_configured";
 
+      // Signal 7: observability readiness (ADR-0050) — bounded Loki probe (short timeout).
+      const { getTenantObservabilityReadiness } =
+        await import("../usecases/tenant-observability.ts");
+      const observabilityReadiness = (
+        await getTenantObservabilityReadiness({
+          organisationId: tenantCtx.organisationId,
+          port: buildObservabilityPort(1200),
+        })
+      ).status;
+
       res.json(
         200,
         buildTenantReadiness({
@@ -2572,6 +2600,7 @@ export const routes: Route[] = [
           emailSender,
           domainReadiness,
           storageReadiness,
+          observabilityReadiness,
         })
       );
     },
@@ -2971,6 +3000,35 @@ export const routes: Route[] = [
       }
       const result = await probeTenantStorage(deps.makeProbe());
       res.json(200, result);
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Tenant observability readiness (ADR-0050 / ADR-ACT-0219).
+  // Read-only: a bounded, tenant-scoped Loki log query is the live check, plus a
+  // structural high-cardinality-label guard. No log line/label value is returned.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/org/observability/readiness",
+    operationName: "org.observability.readiness",
+    requiresAuth: true,
+    requiredPermission: "tenant.observability.read",
+    resource: "admin:observability",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { getTenantObservabilityReadiness } =
+        await import("../usecases/tenant-observability.ts");
+      const readiness = await getTenantObservabilityReadiness({
+        organisationId: tenantCtx.organisationId,
+        port: buildObservabilityPort(),
+      });
+      res.json(200, readiness);
     },
   },
   // ---------------------------------------------------------------------------

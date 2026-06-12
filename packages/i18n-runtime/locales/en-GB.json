@@ -178,6 +178,7 @@
         "email": "Email",
         "domains": "Domains",
         "storage": "Storage",
+        "observability": "Observability",
         "logs": "Log search",
         "readiness": "Readiness"
       },
@@ -188,6 +189,7 @@
         "configurationDescription": "Manage typed platform configuration for this tenant.",
         "domainsDescription": "Add custom domains and prove ownership via DNS.",
         "storageDescription": "Check object-storage readiness and tenant isolation.",
+        "observabilityDescription": "Check log ingestion, tenant-scoped query, and label hygiene.",
         "logsDescription": "Search structured platform logs.",
         "readinessDescription": "See what's configured and what's left to set up."
       },
@@ -353,6 +355,31 @@
           "provider_unreachable": "The object store could not be reached.",
           "isolation_failed": "Tenant isolation could not be confirmed.",
           "unknown": "Storage readiness is unknown — run a probe to check."
+        }
+      },
+      "observability": {
+        "title": "Observability",
+        "description": "Per-tenant log ingestion readiness and label hygiene.",
+        "error": "Observability readiness could not be loaded.",
+        "readinessHeading": "Observability status",
+        "logIngestionLabel": "Log ingestion",
+        "tenantQueryLabel": "Tenant-scoped query",
+        "traceLabel": "Trace correlation",
+        "guardLabel": "High-cardinality label guard",
+        "guardIntact": "Intact",
+        "guardRegressed": "Regressed",
+        "signal": {
+          "ok": "OK",
+          "unreachable": "Unreachable",
+          "not_applicable": "Not applicable",
+          "unknown": "Unknown"
+        },
+        "readiness": {
+          "configured": "Log ingestion is reachable and tenant-scoped queries work.",
+          "not_configured": "No log backend is configured for this platform yet.",
+          "provider_unreachable": "The log backend could not be reached.",
+          "degraded": "Logging is reachable but a signal is not healthy.",
+          "unknown": "Observability readiness is unknown right now."
         }
       },
       "overview": {
@@ -670,7 +697,8 @@
           },
           "observability": {
             "label": "Observability",
-            "description": "Logs, traces, and dashboards for the tenant."
+            "description": "Logs, traces, and dashboards for the tenant.",
+            "action": "Check log ingestion readiness for this tenant."
           },
           "integrations_webhooks": {
             "label": "Integrations & webhooks",

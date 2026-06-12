@@ -72,6 +72,11 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     labelKey: "feature.admin.nav.storage",
     permission: "tenant.storage.read",
   },
+  {
+    to: "/admin/observability",
+    labelKey: "feature.admin.nav.observability",
+    permission: "tenant.observability.read",
+  },
   { to: "/admin/logs", labelKey: "feature.admin.nav.logs", permission: "platform.logs.read" },
 ];
 
