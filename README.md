@@ -101,6 +101,16 @@ The hardest discipline in a platform like this is telling the truth about what w
 
 This means leaders, customers, and auditors can trust the roadmap and the status, not just the marketing.
 
+### The proof ladder
+
+Each proven capability is backed by a repeatable, runnable proof — a single source of truth registered in `@platform/contracts-admin` and reconciled against the `proof:*` scripts and this README by an automated gate. The current ladder:
+
+- **Authentication and identity** — `proof:auth-settings`, `proof:auth-idps`, `proof:auth-credential-lifecycle`, `proof:auth-oidc-enterprise`
+- **Domains and host identity** — `proof:tenant-domains`, `proof:tenant-domains-routing`, `proof:tenant-domain-canonical`, `proof:tenant-domain-claim-lifecycle`, `proof:tenant-custom-domain-resolution`, `proof:tenant-custom-domain-auth-origin`, `proof:domain-identity-matrix`
+- **Tenant services** — `proof:email-sender`, `proof:tenant-storage`, `proof:tenant-observability`
+- **Events and webhooks** — `proof:webhooks`, `proof:webhook-worker`, `proof:webhook-redrive`
+- **Operations** — `proof:platform-services`, `proof:service-clickthrough-policy`, `proof:backup-local`
+
 ![Honest readiness — a running service is not a delivered capability](docs/images/usf-readiness-honesty.svg)
 
 ---
