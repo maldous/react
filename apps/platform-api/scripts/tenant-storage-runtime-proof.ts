@@ -1,18 +1,24 @@
 /**
- * Tenant Storage readiness runtime proof (ADR-0049 / ADR-ACT-0218).
+ * Tenant Storage readiness runtime proof (ADR-0049 / ADR-ACT-0218, ADR-ACT-0223).
  *
  *   1. pure classifier — honest verdicts
- *   2. probe round-trip against the in-memory port (write → read → delete)
- *   3. ISOLATION (always provable, no network): the prefix-locked S3 adapter
- *      rejects a foreign cross-prefix key via its ADR-0029 §6 guard
- *   4. LIVE MinIO probe when S3 env is wired (else honest SKIP)
+ *   2. in-memory probe round-trip (write → read → delete)
+ *   3. ISOLATION (always provable, no network): the prefix-locked S3 adapter rejects
+ *      a foreign cross-prefix key via its ADR-0029 §6 guard
+ *   4. LIVE MinIO probe BY DEFAULT (loads local .env; resolves S3_*→MINIO_*→defaults;
+ *      ensures the bucket; writes/reads-back/deletes a probe object + rejects a
+ *      foreign key). SKIPs only when MinIO is genuinely unreachable.
  *
- * Usage: npm run proof:tenant-storage
- *   Live step requires S3_DEFAULT_ENDPOINT + S3_ADMIN_ACCESS_KEY_ID +
- *   S3_ADMIN_SECRET_ACCESS_KEY (+ S3_DEFAULT_BUCKET). Without them the live step
- *   is SKIPPED — readiness is honestly `not_configured`, never faked.
+ * Usage: npm run proof:tenant-storage   (MinIO up via `make compose-up-default`)
+ * No secret is ever printed.
  */
 
+import {
+  S3Client,
+  CreateBucketCommand,
+  HeadBucketCommand,
+  type S3ServiceException,
+} from "@aws-sdk/client-s3";
 import { createInMemoryObjectStoragePort } from "@platform/storage-runtime";
 import { S3ObjectStorageAdapter } from "@platform/adapters-object-storage";
 import {
@@ -20,11 +26,17 @@ import {
   probeTenantStorage,
   tenantStoragePrefix,
 } from "../src/usecases/tenant-storage.ts";
+import { loadLocalEnv, resolveLocalS3 } from "./lib/local-env.ts";
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}${detail ? ` — ${detail}` : ""}`);
   if (!ok) failures++;
+}
+
+function isConnRefused(err: unknown): boolean {
+  const msg = err instanceof Error ? err.message : String(err);
+  return /ECONNREFUSED|ENOTFOUND|EAI_AGAIN|fetch failed|socket hang up/i.test(msg);
 }
 
 async function main(): Promise<void> {
@@ -64,21 +76,37 @@ async function main(): Promise<void> {
   }
   check("prefix-locked adapter rejects a foreign cross-prefix key (ADR-0029 §6)", rejected);
 
-  // 4. Live MinIO probe when configured.
-  const endpoint = process.env["S3_DEFAULT_ENDPOINT"];
-  const accessKeyId = process.env["S3_ADMIN_ACCESS_KEY_ID"];
-  const secretAccessKey = process.env["S3_ADMIN_SECRET_ACCESS_KEY"];
-  if (!endpoint || !accessKeyId || !secretAccessKey) {
-    console.log(
-      "SKIP  live MinIO probe — S3 not wired (readiness is honestly not_configured; set S3_DEFAULT_ENDPOINT + S3_ADMIN_* to exercise)"
-    );
-  } else {
+  // 4. LIVE MinIO probe (by default — loads local env so it does not skip in dev).
+  loadLocalEnv();
+  const s3 = resolveLocalS3();
+  const safeEndpoint = s3.endpoint.replace(/\/\/[^@]*@/, "//"); // strip any creds in URL
+  const client = new S3Client({
+    region: s3.region,
+    endpoint: s3.endpoint,
+    forcePathStyle: true,
+    credentials: { accessKeyId: s3.accessKeyId, secretAccessKey: s3.secretAccessKey },
+  });
+
+  try {
+    // Deterministic bucket provisioning (idempotent).
+    try {
+      await client.send(new HeadBucketCommand({ Bucket: s3.bucket }));
+    } catch {
+      try {
+        await client.send(new CreateBucketCommand({ Bucket: s3.bucket }));
+      } catch (err) {
+        const name = (err as S3ServiceException)?.name ?? "";
+        if (!/BucketAlreadyOwnedByYou|BucketAlreadyExists/.test(name)) throw err;
+      }
+    }
+    check(`live MinIO reachable + bucket ready @ ${safeEndpoint} (${s3.bucket})`, true);
+
     const port = new S3ObjectStorageAdapter({
-      bucket: process.env["S3_DEFAULT_BUCKET"] ?? "platform-data",
-      region: process.env["S3_DEFAULT_REGION"] ?? "us-east-1",
-      endpoint,
+      bucket: s3.bucket,
+      region: s3.region,
+      endpoint: s3.endpoint,
       forcePathStyle: true,
-      credentials: { accessKeyId, secretAccessKey },
+      credentials: { accessKeyId: s3.accessKeyId, secretAccessKey: s3.secretAccessKey },
       organisationId: "org-proof",
     });
     const live = await probeTenantStorage({
@@ -93,8 +121,28 @@ async function main(): Promise<void> {
         }
       },
     });
+    check("live probe wrote the probe object", live.wrote);
+    check("live probe read it back (size-verified)", live.read);
+    check("live probe deleted it (self-cleaning)", live.deleted);
+    check("live probe rejected a foreign cross-prefix key", live.foreignKeyRejected);
     check("live MinIO probe → configured", live.status === "configured", live.status);
+  } catch (err) {
+    if (isConnRefused(err)) {
+      console.log(
+        `SKIP  live MinIO probe — not reachable @ ${safeEndpoint} (start it: make compose-up-default)`
+      );
+    } else {
+      check("live MinIO probe", false, err instanceof Error ? err.message : String(err));
+    }
+  } finally {
+    client.destroy();
   }
+
+  // 5. Bucket-policy / IAM-level isolation: NOT automated locally (honest).
+  console.log(
+    "INFO  IAM/bucket-policy isolation is NOT proven here — MinIO's admin API differs from AWS IAM;" +
+      " the adapter prefix guard (proven above) is the local isolation control. See evidence for the gap."
+  );
 
   console.log(failures === 0 ? "\n# ALL CHECKS PASSED" : `\n# ${failures} CHECK(S) FAILED`);
   process.exit(failures === 0 ? 0 : 1);

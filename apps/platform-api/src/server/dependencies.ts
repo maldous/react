@@ -108,11 +108,16 @@ export function getProvisioningConfig(): ProvisioningConfig {
       process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
     keycloakProvisionerClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
     redisAdminUrl: process.env["REDIS_ADMIN_URL"] ?? null,
-    s3AdminAccessKeyId: process.env["S3_ADMIN_ACCESS_KEY_ID"] ?? null,
-    s3AdminSecretAccessKey: process.env["S3_ADMIN_SECRET_ACCESS_KEY"] ?? null,
+    // Local dev falls back to the MinIO root creds/endpoint (ADR-ACT-0223) so storage
+    // readiness probes the live local stack without separate wiring. Production sets
+    // S3_* explicitly and has no MINIO_* env, so the fallback never fires there.
+    s3AdminAccessKeyId:
+      process.env["S3_ADMIN_ACCESS_KEY_ID"] ?? process.env["MINIO_ROOT_USER"] ?? null,
+    s3AdminSecretAccessKey:
+      process.env["S3_ADMIN_SECRET_ACCESS_KEY"] ?? process.env["MINIO_ROOT_PASSWORD"] ?? null,
     s3DefaultBucket: process.env["S3_DEFAULT_BUCKET"] ?? "platform-data",
     s3DefaultRegion: process.env["S3_DEFAULT_REGION"] ?? "us-east-1",
-    s3DefaultEndpoint: process.env["S3_DEFAULT_ENDPOINT"] ?? null,
+    s3DefaultEndpoint: process.env["S3_DEFAULT_ENDPOINT"] ?? process.env["MINIO_ENDPOINT"] ?? null,
     apexDomain: process.env["APEX_DOMAIN"] ?? "aldous.info",
     tenantUriScheme,
     bffClientSecret: process.env["KEYCLOAK_CLIENT_SECRET"] ?? "",

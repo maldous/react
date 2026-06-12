@@ -56,7 +56,14 @@ prefix-per-tenant S3/MinIO adapter; ADR-0029 §6 / ADR-0031):
 `apps/platform-api/scripts/tenant-storage-runtime-proof.ts`
 (`npm run proof:tenant-storage`).
 
-Executed output (dev profile, 2026-06-12; S3 admin env not wired locally):
+**Update (ADR-ACT-0223):** the live MinIO probe now runs **by default** in local dev.
+The proof loads `.env`/`.env.dev`, resolves S3 config from `S3_*` → `MINIO_*` →
+local defaults, ensures the bucket deterministically (`HeadBucket`/`CreateBucket`,
+idempotent), then writes → reads-back (size-verified) → deletes a probe object and
+rejects a foreign key. It SKIPs only when MinIO is genuinely unreachable. The readiness
+*route* is also live locally: `getProvisioningConfig` falls back to `MINIO_*`.
+
+Executed output (dev profile, MinIO @ `http://localhost:9000`, 2026-06-12):
 
 ```text
 # Tenant storage runtime proof
@@ -65,22 +72,32 @@ PASS  round-trip + isolation → configured
 PASS  round-trip without isolation → isolation_failed
 PASS  in-memory probe write/read/delete + isolation → configured
 PASS  prefix-locked adapter rejects a foreign cross-prefix key (ADR-0029 §6)
-SKIP  live MinIO probe — S3 not wired (readiness is honestly not_configured; set S3_DEFAULT_ENDPOINT + S3_ADMIN_* to exercise)
+PASS  live MinIO reachable + bucket ready @ http://localhost:9000 (platform-data)
+PASS  live probe wrote the probe object
+PASS  live probe read it back (size-verified)
+PASS  live probe deleted it (self-cleaning)
+PASS  live probe rejected a foreign cross-prefix key
+PASS  live MinIO probe → configured
+INFO  IAM/bucket-policy isolation is NOT proven here — MinIO's admin API differs from AWS IAM; …
 
 # ALL CHECKS PASSED
 ```
 
 ## Proven live vs unit/MSW only
 
+- **Live-proven (against MinIO @ localhost:9000):** deterministic bucket provisioning,
+  and the full write → read-back (size-verified) → delete probe round-trip under the
+  tenant prefix, plus foreign-key rejection.
 - Live-proven (no network needed): the `S3ObjectStorageAdapter` prefix guard rejects a
-  foreign cross-prefix key (ADR-0029 §6) — deterministic, always run.
-- Unit-proven (`node:test`): the classifier (all branches) and the probe round-trip /
-  failure / isolation semantics against the in-memory port.
+  foreign cross-prefix key (ADR-0029 §6).
+- Unit-proven (`node:test`): the classifier (all branches) and probe round-trip / failure
+  / isolation semantics against the in-memory port.
 - MSW-proven (frontend): the `/admin/storage` readiness/probe/read-only flows + axe.
-- NOT proven (honestly deferred): a live MinIO round-trip in default local dev (S3 env
-  not wired → SKIP), IAM-policy enforcement, and provisioning. Set the S3 env
-  (`S3_DEFAULT_ENDPOINT`, `S3_ADMIN_ACCESS_KEY_ID`, `S3_ADMIN_SECRET_ACCESS_KEY`) to
-  exercise the live probe.
+- NOT proven (honestly deferred): **IAM / bucket-policy enforcement** of the tenant
+  prefix. The adapter prefix guard is defence-in-depth at the app layer; the S3/MinIO
+  *server-side* policy (per-tenant IAM user + prefix-scoped bucket policy, ADR-0031) is
+  not automated locally because MinIO's admin/policy API is not AWS-IAM-compatible
+  (`@aws-sdk/client-iam` against MinIO is unreliable). Exact next step below.
 
 ## Capability map changes
 
@@ -91,10 +108,14 @@ never blocks overall readiness.
 
 ## Known deferrals
 
-- A live IAM-policy enforcement proof (the adapter prefix guard is proven; the
-  S3/MinIO bucket-policy + per-tenant IAM enforcement is not exercised here).
-- Per-tenant usage/quota readiness and provisioning verification.
-- A live MinIO probe in default local dev (S3 env not wired).
+- **IAM / bucket-policy enforcement (server-side isolation).** Exact next step: provision
+  a per-tenant MinIO policy via the MinIO Admin API (`mc admin policy` or the
+  `madmin`-compatible endpoint), attach it to a per-tenant access key, then prove a key
+  scoped to `{orgA}/` is *denied* a `GET {orgB}/…` at the storage server (not just the
+  adapter). Blocked on MinIO-admin tooling (not `@aws-sdk/client-iam`); the AWS-IAM path
+  (`S3ProvisioningAdapter`) is for real AWS/prod.
+- Per-tenant usage/quota readiness.
+- (Closed by ADR-ACT-0223: live MinIO probe now runs by default in local dev.)
 
 ## No-secret guarantee
 
