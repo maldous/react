@@ -175,8 +175,11 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     "platform.clickthrough.mailpit",
     "platform.clickthrough.sonarqube",
     "platform.clickthrough.sentry",
-    "platform.clickthrough.wiremock",
-    "platform.clickhouse",
+    // platform.clickthrough.wiremock removed (ADR-ACT-0233): WireMock is
+    // NOT_EXPOSED — granting a clickthrough permission for it was misleading.
+    // "platform.clickhouse" corrected to the contracts-auth vocabulary:
+    "platform.clickthrough.clickhouse",
+    "platform.clickthrough.grafana",
     "platform.audit.read_all",
     "platform.logs.read",
   ],
@@ -216,9 +219,11 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     "tenant.webhooks.write",
     "tenant.platform.read",
     "tenant.audit.read",
+    // tenant.clickthrough.mailpit + sentry removed (ADR-ACT-0233): Mailpit is a
+    // shared unfiltered inbox and the Sentry tenant route never existed — both
+    // are GLOBAL_ONLY. Keycloak stays: realm scoping is enforced by Keycloak's
+    // own admin authentication (see usecases/service-clickthrough.ts).
     "tenant.clickthrough.keycloak",
-    "tenant.clickthrough.mailpit",
-    "tenant.clickthrough.sentry",
   ],
   manager: [
     "organisation.read",

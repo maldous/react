@@ -952,6 +952,10 @@
           "tenant_auth_custom_domain_callback": {
             "label": "Custom domain sign-in origin",
             "description": "Sign-in on an active custom domain derives the correct tenant realm and callback URL (locally proven derivation; real IdP login remains deferred)."
+          },
+          "tenant_service_clickthrough": {
+            "label": "Operational tool access policy",
+            "description": "Tool clickthroughs follow an explicit policy: Keycloak is tenant-scoped (own slug, Keycloak-authenticated console); all other tools are platform-operator only or not exposed."
           }
         }
       }

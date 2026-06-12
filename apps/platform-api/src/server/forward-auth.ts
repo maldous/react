@@ -34,45 +34,14 @@ import { parseSessionCookie } from "./auth.ts";
 import { getSessionStore, getPostgresAppUrl } from "./dependencies.ts";
 import { getFixtureSession } from "./session.ts";
 
-/**
- * Clickthrough service access classification (ADR-0029).
- *
- * GLOBAL_ONLY        — system-admin only, from the global host. Never tenant-admin.
- * TENANT_SCOPED_SAFE — tenant-admin allowed on own slug only. Safe because:
- *                      identity is derived from the session (Keycloak realm = tenant realm);
- *                      tenant cannot switch realm by URL; service scopes data to the realm.
- * NOT_EXPOSED        — not routed through Caddy forward-auth at all.
- */
-
-/** GLOBAL_ONLY services — system-admin only; never accessible to tenant-admin. */
-const SYSTEM_ADMIN_RESOURCES = new Set([
-  "admin:keycloak", // GLOBAL_ONLY — master realm + all tenant realms visible
-  "admin:mailpit", // GLOBAL_ONLY — all-tenant mail visible in shared inbox
-  "admin:sonarqube", // GLOBAL_ONLY — no per-tenant project isolation
-  "admin:minio", // GLOBAL_ONLY — all-bucket access, no per-tenant ACL in console
-  "admin:sentry", // GLOBAL_ONLY — all-org access in shared Sentry instance (subdomain)
-  // admin:wiremock intentionally absent — WireMock is NOT_EXPOSED as a clickthrough.
-  // Access WireMock directly via WIREMOCK_PORT in dev; it must not be linked in UI.
-  "admin:clickhouse", // GLOBAL_ONLY — analytics DB, no per-tenant partitioning yet
-  "admin:localstack", // GLOBAL_ONLY — cloud mock, no tenant scope
-  "admin:tilt", // GLOBAL_ONLY — local dev tooling
-  "admin:pgadmin", // GLOBAL_ONLY — raw SQL; tenant scope via user-settable GUC is unsafe
-  "admin:grafana", // GLOBAL_ONLY — platform log search; all tenants' logs visible
-]);
-
-/**
- * TENANT_SCOPED_SAFE services — tenant-admin allowed on own slug.
- * Safety invariants:
- *   - admin:keycloak: login is realm-scoped via OIDC; tenant cannot switch realm by URL
- *   - admin:mailpit:  tenant subdomain routes to a realm-tagged view (own mail only)
- *   - admin:sentry:   tenant subdomain routes to a per-tenant Sentry organisation
- */
-const TENANT_ADMIN_RESOURCES = new Set([
-  "admin:keycloak", // TENANT_SCOPED_SAFE — own realm only via OIDC login
-  "admin:mailpit", // TENANT_SCOPED_SAFE — tenant Mailpit view, own mail only
-  "admin:sentry", // TENANT_SCOPED_SAFE — per-tenant Sentry organisation
-  // admin:pgadmin is intentionally absent — GLOBAL_ONLY (see above and ADR-0029)
-]);
+// Clickthrough service access classification — the policy lives in
+// usecases/service-clickthrough.ts (ADR-ACT-0233, single source of truth).
+// This handler only resolves session/slug inputs and delegates the decision.
+import {
+  decideServiceAccess,
+  SYSTEM_ADMIN_RESOURCES,
+  TENANT_ADMIN_RESOURCES,
+} from "../usecases/service-clickthrough.ts";
 
 const APEX_DOMAIN = process.env["APEX_DOMAIN"] ?? "aldous.info";
 
@@ -203,8 +172,8 @@ export { extractSlugFromHost, SYSTEM_ADMIN_RESOURCES, TENANT_ADMIN_RESOURCES };
  * Pure access decision: given roles, resource, and resolved slug ownership,
  * return whether access should be granted. No DB or session I/O.
  *
- * Extracted to allow deterministic unit testing of the access logic without
- * mocking the full handler pipeline.
+ * Delegates to decideServiceAccess (usecases/service-clickthrough.ts) so the
+ * policy module is the single decision path (ADR-ACT-0233).
  */
 export function checkResourceAccess(params: {
   roles: string[];
@@ -212,21 +181,5 @@ export function checkResourceAccess(params: {
   requestedSlug: string | null; // null = super-global (aldous.info root)
   ownSlug: string | null; // null = DB lookup failed or no tenantId
 }): boolean {
-  const { roles, resource, requestedSlug, ownSlug } = params;
-
-  if (roles.includes("system-admin") && SYSTEM_ADMIN_RESOURCES.has(resource)) {
-    return true;
-  }
-
-  if (
-    roles.includes("tenant-admin") &&
-    TENANT_ADMIN_RESOURCES.has(resource) &&
-    requestedSlug !== null && // must be a tenant subdomain, not root
-    ownSlug !== null &&
-    ownSlug === requestedSlug
-  ) {
-    return true;
-  }
-
-  return false;
+  return decideServiceAccess(params).granted;
 }

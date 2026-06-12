@@ -212,6 +212,14 @@ export const CAPABILITIES: readonly CapabilityDefinition[] = [
   }),
 
   // --- Operations ---
+  // Service clickthrough policy (ADR-ACT-0233): single policy module, derived
+  // forward-auth sets, Caddyfile reconciliation gate, live proof. Keycloak is
+  // the only tenant-scoped-safe clickthrough; everything else is global-only
+  // or not exposed, with documented isolation invariants.
+  cap("tenant_service_clickthrough", "operations", {
+    implementationStatus: "implemented",
+    readinessKind: "invariant-ready",
+  }),
   cap("audit", "operations", {
     adminRoute: "/admin/logs",
     requiredPermission: "tenant.audit.read",

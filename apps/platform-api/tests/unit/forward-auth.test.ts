@@ -300,6 +300,8 @@ describe("checkResourceAccess — GLOBAL_ONLY services (tenant-admin must be den
     "admin:clickhouse",
     "admin:localstack",
     "admin:tilt",
+    "admin:mailpit", // reclassified GLOBAL_ONLY (ADR-ACT-0233)
+    "admin:sentry", // reclassified GLOBAL_ONLY (ADR-ACT-0233)
   ];
 
   it("admin:wiremock is NOT_EXPOSED — denied even to system-admin (direct port only)", () => {
@@ -341,7 +343,10 @@ describe("checkResourceAccess — GLOBAL_ONLY services (tenant-admin must be den
 });
 
 describe("checkResourceAccess — TENANT_SCOPED_SAFE services", () => {
-  const tenantSafeServices = ["admin:keycloak", "admin:mailpit", "admin:sentry"];
+  // ADR-ACT-0233: keycloak is the ONLY tenant-scoped-safe clickthrough.
+  // Mailpit (shared unfiltered inbox) and Sentry (no tenant route ever existed)
+  // were reclassified GLOBAL_ONLY.
+  const tenantSafeServices = ["admin:keycloak"];
 
   for (const service of tenantSafeServices) {
     it(`tenant-admin allowed ${service} on own slug`, () => {

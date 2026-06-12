@@ -32,8 +32,10 @@ export type Permission =
   | "platform.clickthrough.mailpit"
   | "platform.clickthrough.sonarqube"
   | "platform.clickthrough.sentry"
-  | "platform.clickthrough.wiremock"
+  // platform.clickthrough.wiremock removed (ADR-ACT-0233): WireMock is
+  // NOT_EXPOSED through forward-auth — a permission for it was misleading.
   | "platform.clickthrough.clickhouse"
+  | "platform.clickthrough.grafana"
   | "platform.audit.read_all"
   | "platform.logs.read"
   // Tenant-scoped permissions (tenant-admin only)
@@ -55,9 +57,10 @@ export type Permission =
   | "tenant.auth.settings.read"
   | "tenant.auth.settings.write"
   | "tenant.audit.read"
-  | "tenant.clickthrough.keycloak"
-  | "tenant.clickthrough.mailpit"
-  | "tenant.clickthrough.sentry";
+  // tenant.clickthrough.mailpit + tenant.clickthrough.sentry removed
+  // (ADR-ACT-0233): Mailpit has no tenant filtering (shared inbox) and the
+  // Sentry tenant route never existed — both clickthroughs are GLOBAL_ONLY.
+  | "tenant.clickthrough.keycloak";
 
 // --- AuthErrorCode ---
 

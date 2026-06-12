@@ -288,11 +288,9 @@ http://*.aldous.info http://*.dev.localhost http://*.test.localhost http://*.sta
 		reverse_proxy keycloak:8080
 	}
 
-	# Mailpit ? tenant-domain-filtered email view
-	handle /mailpit/* {
-		import forward_auth_check admin:mailpit read
-		reverse_proxy mailpit:8025
-	}
+	# Mailpit ? NOT routed on tenant hosts (ADR-ACT-0233). Mailpit is a single
+	# shared inbox with NO tenant filtering; the former tenant route exposed
+	# every tenant's captured mail to any tenant-admin. GLOBAL_ONLY: apex block.
 
 	# Sentry ? accessed via aldous.info/sentry (apex block only, not per-tenant).
 

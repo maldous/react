@@ -12,25 +12,76 @@ export const Route = createRoute({
   component: IndexPage,
 });
 
-// External admin-tool clickthroughs (source of truth: docker/caddy/Caddyfile).
-// Data-driven: hrefs are environment routing; labels/descriptions are i18n keys
-// (landing.tool.<id>.*). WireMock is intentionally not exposed as a clickthrough.
+// External admin-tool clickthroughs (source of truth: the clickthrough policy
+// module — apps/platform-api/src/usecases/service-clickthrough.ts — and
+// docker/caddy/Caddyfile). Data-driven: hrefs are environment routing; labels/
+// descriptions are i18n keys (landing.tool.<id>.*). WireMock is intentionally
+// not exposed as a clickthrough. Each link renders only when the actor holds
+// one of its clickthrough permissions (ADR-ACT-0233): GLOBAL_ONLY tools carry
+// platform.clickthrough.*; Keycloak is the only TENANT_SCOPED_SAFE tool, so a
+// tenant-admin sees Keycloak alone.
 interface ToolLink {
   id: string;
   href: string;
   profile?: string;
   testId: string;
+  /** Any-of permission gate (forward-auth remains the enforcement point). */
+  permissions: string[];
 }
 
 const TOOL_LINKS: ToolLink[] = [
-  { id: "keycloak", href: "/kc/", profile: "identity", testId: "tool-link-keycloak" },
-  { id: "mailpit", href: "/mailpit/", testId: "tool-link-mailpit" },
-  { id: "minio", href: "/minio/", testId: "tool-link-minio" },
-  { id: "sonarqube", href: "/sonar/", profile: "quality", testId: "tool-link-sonarqube" },
-  { id: "sentry", href: "/sentry/", profile: "external-sentry", testId: "tool-link-sentry" },
-  { id: "grafana", href: "/grafana/", profile: "observability", testId: "tool-link-grafana" },
-  { id: "clickhouse", href: "/clickhouse/play", testId: "tool-link-clickhouse" },
-  { id: "pgadmin", href: "/pgadmin/", testId: "tool-link-pgadmin" },
+  {
+    id: "keycloak",
+    href: "/kc/",
+    profile: "identity",
+    testId: "tool-link-keycloak",
+    permissions: ["platform.clickthrough.keycloak", "tenant.clickthrough.keycloak"],
+  },
+  {
+    id: "mailpit",
+    href: "/mailpit/",
+    testId: "tool-link-mailpit",
+    permissions: ["platform.clickthrough.mailpit"],
+  },
+  {
+    id: "minio",
+    href: "/minio/",
+    testId: "tool-link-minio",
+    permissions: ["platform.clickthrough.minio"],
+  },
+  {
+    id: "sonarqube",
+    href: "/sonar/",
+    profile: "quality",
+    testId: "tool-link-sonarqube",
+    permissions: ["platform.clickthrough.sonarqube"],
+  },
+  {
+    id: "sentry",
+    href: "/sentry/",
+    profile: "external-sentry",
+    testId: "tool-link-sentry",
+    permissions: ["platform.clickthrough.sentry"],
+  },
+  {
+    id: "grafana",
+    href: "/grafana/",
+    profile: "observability",
+    testId: "tool-link-grafana",
+    permissions: ["platform.clickthrough.grafana"],
+  },
+  {
+    id: "clickhouse",
+    href: "/clickhouse/play",
+    testId: "tool-link-clickhouse",
+    permissions: ["platform.clickthrough.clickhouse"],
+  },
+  {
+    id: "pgadmin",
+    href: "/pgadmin/",
+    testId: "tool-link-pgadmin",
+    permissions: ["platform.clickthrough.pgadmin"],
+  },
 ];
 
 const STATUS_LINKS: { id: string; href: string }[] = [
@@ -152,34 +203,36 @@ function IndexPage() {
         </div>
       </section>
 
-      {/* External admin tool clickthroughs */}
+      {/* External admin tool clickthroughs — permission-gated (ADR-ACT-0233) */}
       <section aria-labelledby="tools-heading">
         <SectionHeader heading={t("landing.tools")} className="mb-4" />
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {TOOL_LINKS.map((tool) => (
-            <a
-              key={tool.href}
-              href={tool.href}
-              className="group block no-underline"
-              data-testid={tool.testId}
-            >
-              <Card className="h-full transition hover:border-indigo-300 hover:shadow">
-                <CardBody>
-                  <span className="font-medium text-gray-900 group-hover:text-indigo-600">
-                    {t(`landing.tool.${tool.id}.label`)}
-                  </span>
-                  <span className="mt-0.5 block text-sm text-gray-600">
-                    {t(`landing.tool.${tool.id}.description`)}
-                  </span>
-                  {tool.profile && (
-                    <Badge variant="outline" className="mt-2">
-                      {t("landing.profileGated", { profile: tool.profile })}
-                    </Badge>
-                  )}
-                </CardBody>
-              </Card>
-            </a>
-          ))}
+          {TOOL_LINKS.filter((tool) => tool.permissions.some((p) => hasPermission(p))).map(
+            (tool) => (
+              <a
+                key={tool.href}
+                href={tool.href}
+                className="group block no-underline"
+                data-testid={tool.testId}
+              >
+                <Card className="h-full transition hover:border-indigo-300 hover:shadow">
+                  <CardBody>
+                    <span className="font-medium text-gray-900 group-hover:text-indigo-600">
+                      {t(`landing.tool.${tool.id}.label`)}
+                    </span>
+                    <span className="mt-0.5 block text-sm text-gray-600">
+                      {t(`landing.tool.${tool.id}.description`)}
+                    </span>
+                    {tool.profile && (
+                      <Badge variant="outline" className="mt-2">
+                        {t("landing.profileGated", { profile: tool.profile })}
+                      </Badge>
+                    )}
+                  </CardBody>
+                </Card>
+              </a>
+            )
+          )}
         </div>
       </section>
     </AppShell>
