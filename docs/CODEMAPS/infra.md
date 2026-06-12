@@ -4,6 +4,8 @@
 
 Docker Compose services, profiles, ports, and Caddy virtual hosts for local development and multi-tenant routing.
 
+> **Universal Service Foundation:** for the forward-looking plan that turns this infrastructure into a multipurpose software-provider substrate (what to build vs compose, per-environment vs shared, and the honest capability status of each domain), see [`docs/evidence/platform/universal-service-foundation-matrix.md`](../evidence/platform/universal-service-foundation-matrix.md) (ADR-ACT-0237, ADR-0053–ADR-0066) and the companion architecture docs under `docs/architecture/universal-service-foundation.md`.
+
 ## Default Profile Services
 
 Started by `docker compose up -d` (no profile selector):

@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-06-11
 
-52 Architecture Decision Records (ADR-0001 through ADR-0052). ADR-0018 is intentionally absent. All status: **Accepted**.
+66 Architecture Decision Records (ADR-0001 through ADR-0066). ADR-0018 is intentionally absent. ADR-0001 through ADR-0052 are **Accepted**; ADR-0053 through ADR-0066 are **Proposed** (Universal Service Foundation planning set, ADR-ACT-0237).
 
 ## Foundation & Governance (8)
 
@@ -92,6 +92,30 @@
 | ADR-0047 | Tenant Email Sender Configuration + Readiness                   | 2026-06-12 | 0047-tenant-email-sender-configuration.md                         |
 | ADR-0048 | Tenant Custom Domains + DNS/TLS Readiness                       | 2026-06-12 | 0048-tenant-custom-domains.md                                     |
 | ADR-0049 | Tenant Storage Readiness + Isolation Proof                      | 2026-06-12 | 0049-tenant-storage-readiness.md                                  |
+| ADR-0050 | Tenant Observability Readiness                                  | 2026-06-12 | 0050-tenant-observability-readiness.md                            |
+| ADR-0051 | Integrations Webhooks                                           | 2026-06-12 | 0051-integrations-webhooks.md                                     |
+| ADR-0052 | Webhook Delivery Worker                                         | 2026-06-12 | 0052-webhook-delivery-worker.md                                   |
+
+## Universal Service Foundation — Proposed (14)
+
+Planning set created under ADR-ACT-0237. Status: **Proposed** (not yet Accepted).
+
+| ID       | Title                                                    | Date       | File                                                          |
+| -------- | -------------------------------------------------------- | ---------- | ------------------------------------------------------------- |
+| ADR-0053 | Universal Service Foundation scope and principles        | 2026-06-13 | 0053-universal-service-foundation-scope-and-principles.md     |
+| ADR-0054 | Build-versus-compose decision framework                  | 2026-06-13 | 0054-build-versus-compose-decision-framework.md               |
+| ADR-0055 | Service catalog and provider integration model           | 2026-06-13 | 0055-service-catalog-and-provider-integration-model.md        |
+| ADR-0056 | Environment-specific versus shared service model         | 2026-06-13 | 0056-environment-specific-versus-shared-service-model.md      |
+| ADR-0057 | Entitlement, billing, and quota architecture             | 2026-06-13 | 0057-entitlement-billing-and-quota-architecture.md            |
+| ADR-0058 | Policy decision point and delegated administration       | 2026-06-13 | 0058-policy-decision-point-and-delegated-administration.md    |
+| ADR-0059 | Workflow, event, and queue architecture                  | 2026-06-13 | 0059-workflow-event-and-queue-architecture.md                 |
+| ADR-0060 | Search and indexing architecture                         | 2026-06-13 | 0060-search-and-indexing-architecture.md                      |
+| ADR-0061 | Analytics and metering architecture                      | 2026-06-13 | 0061-analytics-and-metering-architecture.md                   |
+| ADR-0062 | Observability, alerting, and incident architecture       | 2026-06-13 | 0062-observability-alerting-and-incident-architecture.md      |
+| ADR-0063 | Data governance and compliance architecture              | 2026-06-13 | 0063-data-governance-and-compliance-architecture.md           |
+| ADR-0064 | Backup, recovery, retention, and legal hold architecture | 2026-06-13 | 0064-backup-recovery-retention-and-legal-hold-architecture.md |
+| ADR-0065 | Developer platform and API management architecture       | 2026-06-13 | 0065-developer-platform-and-api-management-architecture.md    |
+| ADR-0066 | Support administration and break-glass architecture      | 2026-06-13 | 0066-support-administration-and-break-glass-architecture.md   |
 
 ---
 
@@ -104,8 +128,8 @@
 
 ## Governance
 
-- All ADRs are **Accepted** (no superceded or pending)
-- Next ADR: **ADR-0053**
+- ADR-0001 through ADR-0052 are **Accepted**; ADR-0053 through ADR-0066 are **Proposed**
+- Next ADR: **ADR-0067**
 - Action register: `docs/adr/ACTION-REGISTER.md`
 - Lifecycle evidence: `docs/evidence/`
 
