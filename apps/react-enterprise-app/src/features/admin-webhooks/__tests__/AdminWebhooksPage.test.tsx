@@ -16,6 +16,9 @@ import {
   adminWebhooksDeleteHandler,
   adminWebhooksUpdateHandler,
   adminWebhooksDeliveriesHandler,
+  adminWebhooksMetricsHandler,
+  adminWebhooksRedriveHandler,
+  adminWebhooksRedriveDeadHandler,
 } from "../../../msw";
 import { AdminWebhooksPage } from "../AdminWebhooksPage";
 
@@ -116,5 +119,57 @@ describe("AdminWebhooksPage (ADR-0051)", () => {
     const { container } = renderPage();
     await screen.findByTestId("admin-webhooks-table");
     expect(await axe(container)).toHaveNoViolations();
+  });
+
+  // --- metrics + dead-letter redrive (ADR-ACT-0226) ---
+  it("shows per-subscription delivery metrics when deliveries are expanded", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminWebhooksListHandler(),
+      adminWebhooksReadinessHandler(),
+      adminWebhooksDeliveriesHandler(),
+      adminWebhooksMetricsHandler()
+    );
+    renderPage();
+    await userEvent.click(await screen.findByTestId("admin-webhooks-deliveries-toggle-wh-1"));
+    const metrics = await screen.findByTestId("admin-webhooks-metrics-wh-1");
+    expect(metrics).toHaveTextContent("Dead");
+    expect(metrics).toHaveTextContent("Delivered");
+  });
+
+  it("redrives a dead delivery and announces success", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminWebhooksListHandler(),
+      adminWebhooksReadinessHandler(),
+      adminWebhooksDeliveriesHandler(),
+      adminWebhooksMetricsHandler(),
+      adminWebhooksRedriveHandler(),
+      adminWebhooksRedriveDeadHandler()
+    );
+    renderPage();
+    await userEvent.click(await screen.findByTestId("admin-webhooks-deliveries-toggle-wh-1"));
+    const redriveBtn = await screen.findByTestId("admin-webhooks-redrive-del-dead-1");
+    await userEvent.click(redriveBtn);
+    await waitFor(() =>
+      expect(
+        screen.getByTestId("admin-webhooks-redrive-announce-del-dead-1")
+      ).not.toBeEmptyDOMElement()
+    );
+  });
+
+  it("exposes no redrive controls without write permission", async () => {
+    server.use(
+      sessionHandler("viewer"),
+      adminWebhooksListHandler(),
+      adminWebhooksReadinessHandler(),
+      adminWebhooksDeliveriesHandler(),
+      adminWebhooksMetricsHandler()
+    );
+    renderPage();
+    await screen.findByTestId("admin-webhooks");
+    // a read-only user has no redrive affordance anywhere on the page
+    expect(screen.queryByTestId("admin-webhooks-redrive-del-dead-1")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("admin-webhooks-redrive-all-wh-1")).not.toBeInTheDocument();
   });
 });

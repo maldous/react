@@ -44,6 +44,7 @@ export const AuditAction = {
   WebhookDeleted: "webhook.deleted",
   WebhookSecretRotated: "webhook.secret_rotated",
   WebhookTested: "webhook.tested",
+  WebhookRedriven: "webhook.redriven",
   ConfigValueChanged: "config.value_changed",
   ConfigValueCleared: "config.value_cleared",
 } as const;

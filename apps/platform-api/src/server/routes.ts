@@ -3405,6 +3405,119 @@ export const routes: Route[] = [
       res.json(200, { deliveries: result.deliveries });
     },
   },
+  {
+    method: "GET",
+    path: "/api/org/webhooks/:id/metrics",
+    operationName: "org.webhooks.metrics",
+    requiresAuth: true,
+    requiredPermission: "tenant.webhooks.read",
+    resource: "admin:webhooks",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const id = webhookIdFromPath(req.raw.url);
+      if (!id) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "invalid webhook id" });
+        return;
+      }
+      const { getSubscriptionMetrics } = await import("../usecases/webhooks.ts");
+      const { store } = await buildWebhookDeps();
+      const metrics = await getSubscriptionMetrics(tenantCtx.organisationId, id, store);
+      if (!metrics) {
+        res.json(404, { code: "NOT_FOUND", message: "Webhook not found" });
+        return;
+      }
+      res.json(200, metrics);
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/org/webhooks/:id/deliveries/:deliveryId/redrive",
+    operationName: "org.webhooks.redrive",
+    requiresAuth: true,
+    requiredPermission: "tenant.webhooks.write",
+    resource: "admin:webhooks",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const segments = new URL(req.raw.url ?? "", "http://localhost").pathname.split("/");
+      const id = segments[segments.indexOf("webhooks") + 1] ?? "";
+      const deliveryId = segments[segments.indexOf("deliveries") + 1] ?? "";
+      if (!UUID_RE.test(id) || !UUID_RE.test(deliveryId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "invalid id" });
+        return;
+      }
+      const { redriveDeadDeliveries } = await import("../usecases/webhooks.ts");
+      const result = await redriveDeadDeliveries(
+        {
+          organisationId: tenantCtx.organisationId,
+          subscriptionId: id,
+          deliveryId,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildWebhookDeps()
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Webhook not found" });
+        return;
+      }
+      res.json(200, { redriven: result.redriven });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/org/webhooks/:id/redrive-dead",
+    operationName: "org.webhooks.redriveDead",
+    requiresAuth: true,
+    requiredPermission: "tenant.webhooks.write",
+    resource: "admin:webhooks",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const id = webhookIdFromPath(req.raw.url);
+      if (!id) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "invalid webhook id" });
+        return;
+      }
+      const { redriveDeadDeliveries } = await import("../usecases/webhooks.ts");
+      const result = await redriveDeadDeliveries(
+        {
+          organisationId: tenantCtx.organisationId,
+          subscriptionId: id,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildWebhookDeps()
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Webhook not found" });
+        return;
+      }
+      res.json(200, { redriven: result.redriven });
+    },
+  },
   // ---------------------------------------------------------------------------
   // Sub-organisation management (ADR-ACT-0143 Slice 3)
   // Tenant admin manages sub-organisations inside their own tenant.

@@ -30,6 +30,9 @@ import {
   useRotateSecret,
   useTestWebhook,
   useWebhookDeliveries,
+  useWebhookMetrics,
+  useRedriveDelivery,
+  useRedriveDead,
 } from "./use-admin-webhooks";
 import type { CreateWebhookSubscriptionResponse } from "./admin-webhooks-client";
 
@@ -472,7 +475,7 @@ function WebhookRow({
       {showDeliveries && (
         <tr>
           <td colSpan={canWrite ? 5 : 4} className="py-2">
-            <DeliveriesPanel id={subscription.id} />
+            <DeliveriesPanel id={subscription.id} canWrite={canWrite} />
           </td>
         </tr>
       )}
@@ -480,19 +483,89 @@ function WebhookRow({
   );
 }
 
-function DeliveriesPanel({ id }: { id: string }) {
+function DeliveriesPanel({ id, canWrite }: { id: string; canWrite: boolean }) {
   const t = useTranslation();
   const { data, isLoading } = useWebhookDeliveries(id);
+  const { data: metrics, isLoading: metricsLoading } = useWebhookMetrics(id);
+  const redriveDead = useRedriveDead(id);
+  const [redriveDeadAnnounce, setRedriveDeadAnnounce] = useState("");
 
-  if (isLoading) return <LoadingState message={t("auth.status.loading")} />;
+  if (isLoading || metricsLoading) return <LoadingState message={t("auth.status.loading")} />;
 
   const deliveries = data?.deliveries ?? [];
+
+  function handleRedriveDead() {
+    redriveDead.mutate(undefined, {
+      onSuccess: () => setRedriveDeadAnnounce(t("feature.admin.webhooks.redrivenAll")),
+      onError: () => setRedriveDeadAnnounce(t("feature.admin.webhooks.redriveError")),
+    });
+  }
 
   return (
     <div
       className="rounded-md border border-border bg-surface-muted p-3 space-y-2"
       data-testid={`admin-webhooks-deliveries-${id}`}
     >
+      {metrics && (
+        <div className="space-y-1" data-testid={`admin-webhooks-metrics-${id}`}>
+          <p className="text-sm font-medium text-fg">
+            {t("feature.admin.webhooks.metricsHeading")}
+          </p>
+          <div className="flex flex-wrap gap-3 text-xs text-fg-muted">
+            <span>
+              {t("feature.admin.webhooks.metric.total")}: <strong>{metrics.total}</strong>
+            </span>
+            <span>
+              {t("feature.admin.webhooks.metric.delivered")}: <strong>{metrics.delivered}</strong>
+            </span>
+            <span>
+              {t("feature.admin.webhooks.metric.failed")}: <strong>{metrics.failed}</strong>
+            </span>
+            <span>
+              {t("feature.admin.webhooks.metric.dead")}: <strong>{metrics.dead}</strong>
+            </span>
+            <span>
+              {t("feature.admin.webhooks.metric.pending")}: <strong>{metrics.pending}</strong>
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-3 text-xs text-fg-muted">
+            <span>
+              {t("feature.admin.webhooks.lastDeliveryLabel")}:{" "}
+              {metrics.lastDeliveryAt ?? t("feature.admin.webhooks.never")}
+            </span>
+            <span>
+              {t("feature.admin.webhooks.lastSuccessLabel")}:{" "}
+              {metrics.lastSuccessAt ?? t("feature.admin.webhooks.never")}
+            </span>
+            <span>
+              {t("feature.admin.webhooks.lastFailureLabel")}:{" "}
+              {metrics.lastFailureAt ?? t("feature.admin.webhooks.never")}
+            </span>
+          </div>
+          {canWrite && metrics.dead > 0 && (
+            <div className="flex items-center gap-2">
+              <Button
+                size="sm"
+                variant="outline"
+                type="button"
+                isDisabled={redriveDead.isPending}
+                onPress={handleRedriveDead}
+                data-testid={`admin-webhooks-redrive-all-${id}`}
+              >
+                {t("feature.admin.webhooks.redriveAllButton")}
+              </Button>
+              <LiveRegion
+                tone="polite"
+                className="sr-only"
+                data-testid={`admin-webhooks-redrive-all-announce-${id}`}
+              >
+                {redriveDeadAnnounce}
+              </LiveRegion>
+            </div>
+          )}
+        </div>
+      )}
+
       <p className="text-sm font-medium text-fg">{t("feature.admin.webhooks.deliveriesHeading")}</p>
       {deliveries.length === 0 ? (
         <p className="text-sm text-fg-muted" data-testid={`admin-webhooks-deliveries-empty-${id}`}>
@@ -505,11 +578,12 @@ function DeliveriesPanel({ id }: { id: string }) {
               <th className="pb-1 pr-4">Event</th>
               <th className="pb-1 pr-4">Status</th>
               <th className="pb-1 pr-4">HTTP</th>
+              {canWrite && <th className="pb-1" />}
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
             {deliveries.map((d) => (
-              <DeliveryRow key={d.id} delivery={d} />
+              <DeliveryRow key={d.id} delivery={d} subscriptionId={id} canWrite={canWrite} />
             ))}
           </tbody>
         </table>
@@ -518,14 +592,32 @@ function DeliveriesPanel({ id }: { id: string }) {
   );
 }
 
-function DeliveryRow({ delivery }: { delivery: WebhookDeliverySummary }) {
+function DeliveryRow({
+  delivery,
+  subscriptionId,
+  canWrite,
+}: {
+  delivery: WebhookDeliverySummary;
+  subscriptionId: string;
+  canWrite: boolean;
+}) {
   const t = useTranslation();
+  const redriveDelivery = useRedriveDelivery(subscriptionId);
+  const [announce, setAnnounce] = useState("");
+
   const variant =
     delivery.status === "delivered"
       ? "default"
       : delivery.status === "failed"
         ? "secondary"
         : "secondary";
+
+  function handleRedrive() {
+    redriveDelivery.mutate(delivery.id, {
+      onSuccess: () => setAnnounce(t("feature.admin.webhooks.redriven")),
+      onError: () => setAnnounce(t("feature.admin.webhooks.redriveError")),
+    });
+  }
 
   return (
     <tr>
@@ -536,6 +628,31 @@ function DeliveryRow({ delivery }: { delivery: WebhookDeliverySummary }) {
         </Badge>
       </td>
       <td className="py-1 pr-4 text-fg-muted">{delivery.responseStatus ?? "—"}</td>
+      {canWrite && (
+        <td className="py-1">
+          {delivery.status === "dead" && (
+            <>
+              <Button
+                size="sm"
+                variant="outline"
+                type="button"
+                isDisabled={redriveDelivery.isPending}
+                onPress={handleRedrive}
+                data-testid={`admin-webhooks-redrive-${delivery.id}`}
+              >
+                {t("feature.admin.webhooks.redriveButton")}
+              </Button>
+              <LiveRegion
+                tone="polite"
+                className="sr-only"
+                data-testid={`admin-webhooks-redrive-announce-${delivery.id}`}
+              >
+                {announce}
+              </LiveRegion>
+            </>
+          )}
+        </td>
+      )}
     </tr>
   );
 }

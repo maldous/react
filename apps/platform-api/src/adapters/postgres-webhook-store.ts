@@ -5,6 +5,7 @@ import { encryptTenantSecret, decryptTenantSecret } from "./tenant-secret-crypto
 import type {
   ClaimedDelivery,
   CreateWebhookInput,
+  DeliveryMetrics,
   DeliveryResult,
   RecordDeliveryInput,
   UpdateWebhookFields,
@@ -254,5 +255,86 @@ export class PostgresWebhookStore implements WebhookStore {
         WHERE id = $1`,
       [id, result.status, result.responseStatus, result.attempt, result.error, result.nextAttemptAt]
     );
+  }
+
+  // --- metrics + dead-letter redrive (ADR-ACT-0226) ---
+
+  async subscriptionMetrics(
+    organisationId: string,
+    subscriptionId: string
+  ): Promise<DeliveryMetrics> {
+    const { rows } = await this.pool.query<{
+      total: number;
+      delivered: number;
+      failed: number;
+      dead: number;
+      pending: number;
+      last_status: string | null;
+      last_delivery_at: Date | string | null;
+      last_success_at: Date | string | null;
+      last_failure_at: Date | string | null;
+    }>(
+      `SELECT
+         count(*)::int AS total,
+         count(*) FILTER (WHERE status = 'delivered')::int AS delivered,
+         count(*) FILTER (WHERE status = 'failed')::int AS failed,
+         count(*) FILTER (WHERE status = 'dead')::int AS dead,
+         count(*) FILTER (WHERE status IN ('pending', 'processing'))::int AS pending,
+         max(created_at) AS last_delivery_at,
+         max(created_at) FILTER (WHERE status = 'delivered') AS last_success_at,
+         max(created_at) FILTER (WHERE status IN ('failed', 'dead')) AS last_failure_at,
+         (SELECT status FROM public.tenant_webhook_deliveries
+           WHERE organisation_id = $1 AND subscription_id = $2
+           ORDER BY created_at DESC LIMIT 1) AS last_status
+       FROM public.tenant_webhook_deliveries
+      WHERE organisation_id = $1 AND subscription_id = $2`,
+      [organisationId, subscriptionId]
+    );
+    const r = rows[0];
+    const lastStatus = r?.last_status === "processing" ? "pending" : (r?.last_status ?? null);
+    return {
+      total: r?.total ?? 0,
+      delivered: r?.delivered ?? 0,
+      failed: r?.failed ?? 0,
+      dead: r?.dead ?? 0,
+      pending: r?.pending ?? 0,
+      lastStatus: lastStatus as WebhookDeliveryStatus | null,
+      lastDeliveryAt: iso(r?.last_delivery_at ?? null),
+      lastSuccessAt: iso(r?.last_success_at ?? null),
+      lastFailureAt: iso(r?.last_failure_at ?? null),
+    };
+  }
+
+  async deadDeliveryCount(organisationId: string): Promise<number> {
+    const { rows } = await this.pool.query<{ dead: number }>(
+      `SELECT count(*)::int AS dead FROM public.tenant_webhook_deliveries
+        WHERE organisation_id = $1 AND status = 'dead'`,
+      [organisationId]
+    );
+    return rows[0]?.dead ?? 0;
+  }
+
+  async redriveDeadDelivery(organisationId: string, deliveryId: string): Promise<boolean> {
+    // Idempotent: only a row currently in `dead` is requeued (attempt reset, due now).
+    const res = await this.pool.query(
+      `UPDATE public.tenant_webhook_deliveries
+          SET status = 'pending', attempt = 0, error = NULL, next_attempt_at = now()
+        WHERE organisation_id = $1 AND id = $2 AND status = 'dead'`,
+      [organisationId, deliveryId]
+    );
+    return (res.rowCount ?? 0) > 0;
+  }
+
+  async redriveDeadForSubscription(
+    organisationId: string,
+    subscriptionId: string
+  ): Promise<number> {
+    const res = await this.pool.query(
+      `UPDATE public.tenant_webhook_deliveries
+          SET status = 'pending', attempt = 0, error = NULL, next_attempt_at = now()
+        WHERE organisation_id = $1 AND subscription_id = $2 AND status = 'dead'`,
+      [organisationId, subscriptionId]
+    );
+    return res.rowCount ?? 0;
   }
 }

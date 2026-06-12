@@ -2567,6 +2567,55 @@
         }
       }
     },
+    "/api/org/webhooks/:id/metrics": {
+      "get": {
+        "summary": "Get per-subscription webhook delivery metrics",
+        "operationId": "getOrgWebhookMetrics",
+        "description": "Returns delivery health counts (total/delivered/failed/dead/pending) + last status/timestamps. Safe metadata only — never payload, headers, or the signing secret. ADR-ACT-0226.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Subscription delivery metrics" },
+          "404": { "description": "Webhook not found" }
+        }
+      }
+    },
+    "/api/org/webhooks/:id/deliveries/:deliveryId/redrive": {
+      "post": {
+        "summary": "Redrive a dead webhook delivery",
+        "operationId": "redriveOrgWebhookDelivery",
+        "description": "Requeues a single DEAD delivery as pending (attempt reset, due now); audit-first; idempotent (a non-dead delivery requeues 0). ADR-ACT-0226.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "deliveryId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Redrive result (count requeued)" },
+          "404": { "description": "Webhook not found" }
+        }
+      }
+    },
+    "/api/org/webhooks/:id/redrive-dead": {
+      "post": {
+        "summary": "Redrive all dead deliveries for a subscription",
+        "operationId": "redriveOrgWebhookDead",
+        "description": "Bulk requeue of all DEAD deliveries for the subscription as pending; audit-first. ADR-ACT-0226.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Redrive result (count requeued)" },
+          "404": { "description": "Webhook not found" }
+        }
+      }
+    },
     "/api/org/readiness": {
       "get": {
         "summary": "Tenant control-plane readiness + capability map",

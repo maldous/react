@@ -8,6 +8,8 @@ import type {
   WebhookSecretRotationResponse,
   WebhookTestResult,
   WebhookDeliveryListResponse,
+  WebhookSubscriptionMetrics,
+  WebhookRedriveResponse,
 } from "@platform/contracts-admin";
 import { adminGet, adminSend } from "../admin/admin-fetch";
 
@@ -18,6 +20,8 @@ export type {
   WebhookSecretRotationResponse,
   WebhookTestResult,
   WebhookDeliveryListResponse,
+  WebhookSubscriptionMetrics,
+  WebhookRedriveResponse,
 };
 
 export function listWebhooks(): Promise<WebhookSubscriptionListResponse> {
@@ -63,5 +67,28 @@ export function testWebhook(id: string): Promise<WebhookTestResult> {
 export function listWebhookDeliveries(id: string): Promise<WebhookDeliveryListResponse> {
   return adminGet<WebhookDeliveryListResponse>(
     `/api/org/webhooks/${encodeURIComponent(id)}/deliveries`
+  );
+}
+
+export function getWebhookMetrics(id: string): Promise<WebhookSubscriptionMetrics> {
+  return adminGet<WebhookSubscriptionMetrics>(
+    `/api/org/webhooks/${encodeURIComponent(id)}/metrics`
+  );
+}
+
+export function redriveWebhookDelivery(
+  id: string,
+  deliveryId: string
+): Promise<WebhookRedriveResponse> {
+  return adminSend<WebhookRedriveResponse>(
+    "POST",
+    `/api/org/webhooks/${encodeURIComponent(id)}/deliveries/${encodeURIComponent(deliveryId)}/redrive`
+  );
+}
+
+export function redriveDeadWebhooks(id: string): Promise<WebhookRedriveResponse> {
+  return adminSend<WebhookRedriveResponse>(
+    "POST",
+    `/api/org/webhooks/${encodeURIComponent(id)}/redrive-dead`
   );
 }

@@ -430,10 +430,28 @@
           "pending": "Pending",
           "dead": "Failed (gave up)"
         },
+        "metricsHeading": "Delivery health",
+        "metric": {
+          "total": "Total",
+          "delivered": "Delivered",
+          "failed": "Failed",
+          "dead": "Dead",
+          "pending": "Pending"
+        },
+        "lastDeliveryLabel": "Last delivery",
+        "lastSuccessLabel": "Last success",
+        "lastFailureLabel": "Last failure",
+        "never": "Never",
+        "redriveButton": "Redrive",
+        "redriven": "Dead delivery requeued — the worker will retry it.",
+        "redriveError": "Could not redrive the delivery. Please try again.",
+        "redriveAllButton": "Redrive all dead",
+        "redrivenAll": "Dead deliveries requeued.",
         "readinessHeading": "Webhooks status",
         "readiness": {
           "no_subscriptions": "No webhook is configured yet.",
           "configured": "At least one enabled webhook is configured.",
+          "has_dead_deliveries": "Some deliveries failed permanently — redrive them to retry.",
           "degraded": "Webhook configuration could not be read right now.",
           "unknown": "Webhooks readiness is unknown right now."
         }

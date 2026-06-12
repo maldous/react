@@ -300,7 +300,7 @@ export function adminWebhooksDeliveriesHandler() {
     HttpResponse.json({
       deliveries: [
         {
-          id: `del-1`,
+          id: "del-1",
           event: "platform.test",
           status: "delivered",
           responseStatus: 200,
@@ -308,9 +308,47 @@ export function adminWebhooksDeliveriesHandler() {
           error: null,
           createdAt: "2026-06-12T00:00:00Z",
         },
+        {
+          id: "del-dead-1",
+          event: "tenant.member.invited",
+          status: "dead",
+          responseStatus: null,
+          attempt: 5,
+          error: "Connection refused",
+          createdAt: "2026-06-12T01:00:00Z",
+        },
       ],
     })
   );
+}
+
+const webhooksMetricsFixture = {
+  subscriptionId: "wh-1",
+  total: 10,
+  delivered: 7,
+  failed: 2,
+  dead: 1,
+  pending: 0,
+  lastStatus: "delivered",
+  lastDeliveryAt: "2026-06-12T00:00:00Z",
+  lastSuccessAt: "2026-06-12T00:00:00Z",
+  lastFailureAt: "2026-06-11T23:00:00Z",
+};
+
+export function adminWebhooksMetricsHandler(
+  response: Record<string, unknown> = webhooksMetricsFixture
+) {
+  return http.get("/api/org/webhooks/:id/metrics", () => HttpResponse.json(response));
+}
+
+export function adminWebhooksRedriveHandler() {
+  return http.post("/api/org/webhooks/:id/deliveries/:deliveryId/redrive", () =>
+    HttpResponse.json({ redriven: 1 })
+  );
+}
+
+export function adminWebhooksRedriveDeadHandler() {
+  return http.post("/api/org/webhooks/:id/redrive-dead", () => HttpResponse.json({ redriven: 2 }));
 }
 
 // --- Tenant observability readiness (ADR-0050) ---

@@ -372,6 +372,7 @@ function capabilityReadiness(kind: ReadinessKind, s: ReadinessSignals): Capabili
           return "ready";
         case "no_subscriptions":
           return "incomplete";
+        case "has_dead_deliveries": // needs operator redrive; optional cap → non-blocking
         case "degraded":
           return "degraded";
         default:

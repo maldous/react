@@ -170,7 +170,8 @@
     "proof:tenant-observability": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
     "proof:webhooks": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/webhooks-runtime-proof.ts",
     "proof:webhook-worker": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
-    "proof:tenant-domains-routing": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+    "proof:tenant-domains-routing": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+    "proof:webhook-redrive": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/webhook-redrive-runtime-proof.ts"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "3.1056.0",

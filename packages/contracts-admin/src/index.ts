@@ -779,7 +779,8 @@ export type WebhookDeliveryStatus = z.infer<typeof WebhookDeliveryStatusSchema>;
 
 export const WEBHOOK_READINESS_STATUSES = [
   "no_subscriptions", // none configured (optional capability)
-  "configured", // ≥1 enabled subscription
+  "configured", // ≥1 enabled subscription, no dead deliveries
+  "has_dead_deliveries", // ≥1 dead (exhausted) delivery awaiting redrive (ADR-ACT-0226)
   "degraded", // store unreachable
   "unknown",
 ] as const;
@@ -901,9 +902,41 @@ export const WebhookReadinessResponseSchema = z
     status: WebhookReadinessStatusSchema,
     total: z.number().int().nonnegative(),
     enabled: z.number().int().nonnegative(),
+    /** Count of dead (exhausted) deliveries across the tenant's subscriptions. */
+    deadDeliveries: z.number().int().nonnegative(),
   })
   .strict();
 export type WebhookReadinessResponse = z.infer<typeof WebhookReadinessResponseSchema>;
+
+// --- Per-subscription delivery metrics + dead-letter redrive (ADR-ACT-0226) ---
+// Safe metadata only: counts + status/timestamps. NEVER the payload body, headers,
+// signing secret, or any tenant data.
+
+/** `GET /api/org/webhooks/:id/metrics`. */
+export const WebhookSubscriptionMetricsSchema = z
+  .object({
+    subscriptionId: z.string(),
+    total: z.number().int().nonnegative(),
+    delivered: z.number().int().nonnegative(),
+    failed: z.number().int().nonnegative(),
+    dead: z.number().int().nonnegative(),
+    pending: z.number().int().nonnegative(),
+    lastStatus: WebhookDeliveryStatusSchema.nullable(),
+    lastDeliveryAt: z.string().nullable(),
+    lastSuccessAt: z.string().nullable(),
+    lastFailureAt: z.string().nullable(),
+  })
+  .strict();
+export type WebhookSubscriptionMetrics = z.infer<typeof WebhookSubscriptionMetricsSchema>;
+
+/** `POST /api/org/webhooks/:id/deliveries/:deliveryId/redrive` and the bulk variant. */
+export const WebhookRedriveResponseSchema = z
+  .object({
+    /** Number of dead deliveries requeued as pending (1 for single, n for bulk). */
+    redriven: z.number().int().nonnegative(),
+  })
+  .strict();
+export type WebhookRedriveResponse = z.infer<typeof WebhookRedriveResponseSchema>;
 
 export const MfaRequirementSchema = z.enum(["none", "optional", "required"]);
 export const MfaTypeSchema = z.enum(["totp", "webauthn"]);

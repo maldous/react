@@ -107,4 +107,27 @@ export interface WebhookStore {
   claimDueDeliveries(limit: number, now: Date): Promise<ClaimedDelivery[]>;
   /** Record the outcome of a claimed delivery attempt (retry/terminal). */
   markDeliveryResult(id: string, result: DeliveryResult): Promise<void>;
+
+  // --- metrics + dead-letter redrive (ADR-ACT-0226) ---
+  /** Per-subscription delivery health (safe metadata only). */
+  subscriptionMetrics(organisationId: string, subscriptionId: string): Promise<DeliveryMetrics>;
+  /** Count of dead deliveries across the tenant (for readiness). */
+  deadDeliveryCount(organisationId: string): Promise<number>;
+  /** Requeue a single DEAD delivery as pending (attempt reset, due now). Returns true
+   * when a dead row was requeued (idempotent: a non-dead/unknown id → false). */
+  redriveDeadDelivery(organisationId: string, deliveryId: string): Promise<boolean>;
+  /** Requeue ALL dead deliveries for a subscription. Returns the count requeued. */
+  redriveDeadForSubscription(organisationId: string, subscriptionId: string): Promise<number>;
+}
+
+export interface DeliveryMetrics {
+  total: number;
+  delivered: number;
+  failed: number;
+  dead: number;
+  pending: number;
+  lastStatus: WebhookDeliveryStatus | null;
+  lastDeliveryAt: string | null;
+  lastSuccessAt: string | null;
+  lastFailureAt: string | null;
 }

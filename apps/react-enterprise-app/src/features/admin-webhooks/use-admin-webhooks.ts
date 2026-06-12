@@ -12,6 +12,9 @@ import {
   rotateWebhookSecret,
   testWebhook,
   listWebhookDeliveries,
+  getWebhookMetrics,
+  redriveWebhookDelivery,
+  redriveDeadWebhooks,
 } from "./admin-webhooks-client";
 
 export const webhooksQueryKey = ["admin", "webhooks"] as const;
@@ -82,5 +85,40 @@ export function useWebhookDeliveries(id: string) {
     queryKey: ["admin", "webhooks", id, "deliveries"],
     queryFn: () => listWebhookDeliveries(id),
     retry: false,
+  });
+}
+
+export function useWebhookMetrics(id: string) {
+  return useQuery({
+    queryKey: ["admin", "webhooks", id, "metrics"],
+    queryFn: () => getWebhookMetrics(id),
+    retry: false,
+  });
+}
+
+function useInvalidateAfterRedrive(id: string) {
+  const queryClient = useQueryClient();
+  return () => {
+    void queryClient.invalidateQueries({ queryKey: ["admin", "webhooks", id, "metrics"] });
+    void queryClient.invalidateQueries({ queryKey: ["admin", "webhooks", id, "deliveries"] });
+    void queryClient.invalidateQueries({ queryKey: webhooksQueryKey });
+    void queryClient.invalidateQueries({ queryKey: webhooksReadinessQueryKey });
+    void queryClient.invalidateQueries({ queryKey: ["admin", "audit"] });
+  };
+}
+
+export function useRedriveDelivery(subscriptionId: string) {
+  const invalidate = useInvalidateAfterRedrive(subscriptionId);
+  return useMutation({
+    mutationFn: (deliveryId: string) => redriveWebhookDelivery(subscriptionId, deliveryId),
+    onSuccess: invalidate,
+  });
+}
+
+export function useRedriveDead(subscriptionId: string) {
+  const invalidate = useInvalidateAfterRedrive(subscriptionId);
+  return useMutation({
+    mutationFn: () => redriveDeadWebhooks(subscriptionId),
+    onSuccess: invalidate,
   });
 }

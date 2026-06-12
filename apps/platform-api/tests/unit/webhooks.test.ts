@@ -11,8 +11,10 @@ import type { AuditEventPort } from "@platform/audit-events";
 import {
   classifyWebhookReadiness,
   createWebhook,
+  getSubscriptionMetrics,
   getWebhookReadiness,
   listWebhooks,
+  redriveDeadDeliveries,
   rotateWebhookSecret,
   signWebhookBody,
   testWebhook,
@@ -99,6 +101,28 @@ function makeStore(): WebhookStore & {
       const all = [...subs.values()].filter((s) => s.organisationId === orgId);
       return { total: all.length, enabled: all.filter((s) => s.enabled).length };
     },
+    async subscriptionMetrics() {
+      return {
+        total: 0,
+        delivered: 0,
+        failed: 0,
+        dead: 0,
+        pending: 0,
+        lastStatus: null,
+        lastDeliveryAt: null,
+        lastSuccessAt: null,
+        lastFailureAt: null,
+      };
+    },
+    async deadDeliveryCount() {
+      return 0;
+    },
+    async redriveDeadDelivery() {
+      return false;
+    },
+    async redriveDeadForSubscription() {
+      return 0;
+    },
   };
 }
 
@@ -129,9 +153,15 @@ describe("HMAC signing (ADR-0051)", () => {
 
 describe("classifyWebhookReadiness", () => {
   it("no subs → no_subscriptions; ≥1 enabled → configured; subs but none enabled → no_subscriptions", () => {
-    assert.equal(classifyWebhookReadiness({ total: 0, enabled: 0 }), "no_subscriptions");
-    assert.equal(classifyWebhookReadiness({ total: 2, enabled: 1 }), "configured");
-    assert.equal(classifyWebhookReadiness({ total: 2, enabled: 0 }), "no_subscriptions");
+    assert.equal(classifyWebhookReadiness({ total: 0, enabled: 0, dead: 0 }), "no_subscriptions");
+    assert.equal(classifyWebhookReadiness({ total: 2, enabled: 1, dead: 0 }), "configured");
+    assert.equal(classifyWebhookReadiness({ total: 2, enabled: 0, dead: 0 }), "no_subscriptions");
+  });
+  it("dead deliveries → has_dead_deliveries (ADR-ACT-0226)", () => {
+    assert.equal(
+      classifyWebhookReadiness({ total: 2, enabled: 1, dead: 3 }),
+      "has_dead_deliveries"
+    );
   });
 });
 
@@ -296,5 +326,115 @@ describe("listWebhooks + getWebhookReadiness", () => {
     assert.equal(readiness.status, "configured");
     assert.equal(readiness.total, 1);
     assert.equal(readiness.enabled, 1);
+    assert.equal(readiness.deadDeliveries, 0);
+  });
+});
+
+// --- metrics + dead-letter redrive (ADR-ACT-0226) ----------------------------
+// A status-aware fake store: one subscription "sub-1" + a mutable delivery list.
+function makeMetricsStore(deliveries: Array<{ id: string; status: string }>) {
+  const redriven: string[] = [];
+  const store = {
+    redriven,
+    async get(_org: string, id: string) {
+      return id === "sub-1" ? { id, url: "https://x", enabled: true } : null;
+    },
+    async subscriptionMetrics() {
+      const by = (s: string) => deliveries.filter((d) => d.status === s).length;
+      return {
+        total: deliveries.length,
+        delivered: by("delivered"),
+        failed: by("failed"),
+        dead: by("dead"),
+        pending: by("pending"),
+        lastStatus: deliveries.at(-1)?.status ?? null,
+        lastDeliveryAt: deliveries.length ? "2026-06-12T00:00:00Z" : null,
+        lastSuccessAt: by("delivered") ? "2026-06-12T00:00:00Z" : null,
+        lastFailureAt: by("dead") + by("failed") ? "2026-06-12T00:00:00Z" : null,
+      };
+    },
+    async deadDeliveryCount() {
+      return deliveries.filter((d) => d.status === "dead").length;
+    },
+    async redriveDeadDelivery(_org: string, deliveryId: string) {
+      const d = deliveries.find((x) => x.id === deliveryId && x.status === "dead");
+      if (!d) return false;
+      d.status = "pending";
+      redriven.push(deliveryId);
+      return true;
+    },
+    async redriveDeadForSubscription() {
+      const dead = deliveries.filter((d) => d.status === "dead");
+      dead.forEach((d) => (d.status = "pending"));
+      return dead.length;
+    },
+  };
+  return store as unknown as import("../../src/ports/webhook-store.ts").WebhookStore & {
+    redriven: string[];
+  };
+}
+
+describe("getSubscriptionMetrics (ADR-ACT-0226)", () => {
+  it("returns safe counts + last-status metadata for a known subscription", async () => {
+    const store = makeMetricsStore([
+      { id: "d1", status: "delivered" },
+      { id: "d2", status: "dead" },
+      { id: "d3", status: "pending" },
+    ]);
+    const m = await getSubscriptionMetrics(ORG, "sub-1", store);
+    assert.equal(m?.subscriptionId, "sub-1");
+    assert.equal(m?.total, 3);
+    assert.equal(m?.delivered, 1);
+    assert.equal(m?.dead, 1);
+    assert.equal(m?.pending, 1);
+    assert.equal(m?.lastSuccessAt !== null, true);
+    // no payload/secret/headers fields leak into the metrics DTO
+    assert.ok(!("payload" in (m as object)) && !("secret" in (m as object)));
+  });
+  it("returns null for an unknown subscription", async () => {
+    const m = await getSubscriptionMetrics(ORG, "nope", makeMetricsStore([]));
+    assert.equal(m, null);
+  });
+});
+
+describe("redriveDeadDeliveries (ADR-ACT-0226)", () => {
+  it("requeues a single dead delivery (audit-first, no secret in audit)", async () => {
+    const store = makeMetricsStore([{ id: "d-dead", status: "dead" }]);
+    const audit = makeAudit();
+    const r = await redriveDeadDeliveries(
+      { organisationId: ORG, subscriptionId: "sub-1", deliveryId: "d-dead", actor: ACTOR },
+      { store, audit }
+    );
+    assert.equal(r.kind === "ok" && r.redriven, 1);
+    assert.deepEqual(store.redriven, ["d-dead"]);
+    assert.equal(audit.events.length, 1);
+    assert.ok(!JSON.stringify(audit.events).toLowerCase().includes("secret"));
+  });
+  it("is idempotent — redriving a non-dead/unknown delivery requeues 0", async () => {
+    const store = makeMetricsStore([{ id: "d-ok", status: "delivered" }]);
+    const r = await redriveDeadDeliveries(
+      { organisationId: ORG, subscriptionId: "sub-1", deliveryId: "d-ok", actor: ACTOR },
+      { store, audit: makeAudit() }
+    );
+    assert.equal(r.kind === "ok" && r.redriven, 0);
+  });
+  it("bulk redrive requeues all dead deliveries for the subscription", async () => {
+    const store = makeMetricsStore([
+      { id: "a", status: "dead" },
+      { id: "b", status: "dead" },
+      { id: "c", status: "delivered" },
+    ]);
+    const r = await redriveDeadDeliveries(
+      { organisationId: ORG, subscriptionId: "sub-1", actor: ACTOR },
+      { store, audit: makeAudit() }
+    );
+    assert.equal(r.kind === "ok" && r.redriven, 2);
+  });
+  it("not_found for an unknown subscription", async () => {
+    const r = await redriveDeadDeliveries(
+      { organisationId: ORG, subscriptionId: "missing", deliveryId: "x", actor: ACTOR },
+      { store: makeMetricsStore([]), audit: makeAudit() }
+    );
+    assert.equal(r.kind, "not_found");
   });
 });

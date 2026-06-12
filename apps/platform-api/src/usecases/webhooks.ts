@@ -238,12 +238,14 @@ export async function testWebhook(
   return { kind: "ok", result: { status, responseStatus: res.status } };
 }
 
-/** Pure: classify subscription counts → readiness. */
+/** Pure: classify subscription + dead-delivery counts → readiness (ADR-ACT-0226). */
 export function classifyWebhookReadiness(counts: {
   total: number;
   enabled: number;
+  dead: number;
 }): WebhookReadinessResponse["status"] {
   if (counts.total === 0) return "no_subscriptions";
+  if (counts.dead > 0) return "has_dead_deliveries";
   return counts.enabled > 0 ? "configured" : "no_subscriptions";
 }
 
@@ -253,12 +255,62 @@ export async function getWebhookReadiness(
 ): Promise<WebhookReadinessResponse> {
   try {
     const counts = await store.counts(organisationId);
+    const dead = await store.deadDeliveryCount(organisationId);
     return {
-      status: classifyWebhookReadiness(counts),
+      status: classifyWebhookReadiness({ ...counts, dead }),
       total: counts.total,
       enabled: counts.enabled,
+      deadDeliveries: dead,
     };
   } catch {
-    return { status: "degraded", total: 0, enabled: 0 };
+    return { status: "degraded", total: 0, enabled: 0, deadDeliveries: 0 };
   }
+}
+
+/** `GET /api/org/webhooks/:id/metrics` — null when the subscription is unknown. */
+export async function getSubscriptionMetrics(
+  organisationId: string,
+  subscriptionId: string,
+  store: WebhookStore
+): Promise<import("@platform/contracts-admin").WebhookSubscriptionMetrics | null> {
+  const sub = await store.get(organisationId, subscriptionId);
+  if (!sub) return null;
+  const m = await store.subscriptionMetrics(organisationId, subscriptionId);
+  return { subscriptionId, ...m };
+}
+
+/**
+ * Redrive dead deliveries (ADR-ACT-0226). Audit-first; requeues only `dead` rows as
+ * pending (attempt reset, due now) — idempotent (a non-dead/unknown delivery → 0). When
+ * `deliveryId` is given, redrives that one; otherwise all dead for the subscription.
+ */
+export async function redriveDeadDeliveries(
+  input: {
+    organisationId: string;
+    subscriptionId: string;
+    deliveryId?: string;
+    actor: WebhookActor;
+  },
+  deps: WebhookDeps
+): Promise<{ kind: "ok"; redriven: number } | { kind: "not_found" }> {
+  const sub = await deps.store.get(input.organisationId, input.subscriptionId);
+  if (!sub) return { kind: "not_found" };
+  await audit(
+    deps,
+    input.organisationId,
+    input.actor,
+    AuditAction.WebhookRedriven,
+    input.subscriptionId,
+    {
+      operation: "redrive",
+      scope: input.deliveryId ? "single" : "subscription",
+      ...(input.deliveryId ? { deliveryId: input.deliveryId } : {}),
+    }
+  );
+  const redriven = input.deliveryId
+    ? (await deps.store.redriveDeadDelivery(input.organisationId, input.deliveryId))
+      ? 1
+      : 0
+    : await deps.store.redriveDeadForSubscription(input.organisationId, input.subscriptionId);
+  return { kind: "ok", redriven };
 }
