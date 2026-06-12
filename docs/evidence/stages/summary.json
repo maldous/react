@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-12T11:21:14.529Z",
+  "generatedAt": "2026-06-12T14:09:01.278Z",
   "stages": {
     "dev": {
       "stage": "dev",
-      "gitSha": "fcd5181",
-      "timestamp": "2026-06-12T11:07:54.944Z",
+      "gitSha": "4b294b8",
+      "timestamp": "2026-06-12T13:54:18.090Z",
       "envFile": ".env.dev",
       "composeProject": "react-dev",
       "profiles": [
@@ -22,13 +22,13 @@
         "http://localhost:3001/healthz"
       ],
       "result": "passed",
-      "durationSeconds": 161,
+      "durationSeconds": 116,
       "failureSummary": null
     },
     "test": {
       "stage": "test",
-      "gitSha": "fcd5181",
-      "timestamp": "2026-06-12T11:13:07.841Z",
+      "gitSha": "4b294b8",
+      "timestamp": "2026-06-12T13:59:34.533Z",
       "envFile": ".env.test",
       "composeProject": "react-test",
       "profiles": [
@@ -49,13 +49,13 @@
         "http://localhost:3002/healthz"
       ],
       "result": "passed",
-      "durationSeconds": 314,
+      "durationSeconds": 317,
       "failureSummary": null
     },
     "staging": {
       "stage": "staging",
-      "gitSha": "fcd5181",
-      "timestamp": "2026-06-12T11:13:52.161Z",
+      "gitSha": "4b294b8",
+      "timestamp": "2026-06-12T14:00:19.192Z",
       "envFile": ".env.staging",
       "composeProject": "react-staging",
       "profiles": [
@@ -82,8 +82,8 @@
     },
     "prod": {
       "stage": "prod",
-      "gitSha": "fcd5181",
-      "timestamp": "2026-06-12T11:21:14.506Z",
+      "gitSha": "4b294b8",
+      "timestamp": "2026-06-12T14:09:01.256Z",
       "envFile": ".env.prod",
       "composeProject": "react-prod",
       "profiles": [
@@ -108,7 +108,7 @@
         "http://localhost:3004/healthz"
       ],
       "result": "passed",
-      "durationSeconds": 443,
+      "durationSeconds": 522,
       "failureSummary": null
     }
   }
