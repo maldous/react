@@ -208,13 +208,13 @@ export const CAPABILITIES: readonly CapabilityDefinition[] = [
   }),
 
   // --- Integrations ---
-  // Webhooks: subscription CRUD, HMAC-signed reveal-once secret, immediate test
-  // dispatch, and a delivery log are implemented (ADR-0051). The async retry worker
-  // is deferred, so the capability is honestly `partial`.
+  // Webhooks: subscription CRUD + HMAC-signed reveal-once secret + immediate test
+  // (ADR-0051) AND a durable background delivery worker with backoff/dead-letter +
+  // real event fan-out (ADR-0052). End-to-end → `implemented`.
   cap("integrations_webhooks", "integrations", {
     adminRoute: "/admin/webhooks",
     requiredPermission: "tenant.webhooks.read",
-    implementationStatus: "partial",
+    implementationStatus: "implemented",
     readinessKind: "tenant-webhooks",
     detailKey: `${A}.integrations_webhooks.action`,
   }),

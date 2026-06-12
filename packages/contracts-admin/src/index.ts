@@ -746,7 +746,7 @@ export const WEBHOOK_EVENT_TYPES = [
 export const WebhookEventTypeSchema = z.enum(WEBHOOK_EVENT_TYPES);
 export type WebhookEventType = z.infer<typeof WebhookEventTypeSchema>;
 
-export const WEBHOOK_DELIVERY_STATUSES = ["delivered", "failed", "pending"] as const;
+export const WEBHOOK_DELIVERY_STATUSES = ["delivered", "failed", "pending", "dead"] as const;
 export const WebhookDeliveryStatusSchema = z.enum(WEBHOOK_DELIVERY_STATUSES);
 export type WebhookDeliveryStatus = z.infer<typeof WebhookDeliveryStatusSchema>;
 

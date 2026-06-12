@@ -3,7 +3,9 @@ import type { WebhookEventType, WebhookDeliveryStatus } from "@platform/contract
 import { createLogger } from "@platform/platform-logging";
 import { encryptTenantSecret, decryptTenantSecret } from "./tenant-secret-crypto.ts";
 import type {
+  ClaimedDelivery,
   CreateWebhookInput,
+  DeliveryResult,
   RecordDeliveryInput,
   UpdateWebhookFields,
   WebhookDeliveryRecord,
@@ -176,7 +178,8 @@ export class PostgresWebhookStore implements WebhookStore {
     return rows.map((r) => ({
       id: r.id,
       event: r.event as WebhookEventType,
-      status: r.status as WebhookDeliveryStatus,
+      // `processing` is a transient internal claim state — surface it as `pending`.
+      status: (r.status === "processing" ? "pending" : r.status) as WebhookDeliveryStatus,
       responseStatus: r.response_status,
       attempt: r.attempt,
       error: r.error,
@@ -192,5 +195,64 @@ export class PostgresWebhookStore implements WebhookStore {
       [organisationId]
     );
     return { total: rows[0]?.total ?? 0, enabled: rows[0]?.enabled ?? 0 };
+  }
+
+  // --- durable delivery queue (ADR-0052) ---
+
+  async enqueueDelivery(input: {
+    organisationId: string;
+    subscriptionId: string;
+    event: string;
+    payload: string;
+  }): Promise<void> {
+    await this.pool.query(
+      `INSERT INTO public.tenant_webhook_deliveries
+         (organisation_id, subscription_id, event, status, attempt, payload, next_attempt_at)
+       VALUES ($1, $2, $3, 'pending', 0, $4, now())`,
+      [input.organisationId, input.subscriptionId, input.event, input.payload]
+    );
+  }
+
+  async claimDueDeliveries(limit: number, now: Date): Promise<ClaimedDelivery[]> {
+    // Atomic claim: flip due pending/processing rows to `processing` and return them.
+    // FOR UPDATE SKIP LOCKED makes this safe under multiple workers; leaving
+    // next_attempt_at <= now means a crashed tick's `processing` row is re-claimable.
+    const { rows } = await this.pool.query<{
+      id: string;
+      organisation_id: string;
+      subscription_id: string;
+      event: string;
+      payload: string | null;
+      attempt: number;
+    }>(
+      `UPDATE public.tenant_webhook_deliveries
+          SET status = 'processing'
+        WHERE id IN (
+          SELECT id FROM public.tenant_webhook_deliveries
+           WHERE status IN ('pending', 'processing') AND next_attempt_at <= $2
+           ORDER BY next_attempt_at
+           LIMIT $1
+           FOR UPDATE SKIP LOCKED
+        )
+        RETURNING id, organisation_id, subscription_id, event, payload, attempt`,
+      [limit, now]
+    );
+    return rows.map((r) => ({
+      id: r.id,
+      organisationId: r.organisation_id,
+      subscriptionId: r.subscription_id,
+      event: r.event as WebhookEventType,
+      payload: r.payload,
+      attempt: r.attempt,
+    }));
+  }
+
+  async markDeliveryResult(id: string, result: DeliveryResult): Promise<void> {
+    await this.pool.query(
+      `UPDATE public.tenant_webhook_deliveries
+          SET status = $2, response_status = $3, attempt = $4, error = $5, next_attempt_at = $6
+        WHERE id = $1`,
+      [id, result.status, result.responseStatus, result.attempt, result.error, result.nextAttemptAt]
+    );
   }
 }

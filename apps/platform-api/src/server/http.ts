@@ -7,6 +7,7 @@ import { connectRedis, disconnectRedis } from "./dependencies.ts";
 import { assertEncryptionKeyConfigured } from "./token-crypto.ts";
 import { validateProviderModeAtStartup } from "./auth-providers.ts";
 import { createSentryAdapter } from "./observability.ts";
+import { startWebhookDeliveryWorker } from "./webhook-worker-runtime.ts";
 
 const LOG_LEVEL = (process.env["LOG_LEVEL"] ?? "info") as PlatformLogLevel;
 const log = createLogger({ name: "platform-api", service: "platform-api", level: LOG_LEVEL });
@@ -37,10 +38,16 @@ async function start(): Promise<void> {
     process.stdout.write(`platform-api listening on http://localhost:${PORT}\n`);
   });
 
+  // Background webhook delivery worker (ADR-0052): retries queued deliveries with
+  // backoff and dead-letters exhausted ones. Best-effort; disable with
+  // WEBHOOK_WORKER_DISABLED=true.
+  const stopWebhookWorker = startWebhookDeliveryWorker();
+
   // Graceful shutdown
   for (const sig of ["SIGTERM", "SIGINT"] as const) {
     process.on(sig, () => {
       log.info({ signal: sig }, "shutting down");
+      stopWebhookWorker();
       server.close(async () => {
         await disconnectRedis();
         process.exit(0);

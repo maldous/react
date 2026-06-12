@@ -2428,6 +2428,20 @@ export const routes: Route[] = [
         res.json(403, { code: "FORBIDDEN", message: "Insufficient permission for this setting" });
         return;
       }
+      // Fan out the config-change event to subscribed webhooks (ADR-0052). Best-effort:
+      // a webhook enqueue failure must never break the config mutation.
+      try {
+        const { emitWebhookEvent } = await import("../usecases/webhook-worker.ts");
+        const { PostgresWebhookStore } = await import("../adapters/postgres-webhook-store.ts");
+        await emitWebhookEvent(
+          tenantCtx.organisationId,
+          "tenant.config.changed",
+          { key },
+          new PostgresWebhookStore(getApplicationPool())
+        );
+      } catch {
+        /* best-effort event fan-out */
+      }
       res.json(204, null);
     },
   },

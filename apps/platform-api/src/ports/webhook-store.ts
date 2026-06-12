@@ -54,6 +54,25 @@ export interface RecordDeliveryInput {
   error: string | null;
 }
 
+/** A delivery the worker has atomically claimed for an attempt (ADR-0052). */
+export interface ClaimedDelivery {
+  id: string;
+  organisationId: string;
+  subscriptionId: string;
+  event: WebhookEventType;
+  payload: string | null;
+  attempt: number;
+}
+
+export interface DeliveryResult {
+  status: WebhookDeliveryStatus | "processing";
+  responseStatus: number | null;
+  attempt: number;
+  error: string | null;
+  /** When the row is next due (retry); null for terminal results. */
+  nextAttemptAt: Date | null;
+}
+
 export interface WebhookStore {
   list(organisationId: string): Promise<WebhookSubscriptionRecord[]>;
   get(organisationId: string, id: string): Promise<WebhookSubscriptionRecord | null>;
@@ -75,4 +94,17 @@ export interface WebhookStore {
     limit: number
   ): Promise<WebhookDeliveryRecord[]>;
   counts(organisationId: string): Promise<{ total: number; enabled: number }>;
+
+  // --- durable delivery queue (ADR-0052) ---
+  /** Enqueue a pending delivery (due now) for the background worker. */
+  enqueueDelivery(input: {
+    organisationId: string;
+    subscriptionId: string;
+    event: WebhookEventType;
+    payload: string;
+  }): Promise<void>;
+  /** Atomically claim up to `limit` due deliveries (pending/processing, due ≤ now). */
+  claimDueDeliveries(limit: number, now: Date): Promise<ClaimedDelivery[]>;
+  /** Record the outcome of a claimed delivery attempt (retry/terminal). */
+  markDeliveryResult(id: string, result: DeliveryResult): Promise<void>;
 }

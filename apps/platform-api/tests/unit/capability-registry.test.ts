@@ -252,7 +252,8 @@ describe("buildTenantReadiness — aggregation", () => {
   it("webhooks readiness reflects its signal honestly (ADR-0051)", () => {
     const ready = buildTenantReadiness({ ...FULLY_READY, webhooksReadiness: "configured" });
     assert.equal(cap(ready, "integrations_webhooks")?.readiness, "ready");
-    assert.equal(cap(ready, "integrations_webhooks")?.implementationStatus, "partial");
+    // ADR-0052: durable delivery worker + event fan-out → implemented (was partial).
+    assert.equal(cap(ready, "integrations_webhooks")?.implementationStatus, "implemented");
     assert.equal(cap(ready, "integrations_webhooks")?.required, false);
 
     assert.equal(
