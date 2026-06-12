@@ -20,4 +20,7 @@ evidence:
 	  for (const [s,r] of Object.entries(results)) \
 	    console.log('  ' + s + ': ' + (r.result || 'unknown')); \
 	"
+	@# Ladder enforcement: all four stages passed, in order, at the current HEAD —
+	@# a missing/failed/stale/mixed-SHA ladder fails make all instead of reporting success.
+	@node scripts/evidence/verify-ladder.mjs
 	$(call OK,evidence summary written to docs/evidence/stages/summary.json)

@@ -23,7 +23,9 @@ import pg from "pg";
 
 import { classifyHostIdentity } from "@platform/domain-identity";
 
-const APEX_DOMAIN = process.env["APEX_DOMAIN"] ?? "aldous.info";
+function getApexDomain(): string {
+  return process.env["APEX_DOMAIN"] ?? "aldous.info";
+}
 
 export interface TenantContext {
   slug: string;
@@ -39,7 +41,7 @@ export interface TenantContext {
  * Returns null for the super-global root (aldous.info) or non-matching hosts.
  * Ports are stripped before matching (ADR-ACT-0225).
  */
-export function extractSlugFromHost(host: string, apexDomain = APEX_DOMAIN): string | null {
+export function extractSlugFromHost(host: string, apexDomain = getApexDomain()): string | null {
   return classifyHostIdentity(host, apexDomain).slug;
 }
 
@@ -52,7 +54,7 @@ export function extractSlugFromHost(host: string, apexDomain = APEX_DOMAIN): str
  * staging uses APEX_DOMAIN=staging.aldous.info. The two environments are
  * never served by a single runtime instance.
  */
-export function isGlobalHost(host: string, apexDomain = APEX_DOMAIN): boolean {
+export function isGlobalHost(host: string, apexDomain = getApexDomain()): boolean {
   return classifyHostIdentity(host, apexDomain).kind === "apex";
 }
 
@@ -63,7 +65,7 @@ export function isGlobalHost(host: string, apexDomain = APEX_DOMAIN): boolean {
  * shares the apex cookie scope and the wildcard Caddy vhost, so it must never
  * be treated as the global host.
  */
-export function isApexSubdomain(host: string, apexDomain = APEX_DOMAIN): boolean {
+export function isApexSubdomain(host: string, apexDomain = getApexDomain()): boolean {
   const kind = classifyHostIdentity(host, apexDomain).kind;
   return kind === "tenant_slug" || kind === "reserved_subdomain" || kind === "invalid_subdomain";
 }
@@ -143,7 +145,7 @@ export async function resolveTenantFromRequest(
   pool: pg.Pool
 ): Promise<TenantContext | null> {
   const host = requestHostFromHeaders(req);
-  const identity = classifyHostIdentity(host, APEX_DOMAIN);
+  const identity = classifyHostIdentity(host, getApexDomain());
 
   if (identity.kind === "tenant_slug" && identity.slug) {
     const org = await resolveOrganisationBySlug(pool, identity.slug);

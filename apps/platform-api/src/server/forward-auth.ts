@@ -43,7 +43,9 @@ import {
   TENANT_ADMIN_RESOURCES,
 } from "../usecases/service-clickthrough.ts";
 
-const APEX_DOMAIN = process.env["APEX_DOMAIN"] ?? "aldous.info";
+function getApexDomain(): string {
+  return process.env["APEX_DOMAIN"] ?? "aldous.info";
+}
 
 // ---------------------------------------------------------------------------
 // Slug ? tenant ID resolution (DB lookup, not trusting the host header alone)
@@ -71,8 +73,8 @@ async function resolveSlugForTenant(tenantId: string): Promise<string | null> {
 // Shared with the pipeline resolver (ADR-ACT-0231): port-stripping, slug regex
 // validation, and reserved-slug rejection are identical on both paths — the
 // previous private copy here had drifted (no port strip, no charset check).
-function extractSlugFromHost(host: string): string | null {
-  return sharedExtractSlugFromHost(host, APEX_DOMAIN);
+function extractSlugFromHost(host: string, apexDomain = getApexDomain()): string | null {
+  return sharedExtractSlugFromHost(host, apexDomain);
 }
 
 // ---------------------------------------------------------------------------
@@ -146,7 +148,7 @@ export const handleForwardAuth: PipelineHandler = async (req, res) => {
   // checkResourceAccess() so tests and production use the same logic path.
   const hostHeader = req.raw.headers["x-forwarded-host"] ?? req.raw.headers["host"] ?? "";
   const rawHost = Array.isArray(hostHeader) ? (hostHeader[0] ?? "") : hostHeader;
-  const requestedSlug = extractSlugFromHost(rawHost);
+  const requestedSlug = extractSlugFromHost(rawHost, getApexDomain());
 
   // DB lookup only needed when tenant-admin may be granted access
   const ownSlug =
@@ -166,7 +168,15 @@ export const handleForwardAuth: PipelineHandler = async (req, res) => {
 // Exported pure functions ? used by unit tests without needing live Redis/DB
 // ---------------------------------------------------------------------------
 
-export { extractSlugFromHost, SYSTEM_ADMIN_RESOURCES, TENANT_ADMIN_RESOURCES };
+export function extractSlugFromHostPure(host: string): string | null {
+  return extractSlugFromHost(host, "aldous.info");
+}
+
+export {
+  extractSlugFromHostPure as extractSlugFromHost,
+  SYSTEM_ADMIN_RESOURCES,
+  TENANT_ADMIN_RESOURCES,
+};
 
 /**
  * Pure access decision: given roles, resource, and resolved slug ownership,
