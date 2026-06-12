@@ -27,6 +27,12 @@ Status vocabulary (the only permitted values): `delivered`, `locally proven`, `p
 - [`docs/architecture/build-versus-compose-decision-framework.md`](../../architecture/build-versus-compose-decision-framework.md) — the build/compose/adapter/defer/reject rubric (ADR-0054).
 - [`docs/architecture/environment-service-classification.md`](../../architecture/environment-service-classification.md) — per-environment vs shared vs mock vs forbidden (ADR-0056).
 
+Delivery hardening (ADR-ACT-0252), source-driven from this registry's `delivery` block:
+
+- [`universal-service-foundation-delivery-dependencies.md`](./universal-service-foundation-delivery-dependencies.md) — the dependency graph: what each capability depends on, blocks, can run in parallel with, and must precede; the required dependency truths the validator enforces.
+- [`universal-service-foundation-implementation-roadmap.md`](./universal-service-foundation-implementation-roadmap.md) — Phases 0–10 with objectives, unlocks, files/packages/ports/contracts/UI, proof scripts, acceptance criteria, size, risk, and stop conditions; includes the per-ADR decision-quality assessment.
+- [`universal-service-foundation-provider-shortlist.md`](./universal-service-foundation-provider-shortlist.md) — local-first candidate evaluation per composed capability, with explicit GPL/AGPL/SSPL/BUSL license flags.
+
 ## Phase 1 — source-driven inventory (what exists today)
 
 Traced to `compose.yaml`, `docker/caddy/*`, `apps/platform-api/src/usecases/*`, `apps/platform-api/src/server/routes.ts`, `packages/contracts-admin/src/*`, `apps/react-enterprise-app/src/*`, `docs/adr/ACTION-REGISTER.md`, and `docs/evidence/platform/*`.

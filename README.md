@@ -58,6 +58,37 @@ The foundation is organised into fourteen capability domains. Some are delivered
 
 ---
 
+## At a glance: what is and isn't delivered
+
+To avoid any impression that the whole foundation already exists, here is the honest split. The authoritative, capability-by-capability record lives in the [Universal Service Foundation matrix](docs/evidence/platform/universal-service-foundation-matrix.md); the build order is in the [implementation roadmap](docs/evidence/platform/universal-service-foundation-implementation-roadmap.md).
+
+**Delivered now** — built to the full standard and in use:
+
+- User identity, roles and permissions, and a privileged-access audit trail
+- External sign-in (OIDC) federation, write-only secret settings, typed per-customer configuration
+- Outbound webhooks with signing, delivery, and retry
+
+**Locally proven** — built and demonstrated with a repeatable proof against the local stack:
+
+- Customer (tenant) identity and isolation, sign-in and sessions, relational storage with per-customer separation
+- Structured logs, an honest service-readiness map, custom-domain routing, and local backup/restore
+
+**Planned foundation capabilities** — decided, designed, and buildable locally for free, but **not yet built**:
+
+- Entitlements, usage metering, quotas, plans/billing (payment capture aside, below)
+- Product search, an event bus and workflow engine, multi-channel notifications and user preferences
+- End-user profile self-service, API keys and a developer portal, metrics/traces and alerting/incident management
+- Data governance and DSR, point-in-time recovery and retention, customer suspend/delete/export, the full storage and support products
+
+**Explicitly not yet delivered** — gaps and deliberate exclusions, stated openly:
+
+- **Payment capture** is the one capability that needs a real paid provider; it is isolated behind an adapter and is **never** part of local proof
+- **Real external-IdP sign-in** is proven only against a local fixture; verification against a real provider is **blocked** until one is available, and **SAML** is not yet supported
+- A **central secrets manager** is planned; today secrets use encrypted database/environment storage
+- **Serverless function hosting** is **deferred** until a concrete product need is proven
+
+---
+
 ## What is delivered and proven today
 
 The foundation already runs a complete, isolated control plane that customers and operators use — long before any product feature sits on top.
