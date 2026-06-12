@@ -6,7 +6,7 @@
         external-caddy-up external-caddy-down \
         sentry-up sentry-down sonar-up sonar-down identity-mocks-down \
         dev-up dev-down test-up staging-up prod-up test-down staging-down prod-down \
-        reset-local seed-demo db-migrate db-shell redis-flush-local \
+        reset-local seed-demo db-migrate db-backup db-restore db-shell redis-flush-local \
         keycloak-provision seed-idps
 
 # ── Compose up ───────────────────────────────────────────────────────────────
@@ -259,6 +259,17 @@ db-migrate:
 db-shell:
 	$(call STEP,db:shell ($(ENV)))
 	$(COMPOSE_CMD) exec postgres psql -U $${POSTGRES_USER:-platform} -d $${POSTGRES_DB:-platform}
+
+## db-backup — Dump ENV's Postgres to .local-artifacts/backups (local-only; ADR-ACT-0229)
+db-backup:
+	$(call STEP,db:backup ($(ENV)))
+	ENV=$(ENV) bash scripts/backup/postgres-backup.sh
+
+## db-restore — GUARDED restore (ENV=dev|test + CONFIRM_RESTORE=restore-ENV). Destructive.
+##   make db-restore ENV=test CONFIRM_RESTORE=restore-test BACKUP_FILE=.local-artifacts/backups/<file>
+db-restore:
+	$(call STEP,db:restore ($(ENV)))
+	ENV=$(ENV) CONFIRM_RESTORE=$(CONFIRM_RESTORE) BACKUP_FILE=$(BACKUP_FILE) bash scripts/backup/postgres-restore.sh
 
 ## redis-flush-local — Flush all keys from ENV's Compose Redis
 redis-flush-local:
