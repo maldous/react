@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="600" viewBox="0 0 1120 600" role="img" aria-labelledby="title desc">
+  <title id="title">From a disciplined foundation to business value</title>
+  <desc id="desc">How the Universal Service Foundation turns architectural discipline into faster, safer product delivery and clear business benefits.</desc>
+  <style>
+    .bg { fill: #f8fafc; }
+    .l1 { fill: #eef2ff; stroke: #4f46e5; stroke-width: 2; }
+    .l2 { fill: #ecfeff; stroke: #0891b2; stroke-width: 2; }
+    .l3 { fill: #f0fdf4; stroke: #16a34a; stroke-width: 2; }
+    .l4 { fill: #fff7ed; stroke: #ea580c; stroke-width: 2; }
+    .text { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+    .title { font-size: 28px; font-weight: 700; }
+    .lead { font-size: 15px; }
+    .label { font-size: 18px; font-weight: 700; }
+    .small { font-size: 13.5px; }
+    .arrow { stroke: #475569; stroke-width: 3; fill: none; marker-end: url(#a); }
+  </style>
+  <defs>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#475569" />
+    </marker>
+  </defs>
+  <rect class="bg" width="1120" height="600" />
+  <text class="text title" x="48" y="52">Discipline at the bottom, value at the top</text>
+  <text class="text lead" x="48" y="80">The harder choices are made once, low in the stack, so the things customers care about become faster and safer to deliver.</text>
+
+  <rect class="l1" x="48" y="108" width="1024" height="92" rx="16" />
+  <text class="text label" x="72" y="142">1 · A disciplined substrate</text>
+  <text class="text small" x="72" y="170">Clear boundaries, decision records, and enforced rules. The browser can never reach servers, secrets, or another tenant’s data.</text>
+
+  <rect class="l2" x="148" y="220" width="824" height="92" rx="16" />
+  <text class="text label" x="172" y="254">2 · Shared capabilities</text>
+  <text class="text small" x="172" y="282">Identity, tenancy, configuration, audit, observability, and webhooks — ready to use, isolated per tenant, proven to work.</text>
+
+  <rect class="l3" x="248" y="332" width="624" height="92" rx="16" />
+  <text class="text label" x="272" y="366">3 · A self-service control plane</text>
+  <text class="text small" x="272" y="394">Administrators manage members, sign-in, settings, domains, and inspect their own audit trail — before any product feature exists.</text>
+
+  <rect class="l4" x="348" y="444" width="424" height="92" rx="16" />
+  <text class="text label" x="372" y="478">4 · Business value</text>
+  <text class="text small" x="372" y="506">Faster launches, lower risk, audit-ready trust, and one foundation for many products.</text>
+
+  <path class="arrow" d="M560 200 V216" />
+  <path class="arrow" d="M560 312 V328" />
+  <path class="arrow" d="M560 424 V440" />
+</svg>
