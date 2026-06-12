@@ -36,7 +36,9 @@ jobs:
         run: npm run audit:deps
 
       - name: OSV vulnerability scan
-        uses: google/osv-scanner-action/osv-scanner-action@v2
+        # Pinned: the repo publishes only exact tags (no floating v2) — an
+        # unresolvable tag fails the job at setup, taking every gate with it.
+        uses: google/osv-scanner-action/osv-scanner-action@v2.3.8
         with:
           scan-args: |-
             --recursive

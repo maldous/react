@@ -104,7 +104,8 @@ license:
 # ── Composite quality targets ────────────────────────────────────────────────
 
 ## quality — Full quality gate (used by make all)
-quality: install format lint typecheck audit security compose architecture semgrep license
+## advisory (knip/depcruise) is report-only — it runs in make all but never fails it.
+quality: install format lint typecheck audit security compose architecture semgrep license advisory
 	$(call OK,quality gate passed)
 
 ## check — Fast local check: format/lint/typecheck/audit/compose/architecture/semgrep

@@ -55,7 +55,20 @@ function makeRepo() {
   const target = fs.mkdtempSync(path.join(os.tmpdir(), "architecture-self-evidence-"));
   copyDir(repoRoot, target);
   // Symlink node_modules so spawned tools resolve deps without copying 570+ dirs.
-  fs.symlinkSync(path.join(repoRoot, "node_modules"), path.join(target, "node_modules"));
+  // Root node_modules may be absent (CI installs only the tool dirs) — the
+  // per-tool symlinks below are what the spawned tools actually resolve from
+  // (e.g. validate-source-imports requires `typescript` from its OWN deps).
+  const rootModules = path.join(repoRoot, "node_modules");
+  if (fs.existsSync(rootModules)) {
+    fs.symlinkSync(rootModules, path.join(target, "node_modules"));
+  }
+  const toolsDir = path.join(repoRoot, "tools", "architecture");
+  for (const tool of fs.readdirSync(toolsDir)) {
+    const toolModules = path.join(toolsDir, tool, "node_modules");
+    if (fs.existsSync(toolModules)) {
+      fs.symlinkSync(toolModules, path.join(target, "tools", "architecture", tool, "node_modules"));
+    }
+  }
   return target;
 }
 
