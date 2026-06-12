@@ -209,6 +209,8 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     "tenant.email.settings.write",
     "tenant.domains.read",
     "tenant.domains.write",
+    "tenant.storage.read",
+    "tenant.storage.write",
     "tenant.audit.read",
     "tenant.clickthrough.keycloak",
     "tenant.clickthrough.mailpit",

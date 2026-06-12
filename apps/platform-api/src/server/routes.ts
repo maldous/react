@@ -27,7 +27,13 @@ import {
   CreateTenantDomainRequestSchema,
   type TenantAuthProvidersConfig,
 } from "@platform/contracts-admin";
-import { getSessionStore, getApplicationPool, getKeycloakConfigForRealm } from "./dependencies.ts";
+import {
+  getSessionStore,
+  getApplicationPool,
+  getKeycloakConfigForRealm,
+  getProvisioningConfig,
+} from "./dependencies.ts";
+import { S3ObjectStorageAdapter } from "@platform/adapters-object-storage";
 import { queryTenantSchema, withTenant } from "@platform/adapters-postgres";
 import { serverT } from "./i18n.ts";
 import { DEFAULT_THEME } from "@platform/authorisation-runtime";
@@ -78,7 +84,11 @@ import {
 import { PostgresEmailSenderSecretStore } from "../adapters/postgres-email-sender-store.ts";
 import { SmtpEmailAdapter } from "../adapters/smtp-email-adapter.ts";
 import { BrevoEmailAdapter } from "@platform/adapters-brevo";
-import { createPostgresAuditEventPort, AuditAction } from "@platform/audit-events";
+import {
+  createPostgresAuditEventPort,
+  createAuditEvent,
+  AuditAction,
+} from "@platform/audit-events";
 import { resolveTenantFromRequest } from "./tenant-resolver.ts";
 import { KeycloakRealmAdminAdapter } from "@platform/adapters-keycloak";
 import { PostgresTenantCredentialStore } from "../adapters/postgres-tenant-credential-store.ts";
@@ -169,6 +179,60 @@ function createEmailSenderFactory(): EmailSenderFactory {
       });
     }
     return null;
+  };
+}
+
+// Build the tenant storage readiness deps (ADR-0049). `endpointConfigured` is honest:
+// it is true only when an S3/MinIO endpoint + admin credentials are actually wired.
+// When configured, `makeProbe` builds a tenant-prefix-locked adapter and an isolation
+// assertion (a foreign cross-prefix key must be rejected by the adapter).
+function buildStorageReadinessDeps(organisationId: string): {
+  organisationId: string;
+  endpointConfigured: boolean;
+  makeProbe?: () => {
+    prefix: string;
+    port: S3ObjectStorageAdapter;
+    assertIsolation: () => Promise<boolean>;
+  };
+} {
+  const cfg = getProvisioningConfig();
+  const endpointConfigured = !!(
+    cfg.s3DefaultEndpoint &&
+    cfg.s3AdminAccessKeyId &&
+    cfg.s3AdminSecretAccessKey
+  );
+  if (!endpointConfigured) return { organisationId, endpointConfigured: false };
+  const prefix = `${organisationId}/`;
+  return {
+    organisationId,
+    endpointConfigured: true,
+    makeProbe: () => {
+      const port = new S3ObjectStorageAdapter({
+        bucket: cfg.s3DefaultBucket,
+        region: cfg.s3DefaultRegion,
+        endpoint: cfg.s3DefaultEndpoint ?? undefined,
+        forcePathStyle: true, // MinIO / S3-compat
+        credentials: {
+          accessKeyId: cfg.s3AdminAccessKeyId!,
+          secretAccessKey: cfg.s3AdminSecretAccessKey!,
+        },
+        organisationId,
+      });
+      return {
+        prefix,
+        port,
+        // A deliberately foreign cross-prefix key must be rejected by the adapter's
+        // prefix guard (ADR-0029 §6) before any network call.
+        assertIsolation: async () => {
+          try {
+            await port.get("isolation-check-foreign-tenant/probe");
+            return false;
+          } catch {
+            return true;
+          }
+        },
+      };
+    },
   };
 }
 
@@ -2492,6 +2556,13 @@ export const routes: Route[] = [
       const domainReadiness = (await getTenantDomainReadiness(tenantCtx.organisationId, pool))
         .status;
 
+      // Signal 6: storage readiness (ADR-0049) — cheap configured-check only; the deep
+      // write/read/delete probe lives on GET /api/org/storage/readiness to avoid S3 IO here.
+      const storageReadiness = buildStorageReadinessDeps(tenantCtx.organisationId)
+        .endpointConfigured
+        ? "configured"
+        : "not_configured";
+
       res.json(
         200,
         buildTenantReadiness({
@@ -2500,6 +2571,7 @@ export const routes: Route[] = [
           idpCount,
           emailSender,
           domainReadiness,
+          storageReadiness,
         })
       );
     },
@@ -2826,6 +2898,79 @@ export const routes: Route[] = [
         }
       );
       res.json(204, null);
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Tenant storage readiness + isolation proof (ADR-0049 / ADR-ACT-0218).
+  // Read + operator-triggered live probe over the existing ObjectStoragePort +
+  // prefix-per-tenant S3/MinIO adapter (ADR-0029 §6 / ADR-0031). No credential is
+  // ever returned; readiness is `not_configured` until S3 is wired, and only
+  // `configured` after a real write/read/delete round-trip + foreign-key rejection.
+  // Tenant authority + key prefix derive from FQDN/session.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/org/storage/readiness",
+    operationName: "org.storage.readiness",
+    requiresAuth: true,
+    requiredPermission: "tenant.storage.read",
+    resource: "admin:storage",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { getTenantStorageReadiness } = await import("../usecases/tenant-storage.ts");
+      const readiness = await getTenantStorageReadiness(
+        buildStorageReadinessDeps(tenantCtx.organisationId)
+      );
+      res.json(200, readiness);
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/org/storage/probe",
+    operationName: "org.storage.probe",
+    requiresAuth: true,
+    requiredPermission: "tenant.storage.write",
+    resource: "admin:storage",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const deps = buildStorageReadinessDeps(tenantCtx.organisationId);
+      // Audit-first: record the probe intent (no credential, no object payload).
+      await createPostgresAuditEventPort(getApplicationPool()).emit(
+        createAuditEvent({
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          tenantId: tenantCtx.organisationId,
+          action: AuditAction.StorageProbed,
+          resource: "storage",
+          resourceId: "probe",
+          metadata: { operation: "probe", endpointConfigured: deps.endpointConfigured },
+        })
+      );
+      const { probeTenantStorage } = await import("../usecases/tenant-storage.ts");
+      if (!deps.endpointConfigured || !deps.makeProbe) {
+        res.json(200, {
+          status: "not_configured",
+          wrote: false,
+          read: false,
+          deleted: false,
+          foreignKeyRejected: true,
+        });
+        return;
+      }
+      const result = await probeTenantStorage(deps.makeProbe());
+      res.json(200, result);
     },
   },
   // ---------------------------------------------------------------------------

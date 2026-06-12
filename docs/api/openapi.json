@@ -2403,6 +2403,32 @@
         }
       }
     },
+    "/api/org/storage/readiness": {
+      "get": {
+        "summary": "Get tenant object-storage readiness",
+        "operationId": "getOrgStorageReadiness",
+        "description": "Returns the classified storage readiness (configured / not_configured / provider_unreachable / isolation_failed). Runs a live write/read/delete probe when configured; never returns a credential; never faked. ADR-0049.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Storage readiness" },
+          "400": { "description": "No tenant context" }
+        }
+      }
+    },
+    "/api/org/storage/probe": {
+      "post": {
+        "summary": "Run a tenant object-storage probe",
+        "operationId": "probeOrgStorage",
+        "description": "Operator-triggered live write/read/delete probe under the tenant key prefix plus a foreign-key isolation check (audit-first). Returns the per-step result; never returns a credential. ADR-0049.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Probe result" },
+          "400": { "description": "No tenant context" }
+        }
+      }
+    },
     "/api/org/readiness": {
       "get": {
         "summary": "Tenant control-plane readiness + capability map",

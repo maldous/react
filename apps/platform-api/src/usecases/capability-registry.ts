@@ -5,6 +5,7 @@ import type {
   CapabilitySummary,
   EmailSenderReadinessStatus,
   TenantDomainReadinessStatus,
+  TenantStorageReadinessStatus,
   TenantReadinessResponse,
   TenantReadinessStatus,
 } from "@platform/contracts-admin";
@@ -34,6 +35,7 @@ export type ReadinessKind =
   | "providers" // resolved (env default or tenant override) → ready
   | "email-sender" // from the tenant email sender readiness (ADR-0047)
   | "tenant-domains" // from the tenant custom-domain readiness (ADR-0048)
+  | "tenant-storage" // from the tenant storage readiness (ADR-0049)
   | "invariant-ready" // ready by construction (documented local invariant)
   | "deferred"; // not yet checkable — never reported ready
 
@@ -179,9 +181,16 @@ export const CAPABILITIES: readonly CapabilityDefinition[] = [
     implementationStatus: "implemented",
     readinessKind: "invariant-ready",
   }),
+  // Storage: a live write/read/delete probe + prefix-per-tenant isolation guard are
+  // implemented (ADR-0049). The aggregate signal is a cheap configured-check; the deep
+  // probe runs on /api/org/storage/readiness. IAM-policy enforcement + provisioning are
+  // not proven in this pass, so the capability is honestly `partial`.
   cap("storage", "operations", {
-    implementationStatus: "deferred",
-    readinessKind: "deferred",
+    adminRoute: "/admin/storage",
+    requiredPermission: "tenant.storage.read",
+    implementationStatus: "partial",
+    readinessKind: "tenant-storage",
+    detailKey: `${A}.storage.action`,
   }),
   cap("observability", "operations", {
     adminRoute: "/admin/logs",
@@ -259,6 +268,8 @@ export interface ReadinessSignals {
   emailSender: EmailSenderReadinessStatus;
   /** Tenant custom-domain readiness (ADR-0048). */
   domainReadiness: TenantDomainReadinessStatus;
+  /** Tenant storage readiness (ADR-0049) — a cheap configured-check for the aggregate. */
+  storageReadiness: TenantStorageReadinessStatus;
 }
 
 function capabilityReadiness(kind: ReadinessKind, s: ReadinessSignals): CapabilityReadiness {
@@ -308,6 +319,18 @@ function capabilityReadiness(kind: ReadinessKind, s: ReadinessSignals): Capabili
         case "pending_verification":
           return "incomplete";
         case "degraded":
+          return "degraded";
+        default:
+          return "unknown";
+      }
+    case "tenant-storage":
+      switch (s.storageReadiness) {
+        case "configured":
+          return "ready";
+        case "not_configured":
+          return "incomplete";
+        case "provider_unreachable":
+        case "isolation_failed":
           return "degraded";
         default:
           return "unknown";

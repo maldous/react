@@ -17,6 +17,7 @@ const FULLY_READY: ReadinessSignals = {
   idpCount: 1,
   emailSender: "configured",
   domainReadiness: "verified",
+  storageReadiness: "configured",
 };
 
 function cap(resp: ReturnType<typeof buildTenantReadiness>, key: string) {
@@ -187,6 +188,37 @@ describe("buildTenantReadiness — aggregation", () => {
     );
   });
 
+  it("storage readiness reflects its signal honestly (ADR-0049)", () => {
+    const ready = buildTenantReadiness({ ...FULLY_READY, storageReadiness: "configured" });
+    assert.equal(cap(ready, "storage")?.readiness, "ready");
+    // honestly partial: IAM enforcement + provisioning not proven this pass.
+    assert.equal(cap(ready, "storage")?.implementationStatus, "partial");
+    assert.equal(cap(ready, "storage")?.required, false);
+
+    assert.equal(
+      cap(buildTenantReadiness({ ...FULLY_READY, storageReadiness: "not_configured" }), "storage")
+        ?.readiness,
+      "incomplete"
+    );
+    assert.equal(
+      cap(
+        buildTenantReadiness({ ...FULLY_READY, storageReadiness: "provider_unreachable" }),
+        "storage"
+      )?.readiness,
+      "degraded"
+    );
+    assert.equal(
+      cap(buildTenantReadiness({ ...FULLY_READY, storageReadiness: "isolation_failed" }), "storage")
+        ?.readiness,
+      "degraded"
+    );
+    // optional capability → never drags the overall status down.
+    assert.equal(
+      buildTenantReadiness({ ...FULLY_READY, storageReadiness: "isolation_failed" }).overall,
+      "ready"
+    );
+  });
+
   it("never fakes readiness: deferred capabilities are always 'deferred'", () => {
     for (const signals of [
       FULLY_READY,
@@ -196,13 +228,13 @@ describe("buildTenantReadiness — aggregation", () => {
         idpCount: null,
         emailSender: "missing_sender" as const,
         domainReadiness: "no_domains" as const,
+        storageReadiness: "not_configured" as const,
       },
     ]) {
       const r = buildTenantReadiness(signals);
       // login simulation + claim/group-role mapping have no live check, so their
       // readiness must stay `deferred` regardless of signals (never faked).
       for (const key of [
-        "storage",
         "oidc_login_simulation",
         "oidc_claim_mapping",
         "oidc_group_role_mapping",

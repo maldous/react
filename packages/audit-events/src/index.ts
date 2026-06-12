@@ -38,6 +38,7 @@ export const AuditAction = {
   AuthSettingsIdpMappingChanged: "auth_settings.idp.mapping.changed",
   EmailSenderChanged: "email_sender.changed",
   EmailSenderTested: "email_sender.tested",
+  StorageProbed: "storage.probed",
   ConfigValueChanged: "config.value_changed",
   ConfigValueCleared: "config.value_cleared",
 } as const;

@@ -629,6 +629,53 @@ export const TenantDomainReadinessResponseSchema = z
   .strict();
 export type TenantDomainReadinessResponse = z.infer<typeof TenantDomainReadinessResponseSchema>;
 
+// ---------------------------------------------------------------------------
+// Tenant storage readiness + isolation proof (ADR-0049 / ADR-ACT-0218)
+// Read + probe surface over the existing ObjectStoragePort (@platform/storage-runtime)
+// and the prefix-per-tenant S3/MinIO adapter (@platform/adapters-object-storage,
+// ADR-0029 §6 / ADR-0031). Strict + no-passthrough. No storage credential is ever
+// returned — only whether the platform is configured + the tenant key prefix.
+// Readiness is `configured` only after a real write/read/delete probe round-trip;
+// `not_configured` when no S3 endpoint/credentials are wired (honest, never faked).
+// ---------------------------------------------------------------------------
+
+export const TENANT_STORAGE_READINESS_STATUSES = [
+  "configured", // probe round-trip succeeded (write → read → delete)
+  "not_configured", // no S3 endpoint / admin credentials wired for the platform
+  "provider_unreachable", // the object store could not be reached
+  "isolation_failed", // the tenant prefix guard did not reject a foreign key
+  "unknown",
+] as const;
+export const TenantStorageReadinessStatusSchema = z.enum(TENANT_STORAGE_READINESS_STATUSES);
+export type TenantStorageReadinessStatus = z.infer<typeof TenantStorageReadinessStatusSchema>;
+
+/** `GET /api/org/storage/readiness` — never carries a credential. */
+export const TenantStorageReadinessResponseSchema = z
+  .object({
+    status: TenantStorageReadinessStatusSchema,
+    /** The tenant's object-key prefix (`{organisationId}/`) — ADR-0029 §6. */
+    prefix: z.string(),
+    /** Whether an S3/MinIO endpoint + admin credentials are wired for the platform. */
+    endpointConfigured: z.boolean(),
+    /** Whether the adapter enforces the tenant prefix (defence-in-depth before IAM). */
+    isolationEnforced: z.boolean(),
+  })
+  .strict();
+export type TenantStorageReadinessResponse = z.infer<typeof TenantStorageReadinessResponseSchema>;
+
+/** `POST /api/org/storage/probe` — operator-triggered live write/read/delete probe. */
+export const TenantStorageProbeResultSchema = z
+  .object({
+    status: TenantStorageReadinessStatusSchema,
+    wrote: z.boolean(),
+    read: z.boolean(),
+    deleted: z.boolean(),
+    /** The tenant adapter rejected a deliberately foreign (cross-prefix) key. */
+    foreignKeyRejected: z.boolean(),
+  })
+  .strict();
+export type TenantStorageProbeResult = z.infer<typeof TenantStorageProbeResultSchema>;
+
 export const MfaRequirementSchema = z.enum(["none", "optional", "required"]);
 export const MfaTypeSchema = z.enum(["totp", "webauthn"]);
 

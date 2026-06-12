@@ -116,6 +116,7 @@ production
 @platform/adapters-postgres
 @platform/authorisation-runtime
 @platform/adapters-object-storage
+@platform/storage-runtime
 @platform/audit-events
 @platform/email-runtime
 @platform/adapters-brevo

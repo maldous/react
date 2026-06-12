@@ -38,6 +38,8 @@ export const sessionFixtures: Record<SessionPersona, SessionActor> = {
       "tenant.email.settings.write",
       "tenant.domains.read",
       "tenant.domains.write",
+      "tenant.storage.read",
+      "tenant.storage.write",
     ],
     displayName: "Tenant Admin",
   },

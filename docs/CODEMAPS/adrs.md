@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-06-11
 
-48 Architecture Decision Records (ADR-0001 through ADR-0048). ADR-0018 is intentionally absent. All status: **Accepted**.
+49 Architecture Decision Records (ADR-0001 through ADR-0049). ADR-0018 is intentionally absent. All status: **Accepted**.
 
 ## Foundation & Governance (8)
 
@@ -91,6 +91,7 @@
 | ADR-0046 | OIDC Enterprise Hardening                                       | 2026-06-12 | 0046-oidc-enterprise-hardening.md                                 |
 | ADR-0047 | Tenant Email Sender Configuration + Readiness                   | 2026-06-12 | 0047-tenant-email-sender-configuration.md                         |
 | ADR-0048 | Tenant Custom Domains + DNS/TLS Readiness                       | 2026-06-12 | 0048-tenant-custom-domains.md                                     |
+| ADR-0049 | Tenant Storage Readiness + Isolation Proof                      | 2026-06-12 | 0049-tenant-storage-readiness.md                                  |
 
 ---
 
@@ -104,7 +105,7 @@
 ## Governance
 
 - All ADRs are **Accepted** (no superceded or pending)
-- Next ADR: **ADR-0049**
+- Next ADR: **ADR-0050**
 - Action register: `docs/adr/ACTION-REGISTER.md`
 - Lifecycle evidence: `docs/evidence/`
 

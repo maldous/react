@@ -26,6 +26,8 @@ export {
   adminDomainsCreateHandler,
   adminDomainsVerifyHandler,
   adminDomainsRemoveHandler,
+  adminStorageReadinessHandler,
+  adminStorageProbeHandler,
   adminEmailSenderHandler,
   adminEmailSenderUpdateHandler,
   adminEmailSenderTestHandler,

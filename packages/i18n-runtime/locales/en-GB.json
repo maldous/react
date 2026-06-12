@@ -177,6 +177,7 @@
         "configuration": "Configuration",
         "email": "Email",
         "domains": "Domains",
+        "storage": "Storage",
         "logs": "Log search",
         "readiness": "Readiness"
       },
@@ -186,6 +187,7 @@
         "featuresDescription": "Enable or disable platform capabilities for this tenant.",
         "configurationDescription": "Manage typed platform configuration for this tenant.",
         "domainsDescription": "Add custom domains and prove ownership via DNS.",
+        "storageDescription": "Check object-storage readiness and tenant isolation.",
         "logsDescription": "Search structured platform logs.",
         "readinessDescription": "See what's configured and what's left to set up."
       },
@@ -331,6 +333,26 @@
           "pending_verification": "A domain is awaiting DNS verification. Publish the TXT record and verify.",
           "verified": "At least one custom domain has proven DNS ownership.",
           "degraded": "Custom domain status could not be determined right now."
+        }
+      },
+      "storage": {
+        "title": "Object storage",
+        "description": "Per-tenant object storage readiness and isolation.",
+        "error": "Storage readiness could not be loaded.",
+        "readinessHeading": "Storage status",
+        "prefixLabel": "Tenant key prefix",
+        "isolationLabel": "Tenant isolation",
+        "isolationEnforced": "Enforced",
+        "isolationNotEnforced": "Not enforced",
+        "probeButton": "Run storage probe",
+        "probeError": "Could not run the storage probe. Please try again.",
+        "probeDone": "Storage probe complete.",
+        "readiness": {
+          "configured": "Object storage is reachable and tenant-isolated.",
+          "not_configured": "Object storage is not configured for this platform yet.",
+          "provider_unreachable": "The object store could not be reached.",
+          "isolation_failed": "Tenant isolation could not be confirmed.",
+          "unknown": "Storage readiness is unknown — run a probe to check."
         }
       },
       "overview": {
@@ -643,7 +665,8 @@
           },
           "storage": {
             "label": "Object storage",
-            "description": "Per-tenant object storage."
+            "description": "Per-tenant object storage.",
+            "action": "Configure object storage and run a readiness probe."
           },
           "observability": {
             "label": "Observability",

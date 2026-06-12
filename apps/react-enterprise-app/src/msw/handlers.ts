@@ -197,6 +197,29 @@ const emailSenderFixture = {
   updatedAt: "2026-06-12T00:00:00Z",
   readiness: "configured",
 };
+// --- Tenant object storage readiness (ADR-0049) ---
+const storageReadinessFixture = {
+  status: "configured",
+  prefix: "00000000-0000-0000-0000-000000000001/",
+  endpointConfigured: true,
+  isolationEnforced: true,
+};
+const storageProbeFixture = {
+  status: "configured",
+  wrote: true,
+  read: true,
+  deleted: true,
+  foreignKeyRejected: true,
+};
+export function adminStorageReadinessHandler(
+  response: Record<string, unknown> = storageReadinessFixture
+) {
+  return http.get("/api/org/storage/readiness", () => HttpResponse.json(response));
+}
+export function adminStorageProbeHandler(response: Record<string, unknown> = storageProbeFixture) {
+  return http.post("/api/org/storage/probe", () => HttpResponse.json(response));
+}
+
 export function adminEmailSenderHandler(response: Record<string, unknown> = emailSenderFixture) {
   return http.get("/api/org/email-sender", () => HttpResponse.json(response));
 }
@@ -313,5 +336,6 @@ export const handlers = [
   adminReadinessHandler(),
   adminDomainsListHandler(),
   adminDomainsReadinessHandler(),
+  adminStorageReadinessHandler(),
   ...adminWriteOkHandlers(),
 ];
