@@ -102,6 +102,16 @@ async function main(): Promise<void> {
       "redirect policy stays no_redirect (no redirect behaviour claimed)",
       r.kind === "ok" && r.record.redirectPolicy === "no_redirect"
     );
+    // ADR-ACT-0236: canonical is a MARKER — it never upgrades routing/TLS
+    // readiness (no public cutover is implied by setting it).
+    check(
+      "canonical does NOT upgrade routing/TLS readiness (marker only)",
+      r.kind === "ok" &&
+        r.record.routingStatus === "routing_local_active" &&
+        r.record.tlsStatus === "tls_unknown" &&
+        r.record.routingPublicProvenAt === null &&
+        r.record.tlsPublicProvenAt === null
+    );
 
     // 3. Second canonical replaces the first atomically.
     await registry.markOwnership(orgId, d2, "verified");

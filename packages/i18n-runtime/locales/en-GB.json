@@ -348,7 +348,7 @@
           "inactive": "Not activated",
           "active": "Active"
         },
-        "canonicalBadge": "Canonical",
+        "canonicalBadge": "Canonical marker",
         "canonicalLocalNote": "Canonical is based on locally proven routing only — no redirect is applied.",
         "activateButton": "Activate",
         "activateError": "Could not activate the domain. Verify DNS ownership first.",
@@ -362,9 +362,11 @@
         "probeUnmatched": "Probe completed: routing is NOT proven (proxy unreachable or wrong tenant context).",
         "setCanonicalButton": "Set canonical",
         "setCanonicalError": "Canonical requires verified ownership, an active auth client, and proven routing.",
-        "canonicalSet": "Canonical domain set. No redirect is applied (policy: no_redirect).",
+        "canonicalSet": "Canonical marker set. No redirect is active (policy: no_redirect).",
         "unsetCanonicalButton": "Unset canonical",
-        "canonicalUnset": "Canonical flag removed."
+        "canonicalUnset": "Canonical flag removed.",
+        "canonicalNoRedirect": "No redirect is active — public cutover not proven.",
+        "addConflictError": "This domain is already claimed by another organisation."
       },
       "storage": {
         "title": "Object storage",
@@ -497,6 +499,10 @@
         "openConsole": "Open console",
         "localOnly": "local-only",
         "systemOperatorOnly": "System operator only",
+        "linkKind": {
+          "routed": "Routed via Caddy",
+          "direct_local": "Direct local service port"
+        },
         "intervalLabel": "Interval",
         "lastTickLabel": "Last tick",
         "never": "never",
@@ -534,7 +540,8 @@
             "label": "Postgres"
           },
           "redis": {
-            "label": "Redis"
+            "label": "Redis",
+            "detail": "Structural check only — wired at startup, not actively pinged."
           },
           "clickhouse": {
             "label": "ClickHouse"

@@ -137,6 +137,7 @@ const domainsListFixture = {
       routing: "routing_unknown",
       canonical: false,
       redirectPolicy: "no_redirect",
+      redirectActive: false,
       txtRecord: "_platform-verify.app.example.com",
       createdAt: "2026-06-12T00:00:00Z",
       verifiedAt: null,
@@ -227,6 +228,7 @@ export function adminDomainsSetCanonicalHandler() {
       canonical: true,
       canonicalAt: "2026-06-12T00:00:00Z",
       redirectPolicy: "no_redirect",
+      redirectActive: false,
     })
   );
 }
@@ -237,7 +239,20 @@ export function adminDomainsUnsetCanonicalHandler() {
       canonical: false,
       canonicalAt: null,
       redirectPolicy: "no_redirect",
+      redirectActive: false,
     })
+  );
+}
+/** POST /api/org/domains responding 409 DOMAIN_ALREADY_CLAIMED (ADR-ACT-0236). */
+export function adminDomainsCreateConflictHandler() {
+  return http.post("/api/org/domains", () =>
+    HttpResponse.json(
+      {
+        code: "DOMAIN_ALREADY_CLAIMED",
+        message: "This domain is already claimed by another organisation",
+      },
+      { status: 409 }
+    )
   );
 }
 
@@ -428,9 +443,10 @@ export function adminObservabilityReadinessHandler(
   return http.get("/api/org/observability/readiness", () => HttpResponse.json(response));
 }
 
-// Mirrors the platform-api SERVICE_REGISTRY + ADR-ACT-0233 console classifications
-// (keys, categories, console URLs). The platform-api unit suite owns the registry
-// truth; this fixture must track it — postgres/redis/loki/etc. carry NO console URL.
+// Mirrors the platform-api SERVICE_REGISTRY + ADR-ACT-0233/0236 console
+// classifications (keys, categories, console URLs, routed-vs-direct labelling).
+// The platform-api unit suite owns the registry truth; this fixture must track
+// it — postgres/redis/loki/etc. carry NO console URL.
 const platformService = (
   key: string,
   category: string,
@@ -446,14 +462,23 @@ const platformService = (
   localOnly: true,
   consoleUrl,
   consoleAccess,
+  // System-operator links are direct local service ports (labelled as such).
+  consoleUrlKind: consoleUrl ? ("direct_local" as const) : null,
   checkedAt: "2026-06-12T00:00:00.000Z",
   detailKey,
 });
 
-/** The full registry as the BFF returns it to a SYSTEM-ADMIN (global-only links present). */
+/** The full registry as the BFF returns it to a SYSTEM-ADMIN on the apex host. */
 const platformServicesSystemAdminView = [
   platformService("postgres", "data", "healthy", "not_exposed", null),
-  platformService("redis", "data", "configured", "not_exposed", null),
+  platformService(
+    "redis",
+    "data",
+    "configured",
+    "not_exposed",
+    null,
+    "feature.admin.platform.svc.redis.detail"
+  ),
   platformService("clickhouse", "data", "healthy", "global_only", "http://localhost:8124/play"),
   platformService("minio", "storage", "healthy", "global_only", "http://localhost:9001"),
   platformService("mailpit", "mail", "healthy", "global_only", "http://localhost:8025/mailpit"),
@@ -489,20 +514,26 @@ const platformWorkersFixture = [
   },
 ];
 
-/** Default fixture = the TENANT-ADMIN view: the BFF nulls global-only console links. */
+/** Default fixture = the TENANT-OPERATOR view (tenant FQDN): global-only console
+ * links are nulled by the BFF; the tenant-safe Keycloak link is the ROUTED
+ * tenant-origin path, never a direct local port (ADR-ACT-0236). */
 const platformServicesReadinessFixture = {
   environment: "test",
   appVersion: "abc123",
+  viewerMode: "tenant_operator",
   services: platformServicesSystemAdminView.map((s) =>
-    s.consoleAccess === "tenant_safe" ? s : { ...s, consoleUrl: null }
+    s.consoleAccess === "tenant_safe"
+      ? { ...s, consoleUrl: "http://acme.aldous.info/kc", consoleUrlKind: "routed" as const }
+      : { ...s, consoleUrl: null, consoleUrlKind: null }
   ),
   workers: platformWorkersFixture,
 };
 
-/** System-admin view: global-only console links present (e.g. Grafana/pgAdmin/MinIO). */
+/** System-operator view (apex): global-only console links present, direct-local labelled. */
 export const platformServicesReadinessSystemAdminFixture = {
   environment: "test",
   appVersion: "abc123",
+  viewerMode: "system_operator",
   services: platformServicesSystemAdminView,
   workers: platformWorkersFixture,
 };

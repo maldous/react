@@ -621,8 +621,13 @@ export const TenantDomainSummarySchema = z
     authClient: TenantDomainAuthClientStatusSchema,
     tls: TenantDomainTlsStatusSchema,
     routing: TenantDomainRoutingStatusSchema,
+    /** CANONICAL MARKER ONLY (ADR-ACT-0232/0236): a primary-display-domain
+     * flag. It never executes a redirect and never implies public cutover. */
     canonical: z.boolean(),
     redirectPolicy: TenantDomainRedirectPolicySchema,
+    /** Always false until a redirect implementation is explicitly proven —
+     * canonical NEVER activates a redirect (ADR-ACT-0236). */
+    redirectActive: z.boolean(),
     txtRecord: z.string(),
     createdAt: z.string().nullable(),
     verifiedAt: z.string().nullable(),
@@ -708,13 +713,16 @@ export type TenantDomainRoutingProbeResponse = z.infer<
   typeof TenantDomainRoutingProbeResponseSchema
 >;
 
-/** `POST` / `DELETE /api/org/domains/:domain/canonical`. */
+/** `POST` / `DELETE /api/org/domains/:domain/canonical`. Canonical is a
+ * MARKER (primary display domain) — `redirectActive` is always false until a
+ * redirect implementation is explicitly proven; no public cutover is implied. */
 export const TenantDomainCanonicalResponseSchema = z
   .object({
     domain: z.string(),
     canonical: z.boolean(),
     canonicalAt: z.string().nullable(),
     redirectPolicy: TenantDomainRedirectPolicySchema,
+    redirectActive: z.boolean(),
   })
   .strict();
 export type TenantDomainCanonicalResponse = z.infer<typeof TenantDomainCanonicalResponseSchema>;
@@ -1077,6 +1085,21 @@ export const PLATFORM_CONSOLE_ACCESS = ["tenant_safe", "global_only", "not_expos
 export const PlatformConsoleAccessSchema = z.enum(PLATFORM_CONSOLE_ACCESS);
 export type PlatformConsoleAccess = z.infer<typeof PlatformConsoleAccessSchema>;
 
+/** How a console URL reaches the service (ADR-ACT-0236): `routed` = through the
+ * Caddy/forward-auth path on the viewer's host; `direct_local` = a direct
+ * localhost service port (operator-labelled, never implied tenant-safe). */
+export const PLATFORM_CONSOLE_URL_KINDS = ["routed", "direct_local"] as const;
+export const PlatformConsoleUrlKindSchema = z.enum(PLATFORM_CONSOLE_URL_KINDS);
+export type PlatformConsoleUrlKind = z.infer<typeof PlatformConsoleUrlKindSchema>;
+
+/** Who the readiness payload was rendered for (ADR-ACT-0236 host authority):
+ * tenant_operator = tenant-resolved FQDN viewer (tenant-safe view, even for a
+ * system-admin without support escalation); system_operator = system-admin on
+ * the apex host (global-only console links present). */
+export const PLATFORM_VIEWER_MODES = ["tenant_operator", "system_operator"] as const;
+export const PlatformViewerModeSchema = z.enum(PLATFORM_VIEWER_MODES);
+export type PlatformViewerMode = z.infer<typeof PlatformViewerModeSchema>;
+
 export const PlatformServiceSummarySchema = z
   .object({
     key: z.string(),
@@ -1092,6 +1115,8 @@ export const PlatformServiceSummarySchema = z
     consoleUrl: z.string().nullable(),
     /** Who may see this service's console link (server-enforced, UI-informative). */
     consoleAccess: PlatformConsoleAccessSchema,
+    /** Routed-vs-direct labelling for the console URL; null when no URL. */
+    consoleUrlKind: PlatformConsoleUrlKindSchema.nullable(),
     checkedAt: z.string(),
     detailKey: z.string().nullable(),
   })
@@ -1123,6 +1148,8 @@ export const PlatformServicesReadinessResponseSchema = z
   .object({
     environment: z.string(),
     appVersion: z.string().nullable(),
+    /** Host-authority-derived view the payload was rendered for (ADR-ACT-0236). */
+    viewerMode: PlatformViewerModeSchema,
     services: z.array(PlatformServiceSummarySchema),
     workers: z.array(PlatformWorkerSummarySchema),
   })

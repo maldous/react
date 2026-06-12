@@ -45,6 +45,8 @@ export function mapRegistryRecords(
     routing: r.routingStatus,
     canonical: r.canonical,
     redirectPolicy: r.redirectPolicy,
+    // No redirect implementation exists — constant false until proven (ADR-ACT-0236).
+    redirectActive: false,
     txtRecord: txtRecordFor(r.domain),
     createdAt: iso(r.createdAt),
     verifiedAt: iso(r.verifiedAt),

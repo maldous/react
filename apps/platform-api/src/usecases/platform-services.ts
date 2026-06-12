@@ -1,9 +1,11 @@
 import type {
   PlatformConsoleAccess,
+  PlatformConsoleUrlKind,
   PlatformServiceCategory,
   PlatformServiceStatus,
   PlatformServiceSummary,
   PlatformServicesReadinessResponse,
+  PlatformViewerMode,
   PlatformWorkerStatus,
   PlatformWorkerSummary,
 } from "@platform/contracts-admin";
@@ -64,32 +66,66 @@ interface ServiceDef {
 const at = (e: NodeJS.ProcessEnv, portVar: string, def: string, path = ""): string =>
   `http://localhost:${e[portVar] ?? def}${path}`;
 
+// `undefined` = unparseable (distinct from a legal JSON `null` body).
 const parseJson = (body: string): unknown => {
   try {
     return JSON.parse(body) as unknown;
   } catch {
-    return null;
+    return undefined;
   }
 };
 
-/** Grafana /api/health: healthy only when `database` (if present) is "ok". */
-const grafanaBodyCheck = (body: string): "degraded" | null => {
-  const health = parseJson(body) as { database?: unknown } | null;
-  if (!health || health.database === undefined) return null;
-  return health.database === "ok" ? null : "degraded";
-};
+/** Structured JSON health check: a malformed body on a JSON endpoint is
+ * DEGRADED (ADR-ACT-0236) — a 200 with garbage is not a healthy service. */
+const jsonBodyCheck =
+  (healthy: (parsed: unknown) => boolean) =>
+  (body: string): "degraded" | null => {
+    const parsed = parseJson(body);
+    if (parsed === undefined) return "degraded";
+    return healthy(parsed) ? null : "degraded";
+  };
 
-/** LocalStack /_localstack/health: degraded when any service reports "error". */
-const localstackBodyCheck = (body: string): "degraded" | null => {
-  const health = parseJson(body) as { services?: Record<string, unknown> } | null;
-  const services = health?.services ?? {};
-  return Object.values(services).some((s) => s === "error") ? "degraded" : null;
-};
+/** Grafana /api/health: valid JSON; `database` (where present) must be "ok". */
+const grafanaBodyCheck = jsonBodyCheck((parsed) => {
+  if (typeof parsed !== "object" || parsed === null) return false;
+  const database = (parsed as { database?: unknown }).database;
+  return database === undefined || database === "ok";
+});
+
+/** LocalStack /_localstack/health: valid JSON; no service may report "error". */
+const localstackBodyCheck = jsonBodyCheck((parsed) => {
+  if (typeof parsed !== "object" || parsed === null) return false;
+  const services = (parsed as { services?: Record<string, unknown> }).services ?? {};
+  return !Object.values(services).some((s) => s === "error");
+});
+
+/** SonarQube /api/system/status: valid JSON with status === "UP". */
+const sonarqubeBodyCheck = jsonBodyCheck(
+  (parsed) =>
+    typeof parsed === "object" &&
+    parsed !== null &&
+    (parsed as { status?: unknown }).status === "UP"
+);
+
+/** Keycloak OIDC discovery: valid JSON with a non-empty issuer. */
+const keycloakBodyCheck = jsonBodyCheck((parsed) => {
+  if (typeof parsed !== "object" || parsed === null) return false;
+  const issuer = (parsed as { issuer?: unknown }).issuer;
+  return typeof issuer === "string" && issuer.length > 0;
+});
 
 // The allowlist. Console URLs are localhost operator links only.
 export const SERVICE_REGISTRY: readonly ServiceDef[] = [
   { key: "postgres", category: "data", kind: "postgres", localOnly: true },
-  { key: "redis", category: "data", kind: "redis", localOnly: true },
+  {
+    key: "redis",
+    category: "data",
+    kind: "redis",
+    localOnly: true,
+    // Structural check only (wired at startup) — surfaced as `configured`,
+    // never `healthy`; the caveat is shown in the UI via this detail key.
+    detailKey: "feature.admin.platform.svc.redis.detail",
+  },
   {
     key: "clickhouse",
     category: "data",
@@ -146,6 +182,7 @@ export const SERVICE_REGISTRY: readonly ServiceDef[] = [
     healthUrl: (e) =>
       at(e, "KEYCLOAK_PORT", "8090", "/kc/realms/master/.well-known/openid-configuration"),
     consoleUrl: (e) => at(e, "KEYCLOAK_PORT", "8090", "/kc"),
+    classifyBody: keycloakBodyCheck,
   },
   {
     key: "mock_oidc",
@@ -186,6 +223,7 @@ export const SERVICE_REGISTRY: readonly ServiceDef[] = [
     localOnly: true,
     healthUrl: (e) => at(e, "SONAR_PORT", "9064", "/sonar/api/system/status"),
     consoleUrl: (e) => at(e, "SONAR_PORT", "9064", "/sonar"),
+    classifyBody: sonarqubeBodyCheck,
   },
   {
     key: "web_caddy",
@@ -216,6 +254,49 @@ export function consoleAccessFor(def: Pick<ServiceDef, "key" | "fallbackConsoleA
   return def.fallbackConsoleAccess ?? ("not_exposed" as const);
 }
 
+// ---------------------------------------------------------------------------
+// Host authority (ADR-ACT-0236). "No tenant context" must never mean "safe
+// global context": the system-operator view exists ONLY on the apex host.
+// ---------------------------------------------------------------------------
+
+export type ReadinessHostKind =
+  | "apex"
+  | "tenant_slug"
+  | "reserved_subdomain"
+  | "invalid_subdomain"
+  | "custom_domain_candidate"
+  | "malformed";
+
+export type ReadinessAccess =
+  | { kind: "ok"; viewerMode: PlatformViewerMode }
+  | { kind: "no_tenant" }
+  | { kind: "invalid_operations_origin" };
+
+/**
+ * Pure host-authority decision for the readiness endpoint:
+ *   - a tenant-resolved host (slug FQDN or ACTIVE custom domain) yields the
+ *     tenant-safe view for EVERY viewer — a system-admin on a tenant host is
+ *     deliberately downgraded (support-mode escalation is not implemented;
+ *     documented policy choice, ADR-ACT-0236)
+ *   - a system-admin on the APEX host gets the system-operator view
+ *   - a system-admin on any other host (reserved/unknown subdomain, unresolved
+ *     custom host, malformed) is REFUSED — unknown hosts never become implicit
+ *     operations origins
+ *   - everyone else without tenant context gets no_tenant
+ */
+export function resolveReadinessAccess(input: {
+  isSystemAdmin: boolean;
+  hostKind: ReadinessHostKind;
+  tenantResolved: boolean;
+}): ReadinessAccess {
+  if (input.tenantResolved) return { kind: "ok", viewerMode: "tenant_operator" };
+  if (input.isSystemAdmin) {
+    if (input.hostKind === "apex") return { kind: "ok", viewerMode: "system_operator" };
+    return { kind: "invalid_operations_origin" };
+  }
+  return { kind: "no_tenant" };
+}
+
 export interface PlatformProbeDeps {
   /** Bounded HTTP probe — the response (status + truncated body), or null when none. */
   httpProbe(url: string): Promise<HttpProbeResult | null>;
@@ -223,8 +304,11 @@ export interface PlatformProbeDeps {
   pgProbe(): Promise<boolean>;
   /** Structural: is Redis wired (connected at startup)? */
   redisConfigured(): boolean;
-  /** True when the requesting actor holds the system-admin role (gates global-only console links). */
-  viewerIsSystemAdmin: boolean;
+  /** Host-authority-resolved view (resolveReadinessAccess) — gates console links. */
+  viewerMode: PlatformViewerMode;
+  /** The tenant host the request arrived on (tenant_operator only) — used to
+   * emit ROUTED tenant-origin console links (e.g. http://{host}/kc). */
+  tenantHost?: string | null;
   env?: NodeJS.ProcessEnv;
   now?: Date;
 }
@@ -245,6 +329,40 @@ async function probeStatus(
   return def.classifyBody?.(res.body) ?? "healthy";
 }
 
+/**
+ * Console link + labelling for one service under the viewer's host authority.
+ * Tenant-safe links on a tenant host are ROUTED through the tenant origin
+ * (Caddy/forward-auth path) — never a direct local port presented as
+ * tenant-safe. Direct local ports appear only in the system-operator view,
+ * explicitly labelled `direct_local` (ADR-ACT-0236).
+ */
+function consoleLinkFor(
+  def: ServiceDef,
+  consoleAccess: PlatformConsoleAccess,
+  deps: PlatformProbeDeps,
+  env: NodeJS.ProcessEnv
+): { consoleUrl: string | null; consoleUrlKind: PlatformConsoleUrlKind | null } {
+  const none = { consoleUrl: null, consoleUrlKind: null };
+  if (consoleAccess === "not_exposed") return none;
+  if (consoleAccess === "global_only") {
+    if (deps.viewerMode !== "system_operator") return none;
+    const url = def.consoleUrl?.(env) ?? null;
+    return url ? { consoleUrl: url, consoleUrlKind: "direct_local" } : none;
+  }
+  // tenant_safe (Keycloak): tenant viewers get the tenant-origin ROUTED path;
+  // the system operator gets the direct local port, labelled as such.
+  if (deps.viewerMode === "tenant_operator") {
+    if (def.key === "keycloak" && deps.tenantHost) {
+      return { consoleUrl: `http://${deps.tenantHost}/kc`, consoleUrlKind: "routed" };
+    }
+    // No routed tenant path available — withhold rather than hand a tenant
+    // viewer a direct local port dressed up as tenant-safe.
+    return none;
+  }
+  const url = def.consoleUrl?.(env) ?? null;
+  return url ? { consoleUrl: url, consoleUrlKind: "direct_local" } : none;
+}
+
 /** Pure-ish: probe every registry service (bounded by the injected probes), in parallel. */
 export async function buildServiceSummaries(
   deps: PlatformProbeDeps
@@ -254,17 +372,16 @@ export async function buildServiceSummaries(
   return Promise.all(
     SERVICE_REGISTRY.map(async (def) => {
       const consoleAccess = consoleAccessFor(def);
-      const showConsole =
-        consoleAccess === "tenant_safe" ||
-        (consoleAccess === "global_only" && deps.viewerIsSystemAdmin);
+      const link = consoleLinkFor(def, consoleAccess, deps, env);
       return {
         key: def.key,
         labelKey: labelKey(def.key),
         category: def.category,
         status: await probeStatus(def, deps),
         localOnly: def.localOnly,
-        consoleUrl: showConsole ? (def.consoleUrl?.(env) ?? null) : null,
+        consoleUrl: link.consoleUrl,
         consoleAccess,
+        consoleUrlKind: link.consoleUrlKind,
         checkedAt,
         detailKey: def.detailKey ?? null,
       };
@@ -322,6 +439,7 @@ export async function buildPlatformServicesReadiness(
   return {
     environment: env["PLATFORM_ENV"] ?? env["NODE_ENV"] ?? "development",
     appVersion: env["GIT_SHA"] ?? env["APP_VERSION"] ?? null,
+    viewerMode: deps.viewerMode,
     services: await buildServiceSummaries(deps),
     workers: buildWorkerSummaries(deps.getHeartbeat, env),
   };

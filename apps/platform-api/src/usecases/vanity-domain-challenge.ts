@@ -2,6 +2,7 @@ import crypto from "node:crypto";
 import pg from "pg";
 import { AuditAction, createAuditEvent, type AuditEventPort } from "@platform/audit-events";
 import { PostgresTenantDomainRegistry } from "../adapters/postgres-tenant-domain-registry.ts";
+import type { TenantDomainRegistryPort } from "../ports/tenant-domain-registry.ts";
 
 // ---------------------------------------------------------------------------
 // Vanity domain ownership challenge (ADR-ACT-0188)
@@ -34,6 +35,8 @@ export interface ChallengeDeps {
   audit: AuditEventPort;
   pool: pg.Pool;
   dns?: DnsResolverPort;
+  /** Lifecycle registry override (tests/proofs); defaults to the Postgres adapter. */
+  registry?: TenantDomainRegistryPort;
 }
 
 // Inline domain validation (same rules as vanity-domain.ts:validateDomain)
@@ -56,7 +59,10 @@ function validateDomain(domain: string): { ok: true } | { ok: false; message: st
 
 export type CreateChallengeResult =
   | { kind: "ok"; token: string; txtRecord: string }
-  | { kind: "invalid_domain"; message: string };
+  | { kind: "invalid_domain"; message: string }
+  /** The domain is enabled for ANOTHER tenant (ADR-ACT-0236). No token is
+   * issued — the conflict is explicit, mapped to 409 DOMAIN_ALREADY_CLAIMED. */
+  | { kind: "domain_already_claimed" };
 
 export type VerifyChallengeResult =
   | { kind: "ok" }
@@ -64,7 +70,10 @@ export type VerifyChallengeResult =
   | { kind: "expired" }
   | { kind: "already_verified" }
   | { kind: "dns_not_found" }
-  | { kind: "dns_mismatch" };
+  | { kind: "dns_mismatch" }
+  /** Another tenant holds the enabled registry row for this domain — never
+   * verifiable here, regardless of DNS state (ADR-ACT-0236). */
+  | { kind: "domain_already_claimed" };
 
 export async function createDomainChallenge(
   input: {
@@ -79,6 +88,30 @@ export async function createDomainChallenge(
   if (!validation.ok) return { kind: "invalid_domain", message: validation.message };
 
   const domain = input.domain.toLowerCase();
+  const registry = deps.registry ?? new PostgresTenantDomainRegistry(deps.pool);
+
+  // Lifecycle registry sync FIRST (ADR-ACT-0232/0236): a domain enabled for
+  // another tenant is rejected BEFORE a token exists — the caller never
+  // receives a DNS challenge it could not possibly verify, and the conflict
+  // is explicit (409), not a misleading pending_dns.
+  const ensured = await registry.ensurePending(input.organisationId, domain);
+  if (ensured.kind === "conflict_other_tenant") {
+    await deps.audit.emit(
+      createAuditEvent({
+        actorId: input.actorId,
+        actorRoles: input.actorRoles,
+        tenantId: input.organisationId,
+        action: "tenant_domains.challenge.rejected_conflict",
+        resource: "auth_settings",
+        resourceId: domain,
+        // Safe metadata only: the domain (a public DNS name) and the reason.
+        // Never the owning tenant's identity, and there is no token to leak.
+        metadata: { domain, reason: "domain_already_claimed" },
+      })
+    );
+    return { kind: "domain_already_claimed" };
+  }
+
   const token = crypto.randomBytes(24).toString("hex");
 
   await deps.audit.emit(
@@ -106,11 +139,6 @@ export async function createDomainChallenge(
      VALUES ($1, $2, $3)`,
     [input.organisationId, domain, token]
   );
-
-  // Lifecycle registry sync (ADR-ACT-0232): ensure an enabled tenant_domains
-  // row exists. Never downgrades an already-verified row; never overwrites a
-  // domain enabled for another tenant (the partial unique index no-ops it).
-  await new PostgresTenantDomainRegistry(deps.pool).ensurePending(input.organisationId, domain);
 
   return { kind: "ok", token, txtRecord: `_aldous-verify.${domain}` };
 }
@@ -147,7 +175,29 @@ export async function verifyDomainChallenge(
   if (new Date(challenge.expires_at) < new Date()) return { kind: "expired" };
   if (challenge.verified_at) return { kind: "already_verified" };
 
-  const registry = new PostgresTenantDomainRegistry(deps.pool);
+  const registry = deps.registry ?? new PostgresTenantDomainRegistry(deps.pool);
+
+  // Lifecycle row gate (ADR-ACT-0236): verification can only succeed when THIS
+  // tenant holds the enabled tenant_domains row. A domain enabled for another
+  // tenant is an explicit conflict — refused BEFORE any DNS lookup, so a stale
+  // challenge can never "verify" a domain this tenant does not own in the
+  // registry. ensurePending is idempotent and never downgrades a verified row.
+  const ensured = await registry.ensurePending(input.organisationId, domain);
+  if (ensured.kind === "conflict_other_tenant") {
+    await deps.audit.emit(
+      createAuditEvent({
+        actorId: input.actorId,
+        actorRoles: input.actorRoles,
+        tenantId: input.organisationId,
+        action: "tenant_domains.challenge.rejected_conflict",
+        resource: "auth_settings",
+        resourceId: domain,
+        metadata: { domain, reason: "domain_already_claimed", phase: "verify" },
+      })
+    );
+    return { kind: "domain_already_claimed" };
+  }
+
   const txtRecords = await resolver.resolveTxt(`_aldous-verify.${domain}`).catch(() => []);
   const flatRecords = txtRecords.flat();
   if (flatRecords.length === 0) return { kind: "dns_not_found" };
@@ -182,12 +232,9 @@ export async function verifyDomainChallenge(
     [challenge.id]
   );
 
-  // Lifecycle registry sync (ADR-ACT-0232): DNS ownership proven.
-  await new PostgresTenantDomainRegistry(deps.pool).markOwnership(
-    input.organisationId,
-    domain,
-    "verified"
-  );
+  // Lifecycle registry sync (ADR-ACT-0232): DNS ownership proven. The row is
+  // guaranteed to exist for THIS tenant (ensurePending gate above).
+  await registry.markOwnership(input.organisationId, domain, "verified");
 
   return { kind: "ok" };
 }

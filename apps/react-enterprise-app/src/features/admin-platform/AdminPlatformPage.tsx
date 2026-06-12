@@ -138,14 +138,23 @@ function ServiceRow({ service, t }: { service: PlatformServiceSummary; t: Transl
         <span className="text-sm text-fg-muted">{t(service.detailKey)}</span>
       ) : null}
       {service.consoleUrl ? (
-        <a
-          href={service.consoleUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="text-sm font-medium text-primary underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-        >
-          {t("feature.admin.platform.openConsole")}
-        </a>
+        <>
+          <a
+            href={service.consoleUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="text-sm font-medium text-primary underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            {t("feature.admin.platform.openConsole")}
+          </a>
+          {/* Routed-vs-direct labelling (ADR-ACT-0236): a direct local port is
+              never presented unlabelled as if it were tenant-routed. */}
+          {service.consoleUrlKind ? (
+            <Badge variant="outline">
+              {t(`feature.admin.platform.linkKind.${service.consoleUrlKind}`)}
+            </Badge>
+          ) : null}
+        </>
       ) : service.consoleAccess === "global_only" ? (
         // The BFF withholds global-only console links from non-system-admin viewers.
         <span className="text-sm text-fg-muted">

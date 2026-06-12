@@ -68,13 +68,16 @@ describe("AdminPlatformPage (ADR-0036 / ADR-ACT-0235)", () => {
       expect(row).toHaveTextContent(/system operator only/i);
     }
 
-    // The tenant-safe Keycloak console link IS shown.
+    // The tenant-safe Keycloak console link IS shown — as the ROUTED
+    // tenant-origin path, labelled, never a direct local port (ADR-ACT-0236).
     const keycloak = screen.getByTestId("admin-platform-service-keycloak");
     const kcLink = within(keycloak).getByRole("link", { name: /open console/i });
-    expect(kcLink).toHaveAttribute("href", "http://localhost:8090/kc");
+    expect(kcLink).toHaveAttribute("href", "http://acme.aldous.info/kc");
+    expect(keycloak).toHaveTextContent(/routed via caddy/i);
+    expect(keycloak).not.toHaveTextContent(/direct local service port/i);
   });
 
-  it("renders global-only console links for a system admin (Grafana)", async () => {
+  it("renders global-only console links for a system admin (Grafana), labelled direct-local", async () => {
     server.use(
       sessionHandler("systemAdmin"),
       adminPlatformServicesHandler(platformServicesReadinessSystemAdminFixture)
@@ -86,6 +89,8 @@ describe("AdminPlatformPage (ADR-0036 / ADR-ACT-0235)", () => {
     expect(link).toHaveAttribute("href", "http://localhost:3200");
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveAttribute("rel", "noreferrer");
+    // Direct local port links are explicitly labelled (ADR-ACT-0236).
+    expect(grafana).toHaveTextContent(/direct local service port/i);
 
     const pgadmin = screen.getByTestId("admin-platform-service-pgadmin");
     expect(within(pgadmin).getByRole("link", { name: /open console/i })).toHaveAttribute(

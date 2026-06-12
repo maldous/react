@@ -1040,6 +1040,9 @@
           },
           "403": {
             "description": "Forbidden"
+          },
+          "409": {
+            "description": "DOMAIN_ALREADY_CLAIMED — the domain is enabled for another organisation; no token is issued (ADR-ACT-0236)"
           }
         }
       }
@@ -1069,6 +1072,9 @@
           },
           "403": {
             "description": "Forbidden"
+          },
+          "409": {
+            "description": "DOMAIN_ALREADY_CLAIMED — the domain is enabled for another organisation; verification is refused before any DNS lookup (ADR-ACT-0236)"
           }
         }
       }
@@ -2500,6 +2506,9 @@
           },
           "400": {
             "description": "Validation error or no tenant context"
+          },
+          "409": {
+            "description": "DOMAIN_ALREADY_CLAIMED — the domain is enabled for another organisation; no token is issued (ADR-ACT-0236)"
           }
         }
       }
@@ -2555,6 +2564,9 @@
           },
           "422": {
             "description": "Challenge expired"
+          },
+          "409": {
+            "description": "DOMAIN_ALREADY_CLAIMED — the domain is enabled for another organisation; verification is refused before any DNS lookup (ADR-ACT-0236)"
           }
         }
       }
@@ -3001,7 +3013,7 @@
       "get": {
         "summary": "Platform operations \u2014 local service readiness + workers",
         "operationId": "getOrgPlatformServicesReadiness",
-        "description": "Read-only operator cockpit data: bounded service-specific health checks over a safe local-service allowlist (non-2xx responses classify as degraded, no response as unreachable) + background-worker heartbeats + environment/version. Never returns secrets, DSNs, or raw env \u2014 only known-safe localhost console URLs, classified per the ADR-ACT-0233 clickthrough policy: global-only console links are emitted ONLY for system-admin viewers; not-exposed services are never linked. Tenant context is required unless the viewer is system-admin (apex allowed). ADR-ACT-0228 / ADR-ACT-0235.",
+        "description": "Read-only operator cockpit data: bounded service-specific health checks over a safe local-service allowlist (non-2xx or malformed structured bodies classify as degraded, no response as unreachable) + background-worker heartbeats + environment/version + viewerMode. Never returns secrets, DSNs, or raw env \u2014 only known-safe console URLs, classified per the ADR-ACT-0233 clickthrough policy under explicit host authority (ADR-ACT-0236): a tenant-resolved FQDN yields the tenant_operator view (routed tenant-safe links only, for every viewer); a system-admin on the apex host gets the system_operator view (direct-local labelled global links); a system-admin on any other host is refused 403 INVALID_OPERATIONS_ORIGIN. ADR-ACT-0228 / ADR-ACT-0235 / ADR-ACT-0236.",
         "tags": ["Organisation"],
         "security": [
           {
@@ -3164,7 +3176,7 @@
       "post": {
         "summary": "Mark a custom domain canonical for the tenant",
         "operationId": "setOrgDomainCanonical",
-        "description": "Guards: verified ownership + active auth client + proven routing. At most one canonical domain per tenant; redirect_policy stays no_redirect (no redirect behaviour is implemented). tenant.domains.write. ADR-ACT-0232.",
+        "description": "Marks a CANONICAL MARKER (primary display domain) — it never executes a redirect and never implies public cutover; the response carries redirectPolicy=no_redirect and redirectActive=false until a redirect implementation is explicitly proven (ADR-ACT-0236). Guards: verified ownership + active auth client + proven routing. At most one canonical domain per tenant. tenant.domains.write. ADR-ACT-0232.",
         "tags": ["Organisation"],
         "security": [
           {

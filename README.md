@@ -74,7 +74,7 @@ reconciled against `package.json` by `proof-registry.test.ts`):
 `proof:webhooks`, `proof:webhook-worker`, `proof:webhook-redrive`, `proof:platform-services`,
 `proof:backup-local`, `proof:domain-identity-matrix`, `proof:tenant-custom-domain-resolution`,
 `proof:tenant-domain-canonical`, `proof:tenant-custom-domain-auth-origin`,
-`proof:service-clickthrough-policy`.
+`proof:service-clickthrough-policy`, `proof:tenant-domain-claim-lifecycle`.
 Public DNS/TLS, real-IdP OIDC login mapping, and real Cloudflare/AWS-IAM/Brevo/Sentry
 remain partial/deferred/blocked. See `docs/evidence/platform/platform-bedrock-foundation-review.md`.
 

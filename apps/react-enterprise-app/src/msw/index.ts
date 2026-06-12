@@ -24,6 +24,7 @@ export {
   adminDomainsListHandler,
   adminDomainsReadinessHandler,
   adminDomainsCreateHandler,
+  adminDomainsCreateConflictHandler,
   adminDomainsVerifyHandler,
   adminDomainsRemoveHandler,
   adminDomainsActivateHandler,

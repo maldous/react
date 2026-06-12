@@ -11,6 +11,7 @@
 import type pg from "pg";
 import type {
   DomainOwnershipStatus,
+  EnsurePendingResult,
   TenantDomainRecord,
   TenantDomainRegistryPort,
 } from "../ports/tenant-domain-registry.ts";
@@ -92,18 +93,38 @@ export class PostgresTenantDomainRegistry implements TenantDomainRegistryPort {
     return row ? toRecord(row) : null;
   }
 
-  async ensurePending(organisationId: string, domain: string): Promise<void> {
-    // ON CONFLICT against the partial unique enabled-domain index: if the
-    // domain is already enabled (for this OR another tenant) the insert
-    // no-ops — an existing verified row is never downgraded, and another
-    // tenant's claim is never overwritten (activation guards catch the
-    // cross-tenant case because getDomain() returns null for this org).
-    await this.pool.query(
-      `INSERT INTO public.tenant_domains (organisation_id, domain, source)
-       VALUES ($1, $2, 'custom')
-       ON CONFLICT (domain) WHERE disabled_at IS NULL DO NOTHING`,
-      [organisationId, domain.toLowerCase()]
-    );
+  async ensurePending(organisationId: string, domain: string): Promise<EnsurePendingResult> {
+    const lower = domain.toLowerCase();
+    // ON CONFLICT against the partial unique enabled-domain index keeps the
+    // takeover guard at the database level: an existing verified row is never
+    // downgraded and another tenant's claim is never overwritten. The result
+    // is classified EXPLICITLY (ADR-ACT-0236): a conflicting insert is
+    // followed by an ownership read so a cross-tenant claim surfaces as
+    // conflict_other_tenant instead of a silent no-op. Two attempts cover the
+    // (rare) race where the conflicting row is disabled between the insert
+    // and the read; if ownership stays unknowable we fail CLOSED as a
+    // conflict — never as an implicit claim.
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const inserted = await this.pool.query(
+        `INSERT INTO public.tenant_domains (organisation_id, domain, source)
+         VALUES ($1, $2, 'custom')
+         ON CONFLICT (domain) WHERE disabled_at IS NULL DO NOTHING
+         RETURNING organisation_id`,
+        [organisationId, lower]
+      );
+      if ((inserted.rowCount ?? 0) > 0) return { kind: "created" };
+
+      const owner = await this.pool.query<{ organisation_id: string }>(
+        `SELECT organisation_id FROM public.tenant_domains
+          WHERE domain = $1 AND disabled_at IS NULL LIMIT 1`,
+        [lower]
+      );
+      const ownerOrg = owner.rows[0]?.organisation_id;
+      if (ownerOrg === organisationId) return { kind: "existing_same_tenant" };
+      if (ownerOrg !== undefined) return { kind: "conflict_other_tenant" };
+      // Conflicting row vanished (disabled concurrently) — retry the insert.
+    }
+    return { kind: "conflict_other_tenant" };
   }
 
   async markOwnership(

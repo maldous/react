@@ -11,6 +11,7 @@ import {
   adminDomainsListHandler,
   adminDomainsReadinessHandler,
   adminDomainsCreateHandler,
+  adminDomainsCreateConflictHandler,
   adminDomainsVerifyHandler,
   adminDomainsRemoveHandler,
   adminDomainsActivateHandler,
@@ -71,6 +72,23 @@ describe("AdminDomainsPage (ADR-0048)", () => {
       "_platform-verify.custom.example.com"
     );
     expect(screen.getByTestId("admin-domains-txt-value")).toHaveTextContent("verify-token-abc123");
+  });
+
+  it("shows the explicit conflict message when the domain is claimed by another tenant (409)", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminDomainsListHandler({ domains: [] }),
+      adminDomainsReadinessHandler(),
+      adminDomainsCreateConflictHandler()
+    );
+    renderPage();
+    await screen.findByTestId("admin-domains-add-form");
+    await userEvent.type(screen.getByTestId("admin-domains-domain-input"), "claimed.example.com");
+    await userEvent.click(screen.getByTestId("admin-domains-add-button"));
+    const error = await screen.findByTestId("admin-domains-add-error");
+    expect(error).toHaveTextContent(/already claimed by another organisation/i);
+    // No TXT panel — the conflict response carries no token.
+    expect(screen.queryByTestId("admin-domains-txt-panel")).not.toBeInTheDocument();
   });
 
   it("verifies a domain and announces success", async () => {
@@ -142,6 +160,7 @@ function domainFixture(over: Record<string, unknown> = {}) {
     routing: "routing_unknown",
     canonical: false,
     redirectPolicy: "no_redirect",
+    redirectActive: false,
     txtRecord: "_platform-verify.app.example.com",
     createdAt: "2026-06-12T00:00:00Z",
     verifiedAt: null,
@@ -242,13 +261,41 @@ describe("AdminDomainsPage lifecycle actions (ADR-ACT-0232)", () => {
       await screen.findByTestId("admin-domains-set-canonical-app.example.com")
     ).toBeInTheDocument();
     expect(screen.getByTestId("admin-domains-canonical-canon.example.com")).toHaveTextContent(
-      "Canonical"
+      /canonical marker/i
+    );
+    // Canonical is a MARKER — the no-redirect truth is shown with the badge
+    // (visible to every viewer, ADR-ACT-0236).
+    expect(screen.getByTestId("admin-domains-canonical-note-canon.example.com")).toHaveTextContent(
+      /no redirect is active — public cutover not proven/i
     );
     expect(
       screen.getByTestId("admin-domains-unset-canonical-canon.example.com")
     ).toBeInTheDocument();
     // an already-canonical domain is not offered set-canonical again
     expect(screen.queryByTestId("admin-domains-set-canonical-canon.example.com")).toBeNull();
+  });
+
+  it("shows the no-redirect canonical note to read-only viewers too", async () => {
+    server.use(
+      sessionHandler("viewer"),
+      adminDomainsListHandler({
+        domains: [
+          domainFixture({
+            status: "verified",
+            authClient: "active",
+            routing: "routing_local_active",
+            canonical: true,
+            canonicalAt: "2026-06-12T00:00:00Z",
+          }),
+        ],
+      }),
+      adminDomainsReadinessHandler()
+    );
+    renderPage();
+    await screen.findByTestId("admin-domains-table");
+    expect(screen.getByTestId("admin-domains-canonical-note-app.example.com")).toHaveTextContent(
+      /no redirect is active/i
+    );
   });
 
   it("hides every lifecycle action without tenant.domains.write", async () => {

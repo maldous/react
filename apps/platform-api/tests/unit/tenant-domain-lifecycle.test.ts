@@ -58,6 +58,7 @@ function fakeDeps(initial: TenantDomainRecord | null) {
     getDomain: async () => current,
     ensurePending: async () => {
       calls.push("ensurePending");
+      return { kind: "created" as const };
     },
     markOwnership: async () => {
       calls.push("markOwnership");

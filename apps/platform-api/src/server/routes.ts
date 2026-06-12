@@ -3010,6 +3010,14 @@ export const routes: Route[] = [
         res.json(400, { code: "VALIDATION_ERROR", message: result.message });
         return;
       }
+      if (result.kind === "domain_already_claimed") {
+        // Explicit cross-tenant conflict (ADR-ACT-0236) — no token, no TXT record.
+        res.json(409, {
+          code: "DOMAIN_ALREADY_CLAIMED",
+          message: "This domain is already claimed by another organisation",
+        });
+        return;
+      }
       res.json(201, {
         domain: parsed.data.domain,
         status: "pending_dns",
@@ -3057,6 +3065,13 @@ export const routes: Route[] = [
       }
       if (result.kind === "expired") {
         res.json(422, { code: "VALIDATION_ERROR", message: "Challenge has expired" });
+        return;
+      }
+      if (result.kind === "domain_already_claimed") {
+        res.json(409, {
+          code: "DOMAIN_ALREADY_CLAIMED",
+          message: "This domain is already claimed by another organisation",
+        });
         return;
       }
       const status =
@@ -3327,6 +3342,9 @@ export const routes: Route[] = [
         canonical: result.record.canonical,
         canonicalAt: result.record.canonicalAt?.toISOString() ?? null,
         redirectPolicy: result.record.redirectPolicy,
+        // Canonical is a MARKER: no redirect implementation exists, so this is
+        // constant false until one is explicitly proven (ADR-ACT-0236).
+        redirectActive: false,
       });
     },
   },
@@ -3367,6 +3385,7 @@ export const routes: Route[] = [
         canonical: result.record.canonical,
         canonicalAt: null,
         redirectPolicy: result.record.redirectPolicy,
+        redirectActive: false,
       });
     },
   },
@@ -3874,14 +3893,16 @@ export const routes: Route[] = [
   },
   // ---------------------------------------------------------------------------
   // Platform operations cockpit — service readiness + workers (ADR-ACT-0228,
-  // hardened ADR-ACT-0235). Read-only, tenant.platform.read. Bounded service-
-  // specific health checks over a safe local-service allowlist; never returns
-  // secrets/DSNs/raw env. Console links follow the ADR-ACT-0233 clickthrough
-  // policy: global-only consoles are emitted ONLY for system-admin viewers.
-  //
-  // No FQDN scope: the payload is platform-global infra, not tenant data. A
-  // tenant-admin must still arrive with tenant context (tenant FQDN) — only a
-  // system-admin may read it from the apex host.
+  // hardened ADR-ACT-0235/0236). Read-only, tenant.platform.read. Bounded
+  // service-specific health checks over a safe local-service allowlist; never
+  // returns secrets/DSNs/raw env. Console links follow the ADR-ACT-0233
+  // clickthrough policy under EXPLICIT host authority (resolveReadinessAccess):
+  //   - tenant-resolved FQDN → tenant_operator view (every viewer, including a
+  //     system-admin without support escalation — documented downgrade policy)
+  //   - system-admin on the APEX host → system_operator view (global links)
+  //   - system-admin on reserved/unknown/unresolved hosts → REFUSED; "no
+  //     tenant context" never means "safe global context"
+  // No pipeline FQDN scope: the handler enforces the matrix above itself.
   // ---------------------------------------------------------------------------
   {
     method: "GET",
@@ -3892,13 +3913,27 @@ export const routes: Route[] = [
     resource: "admin:platform",
     umaScope: "read" as const,
     handler: async (req, res) => {
-      const viewerIsSystemAdmin = req.actor!.roles.includes("system-admin");
+      const { buildPlatformServicesReadiness, resolveReadinessAccess } =
+        await import("../usecases/platform-services.ts");
+      const host = requestHostFromHeaders(req.raw);
+      const identity = classifyHostIdentity(host, process.env["APEX_DOMAIN"] ?? "aldous.info");
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
-      if (!tenantCtx && !viewerIsSystemAdmin) {
+      const access = resolveReadinessAccess({
+        isSystemAdmin: req.actor!.roles.includes("system-admin"),
+        hostKind: identity.kind,
+        tenantResolved: tenantCtx !== null,
+      });
+      if (access.kind === "no_tenant") {
         res.json(400, { code: "NO_TENANT", message: "No tenant context" });
         return;
       }
-      const { buildPlatformServicesReadiness } = await import("../usecases/platform-services.ts");
+      if (access.kind === "invalid_operations_origin") {
+        res.json(403, {
+          code: "INVALID_OPERATIONS_ORIGIN",
+          message: "Operator readiness is only served on the apex host or a tenant FQDN",
+        });
+        return;
+      }
       const { getWorkerHeartbeat } = await import("./worker-registry.ts");
       const pool = getApplicationPool();
       const readiness = await buildPlatformServicesReadiness({
@@ -3908,7 +3943,10 @@ export const routes: Route[] = [
               method: "GET",
               signal: AbortSignal.timeout(1500),
             });
-            const body = ((await response.text().catch(() => "")) || "").slice(0, 4096);
+            // 64KB cap: large enough for full structured health bodies (the
+            // Keycloak discovery document is >4KB — truncating it would break
+            // its JSON check and fake a degraded state), small enough to bound.
+            const body = ((await response.text().catch(() => "")) || "").slice(0, 65536);
             return { statusCode: response.status, body };
           } catch {
             return null;
@@ -3923,7 +3961,8 @@ export const routes: Route[] = [
           }
         },
         redisConfigured: () => !!process.env["REDIS_URL"],
-        viewerIsSystemAdmin,
+        viewerMode: access.viewerMode,
+        tenantHost: access.viewerMode === "tenant_operator" ? host : null,
         getHeartbeat: getWorkerHeartbeat,
       });
       res.json(200, readiness);
@@ -4123,6 +4162,13 @@ export const routes: Route[] = [
         res.json(400, { code: "VALIDATION_ERROR", message: result.message });
         return;
       }
+      if (result.kind === "domain_already_claimed") {
+        res.json(409, {
+          code: "DOMAIN_ALREADY_CLAIMED",
+          message: "This domain is already claimed by another organisation",
+        });
+        return;
+      }
       res.json(201, { txtRecord: result.txtRecord, token: result.token });
     },
   },
@@ -4166,6 +4212,13 @@ export const routes: Route[] = [
       }
       if (result.kind === "already_verified") {
         res.json(200, { status: "already_verified" });
+        return;
+      }
+      if (result.kind === "domain_already_claimed") {
+        res.json(409, {
+          code: "DOMAIN_ALREADY_CLAIMED",
+          message: "This domain is already claimed by another organisation",
+        });
         return;
       }
       if (result.kind === "dns_not_found" || result.kind === "dns_mismatch") {

@@ -41,14 +41,25 @@ export interface TenantDomainRecord {
   disabledAt: Date | null;
 }
 
+/**
+ * Outcome of ensuring an enabled registry row (ADR-ACT-0236). Cross-tenant
+ * conflict is EXPLICIT — callers must surface it (409 DOMAIN_ALREADY_CLAIMED),
+ * never swallow it into a silent no-op or a later not_found.
+ */
+export type EnsurePendingResult =
+  | { kind: "created" }
+  | { kind: "existing_same_tenant" }
+  | { kind: "conflict_other_tenant" };
+
 export interface TenantDomainRegistryPort {
   /** Enabled (not disabled) domains for the tenant, ordered by domain. */
   listDomains(organisationId: string): Promise<TenantDomainRecord[]>;
   /** A single enabled domain row for the tenant, or null. */
   getDomain(organisationId: string, domain: string): Promise<TenantDomainRecord | null>;
   /** Ensure an enabled row exists (pending ownership). Never downgrades an
-   * existing row; never steals a domain enabled for another tenant. */
-  ensurePending(organisationId: string, domain: string): Promise<void>;
+   * existing row; never steals a domain enabled for another tenant. Reports
+   * whether the row was created, already ours, or owned by another tenant. */
+  ensurePending(organisationId: string, domain: string): Promise<EnsurePendingResult>;
   /** Record the DNS-TXT verification outcome. */
   markOwnership(
     organisationId: string,

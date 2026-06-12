@@ -136,7 +136,9 @@ function AddDomainCard() {
           />
           {addDomain.isError && (
             <p role="alert" className="text-sm text-danger" data-testid="admin-domains-add-error">
-              {t("feature.admin.domains.addError")}
+              {(addDomain.error as { code?: string }).code === "DOMAIN_ALREADY_CLAIMED"
+                ? t("feature.admin.domains.addConflictError")
+                : t("feature.admin.domains.addError")}
             </p>
           )}
           <div className="flex items-center gap-2">
@@ -307,7 +309,16 @@ function DomainRow({ domain, canWrite }: { domain: TenantDomainSummary; canWrite
       </td>
       <td className="py-2 pr-4" data-testid={`admin-domains-canonical-${domain.domain}`}>
         {domain.canonical ? (
-          <Badge variant="default">{t("feature.admin.domains.canonicalBadge")}</Badge>
+          <div className="space-y-1">
+            <Badge variant="default">{t("feature.admin.domains.canonicalBadge")}</Badge>
+            {/* Canonical is a marker only — make the no-redirect truth unmissable. */}
+            <p
+              className="text-xs text-fg-muted"
+              data-testid={`admin-domains-canonical-note-${domain.domain}`}
+            >
+              {t("feature.admin.domains.canonicalNoRedirect")}
+            </p>
+          </div>
         ) : (
           <span className="text-xs text-fg-muted">—</span>
         )}

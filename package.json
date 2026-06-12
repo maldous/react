@@ -178,7 +178,8 @@
     "proof:tenant-custom-domain-resolution": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
     "proof:tenant-domain-canonical": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
     "proof:tenant-custom-domain-auth-origin": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
-    "proof:service-clickthrough-policy": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts"
+    "proof:service-clickthrough-policy": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
+    "proof:tenant-domain-claim-lifecycle": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "3.1056.0",

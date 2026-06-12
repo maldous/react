@@ -39,7 +39,8 @@ async function main(): Promise<void> {
   const httpProbe = async (url: string): Promise<HttpProbeResult | null> => {
     try {
       const response = await fetch(url, { method: "GET", signal: AbortSignal.timeout(2000) });
-      const body = ((await response.text().catch(() => "")) || "").slice(0, 4096);
+      // 64KB cap — must hold the FULL Keycloak discovery document (see routes.ts).
+      const body = ((await response.text().catch(() => "")) || "").slice(0, 65536);
       return { statusCode: response.status, body };
     } catch {
       return null;
@@ -58,7 +59,7 @@ async function main(): Promise<void> {
       httpProbe,
       pgProbe,
       redisConfigured: () => !!process.env["REDIS_URL"],
-      viewerIsSystemAdmin: true, // operator view — all exposed console links present
+      viewerMode: "system_operator", // operator view — all exposed console links present
       getHeartbeat: () => null, // standalone proof: no running worker process
     });
 
@@ -99,26 +100,34 @@ async function main(): Promise<void> {
       readiness.services.find((s) => s.key === "wiremock")?.consoleUrl === null
     );
 
-    // Console gating (ADR-ACT-0235): the same registry rendered for a TENANT-ADMIN
-    // viewer must withhold every global-only console link.
+    // Console gating (ADR-ACT-0235/0236): the same registry rendered for a
+    // TENANT-OPERATOR viewer must withhold every global-only console link and
+    // emit the ROUTED tenant-origin Keycloak path (never a direct local port).
     const tenantView = await buildPlatformServicesReadiness({
       httpProbe,
       pgProbe,
       redisConfigured: () => !!process.env["REDIS_URL"],
-      viewerIsSystemAdmin: false,
+      viewerMode: "tenant_operator",
+      tenantHost: "acme.aldous.info",
       getHeartbeat: () => null,
     });
     const leaked = tenantView.services.filter(
       (s) => s.consoleAccess !== "tenant_safe" && s.consoleUrl !== null
     );
     check(
-      "tenant-admin view withholds ALL global-only console links (pgAdmin/MinIO/Grafana/…)",
+      "tenant-operator view withholds ALL global-only console links (pgAdmin/MinIO/Grafana/…)",
       leaked.length === 0,
       leaked.map((s) => s.key).join(",")
     );
+    const kc = tenantView.services.find((s) => s.key === "keycloak");
     check(
-      "tenant-admin view keeps the tenant-safe Keycloak link",
-      tenantView.services.find((s) => s.key === "keycloak")?.consoleUrl !== null
+      "tenant-operator Keycloak link is the ROUTED tenant-origin path",
+      kc?.consoleUrl === "http://acme.aldous.info/kc" && kc.consoleUrlKind === "routed",
+      kc?.consoleUrl ?? "null"
+    );
+    check(
+      "tenant-operator payload declares viewerMode",
+      tenantView.viewerMode === "tenant_operator"
     );
   } catch (err) {
     check("platform services readiness", false, err instanceof Error ? err.message : String(err));
