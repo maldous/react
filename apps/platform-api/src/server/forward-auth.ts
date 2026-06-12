@@ -29,7 +29,7 @@
 import crypto from "node:crypto";
 import pg from "pg";
 import type { PipelineHandler } from "./pipeline.ts";
-import { isSlugReserved } from "@platform/domain-identity";
+import { extractSlugFromHost as sharedExtractSlugFromHost } from "./tenant-resolver.ts";
 import { parseSessionCookie } from "./auth.ts";
 import { getSessionStore, getPostgresAppUrl } from "./dependencies.ts";
 import { getFixtureSession } from "./session.ts";
@@ -99,13 +99,11 @@ async function resolveSlugForTenant(tenantId: string): Promise<string | null> {
   }
 }
 
+// Shared with the pipeline resolver (ADR-ACT-0231): port-stripping, slug regex
+// validation, and reserved-slug rejection are identical on both paths — the
+// previous private copy here had drifted (no port strip, no charset check).
 function extractSlugFromHost(host: string): string | null {
-  // host must end with .<APEX_DOMAIN> or be APEX_DOMAIN exactly
-  if (!host.endsWith(`.${APEX_DOMAIN}`) && host !== APEX_DOMAIN) return null;
-  if (host === APEX_DOMAIN) return null; // super-global root, no tenant slug
-  const slug = host.slice(0, host.length - APEX_DOMAIN.length - 1);
-  if (slug.length > 0 && isSlugReserved(slug)) return null;
-  return slug.length > 0 ? slug : null;
+  return sharedExtractSlugFromHost(host, APEX_DOMAIN);
 }
 
 // ---------------------------------------------------------------------------

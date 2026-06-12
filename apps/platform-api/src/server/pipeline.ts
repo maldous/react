@@ -21,7 +21,12 @@ import {
   resolveAccessToken,
 } from "./dependencies.ts";
 import { serverT } from "./i18n.ts";
-import { resolveTenantFromRequest, type TenantContext } from "./tenant-resolver.ts";
+import {
+  resolveTenantFromRequest,
+  requestHostFromHeaders,
+  isApexSubdomain,
+  type TenantContext,
+} from "./tenant-resolver.ts";
 
 // Test-only injection seam. Production callers never pass this.
 export interface RouterTestDeps {
@@ -456,6 +461,24 @@ export function createRouter(
       // "tenant" routes require a tenant resolved from FQDN.
       // Fixture mode skips FQDN resolution so scope checks are also skipped.
       if (!isFixtureMode) {
+        // ADR-ACT-0231 hardening: global routes must reject ANY subdomain of the
+        // apex zone — including reserved and unknown subdomains that resolve no
+        // tenant. Those hosts share the apex cookie scope and the wildcard Caddy
+        // vhost, so treating them as the global host would let global-only APIs
+        // be driven from non-apex origins. Non-apex hosts (e.g. direct localhost
+        // access to the API) are unaffected.
+        if (matchingRoute.scope === "global" && isApexSubdomain(requestHostFromHeaders(req))) {
+          const err = new ForbiddenError("api.error.permissionRequired", {
+            safeDetails: { permission: "platform:global-host-required" },
+          });
+          jsonResponse(
+            res,
+            403,
+            toSafeResponse(err, (m) => serverT(m, { permission: "global host" })),
+            requestId
+          );
+          return;
+        }
         if (matchingRoute.scope === "global" && fqdnTenant !== null) {
           const err = new ForbiddenError("api.error.permissionRequired", {
             safeDetails: { permission: "platform:global-host-required" },

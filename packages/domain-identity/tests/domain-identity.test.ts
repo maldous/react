@@ -16,6 +16,7 @@ import {
   validateTenantUsername,
   canTransitionMembershipStatus,
   MEMBERSHIP_STATUSES,
+  classifyHostIdentity,
   type Membership,
 } from "../src/index.ts";
 
@@ -428,5 +429,99 @@ describe("canTransitionMembershipStatus (ADR-ACT-0206)", () => {
   it("rejects illegal transitions (active/disabled → invited)", () => {
     assert.equal(canTransitionMembershipStatus("active", "invited"), false);
     assert.equal(canTransitionMembershipStatus("disabled", "invited"), false);
+  });
+});
+
+describe("classifyHostIdentity (ADR-ACT-0231)", () => {
+  const apex = "aldous.info";
+
+  it("classifies the apex itself", () => {
+    assert.deepEqual(classifyHostIdentity("aldous.info", apex), {
+      kind: "apex",
+      hostname: "aldous.info",
+      port: null,
+      slug: null,
+    });
+  });
+
+  it("classifies the apex with a port (port stripped, retained)", () => {
+    const id = classifyHostIdentity("aldous.info:8081", apex);
+    assert.equal(id.kind, "apex");
+    assert.equal(id.port, "8081");
+  });
+
+  it("classifies a valid tenant slug subdomain", () => {
+    const id = classifyHostIdentity("acme-corp.aldous.info", apex);
+    assert.equal(id.kind, "tenant_slug");
+    assert.equal(id.slug, "acme-corp");
+  });
+
+  it("classifies a tenant slug with port", () => {
+    const id = classifyHostIdentity("acme.test.localhost:8081", "test.localhost");
+    assert.equal(id.kind, "tenant_slug");
+    assert.equal(id.slug, "acme");
+    assert.equal(id.port, "8081");
+  });
+
+  it("classifies reserved subdomains", () => {
+    for (const reserved of ["kc", "admin", "api", "staging", "pgadmin", "aldous"]) {
+      assert.equal(
+        classifyHostIdentity(`${reserved}.aldous.info`, apex).kind,
+        "reserved_subdomain",
+        `${reserved} must classify reserved`
+      );
+    }
+  });
+
+  it("classifies dotted (multi-level) subdomains as invalid", () => {
+    assert.equal(classifyHostIdentity("a.b.aldous.info", apex).kind, "invalid_subdomain");
+  });
+
+  it("classifies hosts outside the apex zone as custom domain candidates", () => {
+    assert.equal(classifyHostIdentity("app.mycorp.example", apex).kind, "custom_domain_candidate");
+    assert.equal(classifyHostIdentity("localhost", apex).kind, "custom_domain_candidate");
+    // suffix-similarity does not leak into the apex zone
+    assert.equal(classifyHostIdentity("evilaldous.info", apex).kind, "custom_domain_candidate");
+  });
+
+  it("lowercases hostnames", () => {
+    const id = classifyHostIdentity("App.MyCorp.Example", apex);
+    assert.equal(id.hostname, "app.mycorp.example");
+  });
+
+  it("classifies malformed hosts", () => {
+    for (const bad of [
+      "",
+      "  ",
+      "bad host",
+      "-leading.aldous.info",
+      "x..y",
+      "a:b:c",
+      "host:port",
+      "a".repeat(254),
+    ]) {
+      assert.equal(
+        classifyHostIdentity(bad, apex).kind,
+        "malformed",
+        `"${bad}" must classify malformed`
+      );
+    }
+  });
+
+  it("never returns a slug for non-tenant kinds", () => {
+    for (const host of ["aldous.info", "kc.aldous.info", "a.b.aldous.info", "other.example", ""]) {
+      assert.equal(classifyHostIdentity(host, apex).slug, null);
+    }
+  });
+
+  it("staging apex: production subdomains are outside the staging zone", () => {
+    assert.equal(
+      classifyHostIdentity("tenant1.aldous.info", "staging.aldous.info").kind,
+      "custom_domain_candidate"
+    );
+    assert.equal(
+      classifyHostIdentity("tenant1.staging.aldous.info", "staging.aldous.info").kind,
+      "tenant_slug"
+    );
   });
 });

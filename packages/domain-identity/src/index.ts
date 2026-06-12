@@ -306,6 +306,86 @@ export function isSlugReserved(slug: string): boolean {
   return RESERVED_SLUGS.has(slug);
 }
 
+// ---------------------------------------------------------------------------
+// Host identity ? ADR-ACT-0231
+//
+// Host identity is a first-class domain concept, distinct from organisation
+// identity. Every inbound Host (or X-Forwarded-Host) value classifies into
+// exactly one of these kinds. The classifier is PURE: it never touches DNS,
+// the database, or the environment ? the apex domain is a parameter. Callers
+// (tenant resolver, pipeline scope enforcement, forward-auth) decide what each
+// kind may do; this module only names what the host IS.
+// ---------------------------------------------------------------------------
+
+export type HostIdentityKind =
+  /** The configured apex itself ? the global/system host. */
+  | "apex"
+  /** `{slug}.{apex}` with a well-formed, non-reserved slug. May resolve to a tenant. */
+  | "tenant_slug"
+  /** `{slug}.{apex}` where the slug is reserved (tool/environment names). Never a tenant. */
+  | "reserved_subdomain"
+  /** A subdomain of the apex that can never be a tenant slug (dotted/invalid label). */
+  | "invalid_subdomain"
+  /** A syntactically valid hostname outside the apex zone ? possibly a registered
+   * custom tenant domain; resolution against the domain registry decides. */
+  | "custom_domain_candidate"
+  /** Not a parseable hostname (empty, illegal characters, bad labels, IP-like noise). */
+  | "malformed";
+
+export interface HostIdentity {
+  kind: HostIdentityKind;
+  /** Lowercased hostname with any `:port` suffix removed. Empty when malformed. */
+  hostname: string;
+  /** The port suffix when one was present (e.g. "8081"), else null. */
+  port: string | null;
+  /** The tenant slug ? non-null only for kind === "tenant_slug". */
+  slug: string | null;
+}
+
+const HOSTNAME_LABEL_RE = /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/;
+const SLUG_RE = /^[a-z0-9-]+$/;
+
+function isWellFormedHostname(hostname: string): boolean {
+  if (hostname.length === 0 || hostname.length > 253) return false;
+  return hostname.split(".").every((label) => HOSTNAME_LABEL_RE.test(label));
+}
+
+/**
+ * Classify a raw Host header value against the apex domain. Pure; total
+ * (every input maps to exactly one kind). Port suffixes are stripped before
+ * matching ? consistent with the resolver behaviour proven in ADR-ACT-0225.
+ */
+export function classifyHostIdentity(rawHost: string, apexDomain: string): HostIdentity {
+  const trimmed = (rawHost ?? "").trim().toLowerCase();
+  const malformed: HostIdentity = { kind: "malformed", hostname: "", port: null, slug: null };
+  if (trimmed.length === 0) return malformed;
+
+  const colonIdx = trimmed.indexOf(":");
+  const hostname = colonIdx === -1 ? trimmed : (trimmed.slice(0, colonIdx) ?? "");
+  const portPart = colonIdx === -1 ? null : trimmed.slice(colonIdx + 1);
+  // A port suffix, when present, must be purely numeric (rejects IPv6 literals
+  // and header smuggling like "host:port:junk" ? neither is a tenant host).
+  const port = portPart === null ? null : /^\d{1,5}$/.test(portPart) ? portPart : null;
+  if (portPart !== null && port === null) return malformed;
+  if (!isWellFormedHostname(hostname)) return malformed;
+
+  const apex = apexDomain.toLowerCase();
+  if (hostname === apex) return { kind: "apex", hostname, port, slug: null };
+
+  if (hostname.endsWith(`.${apex}`)) {
+    const prefix = hostname.slice(0, hostname.length - apex.length - 1);
+    if (!SLUG_RE.test(prefix)) {
+      return { kind: "invalid_subdomain", hostname, port, slug: null };
+    }
+    if (isSlugReserved(prefix)) {
+      return { kind: "reserved_subdomain", hostname, port, slug: null };
+    }
+    return { kind: "tenant_slug", hostname, port, slug: prefix };
+  }
+
+  return { kind: "custom_domain_candidate", hostname, port, slug: null };
+}
+
 // Validates that an Organisation slug is well-formed and not reserved
 export function validateOrganisationSlug(slug: string): string[] {
   const errors: string[] = [];

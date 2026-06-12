@@ -297,11 +297,21 @@ describe("checkResourceAccess — GLOBAL_ONLY services (tenant-admin must be den
     "admin:pgadmin",
     "admin:minio",
     "admin:sonarqube",
-    "admin:wiremock",
     "admin:clickhouse",
     "admin:localstack",
     "admin:tilt",
   ];
+
+  it("admin:wiremock is NOT_EXPOSED — denied even to system-admin (direct port only)", () => {
+    assert.ok(
+      !checkResourceAccess({
+        roles: ["system-admin"],
+        resource: "admin:wiremock",
+        requestedSlug: null,
+        ownSlug: null,
+      })
+    );
+  });
 
   for (const service of globalOnlyServices) {
     it(`tenant-admin denied ${service} on own slug`, () => {

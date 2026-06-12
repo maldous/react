@@ -1,18 +1,27 @@
 /**
- * Tenant resolution from FQDN ? ADR-0029 ?1
+ * Tenant resolution from FQDN ? ADR-0029 ?1, ADR-ACT-0231
  *
  * Resolves the active tenant from the HTTP Host header. Used by both the
  * main request pipeline (to verify session tenant matches FQDN tenant) and
  * the auth flow (to select the correct Keycloak realm per tenant).
  *
- * Security: the slug derived from the Host header is always verified against
- * the database ? a forged header resolves to no tenant and is rejected.
+ * Host identity (classifyHostIdentity, @platform/domain-identity) is the
+ * single classification step; this module maps host identities to tenants:
+ *   tenant_slug             ? organisations.slug lookup
+ *   custom_domain_candidate ? tenant_domains registry lookup (ADR-ACT-0231):
+ *                             resolves ONLY when ownership is DNS-verified AND
+ *                             the auth client is activated AND not disabled.
+ *   apex / reserved / invalid / malformed ? never a tenant.
+ *
+ * Security: every host-derived identifier is verified against the database ?
+ * a forged header resolves to no tenant and is rejected. Request bodies never
+ * confer tenant authority.
  */
 
 import type { IncomingMessage } from "node:http";
 import pg from "pg";
 
-import { isSlugReserved } from "@platform/domain-identity";
+import { classifyHostIdentity } from "@platform/domain-identity";
 
 const APEX_DOMAIN = process.env["APEX_DOMAIN"] ?? "aldous.info";
 
@@ -21,22 +30,17 @@ export interface TenantContext {
   organisationId: string;
   /** Keycloak realm name for this tenant: "tenant-{organisationId}" */
   realmName: string;
+  /** Which host identity resolved this tenant (ADR-ACT-0231). */
+  hostSource: "slug" | "custom_domain";
 }
 
 /**
  * Extract the tenant slug from a hostname.
  * Returns null for the super-global root (aldous.info) or non-matching hosts.
+ * Ports are stripped before matching (ADR-ACT-0225).
  */
 export function extractSlugFromHost(host: string, apexDomain = APEX_DOMAIN): string | null {
-  // Strip any port (e.g. `{slug}.test.localhost:8081` in local/test on a non-standard
-  // port) before matching — consistent with isGlobalHost. Production (:80/:443 via
-  // Cloudflare) sends no port, so this is a no-op there. ADR-ACT-0225.
-  const bare = host.split(":")[0] ?? host;
-  if (!bare.endsWith(`.${apexDomain}`) && bare !== apexDomain) return null;
-  if (bare === apexDomain) return null;
-  const slug = bare.slice(0, bare.length - apexDomain.length - 1);
-  if (isSlugReserved(slug)) return null;
-  return slug.length > 0 && /^[a-z0-9-]+$/.test(slug) ? slug : null;
+  return classifyHostIdentity(host, apexDomain).slug;
 }
 
 /**
@@ -49,8 +53,34 @@ export function extractSlugFromHost(host: string, apexDomain = APEX_DOMAIN): str
  * never served by a single runtime instance.
  */
 export function isGlobalHost(host: string, apexDomain = APEX_DOMAIN): boolean {
-  const bare = host.split(":")[0] ?? host; // strip port if present
-  return bare === apexDomain;
+  return classifyHostIdentity(host, apexDomain).kind === "apex";
+}
+
+/**
+ * Returns true when the host is a subdomain of the apex zone — tenant slug,
+ * reserved, or invalid. Global-only routes must reject these hosts even when
+ * no tenant resolves (ADR-ACT-0231 hardening): an unknown/reserved subdomain
+ * shares the apex cookie scope and the wildcard Caddy vhost, so it must never
+ * be treated as the global host.
+ */
+export function isApexSubdomain(host: string, apexDomain = APEX_DOMAIN): boolean {
+  const kind = classifyHostIdentity(host, apexDomain).kind;
+  return kind === "tenant_slug" || kind === "reserved_subdomain" || kind === "invalid_subdomain";
+}
+
+/**
+ * Derive the effective request host: X-Forwarded-Host (set by the trusted
+ * Caddy/Cloudflare proxy chain — see Caddyfile trusted_proxies) preferred over
+ * the raw Host header, comma-split to the first hop. Shared by the pipeline,
+ * the auth flow, and the resolver so every consumer sees the same host.
+ */
+export function requestHostFromHeaders(req: IncomingMessage): string {
+  const rawForwardedHost = req.headers["x-forwarded-host"];
+  const rawHost = req.headers["host"] ?? "";
+  const hostValue =
+    (Array.isArray(rawForwardedHost) ? (rawForwardedHost[0] ?? "") : (rawForwardedHost ?? "")) ||
+    (Array.isArray(rawHost) ? (rawHost[0] ?? "") : rawHost);
+  return hostValue.split(",")[0]?.trim() ?? "";
 }
 
 /**
@@ -73,35 +103,69 @@ export async function resolveOrganisationBySlug(
 }
 
 /**
+ * Resolve an ACTIVE custom domain to its organisation (ADR-ACT-0231).
+ * A custom domain resolves only when its lifecycle row is DNS-ownership
+ * verified AND auth-client activated AND not disabled — a verified-but-not-
+ * activated domain deliberately does NOT serve tenant traffic.
+ */
+export async function resolveOrganisationByActiveCustomDomain(
+  pool: pg.Pool,
+  domain: string
+): Promise<{ id: string; slug: string } | null> {
+  try {
+    const { rows } = await pool.query<{ id: string; slug: string }>(
+      `SELECT o.id, o.slug
+         FROM public.tenant_domains td
+         JOIN public.organisations o ON o.id = td.organisation_id
+        WHERE td.domain = $1
+          AND td.ownership_status = 'verified'
+          AND td.auth_client_status = 'active'
+          AND td.disabled_at IS NULL
+        LIMIT 1`,
+      [domain]
+    );
+    return rows[0] ?? null;
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Resolve the full tenant context from an HTTP request's Host header.
  * Returns null when:
  *   - The host is the super-global root (aldous.info)
+ *   - The host is a reserved/invalid/malformed subdomain
  *   - The slug does not exist in the database
- *   - The host does not match the apex domain
+ *   - The host is a custom domain that is not verified+activated in the registry
  */
 export async function resolveTenantFromRequest(
   req: IncomingMessage,
   pool: pg.Pool
 ): Promise<TenantContext | null> {
-  // Prefer X-Forwarded-Host (set by the external Caddy reverse-proxy to the
-  // original client host) over the raw Host header (which Caddy may rewrite to
-  // the upstream address when proxying between internal services).
-  const rawForwardedHost = req.headers["x-forwarded-host"];
-  const rawHost = req.headers["host"] ?? "";
-  const hostValue =
-    (Array.isArray(rawForwardedHost) ? (rawForwardedHost[0] ?? "") : (rawForwardedHost ?? "")) ||
-    (Array.isArray(rawHost) ? (rawHost[0] ?? "") : rawHost);
-  // X-Forwarded-Host can be comma-separated (multiple proxies); take the first.
-  const host = hostValue.split(",")[0]?.trim() ?? "";
-  const slug = extractSlugFromHost(host);
-  if (!slug) return null;
+  const host = requestHostFromHeaders(req);
+  const identity = classifyHostIdentity(host, APEX_DOMAIN);
 
-  const org = await resolveOrganisationBySlug(pool, slug);
-  if (!org) return null;
+  if (identity.kind === "tenant_slug" && identity.slug) {
+    const org = await resolveOrganisationBySlug(pool, identity.slug);
+    if (!org) return null;
+    return {
+      slug: org.slug,
+      organisationId: org.id,
+      realmName: `tenant-${org.id}`,
+      hostSource: "slug",
+    };
+  }
 
-  return {
-    slug,
-    organisationId: org.id,
-    realmName: `tenant-${org.id}`,
-  };
+  if (identity.kind === "custom_domain_candidate") {
+    const org = await resolveOrganisationByActiveCustomDomain(pool, identity.hostname);
+    if (!org) return null;
+    return {
+      slug: org.slug,
+      organisationId: org.id,
+      realmName: `tenant-${org.id}`,
+      hostSource: "custom_domain",
+    };
+  }
+
+  return null;
 }
