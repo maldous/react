@@ -366,13 +366,18 @@
         "readinessHeading": "Observability status",
         "logIngestionLabel": "Log ingestion",
         "tenantQueryLabel": "Tenant-scoped query",
+        "metricsLabel": "Metrics",
         "traceLabel": "Trace correlation",
+        "otelLabel": "OTel collector",
+        "dashboardsLabel": "Dashboards (Grafana)",
+        "errorCaptureLabel": "Error capture (Sentry)",
         "guardLabel": "High-cardinality label guard",
         "guardIntact": "Intact",
         "guardRegressed": "Regressed",
         "signal": {
           "ok": "OK",
           "unreachable": "Unreachable",
+          "not_configured": "Not configured",
           "not_applicable": "Not applicable",
           "unknown": "Unknown"
         },

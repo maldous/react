@@ -55,7 +55,16 @@ A per-tenant observability readiness layer over the existing Loki log-search plu
 `apps/platform-api/scripts/tenant-observability-runtime-proof.ts`
 (`npm run proof:tenant-observability`).
 
-Executed output (local Loki @ `http://localhost:3100`, dev profile, 2026-06-12):
+**Update (ADR-ACT-0224):** the readiness response now also carries honest reachability
+signals for the surrounding observability infra — `metrics`, `otelCollector`,
+`dashboards` (Grafana), `errorCapture` (Sentry) — each probed with a bounded GET. URLs
+derive from the per-env `GRAFANA_PORT` / `OTEL_HEALTH_PORT`. A service that is not wired
+is `not_configured`; one with no local backend is `not_applicable` — never `ok`. These
+signals are informational: they are surfaced but do NOT downgrade the core status (driven
+by logs + the label guard).
+
+Executed output (dev profile; Loki @ `:3100`, Grafana @ `:3200`, OTel health @ `:13133`;
+no Prometheus, no Sentry DSN; 2026-06-12):
 
 ```text
 # Tenant observability runtime proof
@@ -65,31 +74,42 @@ PASS  ingestion+tenant ok + guard → configured
 PASS  ingestion unreachable → provider_unreachable
 PASS  live Loki probe reachable @ http://localhost:3100 — status=configured ingestion=ok tenantQuery=ok
 PASS  trace correlation honestly not_applicable
+INFO  infra signals: dashboards=ok otel=ok metrics=not_applicable errorCapture=not_configured
+PASS  Grafana dashboards reachable (or honestly not_configured)
+PASS  OTel collector reachable (or honestly not_configured)
+PASS  metrics honestly not_applicable/not_configured (no local Prometheus)
+PASS  error-capture honestly not_configured/ok (Sentry DSN-gated)
 
 # ALL CHECKS PASSED
 ```
 
 ## Proven live vs unit/MSW only
 
-- Live-proven (against Loki): bounded ingestion + tenant-scoped query reachability →
-  `configured`.
-- Unit-proven (`node:test`): the label-hygiene guard, the classifier (all branches), and
-  the probe success/failure/degraded semantics via a fake port.
-- MSW-proven (frontend): the `/admin/observability` panel render/degraded/error + axe.
-- NOT proven (honestly deferred): trace/log correlation (`not_applicable`), metrics
-  readiness, and dashboard link metadata.
+- **Live-proven (against the local stack):** bounded Loki ingestion + tenant-scoped query
+  (`configured`); **Grafana** dashboards reachability (`ok` @ :3200); **OTel collector**
+  health reachability (`ok` @ :13133).
+- **Honestly classified as NOT ready (live):** `metrics` → `not_applicable` (no local
+  Prometheus); `errorCapture` → `not_configured` (no Sentry DSN). Never reported `ok`.
+- Unit-proven (`node:test`): the label-hygiene guard, the classifier (all branches), probe
+  success/failure/degraded semantics, and that infra signals are surfaced without
+  downgrading the core status.
+- MSW-proven (frontend): the `/admin/observability` panel renders all signal rows + axe.
+- NOT proven (honestly deferred): trace/log correlation (`not_applicable` — no trace
+  backend like Tempo locally) and a real metrics backend.
 
 ## Capability map changes
 
-`observability`: stays **partial** (logs readiness implemented; traces/dashboards/metrics
-deferred) but gains `readinessKind: "tenant-observability"`, `adminRoute:
-/admin/observability`, `requiredPermission: tenant.observability.read`, and a new bounded
-`observabilityReadiness` signal in `/api/org/readiness`. Optional → never blocks overall.
+`observability`: stays **partial** — logs readiness + Grafana/OTel reachability are
+live-proven, but traces and metrics have no local backend (`not_applicable`), so the
+capability is honestly not yet fully `implemented`. Gains the extra infra signals in the
+readiness response; `readinessKind: "tenant-observability"`; the aggregate
+`observabilityReadiness` signal (logs-driven) is unchanged.
 
 ## Known deferrals
 
-- Trace/log correlation readiness (`traceCorrelation` is `not_applicable`).
-- Metrics readiness and per-tenant dashboard link metadata.
+- Trace/log correlation readiness — needs a trace backend (e.g. Tempo); `not_applicable`.
+- A real metrics backend (e.g. Prometheus) — `not_applicable` until `PROMETHEUS_URL` set.
+- Live Sentry error-capture — `not_configured` until a `SENTRY_DSN` is wired + reachable.
 
 ## No-leak guarantee
 

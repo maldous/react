@@ -47,10 +47,25 @@ export interface ObservabilityProbePort {
   search(query: LogSearchQuery): Promise<LogSearchResult>;
 }
 
+/**
+ * Honest reachability probes for the surrounding observability infra. Each returns a
+ * signal status; the route wires real timeout-bounded HTTP probes, tests inject fakes.
+ * A service that is not wired returns `not_configured`; one with no local backend
+ * returns `not_applicable` — never `ok`.
+ */
+export interface ObservabilityInfraProbes {
+  probeMetrics(): Promise<ObservabilitySignalStatus>;
+  probeOtelCollector(): Promise<ObservabilitySignalStatus>;
+  probeDashboards(): Promise<ObservabilitySignalStatus>;
+  probeErrorCapture(): Promise<ObservabilitySignalStatus>;
+}
+
 export interface ObservabilityReadinessDeps {
   organisationId: string;
   /** A bounded log-query port (the route wires a timeout-guarded Loki adapter). */
   port: ObservabilityProbePort;
+  /** Optional infra reachability probes; omitted in minimal/unit contexts. */
+  infra?: ObservabilityInfraProbes;
   /** Current time; injected for deterministic tests. */
   now?: Date;
 }
@@ -96,12 +111,34 @@ export async function getTenantObservabilityReadiness(
 
   const status = classifyObservability({ logIngestion, tenantScopedQuery, highCardinalityGuard });
 
+  // Surrounding-infra signals are informational (reported, never faked) and do NOT
+  // downgrade the core status below `configured` when logs are healthy — they are
+  // optional infra, surfaced so operators can see what is reachable.
+  const infraSignals: [
+    ObservabilitySignalStatus,
+    ObservabilitySignalStatus,
+    ObservabilitySignalStatus,
+    ObservabilitySignalStatus,
+  ] = deps.infra
+    ? await Promise.all([
+        deps.infra.probeMetrics(),
+        deps.infra.probeOtelCollector(),
+        deps.infra.probeDashboards(),
+        deps.infra.probeErrorCapture(),
+      ])
+    : ["unknown", "unknown", "unknown", "unknown"];
+  const [metrics, otelCollector, dashboards, errorCapture] = infraSignals;
+
   return {
     status,
     logIngestion,
     tenantScopedQuery,
-    // Trace/log correlation is not wired in this pass — honestly not applicable.
+    metrics,
+    // Trace/log correlation needs a trace backend (none locally) — honestly not applicable.
     traceCorrelation: "not_applicable",
+    otelCollector,
+    dashboards,
+    errorCapture,
     highCardinalityGuard,
   };
 }

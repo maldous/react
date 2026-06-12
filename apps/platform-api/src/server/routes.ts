@@ -28,6 +28,7 @@ import {
   CreateWebhookSubscriptionRequestSchema,
   UpdateWebhookSubscriptionRequestSchema,
   type TenantAuthProvidersConfig,
+  type ObservabilitySignalStatus,
 } from "@platform/contracts-admin";
 import {
   getSessionStore,
@@ -37,7 +38,10 @@ import {
   getLokiAdapter,
 } from "./dependencies.ts";
 import { S3ObjectStorageAdapter } from "@platform/adapters-object-storage";
-import type { ObservabilityProbePort } from "../usecases/tenant-observability.ts";
+import type {
+  ObservabilityProbePort,
+  ObservabilityInfraProbes,
+} from "../usecases/tenant-observability.ts";
 import { queryTenantSchema, withTenant } from "@platform/adapters-postgres";
 import { serverT } from "./i18n.ts";
 import { DEFAULT_THEME } from "@platform/authorisation-runtime";
@@ -253,6 +257,47 @@ function buildObservabilityPort(timeoutMs = 2000): ObservabilityProbePort {
           setTimeout(() => reject(new Error("loki probe timeout")), timeoutMs)
         ),
       ]),
+  };
+}
+
+// Honest reachability probes for the surrounding observability infra (ADR-ACT-0224).
+// A bounded GET = reachable (any HTTP response); a network error = unreachable; an
+// unset endpoint = not_configured; no local backend = not_applicable. No secret/DSN
+// is returned — only signal statuses.
+function buildObservabilityInfra(timeoutMs = 1500): ObservabilityInfraProbes {
+  const reach = async (
+    url: string | undefined,
+    naWhenUnset = false
+  ): Promise<ObservabilitySignalStatus> => {
+    if (!url) return naWhenUnset ? "not_applicable" : "not_configured";
+    try {
+      await fetch(url, { method: "GET", signal: AbortSignal.timeout(timeoutMs) });
+      return "ok"; // any HTTP response means the endpoint is reachable
+    } catch {
+      return "unreachable";
+    }
+  };
+  // Derive the local health URLs from the per-env ports already in .env.<env>
+  // (GRAFANA_PORT / OTEL_HEALTH_PORT), overridable by an explicit *_URL.
+  const port = (v: string | undefined): string | undefined =>
+    v ? `http://localhost:${v}` : undefined;
+  const grafanaUrl = process.env["GRAFANA_URL"] ?? port(process.env["GRAFANA_PORT"]);
+  const otelUrl = process.env["OTEL_HEALTH_URL"] ?? port(process.env["OTEL_HEALTH_PORT"]);
+  return {
+    // No Prometheus/metrics backend locally → not_applicable unless PROMETHEUS_URL is set.
+    probeMetrics: () => reach(process.env["PROMETHEUS_URL"], true),
+    probeOtelCollector: () => reach(otelUrl),
+    probeDashboards: () => reach(grafanaUrl ? `${grafanaUrl}/api/health` : undefined),
+    probeErrorCapture: async () => {
+      const dsn = process.env["SENTRY_DSN"];
+      if (!dsn) return "not_configured";
+      try {
+        await fetch(new URL(dsn).origin, { method: "GET", signal: AbortSignal.timeout(timeoutMs) });
+        return "ok";
+      } catch {
+        return "unreachable";
+      }
+    },
   };
 }
 
@@ -3069,6 +3114,7 @@ export const routes: Route[] = [
       const readiness = await getTenantObservabilityReadiness({
         organisationId: tenantCtx.organisationId,
         port: buildObservabilityPort(),
+        infra: buildObservabilityInfra(),
       });
       res.json(200, readiness);
     },

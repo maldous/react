@@ -38,6 +38,31 @@ describe("AdminObservabilityPage (ADR-0050)", () => {
     expect(screen.getByTestId("admin-observability-tenant-query")).not.toBeEmptyDOMElement();
     expect(screen.getByTestId("admin-observability-trace")).not.toBeEmptyDOMElement();
     expect(screen.getByTestId("admin-observability-guard")).toHaveTextContent(/intact/i);
+    // New ADR-ACT-0224 signal rows
+    expect(screen.getByTestId("admin-observability-signal-metrics")).not.toBeEmptyDOMElement();
+    expect(
+      screen.getByTestId("admin-observability-signal-otel-collector")
+    ).not.toBeEmptyDOMElement();
+    expect(screen.getByTestId("admin-observability-signal-dashboards")).not.toBeEmptyDOMElement();
+    expect(
+      screen.getByTestId("admin-observability-signal-error-capture")
+    ).not.toBeEmptyDOMElement();
+  });
+
+  it("renders new signal rows with correct translated values", async () => {
+    server.use(sessionHandler("tenantAdmin"), adminObservabilityReadinessHandler());
+    renderPage();
+    await screen.findByTestId("admin-observability-readiness-badge");
+    // dashboards: "ok" → "OK" (or similar)
+    expect(screen.getByTestId("admin-observability-signal-dashboards")).toHaveTextContent(/ok/i);
+    // metrics: "not_applicable" → "Not applicable"
+    expect(screen.getByTestId("admin-observability-signal-metrics")).toHaveTextContent(
+      /not applicable/i
+    );
+    // errorCapture: "not_configured" → "Not configured"
+    expect(screen.getByTestId("admin-observability-signal-error-capture")).toHaveTextContent(
+      /not configured/i
+    );
   });
 
   it("renders degraded readiness status when the backend reports degraded", async () => {

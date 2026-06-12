@@ -320,6 +320,10 @@ const observabilityReadinessFixture = {
   tenantScopedQuery: "ok",
   traceCorrelation: "not_applicable",
   highCardinalityGuard: true,
+  metrics: "not_applicable",
+  otelCollector: "ok",
+  dashboards: "ok",
+  errorCapture: "not_configured",
 };
 export function adminObservabilityReadinessHandler(
   response: Record<string, unknown> = observabilityReadinessFixture

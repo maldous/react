@@ -119,4 +119,36 @@ describe("getTenantObservabilityReadiness (ADR-0050)", () => {
     assert.equal(r.logIngestion, "ok");
     assert.equal(r.tenantScopedQuery, "unreachable");
   });
+
+  it("surfaces infra signals honestly without downgrading the core status (ADR-ACT-0224)", async () => {
+    const r = await getTenantObservabilityReadiness({
+      organisationId: "org-1",
+      port: okPort(),
+      now: NOW,
+      infra: {
+        probeMetrics: async () => "not_applicable",
+        probeOtelCollector: async () => "ok",
+        probeDashboards: async () => "ok",
+        probeErrorCapture: async () => "not_configured",
+      },
+    });
+    // core status still configured (logs healthy); infra signals reported as-is.
+    assert.equal(r.status, "configured");
+    assert.equal(r.metrics, "not_applicable");
+    assert.equal(r.otelCollector, "ok");
+    assert.equal(r.dashboards, "ok");
+    assert.equal(r.errorCapture, "not_configured");
+  });
+
+  it("omitting infra leaves the extra signals 'unknown' (minimal context)", async () => {
+    const r = await getTenantObservabilityReadiness({
+      organisationId: "org-1",
+      port: okPort(),
+      now: NOW,
+    });
+    assert.equal(r.dashboards, "unknown");
+    assert.equal(r.otelCollector, "unknown");
+    assert.equal(r.metrics, "unknown");
+    assert.equal(r.errorCapture, "unknown");
+  });
 });

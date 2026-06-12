@@ -68,6 +68,30 @@ export function AdminObservabilityPage() {
               testId="admin-observability-trace"
               t={t}
             />
+            <SignalRow
+              label={t("feature.admin.observability.metricsLabel")}
+              signal={data!.metrics}
+              testId="admin-observability-signal-metrics"
+              t={t}
+            />
+            <SignalRow
+              label={t("feature.admin.observability.otelLabel")}
+              signal={data!.otelCollector}
+              testId="admin-observability-signal-otel-collector"
+              t={t}
+            />
+            <SignalRow
+              label={t("feature.admin.observability.dashboardsLabel")}
+              signal={data!.dashboards}
+              testId="admin-observability-signal-dashboards"
+              t={t}
+            />
+            <SignalRow
+              label={t("feature.admin.observability.errorCaptureLabel")}
+              signal={data!.errorCapture}
+              testId="admin-observability-signal-error-capture"
+              t={t}
+            />
             <div className="flex items-center gap-3">
               <dt className="font-medium text-fg">
                 {t("feature.admin.observability.guardLabel")}:

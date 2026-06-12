@@ -688,8 +688,9 @@ export type TenantStorageProbeResult = z.infer<typeof TenantStorageProbeResultSc
 
 export const OBSERVABILITY_SIGNAL_STATUSES = [
   "ok", // the signal was exercised successfully
-  "unreachable", // the backend could not be reached
-  "not_applicable", // intentionally not checked in this pass
+  "unreachable", // the backend is configured but could not be reached
+  "not_configured", // no endpoint/DSN wired for this signal
+  "not_applicable", // intentionally not part of this pass (e.g. no backend exists)
   "unknown",
 ] as const;
 export const ObservabilitySignalStatusSchema = z.enum(OBSERVABILITY_SIGNAL_STATUSES);
@@ -709,16 +710,27 @@ export type TenantObservabilityReadinessStatus = z.infer<
   typeof TenantObservabilityReadinessStatusSchema
 >;
 
-/** `GET /api/org/observability/readiness`. */
+/** `GET /api/org/observability/readiness`. Each signal is probed honestly; a service
+ * that is not wired is `not_configured` and one with no local backend is `not_applicable`
+ * — never `ok`. No log line, trace payload, label value, tenant data, or secret/DSN is
+ * returned. */
 export const TenantObservabilityReadinessResponseSchema = z
   .object({
     status: TenantObservabilityReadinessStatusSchema,
-    /** Whether a bounded log query against the backend succeeded. */
+    /** Whether a bounded log query against the backend succeeded (Loki). */
     logIngestion: ObservabilitySignalStatusSchema,
     /** Whether a bounded tenant-scoped log query succeeded. */
     tenantScopedQuery: ObservabilitySignalStatusSchema,
-    /** Trace/log correlation readiness — `not_applicable` until traces are wired. */
+    /** Whether the metrics backend is reachable (`not_applicable` if none locally). */
+    metrics: ObservabilitySignalStatusSchema,
+    /** Trace/log correlation readiness (`not_applicable` until a trace backend exists). */
     traceCorrelation: ObservabilitySignalStatusSchema,
+    /** Whether the OTel collector health endpoint is reachable. */
+    otelCollector: ObservabilitySignalStatusSchema,
+    /** Whether Grafana (dashboards) is reachable. */
+    dashboards: ObservabilitySignalStatusSchema,
+    /** Whether error-capture (Sentry) is configured + reachable. */
+    errorCapture: ObservabilitySignalStatusSchema,
     /** True when high-cardinality fields stay `| json` filters, not Loki labels. */
     highCardinalityGuard: z.boolean(),
   })
