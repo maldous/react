@@ -587,7 +587,7 @@ services:
         condition: service_healthy
     command: >-
       bash -c "
-        for topic in ingest-events ingest-transactions ingest-attachments ingest-monitors ingest-replays events snuba-commit-log snuba-metrics snuba-generic-metrics snuba-profiles; do
+        for topic in ingest-events ingest-transactions ingest-attachments ingest-monitors ingest-replays events event-replacements snuba-commit-log snuba-metrics snuba-generic-metrics snuba-profiles; do
           kafka-topics --bootstrap-server sentry-kafka:9092 --create --if-not-exists --topic $$topic --partitions 1 --replication-factor 1;
         done"
     restart: "no"

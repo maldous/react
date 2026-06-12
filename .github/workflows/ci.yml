@@ -12,6 +12,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # gitleaks-action scans the push range base^..head — a shallow clone
+          # lacks the base's parent, so gitleaks exits 1 (git fatal) despite
+          # finding no leaks. Full history keeps the secret scan effective.
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
