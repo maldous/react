@@ -29,6 +29,7 @@ export {
   adminStorageReadinessHandler,
   adminStorageProbeHandler,
   adminObservabilityReadinessHandler,
+  adminPlatformServicesHandler,
   adminWebhooksListHandler,
   adminWebhooksReadinessHandler,
   adminWebhooksCreateHandler,

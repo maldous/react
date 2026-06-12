@@ -180,6 +180,7 @@
         "storage": "Storage",
         "observability": "Observability",
         "webhooks": "Webhooks",
+        "platform": "Platform ops",
         "logs": "Log search",
         "readiness": "Readiness"
       },
@@ -192,6 +193,7 @@
         "storageDescription": "Check object-storage readiness and tenant isolation.",
         "observabilityDescription": "Check log ingestion, tenant-scoped query, and label hygiene.",
         "webhooksDescription": "Subscribe endpoints to events with signed, logged deliveries.",
+        "platformDescription": "Local service health, background workers, and the proof ladder.",
         "logsDescription": "Search structured platform logs.",
         "readinessDescription": "See what's configured and what's left to set up."
       },
@@ -454,6 +456,77 @@
           "has_dead_deliveries": "Some deliveries failed permanently — redrive them to retry.",
           "degraded": "Webhook configuration could not be read right now.",
           "unknown": "Webhooks readiness is unknown right now."
+        }
+      },
+      "platform": {
+        "title": "Platform operations",
+        "description": "Local service health, background workers, and the proof ladder. Local-only — not a production readiness signal.",
+        "error": "Platform service readiness could not be loaded.",
+        "environmentLabel": "Environment",
+        "versionLabel": "Version",
+        "roleLabel": "Your roles",
+        "tenantLabel": "Tenant",
+        "unknownVersion": "unknown",
+        "servicesHeading": "Local services",
+        "workersHeading": "Background workers",
+        "proofsHeading": "Proof ladder",
+        "consolesHeading": "Service consoles",
+        "openConsole": "Open console",
+        "localOnly": "local-only",
+        "intervalLabel": "Interval",
+        "lastTickLabel": "Last tick",
+        "never": "never",
+        "inMemoryNote": "In-memory heartbeat — resets on process restart.",
+        "proofNote": "Read-only index — run proofs from the CLI (npm run proof:*). All proofs are local-only.",
+        "status": {
+          "healthy": "Healthy",
+          "configured": "Configured",
+          "degraded": "Degraded",
+          "unreachable": "Unreachable",
+          "not_configured": "Not configured",
+          "not_applicable": "Not applicable",
+          "blocked": "Blocked",
+          "unknown": "Unknown"
+        },
+        "workerStatus": {
+          "running": "Running",
+          "idle": "Idle",
+          "stopped": "Stopped",
+          "error": "Error",
+          "unknown": "Unknown"
+        },
+        "category": {
+          "data": "Data",
+          "storage": "Storage",
+          "mail": "Mail",
+          "observability": "Observability",
+          "auth": "Auth",
+          "mocks": "Mocks",
+          "web": "Web",
+          "quality": "Quality"
+        },
+        "svc": {
+          "postgres": { "label": "Postgres" },
+          "redis": { "label": "Redis" },
+          "clickhouse": { "label": "ClickHouse" },
+          "minio": { "label": "MinIO" },
+          "mailpit": { "label": "Mailpit" },
+          "otel_collector": { "label": "OTel collector" },
+          "loki": { "label": "Loki" },
+          "grafana": { "label": "Grafana" },
+          "keycloak": { "label": "Keycloak" },
+          "mock_oidc": {
+            "label": "Mock OIDC",
+            "detail": "Local login fixture — not a real identity provider."
+          },
+          "pgadmin": { "label": "pgAdmin" },
+          "wiremock": { "label": "WireMock" },
+          "localstack": { "label": "LocalStack" },
+          "sonarqube": { "label": "SonarQube" },
+          "web_caddy": { "label": "Web (Caddy)" }
+        },
+        "worker": {
+          "webhook-delivery": { "label": "Webhook delivery worker" }
         }
       },
       "overview": {

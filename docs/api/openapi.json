@@ -2616,6 +2616,19 @@
         }
       }
     },
+    "/api/org/platform/services/readiness": {
+      "get": {
+        "summary": "Platform operations — local service readiness + workers",
+        "operationId": "getOrgPlatformServicesReadiness",
+        "description": "Read-only operator cockpit data: bounded health probes over a safe local-service allowlist + background-worker heartbeats + environment/version. Never returns secrets, DSNs, or raw env — only known-safe localhost console URLs. ADR-ACT-0228.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Platform service + worker readiness" },
+          "400": { "description": "No tenant context" }
+        }
+      }
+    },
     "/api/org/readiness": {
       "get": {
         "summary": "Tenant control-plane readiness + capability map",

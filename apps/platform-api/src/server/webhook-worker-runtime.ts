@@ -3,8 +3,12 @@ import { getApplicationPool } from "./dependencies.ts";
 import { PostgresWebhookStore } from "../adapters/postgres-webhook-store.ts";
 import { HttpWebhookDispatcher } from "../adapters/http-webhook-dispatcher.ts";
 import { processDueDeliveries } from "../usecases/webhook-worker.ts";
+import { recordWorkerTick, setWorkerStatus } from "./worker-registry.ts";
 
 const log = createLogger({ name: "webhook-worker" });
+
+/** Registry key for the webhook delivery worker (surfaced in the ops cockpit). */
+export const WEBHOOK_WORKER_KEY = "webhook-delivery";
 
 // ---------------------------------------------------------------------------
 // Webhook delivery worker scheduler (ADR-0052). Started from the server bootstrap
@@ -35,8 +39,14 @@ export function startWebhookDeliveryWorker(): () => void {
       if (summary.claimed > 0) {
         log.info(summary, "webhook delivery tick");
       }
+      recordWorkerTick(WEBHOOK_WORKER_KEY, true);
     } catch (err) {
       log.error({ err }, "webhook delivery tick failed");
+      recordWorkerTick(
+        WEBHOOK_WORKER_KEY,
+        false,
+        err instanceof Error ? err.message : "tick failed"
+      );
     } finally {
       running = false;
     }
@@ -44,6 +54,10 @@ export function startWebhookDeliveryWorker(): () => void {
 
   const timer = setInterval(() => void tick(), INTERVAL_MS);
   if (typeof timer.unref === "function") timer.unref(); // don't keep the process alive
+  setWorkerStatus(WEBHOOK_WORKER_KEY, "idle");
   log.info({ intervalMs: INTERVAL_MS }, "webhook delivery worker started");
-  return () => clearInterval(timer);
+  return () => {
+    clearInterval(timer);
+    setWorkerStatus(WEBHOOK_WORKER_KEY, "stopped");
+  };
 }

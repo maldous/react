@@ -21,20 +21,20 @@ The result is no longer just a React shell. It is a governed enterprise applicat
 
 ## What is built
 
-| Layer                      | Technology / Pattern                                      | Role                                                                 |
-| -------------------------- | --------------------------------------------------------- | -------------------------------------------------------------------- |
-| **React SPA**              | React 19, TanStack Router, TanStack Query, React Aria     | Typed routes, server-state cache, accessible admin and app surfaces  |
-| **Admin control plane**    | `/admin` shell, permission-gated routes, design system    | Members, Auth, Features, Config, Logs, contextual audit panels       |
-| **BFF / API**              | Node.js, TypeScript, route pipeline, use cases            | Session resolution, tenant context, permission checks, orchestration |
-| **Identity**               | Keycloak per-tenant realms, PKCE/OIDC, UMA, BFF sessions  | SSO, realm isolation, policy-backed authorisation                    |
-| **Tenant identity model**  | Global users + tenant-scoped memberships                  | Username, role, status, last login, external identities per tenant   |
-| **Configuration registry** | Typed registry definitions + effective tenant values      | Governed feature/config settings with audit-first mutation           |
-| **Database**               | PostgreSQL schema-per-tenant + RLS, Redis, ClickHouse     | Transactional data, sessions, analytics                              |
-| **Storage**                | MinIO / S3-compatible                                     | Object storage with per-tenant prefix isolation                      |
-| **Email**                  | Brevo / SMTP, Mailpit locally                             | Transactional email with local inbox preview                         |
-| **Observability**          | OpenTelemetry, Loki, Grafana, Alloy, Sentry               | Structured logs, traces, dashboards, error capture                   |
-| **Infrastructure**         | Caddy, Docker Compose, Terraform, AWS, Cloudflare         | Local substrate, reverse proxy, declarative cloud provisioning       |
-| **Quality / Governance**   | Vitest, Playwright, ESLint, OpenAPI drift, ADR validators | Unit, integration, architecture, accessibility, and evidence gates   |
+| Layer                      | Technology / Pattern                                      | Role                                                                                                                   |
+| -------------------------- | --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| **React SPA**              | React 19, TanStack Router, TanStack Query, React Aria     | Typed routes, server-state cache, accessible admin and app surfaces                                                    |
+| **Admin control plane**    | `/admin` shell, permission-gated routes, design system    | Members, Auth, Features, Config, Email, Domains, Storage, Observability, Webhooks, Platform ops, Readiness, Logs/audit |
+| **BFF / API**              | Node.js, TypeScript, route pipeline, use cases            | Session resolution, tenant context, permission checks, orchestration                                                   |
+| **Identity**               | Keycloak per-tenant realms, PKCE/OIDC, UMA, BFF sessions  | SSO, realm isolation, policy-backed authorisation                                                                      |
+| **Tenant identity model**  | Global users + tenant-scoped memberships                  | Username, role, status, last login, external identities per tenant                                                     |
+| **Configuration registry** | Typed registry definitions + effective tenant values      | Governed feature/config settings with audit-first mutation                                                             |
+| **Database**               | PostgreSQL schema-per-tenant + RLS, Redis, ClickHouse     | Transactional data, sessions, analytics                                                                                |
+| **Storage**                | MinIO / S3-compatible                                     | Object storage with per-tenant prefix isolation                                                                        |
+| **Email**                  | Brevo / SMTP, Mailpit locally                             | Transactional email with local inbox preview                                                                           |
+| **Observability**          | OpenTelemetry, Loki, Grafana, Alloy, Sentry               | Structured logs, traces, dashboards, error capture                                                                     |
+| **Infrastructure**         | Caddy, Docker Compose, Terraform, AWS, Cloudflare         | Local substrate, reverse proxy, declarative cloud provisioning                                                         |
+| **Quality / Governance**   | Vitest, Playwright, ESLint, OpenAPI drift, ADR validators | Unit, integration, architecture, accessibility, and evidence gates                                                     |
 
 ---
 
@@ -44,16 +44,33 @@ The result is no longer just a React shell. It is a governed enterprise applicat
 
 The platform has a real tenant administration cockpit under `/admin`, not a placeholder settings page.
 
-| Surface            | Capability                                                                |
-| ------------------ | ------------------------------------------------------------------------- |
-| **Overview**       | Permission-filtered admin landing page                                    |
-| **Members**        | Invite, role change, remove, username edit, status enable/disable, resend |
-| **Authentication** | Provider controls, readiness-aware Session editing, MFA/IdP read models   |
-| **Features**       | Tenant feature toggles backed by shared configuration storage             |
-| **Config**         | Typed effective config grouped by category with overrides and reset       |
-| **Logs / Audit**   | Tenant-scoped admin logs and contextual audit panels                      |
+| Surface            | Capability                                                                         |
+| ------------------ | ---------------------------------------------------------------------------------- |
+| **Overview**       | Permission-filtered admin landing page                                             |
+| **Members**        | Invite, role change, remove, username edit, status enable/disable, resend          |
+| **Authentication** | Provider controls, readiness-aware Session editing, MFA/IdP + OIDC mapping         |
+| **Features**       | Tenant feature toggles backed by shared configuration storage                      |
+| **Config**         | Typed effective config grouped by category with overrides and reset                |
+| **Email**          | Per-tenant sender (provider/identity), encrypted secret, readiness, test           |
+| **Domains**        | Custom-domain DNS-TXT ownership + verification + routing readiness                 |
+| **Storage**        | Object-storage readiness + tenant-prefix isolation probe                           |
+| **Observability**  | Log-ingestion + Grafana/OTel/metrics/Sentry signals + label-guard                  |
+| **Webhooks**       | Signed subscriptions, durable delivery worker, dead-letter redrive + metrics       |
+| **Platform ops**   | Local service health, background workers, console links, proof ladder (local-only) |
+| **Readiness**      | Capability map with honest per-capability readiness (never faked)                  |
+| **Logs / Audit**   | Tenant-scoped admin logs and contextual audit panels                               |
 
 Every admin surface follows the same React stack: TanStack Router, TanStack Query, Zod contracts, BFF REST clients, design-system components, MSW tests, accessibility assertions, and permission-aware rendering.
+
+#### Local proof ladder
+
+Each capability has a repeatable local runtime proof (`npm run proof:*`) — all honest-skip
+(they `SKIP`, never fake, when a service is down) and **local-only**:
+`proof:auth-oidc-enterprise`, `proof:email-sender`, `proof:tenant-domains`,
+`proof:tenant-domains-routing`, `proof:tenant-storage`, `proof:tenant-observability`,
+`proof:webhooks`, `proof:webhook-worker`, `proof:webhook-redrive`, `proof:platform-services`.
+Public DNS/TLS, real-IdP OIDC login mapping, and real Cloudflare/AWS-IAM/Brevo/Sentry
+remain partial/deferred/blocked. See `docs/evidence/platform/platform-bedrock-foundation-review.md`.
 
 ### Tenant identity and membership v2
 

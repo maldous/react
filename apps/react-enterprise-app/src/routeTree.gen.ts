@@ -16,6 +16,7 @@ import { Route as AdminDomainsRoute } from "./routes/admin/domains";
 import { Route as AdminStorageRoute } from "./routes/admin/storage";
 import { Route as AdminObservabilityRoute } from "./routes/admin/observability";
 import { Route as AdminWebhooksRoute } from "./routes/admin/webhooks";
+import { Route as AdminPlatformRoute } from "./routes/admin/platform";
 import { Route as AdminLogsRoute } from "./routes/admin/logs";
 
 // Hand-maintained route tree (no router codegen plugin is configured). Public
@@ -42,6 +43,7 @@ const routeTree = RootRoute.addChildren([
       AdminStorageRoute,
       AdminObservabilityRoute,
       AdminWebhooksRoute,
+      AdminPlatformRoute,
       AdminLogsRoute,
     ]),
   ]),

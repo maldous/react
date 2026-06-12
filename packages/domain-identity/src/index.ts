@@ -214,6 +214,7 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     "tenant.observability.read",
     "tenant.webhooks.read",
     "tenant.webhooks.write",
+    "tenant.platform.read",
     "tenant.audit.read",
     "tenant.clickthrough.keycloak",
     "tenant.clickthrough.mailpit",

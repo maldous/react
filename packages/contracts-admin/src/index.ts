@@ -938,6 +938,88 @@ export const WebhookRedriveResponseSchema = z
   .strict();
 export type WebhookRedriveResponse = z.infer<typeof WebhookRedriveResponseSchema>;
 
+// ---------------------------------------------------------------------------
+// Platform operations cockpit — service readiness + workers (ADR-ACT-0228)
+// A safe, read-only operator view: local-service health + background-worker status.
+// Strict + no-passthrough. NEVER carries secrets, credentials, DSNs, or raw env —
+// only known-safe LOCAL console URLs (localhost), statuses, and timestamps.
+// ---------------------------------------------------------------------------
+
+export const PLATFORM_SERVICE_STATUSES = [
+  "healthy", // probed and responding
+  "configured", // wired + connected at startup (no per-call probe)
+  "degraded", // reachable but unhealthy
+  "unreachable", // configured but not responding (e.g. profile not running)
+  "not_configured", // no endpoint wired for this environment
+  "not_applicable", // no local backend for this signal
+  "blocked", // requires an external dependency not available locally
+  "unknown",
+] as const;
+export const PlatformServiceStatusSchema = z.enum(PLATFORM_SERVICE_STATUSES);
+export type PlatformServiceStatus = z.infer<typeof PlatformServiceStatusSchema>;
+
+export const PLATFORM_SERVICE_CATEGORIES = [
+  "data",
+  "storage",
+  "mail",
+  "observability",
+  "auth",
+  "mocks",
+  "web",
+  "quality",
+] as const;
+export const PlatformServiceCategorySchema = z.enum(PLATFORM_SERVICE_CATEGORIES);
+export type PlatformServiceCategory = z.infer<typeof PlatformServiceCategorySchema>;
+
+export const PlatformServiceSummarySchema = z
+  .object({
+    key: z.string(),
+    labelKey: z.string(),
+    category: PlatformServiceCategorySchema,
+    status: PlatformServiceStatusSchema,
+    /** True for local-only dev services (never implies production readiness). */
+    localOnly: z.boolean(),
+    /** A known-safe LOCAL operator console URL (localhost), or null. Never a secret. */
+    consoleUrl: z.string().nullable(),
+    checkedAt: z.string(),
+    detailKey: z.string().nullable(),
+  })
+  .strict();
+export type PlatformServiceSummary = z.infer<typeof PlatformServiceSummarySchema>;
+
+export const PLATFORM_WORKER_STATUSES = ["running", "idle", "stopped", "error", "unknown"] as const;
+export const PlatformWorkerStatusSchema = z.enum(PLATFORM_WORKER_STATUSES);
+export type PlatformWorkerStatus = z.infer<typeof PlatformWorkerStatusSchema>;
+
+export const PlatformWorkerSummarySchema = z
+  .object({
+    key: z.string(),
+    labelKey: z.string(),
+    enabled: z.boolean(),
+    intervalMs: z.number().int().nonnegative(),
+    lastTickAt: z.string().nullable(),
+    /** A safe, non-secret error summary from the last tick, or null. */
+    lastError: z.string().nullable(),
+    status: PlatformWorkerStatusSchema,
+    /** Heartbeat is in-memory and resets on process restart. */
+    inMemory: z.boolean(),
+  })
+  .strict();
+export type PlatformWorkerSummary = z.infer<typeof PlatformWorkerSummarySchema>;
+
+/** `GET /api/org/platform/services/readiness`. */
+export const PlatformServicesReadinessResponseSchema = z
+  .object({
+    environment: z.string(),
+    appVersion: z.string().nullable(),
+    services: z.array(PlatformServiceSummarySchema),
+    workers: z.array(PlatformWorkerSummarySchema),
+  })
+  .strict();
+export type PlatformServicesReadinessResponse = z.infer<
+  typeof PlatformServicesReadinessResponseSchema
+>;
+
 export const MfaRequirementSchema = z.enum(["none", "optional", "required"]);
 export const MfaTypeSchema = z.enum(["totp", "webauthn"]);
 

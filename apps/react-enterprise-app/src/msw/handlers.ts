@@ -369,6 +369,60 @@ export function adminObservabilityReadinessHandler(
   return http.get("/api/org/observability/readiness", () => HttpResponse.json(response));
 }
 
+const platformServicesReadinessFixture = {
+  environment: "test",
+  appVersion: "abc123",
+  services: [
+    {
+      key: "postgres",
+      labelKey: "feature.admin.platform.svc.postgres.label",
+      category: "data",
+      status: "healthy",
+      localOnly: true,
+      consoleUrl: "http://localhost:3200",
+      checkedAt: "2026-06-12T00:00:00.000Z",
+      detailKey: null,
+    },
+    {
+      key: "redis",
+      labelKey: "feature.admin.platform.svc.redis.label",
+      category: "data",
+      status: "unreachable",
+      localOnly: true,
+      consoleUrl: null,
+      checkedAt: "2026-06-12T00:00:00.000Z",
+      detailKey: null,
+    },
+    {
+      key: "mock_oidc",
+      labelKey: "feature.admin.platform.svc.mock_oidc.label",
+      category: "auth",
+      status: "not_configured",
+      localOnly: true,
+      consoleUrl: null,
+      checkedAt: "2026-06-12T00:00:00.000Z",
+      detailKey: "feature.admin.platform.svc.mock_oidc.detail",
+    },
+  ],
+  workers: [
+    {
+      key: "webhook-delivery",
+      labelKey: "feature.admin.platform.worker.webhook-delivery.label",
+      enabled: true,
+      intervalMs: 5000,
+      lastTickAt: null,
+      lastError: null,
+      status: "idle",
+      inMemory: true,
+    },
+  ],
+};
+export function adminPlatformServicesHandler(
+  response: Record<string, unknown> = platformServicesReadinessFixture
+) {
+  return http.get("/api/org/platform/services/readiness", () => HttpResponse.json(response));
+}
+
 export function adminEmailSenderHandler(response: Record<string, unknown> = emailSenderFixture) {
   return http.get("/api/org/email-sender", () => HttpResponse.json(response));
 }
@@ -487,6 +541,7 @@ export const handlers = [
   adminDomainsReadinessHandler(),
   adminStorageReadinessHandler(),
   adminObservabilityReadinessHandler(),
+  adminPlatformServicesHandler(),
   adminWebhooksListHandler(),
   adminWebhooksReadinessHandler(),
   ...adminWriteOkHandlers(),

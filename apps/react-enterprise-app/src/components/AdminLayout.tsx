@@ -82,6 +82,11 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     labelKey: "feature.admin.nav.webhooks",
     permission: "tenant.webhooks.read",
   },
+  {
+    to: "/admin/platform",
+    labelKey: "feature.admin.nav.platform",
+    permission: "tenant.platform.read",
+  },
   { to: "/admin/logs", labelKey: "feature.admin.nav.logs", permission: "platform.logs.read" },
 ];
 

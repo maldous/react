@@ -3519,6 +3519,52 @@ export const routes: Route[] = [
     },
   },
   // ---------------------------------------------------------------------------
+  // Platform operations cockpit — service readiness + workers (ADR-ACT-0228).
+  // Read-only, tenant-scoped (FQDN/session), tenant.platform.read. Bounded health
+  // probes over a safe local-service allowlist; never returns secrets/DSNs/raw env.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/org/platform/services/readiness",
+    operationName: "org.platform.services.readiness",
+    requiresAuth: true,
+    requiredPermission: "tenant.platform.read",
+    resource: "admin:platform",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { buildPlatformServicesReadiness } = await import("../usecases/platform-services.ts");
+      const { getWorkerHeartbeat } = await import("./worker-registry.ts");
+      const pool = getApplicationPool();
+      const readiness = await buildPlatformServicesReadiness({
+        httpProbe: async (url) => {
+          try {
+            await fetch(url, { method: "GET", signal: AbortSignal.timeout(1500) });
+            return true; // any HTTP response = reachable
+          } catch {
+            return false;
+          }
+        },
+        pgProbe: async () => {
+          try {
+            await pool.query("SELECT 1");
+            return true;
+          } catch {
+            return false;
+          }
+        },
+        redisConfigured: () => !!process.env["REDIS_URL"],
+        getHeartbeat: getWorkerHeartbeat,
+      });
+      res.json(200, readiness);
+    },
+  },
+  // ---------------------------------------------------------------------------
   // Sub-organisation management (ADR-ACT-0143 Slice 3)
   // Tenant admin manages sub-organisations inside their own tenant.
   // Sub-orgs are Tier 2: share parent Keycloak realm, no new infrastructure.
