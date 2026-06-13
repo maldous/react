@@ -18,6 +18,8 @@ import {
   tenantReadinessFixture,
   entitlementsFixture,
   tenantsLookupFixture,
+  usageFixture,
+  quotasFixture,
 } from "./fixtures/admin.ts";
 import type { AuthSettingsReadiness } from "@platform/contracts-admin";
 
@@ -626,6 +628,10 @@ export function adminWriteOkHandlers() {
     http.delete("/api/auth/settings/idps/:alias", () => new HttpResponse(null, { status: 204 })),
     http.patch("/api/org/config/:key", () => new HttpResponse(null, { status: 204 })),
     http.delete("/api/org/config/:key", () => new HttpResponse(null, { status: 204 })),
+    http.patch("/api/admin/tenants/:tenantId/quotas", async ({ request }) => {
+      const body = (await request.json().catch(() => ({}))) as { quotaKey?: string };
+      return HttpResponse.json({ quotaKey: body.quotaKey ?? "webhooks.deliveries" });
+    }),
     http.patch("/api/admin/tenants/:tenantId/entitlements", async ({ request }) => {
       const body = (await request.json().catch(() => ({}))) as { key?: string; state?: string };
       return HttpResponse.json({
@@ -659,6 +665,16 @@ export function adminEntitlementsHandlers(response = entitlementsFixture) {
 
 export function adminTenantsLookupHandler(response = tenantsLookupFixture) {
   return http.get("/api/admin/tenants", () => HttpResponse.json(response));
+}
+
+// Metering + quota (ADR-ACT-0256). Usage + quota reads (tenant own + operator per-tenant).
+export function adminUsageQuotaHandlers(usage = usageFixture, quotas = quotasFixture) {
+  return [
+    http.get("/api/org/usage", () => HttpResponse.json(usage)),
+    http.get("/api/admin/tenants/:tenantId/usage", () => HttpResponse.json(usage)),
+    http.get("/api/org/quotas", () => HttpResponse.json(quotas)),
+    http.get("/api/admin/tenants/:tenantId/quotas", () => HttpResponse.json(quotas)),
+  ];
 }
 
 // --- generic helpers --------------------------------------------------------
@@ -706,5 +722,6 @@ export const handlers = [
   adminWebhooksReadinessHandler(),
   ...adminEntitlementsHandlers(),
   adminTenantsLookupHandler(),
+  ...adminUsageQuotaHandlers(),
   ...adminWriteOkHandlers(),
 ];

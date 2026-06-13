@@ -19,6 +19,7 @@ import { Route as AdminWebhooksRoute } from "./routes/admin/webhooks";
 import { Route as AdminPlatformRoute } from "./routes/admin/platform";
 import { Route as AdminLogsRoute } from "./routes/admin/logs";
 import { Route as AdminEntitlementsRoute } from "./routes/admin/entitlements";
+import { Route as AdminUsageRoute } from "./routes/admin/usage";
 
 // Hand-maintained route tree (no router codegen plugin is configured). Public
 // routes (`/`, `/login`) are direct children of the root; protected feature
@@ -47,6 +48,7 @@ const routeTree = RootRoute.addChildren([
       AdminPlatformRoute,
       AdminLogsRoute,
       AdminEntitlementsRoute,
+      AdminUsageRoute,
     ]),
   ]),
 ]);

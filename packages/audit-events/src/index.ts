@@ -49,6 +49,8 @@ export const AuditAction = {
   ConfigValueCleared: "config.value_cleared",
   EntitlementGranted: "entitlement.granted",
   EntitlementRevoked: "entitlement.revoked",
+  QuotaSet: "quota.set",
+  QuotaRemoved: "quota.removed",
 } as const;
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction];

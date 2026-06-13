@@ -80,10 +80,12 @@ describe("universal-service-foundation registry", () => {
     }
   });
 
-  it("quota-enforcement is not claimed delivered before Phase 2", () => {
+  it("billing capabilities are not claimed delivered (Phase 9, not delivered)", () => {
     const reg = loadRegistry(REPO_ROOT);
-    const q = reg.capabilities.find((c) => c.capability === "quota-enforcement");
-    assert.ok(!["delivered", "locally proven"].includes(q.status), "quota enforcement is Phase 2");
+    for (const key of ["product-catalog-plans-prices", "subscriptions-invoices-payments"]) {
+      const c = reg.capabilities.find((x) => x.capability === key);
+      assert.ok(!["delivered", "locally proven"].includes(c.status), `${key} is Phase 9`);
+    }
   });
 });
 

@@ -1,4 +1,4 @@
-import { ConflictError } from "@platform/platform-errors";
+import { ConflictError, ForbiddenError, ValidationError } from "@platform/platform-errors";
 import type { Route } from "./pipeline.ts";
 import { getHealth, getReadiness, getVersion } from "./health.ts";
 import { getFixtureSession } from "./session.ts";
@@ -28,6 +28,8 @@ import {
   CreateWebhookSubscriptionRequestSchema,
   UpdateWebhookSubscriptionRequestSchema,
   SetEntitlementRequestSchema,
+  RecordMeterEventRequestSchema,
+  SetQuotaRequestSchema,
   type TenantAuthProvidersConfig,
   type ObservabilitySignalStatus,
 } from "@platform/contracts-admin";
@@ -379,6 +381,35 @@ async function buildEntitlementDeps() {
   return {
     repository: new PostgresEntitlementRepository(getApplicationPool()),
     audit: createPostgresAuditEventPort(getApplicationPool()),
+  };
+}
+
+// Build the metering usecase deps (metering repo + entitlement repo) — ADR-ACT-0256.
+async function buildMeteringDeps() {
+  const { PostgresMeteringRepository } =
+    await import("../adapters/postgres-metering-repository.ts");
+  const { PostgresEntitlementRepository } =
+    await import("../adapters/postgres-entitlement-repository.ts");
+  const pool = getApplicationPool();
+  return {
+    metering: new PostgresMeteringRepository(pool),
+    entitlements: new PostgresEntitlementRepository(pool),
+  };
+}
+
+// Build the quota usecase deps (quota + metering + entitlement repos + audit) — ADR-ACT-0256.
+async function buildQuotaDeps() {
+  const { PostgresQuotaRepository } = await import("../adapters/postgres-quota-repository.ts");
+  const { PostgresMeteringRepository } =
+    await import("../adapters/postgres-metering-repository.ts");
+  const { PostgresEntitlementRepository } =
+    await import("../adapters/postgres-entitlement-repository.ts");
+  const pool = getApplicationPool();
+  return {
+    quota: new PostgresQuotaRepository(pool),
+    metering: new PostgresMeteringRepository(pool),
+    entitlements: new PostgresEntitlementRepository(pool),
+    audit: createPostgresAuditEventPort(pool),
   };
 }
 
@@ -4406,6 +4437,177 @@ export const routes: Route[] = [
     handler: async (_req, res) => {
       const { buildServiceCatalog } = await import("../usecases/service-catalog.ts");
       res.json(200, buildServiceCatalog({ operator: true }));
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Metering + quota (Phase 2, ADR-0067 / ADR-ACT-0256). Metering = "how much
+  // usage was recorded"; quota = "is the next action allowed under the limit".
+  // Ingestion is operator/internal (server-authoritative) — tenant self-ingestion
+  // is deliberately NOT exposed (usage/quota integrity). Reads are tenant + operator.
+  // ---------------------------------------------------------------------------
+  {
+    method: "POST",
+    path: "/api/admin/tenants/:tenantId/meter-events",
+    operationName: "admin.tenants.meterEvents.record",
+    requiresAuth: true,
+    requiredPermission: "platform.metering.write",
+    resource: "admin:metering",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      if (!UUID_RE.test(tenantId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const parsed = RecordMeterEventRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid meter event",
+        });
+        return;
+      }
+      const { recordMeterEvent } = await import("../usecases/metering.ts");
+      try {
+        const result = await recordMeterEvent(
+          { organisationId: tenantId, ...parsed.data },
+          await buildMeteringDeps()
+        );
+        if (result.kind === "unknown_meter") {
+          res.json(404, { code: "NOT_FOUND", message: "Unknown meter key" });
+          return;
+        }
+        res.json(result.deduplicated ? 200 : 201, {
+          recorded: result.recorded,
+          deduplicated: result.deduplicated,
+        });
+      } catch (err) {
+        if (err instanceof ForbiddenError) {
+          res.json(403, err.toSafeResponse());
+          return;
+        }
+        if (err instanceof ValidationError) {
+          res.json(400, err.toSafeResponse());
+          return;
+        }
+        throw err;
+      }
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/org/usage",
+    operationName: "org.usage.list",
+    requiresAuth: true,
+    requiredPermission: "tenant.metering.read",
+    resource: "organisation:usage",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { getUsage } = await import("../usecases/metering.ts");
+      res.json(200, await getUsage(tenantCtx.organisationId, await buildMeteringDeps()));
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/tenants/:tenantId/usage",
+    operationName: "admin.tenants.usage.list",
+    requiresAuth: true,
+    requiredPermission: "platform.metering.read",
+    resource: "admin:metering",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      if (!UUID_RE.test(tenantId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const { getUsage } = await import("../usecases/metering.ts");
+      res.json(200, await getUsage(tenantId, await buildMeteringDeps(), { operator: true }));
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/org/quotas",
+    operationName: "org.quotas.list",
+    requiresAuth: true,
+    requiredPermission: "tenant.metering.read",
+    resource: "organisation:quotas",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { listQuotas } = await import("../usecases/quota.ts");
+      res.json(200, await listQuotas(tenantCtx.organisationId, await buildQuotaDeps()));
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/tenants/:tenantId/quotas",
+    operationName: "admin.tenants.quotas.list",
+    requiresAuth: true,
+    requiredPermission: "platform.quotas.read",
+    resource: "admin:quotas",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      if (!UUID_RE.test(tenantId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const { listQuotas } = await import("../usecases/quota.ts");
+      res.json(200, await listQuotas(tenantId, await buildQuotaDeps(), { operator: true }));
+    },
+  },
+  {
+    method: "PATCH",
+    path: "/api/admin/tenants/:tenantId/quotas",
+    operationName: "admin.tenants.quotas.set",
+    requiresAuth: true,
+    requiredPermission: "platform.quotas.write",
+    resource: "admin:quotas",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      if (!UUID_RE.test(tenantId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const parsed = SetQuotaRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid quota request",
+        });
+        return;
+      }
+      const { setQuota } = await import("../usecases/quota.ts");
+      const result = await setQuota(
+        {
+          organisationId: tenantId,
+          ...parsed.data,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildQuotaDeps()
+      );
+      res.json(200, { quotaKey: result.quotaKey });
     },
   },
 ];

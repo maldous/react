@@ -183,7 +183,8 @@
         "platform": "Platform ops",
         "logs": "Log search",
         "readiness": "Readiness",
-        "entitlements": "Entitlements"
+        "entitlements": "Entitlements",
+        "usage": "Usage & quotas"
       },
       "card": {
         "membersDescription": "Invite people, change roles, and remove members.",
@@ -197,7 +198,8 @@
         "platformDescription": "Local service health, background workers, and the proof ladder.",
         "logsDescription": "Search structured platform logs.",
         "readinessDescription": "See what's configured and what's left to set up.",
-        "entitlementsDescription": "See and assign what this tenant is allowed to use."
+        "entitlementsDescription": "See and assign what this tenant is allowed to use.",
+        "usageDescription": "See recorded usage and set quota limits per capability."
       },
       "entitlements": {
         "title": "Entitlements",
@@ -222,6 +224,33 @@
         "revoke": "Revoke",
         "readOnlyNote": "This is a read-only view of your tenant's entitlements. Assignment is operator-only.",
         "quotaNote": "Quota enforcement is not yet active (Phase 2); only entitlement availability is shown."
+      },
+      "usage": {
+        "title": "Usage & quotas",
+        "description": "Recorded usage per capability and the quota limits that gate it. Quota decisions are server-side; billing is not part of this surface.",
+        "tenantSelectLabel": "Tenant",
+        "tenantSelectPlaceholder": "Select a tenant…",
+        "enterTenant": "Select a tenant to view its usage and set quota limits.",
+        "setQuota": "Set a quota limit",
+        "meterLabel": "Meter",
+        "windowLabel": "Window",
+        "limitLabel": "Limit",
+        "save": "Save quota",
+        "saveError": "Could not save the quota.",
+        "noQuotas": "No quotas configured for this tenant.",
+        "readOnlyNote": "This is a read-only view of your tenant's usage and quotas. Limits are set by operators.",
+        "colMeter": "Meter",
+        "colWindow": "Window",
+        "colUsage": "Usage",
+        "colQuota": "Quota",
+        "colLimit": "Usage / limit",
+        "colState": "State",
+        "quotaState": {
+          "within": "Within limit",
+          "exceeded": "Exceeded",
+          "no_entitlement": "Not entitled",
+          "no_quota": "No quota"
+        }
       },
       "config": {
         "title": "Configuration",
@@ -1061,6 +1090,9 @@
       "authenticationRequired": "Authentication required",
       "permissionRequired": "Permission required: {permission}",
       "notEntitled": "This tenant is not entitled to use this capability",
+      "quotaExceeded": "Usage quota exceeded for this capability",
+      "invalidMeterQuantity": "Meter quantity must be a finite number",
+      "negativeMeterQuantity": "Meter quantity cannot be negative unless recorded as an adjustment",
       "notImplemented": "This feature is not yet available",
       "graphqlQueryRequired": "A GraphQL query is required",
       "graphqlInvalidDocument": "The GraphQL document could not be parsed",

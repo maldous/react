@@ -1,8 +1,10 @@
-# ADR-0057: Entitlement, billing, and quota architecture
+# ADR-0057: Billing, invoicing, and payment architecture (re-scoped)
+
+> **Re-scoped (ADR-ACT-0256):** this ADR was originally "entitlement, billing, and quota". It has been **split**: entitlements → **ADR-0058** (Accepted); metering + quota enforcement → **ADR-0067** (Accepted, Phase 2). ADR-0057 now covers **billing / invoicing / payment only**, which remains **Proposed** and is **Phase 9** (not delivered).
 
 ## Status
 
-Proposed
+Proposed (billing/invoicing/payment only — Phase 9; NOT delivered)
 
 ## Date
 
@@ -50,4 +52,4 @@ ADR-0015 (analytical data), ADR-0053, ADR-0061, ADR-0058.
 
 ## Notes
 
-Remains **Proposed** (NOT accepted in ADR-ACT-0254): too broad — it bundles entitlements + metering + quota + billing + payment. It must be **split** into per-capability decisions (or have per-sub acceptance criteria appended) and hardened before acceptance. Discovery (Lago vs OpenMeter vs Kill Bill vs custom ledger) precedes implementation. Note: the entitlement engine + quota HOOK were delivered in Phase 1 under ADR-0058/ADR-ACT-0254; real quota enforcement + billing remain Phase 2/9.
+**Split done (ADR-ACT-0256):** entitlements → ADR-0058 (Accepted, delivered Phase 1); metering + quota enforcement → ADR-0067 (Accepted, delivered Phase 2). This ADR is now scoped to **billing / invoicing / payment** only and remains **Proposed / Phase 9 / not delivered**. Billing discovery (Lago vs Kill Bill; payment gateway as a production-external adapter) precedes implementation. Billing must NOT be marked delivered.

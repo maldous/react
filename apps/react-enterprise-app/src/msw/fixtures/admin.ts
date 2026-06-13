@@ -12,6 +12,8 @@ import type {
   TenantReadinessResponse,
   EntitlementListResponse,
   TenantLookupResponse,
+  UsageResponse,
+  QuotaListResponse,
   CapabilitySummary,
   CapabilityCategory,
   CapabilityImplementationStatus,
@@ -284,6 +286,36 @@ export const tenantsLookupFixture: TenantLookupResponse = {
     { id: "00000000-0000-0000-0000-000000000002", slug: "acme", displayName: "Acme Inc" },
   ],
   truncated: false,
+};
+
+export const usageFixture: UsageResponse = {
+  usage: [
+    {
+      meterKey: "webhooks.deliveries",
+      displayName: "Webhook deliveries",
+      window: "lifetime",
+      usage: 2,
+    },
+    { meterKey: "storage.bytes", displayName: "Storage used", window: "lifetime", usage: 0 },
+  ],
+};
+
+export const quotasFixture: QuotaListResponse = {
+  quotas: [
+    {
+      quotaKey: "webhooks.deliveries",
+      entitlementKey: "webhooks",
+      meterKey: "webhooks.deliveries",
+      limit: 3,
+      window: "lifetime",
+      action: "deny",
+      usage: 2,
+      allowed: true,
+      state: "within",
+      updatedAt: "2026-06-13T00:00:00.000Z",
+      updatedBy: "00000000-0000-0000-0000-0000000000a3",
+    },
+  ],
 };
 
 export const entitlementsFixture: EntitlementListResponse = {

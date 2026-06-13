@@ -2676,6 +2676,93 @@
         }
       }
     },
+    "/api/admin/tenants/:tenantId/meter-events": {
+      "post": {
+        "summary": "Record a usage meter event (system operator / internal)",
+        "operationId": "recordMeterEvent",
+        "description": "Operator/internal ingestion. Idempotent by tenant+meter+idempotencyKey; requires the meter's capability entitlement. Tenant self-ingestion is intentionally not exposed (usage/quota integrity). ADR-0067 / ADR-ACT-0256.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "201": { "description": "Recorded" },
+          "200": { "description": "Deduplicated (idempotent replay)" },
+          "400": { "description": "Validation error or invalid tenant id" },
+          "403": { "description": "Not entitled to the meter's capability" },
+          "404": { "description": "Unknown meter key" }
+        }
+      }
+    },
+    "/api/org/usage": {
+      "get": {
+        "summary": "Tenant's own usage (read-only)",
+        "operationId": "listOrgUsage",
+        "description": "Per-meter lifetime usage for the calling tenant (RLS-scoped). No secrets. ADR-ACT-0256.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Usage list" },
+          "400": { "description": "No tenant context" }
+        }
+      }
+    },
+    "/api/admin/tenants/:tenantId/usage": {
+      "get": {
+        "summary": "A tenant's usage (system operator)",
+        "operationId": "listTenantUsage",
+        "description": "Operator read of a tenant's per-meter usage. ADR-ACT-0256.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Usage list" },
+          "400": { "description": "Invalid tenant id" }
+        }
+      }
+    },
+    "/api/org/quotas": {
+      "get": {
+        "summary": "Tenant's own quotas + live usage state (read-only)",
+        "operationId": "listOrgQuotas",
+        "description": "Per-quota limit, window, current usage, and allow/deny state for the calling tenant. Server-authoritative; React only renders this. ADR-0067 / ADR-ACT-0256.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Quota list" },
+          "400": { "description": "No tenant context" }
+        }
+      }
+    },
+    "/api/admin/tenants/:tenantId/quotas": {
+      "get": {
+        "summary": "A tenant's quotas + usage (system operator)",
+        "operationId": "listTenantQuotas",
+        "description": "Operator read of a tenant's quotas with live usage/state. ADR-ACT-0256.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Quota list" },
+          "400": { "description": "Invalid tenant id" }
+        }
+      },
+      "patch": {
+        "summary": "Set a tenant quota (system operator)",
+        "operationId": "setTenantQuota",
+        "description": "Operator-only, audited. Binds entitlement + meter + limit + window + action. Tenants can never set quotas. ADR-0067 / ADR-ACT-0256.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Quota set" },
+          "400": { "description": "Validation error or invalid tenant id" }
+        }
+      }
+    },
     "/api/org/entitlements": {
       "get": {
         "summary": "List the tenant's own entitlements (read-only)",

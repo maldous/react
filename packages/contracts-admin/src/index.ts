@@ -1356,6 +1356,7 @@ export const AUDIT_RESOURCES = [
   "feature",
   "auth_settings",
   "entitlement",
+  "quota",
 ] as const;
 export const AuditResourceSchema = z.enum(AUDIT_RESOURCES);
 export type AuditResource = z.infer<typeof AuditResourceSchema>;
@@ -1534,3 +1535,97 @@ export const TenantLookupResponseSchema = z.object({
   truncated: z.boolean(),
 });
 export type TenantLookupResponse = z.infer<typeof TenantLookupResponseSchema>;
+
+// ---------------------------------------------------------------------------
+// Metering + quota (ADR-0067 / ADR-ACT-0256) — Phase 2 usage/quota surface.
+//
+// Metering answers "how much usage was recorded?"; quota answers "is the next
+// action allowed under the tenant's entitlement/limit?". Server-authoritative;
+// React only displays state returned by the BFF. No secrets. Billing (what to
+// charge) is NOT delivered — that is Phase 9.
+// ---------------------------------------------------------------------------
+
+export const METER_KEYS = [
+  "webhooks.deliveries",
+  "storage.bytes",
+  "custom_domains.count",
+  "observability.log_queries",
+] as const;
+export const MeterKeySchema = z.enum(METER_KEYS);
+export type MeterKey = z.infer<typeof MeterKeySchema>;
+
+export const QUOTA_WINDOWS = ["daily", "monthly", "rolling_30d", "lifetime"] as const;
+export const QuotaWindowSchema = z.enum(QUOTA_WINDOWS);
+export type QuotaWindow = z.infer<typeof QuotaWindowSchema>;
+
+export const QUOTA_ACTIONS = ["allow", "deny"] as const;
+export const QuotaActionSchema = z.enum(QUOTA_ACTIONS);
+export type QuotaAction = z.infer<typeof QuotaActionSchema>;
+
+/** `POST /api/admin/tenants/:tenantId/meter-events` — operator/internal ingestion.
+ * Idempotent by tenant + meterKey + idempotencyKey. quantity must be > 0 unless the
+ * event is an explicit adjustment (metadata.adjustment === true). */
+export const RecordMeterEventRequestSchema = z
+  .object({
+    meterKey: MeterKeySchema,
+    quantity: z.number(),
+    idempotencyKey: z.string().min(1).max(200),
+    subjectId: z.string().max(200).optional(),
+    occurredAt: z.string().optional(),
+    source: z.string().max(100).optional(),
+    metadata: z.record(z.string(), z.unknown()).optional(),
+  })
+  .strict();
+export type RecordMeterEventRequest = z.infer<typeof RecordMeterEventRequestSchema>;
+
+export const MeterEventResultSchema = z.object({
+  recorded: z.boolean(),
+  deduplicated: z.boolean(),
+});
+export type MeterEventResult = z.infer<typeof MeterEventResultSchema>;
+
+export const UsageItemSchema = z.object({
+  meterKey: MeterKeySchema,
+  displayName: z.string(),
+  window: QuotaWindowSchema,
+  usage: z.number(),
+});
+export type UsageItem = z.infer<typeof UsageItemSchema>;
+
+export const UsageResponseSchema = z.object({ usage: z.array(UsageItemSchema) });
+export type UsageResponse = z.infer<typeof UsageResponseSchema>;
+
+export const QUOTA_STATES = ["within", "exceeded", "no_entitlement", "no_quota"] as const;
+export const QuotaStateSchema = z.enum(QUOTA_STATES);
+export type QuotaState = z.infer<typeof QuotaStateSchema>;
+
+export const QuotaSummarySchema = z.object({
+  quotaKey: z.string(),
+  entitlementKey: z.string(),
+  meterKey: MeterKeySchema,
+  limit: z.number(),
+  window: QuotaWindowSchema,
+  action: QuotaActionSchema,
+  usage: z.number(),
+  allowed: z.boolean(),
+  state: QuotaStateSchema,
+  updatedAt: z.string().nullable(),
+  updatedBy: z.string().nullable(),
+});
+export type QuotaSummary = z.infer<typeof QuotaSummarySchema>;
+
+export const QuotaListResponseSchema = z.object({ quotas: z.array(QuotaSummarySchema) });
+export type QuotaListResponse = z.infer<typeof QuotaListResponseSchema>;
+
+/** `PATCH /api/admin/tenants/:tenantId/quotas` — system-operator only, audited. */
+export const SetQuotaRequestSchema = z
+  .object({
+    quotaKey: z.string().min(1).max(100),
+    entitlementKey: EntitlementKeySchema,
+    meterKey: MeterKeySchema,
+    limit: z.number().int().nonnegative(),
+    window: QuotaWindowSchema,
+    action: QuotaActionSchema.optional(),
+  })
+  .strict();
+export type SetQuotaRequest = z.infer<typeof SetQuotaRequestSchema>;

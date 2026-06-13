@@ -457,11 +457,15 @@ export function validate(repoRoot = REPO_ROOT) {
       );
   }
 
-  // 17. Quota honesty: quota enforcement is Phase 2 — it must not be claimed delivered before then.
-  if (isDeliveredish({ status: statusOf.get("quota-enforcement") }))
-    problems.push(
-      "delivery: quota-enforcement claims a delivered status, but quota enforcement is Phase 2 (only a Phase-1 hook is permitted)"
-    );
+  // 17. Billing honesty: billing/payment is Phase 9 — it must not be claimed delivered.
+  //     (The Phase-1 "no quota before Phase 2" guard was retired in Phase 2, ADR-ACT-0256,
+  //     when real quota enforcement landed; the standing guard is now on billing.)
+  for (const cap of ["product-catalog-plans-prices", "subscriptions-invoices-payments"]) {
+    if (isDeliveredish({ status: statusOf.get(cap) }))
+      problems.push(
+        `delivery: ${cap} claims a delivered status, but billing/payment is Phase 9 (not delivered)`
+      );
+  }
 
   // Non-failing reports: ADR maturity. Separate not-yet-ready from implementation-ready.
   const refs = [...referencedAdrs].sort((a, b) => a - b).map((n) => String(n).padStart(4, "0"));

@@ -62,6 +62,7 @@ export {
   adminWriteOkHandlers,
   adminEntitlementsHandlers,
   adminTenantsLookupHandler,
+  adminUsageQuotaHandlers,
 } from "./handlers.ts";
 export {
   membersFixture,
@@ -78,6 +79,8 @@ export {
   tenantReadinessBlockedFixture,
   entitlementsFixture,
   tenantsLookupFixture,
+  usageFixture,
+  quotasFixture,
 } from "./fixtures/admin.ts";
 export {
   createGraphqlHandler,

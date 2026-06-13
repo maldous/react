@@ -245,5 +245,6 @@ All 14 ADRs share a sound template (Status/Context/Decision/Consequences/Validat
 
 - **Phase 0 — complete.** ADR-0053/0054/0055/0056/0058 hardened and **Accepted**; ADR-0057/0059/0062/0063 kept Proposed pending split.
 - **Phase 1 — delivered (substrate).** Service catalog v2 + entitlement engine + policy-chain hook (deny-by-default, audit-before-change, no-self-grant, quota HOOK only), node:test/MSW/in-memory proven. Live-Postgres end-to-end proof + real quota enforcement are follow-ups. See `phase-1-service-catalog-entitlements.md`.
-- **Phase 2 — next, dependency-clear.** Metering (OpenMeter on the existing ClickHouse) + real quota enforcement, building on the delivered entitlement engine + quota hook. Requires hardening/splitting ADR-0057 (+ ADR-0061) first.
-- Everything later remains gated on its prerequisites per the dependency graph. The USF is **not** complete.
+- **Phase 2 — delivered (ADR-ACT-0256).** Built-in Postgres metering + **real quota enforcement** (replacing the Phase-1 hook), live-proven. ADR-0057 split (billing→0057 Phase 9); ADR-0067 + ADR-0061 Accepted. ClickHouse/OpenMeter metering provider is **Phase 2.5** (behind the `MeteringRepository` port). See `phase-2-metering-quota.md`.
+- **Phase 3 — next.** API keys / PATs + rate limits, building on the entitlement + quota substrate (rate limits reuse the quota/metering model). Harden ADR-0065 first.
+- Everything later remains gated on its prerequisites per the dependency graph. Billing/payment (Phase 9) is **not** delivered. The USF is **not** complete.

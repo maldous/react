@@ -75,7 +75,8 @@ To avoid any impression that the whole foundation already exists, here is the ho
 
 **Phase 1 substrate (delivered, locally proven)** — built behind the BFF with deny-by-default, audit-before-change, and no tenant self-grant; proven against the local database (real row-level-security isolation) and the real API routes, plus node and UI tests:
 
-- **Entitlements** — what each customer is allowed to use, assigned by operators (who pick a customer from a lookup, not a raw id), with a read-only customer view and a service catalog of backing providers. Quota _metering and enforcement_ are not yet active (a placeholder hook only).
+- **Entitlements** — what each customer is allowed to use, assigned by operators (who pick a customer from a lookup, not a raw id), with a read-only customer view and a service catalog of backing providers.
+- **Usage metering & quotas** — recorded per-customer usage (isolated and idempotent) and **real quota enforcement**: when a customer exceeds a configured limit, the next action is denied server-side (entitlement is checked before quota). Operators set limits; customers see their own usage read-only. _Billing/charging is not part of this — that is a later phase._
 
 **Planned foundation capabilities** — decided, designed, and buildable locally for free, but **not yet built**:
 
@@ -146,6 +147,7 @@ Each proven capability is backed by a repeatable, runnable proof — a single so
 - **Events and webhooks** — `proof:webhooks`, `proof:webhook-worker`, `proof:webhook-redrive`
 - **Operations** — `proof:platform-services`, `proof:service-clickthrough-policy`, `proof:backup-local`
 - **Entitlements and service catalog (Phase 1)** — `proof:entitlements`, `proof:entitlement-policy-chain`, `proof:service-catalog-registry`, `proof:entitlements-postgres`, `proof:entitlements-routes`
+- **Metering and quota enforcement (Phase 2)** — `proof:metering`, `proof:quota-enforcement`, `proof:metering-quota-routes`
 
 ![Honest readiness — a running service is not a delivered capability](docs/images/usf-readiness-honesty.svg)
 

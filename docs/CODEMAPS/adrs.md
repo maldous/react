@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-06-11
 
-66 Architecture Decision Records (ADR-0001 through ADR-0066). ADR-0018 is intentionally absent. ADR-0001 through ADR-0052 are **Accepted**. Of the Universal Service Foundation set: ADR-0053, ADR-0054, ADR-0055, ADR-0056, and ADR-0058 are **Accepted** (hardened to decision quality, ADR-ACT-0253/0254); ADR-0057, ADR-0059–0066 remain **Proposed** (ADR-0057/0059/0062/0063 explicitly require splitting before acceptance).
+67 Architecture Decision Records (ADR-0001 through ADR-0067). ADR-0018 is intentionally absent. ADR-0001 through ADR-0052 are **Accepted**. Of the Universal Service Foundation set: ADR-0053, ADR-0054, ADR-0055, ADR-0056, ADR-0058 (ADR-ACT-0253/0254) and ADR-0061, ADR-0067 (ADR-ACT-0256, Phase 2 metering/quota) are **Accepted**. ADR-0057 has been **re-scoped to billing/invoicing/payment** (Phase 9, still Proposed; entitlements→0058, metering/quota→0067). ADR-0059, ADR-0060, ADR-0062–0066 remain **Proposed** (ADR-0059/0062/0063 explicitly require splitting before acceptance).
 
 ## Foundation & Governance (8)
 
@@ -106,7 +106,7 @@ Planning set created under ADR-ACT-0237. Status: **Proposed** (not yet Accepted)
 | ADR-0054 | Build-versus-compose decision framework                  | 2026-06-13 | 0054-build-versus-compose-decision-framework.md               |
 | ADR-0055 | Service catalog and provider integration model           | 2026-06-13 | 0055-service-catalog-and-provider-integration-model.md        |
 | ADR-0056 | Environment-specific versus shared service model         | 2026-06-13 | 0056-environment-specific-versus-shared-service-model.md      |
-| ADR-0057 | Entitlement, billing, and quota architecture             | 2026-06-13 | 0057-entitlement-billing-and-quota-architecture.md            |
+| ADR-0057 | Billing, invoicing, and payment architecture (re-scoped) | 2026-06-13 | 0057-entitlement-billing-and-quota-architecture.md            |
 | ADR-0058 | Policy decision point and delegated administration       | 2026-06-13 | 0058-policy-decision-point-and-delegated-administration.md    |
 | ADR-0059 | Workflow, event, and queue architecture                  | 2026-06-13 | 0059-workflow-event-and-queue-architecture.md                 |
 | ADR-0060 | Search and indexing architecture                         | 2026-06-13 | 0060-search-and-indexing-architecture.md                      |
@@ -116,6 +116,7 @@ Planning set created under ADR-ACT-0237. Status: **Proposed** (not yet Accepted)
 | ADR-0064 | Backup, recovery, retention, and legal hold architecture | 2026-06-13 | 0064-backup-recovery-retention-and-legal-hold-architecture.md |
 | ADR-0065 | Developer platform and API management architecture       | 2026-06-13 | 0065-developer-platform-and-api-management-architecture.md    |
 | ADR-0066 | Support administration and break-glass architecture      | 2026-06-13 | 0066-support-administration-and-break-glass-architecture.md   |
+| ADR-0067 | Metering and quota enforcement architecture              | 2026-06-13 | 0067-metering-and-quota-enforcement.md                        |
 
 ---
 
@@ -128,8 +129,8 @@ Planning set created under ADR-ACT-0237. Status: **Proposed** (not yet Accepted)
 
 ## Governance
 
-- ADR-0001 through ADR-0052, plus ADR-0053/0054/0055/0056/0058, are **Accepted**; ADR-0057 and ADR-0059 through ADR-0066 remain **Proposed**
-- Next ADR: **ADR-0067**
+- ADR-0001 through ADR-0052, plus ADR-0053/0054/0055/0056/0058/0061/0067, are **Accepted**; ADR-0057 (re-scoped to billing, Phase 9) and ADR-0059/0060/0062–0066 remain **Proposed**
+- Next ADR: **ADR-0068**
 - Action register: `docs/adr/ACTION-REGISTER.md`
 - Lifecycle evidence: `docs/evidence/`
 
