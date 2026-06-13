@@ -3146,6 +3146,78 @@
         "responses": { "200": { "description": "Observability readiness" } }
       }
     },
+    "/api/admin/secrets": {
+      "get": {
+        "summary": "List a tenant's secret references (system operator)",
+        "operationId": "listSecrets",
+        "description": "Operator read of central secret-store metadata (requires ?organisationId). Value-free: never returns the secret value. ADR-0069 / ADR-ACT-0265.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Secret reference list (metadata only)" },
+          "400": { "description": "organisationId query parameter is required" }
+        }
+      },
+      "post": {
+        "summary": "Create/rotate a secret (system operator)",
+        "operationId": "putSecret",
+        "description": "Operator-only, audited. The value is write-only and stored encrypted (built-in) or in OpenBao; the response carries metadata + the opaque ref only. ADR-0069 / ADR-ACT-0265.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Secret metadata (no value)" },
+          "400": { "description": "Validation error" }
+        }
+      }
+    },
+    "/api/admin/secrets/readiness": {
+      "get": {
+        "summary": "Secret-store backend readiness (system operator)",
+        "operationId": "secretStoreReadiness",
+        "description": "Honest readiness of the active secret backend (built-in/openbao). No secret value. ADR-0069 / ADR-ACT-0265.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": { "200": { "description": "Secret-store readiness" } }
+      }
+    },
+    "/api/admin/secrets/revoke": {
+      "post": {
+        "summary": "Revoke (soft-disable) a secret (system operator)",
+        "operationId": "revokeSecret",
+        "description": "Operator-only, audited. The value can no longer be resolved; metadata remains. ADR-0069 / ADR-ACT-0265.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Revoked" },
+          "404": { "description": "Secret not found" }
+        }
+      }
+    },
+    "/api/admin/secrets/delete": {
+      "post": {
+        "summary": "Delete a secret (system operator)",
+        "operationId": "deleteSecret",
+        "description": "Operator-only, audited. Hard delete of metadata + value (built-in) / backend entry (openbao). ADR-0069 / ADR-ACT-0265.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Deleted" },
+          "404": { "description": "Secret not found" }
+        }
+      }
+    },
     "/api/admin/scheduled-jobs": {
       "get": {
         "summary": "List a tenant's scheduled jobs (system operator)",

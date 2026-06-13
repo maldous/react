@@ -213,6 +213,11 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     // management + run-now on the event substrate. No tenant role gets these.
     "platform.jobs.read",
     "platform.jobs.write",
+    // Runtime secrets (Tier-1 kernel, ADR-0069 / ADR-ACT-0265): operator-only central
+    // secret store (built-in Postgres default; composed OpenBao provider). No tenant
+    // role gets these; the plaintext value is never returned by any read.
+    "platform.secrets.read",
+    "platform.secrets.write",
     "platform.clickthrough.pgadmin",
     "platform.clickthrough.keycloak",
     "platform.clickthrough.minio",

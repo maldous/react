@@ -143,6 +143,18 @@ export const CLICKTHROUGH_SERVICES: readonly ClickthroughService[] = [
     apexPath: null,
     tenantPath: null,
   },
+  {
+    id: "openbao",
+    resource: "admin:openbao",
+    classification: "not_exposed",
+    isolationInvariant:
+      "Central runtime secrets manager UI (ADR-0069). A secrets console must never be " +
+      "tenant-reachable and is not surfaced through forward-auth; operators reach it directly " +
+      "on OPENBAO_PORT. The platform reads/writes secrets server-side via SecretStorePort, " +
+      "never by linking the OpenBao UI. Dev mode is local-only.",
+    apexPath: null,
+    tenantPath: null,
+  },
 ];
 
 /** Resources system-admin may clickthrough (everything that is exposed at all). */

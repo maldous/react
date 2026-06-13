@@ -94,6 +94,13 @@ case "$PROFILE" in
     TIMEOUT=420
     EXTRA_FLAGS="--build"
     ;;
+  secrets)
+    # OpenBao central secrets manager (ADR-0069). Dev mode: single unsealed instance
+    # with a known root token — DEV/TEST ONLY (production needs sealed/HA/auto-unseal).
+    SERVICES="openbao"
+    PROFILE_FLAG="--profile secrets"
+    TIMEOUT=120
+    ;;
   *)
     printf '%s✗ Unknown profile: %s%s\n' "$RED" "$PROFILE" "$RESET"
     exit 1

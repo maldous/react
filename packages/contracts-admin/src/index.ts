@@ -2140,3 +2140,74 @@ export const RunScheduledJobResponseSchema = z.object({
   deduplicated: z.boolean(),
 });
 export type RunScheduledJobResponse = z.infer<typeof RunScheduledJobResponseSchema>;
+
+// ---------------------------------------------------------------------------
+// Runtime secrets — central secret store (ADR-0069 / ADR-ACT-0265). Tier-1 kernel.
+// Operator-only. Strict + no-passthrough. The read/list surface carries ONLY value-
+// free metadata: the opaque `secret:<uuid>` ref, the logical name, the backend
+// provider, version + lifecycle timestamps. The plaintext value is write-only (it
+// appears only in the PUT request, never in any response) and is resolved exclusively
+// server-internally. Readiness is honest — OpenBao unreachable ⇒ degraded.
+// ---------------------------------------------------------------------------
+
+export const SECRET_PROVIDERS = ["builtin", "openbao"] as const;
+export const SecretProviderSchema = z.enum(SECRET_PROVIDERS);
+export type SecretProviderValue = z.infer<typeof SecretProviderSchema>;
+
+/** `GET /api/admin/secrets` row — value-free metadata only. */
+export const SecretRefSummarySchema = z
+  .object({
+    ref: z.string(),
+    name: z.string(),
+    provider: SecretProviderSchema,
+    version: z.number().int().positive(),
+    revoked: z.boolean(),
+    createdAt: z.string().nullable(),
+    updatedAt: z.string().nullable(),
+    revokedAt: z.string().nullable(),
+  })
+  .strict();
+export type SecretRefSummary = z.infer<typeof SecretRefSummarySchema>;
+
+export const SecretRefListResponseSchema = z
+  .object({ secrets: z.array(SecretRefSummarySchema) })
+  .strict();
+export type SecretRefListResponse = z.infer<typeof SecretRefListResponseSchema>;
+
+/** `POST /api/admin/secrets` — create/rotate. `value` is write-only (never returned).
+ * Body never carries a tenant id (operator passes organisationId explicitly). */
+export const PutSecretRequestSchema = z
+  .object({
+    organisationId: z.string().uuid(),
+    name: z
+      .string()
+      .min(1)
+      .max(128)
+      .regex(
+        /^[a-z0-9][a-z0-9/_.-]*$/i,
+        "name: letters, digits, / _ . - (must start alphanumeric)"
+      ),
+    value: z.string().min(1).max(8192),
+  })
+  .strict();
+export type PutSecretRequest = z.infer<typeof PutSecretRequestSchema>;
+
+/** `POST /api/admin/secrets/revoke` and `/delete` — opaque ref + tenant. */
+export const SecretRefActionRequestSchema = z
+  .object({ organisationId: z.string().uuid(), ref: z.string().min(1).max(128) })
+  .strict();
+export type SecretRefActionRequest = z.infer<typeof SecretRefActionRequestSchema>;
+
+export const SECRET_STORE_READINESS_STATUSES = ["ready", "degraded"] as const;
+export const SecretStoreReadinessStatusSchema = z.enum(SECRET_STORE_READINESS_STATUSES);
+export type SecretStoreReadinessStatus = z.infer<typeof SecretStoreReadinessStatusSchema>;
+
+/** `GET /api/admin/secrets/readiness` — never carries a secret value. */
+export const SecretStoreReadinessResponseSchema = z
+  .object({
+    provider: SecretProviderSchema,
+    status: SecretStoreReadinessStatusSchema,
+    detail: z.string(),
+  })
+  .strict();
+export type SecretStoreReadinessResponse = z.infer<typeof SecretStoreReadinessResponseSchema>;

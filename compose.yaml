@@ -416,6 +416,35 @@ services:
     restart: unless-stopped
 
   # ---------------------------------------------------------------------------
+  # SECRETS PROFILE — `make compose-up-secrets` (docker compose --profile secrets)
+  # OpenBao (open-source, Vault-compatible) central runtime secrets manager
+  # (Tier-1 kernel, ADR-0069 / ADR-ACT-0265). Behind SecretStorePort; the built-in
+  # Postgres store remains the durable default. Runs in -dev mode locally: a single
+  # in-memory unsealed instance with a known root token — DEV/TEST ONLY. Production
+  # requires a sealed, HA, auto-unsealed deployment with externalised credentials.
+  # ---------------------------------------------------------------------------
+
+  openbao:
+    image: openbao/openbao:2.2.0
+    profiles: [secrets]
+    cap_add:
+      - IPC_LOCK
+    environment:
+      BAO_DEV_ROOT_TOKEN_ID: ${OPENBAO_TOKEN:-platform-dev-root-token}
+      BAO_DEV_LISTEN_ADDRESS: "0.0.0.0:8200"
+      BAO_ADDR: "http://127.0.0.1:8200"
+    command: server -dev -dev-root-token-id=${OPENBAO_TOKEN:-platform-dev-root-token} -dev-listen-address=0.0.0.0:8200
+    ports:
+      - "${OPENBAO_PORT:-8200}:8200"
+    healthcheck:
+      test: ["CMD-SHELL", "bao status -address=http://127.0.0.1:8200 >/dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------
   # EXTERNAL-SENTRY INFRASTRUCTURE — dedicated resources for the shared Sentry
   # instance. Never connected to per-environment postgres/redis/clickhouse.

@@ -57,6 +57,9 @@ export const PROOF_LADDER = [
   "proof:alert-notification-bridge",
   "proof:scheduled-jobs",
   "proof:scheduled-job-routes",
+  "proof:secret-store-contract",
+  "proof:secrets-openbao",
+  "proof:provider-secrets-readiness",
 ] as const;
 
 export type ProofLadderEntry = (typeof PROOF_LADDER)[number];

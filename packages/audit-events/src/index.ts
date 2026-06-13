@@ -61,6 +61,11 @@ export const AuditAction = {
   IncidentUpdated: "incident.updated",
   ScheduledJobSet: "scheduled_job.set",
   ScheduledJobRun: "scheduled_job.run",
+  SecretRefCreated: "secret_ref.created",
+  SecretRefRevoked: "secret_ref.revoked",
+  SecretRefDeleted: "secret_ref.deleted",
+  ProviderConfigSet: "provider_config.set",
+  ProviderConfigDeleted: "provider_config.deleted",
 } as const;
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction];

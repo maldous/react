@@ -36,7 +36,7 @@ Allowed-environment legend: ✓ allowed · ✗ not allowed · — n/a.
 | Prometheus | observability-provider | metrics-traces | per-environment | ✓ | ✓ | ✓ | ✓ | yes (runtime metrics) | no (unless checklist) | scrape/ready probe (Phase 7.5) | per-env TSDB | env labels mandatory; tenant labels where tenant data exists | **provider candidate / not integrated** — backend behind OTEL collector |
 | Tempo | observability-provider | metrics-traces (traces) | per-environment | ✓ | ✓ | ✓ | ✓ | yes (traces) | no (unless checklist) | ready probe (Phase 7.5) | per-env trace store | env/tenant labels; no secrets in spans | **provider candidate / not integrated** — trace ingest/query proof required |
 | Alertmanager | observability-provider | alerting-incident-oncall | per-environment | ✓ | ✓ | ✓ | ✓ | no (routing config) | shared only w/ checklist | ready probe (Phase 7.5) | per-env config | env-scoped routing; must not page across environments | **provider candidate / not integrated** — alert routes/on-call not delivered |
-| Vault / OpenBao | (none yet) | runtime-secrets | per-environment | ✓ | ✓ | ✓ | ✓ | yes (secrets) | no | to define | per-env path isolation | path-scoped per tenant; access-controlled | **provider candidate / not integrated** — env/db only today; LocalStack secretsmanager is mock-only |
+| OpenBao | secrets | runtime-secrets | per-environment | ✓ | ✓ | ✓ | ✓ | yes (secrets) | no | `proof:secrets-openbao` (sys/health + live KV round-trip) | per-env KV path `<base>/<org>/<ref>`; revoke/delete | org-scoped ref (RLS) + per-tenant KV path; opaque `secret:<uuid>` | **delivered** behind `SecretStorePort` (built-in Postgres store is the durable default); local profile is OpenBao `-dev` mode — production needs sealed/HA/auto-unseal + externalised creds; UI is `not_exposed` |
 | Mailpit | (default) | notifications (email transport) | local/test/staging proof only | ✓ | ✓ | ✓ | ✗ | no (dev sink) | no | `proof:email-sender` | n/a (sink) | local capture only; never customer mail | **not a production transport** — prod needs real SMTP/Brevo adapter |
 | SonarQube | external-sonar | code-quality-secret-dep-scan | shared-cross-environment | ✓ | ✓ | ✓ | ✓ | no (engineering quality) | yes (checklist met) | sonarqube probe | single `react-sonar` project | engineering quality, not tenant runtime data — no tenant data to leak | dependency scan not yet a hard gate |
 | Sentry | external-sentry | code-quality-secret-dep-scan | shared-cross-environment (errors only) | ✓ | ✓ | ✓ | ✓ | errors only (env/tenant tagged) | yes (checklist met) | sentry probe | 90-day retention | errors only, env/tenant tagged; **its internal Kafka/ClickHouse are Sentry-only and must never be reused as the platform bus/warehouse** | none for error telemetry |
@@ -49,7 +49,7 @@ Allowed-environment legend: ✓ allowed · ✗ not allowed · — n/a.
 These are documented as `provider candidate / not integrated / not production-ready`
 — they have a classification and a delivery requirement, but no adapter, no
 readiness proof against a live backend, and therefore **no delivered status**:
-Meilisearch, Temporal, Windmill, Prometheus, Tempo, Alertmanager, Vault/OpenBao.
+Meilisearch, Temporal, Windmill, Prometheus, Tempo, Alertmanager.
 
 A provider is only promoted to delivered when it has a port-backed adapter, a live
 readiness proof, tenant-isolation proof where it holds tenant data, and a registry
@@ -61,3 +61,9 @@ status change — never from compose availability alone.
   adapter behind `RateLimitRepository`, live-proven (`proof:rate-limits-redis`),
   per-environment, tenant-isolated keys, honest Postgres fallback. See
   [`rate-limit-provider-foundation.md`](./rate-limit-provider-foundation.md).
+- **OpenBao secret store** (`runtime-secrets`, Tier-1 kernel, ADR-ACT-0265): a real
+  adapter behind `SecretStorePort` (built-in Postgres store is the durable default),
+  live-proven (`proof:secrets-openbao` — live KV round-trip), per-environment,
+  org-scoped ref + per-tenant KV path, opaque `secret:<uuid>`, value never returned.
+  Local profile is OpenBao `-dev` mode (production needs sealed/HA/auto-unseal). See
+  [`secrets-openbao-foundation.md`](./secrets-openbao-foundation.md).

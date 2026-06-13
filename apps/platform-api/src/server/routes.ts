@@ -41,6 +41,8 @@ import {
   UpdateIncidentRequestSchema,
   CreateScheduledJobRequestSchema,
   UpdateScheduledJobRequestSchema,
+  PutSecretRequestSchema,
+  SecretRefActionRequestSchema,
   type TenantAuthProvidersConfig,
   type ObservabilitySignalStatus,
 } from "@platform/contracts-admin";
@@ -441,6 +443,7 @@ async function buildApiKeysDeps() {
 }
 
 const rateLimitProviderLog = createLogger({ name: "rate-limit-provider" });
+const secretStoreProviderLog = createLogger({ name: "secret-store-provider" });
 
 // Select the rate-limit repository provider (ADR-0065 / ADR-ACT-0263 — Phase 3.5).
 // Postgres is the durable default and store of record for policy definitions.
@@ -473,6 +476,44 @@ async function buildRateLimitDeps() {
     entitlements: new PostgresEntitlementRepository(pool),
     audit: createPostgresAuditEventPort(pool),
   };
+}
+
+// Select the active secret store (ADR-0069 / ADR-ACT-0265). Built-in Postgres is the
+// durable default; the composed OpenBao provider is chosen only when
+// SECRET_STORE_PROVIDER=openbao AND OPENBAO_ADDR/OPENBAO_TOKEN are wired. A container
+// is not a capability — OpenBao is delivered only when proof:secrets-openbao proves a
+// live round-trip; otherwise this falls back to the built-in store with a warning.
+async function selectSecretStore(
+  pool: ReturnType<typeof getApplicationPool>
+): Promise<import("../ports/secret-store.ts").SecretStore> {
+  const { PostgresSecretStore } = await import("../adapters/postgres-secret-store.ts");
+  const builtin = new PostgresSecretStore(pool);
+  if ((process.env["SECRET_STORE_PROVIDER"] ?? "builtin").toLowerCase() !== "openbao") {
+    return builtin;
+  }
+  const address = process.env["OPENBAO_ADDR"];
+  const token = process.env["OPENBAO_TOKEN"];
+  if (!address || !token) {
+    secretStoreProviderLog.warn(
+      { provider: "openbao" },
+      "SECRET_STORE_PROVIDER=openbao but OPENBAO_ADDR/OPENBAO_TOKEN unset; using built-in store"
+    );
+    return builtin;
+  }
+  const { OpenBaoSecretStore } = await import("../adapters/openbao-secret-store.ts");
+  return new OpenBaoSecretStore(pool, {
+    address,
+    token,
+    mount: process.env["OPENBAO_KV_MOUNT"] ?? "secret",
+    kvBasePath: process.env["OPENBAO_KV_BASE_PATH"] ?? "platform",
+    warn: (message, meta) => secretStoreProviderLog.warn(meta, message),
+  });
+}
+
+// Build the secrets usecase deps (secret store + audit) — ADR-ACT-0265.
+async function buildSecretsDeps() {
+  const pool = getApplicationPool();
+  return { store: await selectSecretStore(pool), audit: createPostgresAuditEventPort(pool) };
 }
 
 // Build the scheduled-jobs usecase deps (scheduled-job repo + event bus + audit) — ADR-ACT-0262.
@@ -5727,6 +5768,154 @@ export const routes: Route[] = [
         return;
       }
       res.json(200, result.job);
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Runtime secrets — central secret store (Tier-1 kernel, ADR-0069 / ADR-ACT-0265).
+  // Operator-only. The read/list/readiness surface returns value-free metadata; the
+  // plaintext is write-only and resolved exclusively server-internally. The active
+  // backend (built-in Postgres default or composed OpenBao) is chosen behind the port.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/admin/secrets/readiness",
+    operationName: "admin.secrets.readiness",
+    requiresAuth: true,
+    requiredPermission: "platform.secrets.read",
+    resource: "admin:secrets",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (_req, res) => {
+      const { secretStoreReadiness } = await import("../usecases/secrets.ts");
+      res.json(200, await secretStoreReadiness(await buildSecretsDeps()));
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/secrets",
+    operationName: "admin.secrets.list",
+    requiresAuth: true,
+    requiredPermission: "platform.secrets.read",
+    resource: "admin:secrets",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const organisationId =
+        new URL(req.raw.url ?? "", "http://localhost").searchParams.get("organisationId") ?? "";
+      if (!UUID_RE.test(organisationId)) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: "organisationId query parameter is required",
+        });
+        return;
+      }
+      const { listSecrets } = await import("../usecases/secrets.ts");
+      res.json(200, await listSecrets(organisationId, await buildSecretsDeps()));
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/secrets",
+    operationName: "admin.secrets.put",
+    requiresAuth: true,
+    requiredPermission: "platform.secrets.write",
+    resource: "admin:secrets",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const parsed = PutSecretRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid secret",
+        });
+        return;
+      }
+      const { putSecret } = await import("../usecases/secrets.ts");
+      const summary = await putSecret(
+        {
+          organisationId: parsed.data.organisationId,
+          name: parsed.data.name,
+          value: parsed.data.value,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildSecretsDeps()
+      );
+      res.json(200, summary);
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/secrets/revoke",
+    operationName: "admin.secrets.revoke",
+    requiresAuth: true,
+    requiredPermission: "platform.secrets.write",
+    resource: "admin:secrets",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const parsed = SecretRefActionRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid secret reference" });
+        return;
+      }
+      const { revokeSecret } = await import("../usecases/secrets.ts");
+      const result = await revokeSecret(
+        {
+          organisationId: parsed.data.organisationId,
+          ref: parsed.data.ref,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildSecretsDeps()
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Secret not found" });
+        return;
+      }
+      res.json(200, { revoked: true });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/secrets/delete",
+    operationName: "admin.secrets.delete",
+    requiresAuth: true,
+    requiredPermission: "platform.secrets.write",
+    resource: "admin:secrets",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const parsed = SecretRefActionRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid secret reference" });
+        return;
+      }
+      const { deleteSecret } = await import("../usecases/secrets.ts");
+      const result = await deleteSecret(
+        {
+          organisationId: parsed.data.organisationId,
+          ref: parsed.data.ref,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildSecretsDeps()
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Secret not found" });
+        return;
+      }
+      res.json(200, { deleted: true });
     },
   },
 ];

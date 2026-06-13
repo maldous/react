@@ -1,5 +1,6 @@
 .PHONY: compose-up compose-up-default compose-up-identity \
         compose-up-cloud compose-up-external-mocks compose-up-identity-mocks \
+        compose-up-secrets \
         compose-up-web compose-up-observability \
         compose-down compose-down-web compose-down-volumes compose-down-reset \
         compose-ps compose-logs \
@@ -34,6 +35,13 @@ compose-up-identity:
 	$(call STEP,compose: starting Keycloak ($(ENV)))
 	bash scripts/compose/up.sh $(ENV) identity
 	$(call OK,Keycloak ready for $(ENV))
+
+## compose-up-secrets — Start OpenBao central secrets manager (secrets profile, dev mode)
+## Pair with SECRET_STORE_PROVIDER=openbao to route the SecretStorePort at OpenBao.
+compose-up-secrets:
+	$(call STEP,compose: starting OpenBao ($(ENV)))
+	bash scripts/compose/up.sh $(ENV) secrets
+	$(call OK,OpenBao ready for $(ENV) — run `npm run proof:secrets-openbao`)
 
 ## compose-up-cloud — Start LocalStack (cloud-mocks profile)
 compose-up-cloud:
