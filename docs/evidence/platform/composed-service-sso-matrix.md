@@ -2,11 +2,12 @@
 
 Source ADR: ADR-0073 · Action: ADR-ACT-0275
 
-App-login (Keycloak realm) SSO for the composed Compose GUI services. Opt-in via
-`COMPOSE_SSO_ENABLED` (compose) + `enable_composed_sso` (Keycloak provisioning), both
-default false. Live OIDC click-through is proven on a running stack (deferred — not
-browser-verifiable in CI/sandbox); the wiring below is statically validated
-(`make infra-check`, `npm run compose:config:all`, `make env-validate-all`).
+App-login (Keycloak realm) SSO for the composed Compose GUI services — **ON by default**
+(`COMPOSE_SSO_ENABLED` + `enable_composed_sso` both default true) for every service that
+supports it; each keeps native-auth fallback so it stays healthy if OIDC is unreachable.
+Live OIDC click-through is proven on a running stack (deferred — not browser-verifiable
+in CI/sandbox); the wiring below is statically validated (`make infra-check`,
+`npm run compose:config:all`, `make env-validate-all`).
 
 ## Matrix
 

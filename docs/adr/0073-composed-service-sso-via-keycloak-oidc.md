@@ -35,9 +35,11 @@ never hand-edited.
    confidential clients for Grafana + SonarQube (MinIO + pgAdmin already exist as
    public PKCE clients, ADR-0030), plus a realm-role token mapper on each (claim
    `roles`, in the ID token + userinfo) so services receive the user's platform roles
-   for authorisation mapping. All gated by `enable_composed_sso` (default false) so
-   default provisioning — and staging/prod — are unchanged until explicitly enabled.
-   `make infra-check` (terraform validate) covers this statically.
+   for authorisation mapping. `enable_composed_sso` defaults to **true** — SSO is on for
+   every composed service that supports it, in every environment. A MinIO hardcoded
+   `policy=consoleAdmin` claim mapper makes MinIO actually AUTHORISE the SSO'd user
+   (otherwise it authenticates then denies); the platform forward-auth gate already
+   restricts the click-through to operators. `make infra-check` covers this statically.
 
 2. **Confidential client secrets in the generated env.** `GRAFANA_OIDC_CLIENT_SECRET`
    and `SONAR_OIDC_CLIENT_SECRET` are per-environment derived secrets in the generated
@@ -45,14 +47,16 @@ never hand-edited.
    Keycloak client and the service share one value. MinIO + pgAdmin are public PKCE
    (no secret).
 
-3. **Service-side OIDC config, opt-in via `COMPOSE_SSO_ENABLED` (default false).**
+3. **Service-side OIDC config, ON by default via `COMPOSE_SSO_ENABLED` (default true).**
+   Each service keeps its native auth as a fallback so it stays healthy even if OIDC is
+   unreachable (the local stack is never broken by SSO being on).
    - **Grafana** — `GF_AUTH_GENERIC_OAUTH_*` wired in compose: auth URL browser-facing
      (`KC_HOSTNAME`), token/userinfo backchannel (`KEYCLOAK_URL`); role map
      `system-admin→Admin, tenant-admin→Editor, else Viewer`.
-   - **MinIO** — `MINIO_IDENTITY_OPENID_*` already wired (ADR-0030); the realm-role
-     mapper makes role→policy mapping possible.
-     The toggle keeps SSO off by default so the local stack is unchanged until an
-     operator turns it on AND provisions the clients (`enable_composed_sso=true`).
+   - **MinIO** — `MINIO_IDENTITY_OPENID_*` already wired (ADR-0030); `CLAIM_NAME=policy`
+     - the Keycloak hardcoded `policy=consoleAdmin` mapper authorise the SSO'd operator.
+   - **pgAdmin / SonarQube** — Keycloak clients ready; pgAdmin needs its OAuth2 config
+     file and SonarQube the `sonar-auth-oidc` plugin (per the matrix).
 
 4. **Per-service SSO capability matrix** (`docs/evidence/platform/composed-service-sso-matrix.md`)
    records what each service supports and its exact wiring.
@@ -63,9 +67,9 @@ never hand-edited.
 
 - **A separate IdP / per-service local logins** — rejected: the platform Keycloak realm
   is the single source of identity; SSO unifies login + role mapping.
-- **Enabling SSO unconditionally** — rejected: it would break the default local stack
-  (clients not provisioned) and staging/prod; gated opt-in (`COMPOSE_SSO_ENABLED` +
-  `enable_composed_sso`) is the safe default.
+- **Opt-in SSO (off by default)** — rejected: the requirement is SSO ON for every
+  composed service that supports it; each service keeps native-auth fallback so
+  on-by-default does not break startup (this superseded the original opt-in default).
 - **Committing SSO as "proven" without a live click-through** — rejected: live OIDC
   flows are an explicit proof requirement on a running stack; this ADR ships the
   statically-validated wiring and records live proof as the acceptance step.
@@ -90,10 +94,10 @@ Points 1–4 above.
 ## Acceptance criteria
 
 - `make infra-check` green with the SSO clients (statically validated).
-- Default provisioning + local stack unchanged when SSO is off.
-- With `COMPOSE_SSO_ENABLED=true` + `enable_composed_sso=true` provisioned, an operator
-  signs into Grafana (and MinIO) via the platform Keycloak login and lands with the
-  mapped role — verified by a live click-through on a running stack.
+- SSO on by default; each service stays healthy via native-auth fallback if OIDC is down.
+- Once the Keycloak clients are provisioned (`keycloak-provision`), an operator signs
+  into Grafana + MinIO via the platform Keycloak login and lands with the mapped
+  role/policy — verified by a live click-through on a running stack.
 
 ## Proof requirements
 
@@ -112,7 +116,7 @@ OIDC flow and the session carries the mapped role. Static: `make infra-check`,
 
 - One login (the platform Keycloak realm) for the app + composed services, role-mapped.
 - Credentials centrally managed (generated env / OpenBao); no hand-edited service creds.
-- SSO is opt-in, so the change is inert until explicitly enabled + provisioned.
+- SSO is ON by default for SSO-capable services; native-auth fallback keeps each service healthy if OIDC is unreachable.
 
 ## Validation / evidence
 

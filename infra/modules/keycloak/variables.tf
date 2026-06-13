@@ -102,13 +102,14 @@ variable "apex_domain" {
 }
 
 # ---------------------------------------------------------------------------
-# Composed-service SSO (ADR-0073) — opt-in OIDC for Grafana/SonarQube/MinIO/pgAdmin
+# Composed-service SSO (ADR-0073) — ON by default for every composed service that
+# supports OIDC (Grafana/SonarQube/MinIO/pgAdmin)
 # ---------------------------------------------------------------------------
 
 variable "enable_composed_sso" {
   type        = bool
-  description = "Create OIDC clients + realm-role mappers for the composed Compose GUI services (Grafana, SonarQube, MinIO, pgAdmin). Default false leaves provisioning unchanged. (ADR-0073)"
-  default     = false
+  description = "Create OIDC clients + realm-role mappers for the composed Compose GUI services (Grafana, SonarQube, MinIO, pgAdmin). Default true — SSO is on for every composed service that supports it (ADR-0073)."
+  default     = true
 }
 
 variable "grafana_oidc_client_secret" {

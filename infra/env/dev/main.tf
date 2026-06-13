@@ -51,10 +51,10 @@ variable "provisioner_client_secret" {
   sensitive = true
 }
 
-# Composed-service SSO (ADR-0073) — opt-in; secrets from the generated env.
+# Composed-service SSO (ADR-0073) — ON by default; secrets from the generated env.
 variable "enable_composed_sso" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "grafana_oidc_client_secret" {

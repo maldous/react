@@ -604,3 +604,21 @@ resource "keycloak_openid_user_realm_role_protocol_mapper" "pgadmin_roles" {
   add_to_access_token = true
   add_to_userinfo     = true
 }
+
+# MinIO console authorisation — MinIO maps the claim named by
+# MINIO_IDENTITY_OPENID_CLAIM_NAME (set to "policy") to a MinIO policy. Without a
+# matching policy, an OIDC-authenticated user is DENIED. The platform forward-auth
+# gate already restricts the MinIO click-through to operators, so SSO'd users get the
+# built-in consoleAdmin policy. Gated by the same flag (ADR-0073).
+resource "keycloak_openid_hardcoded_claim_protocol_mapper" "minio_policy" {
+  count               = var.enable_composed_sso ? 1 : 0
+  realm_id            = keycloak_realm.platform.id
+  client_id           = keycloak_openid_client.minio.id
+  name                = "minio-policy"
+  claim_name          = "policy"
+  claim_value         = "consoleAdmin"
+  claim_value_type    = "String"
+  add_to_id_token     = true
+  add_to_access_token = true
+  add_to_userinfo     = true
+}

@@ -98,7 +98,9 @@ services:
       MINIO_IDENTITY_OPENID_CONFIG_URL: ${KEYCLOAK_URL:-http://keycloak:8080/kc}/realms/${KEYCLOAK_REALM:-platform}/.well-known/openid-configuration
       MINIO_IDENTITY_OPENID_CLIENT_ID: minio
       MINIO_IDENTITY_OPENID_CLIENT_SECRET: ""
-      MINIO_IDENTITY_OPENID_CLAIM_NAME: preferred_username
+      # ADR-0073: MinIO maps this claim to a MinIO policy; the Keycloak minio client
+      # emits policy=consoleAdmin for SSO'd operators (forward-auth gates the click-through).
+      MINIO_IDENTITY_OPENID_CLAIM_NAME: policy
       MINIO_IDENTITY_OPENID_SCOPES: "openid,email,profile"
       MINIO_IDENTITY_OPENID_REDIRECT_URI_DYNAMIC_ALL: "on"
     ports:
