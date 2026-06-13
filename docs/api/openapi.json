@@ -2873,6 +2873,50 @@
         }
       }
     },
+    "/api/org/search": {
+      "post": {
+        "summary": "Tenant-isolated product search",
+        "operationId": "orgSearch",
+        "description": "Built-in Postgres full-text search, RLS-isolated + permission-aware. `q` is plain text (parsed server-side via plainto_tsquery). Returns no body or secret fields. ADR-0060 / ADR-ACT-0258.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Search hits" },
+          "400": { "description": "No tenant context or invalid/empty query" }
+        }
+      }
+    },
+    "/api/admin/search/readiness": {
+      "get": {
+        "summary": "Search readiness (system operator)",
+        "operationId": "getSearchReadiness",
+        "description": "Operator view of the search engine status (postgres-fts). Never faked: `blocked` if the store is unreachable, `degraded` if empty. ADR-0060 / ADR-ACT-0258.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": { "200": { "description": "Search readiness" } }
+      }
+    },
+    "/api/admin/search/reindex": {
+      "post": {
+        "summary": "Reindex a tenant's search documents (system operator)",
+        "operationId": "reindexSearch",
+        "description": "Operator-only, audited. Rebuilds the tsvector for a tenant's documents. ADR-0060 / ADR-ACT-0258.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Reindexed count" },
+          "400": { "description": "Validation error or invalid tenant id" }
+        }
+      }
+    },
     "/api/org/entitlements": {
       "get": {
         "summary": "List the tenant's own entitlements (read-only)",

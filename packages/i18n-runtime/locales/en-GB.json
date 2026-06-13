@@ -185,7 +185,8 @@
         "readiness": "Readiness",
         "entitlements": "Entitlements",
         "usage": "Usage & quotas",
-        "developer": "Developer"
+        "developer": "Developer",
+        "search": "Search"
       },
       "card": {
         "membersDescription": "Invite people, change roles, and remove members.",
@@ -201,7 +202,8 @@
         "readinessDescription": "See what's configured and what's left to set up.",
         "entitlementsDescription": "See and assign what this tenant is allowed to use.",
         "usageDescription": "See recorded usage and set quota limits per capability.",
-        "developerDescription": "Mint API keys, see rate limits, and find the API surface."
+        "developerDescription": "Mint API keys, see rate limits, and find the API surface.",
+        "searchDescription": "Tenant-isolated product search with readiness and reindex."
       },
       "entitlements": {
         "title": "Entitlements",
@@ -298,6 +300,27 @@
         "save": "Save rate limit",
         "saveError": "Could not save the rate limit.",
         "noRateLimits": "No rate-limit policies configured for this tenant."
+      },
+      "search": {
+        "title": "Search",
+        "description": "Tenant-isolated, permission-aware product search (built-in Postgres full-text). Results are server-ranked; React renders hits only.",
+        "testTitle": "Search test",
+        "queryLabel": "Query",
+        "run": "Search",
+        "error": "Search failed.",
+        "noHits": "No matching documents.",
+        "resultMeta": "{total} result(s) in {ms} ms",
+        "colTitle": "Title",
+        "colUrl": "URL",
+        "colScore": "Score",
+        "readinessTitle": "Search readiness",
+        "docCount": "{count} indexed document(s)",
+        "reindexTitle": "Reindex a tenant",
+        "tenantSelectLabel": "Tenant",
+        "tenantSelectPlaceholder": "Select a tenant…",
+        "reindex": "Reindex",
+        "reindexResult": "Reindexed {count} document(s).",
+        "reindexError": "Could not reindex."
       },
       "config": {
         "title": "Configuration",

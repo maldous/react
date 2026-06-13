@@ -103,6 +103,11 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     labelKey: "feature.admin.nav.developer",
     permission: "tenant.developer.read",
   },
+  {
+    to: "/admin/search",
+    labelKey: "feature.admin.nav.search",
+    permission: "tenant.search.read",
+  },
 ];
 
 const linkClass =

@@ -24,6 +24,8 @@ import {
   createApiKeyFixture,
   rateLimitsFixture,
   developerPortalFixture,
+  searchResponseFixture,
+  searchReadinessFixture,
 } from "./fixtures/admin.ts";
 import type { AuthSettingsReadiness } from "@platform/contracts-admin";
 
@@ -703,6 +705,18 @@ export function adminDeveloperHandlers(
   ];
 }
 
+// Tenant-isolated product search (Phase 4, ADR-ACT-0258).
+export function adminSearchHandlers(
+  searchResponse = searchResponseFixture,
+  readiness = searchReadinessFixture
+) {
+  return [
+    http.post("/api/org/search", () => HttpResponse.json(searchResponse)),
+    http.get("/api/admin/search/readiness", () => HttpResponse.json(readiness)),
+    http.post("/api/admin/search/reindex", () => HttpResponse.json({ reindexed: 1 })),
+  ];
+}
+
 // --- generic helpers --------------------------------------------------------
 
 /** Simulated network failure for any GET endpoint. */
@@ -750,5 +764,6 @@ export const handlers = [
   adminTenantsLookupHandler(),
   ...adminUsageQuotaHandlers(),
   ...adminDeveloperHandlers(),
+  ...adminSearchHandlers(),
   ...adminWriteOkHandlers(),
 ];

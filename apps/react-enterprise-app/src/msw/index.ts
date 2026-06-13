@@ -64,6 +64,7 @@ export {
   adminTenantsLookupHandler,
   adminUsageQuotaHandlers,
   adminDeveloperHandlers,
+  adminSearchHandlers,
 } from "./handlers.ts";
 export {
   membersFixture,
@@ -86,6 +87,8 @@ export {
   createApiKeyFixture,
   rateLimitsFixture,
   developerPortalFixture,
+  searchResponseFixture,
+  searchReadinessFixture,
 } from "./fixtures/admin.ts";
 export {
   createGraphqlHandler,

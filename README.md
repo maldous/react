@@ -149,6 +149,7 @@ Each proven capability is backed by a repeatable, runnable proof — a single so
 - **Entitlements and service catalog (Phase 1)** — `proof:entitlements`, `proof:entitlement-policy-chain`, `proof:service-catalog-registry`, `proof:entitlements-postgres`, `proof:entitlements-routes`
 - **Metering and quota enforcement (Phase 2)** — `proof:metering`, `proof:quota-enforcement`, `proof:metering-quota-routes`
 - **Developer platform — API keys + rate limits (Phase 3)** — `proof:api-keys`, `proof:rate-limits`, `proof:api-key-routes`
+- **Tenant-isolated product search (Phase 4)** — `proof:search`, `proof:search-isolation`, `proof:search-routes`
 
 ![Honest readiness — a running service is not a delivered capability](docs/images/usf-readiness-honesty.svg)
 

@@ -18,6 +18,8 @@ import type {
   RateLimitListResponse,
   DeveloperPortalResponse,
   CreateApiKeyResponse,
+  SearchResponse,
+  SearchReadinessResponse,
   CapabilitySummary,
   CapabilityCategory,
   CapabilityImplementationStatus,
@@ -381,6 +383,27 @@ export const developerPortalFixture: DeveloperPortalResponse = {
   openapiPath: "/api/openapi.json",
   scopes: ["read", "write", "admin"],
   rateLimitPolicyCount: 1,
+};
+
+export const searchResponseFixture: SearchResponse = {
+  hits: [
+    {
+      documentId: "p1",
+      documentType: "product",
+      title: "Blue widget",
+      url: "/products/p1",
+      score: 0.42,
+    },
+  ],
+  total: 1,
+  tookMs: 3,
+};
+
+export const searchReadinessFixture: SearchReadinessResponse = {
+  engine: "postgres-fts",
+  status: "ready",
+  documentCount: 1,
+  detail: "Postgres full-text search is reachable and has indexed documents.",
 };
 
 export const entitlementsFixture: EntitlementListResponse = {

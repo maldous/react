@@ -1745,3 +1745,64 @@ export const DeveloperPortalResponseSchema = z.object({
   rateLimitPolicyCount: z.number(),
 });
 export type DeveloperPortalResponse = z.infer<typeof DeveloperPortalResponseSchema>;
+
+// ---------------------------------------------------------------------------
+// Tenant-isolated product search (Phase 4, ADR-0060 / ADR-ACT-0258).
+// Built-in Postgres full-text search; tenant-scoped (RLS) + permission-aware.
+// Meilisearch/Typesense/OpenSearch remain Phase-4.5 provider adapters behind the
+// same ports. Search runs server-side (BFF only); no secret fields are indexed or
+// returned. React renders BFF results only.
+// ---------------------------------------------------------------------------
+
+/** `POST /api/org/search` — tenant full-text query. `q` is plain text (parsed
+ * server-side via plainto_tsquery); never raw tsquery from the client. */
+export const SearchRequestSchema = z
+  .object({
+    q: z.string().min(1).max(200),
+    documentType: z.string().min(1).max(60).optional(),
+    page: z.number().int().positive().max(1000).optional(),
+    limit: z.number().int().positive().max(50).optional(),
+  })
+  .strict();
+export type SearchRequest = z.infer<typeof SearchRequestSchema>;
+
+/** A single search hit. Carries no body and no secret/metadata fields. */
+export const SearchHitSchema = z.object({
+  documentId: z.string(),
+  documentType: z.string(),
+  title: z.string(),
+  url: z.string().nullable(),
+  score: z.number(),
+});
+export type SearchHit = z.infer<typeof SearchHitSchema>;
+
+export const SearchResponseSchema = z.object({
+  hits: z.array(SearchHitSchema),
+  total: z.number(),
+  tookMs: z.number(),
+});
+export type SearchResponse = z.infer<typeof SearchResponseSchema>;
+
+export const SEARCH_READINESS_STATES = ["ready", "degraded", "blocked"] as const;
+export const SearchReadinessStateSchema = z.enum(SEARCH_READINESS_STATES);
+export type SearchReadinessState = z.infer<typeof SearchReadinessStateSchema>;
+
+/** `GET /api/admin/search/readiness` — operator view. Never faked: `blocked` if the
+ * search store is unreachable, `degraded` if reachable but empty/partial. */
+export const SearchReadinessResponseSchema = z.object({
+  engine: z.string(),
+  status: SearchReadinessStateSchema,
+  documentCount: z.number(),
+  detail: z.string(),
+});
+export type SearchReadinessResponse = z.infer<typeof SearchReadinessResponseSchema>;
+
+/** `POST /api/admin/search/reindex` — operator-only, audited. Rebuilds the
+ * tsvector for a tenant's documents. */
+export const ReindexRequestSchema = z.object({ tenantId: z.string().uuid() }).strict();
+export type ReindexRequest = z.infer<typeof ReindexRequestSchema>;
+
+export const ReindexResponseSchema = z.object({
+  reindexed: z.number(),
+});
+export type ReindexResponse = z.infer<typeof ReindexResponseSchema>;

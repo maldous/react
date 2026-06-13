@@ -52,6 +52,7 @@ export const AuditAction = {
   QuotaSet: "quota.set",
   QuotaRemoved: "quota.removed",
   RateLimitSet: "rate_limit.set",
+  SearchReindexed: "search.reindexed",
 } as const;
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction];

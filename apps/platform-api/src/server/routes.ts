@@ -32,6 +32,8 @@ import {
   SetQuotaRequestSchema,
   CreateApiKeyRequestSchema,
   SetRateLimitRequestSchema,
+  SearchRequestSchema,
+  ReindexRequestSchema,
   type TenantAuthProvidersConfig,
   type ObservabilitySignalStatus,
 } from "@platform/contracts-admin";
@@ -440,6 +442,14 @@ async function buildRateLimitDeps() {
     entitlements: new PostgresEntitlementRepository(pool),
     audit: createPostgresAuditEventPort(pool),
   };
+}
+
+// Build the search usecase deps (search index + query repo + audit) — ADR-ACT-0258.
+async function buildSearchDeps() {
+  const { PostgresSearchRepository } = await import("../adapters/postgres-search-repository.ts");
+  const pool = getApplicationPool();
+  const repo = new PostgresSearchRepository(pool);
+  return { index: repo, query: repo, audit: createPostgresAuditEventPort(pool) };
 }
 
 // Build the developer-portal foundation deps (api-key + rate-limit + entitlement repos).
@@ -4890,6 +4900,101 @@ export const routes: Route[] = [
         await buildRateLimitDeps()
       );
       res.json(200, { policyKey: result.policyKey });
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Tenant-isolated product search (Phase 4, ADR-0060 / ADR-ACT-0258). Built-in
+  // Postgres FTS; tenant query is permission-aware + RLS-isolated. Indexing is
+  // server-internal (not exposed). Readiness + reindex are operator-only.
+  // ---------------------------------------------------------------------------
+  {
+    method: "POST",
+    path: "/api/org/search",
+    operationName: "org.search.query",
+    requiresAuth: true,
+    requiredPermission: "tenant.search.read",
+    resource: "organisation:search",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const parsed = SearchRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid search request",
+        });
+        return;
+      }
+      const { searchProducts } = await import("../usecases/search.ts");
+      try {
+        res.json(
+          200,
+          await searchProducts(
+            tenantCtx.organisationId,
+            parsed.data,
+            req.actor!.permissions,
+            await buildSearchDeps()
+          )
+        );
+      } catch (err) {
+        if (err instanceof ValidationError) {
+          res.json(400, err.toSafeResponse());
+          return;
+        }
+        throw err;
+      }
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/search/readiness",
+    operationName: "admin.search.readiness",
+    requiresAuth: true,
+    requiredPermission: "platform.search.read",
+    resource: "admin:search",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (_req, res) => {
+      const { getSearchReadiness } = await import("../usecases/search.ts");
+      res.json(200, await getSearchReadiness(await buildSearchDeps()));
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/search/reindex",
+    operationName: "admin.search.reindex",
+    requiresAuth: true,
+    requiredPermission: "platform.search.write",
+    resource: "admin:search",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const parsed = ReindexRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid reindex request",
+        });
+        return;
+      }
+      const { reindexTenant } = await import("../usecases/search.ts");
+      const result = await reindexTenant(
+        {
+          organisationId: parsed.data.tenantId,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildSearchDeps()
+      );
+      res.json(200, { reindexed: result.reindexed });
     },
   },
 ];

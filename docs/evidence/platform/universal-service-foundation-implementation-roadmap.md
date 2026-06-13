@@ -3,7 +3,7 @@
 - **Action:** ADR-ACT-0252 (delivery hardening); ADR-ACT-0254 (Phase 1 delivered)
 - **Source ADRs:** ADR-0053/0054/0055/0056/0058 **Accepted**; ADR-0057, ADR-0059–0066 Proposed (0057/0059/0062/0063 require splitting)
 - **Date:** 2026-06-13
-- **Status of this document:** governance / planning artifact. It sequences implementation. **Update (ADR-ACT-0254):** Phase 0 governance is complete and the Phase-0 ADRs are Accepted; the **Phase 1 substrate is delivered** (entitlement engine + service catalog v2 + policy-chain hook, node:test/MSW/in-memory proven — see `phase-1-service-catalog-entitlements.md`). **Phase 2 (metering + real quota enforcement, ADR-ACT-0256)** and **Phase 3 (API keys + rate limits + read-only developer portal foundation, ADR-ACT-0257)** are now **delivered + live-proven** (see `phase-2-metering-quota.md`, `phase-3-api-keys-rate-limits.md`). Billing, search, event bus, durable workers, profile self-service, notifications, observability/alerting, and any new composed service remain **not delivered**.
+- **Status of this document:** governance / planning artifact. It sequences implementation. **Update (ADR-ACT-0254):** Phase 0 governance is complete and the Phase-0 ADRs are Accepted; the **Phase 1 substrate is delivered** (entitlement engine + service catalog v2 + policy-chain hook, node:test/MSW/in-memory proven — see `phase-1-service-catalog-entitlements.md`). **Phase 2 (metering + real quota enforcement, ADR-ACT-0256)** and **Phase 3 (API keys + rate limits + read-only developer portal foundation, ADR-ACT-0257)**, and **Phase 4 (built-in Postgres tenant-isolated search, ADR-ACT-0258)** are now **delivered + live-proven** (see `phase-2-metering-quota.md`, `phase-3-api-keys-rate-limits.md`, `phase-4-search.md`). Billing, event bus, durable workers, profile self-service, notifications, observability/alerting, and any new composed service remain **not delivered**.
 
 ## What this is
 
@@ -125,6 +125,8 @@ All 14 ADRs share a sound template (Status/Context/Decision/Consequences/Validat
 **Proof scripts.** `proof:search` (index isolation + permission filter). **Acceptance criteria.** Index-per-tenant; cross-tenant query returns nothing; permission filter enforced server-side; Meilisearch runs locally free (MIT).
 
 **Estimated size.** L. **Risk.** Medium. **Stop condition.** Tenant-isolated search proven.
+
+> **DELIVERED (2026-06-13, ADR-ACT-0258).** Built-in **Postgres full-text search** (migration 026 `search_documents`, RLS-isolated, GIN tsvector), `SearchIndexPort` + `SearchQueryPort`, permission-aware queries, secret-field rejection, operator reindex + readiness, `/admin/search` UI. Live-proven: `proof:search`, `proof:search-isolation`, `proof:search-routes`. Deviation from the sketch: **no Meilisearch composed** — the composed engine is Phase 4.5 behind the same ports (a container is not a capability). **Not delivered:** composed engine, index-per-tenant, typo-tolerance/relevance, indexing producers (wired per capability later).
 
 ---
 

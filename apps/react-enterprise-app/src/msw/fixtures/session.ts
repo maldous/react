@@ -50,6 +50,8 @@ export const sessionFixtures: Record<SessionPersona, SessionActor> = {
       "tenant.api_keys.read",
       "tenant.api_keys.write",
       "tenant.developer.read",
+      // Search (Phase 4, ADR-ACT-0258).
+      "tenant.search.read",
     ],
     displayName: "Tenant Admin",
   },
@@ -91,6 +93,10 @@ export const sessionFixtures: Record<SessionPersona, SessionActor> = {
       "platform.rate_limits.write",
       "tenant.api_keys.read",
       "tenant.developer.read",
+      // Search (Phase 4, ADR-ACT-0258): operator readiness + reindex.
+      "platform.search.read",
+      "platform.search.write",
+      "tenant.search.read",
     ],
     displayName: "System Admin",
   },

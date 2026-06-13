@@ -191,6 +191,11 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     "platform.rate_limits.write",
     "tenant.api_keys.read",
     "tenant.developer.read",
+    // Search (Phase 4, ADR-0060 / ADR-ACT-0258): operators read readiness + reindex;
+    // tenant.search.read alias keeps the search console nav visible to operators.
+    "platform.search.read",
+    "platform.search.write",
+    "tenant.search.read",
     "platform.clickthrough.pgadmin",
     "platform.clickthrough.keycloak",
     "platform.clickthrough.minio",
@@ -256,6 +261,9 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     "tenant.api_keys.read",
     "tenant.api_keys.write",
     "tenant.developer.read",
+    // Search (Phase 4, ADR-0060 / ADR-ACT-0258): tenant-admins query their own
+    // tenant's product search. Reindex is operator-only.
+    "tenant.search.read",
     "tenant.audit.read",
     // tenant.clickthrough.mailpit + sentry removed (ADR-ACT-0233): Mailpit is a
     // shared unfiltered inbox and the Sentry tenant route never existed — both

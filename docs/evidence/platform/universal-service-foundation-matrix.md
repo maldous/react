@@ -171,11 +171,11 @@ Each domain has two generated tables: a **decision view** (status, build/compose
 
 | Capability | Status | Purpose | Compose / provider | Decision | Local free candidate | Environment model | Shared/per-env | Priority | Size | Risk |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `search-indexing` | missing | Tenant-scoped, permission-aware full-text and filtered search. | search-runtime is a PORT-ONLY scaffold; no engine composed | compose | Meilisearch or Typesense (light) / OpenSearch (heavy) | per-environment | per-env | P1 | L | Medium |
+| `search-indexing` | locally proven | Tenant-scoped, permission-aware full-text and filtered search. | postgres (search_documents, RLS, GIN tsvector) | build | Postgres full-text search (built-in); Meilisearch/Typesense are Phase-4.5 behind the ports | per-environment | per-env | P1 | L | Medium |
 
 | Capability | Tenant isolation | Data isolation | Permission | Audit events | Readiness model | BFF contract | Admin UI | Self-service UI | Proof | Production blockers | ADR | ADR-ACT | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `search-indexing` | per-tenant index or tenant filter + permission filter | index-per-tenant preferred for hard isolation | permissions-aware query filter | reindex jobs logged | to define (index health) | missing (port exists, no route/adapter) | missing | missing | not-yet-proven | no engine, adapter, route, or UI; Loki log-search is NOT product search | ADR-0060 | ADR-ACT-0244 | Meilisearch/Typesense favoured for low compose burden + tenant isolation. |
+| `search-indexing` | documents tenant-scoped (RLS); queries run under withTenant | RLS; permission_key query filter; no secret fields indexed/returned | tenant.search.read; platform.search.read/write | search.reindexed (operator, audit-before-change) | operator search-readiness (postgres-fts; never faked) | /api/org/search; /api/admin/search/readiness; /api/admin/search/reindex | /admin/search | tenant search test (read) | proof:search; proof:search-isolation; proof:search-routes | composed engine (Phase 4.5) for typo-tolerance/relevance at scale; indexing producers wired per-capability | ADR-0060 | ADR-ACT-0258 | Phase 4 delivered + live-proven: built-in Postgres FTS, RLS-isolated + permission-aware. Composed engine (Meilisearch/Typesense/OpenSearch) is Phase 4.5 behind SearchIndexPort/SearchQueryPort. |
 
 ### Storage
 

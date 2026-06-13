@@ -40,6 +40,9 @@ export const PROOF_LADDER = [
   "proof:api-keys",
   "proof:rate-limits",
   "proof:api-key-routes",
+  "proof:search",
+  "proof:search-isolation",
+  "proof:search-routes",
 ] as const;
 
 export type ProofLadderEntry = (typeof PROOF_LADDER)[number];
