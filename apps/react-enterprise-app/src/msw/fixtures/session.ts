@@ -46,6 +46,10 @@ export const sessionFixtures: Record<SessionPersona, SessionActor> = {
       "tenant.platform.read",
       "tenant.entitlements.read",
       "tenant.metering.read",
+      // Developer platform (Phase 3, ADR-ACT-0257).
+      "tenant.api_keys.read",
+      "tenant.api_keys.write",
+      "tenant.developer.read",
     ],
     displayName: "Tenant Admin",
   },
@@ -81,6 +85,12 @@ export const sessionFixtures: Record<SessionPersona, SessionActor> = {
       "platform.quotas.read",
       "platform.quotas.write",
       "tenant.metering.read",
+      // Developer platform (Phase 3, ADR-ACT-0257): operator reads keys + sets rate limits.
+      "platform.api_keys.read",
+      "platform.rate_limits.read",
+      "platform.rate_limits.write",
+      "tenant.api_keys.read",
+      "tenant.developer.read",
     ],
     displayName: "System Admin",
   },

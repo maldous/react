@@ -183,6 +183,14 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     "platform.quotas.read",
     "platform.quotas.write",
     "tenant.metering.read",
+    // Developer platform (Phase 3, ADR-0065 / ADR-ACT-0257): operators read tenant
+    // API keys and read/set rate limits; the tenant.* read aliases keep the
+    // developer console nav visible to operators (mirrors tenant.metering.read).
+    "platform.api_keys.read",
+    "platform.rate_limits.read",
+    "platform.rate_limits.write",
+    "tenant.api_keys.read",
+    "tenant.developer.read",
     "platform.clickthrough.pgadmin",
     "platform.clickthrough.keycloak",
     "platform.clickthrough.minio",
@@ -242,6 +250,12 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     // Metering + quota (Phase 2, ADR-0067 / ADR-ACT-0256): tenant-admins READ their own
     // usage + quota state; they can never ingest usage or set quotas (operator-only).
     "tenant.metering.read",
+    // Developer platform (Phase 3, ADR-0065 / ADR-ACT-0257): tenant-admins mint +
+    // revoke their OWN API keys and read their developer foundation + rate limits.
+    // They can never read another tenant's keys or set rate limits (operator-only).
+    "tenant.api_keys.read",
+    "tenant.api_keys.write",
+    "tenant.developer.read",
     "tenant.audit.read",
     // tenant.clickthrough.mailpit + sentry removed (ADR-ACT-0233): Mailpit is a
     // shared unfiltered inbox and the Sentry tenant route never existed — both

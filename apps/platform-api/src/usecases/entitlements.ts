@@ -97,6 +97,17 @@ export const ENTITLEMENT_CATALOG: readonly EntitlementDefinition[] = [
     providerKey: "minio",
     quotaStatus: "not_enforced",
   },
+  {
+    key: "api_access",
+    displayName: "Programmatic API access",
+    description:
+      "Tenant may mint API keys / personal access tokens for programmatic, rate-limited access.",
+    category: "developer-platform",
+    defaultState: "revoked",
+    requiresProvider: false,
+    providerKey: null,
+    quotaStatus: "not_enforced",
+  },
 ] as const;
 
 const CATALOG_BY_KEY = new Map<string, EntitlementDefinition>(

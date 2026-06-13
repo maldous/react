@@ -1431,6 +1431,7 @@ export const ENTITLEMENT_KEYS = [
   "custom_domains",
   "advanced_observability",
   "storage",
+  "api_access",
 ] as const;
 export const EntitlementKeySchema = z.enum(ENTITLEMENT_KEYS);
 export type EntitlementKey = z.infer<typeof EntitlementKeySchema>;
@@ -1629,3 +1630,118 @@ export const SetQuotaRequestSchema = z
   })
   .strict();
 export type SetQuotaRequest = z.infer<typeof SetQuotaRequestSchema>;
+
+// ---------------------------------------------------------------------------
+// Developer platform — API keys / PATs + rate limits (Phase 3, ADR-0065 /
+// ADR-ACT-0257). API keys are SERVER-generated: only a salted+peppered hash is
+// stored, the plaintext secret is shown EXACTLY ONCE on creation and never again.
+// Keys are tenant-scoped, revocable, and entitlement-gated (`api_access`). No
+// list/read route ever returns the secret or the hash. Rate limits reuse the
+// entitlement gate (bridge to the quota substrate) and a durable fixed-window
+// counter; React only renders the state the BFF returns.
+// ---------------------------------------------------------------------------
+
+/** Coarse scopes an API key may carry. Read-only foundation — write/admin scopes
+ * exist for forward-compatibility but the gateway enforcement is Phase 3.5. */
+export const API_KEY_SCOPES = ["read", "write", "admin"] as const;
+export const ApiKeyScopeSchema = z.enum(API_KEY_SCOPES);
+export type ApiKeyScope = z.infer<typeof ApiKeyScopeSchema>;
+
+export const API_KEY_STATES = ["active", "revoked", "expired"] as const;
+export const ApiKeyStateSchema = z.enum(API_KEY_STATES);
+export type ApiKeyState = z.infer<typeof ApiKeyStateSchema>;
+
+/** Non-secret API-key summary. NEVER carries the secret or the stored hash. */
+export const ApiKeySummarySchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  // Non-secret display handle (e.g. "pk_a1b2c3"); safe to show in lists.
+  keyPrefix: z.string(),
+  scopes: z.array(ApiKeyScopeSchema),
+  state: ApiKeyStateSchema,
+  createdAt: z.string(),
+  createdBy: z.string().nullable(),
+  lastUsedAt: z.string().nullable(),
+  expiresAt: z.string().nullable(),
+  revokedAt: z.string().nullable(),
+});
+export type ApiKeySummary = z.infer<typeof ApiKeySummarySchema>;
+
+export const ApiKeyListResponseSchema = z.object({ apiKeys: z.array(ApiKeySummarySchema) });
+export type ApiKeyListResponse = z.infer<typeof ApiKeyListResponseSchema>;
+
+/** `POST /api/org/api-keys` — tenant self-service mint. */
+export const CreateApiKeyRequestSchema = z
+  .object({
+    name: z.string().min(1).max(120),
+    scopes: z.array(ApiKeyScopeSchema).max(8).optional(),
+    expiresAt: z.string().optional(),
+  })
+  .strict();
+export type CreateApiKeyRequest = z.infer<typeof CreateApiKeyRequestSchema>;
+
+/** Creation response — the ONLY time `secret` is ever returned. */
+export const CreateApiKeyResponseSchema = z.object({
+  apiKey: ApiKeySummarySchema,
+  // Plaintext, shown once. The server stores only a hash; this is never recoverable.
+  secret: z.string(),
+  secretShownOnce: z.literal(true),
+});
+export type CreateApiKeyResponse = z.infer<typeof CreateApiKeyResponseSchema>;
+
+// --- Rate limits ----------------------------------------------------------
+
+export const RATE_LIMIT_ACTIONS = ["allow", "deny"] as const;
+export const RateLimitActionSchema = z.enum(RATE_LIMIT_ACTIONS);
+export type RateLimitAction = z.infer<typeof RateLimitActionSchema>;
+
+export const RATE_LIMIT_STATES = ["within", "exceeded", "no_entitlement", "no_policy"] as const;
+export const RateLimitStateSchema = z.enum(RATE_LIMIT_STATES);
+export type RateLimitState = z.infer<typeof RateLimitStateSchema>;
+
+export const RateLimitPolicySummarySchema = z.object({
+  policyKey: z.string(),
+  entitlementKey: EntitlementKeySchema,
+  limit: z.number(),
+  windowSeconds: z.number(),
+  action: RateLimitActionSchema,
+  // Current count in the live window + derived state (BFF-computed; not authoritative client-side).
+  used: z.number(),
+  state: RateLimitStateSchema,
+  updatedAt: z.string().nullable(),
+  updatedBy: z.string().nullable(),
+});
+export type RateLimitPolicySummary = z.infer<typeof RateLimitPolicySummarySchema>;
+
+export const RateLimitListResponseSchema = z.object({
+  policies: z.array(RateLimitPolicySummarySchema),
+});
+export type RateLimitListResponse = z.infer<typeof RateLimitListResponseSchema>;
+
+/** `PATCH /api/admin/tenants/:tenantId/rate-limits` — operator-only, audited. */
+export const SetRateLimitRequestSchema = z
+  .object({
+    policyKey: z.string().min(1).max(100),
+    entitlementKey: EntitlementKeySchema,
+    limit: z.number().int().nonnegative(),
+    windowSeconds: z.number().int().positive().max(86400),
+    action: RateLimitActionSchema.optional(),
+  })
+  .strict();
+export type SetRateLimitRequest = z.infer<typeof SetRateLimitRequestSchema>;
+
+// --- Developer portal foundation (read-only) ------------------------------
+
+/** `GET /api/org/developer` — read-only developer foundation: where to find the
+ * API surface + a non-secret summary of the tenant's programmatic access. */
+export const DeveloperPortalResponseSchema = z.object({
+  apiAccessEntitled: z.boolean(),
+  activeKeyCount: z.number(),
+  // Primary client boundary (ADR-0013) + the supplementary REST baseline (read-only links).
+  graphqlEndpoint: z.string(),
+  restBaselinePath: z.string(),
+  openapiPath: z.string(),
+  scopes: z.array(ApiKeyScopeSchema),
+  rateLimitPolicyCount: z.number(),
+});
+export type DeveloperPortalResponse = z.infer<typeof DeveloperPortalResponseSchema>;

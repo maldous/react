@@ -51,6 +51,7 @@ export const AuditAction = {
   EntitlementRevoked: "entitlement.revoked",
   QuotaSet: "quota.set",
   QuotaRemoved: "quota.removed",
+  RateLimitSet: "rate_limit.set",
 } as const;
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction];

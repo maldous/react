@@ -30,6 +30,8 @@ import {
   SetEntitlementRequestSchema,
   RecordMeterEventRequestSchema,
   SetQuotaRequestSchema,
+  CreateApiKeyRequestSchema,
+  SetRateLimitRequestSchema,
   type TenantAuthProvidersConfig,
   type ObservabilitySignalStatus,
 } from "@platform/contracts-admin";
@@ -410,6 +412,48 @@ async function buildQuotaDeps() {
     metering: new PostgresMeteringRepository(pool),
     entitlements: new PostgresEntitlementRepository(pool),
     audit: createPostgresAuditEventPort(pool),
+  };
+}
+
+// Build the API-keys usecase deps (api-key repo + entitlement repo + audit) — ADR-ACT-0257.
+async function buildApiKeysDeps() {
+  const { PostgresApiKeyRepository } = await import("../adapters/postgres-api-key-repository.ts");
+  const { PostgresEntitlementRepository } =
+    await import("../adapters/postgres-entitlement-repository.ts");
+  const pool = getApplicationPool();
+  return {
+    apiKeys: new PostgresApiKeyRepository(pool),
+    entitlements: new PostgresEntitlementRepository(pool),
+    audit: createPostgresAuditEventPort(pool),
+  };
+}
+
+// Build the rate-limit usecase deps (rate-limit repo + entitlement repo + audit) — ADR-ACT-0257.
+async function buildRateLimitDeps() {
+  const { PostgresRateLimitRepository } =
+    await import("../adapters/postgres-rate-limit-repository.ts");
+  const { PostgresEntitlementRepository } =
+    await import("../adapters/postgres-entitlement-repository.ts");
+  const pool = getApplicationPool();
+  return {
+    rateLimits: new PostgresRateLimitRepository(pool),
+    entitlements: new PostgresEntitlementRepository(pool),
+    audit: createPostgresAuditEventPort(pool),
+  };
+}
+
+// Build the developer-portal foundation deps (api-key + rate-limit + entitlement repos).
+async function buildDeveloperPortalDeps() {
+  const { PostgresApiKeyRepository } = await import("../adapters/postgres-api-key-repository.ts");
+  const { PostgresRateLimitRepository } =
+    await import("../adapters/postgres-rate-limit-repository.ts");
+  const { PostgresEntitlementRepository } =
+    await import("../adapters/postgres-entitlement-repository.ts");
+  const pool = getApplicationPool();
+  return {
+    apiKeys: new PostgresApiKeyRepository(pool),
+    rateLimits: new PostgresRateLimitRepository(pool),
+    entitlements: new PostgresEntitlementRepository(pool),
   };
 }
 
@@ -4608,6 +4652,244 @@ export const routes: Route[] = [
         await buildQuotaDeps()
       );
       res.json(200, { quotaKey: result.quotaKey });
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Developer platform (Phase 3, ADR-0065 / ADR-ACT-0257). API keys are
+  // tenant self-service (server-generated, secret shown once, hashed at rest,
+  // entitlement-gated, revocable). Rate limits are operator-set + tenant-read.
+  // The developer-portal foundation is a read-only summary. No route ever
+  // returns an API-key secret or hash except the one-time create response.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/org/api-keys",
+    operationName: "org.apiKeys.list",
+    requiresAuth: true,
+    requiredPermission: "tenant.api_keys.read",
+    resource: "organisation:api_keys",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { listApiKeys } = await import("../usecases/api-keys.ts");
+      res.json(200, await listApiKeys(tenantCtx.organisationId, await buildApiKeysDeps()));
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/org/api-keys",
+    operationName: "org.apiKeys.create",
+    requiresAuth: true,
+    requiredPermission: "tenant.api_keys.write",
+    resource: "organisation:api_keys",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const parsed = CreateApiKeyRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid API key request",
+        });
+        return;
+      }
+      const { createApiKey } = await import("../usecases/api-keys.ts");
+      try {
+        const result = await createApiKey(
+          {
+            organisationId: tenantCtx.organisationId,
+            ...parsed.data,
+            actor: {
+              actorId: req.actor!.userId,
+              actorRoles: req.actor!.roles,
+              sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+            },
+          },
+          await buildApiKeysDeps()
+        );
+        if (result.kind === "not_entitled") {
+          res.json(403, {
+            code: "FORBIDDEN",
+            message: "Tenant is not entitled to programmatic API access",
+          });
+          return;
+        }
+        res.json(201, result.response);
+      } catch (err) {
+        if (err instanceof ValidationError) {
+          res.json(400, err.toSafeResponse());
+          return;
+        }
+        throw err;
+      }
+    },
+  },
+  {
+    method: "DELETE",
+    path: "/api/org/api-keys/:keyId",
+    operationName: "org.apiKeys.revoke",
+    requiresAuth: true,
+    requiredPermission: "tenant.api_keys.write",
+    resource: "organisation:api_keys",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const keyId = req.params["keyId"] ?? "";
+      if (!UUID_RE.test(keyId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid key id" });
+        return;
+      }
+      const { revokeApiKey } = await import("../usecases/api-keys.ts");
+      const result = await revokeApiKey(
+        {
+          organisationId: tenantCtx.organisationId,
+          keyId,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildApiKeysDeps()
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "API key not found" });
+        return;
+      }
+      res.json(200, { revoked: true });
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/org/developer",
+    operationName: "org.developer.portal",
+    requiresAuth: true,
+    requiredPermission: "tenant.developer.read",
+    resource: "organisation:developer",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { getDeveloperPortal } = await import("../usecases/rate-limits.ts");
+      res.json(
+        200,
+        await getDeveloperPortal(tenantCtx.organisationId, await buildDeveloperPortalDeps())
+      );
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/org/rate-limits",
+    operationName: "org.rateLimits.list",
+    requiresAuth: true,
+    requiredPermission: "tenant.developer.read",
+    resource: "organisation:rate_limits",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { listRateLimits } = await import("../usecases/rate-limits.ts");
+      res.json(200, await listRateLimits(tenantCtx.organisationId, await buildRateLimitDeps()));
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/tenants/:tenantId/api-keys",
+    operationName: "admin.tenants.apiKeys.list",
+    requiresAuth: true,
+    requiredPermission: "platform.api_keys.read",
+    resource: "admin:api_keys",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      if (!UUID_RE.test(tenantId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const { listApiKeys } = await import("../usecases/api-keys.ts");
+      res.json(200, await listApiKeys(tenantId, await buildApiKeysDeps(), { operator: true }));
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/tenants/:tenantId/rate-limits",
+    operationName: "admin.tenants.rateLimits.list",
+    requiresAuth: true,
+    requiredPermission: "platform.rate_limits.read",
+    resource: "admin:rate_limits",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      if (!UUID_RE.test(tenantId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const { listRateLimits } = await import("../usecases/rate-limits.ts");
+      res.json(200, await listRateLimits(tenantId, await buildRateLimitDeps(), { operator: true }));
+    },
+  },
+  {
+    method: "PATCH",
+    path: "/api/admin/tenants/:tenantId/rate-limits",
+    operationName: "admin.tenants.rateLimits.set",
+    requiresAuth: true,
+    requiredPermission: "platform.rate_limits.write",
+    resource: "admin:rate_limits",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      if (!UUID_RE.test(tenantId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const parsed = SetRateLimitRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid rate-limit request",
+        });
+        return;
+      }
+      const { setRateLimit } = await import("../usecases/rate-limits.ts");
+      const result = await setRateLimit(
+        {
+          organisationId: tenantId,
+          ...parsed.data,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildRateLimitDeps()
+      );
+      res.json(200, { policyKey: result.policyKey });
     },
   },
 ];

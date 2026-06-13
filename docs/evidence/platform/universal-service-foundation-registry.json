@@ -1,12 +1,55 @@
 {
-  "$comment": "ADR-ACT-0237 — Universal Service Foundation registry. DATA ONLY. This file does NOT assert that any capability is implemented; the `status` field is the honest, source-traced state at the date below. Single source of truth for docs/evidence/platform/universal-service-foundation-matrix.md. Validated by tools/architecture/validate-universal-foundation. Do not collapse `compose container exists` into a delivered status.",
+  "$comment": "ADR-ACT-0237 \u2014 Universal Service Foundation registry. DATA ONLY. This file does NOT assert that any capability is implemented; the `status` field is the honest, source-traced state at the date below. Single source of truth for docs/evidence/platform/universal-service-foundation-matrix.md. Validated by tools/architecture/validate-universal-foundation. Do not collapse `compose container exists` into a delivered status.",
   "schemaVersion": 1,
   "generatedAs": "planning-inventory",
   "date": "2026-06-13",
-  "sourceAdrs": ["ADR-0053", "ADR-0054", "ADR-0055", "ADR-0056", "ADR-0057", "ADR-0058", "ADR-0059", "ADR-0060", "ADR-0061", "ADR-0062", "ADR-0063", "ADR-0064", "ADR-0065", "ADR-0066"],
-  "statusVocabulary": ["delivered", "locally proven", "partial", "api-only", "ui-only", "compose-only", "mock-only", "deferred", "missing", "blocked", "not applicable"],
-  "decisionVocabulary": ["build", "compose", "adapter", "defer", "reject"],
-  "environmentModelVocabulary": ["per-environment", "shared-cross-environment", "local-only", "test-only", "mock-only", "production-external", "production-internal", "forbidden-in-production", "not-applicable"],
+  "sourceAdrs": [
+    "ADR-0053",
+    "ADR-0054",
+    "ADR-0055",
+    "ADR-0056",
+    "ADR-0057",
+    "ADR-0058",
+    "ADR-0059",
+    "ADR-0060",
+    "ADR-0061",
+    "ADR-0062",
+    "ADR-0063",
+    "ADR-0064",
+    "ADR-0065",
+    "ADR-0066"
+  ],
+  "statusVocabulary": [
+    "delivered",
+    "locally proven",
+    "partial",
+    "api-only",
+    "ui-only",
+    "compose-only",
+    "mock-only",
+    "deferred",
+    "missing",
+    "blocked",
+    "not applicable"
+  ],
+  "decisionVocabulary": [
+    "build",
+    "compose",
+    "adapter",
+    "defer",
+    "reject"
+  ],
+  "environmentModelVocabulary": [
+    "per-environment",
+    "shared-cross-environment",
+    "local-only",
+    "test-only",
+    "mock-only",
+    "production-external",
+    "production-internal",
+    "forbidden-in-production",
+    "not-applicable"
+  ],
   "domains": [
     "identity-access",
     "authentication",
@@ -113,28 +156,28 @@
       "name": "API keys / personal access tokens",
       "domain": "identity-access",
       "purpose": "Programmatic credentials for users and service accounts.",
-      "status": "missing",
-      "composeSupport": "none",
+      "status": "locally proven",
+      "composeSupport": "postgres (api_keys, RLS); scrypt hashing in-process",
       "decision": "build",
-      "localFreeCandidate": "Keycloak service accounts / client credentials + custom token store",
+      "localFreeCandidate": "Postgres + Node scrypt (api-key-crypto); built-in",
       "environmentModel": "per-environment",
       "sharedPerEnv": "per-env",
-      "tenantIsolation": "key scoped to tenant + actor",
-      "dataIsolation": "hashed secret at rest; RLS",
-      "permissionModel": "tenant.apikeys.* (to define)",
-      "auditEvents": "key issue/revoke audit (to build)",
-      "readinessModel": "n/a",
-      "bffContract": "missing",
-      "adminUi": "missing",
-      "selfServiceUi": "missing",
-      "proof": "not-yet-proven",
-      "productionBlockers": "full capability absent",
+      "tenantIsolation": "key tenant-scoped (RLS); UNIQUE prefix lookup",
+      "dataIsolation": "only a salted+peppered scrypt hash stored; plaintext shown once; RLS",
+      "permissionModel": "tenant.api_keys.read/write; platform.api_keys.read",
+      "auditEvents": "api_key.created + api_key.revoked (audit-before-change)",
+      "readinessModel": "n/a (always-on once built)",
+      "bffContract": "/api/org/api-keys; /api/admin/tenants/:tenantId/api-keys",
+      "adminUi": "/admin/developer",
+      "selfServiceUi": "tenant-admin (create/revoke + one-time secret reveal)",
+      "proof": "proof:api-keys; proof:api-key-routes",
+      "productionBlockers": "API_KEY_PEPPER must be set in production (dev default is local-only)",
       "adr": "ADR-0065",
-      "actionRegister": "ADR-ACT-0250",
+      "actionRegister": "ADR-ACT-0257",
       "priority": "P1",
       "size": "L",
       "risk": "High",
-      "notes": "Secret handling must reuse write-only + redaction pattern from auth credentials."
+      "notes": "Phase 3 delivered + live-proven: server-generated, hashed, entitlement-gated (api_access), revocable, tenant-scoped. Secret shown once; never returned by list/read."
     },
     {
       "capability": "groups",
@@ -226,7 +269,7 @@
       "domain": "identity-access",
       "purpose": "Attribute-based, runtime-configurable authorization decisions.",
       "status": "partial",
-      "composeSupport": "keycloak Authorization Services (UMA 2.0 PEP) — authorisation-runtime is real",
+      "composeSupport": "keycloak Authorization Services (UMA 2.0 PEP) \u2014 authorisation-runtime is real",
       "decision": "build",
       "localFreeCandidate": "Keycloak UMA (current); OPA/Cedar adapter as an optional external PDP",
       "environmentModel": "per-environment",
@@ -302,7 +345,7 @@
       "priority": "P1",
       "size": "L",
       "risk": "High",
-      "notes": "Phase 1 + 1.5 (ADR-ACT-0254/0255): entitlement engine LIVE-proven against Compose Postgres (RLS isolation — migration 023 fixed a real bypass-predicate flaw caught by the proof) and live BFF route handlers. Deny-by-default + audit-before-change + no-self-grant + evaluation chain + quota HOOK (Phase-2 only). Operator console picks a tenant via a lookup Select (no raw UUID). Billing/metering/real quotas not delivered."
+      "notes": "Phase 1 + 1.5 (ADR-ACT-0254/0255): entitlement engine LIVE-proven against Compose Postgres (RLS isolation \u2014 migration 023 fixed a real bypass-predicate flaw caught by the proof) and live BFF route handlers. Deny-by-default + audit-before-change + no-self-grant + evaluation chain + quota HOOK (Phase-2 only). Operator console picks a tenant via a lookup Select (no raw UUID). Billing/metering/real quotas not delivered."
     },
     {
       "capability": "support-mode-breakglass",
@@ -604,7 +647,7 @@
       "adminUi": "write-only fields",
       "selfServiceUi": "tenant-admin",
       "proof": "token-crypto + auth-settings-audit tests",
-      "productionBlockers": "no central secrets manager (Vault) — env/db only",
+      "productionBlockers": "no central secrets manager (Vault) \u2014 env/db only",
       "adr": "ADR-0043, ADR-0041",
       "actionRegister": "ADR-ACT-0237",
       "priority": "P1",
@@ -694,7 +737,7 @@
       "priority": "P1",
       "size": "L",
       "risk": "High",
-      "notes": "Phase 2 (ADR-ACT-0256): built-in Postgres metering — RLS-isolated, idempotent, windowed aggregation, entitlement-gated ingestion — live-proven (proof:metering). ClickHouse/OpenMeter providerisation is Phase 2.5 behind MeteringRepository."
+      "notes": "Phase 2 (ADR-ACT-0256): built-in Postgres metering \u2014 RLS-isolated, idempotent, windowed aggregation, entitlement-gated ingestion \u2014 live-proven (proof:metering). ClickHouse/OpenMeter providerisation is Phase 2.5 behind MeteringRepository."
     },
     {
       "capability": "quota-enforcement",
@@ -722,7 +765,7 @@
       "priority": "P1",
       "size": "M",
       "risk": "Medium",
-      "notes": "Phase 2 (ADR-ACT-0256): real quota enforcement (entitlement → usage-vs-limit over a window) replaces the Phase-1 no-op hook; entitlement is checked BEFORE quota; quota changes audited; live-proven (proof:quota-enforcement)."
+      "notes": "Phase 2 (ADR-ACT-0256): real quota enforcement (entitlement \u2192 usage-vs-limit over a window) replaces the Phase-1 no-op hook; entitlement is checked BEFORE quota; quota changes audited; live-proven (proof:quota-enforcement)."
     },
     {
       "capability": "relational-storage",
@@ -818,7 +861,7 @@
       "decision": "compose",
       "localFreeCandidate": "OpenMetadata or DataHub (OSS)",
       "environmentModel": "shared-cross-environment",
-      "sharedPerEnv": "shared (engineering metadata, not tenant runtime data) — requires partitioning proof",
+      "sharedPerEnv": "shared (engineering metadata, not tenant runtime data) \u2014 requires partitioning proof",
       "tenantIsolation": "catalog is metadata; DSR workflows tenant-scoped",
       "dataIsolation": "metadata only; DSR acts on per-tenant data",
       "permissionModel": "platform.governance.* / tenant DSR",
@@ -956,7 +999,7 @@
       "status": "missing",
       "composeSupport": "single webhook worker only; no general scheduler/engine",
       "decision": "compose",
-      "localFreeCandidate": "Temporal (heavy) or Windmill (light) — both OSS local",
+      "localFreeCandidate": "Temporal (heavy) or Windmill (light) \u2014 both OSS local",
       "environmentModel": "per-environment",
       "sharedPerEnv": "per-env",
       "tenantIsolation": "tenant-scoped workflow namespaces",
@@ -1040,7 +1083,7 @@
       "status": "missing",
       "composeSupport": "none",
       "decision": "defer",
-      "localFreeCandidate": "Windmill scripts or OpenFaaS (OSS) — only if a real need emerges",
+      "localFreeCandidate": "Windmill scripts or OpenFaaS (OSS) \u2014 only if a real need emerges",
       "environmentModel": "per-environment",
       "sharedPerEnv": "per-env",
       "tenantIsolation": "sandboxed per tenant",
@@ -1276,7 +1319,7 @@
       "adminUi": "n/a",
       "selfServiceUi": "n/a",
       "proof": "proof:domain-identity-matrix; proof:tenant-storage isolation",
-      "productionBlockers": "shared services (Sentry/Sonar/Grafana/Mailpit) have NO per-tenant isolation — global-only by policy",
+      "productionBlockers": "shared services (Sentry/Sonar/Grafana/Mailpit) have NO per-tenant isolation \u2014 global-only by policy",
       "adr": "ADR-0029",
       "actionRegister": "ADR-ACT-0247",
       "priority": "P0",
@@ -1332,13 +1375,41 @@
       "adminUi": "missing (portal)",
       "selfServiceUi": "missing",
       "proof": "openapi:drift (not complete)",
-      "productionBlockers": "no portal, SDK gen, rate limits, sandbox/test mode, or OpenAPI explorer; OpenAPI drift incomplete",
+      "productionBlockers": "no external portal, SDK gen, sandbox/test mode, or schema-level OpenAPI drift (rate limits now delivered \u2014 see `rate-limiting`)",
       "adr": "ADR-0065",
-      "actionRegister": "ADR-ACT-0250",
+      "actionRegister": "ADR-ACT-0257",
       "priority": "P2",
       "size": "L",
       "risk": "Medium",
-      "notes": "OpenAPI baseline exists; portal/SDK/rate-limit are gaps."
+      "notes": "OpenAPI baseline + path/method drift enforced; rate limits delivered as the `rate-limiting` capability (Phase 3); external portal/SDK/sandbox remain gaps (ADR-0065 Proposed sub-decisions)."
+    },
+    {
+      "capability": "rate-limiting",
+      "name": "Rate limiting (API)",
+      "domain": "developer-platform",
+      "purpose": "Per-tenant request rate limits over a fixed window, entitlement-gated.",
+      "status": "locally proven",
+      "composeSupport": "postgres (rate_limit_policies + rate_limit_counters, RLS)",
+      "decision": "build",
+      "localFreeCandidate": "Postgres fixed-window counter (built-in); Redis is Phase 3.5 behind the port",
+      "environmentModel": "per-environment",
+      "sharedPerEnv": "per-env",
+      "tenantIsolation": "policies + counters tenant-scoped (RLS)",
+      "dataIsolation": "RLS; no secret fields",
+      "permissionModel": "tenant.developer.read; platform.rate_limits.read/write",
+      "auditEvents": "rate_limit.set (audit-before-change)",
+      "readinessModel": "n/a (always-on once built)",
+      "bffContract": "/api/org/rate-limits; /api/admin/tenants/:tenantId/rate-limits",
+      "adminUi": "/admin/developer",
+      "selfServiceUi": "tenant read-only",
+      "proof": "proof:rate-limits; proof:api-key-routes",
+      "productionBlockers": "Redis-backed limiter (Phase 3.5) recommended before sub-second/high-volume load",
+      "adr": "ADR-0065",
+      "actionRegister": "ADR-ACT-0257",
+      "priority": "P1",
+      "size": "M",
+      "risk": "Medium",
+      "notes": "Phase 3 delivered + live-proven. Reuses the entitlement substrate (entitlement before limit), the bridge to the quota model (ADR-0067)."
     },
     {
       "capability": "mock-providers",
@@ -1538,7 +1609,7 @@
     }
   ],
   "delivery": {
-    "$comment": "ADR-ACT-0252 — delivery spine. DATA ONLY. Encodes phase assignment + the dependency graph that orders implementation. `blocks` is NOT stored here; it is derived as the inverse of `dependsOn` by the validator and the dependencies doc so the two can never drift. `track` records whether a row is already delivered (excluded from ordering), planned, blocked, deferred, mock, or a planning artifact. Human views: universal-service-foundation-delivery-dependencies.md (graph) and universal-service-foundation-implementation-roadmap.md (phases). Validated by tools/architecture/validate-universal-foundation.",
+    "$comment": "ADR-ACT-0252 \u2014 delivery spine. DATA ONLY. Encodes phase assignment + the dependency graph that orders implementation. `blocks` is NOT stored here; it is derived as the inverse of `dependsOn` by the validator and the dependencies doc so the two can never drift. `track` records whether a row is already delivered (excluded from ordering), planned, blocked, deferred, mock, or a planning artifact. Human views: universal-service-foundation-delivery-dependencies.md (graph) and universal-service-foundation-implementation-roadmap.md (phases). Validated by tools/architecture/validate-universal-foundation.",
     "phaseOrder": [
       "delivered",
       "phase-0",
@@ -1572,86 +1643,807 @@
       "blocked": "Blocked on an external dependency"
     },
     "requiredDependencyTruths": [
-      { "from": "quota-enforcement", "dependsOn": "entitlements", "truth": "entitlements precede quota enforcement" },
-      { "from": "product-catalog-plans-prices", "dependsOn": "entitlements", "truth": "entitlements precede billing UI" },
-      { "from": "search-indexing", "dependsOn": "service-catalog-provider-model", "truth": "service catalog precedes generic provider composition" },
-      { "from": "workflow-engine-scheduled-jobs", "dependsOn": "service-catalog-provider-model", "truth": "service catalog precedes generic provider composition" },
-      { "from": "metering-usage-meters", "dependsOn": "service-catalog-provider-model", "truth": "service catalog precedes generic provider composition" },
-      { "from": "metrics-traces", "dependsOn": "service-catalog-provider-model", "truth": "service catalog precedes generic provider composition" },
-      { "from": "delegated-admin-roles", "dependsOn": "abac-pdp", "truth": "policy model precedes delegated admin" },
-      { "from": "api-keys-pat", "dependsOn": "abac-pdp", "truth": "policy model precedes API keys" },
-      { "from": "api-docs-portal-sdk-ratelimits", "dependsOn": "api-keys-pat", "truth": "API keys precede developer portal and rate limits" },
-      { "from": "quota-enforcement", "dependsOn": "metering-usage-meters", "truth": "metering precedes quotas" },
-      { "from": "product-catalog-plans-prices", "dependsOn": "metering-usage-meters", "truth": "metering precedes usage billing" },
-      { "from": "workflow-engine-scheduled-jobs", "dependsOn": "event-bus-queues-dlq", "truth": "queue/event substrate precedes workflow orchestration" },
-      { "from": "alerting-incident-oncall", "dependsOn": "notifications", "truth": "notification substrate precedes incident escalation" },
-      { "from": "notifications", "dependsOn": "end-user-profile-self-service", "truth": "profile self-service precedes notification preferences" },
-      { "from": "tenant-lifecycle-suspend-delete-export", "dependsOn": "data-governance-catalog-lineage-pii-dsr", "truth": "data governance precedes tenant deletion/export and DSR" },
-      { "from": "tenant-lifecycle-suspend-delete-export", "dependsOn": "backup-restore", "truth": "backup/recovery precedes production tenant lifecycle confidence" },
-      { "from": "alerting-incident-oncall", "dependsOn": "metrics-traces", "truth": "metrics/traces precede alerting/SLOs" }
+      {
+        "from": "quota-enforcement",
+        "dependsOn": "entitlements",
+        "truth": "entitlements precede quota enforcement"
+      },
+      {
+        "from": "product-catalog-plans-prices",
+        "dependsOn": "entitlements",
+        "truth": "entitlements precede billing UI"
+      },
+      {
+        "from": "search-indexing",
+        "dependsOn": "service-catalog-provider-model",
+        "truth": "service catalog precedes generic provider composition"
+      },
+      {
+        "from": "workflow-engine-scheduled-jobs",
+        "dependsOn": "service-catalog-provider-model",
+        "truth": "service catalog precedes generic provider composition"
+      },
+      {
+        "from": "metering-usage-meters",
+        "dependsOn": "service-catalog-provider-model",
+        "truth": "service catalog precedes generic provider composition"
+      },
+      {
+        "from": "metrics-traces",
+        "dependsOn": "service-catalog-provider-model",
+        "truth": "service catalog precedes generic provider composition"
+      },
+      {
+        "from": "delegated-admin-roles",
+        "dependsOn": "abac-pdp",
+        "truth": "policy model precedes delegated admin"
+      },
+      {
+        "from": "api-keys-pat",
+        "dependsOn": "abac-pdp",
+        "truth": "policy model precedes API keys"
+      },
+      {
+        "from": "api-docs-portal-sdk-ratelimits",
+        "dependsOn": "api-keys-pat",
+        "truth": "API keys precede developer portal and rate limits"
+      },
+      {
+        "from": "quota-enforcement",
+        "dependsOn": "metering-usage-meters",
+        "truth": "metering precedes quotas"
+      },
+      {
+        "from": "product-catalog-plans-prices",
+        "dependsOn": "metering-usage-meters",
+        "truth": "metering precedes usage billing"
+      },
+      {
+        "from": "workflow-engine-scheduled-jobs",
+        "dependsOn": "event-bus-queues-dlq",
+        "truth": "queue/event substrate precedes workflow orchestration"
+      },
+      {
+        "from": "alerting-incident-oncall",
+        "dependsOn": "notifications",
+        "truth": "notification substrate precedes incident escalation"
+      },
+      {
+        "from": "notifications",
+        "dependsOn": "end-user-profile-self-service",
+        "truth": "profile self-service precedes notification preferences"
+      },
+      {
+        "from": "tenant-lifecycle-suspend-delete-export",
+        "dependsOn": "data-governance-catalog-lineage-pii-dsr",
+        "truth": "data governance precedes tenant deletion/export and DSR"
+      },
+      {
+        "from": "tenant-lifecycle-suspend-delete-export",
+        "dependsOn": "backup-restore",
+        "truth": "backup/recovery precedes production tenant lifecycle confidence"
+      },
+      {
+        "from": "alerting-incident-oncall",
+        "dependsOn": "metrics-traces",
+        "truth": "metrics/traces precede alerting/SLOs"
+      }
     ],
     "requiredUiPrecedence": [
-      { "capability": "search-indexing", "truth": "search indexing precedes product search UI" }
+      {
+        "capability": "search-indexing",
+        "truth": "search indexing precedes product search UI"
+      }
     ],
     "phaseGates": {
       "$comment": "A phase's planned capabilities may not advance to a delivered-ish status until its gating ADRs are Accepted or implementation-ready. Enforced by validate-universal-foundation (ADR-ACT-0253).",
-      "phase-1": { "requiresAdrsReady": ["ADR-0055", "ADR-0058"] }
+      "phase-1": {
+        "requiresAdrsReady": [
+          "ADR-0055",
+          "ADR-0058"
+        ]
+      },
+      "phase-3": {
+        "requiresAdrsReady": [
+          "ADR-0065"
+        ]
+      }
     },
     "dependencies": [
-      { "capability": "usf-scope-boundary", "phase": "phase-0", "track": "planning", "dependsOn": [], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": true, "riskIfDelayed": "Without a scope boundary the foundation drifts into fake readiness and scope creep." },
-      { "capability": "build-vs-compose-framework", "phase": "phase-0", "track": "planning", "dependsOn": ["usf-scope-boundary"], "parallelWith": ["environment-service-classification"], "mustPrecedeUi": false, "mustPrecedeCompose": true, "riskIfDelayed": "Build/compose decisions made ad hoc; accidental rewrites of mature capabilities." },
-      { "capability": "environment-service-classification", "phase": "phase-0", "track": "planning", "dependsOn": ["usf-scope-boundary"], "parallelWith": ["build-vs-compose-framework"], "mustPrecedeUi": false, "mustPrecedeCompose": true, "riskIfDelayed": "Unsafe shared services composed without an isolation/leakage analysis." },
-      { "capability": "service-catalog-provider-model", "phase": "phase-1", "track": "planned", "dependsOn": ["usf-scope-boundary", "environment-service-classification", "service-catalog-readiness"], "parallelWith": ["abac-pdp"], "mustPrecedeUi": false, "mustPrecedeCompose": true, "riskIfDelayed": "Every composed service integrates ad hoc; no consistent provider-adapter catalog." },
-      { "capability": "entitlements", "phase": "phase-1", "track": "planned", "dependsOn": ["service-catalog-provider-model"], "parallelWith": ["abac-pdp", "search-indexing"], "mustPrecedeUi": true, "mustPrecedeCompose": false, "riskIfDelayed": "Billing, quotas, and paid feature gating all stall; flags cannot become plan-linked entitlements." },
-      { "capability": "abac-pdp", "phase": "phase-1", "track": "planned", "dependsOn": ["rbac"], "parallelWith": ["entitlements"], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "Delegated admin and scoped API keys cannot be modelled." },
-      { "capability": "metering-usage-meters", "phase": "phase-2", "track": "planned", "dependsOn": ["service-catalog-provider-model", "entitlements"], "parallelWith": [], "mustPrecedeUi": true, "mustPrecedeCompose": false, "riskIfDelayed": "Usage billing and quotas have no signal source." },
-      { "capability": "quota-enforcement", "phase": "phase-2", "track": "planned", "dependsOn": ["entitlements", "metering-usage-meters"], "parallelWith": [], "mustPrecedeUi": true, "mustPrecedeCompose": false, "riskIfDelayed": "No limit enforcement; abuse and cost-overrun risk." },
-      { "capability": "api-keys-pat", "phase": "phase-3", "track": "planned", "dependsOn": ["abac-pdp", "secret-setting-writeonly"], "parallelWith": ["search-indexing"], "mustPrecedeUi": true, "mustPrecedeCompose": false, "riskIfDelayed": "No programmatic access; developer portal and rate limits blocked." },
-      { "capability": "api-docs-portal-sdk-ratelimits", "phase": "phase-3", "track": "planned", "dependsOn": ["api-keys-pat", "entitlements"], "parallelWith": [], "mustPrecedeUi": true, "mustPrecedeCompose": true, "riskIfDelayed": "No self-serve developer experience; rate limits unenforceable; OpenAPI drift stays unguarded." },
-      { "capability": "search-indexing", "phase": "phase-4", "track": "planned", "dependsOn": ["service-catalog-provider-model"], "parallelWith": ["entitlements", "abac-pdp"], "mustPrecedeUi": true, "mustPrecedeCompose": true, "riskIfDelayed": "No product search; the SearchPort scaffold stays unwired." },
-      { "capability": "event-bus-queues-dlq", "phase": "phase-5", "track": "planned", "dependsOn": ["service-catalog-provider-model", "webhooks-developer"], "parallelWith": ["search-indexing"], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "No internal eventing backbone; workflow engine and multi-channel notifications blocked." },
-      { "capability": "background-workers-runtime", "phase": "phase-5", "track": "planned", "dependsOn": ["event-bus-queues-dlq"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "Single in-memory worker cannot scale or persist heartbeat." },
-      { "capability": "workflow-engine-scheduled-jobs", "phase": "phase-5", "track": "planned", "dependsOn": ["event-bus-queues-dlq", "background-workers-runtime"], "parallelWith": [], "mustPrecedeUi": true, "mustPrecedeCompose": true, "riskIfDelayed": "No durable orchestration, approvals, or scheduled jobs; DSR/import-export/dunning blocked." },
-      { "capability": "end-user-profile-self-service", "phase": "phase-6", "track": "planned", "dependsOn": ["user-identity"], "parallelWith": ["groups", "sub-organisations"], "mustPrecedeUi": true, "mustPrecedeCompose": false, "riskIfDelayed": "No end-user self-service; notification preferences blocked." },
-      { "capability": "notifications", "phase": "phase-6", "track": "planned", "dependsOn": ["event-bus-queues-dlq", "end-user-profile-self-service"], "parallelWith": [], "mustPrecedeUi": true, "mustPrecedeCompose": true, "riskIfDelayed": "Only transactional email exists; incident escalation and user preferences blocked." },
-      { "capability": "groups", "phase": "phase-6", "track": "planned", "dependsOn": ["abac-pdp"], "parallelWith": ["sub-organisations", "end-user-profile-self-service"], "mustPrecedeUi": true, "mustPrecedeCompose": false, "riskIfDelayed": "Routes exist but no bulk role-assignment UI." },
-      { "capability": "sub-organisations", "phase": "phase-6", "track": "planned", "dependsOn": [], "parallelWith": ["groups"], "mustPrecedeUi": true, "mustPrecedeCompose": false, "riskIfDelayed": "Routes exist but no nested-org UI." },
-      { "capability": "delegated-admin-roles", "phase": "phase-6", "track": "planned", "dependsOn": ["abac-pdp", "groups"], "parallelWith": [], "mustPrecedeUi": true, "mustPrecedeCompose": false, "riskIfDelayed": "Tenant admins cannot delegate scoped admin rights." },
-      { "capability": "metrics-traces", "phase": "phase-7", "track": "planned", "dependsOn": ["service-catalog-provider-model"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": true, "riskIfDelayed": "OTEL collector ingests but there is no backend; SLOs and alerting blocked." },
-      { "capability": "alerting-incident-oncall", "phase": "phase-7", "track": "planned", "dependsOn": ["metrics-traces", "notifications"], "parallelWith": [], "mustPrecedeUi": true, "mustPrecedeCompose": true, "riskIfDelayed": "No alert rules, on-call, incident lifecycle, or public status page." },
-      { "capability": "backup-restore", "phase": "phase-8", "track": "planned", "dependsOn": ["relational-storage"], "parallelWith": ["metrics-traces"], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "Local scripts only; no production recovery confidence; tenant lifecycle unsafe." },
-      { "capability": "pitr-retention-legalhold-residency", "phase": "phase-8", "track": "planned", "dependsOn": ["backup-restore"], "parallelWith": ["data-governance-catalog-lineage-pii-dsr"], "mustPrecedeUi": false, "mustPrecedeCompose": true, "riskIfDelayed": "No point-in-time recovery, retention, legal hold, or residency controls." },
-      { "capability": "import-export", "phase": "phase-8", "track": "planned", "dependsOn": ["workflow-engine-scheduled-jobs"], "parallelWith": [], "mustPrecedeUi": true, "mustPrecedeCompose": false, "riskIfDelayed": "No portability/offboarding; DSR and tenant deletion blocked." },
-      { "capability": "data-governance-catalog-lineage-pii-dsr", "phase": "phase-8", "track": "planned", "dependsOn": ["service-catalog-provider-model", "workflow-engine-scheduled-jobs", "import-export"], "parallelWith": ["pitr-retention-legalhold-residency"], "mustPrecedeUi": true, "mustPrecedeCompose": true, "riskIfDelayed": "No DSR/GDPR; tenant deletion unsafe; compliance gap." },
-      { "capability": "compliance-evidence-access-reviews", "phase": "phase-8", "track": "planned", "dependsOn": ["privileged-access-audit"], "parallelWith": [], "mustPrecedeUi": true, "mustPrecedeCompose": false, "riskIfDelayed": "No access reviews or compliance evidence packs." },
-      { "capability": "tenant-lifecycle-suspend-delete-export", "phase": "phase-8", "track": "planned", "dependsOn": ["backup-restore", "data-governance-catalog-lineage-pii-dsr", "import-export"], "parallelWith": [], "mustPrecedeUi": true, "mustPrecedeCompose": false, "riskIfDelayed": "No safe suspend/delete; compliance and offboarding risk." },
-      { "capability": "runtime-secrets", "phase": "phase-8", "track": "planned", "dependsOn": ["secret-setting-writeonly", "service-catalog-provider-model"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": true, "riskIfDelayed": "Secrets remain env/db only; no central rotation or audit; LocalStack secretsmanager is mock-only." },
-      { "capability": "product-catalog-plans-prices", "phase": "phase-9", "track": "planned", "dependsOn": ["entitlements", "metering-usage-meters"], "parallelWith": [], "mustPrecedeUi": true, "mustPrecedeCompose": true, "riskIfDelayed": "No sellable catalog; monetization blocked." },
-      { "capability": "subscriptions-invoices-payments", "phase": "phase-9", "track": "planned", "dependsOn": ["product-catalog-plans-prices", "quota-enforcement", "workflow-engine-scheduled-jobs"], "parallelWith": [], "mustPrecedeUi": true, "mustPrecedeCompose": true, "riskIfDelayed": "No monetization. Payment capture is the only production-external paid dependency and cannot be proven locally end-to-end." },
-      { "capability": "object-storage", "phase": "phase-10", "track": "planned", "dependsOn": ["quota-enforcement"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "Storage stays readiness-only; no file product, quotas, lifecycle, AV scan, or legal hold." },
-      { "capability": "support-tickets-health-comms", "phase": "phase-10", "track": "planned", "dependsOn": ["service-catalog-provider-model", "notifications"], "parallelWith": [], "mustPrecedeUi": true, "mustPrecedeCompose": true, "riskIfDelayed": "No ticketing, customer health, incident comms, or announcements." },
-      { "capability": "tenant-identity", "phase": "delivered", "track": "delivered", "dependsOn": [], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "n/a — foundation, locally proven." },
-      { "capability": "user-identity", "phase": "delivered", "track": "delivered", "dependsOn": ["tenant-identity", "platform-login"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "n/a — delivered." },
-      { "capability": "rbac", "phase": "delivered", "track": "delivered", "dependsOn": ["user-identity"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "n/a — delivered." },
-      { "capability": "privileged-access-audit", "phase": "delivered", "track": "delivered", "dependsOn": ["relational-storage"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "n/a — delivered; retention enforcement is a phase-8 follow-up." },
-      { "capability": "platform-login", "phase": "delivered", "track": "delivered", "dependsOn": [], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "n/a — locally proven against mock-oidc." },
-      { "capability": "idp-brokering", "phase": "delivered", "track": "delivered", "dependsOn": ["platform-login"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "n/a — OIDC delivered; SAML is a documented gap." },
-      { "capability": "claim-group-mapping", "phase": "delivered", "track": "delivered-partial", "dependsOn": ["idp-brokering"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "Machinery present; real-IdP mapping proof is blocked (ADR-ACT-0220)." },
-      { "capability": "real-idp-login-proof", "phase": "blocked", "track": "blocked", "dependsOn": ["idp-brokering"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "Enterprise SSO remains unproven against a real external IdP; mock-oidc cannot substitute." },
-      { "capability": "mfa-session-policy", "phase": "delivered", "track": "delivered-partial", "dependsOn": ["platform-login"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "MFA/session writable and proven; lockout/recovery surface + MFA-required E2E deferred." },
-      { "capability": "tenant-config-registry", "phase": "delivered", "track": "delivered", "dependsOn": ["tenant-identity"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "n/a — delivered; full rollback history is a future enhancement." },
-      { "capability": "branding-theme", "phase": "delivered", "track": "delivered-partial", "dependsOn": ["tenant-config-registry"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "Theme delivered; rich branding partial." },
-      { "capability": "custom-domains-dns-tls", "phase": "delivered", "track": "delivered-partial", "dependsOn": ["tenant-identity"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "Machinery live; public DNS verification + canonical cutover unproven locally." },
-      { "capability": "secret-setting-writeonly", "phase": "delivered", "track": "delivered", "dependsOn": [], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "Pattern delivered; a Vault/KMS adapter is the phase-8 runtime-secrets follow-up." },
-      { "capability": "relational-storage", "phase": "delivered", "track": "delivered", "dependsOn": [], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "n/a — foundation, locally proven." },
-      { "capability": "logs", "phase": "delivered", "track": "delivered", "dependsOn": ["service-catalog-readiness"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "n/a — locally proven; prod needs an S3 Loki backend." },
-      { "capability": "service-catalog-readiness", "phase": "delivered", "track": "delivered", "dependsOn": [], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "n/a — locally proven; the seed for the service-catalog-provider-model." },
-      { "capability": "code-quality-secret-dep-scan", "phase": "delivered", "track": "delivered-partial", "dependsOn": [], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "Sonar/gitleaks/semgrep present; dependency scanning not yet a hard gate." },
-      { "capability": "tenant-isolation-proof", "phase": "delivered", "track": "delivered", "dependsOn": ["relational-storage"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "n/a — core isolation proven; shared-tool gaps explicit in clickthrough policy." },
-      { "capability": "webhooks-developer", "phase": "delivered", "track": "delivered", "dependsOn": [], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "n/a — locally proven; the seed for the event/queue substrate." },
-      { "capability": "support-mode-breakglass", "phase": "delivered", "track": "delivered-partial", "dependsOn": ["privileged-access-audit"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "Audited support-session present; approval workflow + host-origin escalation deferred." },
-      { "capability": "serverless-functions", "phase": "deferred", "track": "deferred", "dependsOn": ["workflow-engine-scheduled-jobs"], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "None — explicitly deferred until a concrete product need; large security surface." },
-      { "capability": "mock-providers", "phase": "delivered", "track": "mock", "dependsOn": [], "parallelWith": [], "mustPrecedeUi": false, "mustPrecedeCompose": false, "riskIfDelayed": "n/a — forbidden in production; must never be a production substrate." }
+      {
+        "capability": "usf-scope-boundary",
+        "phase": "phase-0",
+        "track": "planning",
+        "dependsOn": [],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": true,
+        "riskIfDelayed": "Without a scope boundary the foundation drifts into fake readiness and scope creep."
+      },
+      {
+        "capability": "build-vs-compose-framework",
+        "phase": "phase-0",
+        "track": "planning",
+        "dependsOn": [
+          "usf-scope-boundary"
+        ],
+        "parallelWith": [
+          "environment-service-classification"
+        ],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": true,
+        "riskIfDelayed": "Build/compose decisions made ad hoc; accidental rewrites of mature capabilities."
+      },
+      {
+        "capability": "environment-service-classification",
+        "phase": "phase-0",
+        "track": "planning",
+        "dependsOn": [
+          "usf-scope-boundary"
+        ],
+        "parallelWith": [
+          "build-vs-compose-framework"
+        ],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": true,
+        "riskIfDelayed": "Unsafe shared services composed without an isolation/leakage analysis."
+      },
+      {
+        "capability": "service-catalog-provider-model",
+        "phase": "phase-1",
+        "track": "planned",
+        "dependsOn": [
+          "usf-scope-boundary",
+          "environment-service-classification",
+          "service-catalog-readiness"
+        ],
+        "parallelWith": [
+          "abac-pdp"
+        ],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": true,
+        "riskIfDelayed": "Every composed service integrates ad hoc; no consistent provider-adapter catalog."
+      },
+      {
+        "capability": "entitlements",
+        "phase": "phase-1",
+        "track": "planned",
+        "dependsOn": [
+          "service-catalog-provider-model"
+        ],
+        "parallelWith": [
+          "abac-pdp",
+          "search-indexing"
+        ],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "Billing, quotas, and paid feature gating all stall; flags cannot become plan-linked entitlements."
+      },
+      {
+        "capability": "abac-pdp",
+        "phase": "phase-1",
+        "track": "planned",
+        "dependsOn": [
+          "rbac"
+        ],
+        "parallelWith": [
+          "entitlements"
+        ],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "Delegated admin and scoped API keys cannot be modelled."
+      },
+      {
+        "capability": "metering-usage-meters",
+        "phase": "phase-2",
+        "track": "planned",
+        "dependsOn": [
+          "service-catalog-provider-model",
+          "entitlements"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "Usage billing and quotas have no signal source."
+      },
+      {
+        "capability": "quota-enforcement",
+        "phase": "phase-2",
+        "track": "planned",
+        "dependsOn": [
+          "entitlements",
+          "metering-usage-meters"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "No limit enforcement; abuse and cost-overrun risk."
+      },
+      {
+        "capability": "api-keys-pat",
+        "phase": "phase-3",
+        "track": "planned",
+        "dependsOn": [
+          "abac-pdp",
+          "secret-setting-writeonly"
+        ],
+        "parallelWith": [
+          "search-indexing"
+        ],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "No programmatic access; developer portal and rate limits blocked."
+      },
+      {
+        "capability": "api-docs-portal-sdk-ratelimits",
+        "phase": "phase-3",
+        "track": "planned",
+        "dependsOn": [
+          "api-keys-pat",
+          "entitlements"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": true,
+        "riskIfDelayed": "No self-serve developer experience; rate limits unenforceable; OpenAPI drift stays unguarded."
+      },
+      {
+        "capability": "rate-limiting",
+        "phase": "phase-3",
+        "track": "planned",
+        "dependsOn": [
+          "api-keys-pat",
+          "entitlements"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "No request rate limiting; abuse + cost-control gaps for programmatic access."
+      },
+      {
+        "capability": "search-indexing",
+        "phase": "phase-4",
+        "track": "planned",
+        "dependsOn": [
+          "service-catalog-provider-model"
+        ],
+        "parallelWith": [
+          "entitlements",
+          "abac-pdp"
+        ],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": true,
+        "riskIfDelayed": "No product search; the SearchPort scaffold stays unwired."
+      },
+      {
+        "capability": "event-bus-queues-dlq",
+        "phase": "phase-5",
+        "track": "planned",
+        "dependsOn": [
+          "service-catalog-provider-model",
+          "webhooks-developer"
+        ],
+        "parallelWith": [
+          "search-indexing"
+        ],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "No internal eventing backbone; workflow engine and multi-channel notifications blocked."
+      },
+      {
+        "capability": "background-workers-runtime",
+        "phase": "phase-5",
+        "track": "planned",
+        "dependsOn": [
+          "event-bus-queues-dlq"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "Single in-memory worker cannot scale or persist heartbeat."
+      },
+      {
+        "capability": "workflow-engine-scheduled-jobs",
+        "phase": "phase-5",
+        "track": "planned",
+        "dependsOn": [
+          "event-bus-queues-dlq",
+          "background-workers-runtime"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": true,
+        "riskIfDelayed": "No durable orchestration, approvals, or scheduled jobs; DSR/import-export/dunning blocked."
+      },
+      {
+        "capability": "end-user-profile-self-service",
+        "phase": "phase-6",
+        "track": "planned",
+        "dependsOn": [
+          "user-identity"
+        ],
+        "parallelWith": [
+          "groups",
+          "sub-organisations"
+        ],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "No end-user self-service; notification preferences blocked."
+      },
+      {
+        "capability": "notifications",
+        "phase": "phase-6",
+        "track": "planned",
+        "dependsOn": [
+          "event-bus-queues-dlq",
+          "end-user-profile-self-service"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": true,
+        "riskIfDelayed": "Only transactional email exists; incident escalation and user preferences blocked."
+      },
+      {
+        "capability": "groups",
+        "phase": "phase-6",
+        "track": "planned",
+        "dependsOn": [
+          "abac-pdp"
+        ],
+        "parallelWith": [
+          "sub-organisations",
+          "end-user-profile-self-service"
+        ],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "Routes exist but no bulk role-assignment UI."
+      },
+      {
+        "capability": "sub-organisations",
+        "phase": "phase-6",
+        "track": "planned",
+        "dependsOn": [],
+        "parallelWith": [
+          "groups"
+        ],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "Routes exist but no nested-org UI."
+      },
+      {
+        "capability": "delegated-admin-roles",
+        "phase": "phase-6",
+        "track": "planned",
+        "dependsOn": [
+          "abac-pdp",
+          "groups"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "Tenant admins cannot delegate scoped admin rights."
+      },
+      {
+        "capability": "metrics-traces",
+        "phase": "phase-7",
+        "track": "planned",
+        "dependsOn": [
+          "service-catalog-provider-model"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": true,
+        "riskIfDelayed": "OTEL collector ingests but there is no backend; SLOs and alerting blocked."
+      },
+      {
+        "capability": "alerting-incident-oncall",
+        "phase": "phase-7",
+        "track": "planned",
+        "dependsOn": [
+          "metrics-traces",
+          "notifications"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": true,
+        "riskIfDelayed": "No alert rules, on-call, incident lifecycle, or public status page."
+      },
+      {
+        "capability": "backup-restore",
+        "phase": "phase-8",
+        "track": "planned",
+        "dependsOn": [
+          "relational-storage"
+        ],
+        "parallelWith": [
+          "metrics-traces"
+        ],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "Local scripts only; no production recovery confidence; tenant lifecycle unsafe."
+      },
+      {
+        "capability": "pitr-retention-legalhold-residency",
+        "phase": "phase-8",
+        "track": "planned",
+        "dependsOn": [
+          "backup-restore"
+        ],
+        "parallelWith": [
+          "data-governance-catalog-lineage-pii-dsr"
+        ],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": true,
+        "riskIfDelayed": "No point-in-time recovery, retention, legal hold, or residency controls."
+      },
+      {
+        "capability": "import-export",
+        "phase": "phase-8",
+        "track": "planned",
+        "dependsOn": [
+          "workflow-engine-scheduled-jobs"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "No portability/offboarding; DSR and tenant deletion blocked."
+      },
+      {
+        "capability": "data-governance-catalog-lineage-pii-dsr",
+        "phase": "phase-8",
+        "track": "planned",
+        "dependsOn": [
+          "service-catalog-provider-model",
+          "workflow-engine-scheduled-jobs",
+          "import-export"
+        ],
+        "parallelWith": [
+          "pitr-retention-legalhold-residency"
+        ],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": true,
+        "riskIfDelayed": "No DSR/GDPR; tenant deletion unsafe; compliance gap."
+      },
+      {
+        "capability": "compliance-evidence-access-reviews",
+        "phase": "phase-8",
+        "track": "planned",
+        "dependsOn": [
+          "privileged-access-audit"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "No access reviews or compliance evidence packs."
+      },
+      {
+        "capability": "tenant-lifecycle-suspend-delete-export",
+        "phase": "phase-8",
+        "track": "planned",
+        "dependsOn": [
+          "backup-restore",
+          "data-governance-catalog-lineage-pii-dsr",
+          "import-export"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "No safe suspend/delete; compliance and offboarding risk."
+      },
+      {
+        "capability": "runtime-secrets",
+        "phase": "phase-8",
+        "track": "planned",
+        "dependsOn": [
+          "secret-setting-writeonly",
+          "service-catalog-provider-model"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": true,
+        "riskIfDelayed": "Secrets remain env/db only; no central rotation or audit; LocalStack secretsmanager is mock-only."
+      },
+      {
+        "capability": "product-catalog-plans-prices",
+        "phase": "phase-9",
+        "track": "planned",
+        "dependsOn": [
+          "entitlements",
+          "metering-usage-meters"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": true,
+        "riskIfDelayed": "No sellable catalog; monetization blocked."
+      },
+      {
+        "capability": "subscriptions-invoices-payments",
+        "phase": "phase-9",
+        "track": "planned",
+        "dependsOn": [
+          "product-catalog-plans-prices",
+          "quota-enforcement",
+          "workflow-engine-scheduled-jobs"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": true,
+        "riskIfDelayed": "No monetization. Payment capture is the only production-external paid dependency and cannot be proven locally end-to-end."
+      },
+      {
+        "capability": "object-storage",
+        "phase": "phase-10",
+        "track": "planned",
+        "dependsOn": [
+          "quota-enforcement"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "Storage stays readiness-only; no file product, quotas, lifecycle, AV scan, or legal hold."
+      },
+      {
+        "capability": "support-tickets-health-comms",
+        "phase": "phase-10",
+        "track": "planned",
+        "dependsOn": [
+          "service-catalog-provider-model",
+          "notifications"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": true,
+        "riskIfDelayed": "No ticketing, customer health, incident comms, or announcements."
+      },
+      {
+        "capability": "tenant-identity",
+        "phase": "delivered",
+        "track": "delivered",
+        "dependsOn": [],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "n/a \u2014 foundation, locally proven."
+      },
+      {
+        "capability": "user-identity",
+        "phase": "delivered",
+        "track": "delivered",
+        "dependsOn": [
+          "tenant-identity",
+          "platform-login"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "n/a \u2014 delivered."
+      },
+      {
+        "capability": "rbac",
+        "phase": "delivered",
+        "track": "delivered",
+        "dependsOn": [
+          "user-identity"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "n/a \u2014 delivered."
+      },
+      {
+        "capability": "privileged-access-audit",
+        "phase": "delivered",
+        "track": "delivered",
+        "dependsOn": [
+          "relational-storage"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "n/a \u2014 delivered; retention enforcement is a phase-8 follow-up."
+      },
+      {
+        "capability": "platform-login",
+        "phase": "delivered",
+        "track": "delivered",
+        "dependsOn": [],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "n/a \u2014 locally proven against mock-oidc."
+      },
+      {
+        "capability": "idp-brokering",
+        "phase": "delivered",
+        "track": "delivered",
+        "dependsOn": [
+          "platform-login"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "n/a \u2014 OIDC delivered; SAML is a documented gap."
+      },
+      {
+        "capability": "claim-group-mapping",
+        "phase": "delivered",
+        "track": "delivered-partial",
+        "dependsOn": [
+          "idp-brokering"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "Machinery present; real-IdP mapping proof is blocked (ADR-ACT-0220)."
+      },
+      {
+        "capability": "real-idp-login-proof",
+        "phase": "blocked",
+        "track": "blocked",
+        "dependsOn": [
+          "idp-brokering"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "Enterprise SSO remains unproven against a real external IdP; mock-oidc cannot substitute."
+      },
+      {
+        "capability": "mfa-session-policy",
+        "phase": "delivered",
+        "track": "delivered-partial",
+        "dependsOn": [
+          "platform-login"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "MFA/session writable and proven; lockout/recovery surface + MFA-required E2E deferred."
+      },
+      {
+        "capability": "tenant-config-registry",
+        "phase": "delivered",
+        "track": "delivered",
+        "dependsOn": [
+          "tenant-identity"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "n/a \u2014 delivered; full rollback history is a future enhancement."
+      },
+      {
+        "capability": "branding-theme",
+        "phase": "delivered",
+        "track": "delivered-partial",
+        "dependsOn": [
+          "tenant-config-registry"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "Theme delivered; rich branding partial."
+      },
+      {
+        "capability": "custom-domains-dns-tls",
+        "phase": "delivered",
+        "track": "delivered-partial",
+        "dependsOn": [
+          "tenant-identity"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "Machinery live; public DNS verification + canonical cutover unproven locally."
+      },
+      {
+        "capability": "secret-setting-writeonly",
+        "phase": "delivered",
+        "track": "delivered",
+        "dependsOn": [],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "Pattern delivered; a Vault/KMS adapter is the phase-8 runtime-secrets follow-up."
+      },
+      {
+        "capability": "relational-storage",
+        "phase": "delivered",
+        "track": "delivered",
+        "dependsOn": [],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "n/a \u2014 foundation, locally proven."
+      },
+      {
+        "capability": "logs",
+        "phase": "delivered",
+        "track": "delivered",
+        "dependsOn": [
+          "service-catalog-readiness"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "n/a \u2014 locally proven; prod needs an S3 Loki backend."
+      },
+      {
+        "capability": "service-catalog-readiness",
+        "phase": "delivered",
+        "track": "delivered",
+        "dependsOn": [],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "n/a \u2014 locally proven; the seed for the service-catalog-provider-model."
+      },
+      {
+        "capability": "code-quality-secret-dep-scan",
+        "phase": "delivered",
+        "track": "delivered-partial",
+        "dependsOn": [],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "Sonar/gitleaks/semgrep present; dependency scanning not yet a hard gate."
+      },
+      {
+        "capability": "tenant-isolation-proof",
+        "phase": "delivered",
+        "track": "delivered",
+        "dependsOn": [
+          "relational-storage"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "n/a \u2014 core isolation proven; shared-tool gaps explicit in clickthrough policy."
+      },
+      {
+        "capability": "webhooks-developer",
+        "phase": "delivered",
+        "track": "delivered",
+        "dependsOn": [],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "n/a \u2014 locally proven; the seed for the event/queue substrate."
+      },
+      {
+        "capability": "support-mode-breakglass",
+        "phase": "delivered",
+        "track": "delivered-partial",
+        "dependsOn": [
+          "privileged-access-audit"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "Audited support-session present; approval workflow + host-origin escalation deferred."
+      },
+      {
+        "capability": "serverless-functions",
+        "phase": "deferred",
+        "track": "deferred",
+        "dependsOn": [
+          "workflow-engine-scheduled-jobs"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "None \u2014 explicitly deferred until a concrete product need; large security surface."
+      },
+      {
+        "capability": "mock-providers",
+        "phase": "delivered",
+        "track": "mock",
+        "dependsOn": [],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "n/a \u2014 forbidden in production; must never be a production substrate."
+      }
     ]
   }
 }

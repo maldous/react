@@ -3,7 +3,7 @@
 - **Action:** ADR-ACT-0252 (delivery hardening); ADR-ACT-0254 (Phase 1 delivered)
 - **Source ADRs:** ADR-0053/0054/0055/0056/0058 **Accepted**; ADR-0057, ADR-0059–0066 Proposed (0057/0059/0062/0063 require splitting)
 - **Date:** 2026-06-13
-- **Status of this document:** governance / planning artifact. It sequences implementation. **Update (ADR-ACT-0254):** Phase 0 governance is complete and the Phase-0 ADRs are Accepted; the **Phase 1 substrate is delivered** (entitlement engine + service catalog v2 + policy-chain hook, node:test/MSW/in-memory proven — see `phase-1-service-catalog-entitlements.md`). Real quota enforcement, billing, search, workflow, notifications, API keys, and any new composed service remain **not delivered**.
+- **Status of this document:** governance / planning artifact. It sequences implementation. **Update (ADR-ACT-0254):** Phase 0 governance is complete and the Phase-0 ADRs are Accepted; the **Phase 1 substrate is delivered** (entitlement engine + service catalog v2 + policy-chain hook, node:test/MSW/in-memory proven — see `phase-1-service-catalog-entitlements.md`). **Phase 2 (metering + real quota enforcement, ADR-ACT-0256)** and **Phase 3 (API keys + rate limits + read-only developer portal foundation, ADR-ACT-0257)** are now **delivered + live-proven** (see `phase-2-metering-quota.md`, `phase-3-api-keys-rate-limits.md`). Billing, search, event bus, durable workers, profile self-service, notifications, observability/alerting, and any new composed service remain **not delivered**.
 
 ## What this is
 
@@ -105,6 +105,8 @@ All 14 ADRs share a sound template (Status/Context/Decision/Consequences/Validat
 **Proof scripts.** `proof:api-keys`, `proof:rate-limits`; promote `openapi:drift` to complete. **Acceptance criteria.** Keys hashed at rest, shown once, revocable, audited; rate limit derives from entitlement; OpenAPI drift gate complete and green.
 
 **Estimated size.** L. **Risk.** High (credential surface). **Stop condition.** Keys + rate limits proven; full portal/SDK deferred.
+
+> **DELIVERED (2026-06-13, ADR-ACT-0257).** API keys (server-generated, scrypt salt+pepper hash, shown once, tenant-scoped RLS, entitlement-gated via `api_access`, revocable, audited) + durable Postgres fixed-window **rate limits** (entitlement→limit bridge, audited) + a **read-only developer portal foundation** (`/admin/developer`, `GET /api/org/developer`). Live-proven: `proof:api-keys`, `proof:rate-limits`, `proof:api-key-routes`. Deviations from the original sketch: a `RateLimitPort` durable **Postgres** counter (not Redis — Redis is Phase 3.5 behind the port); kept in `apps/platform-api` (no separate `@platform/api-keys` package); `/admin/developer` (not `/admin/api-keys`). **Not delivered:** Redis limiter, external portal/gateway, SDK gen, sandbox mode, and **schema-level** OpenAPI drift (path+method drift remains enforced).
 
 ---
 

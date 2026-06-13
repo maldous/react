@@ -2763,6 +2763,116 @@
         }
       }
     },
+    "/api/org/api-keys": {
+      "get": {
+        "summary": "List the tenant's own API keys (read-only)",
+        "operationId": "listOrgApiKeys",
+        "description": "Tenant self-service list of API keys (RLS-scoped). Never returns the secret or the stored hash. ADR-0065 / ADR-ACT-0257.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "API key list (no secrets)" },
+          "400": { "description": "No tenant context" }
+        }
+      },
+      "post": {
+        "summary": "Create an API key (tenant self-service)",
+        "operationId": "createOrgApiKey",
+        "description": "Server-generates a key; the plaintext secret is returned EXACTLY ONCE and only a salted+peppered hash is stored. Requires the api_access entitlement (deny-by-default). Audited. ADR-0065 / ADR-ACT-0257.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "201": { "description": "Created — secret shown once" },
+          "400": { "description": "Validation error or no tenant context" },
+          "403": { "description": "Tenant not entitled to programmatic API access" }
+        }
+      }
+    },
+    "/api/org/api-keys/:keyId": {
+      "delete": {
+        "summary": "Revoke one of the tenant's own API keys",
+        "operationId": "revokeOrgApiKey",
+        "description": "Tenant self-service revoke (audited). A revoked key can never authenticate again. ADR-0065 / ADR-ACT-0257.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Revoked" },
+          "400": { "description": "Invalid key id or no tenant context" },
+          "404": { "description": "API key not found" }
+        }
+      }
+    },
+    "/api/org/developer": {
+      "get": {
+        "summary": "Developer portal foundation (read-only)",
+        "operationId": "getOrgDeveloperPortal",
+        "description": "Non-secret summary of the tenant's programmatic-access posture and where to find the API surface (GraphQL + REST baseline). ADR-0065 / ADR-ACT-0257.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Developer foundation summary" },
+          "400": { "description": "No tenant context" }
+        }
+      }
+    },
+    "/api/org/rate-limits": {
+      "get": {
+        "summary": "Tenant's own rate-limit policies + live window count (read-only)",
+        "operationId": "listOrgRateLimits",
+        "description": "Per-policy limit, window, current usage, and derived state for the calling tenant. Server-authoritative. ADR-0065 / ADR-ACT-0257.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Rate-limit policy list" },
+          "400": { "description": "No tenant context" }
+        }
+      }
+    },
+    "/api/admin/tenants/:tenantId/api-keys": {
+      "get": {
+        "summary": "List a tenant's API keys (system operator)",
+        "operationId": "listTenantApiKeys",
+        "description": "Operator read of a tenant's API keys. Never returns secrets or hashes. ADR-0065 / ADR-ACT-0257.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "API key list (no secrets)" },
+          "400": { "description": "Invalid tenant id" }
+        }
+      }
+    },
+    "/api/admin/tenants/:tenantId/rate-limits": {
+      "get": {
+        "summary": "A tenant's rate-limit policies (system operator)",
+        "operationId": "listTenantRateLimits",
+        "description": "Operator read of a tenant's rate-limit policies with live window counts. ADR-0065 / ADR-ACT-0257.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Rate-limit policy list" },
+          "400": { "description": "Invalid tenant id" }
+        }
+      },
+      "patch": {
+        "summary": "Set a tenant rate-limit policy (system operator)",
+        "operationId": "setTenantRateLimit",
+        "description": "Operator-only, audited. Binds entitlement + limit + window + action. Reuses the entitlement substrate (entitlement before limit). Tenants can never set rate limits. ADR-0065 / ADR-ACT-0257.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Rate-limit policy set" },
+          "400": { "description": "Validation error or invalid tenant id" }
+        }
+      }
+    },
     "/api/org/entitlements": {
       "get": {
         "summary": "List the tenant's own entitlements (read-only)",

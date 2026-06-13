@@ -1,8 +1,8 @@
 # ADRs Codemap
 
-**Last Updated:** 2026-06-11
+**Last Updated:** 2026-06-13
 
-67 Architecture Decision Records (ADR-0001 through ADR-0067). ADR-0018 is intentionally absent. ADR-0001 through ADR-0052 are **Accepted**. Of the Universal Service Foundation set: ADR-0053, ADR-0054, ADR-0055, ADR-0056, ADR-0058 (ADR-ACT-0253/0254) and ADR-0061, ADR-0067 (ADR-ACT-0256, Phase 2 metering/quota) are **Accepted**. ADR-0057 has been **re-scoped to billing/invoicing/payment** (Phase 9, still Proposed; entitlements→0058, metering/quota→0067). ADR-0059, ADR-0060, ADR-0062–0066 remain **Proposed** (ADR-0059/0062/0063 explicitly require splitting before acceptance).
+67 Architecture Decision Records (ADR-0001 through ADR-0067). ADR-0018 is intentionally absent. ADR-0001 through ADR-0052 are **Accepted**. Of the Universal Service Foundation set: ADR-0053, ADR-0054, ADR-0055, ADR-0056, ADR-0058 (ADR-ACT-0253/0254) and ADR-0061, ADR-0067 (ADR-ACT-0256, Phase 2 metering/quota), and ADR-0065 (ADR-ACT-0257, Phase 3 developer-platform foundation — SDK/portal-gateway/sandbox/full-drift remain Proposed sub-decisions) are **Accepted**. ADR-0057 has been **re-scoped to billing/invoicing/payment** (Phase 9, still Proposed; entitlements→0058, metering/quota→0067). ADR-0059, ADR-0060, ADR-0062–0064, ADR-0066 remain **Proposed** (ADR-0059/0062/0063 explicitly require splitting before acceptance).
 
 ## Foundation & Governance (8)
 
@@ -129,7 +129,7 @@ Planning set created under ADR-ACT-0237. Status: **Proposed** (not yet Accepted)
 
 ## Governance
 
-- ADR-0001 through ADR-0052, plus ADR-0053/0054/0055/0056/0058/0061/0067, are **Accepted**; ADR-0057 (re-scoped to billing, Phase 9) and ADR-0059/0060/0062–0066 remain **Proposed**
+- ADR-0001 through ADR-0052, plus ADR-0053/0054/0055/0056/0058/0061/0065/0067, are **Accepted**; ADR-0057 (re-scoped to billing, Phase 9) and ADR-0059/0060/0062–0064/0066 remain **Proposed**
 - Next ADR: **ADR-0068**
 - Action register: `docs/adr/ACTION-REGISTER.md`
 - Lifecycle evidence: `docs/evidence/`

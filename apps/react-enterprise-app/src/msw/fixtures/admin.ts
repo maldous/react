@@ -14,6 +14,10 @@ import type {
   TenantLookupResponse,
   UsageResponse,
   QuotaListResponse,
+  ApiKeyListResponse,
+  RateLimitListResponse,
+  DeveloperPortalResponse,
+  CreateApiKeyResponse,
   CapabilitySummary,
   CapabilityCategory,
   CapabilityImplementationStatus,
@@ -316,6 +320,67 @@ export const quotasFixture: QuotaListResponse = {
       updatedBy: "00000000-0000-0000-0000-0000000000a3",
     },
   ],
+};
+
+export const apiKeysFixture: ApiKeyListResponse = {
+  apiKeys: [
+    {
+      id: "00000000-0000-0000-0000-0000000000k1",
+      name: "CI deploy token",
+      keyPrefix: "pk_ci0deploy",
+      scopes: ["read"],
+      state: "active",
+      createdAt: "2026-06-13T00:00:00.000Z",
+      createdBy: "00000000-0000-0000-0000-0000000000a1",
+      lastUsedAt: null,
+      expiresAt: null,
+      revokedAt: null,
+    },
+  ],
+};
+
+export const createApiKeyFixture: CreateApiKeyResponse = {
+  apiKey: {
+    id: "00000000-0000-0000-0000-0000000000k2",
+    name: "New token",
+    keyPrefix: "pk_new0token",
+    scopes: ["read"],
+    state: "active",
+    createdAt: "2026-06-13T00:00:00.000Z",
+    createdBy: "00000000-0000-0000-0000-0000000000a1",
+    lastUsedAt: null,
+    expiresAt: null,
+    revokedAt: null,
+  },
+  // Mock-only display secret — never a real credential.
+  secret: "sk_mock0secret0shown0once0000000000",
+  secretShownOnce: true,
+};
+
+export const rateLimitsFixture: RateLimitListResponse = {
+  policies: [
+    {
+      policyKey: "api.requests",
+      entitlementKey: "api_access",
+      limit: 1000,
+      windowSeconds: 3600,
+      action: "deny",
+      used: 12,
+      state: "within",
+      updatedAt: "2026-06-13T00:00:00.000Z",
+      updatedBy: "00000000-0000-0000-0000-0000000000a3",
+    },
+  ],
+};
+
+export const developerPortalFixture: DeveloperPortalResponse = {
+  apiAccessEntitled: true,
+  activeKeyCount: 1,
+  graphqlEndpoint: "/api/graphql",
+  restBaselinePath: "/api",
+  openapiPath: "/api/openapi.json",
+  scopes: ["read", "write", "admin"],
+  rateLimitPolicyCount: 1,
 };
 
 export const entitlementsFixture: EntitlementListResponse = {

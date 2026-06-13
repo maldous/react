@@ -184,7 +184,8 @@
         "logs": "Log search",
         "readiness": "Readiness",
         "entitlements": "Entitlements",
-        "usage": "Usage & quotas"
+        "usage": "Usage & quotas",
+        "developer": "Developer"
       },
       "card": {
         "membersDescription": "Invite people, change roles, and remove members.",
@@ -199,7 +200,8 @@
         "logsDescription": "Search structured platform logs.",
         "readinessDescription": "See what's configured and what's left to set up.",
         "entitlementsDescription": "See and assign what this tenant is allowed to use.",
-        "usageDescription": "See recorded usage and set quota limits per capability."
+        "usageDescription": "See recorded usage and set quota limits per capability.",
+        "developerDescription": "Mint API keys, see rate limits, and find the API surface."
       },
       "entitlements": {
         "title": "Entitlements",
@@ -251,6 +253,51 @@
           "no_entitlement": "Not entitled",
           "no_quota": "No quota"
         }
+      },
+      "developer": {
+        "title": "Developer",
+        "description": "Programmatic access: API keys, rate limits, and where to find the API surface. Keys are server-generated and shown once; only a hash is stored.",
+        "yes": "Yes",
+        "no": "No",
+        "foundationTitle": "API surface",
+        "apiAccess": "API access entitled",
+        "activeKeys": "Active keys",
+        "graphqlEndpoint": "GraphQL endpoint",
+        "openapi": "OpenAPI document",
+        "createTitle": "Create an API key",
+        "nameLabel": "Key name",
+        "create": "Create key",
+        "createError": "Could not create the API key.",
+        "secretTitle": "Copy your API key now",
+        "secretNote": "This secret is shown once and cannot be retrieved again. Store it securely.",
+        "secretDismiss": "I've copied it",
+        "noKeys": "No API keys yet.",
+        "revoke": "Revoke",
+        "rateLimitsTitle": "Rate limits",
+        "colName": "Name",
+        "colScopes": "Scopes",
+        "colState": "State",
+        "colActions": "Actions",
+        "colPolicy": "Policy",
+        "colEntitlement": "Entitlement",
+        "colLimit": "Used / limit",
+        "keyState": {
+          "active": "Active",
+          "revoked": "Revoked",
+          "expired": "Expired"
+        },
+        "tenantSelectLabel": "Tenant",
+        "tenantSelectPlaceholder": "Select a tenant…",
+        "enterTenant": "Select a tenant to view its keys and set rate limits.",
+        "tenantKeysTitle": "API keys",
+        "setRateLimit": "Set a rate limit",
+        "policyLabel": "Policy key",
+        "entitlementLabel": "Entitlement",
+        "limitLabel": "Limit",
+        "windowLabel": "Window (s)",
+        "save": "Save rate limit",
+        "saveError": "Could not save the rate limit.",
+        "noRateLimits": "No rate-limit policies configured for this tenant."
       },
       "config": {
         "title": "Configuration",

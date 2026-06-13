@@ -37,6 +37,9 @@ export const PROOF_LADDER = [
   "proof:metering",
   "proof:quota-enforcement",
   "proof:metering-quota-routes",
+  "proof:api-keys",
+  "proof:rate-limits",
+  "proof:api-key-routes",
 ] as const;
 
 export type ProofLadderEntry = (typeof PROOF_LADDER)[number];

@@ -98,6 +98,11 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     labelKey: "feature.admin.nav.usage",
     permission: "tenant.metering.read",
   },
+  {
+    to: "/admin/developer",
+    labelKey: "feature.admin.nav.developer",
+    permission: "tenant.developer.read",
+  },
 ];
 
 const linkClass =

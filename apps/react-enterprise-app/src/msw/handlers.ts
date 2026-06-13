@@ -20,6 +20,10 @@ import {
   tenantsLookupFixture,
   usageFixture,
   quotasFixture,
+  apiKeysFixture,
+  createApiKeyFixture,
+  rateLimitsFixture,
+  developerPortalFixture,
 } from "./fixtures/admin.ts";
 import type { AuthSettingsReadiness } from "@platform/contracts-admin";
 
@@ -677,6 +681,28 @@ export function adminUsageQuotaHandlers(usage = usageFixture, quotas = quotasFix
   ];
 }
 
+// Developer platform (Phase 3, ADR-ACT-0257). API keys (tenant self-service + operator
+// read), rate limits (tenant read + operator read/set), developer portal foundation.
+export function adminDeveloperHandlers(
+  keys = apiKeysFixture,
+  created = createApiKeyFixture,
+  rateLimits = rateLimitsFixture,
+  portal = developerPortalFixture
+) {
+  return [
+    http.get("/api/org/api-keys", () => HttpResponse.json(keys)),
+    http.post("/api/org/api-keys", () => HttpResponse.json(created, { status: 201 })),
+    http.delete("/api/org/api-keys/:keyId", () => HttpResponse.json({ revoked: true })),
+    http.get("/api/org/developer", () => HttpResponse.json(portal)),
+    http.get("/api/org/rate-limits", () => HttpResponse.json(rateLimits)),
+    http.get("/api/admin/tenants/:tenantId/api-keys", () => HttpResponse.json(keys)),
+    http.get("/api/admin/tenants/:tenantId/rate-limits", () => HttpResponse.json(rateLimits)),
+    http.patch("/api/admin/tenants/:tenantId/rate-limits", () =>
+      HttpResponse.json({ policyKey: "api.requests" })
+    ),
+  ];
+}
+
 // --- generic helpers --------------------------------------------------------
 
 /** Simulated network failure for any GET endpoint. */
@@ -723,5 +749,6 @@ export const handlers = [
   ...adminEntitlementsHandlers(),
   adminTenantsLookupHandler(),
   ...adminUsageQuotaHandlers(),
+  ...adminDeveloperHandlers(),
   ...adminWriteOkHandlers(),
 ];
