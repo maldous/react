@@ -6142,6 +6142,26 @@ export const routes: Route[] = [
     },
   },
   // ---------------------------------------------------------------------------
+  // Click-through services (ADR-ACT-0233 / ADR-0072). Operator's view of the composed
+  // Compose GUI services: click-through URL, access gating (same decision as the
+  // forward-auth gate), isolation invariant, and OpenBao-credential-validated
+  // readiness. Read-only; never returns a secret.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/admin/clickthrough",
+    operationName: "admin.clickthrough.list",
+    requiresAuth: true,
+    requiredPermission: "platform.providers.read",
+    resource: "admin:provider_configs",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const { listClickthroughServices } = await import("../usecases/clickthrough-services.ts");
+      res.json(200, await listClickthroughServices({ roles: req.actor?.roles ?? [] }));
+    },
+  },
+  // ---------------------------------------------------------------------------
   // History read-model (ADR-0063 / ADR-ACT-0272). Read-only UNION projection over the
   // existing audited/event/notification/incident/meter sources — no new store, no
   // duplicated data. Tenant reads its own; operator reads a selected tenant. Paginated;

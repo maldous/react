@@ -2347,6 +2347,57 @@ export type ComposedProviderReadinessResponse = z.infer<
 >;
 
 // ---------------------------------------------------------------------------
+// Click-through services (ADR-ACT-0233 / ADR-0072). The operator's view of the
+// composed Compose GUI services: each service's click-through URL, access gating,
+// isolation invariant, and adapter-confirmed readiness. Credentials are validated
+// server-side via the composed-provider readiness probe (OpenBao-backed); no secret
+// is ever returned. `GET /api/admin/clickthrough`.
+// ---------------------------------------------------------------------------
+
+export const CLICKTHROUGH_CLASSIFICATIONS = [
+  "global_only",
+  "tenant_scoped_safe",
+  "not_exposed",
+] as const;
+export const ClickthroughClassificationSchema = z.enum(CLICKTHROUGH_CLASSIFICATIONS);
+export type ClickthroughClassification = z.infer<typeof ClickthroughClassificationSchema>;
+
+export const CLICKTHROUGH_READINESS_STATUSES = [
+  "ready",
+  "degraded",
+  "not_configured",
+  "unknown",
+] as const;
+export const ClickthroughReadinessSchema = z.enum(CLICKTHROUGH_READINESS_STATUSES);
+export type ClickthroughReadiness = z.infer<typeof ClickthroughReadinessSchema>;
+
+export const ClickthroughServiceRowSchema = z
+  .object({
+    id: z.string(),
+    resource: z.string(),
+    classification: ClickthroughClassificationSchema,
+    /** Apex click-through URL path (e.g. /kc), or null when not path-proxied. */
+    url: z.string().nullable(),
+    /** Whether the current actor may click through to this service on the apex host. */
+    accessible: z.boolean(),
+    /** Adapter-confirmed readiness (credential-validated where a probe exists). */
+    readiness: ClickthroughReadinessSchema,
+    isolationInvariant: z.string(),
+  })
+  .strict();
+export type ClickthroughServiceRow = z.infer<typeof ClickthroughServiceRowSchema>;
+
+/** `GET /api/admin/clickthrough` — never carries a secret. */
+export const ClickthroughServicesResponseSchema = z
+  .object({
+    services: z.array(ClickthroughServiceRowSchema),
+    /** Composed-provider readiness (OpenBao-credential-validated, adapter-confirmed). */
+    providers: z.array(ComposedProviderReadinessRowSchema),
+  })
+  .strict();
+export type ClickthroughServicesResponse = z.infer<typeof ClickthroughServicesResponseSchema>;
+
+// ---------------------------------------------------------------------------
 // History read-model (ADR-0063 / ADR-ACT-0272). A read-only UNION projection over the
 // existing audited/event/notification/incident/meter sources — no new store, no
 // duplicated data. Tenant-scoped; operators may query a selected tenant; pagination

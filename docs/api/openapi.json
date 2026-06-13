@@ -3279,6 +3279,18 @@
         "responses": { "200": { "description": "Composed provider readiness" } }
       }
     },
+    "/api/admin/clickthrough": {
+      "get": {
+        "summary": "Click-through services (system operator)",
+        "operationId": "clickthroughServices",
+        "description": "Operator view of the composed Compose GUI services: click-through URL, access gating (same decision as the forward-auth gate), isolation invariant, and OpenBao-credential-validated composed-provider readiness. No secret. ADR-ACT-0233 / ADR-0072.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Click-through services + composed-provider readiness" }
+        }
+      }
+    },
     "/api/admin/provider-configs/:id/lifecycle": {
       "post": {
         "summary": "Set a provider configuration lifecycle state (system operator)",

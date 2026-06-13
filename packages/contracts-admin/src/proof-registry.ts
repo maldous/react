@@ -70,6 +70,7 @@ export const PROOF_LADDER = [
   "proof:environment-registry",
   "proof:environment-operations",
   "proof:environment-admin-bootstrap",
+  "proof:clickthrough",
 ] as const;
 
 export type ProofLadderEntry = (typeof PROOF_LADDER)[number];
