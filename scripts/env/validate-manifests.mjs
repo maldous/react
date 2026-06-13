@@ -29,6 +29,7 @@ import {
   looksSecret,
   loadManifest,
   loadCommon,
+  loadShared,
   manifestPath,
   generatedEnvPath,
   walkLeaves,
@@ -202,7 +203,16 @@ function validateNoTrackedArtifacts() {
   try {
     tracked = execFileSync(
       "git",
-      ["ls-files", ".env", ".env.dev", ".env.test", ".env.staging", ".env.prod"],
+      [
+        "ls-files",
+        ".env",
+        ".env.dev",
+        ".env.test",
+        ".env.staging",
+        ".env.prod",
+        ".env.sonar",
+        ".env.sentry",
+      ],
       {
         cwd: REPO_ROOT,
         encoding: "utf8",
@@ -242,9 +252,24 @@ function validateCommon() {
   if (!errors) ok("shared base config carries no secret-looking key or value");
 }
 
+function validateShared() {
+  console.log(`\nShared services: config/environments/shared.json`);
+  const before = errors;
+  for (const [keyPath, key, value] of walkLeaves(loadShared())) {
+    if (SECRET_ENV_KEYS.includes(key) || (keyPath.includes("runtime.") && looksSecret(key))) {
+      fail(`secret-looking key "${keyPath}" must not appear in shared.json — seed it via OpenBao`);
+    }
+    if (typeof value === "string" && HEX_SECRET.test(value)) {
+      fail(`secret-looking value at "${keyPath}" (${value.length}-char hex) must not be committed`);
+    }
+  }
+  if (errors === before) ok("shared services config carries no secret-looking key or value");
+}
+
 function main() {
   console.log("Validating environment manifests (ADR-0072 — no hand-maintained .env.* required)");
   validateCommon();
+  validateShared();
   for (const stage of STAGES) validateManifest(stage);
   validateNoTrackedArtifacts();
 

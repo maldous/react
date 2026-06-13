@@ -18,7 +18,8 @@ YELLOW=$(tput setaf 3 2>/dev/null || true)
 RED=$(tput setaf 1 2>/dev/null || true)
 RESET=$(tput sgr0 2>/dev/null || true)
 
-SONAR_ENV_FILE=".env.sonar"
+# ADR-0072: source the generated .env/sonar.env (from config/environments/shared.json).
+SONAR_ENV_FILE="$(bash scripts/env/resolve-env-file.sh sonar 2>/dev/null || echo .env/sonar.env)"
 if [ -f "$SONAR_ENV_FILE" ]; then
   # shellcheck disable=SC1090
   set -a
@@ -101,6 +102,6 @@ if curl -s --max-time 15 -u "${ADMIN_USER}:${ADMIN_PASS}" -X POST \
   "${HOST}/api/qualitygates/select" > /dev/null 2>&1; then
   printf '%s✓ Quality gate "%s" assigned to %s%s\n' "$GREEN" "$GATE_NAME" "$PROJECT_KEY" "$RESET"
 else
-  printf '%s✗ Failed to assign quality gate (check admin credentials in .env.sonar)%s\n' \
+  printf '%s✗ Failed to assign quality gate (check admin credentials in .env/sonar.env)%s\n' \
     "$RED" "$RESET"
 fi

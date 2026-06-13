@@ -66,7 +66,7 @@ sonar:
 	@# (idempotent; restores it after a fresh sonar-postgres volume, which would
 	@# otherwise leave the project on the built-in coverage-enforcing "Sonar way").
 	@bash scripts/sonar/ensure-quality-gate.sh
-	@set -a; . ./.env.sonar; set +a; \
+	@set -a; . "$$(bash scripts/env/resolve-env-file.sh sonar)"; set +a; \
 	_sonar_url="$${SONAR_HOST_URL:-http://localhost:9064/sonar}"; \
 	_sonar_key="$${SONAR_PROJECT_KEY:-maldous-react}"; \
 	_sonar_login="$${SONAR_TOKEN:-}"; \

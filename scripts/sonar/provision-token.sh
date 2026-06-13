@@ -14,22 +14,15 @@ GREEN=$(tput setaf 2 2>/dev/null || true)
 YELLOW=$(tput setaf 3 2>/dev/null || true)
 RESET=$(tput sgr0 2>/dev/null || true)
 
-SONAR_ENV_FILE=".env.sonar"
-SONAR_ENV_EXAMPLE=".env.sonar.example"
+# ADR-0072: the generated runtime artifact .env/sonar.env (from
+# config/environments/shared.json) is the source. The runtime-provisioned analysis
+# token is seeded into .env/secrets/sonar.env (gitignored). No hand-maintained
+# .env.sonar / .env.sonar.example.
+SECRETS_FILE=".env/secrets/sonar.env"
 
-# ── 1. Ensure .env.sonar exists ────────────────────────────────────────────────
+# ── 1. Materialise + source the generated sonar runtime env ─────────────────────
 
-if [ ! -f "$SONAR_ENV_FILE" ]; then
-  if [ -f "$SONAR_ENV_EXAMPLE" ]; then
-    printf '%s.env.sonar not found — copying from .env.sonar.example%s\n' "$YELLOW" "$RESET"
-    cp "$SONAR_ENV_EXAMPLE" "$SONAR_ENV_FILE"
-  else
-    printf '%s✗ Neither .env.sonar nor .env.sonar.example found%s\n' "$RED" "$RESET"
-    exit 1
-  fi
-fi
-
-# ── 2. Source config ───────────────────────────────────────────────────────────
+SONAR_ENV_FILE="$(bash scripts/env/resolve-env-file.sh sonar)"
 
 # shellcheck disable=SC1090
 set -a
@@ -125,7 +118,7 @@ if echo "$RESP" | grep -q '"errors"'; then
   printf '%s✗ Token generation failed. SonarQube response:%s\n' "$RED" "$RESET"
   echo "$RESP" | python3 -m json.tool 2>/dev/null || echo "$RESP"
   printf '\n%s  Possible causes:%s\n' "$YELLOW" "$RESET"
-  printf '%s  1. Admin password changed — set SONAR_ADMIN_PASSWORD in .env.sonar%s\n' \
+  printf '%s  1. Admin password changed — set SONAR_ADMIN_PASSWORD via config/environments/shared.json%s\n' \
     "$YELLOW" "$RESET"
   printf '%s  2. SonarQube still initialising — retry in 30s%s\n' "$YELLOW" "$RESET"
   printf '%s  3. Token name "%s" already exists — delete it in the UI or use a new name%s\n' \
@@ -141,15 +134,19 @@ if [ -z "$NEW_TOKEN" ]; then
   exit 1
 fi
 
-# ── 7. Write token to .env.sonar ───────────────────────────────────────────────
+# ── 7. Persist token to seeded material + regenerate the artifact (ADR-0072) ────
 
 printf '%s✓ Got new token: %s…%s\n' "$GREEN" "${NEW_TOKEN:0:12}" "$RESET"
 
-# Replace the SONAR_TOKEN line in-place, or append if missing
-if grep -q '^SONAR_TOKEN=' "$SONAR_ENV_FILE"; then
-  sed -i "s|^SONAR_TOKEN=.*|SONAR_TOKEN=${NEW_TOKEN}|" "$SONAR_ENV_FILE"
+# The token is secret + runtime-provisioned → seed it into .env/secrets/sonar.env
+# (gitignored), then regenerate .env/sonar.env so it picks the seeded value up.
+mkdir -p "$(dirname "$SECRETS_FILE")"
+touch "$SECRETS_FILE"
+chmod 600 "$SECRETS_FILE"
+if grep -q '^SONAR_TOKEN=' "$SECRETS_FILE"; then
+  sed -i "s|^SONAR_TOKEN=.*|SONAR_TOKEN=${NEW_TOKEN}|" "$SECRETS_FILE"
 else
-  echo "SONAR_TOKEN=${NEW_TOKEN}" >> "$SONAR_ENV_FILE"
+  echo "SONAR_TOKEN=${NEW_TOKEN}" >> "$SECRETS_FILE"
 fi
-
-printf '%s✓ Token saved to %s%s\n' "$GREEN" "$SONAR_ENV_FILE" "$RESET"
+node scripts/env/generate-runtime-env.mjs sonar >/dev/null
+printf '%s✓ Token seeded to %s + .env/sonar.env regenerated%s\n' "$GREEN" "$SECRETS_FILE" "$RESET"

@@ -27,10 +27,11 @@ if [ -f "$GEN" ]; then
     exit 0
 fi
 
-if [ -f "$MANIFEST" ]; then
-    # Materialise the artifact from the manifest. Diagnostics to stderr so the
-    # stdout contract (a single path) stays clean for callers using $(...).
-    node "${ROOT}/scripts/env/generate-runtime-env.mjs" "$STAGE" >&2
+# Materialise the artifact from its manifest. The generator knows both per-stage
+# targets (config/environments/<stage>.json) and shared services sonar/sentry
+# (config/environments/shared.json); it exits non-zero for an unknown target.
+# Diagnostics to stderr so the stdout contract (a single path) stays clean.
+if node "${ROOT}/scripts/env/generate-runtime-env.mjs" "$STAGE" >&2 2>/dev/null && [ -f "$GEN" ]; then
     echo "$GEN"
     exit 0
 fi
@@ -40,6 +41,6 @@ if [ -f "$LEGACY" ]; then
     exit 0
 fi
 
-echo "ERROR: no environment manifest (${MANIFEST}) and no legacy env (${LEGACY}) for stage '${STAGE}'" >&2
+echo "ERROR: cannot generate ${GEN} (no manifest for '${STAGE}') and no legacy ${LEGACY}" >&2
 echo "       run: make env-generate-runtime ENV=${STAGE}" >&2
 exit 1

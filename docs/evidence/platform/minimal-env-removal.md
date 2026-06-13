@@ -34,6 +34,24 @@ guarded so the `.env/` directory is never read as a file.
   (`platformpassword`, `clickhousepassword`) match the committed URLs (documented
   Compose-bootstrap limitation).
 
+## Shared services folded in (zero hand-maintained `.env*`)
+
+The shared cross-environment services are now generated too — there is no
+hand-maintained `.env.sonar`, `.env.sentry`, or their `.example`s:
+
+- `config/environments/shared.json` declares the non-secret Sonar + Sentry config.
+- `make env-generate-runtime ENV=sonar|sentry` (and `--all`) produces
+  `.env/sonar.env` / `.env/sentry.env`.
+- The runtime-provisioned SonarQube analysis token is seeded into
+  `.env/secrets/sonar.env` (gitignored) by `scripts/sonar/provision-token.sh`, which
+  regenerates `.env/sonar.env`; consumers (`make sonar`, `compose.mk`,
+  `ensure-quality-gate.sh`, `compose-wrapper` for the `sonar`/`sentry` projects)
+  resolve via `scripts/env/resolve-env-file.sh`.
+
+PROOF: `git ls-files | grep .env` → none; `ls -a | grep '^\.env'` → only the
+generated `.env/` directory. `validate-manifests` scans `common.json` + `shared.json`
+for secret-looking keys and guards `.env.sonar`/`.env.sentry` against being tracked.
+
 ## Not delivered
 
 Architecture-orchestrator integration of the manifest validator (it is enforced as a

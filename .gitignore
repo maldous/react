@@ -21,10 +21,11 @@ coverage/
 reports/**
 
 # Local + generated environment files (ADR-0072). The tracked source of truth is
-# config/environments/<stage>.json; there is no hand-maintained .env/.env.* and no
-# .env.example. Runtime env artifacts are generated at .env/<stage>.env (+
-# .env/secrets/<stage>.env) by `make env-generate-runtime` — gitignored,
-# reproducible, secret-bearing, NEVER committed. (.env.sentry/.env.sonar remain.)
+# config/environments/*.json (per-stage manifests + common.json + shared.json for
+# Sonar/Sentry); there is NO hand-maintained .env, .env.*, .env.example, .env.sonar,
+# or .env.sentry. Runtime env artifacts are generated at .env/<target>.env (+
+# .env/secrets/<target>.env) by `make env-generate-runtime` — gitignored,
+# reproducible, secret-bearing, NEVER committed.
 .env
 .env.*
 /.env/

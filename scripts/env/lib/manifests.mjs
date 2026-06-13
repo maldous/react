@@ -111,6 +111,24 @@ export const SECRET_ENV_KEYS = [
   "SENTRY_SECRET_KEY",
 ];
 
+// Shared cross-environment services (single instance, react-sonar / react-shared
+// Compose projects) — NOT part of the per-environment deployment ladder. Their
+// runtime env is generated to .env/<target>.env from config/environments/shared.json
+// so NO hand-maintained .env.sonar / .env.sentry is required (ADR-0072).
+export const SHARED_TARGETS = ["sonar", "sentry"];
+export const SHARED_SECRET_KEYS = {
+  sonar: ["SONAR_DB_PASSWORD", "SONAR_TOKEN"],
+  sentry: ["SENTRY_SECRET_KEY", "SENTRY_ADMIN_PASSWORD"],
+};
+// Secret keys left EMPTY when not seeded — runtime-provisioned, never derived
+// (e.g. SonarQube analysis token, minted by scripts/sonar/provision-token.sh).
+export const RUNTIME_PROVISIONED_KEYS = ["SONAR_TOKEN"];
+export const SHARED_PATH = resolve(MANIFEST_DIR, "shared.json");
+export function loadShared() {
+  if (!existsSync(SHARED_PATH)) return {};
+  return JSON.parse(readFileSync(SHARED_PATH, "utf8"));
+}
+
 export const COMMON_PATH = resolve(MANIFEST_DIR, "common.json");
 
 // Load the shared, non-secret base config merged UNDER every stage's runtime

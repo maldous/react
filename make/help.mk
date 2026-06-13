@@ -93,7 +93,7 @@ help:
 	  audit        'npm audit (high/critical) + OSV vulnerability scan' \
 	  security     'Secret scan via gitleaks' \
 	  architecture 'Full architecture governance suite (--strict)' \
-	  sonar        'Sonar scan + quality gate against shared instance (.env.sonar)' \
+	  sonar        'Sonar scan + quality gate against shared instance' \
 	  sbom         'Generate CycloneDX 1.6 SBOM' \
 	  infra-check  'Validate Terraform syntax + format (no credentials needed)'
 	@printf '\n'
@@ -140,11 +140,11 @@ pre-slice-gate: compose format lint typecheck test test-compose audit security a
 	$(call STEP,pre-slice-gate: frontend smoke)
 	npm run test:frontend:run
 	$(call STEP,pre-slice-gate: Sonar quality gate)
-	@if [ ! -f .env.sonar ]; then \
-		printf '$(RED)✗ .env.sonar not found. pre-slice-gate requires the shared Sonar instance.\n'; \
-		printf '  Copy .env.sonar.example to .env.sonar and set SONAR_TOKEN, then re-run.\n$(RESET)'; \
+	@# ADR-0072: the sonar runtime env is generated from config/environments/shared.json.
+	@bash scripts/env/resolve-env-file.sh sonar >/dev/null || { \
+		printf '$(RED)✗ could not materialise .env/sonar.env (config/environments/shared.json).\n$(RESET)'; \
 		exit 1; \
-	fi
+	}
 	$(MAKE) sonar
 	@echo ""
 	@printf '$(BOLD)$(GREEN)'

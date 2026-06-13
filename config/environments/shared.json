@@ -1,0 +1,25 @@
+{
+  "$schema": "./schema.json",
+  "description": "Shared cross-environment services (single instance, NOT the per-environment ladder). Non-secret config only — generated to .env/<target>.env. Secrets (DB passwords, Sentry secret key, admin password, the runtime-provisioned Sonar token) come from OpenBao-seeded material or local-bootstrap defaults, never this file (ADR-0072).",
+  "sonar": {
+    "name": "SonarQube (shared react-sonar instance)",
+    "composeProject": "react-sonar",
+    "runtime": {
+      "SONAR_PORT": "9064",
+      "SONAR_WEB_CONTEXT": "/sonar",
+      "SONAR_HOST_URL": "http://localhost:9064/sonar",
+      "SONAR_PROJECT_KEY": "maldous-react",
+      "SONAR_DB_USER": "sonar",
+      "SONAR_DB_NAME": "sonar"
+    }
+  },
+  "sentry": {
+    "name": "Sentry (shared react-shared instance)",
+    "composeProject": "react-shared",
+    "runtime": {
+      "SENTRY_ADMIN_EMAIL": "admin@sentry.local",
+      "SENTRY_EVENT_RETENTION_DAYS": "90",
+      "SENTRY_URL_PREFIX": "http://localhost:5173/sentry"
+    }
+  }
+}

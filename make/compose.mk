@@ -179,7 +179,7 @@ identity-mocks-down:
 sonar-up:
 	$(call STEP,sonar: startup)
 	bash scripts/compose/up.sh sonar external-sonar
-	@_url=$$(grep -oP 'SONAR_HOST_URL=\K\S+' .env.sonar 2>/dev/null | head -1 || echo http://localhost:9064/sonar); \
+	@_url=$$(grep -oP 'SONAR_HOST_URL=\K\S+' "$$(bash scripts/env/resolve-env-file.sh sonar)" 2>/dev/null | head -1 || echo http://localhost:9064/sonar); \
 	printf '$(GREEN)✓ SonarQube up at %s (project: maldous-react)$(RESET)\n' "$$_url"
 
 ## sonar-provision — Ensure a valid SonarQube analysis token exists (idempotent)

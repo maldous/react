@@ -29,10 +29,13 @@ import { mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import process from "node:process";
 import {
   STAGES,
-  STAGE_POLICY,
   SECRET_ENV_KEYS,
+  SHARED_TARGETS,
+  SHARED_SECRET_KEYS,
+  RUNTIME_PROVISIONED_KEYS,
   loadManifest,
   loadCommon,
+  loadShared,
   generatedEnvPath,
   generatedSecretsPath,
   parseEnvFile,
@@ -72,7 +75,10 @@ const LOCAL_BOOTSTRAP_DEFAULTS = {
   KEYCLOAK_CLIENT_SECRET: "local-dev-bff-secret",
   KEYCLOAK_PROVISIONER_CLIENT_SECRET: "local-dev-provisioner-secret",
   SENTRY_DB_PASSWORD: "sentrypassword",
-  SENTRY_SECRET_KEY: "change-this-to-a-real-secret-key",
+  // Shared-service (sonar/sentry) container-init creds — match the running instances.
+  SONAR_DB_PASSWORD: "sonarpassword",
+  SENTRY_SECRET_KEY: "changeme-generate-with-openssl-rand-hex-50",
+  SENTRY_ADMIN_PASSWORD: "changeme",
 };
 
 function deriveHex(...parts) {
@@ -86,99 +92,122 @@ function derivePassword(stage, key) {
   return `Bs1-${h.slice(0, 24)}`;
 }
 
-export function resolveSecrets(stage) {
+// Resolve the secret values for `target` over the given `keys`. Priority:
+// seeded material > runtime-provisioned-empty > pinned default > derived.
+export function resolveSecrets(target, keys = SECRET_ENV_KEYS) {
   // 1. Seeded material (highest priority) — written by `make env-seed-secrets`.
-  const seeded = parseEnvFile(generatedSecretsPath(stage));
+  const seeded = parseEnvFile(generatedSecretsPath(target));
   const out = {};
   let bootstrapDerived = 0;
-  for (const key of SECRET_ENV_KEYS) {
+  for (const key of keys) {
     if (seeded[key] !== undefined && seeded[key] !== "") {
       out[key] = seeded[key];
       continue;
     }
-    // 2. Pinned local-bootstrap default (must match committed connection URLs).
+    // 2. Runtime-provisioned (e.g. SONAR_TOKEN) — leave EMPTY until provisioned.
+    if (RUNTIME_PROVISIONED_KEYS.includes(key)) {
+      out[key] = "";
+      continue;
+    }
+    // 3. Pinned local-bootstrap default (must match committed URLs / running instances).
     if (LOCAL_BOOTSTRAP_DEFAULTS[key] !== undefined) {
       out[key] = LOCAL_BOOTSTRAP_DEFAULTS[key];
       bootstrapDerived++;
       continue;
     }
-    // 3. Deterministic local-bootstrap derivation.
+    // 4. Deterministic local-bootstrap derivation.
     if (DERIVE_SHARED.has(key)) {
       out[key] = deriveHex(LOCAL_BOOTSTRAP_SALT, "shared", key);
     } else if (DERIVE_AS_PASSWORD.has(key)) {
-      out[key] = derivePassword(stage, key);
+      out[key] = derivePassword(target, key);
     } else {
       // 64-hex crypto material (encryption key, pepper, signing secret).
-      out[key] = deriveHex(LOCAL_BOOTSTRAP_SALT, stage, key);
+      out[key] = deriveHex(LOCAL_BOOTSTRAP_SALT, target, key);
     }
     bootstrapDerived++;
   }
   return { secrets: out, seededCount: Object.keys(seeded).length, bootstrapDerived };
 }
 
-function renderEnvFile(stage, manifest, secrets, info) {
-  const policy = STAGE_POLICY[stage];
+function renderEnvFile(target, runtime, keys, secrets, info) {
+  const isStage = STAGES.includes(target);
+  const source = isStage
+    ? `config/environments/${target}.json`
+    : `config/environments/shared.json (${target})`;
   const lines = [];
-  lines.push(`# .env/${stage}.env — GENERATED RUNTIME ARTIFACT — DO NOT EDIT.`);
-  lines.push(`# Source of truth: config/environments/${stage}.json (ADR-0072).`);
-  lines.push(`# Regenerate: make env-generate-runtime ENV=${stage}`);
+  lines.push(`# .env/${target}.env — GENERATED RUNTIME ARTIFACT — DO NOT EDIT.`);
+  lines.push(`# Source of truth: ${source} (ADR-0072).`);
+  lines.push(`# Regenerate: make env-generate-runtime ENV=${target}`);
   lines.push(`# This file is gitignored, reproducible, and safe to delete.`);
   lines.push(`#`);
   if (info.seededCount > 0) {
-    lines.push(`# Secrets: ${info.seededCount} from seeded material (.env/secrets/${stage}.env),`);
+    lines.push(`# Secrets: ${info.seededCount} from seeded material (.env/secrets/${target}.env),`);
     lines.push(`#          ${info.bootstrapDerived} derived as local-bootstrap.`);
   } else {
     lines.push(
       `# Secrets: ${info.bootstrapDerived} derived as LOCAL BOOTSTRAP (no seeded material).`
     );
   }
-  if (policy.stage === "staging" || policy.stage === "production") {
-    lines.push(`# WARNING: ${stage} secret material is LOCAL BOOTSTRAP and MUST be rotated`);
-    lines.push(`#          (make env-seed-secrets ENV=${stage}) before any real exposure.`);
+  if (isStage && (target === "staging" || target === "prod")) {
+    lines.push(`# WARNING: ${target} secret material is LOCAL BOOTSTRAP and MUST be rotated`);
+    lines.push(`#          (make env-seed-secrets ENV=${target}) before any real exposure.`);
   }
-  lines.push(`# NOTE: POSTGRES_URL / POSTGRES_APP_URL carry a local container-bootstrap`);
-  lines.push(`#       password — the documented Compose limitation (ADR-0072). Real`);
-  lines.push(`#       production must point these at an externally-managed credential.`);
+  if (isStage) {
+    lines.push(`# NOTE: POSTGRES_URL / POSTGRES_APP_URL carry a local container-bootstrap`);
+    lines.push(`#       password — the documented Compose limitation (ADR-0072). Real`);
+    lines.push(`#       production must point these at an externally-managed credential.`);
+  }
   lines.push("");
 
-  // Shared non-secret base config (common.json) merged UNDER the stage runtime —
-  // stage keys win. Together they fully replace the former hand-maintained root .env.
-  const common = loadCommon().runtime ?? {};
-  const runtime = { ...common, ...(manifest.runtime ?? {}) };
-  lines.push("# ── Non-secret bootstrap intent (common.json + manifest) ────────────────────");
+  const label = isStage ? "common.json + manifest" : "shared.json";
+  lines.push(`# ── Non-secret bootstrap intent (${label}) ────────────────────`);
   for (const [k, v] of Object.entries(runtime)) {
     lines.push(`${k}=${v}`);
   }
   lines.push("");
   lines.push("# ── Secret material (seeded from OpenBao or local-bootstrap derived) ────────");
-  for (const key of SECRET_ENV_KEYS) {
-    // Only emit secret keys that this stage actually uses. WEBHOOK/PEPPER/etc.
-    // are always emitted; LOCAL_FIXTURE_SESSION-style keys are handled in runtime.
+  for (const key of keys) {
     lines.push(`${key}=${secrets[key]}`);
   }
   lines.push("");
   return lines.join("\n");
 }
 
-export function generate(stage) {
-  if (!STAGES.includes(stage)) {
-    throw new Error(`unknown stage "${stage}" (expected one of ${STAGES.join(", ")})`);
+// Resolve a target's secret keys + non-secret runtime. Stages merge common.json
+// under the per-stage manifest; shared services (sonar/sentry) read shared.json.
+function targetSpec(target) {
+  if (STAGES.includes(target)) {
+    const common = loadCommon().runtime ?? {};
+    const manifest = loadManifest(target);
+    return { keys: SECRET_ENV_KEYS, runtime: { ...common, ...(manifest.runtime ?? {}) } };
   }
-  const manifest = loadManifest(stage);
-  const { secrets, seededCount, bootstrapDerived } = resolveSecrets(stage);
-  const content = renderEnvFile(stage, manifest, secrets, { seededCount, bootstrapDerived });
-  return { content, path: generatedEnvPath(stage) };
+  if (SHARED_TARGETS.includes(target)) {
+    const svc = loadShared()[target];
+    if (!svc)
+      throw new Error(`shared service "${target}" missing from config/environments/shared.json`);
+    return { keys: SHARED_SECRET_KEYS[target] ?? [], runtime: svc.runtime ?? {} };
+  }
+  throw new Error(
+    `unknown target "${target}" (stages: ${STAGES.join(", ")}; shared: ${SHARED_TARGETS.join(", ")})`
+  );
 }
 
-function writeStage(stage) {
-  const { content, path } = generate(stage);
+export function generate(target) {
+  const { keys, runtime } = targetSpec(target);
+  const { secrets, seededCount, bootstrapDerived } = resolveSecrets(target, keys);
+  const content = renderEnvFile(target, runtime, keys, secrets, { seededCount, bootstrapDerived });
+  return { content, path: generatedEnvPath(target) };
+}
+
+function writeTarget(target) {
+  const { content, path } = generate(target);
   mkdirSync(GENERATED_ENV_DIR, { recursive: true });
   writeFileSync(path, content, { mode: 0o600 });
   return path;
 }
 
-function checkStage(stage) {
-  const { content, path } = generate(stage);
+function checkTarget(target) {
+  const { content, path } = generate(target);
   if (!existsSync(path)) return { ok: false, reason: "missing" };
   const current = readFileSync(path, "utf8");
   return { ok: current === content, reason: current === content ? "up-to-date" : "stale" };
@@ -188,23 +217,24 @@ function main() {
   const args = process.argv.slice(2);
   const check = args.includes("--check");
   const all = args.includes("--all");
-  const stageArg = args.find((a) => !a.startsWith("--")) ?? process.env.ENV ?? "dev";
-  const stages = all ? STAGES : [stageArg];
+  // --all generates every stage AND shared service so preflight materialises everything.
+  const targetArg = args.find((a) => !a.startsWith("--")) ?? process.env.ENV ?? "dev";
+  const targets = all ? [...STAGES, ...SHARED_TARGETS] : [targetArg];
 
   let failures = 0;
-  for (const stage of stages) {
+  for (const target of targets) {
     if (check) {
-      const r = checkStage(stage);
+      const r = checkTarget(target);
       if (r.ok) {
-        console.log(`  ✓ ${stage}: ${r.reason}`);
+        console.log(`  ✓ ${target}: ${r.reason}`);
       } else {
         console.error(
-          `  ✗ ${stage}: generated env ${r.reason} — run: make env-generate-runtime ENV=${stage}`
+          `  ✗ ${target}: generated env ${r.reason} — run: make env-generate-runtime ENV=${target}`
         );
         failures++;
       }
     } else {
-      const path = writeStage(stage);
+      const path = writeTarget(target);
       console.log(`  ✓ generated ${path.replace(process.cwd() + "/", "")}`);
     }
   }
