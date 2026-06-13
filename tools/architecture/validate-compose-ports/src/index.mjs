@@ -52,9 +52,14 @@ function parseEnvFile(filePath) {
 const resolved = {};
 const warnings = [];
 for (const env of ENVS) {
-  const explicit = parseEnvFile(path.join(repoRoot, `.env.${env}`));
+  // ADR-0072: the generated runtime artifact .env/<env>.env (from the manifest) is
+  // the source; fall back to a legacy .env.<env> file only if present.
+  const generated = parseEnvFile(path.join(repoRoot, ".env", `${env}.env`));
+  const explicit = generated ?? parseEnvFile(path.join(repoRoot, `.env.${env}`));
   if (explicit === null) {
-    warnings.push(`[${env}] .env.${env} not found — skipping (gitignored local file)`);
+    warnings.push(
+      `[${env}] no .env/${env}.env or .env.${env} — run: make env-generate-runtime ENV=${env}`
+    );
     continue; // absent env files are normal in CI; only check what's present
   }
   resolved[env] = { ...COMPOSE_DEFAULTS, ...explicit };
