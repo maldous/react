@@ -150,6 +150,7 @@ Each proven capability is backed by a repeatable, runnable proof — a single so
 - **Metering and quota enforcement (Phase 2)** — `proof:metering`, `proof:quota-enforcement`, `proof:metering-quota-routes`
 - **Developer platform — API keys + rate limits (Phase 3)** — `proof:api-keys`, `proof:rate-limits`, `proof:api-key-routes`
 - **Tenant-isolated product search (Phase 4)** — `proof:search`, `proof:search-isolation`, `proof:search-routes`
+- **Event bus + durable workers (Phase 5)** — `proof:event-bus`, `proof:event-worker`, `proof:event-redrive`
 
 ![Honest readiness — a running service is not a delivered capability](docs/images/usf-readiness-honesty.svg)
 

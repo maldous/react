@@ -53,6 +53,7 @@ export const AuditAction = {
   QuotaRemoved: "quota.removed",
   RateLimitSet: "rate_limit.set",
   SearchReindexed: "search.reindexed",
+  EventRedriven: "event.redriven",
 } as const;
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction];

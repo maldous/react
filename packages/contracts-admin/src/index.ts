@@ -1806,3 +1806,71 @@ export const ReindexResponseSchema = z.object({
   reindexed: z.number(),
 });
 export type ReindexResponse = z.infer<typeof ReindexResponseSchema>;
+
+// ---------------------------------------------------------------------------
+// Event bus + durable workers + DLQ/redrive (Phase 5, ADR-0059 / ADR-ACT-0259).
+// Built-in Postgres outbox; tenant-scoped (RLS) + idempotent. Operator-facing read
+// surfaces + redrive. No secret payload fields (rejected at publish). Redis Streams /
+// NATS remain Phase-5.5 providers behind the EventBusPort.
+// ---------------------------------------------------------------------------
+
+export const EVENT_STATUSES = ["pending", "processing", "processed", "failed"] as const;
+export const EventStatusSchema = z.enum(EVENT_STATUSES);
+export type EventStatus = z.infer<typeof EventStatusSchema>;
+
+/** Operator view of an event in the outbox. Carries no secret fields. */
+export const EventSummarySchema = z.object({
+  id: z.string(),
+  organisationId: z.string(),
+  eventType: z.string(),
+  status: EventStatusSchema,
+  attempts: z.number(),
+  maxAttempts: z.number(),
+  lastError: z.string().nullable(),
+  createdAt: z.string(),
+  processedAt: z.string().nullable(),
+});
+export type EventSummary = z.infer<typeof EventSummarySchema>;
+
+export const EventListResponseSchema = z.object({ events: z.array(EventSummarySchema) });
+export type EventListResponse = z.infer<typeof EventListResponseSchema>;
+
+export const DeadLetterSummarySchema = z.object({
+  id: z.string(),
+  eventId: z.string(),
+  organisationId: z.string(),
+  eventType: z.string(),
+  attempts: z.number(),
+  lastError: z.string().nullable(),
+  deadAt: z.string(),
+  redrivenAt: z.string().nullable(),
+});
+export type DeadLetterSummary = z.infer<typeof DeadLetterSummarySchema>;
+
+export const DeadLetterListResponseSchema = z.object({
+  deadLetters: z.array(DeadLetterSummarySchema),
+});
+export type DeadLetterListResponse = z.infer<typeof DeadLetterListResponseSchema>;
+
+export const WORKER_STATUSES = ["alive", "stale", "stopped"] as const;
+export const WorkerStatusSchema = z.enum(WORKER_STATUSES);
+export type WorkerStatus = z.infer<typeof WorkerStatusSchema>;
+
+export const WorkerSummarySchema = z.object({
+  workerId: z.string(),
+  workerKind: z.string(),
+  status: WorkerStatusSchema,
+  lastHeartbeatAt: z.string(),
+  // Derived: seconds since the last heartbeat (server-computed).
+  secondsSinceHeartbeat: z.number(),
+});
+export type WorkerSummary = z.infer<typeof WorkerSummarySchema>;
+
+export const WorkerListResponseSchema = z.object({ workers: z.array(WorkerSummarySchema) });
+export type WorkerListResponse = z.infer<typeof WorkerListResponseSchema>;
+
+export const RedriveResponseSchema = z.object({
+  redriven: z.boolean(),
+  eventId: z.string(),
+});
+export type RedriveResponse = z.infer<typeof RedriveResponseSchema>;

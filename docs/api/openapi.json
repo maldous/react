@@ -2917,6 +2917,56 @@
         }
       }
     },
+    "/api/admin/events": {
+      "get": {
+        "summary": "List a tenant's events (system operator)",
+        "operationId": "listEvents",
+        "description": "Operator read of the durable outbox for a tenant (requires ?organisationId). No secret payload fields. ADR-0059 / ADR-ACT-0259.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Event list" },
+          "400": { "description": "organisationId query parameter is required" }
+        }
+      }
+    },
+    "/api/admin/events/dead-letter": {
+      "get": {
+        "summary": "List a tenant's dead-lettered events (system operator)",
+        "operationId": "listDeadLetters",
+        "description": "Operator read of events that exhausted retries (requires ?organisationId). ADR-0059 / ADR-ACT-0259.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Dead-letter list" },
+          "400": { "description": "organisationId query parameter is required" }
+        }
+      }
+    },
+    "/api/admin/events/:eventId/redrive": {
+      "post": {
+        "summary": "Redrive a dead-lettered event (system operator)",
+        "operationId": "redriveEvent",
+        "description": "Operator-only, audited. Re-enqueues a dead letter as a fresh pending event. `eventId` is the dead-letter id. ADR-0059 / ADR-ACT-0259.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Redriven" },
+          "400": { "description": "Invalid dead-letter id" },
+          "404": { "description": "Dead letter not found or already redriven" }
+        }
+      }
+    },
+    "/api/admin/workers": {
+      "get": {
+        "summary": "List worker-runtime heartbeats (system operator)",
+        "operationId": "listWorkers",
+        "description": "Operator view of registered workers with a derived liveness status (alive/stale/stopped). ADR-0059 / ADR-ACT-0259.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": { "200": { "description": "Worker list" } }
+      }
+    },
     "/api/org/entitlements": {
       "get": {
         "summary": "List the tenant's own entitlements (read-only)",

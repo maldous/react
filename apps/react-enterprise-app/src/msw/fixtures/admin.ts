@@ -20,6 +20,9 @@ import type {
   CreateApiKeyResponse,
   SearchResponse,
   SearchReadinessResponse,
+  EventListResponse,
+  DeadLetterListResponse,
+  WorkerListResponse,
   CapabilitySummary,
   CapabilityCategory,
   CapabilityImplementationStatus,
@@ -404,6 +407,49 @@ export const searchReadinessFixture: SearchReadinessResponse = {
   status: "ready",
   documentCount: 1,
   detail: "Postgres full-text search is reachable and has indexed documents.",
+};
+
+export const eventsFixture: EventListResponse = {
+  events: [
+    {
+      id: "00000000-0000-0000-0000-0000000000e1",
+      organisationId: "00000000-0000-0000-0000-000000000001",
+      eventType: "thing.created",
+      status: "processed",
+      attempts: 1,
+      maxAttempts: 5,
+      lastError: null,
+      createdAt: "2026-06-13T00:00:00.000Z",
+      processedAt: "2026-06-13T00:00:01.000Z",
+    },
+  ],
+};
+
+export const deadLettersFixture: DeadLetterListResponse = {
+  deadLetters: [
+    {
+      id: "00000000-0000-0000-0000-0000000000d1",
+      eventId: "00000000-0000-0000-0000-0000000000e2",
+      organisationId: "00000000-0000-0000-0000-000000000001",
+      eventType: "boom.event",
+      attempts: 5,
+      lastError: "handler failed",
+      deadAt: "2026-06-13T00:00:00.000Z",
+      redrivenAt: null,
+    },
+  ],
+};
+
+export const workersFixture: WorkerListResponse = {
+  workers: [
+    {
+      workerId: "event-worker-1",
+      workerKind: "event-worker",
+      status: "alive",
+      lastHeartbeatAt: "2026-06-13T00:00:00.000Z",
+      secondsSinceHeartbeat: 4,
+    },
+  ],
 };
 
 export const entitlementsFixture: EntitlementListResponse = {

@@ -97,6 +97,10 @@ export const sessionFixtures: Record<SessionPersona, SessionActor> = {
       "platform.search.read",
       "platform.search.write",
       "tenant.search.read",
+      // Event bus + workers (Phase 5, ADR-ACT-0259): operator-only.
+      "platform.events.read",
+      "platform.events.write",
+      "platform.workers.read",
     ],
     displayName: "System Admin",
   },

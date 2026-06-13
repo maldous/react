@@ -26,6 +26,9 @@ import {
   developerPortalFixture,
   searchResponseFixture,
   searchReadinessFixture,
+  eventsFixture,
+  deadLettersFixture,
+  workersFixture,
 } from "./fixtures/admin.ts";
 import type { AuthSettingsReadiness } from "@platform/contracts-admin";
 
@@ -717,6 +720,22 @@ export function adminSearchHandlers(
   ];
 }
 
+// Event bus + workers (Phase 5, ADR-ACT-0259).
+export function adminEventsHandlers(
+  events = eventsFixture,
+  deadLetters = deadLettersFixture,
+  workers = workersFixture
+) {
+  return [
+    http.get("/api/admin/events", () => HttpResponse.json(events)),
+    http.get("/api/admin/events/dead-letter", () => HttpResponse.json(deadLetters)),
+    http.post("/api/admin/events/:eventId/redrive", ({ params }) =>
+      HttpResponse.json({ redriven: true, eventId: String(params["eventId"]) })
+    ),
+    http.get("/api/admin/workers", () => HttpResponse.json(workers)),
+  ];
+}
+
 // --- generic helpers --------------------------------------------------------
 
 /** Simulated network failure for any GET endpoint. */
@@ -765,5 +784,6 @@ export const handlers = [
   ...adminUsageQuotaHandlers(),
   ...adminDeveloperHandlers(),
   ...adminSearchHandlers(),
+  ...adminEventsHandlers(),
   ...adminWriteOkHandlers(),
 ];

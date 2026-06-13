@@ -186,7 +186,8 @@
         "entitlements": "Entitlements",
         "usage": "Usage & quotas",
         "developer": "Developer",
-        "search": "Search"
+        "search": "Search",
+        "events": "Events & workers"
       },
       "card": {
         "membersDescription": "Invite people, change roles, and remove members.",
@@ -203,7 +204,8 @@
         "entitlementsDescription": "See and assign what this tenant is allowed to use.",
         "usageDescription": "See recorded usage and set quota limits per capability.",
         "developerDescription": "Mint API keys, see rate limits, and find the API surface.",
-        "searchDescription": "Tenant-isolated product search with readiness and reindex."
+        "searchDescription": "Tenant-isolated product search with readiness and reindex.",
+        "eventsDescription": "Inspect the event bus, dead letters, redrive, and worker runtime."
       },
       "entitlements": {
         "title": "Entitlements",
@@ -321,6 +323,31 @@
         "reindex": "Reindex",
         "reindexResult": "Reindexed {count} document(s).",
         "reindexError": "Could not reindex."
+      },
+      "events": {
+        "title": "Events & workers",
+        "description": "The durable event bus (Postgres outbox), dead-letter queue with redrive, and the worker runtime. Operator-only; payloads carry no secrets.",
+        "workersTitle": "Worker runtime",
+        "colWorker": "Worker",
+        "colKind": "Kind",
+        "colWorkerStatus": "Status",
+        "colHeartbeat": "Last heartbeat",
+        "secondsAgo": "{s}s ago",
+        "noWorkers": "No workers have reported a heartbeat.",
+        "tenantSelectLabel": "Tenant",
+        "tenantSelectPlaceholder": "Select a tenant…",
+        "enterTenant": "Select a tenant to inspect its events and dead letters.",
+        "deadLetterTitle": "Dead-letter queue",
+        "eventsTitle": "Events",
+        "colType": "Event type",
+        "colStatus": "Status",
+        "colAttempts": "Attempts",
+        "colError": "Last error",
+        "colActions": "Actions",
+        "redrive": "Redrive",
+        "redriven": "Redriven",
+        "noDeadLetters": "No dead letters for this tenant.",
+        "noEvents": "No events for this tenant."
       },
       "config": {
         "title": "Configuration",

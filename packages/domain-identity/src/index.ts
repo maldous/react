@@ -196,6 +196,11 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     "platform.search.read",
     "platform.search.write",
     "tenant.search.read",
+    // Event bus + workers (Phase 5, ADR-0059 / ADR-ACT-0259): operator-only event/DLQ
+    // reads, audited redrive, and worker-runtime visibility. No tenant role gets these.
+    "platform.events.read",
+    "platform.events.write",
+    "platform.workers.read",
     "platform.clickthrough.pgadmin",
     "platform.clickthrough.keycloak",
     "platform.clickthrough.minio",

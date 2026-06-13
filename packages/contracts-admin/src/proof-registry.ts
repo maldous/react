@@ -43,6 +43,9 @@ export const PROOF_LADDER = [
   "proof:search",
   "proof:search-isolation",
   "proof:search-routes",
+  "proof:event-bus",
+  "proof:event-worker",
+  "proof:event-redrive",
 ] as const;
 
 export type ProofLadderEntry = (typeof PROOF_LADDER)[number];

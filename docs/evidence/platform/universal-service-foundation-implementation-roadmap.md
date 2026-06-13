@@ -3,7 +3,7 @@
 - **Action:** ADR-ACT-0252 (delivery hardening); ADR-ACT-0254 (Phase 1 delivered)
 - **Source ADRs:** ADR-0053/0054/0055/0056/0058 **Accepted**; ADR-0057, ADR-0059–0066 Proposed (0057/0059/0062/0063 require splitting)
 - **Date:** 2026-06-13
-- **Status of this document:** governance / planning artifact. It sequences implementation. **Update (ADR-ACT-0254):** Phase 0 governance is complete and the Phase-0 ADRs are Accepted; the **Phase 1 substrate is delivered** (entitlement engine + service catalog v2 + policy-chain hook, node:test/MSW/in-memory proven — see `phase-1-service-catalog-entitlements.md`). **Phase 2 (metering + real quota enforcement, ADR-ACT-0256)** and **Phase 3 (API keys + rate limits + read-only developer portal foundation, ADR-ACT-0257)**, and **Phase 4 (built-in Postgres tenant-isolated search, ADR-ACT-0258)** are now **delivered + live-proven** (see `phase-2-metering-quota.md`, `phase-3-api-keys-rate-limits.md`, `phase-4-search.md`). Billing, event bus, durable workers, profile self-service, notifications, observability/alerting, and any new composed service remain **not delivered**.
+- **Status of this document:** governance / planning artifact. It sequences implementation. **Update (ADR-ACT-0254):** Phase 0 governance is complete and the Phase-0 ADRs are Accepted; the **Phase 1 substrate is delivered** (entitlement engine + service catalog v2 + policy-chain hook, node:test/MSW/in-memory proven — see `phase-1-service-catalog-entitlements.md`). **Phase 2 (metering + real quota enforcement, ADR-ACT-0256)** and **Phase 3 (API keys + rate limits + read-only developer portal foundation, ADR-ACT-0257)**, **Phase 4 (built-in Postgres tenant-isolated search, ADR-ACT-0258)**, and **Phase 5 (Postgres-outbox event bus + durable workers + DLQ/redrive, ADR-ACT-0259)** are now **delivered + live-proven** (see `phase-2-metering-quota.md`, `phase-3-api-keys-rate-limits.md`, `phase-4-search.md`, `phase-5-events-workers.md`). Billing, the workflow engine, profile self-service, notifications, observability/alerting, and any new composed service remain **not delivered**.
 
 ## What this is
 
@@ -145,6 +145,8 @@ All 14 ADRs share a sound template (Status/Context/Decision/Consequences/Validat
 **Proof scripts.** `proof:event-bus`, `proof:workflow` (tenant-namespace isolation, idempotency, DLQ/redrive). **Acceptance criteria.** Tenant-tagged events isolated; DLQ + redrive proven (extend webhook pattern); workflow namespaces per tenant; Windmill runs locally free.
 
 **Estimated size.** XL. **Risk.** High. **Stop condition.** Eventing + one durable workflow proven; serverless stays deferred.
+
+> **DELIVERED (event substrate) (2026-06-13, ADR-ACT-0259).** Built-in **Postgres outbox** event bus (migration 027, RLS, idempotent), durable **worker runtime** (claim via FOR UPDATE SKIP LOCKED, retry → **DLQ**, heartbeats), operator **redrive**, `/admin/events` UI. Live-proven: `proof:event-bus`, `proof:event-worker`, `proof:event-redrive`. Deviation from the sketch: **Postgres outbox, not Redis Streams** (Redis is Phase 5.5 behind `EventBusPort`); **no Windmill composed**. **Not delivered:** composed bus, **workflow engine + scheduled jobs** (Phase 5.5+, gated on this substrate), retry backoff schedule. Notifications split to ADR-0068 (Phase 6).
 
 ---
 

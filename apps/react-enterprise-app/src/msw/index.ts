@@ -65,6 +65,7 @@ export {
   adminUsageQuotaHandlers,
   adminDeveloperHandlers,
   adminSearchHandlers,
+  adminEventsHandlers,
 } from "./handlers.ts";
 export {
   membersFixture,
@@ -89,6 +90,9 @@ export {
   developerPortalFixture,
   searchResponseFixture,
   searchReadinessFixture,
+  eventsFixture,
+  deadLettersFixture,
+  workersFixture,
 } from "./fixtures/admin.ts";
 export {
   createGraphqlHandler,

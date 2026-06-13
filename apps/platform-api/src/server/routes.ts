@@ -444,6 +444,18 @@ async function buildRateLimitDeps() {
   };
 }
 
+// Build the events usecase deps (event bus + worker registry + audit) — ADR-ACT-0259.
+async function buildEventsDeps() {
+  const { PostgresEventBus, PostgresWorkerRegistry } =
+    await import("../adapters/postgres-event-bus.ts");
+  const pool = getApplicationPool();
+  return {
+    bus: new PostgresEventBus(pool),
+    workers: new PostgresWorkerRegistry(pool),
+    audit: createPostgresAuditEventPort(pool),
+  };
+}
+
 // Build the search usecase deps (search index + query repo + audit) — ADR-ACT-0258.
 async function buildSearchDeps() {
   const { PostgresSearchRepository } = await import("../adapters/postgres-search-repository.ts");
@@ -4995,6 +5007,105 @@ export const routes: Route[] = [
         await buildSearchDeps()
       );
       res.json(200, { reindexed: result.reindexed });
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Event bus + durable workers + DLQ/redrive (Phase 5, ADR-0059 / ADR-ACT-0259).
+  // Operator-only read surfaces + audited redrive + worker-runtime visibility.
+  // Publishing + worker ticks are server-internal (not exposed on HTTP).
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/admin/events",
+    operationName: "admin.events.list",
+    requiresAuth: true,
+    requiredPermission: "platform.events.read",
+    resource: "admin:events",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const organisationId =
+        new URL(req.raw.url ?? "", "http://localhost").searchParams.get("organisationId") ?? "";
+      if (!UUID_RE.test(organisationId)) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: "organisationId query parameter is required",
+        });
+        return;
+      }
+      const { getEvents } = await import("../usecases/events.ts");
+      res.json(200, await getEvents(organisationId, await buildEventsDeps()));
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/events/dead-letter",
+    operationName: "admin.events.deadLetter.list",
+    requiresAuth: true,
+    requiredPermission: "platform.events.read",
+    resource: "admin:events",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const organisationId =
+        new URL(req.raw.url ?? "", "http://localhost").searchParams.get("organisationId") ?? "";
+      if (!UUID_RE.test(organisationId)) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: "organisationId query parameter is required",
+        });
+        return;
+      }
+      const { getDeadLetters } = await import("../usecases/events.ts");
+      res.json(200, await getDeadLetters(organisationId, await buildEventsDeps()));
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/events/:eventId/redrive",
+    operationName: "admin.events.redrive",
+    requiresAuth: true,
+    requiredPermission: "platform.events.write",
+    resource: "admin:events",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const deadLetterId = req.params["eventId"] ?? "";
+      if (!UUID_RE.test(deadLetterId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid dead-letter id" });
+        return;
+      }
+      const { redriveEvent } = await import("../usecases/events.ts");
+      const result = await redriveEvent(
+        {
+          deadLetterId,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildEventsDeps()
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Dead letter not found or already redriven" });
+        return;
+      }
+      res.json(200, { redriven: true, eventId: result.eventId });
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/workers",
+    operationName: "admin.workers.list",
+    requiresAuth: true,
+    requiredPermission: "platform.workers.read",
+    resource: "admin:workers",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (_req, res) => {
+      const { listWorkers } = await import("../usecases/events.ts");
+      res.json(200, await listWorkers(await buildEventsDeps()));
     },
   },
 ];

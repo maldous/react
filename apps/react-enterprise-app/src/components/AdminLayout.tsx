@@ -108,6 +108,11 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     labelKey: "feature.admin.nav.search",
     permission: "tenant.search.read",
   },
+  {
+    to: "/admin/events",
+    labelKey: "feature.admin.nav.events",
+    permission: "platform.events.read",
+  },
 ];
 
 const linkClass =
