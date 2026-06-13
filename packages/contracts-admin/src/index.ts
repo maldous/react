@@ -1874,3 +1874,100 @@ export const RedriveResponseSchema = z.object({
   eventId: z.string(),
 });
 export type RedriveResponse = z.infer<typeof RedriveResponseSchema>;
+
+// ---------------------------------------------------------------------------
+// End-user profile self-service + notification preferences + substrate
+// (Phase 6, ADR-0068 / ADR-ACT-0260). Tenant + user scoped (RLS). A user reads/
+// updates only their OWN profile (user_id is the session subject, never a param).
+// Disabled channels suppress dispatch; no secret fields in payloads. Local channels
+// only (no paid provider). React renders BFF state only.
+// ---------------------------------------------------------------------------
+
+/** `GET /api/me/profile` — the calling user's own profile. */
+export const UserProfileSchema = z.object({
+  displayName: z.string(),
+  locale: z.string(),
+  timezone: z.string(),
+});
+export type UserProfile = z.infer<typeof UserProfileSchema>;
+
+/** `PATCH /api/me/profile` — own profile only. */
+export const UpdateProfileRequestSchema = z
+  .object({
+    displayName: z.string().min(1).max(120),
+    locale: z
+      .string()
+      .min(2)
+      .max(10)
+      .regex(/^[a-zA-Z]{2}(-[a-zA-Z0-9]{2,8})?$/, "locale must look like 'en' or 'en-GB'"),
+    timezone: z.string().min(1).max(60),
+  })
+  .strict();
+export type UpdateProfileRequest = z.infer<typeof UpdateProfileRequestSchema>;
+
+export const NOTIFICATION_CHANNELS = ["email", "webhook", "in_app"] as const;
+export const NotificationChannelSchema = z.enum(NOTIFICATION_CHANNELS);
+export type NotificationChannel = z.infer<typeof NotificationChannelSchema>;
+
+export const NOTIFICATION_CATEGORIES = ["security", "billing", "product", "system"] as const;
+export const NotificationCategorySchema = z.enum(NOTIFICATION_CATEGORIES);
+export type NotificationCategory = z.infer<typeof NotificationCategorySchema>;
+
+export const NotificationPreferenceSchema = z.object({
+  channel: NotificationChannelSchema,
+  category: NotificationCategorySchema,
+  enabled: z.boolean(),
+});
+export type NotificationPreference = z.infer<typeof NotificationPreferenceSchema>;
+
+export const NotificationPreferencesResponseSchema = z.object({
+  preferences: z.array(NotificationPreferenceSchema),
+});
+export type NotificationPreferencesResponse = z.infer<typeof NotificationPreferencesResponseSchema>;
+
+/** `PATCH /api/me/notification-preferences` — own preferences only. */
+export const UpdateNotificationPreferencesRequestSchema = z
+  .object({
+    preferences: z.array(NotificationPreferenceSchema).min(1).max(64),
+  })
+  .strict();
+export type UpdateNotificationPreferencesRequest = z.infer<
+  typeof UpdateNotificationPreferencesRequestSchema
+>;
+
+export const NotificationChannelReadinessSchema = z.object({
+  channel: NotificationChannelSchema,
+  available: z.boolean(),
+  transport: z.string(),
+  detail: z.string(),
+});
+export type NotificationChannelReadiness = z.infer<typeof NotificationChannelReadinessSchema>;
+
+export const NotificationReadinessResponseSchema = z.object({
+  channels: z.array(NotificationChannelReadinessSchema),
+});
+export type NotificationReadinessResponse = z.infer<typeof NotificationReadinessResponseSchema>;
+
+/** `POST /api/admin/tenants/:tenantId/notifications/test` — operator test send. */
+export const TestNotificationRequestSchema = z
+  .object({
+    userId: z.string().min(1).max(200),
+    category: NotificationCategorySchema,
+  })
+  .strict();
+export type TestNotificationRequest = z.infer<typeof TestNotificationRequestSchema>;
+
+export const NOTIFICATION_DISPATCH_STATUSES = ["sent", "suppressed", "failed"] as const;
+export const NotificationDispatchStatusSchema = z.enum(NOTIFICATION_DISPATCH_STATUSES);
+export type NotificationDispatchStatus = z.infer<typeof NotificationDispatchStatusSchema>;
+
+export const NotificationDispatchResultSchema = z.object({
+  channel: NotificationChannelSchema,
+  status: NotificationDispatchStatusSchema,
+});
+export type NotificationDispatchResult = z.infer<typeof NotificationDispatchResultSchema>;
+
+export const TestNotificationResponseSchema = z.object({
+  dispatched: z.array(NotificationDispatchResultSchema),
+});
+export type TestNotificationResponse = z.infer<typeof TestNotificationResponseSchema>;

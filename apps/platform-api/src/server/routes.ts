@@ -34,6 +34,9 @@ import {
   SetRateLimitRequestSchema,
   SearchRequestSchema,
   ReindexRequestSchema,
+  UpdateProfileRequestSchema,
+  UpdateNotificationPreferencesRequestSchema,
+  TestNotificationRequestSchema,
   type TenantAuthProvidersConfig,
   type ObservabilitySignalStatus,
 } from "@platform/contracts-admin";
@@ -440,6 +443,27 @@ async function buildRateLimitDeps() {
   return {
     rateLimits: new PostgresRateLimitRepository(pool),
     entitlements: new PostgresEntitlementRepository(pool),
+    audit: createPostgresAuditEventPort(pool),
+  };
+}
+
+// Build the profile usecase deps (profile repo + audit) — ADR-ACT-0260.
+async function buildProfileDeps() {
+  const { PostgresProfileRepository } = await import("../adapters/postgres-profile-repository.ts");
+  const pool = getApplicationPool();
+  return {
+    profiles: new PostgresProfileRepository(pool),
+    audit: createPostgresAuditEventPort(pool),
+  };
+}
+
+// Build the notifications usecase deps (notification repo + audit; local transports) — ADR-ACT-0260.
+async function buildNotificationsDeps() {
+  const { PostgresNotificationRepository } =
+    await import("../adapters/postgres-notification-repository.ts");
+  const pool = getApplicationPool();
+  return {
+    notifications: new PostgresNotificationRepository(pool),
     audit: createPostgresAuditEventPort(pool),
   };
 }
@@ -5106,6 +5130,203 @@ export const routes: Route[] = [
     handler: async (_req, res) => {
       const { listWorkers } = await import("../usecases/events.ts");
       res.json(200, await listWorkers(await buildEventsDeps()));
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // End-user profile self-service + notification preferences + notifications
+  // (Phase 6, ADR-0068 / ADR-ACT-0260). /api/me/* is own-user only (the userId is
+  // the session subject, never a param). Readiness + test send are operator-only.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/me/profile",
+    operationName: "me.profile.get",
+    requiresAuth: true,
+    requiredPermission: "profile.read_self",
+    resource: "me:profile",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { getMyProfile } = await import("../usecases/profile.ts");
+      res.json(
+        200,
+        await getMyProfile(tenantCtx.organisationId, req.actor!.userId, await buildProfileDeps())
+      );
+    },
+  },
+  {
+    method: "PATCH",
+    path: "/api/me/profile",
+    operationName: "me.profile.update",
+    requiresAuth: true,
+    requiredPermission: "profile.update_self",
+    resource: "me:profile",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const parsed = UpdateProfileRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid profile",
+        });
+        return;
+      }
+      const { updateMyProfile } = await import("../usecases/profile.ts");
+      try {
+        const profile = await updateMyProfile(
+          {
+            organisationId: tenantCtx.organisationId,
+            userId: req.actor!.userId,
+            ...parsed.data,
+            actor: {
+              actorId: req.actor!.userId,
+              actorRoles: req.actor!.roles,
+              sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+            },
+          },
+          await buildProfileDeps()
+        );
+        res.json(200, profile);
+      } catch (err) {
+        if (err instanceof ValidationError) {
+          res.json(400, err.toSafeResponse());
+          return;
+        }
+        throw err;
+      }
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/me/notification-preferences",
+    operationName: "me.notificationPreferences.get",
+    requiresAuth: true,
+    requiredPermission: "profile.read_self",
+    resource: "me:notification_preferences",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { getMyPreferences } = await import("../usecases/notifications.ts");
+      res.json(
+        200,
+        await getMyPreferences(
+          tenantCtx.organisationId,
+          req.actor!.userId,
+          await buildNotificationsDeps()
+        )
+      );
+    },
+  },
+  {
+    method: "PATCH",
+    path: "/api/me/notification-preferences",
+    operationName: "me.notificationPreferences.update",
+    requiresAuth: true,
+    requiredPermission: "profile.update_self",
+    resource: "me:notification_preferences",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const parsed = UpdateNotificationPreferencesRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid preferences",
+        });
+        return;
+      }
+      const { updateMyPreferences } = await import("../usecases/notifications.ts");
+      res.json(
+        200,
+        await updateMyPreferences(
+          {
+            organisationId: tenantCtx.organisationId,
+            userId: req.actor!.userId,
+            preferences: parsed.data.preferences,
+            actor: {
+              actorId: req.actor!.userId,
+              actorRoles: req.actor!.roles,
+              sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+            },
+          },
+          await buildNotificationsDeps()
+        )
+      );
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/notifications/readiness",
+    operationName: "admin.notifications.readiness",
+    requiresAuth: true,
+    requiredPermission: "platform.notifications.read",
+    resource: "admin:notifications",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (_req, res) => {
+      const { getNotificationReadiness } = await import("../usecases/notifications.ts");
+      res.json(200, await getNotificationReadiness(await buildNotificationsDeps()));
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/tenants/:tenantId/notifications/test",
+    operationName: "admin.notifications.test",
+    requiresAuth: true,
+    requiredPermission: "platform.notifications.write",
+    resource: "admin:notifications",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      if (!UUID_RE.test(tenantId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const parsed = TestNotificationRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid test request",
+        });
+        return;
+      }
+      const { sendTestNotification } = await import("../usecases/notifications.ts");
+      const result = await sendTestNotification(
+        {
+          organisationId: tenantId,
+          userId: parsed.data.userId,
+          category: parsed.data.category,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildNotificationsDeps()
+      );
+      res.json(200, result);
     },
   },
 ];

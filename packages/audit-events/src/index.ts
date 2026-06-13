@@ -54,6 +54,8 @@ export const AuditAction = {
   RateLimitSet: "rate_limit.set",
   SearchReindexed: "search.reindexed",
   EventRedriven: "event.redriven",
+  NotificationPreferencesChanged: "notification.preferences_changed",
+  NotificationTested: "notification.tested",
 } as const;
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction];

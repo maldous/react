@@ -46,6 +46,9 @@ export const PROOF_LADDER = [
   "proof:event-bus",
   "proof:event-worker",
   "proof:event-redrive",
+  "proof:profile-self-service",
+  "proof:notification-preferences",
+  "proof:notification-dispatch",
 ] as const;
 
 export type ProofLadderEntry = (typeof PROOF_LADDER)[number];

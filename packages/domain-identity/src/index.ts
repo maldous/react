@@ -201,6 +201,10 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     "platform.events.read",
     "platform.events.write",
     "platform.workers.read",
+    // Notifications (Phase 6, ADR-0068 / ADR-ACT-0260): operator readiness + test send.
+    // Profile + preference self-service uses the existing profile.read_self/update_self.
+    "platform.notifications.read",
+    "platform.notifications.write",
     "platform.clickthrough.pgadmin",
     "platform.clickthrough.keycloak",
     "platform.clickthrough.minio",

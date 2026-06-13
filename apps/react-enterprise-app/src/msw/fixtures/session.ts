@@ -52,6 +52,9 @@ export const sessionFixtures: Record<SessionPersona, SessionActor> = {
       "tenant.developer.read",
       // Search (Phase 4, ADR-ACT-0258).
       "tenant.search.read",
+      // Profile + notification preferences self-service (Phase 6, ADR-ACT-0260).
+      "profile.read_self",
+      "profile.update_self",
     ],
     displayName: "Tenant Admin",
   },
@@ -101,6 +104,11 @@ export const sessionFixtures: Record<SessionPersona, SessionActor> = {
       "platform.events.read",
       "platform.events.write",
       "platform.workers.read",
+      // Notifications + profile self-service (Phase 6, ADR-ACT-0260).
+      "platform.notifications.read",
+      "platform.notifications.write",
+      "profile.read_self",
+      "profile.update_self",
     ],
     displayName: "System Admin",
   },

@@ -187,7 +187,8 @@
         "usage": "Usage & quotas",
         "developer": "Developer",
         "search": "Search",
-        "events": "Events & workers"
+        "events": "Events & workers",
+        "account": "Account"
       },
       "card": {
         "membersDescription": "Invite people, change roles, and remove members.",
@@ -205,7 +206,8 @@
         "usageDescription": "See recorded usage and set quota limits per capability.",
         "developerDescription": "Mint API keys, see rate limits, and find the API surface.",
         "searchDescription": "Tenant-isolated product search with readiness and reindex.",
-        "eventsDescription": "Inspect the event bus, dead letters, redrive, and worker runtime."
+        "eventsDescription": "Inspect the event bus, dead letters, redrive, and worker runtime.",
+        "accountDescription": "Manage your profile, notification preferences, and (operators) test sends."
       },
       "entitlements": {
         "title": "Entitlements",
@@ -348,6 +350,26 @@
         "redriven": "Redriven",
         "noDeadLetters": "No dead letters for this tenant.",
         "noEvents": "No events for this tenant."
+      },
+      "account": {
+        "title": "Account",
+        "description": "Your profile and notification preferences. Operators can also check notification readiness and send a test. Changes are server-authoritative and audited.",
+        "profileTitle": "Profile",
+        "displayName": "Display name",
+        "locale": "Locale",
+        "timezone": "Timezone",
+        "save": "Save",
+        "saved": "Saved.",
+        "profileError": "Could not save the profile.",
+        "preferencesTitle": "Notification preferences",
+        "notificationsTitle": "Notifications (operator)",
+        "tenantSelectLabel": "Tenant",
+        "tenantSelectPlaceholder": "Select a tenant…",
+        "userId": "User id",
+        "category": "Category",
+        "sendTest": "Send test",
+        "testResult": "Dispatched to {count} channel(s).",
+        "testError": "Could not send the test notification."
       },
       "config": {
         "title": "Configuration",

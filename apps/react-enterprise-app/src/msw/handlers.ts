@@ -29,6 +29,9 @@ import {
   eventsFixture,
   deadLettersFixture,
   workersFixture,
+  profileFixture,
+  notificationPreferencesFixture,
+  notificationReadinessFixture,
 } from "./fixtures/admin.ts";
 import type { AuthSettingsReadiness } from "@platform/contracts-admin";
 
@@ -736,6 +739,35 @@ export function adminEventsHandlers(
   ];
 }
 
+// Profile + notifications (Phase 6, ADR-ACT-0260).
+export function adminAccountHandlers(
+  profile = profileFixture,
+  preferences = notificationPreferencesFixture,
+  readiness = notificationReadinessFixture
+) {
+  return [
+    http.get("/api/me/profile", () => HttpResponse.json(profile)),
+    http.patch("/api/me/profile", async ({ request }) => {
+      const body = (await request.json().catch(() => ({}))) as Record<string, unknown>;
+      return HttpResponse.json({ ...profile, ...body });
+    }),
+    http.get("/api/me/notification-preferences", () => HttpResponse.json(preferences)),
+    http.patch("/api/me/notification-preferences", async ({ request }) => {
+      const body = (await request.json().catch(() => null)) as { preferences?: unknown } | null;
+      return HttpResponse.json(body?.preferences ? body : preferences);
+    }),
+    http.get("/api/admin/notifications/readiness", () => HttpResponse.json(readiness)),
+    http.post("/api/admin/tenants/:tenantId/notifications/test", () =>
+      HttpResponse.json({
+        dispatched: [
+          { channel: "email", status: "sent" },
+          { channel: "webhook", status: "suppressed" },
+        ],
+      })
+    ),
+  ];
+}
+
 // --- generic helpers --------------------------------------------------------
 
 /** Simulated network failure for any GET endpoint. */
@@ -785,5 +817,6 @@ export const handlers = [
   ...adminDeveloperHandlers(),
   ...adminSearchHandlers(),
   ...adminEventsHandlers(),
+  ...adminAccountHandlers(),
   ...adminWriteOkHandlers(),
 ];

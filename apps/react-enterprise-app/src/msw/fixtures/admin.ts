@@ -23,6 +23,9 @@ import type {
   EventListResponse,
   DeadLetterListResponse,
   WorkerListResponse,
+  UserProfile,
+  NotificationPreferencesResponse,
+  NotificationReadinessResponse,
   CapabilitySummary,
   CapabilityCategory,
   CapabilityImplementationStatus,
@@ -449,6 +452,27 @@ export const workersFixture: WorkerListResponse = {
       lastHeartbeatAt: "2026-06-13T00:00:00.000Z",
       secondsSinceHeartbeat: 4,
     },
+  ],
+};
+
+export const profileFixture: UserProfile = {
+  displayName: "Ada Lovelace",
+  locale: "en-GB",
+  timezone: "Europe/London",
+};
+
+export const notificationPreferencesFixture: NotificationPreferencesResponse = {
+  preferences: [
+    { channel: "email", category: "security", enabled: true },
+    { channel: "webhook", category: "security", enabled: false },
+  ],
+};
+
+export const notificationReadinessFixture: NotificationReadinessResponse = {
+  channels: [
+    { channel: "email", available: true, transport: "local-sink", detail: "Local sink." },
+    { channel: "webhook", available: true, transport: "local-sink", detail: "Local sink." },
+    { channel: "in_app", available: true, transport: "local-sink", detail: "Local sink." },
   ],
 };
 

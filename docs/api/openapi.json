@@ -2967,6 +2967,89 @@
         "responses": { "200": { "description": "Worker list" } }
       }
     },
+    "/api/me/profile": {
+      "get": {
+        "summary": "Get the calling user's own profile",
+        "operationId": "getMyProfile",
+        "description": "End-user self-service. The user_id is the session subject — own profile only. ADR-0068 / ADR-ACT-0260.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Profile" },
+          "400": { "description": "No tenant context" }
+        }
+      },
+      "patch": {
+        "summary": "Update the calling user's own profile",
+        "operationId": "updateMyProfile",
+        "description": "Own profile only (audited). Validated display name + locale + timezone. ADR-0068 / ADR-ACT-0260.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Updated profile" },
+          "400": { "description": "Validation error or no tenant context" }
+        }
+      }
+    },
+    "/api/me/notification-preferences": {
+      "get": {
+        "summary": "Get the calling user's notification preferences",
+        "operationId": "getMyNotificationPreferences",
+        "description": "Own preferences only (tenant + user scoped). ADR-0068 / ADR-ACT-0260.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Preferences" },
+          "400": { "description": "No tenant context" }
+        }
+      },
+      "patch": {
+        "summary": "Update the calling user's notification preferences",
+        "operationId": "updateMyNotificationPreferences",
+        "description": "Own preferences only (audited). Per (channel, category) enable flags. ADR-0068 / ADR-ACT-0260.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Updated preferences" },
+          "400": { "description": "Validation error or no tenant context" }
+        }
+      }
+    },
+    "/api/admin/notifications/readiness": {
+      "get": {
+        "summary": "Notification channel readiness (system operator)",
+        "operationId": "getNotificationReadiness",
+        "description": "Operator view of local channel transports (never faked). ADR-0068 / ADR-ACT-0260.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": { "200": { "description": "Channel readiness" } }
+      }
+    },
+    "/api/admin/tenants/:tenantId/notifications/test": {
+      "post": {
+        "summary": "Send a test notification to a user (system operator)",
+        "operationId": "testNotification",
+        "description": "Operator-only, audited. Dispatches via the LOCAL adapter; a disabled channel is suppressed; no secret payload. ADR-0068 / ADR-ACT-0260.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Dispatch results" },
+          "400": { "description": "Validation error or invalid tenant id" }
+        }
+      }
+    },
     "/api/org/entitlements": {
       "get": {
         "summary": "List the tenant's own entitlements (read-only)",

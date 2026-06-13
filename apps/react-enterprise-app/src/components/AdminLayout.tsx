@@ -113,6 +113,11 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     labelKey: "feature.admin.nav.events",
     permission: "platform.events.read",
   },
+  {
+    to: "/admin/account",
+    labelKey: "feature.admin.nav.account",
+    permission: "profile.read_self",
+  },
 ];
 
 const linkClass =
