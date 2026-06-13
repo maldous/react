@@ -2092,3 +2092,51 @@ export const ObservabilityReadinessResponseSchema = z.object({
   detail: z.string(),
 });
 export type ObservabilityReadinessResponse = z.infer<typeof ObservabilityReadinessResponseSchema>;
+
+// ---------------------------------------------------------------------------
+// Scheduled jobs (Phase 5.5, ADR-0059 / ADR-ACT-0262). Built-in scheduler that
+// enqueues events onto the Phase-5 outbox; idempotent per due window. Operator-
+// managed, tenant-scoped (RLS). No secret payload fields. Windmill/Temporal remain
+// a later workflow-engine decision (not delivered).
+// ---------------------------------------------------------------------------
+
+export const ScheduledJobSummarySchema = z.object({
+  id: z.string(),
+  jobKey: z.string(),
+  eventType: z.string(),
+  intervalSeconds: z.number(),
+  enabled: z.boolean(),
+  nextRunAt: z.string(),
+  lastRunAt: z.string().nullable(),
+  updatedAt: z.string().nullable(),
+  updatedBy: z.string().nullable(),
+});
+export type ScheduledJobSummary = z.infer<typeof ScheduledJobSummarySchema>;
+
+export const ScheduledJobListResponseSchema = z.object({
+  jobs: z.array(ScheduledJobSummarySchema),
+});
+export type ScheduledJobListResponse = z.infer<typeof ScheduledJobListResponseSchema>;
+
+/** `POST /api/admin/scheduled-jobs` — operator-only, audited. */
+export const CreateScheduledJobRequestSchema = z
+  .object({
+    organisationId: z.string().uuid(),
+    jobKey: z.string().min(1).max(100),
+    eventType: z.string().min(1).max(100),
+    intervalSeconds: z.number().int().positive().max(2592000),
+    enabled: z.boolean().optional(),
+  })
+  .strict();
+export type CreateScheduledJobRequest = z.infer<typeof CreateScheduledJobRequestSchema>;
+
+/** `PATCH /api/admin/scheduled-jobs/:jobId` — pause/resume. */
+export const UpdateScheduledJobRequestSchema = z.object({ enabled: z.boolean() }).strict();
+export type UpdateScheduledJobRequest = z.infer<typeof UpdateScheduledJobRequestSchema>;
+
+export const RunScheduledJobResponseSchema = z.object({
+  jobKey: z.string(),
+  enqueued: z.boolean(),
+  deduplicated: z.boolean(),
+});
+export type RunScheduledJobResponse = z.infer<typeof RunScheduledJobResponseSchema>;

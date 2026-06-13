@@ -3146,6 +3146,66 @@
         "responses": { "200": { "description": "Observability readiness" } }
       }
     },
+    "/api/admin/scheduled-jobs": {
+      "get": {
+        "summary": "List a tenant's scheduled jobs (system operator)",
+        "operationId": "listScheduledJobs",
+        "description": "Operator read of built-in scheduled jobs (requires ?organisationId). ADR-0059 / ADR-ACT-0262.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Scheduled job list" },
+          "400": { "description": "organisationId query parameter is required" }
+        }
+      },
+      "post": {
+        "summary": "Create/update a scheduled job (system operator)",
+        "operationId": "setScheduledJob",
+        "description": "Operator-only, audited. A due job enqueues its event onto the Phase-5 outbox (idempotent per window). ADR-0059 / ADR-ACT-0262.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Scheduled job set" },
+          "400": { "description": "Validation error" }
+        }
+      }
+    },
+    "/api/admin/scheduled-jobs/:jobId/run": {
+      "post": {
+        "summary": "Run a scheduled job now (system operator)",
+        "operationId": "runScheduledJob",
+        "description": "Operator-only, audited. Enqueues the job's event immediately. ADR-0059 / ADR-ACT-0262.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Enqueue result" },
+          "400": { "description": "Invalid job id" },
+          "404": { "description": "Scheduled job not found" }
+        }
+      }
+    },
+    "/api/admin/scheduled-jobs/:jobId": {
+      "patch": {
+        "summary": "Pause/resume a scheduled job (system operator)",
+        "operationId": "updateScheduledJob",
+        "description": "Operator-only, audited enable/disable. A paused job never enqueues. ADR-0059 / ADR-ACT-0262.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Updated job" },
+          "400": { "description": "Invalid job id or body" },
+          "404": { "description": "Scheduled job not found" }
+        }
+      }
+    },
     "/api/org/entitlements": {
       "get": {
         "summary": "List the tenant's own entitlements (read-only)",

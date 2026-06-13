@@ -153,6 +153,7 @@ Each proven capability is backed by a repeatable, runnable proof — a single so
 - **Event bus + durable workers (Phase 5)** — `proof:event-bus`, `proof:event-worker`, `proof:event-redrive`
 - **Profile + notifications (Phase 6)** — `proof:profile-self-service`, `proof:notification-preferences`, `proof:notification-dispatch`
 - **Observability — alerting + incidents (Phase 7)** — `proof:observability-signals`, `proof:alerting`, `proof:incident-foundation`, `proof:alert-notification-bridge`
+- **Scheduled jobs on the event substrate (Phase 5.5)** — `proof:scheduled-jobs`, `proof:scheduled-job-routes`
 
 ![Honest readiness — a running service is not a delivered capability](docs/images/usf-readiness-honesty.svg)
 

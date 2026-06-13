@@ -189,7 +189,8 @@
         "search": "Search",
         "events": "Events & workers",
         "account": "Account",
-        "monitoring": "Monitoring"
+        "monitoring": "Monitoring",
+        "scheduledJobs": "Scheduled jobs"
       },
       "card": {
         "membersDescription": "Invite people, change roles, and remove members.",
@@ -209,7 +210,8 @@
         "searchDescription": "Tenant-isolated product search with readiness and reindex.",
         "eventsDescription": "Inspect the event bus, dead letters, redrive, and worker runtime.",
         "accountDescription": "Manage your profile, notification preferences, and (operators) test sends.",
-        "monitoringDescription": "Metric signals, alert rules, and incident lifecycle (operator)."
+        "monitoringDescription": "Metric signals, alert rules, and incident lifecycle (operator).",
+        "scheduledJobsDescription": "Scheduled jobs that enqueue events on the durable substrate (operator)."
       },
       "entitlements": {
         "title": "Entitlements",
@@ -403,6 +405,29 @@
         "ack": "Acknowledge",
         "resolve": "Resolve",
         "noIncidents": "No incidents for this tenant."
+      },
+      "scheduledJobs": {
+        "title": "Scheduled jobs",
+        "description": "Built-in scheduled jobs that enqueue events onto the durable event substrate (idempotent per window). The worker runtime then processes them. Operator-only.",
+        "tenantSelectLabel": "Tenant",
+        "tenantSelectPlaceholder": "Select a tenant…",
+        "enterTenant": "Select a tenant to manage its scheduled jobs.",
+        "jobsTitle": "Jobs",
+        "jobKey": "Job key",
+        "eventType": "Event type",
+        "intervalSeconds": "Interval (s)",
+        "create": "Create job",
+        "colJob": "Job",
+        "colEvent": "Event type",
+        "colInterval": "Interval",
+        "colState": "State",
+        "colActions": "Actions",
+        "enabled": "Enabled",
+        "paused": "Paused",
+        "runNow": "Run now",
+        "pause": "Pause",
+        "resume": "Resume",
+        "noJobs": "No scheduled jobs for this tenant."
       },
       "config": {
         "title": "Configuration",

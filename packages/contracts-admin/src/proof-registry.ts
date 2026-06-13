@@ -53,6 +53,8 @@ export const PROOF_LADDER = [
   "proof:alerting",
   "proof:incident-foundation",
   "proof:alert-notification-bridge",
+  "proof:scheduled-jobs",
+  "proof:scheduled-job-routes",
 ] as const;
 
 export type ProofLadderEntry = (typeof PROOF_LADDER)[number];

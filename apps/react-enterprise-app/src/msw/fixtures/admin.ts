@@ -30,6 +30,7 @@ import type {
   AlertListResponse,
   IncidentListResponse,
   ObservabilityReadinessResponse,
+  ScheduledJobListResponse,
   CapabilitySummary,
   CapabilityCategory,
   CapabilityImplementationStatus,
@@ -534,6 +535,22 @@ export const observabilityReadinessFixture: ObservabilityReadinessResponse = {
   signalCount: 1,
   openIncidentCount: 1,
   detail: "Built-in observability store reachable with registered signals.",
+};
+
+export const scheduledJobsFixture: ScheduledJobListResponse = {
+  jobs: [
+    {
+      id: "00000000-0000-0000-0000-0000000000j1",
+      jobKey: "nightly-report",
+      eventType: "report.run",
+      intervalSeconds: 86400,
+      enabled: true,
+      nextRunAt: "2026-06-14T00:00:00.000Z",
+      lastRunAt: "2026-06-13T00:00:00.000Z",
+      updatedAt: "2026-06-13T00:00:00.000Z",
+      updatedBy: "00000000-0000-0000-0000-0000000000a3",
+    },
+  ],
 };
 
 export const entitlementsFixture: EntitlementListResponse = {

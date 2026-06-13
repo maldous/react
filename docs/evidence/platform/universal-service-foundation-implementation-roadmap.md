@@ -146,7 +146,9 @@ All 14 ADRs share a sound template (Status/Context/Decision/Consequences/Validat
 
 **Estimated size.** XL. **Risk.** High. **Stop condition.** Eventing + one durable workflow proven; serverless stays deferred.
 
-> **DELIVERED (event substrate) (2026-06-13, ADR-ACT-0259).** Built-in **Postgres outbox** event bus (migration 027, RLS, idempotent), durable **worker runtime** (claim via FOR UPDATE SKIP LOCKED, retry → **DLQ**, heartbeats), operator **redrive**, `/admin/events` UI. Live-proven: `proof:event-bus`, `proof:event-worker`, `proof:event-redrive`. Deviation from the sketch: **Postgres outbox, not Redis Streams** (Redis is Phase 5.5 behind `EventBusPort`); **no Windmill composed**. **Not delivered:** composed bus, **workflow engine + scheduled jobs** (Phase 5.5+, gated on this substrate), retry backoff schedule. Notifications split to ADR-0068 (Phase 6).
+> **DELIVERED (event substrate) (2026-06-13, ADR-ACT-0259).** Built-in **Postgres outbox** event bus (migration 027, RLS, idempotent), durable **worker runtime** (claim via FOR UPDATE SKIP LOCKED, retry → **DLQ**, heartbeats), operator **redrive**, `/admin/events` UI. Live-proven: `proof:event-bus`, `proof:event-worker`, `proof:event-redrive`. Deviation from the sketch: **Postgres outbox, not Redis Streams** (Redis is Phase 5.5 behind `EventBusPort`); **no Windmill composed**. **Not delivered:** composed bus, retry backoff schedule. Notifications split to ADR-0068 (Phase 6).
+>
+> **DELIVERED (Phase 5.5 scheduled jobs) (2026-06-13, ADR-ACT-0262).** Built-in **scheduled jobs** on the proven outbox (migration 030 `scheduled_jobs`, RLS): a due job enqueues its event **idempotently per due-window**; paused jobs do not enqueue; run-now + pause/resume; `/admin/scheduled-jobs` UI. Live-proven: `proof:scheduled-jobs`, `proof:scheduled-job-routes`. Registry: `scheduled-jobs-builtin` → locally proven; `workflow-engine-scheduled-jobs` → partial. **Still not delivered:** the **workflow engine** (Windmill/Temporal), cron expressions (fixed interval only), and a running scheduler daemon (the `runDueJobs` tick is invocable, not yet looped).
 
 ---
 

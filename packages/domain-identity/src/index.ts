@@ -209,6 +209,10 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     // alert rules + evaluation, and incident lifecycle. No tenant role gets these.
     "platform.observability.read",
     "platform.observability.write",
+    // Scheduled jobs (Phase 5.5, ADR-0059 / ADR-ACT-0262): operator-only schedule
+    // management + run-now on the event substrate. No tenant role gets these.
+    "platform.jobs.read",
+    "platform.jobs.write",
     "platform.clickthrough.pgadmin",
     "platform.clickthrough.keycloak",
     "platform.clickthrough.minio",

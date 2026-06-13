@@ -996,7 +996,7 @@
       "name": "Workflow engine, scheduled jobs, approvals",
       "domain": "events-queues-workflows",
       "purpose": "Durable orchestration of long-running and scheduled work with visibility.",
-      "status": "missing",
+      "status": "partial",
       "composeSupport": "single webhook worker only; no general scheduler/engine",
       "decision": "compose",
       "localFreeCandidate": "Temporal (heavy) or Windmill (light) \u2014 both OSS local",
@@ -1013,11 +1013,39 @@
       "proof": "not-yet-proven",
       "productionBlockers": "no engine, scheduler, approval workflow, or visibility",
       "adr": "ADR-0059",
-      "actionRegister": "ADR-ACT-0243",
+      "actionRegister": "ADR-ACT-0262",
       "priority": "P1",
       "size": "XL",
       "risk": "High",
-      "notes": "Windmill favoured for low burden; Temporal if durable long-running guarantees needed."
+      "notes": "Scheduled jobs delivered + live-proven as scheduled-jobs-builtin (Phase 5.5, on the Phase-5 outbox). The workflow engine (Windmill/Temporal) + cron expressions + a running scheduler daemon remain deferred."
+    },
+    {
+      "capability": "scheduled-jobs-builtin",
+      "name": "Scheduled jobs (built-in, on the event substrate)",
+      "domain": "events-queues-workflows",
+      "purpose": "Operator-managed scheduled jobs that enqueue events onto the durable outbox, idempotent per due window.",
+      "status": "locally proven",
+      "composeSupport": "postgres (scheduled_jobs, RLS) + Phase-5 outbox",
+      "decision": "build",
+      "localFreeCandidate": "built-in scheduler on the Postgres event bus (no external scheduler)",
+      "environmentModel": "per-environment",
+      "sharedPerEnv": "per-env",
+      "tenantIsolation": "jobs tenant-scoped (RLS); each enqueued event preserves organisation_id",
+      "dataIsolation": "RLS; no secret payload fields",
+      "permissionModel": "platform.jobs.read/write (operator-only)",
+      "auditEvents": "scheduled_job.set + scheduled_job.run (audit-before-change)",
+      "readinessModel": "n/a (runDueJobs tick invocable; daemon loop not yet wired)",
+      "bffContract": "/api/admin/scheduled-jobs; /api/admin/scheduled-jobs/:jobId/run",
+      "adminUi": "/admin/scheduled-jobs",
+      "selfServiceUi": "n/a (operator-only)",
+      "proof": "proof:scheduled-jobs; proof:scheduled-job-routes",
+      "productionBlockers": "a running scheduler daemon (tick is invocable, not looped); cron expressions (fixed interval only)",
+      "adr": "ADR-0059",
+      "actionRegister": "ADR-ACT-0262",
+      "priority": "P1",
+      "size": "M",
+      "risk": "Medium",
+      "notes": "Phase 5.5 delivered + live-proven: scheduled jobs on the proven Phase-5 outbox, idempotent per due window, paused jobs do not enqueue. Workflow engine remains a later decision."
     },
     {
       "capability": "notifications",
@@ -2002,6 +2030,19 @@
         "mustPrecedeUi": true,
         "mustPrecedeCompose": true,
         "riskIfDelayed": "No durable orchestration, approvals, or scheduled jobs; DSR/import-export/dunning blocked."
+      },
+      {
+        "capability": "scheduled-jobs-builtin",
+        "phase": "phase-5",
+        "track": "planned",
+        "dependsOn": [
+          "event-bus-queues-dlq",
+          "background-workers-runtime"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "No scheduled/recurring work; only externally-triggered events."
       },
       {
         "capability": "end-user-profile-self-service",

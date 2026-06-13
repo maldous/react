@@ -112,6 +112,9 @@ export const sessionFixtures: Record<SessionPersona, SessionActor> = {
       // Observability (Phase 7, ADR-ACT-0261): operator-only.
       "platform.observability.read",
       "platform.observability.write",
+      // Scheduled jobs (Phase 5.5, ADR-ACT-0262): operator-only.
+      "platform.jobs.read",
+      "platform.jobs.write",
     ],
     displayName: "System Admin",
   },

@@ -36,6 +36,7 @@ import {
   alertRulesFixture,
   incidentsFixture,
   observabilityReadinessFixture as obsBackendReadinessFixture,
+  scheduledJobsFixture,
 } from "./fixtures/admin.ts";
 import type { AuthSettingsReadiness } from "@platform/contracts-admin";
 
@@ -743,6 +744,21 @@ export function adminEventsHandlers(
   ];
 }
 
+// Scheduled jobs (Phase 5.5, ADR-ACT-0262).
+export function adminScheduledJobsHandlers(jobs = scheduledJobsFixture) {
+  return [
+    http.get("/api/admin/scheduled-jobs", () => HttpResponse.json(jobs)),
+    http.post("/api/admin/scheduled-jobs", () => HttpResponse.json({ jobKey: "nightly-report" })),
+    http.post("/api/admin/scheduled-jobs/:jobId/run", () =>
+      HttpResponse.json({ jobKey: "nightly-report", enqueued: true, deduplicated: false })
+    ),
+    http.patch("/api/admin/scheduled-jobs/:jobId", async ({ request }) => {
+      const body = (await request.json().catch(() => ({}))) as { enabled?: boolean };
+      return HttpResponse.json({ ...jobs.jobs[0], enabled: body.enabled ?? false });
+    }),
+  ];
+}
+
 // Observability — signals + alerts + incidents (Phase 7, ADR-ACT-0261).
 export function adminMonitoringHandlers(
   signals = metricSignalsFixture,
@@ -856,5 +872,6 @@ export const handlers = [
   ...adminEventsHandlers(),
   ...adminAccountHandlers(),
   ...adminMonitoringHandlers(),
+  ...adminScheduledJobsHandlers(),
   ...adminWriteOkHandlers(),
 ];

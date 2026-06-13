@@ -59,6 +59,8 @@ export const AuditAction = {
   AlertRuleSet: "alert.rule_set",
   IncidentOpened: "incident.opened",
   IncidentUpdated: "incident.updated",
+  ScheduledJobSet: "scheduled_job.set",
+  ScheduledJobRun: "scheduled_job.run",
 } as const;
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction];

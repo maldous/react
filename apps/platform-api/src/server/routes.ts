@@ -39,6 +39,8 @@ import {
   TestNotificationRequestSchema,
   CreateAlertRuleRequestSchema,
   UpdateIncidentRequestSchema,
+  CreateScheduledJobRequestSchema,
+  UpdateScheduledJobRequestSchema,
   type TenantAuthProvidersConfig,
   type ObservabilitySignalStatus,
 } from "@platform/contracts-admin";
@@ -445,6 +447,19 @@ async function buildRateLimitDeps() {
   return {
     rateLimits: new PostgresRateLimitRepository(pool),
     entitlements: new PostgresEntitlementRepository(pool),
+    audit: createPostgresAuditEventPort(pool),
+  };
+}
+
+// Build the scheduled-jobs usecase deps (scheduled-job repo + event bus + audit) — ADR-ACT-0262.
+async function buildScheduledJobsDeps() {
+  const { PostgresScheduledJobRepository } =
+    await import("../adapters/postgres-scheduled-job-repository.ts");
+  const { PostgresEventBus } = await import("../adapters/postgres-event-bus.ts");
+  const pool = getApplicationPool();
+  return {
+    jobs: new PostgresScheduledJobRepository(pool),
+    bus: new PostgresEventBus(pool),
     audit: createPostgresAuditEventPort(pool),
   };
 }
@@ -5549,6 +5564,147 @@ export const routes: Route[] = [
     handler: async (_req, res) => {
       const { getObservabilityReadiness } = await import("../usecases/observability.ts");
       res.json(200, await getObservabilityReadiness(await buildObservabilityDeps()));
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Scheduled jobs (Phase 5.5, ADR-0059 / ADR-ACT-0262). Operator-only. A due job
+  // enqueues an event onto the Phase-5 outbox (idempotent per window). The scheduler
+  // tick (runDueJobs) is server-internal; these routes manage + run-now + pause/resume.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/admin/scheduled-jobs",
+    operationName: "admin.scheduledJobs.list",
+    requiresAuth: true,
+    requiredPermission: "platform.jobs.read",
+    resource: "admin:scheduled_jobs",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const organisationId =
+        new URL(req.raw.url ?? "", "http://localhost").searchParams.get("organisationId") ?? "";
+      if (!UUID_RE.test(organisationId)) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: "organisationId query parameter is required",
+        });
+        return;
+      }
+      const { listScheduledJobs } = await import("../usecases/scheduled-jobs.ts");
+      res.json(
+        200,
+        await listScheduledJobs(organisationId, await buildScheduledJobsDeps(), { operator: true })
+      );
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/scheduled-jobs",
+    operationName: "admin.scheduledJobs.create",
+    requiresAuth: true,
+    requiredPermission: "platform.jobs.write",
+    resource: "admin:scheduled_jobs",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const parsed = CreateScheduledJobRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid scheduled job",
+        });
+        return;
+      }
+      const { setScheduledJob } = await import("../usecases/scheduled-jobs.ts");
+      const result = await setScheduledJob(
+        {
+          ...parsed.data,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildScheduledJobsDeps()
+      );
+      res.json(200, { jobKey: result.jobKey });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/scheduled-jobs/:jobId/run",
+    operationName: "admin.scheduledJobs.run",
+    requiresAuth: true,
+    requiredPermission: "platform.jobs.write",
+    resource: "admin:scheduled_jobs",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const jobId = req.params["jobId"] ?? "";
+      if (!UUID_RE.test(jobId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid job id" });
+        return;
+      }
+      const { runScheduledJobNow } = await import("../usecases/scheduled-jobs.ts");
+      const result = await runScheduledJobNow(
+        {
+          jobId,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildScheduledJobsDeps()
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Scheduled job not found" });
+        return;
+      }
+      res.json(200, result.response);
+    },
+  },
+  {
+    method: "PATCH",
+    path: "/api/admin/scheduled-jobs/:jobId",
+    operationName: "admin.scheduledJobs.update",
+    requiresAuth: true,
+    requiredPermission: "platform.jobs.write",
+    resource: "admin:scheduled_jobs",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const jobId = req.params["jobId"] ?? "";
+      if (!UUID_RE.test(jobId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid job id" });
+        return;
+      }
+      const parsed = UpdateScheduledJobRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid update",
+        });
+        return;
+      }
+      const { setScheduledJobEnabled } = await import("../usecases/scheduled-jobs.ts");
+      const result = await setScheduledJobEnabled(
+        {
+          jobId,
+          enabled: parsed.data.enabled,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildScheduledJobsDeps()
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Scheduled job not found" });
+        return;
+      }
+      res.json(200, result.job);
     },
   },
 ];

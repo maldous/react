@@ -123,6 +123,11 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     labelKey: "feature.admin.nav.monitoring",
     permission: "platform.observability.read",
   },
+  {
+    to: "/admin/scheduled-jobs",
+    labelKey: "feature.admin.nav.scheduledJobs",
+    permission: "platform.jobs.read",
+  },
 ];
 
 const linkClass =
