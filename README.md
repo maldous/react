@@ -158,6 +158,7 @@ Each proven capability is backed by a repeatable, runnable proof — a single so
 - **Scheduled jobs on the event substrate (Phase 5.5)** — `proof:scheduled-jobs`, `proof:scheduled-job-routes`
 - **Runtime secrets — built-in store + composed OpenBao (Tier-1 kernel)** — `proof:secret-store-contract`, `proof:secrets-openbao`, `proof:provider-secrets-readiness`
 - **Provider configuration plane (Tier-1 kernel)** — `proof:provider-config`, `proof:provider-readiness-contract`
+- **Composed provider readiness (search/observability)** — `proof:composed-provider-readiness`
 
 ![Honest readiness — a running service is not a delivered capability](docs/images/usf-readiness-honesty.svg)
 

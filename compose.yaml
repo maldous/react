@@ -445,6 +445,82 @@ services:
     restart: unless-stopped
 
   # ---------------------------------------------------------------------------
+  # SEARCH-PROVIDER PROFILE — `make compose-up-search-provider`
+  # Meilisearch composed search provider (ADR-0071 / ADR-ACT-0271). Readiness is
+  # live-proven behind ProviderReadinessProbe; the built-in Postgres FTS (ADR-0060)
+  # remains the durable default search backend. Per-environment. DEV master key is
+  # local-only (never a production key).
+  # ---------------------------------------------------------------------------
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.10
+    profiles: [search-provider]
+    environment:
+      MEILI_ENV: ${MEILI_ENV:-development}
+      MEILI_MASTER_KEY: ${MEILISEARCH_API_KEY:-meili-dev-master-key}
+      MEILI_NO_ANALYTICS: "true"
+    ports:
+      - "${MEILISEARCH_PORT:-7700}:7700"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:7700/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # OBSERVABILITY-PROVIDER PROFILE — `make compose-up-observability-provider`
+  # Composed metrics/traces/alert-routing backends (ADR-0071 / ADR-ACT-0271):
+  # Prometheus (metrics), Tempo (traces), Alertmanager (alert routing). Readiness is
+  # live-proven behind ProviderReadinessProbe; the built-in observability foundation
+  # (ADR-0062) remains the default. Per-environment; env labels mandatory; no secrets
+  # in labels/samples/spans. Distinct from the OTEL collector (default profile).
+  # ---------------------------------------------------------------------------
+
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    profiles: [observability-provider]
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:9090/-/ready || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    restart: unless-stopped
+
+  tempo:
+    image: grafana/tempo:2.6.0
+    profiles: [observability-provider]
+    command: ["-config.file=/etc/tempo/tempo.yaml"]
+    volumes:
+      - ./docker/tempo/tempo.yaml:/etc/tempo/tempo.yaml:ro
+    ports:
+      - "${TEMPO_HTTP_PORT:-3201}:3200"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3200/ready || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 15s
+    restart: unless-stopped
+
+  alertmanager:
+    image: prom/alertmanager:v0.27.0
+    profiles: [observability-provider]
+    ports:
+      - "${ALERTMANAGER_PORT:-9093}:9093"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:9093/-/ready || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------
   # EXTERNAL-SENTRY INFRASTRUCTURE — dedicated resources for the shared Sentry
   # instance. Never connected to per-environment postgres/redis/clickhouse.

@@ -1,6 +1,6 @@
 .PHONY: compose-up compose-up-default compose-up-identity \
         compose-up-cloud compose-up-external-mocks compose-up-identity-mocks \
-        compose-up-secrets \
+        compose-up-secrets compose-up-search-provider compose-up-observability-provider \
         compose-up-web compose-up-observability \
         compose-down compose-down-web compose-down-volumes compose-down-reset \
         compose-ps compose-logs \
@@ -42,6 +42,19 @@ compose-up-secrets:
 	$(call STEP,compose: starting OpenBao ($(ENV)))
 	bash scripts/compose/up.sh $(ENV) secrets
 	$(call OK,OpenBao ready for $(ENV) — run `npm run proof:secrets-openbao`)
+
+## compose-up-search-provider — Start Meilisearch composed search provider (ADR-0071)
+## Postgres FTS stays the default backend; this proves the composed provider readiness.
+compose-up-search-provider:
+	$(call STEP,compose: starting Meilisearch ($(ENV)))
+	bash scripts/compose/up.sh $(ENV) search-provider
+	$(call OK,Meilisearch ready for $(ENV) — run `npm run proof:composed-provider-readiness`)
+
+## compose-up-observability-provider — Start Prometheus + Tempo + Alertmanager (ADR-0071)
+compose-up-observability-provider:
+	$(call STEP,compose: starting Prometheus + Tempo + Alertmanager ($(ENV)))
+	bash scripts/compose/up.sh $(ENV) observability-provider
+	$(call OK,Observability providers ready for $(ENV) — run `npm run proof:composed-provider-readiness`)
 
 ## compose-up-cloud — Start LocalStack (cloud-mocks profile)
 compose-up-cloud:

@@ -3243,6 +3243,16 @@
         }
       }
     },
+    "/api/admin/providers/readiness": {
+      "get": {
+        "summary": "Composed provider readiness (system operator)",
+        "operationId": "composedProviderReadiness",
+        "description": "Live health probe per composed provider (Meilisearch/Prometheus/Tempo/Alertmanager/Windmill/Temporal) feeding adapter-confirmed lifecycle. No secret. not_configured when no endpoint is wired. ADR-0071 / ADR-ACT-0271.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": { "200": { "description": "Composed provider readiness" } }
+      }
+    },
     "/api/admin/provider-configs/:id/lifecycle": {
       "post": {
         "summary": "Set a provider configuration lifecycle state (system operator)",

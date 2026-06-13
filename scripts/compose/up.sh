@@ -101,6 +101,18 @@ case "$PROFILE" in
     PROFILE_FLAG="--profile secrets"
     TIMEOUT=120
     ;;
+  search-provider)
+    # Meilisearch composed search provider (ADR-0071). Postgres FTS stays the default.
+    SERVICES="meilisearch"
+    PROFILE_FLAG="--profile search-provider"
+    TIMEOUT=120
+    ;;
+  observability-provider)
+    # Prometheus + Tempo + Alertmanager composed observability backends (ADR-0071).
+    SERVICES="prometheus tempo alertmanager"
+    PROFILE_FLAG="--profile observability-provider"
+    TIMEOUT=180
+    ;;
   *)
     printf '%s✗ Unknown profile: %s%s\n' "$RED" "$PROFILE" "$RESET"
     exit 1

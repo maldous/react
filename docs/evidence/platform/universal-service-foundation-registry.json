@@ -1690,6 +1690,34 @@
       "size": "M",
       "risk": "Medium",
       "notes": "Tier-1 kernel (ADR-ACT-0266): operator-global, environment-scoped provider config plane behind ProviderConfigRepository. Credentials by secretRef into the ADR-0069 store (never plaintext); forbidden-in-production cannot be active in prod; missing-credential is degraded; ready is adapter-confirmed; a candidate never implies a delivered capability. Live-proven (proof:provider-config + proof:provider-readiness-contract)."
+    },
+    {
+      "capability": "composed-provider-readiness",
+      "name": "Composed provider readiness spine",
+      "domain": "foundation-cross-cutting",
+      "purpose": "Live, port-backed readiness probe per composed provider feeding the adapter-confirmed provider-config lifecycle.",
+      "status": "locally proven",
+      "composeSupport": "search-provider (Meilisearch) + observability-provider (Prometheus/Tempo/Alertmanager) profiles",
+      "decision": "compose",
+      "localFreeCandidate": "generic HttpProviderReadinessProbe (fetch) behind ProviderReadinessProbe; light providers composed locally",
+      "environmentModel": "per-environment",
+      "sharedPerEnv": "per-env",
+      "tenantIsolation": "readiness probe holds no tenant data (operator-global health check)",
+      "dataIsolation": "no tenant data; no secret in the readiness payload (auth header sent, never echoed)",
+      "permissionModel": "platform.providers.read (operator-only)",
+      "auditEvents": "n/a (read-only health probe)",
+      "readinessModel": "live HTTP health probe; ready only on a 2xx; degraded when wired-but-unreachable; not_configured when no endpoint; lifecycle adapter-confirmed (deriveReadinessLifecycle)",
+      "bffContract": "GET /api/admin/providers/readiness",
+      "adminUi": "n/a (operator API; no UI surface in this pass)",
+      "selfServiceUi": "n/a (operator-only)",
+      "proof": "proof:composed-provider-readiness",
+      "productionBlockers": "readiness != backend integration — Meilisearch/Prometheus/Tempo are NOT the active backend (built-in substrates remain default); Windmill/Temporal probe-ready but not composed; local provider profiles are dev configs",
+      "adr": "ADR-0071",
+      "actionRegister": "ADR-ACT-0271",
+      "priority": "P1",
+      "size": "M",
+      "risk": "Medium",
+      "notes": "Composed-provider pass (ADR-ACT-0271): generic readiness probe + compose profiles for the light providers. Meilisearch/Prometheus/Alertmanager live readiness-proven; Windmill/Temporal not_configured (no default endpoint). Backend integration per provider is a deferred sub-decision; the built-in substrates (ADR-0060/0062/0059) stay default."
     }
   ],
   "delivery": {
@@ -1905,6 +1933,16 @@
         "mustPrecedeUi": false,
         "mustPrecedeCompose": true,
         "riskIfDelayed": "Composed providers wired via scattered env vars with no audit, validation, or honest lifecycle."
+      },
+      {
+        "capability": "composed-provider-readiness",
+        "phase": "delivered",
+        "track": "delivered",
+        "dependsOn": ["provider-configuration", "environment-service-classification"],
+        "parallelWith": [],
+        "mustPrecedeUi": false,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "Composed providers remain documented candidates with no live, port-backed readiness signal."
       },
       {
         "capability": "service-catalog-provider-model",

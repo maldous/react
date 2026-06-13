@@ -2311,3 +2311,37 @@ export const SetProviderLifecycleRequestSchema = z
   .object({ lifecycleState: ProviderLifecycleStateSchema })
   .strict();
 export type SetProviderLifecycleRequest = z.infer<typeof SetProviderLifecycleRequestSchema>;
+
+// ---------------------------------------------------------------------------
+// Composed provider readiness (ADR-0071 / ADR-ACT-0271). Operator-only. A live
+// readiness probe per composed provider (Meilisearch/Prometheus/Tempo/Alertmanager/
+// Windmill/Temporal) feeding the provider-config adapter-confirmed lifecycle. Never
+// carries a secret (master key/token); `not_configured` when no endpoint is wired.
+// ---------------------------------------------------------------------------
+
+export const COMPOSED_PROVIDER_READINESS_STATUSES = [
+  "ready",
+  "degraded",
+  "not_configured",
+] as const;
+export const ComposedProviderReadinessStatusSchema = z.enum(COMPOSED_PROVIDER_READINESS_STATUSES);
+export type ComposedProviderReadinessStatus = z.infer<typeof ComposedProviderReadinessStatusSchema>;
+
+export const ComposedProviderReadinessRowSchema = z
+  .object({
+    provider: z.string(),
+    capability: z.string(),
+    status: ComposedProviderReadinessStatusSchema,
+    lifecycleState: ProviderLifecycleStateSchema,
+    detail: z.string(),
+  })
+  .strict();
+export type ComposedProviderReadinessRow = z.infer<typeof ComposedProviderReadinessRowSchema>;
+
+/** `GET /api/admin/providers/readiness` — never carries a secret. */
+export const ComposedProviderReadinessResponseSchema = z
+  .object({ providers: z.array(ComposedProviderReadinessRowSchema) })
+  .strict();
+export type ComposedProviderReadinessResponse = z.infer<
+  typeof ComposedProviderReadinessResponseSchema
+>;

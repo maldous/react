@@ -6051,4 +6051,22 @@ export const routes: Route[] = [
       res.json(200, { deleted: true });
     },
   },
+  // ---------------------------------------------------------------------------
+  // Composed provider readiness (ADR-0071 / ADR-ACT-0271). Operator-only. Live health
+  // probe per composed provider feeding the adapter-confirmed lifecycle. No secret.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/admin/providers/readiness",
+    operationName: "admin.providers.readiness",
+    requiresAuth: true,
+    requiredPermission: "platform.providers.read",
+    resource: "admin:provider_configs",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (_req, res) => {
+      const { getComposedProviderReadiness } = await import("../usecases/composed-providers.ts");
+      res.json(200, await getComposedProviderReadiness());
+    },
+  },
 ];

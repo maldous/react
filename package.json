@@ -208,6 +208,7 @@
     "proof:provider-secrets-readiness": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
     "proof:provider-config": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/provider-config-runtime-proof.ts",
     "proof:provider-readiness-contract": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
+    "proof:composed-provider-readiness": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
     "proof:backup-local": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/backup-local-runtime-proof.ts",
     "proof:domain-identity-matrix": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
     "proof:tenant-custom-domain-resolution": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
