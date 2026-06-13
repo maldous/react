@@ -14,6 +14,10 @@
 # ---------------------------------------------------------------------------
 # Compose infra (default profile)
 # ---------------------------------------------------------------------------
+# ADR-0072: config/environments/dev.json is the source of truth; the resources
+# below generate-if-missing + source the gitignored runtime artifact .env/dev.env
+# in their serve_cmd (the Make ladder also generates it in preflight). A top-level
+# local() is intentionally NOT used — Tilt refuses local() under a guarded context.
 
 os.environ['KC_HOSTNAME'] = 'http://localhost:8090/kc'
 os.environ['MINIO_BROWSER_REDIRECT_URL'] = 'http://localhost:9001'
@@ -147,7 +151,9 @@ dc_resource('alloy', labels=['observability'],
 
 local_resource(
   'platform-api',
-  serve_cmd='npm run api:start:admin',
+  # ADR-0072: source the generated runtime artifact so the host BFF has the shared
+  # service credentials + per-stage config (formerly the make-global .env export).
+  serve_cmd='[ -f .env/dev.env ] || node scripts/env/generate-runtime-env.mjs dev; set -a && . ./.env/dev.env && set +a && npm run api:start:admin',
   readiness_probe=probe(
     http_get=http_get_action(port=3001, path='/healthz'),
     period_secs=5,
@@ -176,10 +182,10 @@ local_resource(
 
 local_resource(
   'react-app',
-  # Source .env.dev so Vite's process.env has the right ports for admin-tool
-  # proxies (SONAR_PORT, KEYCLOAK_PORT, GRAFANA_PORT, PGADMIN_PORT, etc.).
-  # Mirrors docker/compose-wrapper.sh's `set -a; source .env.dev; set +a` pattern.
-  serve_cmd='set -a && . ./.env.dev && set +a && cd apps/react-enterprise-app && ../../node_modules/.bin/vite --port 5173',
+  # Source the generated runtime artifact .env/dev.env (ADR-0072) so Vite's
+  # process.env has the right ports for admin-tool proxies (KEYCLOAK_PORT,
+  # GRAFANA_PORT, PGADMIN_PORT, etc.). Replaces the former `. ./.env.dev`.
+  serve_cmd='[ -f .env/dev.env ] || node scripts/env/generate-runtime-env.mjs dev; set -a && . ./.env/dev.env && set +a && cd apps/react-enterprise-app && ../../node_modules/.bin/vite --port 5173',
   readiness_probe=probe(
     http_get=http_get_action(port=5173, path='/'),
     period_secs=5,

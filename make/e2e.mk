@@ -56,7 +56,7 @@ e2e-external:
 ## dev-e2e — Run E2E smoke tests against dev environment
 dev-e2e:
 	$(call STEP,e2e: dev (internal))
-	@_url="$$(grep -oP 'APP_BASE_URL=\K\S+' .env.dev 2>/dev/null | head -1 || true)"; \
+	@_url="$$(grep -oP 'APP_BASE_URL=\K\S+' .env/dev.env 2>/dev/null | head -1 || true)"; \
 	_url=$${_url:-http://dev.localhost:8080}; \
 	PROD_BASE_URL="$$_url" npx playwright test --config playwright.external.config.ts e2e/external/smoke.test.ts
 	$(call OK,dev E2E passed)
@@ -64,9 +64,9 @@ dev-e2e:
 ## dev-e2e-auth — Run auth E2E against dev (requires Keycloak)
 dev-e2e-auth:
 	$(call STEP,e2e: dev auth)
-	@_url="$$(grep -oP 'APP_BASE_URL=\K\S+' .env.dev 2>/dev/null | head -1 || true)"; \
+	@_url="$$(grep -oP 'APP_BASE_URL=\K\S+' .env/dev.env 2>/dev/null | head -1 || true)"; \
 	_url=$${_url:-http://dev.localhost:8080}; \
-	_apex="$$(grep -oP 'APEX_DOMAIN=\K\S+' .env.dev 2>/dev/null | head -1 || true)"; \
+	_apex="$$(grep -oP 'APEX_DOMAIN=\K\S+' .env/dev.env 2>/dev/null | head -1 || true)"; \
 	_apex=$${_apex:-dev.localhost}; \
 	PROD_BASE_URL="$$_url" APEX_DOMAIN="$$_apex" \
 	npx playwright test --config playwright.external.config.ts \

@@ -44,36 +44,35 @@ import {
 // Real environments override every value via OpenBao-seeded secret material.
 const LOCAL_BOOTSTRAP_SALT = "maldous-react-local-bootstrap-v1";
 
-// Non-sensitive local defaults that must match what the platform provisions
-// (Keycloak client secrets, Grafana/test credentials). Provisioning reads the
-// same generated value, so platform-api and the provisioned service always
-// agree. These are derived (never hard-coded) so no secret string is committed.
-const DERIVE_AS_PASSWORD = new Set([
-  "KEYCLOAK_CLIENT_SECRET",
-  "KEYCLOAK_PROVISIONER_CLIENT_SECRET",
-  "GRAFANA_ADMIN_PASSWORD",
-  "KEYCLOAK_TEST_PASSWORD",
-  "SYSADMIN_BOOTSTRAP_PASSWORD",
-  // Shared service credentials whose container init AND app consumer both read
-  // the generated artifact, so a derived value is self-consistent.
-  "MINIO_ROOT_PASSWORD",
-  "KEYCLOAK_DB_PASSWORD",
-  "KEYCLOAK_ADMIN_PASSWORD",
-  "SENTRY_DB_PASSWORD",
-]);
+// Secrets derived deterministically as local-bootstrap (no preserved-volume or
+// committed-URL dependency). Real environments override via OpenBao-seeded material.
+const DERIVE_AS_PASSWORD = new Set(["SYSADMIN_BOOTSTRAP_PASSWORD"]);
 
 // CADDY_INTERNAL_SECRET is shared across environments (the react-shared Caddy
-// proxies any env), so it is derived without the stage component.
+// proxies any env) and is a runtime header secret (not persisted), so it is derived
+// without the stage component — caddy + every platform-api agree on one value.
 const DERIVE_SHARED = new Set(["CADDY_INTERNAL_SECRET"]);
 
-// LOCAL-BOOTSTRAP container-bootstrap passwords that must MATCH the plaintext
-// already embedded in the committed connection URLs (POSTGRES_URL / DATABASE_URL,
-// CLICKHOUSE_URL) — the documented Compose-bootstrap limitation (ADR-0072). Real
-// environments override these via OpenBao-seeded material. These are the only
-// pinned credential strings; everything else is derived.
+// LOCAL-BOOTSTRAP defaults pinned to the platform's well-known local-dev values.
+// These are CONTAINER-INIT / provisioning credentials that get baked into volumes
+// (Postgres/ClickHouse/MinIO/Keycloak-DB) or set by Keycloak provisioning. They MUST
+// match what existing volumes were initialised with AND what a fresh `make all`
+// initialises them with — deriving them breaks JVM-preserved + staging/prod-preserved
+// volumes (PRESERVE_JVM_VOLUMES keeps keycloak-postgres across resets). These are the
+// platform's documented local-dev defaults; real environments override every value via
+// OpenBao-seeded material (the documented Compose-bootstrap limitation, ADR-0072).
 const LOCAL_BOOTSTRAP_DEFAULTS = {
   POSTGRES_PASSWORD: "platformpassword",
   CLICKHOUSE_PASSWORD: "clickhousepassword",
+  MINIO_ROOT_PASSWORD: "miniopassword",
+  KEYCLOAK_DB_PASSWORD: "keycloakpassword",
+  KEYCLOAK_ADMIN_PASSWORD: "admin",
+  GRAFANA_ADMIN_PASSWORD: "admin",
+  KEYCLOAK_TEST_PASSWORD: "password",
+  KEYCLOAK_CLIENT_SECRET: "local-dev-bff-secret",
+  KEYCLOAK_PROVISIONER_CLIENT_SECRET: "local-dev-provisioner-secret",
+  SENTRY_DB_PASSWORD: "sentrypassword",
+  SENTRY_SECRET_KEY: "change-this-to-a-real-secret-key",
 };
 
 function deriveHex(...parts) {

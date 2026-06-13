@@ -28,10 +28,11 @@ import { defineConfig, devices } from "@playwright/test";
 const API_PORT = process.env["E2E_API_PORT"] ?? "3099";
 const APP_PORT = process.env["E2E_APP_PORT"] ?? "5180";
 
-// Load .env.dev (gitignored) into the BFF + Vite servers so they get the same
-// Postgres/Redis/Keycloak/encryption config the dev stack uses — then override
-// the port, force real auth (clear LOCAL_FIXTURE_SESSION) and mock provider mode.
-const loadDevEnv = "set -a; [ -f .env.dev ] && . ./.env.dev; set +a;";
+// Load the generated runtime artifact .env/dev.env (ADR-0072) into the BFF + Vite
+// servers so they get the same Postgres/Redis/Keycloak/encryption config the dev
+// stack uses — then override the port, force real auth (clear LOCAL_FIXTURE_SESSION)
+// and mock provider mode.
+const loadDevEnv = "set -a; [ -f .env/dev.env ] && . ./.env/dev.env; set +a;";
 
 export default defineConfig({
   testDir: "./e2e/identity",
