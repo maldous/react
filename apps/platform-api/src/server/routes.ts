@@ -50,7 +50,10 @@ import {
   getKeycloakConfigForRealm,
   getProvisioningConfig,
   getLokiAdapter,
+  getRedisClient,
+  connectRedis,
 } from "./dependencies.ts";
+import { createLogger } from "@platform/platform-logging";
 import { S3ObjectStorageAdapter } from "@platform/adapters-object-storage";
 import type {
   ObservabilityProbePort,
@@ -437,15 +440,36 @@ async function buildApiKeysDeps() {
   };
 }
 
-// Build the rate-limit usecase deps (rate-limit repo + entitlement repo + audit) — ADR-ACT-0257.
-async function buildRateLimitDeps() {
+const rateLimitProviderLog = createLogger({ name: "rate-limit-provider" });
+
+// Select the rate-limit repository provider (ADR-0065 / ADR-ACT-0263 — Phase 3.5).
+// Postgres is the durable default and store of record for policy definitions.
+// RATE_LIMIT_PROVIDER=redis enables the high-throughput Redis counter provider,
+// which delegates policy CRUD back to Postgres and keeps Postgres as the honest
+// counter fallback when Redis is unreachable (degraded, never faked).
+async function selectRateLimitRepository(
+  pool: ReturnType<typeof getApplicationPool>
+): Promise<import("../ports/rate-limit-repository.ts").RateLimitRepository> {
   const { PostgresRateLimitRepository } =
     await import("../adapters/postgres-rate-limit-repository.ts");
+  const durable = new PostgresRateLimitRepository(pool);
+  if ((process.env["RATE_LIMIT_PROVIDER"] ?? "postgres").toLowerCase() !== "redis") {
+    return durable;
+  }
+  const { RedisRateLimitRepository } = await import("../adapters/redis-rate-limit-repository.ts");
+  await connectRedis();
+  return new RedisRateLimitRepository(getRedisClient(), durable, {
+    warn: (message, meta) => rateLimitProviderLog.warn(meta, message),
+  });
+}
+
+// Build the rate-limit usecase deps (rate-limit repo + entitlement repo + audit) — ADR-ACT-0257.
+async function buildRateLimitDeps() {
   const { PostgresEntitlementRepository } =
     await import("../adapters/postgres-entitlement-repository.ts");
   const pool = getApplicationPool();
   return {
-    rateLimits: new PostgresRateLimitRepository(pool),
+    rateLimits: await selectRateLimitRepository(pool),
     entitlements: new PostgresEntitlementRepository(pool),
     audit: createPostgresAuditEventPort(pool),
   };
@@ -527,14 +551,12 @@ async function buildSearchDeps() {
 // Build the developer-portal foundation deps (api-key + rate-limit + entitlement repos).
 async function buildDeveloperPortalDeps() {
   const { PostgresApiKeyRepository } = await import("../adapters/postgres-api-key-repository.ts");
-  const { PostgresRateLimitRepository } =
-    await import("../adapters/postgres-rate-limit-repository.ts");
   const { PostgresEntitlementRepository } =
     await import("../adapters/postgres-entitlement-repository.ts");
   const pool = getApplicationPool();
   return {
     apiKeys: new PostgresApiKeyRepository(pool),
-    rateLimits: new PostgresRateLimitRepository(pool),
+    rateLimits: await selectRateLimitRepository(pool),
     entitlements: new PostgresEntitlementRepository(pool),
   };
 }

@@ -39,6 +39,7 @@ export const PROOF_LADDER = [
   "proof:metering-quota-routes",
   "proof:api-keys",
   "proof:rate-limits",
+  "proof:rate-limits-redis",
   "proof:api-key-routes",
   "proof:search",
   "proof:search-isolation",
