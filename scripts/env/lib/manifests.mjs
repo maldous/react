@@ -117,7 +117,7 @@ export const SECRET_ENV_KEYS = [
 // so NO hand-maintained .env.sonar / .env.sentry is required (ADR-0072).
 export const SHARED_TARGETS = ["sonar", "sentry"];
 export const SHARED_SECRET_KEYS = {
-  sonar: ["SONAR_DB_PASSWORD", "SONAR_TOKEN"],
+  sonar: ["SONAR_DB_PASSWORD", "SONAR_ADMIN_PASSWORD", "SONAR_TOKEN"],
   sentry: ["SENTRY_SECRET_KEY", "SENTRY_ADMIN_PASSWORD"],
 };
 // Secret keys left EMPTY when not seeded — runtime-provisioned, never derived

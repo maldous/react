@@ -85,18 +85,45 @@ if ! wait_sonar; then
   fi
 fi
 
-# ── 5. Authenticate as admin and generate a token ──────────────────────────────
-
-# SonarQube 9.9 LTS: POST /api/user_tokens/generate
-# Auth: Basic with admin credentials
-# Body (form-encoded): name=<token-name>&login=admin&type=GLOBAL_ANALYSIS_TOKEN
-#
-# On a fresh instance admin/admin is the default. If the admin password has
-# been changed, the script will fail here — re-generate manually or set
-# ADMIN_PASSWORD in .env.sonar.
+# ── 4b. Ensure the admin password is the MANAGED value (ADR-0072 / no forced change) ──
+# SonarQube forces a password change on UI login while the admin still has the default
+# "admin/admin". We change it once, programmatically, to the managed SONAR_ADMIN_PASSWORD
+# (from the generated env / OpenBao) so click-through login is never interrupted and
+# rotation moves into the app later. Idempotent: a no-op once already managed.
 
 ADMIN_USER="${SONAR_ADMIN_USER:-admin}"
-ADMIN_PASS="${SONAR_ADMIN_PASSWORD:-admin}"
+MANAGED_PASS="${SONAR_ADMIN_PASSWORD:-}"
+
+sonar_auth_ok() {
+  curl -sf --max-time 10 -u "${ADMIN_USER}:$1" "${SONAR_HOST}/api/authentication/validate" 2>/dev/null \
+    | grep -q '"valid":true'
+}
+
+if [ -n "$MANAGED_PASS" ] && [ "$MANAGED_PASS" != "admin" ]; then
+  if sonar_auth_ok "$MANAGED_PASS"; then
+    printf '%s✓ Sonar admin already on the managed password%s\n' "$GREEN" "$RESET"
+  elif sonar_auth_ok "admin"; then
+    if curl -sf --max-time 15 -u "${ADMIN_USER}:admin" -X POST \
+      --data-urlencode "login=${ADMIN_USER}" \
+      --data-urlencode "previousPassword=admin" \
+      --data-urlencode "password=${MANAGED_PASS}" \
+      "${SONAR_HOST}/api/users/change_password" >/dev/null 2>&1; then
+      printf '%s✓ Sonar admin password set to the managed value — no forced change on login%s\n' \
+        "$GREEN" "$RESET"
+    else
+      printf '%s⚠ could not set the managed Sonar admin password (continuing with default)%s\n' \
+        "$YELLOW" "$RESET"
+    fi
+  fi
+fi
+
+# ── 5. Authenticate as admin and generate a token ──────────────────────────────
+
+# SonarQube 9.9 LTS: POST /api/user_tokens/generate. Auth: Basic with admin creds.
+# Prefer the managed password (set above); fall back to the default for a brand-new
+# instance where the change has not happened yet.
+ADMIN_PASS="$MANAGED_PASS"
+if [ -z "$ADMIN_PASS" ] || ! sonar_auth_ok "$ADMIN_PASS"; then ADMIN_PASS="admin"; fi
 TOKEN_NAME="${SONAR_TOKEN_NAME:-codebuff-auto}"
 
 printf '%s▶ Generating analysis token "%s" for user "%s"…%s\n' \

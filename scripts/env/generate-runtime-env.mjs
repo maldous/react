@@ -49,7 +49,10 @@ const LOCAL_BOOTSTRAP_SALT = "maldous-react-local-bootstrap-v1";
 
 // Secrets derived deterministically as local-bootstrap (no preserved-volume or
 // committed-URL dependency). Real environments override via OpenBao-seeded material.
-const DERIVE_AS_PASSWORD = new Set(["SYSADMIN_BOOTSTRAP_PASSWORD"]);
+// SONAR_ADMIN_PASSWORD is a MANAGED password: provisioning changes SonarQube's admin
+// from the default "admin" to this value so the UI never forces a password change on
+// login; rotation moves into the app later (no hand-edited credential).
+const DERIVE_AS_PASSWORD = new Set(["SYSADMIN_BOOTSTRAP_PASSWORD", "SONAR_ADMIN_PASSWORD"]);
 
 // CADDY_INTERNAL_SECRET is shared across environments (the react-shared Caddy
 // proxies any env) and is a runtime header secret (not persisted), so it is derived
