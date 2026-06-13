@@ -3218,6 +3218,61 @@
         }
       }
     },
+    "/api/admin/provider-configs": {
+      "get": {
+        "summary": "List provider configurations (system operator)",
+        "operationId": "listProviderConfigs",
+        "description": "Operator read of the provider config plane (optional ?capability). Credentials are by secretRef; no plaintext. ADR-0070 / ADR-ACT-0266.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": { "200": { "description": "Provider config list" } }
+      },
+      "post": {
+        "summary": "Create/update a provider configuration (system operator)",
+        "operationId": "putProviderConfig",
+        "description": "Operator-only, audited. credentialRef is a secret-store ref; config rejects secret keys; a forbidden-in-production provider cannot be active in prod. ADR-0070 / ADR-ACT-0266.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Provider config" },
+          "400": { "description": "Validation error" }
+        }
+      }
+    },
+    "/api/admin/provider-configs/:id/lifecycle": {
+      "post": {
+        "summary": "Set a provider configuration lifecycle state (system operator)",
+        "operationId": "setProviderLifecycle",
+        "description": "Operator transition (candidate/configured/degraded/ready/disabled). ready is adapter-confirmed. ADR-0070 / ADR-ACT-0266.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Lifecycle updated" },
+          "404": { "description": "Provider config not found" }
+        }
+      }
+    },
+    "/api/admin/provider-configs/:id/delete": {
+      "post": {
+        "summary": "Delete a provider configuration (system operator)",
+        "operationId": "deleteProviderConfig",
+        "description": "Operator-only, audited. ADR-0070 / ADR-ACT-0266.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Deleted" },
+          "404": { "description": "Provider config not found" }
+        }
+      }
+    },
     "/api/admin/scheduled-jobs": {
       "get": {
         "summary": "List a tenant's scheduled jobs (system operator)",

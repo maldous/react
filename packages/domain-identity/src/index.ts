@@ -218,6 +218,10 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     // role gets these; the plaintext value is never returned by any read.
     "platform.secrets.read",
     "platform.secrets.write",
+    // Provider configuration plane (Tier-1 kernel, ADR-0070 / ADR-ACT-0266): operator-only
+    // binding of capability -> concrete provider per environment; credentials by secretRef.
+    "platform.providers.read",
+    "platform.providers.write",
     "platform.clickthrough.pgadmin",
     "platform.clickthrough.keycloak",
     "platform.clickthrough.minio",

@@ -43,6 +43,8 @@ import {
   UpdateScheduledJobRequestSchema,
   PutSecretRequestSchema,
   SecretRefActionRequestSchema,
+  PutProviderConfigRequestSchema,
+  SetProviderLifecycleRequestSchema,
   type TenantAuthProvidersConfig,
   type ObservabilitySignalStatus,
 } from "@platform/contracts-admin";
@@ -514,6 +516,17 @@ async function selectSecretStore(
 async function buildSecretsDeps() {
   const pool = getApplicationPool();
   return { store: await selectSecretStore(pool), audit: createPostgresAuditEventPort(pool) };
+}
+
+// Build the provider-config usecase deps (provider-config repo + audit) — ADR-ACT-0266.
+async function buildProviderConfigDeps() {
+  const { PostgresProviderConfigRepository } =
+    await import("../adapters/postgres-provider-config-repository.ts");
+  const pool = getApplicationPool();
+  return {
+    providers: new PostgresProviderConfigRepository(pool),
+    audit: createPostgresAuditEventPort(pool),
+  };
 }
 
 // Build the scheduled-jobs usecase deps (scheduled-job repo + event bus + audit) — ADR-ACT-0262.
@@ -5913,6 +5926,126 @@ export const routes: Route[] = [
       );
       if (result.kind === "not_found") {
         res.json(404, { code: "NOT_FOUND", message: "Secret not found" });
+        return;
+      }
+      res.json(200, { deleted: true });
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Provider configuration plane (Tier-1 kernel, ADR-0070 / ADR-ACT-0266). Operator-only.
+  // Binds a USF capability to a concrete provider per environment; credentials by
+  // secretRef (ADR-0069); config rejects secret-bearing keys; lifecycle ready is
+  // adapter-confirmed; a forbidden-in-production provider can never be active in prod.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/admin/provider-configs",
+    operationName: "admin.providerConfigs.list",
+    requiresAuth: true,
+    requiredPermission: "platform.providers.read",
+    resource: "admin:provider_configs",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const capability =
+        new URL(req.raw.url ?? "", "http://localhost").searchParams.get("capability") ?? undefined;
+      const { listProviderConfigs } = await import("../usecases/provider-config.ts");
+      res.json(200, await listProviderConfigs(await buildProviderConfigDeps(), { capability }));
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/provider-configs",
+    operationName: "admin.providerConfigs.put",
+    requiresAuth: true,
+    requiredPermission: "platform.providers.write",
+    resource: "admin:provider_configs",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const parsed = PutProviderConfigRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid provider config",
+        });
+        return;
+      }
+      const { putProviderConfig } = await import("../usecases/provider-config.ts");
+      const summary = await putProviderConfig(
+        {
+          ...parsed.data,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildProviderConfigDeps()
+      );
+      res.json(200, summary);
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/provider-configs/:id/lifecycle",
+    operationName: "admin.providerConfigs.lifecycle",
+    requiresAuth: true,
+    requiredPermission: "platform.providers.write",
+    resource: "admin:provider_configs",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const id = req.params["id"] ?? "";
+      if (!UUID_RE.test(id)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid provider config id" });
+        return;
+      }
+      const parsed = SetProviderLifecycleRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid lifecycle state" });
+        return;
+      }
+      const { PostgresProviderConfigRepository } =
+        await import("../adapters/postgres-provider-config-repository.ts");
+      const repo = new PostgresProviderConfigRepository(getApplicationPool());
+      const ok = await repo.setLifecycleState(id, parsed.data.lifecycleState);
+      if (!ok) {
+        res.json(404, { code: "NOT_FOUND", message: "Provider config not found" });
+        return;
+      }
+      res.json(200, { lifecycleState: parsed.data.lifecycleState });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/provider-configs/:id/delete",
+    operationName: "admin.providerConfigs.delete",
+    requiresAuth: true,
+    requiredPermission: "platform.providers.write",
+    resource: "admin:provider_configs",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const id = req.params["id"] ?? "";
+      if (!UUID_RE.test(id)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid provider config id" });
+        return;
+      }
+      const { deleteProviderConfig } = await import("../usecases/provider-config.ts");
+      const result = await deleteProviderConfig(
+        {
+          id,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildProviderConfigDeps()
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Provider config not found" });
         return;
       }
       res.json(200, { deleted: true });

@@ -60,6 +60,8 @@ export const PROOF_LADDER = [
   "proof:secret-store-contract",
   "proof:secrets-openbao",
   "proof:provider-secrets-readiness",
+  "proof:provider-config",
+  "proof:provider-readiness-contract",
 ] as const;
 
 export type ProofLadderEntry = (typeof PROOF_LADDER)[number];

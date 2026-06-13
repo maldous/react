@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-06-13
 
-69 Architecture Decision Records (ADR-0001 through ADR-0069). ADR-0018 is intentionally absent. ADR-0001 through ADR-0052 are **Accepted**. Of the Universal Service Foundation set: ADR-0053, ADR-0054, ADR-0055, ADR-0056, ADR-0058 (ADR-ACT-0253/0254) and ADR-0061, ADR-0067 (ADR-ACT-0256, Phase 2 metering/quota), ADR-0065 (ADR-ACT-0257, Phase 3 developer-platform foundation — SDK/portal-gateway/sandbox/full-drift remain Proposed sub-decisions), ADR-0060 (ADR-ACT-0258, Phase 4 search — built-in Postgres FTS; composed engine remains a Proposed Phase-4.5 sub-decision), and ADR-0059 (ADR-ACT-0259, Phase 5 event bus + durable workers + DLQ/redrive — workflow engine + composed bus remain Proposed sub-decisions; notifications split to ADR-0068), and ADR-0068 (ADR-ACT-0260, Phase 6 end-user profile self-service + notification preferences + local notification substrate — composed providers + real delivery transports remain Proposed Phase-6.5 sub-decisions), and ADR-0062 (ADR-ACT-0261, Phase 7 built-in observability/alerting/incident foundation — composed Prometheus/Tempo/Alertmanager + on-call + status page remain Proposed Phase-7.5 sub-decisions), and ADR-0069 (ADR-ACT-0265, Tier-1 kernel runtime secrets — built-in Postgres secret store + composed OpenBao provider, both live-proven; production sealed/HA topology + rotation automation remain Proposed sub-decisions) are **Accepted**. ADR-0057 has been **re-scoped to billing/invoicing/payment** (Phase 9, still Proposed; entitlements→0058, metering/quota→0067). ADR-0063, ADR-0064, ADR-0066 remain **Proposed** (ADR-0063 explicitly requires splitting before acceptance).
+70 Architecture Decision Records (ADR-0001 through ADR-0070). ADR-0018 is intentionally absent. ADR-0001 through ADR-0052 are **Accepted**. Of the Universal Service Foundation set: ADR-0053, ADR-0054, ADR-0055, ADR-0056, ADR-0058 (ADR-ACT-0253/0254) and ADR-0061, ADR-0067 (ADR-ACT-0256, Phase 2 metering/quota), ADR-0065 (ADR-ACT-0257, Phase 3 developer-platform foundation — SDK/portal-gateway/sandbox/full-drift remain Proposed sub-decisions), ADR-0060 (ADR-ACT-0258, Phase 4 search — built-in Postgres FTS; composed engine remains a Proposed Phase-4.5 sub-decision), and ADR-0059 (ADR-ACT-0259, Phase 5 event bus + durable workers + DLQ/redrive — workflow engine + composed bus remain Proposed sub-decisions; notifications split to ADR-0068), and ADR-0068 (ADR-ACT-0260, Phase 6 end-user profile self-service + notification preferences + local notification substrate — composed providers + real delivery transports remain Proposed Phase-6.5 sub-decisions), and ADR-0062 (ADR-ACT-0261, Phase 7 built-in observability/alerting/incident foundation — composed Prometheus/Tempo/Alertmanager + on-call + status page remain Proposed Phase-7.5 sub-decisions), and ADR-0069 (ADR-ACT-0265, Tier-1 kernel runtime secrets — built-in Postgres secret store + composed OpenBao provider, both live-proven; production sealed/HA topology + rotation automation remain Proposed sub-decisions), and ADR-0070 (ADR-ACT-0266, Tier-1 kernel provider configuration plane — capability→provider binding per environment with credentials by secretRef + adapter-confirmed readiness; per-tenant overrides + auto-reconciliation remain Proposed sub-decisions) are **Accepted**. ADR-0057 has been **re-scoped to billing/invoicing/payment** (Phase 9, still Proposed; entitlements→0058, metering/quota→0067). ADR-0063, ADR-0064, ADR-0066 remain **Proposed** (ADR-0063 explicitly requires splitting before acceptance).
 
 ## Foundation & Governance (8)
 
@@ -119,6 +119,7 @@ Planning set created under ADR-ACT-0237. Status: **Proposed** (not yet Accepted)
 | ADR-0067 | Metering and quota enforcement architecture                  | 2026-06-13 | 0067-metering-and-quota-enforcement.md                        |
 | ADR-0068 | Profile self-service, notification preferences & substrate   | 2026-06-13 | 0068-profile-self-service-and-notifications.md                |
 | ADR-0069 | Runtime secrets store (built-in Postgres + composed OpenBao) | 2026-06-13 | 0069-runtime-secrets-and-openbao.md                           |
+| ADR-0070 | Provider configuration plane                                 | 2026-06-13 | 0070-provider-configuration-plane.md                          |
 
 ---
 
@@ -131,8 +132,8 @@ Planning set created under ADR-ACT-0237. Status: **Proposed** (not yet Accepted)
 
 ## Governance
 
-- ADR-0001 through ADR-0052, plus ADR-0053/0054/0055/0056/0058/0059/0060/0061/0062/0065/0067/0068/0069, are **Accepted**; ADR-0057 (re-scoped to billing, Phase 9) and ADR-0063/0064/0066 remain **Proposed**
-- Next ADR: **ADR-0070**
+- ADR-0001 through ADR-0052, plus ADR-0053/0054/0055/0056/0058/0059/0060/0061/0062/0065/0067/0068/0069/0070, are **Accepted**; ADR-0057 (re-scoped to billing, Phase 9) and ADR-0063/0064/0066 remain **Proposed**
+- Next ADR: **ADR-0071**
 - Action register: `docs/adr/ACTION-REGISTER.md`
 - Lifecycle evidence: `docs/evidence/`
 

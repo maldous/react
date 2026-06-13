@@ -2211,3 +2211,103 @@ export const SecretStoreReadinessResponseSchema = z
   })
   .strict();
 export type SecretStoreReadinessResponse = z.infer<typeof SecretStoreReadinessResponseSchema>;
+
+// ---------------------------------------------------------------------------
+// Provider configuration plane (ADR-0070 / ADR-ACT-0266). Tier-1 kernel. Operator-only.
+// Binds a USF capability to a concrete provider instance per environment, with its
+// environment classification, lifecycle state, non-secret endpoint/config, and
+// credentials BY REFERENCE (an opaque secret:<uuid> into the ADR-0069 secret store).
+// Strict + no-passthrough. The plaintext credential is never carried here; `config`
+// rejects secret-bearing keys server-side. Lifecycle `ready` is adapter-confirmed.
+// ---------------------------------------------------------------------------
+
+export const PROVIDER_ENVIRONMENTS = ["development", "test", "staging", "production"] as const;
+export const ProviderEnvironmentSchema = z.enum(PROVIDER_ENVIRONMENTS);
+export type ProviderEnvironment = z.infer<typeof ProviderEnvironmentSchema>;
+
+export const PROVIDER_LIFECYCLE_STATES = [
+  "candidate",
+  "configured",
+  "degraded",
+  "ready",
+  "disabled",
+] as const;
+export const ProviderLifecycleStateSchema = z.enum(PROVIDER_LIFECYCLE_STATES);
+export type ProviderLifecycleStateValue = z.infer<typeof ProviderLifecycleStateSchema>;
+
+/** Environment-service classification vocabulary (ADR-0056). */
+export const PROVIDER_CLASSIFICATIONS = [
+  "per-environment",
+  "shared-cross-environment",
+  "local-only",
+  "test-only",
+  "mock-only",
+  "production-external",
+  "production-internal",
+  "forbidden-in-production",
+  "not-applicable",
+] as const;
+export const ProviderClassificationSchema = z.enum(PROVIDER_CLASSIFICATIONS);
+export type ProviderClassification = z.infer<typeof ProviderClassificationSchema>;
+
+/** `GET /api/admin/provider-configs` row — never carries a plaintext credential. */
+export const ProviderConfigSummarySchema = z
+  .object({
+    id: z.string(),
+    providerKey: z.string(),
+    capability: z.string(),
+    environment: ProviderEnvironmentSchema,
+    instanceLabel: z.string(),
+    classification: ProviderClassificationSchema,
+    lifecycleState: ProviderLifecycleStateSchema,
+    endpoint: z.string().nullable(),
+    /** Opaque secret-store ref (secret:<uuid>) or null — never a plaintext secret. */
+    credentialRef: z.string().nullable(),
+    hasCredential: z.boolean(),
+    config: z.record(z.string(), z.unknown()),
+    updatedAt: z.string().nullable(),
+    updatedBy: z.string().nullable(),
+  })
+  .strict();
+export type ProviderConfigSummary = z.infer<typeof ProviderConfigSummarySchema>;
+
+export const ProviderConfigListResponseSchema = z
+  .object({ providers: z.array(ProviderConfigSummarySchema) })
+  .strict();
+export type ProviderConfigListResponse = z.infer<typeof ProviderConfigListResponseSchema>;
+
+const ProviderKeySchema = z
+  .string()
+  .min(1)
+  .max(64)
+  .regex(/^[a-z0-9][a-z0-9_-]*$/, "providerKey: lowercase letters, digits, - or _");
+
+/** `POST /api/admin/provider-configs` — operator-only. `credentialRef` is a secret-store
+ * ref; `config` must not contain secret-bearing keys (enforced server-side). */
+export const PutProviderConfigRequestSchema = z
+  .object({
+    providerKey: ProviderKeySchema,
+    capability: z.string().min(1).max(64),
+    environment: ProviderEnvironmentSchema,
+    instanceLabel: z.string().min(1).max(64).optional(),
+    classification: ProviderClassificationSchema,
+    lifecycleState: ProviderLifecycleStateSchema,
+    endpoint: z.string().max(2048).nullable().optional(),
+    credentialRef: z
+      .string()
+      .max(128)
+      .regex(/^secret:/, "credentialRef must be an opaque secret-store ref (secret:<uuid>)")
+      .nullable()
+      .optional(),
+    /** Whether this provider requires a credential — drives the degraded derivation. */
+    requiresCredential: z.boolean().optional(),
+    config: z.record(z.string(), z.unknown()).optional(),
+  })
+  .strict();
+export type PutProviderConfigRequest = z.infer<typeof PutProviderConfigRequestSchema>;
+
+/** `POST /api/admin/provider-configs/:id/lifecycle` — operator transition. */
+export const SetProviderLifecycleRequestSchema = z
+  .object({ lifecycleState: ProviderLifecycleStateSchema })
+  .strict();
+export type SetProviderLifecycleRequest = z.infer<typeof SetProviderLifecycleRequestSchema>;
