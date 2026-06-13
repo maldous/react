@@ -311,8 +311,8 @@ keycloak-provision:
 	@_tfdir=infra/env/$(ENV); \
 	_varfile=$(ENV).tfvars; \
 	if [ ! -f "$${_tfdir}/$${_varfile}" ]; then _varfile=$(ENV).tfvars.example; fi; \
-	_envf=$(ENV_FILE); [ -f "$${_envf}" ] || _envf=.env; \
-	if [ -f "$${_envf}" ]; then set -a; . "./$${_envf}"; set +a; \
+	_envf=$(ENV_FILE); \
+	if [ -f "$${_envf}" ]; then set -a; . "$${_envf}"; set +a; \
 	else printf "$(YELLOW)! no $${_envf} — TF_VAR_* secrets must be exported in the environment$(RESET)\n"; fi; \
 	export TF_VAR_keycloak_admin_user="$${KEYCLOAK_ADMIN_USER:-admin}"; \
 	export TF_VAR_keycloak_admin_password="$${KEYCLOAK_ADMIN_PASSWORD:-}"; \
