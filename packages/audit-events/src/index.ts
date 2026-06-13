@@ -66,6 +66,12 @@ export const AuditAction = {
   SecretRefDeleted: "secret_ref.deleted",
   ProviderConfigSet: "provider_config.set",
   ProviderConfigDeleted: "provider_config.deleted",
+  EnvironmentRegistered: "environment.registered",
+  EnvironmentBootstrapped: "environment.bootstrapped",
+  EnvironmentReconciled: "environment.reconciled",
+  EnvironmentOperationInvoked: "environment.operation_invoked",
+  EnvironmentAdminSeeded: "environment.admin_seeded",
+  EnvironmentSecretRotated: "environment.secret_rotated",
 } as const;
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction];

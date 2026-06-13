@@ -1,15 +1,25 @@
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 // ---------------------------------------------------------------------------
-// Local-env loader for runtime proof scripts (ADR-ACT-0223).
+// Local-env loader for runtime proof scripts (ADR-ACT-0223; ADR-0072).
 //
 // Proof scripts run as plain `node` (no dotenv), so they don't see the local
-// service credentials the operator keeps in `.env` / `.env.dev`. This loads those
-// files into process.env for keys that are NOT already set, so a proof can probe
-// the real local stack (MinIO/Loki/Grafana/etc.) without hardcoding secrets. It
-// NEVER overrides an explicit process.env value, and never prints values.
+// service credentials. ADR-0072: the source is the GENERATED runtime artifact
+// .env/<stage>.env (from config/environments/<stage>.json) — a COMPLETE env
+// (shared base + stage + secrets). Legacy .env / .env.<stage> regular files are a
+// transition fallback. This loads those into process.env for keys that are NOT
+// already set; it NEVER overrides an explicit process.env value, never reads the
+// .env/ DIRECTORY as a file, and never prints values.
 // ---------------------------------------------------------------------------
+
+function isRegularFile(path: string): boolean {
+  try {
+    return existsSync(path) && statSync(path).isFile();
+  } catch {
+    return false;
+  }
+}
 
 function parseEnvFile(path: string): Record<string, string> {
   const out: Record<string, string> = {};
@@ -32,15 +42,18 @@ function parseEnvFile(path: string): Record<string, string> {
 }
 
 /**
- * Load `.env` then `.env.<envName>` (override) from the repo root into process.env,
- * only for keys that are currently unset. Returns the list of files actually loaded.
+ * Load the generated runtime artifact `.env/<envName>.env` (ADR-0072), falling back
+ * to legacy `.env` / `.env.<envName>` regular files, into process.env — only for keys
+ * that are currently unset. Returns the list of files actually loaded. The `.env/`
+ * directory is never read as a file.
  */
 export function loadLocalEnv(envName = process.env["ENV"] ?? "dev"): string[] {
   const root = process.cwd();
   const loaded: string[] = [];
-  for (const file of [".env", `.env.${envName}`]) {
+  // Generated artifact first (complete: shared base + stage + secrets), then legacy.
+  for (const file of [join(".env", `${envName}.env`), ".env", `.env.${envName}`]) {
     const path = join(root, file);
-    if (!existsSync(path)) continue;
+    if (!isRegularFile(path)) continue;
     const parsed = parseEnvFile(path);
     for (const [k, v] of Object.entries(parsed)) {
       if (process.env[k] === undefined) process.env[k] = v;
