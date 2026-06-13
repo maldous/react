@@ -118,6 +118,11 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     labelKey: "feature.admin.nav.account",
     permission: "profile.read_self",
   },
+  {
+    to: "/admin/monitoring",
+    labelKey: "feature.admin.nav.monitoring",
+    permission: "platform.observability.read",
+  },
 ];
 
 const linkClass =

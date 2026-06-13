@@ -26,6 +26,10 @@ import type {
   UserProfile,
   NotificationPreferencesResponse,
   NotificationReadinessResponse,
+  MetricSignalListResponse,
+  AlertListResponse,
+  IncidentListResponse,
+  ObservabilityReadinessResponse,
   CapabilitySummary,
   CapabilityCategory,
   CapabilityImplementationStatus,
@@ -474,6 +478,62 @@ export const notificationReadinessFixture: NotificationReadinessResponse = {
     { channel: "webhook", available: true, transport: "local-sink", detail: "Local sink." },
     { channel: "in_app", available: true, transport: "local-sink", detail: "Local sink." },
   ],
+};
+
+export const metricSignalsFixture: MetricSignalListResponse = {
+  signals: [
+    {
+      signalKey: "api.error_rate",
+      displayName: "API error rate",
+      unit: "%",
+      kind: "gauge",
+      description: "5xx rate",
+      latestValue: 2.5,
+    },
+  ],
+};
+
+export const alertRulesFixture: AlertListResponse = {
+  rules: [
+    {
+      id: "00000000-0000-0000-0000-0000000000a1",
+      ruleKey: "error-rate-high",
+      signalKey: "api.error_rate",
+      comparator: "gt",
+      threshold: 5,
+      severity: "critical",
+      enabled: true,
+      notifyUserId: "00000000-0000-0000-0000-0000000000a3",
+      notifyCategory: "system",
+      updatedAt: "2026-06-13T00:00:00.000Z",
+      updatedBy: "00000000-0000-0000-0000-0000000000a3",
+    },
+  ],
+};
+
+export const incidentsFixture: IncidentListResponse = {
+  incidents: [
+    {
+      id: "00000000-0000-0000-0000-0000000000c1",
+      ruleKey: "error-rate-high",
+      title: "CRITICAL: error-rate-high (api.error_rate gt 5)",
+      severity: "critical",
+      status: "open",
+      observedValue: 9,
+      threshold: 5,
+      openedAt: "2026-06-13T00:00:00.000Z",
+      acknowledgedAt: null,
+      resolvedAt: null,
+    },
+  ],
+};
+
+export const observabilityReadinessFixture: ObservabilityReadinessResponse = {
+  backend: "postgres-builtin",
+  status: "ready",
+  signalCount: 1,
+  openIncidentCount: 1,
+  detail: "Built-in observability store reachable with registered signals.",
 };
 
 export const entitlementsFixture: EntitlementListResponse = {

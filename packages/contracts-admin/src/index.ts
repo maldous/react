@@ -1971,3 +1971,124 @@ export const TestNotificationResponseSchema = z.object({
   dispatched: z.array(NotificationDispatchResultSchema),
 });
 export type TestNotificationResponse = z.infer<typeof TestNotificationResponseSchema>;
+
+// ---------------------------------------------------------------------------
+// Observability — metric signals + alert rules + incidents (Phase 7, ADR-0062 /
+// ADR-ACT-0261). Built-in foundation: a signal registry, threshold alert rules
+// that evaluate against samples, an incident lifecycle, and an alert→notification
+// bridge over the Phase-6 substrate. Tenant-scoped (RLS), operator-managed. No
+// secret fields. Prometheus/Tempo/Alertmanager/Grafana-IRM remain Phase-7.5 providers.
+// ---------------------------------------------------------------------------
+
+export const METRIC_KINDS = ["gauge", "counter"] as const;
+export const MetricKindSchema = z.enum(METRIC_KINDS);
+export type MetricKind = z.infer<typeof MetricKindSchema>;
+
+export const MetricSignalSummarySchema = z.object({
+  signalKey: z.string(),
+  displayName: z.string(),
+  unit: z.string(),
+  kind: MetricKindSchema,
+  description: z.string(),
+  latestValue: z.number().nullable(),
+});
+export type MetricSignalSummary = z.infer<typeof MetricSignalSummarySchema>;
+
+export const MetricSignalListResponseSchema = z.object({
+  signals: z.array(MetricSignalSummarySchema),
+});
+export type MetricSignalListResponse = z.infer<typeof MetricSignalListResponseSchema>;
+
+export const ALERT_COMPARATORS = ["gt", "gte", "lt", "lte"] as const;
+export const AlertComparatorSchema = z.enum(ALERT_COMPARATORS);
+export type AlertComparator = z.infer<typeof AlertComparatorSchema>;
+
+export const ALERT_SEVERITIES = ["info", "warning", "critical"] as const;
+export const AlertSeveritySchema = z.enum(ALERT_SEVERITIES);
+export type AlertSeverity = z.infer<typeof AlertSeveritySchema>;
+
+export const AlertRuleSummarySchema = z.object({
+  id: z.string(),
+  ruleKey: z.string(),
+  signalKey: z.string(),
+  comparator: AlertComparatorSchema,
+  threshold: z.number(),
+  severity: AlertSeveritySchema,
+  enabled: z.boolean(),
+  notifyUserId: z.string().nullable(),
+  notifyCategory: NotificationCategorySchema,
+  updatedAt: z.string().nullable(),
+  updatedBy: z.string().nullable(),
+});
+export type AlertRuleSummary = z.infer<typeof AlertRuleSummarySchema>;
+
+export const AlertListResponseSchema = z.object({ rules: z.array(AlertRuleSummarySchema) });
+export type AlertListResponse = z.infer<typeof AlertListResponseSchema>;
+
+/** `POST /api/admin/alerts` — operator-only, audited. */
+export const CreateAlertRuleRequestSchema = z
+  .object({
+    organisationId: z.string().uuid(),
+    ruleKey: z.string().min(1).max(100),
+    signalKey: z.string().min(1).max(100),
+    comparator: AlertComparatorSchema,
+    threshold: z.number(),
+    severity: AlertSeveritySchema.optional(),
+    enabled: z.boolean().optional(),
+    notifyUserId: z.string().max(200).optional(),
+    notifyCategory: NotificationCategorySchema.optional(),
+  })
+  .strict();
+export type CreateAlertRuleRequest = z.infer<typeof CreateAlertRuleRequestSchema>;
+
+export const ALERT_EVAL_STATES = ["within", "fired", "no_data", "disabled"] as const;
+export const AlertEvalStateSchema = z.enum(ALERT_EVAL_STATES);
+export type AlertEvalState = z.infer<typeof AlertEvalStateSchema>;
+
+export const EvaluateAlertResponseSchema = z.object({
+  ruleKey: z.string(),
+  state: AlertEvalStateSchema,
+  value: z.number().nullable(),
+  threshold: z.number(),
+  incidentId: z.string().nullable(),
+  notified: z.array(NotificationDispatchResultSchema),
+});
+export type EvaluateAlertResponse = z.infer<typeof EvaluateAlertResponseSchema>;
+
+export const INCIDENT_STATUSES = ["open", "acknowledged", "resolved"] as const;
+export const IncidentStatusSchema = z.enum(INCIDENT_STATUSES);
+export type IncidentStatus = z.infer<typeof IncidentStatusSchema>;
+
+export const IncidentSummarySchema = z.object({
+  id: z.string(),
+  ruleKey: z.string(),
+  title: z.string(),
+  severity: AlertSeveritySchema,
+  status: IncidentStatusSchema,
+  observedValue: z.number().nullable(),
+  threshold: z.number().nullable(),
+  openedAt: z.string(),
+  acknowledgedAt: z.string().nullable(),
+  resolvedAt: z.string().nullable(),
+});
+export type IncidentSummary = z.infer<typeof IncidentSummarySchema>;
+
+export const IncidentListResponseSchema = z.object({ incidents: z.array(IncidentSummarySchema) });
+export type IncidentListResponse = z.infer<typeof IncidentListResponseSchema>;
+
+/** `PATCH /api/admin/incidents/:incidentId` — operator lifecycle transition. */
+export const UpdateIncidentRequestSchema = z.object({ status: IncidentStatusSchema }).strict();
+export type UpdateIncidentRequest = z.infer<typeof UpdateIncidentRequestSchema>;
+
+export const OBSERVABILITY_READINESS_STATES = ["ready", "degraded", "blocked"] as const;
+export const ObservabilityReadinessStateSchema = z.enum(OBSERVABILITY_READINESS_STATES);
+export type ObservabilityReadinessState = z.infer<typeof ObservabilityReadinessStateSchema>;
+
+export const ObservabilityReadinessResponseSchema = z.object({
+  backend: z.string(),
+  status: ObservabilityReadinessStateSchema,
+  signalCount: z.number(),
+  openIncidentCount: z.number(),
+  detail: z.string(),
+});
+export type ObservabilityReadinessResponse = z.infer<typeof ObservabilityReadinessResponseSchema>;

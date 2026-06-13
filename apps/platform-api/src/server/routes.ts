@@ -37,6 +37,8 @@ import {
   UpdateProfileRequestSchema,
   UpdateNotificationPreferencesRequestSchema,
   TestNotificationRequestSchema,
+  CreateAlertRuleRequestSchema,
+  UpdateIncidentRequestSchema,
   type TenantAuthProvidersConfig,
   type ObservabilitySignalStatus,
 } from "@platform/contracts-admin";
@@ -444,6 +446,25 @@ async function buildRateLimitDeps() {
     rateLimits: new PostgresRateLimitRepository(pool),
     entitlements: new PostgresEntitlementRepository(pool),
     audit: createPostgresAuditEventPort(pool),
+  };
+}
+
+// Build the observability usecase deps (metric/alert/incident repo + audit +
+// the Phase-6 notification substrate for the alert→notification bridge) — ADR-ACT-0261.
+async function buildObservabilityDeps() {
+  const { PostgresObservabilityRepository } =
+    await import("../adapters/postgres-observability-repository.ts");
+  const { PostgresNotificationRepository } =
+    await import("../adapters/postgres-notification-repository.ts");
+  const pool = getApplicationPool();
+  const repo = new PostgresObservabilityRepository(pool);
+  const audit = createPostgresAuditEventPort(pool);
+  return {
+    metrics: repo,
+    alerts: repo,
+    incidents: repo,
+    audit,
+    notifications: { notifications: new PostgresNotificationRepository(pool), audit },
   };
 }
 
@@ -5327,6 +5348,207 @@ export const routes: Route[] = [
         await buildNotificationsDeps()
       );
       res.json(200, result);
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Observability — metric signals + alert rules + incidents (Phase 7, ADR-0062 /
+  // ADR-ACT-0261). Operator-only. Signal registration + sample recording are
+  // server-internal (not exposed); reads/alert-management/incident-lifecycle here.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/admin/observability/signals",
+    operationName: "admin.observability.signals",
+    requiresAuth: true,
+    requiredPermission: "platform.observability.read",
+    resource: "admin:observability",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const organisationId =
+        new URL(req.raw.url ?? "", "http://localhost").searchParams.get("organisationId") ?? "";
+      if (!UUID_RE.test(organisationId)) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: "organisationId query parameter is required",
+        });
+        return;
+      }
+      const { listSignals } = await import("../usecases/observability.ts");
+      res.json(
+        200,
+        await listSignals(organisationId, await buildObservabilityDeps(), { operator: true })
+      );
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/alerts",
+    operationName: "admin.alerts.list",
+    requiresAuth: true,
+    requiredPermission: "platform.observability.read",
+    resource: "admin:observability",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const organisationId =
+        new URL(req.raw.url ?? "", "http://localhost").searchParams.get("organisationId") ?? "";
+      if (!UUID_RE.test(organisationId)) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: "organisationId query parameter is required",
+        });
+        return;
+      }
+      const { listAlertRules } = await import("../usecases/observability.ts");
+      res.json(
+        200,
+        await listAlertRules(organisationId, await buildObservabilityDeps(), { operator: true })
+      );
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/alerts",
+    operationName: "admin.alerts.create",
+    requiresAuth: true,
+    requiredPermission: "platform.observability.write",
+    resource: "admin:observability",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const parsed = CreateAlertRuleRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid alert rule",
+        });
+        return;
+      }
+      const { setAlertRule } = await import("../usecases/observability.ts");
+      const result = await setAlertRule(
+        {
+          ...parsed.data,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildObservabilityDeps()
+      );
+      res.json(200, { ruleKey: result.ruleKey });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/alerts/:alertId/evaluate",
+    operationName: "admin.alerts.evaluate",
+    requiresAuth: true,
+    requiredPermission: "platform.observability.write",
+    resource: "admin:observability",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const alertId = req.params["alertId"] ?? "";
+      if (!UUID_RE.test(alertId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid alert id" });
+        return;
+      }
+      const { evaluateAlert } = await import("../usecases/observability.ts");
+      const result = await evaluateAlert(alertId, await buildObservabilityDeps(), {
+        actorId: req.actor!.userId,
+        actorRoles: req.actor!.roles,
+        sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+      });
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Alert rule not found" });
+        return;
+      }
+      res.json(200, result.response);
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/incidents",
+    operationName: "admin.incidents.list",
+    requiresAuth: true,
+    requiredPermission: "platform.observability.read",
+    resource: "admin:observability",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const organisationId =
+        new URL(req.raw.url ?? "", "http://localhost").searchParams.get("organisationId") ?? "";
+      if (!UUID_RE.test(organisationId)) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: "organisationId query parameter is required",
+        });
+        return;
+      }
+      const { listIncidents } = await import("../usecases/observability.ts");
+      res.json(
+        200,
+        await listIncidents(organisationId, await buildObservabilityDeps(), { operator: true })
+      );
+    },
+  },
+  {
+    method: "PATCH",
+    path: "/api/admin/incidents/:incidentId",
+    operationName: "admin.incidents.update",
+    requiresAuth: true,
+    requiredPermission: "platform.observability.write",
+    resource: "admin:observability",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const incidentId = req.params["incidentId"] ?? "";
+      if (!UUID_RE.test(incidentId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid incident id" });
+        return;
+      }
+      const parsed = UpdateIncidentRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid incident update",
+        });
+        return;
+      }
+      const { updateIncident } = await import("../usecases/observability.ts");
+      const result = await updateIncident(
+        {
+          incidentId,
+          status: parsed.data.status,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildObservabilityDeps()
+      );
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Incident not found" });
+        return;
+      }
+      res.json(200, result.incident);
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/observability/readiness",
+    operationName: "admin.observability.readiness",
+    requiresAuth: true,
+    requiredPermission: "platform.observability.read",
+    resource: "admin:observability",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (_req, res) => {
+      const { getObservabilityReadiness } = await import("../usecases/observability.ts");
+      res.json(200, await getObservabilityReadiness(await buildObservabilityDeps()));
     },
   },
 ];

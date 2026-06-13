@@ -56,6 +56,9 @@ export const AuditAction = {
   EventRedriven: "event.redriven",
   NotificationPreferencesChanged: "notification.preferences_changed",
   NotificationTested: "notification.tested",
+  AlertRuleSet: "alert.rule_set",
+  IncidentOpened: "incident.opened",
+  IncidentUpdated: "incident.updated",
 } as const;
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction];

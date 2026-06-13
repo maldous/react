@@ -1181,18 +1181,18 @@
       "proof": "observability-smoke; proof:tenant-observability",
       "productionBlockers": "OTEL collector ingests but no metrics/trace backend or dashboards",
       "adr": "ADR-0062, ADR-0020",
-      "actionRegister": "ADR-ACT-0246",
+      "actionRegister": "ADR-ACT-0261",
       "priority": "P1",
       "size": "L",
       "risk": "Medium",
-      "notes": "Collector is the seam; add Prometheus+Tempo backends."
+      "notes": "Built-in metric-signal registry + sample store delivered + live-proven (observability-alerting-builtin); a real Prometheus/Tempo backend remains Phase 7.5 behind MetricRepository."
     },
     {
       "capability": "alerting-incident-oncall",
       "name": "Alerting, incident management, on-call, status page",
       "domain": "observability-ops",
       "purpose": "Alert rules, incident lifecycle, escalation, and public status.",
-      "status": "missing",
+      "status": "partial",
       "composeSupport": "grafana exists but no Alertmanager; no incident tool",
       "decision": "compose",
       "localFreeCandidate": "Grafana Alerting + Alertmanager (OSS); status page via custom + readiness API",
@@ -1209,11 +1209,39 @@
       "proof": "proof:platform-services (readiness only)",
       "productionBlockers": "no alert rules, notification channels, SLOs, incident lifecycle, on-call, or status page",
       "adr": "ADR-0062",
-      "actionRegister": "ADR-ACT-0246",
+      "actionRegister": "ADR-ACT-0261",
       "priority": "P1",
       "size": "L",
       "risk": "High",
-      "notes": "Readiness != alerting. Grafana running != incident management."
+      "notes": "Built-in alerting + incident lifecycle + alert\u2192notification bridge delivered + proven (observability-alerting-builtin). Composed Alertmanager, on-call/escalation, and the public status page remain Phase-7.5 (not delivered)."
+    },
+    {
+      "capability": "observability-alerting-builtin",
+      "name": "Observability \u2014 built-in alerting + incidents",
+      "domain": "observability-ops",
+      "purpose": "Built-in metric-signal registry, threshold alert rules + evaluation, incident lifecycle, and an alert\u2192notification bridge.",
+      "status": "locally proven",
+      "composeSupport": "postgres (metric_signals/metric_samples/alert_rules/incidents, RLS)",
+      "decision": "build",
+      "localFreeCandidate": "built-in Postgres signal/alert/incident store (no external backend)",
+      "environmentModel": "per-environment",
+      "sharedPerEnv": "per-env",
+      "tenantIsolation": "signals/samples/rules/incidents tenant-scoped (RLS)",
+      "dataIsolation": "RLS; no secret fields; alert payloads carry no secrets",
+      "permissionModel": "platform.observability.read/write (operator-only)",
+      "auditEvents": "alert.rule_set + incident.opened + incident.updated (audit-before-change)",
+      "readinessModel": "operator observability readiness (built-in; never faked)",
+      "bffContract": "/api/admin/observability/signals; /api/admin/alerts; /api/admin/incidents; /api/admin/observability/readiness",
+      "adminUi": "/admin/monitoring",
+      "selfServiceUi": "n/a (operator-only)",
+      "proof": "proof:observability-signals; proof:alerting; proof:incident-foundation; proof:alert-notification-bridge",
+      "productionBlockers": "composed metrics/trace + alerting backends (Phase 7.5); on-call/escalation; status page",
+      "adr": "ADR-0062",
+      "actionRegister": "ADR-ACT-0261",
+      "priority": "P1",
+      "size": "L",
+      "risk": "Medium",
+      "notes": "Phase 7 delivered + live-proven: built-in alerting + incident lifecycle + alert\u2192notification bridge (Phase-6 substrate, preference-gated). Composed Prometheus/Tempo/Alertmanager + on-call + status page are Phase 7.5 behind the ports."
     },
     {
       "capability": "service-catalog-readiness",
@@ -1762,6 +1790,11 @@
         "requiresAdrsReady": [
           "ADR-0068"
         ]
+      },
+      "phase-7": {
+        "requiresAdrsReady": [
+          "ADR-0062"
+        ]
       }
     },
     "dependencies": [
@@ -2062,6 +2095,19 @@
         "mustPrecedeUi": true,
         "mustPrecedeCompose": true,
         "riskIfDelayed": "No alert rules, on-call, incident lifecycle, or public status page."
+      },
+      {
+        "capability": "observability-alerting-builtin",
+        "phase": "phase-7",
+        "track": "planned",
+        "dependsOn": [
+          "metrics-traces",
+          "notifications"
+        ],
+        "parallelWith": [],
+        "mustPrecedeUi": true,
+        "mustPrecedeCompose": false,
+        "riskIfDelayed": "No built-in alerting/incident path; readiness is not alerting."
       },
       {
         "capability": "backup-restore",

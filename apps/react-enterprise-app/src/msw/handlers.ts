@@ -32,6 +32,10 @@ import {
   profileFixture,
   notificationPreferencesFixture,
   notificationReadinessFixture,
+  metricSignalsFixture,
+  alertRulesFixture,
+  incidentsFixture,
+  observabilityReadinessFixture as obsBackendReadinessFixture,
 } from "./fixtures/admin.ts";
 import type { AuthSettingsReadiness } from "@platform/contracts-admin";
 
@@ -739,6 +743,39 @@ export function adminEventsHandlers(
   ];
 }
 
+// Observability — signals + alerts + incidents (Phase 7, ADR-ACT-0261).
+export function adminMonitoringHandlers(
+  signals = metricSignalsFixture,
+  alerts = alertRulesFixture,
+  incidents = incidentsFixture,
+  readiness = obsBackendReadinessFixture
+) {
+  return [
+    http.get("/api/admin/observability/readiness", () => HttpResponse.json(readiness)),
+    http.get("/api/admin/observability/signals", () => HttpResponse.json(signals)),
+    http.get("/api/admin/alerts", () => HttpResponse.json(alerts)),
+    http.post("/api/admin/alerts", () => HttpResponse.json({ ruleKey: "error-rate-high" })),
+    http.post("/api/admin/alerts/:alertId/evaluate", () =>
+      HttpResponse.json({
+        ruleKey: "error-rate-high",
+        state: "fired",
+        value: 9,
+        threshold: 5,
+        incidentId: "00000000-0000-0000-0000-0000000000c1",
+        notified: [{ channel: "email", status: "sent" }],
+      })
+    ),
+    http.get("/api/admin/incidents", () => HttpResponse.json(incidents)),
+    http.patch("/api/admin/incidents/:incidentId", async ({ request }) => {
+      const body = (await request.json().catch(() => ({}))) as { status?: string };
+      return HttpResponse.json({
+        ...incidents.incidents[0],
+        status: body.status ?? "acknowledged",
+      });
+    }),
+  ];
+}
+
 // Profile + notifications (Phase 6, ADR-ACT-0260).
 export function adminAccountHandlers(
   profile = profileFixture,
@@ -818,5 +855,6 @@ export const handlers = [
   ...adminSearchHandlers(),
   ...adminEventsHandlers(),
   ...adminAccountHandlers(),
+  ...adminMonitoringHandlers(),
   ...adminWriteOkHandlers(),
 ];

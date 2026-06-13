@@ -24,6 +24,7 @@ import { Route as AdminDeveloperRoute } from "./routes/admin/developer";
 import { Route as AdminSearchRoute } from "./routes/admin/search";
 import { Route as AdminEventsRoute } from "./routes/admin/events";
 import { Route as AdminAccountRoute } from "./routes/admin/account";
+import { Route as AdminMonitoringRoute } from "./routes/admin/monitoring";
 
 // Hand-maintained route tree (no router codegen plugin is configured). Public
 // routes (`/`, `/login`) are direct children of the root; protected feature
@@ -57,6 +58,7 @@ const routeTree = RootRoute.addChildren([
       AdminSearchRoute,
       AdminEventsRoute,
       AdminAccountRoute,
+      AdminMonitoringRoute,
     ]),
   ]),
 ]);

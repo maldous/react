@@ -205,6 +205,10 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     // Profile + preference self-service uses the existing profile.read_self/update_self.
     "platform.notifications.read",
     "platform.notifications.write",
+    // Observability (Phase 7, ADR-0062 / ADR-ACT-0261): operator-only metric signals,
+    // alert rules + evaluation, and incident lifecycle. No tenant role gets these.
+    "platform.observability.read",
+    "platform.observability.write",
     "platform.clickthrough.pgadmin",
     "platform.clickthrough.keycloak",
     "platform.clickthrough.minio",

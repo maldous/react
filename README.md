@@ -152,6 +152,7 @@ Each proven capability is backed by a repeatable, runnable proof — a single so
 - **Tenant-isolated product search (Phase 4)** — `proof:search`, `proof:search-isolation`, `proof:search-routes`
 - **Event bus + durable workers (Phase 5)** — `proof:event-bus`, `proof:event-worker`, `proof:event-redrive`
 - **Profile + notifications (Phase 6)** — `proof:profile-self-service`, `proof:notification-preferences`, `proof:notification-dispatch`
+- **Observability — alerting + incidents (Phase 7)** — `proof:observability-signals`, `proof:alerting`, `proof:incident-foundation`, `proof:alert-notification-bridge`
 
 ![Honest readiness — a running service is not a delivered capability](docs/images/usf-readiness-honesty.svg)
 

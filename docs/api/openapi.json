@@ -3050,6 +3050,102 @@
         }
       }
     },
+    "/api/admin/observability/signals": {
+      "get": {
+        "summary": "List a tenant's metric signals (system operator)",
+        "operationId": "listMetricSignals",
+        "description": "Operator read of the built-in metric-signal registry + latest sample for a tenant (requires ?organisationId). No secret fields. ADR-0062 / ADR-ACT-0261.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Signal list" },
+          "400": { "description": "organisationId query parameter is required" }
+        }
+      }
+    },
+    "/api/admin/alerts": {
+      "get": {
+        "summary": "List a tenant's alert rules (system operator)",
+        "operationId": "listAlertRules",
+        "description": "Operator read of threshold alert rules (requires ?organisationId). ADR-0062 / ADR-ACT-0261.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Alert rule list" },
+          "400": { "description": "organisationId query parameter is required" }
+        }
+      },
+      "post": {
+        "summary": "Create/update an alert rule (system operator)",
+        "operationId": "setAlertRule",
+        "description": "Operator-only, audited. Threshold rule over a signal with a notification target. ADR-0062 / ADR-ACT-0261.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Alert rule set" },
+          "400": { "description": "Validation error" }
+        }
+      }
+    },
+    "/api/admin/alerts/:alertId/evaluate": {
+      "post": {
+        "summary": "Evaluate an alert rule now (system operator)",
+        "operationId": "evaluateAlert",
+        "description": "Evaluates the rule against the signal's latest sample. A fired rule opens an incident and dispatches a preference-gated notification. ADR-0062 / ADR-ACT-0261.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Evaluation result" },
+          "400": { "description": "Invalid alert id" },
+          "404": { "description": "Alert rule not found" }
+        }
+      }
+    },
+    "/api/admin/incidents": {
+      "get": {
+        "summary": "List a tenant's incidents (system operator)",
+        "operationId": "listIncidents",
+        "description": "Operator read of incident lifecycle records (requires ?organisationId). ADR-0062 / ADR-ACT-0261.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Incident list" },
+          "400": { "description": "organisationId query parameter is required" }
+        }
+      }
+    },
+    "/api/admin/incidents/:incidentId": {
+      "patch": {
+        "summary": "Transition an incident (system operator)",
+        "operationId": "updateIncident",
+        "description": "Operator-only, audited lifecycle transition (open → acknowledged → resolved). ADR-0062 / ADR-ACT-0261.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Updated incident" },
+          "400": { "description": "Invalid incident id or status" },
+          "404": { "description": "Incident not found" }
+        }
+      }
+    },
+    "/api/admin/observability/readiness": {
+      "get": {
+        "summary": "Observability readiness (system operator)",
+        "operationId": "getObservabilityReadiness",
+        "description": "Operator view of the observability backend (built-in). Never faked: blocked if unreachable, degraded if no signals. ADR-0062 / ADR-ACT-0261.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": { "200": { "description": "Observability readiness" } }
+      }
+    },
     "/api/org/entitlements": {
       "get": {
         "summary": "List the tenant's own entitlements (read-only)",

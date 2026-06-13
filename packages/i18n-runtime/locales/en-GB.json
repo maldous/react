@@ -188,7 +188,8 @@
         "developer": "Developer",
         "search": "Search",
         "events": "Events & workers",
-        "account": "Account"
+        "account": "Account",
+        "monitoring": "Monitoring"
       },
       "card": {
         "membersDescription": "Invite people, change roles, and remove members.",
@@ -207,7 +208,8 @@
         "developerDescription": "Mint API keys, see rate limits, and find the API surface.",
         "searchDescription": "Tenant-isolated product search with readiness and reindex.",
         "eventsDescription": "Inspect the event bus, dead letters, redrive, and worker runtime.",
-        "accountDescription": "Manage your profile, notification preferences, and (operators) test sends."
+        "accountDescription": "Manage your profile, notification preferences, and (operators) test sends.",
+        "monitoringDescription": "Metric signals, alert rules, and incident lifecycle (operator)."
       },
       "entitlements": {
         "title": "Entitlements",
@@ -370,6 +372,37 @@
         "sendTest": "Send test",
         "testResult": "Dispatched to {count} channel(s).",
         "testError": "Could not send the test notification."
+      },
+      "monitoring": {
+        "title": "Monitoring",
+        "description": "Metric signals, threshold alert rules, and incident lifecycle. A fired alert opens an incident and dispatches a preference-gated notification. Operator-only; server-authoritative.",
+        "readinessTitle": "Observability readiness",
+        "tenantSelectLabel": "Tenant",
+        "tenantSelectPlaceholder": "Select a tenant…",
+        "enterTenant": "Select a tenant to inspect its signals, alerts, and incidents.",
+        "signalsTitle": "Metric signals",
+        "colSignal": "Signal",
+        "colUnit": "Unit",
+        "colLatest": "Latest",
+        "noSignals": "No metric signals registered for this tenant.",
+        "alertsTitle": "Alert rules",
+        "ruleKey": "Rule key",
+        "signalKey": "Signal key",
+        "comparator": "Comparator",
+        "threshold": "Threshold",
+        "createAlert": "Create rule",
+        "colRule": "Rule",
+        "colCondition": "Condition",
+        "colSeverity": "Severity",
+        "colActions": "Actions",
+        "evaluate": "Evaluate",
+        "noAlerts": "No alert rules for this tenant.",
+        "incidentsTitle": "Incidents",
+        "colIncident": "Incident",
+        "colStatus": "Status",
+        "ack": "Acknowledge",
+        "resolve": "Resolve",
+        "noIncidents": "No incidents for this tenant."
       },
       "config": {
         "title": "Configuration",

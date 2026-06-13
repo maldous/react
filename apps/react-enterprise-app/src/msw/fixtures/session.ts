@@ -109,6 +109,9 @@ export const sessionFixtures: Record<SessionPersona, SessionActor> = {
       "platform.notifications.write",
       "profile.read_self",
       "profile.update_self",
+      // Observability (Phase 7, ADR-ACT-0261): operator-only.
+      "platform.observability.read",
+      "platform.observability.write",
     ],
     displayName: "System Admin",
   },
