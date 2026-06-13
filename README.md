@@ -159,6 +159,7 @@ Each proven capability is backed by a repeatable, runnable proof — a single so
 - **Runtime secrets — built-in store + composed OpenBao (Tier-1 kernel)** — `proof:secret-store-contract`, `proof:secrets-openbao`, `proof:provider-secrets-readiness`
 - **Provider configuration plane (Tier-1 kernel)** — `proof:provider-config`, `proof:provider-readiness-contract`
 - **Composed provider readiness (search/observability)** — `proof:composed-provider-readiness`
+- **History read-model (read-only projection)** — `proof:history`
 
 ![Honest readiness — a running service is not a delivered capability](docs/images/usf-readiness-honesty.svg)
 

@@ -63,6 +63,7 @@ export const PROOF_LADDER = [
   "proof:provider-config",
   "proof:provider-readiness-contract",
   "proof:composed-provider-readiness",
+  "proof:history",
 ] as const;
 
 export type ProofLadderEntry = (typeof PROOF_LADDER)[number];

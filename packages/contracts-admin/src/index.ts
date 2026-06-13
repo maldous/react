@@ -2345,3 +2345,43 @@ export const ComposedProviderReadinessResponseSchema = z
 export type ComposedProviderReadinessResponse = z.infer<
   typeof ComposedProviderReadinessResponseSchema
 >;
+
+// ---------------------------------------------------------------------------
+// History read-model (ADR-0063 / ADR-ACT-0272). A read-only UNION projection over the
+// existing audited/event/notification/incident/meter sources — no new store, no
+// duplicated data. Tenant-scoped; operators may query a selected tenant; pagination
+// required; secret-bearing columns (metadata/payload) are never projected.
+// ---------------------------------------------------------------------------
+
+export const HISTORY_SOURCE_TYPES = [
+  "audit",
+  "event",
+  "notification",
+  "incident",
+  "meter",
+] as const;
+export const HistorySourceTypeSchema = z.enum(HISTORY_SOURCE_TYPES);
+export type HistorySourceType = z.infer<typeof HistorySourceTypeSchema>;
+
+export const HistoryEntrySchema = z
+  .object({
+    id: z.string(),
+    source: HistorySourceTypeSchema,
+    type: z.string(),
+    title: z.string(),
+    occurredAt: z.string().nullable(),
+    actorId: z.string().nullable(),
+  })
+  .strict();
+export type HistoryEntry = z.infer<typeof HistoryEntrySchema>;
+
+/** `GET /api/org/history` and `GET /api/admin/tenants/:tenantId/history`. */
+export const HistoryPageResponseSchema = z
+  .object({
+    entries: z.array(HistoryEntrySchema),
+    total: z.number().int().nonnegative(),
+    limit: z.number().int().positive(),
+    offset: z.number().int().nonnegative(),
+  })
+  .strict();
+export type HistoryPageResponse = z.infer<typeof HistoryPageResponseSchema>;

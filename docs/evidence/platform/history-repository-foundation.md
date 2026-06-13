@@ -1,67 +1,68 @@
-# History / audit / data repository foundation — decision (scoped, not delivered)
+# History read-model foundation
 
-**Source ADR:** ADR-0063 (Proposed) · **Capability:** new `history-read-model`
-(domain `security-governance` / `data-platform`) · **Status:** scoped — **not delivered**
+**ADR:** ADR-0063 · **Action:** ADR-ACT-0272 · **Status:** Delivered + locally proven
+**Capability:** `history-read-model` (data-platform)
 
-## Why this is scoped, not built in this pass
+## Scope delivered
 
-A unified, tenant-scoped history read model is genuinely useful, but a naïve
-implementation would **duplicate data and overlap an already-delivered
-capability**. The foundation already has tenant-scoped, RLS-isolated, append-only
-history surfaces:
+A **read-only** history projection — `HistoryRepositoryPort` + `PostgresHistoryRepository`
+— that UNIONs the existing tenant-scoped sources into one paginated history view, with
+**no new store and no duplicated data**. This resolves the data-duplication design gap
+recorded in the earlier scoped pass: history is a SELECT-only projection, never a second
+copy of the audited/event/notification/incident/meter rows.
 
-| Source table | Capability | Existing read surface |
+Sources unioned:
+
+| Source table | Branch type | Title (safe summary) |
 | --- | --- | --- |
-| `audit_events` | privileged-access-audit (delivered) | `GET /api/org/audit` |
-| `platform_events` + `event_dead_letters` | event-bus-queues-dlq (locally proven) | `GET /api/admin/events` |
-| `notification_log` | notifications (locally proven) | (operator readiness; dispatch log) |
-| `incidents` | observability-alerting-builtin (locally proven) | `GET /api/admin/incidents` |
-| `meter_events` | metering-usage-meters (locally proven) | `GET /api/org/usage` |
+| `audit_events` | audit | `action` (+ resource) |
+| `platform_events` | event | `event_type [status]` |
+| `notification_log` | notification | `channel category [status]` |
+| `incidents` | incident | `title` |
+| `meter_events` | meter | `meter_key` |
 
-Building a second store that copies these rows would violate the registry rule
-*"Do not duplicate data unnecessarily"* and the no-fake-readiness discipline.
-The correct architecture is a **read-only union view (a query port), never a
-copy**, and it must be designed against ADR-0063 (data governance / DSR) so the
-history model and the DSR/export model share one lineage definition.
+## Design
 
-## Decision
+- **No new store.** A read-only `UNION ALL`; the only new code is a port + adapter +
+  usecase + two routes. No migration.
+- **Tenant isolation by explicit predicate.** Each branch filters by the organisation
+  (`audit_events.tenant_id::text`; the rest `organisation_id::uuid`; the tenant's
+  organisationId string satisfies both). The explicit org predicate is the isolation
+  guarantee — equivalent to RLS for a read-only projection and immune to the differing
+  tenant-column names across sources.
+- **Redaction.** Only safe summary columns are projected (`id/source/type/title/
+  occurredAt/actorId`). `metadata`/`payload` (which may carry arbitrary content) are
+  **never** selected.
+- **Pagination required** (`limit` ≤ 200, `offset`), ordered by `occurredAt DESC`.
 
-Deliver a `HistoryRepositoryPort` as a **read-only projection** over the existing
-RLS-scoped tables — no new write path, no duplicated rows — once ADR-0063 is
-hardened to decision quality (it is still Proposed). Until then, the existing
-per-domain read surfaces above are the history surface.
+## Surface
 
-## Required design (the next slice)
+- `GET /api/org/history` — tenant reads its own history (`tenant.audit.read`; org from session).
+- `GET /api/admin/tenants/:tenantId/history` — operator reads a selected tenant (`platform.audit.read_all`).
+- Query params: `?limit&offset&sources` (`sources` = comma-separated subset of
+  audit/event/notification/incident/meter).
 
-1. **Port:** `HistoryRepositoryPort.query(organisationId, { sources?, cursor, limit })`
-   returning a normalised `HistoryEntry { sourceType, sourceId, occurredAt, actor?,
-   action, summary }` — **no payload, no secrets** (redacted at the boundary).
-2. **Adapter:** a Postgres adapter issuing a `UNION ALL` over the five tables under
-   `withTenant` (RLS) for tenant queries and `withSystemAdmin` for the operator
-   cross-tenant view, ordered by `occurred_at`, keyset-paginated.
-3. **Tenant isolation:** RLS does the work; the operator route takes an explicit
-   `tenantId` and is `platform.*`-gated and audited.
-4. **Routes (BFF):** `GET /api/org/history` (tenant, own) and
-   `GET /api/admin/tenants/:tenantId/history` (operator) — both paginated, with
-   OpenAPI entries and contracts in `contracts-admin`.
-5. **Redaction:** the projection selects only metadata columns; a regex guard
-   (`/secret|password|token|credential|api[_-]?key/i`) rejects any column that
-   would carry a secret, matching the dispatch/meter guards.
-6. **Retention classification:** history inherits each source table's retention;
-   the read model never extends a row's lifetime. Retention enforcement is the
-   `pitr-retention-legalhold-residency` capability (Phase 8).
+## Proof (live)
 
-## Proof requirement (for the future slice)
+`proof:history` — 10/10 PASS (live Postgres):
 
-`proof:history-repository` (live Postgres): a tenant sees only its own history;
-an operator can query one tenant's history; entries link back to their source
-table/type; secret columns are never projected; the query is keyset-paginated;
-no provider secrets are exposed. Negative: a second tenant's rows never appear in
-tenant A's query.
+```text
+proof:history — 10/10 PASS
+```
 
-## Blockers
+Asserts: history spans ≥3 source types; total reflects the seeded set; every entry has a
+safe summary; **tenant A history excludes tenant B and vice-versa**; **no secret/metadata
+content or field-name**; pagination limit caps the page and offset advances; the
+projection is **read-only** (source rows unchanged after querying).
 
-- **ADR-0063 is Proposed**, not implementation-ready (the USF validator already
-  warns on this). The history read model and DSR/export must share one lineage
-  model, so ADR-0063 hardening is the gate.
-- No data duplication is permitted; the slice is a query projection only.
+## Not delivered
+
+The other ADR-0063 sub-decisions — DSR/GDPR workflows, import/export, classification/PII,
+access reviews, compliance evidence packs — remain Proposed (see ADR-0063, hardened under
+ADR-ACT-0267). This slice delivers the **read-only history projection only**.
+
+## Linkage
+
+ADR-0063 (hardened) · ADR-ACT-0272 · registry capability `history-read-model` (locally
+proven) · projects over `privileged-access-audit`, `event-bus-queues-dlq`, `notifications`,
+`observability-alerting-builtin`, `metering-usage-meters`.

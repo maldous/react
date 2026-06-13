@@ -3243,6 +3243,32 @@
         }
       }
     },
+    "/api/org/history": {
+      "get": {
+        "summary": "Tenant history (read-only projection)",
+        "operationId": "orgHistory",
+        "description": "Read-only UNION projection over audit/event/notification/incident/meter sources for the calling tenant. No new store; secret columns never projected. Paginated (?limit&offset&sources). ADR-0063 / ADR-ACT-0272.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "History page" },
+          "400": { "description": "No tenant context" }
+        }
+      }
+    },
+    "/api/admin/tenants/:tenantId/history": {
+      "get": {
+        "summary": "Tenant history for a selected tenant (system operator)",
+        "operationId": "adminTenantHistory",
+        "description": "Operator read-only history projection for a selected tenant. Same projection + redaction as the tenant route. ADR-0063 / ADR-ACT-0272.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "History page" },
+          "400": { "description": "Invalid tenant id" }
+        }
+      }
+    },
     "/api/admin/providers/readiness": {
       "get": {
         "summary": "Composed provider readiness (system operator)",

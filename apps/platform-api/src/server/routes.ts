@@ -518,6 +518,32 @@ async function buildSecretsDeps() {
   return { store: await selectSecretStore(pool), audit: createPostgresAuditEventPort(pool) };
 }
 
+// Build the history usecase deps (read-only history projection) — ADR-ACT-0272.
+async function buildHistoryDeps() {
+  const { PostgresHistoryRepository } = await import("../adapters/postgres-history-repository.ts");
+  return { history: new PostgresHistoryRepository(getApplicationPool()) };
+}
+
+// Parse history list query params (limit/offset/sources) from a request URL.
+function parseHistoryQuery(rawUrl: string): {
+  limit: number;
+  offset: number;
+  sources: import("@platform/contracts-admin").HistorySourceType[] | undefined;
+} {
+  const sp = new URL(rawUrl, "http://localhost").searchParams;
+  const limit = Math.min(Math.max(Number(sp.get("limit")) || 50, 1), 200);
+  const offset = Math.max(Number(sp.get("offset")) || 0, 0);
+  const known = ["audit", "event", "notification", "incident", "meter"] as const;
+  const raw = (sp.get("sources") ?? "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const sources = raw.filter((s): s is (typeof known)[number] =>
+    (known as readonly string[]).includes(s)
+  );
+  return { limit, offset, sources: sources.length ? sources : undefined };
+}
+
 // Build the provider-config usecase deps (provider-config repo + audit) — ADR-ACT-0266.
 async function buildProviderConfigDeps() {
   const { PostgresProviderConfigRepository } =
@@ -6067,6 +6093,66 @@ export const routes: Route[] = [
     handler: async (_req, res) => {
       const { getComposedProviderReadiness } = await import("../usecases/composed-providers.ts");
       res.json(200, await getComposedProviderReadiness());
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // History read-model (ADR-0063 / ADR-ACT-0272). Read-only UNION projection over the
+  // existing audited/event/notification/incident/meter sources — no new store, no
+  // duplicated data. Tenant reads its own; operator reads a selected tenant. Paginated;
+  // secret-bearing columns never projected.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/org/history",
+    operationName: "org.history.list",
+    requiresAuth: true,
+    requiredPermission: "tenant.audit.read",
+    resource: "organisation:history",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const q = parseHistoryQuery(req.raw.url ?? "");
+      const { getHistory } = await import("../usecases/history.ts");
+      res.json(
+        200,
+        await getHistory(
+          tenantCtx.organisationId,
+          { limit: q.limit, offset: q.offset, sources: q.sources },
+          await buildHistoryDeps()
+        )
+      );
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/tenants/:tenantId/history",
+    operationName: "admin.tenants.history.list",
+    requiresAuth: true,
+    requiredPermission: "platform.audit.read_all",
+    resource: "admin:history",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      if (!UUID_RE.test(tenantId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const q = parseHistoryQuery(req.raw.url ?? "");
+      const { getHistory } = await import("../usecases/history.ts");
+      res.json(
+        200,
+        await getHistory(
+          tenantId,
+          { limit: q.limit, offset: q.offset, sources: q.sources },
+          await buildHistoryDeps()
+        )
+      );
     },
   },
 ];
