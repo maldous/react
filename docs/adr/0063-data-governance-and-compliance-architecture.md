@@ -49,4 +49,4 @@ ADR-0014, ADR-0040, ADR-0053, ADR-0059, ADR-0064.
 
 ## Notes
 
-Proposed; acceptance requires human review.
+Remains **Proposed** (NOT accepted in ADR-ACT-0254): too broad — it bundles catalog + lineage + classification + PII discovery + DSR + access reviews + compliance reports. It must be **split** (DSR-first) and hardened before acceptance.

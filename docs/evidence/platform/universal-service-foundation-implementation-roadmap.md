@@ -1,9 +1,9 @@
 # Universal Service Foundation — implementation roadmap
 
-- **Action:** ADR-ACT-0252 (delivery hardening)
-- **Source ADRs:** ADR-0053 through ADR-0066 (Proposed)
+- **Action:** ADR-ACT-0252 (delivery hardening); ADR-ACT-0254 (Phase 1 delivered)
+- **Source ADRs:** ADR-0053/0054/0055/0056/0058 **Accepted**; ADR-0057, ADR-0059–0066 Proposed (0057/0059/0062/0063 require splitting)
 - **Date:** 2026-06-13
-- **Status of this document:** governance / planning artifact. It sequences implementation; it does **not** authorise or claim any delivery. No new service, package, or compose entry is added in this pass.
+- **Status of this document:** governance / planning artifact. It sequences implementation. **Update (ADR-ACT-0254):** Phase 0 governance is complete and the Phase-0 ADRs are Accepted; the **Phase 1 substrate is delivered** (entitlement engine + service catalog v2 + policy-chain hook, node:test/MSW/in-memory proven — see `phase-1-service-catalog-entitlements.md`). Real quota enforcement, billing, search, workflow, notifications, API keys, and any new composed service remain **not delivered**.
 
 ## What this is
 
@@ -241,6 +241,9 @@ All 14 ADRs share a sound template (Status/Context/Decision/Consequences/Validat
 - **Phase 7 alerting** could be argued before Phase 6 notifications, but alerting escalation *needs* a notification channel — so notifications come first.
 - **`serverless-functions` and `real-idp-login-proof`** are deliberately **off the roadmap** (deferred / blocked) and must not be pulled in without a new ADR / a real external IdP.
 
-## What is implementation-ready right now
+## Status of the roadmap (ADR-ACT-0254)
 
-Only **Phase 1** (service catalog + entitlement + policy substrate) is dependency-clear to start, and only **after** ADR-0055 and ADR-0058 are hardened and Accepted per the Phase 0 assessment. Everything later is gated on Phase 1's output. This is the deliberate, safe first slice.
+- **Phase 0 — complete.** ADR-0053/0054/0055/0056/0058 hardened and **Accepted**; ADR-0057/0059/0062/0063 kept Proposed pending split.
+- **Phase 1 — delivered (substrate).** Service catalog v2 + entitlement engine + policy-chain hook (deny-by-default, audit-before-change, no-self-grant, quota HOOK only), node:test/MSW/in-memory proven. Live-Postgres end-to-end proof + real quota enforcement are follow-ups. See `phase-1-service-catalog-entitlements.md`.
+- **Phase 2 — next, dependency-clear.** Metering (OpenMeter on the existing ClickHouse) + real quota enforcement, building on the delivered entitlement engine + quota hook. Requires hardening/splitting ADR-0057 (+ ADR-0061) first.
+- Everything later remains gated on its prerequisites per the dependency graph. The USF is **not** complete.

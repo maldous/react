@@ -88,6 +88,11 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     permission: "tenant.platform.read",
   },
   { to: "/admin/logs", labelKey: "feature.admin.nav.logs", permission: "platform.logs.read" },
+  {
+    to: "/admin/entitlements",
+    labelKey: "feature.admin.nav.entitlements",
+    permission: "tenant.entitlements.read",
+  },
 ];
 
 const linkClass =

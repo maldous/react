@@ -16,6 +16,7 @@ import {
   configFixture,
   auditFixture,
   tenantReadinessFixture,
+  entitlementsFixture,
 } from "./fixtures/admin.ts";
 import type { AuthSettingsReadiness } from "@platform/contracts-admin";
 
@@ -624,6 +625,34 @@ export function adminWriteOkHandlers() {
     http.delete("/api/auth/settings/idps/:alias", () => new HttpResponse(null, { status: 204 })),
     http.patch("/api/org/config/:key", () => new HttpResponse(null, { status: 204 })),
     http.delete("/api/org/config/:key", () => new HttpResponse(null, { status: 204 })),
+    http.patch("/api/admin/tenants/:tenantId/entitlements", async ({ request }) => {
+      const body = (await request.json().catch(() => ({}))) as { key?: string; state?: string };
+      return HttpResponse.json({
+        entitlement: {
+          key: body.key ?? "webhooks",
+          displayName: "Outbound webhooks",
+          description: "",
+          category: "developer-platform",
+          state: body.state ?? "granted",
+          source: "system",
+          requiresProvider: false,
+          providerKey: null,
+          quota: { status: "not_enforced" },
+          note: null,
+          updatedAt: "2026-06-13T00:00:00.000Z",
+          updatedBy: "00000000-0000-0000-0000-0000000000a3",
+        },
+      });
+    }),
+  ];
+}
+
+// Entitlements (ADR-ACT-0254). One factory serves both the tenant self-read and the
+// operator per-tenant read with the same fixture; the PATCH lives in adminWriteOkHandlers.
+export function adminEntitlementsHandlers(response = entitlementsFixture) {
+  return [
+    http.get("/api/org/entitlements", () => HttpResponse.json(response)),
+    http.get("/api/admin/tenants/:tenantId/entitlements", () => HttpResponse.json(response)),
   ];
 }
 
@@ -670,5 +699,6 @@ export const handlers = [
   adminPlatformServicesHandler(),
   adminWebhooksListHandler(),
   adminWebhooksReadinessHandler(),
+  ...adminEntitlementsHandlers(),
   ...adminWriteOkHandlers(),
 ];

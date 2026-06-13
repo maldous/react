@@ -29,6 +29,9 @@ export const PROOF_LADDER = [
   "proof:tenant-custom-domain-auth-origin",
   "proof:service-clickthrough-policy",
   "proof:tenant-domain-claim-lifecycle",
+  "proof:entitlements",
+  "proof:entitlement-policy-chain",
+  "proof:service-catalog-registry",
 ] as const;
 
 export type ProofLadderEntry = (typeof PROOF_LADDER)[number];

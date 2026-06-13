@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed
+Accepted (2026-06-13, ADR-ACT-0254 — hardened to decision quality; accepted on Matt's authority per the Quad directive)
 
 ## Date
 
@@ -33,6 +33,35 @@ Default biases:
 
 Do not rewrite a mature platform capability unless there is a clear architectural reason recorded in an ADR.
 
+### Alternatives considered
+
+1. **A scored rubric with default biases (chosen).** Consistent, reviewable, records the trigger that would change a defer/reject.
+2. **Always build in-house.** Maximal control but reinvents commodity engines (search, workflow, metering) and bloats maintenance.
+3. **Always compose OSS.** Fast but composes speculatively, adds operational sprawl, and risks license/isolation problems.
+
+### Rejected alternatives
+
+- (2) Always-build — rejected: wasteful for commodity engines with strong OSS options.
+- (3) Always-compose — rejected: violates "never compose speculatively" and the local-first/isolation guards.
+
+### Acceptance criteria
+
+- Every capability records a `decision` (build/compose/adapter/defer/reject) in the registry with a rationale.
+- No `compose`/`adapter` capability lacks a free local-first proof path; license is checked against `license:policy` (GPL/AGPL/SSPL/Commons-Clause flagged).
+- Deferred/rejected entries record the trigger/why.
+
+### Implementation phases
+
+Governance: applied at the start of every capability ADR (ADR-0055..0066) and recorded in the registry `decision` field. No runtime delivery.
+
+### Proof requirements
+
+`npm run usf:validate` (every production candidate names a local free path). No runtime proof — decision artifact.
+
+### Production blockers
+
+None (decision artifact).
+
 ## Consequences
 
 Positive: consistent, reviewable decisions; reduced operational sprawl; explicit rejection of non-core work.
@@ -55,4 +84,4 @@ ADR-0053, ADR-0055, ADR-0056.
 
 ## Notes
 
-Proposed; acceptance requires human review.
+Accepted on 2026-06-13 (ADR-ACT-0254) on Matt's authority per the Quad directive. The framework is advisory input to per-capability ADRs and does not weaken any security/isolation/audit rule.

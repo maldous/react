@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-06-11
 
-66 Architecture Decision Records (ADR-0001 through ADR-0066). ADR-0018 is intentionally absent. ADR-0001 through ADR-0052 are **Accepted**; ADR-0053 through ADR-0066 are **Proposed** (Universal Service Foundation planning set, ADR-ACT-0237).
+66 Architecture Decision Records (ADR-0001 through ADR-0066). ADR-0018 is intentionally absent. ADR-0001 through ADR-0052 are **Accepted**. Of the Universal Service Foundation set: ADR-0053, ADR-0054, ADR-0055, ADR-0056, and ADR-0058 are **Accepted** (hardened to decision quality, ADR-ACT-0253/0254); ADR-0057, ADR-0059–0066 remain **Proposed** (ADR-0057/0059/0062/0063 explicitly require splitting before acceptance).
 
 ## Foundation & Governance (8)
 
@@ -128,7 +128,7 @@ Planning set created under ADR-ACT-0237. Status: **Proposed** (not yet Accepted)
 
 ## Governance
 
-- ADR-0001 through ADR-0052 are **Accepted**; ADR-0053 through ADR-0066 are **Proposed**
+- ADR-0001 through ADR-0052, plus ADR-0053/0054/0055/0056/0058, are **Accepted**; ADR-0057 and ADR-0059 through ADR-0066 remain **Proposed**
 - Next ADR: **ADR-0067**
 - Action register: `docs/adr/ACTION-REGISTER.md`
 - Lifecycle evidence: `docs/evidence/`

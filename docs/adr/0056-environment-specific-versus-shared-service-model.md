@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed
+Accepted (2026-06-13, ADR-ACT-0254 — hardened to decision quality; accepted on Matt's authority per the Quad directive)
 
 ## Date
 
@@ -26,6 +26,35 @@ Classify every service using the controlled vocabulary: `per-environment`, `shar
 
 A service may be **shared-cross-environment only if** it provides all of: environment tagging; tenant tagging where tenant data exists; access controls; retention controls; backup, restore, and deletion models; an audit model; a readiness proof; and a written data-leakage analysis. Tenant runtime data defaults to per-environment. Mocks are forbidden in production.
 
+### Alternatives considered
+
+1. **Controlled vocabulary + a strict shared-service checklist (chosen).** Defaults tenant data to per-environment; only allows sharing when leakage is provably controlled.
+2. **Share infrastructure freely to cut cost.** Lower spend but high cross-environment/tenant leakage risk; incompatible with tenant isolation.
+3. **Everything strictly per-environment.** Safest but wasteful for non-tenant-runtime engineering tools (Sonar, Sentry) and the metadata-only data catalog.
+
+### Rejected alternatives
+
+- (2) Share-freely — rejected: violates tenant isolation; no leakage analysis.
+- (3) Strict-per-environment-only — rejected: needlessly duplicates engineering-quality tooling that holds no tenant runtime data.
+
+### Acceptance criteria
+
+- Every service in the catalog carries a classification from the vocabulary; tenant runtime data is per-environment.
+- Every `shared-cross-environment` service satisfies the full checklist incl. a written leakage analysis.
+- Mock services are `mock-only`/`forbidden-in-production`, profile-gated, and never selectable in production; `usf:validate` enforces gating.
+
+### Implementation phases
+
+Governance: applied whenever a service is added to the catalog (ADR-0055). Enforced by `usf:validate` (shared-isolation notes + forbidden-mock gating).
+
+### Proof requirements
+
+`npm run usf:validate` (shared services carry isolation notes; mock services are profile-gated) and `proof:service-catalog-registry` (classification completeness, no mock-in-production).
+
+### Production blockers
+
+A shared-cross-environment service cannot go to production without its full checklist + leakage analysis.
+
 ## Consequences
 
 Positive: prevents cross-environment and cross-tenant leakage; makes shared-service risk explicit.
@@ -48,4 +77,4 @@ ADR-0017, ADR-0029, ADR-0034, ADR-0053, ADR-ACT-0089.
 
 ## Notes
 
-Proposed; acceptance requires human review.
+Accepted on 2026-06-13 (ADR-ACT-0254) on Matt's authority per the Quad directive. Acceptance strengthens, and does not weaken, tenant isolation and the no-mock-in-production rule.

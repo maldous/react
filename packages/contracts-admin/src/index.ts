@@ -1350,7 +1350,13 @@ export type UpdateConfigValueRequest = z.infer<typeof UpdateConfigValueRequestSc
 
 /** Logical audit resources the SPA may query; mapped server-side to stored resource
  * strings + the context read permission (the SPA never passes internal strings). */
-export const AUDIT_RESOURCES = ["member", "config", "feature", "auth_settings"] as const;
+export const AUDIT_RESOURCES = [
+  "member",
+  "config",
+  "feature",
+  "auth_settings",
+  "entitlement",
+] as const;
 export const AuditResourceSchema = z.enum(AUDIT_RESOURCES);
 export type AuditResource = z.infer<typeof AuditResourceSchema>;
 
@@ -1407,3 +1413,103 @@ export function validateConfigValue(input: {
   }
   return errors;
 }
+
+// ---------------------------------------------------------------------------
+// Entitlements (ADR-0057 / ADR-0058 / ADR-ACT-0254) — REST surface
+//
+// Entitlements answer "what is this tenant allowed to use?" — tenant-scoped,
+// system-operator assigned, audited. They are NOT feature flags and NOT
+// permissions. Absence of a granted entitlement means the capability is
+// unavailable (deny-by-default, ADR-0058). Quota metadata may appear but quota
+// ENFORCEMENT is Phase 2 (ADR-0057, not delivered): `quota.status` is always
+// "not_enforced" / "not_applicable" in Phase 1.
+// ---------------------------------------------------------------------------
+
+export const ENTITLEMENT_KEYS = [
+  "webhooks",
+  "custom_domains",
+  "advanced_observability",
+  "storage",
+] as const;
+export const EntitlementKeySchema = z.enum(ENTITLEMENT_KEYS);
+export type EntitlementKey = z.infer<typeof EntitlementKeySchema>;
+
+export const ENTITLEMENT_STATES = ["granted", "revoked", "not_granted"] as const;
+export const EntitlementStateSchema = z.enum(ENTITLEMENT_STATES);
+export type EntitlementState = z.infer<typeof EntitlementStateSchema>;
+
+export const ENTITLEMENT_QUOTA_STATUSES = ["not_enforced", "not_applicable"] as const;
+export const EntitlementQuotaStatusSchema = z.enum(ENTITLEMENT_QUOTA_STATUSES);
+export type EntitlementQuotaStatus = z.infer<typeof EntitlementQuotaStatusSchema>;
+
+/** A single entitlement as seen by admin + tenant read views. Server-authoritative;
+ * `state` is "not_granted" when the tenant has no row for the key (deny-by-default). */
+export const EntitlementSummarySchema = z.object({
+  key: EntitlementKeySchema,
+  displayName: z.string(),
+  description: z.string(),
+  category: z.string(),
+  state: EntitlementStateSchema,
+  source: z.enum(["system", "migration", "seed"]).nullable(),
+  requiresProvider: z.boolean(),
+  providerKey: z.string().nullable(),
+  // Phase-1 quota is a hook only — it never claims enforcement.
+  quota: z.object({ status: EntitlementQuotaStatusSchema }),
+  note: z.string().nullable(),
+  updatedAt: z.string().nullable(),
+  updatedBy: z.string().nullable(),
+});
+export type EntitlementSummary = z.infer<typeof EntitlementSummarySchema>;
+
+export const EntitlementListResponseSchema = z.object({
+  entitlements: z.array(EntitlementSummarySchema),
+});
+export type EntitlementListResponse = z.infer<typeof EntitlementListResponseSchema>;
+
+/** `PATCH /api/admin/tenants/:tenantId/entitlements` — system-operator only, audited.
+ * No tenant id in the body (taken from the path); a tenant can never self-grant. */
+export const SetEntitlementRequestSchema = z
+  .object({
+    key: EntitlementKeySchema,
+    state: z.enum(["granted", "revoked"]),
+    note: z.string().max(500).optional(),
+  })
+  .strict();
+export type SetEntitlementRequest = z.infer<typeof SetEntitlementRequestSchema>;
+
+// ---------------------------------------------------------------------------
+// Service catalog v2 (ADR-0055 / ADR-ACT-0254) — GET /api/platform/service-catalog
+//
+// Operator-facing catalog of backing services + providers. Carries NO secrets
+// and NO provider credentials. `visibility` mirrors the clickthrough policy
+// (ADR-ACT-0233): `not_exposed` is never listed to tenants; `global_only` is
+// system-admin only; `tenant_scoped_safe` may be shown to tenants.
+// ---------------------------------------------------------------------------
+
+export const SERVICE_VISIBILITIES = ["tenant_scoped_safe", "global_only", "not_exposed"] as const;
+export const ServiceVisibilitySchema = z.enum(SERVICE_VISIBILITIES);
+export type ServiceVisibility = z.infer<typeof ServiceVisibilitySchema>;
+
+export const ServiceCatalogEntrySchema = z.object({
+  serviceKey: z.string(),
+  serviceName: z.string(),
+  category: z.string(),
+  environmentModel: z.string(),
+  visibility: ServiceVisibilitySchema,
+  decision: z.enum(["build", "compose", "adapter", "defer", "reject"]),
+  requiresEntitlement: z.boolean(),
+  entitlementKey: z.string().nullable(),
+  localProvider: z.string(),
+  productionProvider: z.string().nullable(),
+  mockProvider: z.string().nullable(),
+  forbiddenInProduction: z.boolean(),
+  isolationNotes: z.string(),
+  proofRefs: z.array(z.string()),
+});
+export type ServiceCatalogEntry = z.infer<typeof ServiceCatalogEntrySchema>;
+
+export const ServiceCatalogResponseSchema = z.object({
+  services: z.array(ServiceCatalogEntrySchema),
+  generatedFrom: z.string(),
+});
+export type ServiceCatalogResponse = z.infer<typeof ServiceCatalogResponseSchema>;

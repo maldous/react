@@ -2668,6 +2668,60 @@
         }
       }
     },
+    "/api/org/entitlements": {
+      "get": {
+        "summary": "List the tenant's own entitlements (read-only)",
+        "operationId": "listOrgEntitlements",
+        "description": "Tenant read of its own entitlement state (RLS-scoped). Deny-by-default: a missing grant reads as not_granted. No self-grant. ADR-0058 / ADR-ACT-0254.",
+        "tags": ["Organisation"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Entitlement list" },
+          "400": { "description": "No tenant context" }
+        }
+      }
+    },
+    "/api/admin/tenants/:tenantId/entitlements": {
+      "get": {
+        "summary": "List a tenant's entitlements (system operator)",
+        "operationId": "listTenantEntitlements",
+        "description": "System-operator read of a tenant's entitlements. ADR-ACT-0254.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Entitlement list" },
+          "400": { "description": "Invalid tenant id" }
+        }
+      },
+      "patch": {
+        "summary": "Grant or revoke a tenant entitlement (system operator)",
+        "operationId": "setTenantEntitlement",
+        "description": "System-operator-only, audited grant/revoke. Body carries no tenant id (path) and a tenant can never self-grant. ADR-0058 / ADR-ACT-0254.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        },
+        "responses": {
+          "200": { "description": "Updated entitlement" },
+          "400": { "description": "Validation error or invalid tenant id" },
+          "404": { "description": "Unknown entitlement key" }
+        }
+      }
+    },
+    "/api/platform/service-catalog": {
+      "get": {
+        "summary": "Service catalog v2 (system operator)",
+        "operationId": "listServiceCatalog",
+        "description": "Operator-facing catalog of backing services + providers with environment classification, visibility, and entitlement linkage. Contains no secrets or provider credentials. ADR-0055 / ADR-ACT-0254.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": {
+          "200": { "description": "Service catalog" }
+        }
+      }
+    },
     "/api/org/webhooks": {
       "get": {
         "summary": "List tenant webhook subscriptions",

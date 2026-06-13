@@ -169,6 +169,13 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     "platform.tenants.read",
     "platform.tenants.update",
     "platform.tenants.delete",
+    // Entitlements (Phase 1, ADR-0058 / ADR-ACT-0254): system operators assign/revoke
+    // tenant entitlements; tenants can never self-grant.
+    "platform.entitlements.read",
+    "platform.entitlements.write",
+    // Read alias so the (tenant-scoped) entitlement console nav is visible to operators
+    // too — mirrors the existing tenant.platform.read grant on system-admin.
+    "tenant.entitlements.read",
     "platform.clickthrough.pgadmin",
     "platform.clickthrough.keycloak",
     "platform.clickthrough.minio",
@@ -222,6 +229,9 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     "tenant.webhooks.read",
     "tenant.webhooks.write",
     "tenant.platform.read",
+    // Entitlements (Phase 1, ADR-0058 / ADR-ACT-0254): tenant-admins may READ their
+    // own tenant's entitlement state; they can never grant (operator-only).
+    "tenant.entitlements.read",
     "tenant.audit.read",
     // tenant.clickthrough.mailpit + sentry removed (ADR-ACT-0233): Mailpit is a
     // shared unfiltered inbox and the Sentry tenant route never existed — both

@@ -60,6 +60,7 @@ export {
   adminReadinessHandler,
   adminGetErrorHandler,
   adminWriteOkHandlers,
+  adminEntitlementsHandlers,
 } from "./handlers.ts";
 export {
   membersFixture,
@@ -74,6 +75,7 @@ export {
   auditFixture,
   tenantReadinessFixture,
   tenantReadinessBlockedFixture,
+  entitlementsFixture,
 } from "./fixtures/admin.ts";
 export {
   createGraphqlHandler,

@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed
+Accepted (2026-06-13, ADR-ACT-0254 — hardened to decision quality; accepted on Matt's authority per the Quad directive)
 
 ## Date
 
@@ -32,6 +32,35 @@ This ADR establishes the scope and the non-negotiable principles. The capability
 4. **Compliance with platform architecture** is required for every new capability: ADR + action-register entry + port + adapter + contract + route scope + permission + tenant isolation + audit + readiness + proof + evidence + UI surface where applicable + production classification.
 5. The Universal Service Foundation Matrix is the single planning source of truth; the registry JSON is its machine-readable form and is validated in CI.
 
+### Alternatives considered
+
+1. **An explicit scope + non-negotiable principles ADR (chosen).** One governing decision that every later capability ADR inherits.
+2. **No scope ADR; decide per capability.** Lower up-front cost but invites scope creep, fake readiness, and inconsistent local-first/isolation guarantees.
+3. **A product roadmap document instead of an ADR.** Communicates intent but carries no governance force and is not validated.
+
+### Rejected alternatives
+
+- (2) Per-capability-only — rejected: the failure mode this ADR exists to prevent.
+- (3) Roadmap-only — rejected: not enforceable; `usf:validate` needs a decision to enforce against.
+
+### Acceptance criteria
+
+- Every USF capability is expressed through the full hexagonal checklist (point 4) before being called delivered.
+- No capability requires a paid SaaS account for local proof (payment capture excepted, isolated behind an adapter).
+- Status uses the controlled vocabulary; the word "complete" never appears; `usf:validate` is green.
+
+### Implementation phases
+
+This ADR is governance; it ships as the matrix + registry + validator (delivered, ADR-ACT-0237) and is applied by every later phase (roadmap Phases 1–10).
+
+### Proof requirements
+
+`npm run usf:validate` (registry/matrix honesty + delivery-graph integrity). No runtime proof — this is a decision artifact.
+
+### Production blockers
+
+None (decision artifact). It gates other capabilities' production readiness via the checklist.
+
 ## Consequences
 
 Positive: a stable scope boundary; honest status reporting; local-first guarantee; consistent architecture for every future capability.
@@ -54,4 +83,4 @@ ADR-0001, ADR-0007, ADR-0024, ADR-0029, ADR-0030, ADR-0045; `docs/architecture/u
 
 ## Notes
 
-This is a Proposed scope decision; it is not yet Accepted. Acceptance requires human architecture review.
+Accepted on 2026-06-13 (ADR-ACT-0254) on Matt's authority per the Quad directive: the decision is correct, internally consistent, and implementation-ready. Acceptance does not weaken any security, isolation, audit, or no-fake-readiness rule.

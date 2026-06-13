@@ -47,6 +47,8 @@ export const AuditAction = {
   WebhookRedriven: "webhook.redriven",
   ConfigValueChanged: "config.value_changed",
   ConfigValueCleared: "config.value_cleared",
+  EntitlementGranted: "entitlement.granted",
+  EntitlementRevoked: "entitlement.revoked",
 } as const;
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction];

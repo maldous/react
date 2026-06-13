@@ -27,6 +27,7 @@ import {
   CreateTenantDomainRequestSchema,
   CreateWebhookSubscriptionRequestSchema,
   UpdateWebhookSubscriptionRequestSchema,
+  SetEntitlementRequestSchema,
   type TenantAuthProvidersConfig,
   type ObservabilitySignalStatus,
 } from "@platform/contracts-admin";
@@ -367,6 +368,16 @@ async function buildWebhookDeps() {
   const { PostgresWebhookStore } = await import("../adapters/postgres-webhook-store.ts");
   return {
     store: new PostgresWebhookStore(getApplicationPool()),
+    audit: createPostgresAuditEventPort(getApplicationPool()),
+  };
+}
+
+// Build the entitlement usecase deps (repository + audit) — ADR-ACT-0254.
+async function buildEntitlementDeps() {
+  const { PostgresEntitlementRepository } =
+    await import("../adapters/postgres-entitlement-repository.ts");
+  return {
+    repository: new PostgresEntitlementRepository(getApplicationPool()),
     audit: createPostgresAuditEventPort(getApplicationPool()),
   };
 }
@@ -4275,5 +4286,110 @@ export const routes: Route[] = [
     requiredPermission: "platform.logs.read",
     scope: "global",
     handler: handleSearchLogs,
+  },
+  // ---------------------------------------------------------------------------
+  // Entitlements + service catalog (Phase 1, ADR-0055 / ADR-0057 / ADR-0058 / ADR-ACT-0254).
+  // Entitlements answer "what is this tenant allowed to use?" — server-authoritative,
+  // deny-by-default, operator-assigned, audited. A tenant can never self-grant.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/org/entitlements",
+    operationName: "org.entitlements.list",
+    requiresAuth: true,
+    requiredPermission: "tenant.entitlements.read",
+    resource: "organisation:entitlements",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { listTenantEntitlements } = await import("../usecases/entitlements.ts");
+      res.json(
+        200,
+        await listTenantEntitlements(tenantCtx.organisationId, await buildEntitlementDeps())
+      );
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/tenants/:tenantId/entitlements",
+    operationName: "admin.tenants.entitlements.list",
+    requiresAuth: true,
+    requiredPermission: "platform.entitlements.read",
+    resource: "admin:entitlements",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      if (!UUID_RE.test(tenantId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const { listEntitlementsForTenant } = await import("../usecases/entitlements.ts");
+      res.json(200, await listEntitlementsForTenant(tenantId, await buildEntitlementDeps()));
+    },
+  },
+  {
+    method: "PATCH",
+    path: "/api/admin/tenants/:tenantId/entitlements",
+    operationName: "admin.tenants.entitlements.set",
+    requiresAuth: true,
+    requiredPermission: "platform.entitlements.write",
+    resource: "admin:entitlements",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      if (!UUID_RE.test(tenantId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const parsed = SetEntitlementRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid entitlement request",
+        });
+        return;
+      }
+      const { setEntitlement } = await import("../usecases/entitlements.ts");
+      const result = await setEntitlement(
+        {
+          organisationId: tenantId,
+          key: parsed.data.key,
+          state: parsed.data.state,
+          note: parsed.data.note,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        await buildEntitlementDeps()
+      );
+      if (result.kind === "unknown_key") {
+        res.json(404, { code: "NOT_FOUND", message: "Unknown entitlement key" });
+        return;
+      }
+      res.json(200, { entitlement: result.entitlement });
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/platform/service-catalog",
+    operationName: "platform.serviceCatalog.list",
+    requiresAuth: true,
+    requiredPermission: "platform.admin.access",
+    resource: "admin:platform",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (_req, res) => {
+      const { buildServiceCatalog } = await import("../usecases/service-catalog.ts");
+      res.json(200, buildServiceCatalog({ operator: true }));
+    },
   },
 ];

@@ -182,7 +182,8 @@
         "webhooks": "Webhooks",
         "platform": "Platform ops",
         "logs": "Log search",
-        "readiness": "Readiness"
+        "readiness": "Readiness",
+        "entitlements": "Entitlements"
       },
       "card": {
         "membersDescription": "Invite people, change roles, and remove members.",
@@ -195,7 +196,30 @@
         "webhooksDescription": "Subscribe endpoints to events with signed, logged deliveries.",
         "platformDescription": "Local service health, background workers, and the proof ladder.",
         "logsDescription": "Search structured platform logs.",
-        "readinessDescription": "See what's configured and what's left to set up."
+        "readinessDescription": "See what's configured and what's left to set up.",
+        "entitlementsDescription": "See and assign what this tenant is allowed to use."
+      },
+      "entitlements": {
+        "title": "Entitlements",
+        "description": "What this tenant is allowed to use. Entitlements are assigned by operators and are not feature flags; absence means unavailable.",
+        "tenantIdLabel": "Tenant id",
+        "tenantIdPlaceholder": "00000000-0000-0000-0000-000000000000",
+        "loadButton": "Load",
+        "enterTenant": "Enter a tenant id to view and manage its entitlements.",
+        "empty": "No entitlements to show.",
+        "colCapability": "Capability",
+        "colCategory": "Category",
+        "colState": "State",
+        "colActions": "Actions",
+        "state": {
+          "granted": "Granted",
+          "revoked": "Revoked",
+          "not_granted": "Not granted"
+        },
+        "grant": "Grant",
+        "revoke": "Revoke",
+        "readOnlyNote": "This is a read-only view of your tenant's entitlements. Assignment is operator-only.",
+        "quotaNote": "Quota enforcement is not yet active (Phase 2); only entitlement availability is shown."
       },
       "config": {
         "title": "Configuration",
@@ -1034,6 +1058,7 @@
       "methodNotAllowed": "Method {method} not allowed for {path}",
       "authenticationRequired": "Authentication required",
       "permissionRequired": "Permission required: {permission}",
+      "notEntitled": "This tenant is not entitled to use this capability",
       "notImplemented": "This feature is not yet available",
       "graphqlQueryRequired": "A GraphQL query is required",
       "graphqlInvalidDocument": "The GraphQL document could not be parsed",

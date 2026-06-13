@@ -50,4 +50,4 @@ ADR-0047, ADR-0051, ADR-0052, ADR-0053, ADR-0055.
 
 ## Notes
 
-Proposed; acceptance requires human review.
+Remains **Proposed** (NOT accepted in ADR-ACT-0254): too broad — it bundles internal eventing + durable queues + workflow engine + scheduler + notifications. It must be **split** (or carry per-capability acceptance criteria) and the Windmill-vs-Temporal spike resolved before acceptance.

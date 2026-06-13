@@ -10,6 +10,7 @@ import type {
   ConfigListResponse,
   AuditListResponse,
   TenantReadinessResponse,
+  EntitlementListResponse,
   CapabilitySummary,
   CapabilityCategory,
   CapabilityImplementationStatus,
@@ -269,5 +270,38 @@ export const tenantReadinessBlockedFixture: TenantReadinessResponse = {
       adminRoute: "/admin/auth",
       detailKey: "feature.admin.readiness.cap.idp_configuration.action",
     }),
+  ],
+};
+
+export const entitlementsFixture: EntitlementListResponse = {
+  entitlements: [
+    {
+      key: "webhooks",
+      displayName: "Outbound webhooks",
+      description: "Tenant may register and receive signed outbound webhooks.",
+      category: "developer-platform",
+      state: "granted",
+      source: "system",
+      requiresProvider: false,
+      providerKey: null,
+      quota: { status: "not_enforced" },
+      note: null,
+      updatedAt: "2026-06-13T00:00:00.000Z",
+      updatedBy: "00000000-0000-0000-0000-0000000000a3",
+    },
+    {
+      key: "storage",
+      displayName: "Object storage",
+      description: "Tenant-isolated object storage with signed access.",
+      category: "storage",
+      state: "not_granted",
+      source: null,
+      requiresProvider: true,
+      providerKey: "minio",
+      quota: { status: "not_enforced" },
+      note: null,
+      updatedAt: null,
+      updatedBy: null,
+    },
   ],
 };

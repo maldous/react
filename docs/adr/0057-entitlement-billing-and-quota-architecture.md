@@ -50,4 +50,4 @@ ADR-0015 (analytical data), ADR-0053, ADR-0061, ADR-0058.
 
 ## Notes
 
-Proposed; acceptance requires human review. Discovery (Lago vs OpenMeter vs Kill Bill vs custom ledger) precedes implementation.
+Remains **Proposed** (NOT accepted in ADR-ACT-0254): too broad — it bundles entitlements + metering + quota + billing + payment. It must be **split** into per-capability decisions (or have per-sub acceptance criteria appended) and hardened before acceptance. Discovery (Lago vs OpenMeter vs Kill Bill vs custom ledger) precedes implementation. Note: the entitlement engine + quota HOOK were delivered in Phase 1 under ADR-0058/ADR-ACT-0254; real quota enforcement + billing remain Phase 2/9.

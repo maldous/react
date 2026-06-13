@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed — hardened to decision quality; implementation-ready for Phase 1 (ADR-ACT-0253). Formal acceptance pending human architecture review.
+Accepted (2026-06-13, ADR-ACT-0254 — hardened to decision quality in ADR-ACT-0253; accepted on Matt's authority per the Quad directive)
 
 ## Date
 
@@ -175,4 +175,4 @@ ADR-0021, ADR-0030, ADR-0040, ADR-0053, ADR-0055, ADR-0057, ADR-0066; `docs/evid
 
 ## Notes
 
-Hardened to decision quality and marked implementation-ready for Phase 1; formal acceptance still requires human architecture review.
+Hardened to decision quality (ADR-ACT-0253) and accepted on 2026-06-13 (ADR-ACT-0254) on Matt's authority per the Quad directive. Acceptance strengthens deny-by-default, audit-before-change, and the no-self-grant rule.

@@ -44,6 +44,7 @@ export const sessionFixtures: Record<SessionPersona, SessionActor> = {
       "tenant.webhooks.read",
       "tenant.webhooks.write",
       "tenant.platform.read",
+      "tenant.entitlements.read",
     ],
     displayName: "Tenant Admin",
   },
@@ -69,6 +70,10 @@ export const sessionFixtures: Record<SessionPersona, SessionActor> = {
       "platform.admin",
       // Platform operations cockpit (ADR-ACT-0235) — mirrors resolvePermissions("system-admin").
       "tenant.platform.read",
+      // Entitlements (Phase 1, ADR-ACT-0254): operator assigns; read alias for nav.
+      "platform.entitlements.read",
+      "platform.entitlements.write",
+      "tenant.entitlements.read",
     ],
     displayName: "System Admin",
   },

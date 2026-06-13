@@ -49,4 +49,4 @@ ADR-0020, ADR-0035, ADR-0050, ADR-0053, ADR-ACT-0228.
 
 ## Notes
 
-Proposed; acceptance requires human review.
+Remains **Proposed** (NOT accepted in ADR-ACT-0254): too broad — it bundles metrics + traces + alerting + incident lifecycle + on-call + status page. It must be **split** (or carry per-layer acceptance criteria) and hardened before acceptance.
