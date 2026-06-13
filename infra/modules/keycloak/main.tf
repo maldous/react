@@ -499,3 +499,108 @@ resource "keycloak_openid_client_authorization_permission" "admin_tenants_read" 
   scopes    = ["read"]
   policies  = [keycloak_openid_client_role_policy.system_admin.id]
 }
+
+# ---------------------------------------------------------------------------
+# Composed-service SSO (ADR-0073). OIDC clients + realm-role token mappers so the
+# composed Compose GUI services authenticate via the platform Keycloak realm with
+# role-mapped authorisation ("properly permitted"). Opt-in via enable_composed_sso
+# (default false) so default provisioning is unchanged. Grafana + SonarQube are
+# confidential clients (secret); MinIO + pgAdmin already exist above as public PKCE
+# clients — they only gain a realm-role mapper here. Live OIDC flows are proven on a
+# running stack (ADR-0073 proof requirements).
+# ---------------------------------------------------------------------------
+
+resource "keycloak_openid_client" "grafana" {
+  count     = var.enable_composed_sso ? 1 : 0
+  realm_id  = keycloak_realm.platform.id
+  client_id = "grafana"
+  name      = "Grafana"
+  enabled   = true
+
+  access_type                  = "CONFIDENTIAL"
+  standard_flow_enabled        = true
+  implicit_flow_enabled        = false
+  direct_access_grants_enabled = false
+
+  client_secret = var.grafana_oidc_client_secret
+
+  valid_redirect_uris = [
+    "http://localhost:3200/grafana/login/generic_oauth",
+    "http://${var.apex_domain}/grafana/login/generic_oauth",
+    "https://${var.apex_domain}/grafana/login/generic_oauth",
+  ]
+  web_origins = ["+"]
+}
+
+resource "keycloak_openid_client" "sonarqube" {
+  count     = var.enable_composed_sso ? 1 : 0
+  realm_id  = keycloak_realm.platform.id
+  client_id = "sonarqube"
+  name      = "SonarQube"
+  enabled   = true
+
+  access_type                  = "CONFIDENTIAL"
+  standard_flow_enabled        = true
+  implicit_flow_enabled        = false
+  direct_access_grants_enabled = false
+
+  client_secret = var.sonar_oidc_client_secret
+
+  valid_redirect_uris = [
+    "http://localhost:9064/sonar/oauth2/callback/oidc",
+    "http://${var.apex_domain}/sonar/oauth2/callback/oidc",
+    "https://${var.apex_domain}/sonar/oauth2/callback/oidc",
+  ]
+  web_origins = ["+"]
+}
+
+# Realm-role token mappers — each composed service receives the user's realm roles
+# (claim "roles") in the ID token + userinfo so it can map platform roles to service
+# roles. Gated by the same flag so they only exist when SSO is enabled.
+resource "keycloak_openid_user_realm_role_protocol_mapper" "grafana_roles" {
+  count               = var.enable_composed_sso ? 1 : 0
+  realm_id            = keycloak_realm.platform.id
+  client_id           = keycloak_openid_client.grafana[0].id
+  name                = "realm-roles"
+  claim_name          = "roles"
+  multivalued         = true
+  add_to_id_token     = true
+  add_to_access_token = true
+  add_to_userinfo     = true
+}
+
+resource "keycloak_openid_user_realm_role_protocol_mapper" "sonarqube_roles" {
+  count               = var.enable_composed_sso ? 1 : 0
+  realm_id            = keycloak_realm.platform.id
+  client_id           = keycloak_openid_client.sonarqube[0].id
+  name                = "realm-roles"
+  claim_name          = "roles"
+  multivalued         = true
+  add_to_id_token     = true
+  add_to_access_token = true
+  add_to_userinfo     = true
+}
+
+resource "keycloak_openid_user_realm_role_protocol_mapper" "minio_roles" {
+  count               = var.enable_composed_sso ? 1 : 0
+  realm_id            = keycloak_realm.platform.id
+  client_id           = keycloak_openid_client.minio.id
+  name                = "realm-roles"
+  claim_name          = "roles"
+  multivalued         = true
+  add_to_id_token     = true
+  add_to_access_token = true
+  add_to_userinfo     = true
+}
+
+resource "keycloak_openid_user_realm_role_protocol_mapper" "pgadmin_roles" {
+  count               = var.enable_composed_sso ? 1 : 0
+  realm_id            = keycloak_realm.platform.id
+  client_id           = keycloak_openid_client.pgadmin.id
+  name                = "realm-roles"
+  claim_name          = "roles"
+  multivalued         = true
+  add_to_id_token     = true
+  add_to_access_token = true
+  add_to_userinfo     = true
+}

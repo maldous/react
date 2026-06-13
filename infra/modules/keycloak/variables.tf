@@ -100,3 +100,27 @@ variable "apex_domain" {
   description = "Apex domain for FQDN-based tenant routing. Used to construct redirect URIs and web origins for the environment. (ADR-0029, ADR-0033)"
   default     = "aldous.info"
 }
+
+# ---------------------------------------------------------------------------
+# Composed-service SSO (ADR-0073) — opt-in OIDC for Grafana/SonarQube/MinIO/pgAdmin
+# ---------------------------------------------------------------------------
+
+variable "enable_composed_sso" {
+  type        = bool
+  description = "Create OIDC clients + realm-role mappers for the composed Compose GUI services (Grafana, SonarQube, MinIO, pgAdmin). Default false leaves provisioning unchanged. (ADR-0073)"
+  default     = false
+}
+
+variable "grafana_oidc_client_secret" {
+  type        = string
+  sensitive   = true
+  description = "Client secret for the Grafana confidential OIDC client. Sourced from the generated env (GRAFANA_OIDC_CLIENT_SECRET), never committed."
+  default     = ""
+}
+
+variable "sonar_oidc_client_secret" {
+  type        = string
+  sensitive   = true
+  description = "Client secret for the SonarQube confidential OIDC client. Sourced from the generated env (SONAR_OIDC_CLIENT_SECRET), never committed."
+  default     = ""
+}

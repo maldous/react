@@ -1050,6 +1050,20 @@ services:
       # Serve Grafana under /grafana/ so Caddy can path-proxy it.
       GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
       GF_SERVER_SERVE_FROM_SUB_PATH: "true"
+      # ── App-login SSO via Keycloak OIDC (ADR-0073) — opt-in via COMPOSE_SSO_ENABLED ──
+      # AUTH_URL is browser-facing (KC_HOSTNAME); TOKEN/API are backchannel (KEYCLOAK_URL).
+      # Roles map from the realm-role "roles" claim (Keycloak grafana client mapper):
+      # system-admin→Admin, tenant-admin→Editor, else Viewer ("properly permitted").
+      GF_AUTH_GENERIC_OAUTH_ENABLED: ${COMPOSE_SSO_ENABLED:-false}
+      GF_AUTH_GENERIC_OAUTH_NAME: "Platform SSO"
+      GF_AUTH_GENERIC_OAUTH_CLIENT_ID: grafana
+      GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: ${GRAFANA_OIDC_CLIENT_SECRET:-}
+      GF_AUTH_GENERIC_OAUTH_SCOPES: "openid email profile roles"
+      GF_AUTH_GENERIC_OAUTH_AUTH_URL: ${KC_HOSTNAME:-http://localhost/kc}/realms/${KEYCLOAK_REALM:-platform}/protocol/openid-connect/auth
+      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: ${KEYCLOAK_URL:-http://keycloak:8080/kc}/realms/${KEYCLOAK_REALM:-platform}/protocol/openid-connect/token
+      GF_AUTH_GENERIC_OAUTH_API_URL: ${KEYCLOAK_URL:-http://keycloak:8080/kc}/realms/${KEYCLOAK_REALM:-platform}/protocol/openid-connect/userinfo
+      GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH: "contains(roles[*], 'system-admin') && 'Admin' || contains(roles[*], 'tenant-admin') && 'Editor' || 'Viewer'"
+      GF_AUTH_GENERIC_OAUTH_ALLOW_ASSIGN_GRAFANA_ADMIN: "true"
     volumes:
       - grafana-data:/var/lib/grafana
       - ./docker/grafana/provisioning:/etc/grafana/provisioning:ro

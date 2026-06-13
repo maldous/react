@@ -109,6 +109,10 @@ export const SECRET_ENV_KEYS = [
   "KEYCLOAK_ADMIN_PASSWORD",
   "SENTRY_DB_PASSWORD",
   "SENTRY_SECRET_KEY",
+  // Composed-service SSO confidential client secrets (ADR-0073). Match the Keycloak
+  // clients (Terraform sets them from these via TF_VAR). Per-environment.
+  "GRAFANA_OIDC_CLIENT_SECRET",
+  "SONAR_OIDC_CLIENT_SECRET",
 ];
 
 // Shared cross-environment services (single instance, react-sonar / react-shared

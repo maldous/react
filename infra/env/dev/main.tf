@@ -51,6 +51,24 @@ variable "provisioner_client_secret" {
   sensitive = true
 }
 
+# Composed-service SSO (ADR-0073) — opt-in; secrets from the generated env.
+variable "enable_composed_sso" {
+  type    = bool
+  default = false
+}
+
+variable "grafana_oidc_client_secret" {
+  type      = string
+  sensitive = true
+  default   = ""
+}
+
+variable "sonar_oidc_client_secret" {
+  type      = string
+  sensitive = true
+  default   = ""
+}
+
 variable "keycloak_is_local" {
   description = "Set to true only in dev.tfvars for localhost/Docker-internal Keycloak. Gates provision_fixture_users."
   type        = bool
@@ -140,6 +158,11 @@ module "keycloak" {
 
   provision_fixture_users = var.provision_fixture_users
   fixture_user_password   = var.fixture_user_password
+
+  # Composed-service SSO (ADR-0073) — opt-in OIDC clients for Grafana/SonarQube/MinIO/pgAdmin.
+  enable_composed_sso        = var.enable_composed_sso
+  grafana_oidc_client_secret = var.grafana_oidc_client_secret
+  sonar_oidc_client_secret   = var.sonar_oidc_client_secret
 }
 
 # ---------------------------------------------------------------------------
