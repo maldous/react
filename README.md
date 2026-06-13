@@ -150,6 +150,7 @@ Each proven capability is backed by a repeatable, runnable proof — a single so
 - **Metering and quota enforcement (Phase 2)** — `proof:metering`, `proof:quota-enforcement`, `proof:metering-quota-routes`
 - **Developer platform — API keys + rate limits (Phase 3)** — `proof:api-keys`, `proof:rate-limits`, `proof:api-key-routes`
 - **Rate-limit provider — Redis counter behind the port (Phase 3.5)** — `proof:rate-limits-redis`
+- **Provider environment classification (deployment ladder)** — `proof:provider-environment-classification`
 - **Tenant-isolated product search (Phase 4)** — `proof:search`, `proof:search-isolation`, `proof:search-routes`
 - **Event bus + durable workers (Phase 5)** — `proof:event-bus`, `proof:event-worker`, `proof:event-redrive`
 - **Profile + notifications (Phase 6)** — `proof:profile-self-service`, `proof:notification-preferences`, `proof:notification-dispatch`
