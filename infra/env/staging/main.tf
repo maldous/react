@@ -122,6 +122,7 @@ module "keycloak" {
   enable_composed_sso        = var.enable_composed_sso
   grafana_oidc_client_secret = var.grafana_oidc_client_secret
   sonar_oidc_client_secret   = var.sonar_oidc_client_secret
+  pgadmin_oidc_client_secret = var.pgadmin_oidc_client_secret
   provision_fixture_users    = var.provision_fixture_users
 
   # Staging-specific BFF redirect URIs (HTTPS via staging.aldous.info)
@@ -141,6 +142,11 @@ variable "grafana_oidc_client_secret" {
   default   = ""
 }
 variable "sonar_oidc_client_secret" {
+  type      = string
+  sensitive = true
+  default   = ""
+}
+variable "pgadmin_oidc_client_secret" {
   type      = string
   sensitive = true
   default   = ""

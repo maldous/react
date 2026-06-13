@@ -322,6 +322,7 @@ keycloak-provision:
 	export TF_VAR_enable_composed_sso="$${COMPOSE_SSO_ENABLED:-false}"; \
 	export TF_VAR_grafana_oidc_client_secret="$${GRAFANA_OIDC_CLIENT_SECRET:-}"; \
 	export TF_VAR_sonar_oidc_client_secret="$${SONAR_OIDC_CLIENT_SECRET:-}"; \
+	export TF_VAR_pgadmin_oidc_client_secret="$${PGADMIN_OIDC_CLIENT_SECRET:-}"; \
 	cd $${_tfdir} && terraform init -upgrade -input=false > /dev/null 2>&1 \
 	    && terraform apply -var-file=$${_varfile} -auto-approve -input=false
 	$(call OK,Keycloak realm provisioned for $(ENV))

@@ -163,6 +163,7 @@ module "keycloak" {
   enable_composed_sso        = var.enable_composed_sso
   grafana_oidc_client_secret = var.grafana_oidc_client_secret
   sonar_oidc_client_secret   = var.sonar_oidc_client_secret
+  pgadmin_oidc_client_secret = var.pgadmin_oidc_client_secret
 }
 
 # ---------------------------------------------------------------------------
@@ -179,4 +180,9 @@ output "spa_client_id" {
 
 output "bff_client_id" {
   value = module.keycloak.bff_client_id
+}
+variable "pgadmin_oidc_client_secret" {
+  type      = string
+  sensitive = true
+  default   = ""
 }

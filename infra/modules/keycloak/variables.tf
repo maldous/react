@@ -125,3 +125,10 @@ variable "sonar_oidc_client_secret" {
   description = "Client secret for the SonarQube confidential OIDC client. Sourced from the generated env (SONAR_OIDC_CLIENT_SECRET), never committed."
   default     = ""
 }
+
+variable "pgadmin_oidc_client_secret" {
+  type        = string
+  sensitive   = true
+  description = "Client secret for the pgAdmin confidential OIDC client. Sourced from the generated env (PGADMIN_OIDC_CLIENT_SECRET), never committed."
+  default     = ""
+}

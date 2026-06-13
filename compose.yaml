@@ -174,6 +174,8 @@ services:
       KEYCLOAK_URL: ${KEYCLOAK_URL:-http://keycloak:8080/kc}
       KC_HOSTNAME: ${KC_HOSTNAME:-http://localhost/kc}
       KEYCLOAK_REALM: ${KEYCLOAK_REALM:-platform}
+      # Confidential OIDC client secret (ADR-0073) — matches the Keycloak pgadmin client.
+      PGADMIN_OIDC_CLIENT_SECRET: ${PGADMIN_OIDC_CLIENT_SECRET:-}
       # RLS-aware role passwords — must match init-extra-databases.sh
       PGADMIN_DB_PASSWORD: ${PGADMIN_DB_PASSWORD:-pgadmin-sysadmin-password}
       PGADMIN_TENANT_DB_PASSWORD: ${PGADMIN_TENANT_DB_PASSWORD:-pgadmin-tenant-password}
@@ -216,12 +218,39 @@ services:
       start_period: 30s
     restart: unless-stopped
 
+  # sonar-auth-oidc plugin installer (ADR-0073). SonarQube community has NO native
+  # OIDC; this drops the plugin jar into the shared extensions volume before SonarQube
+  # starts. BEST-EFFORT: exits 0 even if the download fails (SonarQube still starts;
+  # OIDC simply stays off) so the quality gate is never blocked. Pin/override the URL
+  # to a version matching the SonarQube image via SONAR_OIDC_PLUGIN_URL.
+  sonar-oidc-plugin:
+    image: curlimages/curl:8.11.1
+    profiles: [external-sonar]
+    user: "0:0"
+    volumes:
+      - sonarqube-extensions:/ext
+    entrypoint:
+      - sh
+      - -c
+      - |
+        mkdir -p /ext/plugins
+        if [ "${COMPOSE_SSO_ENABLED:-false}" = "true" ] && ! ls /ext/plugins/sonar-auth-oidc-*.jar >/dev/null 2>&1; then
+          curl -fsSL -o /ext/plugins/sonar-auth-oidc-plugin.jar \
+            "${SONAR_OIDC_PLUGIN_URL:-https://github.com/vaulttec/sonar-auth-oidc/releases/download/v2.1.1/sonar-auth-oidc-plugin-2.1.1.jar}" \
+            && echo "sonar-auth-oidc plugin installed" \
+            || echo "WARN: sonar-auth-oidc download failed — SonarQube will start without OIDC"
+        fi
+        exit 0
+    restart: "no"
+
   sonarqube:
     image: sonarqube:lts-community
     profiles: [external-sonar]
     depends_on:
       sonar-postgres:
         condition: service_healthy
+      sonar-oidc-plugin:
+        condition: service_completed_successfully
     environment:
       SONAR_JDBC_URL: jdbc:postgresql://sonar-postgres:5432/${SONAR_DB_NAME:-sonar}
       SONAR_JDBC_USERNAME: ${SONAR_DB_USER:-sonar}
@@ -230,7 +259,19 @@ services:
       SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
       # Serve SonarQube under /sonar so Caddy / Vite can proxy it at <host>/sonar/*
       SONAR_WEB_CONTEXT: ${SONAR_WEB_CONTEXT:-/sonar}
-      # Default credentials: admin / admin — change on first login; do not commit tokens
+      # ── App-login SSO via Keycloak OIDC (ADR-0073, sonar-auth-oidc plugin) ──
+      # Shared instance → binds to one realm/host (prod by default). autoLogin skips
+      # the SonarQube login page. Props are ignored if the plugin is not installed.
+      SONAR_CORE_SERVERBASEURL: ${SONAR_PUBLIC_URL:-https://aldous.info/sonar}
+      SONAR_AUTH_OIDC_ENABLED: ${COMPOSE_SSO_ENABLED:-false}
+      SONAR_AUTH_OIDC_ISSUERURI: ${SONAR_OIDC_ISSUER:-https://aldous.info/kc/realms/platform-production}
+      SONAR_AUTH_OIDC_CLIENTID_SECURED: sonarqube
+      SONAR_AUTH_OIDC_CLIENTSECRET_SECURED: ${SONAR_OIDC_CLIENT_SECRET:-}
+      SONAR_AUTH_OIDC_SCOPES: "openid email profile"
+      SONAR_AUTH_OIDC_LOGINBUTTONTEXT: "Platform SSO"
+      SONAR_AUTH_OIDC_AUTOLOGIN: ${COMPOSE_SSO_ENABLED:-false}
+      SONAR_AUTH_OIDC_GROUPSSYNC: "false"
+      # Default credentials: admin / admin — managed by provision-token.sh (ADR-0072)
     ports:
       - "${SONAR_PORT:-9064}:9000"
     volumes:
@@ -1049,8 +1090,11 @@ services:
       GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
       GF_AUTH_ANONYMOUS_ENABLED: "false"
       GF_USERS_DEFAULT_THEME: light
-      # Serve Grafana under /grafana/ so Caddy can path-proxy it.
-      GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
+      # Serve Grafana under /grafana/ so Caddy can path-proxy it. ROOT_URL must be the
+      # PUBLIC base (no internal :3000) — otherwise the OIDC redirect_uri becomes
+      # https://host:3000/grafana/... and Keycloak rejects it (ADR-0073). Derived from
+      # APP_BASE_URL so it is correct per environment (dev.localhost:8080, aldous.info, …).
+      GF_SERVER_ROOT_URL: ${APP_BASE_URL:-http://localhost}/grafana/
       GF_SERVER_SERVE_FROM_SUB_PATH: "true"
       # ── App-login SSO via Keycloak OIDC (ADR-0073) — opt-in via COMPOSE_SSO_ENABLED ──
       # AUTH_URL is browser-facing (KC_HOSTNAME); TOKEN/API are backchannel (KEYCLOAK_URL).
@@ -1064,8 +1108,16 @@ services:
       GF_AUTH_GENERIC_OAUTH_AUTH_URL: ${KC_HOSTNAME:-http://localhost/kc}/realms/${KEYCLOAK_REALM:-platform}/protocol/openid-connect/auth
       GF_AUTH_GENERIC_OAUTH_TOKEN_URL: ${KEYCLOAK_URL:-http://keycloak:8080/kc}/realms/${KEYCLOAK_REALM:-platform}/protocol/openid-connect/token
       GF_AUTH_GENERIC_OAUTH_API_URL: ${KEYCLOAK_URL:-http://keycloak:8080/kc}/realms/${KEYCLOAK_REALM:-platform}/protocol/openid-connect/userinfo
-      GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH: "contains(roles[*], 'system-admin') && 'Admin' || contains(roles[*], 'tenant-admin') && 'Editor' || 'Viewer'"
+      # Click-through is already forward-auth-gated to operators, so grant strong access:
+      # system-admin → server admin (GrafanaAdmin); any other SSO'd operator → org Admin.
+      # STRICT=false so a missing/empty roles claim falls back to Admin instead of denying.
+      GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH: "contains(roles[*], 'system-admin') && 'GrafanaAdmin' || 'Admin'"
+      GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_STRICT: "false"
       GF_AUTH_GENERIC_OAUTH_ALLOW_ASSIGN_GRAFANA_ADMIN: "true"
+      # Full-SSO: skip Grafana's own login page and redirect straight to Keycloak when
+      # SSO is on (break-glass basic login still reachable at /login?disableAutoLogin).
+      GF_AUTH_GENERIC_OAUTH_AUTO_LOGIN: ${COMPOSE_SSO_ENABLED:-false}
+      GF_AUTH_OAUTH_AUTO_LOGIN: ${COMPOSE_SSO_ENABLED:-false}
     volumes:
       - grafana-data:/var/lib/grafana
       - ./docker/grafana/provisioning:/etc/grafana/provisioning:ro

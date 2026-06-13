@@ -113,6 +113,7 @@ export const SECRET_ENV_KEYS = [
   // clients (Terraform sets them from these via TF_VAR). Per-environment.
   "GRAFANA_OIDC_CLIENT_SECRET",
   "SONAR_OIDC_CLIENT_SECRET",
+  "PGADMIN_OIDC_CLIENT_SECRET",
 ];
 
 // Shared cross-environment services (single instance, react-sonar / react-shared

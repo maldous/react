@@ -273,19 +273,21 @@ resource "keycloak_openid_user_realm_role_protocol_mapper" "bff_realm_roles_user
 # for admin tools — they handle their own OIDC flow directly with Keycloak.
 # ---------------------------------------------------------------------------
 
-# pgAdmin OAuth2 client — public, PKCE, Authorization Code flow
+# pgAdmin OAuth2 client — CONFIDENTIAL (ADR-0073). pgAdmin's authlib does a
+# confidential code exchange with a client secret; a public/PKCE client failed the
+# token exchange. The secret comes from the generated env (PGADMIN_OIDC_CLIENT_SECRET).
 resource "keycloak_openid_client" "pgadmin" {
   realm_id  = keycloak_realm.platform.id
   client_id = "pgadmin"
   name      = "pgAdmin"
   enabled   = true
 
-  access_type                  = "PUBLIC"
+  access_type                  = "CONFIDENTIAL"
   standard_flow_enabled        = true
   implicit_flow_enabled        = false
   direct_access_grants_enabled = false
 
-  pkce_code_challenge_method = "S256"
+  client_secret = var.pgadmin_oidc_client_secret
 
   valid_redirect_uris = [
     "http://localhost:5050/pgadmin/oauth2/authorize",

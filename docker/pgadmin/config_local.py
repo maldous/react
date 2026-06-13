@@ -42,7 +42,9 @@ OAUTH2_CONFIG = [
         "OAUTH2_NAME": "keycloak",
         "OAUTH2_DISPLAY_NAME": "Sign in with platform account",
         "OAUTH2_CLIENT_ID": os.environ.get("PGADMIN_OAUTH2_CLIENT_ID", "pgadmin"),
-        "OAUTH2_CLIENT_SECRET": "",  # public PKCE client — no secret
+        # Confidential client (ADR-0073): pgAdmin's authlib needs the secret for the
+        # server-side code exchange. Sourced from the generated env / OpenBao.
+        "OAUTH2_CLIENT_SECRET": os.environ.get("PGADMIN_OIDC_CLIENT_SECRET", ""),
         # Internal URL for server-to-server token exchange
         "OAUTH2_TOKEN_URL": f"{_kc_internal}/realms/{_realm}/protocol/openid-connect/token",
         # Public URL for browser redirect (must be accessible from user's browser)
