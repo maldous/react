@@ -134,13 +134,14 @@ function IndexPage() {
 
   const canReadLogs = hasPermission("platform.logs.read");
   const canAdmin = hasPermission("tenant.admin.access");
+  const canClickthrough = hasPermission("platform.providers.read");
 
   return (
     <AppShell>
       <SectionHeader heading={t("landing.title")} level={1} className="mb-6" />
 
       {/* Internal platform admin features (SPA routes) */}
-      {(canReadLogs || canAdmin) && (
+      {(canReadLogs || canAdmin || canClickthrough) && (
         <section aria-labelledby="admin-heading" className="mb-8">
           <SectionHeader heading={t("landing.adminTools")} className="mb-4" />
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -176,6 +177,24 @@ function IndexPage() {
                     </span>
                     <span className="mt-0.5 block text-sm text-gray-600">
                       {t("landing.tool.logSearch.description")}
+                    </span>
+                  </CardBody>
+                </Card>
+              </Link>
+            )}
+            {canClickthrough && (
+              <Link
+                to="/admin/clickthrough"
+                className="group block no-underline"
+                data-testid="admin-link-clickthrough"
+              >
+                <Card className="h-full transition hover:border-indigo-300 hover:shadow">
+                  <CardBody>
+                    <span className="font-medium text-gray-900 group-hover:text-indigo-600">
+                      {t("feature.admin.clickthrough.title")}
+                    </span>
+                    <span className="mt-0.5 block text-sm text-gray-600">
+                      {t("feature.admin.clickthrough.description")}
                     </span>
                   </CardBody>
                 </Card>
