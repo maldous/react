@@ -1513,3 +1513,24 @@ export const ServiceCatalogResponseSchema = z.object({
   generatedFrom: z.string(),
 });
 export type ServiceCatalogResponse = z.infer<typeof ServiceCatalogResponseSchema>;
+
+// ---------------------------------------------------------------------------
+// Tenant lookup (ADR-ACT-0255) — GET /api/admin/tenants
+//
+// A small, read-only, system-operator lookup so the entitlement console can pick
+// a tenant by slug/name instead of pasting a raw UUID. NOT a tenant-management
+// product: id + slug + display name only, capped, no secrets.
+// ---------------------------------------------------------------------------
+
+export const TenantLookupItemSchema = z.object({
+  id: z.string(),
+  slug: z.string(),
+  displayName: z.string(),
+});
+export type TenantLookupItem = z.infer<typeof TenantLookupItemSchema>;
+
+export const TenantLookupResponseSchema = z.object({
+  tenants: z.array(TenantLookupItemSchema),
+  truncated: z.boolean(),
+});
+export type TenantLookupResponse = z.infer<typeof TenantLookupResponseSchema>;

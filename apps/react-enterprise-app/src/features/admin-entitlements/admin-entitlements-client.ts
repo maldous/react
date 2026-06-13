@@ -6,10 +6,17 @@ import type {
   EntitlementKey,
   EntitlementListResponse,
   EntitlementSummary,
+  TenantLookupResponse,
 } from "@platform/contracts-admin";
 import { adminGet, adminSend } from "../admin/admin-fetch";
 
-export type { EntitlementListResponse, EntitlementSummary, EntitlementKey };
+export type { EntitlementListResponse, EntitlementSummary, EntitlementKey, TenantLookupResponse };
+
+/** System-operator tenant lookup (id/slug/displayName) so the console avoids raw UUIDs. */
+export function lookupTenants(query?: string): Promise<TenantLookupResponse> {
+  const qs = query ? `?q=${encodeURIComponent(query)}` : "";
+  return adminGet<TenantLookupResponse>(`/api/admin/tenants${qs}`);
+}
 
 /** Tenant read of its own entitlements (FQDN/session, read-only). */
 export function listMyEntitlements(): Promise<EntitlementListResponse> {

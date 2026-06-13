@@ -1,12 +1,21 @@
 # Phase 1 — service catalog + entitlement + policy substrate (delivery evidence)
 
-- **Action:** ADR-ACT-0254 (delivery) — scope: ADR-ACT-0253; governing ADRs: ADR-0055, ADR-0057, ADR-0058 (ADR-0055/0058 **Accepted**).
+- **Action:** ADR-ACT-0254 (delivery) + ADR-ACT-0255 (Phase 1.5 live-proof hardening) — scope: ADR-ACT-0253; governing ADRs: ADR-0055, ADR-0057, ADR-0058 (ADR-0055/0058 **Accepted**).
 - **Date:** 2026-06-13
 - **Status of this document:** delivery evidence. It records what was built and proven, and what was deliberately not delivered. The Universal Service Foundation is **not** complete.
 
 ## Proof classification
 
-This slice is **node:test-proven + MSW-proven + in-memory-runtime-proven**, not live-Postgres proven. The three new `proof:*` scripts run against in-memory repositories (no Docker required); the BFF routes + RLS migration are wired and type-checked but a live end-to-end proof against Postgres is a follow-up. Honest status in the registry is therefore `partial` for `entitlements` (not `delivered`/`locally proven`).
+Phase 1 was node:test/MSW/in-memory proven. **Phase 1.5 (ADR-ACT-0255) upgraded the entitlement substrate to LIVE-proven** against the local Compose Postgres and the real BFF route handlers:
+
+- `proof:entitlements-postgres` — live Postgres: migration 022 ran; `tenant_entitlements` exists with RLS **enabled + forced**; tenant self-read is RLS-isolated; cross-tenant read sees nothing (verified with an unfiltered count under a foreign tenant context — RLS, not just a `WHERE`); operator path reads/grants/revokes; absence and revoked both ⇒ not entitled; audit-before-change failure blocks the mutation (DB row unchanged); no secret columns.
+- `proof:entitlements-routes` — invokes the **real route handlers**: org read requires a tenant context (400 without one); invalid tenant id and unknown key are rejected; operator grant/read/revoke work; service catalog returns the operator/global view with no secret fields; access-control metadata (tenant-scope, `platform.entitlements.read/write`) is asserted (pipeline-enforced).
+
+Both SKIP honestly (exit 0) when Postgres is unavailable — they never fake-PASS. The registry status for `entitlements` is therefore upgraded to **`locally proven`**.
+
+### Real finding fixed during hardening
+
+`proof:entitlements-postgres` **caught a real RLS isolation flaw** in migration 022: its bypass predicate `pg_has_role(current_user,'rls_bypass','MEMBER')` is true for `platform_app` (a NOINHERIT *member* of `rls_bypass`), so RLS did **not** isolate `platform_app` under `withTenant()` — exactly the latent flaw migration 012 had already fixed for the other tenant tables. **Migration 023** replaces the policy with the canonical `current_user = 'rls_bypass' OR (member AND rolinherit)` predicate. After 023, the unfiltered cross-tenant count is 0 and all checks pass.
 
 ## Phase 1 delivered
 
@@ -43,15 +52,15 @@ This slice is **node:test-proven + MSW-proven + in-memory-runtime-proven**, not 
 - **search**, **workflow engine**, **notification engine** — Phases 4–6.
 - **API keys**, **developer portal** — Phase 3.
 - **new composed services** — none added this pass.
-- **live-Postgres end-to-end proof** of the entitlement routes — follow-up (proofs are in-memory).
-- **cross-tenant operator console with a tenant picker** — the console uses a tenant-id field; a picker needs a tenant-list surface (later).
+
+Phase 1.5 closed the two follow-ups from Phase 1: the entitlement substrate is now **live-Postgres + live-route proven**, and the operator console picks a tenant via a read-only lookup **Select** (`GET /api/admin/tenants`) instead of a raw UUID. Still deferred: a full tenant-management product (suspend/delete/export) and query-as-you-type lookup filtering beyond the capped list.
 
 ## Governance
 
 - ADR-0053, ADR-0054, ADR-0055, ADR-0056, ADR-0058 **Accepted** (ADR-ACT-0253 hardening + ADR-ACT-0254 acceptance, on Matt's authority per the Quad directive).
 - ADR-0057, ADR-0059, ADR-0062, ADR-0063 remain **Proposed** — too broad; require splitting before acceptance.
-- Registry statuses updated: `entitlements` → `partial`; `service-catalog-provider-model` proof refs extended; `abac-pdp` chain proof added.
+- Registry statuses: `entitlements` → **`locally proven`** (Phase 1.5 live proofs); `service-catalog-provider-model` proof refs extended; `abac-pdp` chain proof added.
 
 ## Commands run (green)
 
-`npm run usf:validate`, `npm run lint:md`, `npm run test:architecture`, `npm run tsc:check`, `npm run openapi:drift`, `npm run frontend:conventions`, `npm run semgrep:gate`, `npm run test:platform-api`, `npm run test:frontend:run`, `npm run proof:entitlements`, `npm run proof:entitlement-policy-chain`, `npm run proof:service-catalog-registry`, `npm run audit:osv`, `npm run audit:deps`, `make check`.
+`npm run usf:validate`, `npm run lint:md`, `npm run test:architecture`, `npm run tsc:check`, `npm run openapi:drift`, `npm run frontend:conventions`, `npm run semgrep:gate`, `npm run test:platform-api`, `npm run test:frontend:run`, `npm run proof:entitlements`, `npm run proof:entitlement-policy-chain`, `npm run proof:service-catalog-registry`, `npm run proof:entitlements-postgres` (live), `npm run proof:entitlements-routes` (live), `npm run audit:osv`, `npm run audit:deps`, `make check`.

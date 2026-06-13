@@ -11,6 +11,7 @@ import type {
   AuditListResponse,
   TenantReadinessResponse,
   EntitlementListResponse,
+  TenantLookupResponse,
   CapabilitySummary,
   CapabilityCategory,
   CapabilityImplementationStatus,
@@ -271,6 +272,18 @@ export const tenantReadinessBlockedFixture: TenantReadinessResponse = {
       detailKey: "feature.admin.readiness.cap.idp_configuration.action",
     }),
   ],
+};
+
+export const tenantsLookupFixture: TenantLookupResponse = {
+  tenants: [
+    {
+      id: "00000000-0000-0000-0000-000000000001",
+      slug: "fixture-org",
+      displayName: "Fixture Organisation",
+    },
+    { id: "00000000-0000-0000-0000-000000000002", slug: "acme", displayName: "Acme Inc" },
+  ],
+  truncated: false,
 };
 
 export const entitlementsFixture: EntitlementListResponse = {

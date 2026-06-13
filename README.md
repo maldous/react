@@ -73,9 +73,9 @@ To avoid any impression that the whole foundation already exists, here is the ho
 - Customer (tenant) identity and isolation, sign-in and sessions, relational storage with per-customer separation
 - Structured logs, an honest service-readiness map, custom-domain routing, and local backup/restore
 
-**Phase 1 substrate (newly delivered, test-proven)** — built behind the BFF with deny-by-default, audit-before-change, and no tenant self-grant; proven with node tests, in-memory proofs, and UI tests (not yet live-proven against the database):
+**Phase 1 substrate (delivered, locally proven)** — built behind the BFF with deny-by-default, audit-before-change, and no tenant self-grant; proven against the local database (real row-level-security isolation) and the real API routes, plus node and UI tests:
 
-- **Entitlements** — what each customer is allowed to use, assigned by operators, with a read-only customer view and a service catalog of backing providers. Quota _metering and enforcement_ are not yet active (a placeholder hook only).
+- **Entitlements** — what each customer is allowed to use, assigned by operators (who pick a customer from a lookup, not a raw id), with a read-only customer view and a service catalog of backing providers. Quota _metering and enforcement_ are not yet active (a placeholder hook only).
 
 **Planned foundation capabilities** — decided, designed, and buildable locally for free, but **not yet built**:
 
@@ -145,7 +145,7 @@ Each proven capability is backed by a repeatable, runnable proof — a single so
 - **Tenant services** — `proof:email-sender`, `proof:tenant-storage`, `proof:tenant-observability`
 - **Events and webhooks** — `proof:webhooks`, `proof:webhook-worker`, `proof:webhook-redrive`
 - **Operations** — `proof:platform-services`, `proof:service-clickthrough-policy`, `proof:backup-local`
-- **Entitlements and service catalog (Phase 1)** — `proof:entitlements`, `proof:entitlement-policy-chain`, `proof:service-catalog-registry`
+- **Entitlements and service catalog (Phase 1)** — `proof:entitlements`, `proof:entitlement-policy-chain`, `proof:service-catalog-registry`, `proof:entitlements-postgres`, `proof:entitlements-routes`
 
 ![Honest readiness — a running service is not a delivered capability](docs/images/usf-readiness-honesty.svg)
 

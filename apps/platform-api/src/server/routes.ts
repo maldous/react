@@ -4380,6 +4380,22 @@ export const routes: Route[] = [
   },
   {
     method: "GET",
+    path: "/api/admin/tenants",
+    operationName: "admin.tenants.lookup",
+    requiresAuth: true,
+    requiredPermission: "platform.tenants.read",
+    resource: "admin:tenants",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const url = new URL(req.raw.url ?? "", "http://localhost");
+      const q = url.searchParams.get("q") ?? undefined;
+      const { lookupTenants } = await import("../usecases/admin-tenants.ts");
+      res.json(200, await lookupTenants(getApplicationPool(), q));
+    },
+  },
+  {
+    method: "GET",
     path: "/api/platform/service-catalog",
     operationName: "platform.serviceCatalog.list",
     requiresAuth: true,

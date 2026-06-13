@@ -764,6 +764,14 @@
       }
     },
     "/api/admin/tenants": {
+      "get": {
+        "summary": "Tenant lookup for operator consoles (system operator)",
+        "operationId": "lookupTenants",
+        "description": "Read-only id/slug/displayName lookup over the organisation registry, optional ?q= filter, capped. No secrets; not tenant lifecycle. ADR-ACT-0255.",
+        "tags": ["Admin"],
+        "security": [{ "sessionCookie": [] }],
+        "responses": { "200": { "description": "Tenant lookup list" } }
+      },
       "post": {
         "summary": "Provision a new tenant",
         "operationId": "createTenant",

@@ -17,6 +17,7 @@ import {
   auditFixture,
   tenantReadinessFixture,
   entitlementsFixture,
+  tenantsLookupFixture,
 } from "./fixtures/admin.ts";
 import type { AuthSettingsReadiness } from "@platform/contracts-admin";
 
@@ -656,6 +657,10 @@ export function adminEntitlementsHandlers(response = entitlementsFixture) {
   ];
 }
 
+export function adminTenantsLookupHandler(response = tenantsLookupFixture) {
+  return http.get("/api/admin/tenants", () => HttpResponse.json(response));
+}
+
 // --- generic helpers --------------------------------------------------------
 
 /** Simulated network failure for any GET endpoint. */
@@ -700,5 +705,6 @@ export const handlers = [
   adminWebhooksListHandler(),
   adminWebhooksReadinessHandler(),
   ...adminEntitlementsHandlers(),
+  adminTenantsLookupHandler(),
   ...adminWriteOkHandlers(),
 ];

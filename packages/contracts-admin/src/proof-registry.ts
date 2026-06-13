@@ -32,6 +32,8 @@ export const PROOF_LADDER = [
   "proof:entitlements",
   "proof:entitlement-policy-chain",
   "proof:service-catalog-registry",
+  "proof:entitlements-postgres",
+  "proof:entitlements-routes",
 ] as const;
 
 export type ProofLadderEntry = (typeof PROOF_LADDER)[number];

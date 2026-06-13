@@ -3,12 +3,22 @@ import type { EntitlementKey } from "@platform/contracts-admin";
 import {
   listMyEntitlements,
   listTenantEntitlements,
+  lookupTenants,
   setTenantEntitlement,
 } from "./admin-entitlements-client";
 
 export const myEntitlementsKey = ["admin", "entitlements", "self"] as const;
 export const tenantEntitlementsKey = (tenantId: string) =>
   ["admin", "entitlements", "tenant", tenantId] as const;
+
+/** System-operator tenant lookup for the console picker. */
+export function useTenantLookup() {
+  return useQuery({
+    queryKey: ["admin", "tenant-lookup"] as const,
+    queryFn: () => lookupTenants(),
+    retry: false,
+  });
+}
 
 /** Tenant self-read of own entitlements (read-only view). */
 export function useMyEntitlements() {

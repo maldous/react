@@ -7,8 +7,9 @@ import {
   CardBody,
   DataTable,
   EmptyState,
-  FormField,
   LoadingState,
+  Select,
+  type SelectItem,
 } from "@platform/ui-design-system";
 import { useTranslation } from "@platform/i18n-runtime";
 import type { EntitlementSummary } from "@platform/contracts-admin";
@@ -19,9 +20,8 @@ import {
   useMyEntitlements,
   useSetEntitlement,
   useTenantEntitlements,
+  useTenantLookup,
 } from "./use-admin-entitlements";
-
-const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 function StateBadge({ state }: { state: EntitlementSummary["state"] }) {
   const t = useTranslation();
@@ -35,10 +35,18 @@ function StateBadge({ state }: { state: EntitlementSummary["state"] }) {
 /** System-operator console: load a tenant's entitlements and grant/revoke them. */
 function OperatorConsole() {
   const t = useTranslation();
-  const [draft, setDraft] = useState("");
   const [tenantId, setTenantId] = useState("");
+  const tenants = useTenantLookup();
   const query = useTenantEntitlements(tenantId);
   const setEntitlement = useSetEntitlement(tenantId);
+  const tenantItems = useMemo<SelectItem[]>(
+    () =>
+      (tenants.data?.tenants ?? []).map((tn) => ({
+        id: tn.id,
+        label: `${tn.slug} — ${tn.displayName}`,
+      })),
+    [tenants.data]
+  );
 
   const columns = useMemo<ColumnDef<EntitlementSummary>[]>(
     () => [
@@ -92,35 +100,19 @@ function OperatorConsole() {
 
   return (
     <div className="space-y-4">
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (UUID_RE.test(draft.trim())) setTenantId(draft.trim());
-        }}
-        className="flex items-end gap-2"
-        data-testid="entitlement-tenant-form"
-      >
-        <div className="flex-1">
-          <FormField
-            label={t("feature.admin.entitlements.tenantIdLabel")}
-            value={draft}
-            onChange={setDraft}
-            name="tenantId"
-            inputProps={{
-              placeholder: t("feature.admin.entitlements.tenantIdPlaceholder"),
-              "data-testid": "entitlement-tenant-input",
-            }}
-          />
-        </div>
-        <Button
-          size="sm"
-          type="submit"
-          isDisabled={!UUID_RE.test(draft.trim())}
-          data-testid="entitlement-tenant-load"
-        >
-          {t("feature.admin.entitlements.loadButton")}
-        </Button>
-      </form>
+      <div className="max-w-md" data-testid="entitlement-tenant-form">
+        <label className="mb-1 block text-sm font-medium text-fg" id="entitlement-tenant-label">
+          {t("feature.admin.entitlements.tenantSelectLabel")}
+        </label>
+        <Select
+          items={tenantItems}
+          placeholder={t("feature.admin.entitlements.tenantSelectPlaceholder")}
+          aria-labelledby="entitlement-tenant-label"
+          selectedKey={tenantId || null}
+          onSelectionChange={(k) => setTenantId(k == null ? "" : String(k))}
+          data-testid="entitlement-tenant-select"
+        />
+      </div>
 
       {tenantId === "" ? (
         <EmptyState title={t("feature.admin.entitlements.enterTenant")} />

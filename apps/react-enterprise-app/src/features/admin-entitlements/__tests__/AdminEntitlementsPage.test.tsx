@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -9,11 +9,17 @@ import {
   server,
   sessionHandler,
   adminEntitlementsHandlers,
+  adminTenantsLookupHandler,
   adminGetErrorHandler,
 } from "../../../msw";
 import { AdminEntitlementsPage } from "../AdminEntitlementsPage";
 
-const TENANT_ID = "00000000-0000-0000-0000-000000000001";
+// Pick the "fixture-org" tenant from the lookup Select (operator console).
+async function selectFixtureTenant() {
+  const region = await screen.findByTestId("entitlement-tenant-form");
+  await userEvent.click(within(region).getByRole("button"));
+  await userEvent.click(await screen.findByRole("option", { name: /fixture-org/i }));
+}
 
 function renderPage() {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
@@ -41,12 +47,16 @@ describe("AdminEntitlementsPage", () => {
     expect(screen.queryByTestId("entitlement-toggle-webhooks")).not.toBeInTheDocument();
   });
 
-  it("lets a system operator load a tenant and grant/revoke", async () => {
-    server.use(sessionHandler("systemAdmin"), ...adminEntitlementsHandlers());
+  it("lets a system operator pick a tenant (by name, not raw UUID) and grant/revoke", async () => {
+    server.use(
+      sessionHandler("systemAdmin"),
+      adminTenantsLookupHandler(),
+      ...adminEntitlementsHandlers()
+    );
     renderPage();
-    // Operator console prompts for a tenant id first.
-    await userEvent.type(await screen.findByTestId("entitlement-tenant-input"), TENANT_ID);
-    await userEvent.click(screen.getByTestId("entitlement-tenant-load"));
+    // Operator console offers a tenant picker (no raw UUID field).
+    expect(screen.queryByTestId("entitlement-tenant-input")).not.toBeInTheDocument();
+    await selectFixtureTenant();
     // A granted row offers Revoke; clicking it issues the mutation.
     const toggle = await screen.findByTestId("entitlement-toggle-webhooks");
     expect(toggle).toHaveTextContent(/revoke/i);
@@ -57,11 +67,11 @@ describe("AdminEntitlementsPage", () => {
   it("renders a retryable error state when the operator list fails", async () => {
     server.use(
       sessionHandler("systemAdmin"),
+      adminTenantsLookupHandler(),
       adminGetErrorHandler("/api/admin/tenants/:tenantId/entitlements", 500)
     );
     renderPage();
-    await userEvent.type(await screen.findByTestId("entitlement-tenant-input"), TENANT_ID);
-    await userEvent.click(screen.getByTestId("entitlement-tenant-load"));
+    await selectFixtureTenant();
     await screen.findByTestId("admin-error-error");
   });
 
