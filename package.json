@@ -208,6 +208,7 @@
     "proof:provider-secrets-readiness": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
     "proof:provider-config": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/provider-config-runtime-proof.ts",
     "proof:environment-registry": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/environment-registry-runtime-proof.ts",
+    "proof:environment-operations": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/environment-operations-runtime-proof.ts",
     "proof:provider-readiness-contract": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
     "proof:composed-provider-readiness": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
     "proof:history": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/history-runtime-proof.ts",
