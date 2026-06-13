@@ -565,6 +565,44 @@ export function adminPlatformServicesHandler(
   return http.get("/api/org/platform/services/readiness", () => HttpResponse.json(response));
 }
 
+const clickthroughServicesFixture = {
+  services: [
+    {
+      id: "keycloak",
+      resource: "admin:keycloak",
+      classification: "tenant_scoped_safe",
+      url: "/kc",
+      accessible: true,
+      readiness: "unknown",
+      isolationInvariant: "Realm administration requires Keycloak's own admin auth.",
+    },
+    {
+      id: "grafana",
+      resource: "admin:grafana",
+      classification: "global_only",
+      url: "/grafana",
+      accessible: true,
+      readiness: "unknown",
+      isolationInvariant: "Shared observability dashboards; system-admin only.",
+    },
+  ],
+  providers: [
+    {
+      provider: "meilisearch",
+      capability: "search-indexing",
+      status: "ready",
+      lifecycleState: "ready",
+      detail: "health 200",
+    },
+  ],
+};
+
+export function adminClickthroughHandler(
+  response: Record<string, unknown> = clickthroughServicesFixture
+) {
+  return http.get("/api/admin/clickthrough", () => HttpResponse.json(response));
+}
+
 export function adminEmailSenderHandler(response: Record<string, unknown> = emailSenderFixture) {
   return http.get("/api/org/email-sender", () => HttpResponse.json(response));
 }
@@ -862,6 +900,7 @@ export const handlers = [
   adminStorageReadinessHandler(),
   adminObservabilityReadinessHandler(),
   adminPlatformServicesHandler(),
+  adminClickthroughHandler(),
   adminWebhooksListHandler(),
   adminWebhooksReadinessHandler(),
   ...adminEntitlementsHandlers(),

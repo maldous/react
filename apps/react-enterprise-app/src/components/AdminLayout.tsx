@@ -87,6 +87,11 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     labelKey: "feature.admin.nav.platform",
     permission: "tenant.platform.read",
   },
+  {
+    to: "/admin/clickthrough",
+    labelKey: "feature.admin.nav.clickthrough",
+    permission: "platform.providers.read",
+  },
   { to: "/admin/logs", labelKey: "feature.admin.nav.logs", permission: "platform.logs.read" },
   {
     to: "/admin/entitlements",

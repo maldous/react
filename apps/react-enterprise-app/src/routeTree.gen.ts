@@ -17,6 +17,7 @@ import { Route as AdminStorageRoute } from "./routes/admin/storage";
 import { Route as AdminObservabilityRoute } from "./routes/admin/observability";
 import { Route as AdminWebhooksRoute } from "./routes/admin/webhooks";
 import { Route as AdminPlatformRoute } from "./routes/admin/platform";
+import { Route as AdminClickthroughRoute } from "./routes/admin/clickthrough";
 import { Route as AdminLogsRoute } from "./routes/admin/logs";
 import { Route as AdminEntitlementsRoute } from "./routes/admin/entitlements";
 import { Route as AdminUsageRoute } from "./routes/admin/usage";
@@ -52,6 +53,7 @@ const routeTree = RootRoute.addChildren([
       AdminObservabilityRoute,
       AdminWebhooksRoute,
       AdminPlatformRoute,
+      AdminClickthroughRoute,
       AdminLogsRoute,
       AdminEntitlementsRoute,
       AdminUsageRoute,

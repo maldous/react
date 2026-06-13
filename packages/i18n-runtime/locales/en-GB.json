@@ -181,6 +181,7 @@
         "observability": "Observability",
         "webhooks": "Webhooks",
         "platform": "Platform ops",
+        "clickthrough": "Click-through services",
         "logs": "Log search",
         "readiness": "Readiness",
         "entitlements": "Entitlements",
@@ -820,6 +821,26 @@
           "webhook-delivery": {
             "label": "Webhook delivery worker"
           }
+        }
+      },
+      "clickthrough": {
+        "title": "Click-through services",
+        "description": "The composed Compose GUI services: where you can click through, whether your session is permitted, and the OpenBao-credential-validated readiness. Console links are local apex paths; no secret is shown here.",
+        "servicesTitle": "Services",
+        "readinessTitle": "Composed provider readiness",
+        "noProviders": "No composed providers are wired.",
+        "open": "Open",
+        "locked": "Not accessible for your session",
+        "classification": {
+          "global_only": "System operator only",
+          "tenant_scoped_safe": "Tenant-scoped (own slug)",
+          "not_exposed": "Not exposed"
+        },
+        "readiness": {
+          "ready": "Ready",
+          "degraded": "Degraded",
+          "not_configured": "Not configured",
+          "unknown": "Unknown"
         }
       },
       "overview": {
