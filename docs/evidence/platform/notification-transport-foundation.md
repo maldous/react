@@ -1,70 +1,62 @@
-# Notification real transports — decision (scoped, not delivered)
+# Notification real transports (Phase 6.5)
 
-**Source ADR:** ADR-0068 (Accepted; Phase-6.5 transports are Proposed sub-decisions)
-**Capability:** `notifications` (delivered as local-sink; real transports = Phase 6.5)
-**Status:** scoped — **not delivered** (a real design gap was found, not just effort)
+**ADR:** ADR-0068 · **Action:** ADR-ACT-0273 · **Status:** Delivered + locally proven
+**Capability:** `notifications` (events-queues-workflows)
 
-## What was found
+## Scope delivered
 
-The dispatch substrate (`dispatchNotification`, ADR-ACT-0260) already exposes the
-correct seam: a `NotificationTransportRegistry` keyed by channel, with the local
-sink as the default. Plugging in a transport is mechanically trivial. The blocker
-is the **transport context**, not the adapter.
+Real notification delivery behind the existing `NotificationTransport` seam (no usecase
+change) — replacing the local sink with actual transports, opt-in per channel:
 
-`NotificationTransport` is currently:
+- **`createEmailTransport`** — resolves the recipient server-side (`NotificationRecipientResolver`)
+  and sends through the `EmailPort` (`SmtpEmailAdapter` → local **Mailpit**). A missing
+  recipient or send error reports `failed` (logged failed, never faked sent).
+- **`createWebhookTransport`** — resolves the tenant destination and POSTs a body signed
+  with the **ADR-0052 HMAC signer** (`webhookSignatureHeader`) via `WebhookDispatchPort`.
+  A non-2xx / unreachable / missing destination reports `failed`.
+- **`NotificationRecipientResolver` port + `ConfiguredNotificationRecipientResolver`** — the
+  server-side recipient/destination resolution (the gap the earlier pass recorded). The
+  configured resolver is delivered; IdP-backed per-user email + per-subscription webhook
+  routing are documented follow-ups behind the same port.
 
-```ts
-(msg: { organisationId; userId; channel; category; subject }) => Promise<NotificationDispatchStatus>
+## Wiring
+
+Transports are **opt-in** and selected in `buildNotificationsDeps` (`selectNotificationTransports`):
+
+| Env | Effect |
+| --- | --- |
+| `NOTIFICATION_EMAIL_TRANSPORT=smtp` | email channel → SMTP/Mailpit |
+| `NOTIFICATION_WEBHOOK_TRANSPORT=on` | webhook channel → signed POST |
+| (neither) | built-in local sink (default, unchanged) |
+
+A disabled preference still **suppresses before the transport** (unchanged). The webhook
+body carries only non-secret summary fields (`event/subject/ids`); the dispatch usecase
+already rejects secret-bearing payload keys upstream.
+
+## Proofs (live)
+
+| Proof | What it proves |
+| --- | --- |
+| `proof:notification-email-transport` | An enabled email preference delivers a REAL SMTP message that lands in Mailpit (verified via the Mailpit API); a disabled preference suppresses (no Mailpit message); an unresolvable recipient reports `failed`. |
+| `proof:notification-webhook-transport` | An enabled webhook preference POSTs to a local receiver with a **valid ADR-0052 signature**; the body carries no secret field; a non-2xx receiver and a missing destination both report `failed`. |
+| `proof:notification-transport-routes` | The operator test-send route (`POST /api/admin/tenants/:tenantId/notifications/test`) selects the wired email transport and delivers end-to-end to Mailpit. |
+
+All pass locally:
+
+```text
+proof:notification-email-transport    — 5/5 PASS (real Mailpit delivery)
+proof:notification-webhook-transport  — 7/7 PASS (valid HMAC signature)
+proof:notification-transport-routes   — 3/3 PASS (wired route → Mailpit)
 ```
 
-This carries **no recipient address and no destination URL**. Real delivery needs:
+## Not delivered (follow-ups)
 
-- **email:** resolve `userId → verified email` within the tenant (the profile
-  store is own-profile-only; there is no cross-user email resolver today), plus
-  the rendered body (only `subject` is in scope);
-- **webhook:** a destination URL + signing secret. The platform already has signed
-  webhook delivery (`webhooks-developer`, ADR-0052) over
-  `tenant_webhook_subscriptions`. A second notification→webhook path would
-  **duplicate** that machinery, which the registry forbids.
+- A composed notification provider (Novu / Knock / Courier).
+- IdP-backed per-user recipient resolution (from Keycloak) + per-subscription webhook routing.
+- Production SMTP / Brevo (the local transport proves delivery against Mailpit).
 
-Shipping a transport with a hardcoded or env-only recipient would be brittle and
-decorative — explicitly out of scope for this pass.
+## Linkage
 
-## Decision
-
-Deliver Phase-6.5 transports only after the transport context is designed:
-
-1. **Extend the transport contract** to a resolved message:
-   `{ ...current, recipient: { email?; webhookSubscriptionId? }, body }`, resolved
-   by the dispatch usecase before the transport is called — so transports stay
-   pure senders and the resolver is testable in isolation.
-2. **Recipient resolver port:** `NotificationRecipientResolver.resolve(organisationId, userId, channel)`
-   backed by the profile/identity store (email) and the webhook subscription store
-   (URL + secret) — **reusing** `webhooks` HMAC signing, not re-implementing it.
-3. **EmailNotificationTransport:** wraps the existing `SmtpEmailAdapter`
-   (Mailpit/local SMTP in dev/test/staging; real SMTP/Brevo in prod). Mailpit is a
-   **dev/test/staging proof provider only** (see provider-environment-classification),
-   never a production transport.
-4. **WebhookNotificationTransport:** delegates to the existing
-   `WebhookDispatchPort` + `signWebhookBody` (ADR-0052) so signing is shared.
-5. **Readiness + failure classification:** `getNotificationReadiness` already
-   reports `local-sink` vs `configured-local` honestly; extend it to report
-   `smtp`/`webhook` transport readiness without faking.
-
-## Proof requirement (for the future slice)
-
-- `proof:notification-email-transport`: enabled email preference sends through
-  local Mailpit (verified via the Mailpit API), disabled suppresses, secret
-  payload rejected, failed transport logs `failed`.
-- `proof:notification-webhook-transport`: enabled webhook sends a signed POST to a
-  local receiver; signature verifies (reuses ADR-0052); failure logs `failed`.
-- `proof:notification-transport-routes`: readiness reports unavailable transports
-  honestly.
-
-## Why scoped now
-
-The current pass delivered a different real provider end-to-end (the Redis
-rate-limit counter, `proof:rate-limits-redis`). Notification transports require a
-contract change (recipient context) and a deliberate reuse of the ADR-0052 signing
-path to avoid duplicating webhook delivery. That is a full slice with a design
-decision, and is left scoped rather than shipped brittle.
+ADR-0068 (Phase 6.5) · ADR-ACT-0273 · reuses the ADR-0052 webhook signer
+(`webhookSignatureHeader`) + `SmtpEmailAdapter` (Mailpit) · registry `notifications`
+proof set extended; transports now real (was local-sink only).

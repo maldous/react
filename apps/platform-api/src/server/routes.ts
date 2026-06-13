@@ -446,6 +446,7 @@ async function buildApiKeysDeps() {
 
 const rateLimitProviderLog = createLogger({ name: "rate-limit-provider" });
 const secretStoreProviderLog = createLogger({ name: "secret-store-provider" });
+const notificationProviderLog = createLogger({ name: "notification-transport" });
 
 // Select the rate-limit repository provider (ADR-0065 / ADR-ACT-0263 — Phase 3.5).
 // Postgres is the durable default and store of record for policy definitions.
@@ -597,7 +598,9 @@ async function buildProfileDeps() {
   };
 }
 
-// Build the notifications usecase deps (notification repo + audit; local transports) — ADR-ACT-0260.
+// Build the notifications usecase deps (notification repo + audit + real transports) —
+// ADR-ACT-0260 / ADR-ACT-0273. Real transports are opt-in (NOTIFICATION_EMAIL_TRANSPORT=smtp,
+// NOTIFICATION_WEBHOOK_TRANSPORT=on); otherwise the built-in local sink is used (default).
 async function buildNotificationsDeps() {
   const { PostgresNotificationRepository } =
     await import("../adapters/postgres-notification-repository.ts");
@@ -605,7 +608,50 @@ async function buildNotificationsDeps() {
   return {
     notifications: new PostgresNotificationRepository(pool),
     audit: createPostgresAuditEventPort(pool),
+    transports: await selectNotificationTransports(),
   };
+}
+
+// Select real notification transports from env (email → SMTP/Mailpit; webhook → signed
+// POST, ADR-0052 signer). Returns undefined (local sink) when none are enabled.
+async function selectNotificationTransports() {
+  const emailOn = (process.env["NOTIFICATION_EMAIL_TRANSPORT"] ?? "").toLowerCase() === "smtp";
+  const webhookOn = (process.env["NOTIFICATION_WEBHOOK_TRANSPORT"] ?? "").toLowerCase() === "on";
+  if (!emailOn && !webhookOn) return undefined;
+  const { ConfiguredNotificationRecipientResolver, createEmailTransport, createWebhookTransport } =
+    await import("../adapters/notification-transports.ts");
+  const resolver = new ConfiguredNotificationRecipientResolver({
+    emailDomain: process.env["NOTIFICATION_EMAIL_DOMAIN"] ?? "mailpit.local",
+    emailOverride: process.env["NOTIFICATION_EMAIL_OVERRIDE"],
+    webhookUrl: process.env["NOTIFICATION_WEBHOOK_URL"],
+  });
+  const registry: import("../ports/notification-repository.ts").NotificationTransportRegistry = {};
+  if (emailOn) {
+    const { SmtpEmailAdapter } = await import("../adapters/smtp-email-adapter.ts");
+    const email = new SmtpEmailAdapter({
+      host: process.env["SMTP_HOST"] ?? "localhost",
+      port: Number(process.env["MAILPIT_SMTP_PORT"] ?? 1025),
+      secure: false,
+    });
+    registry.email = createEmailTransport({
+      resolver,
+      email,
+      from: {
+        address: process.env["NOTIFICATION_FROM_EMAIL"] ?? "notifications@platform.local",
+      },
+      warn: (m, meta) => notificationProviderLog.warn(meta, m),
+    });
+  }
+  if (webhookOn) {
+    const { HttpWebhookDispatcher } = await import("../adapters/http-webhook-dispatcher.ts");
+    registry.webhook = createWebhookTransport({
+      resolver,
+      dispatch: new HttpWebhookDispatcher(),
+      secret: process.env["NOTIFICATION_WEBHOOK_SECRET"],
+      warn: (m, meta) => notificationProviderLog.warn(meta, m),
+    });
+  }
+  return registry;
 }
 
 // Build the events usecase deps (event bus + worker registry + audit) — ADR-ACT-0259.

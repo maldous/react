@@ -64,6 +64,9 @@ export const PROOF_LADDER = [
   "proof:provider-readiness-contract",
   "proof:composed-provider-readiness",
   "proof:history",
+  "proof:notification-email-transport",
+  "proof:notification-webhook-transport",
+  "proof:notification-transport-routes",
 ] as const;
 
 export type ProofLadderEntry = (typeof PROOF_LADDER)[number];

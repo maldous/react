@@ -160,6 +160,7 @@ Each proven capability is backed by a repeatable, runnable proof — a single so
 - **Provider configuration plane (Tier-1 kernel)** — `proof:provider-config`, `proof:provider-readiness-contract`
 - **Composed provider readiness (search/observability)** — `proof:composed-provider-readiness`
 - **History read-model (read-only projection)** — `proof:history`
+- **Real notification transports (email/Mailpit + signed webhook)** — `proof:notification-email-transport`, `proof:notification-webhook-transport`, `proof:notification-transport-routes`
 
 ![Honest readiness — a running service is not a delivered capability](docs/images/usf-readiness-honesty.svg)
 

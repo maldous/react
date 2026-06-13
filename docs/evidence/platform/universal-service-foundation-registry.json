@@ -1066,14 +1066,14 @@
       "bffContract": "/api/me/notification-preferences; /api/admin/notifications/readiness; /api/admin/tenants/:tenantId/notifications/test",
       "adminUi": "/admin/account",
       "selfServiceUi": "/admin/account (preference toggles)",
-      "proof": "proof:notification-preferences; proof:notification-dispatch",
-      "productionBlockers": "real delivery transports (Mailpit/Brevo/webhook-POST) + composed provider (Novu) are Phase 6.5",
+      "proof": "proof:notification-preferences; proof:notification-dispatch; proof:notification-email-transport; proof:notification-webhook-transport; proof:notification-transport-routes",
+      "productionBlockers": "real email (Mailpit) + signed-webhook (ADR-0052) transports are delivered + live-proven (Phase 6.5, ADR-ACT-0273); a composed provider (Novu/Knock/Courier), IdP-backed per-user recipient resolution, and production SMTP/Brevo remain follow-ups",
       "adr": "ADR-0068",
-      "actionRegister": "ADR-ACT-0260",
+      "actionRegister": "ADR-ACT-0260, ADR-ACT-0273",
       "priority": "P1",
       "size": "L",
       "risk": "Medium",
-      "notes": "Phase 6 delivered + live-proven: preference-gated dispatch (disabled suppresses), durable log, local channels, no paid provider. Real transports + Novu are Phase 6.5 behind NotificationDispatchPort."
+      "notes": "Phase 6 delivered + live-proven: preference-gated dispatch (disabled suppresses), durable log. Phase 6.5 (ADR-ACT-0273): REAL transports behind the NotificationTransport seam — email via SmtpEmailAdapter->Mailpit (live-verified delivery) and signed webhook via the ADR-0052 HMAC signer (live receiver verifies the signature); recipient/destination resolved server-side via NotificationRecipientResolver (configured resolver; IdP-backed per-user resolution is a follow-up). Opt-in (NOTIFICATION_EMAIL_TRANSPORT/NOTIFICATION_WEBHOOK_TRANSPORT); local sink stays the default. Composed provider (Novu) remains undelivered."
     },
     {
       "capability": "background-workers-runtime",
