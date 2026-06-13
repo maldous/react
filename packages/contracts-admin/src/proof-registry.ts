@@ -67,6 +67,9 @@ export const PROOF_LADDER = [
   "proof:notification-email-transport",
   "proof:notification-webhook-transport",
   "proof:notification-transport-routes",
+  "proof:environment-registry",
+  "proof:environment-operations",
+  "proof:environment-admin-bootstrap",
 ] as const;
 
 export type ProofLadderEntry = (typeof PROOF_LADDER)[number];

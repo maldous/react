@@ -161,6 +161,7 @@ Each proven capability is backed by a repeatable, runnable proof — a single so
 - **Composed provider readiness (search/observability)** — `proof:composed-provider-readiness`
 - **History read-model (read-only projection)** — `proof:history`
 - **Real notification transports (email/Mailpit + signed webhook)** — `proof:notification-email-transport`, `proof:notification-webhook-transport`, `proof:notification-transport-routes`
+- **Environment registry, bootstrap & controlled operations (ADR-0072)** — `proof:environment-registry`, `proof:environment-operations`, `proof:environment-admin-bootstrap`
 
 ![Honest readiness — a running service is not a delivered capability](docs/images/usf-readiness-honesty.svg)
 
