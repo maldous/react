@@ -1,20 +1,21 @@
-# test.tfvars.example ? copy to test.tfvars and fill in real values (gitignored).
-# Do not commit real secrets.
+# test.tfvars.example — NON-SECRET config only. Copy to test.tfvars (gitignored).
+#
+# Secrets are NOT stored in tfvars. They come from TF_VAR_* sourced from .env.test
+# at apply time (`make keycloak-provision ENV=test`):
+#   TF_VAR_keycloak_admin_user       <- KEYCLOAK_ADMIN_USER
+#   TF_VAR_keycloak_admin_password   <- KEYCLOAK_ADMIN_PASSWORD
+#   TF_VAR_bff_client_secret         <- KEYCLOAK_CLIENT_SECRET
+#   TF_VAR_provisioner_client_secret <- KEYCLOAK_PROVISIONER_CLIENT_SECRET
+#   TF_VAR_fixture_user_password     <- KEYCLOAK_TEST_PASSWORD
+# Never commit real secrets (ADR-0023/ADR-0044, constraint #8).
 
-keycloak_url              = "http://keycloak:8081/kc"
-keycloak_admin_user       = "admin"
-keycloak_admin_password   = "change-me"
+keycloak_url = "http://keycloak:8081/kc"
 
 realm_name = "platform-test"
 
-bff_client_secret        = "change-me-to-a-real-secret"
-provisioner_client_secret = "change-me-to-a-real-secret"
-
-# Test environment: use .localhost TLD (auto-resolves to 127.0.0.1 ? RFC 6761)
-# For real test DNS environments, override with the appropriate hostname.
+# Test environment: use .localhost TLD (auto-resolves to 127.0.0.1 — RFC 6761).
 kc_hostname = "http://test.localhost/kc"
 apex_domain = "test.localhost"
 
-# Fixture users not provisioned by default in test (override if needed)
+# Fixture users not provisioned by default in test (override if needed).
 provision_fixture_users = false
-fixture_user_password   = ""

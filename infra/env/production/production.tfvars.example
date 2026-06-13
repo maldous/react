@@ -1,25 +1,29 @@
-# production.tfvars.example ? placeholder values only
-# Copy to production.tfvars and fill in real values (gitignored).
-# Do not commit real secrets.
+# production.tfvars.example — NON-SECRET config only. Copy to production.tfvars (gitignored).
 #
-# ADR-0033: APEX_DOMAIN = aldous.info
-#   KC_HOSTNAME = https://aldous.info/kc
+# Secrets are NOT stored in tfvars. They come from TF_VAR_* sourced from .env.production
+# (or .env.prod) at apply time (`make keycloak-provision ENV=production`):
+#   TF_VAR_keycloak_admin_user       <- KEYCLOAK_ADMIN_USER
+#   TF_VAR_keycloak_admin_password   <- KEYCLOAK_ADMIN_PASSWORD
+#   TF_VAR_bff_client_secret         <- KEYCLOAK_CLIENT_SECRET
+#   TF_VAR_provisioner_client_secret <- KEYCLOAK_PROVISIONER_CLIENT_SECRET
+#   TF_VAR_fixture_user_password     <- KEYCLOAK_TEST_PASSWORD
+# Never commit real secrets (ADR-0023/ADR-0044, constraint #8).
+#
+# ADR-0033: APEX_DOMAIN = aldous.info, KC_HOSTNAME = https://aldous.info/kc.
 
-keycloak_url      = "http://localhost:8080"
-keycloak_realm    = "platform-production"
-keycloak_client   = "platform-spa-production"
+keycloak_url    = "http://localhost:8080"
+keycloak_realm  = "platform-production"
+keycloak_client = "platform-spa-production"
 
-# Environment-specific redirect URIs
-redirect_uris  = ["http://localhost:5173/*"]
-web_origins    = ["http://localhost:5173"]
+# Environment-specific redirect URIs.
+redirect_uris = ["http://localhost:5173/*"]
+web_origins   = ["http://localhost:5173"]
 
-# Keycloak frontend hostname (determines token issuer)
-# For production behind Cloudflare: https://aldous.info/kc
+# Keycloak frontend hostname (determines token issuer). Behind Cloudflare: https://aldous.info/kc
 kc_hostname = "https://aldous.info/kc"
 
-# Apex domain for FQDN-based tenant routing
-# Production: *.aldous.info resolves to the Caddy
+# Apex domain for FQDN-based tenant routing. Production: *.aldous.info.
 apex_domain = "aldous.info"
 
-# Set to true only for local/development to provision fixture users
+# Set to true only for local/development to provision fixture users.
 provision_fixture_users = false

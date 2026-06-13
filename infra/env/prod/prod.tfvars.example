@@ -1,42 +1,35 @@
-# prod.tfvars.example — placeholder values only
-# Copy to prod.tfvars and fill in real values (gitignored).
-# Do not commit prod.tfvars — it contains secrets.
+# prod.tfvars.example — NON-SECRET config only. Copy to prod.tfvars (gitignored).
 #
-# ADR-0033: APEX_DOMAIN = aldous.info
-#   KC_HOSTNAME = https://aldous.info/kc  (https:// required for real production)
+# Secrets are NOT stored in tfvars. They are supplied as TF_VAR_* environment
+# variables sourced from .env.prod at apply time (`make keycloak-provision ENV=prod`):
+#   TF_VAR_keycloak_admin_user       <- KEYCLOAK_ADMIN_USER
+#   TF_VAR_keycloak_admin_password   <- KEYCLOAK_ADMIN_PASSWORD
+#   TF_VAR_bff_client_secret         <- KEYCLOAK_CLIENT_SECRET
+#   TF_VAR_provisioner_client_secret <- KEYCLOAK_PROVISIONER_CLIENT_SECRET
+#   TF_VAR_fixture_user_password     <- KEYCLOAK_TEST_PASSWORD
+# Never commit real secrets or the real prod.tfvars (ADR-0023/ADR-0044, constraint #8).
 #
-# After filling in values:
+# ADR-0033: APEX_DOMAIN = aldous.info, KC_HOSTNAME = https://aldous.info/kc.
+# Apply:
 #   make compose-up-identity ENV=prod   # start Keycloak
-#   make keycloak-provision ENV=prod    # apply Terraform
+#   make keycloak-provision  ENV=prod    # apply Terraform (secrets from .env.prod)
 #
 # Security notes:
 #   - keycloak_url must be https:// or http://localhost (validated in main.tf)
-#   - kc_hostname / redirect_uris / web_origins default to https:// in main.tf;
-#     override to http:// only for local stack testing (no real TLS available)
-#   - provision_fixture_users MUST remain false for apex_domain=aldous.info;
-#     main.tf has a validation block that enforces this
+#   - kc_hostname / redirect_uris / web_origins default to https:// in main.tf
+#   - provision_fixture_users MUST remain false for apex_domain=aldous.info
+#     (main.tf has a validation block enforcing this)
 
-keycloak_url      = "http://localhost:8093/kc"
-keycloak_realm    = "platform-production"
+keycloak_url   = "http://localhost:8093/kc"
+keycloak_realm = "platform-production"
 
-# Use https:// for real production; http:// only for local stack testing
+# Use https:// for real production; http:// only for local stack testing.
 kc_hostname   = "https://aldous.info/kc"
 redirect_uris = ["https://aldous.info/auth/callback"]
 web_origins   = ["https://aldous.info"]
 
 apex_domain = "aldous.info"
 
-# keycloak_is_local must be true to allow provision_fixture_users=true.
-# Set true only when keycloak_url is localhost (local prod-stack testing).
 # Both MUST be false for real production deployments.
 keycloak_is_local       = false
 provision_fixture_users = false
-
-# Secrets — must match values used in platform-api env and provisioner service
-bff_client_secret         = "REPLACE_WITH_REAL_SECRET"
-provisioner_client_secret = "REPLACE_WITH_REAL_SECRET"
-
-keycloak_admin_user     = "REPLACE_WITH_ADMIN_USER"
-keycloak_admin_password = "REPLACE_WITH_ADMIN_PASSWORD"
-
-fixture_user_password = ""

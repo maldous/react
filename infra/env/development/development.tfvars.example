@@ -1,20 +1,21 @@
-# development.tfvars.example ? copy to development.tfvars and fill in real values (gitignored).
-# Do not commit real secrets.
+# development.tfvars.example — NON-SECRET config only. Copy to development.tfvars (gitignored).
+#
+# Secrets are NOT stored in tfvars. They come from TF_VAR_* sourced from .env.development
+# (or .env.dev) at apply time (`make keycloak-provision ENV=development`):
+#   TF_VAR_keycloak_admin_user       <- KEYCLOAK_ADMIN_USER
+#   TF_VAR_keycloak_admin_password   <- KEYCLOAK_ADMIN_PASSWORD
+#   TF_VAR_bff_client_secret         <- KEYCLOAK_CLIENT_SECRET
+#   TF_VAR_provisioner_client_secret <- KEYCLOAK_PROVISIONER_CLIENT_SECRET
+#   TF_VAR_fixture_user_password     <- KEYCLOAK_TEST_PASSWORD
+# Never commit real secrets (ADR-0023/ADR-0044, constraint #8).
 
-keycloak_url              = "http://localhost:8090/kc"
-keycloak_admin_user       = "admin"
-keycloak_admin_password   = "admin"
+keycloak_url = "http://localhost:8090/kc"
 
 realm_name = "platform-development"
 
-bff_client_secret        = "change-me-to-a-real-secret"
-provisioner_client_secret = "change-me-to-a-real-secret"
-
-# Dev environment: use .localhost TLD (auto-resolves to 127.0.0.1 ? RFC 6761)
-# For CI or shared hosts, override with the appropriate hostname.
+# Dev environment: use .localhost TLD (auto-resolves to 127.0.0.1 — RFC 6761).
 kc_hostname = "http://dev.localhost/kc"
 apex_domain = "dev.localhost"
 
-# Set to true only for local/development to provision fixture users
+# Set to true only for local/development to provision fixture users.
 provision_fixture_users = true
-fixture_user_password   = "password"

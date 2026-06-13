@@ -1,45 +1,28 @@
-# dev.tfvars.example — copy to dev.tfvars and fill in values (gitignored).
-# dev.tfvars is listed in infra/.gitignore — never commit the real file.
+# dev.tfvars.example — NON-SECRET config only. Copy to dev.tfvars (gitignored).
 #
-# These values match the Docker Compose identity profile defaults (.env.example).
-# Require: docker compose --profile identity up -d keycloak
+# Secrets are NOT stored in tfvars. They are supplied as TF_VAR_* environment
+# variables sourced from .env.dev at apply time (`make keycloak-provision ENV=dev`):
+#   TF_VAR_keycloak_admin_user       <- KEYCLOAK_ADMIN_USER
+#   TF_VAR_keycloak_admin_password   <- KEYCLOAK_ADMIN_PASSWORD
+#   TF_VAR_bff_client_secret         <- KEYCLOAK_CLIENT_SECRET
+#   TF_VAR_provisioner_client_secret <- KEYCLOAK_PROVISIONER_CLIENT_SECRET
+#   TF_VAR_fixture_user_password     <- KEYCLOAK_TEST_PASSWORD
+# Never commit real secrets or the real dev.tfvars (ADR-0023/ADR-0044, constraint #8).
 
-# Keycloak admin credentials — matches KEYCLOAK_ADMIN_USER / KEYCLOAK_ADMIN_PASSWORD in compose.yaml
-keycloak_url           = "http://localhost:8090/kc"
-keycloak_admin_user    = "admin"
-keycloak_admin_password = "admin"
+keycloak_url = "http://localhost:8090/kc"
 
 # Realm
 realm_name = "platform"
 
-# BFF/API client secret — known dev-only value; not a real secret.
-# The platform-api server reads this as KEYCLOAK_CLIENT_SECRET at runtime.
-bff_client_secret = "local-dev-bff-secret"
-
-# platform-provisioner service account secret — used by platform-api to create
-# per-tenant Keycloak realms at runtime (POST /api/admin/tenants).
-# Read at runtime as KEYCLOAK_PROVISIONER_CLIENT_SECRET.
-provisioner_client_secret = "local-dev-provisioner-secret"
-
 # keycloak_is_local=true: required to allow provision_fixture_users=true.
 # Set true only when keycloak_url points to localhost or a Docker-internal address.
-keycloak_is_local       = true
+keycloak_is_local = true
 
 # Fixture users — always true for dev environment
 provision_fixture_users = true
 
-# Fixture user password — dev-only, not a real secret
-fixture_user_password = "password"
-
-# Keycloak hostname — determines token issuer (iss claim).
-# Must match the public-facing URL:
-#   Dev .localhost (Tilt / Compose with Caddy):  http://dev.localhost/kc
-#   Test .localhost:                              http://test.localhost/kc
-#   Production:                                  https://aldous.info/kc
+# Keycloak hostname — determines token issuer (iss claim). Must match the public URL.
 kc_hostname = "http://dev.localhost/kc"
 
 # Apex domain for FQDN-based tenant routing (ADR-0029, ADR-0033).
-#   Dev .localhost:   dev.localhost
-#   Test .localhost:  test.localhost
-#   Production:       aldous.info
 apex_domain = "dev.localhost"

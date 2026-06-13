@@ -52,6 +52,19 @@ e2e-results/
 docs/superpowers/plans/
 **/infra/**/.terraform/**
 
+# Terraform: real var files + state hold secrets in plaintext — never commit
+# (constraint #8: no state files / secrets in VCS; ADR-0023/ADR-0044). Only the
+# secret-free *.tfvars.example templates are tracked; secrets come from TF_VAR_*
+# (mapped from .env.<env>) at apply time.
+infra/**/*.tfvars
+!infra/**/*.tfvars.example
+infra/**/*.tfvars.json
+infra/**/*.tfstate
+infra/**/*.tfstate.*
+infra/**/*.tfplan
+crash.log
+crash.*.log
+
 # Tilt pid
 .tilt.pid
 .tilt.log

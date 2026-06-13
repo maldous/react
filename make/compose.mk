@@ -280,16 +280,24 @@ redis-flush-local:
 
 # ── Keycloak provisioning ────────────────────────────────────────────────────
 
-## keycloak-provision — Apply Terraform to provision the platform Keycloak realm
-## Scoped to ENV: each environment uses infra/env/$(ENV)/$(ENV).tfvars.
+## keycloak-provision — Apply Terraform to provision the platform Keycloak realm.
+## Scoped to ENV. NON-SECRET config comes from infra/env/$(ENV)/$(ENV).tfvars (or the
+## tracked secret-free *.example fallback). SECRETS are sourced from .env.$(ENV) (the
+## gitignored secret store) and exported as TF_VAR_* — never read from committed tfvars
+## (ADR-0023/ADR-0044, constraint #8). Terraform auto-reads TF_VAR_<name> for each var.
 keycloak-provision:
 	$(call STEP,keycloak: provisioning realm via Terraform ($(ENV)))
 	@_tfdir=infra/env/$(ENV); \
-	if [ ! -f "$${_tfdir}/$(ENV).tfvars" ]; then \
-		printf "$(RED)✗ Terraform vars not found in $${_tfdir}.\n"; \
-		printf "  Copy $(ENV).tfvars.example to $(ENV).tfvars and fill in values.$(RESET)\n"; \
-		exit 1; \
-	fi; \
+	_varfile=$(ENV).tfvars; \
+	if [ ! -f "$${_tfdir}/$${_varfile}" ]; then _varfile=$(ENV).tfvars.example; fi; \
+	_envf=.env.$(ENV); [ -f "$${_envf}" ] || _envf=.env; \
+	if [ -f "$${_envf}" ]; then set -a; . "./$${_envf}"; set +a; \
+	else printf "$(YELLOW)! no $${_envf} — TF_VAR_* secrets must be exported in the environment$(RESET)\n"; fi; \
+	export TF_VAR_keycloak_admin_user="$${KEYCLOAK_ADMIN_USER:-admin}"; \
+	export TF_VAR_keycloak_admin_password="$${KEYCLOAK_ADMIN_PASSWORD:-}"; \
+	export TF_VAR_bff_client_secret="$${KEYCLOAK_CLIENT_SECRET:-}"; \
+	export TF_VAR_provisioner_client_secret="$${KEYCLOAK_PROVISIONER_CLIENT_SECRET:-}"; \
+	export TF_VAR_fixture_user_password="$${KEYCLOAK_TEST_PASSWORD:-}"; \
 	cd $${_tfdir} && terraform init -upgrade -input=false > /dev/null 2>&1 \
-	    && terraform apply -var-file=$(ENV).tfvars -auto-approve -input=false
+	    && terraform apply -var-file=$${_varfile} -auto-approve -input=false
 	$(call OK,Keycloak realm provisioned for $(ENV))
