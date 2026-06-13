@@ -138,6 +138,16 @@ if [ "$STAGE_RESULT" -eq 0 ] && [ "$DATA_POLICY" = "destructive" ]; then
     POSTGRES_URL="$_pg_url_m" npm run db:seed || STAGE_RESULT=1
 fi
 
+# ── 8b. Environment bootstrap seed (ADR-0072) ────────────────────────────────
+# After migrations: project the manifest into the environment registry, seed
+# provider_configs + OpenBao secrets, and generate the global system administrator
+# handoff. Non-fatal: each step degrades honestly (skips if Postgres/OpenBao is
+# unreachable) so the confidence ladder is never weakened by an optional substrate.
+if [ "$STAGE_RESULT" -eq 0 ]; then
+    POSTGRES_URL="$_pg_url_m" make env-bootstrap-seed ENV="$STAGE" || \
+        printf '%s⚠ env-bootstrap-seed reported issues (non-fatal)%s\n' "$YELLOW" "$RESET"
+fi
+
 # ── 9. SonarQube quality gate (test stage only) ──────────────────────────────
 # test is the gating stage: every issue must be clean before promoting to
 # staging/prod.  The shared SonarQube instance token is auto-provisioned from
