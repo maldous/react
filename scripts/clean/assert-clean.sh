@@ -21,10 +21,11 @@ timeout 60 bash -c \
     || true
 
 # Verify ports free (spare JVM ports)
-_jvm_ports="$(grep -oP 'KEYCLOAK_PORT=\K\d+' ".env.${ENV}" 2>/dev/null \
+_ENVF="$(bash "$(dirname "$0")/../env/resolve-env-file.sh" "$ENV" 2>/dev/null || echo ".env.${ENV}")"
+_jvm_ports="$(grep -oP 'KEYCLOAK_PORT=\K\d+' "$_ENVF" 2>/dev/null \
     | tr '\n' '|' | sed 's/|$//')"
 
-for port in 5173 10350 $(grep -oP '_PORT=\K\d+' ".env.${ENV}" 2>/dev/null \
+for port in 5173 10350 $(grep -oP '_PORT=\K\d+' "$_ENVF" 2>/dev/null \
     | grep -vwE "${_jvm_ports:-__none__}"); do
     timeout 15 bash -c \
         "while ss -tlnp 'sport = :${port}' 2>/dev/null | grep -q LISTEN; do sleep 1; done" \

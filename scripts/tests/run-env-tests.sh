@@ -7,6 +7,10 @@ STAGE="${1:?STAGE required}"
 REQUIRED="${2:?REQUIRED_TESTS_CSV required}"
 EXCLUDED="${3:-}"
 
+# ADR-0072: resolve the generated runtime env (.env/<stage>.env from the manifest)
+# once; all port/url derivation below reads from it. Legacy .env.<stage> is a fallback.
+_ENVF="$(bash "$(dirname "$0")/../env/resolve-env-file.sh" "$STAGE" 2>/dev/null || echo ".env.${STAGE}")"
+
 GREEN=$(tput setaf 2 2>/dev/null || true)
 YELLOW=$(tput setaf 3 2>/dev/null || true)
 RED=$(tput setaf 1 2>/dev/null || true)
@@ -29,24 +33,24 @@ run_group() {
 
     # Derive all service ports from .env.${STAGE} — never fall through to root .env defaults.
     # Each grep uses "|| true" so a missing key never triggers set -euo pipefail exit.
-    _pg_port="$(grep -oP 'POSTGRES_PORT=\K\d+' ".env.${STAGE}" 2>/dev/null | head -1 || true)"
+    _pg_port="$(grep -oP 'POSTGRES_PORT=\K\d+' "$_ENVF" 2>/dev/null | head -1 || true)"
     _pg_port="${_pg_port:-5433}"
-    _rd_port="$(grep -oP 'REDIS_PORT=\K\d+' ".env.${STAGE}" 2>/dev/null | head -1 || true)"
+    _rd_port="$(grep -oP 'REDIS_PORT=\K\d+' "$_ENVF" 2>/dev/null | head -1 || true)"
     _rd_port="${_rd_port:-6379}"
-    _minio_port="$(grep -oP 'MINIO_API_PORT=\K\d+' ".env.${STAGE}" 2>/dev/null | head -1 || true)"
+    _minio_port="$(grep -oP 'MINIO_API_PORT=\K\d+' "$_ENVF" 2>/dev/null | head -1 || true)"
     _minio_port="${_minio_port:-9000}"
-    _ch_port="$(grep -oP 'CLICKHOUSE_HTTP_PORT=\K\d+' ".env.${STAGE}" 2>/dev/null | head -1 || true)"
+    _ch_port="$(grep -oP 'CLICKHOUSE_HTTP_PORT=\K\d+' "$_ENVF" 2>/dev/null | head -1 || true)"
     _ch_port="${_ch_port:-8124}"
-    _mp_ui_port="$(grep -oP 'MAILPIT_UI_PORT=\K\d+' ".env.${STAGE}" 2>/dev/null | head -1 || true)"
+    _mp_ui_port="$(grep -oP 'MAILPIT_UI_PORT=\K\d+' "$_ENVF" 2>/dev/null | head -1 || true)"
     _mp_ui_port="${_mp_ui_port:-8025}"
-    _mp_smtp="$(grep -oP 'MAILPIT_SMTP_PORT=\K\d+' ".env.${STAGE}" 2>/dev/null | head -1 || true)"
+    _mp_smtp="$(grep -oP 'MAILPIT_SMTP_PORT=\K\d+' "$_ENVF" 2>/dev/null | head -1 || true)"
     _mp_smtp="${_mp_smtp:-1025}"
-    _mp_root="$(grep -oP 'MAILPIT_ROOT_URL=\K\S+' ".env.${STAGE}" 2>/dev/null | head -1 || true)"
+    _mp_root="$(grep -oP 'MAILPIT_ROOT_URL=\K\S+' "$_ENVF" 2>/dev/null | head -1 || true)"
     _mp_root="${_mp_root:-/mailpit}"
     # Use explicit MAILPIT_API from env file if defined; otherwise compose from UI port + webroot.
-    _mp_api="$(grep -oP 'MAILPIT_API=\K\S+' ".env.${STAGE}" 2>/dev/null | head -1 || true)"
+    _mp_api="$(grep -oP 'MAILPIT_API=\K\S+' "$_ENVF" 2>/dev/null | head -1 || true)"
     _mp_api="${_mp_api:-http://localhost:${_mp_ui_port}${_mp_root}}"
-    _otel_http="$(grep -oP 'OTEL_HTTP_PORT=\K\d+' ".env.${STAGE}" 2>/dev/null | head -1 || true)"
+    _otel_http="$(grep -oP 'OTEL_HTTP_PORT=\K\d+' "$_ENVF" 2>/dev/null | head -1 || true)"
     _otel_http="${_otel_http:-4318}"
     _pg_url="postgresql://platform:platformpassword@localhost:${_pg_port}/platform"
     _pg_app_url="postgresql://platform_app:platformapppassword@localhost:${_pg_port}/platform"
@@ -55,10 +59,10 @@ run_group() {
     # the real external domain (staging.aldous.info / aldous.info via Cloudflare).
     # For dev/test: use localhost:WEB_HTTP_PORT — no external DNS dependency needed.
     if [ "$STAGE" = "staging" ] || [ "$STAGE" = "prod" ]; then
-        _app_url="$(grep -oP 'APP_BASE_URL=\K\S+' ".env.${STAGE}" 2>/dev/null | head -1 || true)"
+        _app_url="$(grep -oP 'APP_BASE_URL=\K\S+' "$_ENVF" 2>/dev/null | head -1 || true)"
     fi
     if [ -z "${_app_url:-}" ]; then
-        _web_port="$(grep -oP 'WEB_HTTP_PORT=\K\d+' ".env.${STAGE}" 2>/dev/null | head -1 || true)"
+        _web_port="$(grep -oP 'WEB_HTTP_PORT=\K\d+' "$_ENVF" 2>/dev/null | head -1 || true)"
         _app_url="http://localhost:${_web_port:-80}"
     fi
 

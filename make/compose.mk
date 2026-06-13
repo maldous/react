@@ -74,11 +74,11 @@ compose-up-identity-mocks:
 
 ## seed-idps — Register mock broker IdPs (mock-google/azure/apple) on the ENV realm.
 ## Idempotent. Requires Keycloak (compose-up-identity) + mock-oidc (compose-up-identity-mocks).
-## Sources .env.$(ENV) (realm, admin creds, AUTH_PROVIDER_MODE, MOCK_OIDC_*) and targets the
+## Sources $(ENV_FILE) (realm, admin creds, AUTH_PROVIDER_MODE, MOCK_OIDC_*) and targets the
 ## host-published Keycloak port so it works for test/staging/prod, not just dev.
 seed-idps:
 	$(call STEP,seed:idps ($(ENV)))
-	set -a; if [ -f .env.$(ENV) ]; then . ./.env.$(ENV); fi; set +a; \
+	set -a; if [ -f $(ENV_FILE) ]; then . ./$(ENV_FILE); fi; set +a; \
 	KEYCLOAK_URL="http://localhost:$${KEYCLOAK_PORT:-8090}/kc" npm run seed:idps
 	$(call OK,mock broker IdPs registered on the $(ENV) realm)
 
@@ -91,8 +91,8 @@ compose-up-web:
 	fi
 	$(call STEP,web:up ($(ENV)))
 	bash scripts/compose/up.sh $(ENV) web
-	@_port=$$(grep '^WEB_HTTP_PORT=' .env.$(ENV) 2>/dev/null | head -1 | cut -d= -f2 || echo "80"); \
-	_apex=$$(grep '^APEX_DOMAIN=' .env.$(ENV) 2>/dev/null | head -1 | cut -d= -f2 || echo "localhost"); \
+	@_port=$$(grep '^WEB_HTTP_PORT=' $(ENV_FILE) 2>/dev/null | head -1 | cut -d= -f2 || echo "80"); \
+	_apex=$$(grep '^APEX_DOMAIN=' $(ENV_FILE) 2>/dev/null | head -1 | cut -d= -f2 || echo "localhost"); \
 	printf '$(GREEN)✓ Web profile for $(ENV) started → http://%s:%s$(RESET)\n' "$${_apex}" "$${_port}"
 
 # ── Compose down ─────────────────────────────────────────────────────────────
@@ -303,7 +303,7 @@ redis-flush-local:
 
 ## keycloak-provision — Apply Terraform to provision the platform Keycloak realm.
 ## Scoped to ENV. NON-SECRET config comes from infra/env/$(ENV)/$(ENV).tfvars (or the
-## tracked secret-free *.example fallback). SECRETS are sourced from .env.$(ENV) (the
+## tracked secret-free *.example fallback). SECRETS are sourced from $(ENV_FILE) (the
 ## gitignored secret store) and exported as TF_VAR_* — never read from committed tfvars
 ## (ADR-0023/ADR-0044, constraint #8). Terraform auto-reads TF_VAR_<name> for each var.
 keycloak-provision:
@@ -311,7 +311,7 @@ keycloak-provision:
 	@_tfdir=infra/env/$(ENV); \
 	_varfile=$(ENV).tfvars; \
 	if [ ! -f "$${_tfdir}/$${_varfile}" ]; then _varfile=$(ENV).tfvars.example; fi; \
-	_envf=.env.$(ENV); [ -f "$${_envf}" ] || _envf=.env; \
+	_envf=$(ENV_FILE); [ -f "$${_envf}" ] || _envf=.env; \
 	if [ -f "$${_envf}" ]; then set -a; . "./$${_envf}"; set +a; \
 	else printf "$(YELLOW)! no $${_envf} — TF_VAR_* secrets must be exported in the environment$(RESET)\n"; fi; \
 	export TF_VAR_keycloak_admin_user="$${KEYCLOAK_ADMIN_USER:-admin}"; \

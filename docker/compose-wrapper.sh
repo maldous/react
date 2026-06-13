@@ -31,13 +31,13 @@ set -euo pipefail
 ENV="${1:?Usage: compose-wrapper.sh <env> [args...]}"
 shift
 
-ENV_FILE=".env.${ENV}"
+# ADR-0072: resolve the runtime env file via the shared resolver — the generated
+# artifact .env/<env>.env (from config/environments/<env>.json) is preferred; a
+# legacy hand-maintained .env.<env> is only used if no manifest exists. The
+# resolver materialises the artifact from the manifest on demand and exits
+# non-zero (propagated by set -e) if neither source exists.
+ENV_FILE="$("$(dirname "${BASH_SOURCE[0]}")/../scripts/env/resolve-env-file.sh" "$ENV")"
 PROJECT_NAME="${PROJECT:-react-$ENV}"
-
-if [ ! -f "$ENV_FILE" ]; then
-    echo "ERROR: Environment file not found: $ENV_FILE" >&2
-    exit 1
-fi
 
 # Export all vars from the env file so docker compose can use them for interpolation
 set -a

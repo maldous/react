@@ -291,7 +291,8 @@ Package metadata        packages/<name>/package.json, generated README
 Import boundaries       docs/architecture/import-boundary-rules.json
 ADRs                    docs/adr/NNNN-<slug>.md, ACTION-REGISTER.md
 Evidence                docs/evidence/<area>/
-Compose                 compose.yaml, .env.example, docs/local-development/compose-services.md
+Compose                 compose.yaml, docs/local-development/compose-services.md
+Environments            config/environments/<stage>.json (+ common.json), scripts/env/, .env/<stage>.env (generated)
 Tilt                    Tiltfile, docs/local-development/tilt-workflow.md
 WireMock                docker/wiremock/mappings, docker/wiremock/__files
 Dev Container           .devcontainer/devcontainer.json, .devcontainer/post-create.sh

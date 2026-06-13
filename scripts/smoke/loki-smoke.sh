@@ -19,7 +19,7 @@ RED=$(tput setaf 1 2>/dev/null || true)
 RESET=$(tput sgr0 2>/dev/null || true)
 
 ENV="${1:-prod}"
-ENV_FILE=".env.${ENV}"
+ENV_FILE="$(bash "$(dirname "$0")/../env/resolve-env-file.sh" "$ENV" 2>/dev/null || echo ".env.${ENV}")"
 if [ -f "$ENV_FILE" ]; then
   # shellcheck disable=SC1090
   set -a

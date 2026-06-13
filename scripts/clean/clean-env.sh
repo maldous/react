@@ -40,10 +40,11 @@ docker volume ls -q --filter "label=com.docker.compose.project=react" \
     | xargs -r docker volume rm 2>/dev/null || true
 
 # Kill stale port holders (spare JVM services: Keycloak)
-_jvm_ports="$(grep -oP 'KEYCLOAK_PORT=\K\d+' ".env.${ENV}" 2>/dev/null \
+_ENVF="$(bash "$(dirname "$0")/../env/resolve-env-file.sh" "$ENV" 2>/dev/null || echo ".env.${ENV}")"
+_jvm_ports="$(grep -oP 'KEYCLOAK_PORT=\K\d+' "$_ENVF" 2>/dev/null \
     | tr '\n' '|' | sed 's/|$//')"
 
-_all_ports="5173 10350 $(grep -oP '_PORT=\K\d+' ".env.${ENV}" 2>/dev/null \
+_all_ports="5173 10350 $(grep -oP '_PORT=\K\d+' "$_ENVF" 2>/dev/null \
     | grep -vwE "${_jvm_ports:-__none__}")"
 
 for port in $_all_ports; do

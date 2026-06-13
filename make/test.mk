@@ -1,7 +1,7 @@
 .PHONY: run-stage-tests e2e-internal e2e-internal-build test-real-auth
 
 ## run-stage-tests — Run the standard test suite against the active environment.
-## Always derives URLs from .env.$(ENV) to avoid cross-env contamination from root .env.
+## Always derives URLs from $(ENV_FILE) to avoid cross-env contamination from root .env.
 ## Test selection:
 ##   dev/test (LOCAL_FIXTURE_SESSION set):  full test:platform-api (254 tests, fixture org in DB)
 ##   prod    (NODE_ENV=production):          full test:platform-api (254 tests, fixture org seeded)
@@ -11,9 +11,9 @@
 ## from .env.prod breaking Vitest.
 run-stage-tests:
 	$(call STEP,run-stage-tests ($(ENV)))
-	@$(call CONN_URLS,.env.$(ENV)); \
-	_fixture="$$(grep -oP 'LOCAL_FIXTURE_SESSION=\K\S+' .env.$(ENV) 2>/dev/null | head -1 || true)"; \
-	_node_env="$$(grep -oP 'NODE_ENV=\K\S+' .env.$(ENV) 2>/dev/null | head -1 || true)"; \
+	@$(call CONN_URLS,$(ENV_FILE)); \
+	_fixture="$$(grep -oP 'LOCAL_FIXTURE_SESSION=\K\S+' $(ENV_FILE) 2>/dev/null | head -1 || true)"; \
+	_node_env="$$(grep -oP 'NODE_ENV=\K\S+' $(ENV_FILE) 2>/dev/null | head -1 || true)"; \
 	if [ -n "$$_fixture" ] || [ "$$_node_env" = "production" ]; then \
 		POSTGRES_URL="$$_pg_url" POSTGRES_APP_URL="$$_pg_app_url" REDIS_URL="$$_rd_url" \
 		npm run test:platform-api; \
@@ -27,14 +27,14 @@ run-stage-tests:
 
 ## e2e-internal — Internal E2E: fixture session against localhost (Vite dev server)
 ## playwright.internal.config.ts starts platform-api + Vite dev server automatically.
-## URLs always derived from .env.$(ENV) to avoid cross-env contamination.
+## URLs always derived from $(ENV_FILE) to avoid cross-env contamination.
 e2e-internal:
 	$(call STEP,e2e:internal \(localhost fixture session\))
 	@if ! npx playwright --version > /dev/null 2>&1; then \
 		printf '$(RED)✗ Playwright not found. Run: npx playwright install chromium --with-deps$(RESET)\n'; \
 		exit 1; \
 	fi
-	@$(call CONN_URLS,.env.$(ENV)); \
+	@$(call CONN_URLS,$(ENV_FILE)); \
 	POSTGRES_URL="$$_pg_url" \
 	POSTGRES_APP_URL="$$_pg_app_url" \
 	REDIS_URL="$$_rd_url" \

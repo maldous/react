@@ -4,7 +4,11 @@
 ENV ?= dev
 STAGE ?= $(ENV)
 COMPOSE_PROJECT_NAME := react-$(ENV)
-ENV_FILE := .env.$(ENV)
+# Runtime env file. ADR-0072: the generated artifact .env/$(ENV).env (produced
+# from config/environments/$(ENV).json) is the preferred source; a legacy
+# hand-maintained .env.$(ENV) is only used if no manifest exists. Lazy ('=') so
+# it resolves at recipe time, never at parse time, and only when referenced.
+ENV_FILE = $(shell bash scripts/env/resolve-env-file.sh $(ENV) 2>/dev/null || echo .env.$(ENV))
 STAGE_POLICY := env/stage-policy.yaml
 
 # PRESERVE_JVM_VOLUMES — preserve Keycloak data on reset (slow to re-initialise).
@@ -35,7 +39,7 @@ SKIP  = @printf '$(YELLOW)↷ %s$(RESET)\n' "$(1)"
 # JVM_PORTS_EXCLUDE — shell fragment: sets _jvm_ports="port1|port2".
 # Reads KEYCLOAK_PORT from .env.$(ENV) to spare the per-env Keycloak.
 # (SonarQube lives in the shared react-sonar project, port from .env.sonar.)
-JVM_PORTS_EXCLUDE = _jvm_ports="$$(grep -oP 'KEYCLOAK_PORT=\K\d+' .env.$(ENV) 2>/dev/null | tr '\n' '|' | sed 's/|$$//')"
+JVM_PORTS_EXCLUDE = _jvm_ports="$$(grep -oP 'KEYCLOAK_PORT=\K\d+' $(ENV_FILE) 2>/dev/null | tr '\n' '|' | sed 's/|$$//')"
 
 # CONN_URLS(envfile) — sets _pg_port, _rd_port, _pg_url, _pg_app_url, _rd_url
 define CONN_URLS

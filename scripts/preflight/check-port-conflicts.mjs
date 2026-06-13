@@ -1,9 +1,17 @@
 #!/usr/bin/env node
-// Detects cross-environment port collisions by reading all four .env.* files.
+// Detects cross-environment port collisions by reading the generated runtime
+// env for each stage (.env/<stage>.env from config/environments/<stage>.json,
+// ADR-0072), falling back to a legacy .env.<stage> only if the artifact is absent.
 // Environments that can run simultaneously: dev+test (both local), staging+prod.
 
 import { readFileSync, existsSync } from "node:fs";
 import process from "node:process";
+import { generatedEnvPath } from "../env/lib/manifests.mjs";
+
+function resolveEnvPath(stage) {
+  const generated = generatedEnvPath(stage);
+  return existsSync(generated) ? generated : `.env.${stage}`;
+}
 
 function parseEnvPorts(path) {
   if (!existsSync(path)) return {};
@@ -19,7 +27,7 @@ const stages = ["dev", "test", "staging", "prod"];
 const portMap = {}; // port -> [{ stage, key }]
 
 for (const stage of stages) {
-  const ports = parseEnvPorts(`.env.${stage}`);
+  const ports = parseEnvPorts(resolveEnvPath(stage));
   for (const [key, port] of Object.entries(ports)) {
     if (!portMap[port]) portMap[port] = [];
     portMap[port].push({ stage, key });

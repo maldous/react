@@ -27,7 +27,7 @@ docker compose logs -f
 | external-mocks | `npm run compose:external-mocks`             | wiremock                                                                                    |
 | sentry         | `make sentry-up`                             | sentry-web + sentry-worker + sentry-cron + sentry-postgres + sentry-redis (shared instance) |
 
-> **web profile note:** `SESSION_COOKIE_SECURE` must be `false` (the default in `.env.example`) when serving over `http://localhost:80`. Set it to `true` only when behind HTTPS (e.g. production or Cloudflare).
+> **web profile note:** `SESSION_COOKIE_SECURE` must be `false` (the dev/test manifest default) when serving over `http://localhost:80`. It is `true` for staging/prod (HTTPS) per `config/environments/<stage>.json`.
 > Stop any system Caddy process before starting the web profile to free port 80.
 
 ## Services and ports
@@ -60,13 +60,14 @@ docker compose logs -f
 
 ## Configuration
 
-Copy `.env.example` to `.env` and review each value:
+Configuration is driven by the environment manifests, not hand-maintained env files (ADR-0072). The tracked, non-secret manifests `config/environments/<stage>.json` (plus the shared `common.json`) are the source of truth. The Makefile generates the runtime env artifact each stage consumes:
 
 ```bash
-cp .env.example .env
+make env-generate-runtime ENV=dev    # → .env/dev.env (gitignored, reproducible)
+make env-validate-all                # validate manifests + generated output
 ```
 
-Do not commit `.env`. All credentials in `.env.example` are development defaults only.
+The generated `.env/<stage>.env` is a runtime artifact only — gitignored, reproducible, non-authoritative, and safe to delete. Secret values are seeded from OpenBao (`make env-seed-secrets ENV=<stage>`) or derived as local-bootstrap material; they are never committed. There is no `.env`, `.env.<stage>`, or `.env.example` to maintain by hand.
 
 ## WireMock setup (external-mocks profile)
 
@@ -135,19 +136,22 @@ ClickHouse native protocol (port 9000) conflicts with MinIO's API port (9000). T
 
 ## Port conflicts and overrides
 
-Host ports are configurable via `.env`. Override any default to avoid conflicts with other services:
+Host ports are declared per stage in the manifest's `runtime` block. Edit `config/environments/<stage>.json` and regenerate to avoid conflicts with other services:
 
-```bash
-# .env ? override any defaults
-POSTGRES_PORT=5434       # default: 5433
-REDIS_PORT=6380          # default: 6379
-CLICKHOUSE_HTTP_PORT=8125  # default: 8124
-# ...see .env.example for all port vars
+```jsonc
+// config/environments/dev.json → "runtime": { ... }
+"POSTGRES_PORT": "5434",       // default: 5433
+"REDIS_PORT": "6380",          // default: 6379
+"CLICKHOUSE_HTTP_PORT": "8125" // default: 8124
 ```
 
-All port variables and defaults are documented in `.env.example`.
+```bash
+make env-generate-runtime ENV=dev   # re-materialise .env/dev.env
+```
 
-> **Validation host note:** During initial evidence collection, system `postgresql`, `redis-server`, and `mailhog` were stopped to free the default ports. This was a local environment choice, not a repository requirement. Use `.env` port overrides as the preferred conflict resolution approach.
+All port variables live in the manifests; `make env-validate-all` checks cross-stage port collisions.
+
+> **Validation host note:** During initial evidence collection, system `postgresql`, `redis-server`, and `mailhog` were stopped to free the default ports. This was a local environment choice, not a repository requirement. Edit the manifest's port values as the preferred conflict resolution approach.
 
 ## LocalStack Docker socket
 

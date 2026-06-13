@@ -50,7 +50,10 @@ printf '\n%s▶ stage:%s — executor=%s dataPolicy=%s authMode=%s teardown=%s%s
 
 # ── 2. Source env file ────────────────────────────────────────────────────────
 
-ENV_FILE=".env.${STAGE}"
+# ADR-0072: the generated artifact .env/<stage>.env (from the manifest) is the
+# source; the resolver materialises it on demand. Legacy .env.<stage> is only a
+# transition fallback. No hand-maintained env file is required.
+ENV_FILE="$(bash scripts/env/resolve-env-file.sh "$STAGE")"
 [ -f "$ENV_FILE" ] || { printf '%s✗ %s not found%s\n' "$RED" "$ENV_FILE" "$RESET"; exit 1; }
 # shellcheck disable=SC1090
 set -a
@@ -123,7 +126,7 @@ fi
 # target the correct environment. The migrate script silently exits 0 on ECONNREFUSED
 # without this override — without it staging/prod would silently migrate the wrong DB.
 
-_pg_port_m="$(grep -oP 'POSTGRES_PORT=\K\d+' ".env.${STAGE}" 2>/dev/null | head -1 || true)"
+_pg_port_m="$(grep -oP 'POSTGRES_PORT=\K\d+' "$ENV_FILE" 2>/dev/null | head -1 || true)"
 _pg_port_m="${_pg_port_m:-5433}"
 _pg_url_m="postgresql://platform:platformpassword@localhost:${_pg_port_m}/platform"
 

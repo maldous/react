@@ -1,0 +1,127 @@
+{
+  "$schema": "./schema.json",
+  "environmentId": "prod",
+  "name": "Production (local prod-like)",
+  "stage": "production",
+  "executor": "compose",
+  "composeProject": "react-prod",
+  "baseUrl": "https://aldous.info",
+  "apiUrl": "https://aldous.info",
+  "domain": "aldous.info",
+  "stagePolicy": {
+    "authMode": "real",
+    "dataPolicy": "preserve",
+    "dataPreservation": "preserve",
+    "destructiveAllowed": false,
+    "teardownDefault": false,
+    "cookieSecure": true
+  },
+  "allowedProfiles": ["default", "identity", "observability", "web"],
+  "allowedMocks": [],
+  "temporaryMockException": {
+    "reason": "Pre-real-provider bootstrap: mock Google/Microsoft/Apple presented on aldous.info/login via Keycloak brokering until real provider tenants exist.",
+    "adr": "ADR-ACT-0157",
+    "overrideFlag": "ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS",
+    "removeWhen": "real provider tenants configured (AUTH_PROVIDER_MODE=real); drop the override, stop identity-mocks profile, remove Cloudflare DNS + Caddy handle for mock-idp.aldous.info",
+    "providers": ["mock-oidc"]
+  },
+  "secretStoreProvider": "openbao",
+  "adminIdentity": {
+    "usernameTemplate": "sysadmin@aldous.info",
+    "mode": "local-bootstrap",
+    "rotateBeforeProduction": true
+  },
+  "seededProviderDefaults": [
+    {
+      "providerKey": "postgres",
+      "capability": "relational-store",
+      "classification": "per-environment",
+      "requiresCredential": true
+    },
+    {
+      "providerKey": "redis",
+      "capability": "cache-and-rate-limit",
+      "classification": "per-environment",
+      "requiresCredential": false
+    },
+    {
+      "providerKey": "minio",
+      "capability": "object-storage",
+      "classification": "per-environment",
+      "requiresCredential": true
+    },
+    {
+      "providerKey": "keycloak",
+      "capability": "identity-provider",
+      "classification": "per-environment",
+      "requiresCredential": true
+    },
+    {
+      "providerKey": "openbao",
+      "capability": "runtime-secrets",
+      "classification": "per-environment",
+      "requiresCredential": true
+    },
+    {
+      "providerKey": "sentry",
+      "capability": "error-tracking",
+      "classification": "shared-cross-environment",
+      "requiresCredential": true
+    }
+  ],
+  "runtime": {
+    "WEB_HTTP_PORT": "83",
+    "PLATFORM_API_PORT": "3004",
+    "MAILPIT_SMTP_PORT": "1028",
+    "MAILPIT_UI_PORT": "8028",
+    "OTEL_GRPC_PORT": "4332",
+    "OTEL_HTTP_PORT": "4333",
+    "OTEL_HEALTH_PORT": "13148",
+    "LOCALSTACK_PORT": "4569",
+    "PGADMIN_PORT": "5053",
+    "POSTGRES_PORT": "5436",
+    "REDIS_PORT": "6382",
+    "WIREMOCK_PORT": "8088",
+    "KEYCLOAK_PORT": "8093",
+    "CLICKHOUSE_HTTP_PORT": "8127",
+    "MINIO_API_PORT": "9030",
+    "MINIO_CONSOLE_PORT": "9031",
+    "CLICKHOUSE_NATIVE_PORT": "9005",
+    "APEX_DOMAIN": "aldous.info",
+    "KC_HOSTNAME": "https://aldous.info/kc",
+    "APP_BASE_URL": "https://aldous.info",
+    "PLATFORM_API_URL": "https://aldous.info",
+    "MINIO_BROWSER_REDIRECT_URL": "https://aldous.info/minio",
+    "MAILPIT_ROOT_URL": "/mailpit",
+    "SESSION_COOKIE_SECURE": "true",
+    "COMPOSE_PROJECT": "react-prod",
+    "COMPOSE_PROJECT_FILTER": "react-prod",
+    "PLATFORM_ENV": "production",
+    "GRAFANA_PORT": "3203",
+    "LOKI_PORT": "3103",
+    "ALLOY_PORT": "12348",
+    "GRAFANA_ADMIN_USER": "admin",
+    "LOG_LEVEL": "info",
+    "KEYCLOAK_TEST_USERNAME": "sysadmin@aldous.info",
+    "CLICKHOUSE_HTTP": "http://localhost:8127",
+    "KEYCLOAK_REALM": "platform-production",
+    "MAILPIT_API": "http://localhost:8028/mailpit",
+    "MINIO_ENDPOINT": "http://localhost:9030",
+    "S3_DEFAULT_ENDPOINT": "http://localhost:9030",
+    "S3_DEFAULT_BUCKET": "platform-data",
+    "S3_DEFAULT_REGION": "us-east-1",
+    "NODE_ENV": "production",
+    "OTEL_HTTP": "http://localhost:4333",
+    "POSTGRES_APP_URL": "postgresql://platform_app:platformapppassword@localhost:5436/platform",
+    "POSTGRES_URL": "postgresql://platform:platformpassword@localhost:5436/platform",
+    "REDIS_URL": "redis://localhost:6382",
+    "SENTRY_ENABLED": "false",
+    "SENTRY_EVENT_RETENTION_DAYS": "90",
+    "AUTH_PROVIDER_MODE": "mock",
+    "ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS": "true",
+    "MOCK_OIDC_PORT": "9083",
+    "MOCK_OIDC_PUBLIC_URL": "https://mock-idp.aldous.info",
+    "MOCK_OIDC_INTERNAL_URL": "http://mock-oidc:8080",
+    "MOCK_OIDC_KC_BROKER_BASE": "https://aldous.info/kc/realms/platform-production/broker"
+  }
+}

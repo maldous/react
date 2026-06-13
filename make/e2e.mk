@@ -95,10 +95,10 @@ prod-e2e:
 	$(call OK,prod-like E2E passed)
 
 ## run-stage-e2e — Run E2E smoke tests against the active environment
-## Uses WEB_HTTP_PORT derived from .env.$(ENV).
+## Uses WEB_HTTP_PORT derived from $(ENV_FILE).
 run-stage-e2e:
 	$(call STEP,run-stage-e2e ($(ENV)))
-	@_port=$$(grep '^WEB_HTTP_PORT=' .env.$(ENV) 2>/dev/null | head -1 | cut -d= -f2 || echo "80"); \
+	@_port=$$(grep '^WEB_HTTP_PORT=' $(ENV_FILE) 2>/dev/null | head -1 | cut -d= -f2 || echo "80"); \
 	PROD_BASE_URL="http://localhost:$${_port}" \
 	npx playwright test --config playwright.external.config.ts e2e/external/smoke.test.ts
 	$(call OK,stage E2E passed for $(ENV))

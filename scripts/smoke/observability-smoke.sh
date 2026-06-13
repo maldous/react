@@ -8,9 +8,10 @@ GREEN=$(tput setaf 2 2>/dev/null || true)
 YELLOW=$(tput setaf 3 2>/dev/null || true)
 RESET=$(tput sgr0 2>/dev/null || true)
 
-_loki_port="$(grep -oP 'LOKI_PORT=\K\d+' ".env.${ENV}" 2>/dev/null | head -1 || true)"
+_ENVF="$(bash "$(dirname "$0")/../env/resolve-env-file.sh" "$ENV" 2>/dev/null || echo ".env.${ENV}")"
+_loki_port="$(grep -oP 'LOKI_PORT=\K\d+' "$_ENVF" 2>/dev/null | head -1 || true)"
 _loki_port="${_loki_port:-3100}"
-_grafana_port="$(grep -oP 'GRAFANA_PORT=\K\d+' ".env.${ENV}" 2>/dev/null | head -1 || true)"
+_grafana_port="$(grep -oP 'GRAFANA_PORT=\K\d+' "$_ENVF" 2>/dev/null | head -1 || true)"
 _grafana_port="${_grafana_port:-3200}"
 
 if curl -fsS --max-time 5 "http://localhost:${_loki_port}/ready" >/dev/null 2>&1; then

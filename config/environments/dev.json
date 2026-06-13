@@ -1,0 +1,132 @@
+{
+  "$schema": "./schema.json",
+  "environmentId": "dev",
+  "name": "Development",
+  "stage": "development",
+  "executor": "tilt",
+  "composeProject": "react",
+  "baseUrl": "http://dev.localhost:8080",
+  "apiUrl": "http://dev.localhost:8080",
+  "domain": "dev.localhost",
+  "stagePolicy": {
+    "authMode": "fixture",
+    "dataPolicy": "destructive",
+    "dataPreservation": "ephemeral",
+    "destructiveAllowed": true,
+    "teardownDefault": false,
+    "cookieSecure": false
+  },
+  "allowedProfiles": [
+    "default",
+    "identity",
+    "external-mocks",
+    "observability",
+    "web",
+    "cloud-mocks"
+  ],
+  "allowedMocks": ["wiremock", "mock-oidc", "localstack"],
+  "secretStoreProvider": "openbao",
+  "adminIdentity": {
+    "usernameTemplate": "sysadmin@dev.localhost",
+    "mode": "auto-local",
+    "rotateBeforeProduction": false
+  },
+  "seededProviderDefaults": [
+    {
+      "providerKey": "postgres",
+      "capability": "relational-store",
+      "classification": "per-environment",
+      "requiresCredential": true
+    },
+    {
+      "providerKey": "redis",
+      "capability": "cache-and-rate-limit",
+      "classification": "per-environment",
+      "requiresCredential": false
+    },
+    {
+      "providerKey": "minio",
+      "capability": "object-storage",
+      "classification": "per-environment",
+      "requiresCredential": true
+    },
+    {
+      "providerKey": "keycloak",
+      "capability": "identity-provider",
+      "classification": "per-environment",
+      "requiresCredential": true
+    },
+    {
+      "providerKey": "openbao",
+      "capability": "runtime-secrets",
+      "classification": "per-environment",
+      "requiresCredential": true
+    },
+    {
+      "providerKey": "mailpit",
+      "capability": "email-transport",
+      "classification": "mock-only",
+      "requiresCredential": false
+    },
+    {
+      "providerKey": "sentry",
+      "capability": "error-tracking",
+      "classification": "shared-cross-environment",
+      "requiresCredential": true
+    }
+  ],
+  "runtime": {
+    "WEB_HTTP_PORT": "8080",
+    "PLATFORM_API_PORT": "3001",
+    "MAILPIT_SMTP_PORT": "1025",
+    "MAILPIT_UI_PORT": "8025",
+    "OTEL_GRPC_PORT": "4317",
+    "OTEL_HTTP_PORT": "4318",
+    "OTEL_HEALTH_PORT": "13133",
+    "LOCALSTACK_PORT": "4566",
+    "PGADMIN_PORT": "5050",
+    "POSTGRES_PORT": "5433",
+    "REDIS_PORT": "6379",
+    "WIREMOCK_PORT": "8085",
+    "KEYCLOAK_PORT": "8090",
+    "CLICKHOUSE_HTTP_PORT": "8124",
+    "MINIO_API_PORT": "9000",
+    "MINIO_CONSOLE_PORT": "9001",
+    "CLICKHOUSE_NATIVE_PORT": "9002",
+    "APEX_DOMAIN": "dev.localhost",
+    "KC_HOSTNAME": "http://localhost:8090/kc",
+    "APP_BASE_URL": "http://dev.localhost:8080",
+    "PLATFORM_API_URL": "http://dev.localhost:8080",
+    "MINIO_BROWSER_REDIRECT_URL": "http://localhost:9001",
+    "MAILPIT_ROOT_URL": "/mailpit",
+    "LOCAL_FIXTURE_SESSION": "",
+    "SESSION_COOKIE_SECURE": "false",
+    "COMPOSE_PROJECT": "react",
+    "COMPOSE_PROJECT_FILTER": "'react(-dev)?'",
+    "PLATFORM_ENV": "development",
+    "GRAFANA_PORT": "3200",
+    "LOKI_PORT": "3100",
+    "ALLOY_PORT": "12345",
+    "GRAFANA_ADMIN_USER": "admin",
+    "LOG_LEVEL": "debug",
+    "KEYCLOAK_TEST_USERNAME": "sysadmin@aldous.info",
+    "CLICKHOUSE_HTTP": "http://localhost:8124",
+    "KEYCLOAK_REALM": "platform",
+    "MAILPIT_API": "http://localhost:8025/mailpit",
+    "MINIO_ENDPOINT": "http://localhost:9000",
+    "S3_DEFAULT_ENDPOINT": "http://localhost:9000",
+    "S3_DEFAULT_BUCKET": "platform-data",
+    "S3_DEFAULT_REGION": "us-east-1",
+    "NODE_ENV": "development",
+    "OTEL_HTTP": "http://localhost:4318",
+    "POSTGRES_APP_URL": "postgresql://platform_app:platformapppassword@localhost:5433/platform",
+    "POSTGRES_URL": "postgresql://platform:platformpassword@localhost:5433/platform",
+    "REDIS_URL": "redis://localhost:6379",
+    "SENTRY_ENABLED": "false",
+    "SENTRY_EVENT_RETENTION_DAYS": "90",
+    "MOCK_OIDC_PORT": "9080",
+    "MOCK_OIDC_PUBLIC_URL": "http://localhost:9080",
+    "MOCK_OIDC_INTERNAL_URL": "http://mock-oidc:8080",
+    "MOCK_OIDC_KC_BROKER_BASE": "http://localhost:8090/kc/realms/platform/broker"
+  }
+}

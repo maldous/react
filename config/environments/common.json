@@ -1,0 +1,22 @@
+{
+  "$schema": "./schema.json",
+  "description": "Shared, non-secret base config merged UNDER every stage manifest's runtime (ADR-0072). Replaces the non-secret half of the former hand-maintained root .env. Stage runtime keys override these. Secret values (passwords, keys) are NOT here — they are emitted into the generated artifact from OpenBao-seeded material or local-bootstrap derivation.",
+  "runtime": {
+    "POSTGRES_USER": "platform",
+    "POSTGRES_DB": "platform",
+    "CLICKHOUSE_USER": "platform",
+    "CLICKHOUSE_DB": "platform",
+    "MINIO_ROOT_USER": "minioadmin",
+    "KEYCLOAK_DB_USER": "keycloak",
+    "KEYCLOAK_DB_NAME": "keycloak",
+    "KEYCLOAK_ADMIN_USER": "admin",
+    "LOCALSTACK_SERVICES": "s3,sqs,sns,secretsmanager",
+    "LOCALSTACK_DEBUG": "0",
+    "OTEL_EXPORTER_OTLP_ENDPOINT": "http://localhost:4317",
+    "DATABASE_URL": "postgresql://platform:platformpassword@localhost:5433/platform",
+    "CLICKHOUSE_URL": "http://platform:clickhousepassword@localhost:8124",
+    "SENTRY_DB_USER": "sentry",
+    "SENTRY_DB_NAME": "sentry",
+    "SENTRY_DSN": ""
+  }
+}

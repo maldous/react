@@ -5,6 +5,7 @@
 import { writeFileSync, mkdirSync, existsSync, readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import process from "node:process";
+import { generatedEnvPath } from "../env/lib/manifests.mjs";
 
 const [, , stage, result, startTs, requiredCsv, excludedCsv = ""] = process.argv;
 
@@ -24,7 +25,7 @@ const gitSha = shell("git", ["rev-parse", "--short", "HEAD"]);
 const timestamp = new Date().toISOString();
 const durationSeconds = Math.round((Date.now() - new Date(startTs).getTime()) / 1000);
 
-const envPath = `.env.${stage}`;
+const envPath = existsSync(generatedEnvPath(stage)) ? generatedEnvPath(stage) : `.env.${stage}`;
 const composeProject = `react-${stage}`;
 
 // Best-effort parse of a list field from stage-policy.yaml

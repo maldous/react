@@ -1,0 +1,118 @@
+{
+  "$schema": "./schema.json",
+  "environmentId": "staging",
+  "name": "Staging",
+  "stage": "staging",
+  "executor": "compose",
+  "composeProject": "react-staging",
+  "baseUrl": "https://staging.aldous.info",
+  "apiUrl": "https://staging.aldous.info",
+  "domain": "staging.aldous.info",
+  "stagePolicy": {
+    "authMode": "real",
+    "dataPolicy": "preserve",
+    "dataPreservation": "preserve",
+    "destructiveAllowed": false,
+    "teardownDefault": false,
+    "cookieSecure": true
+  },
+  "allowedProfiles": ["default", "identity", "observability", "web"],
+  "allowedMocks": [],
+  "secretStoreProvider": "openbao",
+  "adminIdentity": {
+    "usernameTemplate": "sysadmin@staging.aldous.info",
+    "mode": "local-bootstrap",
+    "rotateBeforeProduction": true
+  },
+  "seededProviderDefaults": [
+    {
+      "providerKey": "postgres",
+      "capability": "relational-store",
+      "classification": "per-environment",
+      "requiresCredential": true
+    },
+    {
+      "providerKey": "redis",
+      "capability": "cache-and-rate-limit",
+      "classification": "per-environment",
+      "requiresCredential": false
+    },
+    {
+      "providerKey": "minio",
+      "capability": "object-storage",
+      "classification": "per-environment",
+      "requiresCredential": true
+    },
+    {
+      "providerKey": "keycloak",
+      "capability": "identity-provider",
+      "classification": "per-environment",
+      "requiresCredential": true
+    },
+    {
+      "providerKey": "openbao",
+      "capability": "runtime-secrets",
+      "classification": "per-environment",
+      "requiresCredential": true
+    },
+    {
+      "providerKey": "sentry",
+      "capability": "error-tracking",
+      "classification": "shared-cross-environment",
+      "requiresCredential": true
+    }
+  ],
+  "runtime": {
+    "WEB_HTTP_PORT": "82",
+    "PLATFORM_API_PORT": "3003",
+    "MAILPIT_SMTP_PORT": "1027",
+    "MAILPIT_UI_PORT": "8027",
+    "OTEL_GRPC_PORT": "4327",
+    "OTEL_HTTP_PORT": "4328",
+    "OTEL_HEALTH_PORT": "13143",
+    "LOCALSTACK_PORT": "4568",
+    "PGADMIN_PORT": "5052",
+    "POSTGRES_PORT": "5435",
+    "REDIS_PORT": "6381",
+    "WIREMOCK_PORT": "8087",
+    "KEYCLOAK_PORT": "8092",
+    "CLICKHOUSE_HTTP_PORT": "8126",
+    "MINIO_API_PORT": "9020",
+    "MINIO_CONSOLE_PORT": "9021",
+    "CLICKHOUSE_NATIVE_PORT": "9004",
+    "APEX_DOMAIN": "staging.aldous.info",
+    "KC_HOSTNAME": "https://staging.aldous.info/kc",
+    "APP_BASE_URL": "https://staging.aldous.info",
+    "PLATFORM_API_URL": "https://staging.aldous.info",
+    "MINIO_BROWSER_REDIRECT_URL": "https://staging.aldous.info/minio",
+    "MAILPIT_ROOT_URL": "/mailpit",
+    "SESSION_COOKIE_SECURE": "true",
+    "COMPOSE_PROJECT": "react-staging",
+    "COMPOSE_PROJECT_FILTER": "react-staging",
+    "PLATFORM_ENV": "staging",
+    "GRAFANA_PORT": "3202",
+    "LOKI_PORT": "3102",
+    "ALLOY_PORT": "12347",
+    "GRAFANA_ADMIN_USER": "admin",
+    "LOG_LEVEL": "info",
+    "KEYCLOAK_TEST_USERNAME": "sysadmin@aldous.info",
+    "CLICKHOUSE_HTTP": "http://localhost:8126",
+    "KEYCLOAK_REALM": "platform-staging",
+    "MAILPIT_API": "http://localhost:8027/mailpit",
+    "MINIO_ENDPOINT": "http://localhost:9020",
+    "S3_DEFAULT_ENDPOINT": "http://localhost:9020",
+    "S3_DEFAULT_BUCKET": "platform-data",
+    "S3_DEFAULT_REGION": "us-east-1",
+    "NODE_ENV": "staging",
+    "OTEL_HTTP": "http://localhost:4328",
+    "POSTGRES_APP_URL": "postgresql://platform_app:platformapppassword@localhost:5435/platform",
+    "POSTGRES_URL": "postgresql://platform:platformpassword@localhost:5435/platform",
+    "REDIS_URL": "redis://localhost:6381",
+    "SENTRY_ENABLED": "false",
+    "SENTRY_EVENT_RETENTION_DAYS": "90",
+    "MOCK_OIDC_PORT": "9082",
+    "MOCK_OIDC_PUBLIC_URL": "http://localhost:9082",
+    "MOCK_OIDC_INTERNAL_URL": "http://mock-oidc:8080",
+    "MOCK_OIDC_KC_BROKER_BASE": "https://staging.aldous.info/kc/realms/platform-staging/broker"
+  }
+}

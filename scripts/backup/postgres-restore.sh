@@ -32,8 +32,9 @@ if [ -z "$FILE" ] || [ ! -f "$FILE" ]; then
 fi
 
 URL="${POSTGRES_URL:-}"
-if [ -z "$URL" ] && [ -f ".env.${ENV}" ]; then
-  URL="$(grep '^POSTGRES_URL=' ".env.${ENV}" | head -1 | cut -d= -f2- || true)"
+_ENVF="$(bash "$(dirname "$0")/../env/resolve-env-file.sh" "$ENV" 2>/dev/null || echo ".env.${ENV}")"
+if [ -z "$URL" ] && [ -f "$_ENVF" ]; then
+  URL="$(grep '^POSTGRES_URL=' "$_ENVF" | head -1 | cut -d= -f2- || true)"
 fi
 URL="${URL:-postgresql://platform:platformpassword@localhost:5433/platform}"
 

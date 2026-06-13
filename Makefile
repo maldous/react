@@ -15,8 +15,11 @@ SHELL := /bin/bash
 .SHELLFLAGS := -eu -o pipefail -c
 .DEFAULT_GOAL := all
 
-# Load .env if present (provides env vars for local development)
--include .env
+# Load a root .env FILE if present (local dev convenience). Guarded with a
+# regular-file test so the .env/ DIRECTORY of generated runtime artifacts
+# (ADR-0072) is never mistaken for an includable file.
+ENV_DOTFILE := $(shell test -f .env && echo .env)
+-include $(ENV_DOTFILE)
 export
 
 include make/core.mk
