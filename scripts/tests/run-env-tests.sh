@@ -112,6 +112,14 @@ run_group() {
         PROD_BASE_URL="$_app_url" E2E_STAGE="$STAGE" \
             npx playwright test --config playwright.discovery.config.ts
         ;;
+      e2e-failure-rootcause)
+        # ADR-ACT-0285 Phase 5 — failure-path/root-cause + Grafana-Loki validation.
+        # Triggers a denial, proves it is root-causeable in Loki (reason+requestId+
+        # traceId), and enforces the no-high-cardinality-labels policy. Honest
+        # DEGRADED when backends unreachable; FAILED on a non-root-causeable failure
+        # or a forbidden label.
+        STAGE="$STAGE" node tools/e2e/failure-rootcause/src/index.mjs
+        ;;
       unit)
         POSTGRES_URL="$_pg_url" POSTGRES_APP_URL="$_pg_app_url" REDIS_URL="$_rd_url" npm run test:platform-api
         NODE_ENV=test npm run test:frontend:run

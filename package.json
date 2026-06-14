@@ -160,6 +160,7 @@
     "e2e:registry:validate": "node tools/e2e/validate-e2e/src/index.mjs all",
     "e2e:observability:correlate": "node tools/e2e/observability-correlation/src/index.mjs",
     "e2e:ui:discover": "playwright test --config playwright.discovery.config.ts",
+    "e2e:failure:rootcause": "node tools/e2e/failure-rootcause/src/index.mjs",
     "validate:slices": "node tools/architecture/validate-slice-readiness/src/index.mjs",
     "build:spa": "cd apps/react-enterprise-app && ../../node_modules/.bin/vite build",
     "semgrep": "semgrep scan --config tools/semgrep/rules.yml --metrics=off",

@@ -1,6 +1,18 @@
 .PHONY: e2e-external-smoke e2e-external-auth e2e-external \
         dev-e2e dev-e2e-auth test-e2e staging-e2e prod-e2e run-stage-e2e \
-        e2e-coverage-validate e2e-observability-correlation e2e-clickability
+        e2e-coverage-validate e2e-observability-correlation e2e-clickability \
+        e2e-failure-rootcause
+
+## e2e-failure-rootcause — Failure-path / root-cause + Grafana-Loki validation
+## (ADR-ACT-0285 Phase 5). Triggers a denial, proves it is root-causeable in Loki
+## (stable reason + requestId + traceId), and enforces the label policy (no
+## high-cardinality Loki labels). Honest DEGRADED when Loki/app unreachable; FAILED
+## when a failure has no root-cause log or a forbidden label exists. Writes
+## docs/evidence/e2e/<stage>-{failure-rootcause,grafana-loki}-latest.{json,md}.
+e2e-failure-rootcause:
+	$(call STEP,e2e:failure-rootcause \($(ENV)\))
+	@STAGE=$(ENV) node tools/e2e/failure-rootcause/src/index.mjs
+	$(call OK,failure-path root-cause + Grafana/Loki evidence written)
 
 ## e2e-clickability — Dynamic clickability crawler (ADR-ACT-0285 Phase 4 / ADR-0075).
 ## Discovers visible clickable surfaces by accessible ROLE (never CSS), safely

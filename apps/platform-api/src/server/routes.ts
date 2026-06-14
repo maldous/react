@@ -1,4 +1,10 @@
-import { ConflictError, ForbiddenError, ValidationError } from "@platform/platform-errors";
+import {
+  ConflictError,
+  ForbiddenError,
+  UnexpectedError,
+  ValidationError,
+} from "@platform/platform-errors";
+import process from "node:process";
 import type { Route } from "./pipeline.ts";
 import { getHealth, getReadiness, getVersion } from "./health.ts";
 import { getFixtureSession } from "./session.ts";
@@ -753,6 +759,28 @@ export const routes: Route[] = [
     method: "GET",
     path: "/healthz",
     handler: async (_req, res) => res.json(200, getHealth()),
+  },
+  {
+    // Controlled synthetic-failure endpoint (ADR-ACT-0285 Phase 5). E2E uses this
+    // to prove an intentional error is logged (http.request.failed) AND captured
+    // to Sentry with the active trace context. GATED OFF by default and INVISIBLE
+    // (404) unless E2E_FAILURE_ENDPOINT_ENABLED=true; in production it additionally
+    // requires the explicit E2E_ALLOW_PROD_SYNTHETIC_FAILURE=true approval flag, so
+    // it can never be triggered in prod by accident. Throws a TYPED UnexpectedError
+    // (500) so the pipeline's catch logs + captures it (not a raw Error — #6).
+    method: "POST",
+    path: "/internal/e2e/trigger-failure",
+    operationName: "e2e.synthetic.failure",
+    handler: async (_req, res) => {
+      const enabled = process.env["E2E_FAILURE_ENDPOINT_ENABLED"] === "true";
+      const isProd = (process.env["PLATFORM_ENV"] ?? "") === "production";
+      const prodApproved = process.env["E2E_ALLOW_PROD_SYNTHETIC_FAILURE"] === "true";
+      if (!enabled || (isProd && !prodApproved)) {
+        res.json(404, { code: "NOT_FOUND", message: "Not found" });
+        return;
+      }
+      throw new UnexpectedError("api.error.e2eSyntheticFailure");
+    },
   },
   {
     method: "GET",

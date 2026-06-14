@@ -29,6 +29,7 @@ test:
     - e2e-smoke # make e2e-internal ENV=test — Playwright fixture session, isolated ports
     - e2e-clickability # ADR-ACT-0285 Phase 4 — crawl + quality-gate visible surfaces (fixture/safe)
     - e2e-observability-correlation # ADR-ACT-0285 Phase 3 — E2E<->logs/traces correlation evidence (honest DEGRADED until specs propagate ids)
+    - e2e-failure-rootcause # ADR-ACT-0285 Phase 5 — failure-path root-cause + Grafana/Loki label-policy evidence
 
 staging:
   executor: compose
@@ -45,6 +46,7 @@ staging:
     - e2e-clickability # ADR-ACT-0285 Phase 4 — crawl + quality-gate non-destructive surfaces
     - auth-e2e # ADR-ACT-0285 — real-auth confidence gate; FAILS on missing creds, DEGRADED on localhost (never passes promotion)
     - e2e-observability-correlation # ADR-ACT-0285 Phase 3 — E2E<->logs/traces correlation evidence
+    - e2e-failure-rootcause # ADR-ACT-0285 Phase 5 — failure-path root-cause + Grafana/Loki label-policy evidence
   excludedTests:
     - tenant-data
     - destructive
@@ -71,3 +73,4 @@ prod:
     - auth-e2e # FAILS if localhost — prod cannot silently skip auth confidence
     - production-e2e # npm run test:e2e:prod
     - e2e-observability-correlation # ADR-ACT-0285 Phase 3 — E2E<->logs/traces correlation evidence
+    - e2e-failure-rootcause # ADR-ACT-0285 Phase 5 — failure-path root-cause + Grafana/Loki label-policy evidence
