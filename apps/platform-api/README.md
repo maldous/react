@@ -112,6 +112,7 @@ production
 @platform/session-runtime
 @platform/i18n-runtime
 @platform/adapters-keycloak
+@platform/adapters-opentelemetry
 @platform/adapters-redis
 @platform/adapters-postgres
 @platform/authorisation-runtime

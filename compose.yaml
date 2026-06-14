@@ -555,8 +555,10 @@ services:
     restart: unless-stopped
 
   tempo:
+    # In BOTH the standard observability stack (so it receives traces wherever
+    # Loki/Grafana/Alloy run — ADR-ACT-0284) and the ADR-0071 provider group.
     image: grafana/tempo:2.6.0
-    profiles: [observability-provider]
+    profiles: [observability, observability-provider]
     command: ["-config.file=/etc/tempo/tempo.yaml"]
     volumes:
       - ./docker/tempo/tempo.yaml:/etc/tempo/tempo.yaml:ro
@@ -1263,6 +1265,15 @@ services:
       # host-perspective LOKI_URL in .env.<env> (localhost:<offset>) is NOT used
       # here — it is for the host-run dev BFF (Tilt) and host smoke tests.
       LOKI_URL: http://loki:3100
+      # Distributed tracing (ADR-ACT-0284): the NodeSDK (adapters-opentelemetry)
+      # exports OTLP/HTTP to the collector, which forwards to Tempo. This is the
+      # in-container service address (4318 = OTLP/HTTP) — the host-perspective
+      # OTEL_EXPORTER_OTLP_ENDPOINT in .env.<env> (localhost) is for the host-run
+      # dev BFF only, exactly like LOKI_URL above. Set OTEL_SDK_DISABLED=true to
+      # turn tracing off without a redeploy.
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+      OTEL_SERVICE_NAME: ${OTEL_SERVICE_NAME:-platform-api}
+      OTEL_SDK_DISABLED: ${OTEL_SDK_DISABLED:-false}
     ports:
       - "${PLATFORM_API_PORT:-3001}:3001"
     depends_on:

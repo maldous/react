@@ -1,6 +1,8 @@
 import {
   trace,
   context,
+  propagation,
+  SpanKind,
   SpanStatusCode,
   type Tracer,
   type Span,
@@ -54,6 +56,43 @@ export function withSpanSync<T>(
     span.end();
     throw err;
   }
+}
+
+/**
+ * Run `fn` inside an ACTIVE server-kind span, continuing any inbound W3C trace
+ * context from `carrier` (incoming HTTP headers). Activating the span is what
+ * makes downstream auto-instrumented work (pg, redis, outbound http) attach as
+ * children and what lets getTraceContext()/Sentry read the trace id — necessary
+ * because node:http is ESM-imported here and so is NOT patched by the SDK's
+ * require-in-the-middle (ADR-ACT-0284). The span is the trace root when there is
+ * no inbound parent.
+ */
+export async function withServerSpan<T>(
+  name: string,
+  carrier: Record<string, string | string[] | undefined>,
+  attributes: OtelSpanAttributes,
+  fn: SpanCallback<T>,
+  tracerName = "platform-api"
+): Promise<T> {
+  const tracer = trace.getTracer(tracerName);
+  const parent = propagation.extract(context.active(), carrier);
+  return tracer.startActiveSpan(
+    name,
+    { kind: SpanKind.SERVER, attributes },
+    parent,
+    async (span) => {
+      try {
+        const result = await fn(span);
+        span.end();
+        return result;
+      } catch (err) {
+        recordException(span, err);
+        span.setStatus({ code: SpanStatusCode.ERROR });
+        span.end();
+        throw err;
+      }
+    }
+  );
 }
 
 export function getTraceContext(): { traceId: string | undefined; spanId: string | undefined } {

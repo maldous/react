@@ -2,6 +2,10 @@ import http from "node:http";
 import crypto from "node:crypto";
 import { createLogger, type PlatformLogLevel } from "@platform/platform-logging";
 import {
+  getTraceContext as getActiveTraceContext,
+  withServerSpan,
+} from "@platform/platform-observability";
+import {
   ForbiddenError,
   UnauthorizedError,
   ValidationError,
@@ -207,7 +211,10 @@ export function createRouter(
     level: (process.env["LOG_LEVEL"] as PlatformLogLevel | undefined) ?? "info",
   });
 
-  return async (req, res) => {
+  const coreHandler = async (
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ): Promise<void> => {
     if (req.method === "OPTIONS") {
       res.writeHead(204, {
         "X-Content-Type-Options": "nosniff",
@@ -222,7 +229,16 @@ export function createRouter(
     const method = req.method ?? "GET";
     const url = new URL(req.url ?? "/", "http://localhost");
     const path = url.pathname;
-    const trace = getTraceContext(req);
+    // Prefer the ACTIVE OpenTelemetry span id (what is exported to Tempo) so log
+    // lines carry the same traceId as the trace — the basis of Loki<->Tempo
+    // correlation. Fall back to the inbound W3C traceparent header when no SDK
+    // span is active (e.g. SDK disabled). (ADR-ACT-0284)
+    const inbound = getTraceContext(req);
+    const active = getActiveTraceContext();
+    const trace = {
+      traceId: active.traceId ?? inbound.traceId,
+      spanId: active.spanId ?? inbound.spanId,
+    };
     const reqLogger = logger.child({
       requestId,
       method,
@@ -682,5 +698,21 @@ export function createRouter(
       const safe = toSafeResponse(err);
       jsonResponse(res, 500, safe, requestId);
     }
+  };
+
+  // Wrap every request in an ACTIVE server span (ADR-ACT-0284). node:http is
+  // ESM-imported, so the SDK's require-in-the-middle cannot patch it — this
+  // manual span is the trace root, and activating it is what makes pg/redis
+  // (auto-instrumented via RITM) attach as children and lets the in-handler
+  // logger + Sentry read the trace id. OPTIONS is handled inside without a body.
+  return async (req, res) => {
+    const method = req.method ?? "GET";
+    const path = new URL(req.url ?? "/", "http://localhost").pathname;
+    await withServerSpan(
+      `${method} ${path}`,
+      req.headers as Record<string, string | string[] | undefined>,
+      { "http.request.method": method, "url.path": path },
+      () => coreHandler(req, res)
+    );
   };
 }

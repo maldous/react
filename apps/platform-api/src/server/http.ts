@@ -1,3 +1,6 @@
+// OpenTelemetry must initialise before any instrumented module loads — keep this
+// import first (ADR-ACT-0284).
+import "./otel-init.ts";
 import http from "node:http";
 import process from "node:process";
 import { createLogger, type PlatformLogLevel } from "@platform/platform-logging";

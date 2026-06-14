@@ -21,6 +21,13 @@ processors:
 exporters:
   debug:
     verbosity: detailed
+  # Export traces to Tempo over OTLP/HTTP (ADR-ACT-0284). Tempo's distributor
+  # listens on 4318; this is what turns the collector from a debug sink into a
+  # real trace backend. tls insecure — internal compose network only.
+  otlphttp/tempo:
+    endpoint: http://tempo:4318
+    tls:
+      insecure: true
 
 service:
   extensions: [health_check]
@@ -28,7 +35,7 @@ service:
     traces:
       receivers: [otlp]
       processors: [memory_limiter, batch]
-      exporters: [debug]
+      exporters: [otlphttp/tempo, debug]
     metrics:
       receivers: [otlp]
       processors: [memory_limiter, batch]

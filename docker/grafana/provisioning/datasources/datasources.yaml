@@ -17,5 +17,25 @@ datasources:
           datasourceUid: platform-loki
         - name: traceId
           matcherRegex: '"traceId":"([^"]+)"'
+          # Clicking a traceId in a log line opens the matching Tempo trace
+          # (ADR-ACT-0284 — logs<->traces correlation).
           url: "${__value.raw}"
-          datasourceUid: platform-loki
+          datasourceUid: platform-tempo
+
+  - name: Tempo
+    type: tempo
+    access: proxy
+    uid: platform-tempo
+    url: http://tempo:3200
+    editable: false
+    jsonData:
+      # From a Tempo span, pivot to the Loki logs for the same trace.
+      tracesToLogsV2:
+        datasourceUid: platform-loki
+        spanStartTimeShift: "-1h"
+        spanEndTimeShift: "1h"
+        filterByTraceID: true
+        customQuery: true
+        query: '{service="$${__span.tags["service.name"]}"} |= "$${__trace.traceId}"'
+      nodeGraph:
+        enabled: true
