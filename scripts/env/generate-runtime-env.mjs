@@ -145,6 +145,27 @@ export function resolveSecrets(target, keys = SECRET_ENV_KEYS) {
   return { secrets: out, seededCount: Object.keys(seeded).length, bootstrapDerived };
 }
 
+// Render a KEY=VALUE line that is safe BOTH for `set -a; source <file>` (the
+// compose-wrapper sources the file so ${VAR} interpolation works) AND for
+// docker compose --env-file (which strips surrounding quotes). Plain values
+// (URLs, tokens, identifiers) are emitted bare to keep the file diff-clean;
+// anything containing shell-significant characters — e.g. a regex like
+// `react-(prod|shared|sonar)` whose `(` `|` `)` are bash syntax — is quoted.
+// Without this, sourcing the file aborts and the var is silently left unset
+// (ADR-ACT-0284). Double-quote when the value has no $/`/\/"/newline (bash
+// keeps it literal, compose strips the quotes); fall back to single-quote for
+// values that do; throw on the rare value neither can carry so it surfaces at
+// generation time instead of corrupting a runtime env.
+function emitEnvLine(k, v) {
+  const value = v == null ? "" : String(v);
+  if (value === "" || /^[A-Za-z0-9_@%+=:,./-]+$/.test(value)) return `${k}=${value}`;
+  if (!/["`$\\\n]/.test(value)) return `${k}="${value}"`;
+  if (!value.includes("'") && !value.includes("\n")) return `${k}='${value}'`;
+  throw new Error(
+    `env value for ${k} contains characters that cannot be safely quoted for both bash and docker compose; quote it explicitly in the manifest`
+  );
+}
+
 function renderEnvFile(target, runtime, keys, secrets, info) {
   const isStage = STAGES.includes(target);
   const source = isStage
@@ -178,12 +199,12 @@ function renderEnvFile(target, runtime, keys, secrets, info) {
   const label = isStage ? "common.json + manifest" : "shared.json";
   lines.push(`# ── Non-secret bootstrap intent (${label}) ────────────────────`);
   for (const [k, v] of Object.entries(runtime)) {
-    lines.push(`${k}=${v}`);
+    lines.push(emitEnvLine(k, v));
   }
   lines.push("");
   lines.push("# ── Secret material (seeded from OpenBao or local-bootstrap derived) ────────");
   for (const key of keys) {
-    lines.push(`${key}=${secrets[key]}`);
+    lines.push(emitEnvLine(key, secrets[key]));
   }
   lines.push("");
   return lines.join("\n");
