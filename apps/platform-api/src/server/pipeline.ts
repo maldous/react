@@ -389,12 +389,23 @@ export function createRouter(
 
         if (decision.granted) {
           umaGranted = true;
-        } else if (decision.reason === "keycloak_unavailable") {
-          // Degrade gracefully — fall through to static check
+        } else if (
+          decision.reason === "keycloak_unavailable" ||
+          decision.reason === "resource_not_registered"
+        ) {
+          // Degrade gracefully — fall through to static check. "keycloak_unavailable"
+          // is a transient outage; "resource_not_registered" is a provisioning gap
+          // (the resource is not yet a protected resource on the BFF client). In both
+          // cases the route's static requiredPermission is the effective gate
+          // (ADR-ACT-0145). Routes without a requiredPermission still fail closed below.
           const log = createLogger({ name: "pipeline" });
           log.warn(
-            { resource: matchingRoute.resource, scope: matchingRoute.umaScope },
-            "UMA check unavailable — falling back to static permission check"
+            {
+              resource: matchingRoute.resource,
+              scope: matchingRoute.umaScope,
+              reason: decision.reason,
+            },
+            "UMA check not decisive — falling back to static permission check"
           );
         } else if (decision.reason === "insufficient_auth_level") {
           jsonResponse(

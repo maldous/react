@@ -120,6 +120,31 @@ describe("authorizeResourceAccess — UMA path (token present)", () => {
     assert.equal(out.ok === false && out.status, 403);
   });
 
+  it("falls back to static check when the resource is not registered in Keycloak (allow)", async () => {
+    // Provisioning gap: the resource/scope is not a protected resource on the BFF
+    // client yet. Must degrade to the static backstop, not hard-deny (ADR-ACT-0145).
+    const out = await authorizeResourceAccess({
+      actor: actor({ accessTokenEnc: "enc", permissions: ["organisation.read"] }),
+      sessionId: "s-1",
+      fqdnTenant: null,
+      guard: GUARD,
+      deps: deps({ granted: false, reason: "resource_not_registered" }),
+    });
+    assert.deepEqual(out, { ok: true });
+  });
+
+  it("still denies (403) on an unregistered resource when the actor lacks the static permission", async () => {
+    const out = await authorizeResourceAccess({
+      actor: actor({ accessTokenEnc: "enc", permissions: [] }),
+      sessionId: "s-1",
+      fqdnTenant: null,
+      guard: GUARD,
+      deps: deps({ granted: false, reason: "resource_not_registered" }),
+    });
+    assert.equal(out.ok, false);
+    assert.equal(out.ok === false && out.status, 403);
+  });
+
   it("returns 401 when a token is expected but cannot be resolved", async () => {
     const out = await authorizeResourceAccess({
       actor: actor({ accessTokenEnc: "enc", permissions: ["organisation.read"] }),

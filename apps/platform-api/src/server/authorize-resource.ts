@@ -10,10 +10,12 @@ import type { TenantContext } from "./tenant-resolver.ts";
  * This mirrors the enforcement order of the route gate in
  * `pipeline.ts` exactly (UMA-first → static fallback → fail-closed):
  *   1. If the actor has a stored access token, call the UMA ticket endpoint.
- *      - granted              → allow
- *      - keycloak_unavailable → degrade to the static permission check
- *      - insufficient_auth    → 401 step-up required
- *      - any other denial     → 403
+ *      - granted                 → allow
+ *      - keycloak_unavailable     → degrade to the static permission check
+ *      - resource_not_registered  → degrade to the static permission check
+ *                                   (provisioning gap, not a policy decision)
+ *      - insufficient_auth        → 401 step-up required
+ *      - any other denial         → 403
  *   2. Static fallback: allow only if the actor's resolved permission set
  *      contains `requiredPermission`; otherwise 403.
  *
@@ -70,8 +72,14 @@ export async function authorizeResourceAccess(params: {
     );
     if (decision.granted) {
       umaGranted = true;
-    } else if (decision.reason === "keycloak_unavailable") {
+    } else if (
+      decision.reason === "keycloak_unavailable" ||
+      decision.reason === "resource_not_registered"
+    ) {
       // Degrade gracefully — fall through to the static permission check.
+      // "keycloak_unavailable" is a transient outage; "resource_not_registered" is a
+      // provisioning gap (resource not yet registered on the BFF client). The static
+      // requiredPermission is the effective gate in both cases (ADR-ACT-0145).
     } else if (decision.reason === "insufficient_auth_level") {
       return { ok: false, status: 401, code: "stepUpRequired", permission };
     } else {

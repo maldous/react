@@ -839,6 +839,60 @@ describe("api pipeline: sole-UMA route fails closed when Keycloak unavailable", 
   });
 });
 
+// ?? 19b. Unregistered resource degrades to static permission ?????????????????
+describe("api pipeline: unregistered UMA resource degrades to static check", () => {
+  let server: http.Server;
+  let url: string;
+  let savedEnv: string | undefined;
+
+  before(async () => {
+    savedEnv = process.env["LOCAL_FIXTURE_SESSION"];
+    delete process.env["LOCAL_FIXTURE_SESSION"];
+
+    const deps: RouterTestDeps = {
+      sessionStore: fakeStore(),
+      authorisationPort: () => ({
+        // Keycloak reports the resource is not a registered protected resource
+        // (provisioning gap) — must degrade to the static permission backstop.
+        checkAccess: async () => ({
+          granted: false as const,
+          reason: "resource_not_registered" as const,
+        }),
+      }),
+      resolveAccessToken: async () => "raw-access-token",
+    };
+
+    const s = await makeServer(
+      [
+        {
+          method: "GET",
+          path: "/uma-unregistered",
+          requiresAuth: true,
+          resource: "admin:provider_configs",
+          umaScope: "read",
+          // actor holds this permission — static fallback should grant
+          requiredPermission: "tenant.auth.settings.read",
+          handler: async (_req, res) => res.json(200, { ok: true }),
+        },
+      ],
+      deps
+    );
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    if (savedEnv !== undefined) process.env["LOCAL_FIXTURE_SESSION"] = savedEnv;
+    else delete process.env["LOCAL_FIXTURE_SESSION"];
+    await closeServer(server);
+  });
+
+  it("returns 200 via static fallback when the UMA resource is not registered", async () => {
+    const res = await fetch(`${url}/uma-unregistered`, { headers: { Cookie: UMA_COOKIE } });
+    assert.equal(res.status, 200);
+  });
+});
+
 // ?? 20. Missing/expired token → 401 ??????????????????????????????????????????
 describe("api pipeline: missing access token fails with 401", () => {
   let server: http.Server;

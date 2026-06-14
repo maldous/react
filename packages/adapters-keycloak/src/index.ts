@@ -277,6 +277,15 @@ export class KeycloakAuthorisationAdapter implements AuthorisationPort {
         return { granted: false, reason: "insufficient_scope" };
       if (String(err["error_description"] ?? "").includes("auth_level"))
         return { granted: false, reason: "insufficient_auth_level" };
+      // Keycloak returns invalid_request ("Resource with id [X] does not exist." /
+      // "Scope [...] does not exist.") when the requested permission's resource or
+      // scope is NOT registered as a protected resource on the BFF client. That is a
+      // PROVISIONING gap, not an authorisation decision — distinct from policy_denied
+      // (a registered resource whose policy evaluates to deny). The caller degrades
+      // this to the static permission backstop (ADR-ACT-0145), so a not-yet-registered
+      // resource never hard-denies a request that the static RBAC would allow.
+      if (errorCode === "invalid_request")
+        return { granted: false, reason: "resource_not_registered" };
       return { granted: false, reason: "policy_denied" };
     } catch {
       return { granted: false, reason: "keycloak_unavailable" };
