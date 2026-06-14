@@ -25,11 +25,22 @@ function makeDeps() {
     }),
   };
 
-  // Patch global fetch so mutateBffClientUris succeeds without network
+  // Patch global fetch so mutateBffClientUris succeeds without network.
+  // The usecase makes 3 sequential calls: token → clients lookup → PUT update.
   const origFetch = global.fetch;
-  global.fetch = mock.fn(async (_url: string, _opts?: unknown) => {
+  global.fetch = mock.fn(async (urlArg: string, _opts?: unknown) => {
     mutationCalls.push("fetch");
-    return new Response(JSON.stringify({ access_token: "tok" }), { status: 200 });
+    const url = String(urlArg);
+    if (url.includes("/protocol/openid-connect/token")) {
+      return new Response(JSON.stringify({ access_token: "tok" }), { status: 200 });
+    }
+    if (url.includes("/clients?")) {
+      return new Response(JSON.stringify([{ id: "client-1", redirectUris: [], webOrigins: [] }]), {
+        status: 200,
+      });
+    }
+    // PUT /clients/{id}
+    return new Response(JSON.stringify({}), { status: 200 });
   }) as typeof fetch;
 
   return {
@@ -72,8 +83,9 @@ describe("validateDomain", () => {
 
   it("rejects domain exceeding 253 chars", async () => {
     const { audit, restore } = makeDeps();
+    // 63+1+63+1+63+1+63+1+3 = 259 chars — exceeds the 253-char limit
     const longDomain =
-      "a".repeat(60) + "." + "b".repeat(60) + "." + "c".repeat(60) + "." + "d".repeat(60) + ".com";
+      "a".repeat(63) + "." + "b".repeat(63) + "." + "c".repeat(63) + "." + "d".repeat(63) + ".com";
     await assert.rejects(
       () =>
         addVanityDomain(
@@ -121,9 +133,20 @@ describe("addVanityDomain", () => {
     audit.emit = mock.fn(async () => {
       callOrder.push("audit");
     });
-    (global.fetch as ReturnType<typeof mock.fn>) = mock.fn(async (_url: string) => {
+    (global.fetch as ReturnType<typeof mock.fn>) = mock.fn(async (urlArg: string) => {
       callOrder.push("fetch");
-      return new Response(JSON.stringify({ access_token: "tok" }), { status: 200 });
+      const url = String(urlArg);
+      if (url.includes("/protocol/openid-connect/token")) {
+        return new Response(JSON.stringify({ access_token: "tok" }), { status: 200 });
+      }
+      if (url.includes("/clients?")) {
+        return new Response(
+          JSON.stringify([{ id: "client-1", redirectUris: [], webOrigins: [] }]),
+          { status: 200 }
+        );
+      }
+      // PUT /clients/{id}
+      return new Response(JSON.stringify({}), { status: 200 });
     }) as typeof fetch;
 
     await addVanityDomain(
