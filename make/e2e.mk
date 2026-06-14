@@ -1,6 +1,22 @@
 .PHONY: e2e-external-smoke e2e-external-auth e2e-external \
         dev-e2e dev-e2e-auth test-e2e staging-e2e prod-e2e run-stage-e2e \
-        e2e-coverage-validate e2e-observability-correlation
+        e2e-coverage-validate e2e-observability-correlation e2e-clickability
+
+## e2e-clickability — Dynamic clickability crawler (ADR-ACT-0285 Phase 4 / ADR-0075).
+## Discovers visible clickable surfaces by accessible ROLE (never CSS), safely
+## crawls same-origin SPA routes, and quality-gates each page (main landmark, h1,
+## no console/page/asset errors, not blank) + diffs discovered routes vs the UI
+## contract. Needs a running stack at PROD_BASE_URL (defaults to the stage web URL).
+## Writes docs/evidence/e2e/<stage>-clickability-latest.{json,md} + trace/video on fail.
+e2e-clickability:
+	$(call STEP,e2e:clickability \($(ENV)\))
+	@_url="$${PROD_BASE_URL:-}"; \
+	if [ -z "$$_url" ]; then \
+		_port="$$(grep -oP 'WEB_HTTP_PORT=\K\d+' .env/$(ENV).env 2>/dev/null | head -1 || echo 80)"; \
+		_url="http://localhost:$$_port"; \
+	fi; \
+	PROD_BASE_URL="$$_url" E2E_STAGE=$(ENV) npx playwright test --config playwright.discovery.config.ts
+	$(call OK,clickability crawl complete)
 
 ## e2e-observability-correlation — Prove each E2E scenario is findable in the logs
 ## (and, when delivered, Tempo) by its testRunId/scenarioId (ADR-ACT-0285 Phase 3).

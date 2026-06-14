@@ -10,6 +10,7 @@ dev:
     - minimal-smoke
     - unit
     - e2e-smoke # runs make e2e-internal ENV=dev — reuses Tilt servers on 3001/5173
+    - e2e-clickability # ADR-ACT-0285 Phase 4 — crawl + quality-gate visible surfaces (fixture/safe)
 
 test:
   executor: compose
@@ -26,6 +27,7 @@ test:
     - interface # compose-smoke.sh — docker container reachability
     - compose-smoke # compose-smoke.test.mjs — full integration smoke (resets DB)
     - e2e-smoke # make e2e-internal ENV=test — Playwright fixture session, isolated ports
+    - e2e-clickability # ADR-ACT-0285 Phase 4 — crawl + quality-gate visible surfaces (fixture/safe)
     - e2e-observability-correlation # ADR-ACT-0285 Phase 3 — E2E<->logs/traces correlation evidence (honest DEGRADED until specs propagate ids)
 
 staging:
@@ -40,6 +42,7 @@ staging:
     - integration # run-stage-tests (unit-safe 206 + frontend 26) — no fixture-DB substrate
     - compose-smoke # compose-smoke.test.mjs DATA_POLICY=preserve — infra health, no resets
     - external-smoke # make e2e-external-smoke — 14 Playwright tests against localhost:82
+    - e2e-clickability # ADR-ACT-0285 Phase 4 — crawl + quality-gate non-destructive surfaces
     - auth-e2e # ADR-ACT-0285 — real-auth confidence gate; FAILS on missing creds, DEGRADED on localhost (never passes promotion)
     - e2e-observability-correlation # ADR-ACT-0285 Phase 3 — E2E<->logs/traces correlation evidence
   excludedTests:
@@ -64,6 +67,7 @@ prod:
     - tenant # tenant-prod.spec.ts — skips unless PROD_BASE_URL=aldous.info
     - compose-smoke # DATA_POLICY=preserve
     - external-smoke # make e2e-external-smoke against localhost:83
+    - e2e-clickability # ADR-ACT-0285 Phase 4 — crawl + quality-gate production-safe surfaces
     - auth-e2e # FAILS if localhost — prod cannot silently skip auth confidence
     - production-e2e # npm run test:e2e:prod
     - e2e-observability-correlation # ADR-ACT-0285 Phase 3 — E2E<->logs/traces correlation evidence

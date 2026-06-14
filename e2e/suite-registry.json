@@ -1,5 +1,5 @@
 {
-  "$comment": "ADR-0075 / ADR-ACT-0285 — stage-aware E2E suite registry. Single source of truth for E2E coverage. Every test file under e2e/ MUST have an entry here (validated by e2e:coverage:validate); no hidden coverage. authMode: fixture|real|unauthenticated|mixed. stageMin: lowest stage a suite runs at (runs at that stage and all higher). destructive: writes/destroys tenant-or-customer data. requiredCapabilities reference docs/evidence/platform/universal-service-foundation-registry.json .capabilities[].capability. expected{Logs,Metrics,Traces,SentryEvents} declare the observability that scenario must produce ('none' = not asserted yet at this phase).",
+  "$comment": "ADR-0075 / ADR-ACT-0285 \u2014 stage-aware E2E suite registry. Single source of truth for E2E coverage. Every test file under e2e/ MUST have an entry here (validated by e2e:coverage:validate); no hidden coverage. authMode: fixture|real|unauthenticated|mixed. stageMin: lowest stage a suite runs at (runs at that stage and all higher). destructive: writes/destroys tenant-or-customer data. requiredCapabilities reference docs/evidence/platform/universal-service-foundation-registry.json .capabilities[].capability. expected{Logs,Metrics,Traces,SentryEvents} declare the observability that scenario must produce ('none' = not asserted yet at this phase).",
   "schemaVersion": 1,
   "stageVocabulary": ["dev", "test", "staging", "prod"],
   "authModeVocabulary": ["fixture", "real", "unauthenticated", "mixed"],
@@ -308,6 +308,29 @@
       "expectedSentryEvents": [],
       "failureModes": ["missing-security-headers", "weak-csp"],
       "owner": "ADR-0025; ADR-0035"
+    },
+    {
+      "id": "discovery-clickability",
+      "file": "e2e/discovery/clickability.spec.ts",
+      "stageMin": "dev",
+      "authMode": "mixed",
+      "destructive": false,
+      "surfaces": ["route:*", "discovery:crawl", "a11y:landmarks"],
+      "requiredCapabilities": ["service-catalog-readiness"],
+      "expectedLogs": ["http.request.complete"],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": [
+        "console-error",
+        "pageerror",
+        "blank-page",
+        "missing-main-landmark",
+        "missing-heading",
+        "failed-asset",
+        "orphaned-route"
+      ],
+      "owner": "ADR-0075; ADR-ACT-0285"
     }
   ],
   "capabilityExemptions": [

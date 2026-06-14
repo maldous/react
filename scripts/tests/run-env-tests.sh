@@ -104,6 +104,14 @@ run_group() {
         # produced zero correlatable lines. Never silently passes.
         STAGE="$STAGE" node tools/e2e/observability-correlation/src/index.mjs
         ;;
+      e2e-clickability)
+        # ADR-ACT-0285 Phase 4 / ADR-0075 — dynamic clickability crawler. Discovers
+        # clickable surfaces by accessible role, safely crawls same-origin routes,
+        # and quality-gates each page (landmark/h1/no-console-error/not-blank) +
+        # diffs vs the UI contract. Runs against the stage web URL.
+        PROD_BASE_URL="$_app_url" E2E_STAGE="$STAGE" \
+            npx playwright test --config playwright.discovery.config.ts
+        ;;
       unit)
         POSTGRES_URL="$_pg_url" POSTGRES_APP_URL="$_pg_app_url" REDIS_URL="$_rd_url" npm run test:platform-api
         NODE_ENV=test npm run test:frontend:run

@@ -1,0 +1,60 @@
+{
+  "stage": "prod",
+  "testRunId": "crawl-verify2-1781429140",
+  "baseURL": "http://localhost:83",
+  "pagesCrawled": 2,
+  "visited": [
+    {
+      "route": "/",
+      "status": "ok",
+      "violations": [],
+      "hasMain": true,
+      "hasHeading": true,
+      "clickableCount": 2
+    },
+    {
+      "route": "/login",
+      "status": "ok",
+      "violations": [],
+      "hasMain": true,
+      "hasHeading": true,
+      "clickableCount": 2
+    }
+  ],
+  "discovery": {
+    "newSurfacesNotInContract": [],
+    "contractRoutesNotReached": [
+      "/admin",
+      "/admin/readiness",
+      "/admin/members",
+      "/admin/auth",
+      "/admin/features",
+      "/admin/config",
+      "/admin/email",
+      "/admin/domains",
+      "/admin/storage",
+      "/admin/observability",
+      "/admin/webhooks",
+      "/admin/platform",
+      "/admin/clickthrough",
+      "/admin/logs",
+      "/admin/entitlements",
+      "/admin/usage",
+      "/admin/developer",
+      "/admin/search",
+      "/admin/events",
+      "/admin/account",
+      "/admin/monitoring",
+      "/admin/scheduled-jobs"
+    ]
+  },
+  "consoleErrors": [],
+  "benignConsoleIgnored": [
+    "http://localhost:83/ :: Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+    "http://localhost:83/ :: Faro\n @grafana/faro-web-sdk:transport-fetch\n Failed sending payload to the receiver\n {meta: Object, measurements: Array(2)} TypeError: Failed to fetch\n    at http://localhost:83/assets/index-HZJNhL9M.js:140:47047\n    at lJ.<anonymous> (http://localhost:83/assets/index-HZJNhL9M.js:139:33151)\n    at Generator.next (<anonymous>)\n    at http://localhost:83/assets/index-HZJNhL9M.js:139:31878\n    at new Promise (<anonymous>)\n    at tJ (http://localhost:83/assets/index-HZJNhL9M.js:139:31678)\n    at http://localhost:83/assets/index-HZJNhL9M.js:139:32846\n    at a (http://localhost:83/assets/index-HZJNhL9M.js:121:3000)\n    at http://localhost:83/assets/index-HZJNhL9M.js:121:3179\n    at new Promise (<anonymous>)"
+  ],
+  "pageErrors": [],
+  "failedAssets": [],
+  "result": "PASSED",
+  "generatedFor": "ADR-ACT-0285 Phase 4 / ADR-0075"
+}
