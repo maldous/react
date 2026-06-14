@@ -97,6 +97,13 @@ run_group() {
         # coverage (minus honest exemptions). Pure registry validation.
         STAGE="$STAGE" node tools/e2e/validate-e2e/src/index.mjs all
         ;;
+      e2e-observability-correlation)
+        # ADR-ACT-0285 Phase 3 — prove E2E scenarios are findable in the logs by
+        # testRunId/scenarioId (and Tempo when delivered). Honest: DEGRADED when
+        # backends unreachable / no E2E_TEST_RUN_ID; FAILED only when a known run
+        # produced zero correlatable lines. Never silently passes.
+        STAGE="$STAGE" node tools/e2e/observability-correlation/src/index.mjs
+        ;;
       unit)
         POSTGRES_URL="$_pg_url" POSTGRES_APP_URL="$_pg_app_url" REDIS_URL="$_rd_url" npm run test:platform-api
         NODE_ENV=test npm run test:frontend:run

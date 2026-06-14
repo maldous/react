@@ -1,0 +1,19 @@
+{
+  "stage": "prod",
+  "testRunId": "",
+  "result": "DEGRADED",
+  "loki": {
+    "status": "reachable",
+    "reason": "no E2E_TEST_RUN_ID provided — pipeline probe only (set E2E_TEST_RUN_ID to correlate a specific run)",
+    "lineCount": 0
+  },
+  "tempo": {
+    "status": "reachable",
+    "reason": null
+  },
+  "scenarios": [],
+  "notes": [
+    "Loki pipeline reachable: 115 platform-api stream(s) present."
+  ],
+  "generatedFor": "ADR-ACT-0285 Phase 3"
+}

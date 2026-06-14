@@ -90,6 +90,9 @@ loki.process "platform_logs" {
       durationMs     = "durationMs",
       errorCode      = "errorCode",
       errName        = "err.name",
+      testRunId      = "testRunId",
+      scenarioId     = "scenarioId",
+      e2eStage       = "e2eStage",
     }
   }
 
@@ -119,6 +122,9 @@ loki.process "platform_logs" {
       durationMs     = "",
       errorCode      = "",
       errName        = "",
+      testRunId      = "",
+      scenarioId     = "",
+      e2eStage       = "",
     }
   }
 

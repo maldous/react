@@ -198,6 +198,32 @@ function getTraceContext(req: http.IncomingMessage): {
   return { traceparent, traceId: parts[1], spanId: parts[2] };
 }
 
+/**
+ * Extract E2E correlation ids from x-e2e-* request headers (ADR-ACT-0285 Phase 3).
+ * The Playwright harness stamps a testRunId/scenarioId/stage on every browser and
+ * API request so a scenario can be traced through the logs (and on to Tempo via
+ * traceId). These are LOW-trust client-supplied values used only as searchable log
+ * metadata (never Loki labels, never a security decision) — sanitised to a safe
+ * charset and length so a hostile header can't inject into log lines.
+ */
+function getE2ECorrelation(req: http.IncomingMessage): {
+  testRunId?: string;
+  scenarioId?: string;
+  e2eStage?: string;
+} {
+  const clean = (v: string | string[] | undefined): string | undefined => {
+    const s = Array.isArray(v) ? v[0] : v;
+    if (typeof s !== "string" || s.length === 0) return undefined;
+    const safe = s.replace(/[^A-Za-z0-9._:-]/g, "").slice(0, 128);
+    return safe.length ? safe : undefined;
+  };
+  return {
+    testRunId: clean(req.headers["x-e2e-test-run-id"]),
+    scenarioId: clean(req.headers["x-e2e-scenario-id"]),
+    e2eStage: clean(req.headers["x-e2e-stage"]),
+  };
+}
+
 // Create the HTTP request handler from a route list
 export function createRouter(
   routes: Route[],
@@ -239,12 +265,17 @@ export function createRouter(
       traceId: active.traceId ?? inbound.traceId,
       spanId: active.spanId ?? inbound.spanId,
     };
+    const e2e = getE2ECorrelation(req);
     const reqLogger = logger.child({
       requestId,
       method,
       path,
       ...(trace.traceId ? { traceId: trace.traceId } : {}),
       ...(trace.spanId ? { spanId: trace.spanId } : {}),
+      // E2E correlation (ADR-ACT-0285 Phase 3) — searchable metadata only.
+      ...(e2e.testRunId ? { testRunId: e2e.testRunId } : {}),
+      ...(e2e.scenarioId ? { scenarioId: e2e.scenarioId } : {}),
+      ...(e2e.e2eStage ? { e2eStage: e2e.e2eStage } : {}),
     });
     reqLogger.debug("http.request.start");
 

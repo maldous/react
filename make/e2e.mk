@@ -1,6 +1,16 @@
 .PHONY: e2e-external-smoke e2e-external-auth e2e-external \
         dev-e2e dev-e2e-auth test-e2e staging-e2e prod-e2e run-stage-e2e \
-        e2e-coverage-validate
+        e2e-coverage-validate e2e-observability-correlation
+
+## e2e-observability-correlation — Prove each E2E scenario is findable in the logs
+## (and, when delivered, Tempo) by its testRunId/scenarioId (ADR-ACT-0285 Phase 3).
+## Honest: DEGRADED (exit 0) when Loki/Tempo unreachable or no E2E_TEST_RUN_ID;
+## FAILED (exit 1) only when a known run produced ZERO correlatable lines. Writes
+## docs/evidence/e2e/<stage>-observability-correlation-latest.{json,md}.
+e2e-observability-correlation:
+	$(call STEP,e2e:observability-correlation \($(ENV)\))
+	@STAGE=$(ENV) node tools/e2e/observability-correlation/src/index.mjs
+	$(call OK,observability correlation evidence written)
 
 ## e2e-coverage-validate — Stage-aware E2E coverage gate (ADR-0075 / ADR-ACT-0285).
 ## Fails make all when a delivered/locally-proven capability, admin route, nav item,

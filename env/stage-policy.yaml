@@ -26,6 +26,7 @@ test:
     - interface # compose-smoke.sh — docker container reachability
     - compose-smoke # compose-smoke.test.mjs — full integration smoke (resets DB)
     - e2e-smoke # make e2e-internal ENV=test — Playwright fixture session, isolated ports
+    - e2e-observability-correlation # ADR-ACT-0285 Phase 3 — E2E<->logs/traces correlation evidence (honest DEGRADED until specs propagate ids)
 
 staging:
   executor: compose
@@ -40,6 +41,7 @@ staging:
     - compose-smoke # compose-smoke.test.mjs DATA_POLICY=preserve — infra health, no resets
     - external-smoke # make e2e-external-smoke — 14 Playwright tests against localhost:82
     - auth-e2e # ADR-ACT-0285 — real-auth confidence gate; FAILS on missing creds, DEGRADED on localhost (never passes promotion)
+    - e2e-observability-correlation # ADR-ACT-0285 Phase 3 — E2E<->logs/traces correlation evidence
   excludedTests:
     - tenant-data
     - destructive
@@ -64,3 +66,4 @@ prod:
     - external-smoke # make e2e-external-smoke against localhost:83
     - auth-e2e # FAILS if localhost — prod cannot silently skip auth confidence
     - production-e2e # npm run test:e2e:prod
+    - e2e-observability-correlation # ADR-ACT-0285 Phase 3 — E2E<->logs/traces correlation evidence

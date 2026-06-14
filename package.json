@@ -158,6 +158,7 @@
     "e2e:personas:validate": "node tools/e2e/validate-e2e/src/index.mjs personas",
     "e2e:ui:contract:validate": "node tools/e2e/validate-e2e/src/index.mjs ui-contract",
     "e2e:registry:validate": "node tools/e2e/validate-e2e/src/index.mjs all",
+    "e2e:observability:correlate": "node tools/e2e/observability-correlation/src/index.mjs",
     "validate:slices": "node tools/architecture/validate-slice-readiness/src/index.mjs",
     "build:spa": "cd apps/react-enterprise-app && ../../node_modules/.bin/vite build",
     "semgrep": "semgrep scan --config tools/semgrep/rules.yml --metrics=off",
