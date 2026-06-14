@@ -188,6 +188,7 @@ sonar-up:
 ## .env.sonar if the default password has been changed.
 sonar-provision:
 	bash scripts/sonar/provision-token.sh
+	bash scripts/sonar/provision-oidc.sh
 
 ## sonar-down — Stop shared SonarQube instance
 sonar-down:

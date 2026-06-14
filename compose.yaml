@@ -260,17 +260,11 @@ services:
       # Serve SonarQube under /sonar so Caddy / Vite can proxy it at <host>/sonar/*
       SONAR_WEB_CONTEXT: ${SONAR_WEB_CONTEXT:-/sonar}
       # ── App-login SSO via Keycloak OIDC (ADR-0073, sonar-auth-oidc plugin) ──
-      # Shared instance → binds to one realm/host (prod by default). autoLogin skips
-      # the SonarQube login page. Props are ignored if the plugin is not installed.
-      SONAR_CORE_SERVERBASEURL: ${SONAR_PUBLIC_URL:-https://aldous.info/sonar}
-      SONAR_AUTH_OIDC_ENABLED: ${COMPOSE_SSO_ENABLED:-false}
-      SONAR_AUTH_OIDC_ISSUERURI: ${SONAR_OIDC_ISSUER:-https://aldous.info/kc/realms/platform-production}
-      SONAR_AUTH_OIDC_CLIENTID_SECURED: sonarqube
-      SONAR_AUTH_OIDC_CLIENTSECRET_SECURED: ${SONAR_OIDC_CLIENT_SECRET:-}
-      SONAR_AUTH_OIDC_SCOPES: "openid email profile"
-      SONAR_AUTH_OIDC_LOGINBUTTONTEXT: "Platform SSO"
-      SONAR_AUTH_OIDC_AUTOLOGIN: ${COMPOSE_SSO_ENABLED:-false}
-      SONAR_AUTH_OIDC_GROUPSSYNC: "false"
+      # NOTE: the sonar-auth-oidc plugin's settings are camelCase (issuerUri,
+      # clientId.secured, groupsSync.claimName, …). SonarQube maps SONAR_* env vars
+      # to properties by LOWERCASING, so those settings CANNOT be set here — they
+      # are written through the web API by scripts/sonar/provision-oidc.sh (run via
+      # `make sonar-provision`), where they persist in the SonarQube DB volume.
       # Default credentials: admin / admin — managed by provision-token.sh (ADR-0072)
     ports:
       - "${SONAR_PORT:-9064}:9000"

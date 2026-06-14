@@ -59,6 +59,15 @@ const DERIVE_AS_PASSWORD = new Set(["SYSADMIN_BOOTSTRAP_PASSWORD", "SONAR_ADMIN_
 // without the stage component — caddy + every platform-api agree on one value.
 const DERIVE_SHARED = new Set(["CADDY_INTERNAL_SECRET"]);
 
+// Some shared single-instance services authenticate against ONE environment's
+// Keycloak realm, so their derived secret must equal THAT environment's value
+// rather than a target-scoped derivation. The shared SonarQube binds to the prod
+// realm (ADR-0073), so its OIDC client secret is derived as if for prod — making
+// .env/sonar.env agree with .env/prod.env and the provisioned Keycloak client.
+const SHARED_REALM_BOUND_SECRETS = {
+  sonar: { SONAR_OIDC_CLIENT_SECRET: "prod" },
+};
+
 // LOCAL-BOOTSTRAP defaults pinned to the platform's well-known local-dev values.
 // These are CONTAINER-INIT / provisioning credentials that get baked into volumes
 // (Postgres/ClickHouse/MinIO/Keycloak-DB) or set by Keycloak provisioning. They MUST
@@ -119,7 +128,11 @@ export function resolveSecrets(target, keys = SECRET_ENV_KEYS) {
       continue;
     }
     // 4. Deterministic local-bootstrap derivation.
-    if (DERIVE_SHARED.has(key)) {
+    const realmBound = SHARED_REALM_BOUND_SECRETS[target]?.[key];
+    if (realmBound) {
+      // Bind to another environment's realm value (e.g. shared sonar -> prod).
+      out[key] = deriveHex(LOCAL_BOOTSTRAP_SALT, realmBound, key);
+    } else if (DERIVE_SHARED.has(key)) {
       out[key] = deriveHex(LOCAL_BOOTSTRAP_SALT, "shared", key);
     } else if (DERIVE_AS_PASSWORD.has(key)) {
       out[key] = derivePassword(target, key);

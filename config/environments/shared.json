@@ -10,7 +10,10 @@
       "SONAR_HOST_URL": "http://localhost:9064/sonar",
       "SONAR_PROJECT_KEY": "maldous-react",
       "SONAR_DB_USER": "sonar",
-      "SONAR_DB_NAME": "sonar"
+      "SONAR_DB_NAME": "sonar",
+      "COMPOSE_SSO_ENABLED": "true",
+      "SONAR_PUBLIC_URL": "https://aldous.info/sonar",
+      "SONAR_OIDC_ISSUER": "https://aldous.info/kc/realms/platform-production"
     }
   },
   "sentry": {

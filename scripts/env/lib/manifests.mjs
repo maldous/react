@@ -122,7 +122,11 @@ export const SECRET_ENV_KEYS = [
 // so NO hand-maintained .env.sonar / .env.sentry is required (ADR-0072).
 export const SHARED_TARGETS = ["sonar", "sentry"];
 export const SHARED_SECRET_KEYS = {
-  sonar: ["SONAR_DB_PASSWORD", "SONAR_ADMIN_PASSWORD", "SONAR_TOKEN"],
+  // SONAR_OIDC_CLIENT_SECRET: the shared SonarQube is a SINGLE instance, so its
+  // Keycloak OIDC client lives in exactly one realm (the prod realm). The secret
+  // must therefore equal the prod environment's SONAR_OIDC_CLIENT_SECRET — see
+  // SHARED_REALM_BOUND_SECRETS in generate-runtime-env.mjs (ADR-0073).
+  sonar: ["SONAR_DB_PASSWORD", "SONAR_ADMIN_PASSWORD", "SONAR_TOKEN", "SONAR_OIDC_CLIENT_SECRET"],
   sentry: ["SENTRY_SECRET_KEY", "SENTRY_ADMIN_PASSWORD"],
 };
 // Secret keys left EMPTY when not seeded — runtime-provisioned, never derived
