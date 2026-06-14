@@ -30,7 +30,7 @@ import crypto from "node:crypto";
 import pg from "pg";
 import type { PipelineHandler } from "./pipeline.ts";
 import { extractSlugFromHost as sharedExtractSlugFromHost } from "./tenant-resolver.ts";
-import { parseSessionCookie } from "./auth.ts";
+import { parseSessionCookies } from "./auth.ts";
 import { getSessionStore, getPostgresAppUrl } from "./dependencies.ts";
 import { getFixtureSession } from "./session.ts";
 
@@ -125,13 +125,20 @@ export const handleForwardAuth: PipelineHandler = async (req, res) => {
     roles = fixtureActor.roles;
     tenantId = fixtureActor.tenantId;
   } else {
-    const sessionId = parseSessionCookie(req.raw.headers["cookie"]);
-    if (!sessionId) {
+    // Try EVERY presented platform_session so a stale cookie can't shadow a valid
+    // session and wrongly deny a clickthrough service (ADR-ACT-0278).
+    const candidateIds = parseSessionCookies(req.raw.headers["cookie"]);
+    if (candidateIds.length === 0) {
       res.json(401, { code: "UNAUTHENTICATED", message: "No session" });
       return;
     }
     try {
-      const record = await getSessionStore().find(sessionId);
+      const store = getSessionStore();
+      let record = null;
+      for (const id of candidateIds) {
+        record = await store.find(id);
+        if (record) break;
+      }
       if (!record) {
         res.json(401, { code: "UNAUTHENTICATED", message: "Session expired" });
         return;

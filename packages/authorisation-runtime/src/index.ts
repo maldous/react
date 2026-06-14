@@ -27,6 +27,7 @@ export type AccessDenialReason =
   | "policy_denied" // Keycloak policy evaluation returned deny
   | "no_session" // no valid token presented
   | "resource_not_registered" // resource/scope not registered as a protected resource in Keycloak
+  | "token_unresolved" // valid session, but the UMA access token could not be resolved/refreshed
   | "keycloak_unavailable"; // Keycloak admin API unreachable / network error
 
 export type AccessDecision =

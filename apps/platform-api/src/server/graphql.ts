@@ -13,10 +13,14 @@ import {
 } from "@platform/graphql-api-runtime";
 import type { OrganisationProfile } from "@platform/contracts-organisation";
 import { getOrganisationProfile, updateOrganisationDisplayName } from "../usecases/organisation.ts";
-import { createOrganisationDependencies, getApplicationPool } from "./dependencies.ts";
+import {
+  createOrganisationDependencies,
+  getApplicationPool,
+  getSessionStore,
+} from "./dependencies.ts";
 import { getFixtureSession } from "./session.ts";
 import { resolveTenantFromRequest } from "./tenant-resolver.ts";
-import { parseSessionCookie } from "./auth.ts";
+import { parseSessionCookies } from "./auth.ts";
 import {
   authorizeResourceAccess,
   type ResourceGuard,
@@ -175,8 +179,23 @@ export const handleGraphql: PipelineHandler = async (req, res) => {
     return;
   }
 
-  // Per-operation UMA authorisation — mirrors the REST route gate.
-  const sessionId = parseSessionCookie(req.raw.headers["cookie"]);
+  // Per-operation UMA authorisation — mirrors the REST route gate. Resolve the
+  // session id from the FIRST presented platform_session cookie that exists in the
+  // store, so a stale cookie can't break UMA token resolution (ADR-ACT-0278).
+  let sessionId: string | null = null;
+  if (!getFixtureSession()) {
+    try {
+      const store = getSessionStore();
+      for (const id of parseSessionCookies(req.raw.headers["cookie"])) {
+        if (await store.find(id)) {
+          sessionId = id;
+          break;
+        }
+      }
+    } catch {
+      sessionId = null;
+    }
+  }
   const fqdnTenant = getFixtureSession()
     ? null
     : await resolveTenantFromRequest(req.raw, getApplicationPool()).catch(() => null);

@@ -10,7 +10,7 @@ import {
   handleAuthCallback,
   handleAuthLogout,
   handleAuthLogoutRedirect,
-  parseSessionCookie,
+  parseSessionCookies,
 } from "./auth.ts";
 import { handleForwardAuth } from "./forward-auth.ts";
 import {
@@ -777,21 +777,25 @@ export const routes: Route[] = [
         res.json(200, fixtureActor);
         return;
       }
-      // Real session: read from HTTP-only cookie ? Redis
-      const sessionId = parseSessionCookie(req.raw.headers["cookie"]);
-      if (sessionId) {
+      // Real session: read from HTTP-only cookie(s) ? Redis. Try every presented
+      // platform_session so a stale cookie can't shadow a valid one (ADR-ACT-0278).
+      const candidateIds = parseSessionCookies(req.raw.headers["cookie"]);
+      if (candidateIds.length > 0) {
         try {
-          const record = await getSessionStore().find(sessionId);
-          if (record) {
-            res.json(200, {
-              userId: record.userId,
-              tenantId: record.tenantId,
-              organisationId: record.organisationId,
-              roles: record.roles,
-              permissions: record.permissions,
-              displayName: record.displayName,
-            });
-            return;
+          const store = getSessionStore();
+          for (const id of candidateIds) {
+            const record = await store.find(id);
+            if (record) {
+              res.json(200, {
+                userId: record.userId,
+                tenantId: record.tenantId,
+                organisationId: record.organisationId,
+                roles: record.roles,
+                permissions: record.permissions,
+                displayName: record.displayName,
+              });
+              return;
+            }
           }
         } catch {
           // Redis unavailable ? fall through to 401
@@ -5329,11 +5333,20 @@ export const routes: Route[] = [
     requiredPermission: "profile.read_self",
     resource: "me:profile",
     umaScope: "read" as const,
-    scope: "tenant" as const,
+    // "me" is a SELF resource — readable wherever the user is authenticated, not
+    // host-gated. A system-admin has no tenant FQDN; without dropping the tenant
+    // scope their own Account page 403s on the apex (ADR-ACT-0278).
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      // No tenant context (system-admin on the apex / operator without an org):
+      // return an identity-derived default so the Account page renders instead of
+      // failing. Tenant users get their tenant-scoped profile as before.
       if (!tenantCtx) {
-        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        res.json(200, {
+          displayName: req.actor!.displayName ?? "",
+          locale: "en-GB",
+          timezone: "UTC",
+        });
         return;
       }
       const { getMyProfile } = await import("../usecases/profile.ts");
@@ -5399,11 +5412,12 @@ export const routes: Route[] = [
     requiredPermission: "profile.read_self",
     resource: "me:notification_preferences",
     umaScope: "read" as const,
-    scope: "tenant" as const,
+    // Self resource — not host-gated (see me:profile GET). System-admin without a
+    // tenant gets an empty set so the Account page renders (ADR-ACT-0278).
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
       if (!tenantCtx) {
-        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        res.json(200, { preferences: [] });
         return;
       }
       const { getMyPreferences } = await import("../usecases/notifications.ts");

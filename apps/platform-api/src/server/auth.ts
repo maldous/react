@@ -119,13 +119,31 @@ function buildClearPreAuthCookieHeader(): string {
   return parts.join("; ");
 }
 
-function parseSessionCookie(rawCookieHeader: string | undefined): string | null {
-  if (!rawCookieHeader) return null;
+// Return EVERY platform_session value present in the Cookie header, in order.
+// A browser can legitimately carry more than one platform_session — e.g. a
+// host-only cookie (aldous.info) from an older config alongside the current
+// domain-scoped cookie (.aldous.info), or vice versa after SESSION_COOKIE_DOMAIN
+// changes. The header then reads `platform_session=A; platform_session=B`. Callers
+// must try ALL candidates against the session store and use the first that
+// resolves, otherwise a single stale cookie shadows a valid session → spurious
+// 401 → login loop (ADR-ACT-0278).
+function parseSessionCookies(rawCookieHeader: string | undefined): string[] {
+  if (!rawCookieHeader) return [];
+  const ids: string[] = [];
   for (const part of rawCookieHeader.split(";")) {
     const [name, ...rest] = part.trim().split("=");
-    if (name?.trim() === SESSION_COOKIE_NAME) return rest.join("=").trim();
+    if (name?.trim() === SESSION_COOKIE_NAME) {
+      const v = rest.join("=").trim();
+      if (v) ids.push(v);
+    }
   }
-  return null;
+  return ids;
+}
+
+// Back-compat single-value accessor (first candidate). Prefer parseSessionCookies
+// + a store lookup over every candidate for resolution paths.
+function parseSessionCookie(rawCookieHeader: string | undefined): string | null {
+  return parseSessionCookies(rawCookieHeader)[0] ?? null;
 }
 
 function parsePreAuthCookie(rawCookieHeader: string | undefined): string | null {
@@ -515,4 +533,4 @@ export const handleAuthLogout: PipelineHandler = async (req, res) => {
 // Exported cookie parser for pipeline use
 // ---------------------------------------------------------------------------
 
-export { parseSessionCookie, buildClearCookieHeaders };
+export { parseSessionCookie, parseSessionCookies, buildClearCookieHeaders };

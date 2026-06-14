@@ -893,6 +893,106 @@ describe("api pipeline: unregistered UMA resource degrades to static check", () 
   });
 });
 
+// ?? 19c. Dual cookies — a stale platform_session must not shadow a valid one ??
+describe("api pipeline: resolves a valid session when a stale cookie is also present", () => {
+  let server: http.Server;
+  let url: string;
+  let savedEnv: string | undefined;
+
+  before(async () => {
+    savedEnv = process.env["LOCAL_FIXTURE_SESSION"];
+    delete process.env["LOCAL_FIXTURE_SESSION"];
+
+    // Store knows ONLY the valid id; the stale id resolves to null (ADR-ACT-0278).
+    const deps: RouterTestDeps = {
+      sessionStore: {
+        find: async (id: string) => (id === UMA_SESSION_ID ? makeUmaSession() : null),
+        create: async () => UMA_SESSION_ID,
+        refresh: async () => {},
+        destroy: async () => {},
+      },
+      resolveAccessToken: async () => "raw-access-token",
+    };
+
+    const s = await makeServer(
+      [
+        {
+          method: "GET",
+          path: "/needs-auth",
+          requiresAuth: true,
+          requiredPermission: "tenant.auth.settings.read",
+          handler: async (_req, res) => res.json(200, { ok: true }),
+        },
+      ],
+      deps
+    );
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    if (savedEnv !== undefined) process.env["LOCAL_FIXTURE_SESSION"] = savedEnv;
+    else delete process.env["LOCAL_FIXTURE_SESSION"];
+    await closeServer(server);
+  });
+
+  it("uses the valid platform_session even when a stale one is sent first", async () => {
+    const res = await fetch(`${url}/needs-auth`, {
+      headers: { Cookie: `platform_session=stale-and-gone; platform_session=${UMA_SESSION_ID}` },
+    });
+    assert.equal(res.status, 200);
+  });
+});
+
+// ?? 19d. Valid session, unresolvable UMA token → degrade to static (not 401) ??
+describe("api pipeline: unresolvable UMA token degrades to static for a route with a fallback", () => {
+  let server: http.Server;
+  let url: string;
+  let savedEnv: string | undefined;
+
+  before(async () => {
+    savedEnv = process.env["LOCAL_FIXTURE_SESSION"];
+    delete process.env["LOCAL_FIXTURE_SESSION"];
+
+    const deps: RouterTestDeps = {
+      sessionStore: fakeStore(),
+      authorisationPort: () => ({
+        checkAccess: async () => ({ granted: true as const, rpt: "rpt" }),
+      }),
+      // Token cannot be resolved (refresh token dead). Session itself is valid.
+      resolveAccessToken: async () => null,
+    };
+
+    const s = await makeServer(
+      [
+        {
+          method: "GET",
+          path: "/uma-tokenless",
+          requiresAuth: true,
+          resource: "admin:auth",
+          umaScope: "read",
+          requiredPermission: "tenant.auth.settings.read", // actor holds it
+          handler: async (_req, res) => res.json(200, { ok: true }),
+        },
+      ],
+      deps
+    );
+    server = s.server;
+    url = s.url;
+  });
+
+  after(async () => {
+    if (savedEnv !== undefined) process.env["LOCAL_FIXTURE_SESSION"] = savedEnv;
+    else delete process.env["LOCAL_FIXTURE_SESSION"];
+    await closeServer(server);
+  });
+
+  it("returns 200 via static fallback when the UMA access token is unresolvable", async () => {
+    const res = await fetch(`${url}/uma-tokenless`, { headers: { Cookie: UMA_COOKIE } });
+    assert.equal(res.status, 200);
+  });
+});
+
 // ?? 20. Missing/expired token → 401 ??????????????????????????????????????????
 describe("api pipeline: missing access token fails with 401", () => {
   let server: http.Server;

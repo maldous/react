@@ -13,7 +13,7 @@ import { createRequestContext, type RuntimeContext } from "@platform/platform-ru
 import { type SessionStore } from "@platform/session-runtime";
 import { type AuthorisationPort } from "@platform/authorisation-runtime";
 import { getFixtureSession } from "./session.ts";
-import { parseSessionCookie } from "./auth.ts";
+import { parseSessionCookies } from "./auth.ts";
 import {
   getSessionStore,
   getApplicationPool,
@@ -232,9 +232,33 @@ export function createRouter(
     });
     reqLogger.debug("http.request.start");
 
+    // Structured rejection log (ADR-ACT-0278). Pipeline-level non-2xx outcomes
+    // (404/405/400 and every 401/403 auth-or-scope denial) are returned BEFORE the
+    // success "http.request.complete" line, so without this they were invisible —
+    // the exact failures customers report (Access denied / Page not found) left no
+    // server trace. Every early return below logs ONE `http.request.rejected` warn
+    // with the status, a stable machine `reason`, the route, the actor, and the
+    // permission/resource in play, so an operator can root-cause from Loki alone.
+    const logRejection = (
+      status: number,
+      reason: string,
+      fields: Record<string, unknown> = {}
+    ): void => {
+      reqLogger.warn(
+        {
+          status,
+          reason,
+          host: requestHostFromHeaders(req),
+          ...fields,
+        },
+        "http.request.rejected"
+      );
+    };
+
     // Parse body
     const bodyResult = await parseJsonBody(req);
     if (!bodyResult.ok) {
+      logRejection(400, "malformed_json_body", { error: bodyResult.error });
       const err = new ValidationError("api.error.malformedJsonBody");
       jsonResponse(
         res,
@@ -250,6 +274,7 @@ export function createRouter(
     const matchingRoute = matchingMethod.find((r) => r.method === method.toUpperCase());
 
     if (matchingMethod.length === 0) {
+      logRejection(404, "path_not_found", { path });
       jsonResponse(
         res,
         404,
@@ -261,6 +286,7 @@ export function createRouter(
     if (!matchingRoute) {
       const allowed = matchingMethod.map((r) => r.method).join(", ");
       res.setHeader("Allow", allowed);
+      logRejection(405, "method_not_allowed", { allowed });
       jsonResponse(
         res,
         405,
@@ -292,13 +318,22 @@ export function createRouter(
     if (matchingRoute.requiresAuth) {
       actor = getFixtureSession();
       if (!actor) {
-        // Real session: read the HTTP-only cookie
-        const sessionId = parseSessionCookie(req.headers["cookie"]);
-        if (sessionId) {
-          resolvedSessionId = sessionId;
+        // Real session: read the HTTP-only cookie(s). A browser may present more
+        // than one platform_session (host-only + domain-scoped after a
+        // SESSION_COOKIE_DOMAIN change); try EVERY candidate and use the first that
+        // resolves so a stale cookie can't shadow a valid session (ADR-ACT-0278).
+        const candidateIds = parseSessionCookies(req.headers["cookie"]);
+        if (candidateIds.length > 0) {
           try {
             const store = _testDeps?.sessionStore ?? getSessionStore();
-            const record = await store.find(sessionId);
+            let record: Awaited<ReturnType<SessionStore["find"]>> = null;
+            for (const id of candidateIds) {
+              record = await store.find(id);
+              if (record) {
+                resolvedSessionId = id;
+                break;
+              }
+            }
             if (record) {
               actor = {
                 userId: record.userId,
@@ -333,6 +368,14 @@ export function createRouter(
       //   - System-admin (support mode): only the specific effective tenant.
       if (actor && fqdnTenant) {
         if (!canAccessTenantFqdn(actor, fqdnTenant.organisationId)) {
+          logRejection(403, "tenant_fqdn_forbidden", {
+            route: matchingRoute.path,
+            operationName: matchingRoute.operationName,
+            actorId: actor.userId,
+            roles: actor.roles,
+            fqdnOrganisationId: fqdnTenant.organisationId,
+            supportMode: actor.supportMode ?? false,
+          });
           const err = new ForbiddenError("api.error.permissionRequired", {
             safeDetails: { permission: "tenant:own" },
           });
@@ -347,6 +390,11 @@ export function createRouter(
       }
 
       if (!actor) {
+        logRejection(401, "authentication_required", {
+          route: matchingRoute.path,
+          operationName: matchingRoute.operationName,
+          hadCookie: !!req.headers["cookie"],
+        });
         const err = new UnauthorizedError("api.error.authenticationRequired");
         jsonResponse(
           res,
@@ -369,8 +417,17 @@ export function createRouter(
           ? await effectiveResolveToken(resolvedSessionId, store)
           : null;
 
-        if (!rawToken) {
-          // Token missing or refresh failed
+        // Unresolvable UMA access token (refresh token invalidated by a client
+        // rotation, or expired). If the route has a static requiredPermission
+        // fallback, DEGRADE to it — the session itself is authenticated, so don't
+        // force a re-login (ADR-ACT-0278). If the route is sole-UMA (no static
+        // fallback), 401 so the client can re-login and obtain a fresh token.
+        if (!rawToken && !matchingRoute.requiredPermission) {
+          logRejection(401, "access_token_unresolved", {
+            route: matchingRoute.path,
+            operationName: matchingRoute.operationName,
+            actorId: actor.userId,
+          });
           jsonResponse(
             res,
             401,
@@ -381,17 +438,21 @@ export function createRouter(
           );
           return;
         }
-
-        const decision = await effectiveAuthorisationPort(fqdnTenant).checkAccess(
-          { name: matchingRoute.resource, scope: matchingRoute.umaScope },
-          rawToken
-        );
+        // Synthesise a degradable decision when there is no token so it flows
+        // through the same fallback path as keycloak_unavailable below.
+        const decision = rawToken
+          ? await effectiveAuthorisationPort(fqdnTenant).checkAccess(
+              { name: matchingRoute.resource, scope: matchingRoute.umaScope },
+              rawToken
+            )
+          : ({ granted: false, reason: "token_unresolved" } as const);
 
         if (decision.granted) {
           umaGranted = true;
         } else if (
           decision.reason === "keycloak_unavailable" ||
-          decision.reason === "resource_not_registered"
+          decision.reason === "resource_not_registered" ||
+          decision.reason === "token_unresolved"
         ) {
           // Degrade gracefully — fall through to static check. "keycloak_unavailable"
           // is a transient outage; "resource_not_registered" is a provisioning gap
@@ -408,6 +469,13 @@ export function createRouter(
             "UMA check not decisive — falling back to static permission check"
           );
         } else if (decision.reason === "insufficient_auth_level") {
+          logRejection(401, "step_up_required", {
+            route: matchingRoute.path,
+            operationName: matchingRoute.operationName,
+            actorId: actor.userId,
+            resource: matchingRoute.resource,
+            umaScope: matchingRoute.umaScope,
+          });
           jsonResponse(
             res,
             401,
@@ -416,6 +484,16 @@ export function createRouter(
           );
           return;
         } else {
+          logRejection(403, "uma_policy_denied", {
+            route: matchingRoute.path,
+            operationName: matchingRoute.operationName,
+            actorId: actor.userId,
+            roles: actor.roles,
+            resource: matchingRoute.resource,
+            umaScope: matchingRoute.umaScope,
+            umaReason: decision.reason,
+            requiredPermission: matchingRoute.requiredPermission,
+          });
           const err = new ForbiddenError("api.error.permissionRequired", {
             safeDetails: {
               permission: `${matchingRoute.resource}#${matchingRoute.umaScope}`,
@@ -436,6 +514,13 @@ export function createRouter(
       // This prevents fail-open when Keycloak is unavailable and no static fallback exists.
       const umaConfigured = !!(matchingRoute.resource && matchingRoute.umaScope);
       if (umaConfigured && !umaGranted && !matchingRoute.requiredPermission) {
+        logRejection(403, "uma_fail_closed", {
+          route: matchingRoute.path,
+          operationName: matchingRoute.operationName,
+          actorId: actor.userId,
+          resource: matchingRoute.resource,
+          umaScope: matchingRoute.umaScope,
+        });
         const err = new ForbiddenError("api.error.permissionRequired", {
           safeDetails: { permission: `${matchingRoute.resource}#${matchingRoute.umaScope}` },
         });
@@ -455,6 +540,16 @@ export function createRouter(
         !actor.permissions.includes(matchingRoute.requiredPermission)
       ) {
         const requiredPermission = matchingRoute.requiredPermission;
+        logRejection(403, "static_permission_denied", {
+          route: matchingRoute.path,
+          operationName: matchingRoute.operationName,
+          actorId: actor.userId,
+          roles: actor.roles,
+          requiredPermission,
+          ...(umaConfigured
+            ? { resource: matchingRoute.resource, umaScope: matchingRoute.umaScope }
+            : {}),
+        });
         const err = new ForbiddenError("api.error.permissionRequired", {
           safeDetails: { permission: requiredPermission },
         });
@@ -479,6 +574,12 @@ export function createRouter(
         // be driven from non-apex origins. Non-apex hosts (e.g. direct localhost
         // access to the API) are unaffected.
         if (matchingRoute.scope === "global" && isApexSubdomain(requestHostFromHeaders(req))) {
+          logRejection(403, "global_host_required", {
+            route: matchingRoute.path,
+            operationName: matchingRoute.operationName,
+            actorId: actor.userId,
+            detail: "apex_subdomain",
+          });
           const err = new ForbiddenError("api.error.permissionRequired", {
             safeDetails: { permission: "platform:global-host-required" },
           });
@@ -491,6 +592,13 @@ export function createRouter(
           return;
         }
         if (matchingRoute.scope === "global" && fqdnTenant !== null) {
+          logRejection(403, "global_host_required", {
+            route: matchingRoute.path,
+            operationName: matchingRoute.operationName,
+            actorId: actor.userId,
+            detail: "tenant_fqdn_resolved",
+            fqdnOrganisationId: fqdnTenant.organisationId,
+          });
           const err = new ForbiddenError("api.error.permissionRequired", {
             safeDetails: { permission: "platform:global-host-required" },
           });
@@ -503,6 +611,11 @@ export function createRouter(
           return;
         }
         if (matchingRoute.scope === "tenant" && fqdnTenant === null) {
+          logRejection(403, "tenant_fqdn_required", {
+            route: matchingRoute.path,
+            operationName: matchingRoute.operationName,
+            actorId: actor.userId,
+          });
           const err = new ForbiddenError("api.error.permissionRequired", {
             safeDetails: { permission: "tenant:fqdn-required" },
           });
