@@ -64,15 +64,15 @@ export function decryptToken(stored: string): string {
 }
 
 /**
- * Called at startup. Throws in production if the encryption key is absent or malformed.
+ * Called at startup. Throws in staging or production if the encryption key is absent or malformed.
  */
 export function assertEncryptionKeyConfigured(): void {
   const keyHex = process.env["TENANT_SECRET_ENCRYPTION_KEY"];
   const valid = typeof keyHex === "string" && keyHex.length === 64;
-  if (
-    !valid &&
-    (process.env["NODE_ENV"] === "production" || process.env["PLATFORM_ENV"] === "production")
-  ) {
+  const stage = process.env["PLATFORM_ENV"] ?? process.env["NODE_ENV"] ?? "development";
+  const requiresKey =
+    stage === "staging" || stage === "production" || process.env["NODE_ENV"] === "production";
+  if (!valid && requiresKey) {
     throw new Error(
       "TENANT_SECRET_ENCRYPTION_KEY must be a 64-char hex string (32 bytes). " +
         "Session tokens cannot be stored encrypted without it."
@@ -80,7 +80,7 @@ export function assertEncryptionKeyConfigured(): void {
   }
   if (!valid) {
     log.warn(
-      "TENANT_SECRET_ENCRYPTION_KEY not set or invalid — token encryption disabled. Set this before deploying to production."
+      "TENANT_SECRET_ENCRYPTION_KEY not set or invalid — token encryption disabled (non-production stage). Set this before deploying to staging or production."
     );
   }
 }
