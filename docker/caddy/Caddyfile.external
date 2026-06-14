@@ -61,6 +61,17 @@
 # so the mock-idp.* hosts are matched BEFORE the *.staging / *.aldous wildcards
 # below, which would otherwise swallow them.
 :80 {
+	# Access logging (ADR-ACT-0283): the front door (Cloudflare -> external-caddy)
+	# previously logged nothing per-request, leaving a blind spot for routing/5xx
+	# diagnosis. Emit structured JSON to stdout so requests are visible in Loki via
+	# the Alloy docker pipeline (host, uri, status, duration, the real client IP from
+	# trusted_proxies). INFO level keeps it to one line per request.
+	log {
+		output stdout
+		format json
+		level INFO
+	}
+
 	# =========================================================================
 	# NON-PRODUCTION pre-real-provider BOOTSTRAP (ADR-ACT-0157)
 	# -------------------------------------------------------------------------
