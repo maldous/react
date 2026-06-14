@@ -28,10 +28,17 @@ function readinessFor(
   return row ? row.status : "unknown";
 }
 
-/** Apex click-through path from a Caddy path prefix ("/kc/*" → "/kc"). */
-function apexUrl(apexPath: string | null): string | null {
+/**
+ * Apex click-through URL from a Caddy path prefix ("/kc/*" → "/kc/").
+ *
+ * The TRAILING SLASH is significant and MUST be kept: the Caddy tool routes are
+ * `handle /kc/*` etc., which match `/kc/` and `/kc/...` but NOT bare `/kc` —
+ * a bare path falls through to the SPA catch-all and renders "Page not found"
+ * (ADR-ACT-0284). Strip only the `*` wildcard, never the slash before it.
+ */
+export function apexUrl(apexPath: string | null): string | null {
   if (apexPath == null) return null;
-  const trimmed = apexPath.replace(/\/\*$/, "");
+  const trimmed = apexPath.replace(/\*$/, "");
   return trimmed === "" ? "/" : trimmed;
 }
 

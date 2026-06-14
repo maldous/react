@@ -21,7 +21,34 @@ import {
   TENANT_ADMIN_RESOURCES,
   decideServiceAccess,
 } from "../../src/usecases/service-clickthrough.ts";
+import { apexUrl } from "../../src/usecases/clickthrough-services.ts";
 import { resolvePermissions } from "@platform/domain-identity";
+
+// ---------------------------------------------------------------------------
+// 0. apexUrl — the click-through URL served to the admin page MUST keep the
+//    trailing slash. Caddy routes are `handle /svc/*`, which match `/svc/` but
+//    NOT bare `/svc`; a bare path falls through to the SPA and renders
+//    "Page not found". Regression guard for ADR-ACT-0284 (the bug stripped the
+//    slash along with the `*`, breaking every clickthrough link).
+// ---------------------------------------------------------------------------
+
+describe("apexUrl trailing slash (ADR-ACT-0284)", () => {
+  it("keeps the trailing slash when stripping the wildcard", () => {
+    assert.equal(apexUrl("/mailpit/*"), "/mailpit/");
+    assert.equal(apexUrl("/grafana/*"), "/grafana/");
+    assert.equal(apexUrl("/kc/*"), "/kc/");
+  });
+  it("never returns a bare tool path (would fall through to the SPA)", () => {
+    for (const s of CLICKTHROUGH_SERVICES) {
+      const url = apexUrl(s.apexPath);
+      if (url && url !== "/") assert.ok(url.endsWith("/"), `${s.id} url must end with /: ${url}`);
+    }
+  });
+  it("maps null apexPath to null and a lone wildcard to root", () => {
+    assert.equal(apexUrl(null), null);
+    assert.equal(apexUrl("/*"), "/");
+  });
+});
 
 // ---------------------------------------------------------------------------
 // 1. Decision matrix
