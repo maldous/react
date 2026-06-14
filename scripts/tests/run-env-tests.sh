@@ -120,6 +120,17 @@ run_group() {
         # or a forbidden label.
         STAGE="$STAGE" node tools/e2e/failure-rootcause/src/index.mjs
         ;;
+      e2e-accessibility)
+        # ADR-ACT-0285 Phase 6 — axe-core WCAG across safe routes x a11y profiles.
+        PROD_BASE_URL="$_app_url" E2E_STAGE="$STAGE" \
+            npx playwright test --config playwright.discovery.config.ts e2e/discovery/accessibility.spec.ts
+        ;;
+      e2e-persona-authz)
+        # ADR-ACT-0285 Phase 6 — persona authorization permutation (forbidden
+        # routes/APIs denied, expected allowed). E2E_PERSONA selects the persona.
+        PROD_BASE_URL="$_app_url" E2E_STAGE="$STAGE" \
+            npx playwright test --config playwright.discovery.config.ts e2e/discovery/persona-authz.spec.ts
+        ;;
       unit)
         POSTGRES_URL="$_pg_url" POSTGRES_APP_URL="$_pg_app_url" REDIS_URL="$_rd_url" npm run test:platform-api
         NODE_ENV=test npm run test:frontend:run

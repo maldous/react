@@ -415,6 +415,81 @@ resource "keycloak_user_roles" "viewer_roles" {
 }
 
 # ---------------------------------------------------------------------------
+# Additional persona scaffold accounts (ADR-ACT-0285 Phase 6) — provisioned with
+# the fixture users so the persona-registry's manager/member/disabled personas are
+# real (positive + negative authorization permutation). Gated by
+# provision_fixture_users (dev/test); staging/prod set it per environment policy.
+# ---------------------------------------------------------------------------
+resource "keycloak_user" "manager_scaffold" {
+  count          = var.provision_fixture_users ? 1 : 0
+  realm_id       = keycloak_realm.platform.id
+  username       = "manager@fixture.local"
+  email          = "manager@fixture.local"
+  enabled        = true
+  email_verified = true
+  first_name     = "Scaffold"
+  last_name      = "Manager"
+  initial_password {
+    value     = var.fixture_user_password
+    temporary = false
+  }
+  attributes = {
+    organisationId = "00000000-0000-0000-0000-000000000001"
+  }
+}
+
+resource "keycloak_user_roles" "manager_scaffold_roles" {
+  count    = var.provision_fixture_users ? 1 : 0
+  realm_id = keycloak_realm.platform.id
+  user_id  = keycloak_user.manager_scaffold[0].id
+  role_ids = [keycloak_role.manager.id]
+}
+
+resource "keycloak_user" "member_scaffold" {
+  count          = var.provision_fixture_users ? 1 : 0
+  realm_id       = keycloak_realm.platform.id
+  username       = "member@fixture.local"
+  email          = "member@fixture.local"
+  enabled        = true
+  email_verified = true
+  first_name     = "Scaffold"
+  last_name      = "Member"
+  initial_password {
+    value     = var.fixture_user_password
+    temporary = false
+  }
+  attributes = {
+    organisationId = "00000000-0000-0000-0000-000000000001"
+  }
+}
+
+resource "keycloak_user_roles" "member_scaffold_roles" {
+  count    = var.provision_fixture_users ? 1 : 0
+  realm_id = keycloak_realm.platform.id
+  user_id  = keycloak_user.member_scaffold[0].id
+  role_ids = [keycloak_role.member.id]
+}
+
+# Disabled account — proves a suspended user is refused login (negative persona).
+resource "keycloak_user" "disabled_scaffold" {
+  count          = var.provision_fixture_users ? 1 : 0
+  realm_id       = keycloak_realm.platform.id
+  username       = "disabled@fixture.local"
+  email          = "disabled@fixture.local"
+  enabled        = false
+  email_verified = true
+  first_name     = "Scaffold"
+  last_name      = "Disabled"
+  initial_password {
+    value     = var.fixture_user_password
+    temporary = false
+  }
+  attributes = {
+    organisationId = "00000000-0000-0000-0000-000000000001"
+  }
+}
+
+# ---------------------------------------------------------------------------
 # Super-global system-admin fixture user ? local/dev only
 #
 # Used by real-browser E2E login tests on aldous.info (playwright.real-auth.config.ts).

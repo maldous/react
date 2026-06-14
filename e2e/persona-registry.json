@@ -258,7 +258,7 @@
       "personaId": "scaffold-tenant-manager",
       "authMode": "real",
       "stageAllowed": ["staging", "prod"],
-      "provisionRef": "keycloak:manager@fixture.local (scaffold tenant) \u2014 NOT YET PROVISIONED",
+      "provisionRef": "keycloak:manager@fixture.local (scaffold tenant, role=manager; infra/modules/keycloak provision_fixture_users)",
       "tenantId": "00000000-0000-0000-0000-000000000001",
       "roles": ["manager"],
       "permissions": [
@@ -287,7 +287,7 @@
       "personaId": "scaffold-tenant-member",
       "authMode": "real",
       "stageAllowed": ["staging", "prod"],
-      "provisionRef": "keycloak:member@fixture.local (scaffold tenant) \u2014 NOT YET PROVISIONED",
+      "provisionRef": "keycloak:member@fixture.local (scaffold tenant, role=member; infra/modules/keycloak provision_fixture_users)",
       "tenantId": "00000000-0000-0000-0000-000000000001",
       "roles": ["member"],
       "permissions": [
@@ -340,7 +340,7 @@
       "personaId": "scaffold-disabled-user",
       "authMode": "real",
       "stageAllowed": ["staging", "prod"],
-      "provisionRef": "keycloak:disabled@fixture.local (enabled=false) \u2014 NOT YET PROVISIONED",
+      "provisionRef": "keycloak:disabled@fixture.local (enabled=false; infra/modules/keycloak provision_fixture_users)",
       "tenantId": "00000000-0000-0000-0000-000000000001",
       "roles": ["member"],
       "permissions": [],

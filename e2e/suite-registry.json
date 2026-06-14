@@ -331,6 +331,45 @@
         "orphaned-route"
       ],
       "owner": "ADR-0075; ADR-ACT-0285"
+    },
+    {
+      "id": "discovery-accessibility",
+      "file": "e2e/discovery/accessibility.spec.ts",
+      "stageMin": "dev",
+      "authMode": "mixed",
+      "destructive": false,
+      "surfaces": ["a11y:axe", "a11y:landmarks", "a11y:contrast", "a11y:reduced-motion"],
+      "requiredCapabilities": ["service-catalog-readiness"],
+      "expectedLogs": ["http.request.complete"],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": [
+        "axe-serious-violation",
+        "axe-critical-violation",
+        "missing-main-landmark",
+        "missing-heading"
+      ],
+      "owner": "ADR-0075; ADR-ACT-0285"
+    },
+    {
+      "id": "discovery-persona-authz",
+      "file": "e2e/discovery/persona-authz.spec.ts",
+      "stageMin": "dev",
+      "authMode": "mixed",
+      "destructive": false,
+      "surfaces": ["authz:forbidden-route", "authz:forbidden-api", "authz:expected-route"],
+      "requiredCapabilities": ["rbac"],
+      "expectedLogs": ["http.request.rejected"],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": [
+        "forbidden-route-revealed",
+        "forbidden-api-allowed",
+        "ui-hidden-but-api-accessible"
+      ],
+      "owner": "ADR-0075; ADR-ACT-0285"
     }
   ],
   "capabilityExemptions": [

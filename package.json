@@ -161,6 +161,8 @@
     "e2e:observability:correlate": "node tools/e2e/observability-correlation/src/index.mjs",
     "e2e:ui:discover": "playwright test --config playwright.discovery.config.ts",
     "e2e:failure:rootcause": "node tools/e2e/failure-rootcause/src/index.mjs",
+    "e2e:accessibility": "playwright test --config playwright.discovery.config.ts e2e/discovery/accessibility.spec.ts",
+    "e2e:persona:authz": "playwright test --config playwright.discovery.config.ts e2e/discovery/persona-authz.spec.ts",
     "validate:slices": "node tools/architecture/validate-slice-readiness/src/index.mjs",
     "build:spa": "cd apps/react-enterprise-app && ../../node_modules/.bin/vite build",
     "semgrep": "semgrep scan --config tools/semgrep/rules.yml --metrics=off",
@@ -234,6 +236,7 @@
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "3.1056.0",
+    "@axe-core/playwright": "^4.11.3",
     "@cyclonedx/cyclonedx-npm": "4.2.1",
     "@eslint/js": "10.0.1",
     "@grafana/faro-web-sdk": "^2.7.1",
