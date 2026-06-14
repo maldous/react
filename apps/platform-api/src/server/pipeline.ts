@@ -354,8 +354,11 @@ export function createRouter(
                 ...(record.accessTokenEnc ? { accessTokenEnc: record.accessTokenEnc } : {}),
               };
             }
-          } catch {
-            // Redis unavailable ? treat as unauthenticated (do not crash)
+          } catch (err) {
+            // Redis unavailable -> treat as unauthenticated (do not crash). Log it:
+            // a session-store outage makes the whole platform fail auth, so it must
+            // be diagnosable rather than silently 401 every request (ADR-ACT-0284).
+            reqLogger.error({ err }, "session store unavailable during auth resolution");
           }
         }
       }

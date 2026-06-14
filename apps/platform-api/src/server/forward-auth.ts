@@ -28,6 +28,7 @@
 
 import crypto from "node:crypto";
 import pg from "pg";
+import { createLogger } from "@platform/platform-logging";
 import type { PipelineHandler } from "./pipeline.ts";
 import { extractSlugFromHost as sharedExtractSlugFromHost } from "./tenant-resolver.ts";
 import { parseSessionCookies } from "./auth.ts";
@@ -58,6 +59,12 @@ function getPool(): pg.Pool {
   return _pgPool;
 }
 
+const faLog = createLogger({
+  name: "forward-auth",
+  service: "platform-api",
+  boundedContext: "bff",
+});
+
 async function resolveSlugForTenant(tenantId: string): Promise<string | null> {
   try {
     const { rows } = await getPool().query<{ slug: string }>(
@@ -65,7 +72,8 @@ async function resolveSlugForTenant(tenantId: string): Promise<string | null> {
       [tenantId]
     );
     return rows[0]?.slug ?? null;
-  } catch {
+  } catch (err) {
+    faLog.warn({ err, tenantId }, "forward-auth: tenant slug lookup failed");
     return null;
   }
 }
@@ -145,7 +153,8 @@ export const handleForwardAuth: PipelineHandler = async (req, res) => {
       }
       roles = record.roles;
       tenantId = record.tenantId;
-    } catch {
+    } catch (err) {
+      faLog.error({ err }, "forward-auth: session store unavailable — denying clickthrough");
       res.json(401, { code: "UNAUTHENTICATED", message: "Session store unavailable" });
       return;
     }

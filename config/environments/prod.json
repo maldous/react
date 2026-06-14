@@ -96,7 +96,7 @@
     "MAILPIT_ROOT_URL": "/mailpit",
     "SESSION_COOKIE_SECURE": "true",
     "COMPOSE_PROJECT": "react-prod",
-    "COMPOSE_PROJECT_FILTER": "react-prod",
+    "COMPOSE_PROJECT_FILTER": "react-(prod|shared|sonar)",
     "PLATFORM_ENV": "production",
     "GRAFANA_PORT": "3203",
     "LOKI_PORT": "3103",

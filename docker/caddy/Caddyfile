@@ -88,6 +88,18 @@
 	}
 }
 
+# Per-request access logging (ADR-ACT-0284). The internal Caddy is each env's request
+# front door (SPA, /api/*, /auth/*, every tool-proxy route); without this it logged
+# nothing per-request — a blind spot. JSON to stdout -> Alloy -> Loki. Imported into
+# every site block below.
+(access_log) {
+	log {
+		output stdout
+		format json
+		level INFO
+	}
+}
+
 # ---------------------------------------------------------------------------
 # Super-global admin ? aldous.info, localhost, dev.localhost, test.localhost
 # Hosts the platform admin SPA, all developer tooling, and operational UIs.
@@ -99,6 +111,7 @@
 #   No /etc/hosts needed ? .localhost resolves to 127.0.0.1 per RFC 6761.
 # ---------------------------------------------------------------------------
 http://aldous.info http://localhost http://dev.localhost http://test.localhost http://staging.aldous.info {
+	import access_log
 	# Security headers are scoped to SPA and BFF routes only (see below).
 	# Tool proxy routes (/kc/*, /mailpit/*, etc.) must NOT receive the platform
 	# CSP — those services serve their own UIs with external assets that would be
@@ -281,6 +294,7 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 # ADR-0033: .localhost dev/test domain convention
 # ---------------------------------------------------------------------------
 http://*.aldous.info http://*.dev.localhost http://*.test.localhost http://*.staging.aldous.info {
+	import access_log
 	# No global header block — security headers are scoped per route (same reason as above).
 
 	# Keycloak realm endpoints ? publicly accessible (Keycloak handles its own auth)
@@ -364,6 +378,7 @@ http://*.aldous.info http://*.dev.localhost http://*.test.localhost http://*.sta
 # Public DNS/TLS for custom domains is Cloudflare-terminated (external).
 # ---------------------------------------------------------------------------
 http:// {
+	import access_log
 	# Keycloak realm endpoints ? publicly accessible (Keycloak handles its own auth)
 	handle /kc/realms/* {
 		reverse_proxy keycloak:8080

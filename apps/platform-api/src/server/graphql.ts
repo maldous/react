@@ -1,4 +1,5 @@
 import process from "node:process";
+import { createLogger } from "@platform/platform-logging";
 import {
   ValidationError,
   UnauthorizedError,
@@ -28,6 +29,8 @@ import {
 } from "./authorize-resource.ts";
 import type { PipelineHandler } from "./pipeline.ts";
 import { serverT } from "./i18n.ts";
+
+const gqlLog = createLogger({ name: "graphql", service: "platform-api", boundedContext: "bff" });
 
 // ---------------------------------------------------------------------------
 // GraphQL boundary (ADR-0013, ADR-ACT-0199)
@@ -192,7 +195,8 @@ export const handleGraphql: PipelineHandler = async (req, res) => {
           break;
         }
       }
-    } catch {
+    } catch (err) {
+      gqlLog.error({ err }, "graphql: session store unavailable during resolution");
       sessionId = null;
     }
   }

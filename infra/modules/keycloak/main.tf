@@ -55,6 +55,10 @@ resource "keycloak_realm_events" "platform" {
   events_expiration            = 86400
   admin_events_enabled         = true
   admin_events_details_enabled = true
+
+  # Emit events to the server log (-> stdout -> Alloy -> Loki) in addition to the
+  # admin-console Events tab, so auth/admin audit events are queryable (ADR-ACT-0284).
+  events_listeners = ["jboss-logging"]
 }
 
 # ---------------------------------------------------------------------------

@@ -257,6 +257,9 @@ services:
       SONAR_JDBC_PASSWORD: ${SONAR_DB_PASSWORD:-sonarpassword}
       # Disable ES bootstrap checks (required without vm.max_map_count sysctl)
       SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+      # Route SonarQube's rolling logs (sonar/web/ce/es) to stdout so Alloy -> Loki
+      # captures them, not just the thin entrypoint output (ADR-ACT-0284).
+      SONAR_LOG_CONSOLE: "true"
       # Serve SonarQube under /sonar so Caddy / Vite can proxy it at <host>/sonar/*
       SONAR_WEB_CONTEXT: ${SONAR_WEB_CONTEXT:-/sonar}
       # ── App-login SSO via Keycloak OIDC (ADR-0073, sonar-auth-oidc plugin) ──
@@ -331,6 +334,14 @@ services:
       KC_DB_URL: jdbc:postgresql://keycloak-postgres:5432/${KEYCLOAK_DB_NAME:-keycloak}
       KC_DB_USERNAME: ${KEYCLOAK_DB_USER:-keycloak}
       KC_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD:-keycloakpassword}
+      # Security/audit event logging (ADR-ACT-0284): emit login/logout/token/admin
+      # events to the console (-> Alloy -> Loki) via the jboss-logging events
+      # listener. The realm enables events + the jboss-logging listener (Terraform
+      # keycloak_realm_events). Without this the highest-value auth audit signal
+      # exists only in the admin console Events tab, never in Loki.
+      KC_LOG: "console"
+      KC_SPI_EVENTS_LISTENER_JBOSS_LOGGING_SUCCESS_LEVEL: "info"
+      KC_SPI_EVENTS_LISTENER_JBOSS_LOGGING_ERROR_LEVEL: "warn"
       # KC_HOSTNAME_STRICT: When true, Keycloak only accepts requests whose Host
       # header matches KC_HOSTNAME. Set to true so the token issuer (iss claim)
       # is locked to the public-facing URL. Backchannel requests from the BFF to

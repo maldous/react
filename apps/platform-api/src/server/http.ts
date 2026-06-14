@@ -14,6 +14,23 @@ const log = createLogger({ name: "platform-api", service: "platform-api", level:
 const PORT = Number(process.env["PLATFORM_API_PORT"] ?? 3001);
 const sentry = createSentryAdapter();
 
+// Process-level safety net (ADR-ACT-0284). Without these, an async throw or rejected
+// promise OUTSIDE a request handler (a worker tick, a background task, a library) would
+// crash or leak with NO structured log and NO Sentry capture — undiagnosable. Log +
+// capture both; for an uncaught exception the process state is unknown, so flush and
+// exit so the orchestrator restarts cleanly.
+process.on("unhandledRejection", (reason: unknown) => {
+  const error = reason instanceof Error ? reason : new Error(String(reason));
+  log.error({ err: error }, "unhandledRejection");
+  sentry.captureError(error);
+});
+process.on("uncaughtException", (err: unknown) => {
+  const error = err instanceof Error ? err : new Error(String(err));
+  log.fatal({ err: error }, "uncaughtException — exiting for clean restart");
+  sentry.captureError(error);
+  void sentry.flush(2000).finally(() => process.exit(1));
+});
+
 async function start(): Promise<void> {
   // Connect Redis before the server starts accepting requests.
   // The auth flow (PKCE state store, session store) requires an active client.
