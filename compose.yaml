@@ -312,7 +312,11 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:26.2
     profiles: [identity]
-    command: start-dev
+    # Per-environment start mode (ADR-ACT-0281): dev/test default to start-dev for
+    # fast iteration; staging/prod set KEYCLOAK_COMMAND=start (production mode) where
+    # Authorization Services / UMA behave correctly (start-dev had a broken authz
+    # ResourceServer on KC 26.2 — ADR-ACT-0280). Plain `start` auto-builds on boot.
+    command: ${KEYCLOAK_COMMAND:-start-dev}
     depends_on:
       keycloak-postgres:
         condition: service_healthy
@@ -328,6 +332,11 @@ services:
       KC_HOSTNAME_STRICT: "true"
       KC_HOSTNAME_STRICT_BACKCHANNEL: "false"
       KC_HTTP_ENABLED: "true"
+      # Production `start` mode runs behind Cloudflare -> Caddy (TLS terminated at the
+      # edge; Keycloak speaks HTTP internally). Trust the X-Forwarded-* headers so KC
+      # resolves the original https scheme/host for issuer + redirect URLs. Harmless in
+      # start-dev. (KC 26 hostname-v2 setting; replaces the old KC_PROXY=edge.)
+      KC_PROXY_HEADERS: "xforwarded"
       KC_HEALTH_ENABLED: "true"
       # Tells Keycloak to generate all its URLs (login form actions, redirects, assets)
       # with /kc as the path prefix. This matches how Caddy exposes Keycloak externally.
