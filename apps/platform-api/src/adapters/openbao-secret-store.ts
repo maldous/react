@@ -228,7 +228,17 @@ export class OpenBaoSecretStore implements SecretStore {
       await this.fetchImpl(this.metadataUrl(path), {
         method: "DELETE",
         headers: this.headers(),
-      }).catch(() => {});
+      }).catch((err: unknown) => {
+        // The DB row is removed below regardless; a failed backend delete leaves
+        // orphaned secret material in OpenBao that must be reconcilable, so it
+        // must never be silent (ADR-ACT-0284).
+        this.warn("openbao backend metadata delete failed; secret material may be orphaned", {
+          provider: "openbao",
+          op: "delete",
+          organisationId,
+          err: err instanceof Error ? err.message : String(err),
+        });
+      });
     }
     return withSystemAdmin(this.pool as never, async (client) => {
       const r = await client.query(

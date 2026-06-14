@@ -13,8 +13,19 @@ import {
   type GetObjectResult,
   type PresignedUrlOptions,
 } from "@platform/storage-runtime";
+import { createLogger } from "@platform/platform-logging";
 
 export const packageName = "@platform/adapters-object-storage";
+
+// Adapter-local logger (ADR-ACT-0284). Tenant-credential revocation is
+// best-effort/idempotent, but a genuine IAM failure here means a tenant access
+// key may NOT be revoked — a security-relevant outcome that must never be
+// silent. Log the cause while keeping revocation non-throwing.
+const storageLog = createLogger({
+  name: "object-storage-adapter",
+  service: "platform-api",
+  boundedContext: "storage",
+});
 
 export interface S3Config {
   bucket: string;
@@ -221,7 +232,16 @@ export class S3ProvisioningAdapter {
           PolicyName: `tenant-${organisationId}-access`,
         })
       )
-      .catch(() => undefined);
-    await this.iamClient.send(new DeleteUserCommand({ UserName: username })).catch(() => undefined);
+      .catch((err: unknown) => {
+        storageLog.warn(
+          { err, organisationId, username },
+          "revokeTenantUser: delete policy failed"
+        );
+      });
+    await this.iamClient
+      .send(new DeleteUserCommand({ UserName: username }))
+      .catch((err: unknown) => {
+        storageLog.warn({ err, organisationId, username }, "revokeTenantUser: delete user failed");
+      });
   }
 }

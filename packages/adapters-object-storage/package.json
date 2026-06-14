@@ -65,7 +65,8 @@
     "relations": {
       "dependsOn": [
         "@platform/storage-runtime",
-        "@platform/config-runtime"
+        "@platform/config-runtime",
+        "@platform/platform-logging"
       ],
       "providesApis": [
         "object-storage-adapter",

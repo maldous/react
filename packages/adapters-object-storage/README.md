@@ -99,6 +99,7 @@ production
 ```text
 @platform/storage-runtime
 @platform/config-runtime
+@platform/platform-logging
 ```
 
 ### Provides APIs
