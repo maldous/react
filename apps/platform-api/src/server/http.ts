@@ -51,7 +51,13 @@ async function start(): Promise<void> {
   log.info("Redis connected");
 
   const router = createRouter(routes, undefined, sentry);
-  const server = http.createServer(router);
+  // http.createServer expects a sync (req, res) => void callback; router is
+  // async. Wrap so the Node HTTP server gets the right signature. Unhandled
+  // rejections from router propagate to the process.on("unhandledRejection")
+  // handler installed above, so fire-and-forget is safe here.
+  const server = http.createServer((req, res) => {
+    void router(req, res);
+  });
 
   server.listen(PORT, () => {
     log.info({ port: PORT }, `platform-api listening`);
@@ -68,9 +74,15 @@ async function start(): Promise<void> {
     process.on(sig, () => {
       log.info({ signal: sig }, "shutting down");
       stopWebhookWorker();
-      server.close(async () => {
-        await disconnectRedis();
-        process.exit(0);
+      // server.close expects a sync (err?: Error) => void callback. Run the
+      // async shutdown work as a void IIFE; any rejection propagates to the
+      // process.on("unhandledRejection") handler, which logs + captures it
+      // before process.exit(1) — an acceptable outcome for a shutdown path.
+      server.close(() => {
+        void (async () => {
+          await disconnectRedis();
+          process.exit(0);
+        })();
       });
     });
   }

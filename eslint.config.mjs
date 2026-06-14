@@ -75,5 +75,31 @@ export default tseslint.config(
     rules: {
       "no-console": "error",
     },
+  },
+
+  // Bucket 4: type-aware promise rules on async-critical surfaces.
+  // Catches unawaited/fire-and-forget promises and async functions passed
+  // where a sync callback is expected. Scoped to BFF, adapters, and
+  // runtime packages only (NOT the React app). Test files excluded
+  // because test frameworks use intentional fire-and-forget patterns.
+  {
+    files: [
+      "apps/platform-api/src/**/*.ts",
+      "packages/adapters-*/src/**/*.ts",
+      "packages/*-runtime/src/**/*.ts",
+    ],
+    ignores: ["**/*.test.ts", "**/tests/**"],
+    languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    plugins: { "@typescript-eslint": tseslint.plugin },
+    rules: {
+      "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/no-misused-promises": "error",
+    },
   }
 );
