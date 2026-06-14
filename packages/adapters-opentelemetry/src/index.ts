@@ -85,7 +85,16 @@ export async function startNodeTracing(
   // pulls the heavy SDK graph into a bundle that does not start tracing.
   const { NodeSDK } = await import("@opentelemetry/sdk-node");
   const { OTLPTraceExporter } = await import("@opentelemetry/exporter-trace-otlp-http");
-  const { getNodeAutoInstrumentations } = await import("@opentelemetry/auto-instrumentations-node");
+  // Explicit instrumentations only — NOT @opentelemetry/auto-instrumentations-node,
+  // whose bundled GCP/Prometheus detectors dragged in vulnerable transitive deps
+  // we never use (ADR-ACT-0284). These are the libraries this BFF actually speaks:
+  // outbound http + undici(fetch), Postgres, and node-redis. The inbound HTTP
+  // server span is created manually (platform-observability.withServerSpan)
+  // because node:http is ESM-imported and not patched by require-in-the-middle.
+  const { HttpInstrumentation } = await import("@opentelemetry/instrumentation-http");
+  const { PgInstrumentation } = await import("@opentelemetry/instrumentation-pg");
+  const { RedisInstrumentation } = await import("@opentelemetry/instrumentation-redis");
+  const { UndiciInstrumentation } = await import("@opentelemetry/instrumentation-undici");
   const { resourceFromAttributes } = await import("@opentelemetry/resources");
   const { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } =
     await import("@opentelemetry/semantic-conventions");
@@ -103,10 +112,10 @@ export async function startNodeTracing(
     }),
     traceExporter: new OTLPTraceExporter({ url: `${base.replace(/\/$/, "")}/v1/traces` }),
     instrumentations: [
-      getNodeAutoInstrumentations({
-        // fs spans are extremely noisy and not useful for request tracing.
-        "@opentelemetry/instrumentation-fs": { enabled: false },
-      }),
+      new HttpInstrumentation(),
+      new UndiciInstrumentation(),
+      new PgInstrumentation(),
+      new RedisInstrumentation(),
     ],
   });
 
