@@ -138,15 +138,14 @@ resource "keycloak_openid_client" "bff" {
   direct_access_grants_enabled = false
   service_accounts_enabled     = true # Required for Authorization Services (ADR-ACT-0145)
 
-  # Keycloak Authorization Services (UMA 2.0) — ADR-ACT-0145
-  # Enables runtime per-resource policy evaluation via UMA ticket endpoint.
-  # The BFF calls POST /realms/{realm}/protocol/openid-connect/token with
-  # grant_type=urn:ietf:params:oauth:grant-type:uma-ticket on each request.
-  authorization {
-    policy_enforcement_mode          = "ENFORCING"
-    decision_strategy                = "AFFIRMATIVE"
-    allow_remote_resource_management = true
-  }
+  # Keycloak Authorization Services (UMA 2.0) — ADR-ACT-0145, ADR-ACT-0279.
+  # NOT provisioned here: the archived mrparkers/keycloak ~4.4 provider does NOT
+  # enable authorizationServicesEnabled on Keycloak 26 (it creates a phantom
+  # ResourceServer the token endpoint rejects with "Client does not support
+  # permissions", and a TF apply error-loops on the role policy). UMA is instead
+  # provisioned via the Keycloak admin API by scripts/keycloak/provision-bff-authz.sh
+  # (run from `make keycloak-provision`), which is KC-26 compatible. The static-RBAC
+  # backstop (ADR-ACT-0276) covers any window where UMA is unprovisioned.
 
   # PKCE as additional security layer even for confidential clients
   pkce_code_challenge_method = "S256"
@@ -447,60 +446,20 @@ resource "keycloak_user_roles" "sysadmin_roles" {
 }
 
 # ---------------------------------------------------------------------------
-# Authorization resources and policies (UMA 2.0) — ADR-ACT-0145
+# Authorization resources and policies (UMA 2.0) — ADR-ACT-0145, ADR-ACT-0279
 #
-# Defines protected resources managed by the BFF client's Authorization
-# Services. Resources are evaluated at runtime with ENFORCING policy mode.
-# Role-based policies grant system-admin access to global admin resources.
+# MOVED OUT OF TERRAFORM. The archived mrparkers/keycloak ~4.4 provider cannot
+# enable Authorization Services on Keycloak 26 — it creates a phantom
+# ResourceServer (admin API returns it, but the token endpoint answers every UMA
+# ticket with "Client does not support permissions") and a TF apply hard-errors
+# (404) creating the role policy. The bff client's authz services + the
+# admin:tenants resource / system-admin role policy / read+create permissions are
+# now provisioned via the Keycloak admin API by
+# scripts/keycloak/provision-bff-authz.sh (run from `make keycloak-provision`),
+# which is KC-26 compatible. The static-RBAC backstop (ADR-ACT-0276) covers any
+# window in which UMA is unprovisioned. The proper long-term fix is migrating to
+# the maintained keycloak/keycloak provider (tracked as a follow-up).
 # ---------------------------------------------------------------------------
-
-# admin:tenants — global tenant provisioning resource
-resource "keycloak_openid_client_authorization_resource" "admin_tenants" {
-  resource_server_id = keycloak_openid_client.bff.resource_server_id
-  realm_id           = keycloak_realm.platform.id
-  name               = "admin:tenants"
-  display_name       = "Admin — Tenant Provisioning"
-  scopes             = ["create", "read"]
-}
-
-# Role-based policy — system-admin role grants access
-resource "keycloak_openid_client_role_policy" "system_admin" {
-  resource_server_id = keycloak_openid_client.bff.resource_server_id
-  realm_id           = keycloak_realm.platform.id
-  name               = "system-admin-role-policy"
-  description        = "Grants access to users with the system-admin realm role"
-  type               = "role"
-  logic              = "POSITIVE"
-  decision_strategy  = "UNANIMOUS"
-
-  role {
-    id       = keycloak_role.system_admin.id
-    required = true
-  }
-}
-
-# Scope-based permissions — bind resource + scope to role policy
-resource "keycloak_openid_client_authorization_permission" "admin_tenants_create" {
-  resource_server_id = keycloak_openid_client.bff.resource_server_id
-  realm_id           = keycloak_realm.platform.id
-  name               = "admin:tenants-create-permission"
-  description        = "System-admin may create new tenants"
-
-  resources = [keycloak_openid_client_authorization_resource.admin_tenants.id]
-  scopes    = ["create"]
-  policies  = [keycloak_openid_client_role_policy.system_admin.id]
-}
-
-resource "keycloak_openid_client_authorization_permission" "admin_tenants_read" {
-  resource_server_id = keycloak_openid_client.bff.resource_server_id
-  realm_id           = keycloak_realm.platform.id
-  name               = "admin:tenants-read-permission"
-  description        = "System-admin may read tenant resource configurations"
-
-  resources = [keycloak_openid_client_authorization_resource.admin_tenants.id]
-  scopes    = ["read"]
-  policies  = [keycloak_openid_client_role_policy.system_admin.id]
-}
 
 # ---------------------------------------------------------------------------
 # Composed-service SSO (ADR-0073). OIDC clients + realm-role token mappers so the

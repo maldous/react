@@ -78,7 +78,7 @@ compose-up-identity-mocks:
 ## host-published Keycloak port so it works for test/staging/prod, not just dev.
 seed-idps:
 	$(call STEP,seed:idps ($(ENV)))
-	set -a; if [ -f $(ENV_FILE) ]; then . ./$(ENV_FILE); fi; set +a; \
+	set -a; if [ -f $(ENV_FILE) ]; then . $(ENV_FILE); fi; set +a; \
 	KEYCLOAK_URL="http://localhost:$${KEYCLOAK_PORT:-8090}/kc" npm run seed:idps
 	$(call OK,mock broker IdPs registered on the $(ENV) realm)
 
