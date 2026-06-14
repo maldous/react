@@ -6,6 +6,7 @@ dev:
   tenants: none
   teardownDefault: false # persistent — dev remains running after stage-dev
   requiredTests:
+    - e2e-coverage-validate # ADR-0075 — registry coverage gate (no hidden/dishonest E2E coverage)
     - minimal-smoke
     - unit
     - e2e-smoke # runs make e2e-internal ENV=dev — reuses Tilt servers on 3001/5173
@@ -18,6 +19,7 @@ test:
   tenants: none
   teardownDefault: false # persistent — test remains running after stage-test
   requiredTests:
+    - e2e-coverage-validate # ADR-0075 — registry coverage gate
     - unit # test:platform-api (254) + test:frontend:run (26) — full local suite
     - contract # test:architecture (638) — governance + package contracts
     - port # validate-compose-ports — no cross-env collisions
@@ -33,6 +35,7 @@ staging:
   tenants: none
   teardownDefault: false
   requiredTests:
+    - e2e-coverage-validate # ADR-0075 — registry coverage gate
     - integration # run-stage-tests (unit-safe 206 + frontend 26) — no fixture-DB substrate
     - compose-smoke # compose-smoke.test.mjs DATA_POLICY=preserve — infra health, no resets
     - external-smoke # make e2e-external-smoke — 14 Playwright tests against localhost:82
@@ -49,6 +52,7 @@ prod:
   tenants: real
   teardownDefault: false
   requiredTests:
+    - e2e-coverage-validate # ADR-0075 — registry coverage gate
     - unit # test:platform-api (254, fixture-org present) + frontend
     - contract # test:architecture (638)
     - port

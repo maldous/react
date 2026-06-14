@@ -1,0 +1,38 @@
+{
+  "stage": "dev",
+  "validator": "persona",
+  "result": "PASSED",
+  "failures": [],
+  "reported": [
+    "permission 'tenant.members.read' (route /admin/members) has no persona with negative (denied) coverage",
+    "permission 'tenant.auth.settings.read' (route /admin/auth) has no persona with negative (denied) coverage",
+    "permission 'tenant.features.read' (route /admin/features) has no persona with negative (denied) coverage",
+    "permission 'tenant.config.read' (route /admin/config) has no persona with negative (denied) coverage",
+    "permission 'tenant.email.settings.read' (route /admin/email) has no persona with positive coverage",
+    "permission 'tenant.email.settings.read' (route /admin/email) has no persona with negative (denied) coverage",
+    "permission 'tenant.domains.read' (route /admin/domains) has no persona with negative (denied) coverage",
+    "permission 'tenant.storage.read' (route /admin/storage) has no persona with negative (denied) coverage",
+    "permission 'tenant.observability.read' (route /admin/observability) has no persona with negative (denied) coverage",
+    "permission 'tenant.webhooks.read' (route /admin/webhooks) has no persona with negative (denied) coverage",
+    "permission 'tenant.platform.read' (route /admin/platform) has no persona with positive coverage",
+    "permission 'tenant.platform.read' (route /admin/platform) has no persona with negative (denied) coverage",
+    "permission 'tenant.entitlements.read' (route /admin/entitlements) has no persona with negative (denied) coverage",
+    "permission 'tenant.metering.read' (route /admin/usage) has no persona with negative (denied) coverage",
+    "permission 'tenant.developer.read' (route /admin/developer) has no persona with negative (denied) coverage",
+    "permission 'tenant.search.read' (route /admin/search) has no persona with negative (denied) coverage",
+    "permission 'profile.read_self' (route /admin/account) has no persona with negative (denied) coverage",
+    "permission 'platform.observability.read' (route /admin/monitoring) has no persona with negative (denied) coverage",
+    "persona 'scaffold-tenant-manager' scaffold account NOT YET PROVISIONED — must exist before staging/prod real-auth execution (Phase 6)",
+    "persona 'scaffold-tenant-member' scaffold account NOT YET PROVISIONED — must exist before staging/prod real-auth execution (Phase 6)",
+    "persona 'scaffold-disabled-user' scaffold account NOT YET PROVISIONED — must exist before staging/prod real-auth execution (Phase 6)",
+    "persona 'scaffold-cross-tenant' scaffold account NOT YET PROVISIONED — must exist before staging/prod real-auth execution (Phase 6)"
+  ],
+  "summary": {
+    "personas": 21,
+    "roles": 2,
+    "rolesCovered": 2,
+    "accessibilityProfiles": 5,
+    "a11yProfilesCovered": 5
+  },
+  "generatedFor": "ADR-0075 / ADR-ACT-0285"
+}

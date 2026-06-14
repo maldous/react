@@ -1,0 +1,74 @@
+# E2E coverage coverage — dev
+
+Generated for git evidence (ADR-0075 / ADR-ACT-0285). DO NOT EDIT — regenerate via `npm run e2e:coverage:validate`.
+
+- Result: **PASSED**
+- Failures (block make all): 0
+- Reported gaps (honest, non-blocking this phase): 54
+
+## Reported gaps (tracked, not yet blocking)
+
+- ⚠️ capability 'end-user-profile-self-service' (locally proven) exempt: Profile self-service journey E2E lands in ADR-ACT-0285 Phase 6; covered by runtime-proof today.
+- ⚠️ capability 'api-keys-pat' (locally proven) exempt: Developer-portal journey E2E lands in ADR-ACT-0285 Phase 6; covered by runtime-proof today.
+- ⚠️ capability 'entitlements' (locally proven) exempt: Entitlement enabled/disabled persona coverage lands in ADR-ACT-0285 Phase 6; covered by runtime-proof + persona registry today.
+- ⚠️ capability 'privileged-access-audit' (delivered) exempt: Support-mode/breakglass audited-access E2E lands in ADR-ACT-0285 Phase 6 (persona: support/breakglass); covered by support runtime-proof today.
+- ⚠️ capability 'tenant-config-registry' (delivered) exempt: Config admin journey E2E lands in ADR-ACT-0285 Phase 6 (feature-suite); covered by runtime-proof today.
+- ⚠️ capability 'secret-setting-writeonly' (delivered) exempt: Write-only; no read surface to E2E. Covered by runtime-proof.
+- ⚠️ capability 'metering-usage-meters' (locally proven) exempt: Usage-ingestion proof lands in ADR-ACT-0285 Phase 5; covered by runtime-proof today.
+- ⚠️ capability 'quota-enforcement' (locally proven) exempt: Failure-path E2E lands in ADR-ACT-0285 Phase 5 (quota denial proof); covered by unit + runtime-proof today.
+- ⚠️ capability 'relational-storage' (locally proven) exempt: Substrate, not a user surface; exercised transitively by every authenticated journey.
+- ⚠️ capability 'backup-restore' (locally proven) exempt: Operational script, not a user surface; covered by backup scripts + runtime-proof.
+- ⚠️ capability 'search-indexing' (locally proven) exempt: Search admin journey E2E lands in ADR-ACT-0285 Phase 6 (feature-suite); covered by runtime-proof today.
+- ⚠️ capability 'event-bus-queues-dlq' (locally proven) exempt: DLQ failure-path E2E lands in ADR-ACT-0285 Phase 5; covered by runtime-proof today.
+- ⚠️ capability 'scheduled-jobs-builtin' (locally proven) exempt: Browser-observable proof lands in ADR-ACT-0285 Phase 5; covered by runtime-proof today.
+- ⚠️ capability 'notifications' (locally proven) exempt: Failure-path E2E (failed notification) lands in ADR-ACT-0285 Phase 5; covered by runtime-proof today.
+- ⚠️ capability 'background-workers-runtime' (locally proven) exempt: No user-facing surface; covered by worker heartbeat runtime-proof.
+- ⚠️ capability 'runtime-secrets' (locally proven) exempt: Write-only; no read surface to E2E. Covered by secret-store runtime-proof.
+- ⚠️ capability 'logs' (locally proven) exempt: Log read surface covered by external-smoke + the observability-correlation harness (ADR-ACT-0285 Phase 3).
+- ⚠️ capability 'observability-alerting-builtin' (locally proven) exempt: Alert/incident evidence E2E lands in ADR-ACT-0285 Phase 5; covered by runtime-proof today.
+- ⚠️ capability 'webhooks-developer' (locally proven) exempt: Failed-webhook failure-path E2E lands in ADR-ACT-0285 Phase 5; covered by runtime-proof today.
+- ⚠️ capability 'rate-limiting' (locally proven) exempt: Failure-path E2E lands in ADR-ACT-0285 Phase 5 (rate-limit denial proof); covered by unit + runtime-proof today.
+- ⚠️ capability 'usf-scope-boundary' (delivered) exempt: Governance boundary (validator), not a user surface.
+- ⚠️ capability 'build-vs-compose-framework' (delivered) exempt: Governance framework (validator), not a user surface.
+- ⚠️ capability 'environment-service-classification' (delivered) exempt: Governance matrix (validator), not a user surface.
+- ⚠️ capability 'provider-configuration' (locally proven) exempt: Operator provider-config journey E2E lands in ADR-ACT-0285 Phase 6; covered by runtime-proof today.
+- ⚠️ capability 'composed-provider-readiness' (locally proven) exempt: Readiness surface covered by clickthrough reachability + external-smoke; deeper proof Phase 6.
+- ⚠️ capability 'history-read-model' (locally proven) exempt: Admin history journey E2E lands in ADR-ACT-0285 Phase 6 (feature-suite); covered by runtime-proof today.
+- ⚠️ capability 'groups' status=api-only — not required to have E2E (honest report)
+- ⚠️ capability 'sub-organisations' status=api-only — not required to have E2E (honest report)
+- ⚠️ capability 'abac-pdp' status=partial — not required to have E2E (honest report)
+- ⚠️ capability 'delegated-admin-roles' status=deferred — not required to have E2E (honest report)
+- ⚠️ capability 'support-mode-breakglass' status=partial — not required to have E2E (honest report)
+- ⚠️ capability 'claim-group-mapping' status=partial — not required to have E2E (honest report)
+- ⚠️ capability 'real-idp-login-proof' status=blocked — not required to have E2E (honest report)
+- ⚠️ capability 'mfa-session-policy' status=partial — not required to have E2E (honest report)
+- ⚠️ capability 'branding-theme' status=partial — not required to have E2E (honest report)
+- ⚠️ capability 'custom-domains-dns-tls' status=partial — not required to have E2E (honest report)
+- ⚠️ capability 'product-catalog-plans-prices' status=missing — not required to have E2E (honest report)
+- ⚠️ capability 'subscriptions-invoices-payments' status=missing — not required to have E2E (honest report)
+- ⚠️ capability 'pitr-retention-legalhold-residency' status=missing — not required to have E2E (honest report)
+- ⚠️ capability 'data-governance-catalog-lineage-pii-dsr' status=missing — not required to have E2E (honest report)
+- ⚠️ capability 'import-export' status=missing — not required to have E2E (honest report)
+- ⚠️ capability 'object-storage' status=partial — not required to have E2E (honest report)
+- ⚠️ capability 'workflow-engine-scheduled-jobs' status=partial — not required to have E2E (honest report)
+- ⚠️ capability 'serverless-functions' status=missing — not required to have E2E (honest report)
+- ⚠️ capability 'metrics-traces' status=partial — not required to have E2E (honest report)
+- ⚠️ capability 'alerting-incident-oncall' status=partial — not required to have E2E (honest report)
+- ⚠️ capability 'code-quality-secret-dep-scan' status=partial — not required to have E2E (honest report)
+- ⚠️ capability 'compliance-evidence-access-reviews' status=partial — not required to have E2E (honest report)
+- ⚠️ capability 'api-docs-portal-sdk-ratelimits' status=partial — not required to have E2E (honest report)
+- ⚠️ capability 'mock-providers' status=mock-only — not required to have E2E (honest report)
+- ⚠️ capability 'tenant-lifecycle-suspend-delete-export' status=partial — not required to have E2E (honest report)
+- ⚠️ capability 'support-tickets-health-comms' status=missing — not required to have E2E (honest report)
+- ⚠️ capability 'service-catalog-provider-model' status=partial — not required to have E2E (honest report)
+- ⚠️ proof scripts present: 62 (capability-evidence mapping audited in ADR-ACT-0285 Phase 5)
+
+## Summary
+
+- testFiles: 19
+- suites: 19
+- delivered+locallyProven capabilities: 33
+- coveredCapabilities: 7
+- exemptCapabilities: 26
+- adminNavRoutes: 22
+- clickthroughExposed: 10

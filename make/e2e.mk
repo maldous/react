@@ -1,5 +1,16 @@
 .PHONY: e2e-external-smoke e2e-external-auth e2e-external \
-        dev-e2e dev-e2e-auth test-e2e staging-e2e prod-e2e run-stage-e2e
+        dev-e2e dev-e2e-auth test-e2e staging-e2e prod-e2e run-stage-e2e \
+        e2e-coverage-validate
+
+## e2e-coverage-validate — Stage-aware E2E coverage gate (ADR-0075 / ADR-ACT-0285).
+## Fails make all when a delivered/locally-proven capability, admin route, nav item,
+## clickthrough policy entry, role, accessibility profile, or UI surface lacks declared
+## E2E coverage (minus honest exemptions). Pure registry validation — no running stack
+## required, so it runs at every stage. Writes docs/evidence/e2e/<stage>-*-latest.{json,md}.
+e2e-coverage-validate:
+	$(call STEP,e2e:coverage-validate \($(ENV)\))
+	@STAGE=$(ENV) node tools/e2e/validate-e2e/src/index.mjs all
+	$(call OK,e2e coverage + persona + ui-contract registries validated)
 
 ## e2e-external-smoke — External smoke tests against a running stack (no auth required)
 ## Runs e2e/external/smoke.test.ts against PROD_BASE_URL.

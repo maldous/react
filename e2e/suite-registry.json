@@ -1,0 +1,480 @@
+{
+  "$comment": "ADR-0075 / ADR-ACT-0285 — stage-aware E2E suite registry. Single source of truth for E2E coverage. Every test file under e2e/ MUST have an entry here (validated by e2e:coverage:validate); no hidden coverage. authMode: fixture|real|unauthenticated|mixed. stageMin: lowest stage a suite runs at (runs at that stage and all higher). destructive: writes/destroys tenant-or-customer data. requiredCapabilities reference docs/evidence/platform/universal-service-foundation-registry.json .capabilities[].capability. expected{Logs,Metrics,Traces,SentryEvents} declare the observability that scenario must produce ('none' = not asserted yet at this phase).",
+  "schemaVersion": 1,
+  "stageVocabulary": ["dev", "test", "staging", "prod"],
+  "authModeVocabulary": ["fixture", "real", "unauthenticated", "mixed"],
+  "suites": [
+    {
+      "id": "internal-smoke",
+      "file": "e2e/internal/smoke.test.ts",
+      "stageMin": "dev",
+      "authMode": "fixture",
+      "destructive": true,
+      "surfaces": [
+        "route:/",
+        "api:/healthz",
+        "api:/readyz",
+        "api:/api/session",
+        "graphql:organisationProfile"
+      ],
+      "requiredCapabilities": ["platform-login", "user-identity", "service-catalog-readiness"],
+      "expectedLogs": ["http.request.complete"],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": [],
+      "owner": "ADR-0025; docs/evidence/e2e/playwright-baseline.json"
+    },
+    {
+      "id": "internal-build",
+      "file": "e2e/internal/build.test.ts",
+      "stageMin": "test",
+      "authMode": "fixture",
+      "destructive": false,
+      "surfaces": ["route:/", "asset:bundle"],
+      "requiredCapabilities": ["platform-login"],
+      "expectedLogs": [],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": ["broken-production-bundle"],
+      "owner": "ADR-0025"
+    },
+    {
+      "id": "external-smoke",
+      "file": "e2e/external/smoke.test.ts",
+      "stageMin": "staging",
+      "authMode": "unauthenticated",
+      "destructive": false,
+      "surfaces": ["api:/healthz", "api:/readyz", "route:/", "route:/login", "security:headers"],
+      "requiredCapabilities": ["platform-login", "service-catalog-readiness"],
+      "expectedLogs": ["http.request.complete"],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": ["front-door-unreachable", "missing-security-headers"],
+      "owner": "ADR-0025; ADR-0035"
+    },
+    {
+      "id": "external-login",
+      "file": "e2e/external/login.spec.ts",
+      "stageMin": "staging",
+      "authMode": "real",
+      "destructive": false,
+      "surfaces": [
+        "route:/login",
+        "route:/auth/login",
+        "route:/auth/callback",
+        "auth:keycloak-oidc"
+      ],
+      "requiredCapabilities": ["platform-login", "idp-brokering", "user-identity"],
+      "expectedLogs": ["http.request.complete"],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": ["login-broken", "callback-failure"],
+      "owner": "ADR-0025; docs/local-development/real-login-e2e.md"
+    },
+    {
+      "id": "external-logout",
+      "file": "e2e/external/logout.spec.ts",
+      "stageMin": "staging",
+      "authMode": "real",
+      "destructive": false,
+      "surfaces": ["route:/auth/logout", "auth:session"],
+      "requiredCapabilities": ["platform-login"],
+      "expectedLogs": ["http.request.complete"],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": ["session-not-cleared"],
+      "owner": "ADR-0025"
+    },
+    {
+      "id": "external-auth-negative",
+      "file": "e2e/external/auth-negative.spec.ts",
+      "stageMin": "staging",
+      "authMode": "mixed",
+      "destructive": false,
+      "surfaces": ["api:protected-routes", "auth:denial"],
+      "requiredCapabilities": ["platform-login", "rbac"],
+      "expectedLogs": ["http.request.rejected"],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": ["unauthenticated-access", "invalid-session"],
+      "owner": "ADR-0030; ADR-ACT-0278"
+    },
+    {
+      "id": "external-caddy-links",
+      "file": "e2e/external/caddy-links.spec.ts",
+      "stageMin": "staging",
+      "authMode": "real",
+      "destructive": false,
+      "surfaces": [
+        "clickthrough:keycloak",
+        "clickthrough:grafana",
+        "clickthrough:mailpit",
+        "clickthrough:sonarqube",
+        "clickthrough:minio",
+        "clickthrough:pgadmin",
+        "clickthrough:sentry",
+        "clickthrough:clickhouse"
+      ],
+      "requiredCapabilities": ["service-catalog-readiness"],
+      "expectedLogs": ["http.request.complete"],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": ["clickthrough-unreachable", "clickthrough-not-blocked"],
+      "owner": "ADR-ACT-0233; ADR-ACT-0284"
+    },
+    {
+      "id": "external-tenant-prod",
+      "file": "e2e/external/tenant-prod.spec.ts",
+      "stageMin": "prod",
+      "authMode": "real",
+      "destructive": false,
+      "surfaces": ["route:tenant-fqdn", "tenant:routing", "tenant:isolation"],
+      "requiredCapabilities": ["tenant-identity", "tenant-isolation-proof"],
+      "expectedLogs": ["http.request.complete"],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": ["tenant-routing-broken", "cross-tenant-leak"],
+      "owner": "ADR-0029"
+    },
+    {
+      "id": "external-tool-services",
+      "file": "e2e/external/tool-services.spec.ts",
+      "stageMin": "staging",
+      "authMode": "real",
+      "destructive": false,
+      "surfaces": ["clickthrough:tools"],
+      "requiredCapabilities": ["service-catalog-readiness"],
+      "expectedLogs": ["http.request.complete"],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": ["tool-service-unreachable"],
+      "owner": "ADR-ACT-0233"
+    },
+    {
+      "id": "identity-broker-login",
+      "file": "e2e/identity/broker-login.spec.ts",
+      "stageMin": "test",
+      "authMode": "real",
+      "destructive": false,
+      "surfaces": ["auth:idp-broker", "route:/auth/login", "route:/auth/callback"],
+      "requiredCapabilities": ["idp-brokering", "platform-login"],
+      "expectedLogs": ["http.request.complete"],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": ["broker-login-failure", "account-conflict"],
+      "owner": "ADR-ACT-0157"
+    },
+    {
+      "id": "identity-redirect-merge",
+      "file": "e2e/identity/redirect-merge.test.ts",
+      "stageMin": "test",
+      "authMode": "real",
+      "destructive": false,
+      "surfaces": ["auth:account-link"],
+      "requiredCapabilities": ["idp-brokering", "user-identity"],
+      "expectedLogs": [],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": ["account-link-failure"],
+      "owner": "ADR-ACT-0157"
+    },
+    {
+      "id": "prod-admin-tools",
+      "file": "e2e/prod/admin-tools.test.ts",
+      "stageMin": "prod",
+      "authMode": "real",
+      "destructive": false,
+      "surfaces": ["route:/admin", "admin:surfaces"],
+      "requiredCapabilities": ["rbac", "service-catalog-readiness"],
+      "expectedLogs": ["http.request.complete"],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": ["admin-surface-broken"],
+      "owner": "ADR-0036"
+    },
+    {
+      "id": "prod-api-contract",
+      "file": "e2e/prod/api-contract.test.ts",
+      "stageMin": "prod",
+      "authMode": "real",
+      "destructive": false,
+      "surfaces": ["api:openapi", "api:contract"],
+      "requiredCapabilities": ["user-identity"],
+      "expectedLogs": [],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": ["api-contract-drift"],
+      "owner": "ADR-0013; docs/api/openapi.json"
+    },
+    {
+      "id": "prod-asset-integrity",
+      "file": "e2e/prod/asset-integrity.test.ts",
+      "stageMin": "prod",
+      "authMode": "unauthenticated",
+      "destructive": false,
+      "surfaces": ["asset:js", "asset:css", "asset:bundle-hash"],
+      "requiredCapabilities": [],
+      "expectedLogs": [],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": ["asset-corruption", "failed-asset-load"],
+      "owner": "ADR-0025"
+    },
+    {
+      "id": "prod-cookie-security",
+      "file": "e2e/prod/cookie-security.test.ts",
+      "stageMin": "prod",
+      "authMode": "real",
+      "destructive": false,
+      "surfaces": ["auth:cookie", "security:cookie-flags"],
+      "requiredCapabilities": ["platform-login"],
+      "expectedLogs": [],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": ["insecure-cookie"],
+      "owner": "ADR-ACT-0278"
+    },
+    {
+      "id": "prod-cross-cutting",
+      "file": "e2e/prod/cross-cutting.test.ts",
+      "stageMin": "prod",
+      "authMode": "real",
+      "destructive": false,
+      "surfaces": ["tenant:isolation", "error:boundary"],
+      "requiredCapabilities": ["tenant-isolation-proof"],
+      "expectedLogs": [],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": ["tenant-isolation-failure"],
+      "owner": "ADR-0029"
+    },
+    {
+      "id": "prod-error-handling",
+      "file": "e2e/prod/error-handling.test.ts",
+      "stageMin": "prod",
+      "authMode": "mixed",
+      "destructive": false,
+      "surfaces": ["error:4xx", "error:5xx", "error:ui"],
+      "requiredCapabilities": [],
+      "expectedLogs": ["http.request.rejected"],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": ["unhandled-error-ui"],
+      "owner": "ADR-0025"
+    },
+    {
+      "id": "prod-performance-budget",
+      "file": "e2e/prod/performance-budget.test.ts",
+      "stageMin": "prod",
+      "authMode": "unauthenticated",
+      "destructive": false,
+      "surfaces": ["perf:web-vitals"],
+      "requiredCapabilities": [],
+      "expectedLogs": [],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": ["perf-budget-exceeded"],
+      "owner": "ADR-0025"
+    },
+    {
+      "id": "prod-security-headers",
+      "file": "e2e/prod/security-headers.test.ts",
+      "stageMin": "prod",
+      "authMode": "unauthenticated",
+      "destructive": false,
+      "surfaces": ["security:headers", "security:csp"],
+      "requiredCapabilities": [],
+      "expectedLogs": [],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": ["missing-security-headers", "weak-csp"],
+      "owner": "ADR-0025; ADR-0035"
+    }
+  ],
+  "capabilityExemptions": [
+    {
+      "capability": "rate-limiting",
+      "reason": "Failure-path E2E lands in ADR-ACT-0285 Phase 5 (rate-limit denial proof); covered by unit + runtime-proof today.",
+      "until": "ADR-ACT-0285-phase-5"
+    },
+    {
+      "capability": "quota-enforcement",
+      "reason": "Failure-path E2E lands in ADR-ACT-0285 Phase 5 (quota denial proof); covered by unit + runtime-proof today.",
+      "until": "ADR-ACT-0285-phase-5"
+    },
+    {
+      "capability": "notifications",
+      "reason": "Failure-path E2E (failed notification) lands in ADR-ACT-0285 Phase 5; covered by runtime-proof today.",
+      "until": "ADR-ACT-0285-phase-5"
+    },
+    {
+      "capability": "webhooks-developer",
+      "reason": "Failed-webhook failure-path E2E lands in ADR-ACT-0285 Phase 5; covered by runtime-proof today.",
+      "until": "ADR-ACT-0285-phase-5"
+    },
+    {
+      "capability": "event-bus-queues-dlq",
+      "reason": "DLQ failure-path E2E lands in ADR-ACT-0285 Phase 5; covered by runtime-proof today.",
+      "until": "ADR-ACT-0285-phase-5"
+    },
+    {
+      "capability": "scheduled-jobs-builtin",
+      "reason": "Browser-observable proof lands in ADR-ACT-0285 Phase 5; covered by runtime-proof today.",
+      "until": "ADR-ACT-0285-phase-5"
+    },
+    {
+      "capability": "background-workers-runtime",
+      "reason": "No user-facing surface; covered by worker heartbeat runtime-proof.",
+      "until": "permanent"
+    },
+    {
+      "capability": "runtime-secrets",
+      "reason": "Write-only; no read surface to E2E. Covered by secret-store runtime-proof.",
+      "until": "permanent"
+    },
+    {
+      "capability": "secret-setting-writeonly",
+      "reason": "Write-only; no read surface to E2E. Covered by runtime-proof.",
+      "until": "permanent"
+    },
+    {
+      "capability": "metering-usage-meters",
+      "reason": "Usage-ingestion proof lands in ADR-ACT-0285 Phase 5; covered by runtime-proof today.",
+      "until": "ADR-ACT-0285-phase-5"
+    },
+    {
+      "capability": "backup-restore",
+      "reason": "Operational script, not a user surface; covered by backup scripts + runtime-proof.",
+      "until": "permanent"
+    },
+    {
+      "capability": "search-indexing",
+      "reason": "Search admin journey E2E lands in ADR-ACT-0285 Phase 6 (feature-suite); covered by runtime-proof today.",
+      "until": "ADR-ACT-0285-phase-6"
+    },
+    {
+      "capability": "relational-storage",
+      "reason": "Substrate, not a user surface; exercised transitively by every authenticated journey.",
+      "until": "permanent"
+    },
+    {
+      "capability": "observability-alerting-builtin",
+      "reason": "Alert/incident evidence E2E lands in ADR-ACT-0285 Phase 5; covered by runtime-proof today.",
+      "until": "ADR-ACT-0285-phase-5"
+    },
+    {
+      "capability": "logs",
+      "reason": "Log read surface covered by external-smoke + the observability-correlation harness (ADR-ACT-0285 Phase 3).",
+      "until": "ADR-ACT-0285-phase-3"
+    },
+    {
+      "capability": "history-read-model",
+      "reason": "Admin history journey E2E lands in ADR-ACT-0285 Phase 6 (feature-suite); covered by runtime-proof today.",
+      "until": "ADR-ACT-0285-phase-6"
+    },
+    {
+      "capability": "provider-configuration",
+      "reason": "Operator provider-config journey E2E lands in ADR-ACT-0285 Phase 6; covered by runtime-proof today.",
+      "until": "ADR-ACT-0285-phase-6"
+    },
+    {
+      "capability": "composed-provider-readiness",
+      "reason": "Readiness surface covered by clickthrough reachability + external-smoke; deeper proof Phase 6.",
+      "until": "ADR-ACT-0285-phase-6"
+    },
+    {
+      "capability": "tenant-config-registry",
+      "reason": "Config admin journey E2E lands in ADR-ACT-0285 Phase 6 (feature-suite); covered by runtime-proof today.",
+      "until": "ADR-ACT-0285-phase-6"
+    },
+    {
+      "capability": "entitlements",
+      "reason": "Entitlement enabled/disabled persona coverage lands in ADR-ACT-0285 Phase 6; covered by runtime-proof + persona registry today.",
+      "until": "ADR-ACT-0285-phase-6"
+    },
+    {
+      "capability": "api-keys-pat",
+      "reason": "Developer-portal journey E2E lands in ADR-ACT-0285 Phase 6; covered by runtime-proof today.",
+      "until": "ADR-ACT-0285-phase-6"
+    },
+    {
+      "capability": "end-user-profile-self-service",
+      "reason": "Profile self-service journey E2E lands in ADR-ACT-0285 Phase 6; covered by runtime-proof today.",
+      "until": "ADR-ACT-0285-phase-6"
+    },
+    {
+      "capability": "privileged-access-audit",
+      "reason": "Support-mode/breakglass audited-access E2E lands in ADR-ACT-0285 Phase 6 (persona: support/breakglass); covered by support runtime-proof today.",
+      "until": "ADR-ACT-0285-phase-6"
+    },
+    {
+      "capability": "tenant-identity",
+      "reason": "Covered by external-tenant-prod (tenant routing) + cross-cutting isolation; provisioning journey Phase 6.",
+      "until": "ADR-ACT-0285-phase-6"
+    },
+    {
+      "capability": "usf-scope-boundary",
+      "reason": "Governance boundary (validator), not a user surface.",
+      "until": "permanent"
+    },
+    {
+      "capability": "build-vs-compose-framework",
+      "reason": "Governance framework (validator), not a user surface.",
+      "until": "permanent"
+    },
+    {
+      "capability": "environment-service-classification",
+      "reason": "Governance matrix (validator), not a user surface.",
+      "until": "permanent"
+    },
+    {
+      "capability": "tenant-isolation-proof",
+      "reason": "Covered by external-tenant-prod + prod-cross-cutting.",
+      "until": "permanent"
+    },
+    {
+      "capability": "service-catalog-readiness",
+      "reason": "Covered by external-smoke + clickthrough reachability.",
+      "until": "permanent"
+    },
+    {
+      "capability": "rbac",
+      "reason": "Positive/negative coverage by persona registry (ADR-ACT-0285) + auth-negative; full persona execution Phase 6.",
+      "until": "ADR-ACT-0285-phase-6"
+    },
+    {
+      "capability": "user-identity",
+      "reason": "Covered by login/session suites.",
+      "until": "permanent"
+    },
+    {
+      "capability": "idp-brokering",
+      "reason": "Covered by identity-broker-login + external-login.",
+      "until": "permanent"
+    },
+    {
+      "capability": "platform-login",
+      "reason": "Covered by external-login/logout + internal-smoke.",
+      "until": "permanent"
+    }
+  ]
+}

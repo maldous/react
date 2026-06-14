@@ -1,0 +1,26 @@
+{
+  "stage": "staging",
+  "validator": "ui-contract",
+  "result": "PASSED",
+  "failures": [],
+  "reported": [
+    "surface 'admin-readiness' requires a negative test but no persona declares it forbidden (Phase 6 execution)",
+    "surface 'admin-features' requires a negative test but no persona declares it forbidden (Phase 6 execution)",
+    "surface 'admin-email' requires a negative test but no persona declares it forbidden (Phase 6 execution)",
+    "surface 'admin-domains' requires a negative test but no persona declares it forbidden (Phase 6 execution)",
+    "surface 'admin-storage' requires a negative test but no persona declares it forbidden (Phase 6 execution)",
+    "surface 'admin-observability' requires a negative test but no persona declares it forbidden (Phase 6 execution)",
+    "surface 'admin-webhooks' requires a negative test but no persona declares it forbidden (Phase 6 execution)",
+    "surface 'admin-platform' requires a negative test but no persona declares it forbidden (Phase 6 execution)",
+    "surface 'admin-entitlements' requires a negative test but no persona declares it forbidden (Phase 6 execution)",
+    "surface 'admin-usage' requires a negative test but no persona declares it forbidden (Phase 6 execution)",
+    "surface 'admin-developer' requires a negative test but no persona declares it forbidden (Phase 6 execution)",
+    "surface 'admin-search' requires a negative test but no persona declares it forbidden (Phase 6 execution)"
+  ],
+  "summary": {
+    "surfaces": 24,
+    "adminNavRoutes": 22,
+    "deprecatedSurfaces": 0
+  },
+  "generatedFor": "ADR-0075 / ADR-ACT-0285"
+}

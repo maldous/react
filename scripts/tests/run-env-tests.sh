@@ -70,6 +70,13 @@ run_group() {
       minimal-smoke)
         bash scripts/smoke/http-smoke.sh "$STAGE"
         ;;
+      e2e-coverage-validate)
+        # ADR-0075 / ADR-ACT-0285 — stage-aware E2E coverage gate. Fails when a
+        # delivered/locally-proven capability, admin route, nav item, clickthrough
+        # entry, role, accessibility profile, or UI surface has no declared E2E
+        # coverage (minus honest exemptions). Pure registry validation.
+        STAGE="$STAGE" node tools/e2e/validate-e2e/src/index.mjs all
+        ;;
       unit)
         POSTGRES_URL="$_pg_url" POSTGRES_APP_URL="$_pg_app_url" REDIS_URL="$_rd_url" npm run test:platform-api
         NODE_ENV=test npm run test:frontend:run
