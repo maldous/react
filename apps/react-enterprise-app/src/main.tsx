@@ -8,6 +8,11 @@ import { I18nProvider, enGB } from "@platform/i18n-runtime";
 import { queryClient } from "./app/query-client";
 import { router } from "./app/router";
 import { ThemeProvider } from "./theme/ThemeProvider";
+import { initFaro } from "./observability/faro";
+
+// Browser-side diagnostics (ADR-0074). Initialise BEFORE React renders so the
+// earliest errors / Web Vitals of this page load are captured. No-op when disabled.
+initFaro();
 
 const root = document.getElementById("root");
 if (!root) throw new Error("Root element not found");

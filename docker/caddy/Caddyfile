@@ -220,6 +220,12 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 	handle /api/* {
 		import platform_api_proxy
 	}
+	# Browser diagnostics (ADR-0074): same-origin Faro collector. handle_path strips
+	# the /faro prefix so it maps to this environment's Alloy faro.receiver /collect.
+	# Same-origin keeps the existing CSP (connect-src 'self') intact.
+	handle_path /faro/* {
+		reverse_proxy alloy:12347
+	}
 	# /auth/* carries full SPA security headers — browsers may display the BFF
 	# redirect response (e.g. error pages), and /auth/login is tested as a
 	# security-sensitive route.
@@ -306,6 +312,12 @@ http://*.aldous.info http://*.dev.localhost http://*.test.localhost http://*.sta
 	handle /api/* {
 		import platform_api_proxy
 	}
+	# Browser diagnostics (ADR-0074): same-origin Faro collector. handle_path strips
+	# the /faro prefix so it maps to this environment's Alloy faro.receiver /collect.
+	# Same-origin keeps the existing CSP (connect-src 'self') intact.
+	handle_path /faro/* {
+		reverse_proxy alloy:12347
+	}
 	handle /auth/* {
 		header X-Content-Type-Options nosniff
 		header X-Frame-Options DENY
@@ -373,6 +385,12 @@ http:// {
 	# BFF ? /internal/* intentionally NOT listed (same reason as the blocks above)
 	handle /api/* {
 		import platform_api_proxy
+	}
+	# Browser diagnostics (ADR-0074): same-origin Faro collector. handle_path strips
+	# the /faro prefix so it maps to this environment's Alloy faro.receiver /collect.
+	# Same-origin keeps the existing CSP (connect-src 'self') intact.
+	handle_path /faro/* {
+		reverse_proxy alloy:12347
 	}
 	handle /auth/* {
 		header X-Content-Type-Options nosniff
