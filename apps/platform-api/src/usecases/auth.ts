@@ -57,12 +57,27 @@ export async function resolveSessionFromIdentity(
   );
 
   if (!pair) {
-    pair = await deps.identities.createUserAndExternalIdentity({
-      email: identity.email,
-      displayName: identity.displayName,
-      provider: identity.provider,
-      providerSubject: identity.providerSubject,
-    });
+    // The (provider, subject) is unknown. The email is already verified upstream
+    // (getUserInfo refuses unverified emails), so if an account with this email
+    // already exists, RE-LINK the new external identity to it rather than failing on
+    // the unique-email constraint. This handles IdP subject rotation — notably a
+    // Keycloak realm rebuild, which gives every user a fresh subject (ADR-ACT-0282).
+    const existingUser = await deps.identities.findUserByEmail(identity.email);
+    if (existingUser) {
+      const externalIdentity = await deps.identities.linkExternalIdentity(existingUser.id, {
+        provider: identity.provider,
+        providerSubject: identity.providerSubject,
+        email: identity.email,
+      });
+      pair = { user: existingUser, externalIdentity };
+    } else {
+      pair = await deps.identities.createUserAndExternalIdentity({
+        email: identity.email,
+        displayName: identity.displayName,
+        provider: identity.provider,
+        providerSubject: identity.providerSubject,
+      });
+    }
   }
 
   const { user } = pair;

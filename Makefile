@@ -59,6 +59,7 @@ all: clean-all \
 ## Sentry starts first (own project, survives env resets). external-caddy restarts after
 ## destructive stages (dev+test kill react-dev). staging/prod E2E need both live.
 all-promote:
+	docker network create sonar-bridge 2>/dev/null || true
 	$(MAKE) sentry-up
 	$(MAKE) stage-dev
 	$(MAKE) stage-test

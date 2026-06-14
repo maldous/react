@@ -282,6 +282,12 @@ services:
       timeout: 10s
       retries: 10
       start_period: 120s
+    networks:
+      # default = the react-sonar project network (sonar-postgres link). sonar-bridge
+      # is a shared external network so each env's Caddy can reach the shared SonarQube
+      # for the /sonar clickthrough (mirrors sentry-bridge) — ADR-ACT-0282.
+      default: {}
+      sonar-bridge: {}
     restart: unless-stopped
 
   # ---------------------------------------------------------------------------
@@ -1280,6 +1286,7 @@ services:
     networks:
       default: {}
       sentry-bridge: {}
+      sonar-bridge: {}
     depends_on:
       platform-api:
         condition: service_healthy
@@ -1357,6 +1364,9 @@ networks:
   sentry-bridge:
     external: true
     name: sentry-bridge
+  sonar-bridge:
+    external: true
+    name: sonar-bridge
 
 volumes:
   postgres-data:

@@ -139,6 +139,39 @@ export class PostgresIdentityRepository implements IdentityRepository {
     });
   }
 
+  // Re-link support (ADR-ACT-0282): find an existing user by email so a rotated IdP
+  // subject (e.g. after a Keycloak realm rebuild) can be attached to the SAME account
+  // instead of failing with account_conflict.
+  async findUserByEmail(email: string): Promise<User | null> {
+    return withSystemAdmin(this.pool, async (client) => {
+      const { rows } = await client.query(
+        `SELECT id, email, display_name, created_at, updated_at
+         FROM users WHERE lower(email) = lower($1) LIMIT 1`,
+        [email]
+      );
+      return rows.length ? rowToUser(rows[0] as Record<string, unknown>) : null;
+    });
+  }
+
+  // Attach a new external identity to an existing user. Caller must have verified the
+  // email (getUserInfo refuses unverified). Idempotent on the (provider,
+  // provider_subject) unique key.
+  async linkExternalIdentity(
+    userId: string,
+    input: { provider: string; providerSubject: string; email: string }
+  ): Promise<ExternalIdentity> {
+    return withSystemAdmin(this.pool, async (client) => {
+      const { rows } = await client.query(
+        `INSERT INTO external_identities (user_id, provider, provider_subject)
+         VALUES ($1, $2, $3)
+         ON CONFLICT (provider, provider_subject) DO UPDATE SET user_id = EXCLUDED.user_id
+         RETURNING id, user_id, provider, provider_subject, created_at`,
+        [userId, input.provider, input.providerSubject]
+      );
+      return rowToExternalIdentity(rows[0] as Record<string, unknown>);
+    });
+  }
+
   async findMembershipByUser(userId: string): Promise<(Membership & { role: TenantRole }) | null> {
     return withSystemAdmin(this.pool, async (client) => {
       const { rows } = await client.query(

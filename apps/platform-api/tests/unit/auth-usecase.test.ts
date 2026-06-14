@@ -54,6 +54,8 @@ function makeFakeIdentityRepo(overrides: Partial<IdentityRepository> = {}): Iden
       user: FIXTURE_USER,
       externalIdentity: FIXTURE_EI,
     }),
+    findUserByEmail: async () => null,
+    linkExternalIdentity: async () => FIXTURE_EI,
     findMembershipByUser: async () => FIXTURE_MEMBERSHIP,
     consumePendingInvitationsForUser: async () => [],
     ...overrides,
@@ -121,6 +123,33 @@ describe("resolveSessionFromIdentity", () => {
     };
     await resolveSessionFromIdentity(KEYCLOAK_IDENTITY, deps);
     assert.ok(createCalled, "createUserAndExternalIdentity must be called for first-time login");
+  });
+
+  it("re-links a rotated IdP subject to the existing account (ADR-ACT-0282)", async () => {
+    // Unknown (provider, subject) but the email already has an account — e.g. after a
+    // Keycloak realm rebuild. Must re-link (NOT create / conflict).
+    let linked = false;
+    let createCalled = false;
+    const sessions = makeFakeSessionStore();
+    const deps: AuthUseCaseDeps = {
+      identities: makeFakeIdentityRepo({
+        findExternalIdentity: async () => null,
+        findUserByEmail: async () => FIXTURE_USER,
+        linkExternalIdentity: async () => {
+          linked = true;
+          return FIXTURE_EI;
+        },
+        createUserAndExternalIdentity: async () => {
+          createCalled = true;
+          return { user: FIXTURE_USER, externalIdentity: FIXTURE_EI };
+        },
+      }),
+      sessions,
+    };
+    const result = await resolveSessionFromIdentity(KEYCLOAK_IDENTITY, deps);
+    assert.ok(linked, "linkExternalIdentity must be called when the email already exists");
+    assert.ok(!createCalled, "must NOT create a new user when re-linking");
+    assert.equal(result.userId, FIXTURE_USER.id);
   });
 
   it("handles no-membership: sets empty tenantId and no permissions", async () => {

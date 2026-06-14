@@ -178,6 +178,7 @@ identity-mocks-down:
 ## Idempotent — fast no-op when already healthy. Single instance shared across all envs.
 sonar-up:
 	$(call STEP,sonar: startup)
+	docker network create sonar-bridge 2>/dev/null || true
 	bash scripts/compose/up.sh sonar external-sonar
 	@_url=$$(grep -oP 'SONAR_HOST_URL=\K\S+' "$$(bash scripts/env/resolve-env-file.sh sonar)" 2>/dev/null | head -1 || echo http://localhost:9064/sonar); \
 	printf '$(GREEN)✓ SonarQube up at %s (project: maldous-react)$(RESET)\n' "$$_url"

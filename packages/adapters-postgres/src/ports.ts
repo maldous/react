@@ -14,6 +14,19 @@ export interface IdentityRepository {
     providerSubject: string;
   }): Promise<{ user: User; externalIdentity: ExternalIdentity }>;
 
+  /** Find an existing user by email (case-insensitive). Used to re-link a new
+   *  external identity to an existing account when the IdP subject rotated (e.g. a
+   *  Keycloak realm rebuild) — ADR-ACT-0282. */
+  findUserByEmail(email: string): Promise<User | null>;
+
+  /** Attach a new (provider, providerSubject) external identity to an EXISTING
+   *  user. Safe only after the caller has verified the email (getUserInfo refuses
+   *  unverified emails). Idempotent on the (provider, providerSubject) unique key. */
+  linkExternalIdentity(
+    userId: string,
+    input: { provider: string; providerSubject: string; email: string }
+  ): Promise<ExternalIdentity>;
+
   findMembershipByUser(userId: string): Promise<(Membership & { role: TenantRole }) | null>;
 
   /**
