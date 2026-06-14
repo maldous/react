@@ -39,8 +39,14 @@ for (const stage of LADDER) {
 }
 
 for (const [stage, ev] of Object.entries(stages)) {
+  // ADR-ACT-0285 Phase 2 — only FULL confidence passes promotion. A "degraded"
+  // stage (real auth skipped at staging/prod) is NOT a pass, so the ladder fails
+  // and make all cannot report staging/prod as passed when real auth was skipped.
   if (ev.result !== "passed") {
-    failures.push(`${stage}: result is "${ev.result}" (${ev.failureSummary ?? "no summary"})`);
+    const conf = ev.confidence ? ` [${ev.confidence} CONFIDENCE]` : "";
+    failures.push(
+      `${stage}: result is "${ev.result}"${conf} (${ev.failureSummary ?? "no summary"})`
+    );
   }
 }
 

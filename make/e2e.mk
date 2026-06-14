@@ -28,13 +28,21 @@ e2e-external-smoke:
 	PROD_BASE_URL=$$BASE npx playwright test --config playwright.external.config.ts e2e/external/smoke.test.ts
 	$(call OK,external smoke tests passed)
 
-## e2e-external-auth — External auth E2E against a running stack (real Keycloak)
-## Requires: KEYCLOAK_TEST_PASSWORD set. Skips gracefully if prerequisites not met.
+## e2e-external-auth — External auth E2E against a running stack (real Keycloak).
+## Requires KEYCLOAK_TEST_USERNAME + KEYCLOAK_TEST_PASSWORD. FAILS (not skips) when
+## missing — the stage gate must never silently drop real auth (ADR-ACT-0285 Phase 2).
+## E2E_AUTH_OPTIONAL=1 permits a graceful skip for OPTIONAL local manual runs only;
+## the stage policy never sets it, so staging/prod always enforce the gate.
 e2e-external-auth:
-	$(call STEP,e2e:external-auth \(Keycloak login — gracefully skipped if not provisioned\))
-	@if [ -z "$${KEYCLOAK_TEST_PASSWORD}" ]; then \
-		$(call WARN,external-auth E2E skipped — KEYCLOAK_TEST_PASSWORD not set); \
-		exit 0; \
+	$(call STEP,e2e:external-auth \(real Keycloak login\))
+	@if [ -z "$${KEYCLOAK_TEST_USERNAME}" ] || [ -z "$${KEYCLOAK_TEST_PASSWORD}" ]; then \
+		if [ "$${E2E_AUTH_OPTIONAL:-}" = "1" ]; then \
+			$(call WARN,external-auth E2E skipped — E2E_AUTH_OPTIONAL=1 (manual local run only)); \
+			exit 0; \
+		fi; \
+		printf '$(RED)✗ FAILED CONFIDENCE: external-auth requires KEYCLOAK_TEST_USERNAME + KEYCLOAK_TEST_PASSWORD$(RESET)\n'; \
+		printf '$(YELLOW)  See docs/local-development/real-login-e2e.md. staging/prod cannot pass without real auth.$(RESET)\n'; \
+		exit 1; \
 	fi
 	@BASE=$${PROD_BASE_URL:-http://aldous.info}; \
 	if ! curl -fsS --max-time 10 "$$BASE/healthz" > /dev/null 2>&1; then \

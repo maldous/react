@@ -160,9 +160,21 @@ fi
 
 # ── 10. Test groups ────────────────────────────────────────────────────────────
 
+# run-env-tests.sh exits 0 (FULL), 2 (DEGRADED — all groups passed but real auth
+# was skipped at staging/prod), or other (FAILED). DEGRADED is NOT a pass:
+# recorded as "degraded" so verify-ladder rejects staging/prod promotion
+# (ADR-ACT-0285 Phase 2). The ladder still runs to completion for visibility.
+STAGE_DEGRADED=0
 if [ "$STAGE_RESULT" -eq 0 ] && [ -n "$REQUIRED_CSV" ]; then
-    bash scripts/tests/run-env-tests.sh "$STAGE" "$REQUIRED_CSV" "$EXCLUDED_CSV" \
-        || STAGE_RESULT=1
+    set +e
+    bash scripts/tests/run-env-tests.sh "$STAGE" "$REQUIRED_CSV" "$EXCLUDED_CSV"
+    _tests_rc=$?
+    set -e
+    if [ "$_tests_rc" -eq 2 ]; then
+        STAGE_DEGRADED=1
+    elif [ "$_tests_rc" -ne 0 ]; then
+        STAGE_RESULT=1
+    fi
 fi
 
 # ── (reserved — E2E coverage owned by policy test groups in step 10) ─────
@@ -184,7 +196,11 @@ teardown
 # ── 13. Write evidence ────────────────────────────────────────────────────────
 
 RESULT_STR="passed"
-[ "$STAGE_RESULT" -ne 0 ] && RESULT_STR="failed"
+if [ "$STAGE_RESULT" -ne 0 ]; then
+    RESULT_STR="failed"
+elif [ "$STAGE_DEGRADED" -eq 1 ]; then
+    RESULT_STR="degraded"
+fi
 
 node scripts/evidence/write-stage-evidence.mjs \
     "$STAGE" "$RESULT_STR" "$START_TS" "$REQUIRED_CSV" "$EXCLUDED_CSV" \
@@ -192,10 +208,18 @@ node scripts/evidence/write-stage-evidence.mjs \
 
 # ── 14. Exit ──────────────────────────────────────────────────────────────────
 
-if [ "$STAGE_RESULT" -eq 0 ]; then
-    printf '\n%s✓ stage:%s PASSED%s\n' "$GREEN" "$STAGE" "$RESET"
+# DEGRADED exits 0 so `make all-promote` runs the whole ladder to completion;
+# the degraded result is recorded in evidence and verify-ladder (make evidence)
+# fails the run because staging/prod are not FULL. A DIRECT stage run that hits a
+# real-auth gap hard-fails earlier (exit 1) via the auth-e2e group, so a direct
+# `make stage-staging`/`stage-prod` never silently passes (ADR-ACT-0285 Phase 2).
+if [ "$STAGE_RESULT" -ne 0 ]; then
+    printf '\n%s✗ stage:%s FAILED CONFIDENCE%s\n' "$RED" "$STAGE" "$RESET"
+    exit "$STAGE_RESULT"
+elif [ "$STAGE_DEGRADED" -eq 1 ]; then
+    printf '\n%s⚠ stage:%s DEGRADED CONFIDENCE — recorded; will fail ladder verification%s\n' "$YELLOW" "$STAGE" "$RESET"
+    exit 0
 else
-    printf '\n%s✗ stage:%s FAILED%s\n' "$RED" "$STAGE" "$RESET"
+    printf '\n%s✓ stage:%s FULL CONFIDENCE%s\n' "$GREEN" "$STAGE" "$RESET"
+    exit 0
 fi
-
-exit "$STAGE_RESULT"

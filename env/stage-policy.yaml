@@ -39,6 +39,7 @@ staging:
     - integration # run-stage-tests (unit-safe 206 + frontend 26) — no fixture-DB substrate
     - compose-smoke # compose-smoke.test.mjs DATA_POLICY=preserve — infra health, no resets
     - external-smoke # make e2e-external-smoke — 14 Playwright tests against localhost:82
+    - auth-e2e # ADR-ACT-0285 — real-auth confidence gate; FAILS on missing creds, DEGRADED on localhost (never passes promotion)
   excludedTests:
     - tenant-data
     - destructive

@@ -16,6 +16,26 @@ YELLOW=$(tput setaf 3 2>/dev/null || true)
 RED=$(tput setaf 1 2>/dev/null || true)
 RESET=$(tput sgr0 2>/dev/null || true)
 
+# ADR-ACT-0285 Phase 2 — explicit confidence. A stage run is FULL only when every
+# required group passes AND (staging/prod) real auth actually ran. DEGRADED means
+# all groups passed but real auth was skipped — it NEVER passes promotion. FAILED
+# means a required group failed. E2E_DEGRADED is set by the auth-e2e group; the
+# script exits 2 (degraded) so run-stage.sh records the stage as "degraded".
+E2E_DEGRADED=0
+
+confidence() {
+    local level="$1"
+    shift
+    local color="$GREEN"
+    case "$level" in
+        DEGRADED) color="$YELLOW" ;;
+        FAILED) color="$RED" ;;
+    esac
+    printf '%s================ %s CONFIDENCE [%s] ================%s\n' "$color" "$level" "$STAGE" "$RESET"
+    printf '%s  %s%s\n' "$color" "$*" "$RESET"
+    printf '%s====================================================%s\n' "$color" "$RESET"
+}
+
 is_excluded() {
     local group="$1"
     echo "$EXCLUDED" | tr ',' '\n' | grep -qx "$group"
@@ -155,37 +175,32 @@ run_group() {
         PROD_BASE_URL="$_app_url" make e2e-external-smoke
         ;;
       auth-e2e)
-        # auth-e2e requires a real KC redirect flow — only works when PROD_BASE_URL
-        # is a real domain (not localhost).
-        #
-        # Default (no ALLOW_SKIP_AUTH_E2E): prod hard-fails when localhost so the
-        # gate is never silently dropped. Set ALLOW_SKIP_AUTH_E2E=1 to skip with a
-        # prominent warning — make all sets this so the local confidence ladder works.
-        # Direct 'make stage-prod' without the var enforces the full gate.
+        # ADR-ACT-0285 Phase 2 — real-auth confidence gate (staging/prod only).
+        # FULL requires KEYCLOAK_TEST_USERNAME + KEYCLOAK_TEST_PASSWORD AND a real
+        # domain (Keycloak's redirect cannot complete against localhost). Missing
+        # creds = hard FAILED (the gate is never silently skipped). localhost with
+        # creds = DEGRADED only when ALLOW_SKIP_AUTH_E2E=1 (manual local ladder);
+        # DEGRADED never passes promotion (verify-ladder rejects it). Direct
+        # stage runs without the flag hard-fail. dev/test use fixture auth and
+        # never include this group.
+        _missing=""
+        [ -z "${KEYCLOAK_TEST_USERNAME:-}" ] && _missing="KEYCLOAK_TEST_USERNAME"
+        [ -z "${KEYCLOAK_TEST_PASSWORD:-}" ] && _missing="${_missing:+$_missing, }KEYCLOAK_TEST_PASSWORD"
+        if [ -n "$_missing" ]; then
+            confidence FAILED "real-auth E2E cannot run — missing $_missing. staging/prod cannot pass without real auth (docs/local-development/real-login-e2e.md)."
+            exit 1
+        fi
         if echo "$_app_url" | grep -q "localhost"; then
-            if [ "$STAGE" = "prod" ] && [ "${ALLOW_SKIP_AUTH_E2E:-}" != "1" ]; then
-                printf '%s✗ auth-e2e cannot run: PROD_BASE_URL=%s is localhost%s\n' \
-                    "$RED" "$_app_url" "$RESET"
-                printf '%s  Prod requires real KC redirect. Options:%s\n' "$YELLOW" "$RESET"
-                printf '%s  1. Run against real DNS: PROD_BASE_URL=https://aldous.info make stage-prod%s\n' \
-                    "$YELLOW" "$RESET"
-                printf '%s  2. Local confidence ladder: make all  (sets ALLOW_SKIP_AUTH_E2E=1)%s\n' \
-                    "$YELLOW" "$RESET"
-                exit 1
-            fi
-            if [ "$STAGE" = "prod" ]; then
-                printf '%s╔══════════════════════════════════════════════════════════════╗%s\n' "$RED" "$RESET"
-                printf '%s║  ⚠ CONFIDENCE DEGRADED: auth-e2e SKIPPED on prod            ║%s\n' "$RED" "$RESET"
-                printf '%s║  PROD_BASE_URL=%s is localhost — Keycloak redirect requires  ║%s\n' "$RED" "$_app_url" "$RESET"
-                printf '%s║  real DNS. Set PROD_BASE_URL=https://aldous.info to run full ║%s\n' "$RED" "$RESET"
-                printf '%s║  gate. KEYCLOAK_TEST_PASSWORD must also be set.              ║%s\n' "$RED" "$RESET"
-                printf '%s╚══════════════════════════════════════════════════════════════╝%s\n' "$RED" "$RESET"
+            if [ "${ALLOW_SKIP_AUTH_E2E:-}" = "1" ]; then
+                confidence DEGRADED "real-auth E2E skipped — $_app_url is localhost; Keycloak redirect needs real DNS. Run PROD_BASE_URL=<real-domain> for FULL. This stage will NOT pass promotion."
+                E2E_DEGRADED=1
             else
-                printf '%s↷ auth-e2e skipped — PROD_BASE_URL=%s is localhost%s\n' \
-                    "$YELLOW" "$_app_url" "$RESET"
+                confidence FAILED "real-auth E2E cannot run against localhost ($_app_url). Run PROD_BASE_URL=https://aldous.info make stage-$STAGE for the real Keycloak redirect."
+                exit 1
             fi
         else
             PROD_BASE_URL="$_app_url" make e2e-external-auth
+            confidence FULL "real-auth E2E passed against $_app_url"
         fi
         ;;
       production-e2e)
@@ -202,8 +217,18 @@ run_group() {
     esac
 }
 
-while IFS= read -r group; do
+# `|| [ -n "$group" ]` is REQUIRED: REQUIRED_CSV is comma-joined with no trailing
+# newline, so a plain `while read` silently drops the LAST group (pre-existing bug
+# that skipped each stage's final test group, e.g. prod production-e2e). Fixed here
+# so every required group — including the auth-e2e confidence gate — actually runs.
+while IFS= read -r group || [ -n "$group" ]; do
+    [ -z "$group" ] && continue
     run_group "$group"
 done < <(printf '%s' "$REQUIRED" | tr ',' '\n')
 
-printf '\n%s✓ all test groups complete for %s%s\n' "$GREEN" "$STAGE" "$RESET"
+if [ "$E2E_DEGRADED" = "1" ]; then
+    printf '\n%s⚠ %s completed with DEGRADED confidence (real auth skipped) — does NOT pass promotion%s\n' "$YELLOW" "$STAGE" "$RESET"
+    exit 2
+fi
+
+printf '\n%s✓ all test groups complete for %s — FULL confidence%s\n' "$GREEN" "$STAGE" "$RESET"

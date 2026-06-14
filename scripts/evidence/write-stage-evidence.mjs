@@ -113,8 +113,17 @@ const evidence = {
   e2eCommand: e2eCommands[stage] ?? "unknown",
   urlsChecked: [`http://localhost:${apiPort}/healthz`],
   result,
+  // ADR-ACT-0285 Phase 2 — explicit confidence. FULL only when passed; DEGRADED
+  // when real auth was skipped (staging/prod); FAILED on any failure. Only FULL
+  // passes staging/prod promotion (verify-ladder).
+  confidence: result === "passed" ? "FULL" : result === "degraded" ? "DEGRADED" : "FAILED",
   durationSeconds,
-  failureSummary: result === "failed" ? "See stage output for details." : null,
+  failureSummary:
+    result === "failed"
+      ? "See stage output for details."
+      : result === "degraded"
+        ? "Real-auth E2E was skipped — staging/prod cannot pass promotion without FULL confidence (real auth against a real domain)."
+        : null,
 };
 
 const dir = "docs/evidence/stages";

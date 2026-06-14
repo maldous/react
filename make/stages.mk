@@ -34,11 +34,15 @@ stage-staging:
 	bash scripts/stages/run-stage.sh staging
 
 ## stage-prod — Production stage: Compose HA, preserve data, all production-safe tests + external-smoke + auth-e2e + production E2E (no teardown)
-## auth-e2e hard-fails if PROD_BASE_URL is localhost unless ALLOW_SKIP_AUTH_E2E=1 is set.
-## make all sets ALLOW_SKIP_AUTH_E2E=1 (local runs). Direct make stage-prod enforces the gate.
+## ADR-ACT-0285 Phase 2: auth-e2e FAILS (FAILED CONFIDENCE) when KEYCLOAK_TEST_USERNAME/
+## KEYCLOAK_TEST_PASSWORD are missing, and when PROD_BASE_URL is localhost (Keycloak
+## redirect needs real DNS). For FULL confidence run against the real domain with creds:
+##   KEYCLOAK_TEST_USERNAME=… KEYCLOAK_TEST_PASSWORD=… PROD_BASE_URL=https://aldous.info make stage-prod
+## ALLOW_SKIP_AUTH_E2E=1 (manual only; make all never sets it) downgrades a localhost run to
+## DEGRADED CONFIDENCE — which is RECORDED but still fails ladder verification (never promotes).
 stage-prod:
-	# ADR-0034: stage-prod runs external-smoke + auth-e2e + test:e2e:prod
-	# auth-e2e: hard-fails on localhost unless ALLOW_SKIP_AUTH_E2E=1; use real DNS for full gate
+	# ADR-0034: stage-prod runs external-smoke + auth-e2e + test:e2e:prod (production-e2e)
+	# auth-e2e enforces FULL real-auth confidence (ADR-ACT-0285 Phase 2); DEGRADED never promotes
 	$(call STEP,stage:prod)
 	bash scripts/stages/run-stage.sh prod
 
