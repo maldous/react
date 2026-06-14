@@ -1,4 +1,17 @@
+import { createLogger } from "@platform/platform-logging";
+
 export const packageName = "@platform/adapters-keycloak";
+
+// Adapter-local logger (ADR-ACT-0284). Outbound Keycloak failures used to be
+// swallowed into opaque degrade reasons ("policy_denied" / "keycloak_unavailable")
+// with no record of what Keycloak actually returned — the exact blind spot that
+// made the UMA authorisation investigation so slow. Log the real cause here so a
+// degrade is always traceable, while the caller still receives the safe reason.
+const kcLog = createLogger({
+  name: "keycloak-adapter",
+  service: "platform-api",
+  boundedContext: "auth-keycloak",
+});
 
 // Internal Keycloak claim types ? NEVER exported to domain or React packages
 interface KeycloakTokenClaims {
@@ -286,8 +299,28 @@ export class KeycloakAuthorisationAdapter implements AuthorisationPort {
       // resource never hard-denies a request that the static RBAC would allow.
       if (errorCode === "invalid_request")
         return { granted: false, reason: "resource_not_registered" };
+      // An unrecognised non-OK response is a genuine policy deny (or an
+      // unexpected Keycloak error). Capture status + Keycloak's own error code
+      // and description so the deny is diagnosable rather than opaque.
+      kcLog.warn(
+        {
+          resource: resource.name,
+          scope: resource.scope,
+          status: response.status,
+          kcError: errorCode || undefined,
+          kcErrorDescription: String(err["error_description"] ?? "") || undefined,
+        },
+        "keycloak checkAccess denied"
+      );
       return { granted: false, reason: "policy_denied" };
-    } catch {
+    } catch (err) {
+      // Network/transport failure reaching the Keycloak token endpoint. The
+      // caller degrades to the static RBAC backstop; log the real error so an
+      // outage (DNS, TLS, connection refused) is not invisible.
+      kcLog.error(
+        { err, resource: resource.name, scope: resource.scope, tokenUrl },
+        "keycloak checkAccess unreachable"
+      );
       return { granted: false, reason: "keycloak_unavailable" };
     }
   }

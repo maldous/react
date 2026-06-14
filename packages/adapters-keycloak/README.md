@@ -100,6 +100,7 @@ production
 @platform/security-auth
 @platform/config-runtime
 @platform/authorisation-runtime
+@platform/platform-logging
 ```
 
 ### Provides APIs
