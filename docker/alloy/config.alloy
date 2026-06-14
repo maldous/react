@@ -157,8 +157,22 @@ faro.receiver "browser" {
 
   // Browser signals become Loki log lines, labelled per-environment alongside the
   // server-side Pino logs (kind=exception|measurement|event|log, plus app metadata).
+  // Browser spans go to the collector -> Tempo, joining the server-side traces.
   output {
-    logs = [loki.process.faro_logs.receiver]
+    logs   = [loki.process.faro_logs.receiver]
+    traces = [otelcol.exporter.otlp.browser_traces.input]
+  }
+}
+
+// Forward browser spans to the environment's otel-collector (OTLP/gRPC), which
+// batches and exports them to Tempo alongside the platform-api server spans
+// (ADR-ACT-0284).
+otelcol.exporter.otlp "browser_traces" {
+  client {
+    endpoint = "otel-collector:4317"
+    tls {
+      insecure = true
+    }
   }
 }
 

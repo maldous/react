@@ -19,6 +19,7 @@
 //     must never take the app down).
 
 import { initializeFaro, getWebInstrumentations, type Faro } from "@grafana/faro-web-sdk";
+import { TracingInstrumentation } from "@grafana/faro-web-tracing";
 
 let faro: Faro | undefined;
 
@@ -57,11 +58,21 @@ export function initFaro(): Faro | undefined {
         version: String(appVersion),
         environment: resolveEnvironment(window.location.hostname),
       },
-      // Default browser diagnostics: errors, unhandled rejections, console
-      // errors, Web Vitals, page views, and session tracking. No distributed
-      // tracing (the collector is a logs pipeline) — that is a documented
-      // follow-up behind the same receiver.
-      instrumentations: [...getWebInstrumentations({ captureConsole: false })],
+      // Browser diagnostics: errors, unhandled rejections, console errors, Web
+      // Vitals, page views, session tracking — PLUS distributed tracing
+      // (ADR-ACT-0284). TracingInstrumentation auto-instruments fetch/XHR and
+      // propagates the W3C `traceparent` header to same-origin /api calls, so a
+      // browser span continues into the BFF server span (shared trace id across
+      // browser -> BFF -> pg/redis -> Tempo). Traces flow to the same
+      // same-origin collector; Alloy fans logs to Loki and traces to Tempo.
+      instrumentations: [
+        ...getWebInstrumentations({ captureConsole: false }),
+        new TracingInstrumentation({
+          instrumentationOptions: {
+            propagateTraceHeaderCorsUrls: [new RegExp(`${window.location.origin}/api`)],
+          },
+        }),
+      ],
     });
     return faro;
   } catch {
