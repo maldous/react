@@ -49,8 +49,23 @@ export const test = base.extend<{ scenarioId: string }>({
   scenarioId: async ({}, use, testInfo) => {
     await use(scenarioIdFromTitle(testInfo.title));
   },
-  context: async ({ context }, use, testInfo) => {
-    await context.setExtraHTTPHeaders(correlationHeaders(scenarioIdFromTitle(testInfo.title)));
+  context: async ({ context, baseURL }, use, testInfo) => {
+    const headers = correlationHeaders(scenarioIdFromTitle(testInfo.title));
+    // Attach x-e2e-* correlation headers to SAME-ORIGIN (platform) requests only.
+    // The platform-api pipeline reads them server-side, so they are only meaningful
+    // same-origin. setExtraHTTPHeaders would add them to EVERY request including
+    // third-party origins (e.g. the Cloudflare analytics beacon), turning those into
+    // preflighted CORS requests the third party rejects — and leaking internal test
+    // ids externally. Scope via a route interceptor instead.
+    const appOrigin = baseURL ? new URL(baseURL).origin : null;
+    await context.route("**/*", async (route) => {
+      const request = route.request();
+      if (appOrigin && request.url().startsWith(appOrigin)) {
+        await route.continue({ headers: { ...request.headers(), ...headers } });
+      } else {
+        await route.continue();
+      }
+    });
     await use(context);
   },
 });

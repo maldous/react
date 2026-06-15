@@ -82,13 +82,17 @@ test.describe("admin tools: system-admin access", () => {
       // Must not be a hard gateway error
       expect(status, `${tool.label} must not return 5xx`).toBeLessThan(500);
 
-      // Page must load actual service content — not the React SPA
-      // SPA indicates the service response was hijacked by try_files
+      // Page must load actual service content — not the platform SPA.
+      // A try_files hijack would serve the platform's index.html, identified by
+      // its <title>Enterprise Platform</title>. Detect THAT specifically — not a
+      // generic `<div id="root">`, which MinIO's own React console legitimately
+      // uses too (that produced a false positive for /minio/).
       const body = await response?.text();
       if (body) {
-        expect(body, `${tool.label} must not serve React SPA instead of service UI`).not.toContain(
-          '<div id="root">'
-        );
+        expect(
+          body,
+          `${tool.label} must not serve the platform SPA instead of service UI`
+        ).not.toContain("<title>Enterprise Platform</title>");
       }
     });
   }

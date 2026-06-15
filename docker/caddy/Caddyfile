@@ -247,7 +247,7 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 		header X-Frame-Options DENY
 		header Referrer-Policy strict-origin-when-cross-origin
 		header Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=()"
-		header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'"
+		header Content-Security-Policy "default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://cloudflareinsights.com; font-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'"
 		header Cache-Control "no-cache, no-store, must-revalidate"
 		import platform_api_proxy
 	}
@@ -274,7 +274,7 @@ http://aldous.info http://localhost http://dev.localhost http://test.localhost h
 		header X-Frame-Options DENY
 		header Referrer-Policy strict-origin-when-cross-origin
 		header Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=()"
-		header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'"
+		header Content-Security-Policy "default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://cloudflareinsights.com; font-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'"
 		header Cache-Control "no-cache, no-store, must-revalidate"
 		root * /srv
 		try_files {path} /index.html
@@ -337,7 +337,7 @@ http://*.aldous.info http://*.dev.localhost http://*.test.localhost http://*.sta
 		header X-Frame-Options DENY
 		header Referrer-Policy strict-origin-when-cross-origin
 		header Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=()"
-		header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'"
+		header Content-Security-Policy "default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://cloudflareinsights.com; font-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'"
 		header Cache-Control "no-cache, no-store, must-revalidate"
 		import platform_api_proxy
 	}
@@ -357,7 +357,7 @@ http://*.aldous.info http://*.dev.localhost http://*.test.localhost http://*.sta
 		header X-Frame-Options DENY
 		header Referrer-Policy strict-origin-when-cross-origin
 		header Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=()"
-		header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'"
+		header Content-Security-Policy "default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://cloudflareinsights.com; font-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'"
 		header Cache-Control "no-cache, no-store, must-revalidate"
 		root * /srv
 		try_files {path} /index.html
@@ -412,7 +412,7 @@ http:// {
 		header X-Frame-Options DENY
 		header Referrer-Policy strict-origin-when-cross-origin
 		header Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=()"
-		header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'"
+		header Content-Security-Policy "default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://cloudflareinsights.com; font-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'"
 		header Cache-Control "no-cache, no-store, must-revalidate"
 		import platform_api_proxy
 	}
@@ -432,7 +432,7 @@ http:// {
 		header X-Frame-Options DENY
 		header Referrer-Policy strict-origin-when-cross-origin
 		header Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=()"
-		header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'"
+		header Content-Security-Policy "default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://cloudflareinsights.com; font-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'"
 		header Cache-Control "no-cache, no-store, must-revalidate"
 		root * /srv
 		try_files {path} /index.html

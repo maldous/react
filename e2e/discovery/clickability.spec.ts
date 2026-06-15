@@ -73,8 +73,12 @@ test("clickability crawl — discover + quality-gate every safe surface", async 
 
   page.on("console", (m) => {
     if (m.type() !== "error") return;
+    // A browser "Failed to load resource" console error carries the failing URL
+    // in m.location().url, NOT in m.text() — so match benign patterns against
+    // both, otherwise best-effort endpoints like /faro/collect leak through.
+    const haystack = `${m.text()} ${m.location()?.url ?? ""}`;
     const line = `${page.url()} :: ${m.text()}`;
-    if (isBenign(m.text())) benignConsole.push(line);
+    if (isBenign(haystack)) benignConsole.push(line);
     else consoleErrors.push(line);
   });
   page.on("pageerror", (e) => pageErrors.push(`${page.url()} :: ${e.message}`));

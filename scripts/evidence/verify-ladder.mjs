@@ -8,7 +8,9 @@
  * itself an EXPLICIT, checkable invariant at the end of the run:
  *
  *   1. every stage evidence file exists (dev, test, staging, prod)
- *   2. every stage result is "passed"
+ *   2. staging and prod are "passed" (FULL confidence — real auth against a real
+ *      domain); dev and test may be "passed" or "degraded" (they use fixture auth,
+ *      so real-auth E2E is skipped by design). Any stage that is "failed" fails.
  *   3. every stage ran at the SAME git SHA — and that SHA is the current HEAD
  *      (no stale evidence from a previous commit can satisfy the ladder)
  *   4. stage timestamps are strictly increasing in ladder order
@@ -38,11 +40,18 @@ for (const stage of LADDER) {
   stages[stage] = JSON.parse(fs.readFileSync(path, "utf8"));
 }
 
+// ADR-ACT-0285 Phase 2 — the FULL-confidence (real-auth) requirement applies
+// only to staging and prod, which run against real domains with real auth. dev
+// and test deliberately use fixture auth, so their real-auth E2E is skipped and
+// they report "degraded" by design — that is expected, not a promotion blocker.
+// A genuine failure still sets "failed" (or the file is missing), which fails
+// the ladder for every stage.
+const REQUIRE_FULL_CONFIDENCE = new Set(["staging", "prod"]);
 for (const [stage, ev] of Object.entries(stages)) {
-  // ADR-ACT-0285 Phase 2 — only FULL confidence passes promotion. A "degraded"
-  // stage (real auth skipped at staging/prod) is NOT a pass, so the ladder fails
-  // and make all cannot report staging/prod as passed when real auth was skipped.
-  if (ev.result !== "passed") {
+  const acceptable = REQUIRE_FULL_CONFIDENCE.has(stage)
+    ? ev.result === "passed"
+    : ev.result === "passed" || ev.result === "degraded";
+  if (!acceptable) {
     const conf = ev.confidence ? ` [${ev.confidence} CONFIDENCE]` : "";
     failures.push(
       `${stage}: result is "${ev.result}"${conf} (${ev.failureSummary ?? "no summary"})`
@@ -91,7 +100,9 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log(`✓ confidence ladder verified: dev → test → staging → prod, all passed at ${head}`);
+console.log(
+  `✓ confidence ladder verified: dev → test → staging → prod at ${head} (staging/prod FULL, dev/test ≥ degraded)`
+);
 for (const s of LADDER) {
   console.log(`  ${s.padEnd(8)} ${stages[s].timestamp}  (${stages[s].durationSeconds}s)`);
 }
