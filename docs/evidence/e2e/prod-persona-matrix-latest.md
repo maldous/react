@@ -3,7 +3,7 @@
 Generated (ADR-ACT-0285 Phase 6 sub-project A). DO NOT EDIT — regenerate via `make e2e-persona-matrix ENV=<stage>`.
 
 - Result: **PASSED**
-- Personas: 13; checks: 61; failed: 0
+- Personas: 13; checks: 63; failed: 0
 - Real auth: creds present
 
 ## Persona outcomes
@@ -16,7 +16,7 @@ Generated (ADR-ACT-0285 Phase 6 sub-project A). DO NOT EDIT — regenerate via `
 - scaffold-support-breakglass (real): RAN
 - scaffold-disabled-user (real): RAN
 - scaffold-expired-session (real): SKIPPED — no distinct Keycloak account in provisionRef
-- scaffold-cross-tenant (real): SKIPPED — needs 2nd tenant (sub-project B)
+- scaffold-cross-tenant (real): RAN
 - tenant-entitlement-disabled (real): SKIPPED — no distinct Keycloak account in provisionRef
 - tenant-entitlement-enabled (real): SKIPPED — no distinct Keycloak account in provisionRef
 - tenant-quota-limited (real): SKIPPED — no distinct Keycloak account in provisionRef
@@ -44,8 +44,8 @@ Generated (ADR-ACT-0285 Phase 6 sub-project A). DO NOT EDIT — regenerate via `
 - ✅ [scaffold-system-admin] expected-route `/admin` → expected loads (non-blank), got loads
 - ✅ [scaffold-system-admin] expected-route `/admin/logs` → expected loads (non-blank), got loads
 - ✅ [scaffold-system-admin] expected-route `/admin/clickthrough` → expected loads (non-blank), got loads
-- ✅ [scaffold-system-admin] clickthrough-granted `keycloak /kc/` → expected service UI (status<400, not SPA), got status=200 url=https://aldous.info/kc/realms/master/protocol/openid-connect/auth?client_id=security-admin-console&redirect_uri=https%3A%2F%2Faldous.info%2Fkc%2Fadmin%2Fmaster%2Fconsole%2F&state=ac70e6e3-d77b-4855-89e5-e3fc7e3954a4&response_mode=query&response_type=code&scope=openid&nonce=62ecb464-e4e6-468a-add7-34ef47217ce3&code_challenge=qaEYxDv3IntLyJ5FdacsomObbPkxUs_cjBab9y_wuBc&code_challenge_method=S256
-- ✅ [scaffold-system-admin] clickthrough-granted `grafana /grafana/` → expected service UI (status<400, not SPA), got status=200 url=https://aldous.info/grafana/?orgId=1&from=now-6h&to=now&timezone=browser
+- ✅ [scaffold-system-admin] clickthrough-granted `keycloak /kc/` → expected service UI (status<400, not SPA), got status=200 url=https://aldous.info/kc/realms/master/protocol/openid-connect/auth?client_id=security-admin-console&redirect_uri=https%3A%2F%2Faldous.info%2Fkc%2Fadmin%2Fmaster%2Fconsole%2F&state=4f1805f9-1390-464c-a621-437fc0ba3e44&response_mode=query&response_type=code&scope=openid&nonce=c2c8521e-0a1b-4435-8470-01591e44ef69&code_challenge=uV1EaQ_YkfMjbowoqx2JyUjxOpkTgJUOIRinQZSJUHw&code_challenge_method=S256
+- ✅ [scaffold-system-admin] clickthrough-granted `grafana /grafana/` → expected service UI (status<400, not SPA), got status=200 url=https://aldous.info/grafana/
 - ✅ [scaffold-system-admin] clickthrough-granted `mailpit /mailpit/` → expected service UI (status<400, not SPA), got status=200 url=https://aldous.info/mailpit/
 - ✅ [scaffold-system-admin] clickthrough-granted `sonarqube /sonar/` → expected service UI (status<400, not SPA), got status=200 url=https://aldous.info/sonar/
 - ✅ [scaffold-system-admin] clickthrough-granted `minio /minio/` → expected service UI (status<400, not SPA), got status=200 url=https://aldous.info/minio/
@@ -85,3 +85,5 @@ Generated (ADR-ACT-0285 Phase 6 sub-project A). DO NOT EDIT — regenerate via `
 - ✅ [scaffold-disabled-user] forbidden-api `GET /api/admin/tenants` → expected 401/403, got 401
 - ✅ [scaffold-disabled-user] expected-route `/login` → expected loads (non-blank), got loads
 - ✅ [scaffold-disabled-user] clickthrough-forbidden `keycloak /kc/` → expected denied (401/403 or redirect-to-login), got 401
+- ✅ [scaffold-cross-tenant] session-roles `/api/session` → expected ["tenant-admin"], got ["tenant-admin"]
+- ✅ [scaffold-cross-tenant] forbidden-api `tenant-b:GET /api/organisation/profile` → expected 401/403, got 403

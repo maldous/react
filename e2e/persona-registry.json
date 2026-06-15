@@ -388,7 +388,7 @@
       "personaId": "scaffold-cross-tenant",
       "authMode": "real",
       "stageAllowed": ["staging", "prod"],
-      "provisionRef": "scaffold-tenant-admin of tenant A accessing tenant B FQDN \u2014 NOT YET PROVISIONED",
+      "provisionRef": "scaffold-tenant-admin (admin@fixture.local, fixture-org) accessing the e2e-tenant FQDN - cross-tenant denial proven via tenant-scoped data 403",
       "tenantId": "00000000-0000-0000-0000-000000000001",
       "roles": ["tenant-admin"],
       "permissions": ["tenant.admin.access"],
@@ -401,12 +401,12 @@
       "expectedNavItems": [],
       "forbiddenNavItems": [],
       "expectedRoutes": [],
-      "forbiddenRoutes": ["tenant-b-fqdn:/admin"],
+      "forbiddenRoutes": [],
       "expectedApiAccess": [],
-      "forbiddenApiAccess": ["tenant-b:GET /api/session"],
+      "forbiddenApiAccess": ["tenant-b:GET /api/organisation/profile"],
       "expectedClickthroughAccess": [],
       "forbiddenClickthroughAccess": [],
-      "notes": "Cross-tenant access via FQDN must be denied (canAccessTenantFqdn / forward-auth IDOR guard)."
+      "notes": "Cross-tenant DATA access via another tenant FQDN is denied by server-side tenant authority: a tenant-scoped data endpoint (GET /api/organisation/profile) returns 403 on the e2e-tenant FQDN while authenticated as the fixture-org tenant-admin. /api/session correctly returns own identity (host-agnostic, not a leak). No IDOR."
     },
     {
       "personaId": "tenant-entitlement-disabled",

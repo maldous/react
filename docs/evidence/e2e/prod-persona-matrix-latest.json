@@ -54,8 +54,8 @@
     {
       "persona": "scaffold-cross-tenant",
       "authMode": "real",
-      "status": "SKIPPED",
-      "reason": "needs 2nd tenant (sub-project B)"
+      "status": "RAN",
+      "reason": null
     },
     {
       "persona": "tenant-entitlement-disabled",
@@ -248,7 +248,7 @@
       "kind": "clickthrough-granted",
       "target": "keycloak /kc/",
       "expected": "service UI (status<400, not SPA)",
-      "actual": "status=200 url=https://aldous.info/kc/realms/master/protocol/openid-connect/auth?client_id=security-admin-console&redirect_uri=https%3A%2F%2Faldous.info%2Fkc%2Fadmin%2Fmaster%2Fconsole%2F&state=ac70e6e3-d77b-4855-89e5-e3fc7e3954a4&response_mode=query&response_type=code&scope=openid&nonce=62ecb464-e4e6-468a-add7-34ef47217ce3&code_challenge=qaEYxDv3IntLyJ5FdacsomObbPkxUs_cjBab9y_wuBc&code_challenge_method=S256",
+      "actual": "status=200 url=https://aldous.info/kc/realms/master/protocol/openid-connect/auth?client_id=security-admin-console&redirect_uri=https%3A%2F%2Faldous.info%2Fkc%2Fadmin%2Fmaster%2Fconsole%2F&state=4f1805f9-1390-464c-a621-437fc0ba3e44&response_mode=query&response_type=code&scope=openid&nonce=c2c8521e-0a1b-4435-8470-01591e44ef69&code_challenge=uV1EaQ_YkfMjbowoqx2JyUjxOpkTgJUOIRinQZSJUHw&code_challenge_method=S256",
       "ok": true
     },
     {
@@ -256,7 +256,7 @@
       "kind": "clickthrough-granted",
       "target": "grafana /grafana/",
       "expected": "service UI (status<400, not SPA)",
-      "actual": "status=200 url=https://aldous.info/grafana/?orgId=1&from=now-6h&to=now&timezone=browser",
+      "actual": "status=200 url=https://aldous.info/grafana/",
       "ok": true
     },
     {
@@ -569,6 +569,22 @@
       "target": "keycloak /kc/",
       "expected": "denied (401/403 or redirect-to-login)",
       "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-cross-tenant",
+      "kind": "session-roles",
+      "target": "/api/session",
+      "expected": "[\"tenant-admin\"]",
+      "actual": "[\"tenant-admin\"]",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-cross-tenant",
+      "kind": "forbidden-api",
+      "target": "tenant-b:GET /api/organisation/profile",
+      "expected": "401/403",
+      "actual": "403",
       "ok": true
     }
   ],

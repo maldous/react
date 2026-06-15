@@ -135,7 +135,20 @@ test.describe("persona-matrix — authed link/route/API crawl per persona", () =
         return;
       }
 
-      const username = usernameFromProvisionRef(persona.provisionRef);
+      // The cross-tenant persona logs in as tenant A's tenant-admin (re-using that account)
+      // then probes tenant B's FQDN — it has no provisionRef username of its own. Sub-project B.
+      const isCrossTenant = persona.personaId === "scaffold-cross-tenant";
+      const TENANT_B_SLUG = "e2e-tenant"; // the provisioned 2nd tenant org (see seed / organisations)
+      const tenantBOrigin = (() => {
+        const u = new URL(origin);
+        return `${u.protocol}//${TENANT_B_SLUG}.${u.host}`;
+      })();
+      const username = isCrossTenant
+        ? usernameFromProvisionRef(
+            registry.personas.find((p: Persona) => p.personaId === "scaffold-tenant-admin")
+              ?.provisionRef ?? null
+          )
+        : usernameFromProvisionRef(persona.provisionRef);
       // real personas with no distinct Keycloak account can't be driven by login here
       // (expired-session / entitlement / quota / rate are tenant-state variations without a
       // dedicated user). Skip honestly — never a silent pass.
@@ -242,18 +255,33 @@ test.describe("persona-matrix — authed link/route/API crawl per persona", () =
         );
       }
 
-      // Forbidden APIs (as this persona): must be 401/403.
-      for (const api of persona.forbiddenApiAccess) {
+      // Forbidden APIs (as this persona): must be 401/403. A "tenant-b:" prefix targets the
+      // 2nd tenant's FQDN — proving cross-tenant data access is denied by server-side tenant
+      // authority (e.g. GET /api/organisation/profile → 403 on the e2e-tenant FQDN while
+      // authenticated as the fixture-org tenant-admin). Sub-project B.
+      for (const apiRaw of persona.forbiddenApiAccess) {
+        let api = apiRaw;
+        let reqOrigin = origin;
+        if (api.startsWith("tenant-b:")) {
+          api = api.slice("tenant-b:".length).trim();
+          reqOrigin = tenantBOrigin;
+        }
         const m = api.match(/^(GET|POST|PATCH|PUT|DELETE)\s+(\S+)$/);
         if (!m) continue;
         const method = m[1];
         const path = m[2];
-        if (path.includes(":") || path.includes("tenant-b")) continue;
+        if (path.includes(":")) continue; // unresolved path param
         const resp = await page.request
-          .fetch(origin + path, { method, failOnStatusCode: false })
+          .fetch(reqOrigin + path, { method, failOnStatusCode: false })
           .catch(() => null);
         const status = resp?.status() ?? 0;
-        record("forbidden-api", api, "401/403", String(status), status === 401 || status === 403);
+        record(
+          "forbidden-api",
+          apiRaw,
+          "401/403",
+          String(status),
+          status === 401 || status === 403
+        );
       }
 
       // Expected routes load (non-blank).
