@@ -1,0 +1,577 @@
+{
+  "stage": "prod",
+  "generatedFor": "ADR-ACT-0285 Phase 6 sub-project A (persona-matrix)",
+  "credsPresent": true,
+  "personas": [
+    {
+      "persona": "unauthenticated-visitor",
+      "authMode": "unauthenticated",
+      "status": "RAN",
+      "reason": null
+    },
+    {
+      "persona": "scaffold-system-admin",
+      "authMode": "real",
+      "status": "RAN",
+      "reason": null
+    },
+    {
+      "persona": "scaffold-tenant-admin",
+      "authMode": "real",
+      "status": "RAN",
+      "reason": null
+    },
+    {
+      "persona": "scaffold-tenant-manager",
+      "authMode": "real",
+      "status": "RAN",
+      "reason": null
+    },
+    {
+      "persona": "scaffold-tenant-member",
+      "authMode": "real",
+      "status": "RAN",
+      "reason": null
+    },
+    {
+      "persona": "scaffold-support-breakglass",
+      "authMode": "real",
+      "status": "RAN",
+      "reason": null
+    },
+    {
+      "persona": "scaffold-disabled-user",
+      "authMode": "real",
+      "status": "RAN",
+      "reason": null
+    },
+    {
+      "persona": "scaffold-expired-session",
+      "authMode": "real",
+      "status": "SKIPPED",
+      "reason": "no distinct Keycloak account in provisionRef"
+    },
+    {
+      "persona": "scaffold-cross-tenant",
+      "authMode": "real",
+      "status": "SKIPPED",
+      "reason": "needs 2nd tenant (sub-project B)"
+    },
+    {
+      "persona": "tenant-entitlement-disabled",
+      "authMode": "real",
+      "status": "SKIPPED",
+      "reason": "no distinct Keycloak account in provisionRef"
+    },
+    {
+      "persona": "tenant-entitlement-enabled",
+      "authMode": "real",
+      "status": "SKIPPED",
+      "reason": "no distinct Keycloak account in provisionRef"
+    },
+    {
+      "persona": "tenant-quota-limited",
+      "authMode": "real",
+      "status": "SKIPPED",
+      "reason": "no distinct Keycloak account in provisionRef"
+    },
+    {
+      "persona": "tenant-rate-limited",
+      "authMode": "real",
+      "status": "SKIPPED",
+      "reason": "no distinct Keycloak account in provisionRef"
+    }
+  ],
+  "checks": [
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "forbidden-route",
+      "target": "/admin",
+      "expected": "denied (redirect / sign-in / forbidden-state)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "forbidden-route",
+      "target": "/admin/members",
+      "expected": "denied (redirect / sign-in / forbidden-state)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "forbidden-route",
+      "target": "/admin/logs",
+      "expected": "denied (redirect / sign-in / forbidden-state)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "forbidden-api",
+      "target": "GET /api/admin/tenants",
+      "expected": "401/403",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "forbidden-api",
+      "target": "GET /api/auth/settings/providers",
+      "expected": "401/403",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "expected-route",
+      "target": "/",
+      "expected": "loads (non-blank)",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "expected-route",
+      "target": "/login",
+      "expected": "loads (non-blank)",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "clickthrough-forbidden",
+      "target": "grafana /grafana/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "clickthrough-forbidden",
+      "target": "mailpit /mailpit/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "clickthrough-forbidden",
+      "target": "sonarqube /sonar/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "clickthrough-forbidden",
+      "target": "minio /minio/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "clickthrough-forbidden",
+      "target": "pgadmin /pgadmin/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "clickthrough-forbidden",
+      "target": "sentry /sentry/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "clickthrough-forbidden",
+      "target": "clickhouse /clickhouse/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "clickthrough-forbidden",
+      "target": "keycloak /kc/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-system-admin",
+      "kind": "session-roles",
+      "target": "/api/session",
+      "expected": "[\"system-admin\"]",
+      "actual": "[\"system-admin\"]",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-system-admin",
+      "kind": "expected-route",
+      "target": "/",
+      "expected": "loads (non-blank)",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-system-admin",
+      "kind": "expected-route",
+      "target": "/admin",
+      "expected": "loads (non-blank)",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-system-admin",
+      "kind": "expected-route",
+      "target": "/admin/logs",
+      "expected": "loads (non-blank)",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-system-admin",
+      "kind": "expected-route",
+      "target": "/admin/clickthrough",
+      "expected": "loads (non-blank)",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-system-admin",
+      "kind": "clickthrough-granted",
+      "target": "keycloak /kc/",
+      "expected": "service UI (status<400, not SPA)",
+      "actual": "status=200 url=https://aldous.info/kc/realms/master/protocol/openid-connect/auth?client_id=security-admin-console&redirect_uri=https%3A%2F%2Faldous.info%2Fkc%2Fadmin%2Fmaster%2Fconsole%2F&state=ac70e6e3-d77b-4855-89e5-e3fc7e3954a4&response_mode=query&response_type=code&scope=openid&nonce=62ecb464-e4e6-468a-add7-34ef47217ce3&code_challenge=qaEYxDv3IntLyJ5FdacsomObbPkxUs_cjBab9y_wuBc&code_challenge_method=S256",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-system-admin",
+      "kind": "clickthrough-granted",
+      "target": "grafana /grafana/",
+      "expected": "service UI (status<400, not SPA)",
+      "actual": "status=200 url=https://aldous.info/grafana/?orgId=1&from=now-6h&to=now&timezone=browser",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-system-admin",
+      "kind": "clickthrough-granted",
+      "target": "mailpit /mailpit/",
+      "expected": "service UI (status<400, not SPA)",
+      "actual": "status=200 url=https://aldous.info/mailpit/",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-system-admin",
+      "kind": "clickthrough-granted",
+      "target": "sonarqube /sonar/",
+      "expected": "service UI (status<400, not SPA)",
+      "actual": "status=200 url=https://aldous.info/sonar/",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-system-admin",
+      "kind": "clickthrough-granted",
+      "target": "minio /minio/",
+      "expected": "service UI (status<400, not SPA)",
+      "actual": "status=200 url=https://aldous.info/minio/",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-system-admin",
+      "kind": "clickthrough-granted",
+      "target": "pgadmin /pgadmin/",
+      "expected": "service UI (status<400, not SPA)",
+      "actual": "status=200 url=https://aldous.info/pgadmin/login?next=/pgadmin/",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-system-admin",
+      "kind": "clickthrough-granted",
+      "target": "sentry /sentry/",
+      "expected": "service UI (status<400, not SPA)",
+      "actual": "status=200 url=https://aldous.info/sentry/auth/login/",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-system-admin",
+      "kind": "clickthrough-granted",
+      "target": "clickhouse /clickhouse/",
+      "expected": "service UI (status<400, not SPA)",
+      "actual": "status=200 url=https://aldous.info/clickhouse/",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-admin",
+      "kind": "session-roles",
+      "target": "/api/session",
+      "expected": "[\"tenant-admin\"]",
+      "actual": "[\"tenant-admin\"]",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-admin",
+      "kind": "forbidden-route",
+      "target": "/admin/logs",
+      "expected": "denied (redirect / sign-in / forbidden-state)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-admin",
+      "kind": "forbidden-api",
+      "target": "GET /api/admin/tenants",
+      "expected": "401/403",
+      "actual": "403",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-admin",
+      "kind": "expected-route",
+      "target": "/",
+      "expected": "loads (non-blank)",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-admin",
+      "kind": "expected-route",
+      "target": "/admin",
+      "expected": "loads (non-blank)",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-admin",
+      "kind": "expected-route",
+      "target": "/admin/members",
+      "expected": "loads (non-blank)",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-admin",
+      "kind": "clickthrough-granted",
+      "target": "keycloak /kc/",
+      "expected": "tenant-host-scoped",
+      "actual": "deferred to sub-project B (tenant FQDN); apex correctly denies",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-admin",
+      "kind": "clickthrough-forbidden",
+      "target": "grafana /grafana/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "403",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-admin",
+      "kind": "clickthrough-forbidden",
+      "target": "sentry /sentry/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "403",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-admin",
+      "kind": "clickthrough-forbidden",
+      "target": "sonarqube /sonar/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "403",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-manager",
+      "kind": "session-roles",
+      "target": "/api/session",
+      "expected": "[\"manager\"]",
+      "actual": "[\"manager\"]",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-manager",
+      "kind": "forbidden-route",
+      "target": "/admin/auth",
+      "expected": "denied (redirect / sign-in / forbidden-state)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-manager",
+      "kind": "forbidden-route",
+      "target": "/admin/config",
+      "expected": "denied (redirect / sign-in / forbidden-state)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-manager",
+      "kind": "forbidden-api",
+      "target": "PATCH /api/auth/settings/providers",
+      "expected": "401/403",
+      "actual": "403",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-manager",
+      "kind": "expected-route",
+      "target": "/",
+      "expected": "loads (non-blank)",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-manager",
+      "kind": "clickthrough-forbidden",
+      "target": "keycloak /kc/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "403",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-manager",
+      "kind": "clickthrough-forbidden",
+      "target": "grafana /grafana/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "403",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-member",
+      "kind": "session-roles",
+      "target": "/api/session",
+      "expected": "[\"member\"]",
+      "actual": "[\"member\"]",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-member",
+      "kind": "forbidden-route",
+      "target": "/admin/members",
+      "expected": "denied (redirect / sign-in / forbidden-state)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-member",
+      "kind": "forbidden-api",
+      "target": "GET /api/admin/tenants",
+      "expected": "401/403",
+      "actual": "403",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-member",
+      "kind": "expected-route",
+      "target": "/",
+      "expected": "loads (non-blank)",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-member",
+      "kind": "expected-route",
+      "target": "/admin",
+      "expected": "loads (non-blank)",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-member",
+      "kind": "clickthrough-forbidden",
+      "target": "keycloak /kc/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "403",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-member",
+      "kind": "clickthrough-forbidden",
+      "target": "grafana /grafana/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "403",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-support-breakglass",
+      "kind": "session-roles",
+      "target": "/api/session",
+      "expected": "[\"system-admin\"]",
+      "actual": "[\"system-admin\"]",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-support-breakglass",
+      "kind": "expected-route",
+      "target": "/admin",
+      "expected": "loads (non-blank)",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-disabled-user",
+      "kind": "login-disabled",
+      "target": "/api/session",
+      "expected": "no session",
+      "actual": "status=401 userId=none",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-disabled-user",
+      "kind": "forbidden-route",
+      "target": "/",
+      "expected": "denied (redirect / sign-in / forbidden-state)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-disabled-user",
+      "kind": "forbidden-route",
+      "target": "/admin",
+      "expected": "denied (redirect / sign-in / forbidden-state)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-disabled-user",
+      "kind": "forbidden-api",
+      "target": "GET /api/session",
+      "expected": "401/403",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-disabled-user",
+      "kind": "forbidden-api",
+      "target": "GET /api/admin/tenants",
+      "expected": "401/403",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-disabled-user",
+      "kind": "expected-route",
+      "target": "/login",
+      "expected": "loads (non-blank)",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-disabled-user",
+      "kind": "clickthrough-forbidden",
+      "target": "keycloak /kc/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    }
+  ],
+  "failureCount": 0,
+  "result": "PASSED"
+}

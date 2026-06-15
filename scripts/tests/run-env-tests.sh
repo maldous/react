@@ -131,6 +131,14 @@ run_group() {
         PROD_BASE_URL="$_app_url" E2E_STAGE="$STAGE" \
             npx playwright test --config playwright.discovery.config.ts e2e/discovery/persona-authz.spec.ts
         ;;
+      e2e-persona-matrix)
+        # ADR-ACT-0285 Phase 6 sub-project A — multi-persona authed crawl: every
+        # stage-applicable persona logs in and the full registry matrix is asserted
+        # (routes + APIs + clickthrough allow/deny). Real personas degrade honestly
+        # (recorded, non-blocking) when KEYCLOAK_TEST_* creds are absent.
+        PROD_BASE_URL="$_app_url" E2E_STAGE="$STAGE" \
+            npx playwright test --config playwright.discovery.config.ts e2e/discovery/persona-matrix.spec.ts
+        ;;
       unit)
         POSTGRES_URL="$_pg_url" POSTGRES_APP_URL="$_pg_app_url" REDIS_URL="$_rd_url" npm run test:platform-api
         NODE_ENV=test npm run test:frontend:run

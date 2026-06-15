@@ -1138,6 +1138,10 @@ services:
       GF_AUTH_GENERIC_OAUTH_ALLOW_ASSIGN_GRAFANA_ADMIN: "true"
       # Full-SSO: skip Grafana's own login page and redirect straight to Keycloak when
       # SSO is on (break-glass basic login still reachable at /login?disableAutoLogin).
+      # The earlier ERR_TOO_MANY_REDIRECTS loop here was NOT a Grafana problem — Caddy's
+      # `copy_headers Cookie` in (forward_auth_check) was stripping the browser Cookie
+      # before it reached Grafana, so the OAuth state cookie never arrived. Fixed in the
+      # Caddyfile; seamless auto-login works again (ADR-ACT-0285 Phase 6).
       GF_AUTH_GENERIC_OAUTH_AUTO_LOGIN: ${COMPOSE_SSO_ENABLED:-false}
       GF_AUTH_OAUTH_AUTO_LOGIN: ${COMPOSE_SSO_ENABLED:-false}
     volumes:

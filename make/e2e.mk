@@ -1,7 +1,7 @@
 .PHONY: e2e-external-smoke e2e-external-auth e2e-external \
         dev-e2e dev-e2e-auth test-e2e staging-e2e prod-e2e run-stage-e2e \
         e2e-coverage-validate e2e-observability-correlation e2e-clickability \
-        e2e-failure-rootcause e2e-accessibility e2e-persona-authz
+        e2e-failure-rootcause e2e-accessibility e2e-persona-authz e2e-persona-matrix
 
 ## e2e-accessibility — axe-core WCAG 2.1 A/AA across safe routes x a11y profiles
 ## (default/reduced-motion/high-contrast) + structural contract (landmark/h1).
@@ -22,6 +22,17 @@ e2e-persona-authz:
 	if [ -z "$$_url" ]; then _port="$$(grep -oP 'WEB_HTTP_PORT=\K\d+' .env/$(ENV).env 2>/dev/null | head -1 || echo 80)"; _url="http://localhost:$$_port"; fi; \
 	PROD_BASE_URL="$$_url" E2E_STAGE=$(ENV) npx playwright test --config playwright.discovery.config.ts e2e/discovery/persona-authz.spec.ts
 	$(call OK,persona authorization coverage written)
+
+## e2e-persona-matrix — multi-persona authed crawl: logs in EVERY stage-applicable persona
+## and asserts the full registry matrix (expected/forbidden routes + APIs + clickthrough
+## allow/deny, navigating each granted tile to confirm it loads). ADR-ACT-0285 Phase 6
+## sub-project A. Writes docs/evidence/e2e/<stage>-persona-matrix-latest.{json,md}.
+e2e-persona-matrix:
+	$(call STEP,e2e:persona-matrix \($(ENV)\))
+	@_url="$${PROD_BASE_URL:-}"; \
+	if [ -z "$$_url" ]; then _port="$$(grep -oP 'WEB_HTTP_PORT=\K\d+' .env/$(ENV).env 2>/dev/null | head -1 || echo 80)"; _url="http://localhost:$$_port"; fi; \
+	PROD_BASE_URL="$$_url" E2E_STAGE=$(ENV) npx playwright test --config playwright.discovery.config.ts e2e/discovery/persona-matrix.spec.ts
+	$(call OK,persona matrix coverage written)
 
 ## e2e-failure-rootcause — Failure-path / root-cause + Grafana-Loki validation
 ## (ADR-ACT-0285 Phase 5). Triggers a denial, proves it is root-causeable in Loki

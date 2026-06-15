@@ -370,6 +370,32 @@
         "ui-hidden-but-api-accessible"
       ],
       "owner": "ADR-0075; ADR-ACT-0285"
+    },
+    {
+      "id": "discovery-persona-matrix",
+      "file": "e2e/discovery/persona-matrix.spec.ts",
+      "stageMin": "dev",
+      "authMode": "mixed",
+      "destructive": false,
+      "surfaces": [
+        "authz:clickthrough-granted",
+        "authz:clickthrough-forbidden",
+        "authz:forbidden-route",
+        "authz:forbidden-api",
+        "authz:expected-route",
+        "authz:session-roles"
+      ],
+      "requiredCapabilities": ["rbac"],
+      "expectedLogs": [],
+      "expectedMetrics": [],
+      "expectedTraces": [],
+      "expectedSentryEvents": [],
+      "failureModes": [
+        "clickthrough-granted-broken",
+        "clickthrough-forbidden-reachable",
+        "session-roles-mismatch"
+      ],
+      "owner": "ADR-0075; ADR-ACT-0285"
     }
   ],
   "capabilityExemptions": [

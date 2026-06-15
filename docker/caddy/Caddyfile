@@ -82,11 +82,16 @@
 (forward_auth_check) {
 	forward_auth platform-api:3001 {
 		uri /internal/auth/forward?resource={args[0]}&scope={args[1]}
-		copy_headers Cookie
 		header_up X-Forwarded-Host {host}
 		header_up X-Internal-Secret {$CADDY_INTERNAL_SECRET}
 	}
 }
+# NOTE: do NOT add `copy_headers Cookie` here. In Caddy, copy_headers copies the named
+# field FROM the auth response ONTO the upstream request — and since the auth response has
+# no Cookie, it CLEARS the browser's Cookie before it reaches the tool. Cookie-based tools
+# (Grafana OAuth state cookie, Keycloak admin console session) then never see their cookies
+# → "missing state cookie" / auth loops. The auth sub-request already receives the original
+# Cookie by default, so platform-api's session check still works without copying it.
 
 # Per-request access logging (ADR-ACT-0284). The internal Caddy is each env's request
 # front door (SPA, /api/*, /auth/*, every tool-proxy route); without this it logged

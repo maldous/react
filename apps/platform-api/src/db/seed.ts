@@ -10,6 +10,8 @@ export const FIXTURE = {
   ADMIN_ID: "00000000-0000-0000-0000-000000000002",
   VIEWER_ID: "00000000-0000-0000-0000-000000000003",
   FORBIDDEN_ID: "00000000-0000-0000-0000-000000000004",
+  MANAGER_ID: "00000000-0000-0000-0000-000000000005",
+  MEMBER_ID: "00000000-0000-0000-0000-000000000006",
 } as const;
 
 export async function seedFixtures(): Promise<void> {
@@ -34,20 +36,30 @@ export async function seedFixtures(): Promise<void> {
       INSERT INTO users (id, email, display_name) VALUES
         ($1, 'admin@fixture.local', 'Fixture Admin'),
         ($2, 'viewer@fixture.local', 'Fixture Viewer'),
-        ($3, 'forbidden@fixture.local', 'Fixture Forbidden')
+        ($3, 'forbidden@fixture.local', 'Fixture Forbidden'),
+        ($4, 'manager@fixture.local', 'Fixture Manager'),
+        ($5, 'member@fixture.local', 'Fixture Member')
       ON CONFLICT (id) DO NOTHING
     `,
-      [FIXTURE.ADMIN_ID, FIXTURE.VIEWER_ID, FIXTURE.FORBIDDEN_ID]
+      [
+        FIXTURE.ADMIN_ID,
+        FIXTURE.VIEWER_ID,
+        FIXTURE.FORBIDDEN_ID,
+        FIXTURE.MANAGER_ID,
+        FIXTURE.MEMBER_ID,
+      ]
     );
 
     await client.query(
       `
       INSERT INTO memberships (user_id, organisation_id, role) VALUES
         ($1, $2, 'tenant-admin'),
-        ($3, $2, 'viewer')
+        ($3, $2, 'viewer'),
+        ($4, $2, 'manager'),
+        ($5, $2, 'member')
       ON CONFLICT (user_id, organisation_id) DO NOTHING
     `,
-      [FIXTURE.ADMIN_ID, FIXTURE.ORG_ID, FIXTURE.VIEWER_ID]
+      [FIXTURE.ADMIN_ID, FIXTURE.ORG_ID, FIXTURE.VIEWER_ID, FIXTURE.MANAGER_ID, FIXTURE.MEMBER_ID]
     );
   } finally {
     await client.end();
