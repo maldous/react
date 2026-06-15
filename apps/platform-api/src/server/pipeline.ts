@@ -725,7 +725,14 @@ export function createRouter(
     } catch (err) {
       const durationMs = Number(process.hrtime.bigint() - startedAt) / 1_000_000;
       enrichedLogger.error({ err, ...routeMeta, status: 500, durationMs }, "http.request.failed");
-      sentry?.captureError(err instanceof Error ? err : new Error(String(err)));
+      // Attach the SAME correlation ids the log line carries so the captured
+      // Sentry event is searchable by requestId (pivots to Loki) and by the E2E
+      // testRunId/scenarioId that triggered it (ADR-ACT-0285 Phase 5.5). Only
+      // defined keys are passed; the adapter promotes them to searchable tags.
+      const captureContext: Record<string, string> = { requestId };
+      if (e2e.testRunId) captureContext["testRunId"] = e2e.testRunId;
+      if (e2e.scenarioId) captureContext["scenarioId"] = e2e.scenarioId;
+      sentry?.captureError(err instanceof Error ? err : new Error(String(err)), captureContext);
       const safe = toSafeResponse(err);
       jsonResponse(res, 500, safe, requestId);
     }

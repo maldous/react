@@ -272,12 +272,19 @@
       "destructive": false,
       "surfaces": ["error:4xx", "error:5xx", "error:ui"],
       "requiredCapabilities": [],
-      "expectedLogs": ["http.request.rejected"],
+      "expectedLogs": ["http.request.rejected", "http.request.failed"],
       "expectedMetrics": [],
       "expectedTraces": [],
-      "expectedSentryEvents": [],
-      "failureModes": ["unhandled-error-ui"],
-      "owner": "ADR-0025"
+      "expectedSentryEvents": [
+        {
+          "trigger": "POST /internal/e2e/trigger-failure (gated synthetic 500)",
+          "tags": ["environment", "trace_id", "requestId", "testRunId", "scenarioId"],
+          "assertedBy": "e2e-sentry-assertion",
+          "owner": "ADR-ACT-0285 Phase 5.5"
+        }
+      ],
+      "failureModes": ["unhandled-error-ui", "synthetic-failure-not-captured-in-sentry"],
+      "owner": "ADR-0025; ADR-ACT-0285"
     },
     {
       "id": "prod-performance-budget",

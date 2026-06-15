@@ -45,6 +45,19 @@ e2e-failure-rootcause:
 	@STAGE=$(ENV) node tools/e2e/failure-rootcause/src/index.mjs
 	$(call OK,failure-path root-cause + Grafana/Loki evidence written)
 
+## e2e-sentry-assertion — Self-hosted Sentry API event assertion (ADR-ACT-0285
+## Phase 5.5). Triggers the gated synthetic-failure endpoint with a unique
+## testRunId/scenarioId, then queries the Sentry API to PROVE the event was
+## captured with environment/release/requestId/traceId + testRunId/scenarioId
+## tags; in prod also runs a no-unexpected-events gate. Honest DEGRADED when the
+## Sentry API is unconfigured/unreachable for the stage; FAILED when reachable
+## but the event is missing/has wrong metadata. Writes
+## docs/evidence/e2e/<stage>-sentry-events-latest.{json,md}.
+e2e-sentry-assertion:
+	$(call STEP,e2e:sentry-assertion \($(ENV)\))
+	@STAGE=$(ENV) node tools/e2e/sentry-assertion/src/index.mjs
+	$(call OK,Sentry API event-assertion evidence written)
+
 ## e2e-clickability — Dynamic clickability crawler (ADR-ACT-0285 Phase 4 / ADR-0075).
 ## Discovers visible clickable surfaces by accessible ROLE (never CSS), safely
 ## crawls same-origin SPA routes, and quality-gates each page (main landmark, h1,

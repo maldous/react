@@ -109,6 +109,11 @@ export const SECRET_ENV_KEYS = [
   "KEYCLOAK_ADMIN_PASSWORD",
   "SENTRY_DB_PASSWORD",
   "SENTRY_SECRET_KEY",
+  // Self-hosted Sentry API auth token used by the Phase 5.5 E2E event-assertion
+  // (ADR-ACT-0285). Runtime-provisioned like SONAR_TOKEN — minted as an
+  // internal-integration token after the Sentry instance is up; EMPTY until then,
+  // never derived. Its absence makes the assertion DEGRADE honestly, never fail.
+  "SENTRY_API_TOKEN",
   // Composed-service SSO confidential client secrets (ADR-0073). Match the Keycloak
   // clients (Terraform sets them from these via TF_VAR). Per-environment.
   "GRAFANA_OIDC_CLIENT_SECRET",
@@ -127,11 +132,12 @@ export const SHARED_SECRET_KEYS = {
   // must therefore equal the prod environment's SONAR_OIDC_CLIENT_SECRET — see
   // SHARED_REALM_BOUND_SECRETS in generate-runtime-env.mjs (ADR-0073).
   sonar: ["SONAR_DB_PASSWORD", "SONAR_ADMIN_PASSWORD", "SONAR_TOKEN", "SONAR_OIDC_CLIENT_SECRET"],
-  sentry: ["SENTRY_SECRET_KEY", "SENTRY_ADMIN_PASSWORD"],
+  sentry: ["SENTRY_SECRET_KEY", "SENTRY_ADMIN_PASSWORD", "SENTRY_API_TOKEN"],
 };
 // Secret keys left EMPTY when not seeded — runtime-provisioned, never derived
-// (e.g. SonarQube analysis token, minted by scripts/sonar/provision-token.sh).
-export const RUNTIME_PROVISIONED_KEYS = ["SONAR_TOKEN"];
+// (e.g. SonarQube analysis token, minted by scripts/sonar/provision-token.sh;
+// the Sentry API token, minted as an internal-integration token once Sentry is up).
+export const RUNTIME_PROVISIONED_KEYS = ["SONAR_TOKEN", "SENTRY_API_TOKEN"];
 export const SHARED_PATH = resolve(MANIFEST_DIR, "shared.json");
 export function loadShared() {
   if (!existsSync(SHARED_PATH)) return {};

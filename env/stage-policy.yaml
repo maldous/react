@@ -36,6 +36,7 @@ test:
     - e2e-persona-matrix # ADR-ACT-0285 Phase 6 — multi-persona authed link/route/API matrix (sub-project A)
     - e2e-observability-correlation # ADR-ACT-0285 Phase 3 — E2E<->logs/traces correlation evidence (honest DEGRADED until specs propagate ids)
     - e2e-failure-rootcause # ADR-ACT-0285 Phase 5 — failure-path root-cause + Grafana/Loki label-policy evidence
+    - e2e-sentry-assertion # ADR-ACT-0285 Phase 5.5 — self-hosted Sentry API event assertion (DEGRADED until Sentry API+token provisioned)
 
 staging:
   executor: compose
@@ -56,6 +57,7 @@ staging:
     - auth-e2e # ADR-ACT-0285 — real-auth confidence gate; FAILS on missing creds, DEGRADED on localhost (never passes promotion)
     - e2e-observability-correlation # ADR-ACT-0285 Phase 3 — E2E<->logs/traces correlation evidence
     - e2e-failure-rootcause # ADR-ACT-0285 Phase 5 — failure-path root-cause + Grafana/Loki label-policy evidence
+    - e2e-sentry-assertion # ADR-ACT-0285 Phase 5.5 — self-hosted Sentry API event assertion (DEGRADED until Sentry API+token provisioned)
   excludedTests:
     - tenant-data
     - destructive
@@ -86,3 +88,4 @@ prod:
     - production-e2e # npm run test:e2e:prod
     - e2e-observability-correlation # ADR-ACT-0285 Phase 3 — E2E<->logs/traces correlation evidence
     - e2e-failure-rootcause # ADR-ACT-0285 Phase 5 — failure-path root-cause + Grafana/Loki label-policy evidence
+    - e2e-sentry-assertion # ADR-ACT-0285 Phase 5.5 — self-hosted Sentry API event assertion + prod no-unexpected-events gate

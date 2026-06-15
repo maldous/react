@@ -120,6 +120,15 @@ run_group() {
         # or a forbidden label.
         STAGE="$STAGE" node tools/e2e/failure-rootcause/src/index.mjs
         ;;
+      e2e-sentry-assertion)
+        # ADR-ACT-0285 Phase 5.5 — self-hosted Sentry API event assertion. Triggers
+        # the gated synthetic-failure endpoint, then queries the Sentry API to prove
+        # the event was captured with environment/release/requestId/traceId +
+        # testRunId/scenarioId tags (and a prod no-unexpected-events gate). Honest
+        # DEGRADED when Sentry is unconfigured/unreachable; FAILED when reachable but
+        # the event is missing or has wrong metadata.
+        STAGE="$STAGE" node tools/e2e/sentry-assertion/src/index.mjs
+        ;;
       e2e-accessibility)
         # ADR-ACT-0285 Phase 6 — axe-core WCAG across safe routes x a11y profiles.
         PROD_BASE_URL="$_app_url" E2E_STAGE="$STAGE" \

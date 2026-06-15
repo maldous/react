@@ -15,6 +15,20 @@ function activeTrace(): { traceId: string; spanId: string } | null {
   return { traceId: ctx.traceId, spanId: ctx.spanId };
 }
 
+// Correlation ids we promote from `context` to searchable Sentry tags. Stable,
+// bounded-per-request identifiers only — never actor/tenant/free-form values.
+const CORRELATION_TAG_KEYS = ["requestId", "testRunId", "scenarioId"] as const;
+
+export function correlationTagsFrom(context?: Record<string, unknown>): Record<string, string> {
+  if (!context) return {};
+  const tags: Record<string, string> = {};
+  for (const key of CORRELATION_TAG_KEYS) {
+    const value = context[key];
+    if (typeof value === "string" && value.length > 0) tags[key] = value;
+  }
+  return tags;
+}
+
 export interface SentryConfig {
   dsn: string;
   environment: string;
@@ -68,11 +82,19 @@ export class SentryErrorAdapter {
       ...(context ?? {}),
       ...(tc ? { trace_id: tc.traceId, span_id: tc.spanId } : {}),
     };
+    // Promote stable correlation ids to Sentry TAGS so they are searchable via
+    // the Sentry API (`?query=key:value`); `extra` is stored but not indexed for
+    // search. requestId pivots to the matching Loki log line; testRunId/scenarioId
+    // let an E2E run find exactly the event it triggered (ADR-ACT-0285 Phase 5.5).
+    // Unlike Loki labels (ADR-0035), Sentry tags tolerate this cardinality.
+    const correlationTags = correlationTagsFrom(context);
+    const tags = {
+      ...(tc ? { trace_id: tc.traceId } : {}),
+      ...correlationTags,
+    };
     return this.sentry.captureException(error, {
       extra,
-      // Tag so the trace id is filterable in Sentry and pivots to the matching
-      // Tempo trace (and its Loki logs) — one shared id across all three.
-      ...(tc ? { tags: { trace_id: tc.traceId } } : {}),
+      ...(Object.keys(tags).length ? { tags } : {}),
     });
   }
 
