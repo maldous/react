@@ -38,7 +38,7 @@ const requiredOrchestratorFields = [
   "evidenceGenerated",
 ];
 
-const SKIP_DIRS = new Set(["node_modules", ".git", "reports"]);
+const SKIP_DIRS = new Set(["node_modules", ".git", "reports", ".agents", ".claude"]);
 
 function copyDir(source, target) {
   fs.mkdirSync(target, { recursive: true });

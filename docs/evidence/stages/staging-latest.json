@@ -1,7 +1,7 @@
 {
   "stage": "staging",
-  "gitSha": "9b59d79",
-  "timestamp": "2026-06-13T17:08:18.572Z",
+  "gitSha": "3662a1f",
+  "timestamp": "2026-06-15T06:27:06.931Z",
   "envFile": "/home/user/src/react/.env/staging.env",
   "composeProject": "react-staging",
   "profiles": [
@@ -9,9 +9,16 @@
   ],
   "dataPolicy": "preserve",
   "testGroupsRun": [
+    "e2e-coverage-validate",
     "integration",
     "compose-smoke",
-    "external-smoke"
+    "external-smoke",
+    "e2e-clickability",
+    "e2e-accessibility",
+    "e2e-persona-authz",
+    "auth-e2e",
+    "e2e-observability-correlation",
+    "e2e-failure-rootcause"
   ],
   "testGroupsSkipped": [
     "tenant-data",
@@ -23,6 +30,7 @@
     "http://localhost:3003/healthz"
   ],
   "result": "passed",
-  "durationSeconds": 60,
+  "confidence": "FULL",
+  "durationSeconds": 184,
   "failureSummary": null
 }

@@ -1,7 +1,7 @@
 {
   "stage": "prod",
-  "gitSha": "9b59d79",
-  "timestamp": "2026-06-13T17:15:07.110Z",
+  "gitSha": "3662a1f",
+  "timestamp": "2026-06-15T06:36:07.805Z",
   "envFile": "/home/user/src/react/.env/prod.env",
   "composeProject": "react-prod",
   "profiles": [
@@ -9,6 +9,7 @@
   ],
   "dataPolicy": "preserve",
   "testGroupsRun": [
+    "e2e-coverage-validate",
     "unit",
     "contract",
     "port",
@@ -17,8 +18,13 @@
     "tenant",
     "compose-smoke",
     "external-smoke",
+    "e2e-clickability",
+    "e2e-accessibility",
+    "e2e-persona-authz",
     "auth-e2e",
-    "production-e2e"
+    "production-e2e",
+    "e2e-observability-correlation",
+    "e2e-failure-rootcause"
   ],
   "testGroupsSkipped": [],
   "e2eCommand": "make e2e-external PROD_BASE_URL=https://aldous.info && npm run test:e2e:prod",
@@ -26,6 +32,7 @@
     "http://localhost:3004/healthz"
   ],
   "result": "passed",
-  "durationSeconds": 409,
+  "confidence": "FULL",
+  "durationSeconds": 542,
   "failureSummary": null
 }

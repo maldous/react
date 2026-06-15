@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-13T17:15:07.141Z",
+  "generatedAt": "2026-06-15T06:36:07.843Z",
   "stages": {
     "dev": {
       "stage": "dev",
-      "gitSha": "9b59d79",
-      "timestamp": "2026-06-13T17:01:54.399Z",
+      "gitSha": "3662a1f",
+      "timestamp": "2026-06-15T06:18:24.544Z",
       "envFile": "/home/user/src/react/.env/dev.env",
       "composeProject": "react-dev",
       "profiles": [
@@ -12,23 +12,28 @@
       ],
       "dataPolicy": "destructive",
       "testGroupsRun": [
+        "e2e-coverage-validate",
         "minimal-smoke",
         "unit",
-        "e2e-smoke"
+        "e2e-smoke",
+        "e2e-clickability",
+        "e2e-accessibility",
+        "e2e-persona-authz"
       ],
       "testGroupsSkipped": [],
       "e2eCommand": "make e2e-internal",
       "urlsChecked": [
         "http://localhost:3001/healthz"
       ],
-      "result": "passed",
-      "durationSeconds": 106,
-      "failureSummary": null
+      "result": "degraded",
+      "confidence": "DEGRADED",
+      "durationSeconds": 140,
+      "failureSummary": "Real-auth E2E was skipped — staging/prod cannot pass promotion without FULL confidence (real auth against a real domain)."
     },
     "test": {
       "stage": "test",
-      "gitSha": "9b59d79",
-      "timestamp": "2026-06-13T17:07:18.874Z",
+      "gitSha": "3662a1f",
+      "timestamp": "2026-06-15T06:24:03.108Z",
       "envFile": "/home/user/src/react/.env/test.env",
       "composeProject": "react-test",
       "profiles": [
@@ -36,26 +41,33 @@
       ],
       "dataPolicy": "destructive",
       "testGroupsRun": [
+        "e2e-coverage-validate",
         "unit",
         "contract",
         "port",
         "interface",
         "compose-smoke",
-        "e2e-smoke"
+        "e2e-smoke",
+        "e2e-clickability",
+        "e2e-accessibility",
+        "e2e-persona-authz",
+        "e2e-observability-correlation",
+        "e2e-failure-rootcause"
       ],
       "testGroupsSkipped": [],
       "e2eCommand": "make e2e-internal",
       "urlsChecked": [
         "http://localhost:3002/healthz"
       ],
-      "result": "passed",
-      "durationSeconds": 325,
-      "failureSummary": null
+      "result": "degraded",
+      "confidence": "DEGRADED",
+      "durationSeconds": 339,
+      "failureSummary": "Real-auth E2E was skipped — staging/prod cannot pass promotion without FULL confidence (real auth against a real domain)."
     },
     "staging": {
       "stage": "staging",
-      "gitSha": "9b59d79",
-      "timestamp": "2026-06-13T17:08:18.572Z",
+      "gitSha": "3662a1f",
+      "timestamp": "2026-06-15T06:27:06.931Z",
       "envFile": "/home/user/src/react/.env/staging.env",
       "composeProject": "react-staging",
       "profiles": [
@@ -63,9 +75,16 @@
       ],
       "dataPolicy": "preserve",
       "testGroupsRun": [
+        "e2e-coverage-validate",
         "integration",
         "compose-smoke",
-        "external-smoke"
+        "external-smoke",
+        "e2e-clickability",
+        "e2e-accessibility",
+        "e2e-persona-authz",
+        "auth-e2e",
+        "e2e-observability-correlation",
+        "e2e-failure-rootcause"
       ],
       "testGroupsSkipped": [
         "tenant-data",
@@ -77,13 +96,14 @@
         "http://localhost:3003/healthz"
       ],
       "result": "passed",
-      "durationSeconds": 60,
+      "confidence": "FULL",
+      "durationSeconds": 184,
       "failureSummary": null
     },
     "prod": {
       "stage": "prod",
-      "gitSha": "9b59d79",
-      "timestamp": "2026-06-13T17:15:07.110Z",
+      "gitSha": "3662a1f",
+      "timestamp": "2026-06-15T06:36:07.805Z",
       "envFile": "/home/user/src/react/.env/prod.env",
       "composeProject": "react-prod",
       "profiles": [
@@ -91,6 +111,7 @@
       ],
       "dataPolicy": "preserve",
       "testGroupsRun": [
+        "e2e-coverage-validate",
         "unit",
         "contract",
         "port",
@@ -99,8 +120,13 @@
         "tenant",
         "compose-smoke",
         "external-smoke",
+        "e2e-clickability",
+        "e2e-accessibility",
+        "e2e-persona-authz",
         "auth-e2e",
-        "production-e2e"
+        "production-e2e",
+        "e2e-observability-correlation",
+        "e2e-failure-rootcause"
       ],
       "testGroupsSkipped": [],
       "e2eCommand": "make e2e-external PROD_BASE_URL=https://aldous.info && npm run test:e2e:prod",
@@ -108,7 +134,8 @@
         "http://localhost:3004/healthz"
       ],
       "result": "passed",
-      "durationSeconds": 409,
+      "confidence": "FULL",
+      "durationSeconds": 542,
       "failureSummary": null
     }
   }

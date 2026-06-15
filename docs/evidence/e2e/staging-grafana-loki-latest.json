@@ -1,0 +1,17 @@
+{
+  "stage": "staging",
+  "result": "PASSED",
+  "forbiddenLabelsPresent": [],
+  "labelsSeen": [
+    "container",
+    "environment",
+    "level",
+    "platform",
+    "service",
+    "service_name"
+  ],
+  "lines": [
+    "Label policy OK: none of [requestId, traceId, spanId, testRunId, scenarioId, actorId, tenantId, organisationId, route, path, errorCode, durationMs] are Loki labels. Labels: `container, environment, level, platform, service, service_name`"
+  ],
+  "generatedFor": "ADR-ACT-0285 Phase 5"
+}

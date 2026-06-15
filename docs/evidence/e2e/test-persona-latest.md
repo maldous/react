@@ -4,7 +4,7 @@ Generated for git evidence (ADR-0075 / ADR-ACT-0285). DO NOT EDIT — regenerate
 
 - Result: **PASSED**
 - Failures (block make all): 0
-- Reported gaps (honest, non-blocking this phase): 22
+- Reported gaps (honest, non-blocking this phase): 19
 
 ## Reported gaps (tracked, not yet blocking)
 
@@ -26,9 +26,6 @@ Generated for git evidence (ADR-0075 / ADR-ACT-0285). DO NOT EDIT — regenerate
 - ⚠️ permission 'tenant.search.read' (route /admin/search) has no persona with negative (denied) coverage
 - ⚠️ permission 'profile.read_self' (route /admin/account) has no persona with negative (denied) coverage
 - ⚠️ permission 'platform.observability.read' (route /admin/monitoring) has no persona with negative (denied) coverage
-- ⚠️ persona 'scaffold-tenant-manager' scaffold account NOT YET PROVISIONED — must exist before staging/prod real-auth execution (Phase 6)
-- ⚠️ persona 'scaffold-tenant-member' scaffold account NOT YET PROVISIONED — must exist before staging/prod real-auth execution (Phase 6)
-- ⚠️ persona 'scaffold-disabled-user' scaffold account NOT YET PROVISIONED — must exist before staging/prod real-auth execution (Phase 6)
 - ⚠️ persona 'scaffold-cross-tenant' scaffold account NOT YET PROVISIONED — must exist before staging/prod real-auth execution (Phase 6)
 
 ## Summary

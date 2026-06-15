@@ -1,7 +1,7 @@
 {
   "stage": "test",
-  "gitSha": "9b59d79",
-  "timestamp": "2026-06-13T17:07:18.874Z",
+  "gitSha": "3662a1f",
+  "timestamp": "2026-06-15T06:24:03.108Z",
   "envFile": "/home/user/src/react/.env/test.env",
   "composeProject": "react-test",
   "profiles": [
@@ -9,19 +9,26 @@
   ],
   "dataPolicy": "destructive",
   "testGroupsRun": [
+    "e2e-coverage-validate",
     "unit",
     "contract",
     "port",
     "interface",
     "compose-smoke",
-    "e2e-smoke"
+    "e2e-smoke",
+    "e2e-clickability",
+    "e2e-accessibility",
+    "e2e-persona-authz",
+    "e2e-observability-correlation",
+    "e2e-failure-rootcause"
   ],
   "testGroupsSkipped": [],
   "e2eCommand": "make e2e-internal",
   "urlsChecked": [
     "http://localhost:3002/healthz"
   ],
-  "result": "passed",
-  "durationSeconds": 325,
-  "failureSummary": null
+  "result": "degraded",
+  "confidence": "DEGRADED",
+  "durationSeconds": 339,
+  "failureSummary": "Real-auth E2E was skipped — staging/prod cannot pass promotion without FULL confidence (real auth against a real domain)."
 }
