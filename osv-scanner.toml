@@ -1,0 +1,34 @@
+# OSV-Scanner accepted-risk register (audit:osv gate, make/quality.mk `audit`).
+#
+# Every entry below is a DEV-ONLY dependency advisory: the package is a build/test/
+# lint tool, NOT part of any shipped artifact (the platform-api Docker image and the
+# SPA production bundle ship PRODUCTION deps only — `npm audit --omit=dev` reports 0
+# vulnerabilities). These are recorded as accepted risk so the `make all` audit gate
+# is deterministic (it otherwise fails network-dependently on transient dev-tool CVEs)
+# while still failing hard on any PRODUCTION vulnerability or a NEW advisory not listed
+# here. Re-review when bumping the owning dev tool; drop the entry once patched.
+# Reviewed: 2026-06-16.
+
+[[IgnoredVulns]]
+id = "GHSA-fx2h-pf6j-xcff"
+reason = "vite (dev) — dev-server server.fs.deny bypass on Windows alternate paths. Build/dev tool only; never serves production traffic."
+
+[[IgnoredVulns]]
+id = "GHSA-v6wh-96g9-6wx3"
+reason = "vite/launch-editor (dev) — NTLMv2 disclosure via UNC paths on Windows in the dev server. Not in the shipped bundle."
+
+[[IgnoredVulns]]
+id = "GHSA-vmf3-w455-68vh"
+reason = "tar (dev) — PAX header parser differential in build tooling. Not a runtime dependency of the deployed services."
+
+[[IgnoredVulns]]
+id = "GHSA-6v5v-wf23-fmfq"
+reason = "markdown-it (dev, via markdownlint-cli2) — quadratic-complexity DoS in the docs linter. Dev-time only."
+
+[[IgnoredVulns]]
+id = "GHSA-h67p-54hq-rp68"
+reason = "js-yaml (dev) — used by dev/build tooling only; not loaded by the production services."
+
+[[IgnoredVulns]]
+id = "GHSA-8988-4f7v-96qf"
+reason = "@opentelemetry/core (dev-resolved at repo root) — the production OTEL stack lives in packages/adapters-opentelemetry with its own pinned deps; the root dev copy is not shipped."
