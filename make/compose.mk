@@ -155,8 +155,10 @@ external-caddy-down:
 sentry-up:
 	$(call STEP,sentry: startup)
 	docker network create sentry-bridge 2>/dev/null || true
+	bash scripts/sentry/ensure-relay-credentials.sh
 	bash scripts/compose/up.sh sentry external-sentry
 	@bash scripts/smoke/sentry-smoke.sh
+	bash scripts/sentry/provision-sentry.sh
 	$(call OK,sentry up)
 
 ## sentry-down — Stop shared Sentry instance (react-shared project)

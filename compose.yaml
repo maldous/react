@@ -775,10 +775,18 @@ services:
     image: ghcr.io/getsentry/relay:26.5.2
     profiles: [external-sentry]
     volumes:
+      # Named volume so relay's managed-mode credentials (generated on first boot)
+      # persist; the read-only config.yml bind-mount overlays the file inside it.
+      - sentry-relay-data:/work/.relay
       - ./docker/sentry/relay.yml:/work/.relay/config.yml:ro
     depends_on:
       sentry-web:
         condition: service_healthy
+    networks:
+      # default = react-shared project net. sentry-bridge so each env's platform-api can
+      # send events to the relay's ingest endpoint (sentry-relay:3000) — ADR-ACT-0285 5.5.
+      default: {}
+      sentry-bridge: {}
     restart: unless-stopped
 
   sentry-snuba-api:
@@ -1287,8 +1295,27 @@ services:
       OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
       OTEL_SERVICE_NAME: ${OTEL_SERVICE_NAME:-platform-api}
       OTEL_SDK_DISABLED: ${OTEL_SDK_DISABLED:-false}
+      # Sentry error monitoring (ADR-0073 / ADR-ACT-0285 Phase 5.5). SENTRY_DSN points at
+      # the in-cluster Sentry Relay over the sentry-bridge network (sentry-relay:3000) and
+      # SENTRY_API_TOKEN are runtime-provisioned by scripts/sentry/provision-sentry.sh; the
+      # adapter sets environment=PLATFORM_ENV, release=APP_VERSION, and reports only when
+      # SENTRY_ENABLED=true with a non-empty DSN (observability.ts).
+      PLATFORM_ENV: ${PLATFORM_ENV:-development}
+      APP_VERSION: ${APP_VERSION:-}
+      SENTRY_ENABLED: ${SENTRY_ENABLED:-false}
+      SENTRY_DSN: ${SENTRY_DSN:-}
+      # Gated synthetic-failure endpoint — the Phase 5.5 assertion triggers it to prove a
+      # captured error is queryable in Sentry. 404 unless enabled; in prod it ALSO requires
+      # E2E_ALLOW_PROD_SYNTHETIC_FAILURE (defence in depth — synthetic-failure-endpoint test).
+      E2E_FAILURE_ENDPOINT_ENABLED: ${E2E_FAILURE_ENDPOINT_ENABLED:-false}
+      E2E_ALLOW_PROD_SYNTHETIC_FAILURE: ${E2E_ALLOW_PROD_SYNTHETIC_FAILURE:-false}
     ports:
       - "${PLATFORM_API_PORT:-3001}:3001"
+    networks:
+      # default = this env's project network. sentry-bridge lets platform-api reach the
+      # SHARED Sentry Relay (sentry-relay:3000) to send events (mirrors react-app's bridge).
+      default: {}
+      sentry-bridge: {}
     depends_on:
       postgres:
         condition: service_healthy
@@ -1419,6 +1446,7 @@ volumes:
   sentry-postgres-data:
   sentry-redis-data:
   sentry-clickhouse-data:
+  sentry-relay-data:
   pgadmin-data:
   loki-data:
   grafana-data:

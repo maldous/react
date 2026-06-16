@@ -25,9 +25,11 @@ export function assertEventMetadata({ event, expected }) {
   const failures = [];
   const tags = tagsToMap(event);
 
-  // environment — assert only when we know what to expect.
+  // environment — assert only when we know what to expect. Self-hosted Sentry's
+  // latest-event API returns environment as a TAG, not a top-level field (top-level
+  // is null), so read the tag first and fall back to the top-level field.
   if (expected.environment) {
-    const actual = event?.environment ?? null;
+    const actual = tags["environment"] ?? event?.environment ?? null;
     checks.push({ name: "environment", expected: expected.environment, actual });
     if (actual !== expected.environment) {
       failures.push(
@@ -35,12 +37,17 @@ export function assertEventMetadata({ event, expected }) {
       );
     }
   } else {
-    checks.push({ name: "environment", note: "not asserted", actual: event?.environment ?? null });
+    checks.push({
+      name: "environment",
+      note: "not asserted",
+      actual: tags["environment"] ?? event?.environment ?? null,
+    });
   }
 
-  // release — only asserted when APP_VERSION / expected.release is configured.
+  // release — only asserted when APP_VERSION / expected.release is configured. Same
+  // tag-vs-top-level nuance as environment.
   if (expected.release) {
-    const actual = event?.release ?? null;
+    const actual = tags["release"] ?? event?.release ?? null;
     checks.push({ name: "release", expected: expected.release, actual });
     if (actual !== expected.release) {
       failures.push(`release mismatch (expected ${expected.release}, got ${actual ?? "none"})`);

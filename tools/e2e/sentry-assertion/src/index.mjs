@@ -78,9 +78,12 @@ const config = {
   scenarioId: process.env["E2E_SCENARIO_ID"] || "synthetic-failure-sentry-capture",
   expectedEnvironment: platformEnv || undefined,
   expectedRelease: envValue("APP_VERSION") || undefined,
-  triggerWaitMs: Number(process.env["SENTRY_ASSERT_INGEST_WAIT_MS"] ?? 5000),
-  pollAttempts: Number(process.env["SENTRY_ASSERT_POLL_ATTEMPTS"] ?? 6),
-  pollIntervalMs: Number(process.env["SENTRY_ASSERT_POLL_INTERVAL_MS"] ?? 5000),
+  // Self-hosted Sentry ingest+snuba-index latency: a group is created quickly but the
+  // tag SEARCH can lag, so default to ~80s of polling (12 × 6s after a 6s warm-up). The
+  // gate still DEGRADES honestly if Sentry is unreachable — it never hangs make all.
+  triggerWaitMs: Number(process.env["SENTRY_ASSERT_INGEST_WAIT_MS"] ?? 6000),
+  pollAttempts: Number(process.env["SENTRY_ASSERT_POLL_ATTEMPTS"] ?? 12),
+  pollIntervalMs: Number(process.env["SENTRY_ASSERT_POLL_INTERVAL_MS"] ?? 6000),
 };
 
 const payload = await runAssertion(

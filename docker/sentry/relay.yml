@@ -1,13 +1,26 @@
 # docker/sentry/relay.yml — Relay 26.x configuration.
 # Mounted read-only as /work/.relay/config.yml inside the relay container.
-# Uses proxy mode: no credential generation required, events forwarded directly
-# to sentry-web via HTTP. Suitable for self-hosted dev/staging/prod without
-# the managed-mode credential registration step.
+#
+# MANAGED + PROCESSING mode (the canonical self-hosted ingest setup):
+#   - managed mode: relay generates a credentials keypair (persisted in the
+#     sentry-relay-data volume) and registers with the upstream sentry-web.
+#   - processing.enabled: relay PROCESSES envelopes itself and publishes them
+#     directly to Kafka (ingest-events), which the events-consumer turns into
+#     groups. WITHOUT processing, relay only forwards to the upstream and nothing
+#     reaches Kafka — events are silently dropped (the original "0 groups" bug,
+#     which proxy mode also caused via the web RedirectView/CSRF 403).
+processing:
+  enabled: true
+  kafka_config:
+    - name: "bootstrap.servers"
+      value: "sentry-kafka:9092"
+  redis: "redis://sentry-redis:6379"
+
 relay:
   upstream: "http://sentry-web:9000/"
   host: "0.0.0.0"
   port: 3000
-  mode: proxy
+  mode: managed
 
 logging:
-  level: WARN
+  level: INFO
