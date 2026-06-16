@@ -90,7 +90,12 @@ const personas: Persona[] = registry.personas.filter((p: Persona) =>
 );
 
 test.describe("persona-matrix — authed link/route/API crawl per persona", () => {
-  test.setTimeout(180_000);
+  // Per-persona budget. The heaviest personas (system-admin / cross-tenant) log in then
+  // navigate every clickthrough tile + route; under `make all` the prod stage shares the
+  // host with the dev+test+staging stacks + Sentry + Sonar, so each navigation is slow and
+  // the cumulative run can exceed the old 180s (observed 192s). Generous + env-tunable so
+  // host contention never false-fails it; real per-nav timeouts still guard a hung page.
+  test.setTimeout(Number(process.env["E2E_PERSONA_TIMEOUT_MS"] ?? "480000"));
   // NOTE: do NOT clear FRAG_DIR in beforeAll — Playwright recycles the worker after a
   // test failure and would re-run beforeAll, wiping earlier personas' fragments. Each
   // persona overwrites its own (idempotent) fragment every run; afterAll reads the
