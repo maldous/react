@@ -470,10 +470,13 @@ test.describe("persona-matrix — authed link/route/API crawl per persona", () =
         "",
         ...[...allChecks]
           .sort((a, b) => Number(a.ok) - Number(b.ok))
-          .map(
-            (c) =>
-              `- ${c.ok ? "✅" : "❌"} [${c.persona}] ${c.kind} \`${c.target}\` → expected ${c.expected}, got ${c.actual}`
-          ),
+          .map((c) => {
+            // Angle-bracket bare URLs so the GENERATED evidence passes markdownlint
+            // (MD034/no-bare-urls) on every regeneration — the clickthrough-granted
+            // checks record `url=https://…` which would otherwise fail the lint gate.
+            const wrapUrls = (s) => String(s).replace(/(https?:\/\/[^\s<>]+)/g, "<$1>");
+            return `- ${c.ok ? "✅" : "❌"} [${c.persona}] ${c.kind} \`${c.target}\` → expected ${wrapUrls(c.expected)}, got ${wrapUrls(c.actual)}`;
+          }),
         "",
       ].join("\n")
     );

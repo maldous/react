@@ -1,4 +1,4 @@
-# E2E persona-matrix — prod
+# E2E persona-matrix — staging
 
 Generated (ADR-ACT-0285 Phase 6 sub-project A). DO NOT EDIT — regenerate via `make e2e-persona-matrix ENV=<stage>`.
 
@@ -44,14 +44,14 @@ Generated (ADR-ACT-0285 Phase 6 sub-project A). DO NOT EDIT — regenerate via `
 - ✅ [scaffold-system-admin] expected-route `/admin` → expected loads (non-blank), got loads
 - ✅ [scaffold-system-admin] expected-route `/admin/logs` → expected loads (non-blank), got loads
 - ✅ [scaffold-system-admin] expected-route `/admin/clickthrough` → expected loads (non-blank), got loads
-- ✅ [scaffold-system-admin] clickthrough-granted `keycloak /kc/` → expected service UI (status<400, not SPA), got status=200 url=<https://aldous.info/kc/realms/master/protocol/openid-connect/auth?client_id=security-admin-console&redirect_uri=https%3A%2F%2Faldous.info%2Fkc%2Fadmin%2Fmaster%2Fconsole%2F&state=4f1805f9-1390-464c-a621-437fc0ba3e44&response_mode=query&response_type=code&scope=openid&nonce=c2c8521e-0a1b-4435-8470-01591e44ef69&code_challenge=uV1EaQ_YkfMjbowoqx2JyUjxOpkTgJUOIRinQZSJUHw&code_challenge_method=S256>
-- ✅ [scaffold-system-admin] clickthrough-granted `grafana /grafana/` → expected service UI (status<400, not SPA), got status=200 url=<https://aldous.info/grafana/>
-- ✅ [scaffold-system-admin] clickthrough-granted `mailpit /mailpit/` → expected service UI (status<400, not SPA), got status=200 url=<https://aldous.info/mailpit/>
-- ✅ [scaffold-system-admin] clickthrough-granted `sonarqube /sonar/` → expected service UI (status<400, not SPA), got status=200 url=<https://aldous.info/sonar/>
-- ✅ [scaffold-system-admin] clickthrough-granted `minio /minio/` → expected service UI (status<400, not SPA), got status=200 url=<https://aldous.info/minio/>
-- ✅ [scaffold-system-admin] clickthrough-granted `pgadmin /pgadmin/` → expected service UI (status<400, not SPA), got status=200 url=<https://aldous.info/pgadmin/login?next=/pgadmin/>
-- ✅ [scaffold-system-admin] clickthrough-granted `sentry /sentry/` → expected service UI (status<400, not SPA), got status=200 url=<https://aldous.info/sentry/auth/login/>
-- ✅ [scaffold-system-admin] clickthrough-granted `clickhouse /clickhouse/` → expected service UI (status<400, not SPA), got status=200 url=<https://aldous.info/clickhouse/>
+- ✅ [scaffold-system-admin] clickthrough-granted `keycloak /kc/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/kc/realms/master/protocol/openid-connect/auth?client_id=security-admin-console&redirect_uri=https%3A%2F%2Fstaging.aldous.info%2Fkc%2Fadmin%2Fmaster%2Fconsole%2F&state=37357a44-cf09-44a4-b9e2-338d0cf5bf04&response_mode=query&response_type=code&scope=openid&nonce=92beeacb-b238-4ad7-a79d-68a291dc8496&code_challenge=1lUgFyVL0-FNV01zOtPWYYpXCFDZJV2P3L1sueCQhcY&code_challenge_method=S256>
+- ✅ [scaffold-system-admin] clickthrough-granted `grafana /grafana/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/grafana/>
+- ✅ [scaffold-system-admin] clickthrough-granted `mailpit /mailpit/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/mailpit/>
+- ✅ [scaffold-system-admin] clickthrough-granted `sonarqube /sonar/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/sonar/>
+- ✅ [scaffold-system-admin] clickthrough-granted `minio /minio/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/minio/>
+- ✅ [scaffold-system-admin] clickthrough-granted `pgadmin /pgadmin/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/pgadmin/login?next=/pgadmin/>
+- ✅ [scaffold-system-admin] clickthrough-granted `sentry /sentry/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/sentry/auth/login/>
+- ✅ [scaffold-system-admin] clickthrough-granted `clickhouse /clickhouse/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/clickhouse/>
 - ✅ [scaffold-tenant-admin] session-roles `/api/session` → expected ["tenant-admin"], got ["tenant-admin"]
 - ✅ [scaffold-tenant-admin] forbidden-route `/admin/logs` → expected denied (redirect / sign-in / forbidden-state), got denied
 - ✅ [scaffold-tenant-admin] forbidden-api `GET /api/admin/tenants` → expected 401/403, got 403
@@ -86,4 +86,4 @@ Generated (ADR-ACT-0285 Phase 6 sub-project A). DO NOT EDIT — regenerate via `
 - ✅ [scaffold-disabled-user] expected-route `/login` → expected loads (non-blank), got loads
 - ✅ [scaffold-disabled-user] clickthrough-forbidden `keycloak /kc/` → expected denied (401/403 or redirect-to-login), got 401
 - ✅ [scaffold-cross-tenant] session-roles `/api/session` → expected ["tenant-admin"], got ["tenant-admin"]
-- ✅ [scaffold-cross-tenant] forbidden-api `tenant-b:GET /api/organisation/profile` → expected 401/403, got 403
+- ✅ [scaffold-cross-tenant] forbidden-api-skipped `tenant-b:GET /api/organisation/profile` → expected skipped (tenant FQDN TLS not covered on this stage; proven on prod apex), got skipped
