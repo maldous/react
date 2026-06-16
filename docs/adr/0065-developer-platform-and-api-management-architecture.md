@@ -2,7 +2,9 @@
 
 ## Status
 
-Accepted (2026-06-13, ADR-ACT-0257 — Phase 3 foundation; accepted on Matt's authority per the directive). SDK generation, an external developer-portal/gateway, sandbox/test mode, and complete schema-level OpenAPI drift enforcement remain **Proposed** sub-decisions within this ADR (not delivered).
+Accepted (2026-06-13, ADR-ACT-0257 — Phase 3 foundation; accepted on Matt's authority per the directive). SDK generation, an external developer-portal/gateway, and sandbox/test mode remain **Proposed** sub-decisions within this ADR (not delivered).
+
+**Update (2026-06-17, ADR-ACT-0287):** Schema-level OpenAPI drift enforcement is now **delivered**. Every documented BFF request body and non-bodyless response declares a schema in `docs/api/openapi.json` (errors via the `ErrorResponse` envelope; success bodies authored from each handler's `res.json` shape), and `validate-openapi-drift --strict` is a hard gate over schema presence + local `$ref` integrity + path/method presence. Out of scope (and not claimed): runtime/semantic conformance assertion that a documented schema matches the live response shape.
 
 ## Date
 
@@ -97,4 +99,4 @@ ADR-0013, ADR-0044, ADR-0051, ADR-0052, ADR-0053, ADR-0058, ADR-0067.
 
 ## Notes
 
-Accepted on 2026-06-13 (ADR-ACT-0257) on Matt's authority per the directive. SDK generation, external portal/gateway, sandbox mode, and full schema-level OpenAPI drift are explicitly NOT accepted or delivered here.
+Accepted on 2026-06-13 (ADR-ACT-0257) on Matt's authority per the directive. SDK generation, external portal/gateway, and sandbox mode are explicitly NOT accepted or delivered here. Full schema-level OpenAPI drift enforcement was subsequently delivered on 2026-06-17 (ADR-ACT-0287) — see the Status update above.

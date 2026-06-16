@@ -234,7 +234,7 @@ node tools/architecture/validate-i18n/src/index.mjs .
 
 GraphQL remains the primary client-facing API boundary per ADR-0013.
 
-OpenAPI drift validation is not complete. Check `docs/adr/ACTION-REGISTER.md` for current status before assuming the contract is enforced.
+OpenAPI drift validation is a hard gate (`validate-openapi-drift --strict`, run by `make architecture` → `make check`): it enforces path+method presence (code ↔ spec), local `$ref` integrity, and schema presence on every request body and non-bodyless response (ADR-ACT-0286/0287). Not enforced: runtime/semantic conformance that a documented schema matches the live response shape — that is contract-testing, not drift. The external developer portal/gateway, SDK generation, and sandbox mode remain Proposed under ADR-0065 (ADR-ACT-0250).
 
 ## Dev Container
 

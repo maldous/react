@@ -12,6 +12,7 @@ import {
   collectRefs,
   refResolves,
   findUnresolvedRefs,
+  findSchemalessSchemas,
 } from "../src/index.mjs";
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../..");
@@ -77,8 +78,13 @@ describe("validate-openapi-drift — drift detection", () => {
   });
 
   it("decideExit returns 1 under --strict when drift exists, 0 otherwise", () => {
-    const clean = { missing: [], extra: [], unresolvedRefs: [] };
-    const drifted = { missing: [{ method: "get", path: "/x" }], extra: [], unresolvedRefs: [] };
+    const clean = { missing: [], extra: [], unresolvedRefs: [], schemaless: [] };
+    const drifted = {
+      missing: [{ method: "get", path: "/x" }],
+      extra: [],
+      unresolvedRefs: [],
+      schemaless: [],
+    };
     assert.equal(decideExit(clean, true), 0);
     assert.equal(decideExit(clean, false), 0);
     assert.equal(decideExit(drifted, false), 0, "report-only never fails");
@@ -86,9 +92,68 @@ describe("validate-openapi-drift — drift detection", () => {
   });
 
   it("decideExit treats an unresolvable $ref as drift under --strict", () => {
-    const refDrift = { missing: [], extra: [], unresolvedRefs: ["#/components/schemas/Missing"] };
+    const refDrift = {
+      missing: [],
+      extra: [],
+      unresolvedRefs: ["#/components/schemas/Missing"],
+      schemaless: [],
+    };
     assert.equal(decideExit(refDrift, false), 0, "report-only never fails");
     assert.equal(decideExit(refDrift, true), 1, "strict fails on a dangling ref");
+  });
+
+  it("decideExit treats a schemaless body as drift under --strict", () => {
+    const schemaDrift = {
+      missing: [],
+      extra: [],
+      unresolvedRefs: [],
+      schemaless: ["GET /api/x [200]"],
+    };
+    assert.equal(decideExit(schemaDrift, false), 0, "report-only never fails");
+    assert.equal(decideExit(schemaDrift, true), 1, "strict fails on a schemaless body");
+  });
+});
+
+describe("validate-openapi-drift — schema presence", () => {
+  const doc = {
+    paths: {
+      "/ok": {
+        post: {
+          requestBody: { content: { "application/json": { schema: { type: "object" } } } },
+          responses: {
+            200: { content: { "application/json": { schema: { type: "object" } } } },
+            204: { description: "No Content" },
+            302: { description: "Redirect" },
+            400: { $ref: "#/components/responses/ValidationError" },
+          },
+        },
+      },
+      "/bad": {
+        get: {
+          responses: {
+            200: { description: "missing schema" },
+            201: { content: { "application/json": {} } },
+          },
+        },
+        put: {
+          requestBody: { content: { "application/json": {} } },
+          responses: { 200: { content: { "application/json": { schema: { type: "string" } } } } },
+        },
+      },
+    },
+  };
+
+  it("flags only the responses/bodies that lack a schema, exempting 204/302 and $ref", () => {
+    assert.deepEqual(findSchemalessSchemas(doc).sort(), [
+      "GET /bad [200]",
+      "GET /bad [201]",
+      "PUT /bad [requestBody]",
+    ]);
+  });
+
+  it("the live docs/api/openapi.json has zero schemaless bodies", () => {
+    const openapi = JSON.parse(readFileSync(path.join(REPO_ROOT, "docs/api/openapi.json"), "utf8"));
+    assert.deepEqual(findSchemalessSchemas(openapi), []);
   });
 });
 

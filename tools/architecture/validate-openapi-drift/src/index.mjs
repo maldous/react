@@ -93,6 +93,45 @@ export function findUnresolvedRefs(openapi) {
   return unresolved;
 }
 
+// Status codes whose responses legitimately carry no body.
+const BODYLESS_STATUS = new Set(["204", "301", "302", "303", "304", "307", "308"]);
+const PATH_META_KEYS = new Set(["parameters", "summary", "description", "servers", "$ref"]);
+
+function jsonSchemaPresent(carrier) {
+  const schema = carrier?.content?.["application/json"]?.schema;
+  return Boolean(
+    schema &&
+    (schema.$ref ||
+      schema.type ||
+      schema.allOf ||
+      schema.oneOf ||
+      schema.anyOf ||
+      schema.properties ||
+      schema.items)
+  );
+}
+
+// Every documented JSON request body and non-bodyless response must declare a
+// schema. A reusable `$ref` response is accepted as-is (resolved separately by
+// findUnresolvedRefs). This is the schema-presence half of ADR-ACT-0250.
+export function findSchemalessSchemas(openapi) {
+  const offenders = [];
+  for (const [routePath, item] of Object.entries(openapi.paths ?? {})) {
+    for (const [method, op] of Object.entries(item)) {
+      if (PATH_META_KEYS.has(method) || !op || typeof op !== "object") continue;
+      const label = `${method.toUpperCase()} ${routePath}`;
+      if (op.requestBody && op.requestBody.content && !jsonSchemaPresent(op.requestBody)) {
+        offenders.push(`${label} [requestBody]`);
+      }
+      for (const [code, resp] of Object.entries(op.responses ?? {})) {
+        if (resp?.$ref || BODYLESS_STATUS.has(code)) continue;
+        if (!jsonSchemaPresent(resp)) offenders.push(`${label} [${code}]`);
+      }
+    }
+  }
+  return offenders;
+}
+
 export function checkDrift(repoRoot) {
   const routesPath = path.join(repoRoot, ROUTES_FILE);
   const openapiPath = path.join(repoRoot, OPENAPI_FILE);
@@ -110,12 +149,16 @@ export function checkDrift(repoRoot) {
     missing: findMissing(routes, definedPaths),
     extra: findExtra(routes, definedPaths),
     unresolvedRefs: findUnresolvedRefs(openapi),
+    schemaless: findSchemalessSchemas(openapi),
   };
 }
 
 function hasDrift(result) {
   return (
-    result.missing.length > 0 || result.extra.length > 0 || (result.unresolvedRefs?.length ?? 0) > 0
+    result.missing.length > 0 ||
+    result.extra.length > 0 ||
+    (result.unresolvedRefs?.length ?? 0) > 0 ||
+    (result.schemaless?.length ?? 0) > 0
   );
 }
 
@@ -153,6 +196,15 @@ function reportDrift(result) {
     console.warn("[validate-openapi-drift] unresolvable $ref pointers in docs/api/openapi.json:");
     for (const ref of result.unresolvedRefs) {
       console.warn(`  - ${ref}`);
+    }
+  }
+
+  if ((result.schemaless?.length ?? 0) > 0) {
+    console.warn(
+      "[validate-openapi-drift] request/response bodies without a schema in docs/api/openapi.json:"
+    );
+    for (const offender of result.schemaless) {
+      console.warn(`  - ${offender}`);
     }
   }
 }
