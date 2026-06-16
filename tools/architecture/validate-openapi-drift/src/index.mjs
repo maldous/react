@@ -52,6 +52,47 @@ export function findExtra(routes, definedPaths) {
   return extra;
 }
 
+// Collect every $ref string anywhere in the OpenAPI document.
+export function collectRefs(node, acc = []) {
+  if (Array.isArray(node)) {
+    for (const item of node) collectRefs(item, acc);
+  } else if (node && typeof node === "object") {
+    for (const [key, value] of Object.entries(node)) {
+      if (key === "$ref" && typeof value === "string") acc.push(value);
+      else collectRefs(value, acc);
+    }
+  }
+  return acc;
+}
+
+// Resolve a local JSON-pointer ref (e.g. "#/components/schemas/Foo") within the
+// document. Returns true only for in-document pointers that resolve to a node.
+// External refs (no leading "#") are treated as unresolved by this local check.
+export function refResolves(doc, ref) {
+  if (typeof ref !== "string" || !ref.startsWith("#/")) return false;
+  const segments = ref
+    .slice(2)
+    .split("/")
+    .map((s) => s.replace(/~1/g, "/").replace(/~0/g, "~"));
+  let cursor = doc;
+  for (const segment of segments) {
+    if (cursor && typeof cursor === "object" && segment in cursor) cursor = cursor[segment];
+    else return false;
+  }
+  return cursor !== undefined;
+}
+
+export function findUnresolvedRefs(openapi) {
+  const unresolved = [];
+  const seen = new Set();
+  for (const ref of collectRefs(openapi)) {
+    if (seen.has(ref)) continue;
+    seen.add(ref);
+    if (!refResolves(openapi, ref)) unresolved.push(ref);
+  }
+  return unresolved;
+}
+
 export function checkDrift(repoRoot) {
   const routesPath = path.join(repoRoot, ROUTES_FILE);
   const openapiPath = path.join(repoRoot, OPENAPI_FILE);
@@ -68,19 +109,26 @@ export function checkDrift(repoRoot) {
     routes,
     missing: findMissing(routes, definedPaths),
     extra: findExtra(routes, definedPaths),
+    unresolvedRefs: findUnresolvedRefs(openapi),
   };
 }
 
-// Drift covers path+method presence only. Schema-level drift (request/response
-// bodies, parameters, status codes) remains a Proposed sub-decision of ADR-0065
-// tracked by ADR-ACT-0250.
+function hasDrift(result) {
+  return (
+    result.missing.length > 0 || result.extra.length > 0 || (result.unresolvedRefs?.length ?? 0) > 0
+  );
+}
+
+// Drift covers path+method presence and local $ref integrity. Full schema-level
+// drift (request/response bodies, parameters, status codes) remains a Proposed
+// sub-decision of ADR-0065 tracked by ADR-ACT-0250.
 export function decideExit(result, strict) {
-  if (result.missing.length === 0 && result.extra.length === 0) return 0;
+  if (!hasDrift(result)) return 0;
   return strict ? 1 : 0;
 }
 
 function reportDrift(result) {
-  if (result.missing.length === 0 && result.extra.length === 0) {
+  if (!hasDrift(result)) {
     console.log(
       `[validate-openapi-drift] OK - ${result.routes.length} route(s) match docs/api/openapi.json`
     );
@@ -98,6 +146,13 @@ function reportDrift(result) {
     console.warn("[validate-openapi-drift] OpenAPI paths not present in routes.ts:");
     for (const route of result.extra) {
       console.warn(`  - ${route.method.toUpperCase()} ${route.path}`);
+    }
+  }
+
+  if ((result.unresolvedRefs?.length ?? 0) > 0) {
+    console.warn("[validate-openapi-drift] unresolvable $ref pointers in docs/api/openapi.json:");
+    for (const ref of result.unresolvedRefs) {
+      console.warn(`  - ${ref}`);
     }
   }
 }

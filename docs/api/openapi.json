@@ -4140,6 +4140,24 @@
             "type": "object"
           }
         }
+      },
+      "SupportSessionRequest": {
+        "type": "object",
+        "required": ["targetOrganisationId", "supportAccessReason"],
+        "properties": {
+          "targetOrganisationId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Organisation/tenant the support session targets."
+          },
+          "supportAccessReason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500,
+            "description": "Audited justification for entering support mode."
+          }
+        },
+        "additionalProperties": false
       }
     },
     "responses": {
