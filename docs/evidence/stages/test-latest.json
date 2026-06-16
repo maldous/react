@@ -1,7 +1,7 @@
 {
   "stage": "test",
-  "gitSha": "3662a1f",
-  "timestamp": "2026-06-15T06:24:03.108Z",
+  "gitSha": "cee99f3",
+  "timestamp": "2026-06-16T13:04:55.412Z",
   "envFile": "/home/user/src/react/.env/test.env",
   "composeProject": "react-test",
   "profiles": [
@@ -19,8 +19,10 @@
     "e2e-clickability",
     "e2e-accessibility",
     "e2e-persona-authz",
+    "e2e-persona-matrix",
     "e2e-observability-correlation",
-    "e2e-failure-rootcause"
+    "e2e-failure-rootcause",
+    "e2e-sentry-assertion"
   ],
   "testGroupsSkipped": [],
   "e2eCommand": "make e2e-internal",
@@ -29,6 +31,6 @@
   ],
   "result": "degraded",
   "confidence": "DEGRADED",
-  "durationSeconds": 339,
+  "durationSeconds": 381,
   "failureSummary": "Real-auth E2E was skipped — staging/prod cannot pass promotion without FULL confidence (real auth against a real domain)."
 }

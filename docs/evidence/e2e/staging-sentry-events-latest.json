@@ -1,0 +1,56 @@
+{
+  "stage": "staging",
+  "testRunId": "sentry-staging-1781615643702",
+  "result": "PASSED",
+  "checks": [
+    {
+      "name": "trigger-synthetic-failure",
+      "httpStatus": 500,
+      "requestId": "2198fb3d-0a21-4c22-ae5d-7bd7605b21fb",
+      "expected": 500
+    },
+    {
+      "name": "event-metadata",
+      "eventId": "fd964c98fa9b44d2a5e3e0eefc02274e",
+      "ok": true,
+      "failures": [],
+      "checks": [
+        {
+          "name": "environment",
+          "expected": "staging",
+          "actual": "staging"
+        },
+        {
+          "name": "release",
+          "note": "not asserted (no release configured)",
+          "actual": null
+        },
+        {
+          "name": "tag:requestId",
+          "expected": "2198fb3d-0a21-4c22-ae5d-7bd7605b21fb",
+          "actual": "2198fb3d-0a21-4c22-ae5d-7bd7605b21fb"
+        },
+        {
+          "name": "tag:testRunId",
+          "expected": "sentry-staging-1781615643702",
+          "actual": "sentry-staging-1781615643702"
+        },
+        {
+          "name": "tag:scenarioId",
+          "expected": "synthetic-failure-sentry-capture",
+          "actual": "synthetic-failure-sentry-capture"
+        },
+        {
+          "name": "tag:trace_id",
+          "present": true,
+          "actual": "54c44f0296fd901cdec69439bf123bee"
+        }
+      ]
+    }
+  ],
+  "lines": [
+    "Triggered synthetic failure → HTTP 500 (x-request-id=2198fb3d-0a21-4c22-ae5d-7bd7605b21fb).",
+    "Sentry event fd964c98fa9b44d2a5e3e0eefc02274e carries environment + requestId + trace_id + testRunId + scenarioId."
+  ],
+  "generatedFor": "ADR-ACT-0285 Phase 5.5"
+}

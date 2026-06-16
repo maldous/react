@@ -1,4 +1,4 @@
-# E2E persona coverage — staging
+# E2E persona coverage — local
 
 Generated for git evidence (ADR-0075 / ADR-ACT-0285). DO NOT EDIT — regenerate via `npm run e2e:ui:contract:validate`.
 

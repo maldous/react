@@ -1,7 +1,7 @@
 {
   "stage": "prod",
-  "gitSha": "3662a1f",
-  "timestamp": "2026-06-15T06:36:07.805Z",
+  "gitSha": "cee99f3",
+  "timestamp": "2026-06-16T13:34:02.906Z",
   "envFile": "/home/user/src/react/.env/prod.env",
   "composeProject": "react-prod",
   "profiles": [
@@ -21,10 +21,12 @@
     "e2e-clickability",
     "e2e-accessibility",
     "e2e-persona-authz",
+    "e2e-persona-matrix",
     "auth-e2e",
     "production-e2e",
     "e2e-observability-correlation",
-    "e2e-failure-rootcause"
+    "e2e-failure-rootcause",
+    "e2e-sentry-assertion"
   ],
   "testGroupsSkipped": [],
   "e2eCommand": "make e2e-external PROD_BASE_URL=https://aldous.info && npm run test:e2e:prod",
@@ -33,6 +35,6 @@
   ],
   "result": "passed",
   "confidence": "FULL",
-  "durationSeconds": 542,
+  "durationSeconds": 1187,
   "failureSummary": null
 }

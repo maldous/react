@@ -1,7 +1,7 @@
 {
   "stage": "staging",
-  "gitSha": "3662a1f",
-  "timestamp": "2026-06-15T06:27:06.931Z",
+  "gitSha": "cee99f3",
+  "timestamp": "2026-06-16T13:14:16.287Z",
   "envFile": "/home/user/src/react/.env/staging.env",
   "composeProject": "react-staging",
   "profiles": [
@@ -16,9 +16,11 @@
     "e2e-clickability",
     "e2e-accessibility",
     "e2e-persona-authz",
+    "e2e-persona-matrix",
     "auth-e2e",
     "e2e-observability-correlation",
-    "e2e-failure-rootcause"
+    "e2e-failure-rootcause",
+    "e2e-sentry-assertion"
   ],
   "testGroupsSkipped": [
     "tenant-data",
@@ -31,6 +33,6 @@
   ],
   "result": "passed",
   "confidence": "FULL",
-  "durationSeconds": 184,
+  "durationSeconds": 560,
   "failureSummary": null
 }

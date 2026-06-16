@@ -1,0 +1,17 @@
+{
+  "stage": "test",
+  "testRunId": "sentry-test-1781528699948",
+  "result": "DEGRADED",
+  "checks": [
+    {
+      "name": "trigger-synthetic-failure",
+      "httpStatus": 404,
+      "requestId": "eb611137-2aae-41f5-925e-814a51c85bd9",
+      "expected": 500
+    }
+  ],
+  "lines": [
+    "Synthetic-failure endpoint returned 404 — E2E_FAILURE_ENDPOINT_ENABLED not set for this stage; cannot assert — DEGRADED."
+  ],
+  "generatedFor": "ADR-ACT-0285 Phase 5.5"
+}

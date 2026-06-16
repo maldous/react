@@ -1,5 +1,5 @@
 {
-  "stage": "prod",
+  "stage": "staging",
   "generatedFor": "ADR-ACT-0285 Phase 6 sub-project A (persona-matrix)",
   "credsPresent": true,
   "personas": [
@@ -248,7 +248,7 @@
       "kind": "clickthrough-granted",
       "target": "keycloak /kc/",
       "expected": "service UI (status<400, not SPA)",
-      "actual": "status=200 url=https://aldous.info/kc/realms/master/protocol/openid-connect/auth?client_id=security-admin-console&redirect_uri=https%3A%2F%2Faldous.info%2Fkc%2Fadmin%2Fmaster%2Fconsole%2F&state=93f69c24-6ef2-49d2-8e2e-cffbe1101938&response_mode=query&response_type=code&scope=openid&nonce=358b1d1a-c023-46a8-885c-edc94dc7e6ed&code_challenge=hf_TmCxUZcBmBOkErqAJ4EuXCow1uCiKQ01DjClop80&code_challenge_method=S256",
+      "actual": "status=200 url=https://staging.aldous.info/kc/realms/master/protocol/openid-connect/auth?client_id=security-admin-console&redirect_uri=https%3A%2F%2Fstaging.aldous.info%2Fkc%2Fadmin%2Fmaster%2Fconsole%2F&state=ddc67355-de36-4779-916e-b856d0e43ed0&response_mode=query&response_type=code&scope=openid&nonce=2750b6c6-8e67-4232-9b39-488b1292ebb5&code_challenge=W0yO3ExBkEPyrnEJTUZBoBopheKJVIlKan4XBV9C-58&code_challenge_method=S256",
       "ok": true
     },
     {
@@ -256,7 +256,7 @@
       "kind": "clickthrough-granted",
       "target": "grafana /grafana/",
       "expected": "service UI (status<400, not SPA)",
-      "actual": "status=200 url=https://aldous.info/grafana/?orgId=1&from=now-6h&to=now&timezone=browser",
+      "actual": "status=200 url=https://staging.aldous.info/grafana/?orgId=1&from=now-6h&to=now&timezone=browser",
       "ok": true
     },
     {
@@ -264,7 +264,7 @@
       "kind": "clickthrough-granted",
       "target": "mailpit /mailpit/",
       "expected": "service UI (status<400, not SPA)",
-      "actual": "status=200 url=https://aldous.info/mailpit/",
+      "actual": "status=200 url=https://staging.aldous.info/mailpit/",
       "ok": true
     },
     {
@@ -272,7 +272,7 @@
       "kind": "clickthrough-granted",
       "target": "sonarqube /sonar/",
       "expected": "service UI (status<400, not SPA)",
-      "actual": "status=200 url=https://aldous.info/sonar/",
+      "actual": "status=200 url=https://staging.aldous.info/sonar/",
       "ok": true
     },
     {
@@ -280,7 +280,7 @@
       "kind": "clickthrough-granted",
       "target": "minio /minio/",
       "expected": "service UI (status<400, not SPA)",
-      "actual": "status=200 url=https://aldous.info/minio/",
+      "actual": "status=200 url=https://staging.aldous.info/minio/",
       "ok": true
     },
     {
@@ -288,7 +288,7 @@
       "kind": "clickthrough-granted",
       "target": "pgadmin /pgadmin/",
       "expected": "service UI (status<400, not SPA)",
-      "actual": "status=200 url=https://aldous.info/pgadmin/login?next=/pgadmin/",
+      "actual": "status=200 url=https://staging.aldous.info/pgadmin/login?next=/pgadmin/",
       "ok": true
     },
     {
@@ -296,7 +296,7 @@
       "kind": "clickthrough-granted",
       "target": "sentry /sentry/",
       "expected": "service UI (status<400, not SPA)",
-      "actual": "status=200 url=https://aldous.info/sentry/auth/login/",
+      "actual": "status=200 url=https://staging.aldous.info/sentry/auth/login/",
       "ok": true
     },
     {
@@ -304,7 +304,7 @@
       "kind": "clickthrough-granted",
       "target": "clickhouse /clickhouse/",
       "expected": "service UI (status<400, not SPA)",
-      "actual": "status=200 url=https://aldous.info/clickhouse/",
+      "actual": "status=200 url=https://staging.aldous.info/clickhouse/",
       "ok": true
     },
     {
@@ -581,10 +581,10 @@
     },
     {
       "persona": "scaffold-cross-tenant",
-      "kind": "forbidden-api",
+      "kind": "forbidden-api-skipped",
       "target": "tenant-b:GET /api/organisation/profile",
-      "expected": "401/403",
-      "actual": "403",
+      "expected": "skipped (tenant FQDN TLS not covered on this stage; proven on prod apex)",
+      "actual": "skipped",
       "ok": true
     }
   ],

@@ -1,4 +1,4 @@
-# E2E coverage coverage — test
+# E2E coverage coverage — local
 
 Generated for git evidence (ADR-0075 / ADR-ACT-0285). DO NOT EDIT — regenerate via `npm run e2e:coverage:validate`.
 

@@ -65,8 +65,8 @@ Generated for git evidence (ADR-0075 / ADR-ACT-0285). DO NOT EDIT — regenerate
 
 ## Summary
 
-- testFiles: 22
-- suites: 22
+- testFiles: 23
+- suites: 23
 - delivered+locallyProven capabilities: 33
 - coveredCapabilities: 7
 - exemptCapabilities: 26

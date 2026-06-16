@@ -1,0 +1,62 @@
+{
+  "stage": "prod",
+  "testRunId": "sentry-prod-1781616830126",
+  "result": "PASSED",
+  "checks": [
+    {
+      "name": "trigger-synthetic-failure",
+      "httpStatus": 500,
+      "requestId": "b8bc5dda-cdb9-4336-a3f7-b1182ea0e3cf",
+      "expected": 500
+    },
+    {
+      "name": "event-metadata",
+      "eventId": "9f527ee1268e4705ba9ede74a51a34d1",
+      "ok": true,
+      "failures": [],
+      "checks": [
+        {
+          "name": "environment",
+          "expected": "production",
+          "actual": "production"
+        },
+        {
+          "name": "release",
+          "note": "not asserted (no release configured)",
+          "actual": null
+        },
+        {
+          "name": "tag:requestId",
+          "expected": "b8bc5dda-cdb9-4336-a3f7-b1182ea0e3cf",
+          "actual": "b8bc5dda-cdb9-4336-a3f7-b1182ea0e3cf"
+        },
+        {
+          "name": "tag:testRunId",
+          "expected": "sentry-prod-1781616830126",
+          "actual": "sentry-prod-1781616830126"
+        },
+        {
+          "name": "tag:scenarioId",
+          "expected": "synthetic-failure-sentry-capture",
+          "actual": "synthetic-failure-sentry-capture"
+        },
+        {
+          "name": "tag:trace_id",
+          "present": true,
+          "actual": "15f03b0fbbb4b2f87b68c1aae804fa51"
+        }
+      ]
+    },
+    {
+      "name": "prod-no-unexpected-events",
+      "unexpectedCount": 0,
+      "unexpected": []
+    }
+  ],
+  "lines": [
+    "Triggered synthetic failure → HTTP 500 (x-request-id=b8bc5dda-cdb9-4336-a3f7-b1182ea0e3cf).",
+    "Sentry event 9f527ee1268e4705ba9ede74a51a34d1 carries environment + requestId + trace_id + testRunId + scenarioId.",
+    "Prod no-unexpected-events gate OK: no unexpected errors first seen during the E2E window."
+  ],
+  "generatedFor": "ADR-ACT-0285 Phase 5.5"
+}
