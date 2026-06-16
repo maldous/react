@@ -111,6 +111,27 @@ function jsonSchemaPresent(carrier) {
   );
 }
 
+function isOperation(method, op) {
+  return !PATH_META_KEYS.has(method) && Boolean(op) && typeof op === "object";
+}
+
+function responseNeedsSchema(code, resp) {
+  return !resp?.$ref && !BODYLESS_STATUS.has(code);
+}
+
+function schemalessInOperation(label, op) {
+  const offenders = [];
+  if (op.requestBody?.content && !jsonSchemaPresent(op.requestBody)) {
+    offenders.push(`${label} [requestBody]`);
+  }
+  for (const [code, resp] of Object.entries(op.responses ?? {})) {
+    if (responseNeedsSchema(code, resp) && !jsonSchemaPresent(resp)) {
+      offenders.push(`${label} [${code}]`);
+    }
+  }
+  return offenders;
+}
+
 // Every documented JSON request body and non-bodyless response must declare a
 // schema. A reusable `$ref` response is accepted as-is (resolved separately by
 // findUnresolvedRefs). This is the schema-presence half of ADR-ACT-0250.
@@ -118,15 +139,8 @@ export function findSchemalessSchemas(openapi) {
   const offenders = [];
   for (const [routePath, item] of Object.entries(openapi.paths ?? {})) {
     for (const [method, op] of Object.entries(item)) {
-      if (PATH_META_KEYS.has(method) || !op || typeof op !== "object") continue;
-      const label = `${method.toUpperCase()} ${routePath}`;
-      if (op.requestBody && op.requestBody.content && !jsonSchemaPresent(op.requestBody)) {
-        offenders.push(`${label} [requestBody]`);
-      }
-      for (const [code, resp] of Object.entries(op.responses ?? {})) {
-        if (resp?.$ref || BODYLESS_STATUS.has(code)) continue;
-        if (!jsonSchemaPresent(resp)) offenders.push(`${label} [${code}]`);
-      }
+      if (!isOperation(method, op)) continue;
+      offenders.push(...schemalessInOperation(`${method.toUpperCase()} ${routePath}`, op));
     }
   }
   return offenders;
