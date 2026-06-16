@@ -3,7 +3,7 @@
   "info": {
     "title": "Enterprise Platform REST API",
     "version": "0.1.0",
-    "description": "REST supplementary routes for the enterprise React platform BFF. GraphQL is the primary client boundary per ADR-0013; these routes cover health probes, auth, session management, FQDN-based tenant routing, per-tenant branding, auth settings self-service, and tenant provisioning. ADRs 0028\u20130031 govern the multi-tenant architecture."
+    "description": "REST supplementary routes for the enterprise React platform BFF. GraphQL is the primary client boundary per ADR-0013; these routes cover health probes, auth, session management, FQDN-based tenant routing, per-tenant branding, auth settings self-service, and tenant provisioning. ADRs 0028–0031 govern the multi-tenant architecture."
   },
   "servers": [
     {
@@ -417,10 +417,10 @@
     },
     "/internal/auth/forward": {
       "get": {
-        "summary": "Caddy forward_auth gate \u2014 internal only",
+        "summary": "Caddy forward_auth gate — internal only",
         "operationId": "forwardAuth",
         "tags": ["Internal"],
-        "description": "Called by Caddy before proxying admin/tool UIs. NOT externally reachable \u2014 blocked in Caddyfile public blocks. Requires X-Internal-Secret header. Returns 200 (allow), 401 (no session), 403 (forbidden), or 503 (misconfigured). ADR-0029, ADR-0030, ADR-0031.",
+        "description": "Called by Caddy before proxying admin/tool UIs. NOT externally reachable — blocked in Caddyfile public blocks. Requires X-Internal-Secret header. Returns 200 (allow), 401 (no session), 403 (forbidden), or 503 (misconfigured). ADR-0029, ADR-0030, ADR-0031.",
         "parameters": [
           {
             "name": "resource",
@@ -446,13 +446,34 @@
             "description": "Access granted"
           },
           "401": {
-            "description": "No session"
+            "description": "No session",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Denied"
+            "description": "Denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "503": {
-            "description": "Secret not configured"
+            "description": "Secret not configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -507,7 +528,7 @@
         "summary": "Per-tenant branding configuration",
         "operationId": "getTheme",
         "tags": ["Tenant"],
-        "description": "Returns theme config (logo, colours, displayName) resolved from the tenant schema via Host header. Falls back to platform defaults if tenant not found or schema not seeded. ADR-0029 \u00a74.",
+        "description": "Returns theme config (logo, colours, displayName) resolved from the tenant schema via Host header. Falls back to platform defaults if tenant not found or schema not seeded. ADR-0029 §4.",
         "responses": {
           "200": {
             "description": "Theme config",
@@ -541,7 +562,7 @@
         "summary": "List tenant identity providers",
         "operationId": "listIdps",
         "tags": ["Auth Settings"],
-        "description": "Returns configured IdPs for the tenant realm derived from the Host header. Requires admin.access permission. ADR-0030 \u00a71b.",
+        "description": "Returns configured IdPs for the tenant realm derived from the Host header. Requires admin.access permission. ADR-0030 §1b.",
         "security": [
           {
             "sessionCookie": []
@@ -552,10 +573,24 @@
             "description": "IdP list"
           },
           "400": {
-            "description": "No tenant context"
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -563,7 +598,7 @@
         "summary": "Create or update identity provider",
         "operationId": "upsertIdp",
         "tags": ["Auth Settings"],
-        "description": "Creates or updates an IdP in the tenant Keycloak realm. Realm derived from Host header \u2014 never from body. ADR-0030 \u00a71b.",
+        "description": "Creates or updates an IdP in the tenant Keycloak realm. Realm derived from Host header — never from body. ADR-0030 §1b.",
         "security": [
           {
             "sessionCookie": []
@@ -603,10 +638,24 @@
             "description": "Updated"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -662,7 +711,14 @@
             "description": "Updated"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -769,8 +825,16 @@
         "operationId": "lookupTenants",
         "description": "Read-only id/slug/displayName lookup over the organisation registry, optional ?q= filter, capped. No secrets; not tenant lifecycle. ADR-ACT-0255.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
-        "responses": { "200": { "description": "Tenant lookup list" } }
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tenant lookup list"
+          }
+        }
       },
       "post": {
         "summary": "Provision a new tenant",
@@ -814,10 +878,24 @@
             "description": "Tenant provisioned"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "409": {
-            "description": "Slug already taken"
+            "description": "Slug already taken",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -849,7 +927,14 @@
             "description": "Resource config"
           },
           "404": {
-            "description": "Tenant not found"
+            "description": "Tenant not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -859,7 +944,7 @@
         "summary": "Provision a sub-tenant (not yet implemented)",
         "operationId": "createSubTenant",
         "tags": ["Admin"],
-        "description": "Hierarchical tenant provisioning \u2014 tracked in ADR-ACT-0143. Returns 501 until implemented.",
+        "description": "Hierarchical tenant provisioning — tracked in ADR-ACT-0143. Returns 501 until implemented.",
         "security": [
           {
             "sessionCookie": []
@@ -867,7 +952,14 @@
         ],
         "responses": {
           "501": {
-            "description": "Not yet implemented"
+            "description": "Not yet implemented",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -897,13 +989,34 @@
             "description": "Support session created"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -923,13 +1036,34 @@
             "description": "Resource policy list"
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "503": {
-            "description": "No credential configured"
+            "description": "No credential configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -947,16 +1081,44 @@
             "description": "Resource policy updated"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "503": {
-            "description": "No credential configured"
+            "description": "No credential configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -976,16 +1138,44 @@
             "description": "Domain added"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "503": {
-            "description": "No credential configured"
+            "description": "No credential configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1015,13 +1205,34 @@
             "description": "Domain removed"
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "503": {
-            "description": "No credential configured"
+            "description": "No credential configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1041,16 +1252,44 @@
             "description": "Challenge created"
           },
           "400": {
-            "description": "Invalid domain"
+            "description": "Invalid domain",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "409": {
-            "description": "DOMAIN_ALREADY_CLAIMED — the domain is enabled for another organisation; no token is issued (ADR-ACT-0236)"
+            "description": "DOMAIN_ALREADY_CLAIMED — the domain is enabled for another organisation; no token is issued (ADR-ACT-0236)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1069,20 +1308,55 @@
           "200": {
             "description": "Verification result"
           },
-          "404": {
-            "description": "No active challenge"
-          },
-          "422": {
-            "description": "DNS verification failed"
-          },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No active challenge",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "409": {
-            "description": "DOMAIN_ALREADY_CLAIMED — the domain is enabled for another organisation; verification is refused before any DNS lookup (ADR-ACT-0236)"
+            "description": "DOMAIN_ALREADY_CLAIMED — the domain is enabled for another organisation; verification is refused before any DNS lookup (ADR-ACT-0236)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "DNS verification failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1102,10 +1376,24 @@
             "description": "Member list"
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1125,16 +1413,44 @@
             "description": "Invitation sent or member added"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "409": {
-            "description": "Conflict"
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1164,19 +1480,54 @@
             "description": "Role updated"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Member not found"
+            "description": "Member not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "422": {
-            "description": "Last admin cannot be demoted"
+            "description": "Last admin cannot be demoted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -1204,16 +1555,44 @@
             "description": "Member removed"
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Member not found"
+            "description": "Member not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "422": {
-            "description": "Last admin cannot be removed"
+            "description": "Last admin cannot be removed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1233,13 +1612,34 @@
             "description": "Group list"
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "503": {
-            "description": "No credential configured"
+            "description": "No credential configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -1257,19 +1657,54 @@
             "description": "Group created"
           },
           "400": {
-            "description": "Invalid name"
+            "description": "Invalid name",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "409": {
-            "description": "Name conflict"
+            "description": "Name conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "503": {
-            "description": "No credential configured"
+            "description": "No credential configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1299,22 +1734,64 @@
             "description": "Group renamed"
           },
           "400": {
-            "description": "Invalid name"
+            "description": "Invalid name",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Group not found"
+            "description": "Group not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "409": {
-            "description": "Name conflict"
+            "description": "Name conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "503": {
-            "description": "No credential configured"
+            "description": "No credential configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -1342,19 +1819,54 @@
             "description": "Group deleted"
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Group not found"
+            "description": "Group not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "422": {
-            "description": "Group is protected"
+            "description": "Group is protected",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "503": {
-            "description": "No credential configured"
+            "description": "No credential configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1374,10 +1886,24 @@
             "description": "Feature states"
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1407,16 +1933,44 @@
             "description": "Toggle applied"
           },
           "400": {
-            "description": "Invalid body"
+            "description": "Invalid body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Unknown feature key"
+            "description": "Unknown feature key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1436,10 +1990,24 @@
             "description": "Sub-organisation list"
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -1457,19 +2025,54 @@
             "description": "Sub-organisation created"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "409": {
-            "description": "Slug conflict"
+            "description": "Slug conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "422": {
-            "description": "Reserved slug"
+            "description": "Reserved slug",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1499,16 +2102,44 @@
             "description": "Sub-organisation updated"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -1536,13 +2167,34 @@
             "description": "Sub-organisation deactivated"
           },
           "401": {
-            "description": "Unauthenticated"
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1600,7 +2252,14 @@
             "description": "Updated config"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1640,10 +2299,24 @@
             "description": "Updated"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1682,10 +2355,24 @@
             "description": "Updated"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1725,10 +2412,24 @@
             "description": "Updated"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1751,10 +2452,24 @@
             "description": "Updated"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1777,13 +2492,34 @@
             "description": "Updated"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1820,13 +2556,34 @@
             "description": "Updated"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -1847,13 +2604,34 @@
             "description": "Updated"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1905,10 +2683,24 @@
             "description": "Audit events"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1929,7 +2721,14 @@
             "description": "Readiness status"
           },
           "400": {
-            "description": "No tenant context"
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1974,13 +2773,34 @@
             "description": "Credential validated and stored"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "422": {
-            "description": "Credential lacks realm-management permission"
+            "description": "Credential lacks realm-management permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "502": {
-            "description": "Credential rejected or realm unreachable"
+            "description": "Credential rejected or realm unreachable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -2021,10 +2841,24 @@
             "description": "Updated"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Identity provider not found"
+            "description": "Identity provider not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -2081,7 +2915,14 @@
             "description": "Discovery result (metadata + classified validation)"
           },
           "400": {
-            "description": "Validation error or no tenant context"
+            "description": "Validation error or no tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -2112,7 +2953,14 @@
             "description": "Callback URL"
           },
           "400": {
-            "description": "No tenant context"
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -2143,7 +2991,14 @@
             "description": "Classified validation result"
           },
           "404": {
-            "description": "Identity provider not found"
+            "description": "Identity provider not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -2174,7 +3029,14 @@
             "description": "Mapping config"
           },
           "404": {
-            "description": "Identity provider not found"
+            "description": "Identity provider not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -2213,10 +3075,24 @@
             "description": "Updated mapping"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Identity provider not found"
+            "description": "Identity provider not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -2297,13 +3173,34 @@
             "description": "Rotated"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "422": {
-            "description": "Credential lacks realm-management permission"
+            "description": "Credential lacks realm-management permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "502": {
-            "description": "Credential rejected or realm unreachable"
+            "description": "Credential rejected or realm unreachable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -2355,13 +3252,34 @@
             "description": "Repaired"
           },
           "400": {
-            "description": "Validation error"
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "422": {
-            "description": "Credential lacks realm-management permission"
+            "description": "Credential lacks realm-management permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "502": {
-            "description": "Credential rejected or realm unreachable"
+            "description": "Credential rejected or realm unreachable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -2382,7 +3300,14 @@
             "description": "Email sender settings"
           },
           "400": {
-            "description": "No tenant context"
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -2411,7 +3336,14 @@
             "description": "Updated settings"
           },
           "400": {
-            "description": "Validation error or no tenant context"
+            "description": "Validation error or no tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -2432,7 +3364,14 @@
             "description": "Readiness status"
           },
           "400": {
-            "description": "No tenant context"
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -2463,7 +3402,14 @@
             "description": "Classified test result"
           },
           "400": {
-            "description": "Validation error or no tenant context"
+            "description": "Validation error or no tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -2484,7 +3430,14 @@
             "description": "Domain list"
           },
           "400": {
-            "description": "No tenant context"
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -2513,10 +3466,24 @@
             "description": "Challenge created"
           },
           "400": {
-            "description": "Validation error or no tenant context"
+            "description": "Validation error or no tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "409": {
-            "description": "DOMAIN_ALREADY_CLAIMED — the domain is enabled for another organisation; no token is issued (ADR-ACT-0236)"
+            "description": "DOMAIN_ALREADY_CLAIMED — the domain is enabled for another organisation; no token is issued (ADR-ACT-0236)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -2537,7 +3504,14 @@
             "description": "Readiness status"
           },
           "400": {
-            "description": "No tenant context"
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -2568,13 +3542,34 @@
             "description": "Classified verification result"
           },
           "404": {
-            "description": "No active challenge"
-          },
-          "422": {
-            "description": "Challenge expired"
+            "description": "No active challenge",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "409": {
-            "description": "DOMAIN_ALREADY_CLAIMED — the domain is enabled for another organisation; verification is refused before any DNS lookup (ADR-ACT-0236)"
+            "description": "DOMAIN_ALREADY_CLAIMED — the domain is enabled for another organisation; verification is refused before any DNS lookup (ADR-ACT-0236)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Challenge expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -2605,10 +3600,24 @@
             "description": "Removed"
           },
           "400": {
-            "description": "Validation error or no tenant context"
+            "description": "Validation error or no tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "503": {
-            "description": "No realm-admin credential configured"
+            "description": "No realm-admin credential configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -2629,7 +3638,14 @@
             "description": "Storage readiness"
           },
           "400": {
-            "description": "No tenant context"
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -2650,7 +3666,14 @@
             "description": "Probe result"
           },
           "400": {
-            "description": "No tenant context"
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -2671,7 +3694,14 @@
             "description": "Observability readiness"
           },
           "400": {
-            "description": "No tenant context"
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -2682,17 +3712,58 @@
         "operationId": "recordMeterEvent",
         "description": "Operator/internal ingestion. Idempotent by tenant+meter+idempotencyKey; requires the meter's capability entitlement. Tenant self-ingestion is intentionally not exposed (usage/quota integrity). ADR-0067 / ADR-ACT-0256.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "201": { "description": "Recorded" },
-          "200": { "description": "Deduplicated (idempotent replay)" },
-          "400": { "description": "Validation error or invalid tenant id" },
-          "403": { "description": "Not entitled to the meter's capability" },
-          "404": { "description": "Unknown meter key" }
+          "200": {
+            "description": "Deduplicated (idempotent replay)"
+          },
+          "201": {
+            "description": "Recorded"
+          },
+          "400": {
+            "description": "Validation error or invalid tenant id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Not entitled to the meter's capability",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unknown meter key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2702,10 +3773,25 @@
         "operationId": "listOrgUsage",
         "description": "Per-meter lifetime usage for the calling tenant (RLS-scoped). No secrets. ADR-ACT-0256.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Usage list" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "Usage list"
+          },
+          "400": {
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2715,10 +3801,25 @@
         "operationId": "listTenantUsage",
         "description": "Operator read of a tenant's per-meter usage. ADR-ACT-0256.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Usage list" },
-          "400": { "description": "Invalid tenant id" }
+          "200": {
+            "description": "Usage list"
+          },
+          "400": {
+            "description": "Invalid tenant id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2728,10 +3829,25 @@
         "operationId": "listOrgQuotas",
         "description": "Per-quota limit, window, current usage, and allow/deny state for the calling tenant. Server-authoritative; React only renders this. ADR-0067 / ADR-ACT-0256.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Quota list" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "Quota list"
+          },
+          "400": {
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2741,10 +3857,25 @@
         "operationId": "listTenantQuotas",
         "description": "Operator read of a tenant's quotas with live usage/state. ADR-ACT-0256.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Quota list" },
-          "400": { "description": "Invalid tenant id" }
+          "200": {
+            "description": "Quota list"
+          },
+          "400": {
+            "description": "Invalid tenant id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       },
       "patch": {
@@ -2752,14 +3883,35 @@
         "operationId": "setTenantQuota",
         "description": "Operator-only, audited. Binds entitlement + meter + limit + window + action. Tenants can never set quotas. ADR-0067 / ADR-ACT-0256.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Quota set" },
-          "400": { "description": "Validation error or invalid tenant id" }
+          "200": {
+            "description": "Quota set"
+          },
+          "400": {
+            "description": "Validation error or invalid tenant id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2769,10 +3921,25 @@
         "operationId": "listOrgApiKeys",
         "description": "Tenant self-service list of API keys (RLS-scoped). Never returns the secret or the stored hash. ADR-0065 / ADR-ACT-0257.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "API key list (no secrets)" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "API key list (no secrets)"
+          },
+          "400": {
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       },
       "post": {
@@ -2780,15 +3947,45 @@
         "operationId": "createOrgApiKey",
         "description": "Server-generates a key; the plaintext secret is returned EXACTLY ONCE and only a salted+peppered hash is stored. Requires the api_access entitlement (deny-by-default). Audited. ADR-0065 / ADR-ACT-0257.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "201": { "description": "Created — secret shown once" },
-          "400": { "description": "Validation error or no tenant context" },
-          "403": { "description": "Tenant not entitled to programmatic API access" }
+          "201": {
+            "description": "Created — secret shown once"
+          },
+          "400": {
+            "description": "Validation error or no tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Tenant not entitled to programmatic API access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2798,11 +3995,35 @@
         "operationId": "revokeOrgApiKey",
         "description": "Tenant self-service revoke (audited). A revoked key can never authenticate again. ADR-0065 / ADR-ACT-0257.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Revoked" },
-          "400": { "description": "Invalid key id or no tenant context" },
-          "404": { "description": "API key not found" }
+          "200": {
+            "description": "Revoked"
+          },
+          "400": {
+            "description": "Invalid key id or no tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "API key not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2812,10 +4033,25 @@
         "operationId": "getOrgDeveloperPortal",
         "description": "Non-secret summary of the tenant's programmatic-access posture and where to find the API surface (GraphQL + REST baseline). ADR-0065 / ADR-ACT-0257.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Developer foundation summary" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "Developer foundation summary"
+          },
+          "400": {
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2825,10 +4061,25 @@
         "operationId": "listOrgRateLimits",
         "description": "Per-policy limit, window, current usage, and derived state for the calling tenant. Server-authoritative. ADR-0065 / ADR-ACT-0257.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Rate-limit policy list" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "Rate-limit policy list"
+          },
+          "400": {
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2838,10 +4089,25 @@
         "operationId": "listTenantApiKeys",
         "description": "Operator read of a tenant's API keys. Never returns secrets or hashes. ADR-0065 / ADR-ACT-0257.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "API key list (no secrets)" },
-          "400": { "description": "Invalid tenant id" }
+          "200": {
+            "description": "API key list (no secrets)"
+          },
+          "400": {
+            "description": "Invalid tenant id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2851,10 +4117,25 @@
         "operationId": "listTenantRateLimits",
         "description": "Operator read of a tenant's rate-limit policies with live window counts. ADR-0065 / ADR-ACT-0257.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Rate-limit policy list" },
-          "400": { "description": "Invalid tenant id" }
+          "200": {
+            "description": "Rate-limit policy list"
+          },
+          "400": {
+            "description": "Invalid tenant id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       },
       "patch": {
@@ -2862,14 +4143,35 @@
         "operationId": "setTenantRateLimit",
         "description": "Operator-only, audited. Binds entitlement + limit + window + action. Reuses the entitlement substrate (entitlement before limit). Tenants can never set rate limits. ADR-0065 / ADR-ACT-0257.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Rate-limit policy set" },
-          "400": { "description": "Validation error or invalid tenant id" }
+          "200": {
+            "description": "Rate-limit policy set"
+          },
+          "400": {
+            "description": "Validation error or invalid tenant id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2879,14 +4181,35 @@
         "operationId": "orgSearch",
         "description": "Built-in Postgres full-text search, RLS-isolated + permission-aware. `q` is plain text (parsed server-side via plainto_tsquery). Returns no body or secret fields. ADR-0060 / ADR-ACT-0258.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Search hits" },
-          "400": { "description": "No tenant context or invalid/empty query" }
+          "200": {
+            "description": "Search hits"
+          },
+          "400": {
+            "description": "No tenant context or invalid/empty query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2896,8 +4219,16 @@
         "operationId": "getSearchReadiness",
         "description": "Operator view of the search engine status (postgres-fts). Never faked: `blocked` if the store is unreachable, `degraded` if empty. ADR-0060 / ADR-ACT-0258.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
-        "responses": { "200": { "description": "Search readiness" } }
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search readiness"
+          }
+        }
       }
     },
     "/api/admin/search/reindex": {
@@ -2906,14 +4237,35 @@
         "operationId": "reindexSearch",
         "description": "Operator-only, audited. Rebuilds the tsvector for a tenant's documents. ADR-0060 / ADR-ACT-0258.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Reindexed count" },
-          "400": { "description": "Validation error or invalid tenant id" }
+          "200": {
+            "description": "Reindexed count"
+          },
+          "400": {
+            "description": "Validation error or invalid tenant id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2923,10 +4275,25 @@
         "operationId": "listEvents",
         "description": "Operator read of the durable outbox for a tenant (requires ?organisationId). No secret payload fields. ADR-0059 / ADR-ACT-0259.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Event list" },
-          "400": { "description": "organisationId query parameter is required" }
+          "200": {
+            "description": "Event list"
+          },
+          "400": {
+            "description": "organisationId query parameter is required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2936,10 +4303,25 @@
         "operationId": "listDeadLetters",
         "description": "Operator read of events that exhausted retries (requires ?organisationId). ADR-0059 / ADR-ACT-0259.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Dead-letter list" },
-          "400": { "description": "organisationId query parameter is required" }
+          "200": {
+            "description": "Dead-letter list"
+          },
+          "400": {
+            "description": "organisationId query parameter is required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2949,11 +4331,35 @@
         "operationId": "redriveEvent",
         "description": "Operator-only, audited. Re-enqueues a dead letter as a fresh pending event. `eventId` is the dead-letter id. ADR-0059 / ADR-ACT-0259.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Redriven" },
-          "400": { "description": "Invalid dead-letter id" },
-          "404": { "description": "Dead letter not found or already redriven" }
+          "200": {
+            "description": "Redriven"
+          },
+          "400": {
+            "description": "Invalid dead-letter id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Dead letter not found or already redriven",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2963,8 +4369,16 @@
         "operationId": "listWorkers",
         "description": "Operator view of registered workers with a derived liveness status (alive/stale/stopped). ADR-0059 / ADR-ACT-0259.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
-        "responses": { "200": { "description": "Worker list" } }
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Worker list"
+          }
+        }
       }
     },
     "/api/me/profile": {
@@ -2973,10 +4387,25 @@
         "operationId": "getMyProfile",
         "description": "End-user self-service. The user_id is the session subject — own profile only. ADR-0068 / ADR-ACT-0260.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Profile" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "Profile"
+          },
+          "400": {
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       },
       "patch": {
@@ -2984,14 +4413,35 @@
         "operationId": "updateMyProfile",
         "description": "Own profile only (audited). Validated display name + locale + timezone. ADR-0068 / ADR-ACT-0260.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Updated profile" },
-          "400": { "description": "Validation error or no tenant context" }
+          "200": {
+            "description": "Updated profile"
+          },
+          "400": {
+            "description": "Validation error or no tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3001,10 +4451,25 @@
         "operationId": "getMyNotificationPreferences",
         "description": "Own preferences only (tenant + user scoped). ADR-0068 / ADR-ACT-0260.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Preferences" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "Preferences"
+          },
+          "400": {
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       },
       "patch": {
@@ -3012,14 +4477,35 @@
         "operationId": "updateMyNotificationPreferences",
         "description": "Own preferences only (audited). Per (channel, category) enable flags. ADR-0068 / ADR-ACT-0260.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Updated preferences" },
-          "400": { "description": "Validation error or no tenant context" }
+          "200": {
+            "description": "Updated preferences"
+          },
+          "400": {
+            "description": "Validation error or no tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3029,8 +4515,16 @@
         "operationId": "getNotificationReadiness",
         "description": "Operator view of local channel transports (never faked). ADR-0068 / ADR-ACT-0260.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
-        "responses": { "200": { "description": "Channel readiness" } }
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Channel readiness"
+          }
+        }
       }
     },
     "/api/admin/tenants/:tenantId/notifications/test": {
@@ -3039,14 +4533,35 @@
         "operationId": "testNotification",
         "description": "Operator-only, audited. Dispatches via the LOCAL adapter; a disabled channel is suppressed; no secret payload. ADR-0068 / ADR-ACT-0260.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Dispatch results" },
-          "400": { "description": "Validation error or invalid tenant id" }
+          "200": {
+            "description": "Dispatch results"
+          },
+          "400": {
+            "description": "Validation error or invalid tenant id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3056,10 +4571,25 @@
         "operationId": "listMetricSignals",
         "description": "Operator read of the built-in metric-signal registry + latest sample for a tenant (requires ?organisationId). No secret fields. ADR-0062 / ADR-ACT-0261.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Signal list" },
-          "400": { "description": "organisationId query parameter is required" }
+          "200": {
+            "description": "Signal list"
+          },
+          "400": {
+            "description": "organisationId query parameter is required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3069,10 +4599,25 @@
         "operationId": "listAlertRules",
         "description": "Operator read of threshold alert rules (requires ?organisationId). ADR-0062 / ADR-ACT-0261.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Alert rule list" },
-          "400": { "description": "organisationId query parameter is required" }
+          "200": {
+            "description": "Alert rule list"
+          },
+          "400": {
+            "description": "organisationId query parameter is required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       },
       "post": {
@@ -3080,14 +4625,35 @@
         "operationId": "setAlertRule",
         "description": "Operator-only, audited. Threshold rule over a signal with a notification target. ADR-0062 / ADR-ACT-0261.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Alert rule set" },
-          "400": { "description": "Validation error" }
+          "200": {
+            "description": "Alert rule set"
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3097,11 +4663,35 @@
         "operationId": "evaluateAlert",
         "description": "Evaluates the rule against the signal's latest sample. A fired rule opens an incident and dispatches a preference-gated notification. ADR-0062 / ADR-ACT-0261.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Evaluation result" },
-          "400": { "description": "Invalid alert id" },
-          "404": { "description": "Alert rule not found" }
+          "200": {
+            "description": "Evaluation result"
+          },
+          "400": {
+            "description": "Invalid alert id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Alert rule not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3111,10 +4701,25 @@
         "operationId": "listIncidents",
         "description": "Operator read of incident lifecycle records (requires ?organisationId). ADR-0062 / ADR-ACT-0261.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Incident list" },
-          "400": { "description": "organisationId query parameter is required" }
+          "200": {
+            "description": "Incident list"
+          },
+          "400": {
+            "description": "organisationId query parameter is required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3124,15 +4729,45 @@
         "operationId": "updateIncident",
         "description": "Operator-only, audited lifecycle transition (open → acknowledged → resolved). ADR-0062 / ADR-ACT-0261.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Updated incident" },
-          "400": { "description": "Invalid incident id or status" },
-          "404": { "description": "Incident not found" }
+          "200": {
+            "description": "Updated incident"
+          },
+          "400": {
+            "description": "Invalid incident id or status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Incident not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3142,8 +4777,16 @@
         "operationId": "getObservabilityReadiness",
         "description": "Operator view of the observability backend (built-in). Never faked: blocked if unreachable, degraded if no signals. ADR-0062 / ADR-ACT-0261.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
-        "responses": { "200": { "description": "Observability readiness" } }
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Observability readiness"
+          }
+        }
       }
     },
     "/api/admin/secrets": {
@@ -3152,10 +4795,25 @@
         "operationId": "listSecrets",
         "description": "Operator read of central secret-store metadata (requires ?organisationId). Value-free: never returns the secret value. ADR-0069 / ADR-ACT-0265.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Secret reference list (metadata only)" },
-          "400": { "description": "organisationId query parameter is required" }
+          "200": {
+            "description": "Secret reference list (metadata only)"
+          },
+          "400": {
+            "description": "organisationId query parameter is required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       },
       "post": {
@@ -3163,14 +4821,35 @@
         "operationId": "putSecret",
         "description": "Operator-only, audited. The value is write-only and stored encrypted (built-in) or in OpenBao; the response carries metadata + the opaque ref only. ADR-0069 / ADR-ACT-0265.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Secret metadata (no value)" },
-          "400": { "description": "Validation error" }
+          "200": {
+            "description": "Secret metadata (no value)"
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3180,8 +4859,16 @@
         "operationId": "secretStoreReadiness",
         "description": "Honest readiness of the active secret backend (built-in/openbao). No secret value. ADR-0069 / ADR-ACT-0265.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
-        "responses": { "200": { "description": "Secret-store readiness" } }
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Secret-store readiness"
+          }
+        }
       }
     },
     "/api/admin/secrets/revoke": {
@@ -3190,14 +4877,35 @@
         "operationId": "revokeSecret",
         "description": "Operator-only, audited. The value can no longer be resolved; metadata remains. ADR-0069 / ADR-ACT-0265.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Revoked" },
-          "404": { "description": "Secret not found" }
+          "200": {
+            "description": "Revoked"
+          },
+          "404": {
+            "description": "Secret not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3207,14 +4915,35 @@
         "operationId": "deleteSecret",
         "description": "Operator-only, audited. Hard delete of metadata + value (built-in) / backend entry (openbao). ADR-0069 / ADR-ACT-0265.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Deleted" },
-          "404": { "description": "Secret not found" }
+          "200": {
+            "description": "Deleted"
+          },
+          "404": {
+            "description": "Secret not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3224,22 +4953,51 @@
         "operationId": "listProviderConfigs",
         "description": "Operator read of the provider config plane (optional ?capability). Credentials are by secretRef; no plaintext. ADR-0070 / ADR-ACT-0266.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
-        "responses": { "200": { "description": "Provider config list" } }
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Provider config list"
+          }
+        }
       },
       "post": {
         "summary": "Create/update a provider configuration (system operator)",
         "operationId": "putProviderConfig",
         "description": "Operator-only, audited. credentialRef is a secret-store ref; config rejects secret keys; a forbidden-in-production provider cannot be active in prod. ADR-0070 / ADR-ACT-0266.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Provider config" },
-          "400": { "description": "Validation error" }
+          "200": {
+            "description": "Provider config"
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3249,10 +5007,25 @@
         "operationId": "orgHistory",
         "description": "Read-only UNION projection over audit/event/notification/incident/meter sources for the calling tenant. No new store; secret columns never projected. Paginated (?limit&offset&sources). ADR-0063 / ADR-ACT-0272.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "History page" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "History page"
+          },
+          "400": {
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3262,10 +5035,25 @@
         "operationId": "adminTenantHistory",
         "description": "Operator read-only history projection for a selected tenant. Same projection + redaction as the tenant route. ADR-0063 / ADR-ACT-0272.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "History page" },
-          "400": { "description": "Invalid tenant id" }
+          "200": {
+            "description": "History page"
+          },
+          "400": {
+            "description": "Invalid tenant id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3275,8 +5063,16 @@
         "operationId": "composedProviderReadiness",
         "description": "Live health probe per composed provider (Meilisearch/Prometheus/Tempo/Alertmanager/Windmill/Temporal) feeding adapter-confirmed lifecycle. No secret. not_configured when no endpoint is wired. ADR-0071 / ADR-ACT-0271.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
-        "responses": { "200": { "description": "Composed provider readiness" } }
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Composed provider readiness"
+          }
+        }
       }
     },
     "/api/admin/clickthrough": {
@@ -3285,9 +5081,15 @@
         "operationId": "clickthroughServices",
         "description": "Operator view of the composed Compose GUI services: click-through URL, access gating (same decision as the forward-auth gate), isolation invariant, and OpenBao-credential-validated composed-provider readiness. No secret. ADR-ACT-0233 / ADR-0072.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Click-through services + composed-provider readiness" }
+          "200": {
+            "description": "Click-through services + composed-provider readiness"
+          }
         }
       }
     },
@@ -3297,14 +5099,35 @@
         "operationId": "setProviderLifecycle",
         "description": "Operator transition (candidate/configured/degraded/ready/disabled). ready is adapter-confirmed. ADR-0070 / ADR-ACT-0266.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Lifecycle updated" },
-          "404": { "description": "Provider config not found" }
+          "200": {
+            "description": "Lifecycle updated"
+          },
+          "404": {
+            "description": "Provider config not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3314,10 +5137,25 @@
         "operationId": "deleteProviderConfig",
         "description": "Operator-only, audited. ADR-0070 / ADR-ACT-0266.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Deleted" },
-          "404": { "description": "Provider config not found" }
+          "200": {
+            "description": "Deleted"
+          },
+          "404": {
+            "description": "Provider config not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3327,10 +5165,25 @@
         "operationId": "listScheduledJobs",
         "description": "Operator read of built-in scheduled jobs (requires ?organisationId). ADR-0059 / ADR-ACT-0262.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Scheduled job list" },
-          "400": { "description": "organisationId query parameter is required" }
+          "200": {
+            "description": "Scheduled job list"
+          },
+          "400": {
+            "description": "organisationId query parameter is required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       },
       "post": {
@@ -3338,14 +5191,35 @@
         "operationId": "setScheduledJob",
         "description": "Operator-only, audited. A due job enqueues its event onto the Phase-5 outbox (idempotent per window). ADR-0059 / ADR-ACT-0262.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Scheduled job set" },
-          "400": { "description": "Validation error" }
+          "200": {
+            "description": "Scheduled job set"
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3355,11 +5229,35 @@
         "operationId": "runScheduledJob",
         "description": "Operator-only, audited. Enqueues the job's event immediately. ADR-0059 / ADR-ACT-0262.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Enqueue result" },
-          "400": { "description": "Invalid job id" },
-          "404": { "description": "Scheduled job not found" }
+          "200": {
+            "description": "Enqueue result"
+          },
+          "400": {
+            "description": "Invalid job id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Scheduled job not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3369,15 +5267,45 @@
         "operationId": "updateScheduledJob",
         "description": "Operator-only, audited enable/disable. A paused job never enqueues. ADR-0059 / ADR-ACT-0262.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Updated job" },
-          "400": { "description": "Invalid job id or body" },
-          "404": { "description": "Scheduled job not found" }
+          "200": {
+            "description": "Updated job"
+          },
+          "400": {
+            "description": "Invalid job id or body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Scheduled job not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3387,10 +5315,25 @@
         "operationId": "listOrgEntitlements",
         "description": "Tenant read of its own entitlement state (RLS-scoped). Deny-by-default: a missing grant reads as not_granted. No self-grant. ADR-0058 / ADR-ACT-0254.",
         "tags": ["Organisation"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Entitlement list" },
-          "400": { "description": "No tenant context" }
+          "200": {
+            "description": "Entitlement list"
+          },
+          "400": {
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3400,10 +5343,25 @@
         "operationId": "listTenantEntitlements",
         "description": "System-operator read of a tenant's entitlements. ADR-ACT-0254.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Entitlement list" },
-          "400": { "description": "Invalid tenant id" }
+          "200": {
+            "description": "Entitlement list"
+          },
+          "400": {
+            "description": "Invalid tenant id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       },
       "patch": {
@@ -3411,15 +5369,45 @@
         "operationId": "setTenantEntitlement",
         "description": "System-operator-only, audited grant/revoke. Body carries no tenant id (path) and a tenant can never self-grant. ADR-0058 / ADR-ACT-0254.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "type": "object" } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Updated entitlement" },
-          "400": { "description": "Validation error or invalid tenant id" },
-          "404": { "description": "Unknown entitlement key" }
+          "200": {
+            "description": "Updated entitlement"
+          },
+          "400": {
+            "description": "Validation error or invalid tenant id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unknown entitlement key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3429,9 +5417,15 @@
         "operationId": "listServiceCatalog",
         "description": "Operator-facing catalog of backing services + providers with environment classification, visibility, and entitlement linkage. Contains no secrets or provider credentials. ADR-0055 / ADR-ACT-0254.",
         "tags": ["Admin"],
-        "security": [{ "sessionCookie": [] }],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "responses": {
-          "200": { "description": "Service catalog" }
+          "200": {
+            "description": "Service catalog"
+          }
         }
       }
     },
@@ -3451,7 +5445,14 @@
             "description": "Webhook list"
           },
           "400": {
-            "description": "No tenant context"
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -3480,7 +5481,14 @@
             "description": "Created (secret revealed once)"
           },
           "400": {
-            "description": "Validation error or no tenant context"
+            "description": "Validation error or no tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -3501,7 +5509,14 @@
             "description": "Readiness status"
           },
           "400": {
-            "description": "No tenant context"
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -3542,10 +5557,24 @@
             "description": "Updated subscription"
           },
           "400": {
-            "description": "Validation error or no tenant context"
+            "description": "Validation error or no tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Webhook not found"
+            "description": "Webhook not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -3574,10 +5603,24 @@
             "description": "Deleted"
           },
           "400": {
-            "description": "Validation error or no tenant context"
+            "description": "Validation error or no tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Webhook not found"
+            "description": "Webhook not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -3608,7 +5651,14 @@
             "description": "New secret revealed once"
           },
           "404": {
-            "description": "Webhook not found"
+            "description": "Webhook not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -3639,7 +5689,14 @@
             "description": "Classified test result"
           },
           "404": {
-            "description": "Webhook not found"
+            "description": "Webhook not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -3670,7 +5727,14 @@
             "description": "Delivery list"
           },
           "404": {
-            "description": "Webhook not found"
+            "description": "Webhook not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -3679,7 +5743,7 @@
       "get": {
         "summary": "Get per-subscription webhook delivery metrics",
         "operationId": "getOrgWebhookMetrics",
-        "description": "Returns delivery health counts (total/delivered/failed/dead/pending) + last status/timestamps. Safe metadata only \u2014 never payload, headers, or the signing secret. ADR-ACT-0226.",
+        "description": "Returns delivery health counts (total/delivered/failed/dead/pending) + last status/timestamps. Safe metadata only — never payload, headers, or the signing secret. ADR-ACT-0226.",
         "tags": ["Organisation"],
         "security": [
           {
@@ -3701,7 +5765,14 @@
             "description": "Subscription delivery metrics"
           },
           "404": {
-            "description": "Webhook not found"
+            "description": "Webhook not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -3740,7 +5811,14 @@
             "description": "Redrive result (count requeued)"
           },
           "404": {
-            "description": "Webhook not found"
+            "description": "Webhook not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -3771,16 +5849,23 @@
             "description": "Redrive result (count requeued)"
           },
           "404": {
-            "description": "Webhook not found"
+            "description": "Webhook not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/org/platform/services/readiness": {
       "get": {
-        "summary": "Platform operations \u2014 local service readiness + workers",
+        "summary": "Platform operations — local service readiness + workers",
         "operationId": "getOrgPlatformServicesReadiness",
-        "description": "Read-only operator cockpit data: bounded service-specific health checks over a safe local-service allowlist (non-2xx or malformed structured bodies classify as degraded, no response as unreachable) + background-worker heartbeats + environment/version + viewerMode. Never returns secrets, DSNs, or raw env \u2014 only known-safe console URLs, classified per the ADR-ACT-0233 clickthrough policy under explicit host authority (ADR-ACT-0236): a tenant-resolved FQDN yields the tenant_operator view (routed tenant-safe links only, for every viewer); a system-admin on the apex host gets the system_operator view (direct-local labelled global links); a system-admin on any other host is refused 403 INVALID_OPERATIONS_ORIGIN. ADR-ACT-0228 / ADR-ACT-0235 / ADR-ACT-0236.",
+        "description": "Read-only operator cockpit data: bounded service-specific health checks over a safe local-service allowlist (non-2xx or malformed structured bodies classify as degraded, no response as unreachable) + background-worker heartbeats + environment/version + viewerMode. Never returns secrets, DSNs, or raw env — only known-safe console URLs, classified per the ADR-ACT-0233 clickthrough policy under explicit host authority (ADR-ACT-0236): a tenant-resolved FQDN yields the tenant_operator view (routed tenant-safe links only, for every viewer); a system-admin on the apex host gets the system_operator view (direct-local labelled global links); a system-admin on any other host is refused 403 INVALID_OPERATIONS_ORIGIN. ADR-ACT-0228 / ADR-ACT-0235 / ADR-ACT-0236.",
         "tags": ["Organisation"],
         "security": [
           {
@@ -3792,7 +5877,14 @@
             "description": "Platform service + worker readiness"
           },
           "400": {
-            "description": "No tenant context (non-system-admin viewer)"
+            "description": "No tenant context (non-system-admin viewer)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -3801,7 +5893,7 @@
       "get": {
         "summary": "Tenant control-plane readiness + capability map",
         "operationId": "getTenantReadiness",
-        "description": "Returns the enterprise control-plane capability inventory (implementation status) with each capability's per-tenant readiness + the aggregated overall status. Tenant-scoped (FQDN/session). Readiness is live-checked or invariant \u2014 never faked. ADR-0045.",
+        "description": "Returns the enterprise control-plane capability inventory (implementation status) with each capability's per-tenant readiness + the aggregated overall status. Tenant-scoped (FQDN/session). Readiness is live-checked or invariant — never faked. ADR-0045.",
         "tags": ["Organisation"],
         "security": [
           {
@@ -3813,7 +5905,14 @@
             "description": "Capability map + readiness"
           },
           "400": {
-            "description": "No tenant context"
+            "description": "No tenant context",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -3857,16 +5956,44 @@
             "description": "Activated"
           },
           "404": {
-            "description": "Unknown domain"
+            "description": "Unknown domain",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "409": {
-            "description": "Already active"
+            "description": "Already active",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "422": {
-            "description": "Ownership not verified"
+            "description": "Ownership not verified",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "503": {
-            "description": "Auth settings credential not configured"
+            "description": "Auth settings credential not configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -3897,13 +6024,34 @@
             "description": "Deactivated"
           },
           "404": {
-            "description": "Unknown domain"
+            "description": "Unknown domain",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "409": {
-            "description": "Not active"
+            "description": "Not active",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "503": {
-            "description": "Auth settings credential not configured"
+            "description": "Auth settings credential not configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -3934,7 +6082,14 @@
             "description": "Probe outcome (honest; may be routing_unknown)"
           },
           "404": {
-            "description": "Unknown domain"
+            "description": "Unknown domain",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -3965,10 +6120,24 @@
             "description": "Canonical set"
           },
           "404": {
-            "description": "Unknown domain"
+            "description": "Unknown domain",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "422": {
-            "description": "Canonical guards failed"
+            "description": "Canonical guards failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       },
@@ -3997,7 +6166,14 @@
             "description": "Canonical unset"
           },
           "404": {
-            "description": "Unknown domain"
+            "description": "Unknown domain",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         }
       }
