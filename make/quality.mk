@@ -43,6 +43,7 @@ architecture:
 	$(ORCHESTRATOR) all --no-reports --strict
 	npm run codegen:check
 	npm run frontend:conventions
+	node tools/architecture/validate-openapi-drift/src/index.mjs --strict
 	$(call OK,all architecture gates passed)
 
 ## semgrep — ERROR-severity constraint rules (tools/semgrep). Hard gate; advisory WARNING/INFO excluded.
