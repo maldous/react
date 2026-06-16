@@ -143,6 +143,16 @@ test.describe("persona-matrix — authed link/route/API crawl per persona", () =
         const u = new URL(origin);
         return `${u.protocol}//${TENANT_B_SLUG}.${u.host}`;
       })();
+      // Is the tenant-B FQDN actually reachable over TLS on this stage? Cloudflare
+      // Universal SSL covers aldous.info + *.aldous.info (ONE level), NOT the 2nd-level
+      // *.staging.aldous.info — so e2e-tenant.staging.aldous.info has no cert and a probe
+      // returns status 0 (TLS failure), NOT a real authz result. The cross-tenant denial
+      // is proven on prod (apex) where *.aldous.info IS covered; locally everything is
+      // plain HTTP. Skip the tenant-B probe honestly elsewhere instead of false-failing.
+      const tenantFqdnTlsReachable = (() => {
+        const u = new URL(origin);
+        return u.protocol === "http:" || u.hostname === "aldous.info";
+      })();
       const username = isCrossTenant
         ? usernameFromProvisionRef(
             registry.personas.find((p: Persona) => p.personaId === "scaffold-tenant-admin")
@@ -265,6 +275,19 @@ test.describe("persona-matrix — authed link/route/API crawl per persona", () =
         if (api.startsWith("tenant-b:")) {
           api = api.slice("tenant-b:".length).trim();
           reqOrigin = tenantBOrigin;
+          // The tenant-B FQDN has no TLS cert on staging (2nd-level wildcard not covered
+          // by Cloudflare Universal SSL). Record an honest SKIP — cross-tenant denial is
+          // proven on the prod apex — rather than a false failure on an unreachable host.
+          if (!tenantFqdnTlsReachable) {
+            record(
+              "forbidden-api-skipped",
+              apiRaw,
+              "skipped (tenant FQDN TLS not covered on this stage; proven on prod apex)",
+              "skipped",
+              true
+            );
+            continue;
+          }
         }
         const m = api.match(/^(GET|POST|PATCH|PUT|DELETE)\s+(\S+)$/);
         if (!m) continue;
