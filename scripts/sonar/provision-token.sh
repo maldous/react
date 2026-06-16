@@ -33,7 +33,14 @@ SONAR_HOST="${SONAR_HOST_URL:-http://localhost:9064/sonar}"
 SONAR_HOST="${SONAR_HOST%/}"          # strip trailing slash
 SONAR_KEY="${SONAR_PROJECT_KEY:-maldous-react}"
 
-# ── 3. Validate existing token (if any) ────────────────────────────────────────
+# ── 3. Define the existing-token validator ──────────────────────────────────────
+# NOTE (ordering): the token-validity EARLY EXIT was moved to §4c, AFTER the admin
+# password rotation (§4b). Previously this section did `exit 0` when the token was
+# already valid — the steady state — so on any instance whose analysis token was
+# already minted the default admin/admin password was NEVER rotated, leaving the
+# "default administrator credentials are still used" prompt forever. The password
+# rotation must run on every invocation; the token-generation skip is the only
+# optimisation that may short-circuit.
 
 token_valid() {
   local token="$1"
@@ -45,21 +52,6 @@ token_valid() {
     "${SONAR_HOST}/api/authentication/validate" 2>/dev/null || true)
   echo "$body" | python3 -c "import sys,json; sys.exit(0 if json.load(sys.stdin).get('valid') else 1)" 2>/dev/null
 }
-
-CURRENT_TOKEN="${SONAR_TOKEN:-}"
-
-# Treat empty and placeholder tokens the same as missing
-if [ -n "$CURRENT_TOKEN" ] && ! echo "$CURRENT_TOKEN" | grep -q '<'; then
-  if token_valid "$CURRENT_TOKEN"; then
-    printf '%s✓ SonarQube token is valid — nothing to provision%s\n' "$GREEN" "$RESET"
-    exit 0
-  fi
-  printf '%sSonarQube token is invalid (expired / revoked / fresh DB) — regenerating…%s\n' \
-    "$YELLOW" "$RESET"
-else
-  printf '%sSonarQube token not set (or still a placeholder) — generating…%s\n' \
-    "$YELLOW" "$RESET"
-fi
 
 # ── 4. Ensure SonarQube is reachable ───────────────────────────────────────────
 
@@ -115,6 +107,23 @@ if [ -n "$MANAGED_PASS" ] && [ "$MANAGED_PASS" != "admin" ]; then
         "$YELLOW" "$RESET"
     fi
   fi
+fi
+
+# ── 4c. Token early-exit (runs AFTER §4b so the password is always ensured) ─────
+
+CURRENT_TOKEN="${SONAR_TOKEN:-}"
+
+# Treat empty and placeholder tokens the same as missing
+if [ -n "$CURRENT_TOKEN" ] && ! echo "$CURRENT_TOKEN" | grep -q '<'; then
+  if token_valid "$CURRENT_TOKEN"; then
+    printf '%s✓ SonarQube token is valid — nothing more to provision%s\n' "$GREEN" "$RESET"
+    exit 0
+  fi
+  printf '%sSonarQube token is invalid (expired / revoked / fresh DB) — regenerating…%s\n' \
+    "$YELLOW" "$RESET"
+else
+  printf '%sSonarQube token not set (or still a placeholder) — generating…%s\n' \
+    "$YELLOW" "$RESET"
 fi
 
 # ── 5. Authenticate as admin and generate a token ──────────────────────────────

@@ -45,10 +45,14 @@ redirects — see "Live verification" below).
    non-admin user. `provision-oidc.sh` creates a `system-admin` Sonar group with global
    administration; group sync (claim `roles`) maps the Keycloak realm role `system-admin`
    to it, so the platform system administrator gets full Sonar access. Forward-auth
-   (ADR-0030) already restricts `/sonar` to system administrators. **Operational:** the
-   default-admin "change password" prompt means `make sonar-provision` was not run after a
-   fresh SonarQube volume — it both rotates `admin/admin` to the managed `SONAR_ADMIN_PASSWORD`
-   (`provision-token.sh` §4b) and writes the OIDC settings incl. `autoLogin` (`provision-oidc.sh`).
+   (ADR-0030) already restricts `/sonar` to system administrators. **Ordering bug (fixed 2026-06-16):**
+   `provision-token.sh` did `exit 0` at the token-validity check BEFORE the admin-password
+   rotation, so once the analysis token was minted (the steady state) `admin/admin` was never
+   rotated — the live shared instance still validated `admin:admin` even with OIDC enabled. The
+   token early-exit is now §4c (after the §4b rotation), so the managed `SONAR_ADMIN_PASSWORD` is
+   ensured on every run. Verified live: post-fix `admin:admin` → `{"valid":false}`, managed
+   password → `{"valid":true}`, `autoLogin=true`, `system-admin` group holds
+   `admin/gateadmin/profileadmin/provisioning/scan`.
 5. **pgAdmin authlib needs `jwks_uri` — supply OIDC discovery.** pgAdmin's authlib validates
    the ID-token signature on the code exchange and fails with `Missing "jwks_uri" in metadata`
    if only the explicit token/auth/userinfo endpoints are configured. Fixed by adding

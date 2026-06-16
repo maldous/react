@@ -22,7 +22,7 @@ possible in-sandbox; it is called out per service below.
 | **pgadmin** | OIDC code exchange completes; user auto-created | `{"success":0,"errormsg":"Missing \"jwks_uri\" in metadata"}` | authlib (pgAdmin's OAuth2 backend) validates the ID-token signature and needs `jwks_uri`; `config_local.py` set token/auth/userinfo endpoints but **no discovery URL**, so authlib had no `jwks_uri` | **Fix** — add `OAUTH2_SERVER_METADATA_URL` (OIDC discovery) |
 | **clickhouse** | Interactive query UI | "Ok." | The clickthrough URL was the apex root `/clickhouse/` → ClickHouse HTTP root, which answers the bare health string "Ok."; the UI is at `/play` | **Fix** — surface `/clickhouse/play` (not SSO; ClickHouse has none) |
 | **localstack** | Only reachable when the `cloud-mocks` profile is up (dev/staging); never a public prod link | Cloudflare "Bad Gateway" | LocalStack is `mock-only` + `forbiddenInProduction` (service-catalog) and not deployed in prod, but the clickthrough still rendered an apex "Open" link → 502 | **Fix** — lock the link (no URL) in production |
-| **sonarqube** | OIDC auto-login (`autoLogin`); default admin rotated to the managed password | "default administrator credentials still used — change password" prompt | OIDC provisioning (`make sonar-provision`) was **not run** on that stack: `provision-oidc.sh` (sets `autoLogin`) and `provision-token.sh` §4b (rotates admin off `admin/admin` to the managed `SONAR_ADMIN_PASSWORD`) never executed there | **No code defect** — operational: run `make sonar-provision`; documented |
+| **sonarqube** | OIDC auto-login (`autoLogin`); default admin rotated to the managed password | "default administrator credentials still used — change password" prompt; live: `admin:admin` validated `true` even though OIDC was already enabled | **Code defect** in `provision-token.sh`: the token-validity check did `exit 0` (§3) *before* the admin-password rotation (§4b), so once the analysis token was minted (the steady state) the password was NEVER rotated → `admin:admin` persisted | **Fix** — reorder so rotation runs every invocation + run `make sonar-provision` (**verified live**) |
 
 ## 2. Fixes applied (in-repo)
 
@@ -43,17 +43,16 @@ possible in-sandbox; it is called out per service below.
   (`PLATFORM_ENV`), so the page shows "locked" instead of a dead 502 link. Dev/staging still link it.
 - **Keycloak Terraform** — `infra/modules/keycloak/main.tf`: corrected a stale comment that said
   `enable_composed_sso` defaults `false`; it defaults `true` (matches `variables.tf` and ADR-0073).
+- **SonarQube** — `scripts/sonar/provision-token.sh`: moved the token-validity early-exit (§3) to
+  run AFTER the admin-password rotation (§4b → new §4c). The early `exit 0` on a valid token meant
+  the rotation never ran in the steady state, leaving `admin:admin` active indefinitely. Now the
+  managed password is ensured on every invocation; only token *generation* is skipped when the
+  token is already valid. Then ran `make sonar-provision` against the shared instance.
 
 ## 3. No-change-but-documented
 
 - **Sentry** — SSO intentionally **not wired** (paid feature on self-hosted). Native admin login is
   the expected behaviour; the "Organization ID" prompt is Sentry's own unused SSO UI.
-- **SonarQube** — the provisioning scripts are complete and correct: `make sonar-provision` runs
-  `provision-token.sh` (rotates the default `admin/admin` to the managed `SONAR_ADMIN_PASSWORD`,
-  a derived secret in the env manifest) **and** `provision-oidc.sh` (writes the OIDC plugin
-  settings incl. `autoLogin`, and the `system-admin` group + admin permissions). Seeing the
-  default-admin prompt means provisioning was not run after the fresh SonarQube volume on that
-  stack. Operational remedy: `make sonar-provision`. No code change.
 
 ## 4. Verification run (this session, in-sandbox)
 
@@ -67,10 +66,32 @@ possible in-sandbox; it is called out per service below.
 - `make check` — passes every gate **except** the pre-existing `npm audit` advisories
   (markdown-it / tar / vite transitive deps); no dependency was touched by this work.
 
-## 5. Live verification still required (cannot be done in this sandbox)
+## 4b. Live verification run (2026-06-16, prod-adjacent — what this environment CAN reach)
 
-On a stack with Caddy + the provisioned `platform` realm + the SSO-target services running
-(`enable_composed_sso=true`, `COMPOSE_SSO_ENABLED=true`):
+This environment reaches the prod **edge** read-only (`https://aldous.info/healthz` → ok;
+`/version` → `environment: production`, `commit: "unknown"` because `GIT_SHA` is unset there)
+and the **shared SonarQube** at `http://localhost:9064/sonar` (the `react-sonar` instance,
+prod-realm-bound). It has **no prod deploy tooling, no prod system-admin session, and no
+container/host access**, so authenticated clickthrough flows cannot be driven from here:
+every `/clickhouse|/localstack|/pgadmin|/minio|/sonar|/grafana|/kc|/sentry|/mailpit` route and
+`/api/admin/clickthrough` return **HTTP 401** at forward-auth (expected; no session).
+
+SonarQube (shared instance) — **fully verified after the fix**:
+
+- Before: `admin:admin` → `{"valid":true}` (default still active) despite OIDC already enabled.
+- Root cause: `provision-token.sh` early-exit ordering bug (above).
+- After fix + `make sonar-provision`:
+  - `admin:admin` → `{"valid":false}` (default rejected).
+  - managed `SONAR_ADMIN_PASSWORD` → `{"valid":true}`.
+  - `sonar.auth.oidc.enabled=true`, `sonar.auth.oidc.autoLogin=true`,
+    `issuerUri=https://aldous.info/kc/realms/platform-production`.
+  - `system-admin` group permissions = `admin, gateadmin, profileadmin, provisioning, scan`.
+
+## 5. Live verification still required (operator-gated — needs prod deploy + a system-admin session)
+
+Blocked here: no prod deploy/reload tooling in the repo, `commit: "unknown"` so the live commit
+of `react-app`/Caddy/platform-api cannot be confirmed, and no prod system-admin credentials.
+On a stack with the latest commit deployed + a system-admin session:
 
 - **pgAdmin** — click through `/pgadmin/`; the Keycloak code exchange completes (no
   "Missing jwks_uri"); confirm the pgAdmin container can reach the discovered `jwks_uri`
@@ -78,8 +99,8 @@ On a stack with Caddy + the provisioned `platform` realm + the SSO-target servic
 - **ClickHouse** — `/clickhouse/play` renders the query console.
 - **LocalStack** — link is "locked" in prod; reachable in dev/staging with the `cloud-mocks`
   profile up.
-- **SonarQube** — run `make sonar-provision`, then `/sonar/` auto-logs-in via OIDC and the
-  default-admin prompt is gone.
+- **SonarQube** — re-check `/sonar/` in a browser auto-logs-in via OIDC and the default-admin
+  prompt is gone (the API-level state above is already confirmed).
 - **MinIO** — see "Open question" below.
 
 ## 6. Open question — MinIO "No session"
