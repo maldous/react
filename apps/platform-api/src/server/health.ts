@@ -123,10 +123,13 @@ export async function getReadiness(opts?: {
 }
 
 export function getVersion(): VersionResponse {
+  // Use || (not ??) so an EMPTY APP_VERSION/GIT_SHA/BUILD_TIME (compose passes
+  // `${APP_VERSION:-}` which is "" when unset, not undefined) falls back to a valid
+  // default — /version must always return a non-empty version (api-contract test).
   return createVersionResponse({
-    version: process.env["APP_VERSION"] ?? "0.1.0",
-    commit: process.env["GIT_SHA"] ?? "unknown",
-    buildTime: process.env["BUILD_TIME"] ?? "unknown",
-    environment: process.env["NODE_ENV"] ?? "development",
+    version: process.env["APP_VERSION"] || "0.1.0",
+    commit: process.env["GIT_SHA"] || "unknown",
+    buildTime: process.env["BUILD_TIME"] || "unknown",
+    environment: process.env["NODE_ENV"] || "development",
   });
 }
