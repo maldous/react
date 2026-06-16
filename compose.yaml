@@ -344,10 +344,19 @@ services:
       KC_SPI_EVENTS_LISTENER_JBOSS_LOGGING_ERROR_LEVEL: "warn"
       # KC_HOSTNAME_STRICT: When true, Keycloak only accepts requests whose Host
       # header matches KC_HOSTNAME. Set to true so the token issuer (iss claim)
-      # is locked to the public-facing URL. Backchannel requests from the BFF to
-      # the Docker-internal hostname are accepted via STRICT_BACKCHANNEL=false.
+      # is locked to the public-facing URL.
       KC_HOSTNAME_STRICT: "true"
-      KC_HOSTNAME_STRICT_BACKCHANNEL: "false"
+      # KC_HOSTNAME_BACKCHANNEL_DYNAMIC (KC 26 hostname-v2): the FRONTEND URLs (issuer,
+      # authorization_endpoint) stay pinned to KC_HOSTNAME (public, for the browser + the
+      # token iss), but the BACKCHANNEL endpoints advertised in the OIDC discovery doc
+      # (token, jwks_uri, userinfo, introspection) resolve from the request host. So a
+      # composed service that derives its endpoints from discovery over the Docker-internal
+      # hostname (MinIO MINIO_IDENTITY_OPENID_CONFIG_URL; pgAdmin OAUTH2_SERVER_METADATA_URL)
+      # gets CONTAINER-REACHABLE backchannel URLs. Without this, discovery returned the
+      # PUBLIC URLs, which containers hit through Cloudflare and got HTTP 403 — MinIO's code
+      # exchange failed ("No session") and pgAdmin's jwks fetch failed (ADR-0073). Replaces
+      # the deprecated v1 KC_HOSTNAME_STRICT_BACKCHANNEL (ignored under hostname-v2).
+      KC_HOSTNAME_BACKCHANNEL_DYNAMIC: "true"
       KC_HTTP_ENABLED: "true"
       # Production `start` mode runs behind Cloudflare -> Caddy (TLS terminated at the
       # edge; Keycloak speaks HTTP internally). Trust the X-Forwarded-* headers so KC

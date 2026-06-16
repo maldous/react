@@ -66,6 +66,12 @@ OAUTH2_CONFIG = [
         "OAUTH2_AUTO_CREATE_USER": True,
         "OAUTH2_ICON": "fa-key",
         "OAUTH2_BUTTON_COLOR": "#4DB3DB",
-        "OAUTH2_ADDITIONAL_CLAIMS": {},
+        # MUST be None, NOT {}. pgAdmin runs its additional-claim authorisation check
+        # whenever this is non-None; an EMPTY dict matches no claim, so every SSO'd user
+        # is denied ("not authorized ... additional claim required {}") even after a
+        # successful token exchange. None disables the extra check — the platform
+        # forward-auth gate (ADR-0030) already restricts /pgadmin to system-admins, and
+        # OAUTH2_AUTO_CREATE_USER provisions the pgAdmin account from the email claim.
+        "OAUTH2_ADDITIONAL_CLAIMS": None,
     }
 ]

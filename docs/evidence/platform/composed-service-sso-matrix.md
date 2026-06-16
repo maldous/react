@@ -15,8 +15,8 @@ redirects — see "Live verification" below).
 | Service | SSO support | Keycloak client | Service-side wiring | Admin mapping | Status |
 | --- | --- | --- | --- | --- | --- |
 | **Grafana** | Native generic OAuth (OIDC) | confidential `grafana` (+ realm-role mapper) | `GF_AUTH_GENERIC_OAUTH_*` in compose (gated); `auto_login`; `ROOT_URL` from `APP_BASE_URL` | `roles` claim → `system-admin`=GrafanaAdmin, else Admin (`role_attribute_strict=false`) | **Wired + verified** |
-| **MinIO** | Native console OIDC | public PKCE `minio` (ADR-0030) + hardcoded `policy` mapper | `MINIO_IDENTITY_OPENID_*`; `MINIO_IDENTITY_OPENID_CLAIM_NAME=policy` | client emits `policy=consoleAdmin` for all client users → console admin | **Wired + verified** |
-| **pgAdmin** | Native OAuth2 | **confidential** `pgadmin` (+ realm-role mapper) | `config_local.py` `OAUTH2_CONFIG` with `OAUTH2_CLIENT_SECRET` + **`OAUTH2_SERVER_METADATA_URL`** (OIDC discovery → `jwks_uri`) from env; `OAUTH2_AUTO_CREATE_USER` | auto-created users manage their own server connections | **Wired** (jwks_uri fix 2026-06-16; live proof pending) |
+| **MinIO** | Native console OIDC | public `minio` (ADR-0030), **PKCE mandate removed** + hardcoded `policy` mapper | `MINIO_IDENTITY_OPENID_*`; `MINIO_IDENTITY_OPENID_CLAIM_NAME=policy` | client emits `policy=consoleAdmin` for all client users → console admin | **Wired + verified live** (SSO completes → /minio/browser, session 200; 2026-06-16) |
+| **pgAdmin** | Native OAuth2 | **confidential** `pgadmin` (+ realm-role mapper) | `config_local.py` `OAUTH2_CONFIG`: `OAUTH2_CLIENT_SECRET` + **`OAUTH2_SERVER_METADATA_URL`** (discovery → `jwks_uri`) + **`OAUTH2_ADDITIONAL_CLAIMS: None`**; `OAUTH2_AUTO_CREATE_USER` | auto-created users manage their own server connections | **Wired + verified live** (lands on /pgadmin/browser/; 2026-06-16) |
 | **SonarQube** | Via `sonar-auth-oidc` plugin (no native OIDC in community) | confidential `sonarqube` (+ realm-role mapper) | plugin jar via init service **+ settings written by `scripts/sonar/provision-oidc.sh`** (NOT env vars — see gotcha) | `roles` claim → group sync → `system-admin` Sonar group with global admin | **Wired + verified** |
 | **Keycloak** | N/A (it IS the IdP) | — | admin console uses Keycloak's own auth | — | N/A |
 | **Sentry** (self-hosted) | SSO is a business/paid feature; community self-hosted is limited | — | — | — | **Not wired** (documented) |
@@ -59,9 +59,28 @@ redirects — see "Live verification" below).
    `OAUTH2_SERVER_METADATA_URL` (the `.well-known/openid-configuration` discovery doc) on the
    **internal** KC URL so the container can fetch it; the explicit public authorization URL and
    internal token/userinfo URLs still take precedence (split-horizon), so only `jwks_uri`/`issuer`
-   come from discovery (2026-06-16). NOTE: the discovered `jwks_uri` is the **public** KC URL
-   (KC_HOSTNAME_STRICT + non-dynamic backchannel), so the container must reach it via the edge —
-   the same constraint MinIO has (it derives all OIDC endpoints from discovery).
+   come from discovery (2026-06-16). The discovered backchannel URLs are made container-reachable
+   by gotcha #6.
+6. **KC must use `hostname-backchannel-dynamic` so discovery advertises INTERNAL backchannel URLs.**
+   With `KC_HOSTNAME_STRICT=true` and the deprecated v1 `KC_HOSTNAME_STRICT_BACKCHANNEL` (ignored
+   under KC 26 hostname-v2), the OIDC discovery doc returned the **public** token/jwks/userinfo URLs.
+   A container deriving its endpoints from discovery (MinIO `…CONFIG_URL`, pgAdmin
+   `OAUTH2_SERVER_METADATA_URL`) then hit `https://aldous.info/kc/...` and got **HTTP 403** from
+   Cloudflare (public certs → 403; internal certs → 200). Fixed with
+   `KC_HOSTNAME_BACKCHANNEL_DYNAMIC: "true"` (`compose.yaml`): issuer + authorization_endpoint stay
+   public (browser + token `iss` unchanged), backchannel endpoints resolve internal. Verified live:
+   discovery over `http://keycloak:8080` now returns internal token/jwks/userinfo, and the real-auth
+   login suite still passes (no regression).
+7. **MinIO console sends no PKCE — the KC `minio` client must not mandate it.** With
+   `pkce_code_challenge_method = "S256"` the client required PKCE, but the MinIO console
+   (RELEASE.2024-12-18) sends no `code_challenge`, so KC rejected the login with
+   `Missing parameter: code_challenge_method` (surfaced as the "No session" error). Fixed by
+   removing the mandate (`main.tf`); the redirect-URI allowlist + forward-auth gate are the controls.
+8. **pgAdmin `OAUTH2_ADDITIONAL_CLAIMS` must be `None`, not `{}`.** A non-None value (even an empty
+   dict) makes pgAdmin enforce its additional-claim authorisation check, and `{}` matches nothing →
+   every SSO'd user is denied ("not authorized … additional claim required {}") after an otherwise
+   successful token exchange. `None` disables the check; forward-auth already restricts `/pgadmin` to
+   system-admins. Verified live: pgAdmin now lands on `/pgadmin/browser/`.
 
 ## Wiring summary (delivered)
 

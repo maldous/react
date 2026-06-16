@@ -312,7 +312,14 @@ resource "keycloak_openid_client" "minio" {
   implicit_flow_enabled        = false
   direct_access_grants_enabled = false
 
-  pkce_code_challenge_method = "S256"
+  # NO mandatory PKCE: the MinIO console (RELEASE.2024-12-18) does NOT send a
+  # code_challenge on its authorization request, so a client that requires S256 PKCE
+  # rejects the login with "Missing parameter: code_challenge_method" (KC), which the
+  # console surfaces as the "No session" / UNAUTHENTICATED error. The redirect-URI
+  # allowlist below + the platform forward-auth gate (ADR-0030) are the controls for
+  # this public client. (Confirmed live 2026-06-16: the MinIO auth request carries no
+  # code_challenge; pgAdmin uses a confidential client instead — see above.)
+  pkce_code_challenge_method = ""
 
   valid_redirect_uris = [
     "http://localhost:9001/minio/oauth_callback",
