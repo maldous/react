@@ -42,12 +42,33 @@ export function apexUrl(apexPath: string | null): string | null {
   return trimmed === "" ? "/" : trimmed;
 }
 
+/**
+ * The click-through URL surfaced to an operator for a service, given the running
+ * environment. Three rules over the raw apex route:
+ *   - a `devOnly` service is LOCKED (null) in production — it is not deployed there,
+ *     so the apex route 502s (the LocalStack "Bad Gateway" finding);
+ *   - an explicit `landingPath` wins when the tool's UI is at a subpath, not the apex
+ *     root (the ClickHouse "/play" finding — bare /clickhouse/ answers "Ok.");
+ *   - otherwise the apex URL (with its significant trailing slash) is used.
+ */
+export function clickthroughUrlFor(
+  service: { apexPath: string | null; landingPath?: string; devOnly?: boolean },
+  environment: string
+): string | null {
+  if (service.devOnly && /^prod(uction)?$/i.test(environment)) return null;
+  if (service.landingPath) return service.landingPath;
+  return apexUrl(service.apexPath);
+}
+
 export async function listClickthroughServices(input: {
   roles: string[];
 }): Promise<ClickthroughServicesResponse> {
   // Composed-provider readiness is the adapter-confirmed, OpenBao-credential-validated
   // status (probes live health, never echoes a secret).
   const { providers } = await getComposedProviderReadiness();
+
+  // Running environment governs whether a dev/mock-only service is linked (ADR-0056).
+  const environment = process.env["PLATFORM_ENV"] ?? process.env["NODE_ENV"] ?? "development";
 
   const services: ClickthroughServiceRow[] = CLICKTHROUGH_SERVICES
     // not_exposed services are never reachable — they never appear on the page.
@@ -56,7 +77,7 @@ export async function listClickthroughServices(input: {
       id: s.id,
       resource: s.resource,
       classification: s.classification,
-      url: apexUrl(s.apexPath),
+      url: clickthroughUrlFor(s, environment),
       // Same decision path as forward-auth, evaluated for the APEX (global) host.
       accessible: decideServiceAccess({
         roles: input.roles,

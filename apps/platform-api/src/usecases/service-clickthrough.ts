@@ -38,6 +38,22 @@ export interface ClickthroughService {
   apexPath: string | null;
   /** Caddy path prefix on the tenant wildcard vhost, or null. */
   tenantPath: string | null;
+  /**
+   * Human click-through landing path, when the tool's useful UI is NOT at the apex
+   * root (which the Caddy route serves). ClickHouse's apex root returns the bare
+   * "Ok." HTTP probe response; its interactive UI is at /play. When set, this is the
+   * URL surfaced to operators; the apexPath still governs the Caddy route + auth
+   * reconciliation (it must remain the wildcard the Caddyfile declares). Optional.
+   */
+  landingPath?: string;
+  /**
+   * Mock/dev-only service (no production deployment). Such a service must NOT present
+   * a click-through "Open" link in production — it is not running there, so the apex
+   * route 502s (Bad Gateway). The link is locked (url null) in production environments;
+   * mirrors the service-catalog `forbiddenInProduction` / `mock-only` classification.
+   * Optional; defaults to false.
+   */
+  devOnly?: boolean;
 }
 
 export const CLICKTHROUGH_SERVICES: readonly ClickthroughService[] = [
@@ -97,6 +113,9 @@ export const CLICKTHROUGH_SERVICES: readonly ClickthroughService[] = [
     isolationInvariant: "Analytics DB without per-tenant partition isolation.",
     apexPath: "/clickhouse/*",
     tenantPath: null,
+    // Bare /clickhouse/ proxies to the HTTP root which answers "Ok." (the health probe
+    // response), not a UI. The interactive query console is /play (ClickHouse has no SSO).
+    landingPath: "/clickhouse/play",
   },
   {
     id: "localstack",
@@ -105,6 +124,9 @@ export const CLICKTHROUGH_SERVICES: readonly ClickthroughService[] = [
     isolationInvariant: "Cloud mock with no tenant scope (dev/staging only).",
     apexPath: "/localstack/*",
     tenantPath: null,
+    // Mock-only (cloud-mocks profile), forbidden in production (service-catalog). It is
+    // not deployed in prod, so the apex link would 502; lock it there instead.
+    devOnly: true,
   },
   {
     id: "pgadmin",

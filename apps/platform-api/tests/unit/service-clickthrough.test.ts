@@ -21,7 +21,7 @@ import {
   TENANT_ADMIN_RESOURCES,
   decideServiceAccess,
 } from "../../src/usecases/service-clickthrough.ts";
-import { apexUrl } from "../../src/usecases/clickthrough-services.ts";
+import { apexUrl, clickthroughUrlFor } from "../../src/usecases/clickthrough-services.ts";
 import { resolvePermissions } from "@platform/domain-identity";
 
 // ---------------------------------------------------------------------------
@@ -47,6 +47,70 @@ describe("apexUrl trailing slash (ADR-ACT-0284)", () => {
   it("maps null apexPath to null and a lone wildcard to root", () => {
     assert.equal(apexUrl(null), null);
     assert.equal(apexUrl("/*"), "/");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 0b. clickthroughUrlFor — landingPath + devOnly env-gating over the apex route.
+//     Closes three live findings: ClickHouse "Ok." (needs /play), LocalStack
+//     "Bad Gateway" in prod (mock, not deployed), and keeps every other tool on
+//     its apex route. (ADR-ACT-0233 / ADR-0073)
+// ---------------------------------------------------------------------------
+
+describe("clickthroughUrlFor (ADR-ACT-0233)", () => {
+  it("uses an explicit landingPath when set (ClickHouse → /play, not bare /clickhouse/)", () => {
+    const ch = CLICKTHROUGH_SERVICES.find((s) => s.id === "clickhouse")!;
+    assert.equal(ch.landingPath, "/clickhouse/play");
+    assert.equal(clickthroughUrlFor(ch, "development"), "/clickhouse/play");
+    assert.equal(clickthroughUrlFor(ch, "production"), "/clickhouse/play");
+  });
+
+  it("locks a devOnly service (LocalStack) in production, links it elsewhere", () => {
+    const ls = CLICKTHROUGH_SERVICES.find((s) => s.id === "localstack")!;
+    assert.equal(ls.devOnly, true);
+    assert.equal(clickthroughUrlFor(ls, "production"), null);
+    assert.equal(clickthroughUrlFor(ls, "prod"), null);
+    assert.equal(clickthroughUrlFor(ls, "development"), "/localstack/");
+    assert.equal(clickthroughUrlFor(ls, "staging"), "/localstack/");
+  });
+
+  it("falls back to the apex URL (trailing slash) for a normal service", () => {
+    const mp = CLICKTHROUGH_SERVICES.find((s) => s.id === "mailpit")!;
+    assert.equal(clickthroughUrlFor(mp, "production"), "/mailpit/");
+  });
+
+  it("only LocalStack is devOnly; only ClickHouse overrides its landing path", () => {
+    assert.deepEqual(
+      CLICKTHROUGH_SERVICES.filter((s) => s.devOnly).map((s) => s.id),
+      ["localstack"]
+    );
+    assert.deepEqual(
+      CLICKTHROUGH_SERVICES.filter((s) => s.landingPath).map((s) => s.id),
+      ["clickhouse"]
+    );
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 0c. pgAdmin OAuth2 config — must expose OIDC discovery so authlib can resolve
+//     jwks_uri (otherwise the callback fails: `Missing "jwks_uri" in metadata`).
+//     Static guard over docker/pgadmin/config_local.py (ADR-0073).
+// ---------------------------------------------------------------------------
+
+describe("pgAdmin OAuth2 config (ADR-0073)", () => {
+  const cfg = fs.readFileSync(path.join(process.cwd(), "docker/pgadmin/config_local.py"), "utf8");
+  it("declares the OIDC discovery URL so authlib can obtain jwks_uri", () => {
+    assert.match(cfg, /OAUTH2_SERVER_METADATA_URL/);
+    assert.match(cfg, /\.well-known\/openid-configuration/);
+  });
+  it("fetches discovery on the internal Keycloak URL (container-reachable backchannel)", () => {
+    assert.match(
+      cfg,
+      /"OAUTH2_SERVER_METADATA_URL":\s*f"\{_kc_internal\}\/realms\/\{_realm\}\/\.well-known\/openid-configuration"/
+    );
+  });
+  it("keeps the public authorization URL for the browser redirect (split-horizon)", () => {
+    assert.match(cfg, /"OAUTH2_AUTHORIZATION_URL":\s*f"\{_kc_public\}/);
   });
 });
 

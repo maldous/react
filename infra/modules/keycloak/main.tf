@@ -543,8 +543,9 @@ resource "keycloak_user_roles" "sysadmin_roles" {
 # ---------------------------------------------------------------------------
 # Composed-service SSO (ADR-0073). OIDC clients + realm-role token mappers so the
 # composed Compose GUI services authenticate via the platform Keycloak realm with
-# role-mapped authorisation ("properly permitted"). Opt-in via enable_composed_sso
-# (default false) so default provisioning is unchanged. Grafana + SonarQube are
+# role-mapped authorisation ("properly permitted"). Gated by enable_composed_sso
+# (default TRUE — SSO on for every composed service that supports it, ADR-0073).
+# Grafana + SonarQube are
 # confidential clients (secret); MinIO + pgAdmin already exist above as public PKCE
 # clients — they only gain a realm-role mapper here. Live OIDC flows are proven on a
 # running stack (ADR-0073 proof requirements).

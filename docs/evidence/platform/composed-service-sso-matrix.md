@@ -16,7 +16,7 @@ redirects — see "Live verification" below).
 | --- | --- | --- | --- | --- | --- |
 | **Grafana** | Native generic OAuth (OIDC) | confidential `grafana` (+ realm-role mapper) | `GF_AUTH_GENERIC_OAUTH_*` in compose (gated); `auto_login`; `ROOT_URL` from `APP_BASE_URL` | `roles` claim → `system-admin`=GrafanaAdmin, else Admin (`role_attribute_strict=false`) | **Wired + verified** |
 | **MinIO** | Native console OIDC | public PKCE `minio` (ADR-0030) + hardcoded `policy` mapper | `MINIO_IDENTITY_OPENID_*`; `MINIO_IDENTITY_OPENID_CLAIM_NAME=policy` | client emits `policy=consoleAdmin` for all client users → console admin | **Wired + verified** |
-| **pgAdmin** | Native OAuth2 | **confidential** `pgadmin` (+ realm-role mapper) | `config_local.py` `OAUTH2_CONFIG` with `OAUTH2_CLIENT_SECRET` from env; `OAUTH2_AUTO_CREATE_USER` | auto-created users manage their own server connections | **Wired + verified** |
+| **pgAdmin** | Native OAuth2 | **confidential** `pgadmin` (+ realm-role mapper) | `config_local.py` `OAUTH2_CONFIG` with `OAUTH2_CLIENT_SECRET` + **`OAUTH2_SERVER_METADATA_URL`** (OIDC discovery → `jwks_uri`) from env; `OAUTH2_AUTO_CREATE_USER` | auto-created users manage their own server connections | **Wired** (jwks_uri fix 2026-06-16; live proof pending) |
 | **SonarQube** | Via `sonar-auth-oidc` plugin (no native OIDC in community) | confidential `sonarqube` (+ realm-role mapper) | plugin jar via init service **+ settings written by `scripts/sonar/provision-oidc.sh`** (NOT env vars — see gotcha) | `roles` claim → group sync → `system-admin` Sonar group with global admin | **Wired + verified** |
 | **Keycloak** | N/A (it IS the IdP) | — | admin console uses Keycloak's own auth | — | N/A |
 | **Sentry** (self-hosted) | SSO is a business/paid feature; community self-hosted is limited | — | — | — | **Not wired** (documented) |
@@ -45,7 +45,19 @@ redirects — see "Live verification" below).
    non-admin user. `provision-oidc.sh` creates a `system-admin` Sonar group with global
    administration; group sync (claim `roles`) maps the Keycloak realm role `system-admin`
    to it, so the platform system administrator gets full Sonar access. Forward-auth
-   (ADR-0030) already restricts `/sonar` to system administrators.
+   (ADR-0030) already restricts `/sonar` to system administrators. **Operational:** the
+   default-admin "change password" prompt means `make sonar-provision` was not run after a
+   fresh SonarQube volume — it both rotates `admin/admin` to the managed `SONAR_ADMIN_PASSWORD`
+   (`provision-token.sh` §4b) and writes the OIDC settings incl. `autoLogin` (`provision-oidc.sh`).
+5. **pgAdmin authlib needs `jwks_uri` — supply OIDC discovery.** pgAdmin's authlib validates
+   the ID-token signature on the code exchange and fails with `Missing "jwks_uri" in metadata`
+   if only the explicit token/auth/userinfo endpoints are configured. Fixed by adding
+   `OAUTH2_SERVER_METADATA_URL` (the `.well-known/openid-configuration` discovery doc) on the
+   **internal** KC URL so the container can fetch it; the explicit public authorization URL and
+   internal token/userinfo URLs still take precedence (split-horizon), so only `jwks_uri`/`issuer`
+   come from discovery (2026-06-16). NOTE: the discovered `jwks_uri` is the **public** KC URL
+   (KC_HOSTNAME_STRICT + non-dynamic backchannel), so the container must reach it via the edge —
+   the same constraint MinIO has (it derives all OIDC endpoints from discovery).
 
 ## Wiring summary (delivered)
 

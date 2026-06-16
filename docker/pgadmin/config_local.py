@@ -51,6 +51,16 @@ OAUTH2_CONFIG = [
         "OAUTH2_AUTHORIZATION_URL": f"{_kc_public}/realms/{_realm}/protocol/openid-connect/auth",
         "OAUTH2_API_BASE_URL": f"{_kc_internal}/realms/{_realm}/",
         "OAUTH2_USERINFO_ENDPOINT": f"{_kc_internal}/realms/{_realm}/protocol/openid-connect/userinfo",
+        # OIDC discovery document. authlib (pgAdmin's OAuth2 backend) needs jwks_uri to
+        # validate the ID token signature on the code exchange; without it the callback
+        # fails with `Missing "jwks_uri" in metadata` (ADR-0073). The explicit
+        # authorization/token/userinfo URLs above still take precedence (split-horizon:
+        # public browser URL for auth, internal backchannel for token/userinfo), so only
+        # the missing jwks_uri + issuer are filled from discovery. Fetched from the
+        # INTERNAL Keycloak URL so the pgAdmin container can always reach the discovery
+        # doc; KC_HOSTNAME_STRICT pins the issuer to the public URL, matching the
+        # browser-minted token.
+        "OAUTH2_SERVER_METADATA_URL": f"{_kc_internal}/realms/{_realm}/.well-known/openid-configuration",
         "OAUTH2_SCOPE": "openid email profile",
         "OAUTH2_USERNAME_CLAIM": "email",
         "OAUTH2_AUTO_CREATE_USER": True,
