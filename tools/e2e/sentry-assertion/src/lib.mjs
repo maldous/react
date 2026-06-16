@@ -202,7 +202,9 @@ export async function runAssertion(deps, config) {
     for (let attempt = 1; attempt <= config.pollAttempts; attempt++) {
       const issues = await sentryGet(`/api/0/projects/${orgSlug}/${projectSlug}/issues/`, {
         query: `testRunId:${config.testRunId}`,
-        statsPeriod: "1h",
+        // Self-hosted Sentry (26.x) only accepts statsPeriod of '', '24h', or '14d' —
+        // "1h" is rejected with "Invalid stats_period". 24h safely covers a test window.
+        statsPeriod: "24h",
       });
       const issueId = pickIssueId(issues);
       if (issueId) {
@@ -257,7 +259,7 @@ export async function runAssertion(deps, config) {
     try {
       const issues = await sentryGet(`/api/0/projects/${orgSlug}/${projectSlug}/issues/`, {
         query: "environment:production",
-        statsPeriod: "1h",
+        statsPeriod: "24h", // see note above — self-hosted Sentry rejects "1h".
       });
       const unexpected = findUnexpectedIssues({
         issues,
