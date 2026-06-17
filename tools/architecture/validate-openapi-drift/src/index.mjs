@@ -3,18 +3,13 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
+import { findRepoRoot as sharedFindRepoRoot } from "../../_shared/repo-root.mjs";
 
 const ROUTES_FILE = "apps/platform-api/src/server/routes.ts";
 const OPENAPI_FILE = "docs/api/openapi.json";
 
 export function findRepoRoot(startDir) {
-  let dir = path.resolve(startDir);
-  while (true) {
-    if (fs.existsSync(path.join(dir, "package.json"))) return dir;
-    const parent = path.dirname(dir);
-    if (parent === dir) return path.resolve(startDir);
-    dir = parent;
-  }
+  return sharedFindRepoRoot(startDir, "package.json");
 }
 
 function loadJson(filePath) {

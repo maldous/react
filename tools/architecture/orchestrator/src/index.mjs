@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { spawnSync } from "node:child_process";
+import { findRepoRoot as sharedFindRepoRoot } from "../../_shared/repo-root.mjs";
 
 export function parseArgs(argv) {
   const options = {
@@ -67,17 +68,7 @@ export function parseArgs(argv) {
 }
 
 export function findRepoRoot(startDir) {
-  let dir = path.resolve(startDir);
-  while (true) {
-    if (fs.existsSync(path.join(dir, "docs", "schemas", "package-json-architecture.schema.json"))) {
-      return dir;
-    }
-    const parent = path.dirname(dir);
-    if (parent === dir) {
-      return path.resolve(startDir);
-    }
-    dir = parent;
-  }
+  return sharedFindRepoRoot(startDir, "docs/schemas/package-json-architecture.schema.json");
 }
 
 function rel(filePath, repoRoot) {

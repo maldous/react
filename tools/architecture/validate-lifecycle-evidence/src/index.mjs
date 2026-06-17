@@ -3,6 +3,8 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { findRepoRoot as sharedFindRepoRoot } from "../../_shared/repo-root.mjs";
+import { readJson } from "../../_shared/json.mjs";
 
 // Options that consume the next argument as their value
 export const VALUE_OPTS = new Map([
@@ -65,17 +67,7 @@ export function parseArgs(argv) {
 }
 
 export function findRepoRoot(startDir) {
-  let dir = path.resolve(startDir);
-  while (true) {
-    if (fs.existsSync(path.join(dir, "docs", "schemas"))) return dir;
-    const parent = path.dirname(dir);
-    if (parent === dir) return path.resolve(startDir);
-    dir = parent;
-  }
-}
-
-function readJson(filePath) {
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
+  return sharedFindRepoRoot(startDir, "docs/schemas");
 }
 
 async function loadAjv(toolRoot) {

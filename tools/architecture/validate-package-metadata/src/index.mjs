@@ -3,6 +3,9 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { pathToFileURL } from "node:url";
+import { findRepoRoot as sharedFindRepoRoot } from "../../_shared/repo-root.mjs";
+import { readJson } from "../../_shared/json.mjs";
+import { walkPackageJson } from "../../_shared/files.mjs";
 
 export function parseArgs(argv) {
   const options = {
@@ -49,22 +52,10 @@ export function parseArgs(argv) {
   return options;
 }
 
+// Marker that identifies this repo's root for this tool (unchanged behaviour).
+const REPO_ROOT_MARKER = "docs/schemas/package-json-architecture.schema.json";
 export function findRepoRoot(startDir) {
-  let dir = path.resolve(startDir);
-  while (true) {
-    if (fs.existsSync(path.join(dir, "docs", "schemas", "package-json-architecture.schema.json"))) {
-      return dir;
-    }
-    const parent = path.dirname(dir);
-    if (parent === dir) {
-      return path.resolve(startDir);
-    }
-    dir = parent;
-  }
-}
-
-function readJson(filePath) {
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
+  return sharedFindRepoRoot(startDir, REPO_ROOT_MARKER);
 }
 
 export function isObject(value) {
@@ -105,22 +96,6 @@ function isMetadataFixtureDirectory(directoryPath) {
   return parts.includes("tests") && parts.includes("fixtures");
 }
 
-function walkMetadata(current, results, ignored, explicitFixtureScan) {
-  const stat = fs.statSync(current);
-  if (stat.isDirectory()) {
-    const base = path.basename(current);
-    if (ignored.has(base)) return;
-    if (!explicitFixtureScan && isMetadataFixtureDirectory(current)) return;
-    for (const entry of fs.readdirSync(current)) {
-      walkMetadata(path.join(current, entry), results, ignored, explicitFixtureScan);
-    }
-    return;
-  }
-  if (path.basename(current) === "package.json") {
-    results.push(current);
-  }
-}
-
 export function listPackageJsonFiles(searchRoots, repoRoot) {
   const ignored = new Set(["node_modules", ".git", "dist", "build", "coverage", "reports"]);
   const results = [];
@@ -131,7 +106,11 @@ export function listPackageJsonFiles(searchRoots, repoRoot) {
     if (!fs.existsSync(absoluteRoot)) {
       continue;
     }
-    walkMetadata(absoluteRoot, results, ignored, explicitFixtureScan);
+    walkPackageJson(absoluteRoot, results, {
+      ignored,
+      isFixtureDir: isMetadataFixtureDirectory,
+      explicitFixtureScan,
+    });
   }
 
   return [...new Set(results)].sort();

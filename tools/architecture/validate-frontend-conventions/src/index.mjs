@@ -17,20 +17,13 @@
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
+import { findRepoRoot as sharedFindRepoRoot } from "../../_shared/repo-root.mjs";
 
 const APP_REL = "apps/react-enterprise-app/src";
 const FEATURES_SUBDIR = "features";
 
 export function findRepoRoot(startDir) {
-  let dir = path.resolve(startDir);
-  while (true) {
-    if (fs.existsSync(path.join(dir, "docs", "architecture", "import-boundary-rules.json"))) {
-      return dir;
-    }
-    const parent = path.dirname(dir);
-    if (parent === dir) return path.resolve(startDir);
-    dir = parent;
-  }
+  return sharedFindRepoRoot(startDir, "docs/architecture/import-boundary-rules.json");
 }
 
 const isTestFile = (rel) => /(?:^|\/)__tests__\//.test(rel) || /\.test\.[tj]sx?$/.test(rel);

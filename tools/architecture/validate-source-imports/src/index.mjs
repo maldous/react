@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 
+import { findRepoRoot as sharedFindRepoRoot } from "../../_shared/repo-root.mjs";
 import { UNIVERSAL_RULES, PACKAGE_RULES } from "./rules.mjs";
 import { scanRoots } from "./scanner.mjs";
 import { buildPackageMap } from "./package-map.mjs";
@@ -67,17 +68,7 @@ function parseArgs(argv) {
 }
 
 function findRepoRoot(startDir) {
-  let dir = path.resolve(startDir);
-  while (true) {
-    if (fs.existsSync(path.join(dir, "docs", "schemas", "package-json-architecture.schema.json"))) {
-      return dir;
-    }
-    const parent = path.dirname(dir);
-    if (parent === dir) {
-      return path.resolve(startDir);
-    }
-    dir = parent;
-  }
+  return sharedFindRepoRoot(startDir, "docs/schemas/package-json-architecture.schema.json");
 }
 
 function readToolVersion(repoRoot) {

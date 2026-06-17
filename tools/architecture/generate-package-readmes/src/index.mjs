@@ -3,6 +3,9 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
+import { findRepoRoot as sharedFindRepoRoot } from "../../_shared/repo-root.mjs";
+import { readJson } from "../../_shared/json.mjs";
+import { walkPackageJson } from "../../_shared/files.mjs";
 
 function parseArgs(argv) {
   const options = {
@@ -57,42 +60,12 @@ const TOOL_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..
 const TOOL_PACKAGE_PATH = path.join(TOOL_ROOT, "package.json");
 
 function findRepoRoot(startDir) {
-  let dir = path.resolve(startDir);
-  while (true) {
-    if (fs.existsSync(path.join(dir, "docs", "schemas", "package-json-architecture.schema.json"))) {
-      return dir;
-    }
-    const parent = path.dirname(dir);
-    if (parent === dir) {
-      return path.resolve(startDir);
-    }
-    dir = parent;
-  }
-}
-
-function readJson(filePath) {
-  return JSON.parse(fs.readFileSync(filePath, "utf8"));
+  return sharedFindRepoRoot(startDir, "docs/schemas/package-json-architecture.schema.json");
 }
 
 function isReadmeFixtureDirectory(directoryPath) {
   const parts = directoryPath.split(path.sep);
   return parts.includes("tests") && parts.includes("fixtures");
-}
-
-function walkReadmes(current, results, ignored, explicitFixtureScan) {
-  const stat = fs.statSync(current);
-  if (stat.isDirectory()) {
-    const base = path.basename(current);
-    if (ignored.has(base)) return;
-    if (!explicitFixtureScan && isReadmeFixtureDirectory(current)) return;
-    for (const entry of fs.readdirSync(current)) {
-      walkReadmes(path.join(current, entry), results, ignored, explicitFixtureScan);
-    }
-    return;
-  }
-  if (path.basename(current) === "package.json") {
-    results.push(current);
-  }
 }
 
 function listPackageJsonFiles(searchRoots) {
@@ -105,7 +78,11 @@ function listPackageJsonFiles(searchRoots) {
     if (!fs.existsSync(absoluteRoot)) {
       continue;
     }
-    walkReadmes(absoluteRoot, results, ignored, explicitFixtureScan);
+    walkPackageJson(absoluteRoot, results, {
+      ignored,
+      isFixtureDir: isReadmeFixtureDirectory,
+      explicitFixtureScan,
+    });
   }
 
   return [...new Set(results)].sort();

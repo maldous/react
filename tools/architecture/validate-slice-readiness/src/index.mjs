@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { pathToFileURL } from "node:url";
+import { findRepoRoot as sharedFindRepoRoot } from "../../_shared/repo-root.mjs";
 
 // Known readiness tiers per ADR-0024
 const VALID_TIERS = [0, 1, 2, 3, 4];
@@ -39,13 +40,7 @@ const KNOWN_FORBIDDEN = new Set(["live-keycloak", "cloud-production", "real-sso"
 const ADR_ACT_PATTERN = /^ADR-ACT-\d{4}$/;
 
 export function findRepoRoot(startDir) {
-  let dir = path.resolve(startDir);
-  while (true) {
-    if (fs.existsSync(path.join(dir, "docs", "schemas"))) return dir;
-    const parent = path.dirname(dir);
-    if (parent === dir) return path.resolve(startDir);
-    dir = parent;
-  }
+  return sharedFindRepoRoot(startDir, "docs/schemas");
 }
 
 export function readActionRegisterStatuses(repoRoot) {
