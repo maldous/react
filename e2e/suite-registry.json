@@ -1,5 +1,5 @@
 {
-  "$comment": "ADR-0075 / ADR-ACT-0285 \u2014 stage-aware E2E suite registry. Single source of truth for E2E coverage. Every test file under e2e/ MUST have an entry here (validated by e2e:coverage:validate); no hidden coverage. authMode: fixture|real|unauthenticated|mixed. stageMin: lowest stage a suite runs at (runs at that stage and all higher). destructive: writes/destroys tenant-or-customer data. requiredCapabilities reference docs/evidence/platform/universal-service-foundation-registry.json .capabilities[].capability. expected{Logs,Metrics,Traces,SentryEvents} declare the observability that scenario must produce ('none' = not asserted yet at this phase).",
+  "$comment": "ADR-0075 / ADR-ACT-0285 — stage-aware E2E suite registry. Single source of truth for E2E coverage. Every test file under e2e/ MUST have an entry here (validated by e2e:coverage:validate); no hidden coverage. authMode: fixture|real|unauthenticated|mixed. stageMin: lowest stage a suite runs at (runs at that stage and all higher). destructive: writes/destroys tenant-or-customer data. requiredCapabilities reference docs/evidence/platform/universal-service-foundation-registry.json .capabilities[].capability. expected{Logs,Metrics,Traces,SentryEvents} declare the observability that scenario must produce ('none' = not asserted yet at this phase).",
   "schemaVersion": 1,
   "stageVocabulary": ["dev", "test", "staging", "prod"],
   "authModeVocabulary": ["fixture", "real", "unauthenticated", "mixed"],
@@ -319,7 +319,7 @@
     {
       "id": "discovery-clickability",
       "file": "e2e/discovery/clickability.spec.ts",
-      "stageMin": "dev",
+      "stageMin": "test",
       "authMode": "mixed",
       "destructive": false,
       "surfaces": ["route:*", "discovery:crawl", "a11y:landmarks"],
@@ -342,7 +342,7 @@
     {
       "id": "discovery-accessibility",
       "file": "e2e/discovery/accessibility.spec.ts",
-      "stageMin": "dev",
+      "stageMin": "test",
       "authMode": "mixed",
       "destructive": false,
       "surfaces": ["a11y:axe", "a11y:landmarks", "a11y:contrast", "a11y:reduced-motion"],
@@ -362,7 +362,7 @@
     {
       "id": "discovery-persona-authz",
       "file": "e2e/discovery/persona-authz.spec.ts",
-      "stageMin": "dev",
+      "stageMin": "test",
       "authMode": "mixed",
       "destructive": false,
       "surfaces": ["authz:forbidden-route", "authz:forbidden-api", "authz:expected-route"],
@@ -381,7 +381,7 @@
     {
       "id": "discovery-persona-matrix",
       "file": "e2e/discovery/persona-matrix.spec.ts",
-      "stageMin": "dev",
+      "stageMin": "test",
       "authMode": "mixed",
       "destructive": false,
       "surfaces": [

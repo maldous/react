@@ -10,10 +10,14 @@ dev:
     - minimal-smoke
     - unit
     - e2e-smoke # runs make e2e-internal ENV=dev — reuses Tilt servers on 3001/5173
-    - e2e-clickability # ADR-ACT-0285 Phase 4 — crawl + quality-gate visible surfaces (fixture/safe)
-    - e2e-accessibility # ADR-ACT-0285 Phase 6 — axe WCAG + structural a11y across routes x profiles
-    - e2e-persona-authz # ADR-ACT-0285 Phase 6 — persona authorization permutation (deny/allow)
-    - e2e-persona-matrix # ADR-ACT-0285 Phase 6 — multi-persona authed link/route/API matrix (sub-project A)
+    # NOTE: the discovery suites (clickability/accessibility/persona-authz/persona-matrix)
+    # target localhost:WEB_HTTP_PORT (the Caddy `web` profile) and persona-matrix asserts
+    # clickthrough via Caddy forward-auth. The dev stage runs on Tilt (Vite :5173 / API
+    # :3001) and deliberately does NOT start the compose `web` profile (run-stage.sh; dev
+    # uses Tilt, not compose-up-web). So these are NOT Tilt-runnable on dev — they run at
+    # test/staging/prod (which bring up the web profile) and remain fully registered in
+    # e2e/suite-registry.json (stageMin: test). dev's environment-appropriate coverage is
+    # the internal smoke + unit + registry gate. (ADR-0075 / ADR-ACT-0285)
 
 test:
   executor: compose
