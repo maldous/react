@@ -526,7 +526,14 @@ test.describe("persona-matrix — authed link/route/API crawl per persona", () =
             return `- ${c.ok ? "✅" : "❌"} [${c.persona}] ${c.kind} \`${c.target}\` → expected ${wrapUrls(c.expected)}, got ${wrapUrls(c.actual)}`;
           }),
         "",
-      ].join("\n")
+      ]
+        .join("\n")
+        // Collapse empty sections so the GENERATED evidence passes markdownlint
+        // MD012 (no multiple consecutive blank lines) for ANY run shape — e.g. a
+        // DEGRADED/skip run leaves the checks list empty, which would otherwise
+        // emit two blank lines after its heading. Single trailing newline.
+        .replace(/\n{3,}/g, "\n\n")
+        .replace(/\s*$/, "") + "\n"
     );
   });
 });
