@@ -14,6 +14,10 @@
 import { test, expect, E2E_STAGE } from "../support/correlation.ts";
 import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
 
+// Canonical scenario id (ADR-ACT-0285 closure) — declared explicitly, never derived
+// from the test title. Matched by e2e/scenario-manifest.json.
+test.use({ scenarioId: "persona-authz" });
+
 const EVIDENCE_DIR = "docs/evidence/e2e";
 const ACTIVE_PERSONA = process.env["E2E_PERSONA"] ?? "unauthenticated-visitor";
 

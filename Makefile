@@ -58,11 +58,16 @@ all: clean-all \
 ## all-promote — run the full promote ladder
 ## Sentry starts first (own project, survives env resets). external-caddy restarts after
 ## destructive stages (dev+test kill react-dev). staging/prod E2E need both live.
+## ADR-ACT-0285 (closure): the orchestrator sets LADDER_CONTINUE_ON_DEGRADED=1 — the EXPLICIT
+## continuation mode — so a DEGRADED stage does not halt the ladder and the run still collects
+## every stage's evidence; the final `evidence` target's verify-ladder then FAILS make all on
+## any non-FULL stage. A FAILED stage still halts immediately (run-stage exit 1). A DIRECT
+## `make stage-<stage>` (no flag) returns exit 2 on DEGRADED — it never lies about its result.
 all-promote:
 	docker network create sonar-bridge 2>/dev/null || true
 	$(MAKE) sentry-up
-	$(MAKE) stage-dev
-	$(MAKE) stage-test
+	LADDER_CONTINUE_ON_DEGRADED=1 $(MAKE) stage-dev
+	LADDER_CONTINUE_ON_DEGRADED=1 $(MAKE) stage-test
 	$(MAKE) external-caddy-up
-	$(MAKE) stage-staging
-	$(MAKE) stage-prod
+	LADDER_CONTINUE_ON_DEGRADED=1 $(MAKE) stage-staging
+	LADDER_CONTINUE_ON_DEGRADED=1 $(MAKE) stage-prod

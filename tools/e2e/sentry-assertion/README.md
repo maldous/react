@@ -21,8 +21,11 @@ stages via `env/stage-policy.yaml` → `scripts/tests/run-env-tests.sh`.
 - **PASSED** — Sentry reachable, event present with correct metadata.
 - **FAILED** (exit 1, blocks `make all`) — Sentry reachable but the event is missing
   or has wrong metadata (or, in prod, unexpected events appeared).
-- **DEGRADED** (exit 0) — the Sentry API / trigger endpoint is not configured or not
-  reachable for the stage. Keeps `make all` green where Sentry capture is not wired.
+- **DEGRADED** (exit 2) — the Sentry API / trigger endpoint is not configured or not
+  reachable for the stage. NOT a pass: the shared result-contract (`tools/e2e/result-contract.mjs`)
+  maps DEGRADED → exit 2, the stage runner records the group as DEGRADED, and `verify-ladder`
+  fails the ladder (no stage may pass as degraded — ADR-ACT-0285 closure). A degraded Sentry
+  assertion therefore blocks promotion rather than silently keeping `make all` green.
 
 Evidence: `docs/evidence/e2e/<stage>-sentry-events-latest.{json,md}`.
 

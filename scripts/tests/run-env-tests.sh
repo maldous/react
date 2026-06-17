@@ -16,11 +16,14 @@ YELLOW=$(tput setaf 3 2>/dev/null || true)
 RED=$(tput setaf 1 2>/dev/null || true)
 RESET=$(tput sgr0 2>/dev/null || true)
 
-# ADR-ACT-0285 Phase 2 — explicit confidence. A stage run is FULL only when every
-# required group passes AND (staging/prod) real auth actually ran. DEGRADED means
-# all groups passed but real auth was skipped — it NEVER passes promotion. FAILED
-# means a required group failed. E2E_DEGRADED is set by the auth-e2e group; the
-# script exits 2 (degraded) so run-stage.sh records the stage as "degraded".
+# ADR-ACT-0285 (closure) — explicit, honest confidence. A stage run is FULL only when
+# EVERY required group is proven. DEGRADED means ANY required contract-aware group exited
+# 2 (could not be proven) — observability-correlation (Loki completeness / required Tempo
+# trace), failure-rootcause, sentry-assertion, OR the auth-e2e gate. It is NOT auth-only and
+# NEVER passes promotion at any stage. FAILED means a required group failed (incl. a missing
+# required scenario or a Tempo trace that exists in Loki but not Tempo). E2E_DEGRADED is set
+# whenever a contract-aware group exits 2; the script then exits 2 so run-stage.sh records
+# the stage as "degraded" and verify-ladder fails the ladder.
 E2E_DEGRADED=0
 
 confidence() {
@@ -96,6 +99,12 @@ run_group() {
         # entry, role, accessibility profile, or UI surface has no declared E2E
         # coverage (minus honest exemptions). Pure registry validation.
         STAGE="$STAGE" node tools/e2e/validate-e2e/src/index.mjs all
+        # ADR-ACT-0285 (closure) — canonical scenario-manifest gate. Fails when a test
+        # has no scenario/dynamic/exemption, a scenario id is duplicated/orphaned/title-
+        # derived, a scenario's stage is incompatible with its suite, or an expected
+        # observability field is invalid. e2e/scenario-manifest.json is the single source
+        # of truth for correlatable scenarios.
+        STAGE="$STAGE" node tools/e2e/validate-scenario-manifest/src/index.mjs
         ;;
       e2e-observability-correlation)
         # ADR-ACT-0285 Phase 3 — prove E2E scenarios are findable in the logs by

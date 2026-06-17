@@ -1,0 +1,210 @@
+{
+  "$comment": "ADR-0075 / ADR-ACT-0285 (closure) — CANONICAL machine-readable E2E scenario manifest. The single source of truth for individual correlatable SCENARIOS (finer-grained than suite-registry.json, which tracks files/suites). Each scenario has a STABLE EXPLICIT scenarioId (never a sanitised test title); specs set it via test.use({scenarioId}) or the scenario() per-test annotation (e2e/support/correlation.ts). Validated by tools/e2e/validate-scenario-manifest. The observability-correlation harness expands this manifest (tools/e2e/scenario-manifest.mjs), queries Loki PER SCENARIO, and asserts per-stage completeness (every REQUIRED scenario observed) + the Tempo trace contract. correlation.logs/traces: required = a missing observation FAILS; best-effort = observed-if-present, never fails; none = not asserted. Dynamic suites (persona-matrix) declare a CONTROLLED expansion from persona-registry — runtime ids stay deterministic + validated, no per-persona duplication.",
+  "schemaVersion": 1,
+  "stageVocabulary": ["dev", "test", "staging", "prod"],
+  "authModeVocabulary": ["fixture", "real", "unauthenticated", "mixed"],
+  "correlationVocabulary": ["required", "best-effort", "none", "conditional"],
+  "knownServices": ["platform-api", "react-enterprise-app"],
+  "scenarios": [
+    {
+      "scenarioId": "pipeline-health-probe",
+      "suiteId": null,
+      "file": "tools/e2e/observability-correlation/src/index.mjs",
+      "source": "harness",
+      "stages": ["test", "staging", "prod"],
+      "authMode": "unauthenticated",
+      "personas": ["unauthenticated-visitor"],
+      "surfaces": ["api:/api/admin/tenants", "auth:denial"],
+      "expectedLogs": ["http.request.rejected"],
+      "expectedTraces": { "services": ["platform-api"], "route": "/api/admin/tenants" },
+      "expectedSentryEvents": [],
+      "expectedOperations": ["GET /api/admin/tenants"],
+      "destructive": false,
+      "correlation": { "logs": "required", "traces": "required" },
+      "owner": "ADR-ACT-0285 Phase 3 (pipeline-health probe). A deterministic unauthenticated denial that proves the header->log->Loki->Tempo pipeline is alive; it has its OWN entry and does NOT substitute for any real scenario."
+    },
+    {
+      "scenarioId": "internal-smoke",
+      "suiteId": "internal-smoke",
+      "file": "e2e/internal/smoke.test.ts",
+      "source": "playwright",
+      "stages": ["dev", "test"],
+      "authMode": "fixture",
+      "personas": ["fixture-tenant-admin", "fixture-viewer", "fixture-no-membership"],
+      "surfaces": [
+        "route:/",
+        "api:/healthz",
+        "api:/version",
+        "api:/api/session",
+        "graphql:organisationProfile"
+      ],
+      "expectedLogs": ["http.request.rejected"],
+      "expectedTraces": null,
+      "expectedSentryEvents": [],
+      "expectedOperations": ["GET /api/session", "GET /healthz", "GET /version"],
+      "destructive": true,
+      "correlation": { "logs": "best-effort", "traces": "none" },
+      "owner": "ADR-0025; ADR-ACT-0285. Runs on isolated dev/test ports (a separate platform-api not always shipping to Loki), so log correlation is best-effort, not required."
+    },
+    {
+      "scenarioId": "clickability-crawl",
+      "suiteId": "discovery-clickability",
+      "file": "e2e/discovery/clickability.spec.ts",
+      "source": "playwright",
+      "stages": ["test", "staging", "prod"],
+      "authMode": "mixed",
+      "personas": ["unauthenticated-visitor", "fixture-tenant-admin"],
+      "surfaces": ["route:*", "discovery:crawl", "a11y:landmarks"],
+      "expectedLogs": ["http.request.complete"],
+      "expectedTraces": null,
+      "expectedSentryEvents": [],
+      "expectedOperations": ["GET /"],
+      "destructive": false,
+      "correlation": { "logs": "best-effort", "traces": "none" },
+      "owner": "ADR-0075; ADR-ACT-0285 Phase 4. Crawls safe routes (mostly 2xx; INFO-filtered at LOG_LEVEL=warn), so correlation is best-effort."
+    },
+    {
+      "scenarioId": "accessibility-safe-routes",
+      "suiteId": "discovery-accessibility",
+      "file": "e2e/discovery/accessibility.spec.ts",
+      "source": "playwright",
+      "stages": ["test", "staging", "prod"],
+      "authMode": "mixed",
+      "personas": ["a11y-keyboard-only", "a11y-screen-reader"],
+      "surfaces": ["a11y:axe", "a11y:landmarks", "a11y:contrast", "a11y:reduced-motion"],
+      "expectedLogs": ["http.request.complete"],
+      "expectedTraces": null,
+      "expectedSentryEvents": [],
+      "expectedOperations": ["GET /", "GET /login"],
+      "destructive": false,
+      "correlation": { "logs": "best-effort", "traces": "none" },
+      "owner": "ADR-0075; ADR-ACT-0285 Phase 6. Axe over safe 2xx routes; correlation best-effort."
+    },
+    {
+      "scenarioId": "persona-authz",
+      "suiteId": "discovery-persona-authz",
+      "file": "e2e/discovery/persona-authz.spec.ts",
+      "source": "playwright",
+      "stages": ["test", "staging", "prod"],
+      "authMode": "mixed",
+      "personas": ["unauthenticated-visitor"],
+      "surfaces": ["authz:forbidden-route", "authz:forbidden-api", "authz:expected-route"],
+      "expectedLogs": ["http.request.rejected"],
+      "expectedTraces": null,
+      "expectedSentryEvents": [],
+      "expectedOperations": ["GET /api/admin/tenants", "GET /api/auth/settings/providers"],
+      "destructive": false,
+      "correlation": { "logs": "required", "traces": "none" },
+      "owner": "ADR-0075; ADR-ACT-0285 Phase 6. The unauthenticated-visitor persona always runs and deterministically hits a forbidden API (401/403 -> http.request.rejected WARN), so log correlation is required."
+    }
+  ],
+  "dynamicScenarios": [
+    {
+      "baseScenarioId": "persona-matrix",
+      "suiteId": "discovery-persona-matrix",
+      "file": "e2e/discovery/persona-matrix.spec.ts",
+      "source": "playwright",
+      "authMode": "mixed",
+      "surfaces": [
+        "authz:clickthrough-granted",
+        "authz:clickthrough-forbidden",
+        "authz:forbidden-route",
+        "authz:forbidden-api",
+        "authz:expected-route",
+        "authz:session-roles"
+      ],
+      "expectedLogs": ["http.request.rejected"],
+      "expectedTraces": null,
+      "expectedSentryEvents": [],
+      "destructive": false,
+      "dynamicSource": {
+        "registry": "e2e/persona-registry.json",
+        "collection": "personas",
+        "idField": "personaId",
+        "idTemplate": "persona-matrix:{personaId}",
+        "stageField": "stageAllowed",
+        "selector": { "excludeIdPrefixes": ["a11y-"], "excludeAuthModes": ["mixed"] }
+      },
+      "correlation": {
+        "logs": "conditional",
+        "logsRequiredRule": "persona-matrix-denial",
+        "traces": "none"
+      },
+      "owner": "ADR-0075; ADR-ACT-0285 Phase 6 sub-project A. Controlled expansion: one runtime scenario per stage-applicable persona (id persona-matrix:{personaId}). A persona is REQUIRED to be observed in Loki only when the deterministic 'persona-matrix-denial' rule says it actually logs in AND probes a resolvable forbidden API at the stage (so legitimately-skipped personas — expired-session, entitlement/quota/rate variations with no distinct Keycloak account, cross-tenant on stages without 2nd-level TLS — are best-effort, never a false missing-scenario failure)."
+    }
+  ],
+  "exemptions": [
+    {
+      "file": "e2e/internal/build.test.ts",
+      "reason": "Production-build preview verification (@playwright/test, isolated preview server). No observability backend; build integrity only. Owner ADR-0025."
+    },
+    {
+      "file": "e2e/external/smoke.test.ts",
+      "reason": "Unauthenticated front-door health/headers against the real stage URL; covered by suite-registry external-smoke. Not part of the observability-correlation contract."
+    },
+    {
+      "file": "e2e/external/login.spec.ts",
+      "reason": "Real Keycloak login flow (auth-e2e). Drives a 3rd-party IdP origin; correlation headers must NOT be sent to Keycloak, so this suite is intentionally uncorrelated."
+    },
+    {
+      "file": "e2e/external/logout.spec.ts",
+      "reason": "Real logout/session-clear flow (auth-e2e); uncorrelated for the same IdP-origin reason as login."
+    },
+    {
+      "file": "e2e/external/auth-negative.spec.ts",
+      "reason": "Negative auth against the real stack; suite-registry external-auth-negative. Uncorrelated (touches Keycloak error surface)."
+    },
+    {
+      "file": "e2e/external/caddy-links.spec.ts",
+      "reason": "Clickthrough routing reachability (real auth); suite-registry external-caddy-links. Navigates tool origins behind Caddy; uncorrelated by design."
+    },
+    {
+      "file": "e2e/external/tenant-prod.spec.ts",
+      "reason": "Tenant-FQDN routing/isolation at prod; suite-registry external-tenant-prod. Driven directly via playwright.external.config; not in the correlation set."
+    },
+    {
+      "file": "e2e/external/tool-services.spec.ts",
+      "reason": "Tool-service clickthrough reachability; suite-registry external-tool-services. Uncorrelated (tool origins)."
+    },
+    {
+      "file": "e2e/identity/broker-login.spec.ts",
+      "reason": "Real IdP-broker login flow; suite-registry identity-broker-login. Drives mock-oidc + Keycloak origins; uncorrelated by design."
+    },
+    {
+      "file": "e2e/identity/redirect-merge.test.ts",
+      "reason": "node:test unit (NOT Playwright) for account-link redirect/merge logic; suite-registry identity-redirect-merge. No browser/API surface to correlate."
+    },
+    {
+      "file": "e2e/prod/admin-tools.test.ts",
+      "reason": "Prod admin-surface smoke (@playwright/test, playwright.prod.config); suite-registry prod-admin-tools. production-e2e group, not the correlation set."
+    },
+    {
+      "file": "e2e/prod/api-contract.test.ts",
+      "reason": "Prod API contract/metadata smoke; suite-registry prod-api-contract. production-e2e group."
+    },
+    {
+      "file": "e2e/prod/asset-integrity.test.ts",
+      "reason": "Prod asset integrity (unauthenticated); suite-registry prod-asset-integrity. production-e2e group."
+    },
+    {
+      "file": "e2e/prod/cookie-security.test.ts",
+      "reason": "Prod cookie-flag/security checks; suite-registry prod-cookie-security. production-e2e group."
+    },
+    {
+      "file": "e2e/prod/cross-cutting.test.ts",
+      "reason": "Prod tenant-isolation/error-boundary cross-cutting; suite-registry prod-cross-cutting. production-e2e group."
+    },
+    {
+      "file": "e2e/prod/error-handling.test.ts",
+      "reason": "Prod 4xx/5xx/error-UI; suite-registry prod-error-handling. Its synthetic Sentry event is asserted by e2e-sentry-assertion, not by log/trace correlation."
+    },
+    {
+      "file": "e2e/prod/performance-budget.test.ts",
+      "reason": "Prod web-vitals/perf budget (unauthenticated); suite-registry prod-performance-budget. production-e2e group."
+    },
+    {
+      "file": "e2e/prod/security-headers.test.ts",
+      "reason": "Prod security headers/CSP (unauthenticated); suite-registry prod-security-headers. production-e2e group."
+    }
+  ]
+}

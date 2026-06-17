@@ -30,9 +30,15 @@ case "$PROFILE" in
     TIMEOUT=360
     ;;
   observability)
-    SERVICES="loki grafana alloy"
+    # ADR-ACT-0285 (closure): Tempo is in the `observability` profile and is REQUIRED for
+    # real E2E trace-by-id correlation (the observability-correlation harness asserts the
+    # pipeline-health probe's trace in Tempo). It must start on the normal stage path — not
+    # only via the ADR-0071 observability-provider profile — so list it explicitly here
+    # (loki + tempo + grafana + alloy). The otel-collector (default profile) exports spans
+    # to tempo:4318; each stage uses its own TEMPO_HTTP_PORT.
+    SERVICES="loki tempo grafana alloy"
     PROFILE_FLAG="--profile observability"
-    TIMEOUT=120
+    TIMEOUT=180
     ;;
   cloud)
     SERVICES="localstack"

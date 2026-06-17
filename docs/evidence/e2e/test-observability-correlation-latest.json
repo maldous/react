@@ -1,29 +1,148 @@
 {
   "stage": "test",
-  "testRunId": "run-test-1781694864-1297129f",
+  "testRunId": "run-test-1781704174-7bba3124",
   "result": "FULL",
   "loki": {
     "status": "reachable",
     "reason": null,
-    "lineCount": 1
+    "lineCount": 17,
+    "truncated": false
   },
   "tempo": {
-    "status": "unreachable",
-    "required": false,
-    "reason": "fetch failed"
+    "status": "reachable",
+    "required": true,
+    "reason": null,
+    "base": "http://localhost:3211"
   },
+  "expectedRequired": [
+    "pipeline-health-probe",
+    "persona-authz",
+    "persona-matrix:unauthenticated-visitor",
+    "persona-matrix:fixture-tenant-admin",
+    "persona-matrix:fixture-viewer",
+    "persona-matrix:fixture-no-membership"
+  ],
+  "missingRequired": [],
+  "unexpected": [],
   "scenarios": [
     {
-      "scenarioId": "observability-correlation-probe",
-      "lines": 1
+      "scenarioId": "pipeline-health-probe",
+      "required": true,
+      "observed": true,
+      "lines": 1,
+      "traceIds": [
+        "27af743f456d70b36dc2941e83f52556"
+      ],
+      "result": "OK"
+    },
+    {
+      "scenarioId": "internal-smoke",
+      "required": false,
+      "observed": false,
+      "lines": 0,
+      "traceIds": [],
+      "result": "ABSENT"
+    },
+    {
+      "scenarioId": "clickability-crawl",
+      "required": false,
+      "observed": false,
+      "lines": 0,
+      "traceIds": [],
+      "result": "ABSENT"
+    },
+    {
+      "scenarioId": "accessibility-safe-routes",
+      "required": false,
+      "observed": false,
+      "lines": 0,
+      "traceIds": [],
+      "result": "ABSENT"
+    },
+    {
+      "scenarioId": "persona-authz",
+      "required": true,
+      "observed": true,
+      "lines": 4,
+      "traceIds": [
+        "68eefa5a0f3964d50b0b3ad9c97cb79a",
+        "5ca3443df29d8dbcaa36900880f04fb0",
+        "9febc41c537a0cd5bd3208e3d6790870",
+        "12b3057ca2096e20da5caed587be33ff"
+      ],
+      "result": "OK"
+    },
+    {
+      "scenarioId": "persona-matrix:unauthenticated-visitor",
+      "required": true,
+      "observed": true,
+      "lines": 4,
+      "traceIds": [
+        "63ddad28f7af2c504e8debb5cb3eeae4",
+        "8f120d7cb4809fe6125da4531ebd2770",
+        "db5d9dda37f96a63e2000e1d9bf35cb9",
+        "6527a5b52c14deb0cfb5cd0d2a11449b"
+      ],
+      "result": "OK"
+    },
+    {
+      "scenarioId": "persona-matrix:fixture-tenant-admin",
+      "required": true,
+      "observed": true,
+      "lines": 2,
+      "traceIds": [
+        "d8e3d292e2bec78fb62e9f1869f2c07a",
+        "064d1083be91b5948dd0da6a36a4460b"
+      ],
+      "result": "OK"
+    },
+    {
+      "scenarioId": "persona-matrix:fixture-viewer",
+      "required": true,
+      "observed": true,
+      "lines": 4,
+      "traceIds": [
+        "774c8236a7f86a79d97d4e13b7ad8792",
+        "0235c8ff69974e8fc3c7a550499c19c7",
+        "a05143d5bb59b98de13c59f4881b1da4",
+        "88d42aa5e24c9839886829c58ba1b3c3"
+      ],
+      "result": "OK"
+    },
+    {
+      "scenarioId": "persona-matrix:fixture-no-membership",
+      "required": true,
+      "observed": true,
+      "lines": 2,
+      "traceIds": [
+        "6312dc6f0b1319f383ab85d7215c2536",
+        "8353bef64f4201a9534d2d3e2c5ba0ec"
+      ],
+      "result": "OK"
+    }
+  ],
+  "traces": [
+    {
+      "scenarioId": "pipeline-health-probe",
+      "traceId": "27af743f456d70b36dc2941e83f52556",
+      "found": true,
+      "services": [
+        "platform-api"
+      ],
+      "missingServices": [],
+      "routeFound": true,
+      "secretHits": [],
+      "result": "PASSED",
+      "spanCount": 2
     }
   ],
   "notes": [
-    "Correlated 1 log line(s) across 1 scenario(s) by testRunId."
+    "Correlated 17 line(s); all 6 required scenario(s) observed.",
+    "Trace 27af743f456d70b36dc2941e83f52556 for 'pipeline-health-probe' matched in Tempo: services [platform-api], route true."
   ],
-  "generatedFor": "ADR-ACT-0285 Phase 3",
   "probe": {
-    "scenario": "observability-correlation-probe",
+    "scenario": "pipeline-health-probe",
     "sent": true
-  }
+  },
+  "generatedFor": "ADR-ACT-0285 Phase 3 + closure"
 }

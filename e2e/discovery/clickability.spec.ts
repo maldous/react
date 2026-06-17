@@ -18,6 +18,10 @@
 import { test, expect, TEST_RUN_ID, E2E_STAGE } from "../support/correlation.ts";
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 
+// Canonical scenario id (ADR-ACT-0285 closure) — declared explicitly, never derived
+// from the test title. Matched by e2e/scenario-manifest.json.
+test.use({ scenarioId: "clickability-crawl" });
+
 const EVIDENCE_DIR = "docs/evidence/e2e";
 const MAX_PAGES = Number(process.env["CRAWL_MAX_PAGES"] ?? 40);
 

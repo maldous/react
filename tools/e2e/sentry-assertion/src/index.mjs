@@ -11,7 +11,9 @@
 //   PASSED   — Sentry reachable and the event carries the required metadata.
 //   FAILED   — Sentry reachable but the event is missing/has wrong metadata
 //              (or, in prod, unexpected events appeared). Exit 1 — blocks `make all`.
-//   DEGRADED — API/Sentry not reachable or not configured for the stage. Exit 0.
+//   DEGRADED — API/Sentry not reachable or not configured for the stage. Exit 2 (NOT a
+//              pass — the shared result-contract; the stage runner records it as DEGRADED
+//              and verify-ladder fails the ladder; ADR-ACT-0285 closure).
 //
 // Writes docs/evidence/e2e/<stage>-sentry-events-latest.{json,md}. Pure Node + fetch.
 // The Sentry API token is read from env and sent only in the Authorization header —

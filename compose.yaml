@@ -1087,14 +1087,18 @@ services:
   # ---------------------------------------------------------------------------
   # OBSERVABILITY PROFILE ? `docker compose --profile observability up -d`
   #
-  # Grafana Loki + Grafana + Grafana Alloy for log ingestion, retention, and
-  # search (ADR-0032). Alloy discovers all react-platform containers via Docker
-  # socket, parses Pino JSON stdout, and forwards to Loki.
+  # Grafana Loki + Tempo + Grafana + Grafana Alloy for log/trace ingestion,
+  # retention, and search (ADR-0032 / ADR-ACT-0284). Alloy discovers all
+  # react-platform containers via Docker socket, parses Pino JSON stdout, and
+  # forwards to Loki; the otel-collector forwards spans to Tempo (tempo:4318).
+  # Tempo is in this profile (and started by `make compose-up-observability`) so
+  # E2E trace-by-id correlation works at every stage (ADR-ACT-0285 closure).
   #
   # Usage:
-  #   make compose-up-observability          # start Loki + Grafana + Alloy
+  #   make compose-up-observability          # start Loki + Tempo + Grafana + Alloy
   #   http://localhost:${GRAFANA_PORT:-3000}  # Grafana UI (admin:admin by default)
   #   http://localhost:${LOKI_PORT:-3100}     # Loki API (internal; exposed for dev)
+  #   http://localhost:${TEMPO_HTTP_PORT:-3201}/ready  # Tempo (traces; per-stage port)
   #
   # Grafana clickthrough:  http://aldous.info/grafana/
   #

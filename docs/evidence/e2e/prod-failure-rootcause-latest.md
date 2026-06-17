@@ -3,5 +3,5 @@
 Generated (ADR-ACT-0285 Phase 5). DO NOT EDIT — regenerate via make e2e-failure-rootcause.
 
 - Result: **PASSED**
-- Triggered unauthenticated /api/admin/tenants → HTTP 401 (x-request-id=38046517-a664-419a-a141-c33a7ec13a43)
-- Root-cause proven: 4 http.request.rejected line(s) in Loki carry a stable reason + requestId (sample reason=tenant_fqdn_required, traceId=7af8eaec8a5d78e193df19239f9c5411).
+- Triggered unauthenticated /api/admin/tenants → HTTP 401 (x-request-id=84120f5f-96a6-49f4-96d5-a5530ae5c9fb)
+- Root-cause proven: 20 http.request.rejected line(s) in Loki carry a stable reason + requestId (sample reason=static_permission_denied, traceId=b1c75f6a06d40f51ef8ba0b156b3057f).

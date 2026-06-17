@@ -160,10 +160,12 @@ fi
 
 # ── 10. Test groups ────────────────────────────────────────────────────────────
 
-# run-env-tests.sh exits 0 (FULL), 2 (DEGRADED — all groups passed but real auth
-# was skipped at staging/prod), or other (FAILED). DEGRADED is NOT a pass:
-# recorded as "degraded" so verify-ladder rejects staging/prod promotion
-# (ADR-ACT-0285 Phase 2). The ladder still runs to completion for visibility.
+# run-env-tests.sh exits 0 (FULL), 2 (DEGRADED), or other (FAILED). DEGRADED means
+# ANY required contract-aware group could not be proven (ADR-ACT-0285 closure) — e.g.
+# observability-correlation/failure-rootcause/sentry-assertion backends unreachable, a
+# required Tempo trace not retrievable, OR real auth skipped at staging/prod. It is NOT
+# auth-only and NOT a pass: recorded as "degraded" so verify-ladder rejects the ladder
+# at EVERY stage (dev/test/staging/prod). The ladder still runs to completion for visibility.
 STAGE_DEGRADED=0
 if [ "$STAGE_RESULT" -eq 0 ] && [ -n "$REQUIRED_CSV" ]; then
     set +e
@@ -208,18 +210,25 @@ node scripts/evidence/write-stage-evidence.mjs \
 
 # ── 14. Exit ──────────────────────────────────────────────────────────────────
 
-# DEGRADED exits 0 so `make all-promote` runs the whole ladder to completion;
-# the degraded result is recorded in evidence and verify-ladder (make evidence)
-# fails the run because staging/prod are not FULL. A DIRECT stage run that hits a
-# real-auth gap hard-fails earlier (exit 1) via the auth-e2e group, so a direct
-# `make stage-staging`/`stage-prod` never silently passes (ADR-ACT-0285 Phase 2).
+# Exit contract (ADR-ACT-0285 closure — honest, no process-result lie):
+#   FAILED   → exit 1 ALWAYS (a real failure halts the ladder immediately).
+#   DEGRADED → exit 2 by default, so a DIRECT `make stage-<stage>` returns a non-zero
+#              process result for automation (a degraded required group is NOT a pass).
+#              ONLY the orchestrator (all-promote) sets LADDER_CONTINUE_ON_DEGRADED=1 to
+#              get exit 0 here — an EXPLICIT continuation mode so the whole ladder still
+#              runs and verify-ladder (make evidence) sees every stage and fails on the
+#              recorded DEGRADED. The stage never lies about its own process result.
+#   FULL     → exit 0.
+# shellcheck source=scripts/stages/stage-exit.sh
+. "$(dirname "$0")/stage-exit.sh"
+FINAL_RC="$(stage_exit_code "$STAGE_RESULT" "$STAGE_DEGRADED" "${LADDER_CONTINUE_ON_DEGRADED:-}")"
 if [ "$STAGE_RESULT" -ne 0 ]; then
     printf '\n%s✗ stage:%s FAILED CONFIDENCE%s\n' "$RED" "$STAGE" "$RESET"
-    exit "$STAGE_RESULT"
+elif [ "$STAGE_DEGRADED" -eq 1 ] && [ "$FINAL_RC" = "0" ]; then
+    printf '\n%s⚠ stage:%s DEGRADED CONFIDENCE — recorded; continuation mode (exit 0) so the ladder collects later stages; verify-ladder WILL fail%s\n' "$YELLOW" "$STAGE" "$RESET"
 elif [ "$STAGE_DEGRADED" -eq 1 ]; then
-    printf '\n%s⚠ stage:%s DEGRADED CONFIDENCE — recorded; will fail ladder verification%s\n' "$YELLOW" "$STAGE" "$RESET"
-    exit 0
+    printf '\n%s⚠ stage:%s DEGRADED CONFIDENCE — exit 2 (a degraded required group never passes; set LADDER_CONTINUE_ON_DEGRADED=1 only in the orchestrator)%s\n' "$YELLOW" "$STAGE" "$RESET"
 else
     printf '\n%s✓ stage:%s FULL CONFIDENCE%s\n' "$GREEN" "$STAGE" "$RESET"
-    exit 0
 fi
+exit "$FINAL_RC"

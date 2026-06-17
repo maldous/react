@@ -23,10 +23,11 @@ compose-up-default:
 	bash scripts/compose/up.sh $(ENV) default
 	$(call OK,default services healthy for $(ENV))
 
-## compose-up-observability — Start Loki + Grafana + Alloy (observability profile)
-## Grafana UI: http://localhost:${GRAFANA_PORT:-3200}
+## compose-up-observability — Start Loki + Tempo + Grafana + Alloy (observability profile)
+## Grafana UI: http://localhost:${GRAFANA_PORT:-3200}. Tempo (traces) is part of the normal
+## stack so E2E trace-by-id correlation works at every stage (ADR-ACT-0285 closure / ADR-ACT-0284).
 compose-up-observability:
-	$(call STEP,compose: starting Loki + Grafana + Alloy ($(ENV)))
+	$(call STEP,compose: starting Loki + Tempo + Grafana + Alloy ($(ENV)))
 	bash scripts/compose/up.sh $(ENV) observability
 	$(call OK,Observability stack ready for $(ENV))
 

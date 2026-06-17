@@ -3,6 +3,10 @@
 // e2e-observability-correlation harness can find this run's lines in Loki (ADR-ACT-0285).
 import { test, expect } from "../support/correlation.ts";
 
+// Canonical scenario id (ADR-ACT-0285 closure) — declared explicitly for the whole
+// file, never derived from per-test titles. Matched by e2e/scenario-manifest.json.
+test.use({ scenarioId: "internal-smoke" });
+
 /**
  * Platform substrate E2E smoke tests.
  * Tests browser → React SPA → platform-api → browser roundtrip.

@@ -32,7 +32,7 @@ help:
 	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
 	  compose-up-default        'postgres redis clickhouse minio mailpit otel-collector' \
 	  compose-up-identity       '+ Keycloak SSO (identity profile)' \
-	  compose-up-observability  '+ Loki + Grafana + Alloy (observability profile)' \
+	  compose-up-observability  '+ Loki + Tempo + Grafana + Alloy (observability profile)' \
 	  compose-up-cloud          '+ LocalStack / AWS mocks (cloud-mocks profile)' \
 	  compose-up-external-mocks '+ WireMock (external-mocks profile)' \
 	  compose-up-web            '+ Caddy SPA + containerised platform-api' \

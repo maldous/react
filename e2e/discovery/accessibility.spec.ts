@@ -14,6 +14,10 @@ import { test, expect, E2E_STAGE } from "../support/correlation.ts";
 import AxeBuilder from "@axe-core/playwright";
 import { mkdirSync, writeFileSync } from "node:fs";
 
+// Canonical scenario id (ADR-ACT-0285 closure) — declared explicitly, never derived
+// from the test title. Matched by e2e/scenario-manifest.json.
+test.use({ scenarioId: "accessibility-safe-routes" });
+
 const EVIDENCE_DIR = "docs/evidence/e2e";
 
 // Profiles emulated via Playwright (keyboard-only + screen-reader are asserted
