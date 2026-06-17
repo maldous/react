@@ -46,9 +46,15 @@ test.describe("React SPA substrate", () => {
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible({ timeout: 10000 });
   });
 
-  test("/login renders sign in heading", async ({ page }) => {
+  test("/login renders the branded entry + sign-in CTA", async ({ page }) => {
     await page.goto("/login");
-    await expect(page.getByRole("heading", { name: /sign in/i })).toBeVisible();
+    // The /login page (ecd7ba1) is a branded entry screen: the platform-name h1
+    // plus a visible sign-in CTA that hands off to the BFF (/auth/login). It does
+    // NOT render a "Sign in" heading (older design). Assert the real, stable
+    // contract — the level-1 heading and the same data-testid the persona suites
+    // drive — matching the unit test (routes/__tests__/login.test.tsx).
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(page.getByTestId("sign-in-button")).toBeVisible();
   });
 
   test("Vite proxy: /api/session proxies to platform-api", async ({ page }) => {
