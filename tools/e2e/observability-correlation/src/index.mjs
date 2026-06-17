@@ -47,6 +47,39 @@ function lokiBase() {
   return `http://localhost:${port}`;
 }
 
+function apiBase() {
+  if (process.env["OBS_CORR_API_URL"]) return process.env["OBS_CORR_API_URL"];
+  const port = envValue("PLATFORM_API_PORT") || "3001";
+  return `http://localhost:${port}`;
+}
+
+const PROBE_SCENARIO = "observability-correlation-probe";
+
+/**
+ * Emit ONE deterministic correlatable log line: an unauthenticated GET to a
+ * protected route → http.request.rejected (WARN level) carrying testRunId. This
+ * is the failure-rootcause pattern (ADR-ACT-0285 Phase 5) and is what makes the
+ * proof reliable regardless of LOG_LEVEL: successful requests log at INFO (filtered
+ * when LOG_LEVEL=warn on the compose stages), so a denial is the dependable signal.
+ * Returns true if the request reached the BFF (so a line SHOULD exist in Loki).
+ */
+async function emitCorrelatableDenial() {
+  if (!TEST_RUN_ID) return false;
+  try {
+    await fetch(`${apiBase()}/api/admin/tenants`, {
+      headers: {
+        "x-e2e-test-run-id": TEST_RUN_ID,
+        "x-e2e-scenario-id": PROBE_SCENARIO,
+        "x-e2e-stage": STAGE,
+      },
+      signal: AbortSignal.timeout(8000),
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function tempoBase() {
   const port = envValue("TEMPO_HTTP_PORT");
   return port ? `http://localhost:${port}` : null;
@@ -69,21 +102,25 @@ async function lokiQuery(base, query) {
 /**
  * Pure correlation classifier (unit-tested). Drives the result purely from the
  * collected facts so the result→exit mapping is honest and testable.
- *   - Loki unreachable                         → DEGRADED
- *   - no testRunId provided                    → DEGRADED
- *   - testRunId provided, zero lines           → FAILED
+ *   - Loki unreachable                          → DEGRADED (can't collect)
+ *   - no testRunId provided                     → DEGRADED (nothing to correlate)
+ *   - no correlatable event could be emitted    → DEGRADED (app unreachable — can't prove)
+ *     (probeSent=false: the harness could not reach the BFF to emit a tagged line)
+ *   - event emitted, but ZERO lines found       → FAILED (pipeline didn't correlate it)
  *   - lines > 0 and (Tempo not required OR reachable) → FULL
- *   - lines > 0 but required Tempo unreachable  → DEGRADED
+ *   - lines > 0 but required Tempo unreachable   → DEGRADED
  */
 export function classifyCorrelation({
   lokiReachable,
   testRunId,
+  probeSent,
   lineCount,
   tempoRequired,
   tempoReachable,
 }) {
   if (!lokiReachable) return "DEGRADED";
   if (!testRunId) return "DEGRADED";
+  if (!probeSent) return "DEGRADED";
   if (!(lineCount > 0)) return "FAILED";
   if (tempoRequired && !tempoReachable) return "DEGRADED";
   return "FULL";
@@ -133,6 +170,21 @@ async function main() {
 
   let lokiReachable = false;
 
+  // --- Emit a deterministic correlatable line (shared testRunId), then correlate ---
+  // The E2E specs also stamp this testRunId, but successful requests log at INFO
+  // (filtered when the compose stages run at LOG_LEVEL=warn). A denial logs at WARN,
+  // so this guarantees ≥1 correlatable line through the REAL pipeline (header →
+  // platform-api log → Alloy → Loki) for the shared id.
+  const probeSent = await emitCorrelatableDenial();
+  report.probe = { scenario: PROBE_SCENARIO, sent: probeSent };
+  if (probeSent) {
+    await new Promise((r) => setTimeout(r, Number(process.env["OBS_CORR_INGEST_WAIT_MS"] ?? 9000)));
+  } else if (TEST_RUN_ID) {
+    report.notes.push(
+      "Could not reach the BFF to emit a correlatable denial — DEGRADED (cannot prove correlation)."
+    );
+  }
+
   // --- Loki correlation ---
   try {
     const base = lokiBase();
@@ -147,10 +199,19 @@ async function main() {
       const byScenario = new Map();
       let total = 0;
       for (const stream of result) {
-        const sid = stream.stream?.scenarioId || stream.stream?.detected_scenarioId || "unknown";
-        const n = stream.values?.length ?? 0;
-        total += n;
-        byScenario.set(sid, (byScenario.get(sid) ?? 0) + n);
+        for (const [, line] of stream.values ?? []) {
+          total++;
+          // scenarioId is structured metadata / a JSON field on the line, not a
+          // stream label — parse the line body, falling back to any label.
+          let sid = stream.stream?.scenarioId || stream.stream?.detected_scenarioId || "unknown";
+          try {
+            const o = JSON.parse(line);
+            if (o.scenarioId) sid = o.scenarioId;
+          } catch {
+            /* non-json line */
+          }
+          byScenario.set(sid, (byScenario.get(sid) ?? 0) + 1);
+        }
       }
       report.loki.lineCount = total;
       report.scenarios = [...byScenario.entries()].map(([scenarioId, lines]) => ({
@@ -210,6 +271,7 @@ async function main() {
   report.result = classifyCorrelation({
     lokiReachable,
     testRunId: TEST_RUN_ID,
+    probeSent,
     lineCount: report.loki.lineCount,
     tempoRequired: report.tempo.required,
     tempoReachable,

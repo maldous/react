@@ -9,6 +9,7 @@ const code = (args) => exitCodeForResult(classifyCorrelation(args));
 const base = {
   lokiReachable: true,
   testRunId: "run-test-x",
+  probeSent: true,
   lineCount: 5,
   tempoRequired: false,
   tempoReachable: false,
@@ -22,6 +23,11 @@ test("missing testRunId → DEGRADED (exit 2)", () => {
 test("Loki unreachable → DEGRADED (exit 2)", () => {
   assert.equal(classifyCorrelation({ ...base, lokiReachable: false }), "DEGRADED");
   assert.equal(code({ ...base, lokiReachable: false }), 2);
+});
+
+test("BFF unreachable (no probe emitted) → DEGRADED (exit 2) — can't prove, not FAILED", () => {
+  assert.equal(classifyCorrelation({ ...base, probeSent: false, lineCount: 0 }), "DEGRADED");
+  assert.equal(code({ ...base, probeSent: false, lineCount: 0 }), 2);
 });
 
 test("known testRunId with ZERO Loki lines → FAILED (exit 1)", () => {
