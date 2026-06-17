@@ -67,10 +67,10 @@ test("mixed SHAs fail the ladder", () => {
 
 test("attestation: evidence-only commit on top of the tested commit PASSES", () => {
   // tested sha != head, tested is an ancestor, and the only changes are evidence/adr.
-  const stages = ladder({ sha: "tested1" });
+  const stages = ladder({ sha: "1111111" });
   const r = verifyLadder(
     base(stages, {
-      head: "head999",
+      head: "2222222",
       testedShaIsAncestor: true,
       changedSinceTested: ["docs/evidence/stages/prod-latest.json", "docs/adr/ACTION-REGISTER.md"],
     })
@@ -79,10 +79,10 @@ test("attestation: evidence-only commit on top of the tested commit PASSES", () 
 });
 
 test("attestation: a non-evidence path changed since the tested commit FAILS (stale)", () => {
-  const stages = ladder({ sha: "tested1" });
+  const stages = ladder({ sha: "1111111" });
   const r = verifyLadder(
     base(stages, {
-      head: "head999",
+      head: "2222222",
       testedShaIsAncestor: true,
       changedSinceTested: [
         "docs/evidence/stages/prod-latest.json",
@@ -95,10 +95,10 @@ test("attestation: a non-evidence path changed since the tested commit FAILS (st
 });
 
 test("attestation: tested commit not an ancestor of HEAD FAILS", () => {
-  const stages = ladder({ sha: "tested1" });
+  const stages = ladder({ sha: "1111111" });
   const r = verifyLadder(
     base(stages, {
-      head: "head999",
+      head: "2222222",
       testedShaIsAncestor: false,
       changedSinceTested: ["docs/evidence/x.json"],
     })
@@ -119,4 +119,48 @@ test("freshness: a ladder older than maxAge FAILS", () => {
   const r = verifyLadder(base(ladder(), { nowMs: T0 + 100 * HOUR, maxAgeHours: 24 }));
   assert.equal(r.ok, false);
   assert.ok(r.failures.some((f) => /stale/.test(f)));
+});
+
+// ── attestation security (#5) ────────────────────────────────────────────────
+test("a malicious / malformed gitSha is REJECTED before any git call", () => {
+  for (const evil of [
+    "$(rm -rf /)",
+    "abc;reboot",
+    "--upload-pack=evil",
+    "HEAD origin",
+    "../etc",
+    "zzzz",
+  ]) {
+    const stages = ladder({ sha: evil });
+    const r = verifyLadder(base(stages, { head: "abc1234" }));
+    assert.equal(r.ok, false, `evil sha must fail: ${evil}`);
+    assert.ok(
+      r.failures.some((f) => /not a valid git object id/.test(f)),
+      `${evil}: ${r.failures.join("|")}`
+    );
+  }
+});
+
+test("a non-hex HEAD is REJECTED", () => {
+  const r = verifyLadder(base(ladder(), { head: "$(touch pwned)" }));
+  assert.equal(r.ok, false);
+  assert.ok(r.failures.some((f) => /HEAD sha.*not a valid git object id/.test(f)));
+});
+
+test("fail-closed: an unresolved git diff (null changedSinceTested) FAILS", () => {
+  const stages = ladder({ sha: "1111111" });
+  const r = verifyLadder(
+    base(stages, { head: "2222222", testedShaIsAncestor: true, changedSinceTested: null })
+  );
+  assert.equal(r.ok, false);
+  assert.ok(r.failures.some((f) => /could not compute the diff.*fail-closed/.test(f)));
+});
+
+test("fail-closed: a non-ancestor / failed merge-base FAILS (not silently approved)", () => {
+  const stages = ladder({ sha: "1111111" });
+  const r = verifyLadder(
+    base(stages, { head: "2222222", testedShaIsAncestor: false, changedSinceTested: [] })
+  );
+  assert.equal(r.ok, false);
+  assert.ok(r.failures.some((f) => /not an ancestor of HEAD/.test(f)));
 });

@@ -43,27 +43,26 @@ include make/help.mk
 # in each env file: http://staging.aldous.info and https://aldous.info). If the
 # domains are unreachable, make all fails — this is intentional. The confidence
 # ladder must confirm the entire stack, not just local containers.
-.PHONY: all all-promote
-## all — Full confidence ladder: clean-all → preflight → quality → env-validate-all → env-drift-check → all-promote → evidence → env-status
+.PHONY: all all-promote _all-promote-internal
+## all — Full confidence ladder: clean-all → preflight → quality → env-validate-all → env-drift-check → _all-promote-internal → evidence → env-status
 ## clean-all tears down dev and test (ephemeral). Staging and prod are preserved or started.
+## Uses _all-promote-internal (the stage runs) then `evidence` ONCE — never via all-promote,
+## so the ladder runs and evidence is verified exactly once.
 all: clean-all \
      preflight \
      quality \
      env-validate-all \
      env-drift-check \
-     all-promote \
+     _all-promote-internal \
      evidence \
      env-status
 
-## all-promote — run the full promote ladder
-## Sentry starts first (own project, survives env resets). external-caddy restarts after
-## destructive stages (dev+test kill react-dev). staging/prod E2E need both live.
-## ADR-ACT-0285 (closure): the orchestrator sets LADDER_CONTINUE_ON_DEGRADED=1 — the EXPLICIT
-## continuation mode — so a DEGRADED stage does not halt the ladder and the run still collects
-## every stage's evidence; the final `evidence` target's verify-ladder then FAILS make all on
-## any non-FULL stage. A FAILED stage still halts immediately (run-stage exit 1). A DIRECT
-## `make stage-<stage>` (no flag) returns exit 2 on DEGRADED — it never lies about its result.
-all-promote:
+## _all-promote-internal — run the stage ladder (no verification). Internal: the orchestrator
+## sets LADDER_CONTINUE_ON_DEGRADED=1 — the EXPLICIT continuation mode — so a DEGRADED stage
+## does not halt the run and every stage's evidence is collected; a FAILED stage still halts
+## immediately (run-stage exit 1). A DIRECT `make stage-<stage>` (no flag) returns exit 2 on
+## DEGRADED. Sentry starts first (own project); external-caddy restarts after destructive stages.
+_all-promote-internal:
 	docker network create sonar-bridge 2>/dev/null || true
 	$(MAKE) sentry-up
 	LADDER_CONTINUE_ON_DEGRADED=1 $(MAKE) stage-dev
@@ -71,3 +70,9 @@ all-promote:
 	$(MAKE) external-caddy-up
 	LADDER_CONTINUE_ON_DEGRADED=1 $(MAKE) stage-staging
 	LADDER_CONTINUE_ON_DEGRADED=1 $(MAKE) stage-prod
+
+## all-promote — run the full promote ladder AND verify it. A user invoking `make all-promote`
+## directly gets the SAME honest result as `make all`: the stage ladder followed by `evidence`
+## (verify-ladder), which FAILS on any non-FULL/degraded/stale stage. (ADR-ACT-0285 closure —
+## direct invocation no longer reports success when a stage DEGRADED.)
+all-promote: _all-promote-internal evidence

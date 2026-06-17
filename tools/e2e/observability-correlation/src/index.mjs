@@ -37,12 +37,25 @@ import {
   requiredTraceScenarios,
   logRequirementForStage,
 } from "../../scenario-manifest.mjs";
-import {
-  parseTraceId,
-  pollTempoTrace,
-  extractSpans,
-  assertTraceContract,
-} from "../../tempo-trace.mjs";
+import { evaluateTraceScenario } from "../../tempo-trace.mjs";
+
+/** Describe why a trace scenario failed, for the evidence notes. */
+function describeTraceFailure(t, sc) {
+  if (!t) return "no candidate trace id";
+  if (!t.found)
+    return `trace ${t.traceId} ${t.classification === "missing" ? "missing in Tempo after polling (genuine 404)" : "could not be retrieved (backend/network)"}`;
+  const c = t.contract ?? {};
+  const why = [];
+  if ((c.missingServices ?? []).length)
+    why.push(`missing services: ${c.missingServices.join(", ")}`);
+  if (c.routeRequired && !c.routeFound)
+    why.push(`route '${sc.expectedTraces.route}' not in any span`);
+  if ((c.secretHits ?? []).length)
+    why.push(`${c.secretHits.length} secret(s) leaked into span attributes`);
+  if ((c.traceIdMismatches ?? []).length)
+    why.push(`${c.traceIdMismatches.length} span(s) do not belong to the requested trace id`);
+  return why.join("; ") || "contract not satisfied";
+}
 
 const ROOT = resolve(".");
 const STAGE = (process.env["STAGE"] || process.env["E2E_STAGE"] || "local").toLowerCase();
@@ -359,96 +372,73 @@ async function main() {
       process.env["SENTRY_API_TOKEN"],
       process.env["KEYCLOAK_TEST_USERNAME"],
     ].filter(Boolean);
+    const attempts = Number(process.env["TEMPO_POLL_ATTEMPTS"] ?? 8);
+    const intervalMs = Number(process.env["TEMPO_POLL_INTERVAL_MS"] ?? 2000);
     const traceOutcomes = [];
+    let anyDegraded = false;
     for (const sc of traceScenarios) {
       const observed = observedMap.get(sc.scenarioId);
-      const rawTraceId = observed ? [...observed.traceIds][0] : null;
-      const traceId = parseTraceId(rawTraceId);
-      const outcome = {
-        scenarioId: sc.scenarioId,
-        traceId: traceId ?? rawTraceId ?? null,
-        found: false,
-        services: [],
-        missingServices: sc.expectedTraces.services ?? [],
-        routeFound: null,
-        secretHits: [],
-        result: "FAILED",
-      };
-      if (!observed) {
-        outcome.result = "FAILED";
-        outcome.note = "no Loki line for this scenario — cannot extract a traceId";
+      const traceIds = observed ? [...observed.traceIds] : [];
+      if (traceIds.length === 0) {
+        // A trace-required scenario with no correlatable Loki line is already MISSING in the
+        // log completeness (FAILED there); fail the trace too — there is no id to retrieve.
+        traceOutcomes.push({
+          scenarioId: sc.scenarioId,
+          result: "FAILED",
+          chosenTraceId: null,
+          candidateTraceIds: [],
+          found: false,
+          note: "no correlatable Loki line — cannot extract a traceId",
+        });
+        tempoResult = worstResult([tempoResult, "FAILED"]);
         report.notes.push(
           `FAILED: trace scenario '${sc.scenarioId}' had no correlatable Loki line.`
         );
-        traceOutcomes.push(outcome);
-        traceResultPush();
         continue;
       }
-      if (!traceId) {
-        outcome.result = "FAILED";
-        outcome.note = "Loki line carried no valid traceId";
-        report.notes.push(`FAILED: scenario '${sc.scenarioId}' Loki line has no valid traceId.`);
-        traceOutcomes.push(outcome);
-        traceResultPush();
-        continue;
-      }
-      const poll = await pollTempoTrace(tb, traceId, {
-        attempts: Number(process.env["TEMPO_POLL_ATTEMPTS"] ?? 8),
-        intervalMs: Number(process.env["TEMPO_POLL_INTERVAL_MS"] ?? 2000),
+      // Evaluate ALL candidate trace ids (never blindly the first); allTraceIds in the
+      // manifest forces every id to satisfy the contract, else first-pass wins.
+      const evald = await evaluateTraceScenario(tb, traceIds, sc.expectedTraces, {
+        attempts,
+        intervalMs,
+        extraSecrets,
       });
-      report.tempo.status = poll.reachable ? "reachable" : "unreachable";
-      if (!poll.reachable) {
-        outcome.result = "DEGRADED";
-        outcome.note = `Tempo unreachable: ${poll.error ?? "network error"}`;
-        report.notes.push(`DEGRADED: Tempo unreachable while asserting '${sc.scenarioId}'.`);
-        traceOutcomes.push(outcome);
-        traceResultPush();
-        continue;
-      }
-      if (!poll.found) {
-        outcome.result = "FAILED";
-        outcome.note = `trace ${traceId} not found in Tempo after ${poll.attempts} attempt(s) (status ${poll.status})`;
+      if (evald.result === "DEGRADED") anyDegraded = true;
+      const best =
+        evald.perTrace.find((t) => t.found && t.contract?.ok) ??
+        evald.perTrace.find((t) => t.found) ??
+        evald.perTrace[0];
+      traceOutcomes.push({
+        scenarioId: sc.scenarioId,
+        result: evald.result,
+        chosenTraceId: evald.chosenTraceId,
+        candidateTraceIds: traceIds,
+        found: Boolean(best?.found),
+        services: best?.contract?.services ?? [],
+        missingServices: best?.contract?.missingServices ?? sc.expectedTraces.services ?? [],
+        routeFound: best?.contract?.routeFound ?? null,
+        secretHits: best?.contract?.secretHits ?? [],
+        traceIdMismatches: best?.contract?.traceIdMismatches ?? [],
+        spanCount: best?.contract?.spanCount ?? 0,
+      });
+      // Aggregate result worst-wins; a later PASS never overwrites an earlier FAIL/DEGRADE.
+      tempoResult = worstResult([tempoResult, evald.result]);
+      if (evald.result === "PASSED")
         report.notes.push(
-          `FAILED: Loki line exists for '${sc.scenarioId}' but trace ${traceId} is missing in Tempo after polling.`
+          `Trace ${evald.chosenTraceId} for '${sc.scenarioId}' matched in Tempo: services [${(best?.contract?.services ?? []).join(", ")}].`
         );
-        traceOutcomes.push(outcome);
-        traceResultPush();
-        continue;
-      }
-      const spans = extractSpans(poll.trace);
-      const contract = assertTraceContract(spans, sc.expectedTraces, extraSecrets);
-      outcome.found = true;
-      outcome.services = contract.services;
-      outcome.missingServices = contract.missingServices;
-      outcome.routeFound = contract.routeFound;
-      outcome.secretHits = contract.secretHits;
-      outcome.spanCount = contract.spanCount;
-      outcome.result = contract.ok ? "PASSED" : "FAILED";
-      if (!contract.ok) {
-        const why = [];
-        if (contract.missingServices.length)
-          why.push(`missing services: ${contract.missingServices.join(", ")}`);
-        if (!contract.routeFound)
-          why.push(`expected route '${sc.expectedTraces.route}' not in any span`);
-        if (contract.secretHits.length)
-          why.push(`secret(s) leaked into ${contract.secretHits.length} span attribute(s)`);
-        outcome.note = why.join("; ");
-        report.notes.push(`FAILED: trace for '${sc.scenarioId}' — ${outcome.note}`);
-      } else {
+      else if (evald.result === "DEGRADED")
         report.notes.push(
-          `Trace ${traceId} for '${sc.scenarioId}' matched in Tempo: services [${contract.services.join(", ")}], route ${contract.routeFound}.`
+          `DEGRADED: Tempo could not prove the trace for '${sc.scenarioId}' (backend unreachable/5xx/auth/malformed).`
         );
-      }
-      traceOutcomes.push(outcome);
-      traceResultPush();
-
-      function traceResultPush() {
-        const r = traceOutcomes[traceOutcomes.length - 1].result;
-        tempoResult = worstResult([tempoResult, r]);
-      }
+      else
+        report.notes.push(
+          `FAILED: trace for '${sc.scenarioId}' — ${describeTraceFailure(best, sc)}.`
+        );
     }
     report.traces = traceOutcomes;
-    if (report.tempo.status === "not-configured") report.tempo.status = "reachable";
+    // Monotonic Tempo status across all scenarios: any degraded backend keeps it degraded.
+    report.tempo.status = anyDegraded ? "degraded" : "reachable";
   }
 
   // --- overall result ---

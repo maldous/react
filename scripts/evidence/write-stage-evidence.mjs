@@ -113,16 +113,16 @@ const evidence = {
   e2eCommand: e2eCommands[stage] ?? "unknown",
   urlsChecked: [`http://localhost:${apiPort}/healthz`],
   result,
-  // ADR-ACT-0285 Phase 2 — explicit confidence. FULL only when passed; DEGRADED
-  // when real auth was skipped (staging/prod); FAILED on any failure. Only FULL
-  // passes staging/prod promotion (verify-ladder).
+  // ADR-ACT-0285 (closure) — explicit confidence. FULL only when every required group is
+  // proven; DEGRADED when ANY required contract-aware group could not be proven; FAILED on
+  // any failure. No stage passes the ladder unless FULL (verify-ladder, all four stages).
   confidence: result === "passed" ? "FULL" : result === "degraded" ? "DEGRADED" : "FAILED",
   durationSeconds,
   failureSummary:
     result === "failed"
       ? "See stage output for details."
       : result === "degraded"
-        ? "Real-auth E2E was skipped — staging/prod cannot pass promotion without FULL confidence (real auth against a real domain)."
+        ? "A required group could not be proven (DEGRADED) — e.g. observability-correlation (Loki completeness / required Tempo trace), failure-rootcause, sentry-assertion backend unavailable, OR real-auth E2E skipped at staging/prod. Not auth-only; never passes the ladder."
         : null,
 };
 

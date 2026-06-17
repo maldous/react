@@ -105,7 +105,6 @@ export function expand(model) {
       expectedLogs: s.expectedLogs ?? [],
       expectedTraces: s.expectedTraces ?? null,
       expectedSentryEvents: s.expectedSentryEvents ?? [],
-      expectedOperations: s.expectedOperations ?? [],
       correlation: {
         logs: s.correlation?.logs ?? "none",
         traces: s.correlation?.traces ?? "none",
@@ -144,7 +143,6 @@ export function expand(model) {
         expectedLogs: d.expectedLogs ?? [],
         expectedTraces: d.expectedTraces ?? null,
         expectedSentryEvents: d.expectedSentryEvents ?? [],
-        expectedOperations: d.expectedOperations ?? [],
         correlation: {
           logs: d.correlation?.logs ?? "none",
           traces: d.correlation?.traces ?? "none",

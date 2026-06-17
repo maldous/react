@@ -1,16 +1,32 @@
-// ADR-ACT-0285 (closure) — Tempo trace-by-id retrieval + assertion.
+// ADR-ACT-0285 (closure + hardening) — Tempo trace-by-id retrieval + assertion.
 //
-// Real trace correlation (not liveness): given a traceId extracted from a correlated
-// Loki log line, poll Tempo for ingestion, fetch the trace by id, parse the returned
-// OpenTelemetry JSON, and assert the expected service/span contract — plus a guard that
-// no secret/credential leaked into captured span attributes. Pure Node + fetch; the HTTP
+// Real trace correlation: given a traceId extracted from a correlated Loki log line, poll
+// Tempo for ingestion, fetch the trace by id, parse the OpenTelemetry JSON, and assert the
+// expected service/span contract — with a per-span trace-membership check, exact/normalised
+// route matching, and a guard that no secret leaked into captured span attributes. The HTTP
 // surface is injectable (fetchImpl/sleepImpl) so it is unit-tested without a live Tempo.
 
-/** A 16- or 32-hex-char OpenTelemetry trace id (lower-cased), or null if invalid. */
+/** A 32-hex-char (128-bit) OpenTelemetry trace id, lower-cased, or null. 16-hex (span-id
+ *  sized) values are REJECTED — a trace id is always 128 bits. */
 export function parseTraceId(raw) {
   if (typeof raw !== "string") return null;
   const t = raw.trim().toLowerCase();
-  return /^[0-9a-f]{16}$|^[0-9a-f]{32}$/.test(t) ? t : null;
+  return /^[0-9a-f]{32}$/.test(t) ? t : null;
+}
+
+/** Normalise an OTLP traceId that may be hex (32 chars) OR base64 (Tempo JSON default) to
+ *  a 32-hex lower-cased id, or null when it cannot be interpreted as a 128-bit id. */
+export function normalizeTraceId(raw) {
+  if (typeof raw !== "string" || raw.length === 0) return null;
+  const t = raw.trim();
+  if (/^[0-9a-f]{32}$/i.test(t)) return t.toLowerCase();
+  try {
+    const buf = Buffer.from(t, "base64");
+    if (buf.length === 16) return buf.toString("hex");
+  } catch {
+    /* not base64 */
+  }
+  return null;
 }
 
 function attrMap(attributes) {
@@ -30,7 +46,7 @@ function attrMap(attributes) {
 
 /** Flatten a Tempo/OTLP trace JSON (handles `batches` and `resourceSpans`, and both
  *  `scopeSpans` and legacy `instrumentationLibrarySpans`) into a flat span list:
- *  [{ service, name, kind, attributes:{} }]. */
+ *  [{ service, name, kind, traceId(normalised|null), spanId, attributes:{} }]. */
 export function extractSpans(traceJson) {
   const batches = traceJson?.batches ?? traceJson?.resourceSpans ?? [];
   const spans = [];
@@ -44,6 +60,8 @@ export function extractSpans(traceJson) {
           service,
           name: sp.name ?? "",
           kind: sp.kind ?? "",
+          traceId: normalizeTraceId(sp.traceId ?? ""),
+          spanId: sp.spanId ?? "",
           attributes: attrMap(sp.attributes),
         });
       }
@@ -54,11 +72,39 @@ export function extractSpans(traceJson) {
 
 const ROUTE_ATTR_KEYS = ["http.route", "http.target", "url.path", "http.url", "url.full"];
 
-// Attribute keys/values that must never appear in captured span attributes.
+/** Normalise a route/path for comparison: take the pathname, strip a trailing slash. */
+function normPath(v) {
+  if (typeof v !== "string" || !v) return "";
+  let p = v;
+  try {
+    // absolute url → pathname; relative → strip query/hash
+    p = v.startsWith("http") ? new URL(v).pathname : v.split(/[?#]/)[0];
+  } catch {
+    p = v.split(/[?#]/)[0];
+  }
+  return p.length > 1 ? p.replace(/\/+$/, "") : p;
+}
+
+/** Does any span reference `route` by an EXACT/normalised path match (preferred), with a
+ *  guarded substring fallback only when no exact match exists? */
+export function routeFoundIn(spans, route) {
+  const want = normPath(route);
+  if (!want) return true;
+  let substringHit = false;
+  for (const sp of spans) {
+    for (const k of ROUTE_ATTR_KEYS) {
+      const v = sp.attributes[k];
+      if (typeof v !== "string" || !v) continue;
+      if (normPath(v) === want) return true; // exact/normalised
+      if (v.includes(route)) substringHit = true; // last-resort fallback
+    }
+  }
+  return substringHit;
+}
+
 const SECRET_KEY_RE = /password|secret|token|authorization|cookie|api[-_]?key|bearer/i;
 
-/** Scan span attributes for leaked secrets/credentials. Returns redacted hits.
- *  extraSecrets: concrete secret VALUES (e.g. the E2E password) that must not appear. */
+/** Scan span attributes for leaked secrets/credentials. Returns redacted hits. */
 export function scanForSecrets(spans, extraSecrets = []) {
   const hits = [];
   const secretVals = extraSecrets.filter((s) => typeof s === "string" && s.length >= 6);
@@ -88,24 +134,28 @@ export function scanForSecrets(spans, extraSecrets = []) {
 /**
  * Assert a trace's span set against the expected contract.
  *   expected: { services: string[], route?: string }
- * Returns { ok, missingServices, routeFound, routeRequired, secretHits, services }.
+ *   opts: { expectedTraceId?: 32-hex, extraSecrets?: string[] }
+ * Returns { ok, missingServices, routeFound, routeRequired, secretHits, services,
+ *           spanCount, traceIdMismatches }.
  */
-export function assertTraceContract(spans, expected, extraSecrets = []) {
+export function assertTraceContract(spans, expected, opts = {}) {
   const services = [...new Set(spans.map((s) => s.service).filter(Boolean))];
   const missingServices = (expected.services ?? []).filter((s) => !services.includes(s));
-  let routeFound = true;
   const routeRequired = Boolean(expected.route);
-  if (routeRequired) {
-    const want = expected.route;
-    routeFound = spans.some((sp) =>
-      ROUTE_ATTR_KEYS.some((k) => {
-        const v = sp.attributes[k];
-        return typeof v === "string" && v.includes(want);
-      })
-    );
-  }
-  const secretHits = scanForSecrets(spans, extraSecrets);
-  const ok = missingServices.length === 0 && routeFound && secretHits.length === 0;
+  const routeFound = routeRequired ? routeFoundIn(spans, expected.route) : true;
+  const secretHits = scanForSecrets(spans, opts.extraSecrets ?? []);
+  // Every span that carries a parseable traceId must belong to the requested trace.
+  const want = opts.expectedTraceId ? parseTraceId(opts.expectedTraceId) : null;
+  const traceIdMismatches = want
+    ? spans
+        .filter((s) => s.traceId && s.traceId !== want)
+        .map((s) => ({ service: s.service, span: s.name, traceId: s.traceId }))
+    : [];
+  const ok =
+    missingServices.length === 0 &&
+    routeFound &&
+    secretHits.length === 0 &&
+    traceIdMismatches.length === 0;
   return {
     ok,
     missingServices,
@@ -114,16 +164,19 @@ export function assertTraceContract(spans, expected, extraSecrets = []) {
     secretHits,
     services,
     spanCount: spans.length,
+    traceIdMismatches,
   };
 }
 
 const defaultSleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /**
- * Fetch a trace by id, polling for ingestion (Tempo returns 404 until the trace lands).
- * Returns { reachable, found, status, trace, attempts, error }.
- *   - reachable=false → Tempo could not be contacted at all (network/timeout).
- *   - found=false but reachable=true → repeatedly 404 (or empty) after all attempts.
+ * Fetch a trace by id, polling for ingestion. Returns
+ *   { classification: 'found'|'missing'|'degraded', reachable, found, status, trace, attempts, error }
+ *   - 'found'      → 200 with ≥1 span (success).
+ *   - 'missing'    → reachable, only genuine 404s (or 200-empty) after all attempts → FAILED upstream.
+ *   - 'degraded'   → network error / timeout / 5xx / 401/403 / malformed → DEGRADED upstream (could
+ *                    not be proven, NOT a genuine absence).
  */
 export async function pollTempoTrace(tempoBase, traceId, opts = {}) {
   const attempts = opts.attempts ?? 8;
@@ -135,6 +188,8 @@ export async function pollTempoTrace(tempoBase, traceId, opts = {}) {
   let reachable = false;
   let lastStatus = 0;
   let lastError = null;
+  let sawDegrading = false; // network / 5xx / auth / malformed → cannot prove absence
+  let saw404 = false;
   for (let i = 0; i < attempts; i++) {
     try {
       const res = await fetchImpl(url, {
@@ -148,19 +203,14 @@ export async function pollTempoTrace(tempoBase, traceId, opts = {}) {
         try {
           trace = await res.json();
         } catch {
-          // 200 with an unparseable body is a malformed response, not a missing trace.
-          return {
-            reachable,
-            found: false,
-            status: res.status,
-            trace: null,
-            attempts: i + 1,
-            error: "malformed-json",
-          };
+          sawDegrading = true; // 200 but unparseable → backend problem, not a clean absence
+          lastError = "malformed-json";
+          if (i < attempts - 1) await sleep(intervalMs);
+          continue;
         }
-        const spanCount = extractSpans(trace).length;
-        if (spanCount > 0)
+        if (extractSpans(trace).length > 0)
           return {
+            classification: "found",
             reachable,
             found: true,
             status: res.status,
@@ -169,11 +219,88 @@ export async function pollTempoTrace(tempoBase, traceId, opts = {}) {
             error: null,
           };
         // 200 but no spans yet → keep polling (partial ingest).
+      } else if (res.status === 404) {
+        saw404 = true;
+      } else if (res.status >= 500 || res.status === 401 || res.status === 403) {
+        sawDegrading = true; // backend/auth/config problem, not a genuine absence
+      } else {
+        sawDegrading = true;
       }
     } catch (err) {
       lastError = String(err?.message ?? err);
+      sawDegrading = true; // network error / timeout
     }
     if (i < attempts - 1) await sleep(intervalMs);
   }
-  return { reachable, found: false, status: lastStatus, trace: null, attempts, error: lastError };
+  // After polling: a genuine, repeatable 404 with NO degrading signal = missing (FAILED);
+  // anything else (network/5xx/auth/malformed, or never a clean answer) = degraded.
+  const classification = saw404 && !sawDegrading ? "missing" : "degraded";
+  return {
+    classification,
+    reachable,
+    found: false,
+    status: lastStatus,
+    trace: null,
+    attempts,
+    error: lastError,
+  };
+}
+
+/**
+ * Evaluate a trace scenario that may have MULTIPLE candidate trace ids. Does NOT blindly
+ * take the first id. Returns { result: 'PASSED'|'FAILED'|'DEGRADED', chosenTraceId, perTrace }.
+ *   - expected.allTraceIds === true → EVERY id must satisfy the contract (worst wins).
+ *   - otherwise → the FIRST id that satisfies the contract PASSES; else the worst outcome
+ *     across all ids (a 'missing' 404 → FAILED beats a 'degraded' only if no id passed).
+ */
+export async function evaluateTraceScenario(tempoBase, traceIds, expected, opts = {}) {
+  const ids = (traceIds ?? []).map(parseTraceId).filter(Boolean);
+  if (ids.length === 0)
+    return {
+      result: "FAILED",
+      chosenTraceId: null,
+      perTrace: [],
+      reason: "no valid 32-hex trace id from Loki",
+    };
+  const requireAll = expected.allTraceIds === true;
+  const perTrace = [];
+  let sawMissing = false;
+  let sawDegraded = false;
+  let allPass = true;
+  let firstPass = null;
+  for (const id of ids) {
+    const poll = await pollTempoTrace(tempoBase, id, opts);
+    if (poll.classification !== "found") {
+      allPass = false;
+      if (poll.classification === "missing") sawMissing = true;
+      else sawDegraded = true;
+      perTrace.push({
+        traceId: id,
+        found: false,
+        classification: poll.classification,
+        error: poll.error,
+        status: poll.status,
+      });
+      if (!requireAll) continue;
+      continue;
+    }
+    const spans = extractSpans(poll.trace);
+    const contract = assertTraceContract(spans, expected, {
+      expectedTraceId: id,
+      extraSecrets: opts.extraSecrets,
+    });
+    perTrace.push({ traceId: id, found: true, classification: "found", contract });
+    if (contract.ok) {
+      if (!firstPass) firstPass = id;
+      if (!requireAll) return { result: "PASSED", chosenTraceId: id, perTrace };
+    } else {
+      allPass = false;
+    }
+  }
+  if (requireAll)
+    return { result: allPass ? "PASSED" : "FAILED", chosenTraceId: firstPass, perTrace };
+  if (firstPass) return { result: "PASSED", chosenTraceId: firstPass, perTrace };
+  // No id passed the contract: a genuine 404 absence is FAILED; otherwise DEGRADED.
+  const result = sawMissing ? "FAILED" : sawDegraded ? "DEGRADED" : "FAILED";
+  return { result, chosenTraceId: null, perTrace };
 }

@@ -405,6 +405,21 @@
         "expected-route-data-error"
       ],
       "owner": "ADR-0075; ADR-ACT-0285"
+    },
+    {
+      "id": "discovery-browser-bff-trace",
+      "file": "e2e/discovery/browser-bff-trace.spec.ts",
+      "stageMin": "test",
+      "authMode": "unauthenticated",
+      "destructive": false,
+      "surfaces": ["route:/", "api:/api/admin/tenants", "trace:browser-to-bff"],
+      "requiredCapabilities": ["service-catalog-readiness"],
+      "expectedLogs": ["http.request.rejected"],
+      "expectedMetrics": [],
+      "expectedTraces": ["react-enterprise-app", "platform-api"],
+      "expectedSentryEvents": [],
+      "failureModes": ["trace-not-propagated", "browser-span-missing", "bff-span-missing"],
+      "owner": "ADR-0075; ADR-ACT-0285 (closure — browser↔BFF distributed trace)"
     }
   ],
   "capabilityExemptions": [

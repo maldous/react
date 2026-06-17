@@ -4,6 +4,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   correlatedApiContext,
+  correlatedRouteHeaders,
   isSameOrigin,
   mergeHeaders,
   scenario,
@@ -11,8 +12,19 @@ import {
   SCENARIO_ANNOTATION,
 } from "../../e2e/support/correlation-core.mjs";
 
-const APP = "https://app.aldous.info";
+const APP = "https://aldous.info";
 const HEADERS = { "x-e2e-test-run-id": "run-1", "x-e2e-scenario-id": "s1", "x-e2e-stage": "test" };
+
+// The exact set of hostile / cross-origin URLs that must NEVER receive correlation headers.
+const HOSTILE = [
+  ["subdomain-suffix spoof", "https://aldous.info.evil.example/x"],
+  ["userinfo spoof", "https://aldous.info@evil.example/x"],
+  ["keycloak subdomain", "https://keycloak.aldous.info/realms/x"],
+  ["cloudflare analytics", "https://cloudflareinsights.com/cdn-cgi/rum"],
+  ["different scheme", "http://aldous.info/x"],
+  ["different port", "https://aldous.info:8443/x"],
+  ["different host", "https://evil.example/x"],
+];
 
 test("isSameOrigin: only the platform origin matches", () => {
   assert.equal(isSameOrigin(`${APP}/api/x`, APP), true);
@@ -59,6 +71,42 @@ test("correlatedApiContext injects headers on same-origin requests for every ver
     undefined,
     "cross-origin (Keycloak) fetch gets NO correlation headers"
   );
+});
+
+test("BROWSER route injection (correlatedRouteHeaders) adds headers ONLY same-origin", () => {
+  // same-origin → merged headers returned (this is exactly what the context.route fixture sends)
+  const same = correlatedRouteHeaders(`${APP}/api/session`, { accept: "x" }, APP, HEADERS);
+  assert.equal(same["x-e2e-scenario-id"], "s1");
+  assert.equal(same["accept"], "x", "existing request headers (incl. Faro traceparent) preserved");
+  // relative is resolved against appOrigin → same-origin
+  assert.ok(correlatedRouteHeaders("/api/theme", {}, APP, HEADERS));
+  // every hostile/cross-origin URL → null (pass through untouched, NO correlation headers)
+  for (const [label, url] of HOSTILE)
+    assert.equal(
+      correlatedRouteHeaders(url, {}, APP, HEADERS),
+      null,
+      `route must NOT tag: ${label}`
+    );
+});
+
+test("API context wrapping (correlatedApiContext) tags ONLY same-origin, never hostile origins", () => {
+  for (const [label, url] of HOSTILE) {
+    const calls = [];
+    const wrapped = correlatedApiContext(
+      { get: (u, o) => calls.push(o), fetch: (u, o) => calls.push(o) },
+      APP,
+      HEADERS
+    );
+    wrapped.get(url);
+    wrapped.fetch(url, { method: "POST" });
+    assert.equal(calls[0]?.headers, undefined, `API get must NOT tag: ${label}`);
+    assert.equal(calls[1]?.headers, undefined, `API fetch must NOT tag: ${label}`);
+  }
+  // sanity: same-origin IS tagged
+  const ok = [];
+  const w = correlatedApiContext({ get: (u, o) => ok.push(o) }, APP, HEADERS);
+  w.get(`${APP}/api/session`);
+  assert.equal(ok[0].headers["x-e2e-scenario-id"], "s1");
 });
 
 test("scenario() builds the annotation; scenarioIdFromTitle sanitises (fallback only)", () => {

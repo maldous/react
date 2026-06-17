@@ -27,6 +27,7 @@ import {
   scenarioIdFromTitle,
   correlationHeaders,
   correlatedApiContext,
+  correlatedRouteHeaders,
 } from "./correlation-core.mjs";
 
 export {
@@ -63,14 +64,14 @@ export const test = base.extend<{ scenarioId: string }>({
     const sid = resolveScenarioId(scenarioId, testInfo);
     const headers = correlationHeaders(sid);
     const appOrigin = baseURL ? new URL(baseURL).origin : null;
-    // Browser requests (navigation + in-page fetch) → same-origin header injection.
+    // Browser requests (navigation + in-page fetch) → STRICT same-origin header injection
+    // via correlatedRouteHeaders (URL-origin parse, never a string prefix — so
+    // https://aldous.info.evil.example / https://aldous.info@evil.example never receive ids).
     await context.route("**/*", async (route) => {
       const request = route.request();
-      if (appOrigin && request.url().startsWith(appOrigin)) {
-        await route.continue({ headers: { ...request.headers(), ...headers } });
-      } else {
-        await route.continue();
-      }
+      const merged = correlatedRouteHeaders(request.url(), request.headers(), appOrigin, headers);
+      if (merged) await route.continue({ headers: merged });
+      else await route.continue();
     });
     await use(context);
   },

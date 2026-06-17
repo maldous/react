@@ -23,7 +23,7 @@
  */
 
 import fs from "node:fs";
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 
 const DIR = "docs/evidence/stages";
 export const LADDER = ["dev", "test", "staging", "prod"];
@@ -43,6 +43,10 @@ export const APPROVED_PATH_RE = /^(docs\/evidence\/|docs\/adr\/)/;
  *   nowMs, maxAgeHours
  * Returns { ok, failures }.
  */
+/** A Git short/long object id: 7–40 lowercase hex. Anything else in an evidence file's
+ *  gitSha is rejected BEFORE it can ever reach a git subprocess (no shell injection). */
+export const GIT_SHA_RE = /^[0-9a-f]{7,40}$/;
+
 export function verifyLadder({
   stages,
   head,
@@ -52,6 +56,14 @@ export function verifyLadder({
   maxAgeHours = MAX_AGE_HOURS,
 }) {
   const failures = [];
+
+  // 0. SHA hygiene — every recorded gitSha (and HEAD) must be a strict hex id. A malicious
+  //    or malformed sha (e.g. "$(rm -rf /)") fails here and is NEVER passed to git.
+  if (typeof head !== "string" || !GIT_SHA_RE.test(head))
+    failures.push(`HEAD sha '${head}' is not a valid git object id`);
+  for (const [stage, ev] of Object.entries(stages))
+    if (typeof ev.gitSha !== "string" || !GIT_SHA_RE.test(ev.gitSha))
+      failures.push(`${stage}: gitSha '${ev.gitSha}' is not a valid git object id`);
 
   // 1. presence
   for (const s of LADDER)
@@ -75,14 +87,19 @@ export function verifyLadder({
     );
   const testedSha = shas.length === 1 ? shas[0] : null;
 
-  // 4. attestation (evidence-only-commit model)
-  if (testedSha && testedSha !== head) {
+  // 4. attestation (evidence-only-commit model) — FAIL CLOSED on any uncertainty.
+  if (testedSha && GIT_SHA_RE.test(testedSha) && testedSha !== head) {
     if (!testedShaIsAncestor) {
       failures.push(
-        `evidence tested commit ${testedSha} is not an ancestor of HEAD ${head} — stale or rebased ladder`
+        `evidence tested commit ${testedSha} is not an ancestor of HEAD ${head} — stale/rebased ladder, or the merge-base check failed (fail-closed)`
+      );
+    } else if (changedSinceTested == null) {
+      // git diff could not be computed → we cannot prove only-approved paths changed → reject.
+      failures.push(
+        `could not compute the diff since tested commit ${testedSha} (git failure) — fail-closed, re-run the ladder`
       );
     } else {
-      const nonApproved = (changedSinceTested ?? []).filter((p) => p && !APPROVED_PATH_RE.test(p));
+      const nonApproved = changedSinceTested.filter((p) => p && !APPROVED_PATH_RE.test(p));
       if (nonApproved.length) {
         failures.push(
           `non-evidence paths changed since the tested commit ${testedSha} (${nonApproved.slice(0, 8).join(", ")}${nonApproved.length > 8 ? ", …" : ""}) — re-run the ladder`
@@ -122,26 +139,32 @@ function main() {
     if (fs.existsSync(path)) stages[stage] = JSON.parse(fs.readFileSync(path, "utf8"));
   }
 
-  const head = execSync("git rev-parse --short HEAD", { encoding: "utf8" }).trim();
+  // All git invocations use execFileSync ARGUMENT ARRAYS (never a shell string), and every
+  // sha is validated against GIT_SHA_RE before it is passed as an argument — so a malicious
+  // gitSha in an evidence JSON can neither inject a shell command nor a git option.
+  const git = (args) => execFileSync("git", args, { encoding: "utf8" }).trim();
+  const head = git(["rev-parse", "--short", "HEAD"]);
   const shas = [...new Set(Object.values(stages).map((e) => e.gitSha))];
   const testedSha = shas.length === 1 ? shas[0] : null;
 
   let testedShaIsAncestor = false;
+  // null = "could not determine" → verifyLadder fails closed. [] = "determined: no changes".
   let changedSinceTested = [];
-  if (testedSha && testedSha !== head) {
+  const shaSafe = testedSha && GIT_SHA_RE.test(testedSha) && GIT_SHA_RE.test(head);
+  if (shaSafe && testedSha !== head) {
     try {
-      execSync(`git merge-base --is-ancestor ${testedSha} HEAD`, { stdio: "ignore" });
+      execFileSync("git", ["merge-base", "--is-ancestor", testedSha, "HEAD"], { stdio: "ignore" });
       testedShaIsAncestor = true;
     } catch {
-      testedShaIsAncestor = false;
+      testedShaIsAncestor = false; // non-ancestor OR bad ref OR git failure → fail closed
     }
     try {
-      changedSinceTested = execSync(`git diff --name-only ${testedSha} HEAD`, { encoding: "utf8" })
+      changedSinceTested = git(["diff", "--name-only", testedSha, "HEAD"])
         .split("\n")
         .map((l) => l.trim())
         .filter(Boolean);
     } catch {
-      changedSinceTested = [];
+      changedSinceTested = null; // git failure → cannot prove approved-only → fail closed
     }
   }
 

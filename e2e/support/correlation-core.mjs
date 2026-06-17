@@ -72,6 +72,20 @@ const API_METHODS = new Set(["get", "post", "put", "patch", "delete", "head", "f
  * bypassed correlation entirely — this closes that gap while preserving the strict
  * same-origin scope (never leaks ids to Keycloak/Cloudflare/third parties).
  */
+/**
+ * Decide headers for a browser `route.continue()`. Returns the merged header set for a
+ * SAME-ORIGIN request (correlation headers added) or `null` when the request must pass
+ * through untouched. Uses the strict `isSameOrigin` URL-origin parser, NOT a string
+ * prefix — `request.url().startsWith(appOrigin)` would WRONGLY match
+ * `https://aldous.info.evil.example` and `https://aldous.info@evil.example` and leak the
+ * internal test ids to a third party. This is the EXACT logic the Playwright context.route
+ * fixture calls, so it is the unit under test (no parallel reimplementation).
+ */
+export function correlatedRouteHeaders(requestUrl, requestHeaders, appOrigin, headers) {
+  if (!isSameOrigin(requestUrl, appOrigin)) return null;
+  return { ...(requestHeaders ?? {}), ...headers };
+}
+
 export function correlatedApiContext(api, appOrigin, headers) {
   return new Proxy(api, {
     get(target, prop, receiver) {

@@ -16,11 +16,16 @@
       "personas": ["unauthenticated-visitor"],
       "surfaces": ["api:/api/admin/tenants", "auth:denial"],
       "expectedLogs": ["http.request.rejected"],
-      "expectedTraces": { "services": ["platform-api"], "route": "/api/admin/tenants" },
+      "expectedTraces": {
+        "services": ["platform-api"],
+        "route": "/api/admin/tenants"
+      },
       "expectedSentryEvents": [],
-      "expectedOperations": ["GET /api/admin/tenants"],
       "destructive": false,
-      "correlation": { "logs": "required", "traces": "required" },
+      "correlation": {
+        "logs": "required",
+        "traces": "required"
+      },
       "owner": "ADR-ACT-0285 Phase 3 (pipeline-health probe). A deterministic unauthenticated denial that proves the header->log->Loki->Tempo pipeline is alive; it has its OWN entry and does NOT substitute for any real scenario."
     },
     {
@@ -41,9 +46,11 @@
       "expectedLogs": ["http.request.rejected"],
       "expectedTraces": null,
       "expectedSentryEvents": [],
-      "expectedOperations": ["GET /api/session", "GET /healthz", "GET /version"],
       "destructive": true,
-      "correlation": { "logs": "best-effort", "traces": "none" },
+      "correlation": {
+        "logs": "best-effort",
+        "traces": "none"
+      },
       "owner": "ADR-0025; ADR-ACT-0285. Runs on isolated dev/test ports (a separate platform-api not always shipping to Loki), so log correlation is best-effort, not required."
     },
     {
@@ -58,9 +65,11 @@
       "expectedLogs": ["http.request.complete"],
       "expectedTraces": null,
       "expectedSentryEvents": [],
-      "expectedOperations": ["GET /"],
       "destructive": false,
-      "correlation": { "logs": "best-effort", "traces": "none" },
+      "correlation": {
+        "logs": "best-effort",
+        "traces": "none"
+      },
       "owner": "ADR-0075; ADR-ACT-0285 Phase 4. Crawls safe routes (mostly 2xx; INFO-filtered at LOG_LEVEL=warn), so correlation is best-effort."
     },
     {
@@ -75,9 +84,11 @@
       "expectedLogs": ["http.request.complete"],
       "expectedTraces": null,
       "expectedSentryEvents": [],
-      "expectedOperations": ["GET /", "GET /login"],
       "destructive": false,
-      "correlation": { "logs": "best-effort", "traces": "none" },
+      "correlation": {
+        "logs": "best-effort",
+        "traces": "none"
+      },
       "owner": "ADR-0075; ADR-ACT-0285 Phase 6. Axe over safe 2xx routes; correlation best-effort."
     },
     {
@@ -92,10 +103,34 @@
       "expectedLogs": ["http.request.rejected"],
       "expectedTraces": null,
       "expectedSentryEvents": [],
-      "expectedOperations": ["GET /api/admin/tenants", "GET /api/auth/settings/providers"],
       "destructive": false,
-      "correlation": { "logs": "required", "traces": "none" },
+      "correlation": {
+        "logs": "required",
+        "traces": "none"
+      },
       "owner": "ADR-0075; ADR-ACT-0285 Phase 6. The unauthenticated-visitor persona always runs and deterministically hits a forbidden API (401/403 -> http.request.rejected WARN), so log correlation is required."
+    },
+    {
+      "scenarioId": "browser-bff-trace",
+      "suiteId": "discovery-browser-bff-trace",
+      "file": "e2e/discovery/browser-bff-trace.spec.ts",
+      "source": "playwright",
+      "stages": ["test", "staging", "prod"],
+      "authMode": "unauthenticated",
+      "personas": ["unauthenticated-visitor"],
+      "surfaces": ["route:/", "api:/api/admin/tenants", "trace:browser-to-bff"],
+      "expectedLogs": ["http.request.rejected"],
+      "expectedTraces": {
+        "services": ["react-enterprise-app", "platform-api"],
+        "route": "/api/admin/tenants"
+      },
+      "expectedSentryEvents": [],
+      "destructive": false,
+      "correlation": {
+        "logs": "required",
+        "traces": "required"
+      },
+      "owner": "ADR-ACT-0285 closure. Loads the React app then makes ONE in-page (Faro-instrumented) same-origin BFF request to a protected route (401 → WARN log carrying the propagated traceId); the harness asserts the resulting Tempo trace contains BOTH react-enterprise-app and platform-api spans (true browser→BFF distributed trace, not liveness)."
     }
   ],
   "dynamicScenarios": [
@@ -123,7 +158,10 @@
         "idField": "personaId",
         "idTemplate": "persona-matrix:{personaId}",
         "stageField": "stageAllowed",
-        "selector": { "excludeIdPrefixes": ["a11y-"], "excludeAuthModes": ["mixed"] }
+        "selector": {
+          "excludeIdPrefixes": ["a11y-"],
+          "excludeAuthModes": ["mixed"]
+        }
       },
       "correlation": {
         "logs": "conditional",
@@ -136,75 +174,98 @@
   "exemptions": [
     {
       "file": "e2e/internal/build.test.ts",
-      "reason": "Production-build preview verification (@playwright/test, isolated preview server). No observability backend; build integrity only. Owner ADR-0025."
+      "reason": "Production-build preview verification (@playwright/test, isolated preview server). No observability backend; build integrity only. Owner ADR-0025.",
+      "category": "non-observability"
     },
     {
       "file": "e2e/external/smoke.test.ts",
-      "reason": "Unauthenticated front-door health/headers against the real stage URL; covered by suite-registry external-smoke. Not part of the observability-correlation contract."
+      "reason": "Unauthenticated front-door health/headers against the real stage URL; covered by suite-registry external-smoke. Not part of the observability-correlation contract. CATEGORY prod-could-correlate-deferred: same-origin platform requests here COULD carry correlation headers; deferred as tracked future work (production smoke via playwright.prod/external.config against live traffic — not skipped for convenience).",
+      "category": "prod-could-correlate-deferred"
     },
     {
       "file": "e2e/external/login.spec.ts",
-      "reason": "Real Keycloak login flow (auth-e2e). Drives a 3rd-party IdP origin; correlation headers must NOT be sent to Keycloak, so this suite is intentionally uncorrelated."
+      "reason": "Real Keycloak login flow (auth-e2e). Drives a 3rd-party IdP origin; correlation headers must NOT be sent to Keycloak, so this suite is intentionally uncorrelated.",
+      "category": "external-origin-noncorrelatable"
     },
     {
       "file": "e2e/external/logout.spec.ts",
-      "reason": "Real logout/session-clear flow (auth-e2e); uncorrelated for the same IdP-origin reason as login."
+      "reason": "Real logout/session-clear flow (auth-e2e); uncorrelated for the same IdP-origin reason as login.",
+      "category": "external-origin-noncorrelatable"
     },
     {
       "file": "e2e/external/auth-negative.spec.ts",
-      "reason": "Negative auth against the real stack; suite-registry external-auth-negative. Uncorrelated (touches Keycloak error surface)."
+      "reason": "Negative auth against the real stack; suite-registry external-auth-negative. Uncorrelated (touches Keycloak error surface).",
+      "category": "external-origin-noncorrelatable"
     },
     {
       "file": "e2e/external/caddy-links.spec.ts",
-      "reason": "Clickthrough routing reachability (real auth); suite-registry external-caddy-links. Navigates tool origins behind Caddy; uncorrelated by design."
+      "reason": "Clickthrough routing reachability (real auth); suite-registry external-caddy-links. Navigates tool origins behind Caddy; uncorrelated by design.",
+      "category": "external-origin-noncorrelatable"
     },
     {
       "file": "e2e/external/tenant-prod.spec.ts",
-      "reason": "Tenant-FQDN routing/isolation at prod; suite-registry external-tenant-prod. Driven directly via playwright.external.config; not in the correlation set."
+      "reason": "Tenant-FQDN routing/isolation at prod; suite-registry external-tenant-prod. Driven directly via playwright.external.config; not in the correlation set. CATEGORY prod-could-correlate-deferred: same-origin platform requests here COULD carry correlation headers; deferred as tracked future work (production smoke via playwright.prod/external.config against live traffic — not skipped for convenience).",
+      "category": "prod-could-correlate-deferred"
     },
     {
       "file": "e2e/external/tool-services.spec.ts",
-      "reason": "Tool-service clickthrough reachability; suite-registry external-tool-services. Uncorrelated (tool origins)."
+      "reason": "Tool-service clickthrough reachability; suite-registry external-tool-services. Uncorrelated (tool origins).",
+      "category": "external-origin-noncorrelatable"
     },
     {
       "file": "e2e/identity/broker-login.spec.ts",
-      "reason": "Real IdP-broker login flow; suite-registry identity-broker-login. Drives mock-oidc + Keycloak origins; uncorrelated by design."
+      "reason": "Real IdP-broker login flow; suite-registry identity-broker-login. Drives mock-oidc + Keycloak origins; uncorrelated by design.",
+      "category": "external-origin-noncorrelatable"
     },
     {
       "file": "e2e/identity/redirect-merge.test.ts",
-      "reason": "node:test unit (NOT Playwright) for account-link redirect/merge logic; suite-registry identity-redirect-merge. No browser/API surface to correlate."
+      "reason": "node:test unit (NOT Playwright) for account-link redirect/merge logic; suite-registry identity-redirect-merge. No browser/API surface to correlate.",
+      "category": "non-observability"
     },
     {
       "file": "e2e/prod/admin-tools.test.ts",
-      "reason": "Prod admin-surface smoke (@playwright/test, playwright.prod.config); suite-registry prod-admin-tools. production-e2e group, not the correlation set."
+      "reason": "Prod admin-surface smoke (@playwright/test, playwright.prod.config); suite-registry prod-admin-tools. production-e2e group, not the correlation set. CATEGORY prod-could-correlate-deferred: same-origin platform requests here COULD carry correlation headers; deferred as tracked future work (production smoke via playwright.prod/external.config against live traffic — not skipped for convenience).",
+      "category": "prod-could-correlate-deferred"
     },
     {
       "file": "e2e/prod/api-contract.test.ts",
-      "reason": "Prod API contract/metadata smoke; suite-registry prod-api-contract. production-e2e group."
+      "reason": "Prod API contract/metadata smoke; suite-registry prod-api-contract. production-e2e group. CATEGORY prod-could-correlate-deferred: same-origin platform requests here COULD carry correlation headers; deferred as tracked future work (production smoke via playwright.prod/external.config against live traffic — not skipped for convenience).",
+      "category": "prod-could-correlate-deferred"
     },
     {
       "file": "e2e/prod/asset-integrity.test.ts",
-      "reason": "Prod asset integrity (unauthenticated); suite-registry prod-asset-integrity. production-e2e group."
+      "reason": "Prod asset integrity (unauthenticated); suite-registry prod-asset-integrity. production-e2e group.",
+      "category": "non-observability"
     },
     {
       "file": "e2e/prod/cookie-security.test.ts",
-      "reason": "Prod cookie-flag/security checks; suite-registry prod-cookie-security. production-e2e group."
+      "reason": "Prod cookie-flag/security checks; suite-registry prod-cookie-security. production-e2e group. CATEGORY prod-could-correlate-deferred: same-origin platform requests here COULD carry correlation headers; deferred as tracked future work (production smoke via playwright.prod/external.config against live traffic — not skipped for convenience).",
+      "category": "prod-could-correlate-deferred"
     },
     {
       "file": "e2e/prod/cross-cutting.test.ts",
-      "reason": "Prod tenant-isolation/error-boundary cross-cutting; suite-registry prod-cross-cutting. production-e2e group."
+      "reason": "Prod tenant-isolation/error-boundary cross-cutting; suite-registry prod-cross-cutting. production-e2e group. CATEGORY prod-could-correlate-deferred: same-origin platform requests here COULD carry correlation headers; deferred as tracked future work (production smoke via playwright.prod/external.config against live traffic — not skipped for convenience).",
+      "category": "prod-could-correlate-deferred"
     },
     {
       "file": "e2e/prod/error-handling.test.ts",
-      "reason": "Prod 4xx/5xx/error-UI; suite-registry prod-error-handling. Its synthetic Sentry event is asserted by e2e-sentry-assertion, not by log/trace correlation."
+      "reason": "Prod 4xx/5xx/error-UI; suite-registry prod-error-handling. Its synthetic Sentry event is asserted by e2e-sentry-assertion, not by log/trace correlation. CATEGORY prod-could-correlate-deferred: same-origin platform requests here COULD carry correlation headers; deferred as tracked future work (production smoke via playwright.prod/external.config against live traffic — not skipped for convenience).",
+      "category": "prod-could-correlate-deferred"
     },
     {
       "file": "e2e/prod/performance-budget.test.ts",
-      "reason": "Prod web-vitals/perf budget (unauthenticated); suite-registry prod-performance-budget. production-e2e group."
+      "reason": "Prod web-vitals/perf budget (unauthenticated); suite-registry prod-performance-budget. production-e2e group.",
+      "category": "non-observability"
     },
     {
       "file": "e2e/prod/security-headers.test.ts",
-      "reason": "Prod security headers/CSP (unauthenticated); suite-registry prod-security-headers. production-e2e group."
+      "reason": "Prod security headers/CSP (unauthenticated); suite-registry prod-security-headers. production-e2e group.",
+      "category": "non-observability"
     }
+  ],
+  "exemptionCategoryVocabulary": [
+    "external-origin-noncorrelatable",
+    "prod-could-correlate-deferred",
+    "non-observability"
   ]
 }

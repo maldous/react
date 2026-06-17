@@ -14,7 +14,7 @@ import {
   requiredTraceScenarios,
   allScenarioIds,
 } from "./scenario-manifest.mjs";
-import { validateScenarioManifest } from "./validate-scenario-manifest/src/index.mjs";
+import { validateScenarioManifest, analyzeSpec } from "./validate-scenario-manifest/src/index.mjs";
 
 const REPO = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 
@@ -122,11 +122,12 @@ test("required log/trace sets per stage are honest", () => {
   const stagingReq = requiredLogScenarioIds(expanded, "staging");
   assert.ok(!stagingReq.includes("persona-matrix:scaffold-system-admin"));
   assert.ok(!stagingReq.includes("persona-matrix:scaffold-expired-session"));
-  // the probe is the required Tempo trace scenario at every reporting stage
+  // BOTH the probe (platform-api) and the browser-bff-trace (react-enterprise-app +
+  // platform-api) are required Tempo trace scenarios at every reporting stage.
   for (const st of ["test", "staging", "prod"])
     assert.deepEqual(
       requiredTraceScenarios(expanded, st).map((s) => s.scenarioId),
-      ["pipeline-health-probe"]
+      ["pipeline-health-probe", "browser-bff-trace"]
     );
 });
 
@@ -256,7 +257,9 @@ test("correlated spec relying on a title (no explicit scenarioId) FAILS", () => 
   try {
     const r = validateScenarioManifest(root);
     assert.ok(
-      r.failures.some((f) => /does not declare an explicit scenarioId/.test(f)),
+      r.failures.some((f) =>
+        /unmapped test|no scenario\(\) annotation|not declared in source/.test(f)
+      ),
       r.failures.join("\n")
     );
   } finally {
@@ -307,6 +310,134 @@ test("scenario stage below the suite stageMin FAILS", () => {
     );
   } finally {
     rmSync(root, { recursive: true, force: true });
+  }
+});
+
+// ── per-test AST analysis (Option A) ────────────────────────────────────────
+test("analyzeSpec extracts file-level test.use scenarioId + per-test scenario kinds", () => {
+  const a = analyzeSpec(
+    `import { test } from "../support/correlation.ts";\ntest.use({ scenarioId: "f" });\ntest("a", async () => {});\ntest("b", async () => {});\n`
+  );
+  assert.equal(a.fileScenarioId, "f");
+  assert.equal(a.tests.length, 2);
+  assert.ok(a.tests.every((t) => t.scenario.kind === "none"));
+
+  const b = analyzeSpec(
+    `import { test, scenario } from "../support/correlation.ts";\ntest("x", { annotation: scenario("lit-id") }, async () => {});\ntest("y", { annotation: scenario(\`pm:\${p.id}\`) }, async () => {});\ntest.describe("grp", () => {});\n`
+  );
+  assert.equal(b.fileScenarioId, null);
+  assert.equal(b.tests.length, 2, "test.describe is NOT an executable test");
+  assert.deepEqual(b.tests[0].scenario, { kind: "literal", value: "lit-id" });
+  assert.equal(b.tests[1].scenario.kind, "template");
+  assert.equal(b.tests[1].scenario.prefix, "pm:");
+});
+
+function astRoot(scenarios, dynamicScenarios, files) {
+  const m = baseManifest();
+  m.scenarios = scenarios;
+  m.dynamicScenarios = dynamicScenarios ?? [];
+  return makeRoot(m, files);
+}
+const staticScn = (id, file) => ({
+  scenarioId: id,
+  suiteId: "discovery-clickability",
+  file,
+  source: "playwright",
+  stages: ["test"],
+  authMode: "mixed",
+  expectedLogs: [],
+  expectedTraces: null,
+  correlation: { logs: "none", traces: "none" },
+  owner: "t",
+});
+
+test("per-test: an executable test with NO scenario mapping FAILS (case B)", () => {
+  const root = astRoot([staticScn("s1", "e2e/x.spec.ts")], [], {
+    "e2e/x.spec.ts": `import { test, scenario } from "../support/correlation.ts";\ntest("a", { annotation: scenario("s1") }, async () => {});\ntest("b", async () => {});\n`,
+  });
+  try {
+    const r = validateScenarioManifest(root);
+    assert.ok(
+      r.failures.some((f) => /test "b".*unmapped test/.test(f)),
+      r.failures.join("\n")
+    );
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("per-test: a source scenario id that is not in the manifest FAILS (source drift)", () => {
+  const root = astRoot([staticScn("s1", "e2e/x.spec.ts")], [], {
+    "e2e/x.spec.ts": `import { test, scenario } from "../support/correlation.ts";\ntest("a", { annotation: scenario("DIFFERENT") }, async () => {});\n`,
+  });
+  try {
+    const r = validateScenarioManifest(root);
+    assert.ok(
+      r.failures.some((f) => /annotates scenarioId 'DIFFERENT'/.test(f)),
+      r.failures.join("\n")
+    );
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("per-test: a manifest id not present in source FAILS (manifest drift, reverse)", () => {
+  // file pins test.use 's1'; manifest declares 's2' for the file → both directions fail.
+  const root = astRoot([staticScn("s2", "e2e/x.spec.ts")], [], {
+    "e2e/x.spec.ts": `import { test } from "../support/correlation.ts";\ntest.use({ scenarioId: "s1" });\ntest("a", async () => {});\n`,
+  });
+  try {
+    const r = validateScenarioManifest(root);
+    assert.ok(
+      r.failures.some((f) => /manifest scenario 's2'.*not declared in source/.test(f)),
+      r.failures.join("\n")
+    );
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("per-test: dynamic persona template prefix must match the idTemplate", () => {
+  const dyn = {
+    baseScenarioId: "pm",
+    suiteId: "discovery-persona-matrix",
+    file: "e2e/m.spec.ts",
+    source: "playwright",
+    authMode: "mixed",
+    expectedLogs: [],
+    expectedTraces: null,
+    dynamicSource: {
+      registry: "e2e/persona-registry.json",
+      collection: "personas",
+      idField: "personaId",
+      idTemplate: "pm:{personaId}",
+      stageField: "stageAllowed",
+      selector: { excludeIdPrefixes: ["a11y-"], excludeAuthModes: ["mixed"] },
+    },
+    correlation: { logs: "conditional", logsRequiredRule: "persona-matrix-denial", traces: "none" },
+    owner: "t",
+  };
+  // matching prefix → passes the per-test mapping check
+  const ok = astRoot([], [dyn], {
+    "e2e/m.spec.ts": `import { test, scenario } from "../support/correlation.ts";\ntest("p", { annotation: scenario(\`pm:\${x.id}\`) }, async () => {});\n`,
+  });
+  try {
+    assert.ok(!validateScenarioManifest(ok).failures.some((f) => /m\.spec\.ts/.test(f)));
+  } finally {
+    rmSync(ok, { recursive: true, force: true });
+  }
+  // wrong prefix → fails
+  const bad = astRoot(
+    [],
+    [{ ...dyn, dynamicSource: { ...dyn.dynamicSource, idTemplate: "other:{personaId}" } }],
+    {
+      "e2e/m.spec.ts": `import { test, scenario } from "../support/correlation.ts";\ntest("p", { annotation: scenario(\`pm:\${x.id}\`) }, async () => {});\n`,
+    }
+  );
+  try {
+    assert.ok(validateScenarioManifest(bad).failures.some((f) => /template prefix 'pm:'/.test(f)));
+  } finally {
+    rmSync(bad, { recursive: true, force: true });
   }
 });
 
