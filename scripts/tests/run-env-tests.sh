@@ -184,6 +184,15 @@ run_group() {
         MAILPIT_SMTP_PORT="${_mp_smtp}" \
         OTEL_HTTP="http://localhost:${_otel_http}" \
         npm run test:compose
+        # compose-smoke resets the DB on destructive stages (dev/test) and seeds the
+        # RLS-isolation fixtures (rls-org-a/b), which removes the boot-seeded
+        # fixture-org. The E2E groups that follow (e2e-smoke + discovery) drive the
+        # fixture session (fixture-org), so restore the fixture seed before they run.
+        # preserve stages (staging/prod) skip the reset, so they are never re-seeded.
+        if [ "$_data_policy" = "destructive" ]; then
+            printf '%s▶ restoring fixture seed after destructive compose-smoke%s\n' "$GREEN" "$RESET"
+            POSTGRES_URL="$_pg_url" npm run db:seed
+        fi
         ;;
       integration)
         make run-stage-tests ENV="$STAGE"
