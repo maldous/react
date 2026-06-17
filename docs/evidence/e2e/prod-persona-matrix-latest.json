@@ -127,7 +127,7 @@
       "persona": "unauthenticated-visitor",
       "kind": "expected-route",
       "target": "/",
-      "expected": "loads (non-blank)",
+      "expected": "loads + data APIs 2xx",
       "actual": "loads",
       "ok": true
     },
@@ -135,7 +135,7 @@
       "persona": "unauthenticated-visitor",
       "kind": "expected-route",
       "target": "/login",
-      "expected": "loads (non-blank)",
+      "expected": "loads + data APIs 2xx",
       "actual": "loads",
       "ok": true
     },
@@ -215,7 +215,7 @@
       "persona": "scaffold-system-admin",
       "kind": "expected-route",
       "target": "/",
-      "expected": "loads (non-blank)",
+      "expected": "loads + data APIs 2xx",
       "actual": "loads",
       "ok": true
     },
@@ -223,7 +223,7 @@
       "persona": "scaffold-system-admin",
       "kind": "expected-route",
       "target": "/admin",
-      "expected": "loads (non-blank)",
+      "expected": "loads + data APIs 2xx",
       "actual": "loads",
       "ok": true
     },
@@ -231,7 +231,7 @@
       "persona": "scaffold-system-admin",
       "kind": "expected-route",
       "target": "/admin/logs",
-      "expected": "loads (non-blank)",
+      "expected": "loads + data APIs 2xx",
       "actual": "loads",
       "ok": true
     },
@@ -239,7 +239,7 @@
       "persona": "scaffold-system-admin",
       "kind": "expected-route",
       "target": "/admin/clickthrough",
-      "expected": "loads (non-blank)",
+      "expected": "loads + data APIs 2xx",
       "actual": "loads",
       "ok": true
     },
@@ -248,7 +248,7 @@
       "kind": "clickthrough-granted",
       "target": "keycloak /kc/",
       "expected": "service UI (status<400, not SPA)",
-      "actual": "status=200 url=https://aldous.info/kc/realms/master/protocol/openid-connect/auth?client_id=security-admin-console&redirect_uri=https%3A%2F%2Faldous.info%2Fkc%2Fadmin%2Fmaster%2Fconsole%2F&state=93f69c24-6ef2-49d2-8e2e-cffbe1101938&response_mode=query&response_type=code&scope=openid&nonce=358b1d1a-c023-46a8-885c-edc94dc7e6ed&code_challenge=hf_TmCxUZcBmBOkErqAJ4EuXCow1uCiKQ01DjClop80&code_challenge_method=S256",
+      "actual": "status=200 url=https://aldous.info/kc/admin/master/console/",
       "ok": true
     },
     {
@@ -256,7 +256,7 @@
       "kind": "clickthrough-granted",
       "target": "grafana /grafana/",
       "expected": "service UI (status<400, not SPA)",
-      "actual": "status=200 url=https://aldous.info/grafana/?orgId=1&from=now-6h&to=now&timezone=browser",
+      "actual": "status=200 url=https://aldous.info/grafana/",
       "ok": true
     },
     {
@@ -335,7 +335,7 @@
       "persona": "scaffold-tenant-admin",
       "kind": "expected-route",
       "target": "/",
-      "expected": "loads (non-blank)",
+      "expected": "loads + data APIs 2xx",
       "actual": "loads",
       "ok": true
     },
@@ -343,7 +343,7 @@
       "persona": "scaffold-tenant-admin",
       "kind": "expected-route",
       "target": "/admin",
-      "expected": "loads (non-blank)",
+      "expected": "loads + data APIs 2xx",
       "actual": "loads",
       "ok": true
     },
@@ -351,7 +351,7 @@
       "persona": "scaffold-tenant-admin",
       "kind": "expected-route",
       "target": "/admin/members",
-      "expected": "loads (non-blank)",
+      "expected": "loads + data APIs 2xx",
       "actual": "loads",
       "ok": true
     },
@@ -423,7 +423,7 @@
       "persona": "scaffold-tenant-manager",
       "kind": "expected-route",
       "target": "/",
-      "expected": "loads (non-blank)",
+      "expected": "loads + data APIs 2xx",
       "actual": "loads",
       "ok": true
     },
@@ -471,7 +471,7 @@
       "persona": "scaffold-tenant-member",
       "kind": "expected-route",
       "target": "/",
-      "expected": "loads (non-blank)",
+      "expected": "loads + data APIs 2xx",
       "actual": "loads",
       "ok": true
     },
@@ -479,7 +479,7 @@
       "persona": "scaffold-tenant-member",
       "kind": "expected-route",
       "target": "/admin",
-      "expected": "loads (non-blank)",
+      "expected": "loads + data APIs 2xx",
       "actual": "loads",
       "ok": true
     },
@@ -511,7 +511,7 @@
       "persona": "scaffold-support-breakglass",
       "kind": "expected-route",
       "target": "/admin",
-      "expected": "loads (non-blank)",
+      "expected": "loads + data APIs 2xx",
       "actual": "loads",
       "ok": true
     },
@@ -559,7 +559,7 @@
       "persona": "scaffold-disabled-user",
       "kind": "expected-route",
       "target": "/login",
-      "expected": "loads (non-blank)",
+      "expected": "loads + data APIs 2xx",
       "actual": "loads",
       "ok": true
     },

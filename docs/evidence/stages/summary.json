@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-16T13:34:02.936Z",
+  "generatedAt": "2026-06-17T03:48:24.948Z",
   "stages": {
     "dev": {
       "stage": "dev",
-      "gitSha": "cee99f3",
-      "timestamp": "2026-06-16T12:58:33.992Z",
+      "gitSha": "70c8dfb",
+      "timestamp": "2026-06-17T03:24:27.808Z",
       "envFile": "/home/user/src/react/.env/dev.env",
       "composeProject": "react-dev",
       "profiles": [
@@ -33,8 +33,8 @@
     },
     "test": {
       "stage": "test",
-      "gitSha": "cee99f3",
-      "timestamp": "2026-06-16T13:04:55.412Z",
+      "gitSha": "70c8dfb",
+      "timestamp": "2026-06-17T03:30:50.357Z",
       "envFile": "/home/user/src/react/.env/test.env",
       "composeProject": "react-test",
       "profiles": [
@@ -64,13 +64,13 @@
       ],
       "result": "degraded",
       "confidence": "DEGRADED",
-      "durationSeconds": 381,
+      "durationSeconds": 383,
       "failureSummary": "Real-auth E2E was skipped — staging/prod cannot pass promotion without FULL confidence (real auth against a real domain)."
     },
     "staging": {
       "stage": "staging",
-      "gitSha": "cee99f3",
-      "timestamp": "2026-06-16T13:14:16.287Z",
+      "gitSha": "70c8dfb",
+      "timestamp": "2026-06-17T03:36:13.419Z",
       "envFile": "/home/user/src/react/.env/staging.env",
       "composeProject": "react-staging",
       "profiles": [
@@ -102,13 +102,13 @@
       ],
       "result": "passed",
       "confidence": "FULL",
-      "durationSeconds": 560,
+      "durationSeconds": 322,
       "failureSummary": null
     },
     "prod": {
       "stage": "prod",
-      "gitSha": "cee99f3",
-      "timestamp": "2026-06-16T13:34:02.906Z",
+      "gitSha": "70c8dfb",
+      "timestamp": "2026-06-17T03:48:24.915Z",
       "envFile": "/home/user/src/react/.env/prod.env",
       "composeProject": "react-prod",
       "profiles": [
@@ -142,7 +142,7 @@
       ],
       "result": "passed",
       "confidence": "FULL",
-      "durationSeconds": 1187,
+      "durationSeconds": 732,
       "failureSummary": null
     }
   }

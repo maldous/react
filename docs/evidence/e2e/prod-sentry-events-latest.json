@@ -1,17 +1,17 @@
 {
   "stage": "prod",
-  "testRunId": "sentry-prod-1781616830126",
+  "testRunId": "sentry-prod-1781668092096",
   "result": "PASSED",
   "checks": [
     {
       "name": "trigger-synthetic-failure",
       "httpStatus": 500,
-      "requestId": "b8bc5dda-cdb9-4336-a3f7-b1182ea0e3cf",
+      "requestId": "2b02c2c0-9341-417c-b3db-f065299a8684",
       "expected": 500
     },
     {
       "name": "event-metadata",
-      "eventId": "9f527ee1268e4705ba9ede74a51a34d1",
+      "eventId": "081d1cc6e4d242e99d21d1519a72a084",
       "ok": true,
       "failures": [],
       "checks": [
@@ -27,13 +27,13 @@
         },
         {
           "name": "tag:requestId",
-          "expected": "b8bc5dda-cdb9-4336-a3f7-b1182ea0e3cf",
-          "actual": "b8bc5dda-cdb9-4336-a3f7-b1182ea0e3cf"
+          "expected": "2b02c2c0-9341-417c-b3db-f065299a8684",
+          "actual": "2b02c2c0-9341-417c-b3db-f065299a8684"
         },
         {
           "name": "tag:testRunId",
-          "expected": "sentry-prod-1781616830126",
-          "actual": "sentry-prod-1781616830126"
+          "expected": "sentry-prod-1781668092096",
+          "actual": "sentry-prod-1781668092096"
         },
         {
           "name": "tag:scenarioId",
@@ -43,7 +43,7 @@
         {
           "name": "tag:trace_id",
           "present": true,
-          "actual": "15f03b0fbbb4b2f87b68c1aae804fa51"
+          "actual": "975dab855bb4953bcb08780f631ee1e7"
         }
       ]
     },
@@ -54,8 +54,8 @@
     }
   ],
   "lines": [
-    "Triggered synthetic failure → HTTP 500 (x-request-id=b8bc5dda-cdb9-4336-a3f7-b1182ea0e3cf).",
-    "Sentry event 9f527ee1268e4705ba9ede74a51a34d1 carries environment + requestId + trace_id + testRunId + scenarioId.",
+    "Triggered synthetic failure → HTTP 500 (x-request-id=2b02c2c0-9341-417c-b3db-f065299a8684).",
+    "Sentry event 081d1cc6e4d242e99d21d1519a72a084 carries environment + requestId + trace_id + testRunId + scenarioId.",
     "Prod no-unexpected-events gate OK: no unexpected errors first seen during the E2E window."
   ],
   "generatedFor": "ADR-ACT-0285 Phase 5.5"
