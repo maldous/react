@@ -22,6 +22,19 @@ export async function seedFixtures(): Promise<void> {
   const client = new pg.Client(POSTGRES_URL);
   await client.connect();
   try {
+    // Reconcile a legacy fixture organisation. Earlier seeds used a non-v4 id
+    // (00000000-0000-0000-0000-000000000001); the organisation id MUST be a UUID
+    // v4 (tenantSchemaIdentifier / ADR-0029 schema-per-tenant), so the fixture id
+    // was corrected. On a database seeded before that change, the row below would
+    // hit the organisations_slug UNIQUE constraint (same slug, different id) and
+    // crash the container's boot-time seed. Remove the stale fixture row first
+    // (FK ON DELETE CASCADE clears only its fixture children — real provisioned
+    // tenants have different ids and are untouched). Idempotent: matches nothing
+    // once the database is already on the v4 id.
+    await client.query("DELETE FROM organisations WHERE slug = $1 AND id <> $2", [
+      FIXTURE.ORG_SLUG,
+      FIXTURE.ORG_ID,
+    ]);
     await client.query(
       `
       INSERT INTO organisations (id, slug, display_name)
