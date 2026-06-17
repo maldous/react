@@ -312,24 +312,54 @@ test.describe("persona-matrix — authed link/route/API crawl per persona", () =
         );
       }
 
-      // Expected routes load (non-blank).
+      // Expected routes must load AND fetch their data cleanly.
+      //
+      // Non-blank alone is NOT enough: the error boundary ("Something went wrong")
+      // is itself non-blank, so a page whose every data call 4xx/5xx'd still
+      // "loaded". That gap let a NO_TENANT 400 / 500 on the /api/org/* admin
+      // endpoints ship — the persona crawl visited /admin and passed because the
+      // boundary rendered. Enforce the ui-contract observability baseline
+      // (docs … e2e/ui-contract.json → observabilityBaseline: no-failed-asset):
+      // while an expected route loads, no /api/* DATA request may fail (>=400).
+      // /api/session is an auth probe (401 when unauthenticated) and is allowlisted.
       for (const route of persona.expectedRoutes) {
         if (route.includes("fqdn") || route.includes("tenant-b")) continue;
+        const failedApis: string[] = [];
+        const onResp = (resp: { url(): string; status(): number }) => {
+          let path = "";
+          try {
+            path = new URL(resp.url()).pathname;
+          } catch {
+            return;
+          }
+          if (!path.startsWith("/api/") || path === "/api/session") return;
+          if (resp.status() >= 400) failedApis.push(`${resp.status()} ${path}`);
+        };
+        page.on("response", onResp);
         await page
           .goto(origin + route, { waitUntil: "domcontentloaded", timeout: 20_000 })
           .catch(() => {});
+        await page.waitForLoadState("networkidle", { timeout: 5000 }).catch(() => {});
+        page.off("response", onResp);
         const body = (
           (await page
             .locator("body")
             .textContent()
             .catch(() => "")) ?? ""
         ).trim();
+        const nonBlank = body.length > 1;
+        const uniqueFailures = [...new Set(failedApis)];
+        const ok = nonBlank && uniqueFailures.length === 0;
         record(
           "expected-route",
           route,
-          "loads (non-blank)",
-          body.length > 1 ? "loads" : "blank",
-          body.length > 1
+          "loads + data APIs 2xx",
+          !nonBlank
+            ? "blank"
+            : uniqueFailures.length
+              ? `data API failed: ${uniqueFailures.join(", ")}`
+              : "loads",
+          ok
         );
       }
 

@@ -390,7 +390,8 @@
         "authz:forbidden-route",
         "authz:forbidden-api",
         "authz:expected-route",
-        "authz:session-roles"
+        "authz:session-roles",
+        "observability:no-failed-api"
       ],
       "requiredCapabilities": ["rbac"],
       "expectedLogs": [],
@@ -400,7 +401,8 @@
       "failureModes": [
         "clickthrough-granted-broken",
         "clickthrough-forbidden-reachable",
-        "session-roles-mismatch"
+        "session-roles-mismatch",
+        "expected-route-data-error"
       ],
       "owner": "ADR-0075; ADR-ACT-0285"
     }
