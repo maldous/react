@@ -4,29 +4,14 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
+import { REQUIRED_EVIDENCE_FIELDS } from "../../_shared/self-evidence.mjs";
 
 const repoRoot = path.resolve(path.dirname(new URL(import.meta.url).pathname), "../../../..");
 
-const requiredToolFields = [
-  "toolName",
-  "toolVersion",
-  "command",
-  "mode",
-  "root",
-  "startedAt",
-  "finishedAt",
-  "durationMs",
-  "inputRoots",
-  "outputPaths",
-  "rulesEvaluated",
-  "checksPassed",
-  "checksFailed",
-  "warnings",
-  "errors",
-  "dependencySteps",
-  "gitTreatment",
-  "exitCode",
-];
+// Single source of truth: the per-tool self-evidence schema is owned by
+// _shared/self-evidence.mjs (ADR-0012 / ADR-ACT-0288). The orchestrator-only
+// additional fields are still asserted separately below.
+const requiredToolFields = REQUIRED_EVIDENCE_FIELDS;
 
 const requiredOrchestratorFields = [
   "dependencyOrder",

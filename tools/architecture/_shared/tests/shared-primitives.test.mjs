@@ -94,12 +94,36 @@ test("walkPackageJson includes fixtures when explicitFixtureScan is true", () =>
   assert.ok(!results.some((p) => p.includes("node_modules"))); // ignored still pruned
 });
 
-const sampleEvidence = {
-  toolName: "sample-tool",
-  finishedAt: "2026-05-26T00:00:00.000Z",
-  checksPassed: 1,
-  checksFailed: 0,
-};
+// A complete, schema-valid evidence object. null values are intentional: the
+// schema requires property PRESENCE, not truthiness.
+function completeEvidence(overrides = {}) {
+  const base = {};
+  for (const field of REQUIRED_EVIDENCE_FIELDS) {
+    base[field] = null;
+  }
+  return {
+    ...base,
+    toolName: "sample-tool",
+    toolVersion: "0.0.0",
+    command: ["node", "sample"],
+    mode: "check",
+    root: "/repo",
+    startedAt: "2026-05-26T00:00:00.000Z",
+    finishedAt: "2026-05-26T00:00:00.000Z",
+    durationMs: 0,
+    inputRoots: [],
+    outputPaths: [],
+    rulesEvaluated: [],
+    checksPassed: 1,
+    checksFailed: 0,
+    warnings: [],
+    errors: [],
+    dependencySteps: [],
+    gitTreatment: "reports/** ignored by default",
+    exitCode: 0,
+    ...overrides,
+  };
+}
 
 test("REQUIRED_EVIDENCE_FIELDS pins the ADR-0012 self-evidence schema (18 fields)", () => {
   // Matches orchestrator/tests/self-evidence.test.mjs requiredToolFields.
@@ -117,26 +141,62 @@ test("REQUIRED_EVIDENCE_FIELDS pins the ADR-0012 self-evidence schema (18 fields
   }
 });
 
-test("writeSelfEvidence with noReports writes nothing and returns null", () => {
+test("writeSelfEvidence writes <timestamp>-run.json with JSON + trailing newline", () => {
   const dir = path.join(tmp(), "tooling", "sample-tool");
+  const evidence = completeEvidence();
+  const result = writeSelfEvidence({ evidence, toolingReportDir: dir, noReports: false });
+  assert.equal(result, path.join(dir, "2026-05-26T00-00-00-000Z-run.json"));
+  const raw = fs.readFileSync(result, "utf8");
+  assert.ok(raw.endsWith("\n"));
+  assert.deepEqual(JSON.parse(raw), evidence);
+});
+
+test("writeSelfEvidence accepts a present-but-null required field (presence, not truthiness)", () => {
+  const dir = path.join(tmp(), "tooling", "sample-tool");
+  const evidence = completeEvidence({ warnings: null, errors: null });
+  const result = writeSelfEvidence({ evidence, toolingReportDir: dir, noReports: false });
+  assert.ok(result && fs.existsSync(result));
+});
+
+test("writeSelfEvidence throws when a required field is absent", () => {
+  const dir = path.join(tmp(), "tooling", "sample-tool");
+  const evidence = completeEvidence();
+  delete evidence.gitTreatment;
+  assert.throws(
+    () => writeSelfEvidence({ evidence, toolingReportDir: dir, noReports: false }),
+    /gitTreatment/
+  );
+  assert.equal(fs.existsSync(dir), false);
+});
+
+test("writeSelfEvidence throws when evidence is not a plain object", () => {
+  const dir = path.join(tmp(), "tooling", "sample-tool");
+  for (const bad of [null, undefined, "x", 42, [1, 2]]) {
+    assert.throws(() =>
+      writeSelfEvidence({ evidence: bad, toolingReportDir: dir, noReports: false })
+    );
+  }
+});
+
+test("writeSelfEvidence throws when finishedAt is missing or invalid for a filename", () => {
+  const dir = path.join(tmp(), "tooling", "sample-tool");
+  for (const bad of [null, "", 1748217600000, "2026/05/26"]) {
+    const evidence = completeEvidence({ finishedAt: bad });
+    assert.throws(
+      () => writeSelfEvidence({ evidence, toolingReportDir: dir, noReports: false }),
+      /finishedAt/
+    );
+  }
+});
+
+test("writeSelfEvidence with noReports returns null BEFORE validation and writes nothing", () => {
+  const dir = path.join(tmp(), "tooling", "sample-tool");
+  // Deliberately invalid evidence — must still short-circuit on noReports.
   const result = writeSelfEvidence({
-    evidence: sampleEvidence,
+    evidence: { toolName: "x" },
     toolingReportDir: dir,
     noReports: true,
   });
   assert.equal(result, null);
   assert.equal(fs.existsSync(dir), false);
-});
-
-test("writeSelfEvidence writes <timestamp>-run.json with JSON + trailing newline", () => {
-  const dir = path.join(tmp(), "tooling", "sample-tool");
-  const result = writeSelfEvidence({
-    evidence: sampleEvidence,
-    toolingReportDir: dir,
-    noReports: false,
-  });
-  assert.equal(result, path.join(dir, "2026-05-26T00-00-00-000Z-run.json"));
-  const raw = fs.readFileSync(result, "utf8");
-  assert.ok(raw.endsWith("\n"));
-  assert.deepEqual(JSON.parse(raw), sampleEvidence);
 });
