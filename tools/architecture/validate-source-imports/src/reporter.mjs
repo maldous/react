@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { writeSelfEvidence as sharedWriteSelfEvidence } from "../../_shared/self-evidence.mjs";
 
 function buildPackageGraphObj(packageGraph) {
   const obj = {};
@@ -194,10 +195,6 @@ export function writeSelfEvidence({
   exitCode,
   toolingReportDir,
 }) {
-  fs.mkdirSync(toolingReportDir, { recursive: true });
-  const safeTimestamp = finishedAt.replace(/[:.]/g, "-");
-  const evidencePath = path.join(toolingReportDir, `${safeTimestamp}-run.json`);
-
   const evidence = {
     toolName,
     toolVersion,
@@ -249,6 +246,5 @@ export function writeSelfEvidence({
     exitCode,
   };
 
-  fs.writeFileSync(evidencePath, `${JSON.stringify(evidence, null, 2)}\n`, "utf8");
-  return evidencePath;
+  return sharedWriteSelfEvidence({ evidence, toolingReportDir, noReports: false });
 }

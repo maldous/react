@@ -5,6 +5,7 @@ import process from "node:process";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { findRepoRoot as sharedFindRepoRoot } from "../../_shared/repo-root.mjs";
 import { readJson } from "../../_shared/json.mjs";
+import { writeSelfEvidence as sharedWriteSelfEvidence } from "../../_shared/self-evidence.mjs";
 
 // Options that consume the next argument as their value
 export const VALUE_OPTS = new Map([
@@ -453,9 +454,6 @@ function writeSelfEvidence({
   toolingReportDir,
 }) {
   if (options.noReports) return null;
-  fs.mkdirSync(toolingReportDir, { recursive: true });
-  const safeTimestamp = finishedAt.replace(/[:.]/g, "-");
-  const evidencePath = path.join(toolingReportDir, `${safeTimestamp}-run.json`);
   const evidence = {
     toolName: "validate-lifecycle-evidence",
     toolVersion: readJson(toolPackagePath).version ?? "0.0.0",
@@ -488,8 +486,7 @@ function writeSelfEvidence({
     gitTreatment: "docs/evidence/** committed; reports/** ignored by default",
     exitCode,
   };
-  fs.writeFileSync(evidencePath, `${JSON.stringify(evidence, null, 2)}\n`, "utf8");
-  return evidencePath;
+  return sharedWriteSelfEvidence({ evidence, toolingReportDir, noReports: options.noReports });
 }
 
 async function main() {

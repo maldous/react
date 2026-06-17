@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import { findRepoRoot as sharedFindRepoRoot } from "../../_shared/repo-root.mjs";
 import { readJson } from "../../_shared/json.mjs";
 import { walkPackageJson } from "../../_shared/files.mjs";
+import { writeSelfEvidence as sharedWriteSelfEvidence } from "../../_shared/self-evidence.mjs";
 
 function parseArgs(argv) {
   const options = {
@@ -268,10 +269,6 @@ function existingGeneratedAt() {
 
 function writeSelfEvidence({ startedAt, finishedAt, roots, results, exitCode }) {
   if (OPTIONS.noReports) return null;
-
-  fs.mkdirSync(TOOLING_REPORT_DIR, { recursive: true });
-  const safeTimestamp = finishedAt.replace(/[:.]/g, "-");
-  const evidencePath = path.join(TOOLING_REPORT_DIR, `${safeTimestamp}-run.json`);
   const evidence = {
     toolName: "generate-lifecycle-reports",
     toolVersion: readJson(TOOL_PACKAGE_PATH).version ?? "0.0.0",
@@ -306,8 +303,11 @@ function writeSelfEvidence({ startedAt, finishedAt, roots, results, exitCode }) 
     exitCode,
   };
 
-  fs.writeFileSync(evidencePath, `${JSON.stringify(evidence, null, 2)}\n`, "utf8");
-  return evidencePath;
+  return sharedWriteSelfEvidence({
+    evidence,
+    toolingReportDir: TOOLING_REPORT_DIR,
+    noReports: OPTIONS.noReports,
+  });
 }
 
 function main() {

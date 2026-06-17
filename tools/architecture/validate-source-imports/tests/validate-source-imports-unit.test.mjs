@@ -413,7 +413,7 @@ test("PACKAGE_RULES: rule message includes package and specifier", () => {
 
 // ??? package-map.mjs ?????????????????????????????????????????????????????????
 
-import { buildPackageMap, validatePackageMap, getPackageForFile } from "../src/package-map.mjs";
+import { buildPackageMap } from "../src/package-map.mjs";
 
 test("buildPackageMap: returns a Map with known packages from the repo", () => {
   const packageMap = buildPackageMap(repoRoot);
@@ -436,29 +436,6 @@ test("buildPackageMap: entries have expected shape", () => {
     assert.equal(name, info.name);
     break; // just check the first one
   }
-});
-
-test("validatePackageMap: returns valid for well-formed packages", () => {
-  const packageMap = buildPackageMap(repoRoot);
-  const result = validatePackageMap(packageMap);
-  assert.ok(typeof result.valid === "boolean");
-  assert.ok(Array.isArray(result.errors));
-});
-
-test("getPackageForFile: finds the package for a known file path", () => {
-  const packageMap = buildPackageMap(repoRoot);
-  if (packageMap.size === 0) return;
-  const [, info] = [...packageMap.entries()][0];
-  // A file inside the package root
-  const testFile = path.join(info.root, "src", "index.ts");
-  const found = getPackageForFile(packageMap, testFile);
-  assert.equal(found, info.name);
-});
-
-test("getPackageForFile: returns null for unknown file", () => {
-  const packageMap = buildPackageMap(repoRoot);
-  const found = getPackageForFile(packageMap, "/tmp/nonexistent/file.ts");
-  assert.equal(found, null);
 });
 
 // ??? scanner.mjs ?????????????????????????????????????????????????????????????

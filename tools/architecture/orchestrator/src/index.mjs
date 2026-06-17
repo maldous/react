@@ -4,6 +4,7 @@ import path from "node:path";
 import process from "node:process";
 import { spawnSync } from "node:child_process";
 import { findRepoRoot as sharedFindRepoRoot } from "../../_shared/repo-root.mjs";
+import { writeSelfEvidence as sharedWriteSelfEvidence } from "../../_shared/self-evidence.mjs";
 
 export function parseArgs(argv) {
   const options = {
@@ -351,11 +352,6 @@ function writeSelfEvidence({
   if (options.noReports) {
     return null;
   }
-
-  fs.mkdirSync(toolingReportDir, { recursive: true });
-  const safeTimestamp = finishedAt.replace(/[:.]/g, "-");
-  const evidencePath = path.join(toolingReportDir, `${safeTimestamp}-run.json`);
-
   const evidence = {
     toolName: "orchestrator",
     toolVersion:
@@ -418,8 +414,7 @@ function writeSelfEvidence({
     evidenceGenerated: false,
   };
 
-  fs.writeFileSync(evidencePath, `${JSON.stringify(evidence, null, 2)}\n`, "utf8");
-  return evidencePath;
+  return sharedWriteSelfEvidence({ evidence, toolingReportDir, noReports: options.noReports });
 }
 
 function printText({

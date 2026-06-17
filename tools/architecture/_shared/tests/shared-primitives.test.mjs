@@ -11,6 +11,7 @@ import path from "node:path";
 import { findRepoRoot } from "../repo-root.mjs";
 import { readJson } from "../json.mjs";
 import { walkPackageJson } from "../files.mjs";
+import { writeSelfEvidence, REQUIRED_EVIDENCE_FIELDS } from "../self-evidence.mjs";
 
 function tmp() {
   return fs.mkdtempSync(path.join(os.tmpdir(), "shared-prim-"));
@@ -91,4 +92,51 @@ test("walkPackageJson includes fixtures when explicitFixtureScan is true", () =>
   walkPackageJson(root, results, { ignored: IGNORED, isFixtureDir, explicitFixtureScan: true });
   assert.ok(results.includes(path.join(root, "tests", "fixtures", "fx", "package.json")));
   assert.ok(!results.some((p) => p.includes("node_modules"))); // ignored still pruned
+});
+
+const sampleEvidence = {
+  toolName: "sample-tool",
+  finishedAt: "2026-05-26T00:00:00.000Z",
+  checksPassed: 1,
+  checksFailed: 0,
+};
+
+test("REQUIRED_EVIDENCE_FIELDS pins the ADR-0012 self-evidence schema (18 fields)", () => {
+  // Matches orchestrator/tests/self-evidence.test.mjs requiredToolFields.
+  assert.equal(REQUIRED_EVIDENCE_FIELDS.length, 18);
+  for (const f of [
+    "toolName",
+    "command",
+    "mode",
+    "root",
+    "durationMs",
+    "exitCode",
+    "gitTreatment",
+  ]) {
+    assert.ok(REQUIRED_EVIDENCE_FIELDS.includes(f), `missing required field ${f}`);
+  }
+});
+
+test("writeSelfEvidence with noReports writes nothing and returns null", () => {
+  const dir = path.join(tmp(), "tooling", "sample-tool");
+  const result = writeSelfEvidence({
+    evidence: sampleEvidence,
+    toolingReportDir: dir,
+    noReports: true,
+  });
+  assert.equal(result, null);
+  assert.equal(fs.existsSync(dir), false);
+});
+
+test("writeSelfEvidence writes <timestamp>-run.json with JSON + trailing newline", () => {
+  const dir = path.join(tmp(), "tooling", "sample-tool");
+  const result = writeSelfEvidence({
+    evidence: sampleEvidence,
+    toolingReportDir: dir,
+    noReports: false,
+  });
+  assert.equal(result, path.join(dir, "2026-05-26T00-00-00-000Z-run.json"));
+  const raw = fs.readFileSync(result, "utf8");
+  assert.ok(raw.endsWith("\n"));
+  assert.deepEqual(JSON.parse(raw), sampleEvidence);
 });
