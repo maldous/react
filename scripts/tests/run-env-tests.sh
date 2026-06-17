@@ -183,15 +183,17 @@ run_group() {
         MAILPIT_API="${_mp_api}" \
         MAILPIT_SMTP_PORT="${_mp_smtp}" \
         OTEL_HTTP="http://localhost:${_otel_http}" \
-        npm run test:compose
+        npm run test:compose || return 1
         # compose-smoke resets the DB on destructive stages (dev/test) and seeds the
         # RLS-isolation fixtures (rls-org-a/b), which removes the boot-seeded
         # fixture-org. The E2E groups that follow (e2e-smoke + discovery) drive the
         # fixture session (fixture-org), so restore the fixture seed before they run.
         # preserve stages (staging/prod) skip the reset, so they are never re-seeded.
+        # (Runs only after test:compose succeeded — the `|| return 1` above
+        # propagates a compose-smoke failure as a real FAILED group.)
         if [ "$_data_policy" = "destructive" ]; then
             printf '%s▶ restoring fixture seed after destructive compose-smoke%s\n' "$GREEN" "$RESET"
-            POSTGRES_URL="$_pg_url" npm run db:seed
+            POSTGRES_URL="$_pg_url" npm run db:seed || return 1
         fi
         ;;
       integration)
@@ -205,7 +207,7 @@ run_group() {
             printf '%s✗ tenant E2E guard: %s/healthz not reachable — is external-caddy running?%s\n' \
                 "$RED" "$_tenant_base" "$RESET"
             printf '%s  Run: make external-caddy-up%s\n' "$YELLOW" "$RESET"
-            exit 1
+            return 1
         fi
         PROD_BASE_URL="$_app_url" npx playwright test --config playwright.external.config.ts \
             e2e/external/tenant-prod.spec.ts
@@ -246,22 +248,26 @@ run_group() {
         _missing=""
         [ -z "${KEYCLOAK_TEST_USERNAME:-}" ] && _missing="KEYCLOAK_TEST_USERNAME"
         [ -z "${KEYCLOAK_TEST_PASSWORD:-}" ] && _missing="${_missing:+$_missing, }KEYCLOAK_TEST_PASSWORD"
+        # Routed through the shared contract: FULL→return 0, FAILED→return 1,
+        # DEGRADED→return 2 (the loop records E2E_DEGRADED — no auth-only special-case).
         if [ -n "$_missing" ]; then
             confidence FAILED "real-auth E2E cannot run — missing $_missing. staging/prod cannot pass without real auth (docs/local-development/real-login-e2e.md)."
-            exit 1
+            return 1
         fi
         if echo "$_app_url" | grep -q "localhost"; then
             if [ "${ALLOW_SKIP_AUTH_E2E:-}" = "1" ]; then
                 confidence DEGRADED "real-auth E2E skipped — $_app_url is localhost; Keycloak redirect needs real DNS. Run PROD_BASE_URL=<real-domain> for FULL. This stage will NOT pass promotion."
-                E2E_DEGRADED=1
-            else
-                confidence FAILED "real-auth E2E cannot run against localhost ($_app_url). Run PROD_BASE_URL=https://aldous.info make stage-$STAGE for the real Keycloak redirect."
-                exit 1
+                return 2
             fi
-        else
-            PROD_BASE_URL="$_app_url" make e2e-external-auth
-            confidence FULL "real-auth E2E passed against $_app_url"
+            confidence FAILED "real-auth E2E cannot run against localhost ($_app_url). Run PROD_BASE_URL=https://aldous.info make stage-$STAGE for the real Keycloak redirect."
+            return 1
         fi
+        if PROD_BASE_URL="$_app_url" make e2e-external-auth; then
+            confidence FULL "real-auth E2E passed against $_app_url"
+            return 0
+        fi
+        confidence FAILED "real-auth E2E run failed against $_app_url"
+        return 1
         ;;
       production-e2e)
         PROD_BASE_URL="$_app_url" npm run test:e2e:prod
@@ -272,7 +278,7 @@ run_group() {
       *)
         printf '%s✗ unknown test group "%s" — check stage-policy.yaml for typos%s\n' \
             "$RED" "$group" "$RESET"
-        exit 1
+        return 1
         ;;
     esac
 }
@@ -281,14 +287,50 @@ run_group() {
 # newline, so a plain `while read` silently drops the LAST group (pre-existing bug
 # that skipped each stage's final test group, e.g. prod production-e2e). Fixed here
 # so every required group — including the auth-e2e confidence gate — actually runs.
+
+# ADR-ACT-0285 Phase 3 — ONE shared correlation id for the whole stage run. The
+# Playwright groups stamp it on their platform-api requests (via
+# e2e/support/correlation.ts → x-e2e-test-run-id) and the later
+# e2e-observability-correlation harness queries Loki for the SAME id. Generated once
+# here and exported so every group's child process (make → playwright, node tools)
+# inherits it. Honours a pre-set value (caller/CI) for reproducibility.
+if [ -z "${E2E_TEST_RUN_ID:-}" ]; then
+    E2E_TEST_RUN_ID="run-${STAGE}-$(date +%s)-$(openssl rand -hex 4 2>/dev/null || printf '%04x%04x' "$RANDOM" "$RANDOM")"
+fi
+export E2E_TEST_RUN_ID
+export E2E_STAGE="$STAGE"
+printf '%s▶ correlation: E2E_TEST_RUN_ID=%s (stage %s)%s\n' "$GREEN" "$E2E_TEST_RUN_ID" "$STAGE" "$RESET"
+
+# Honest confidence aggregation (ADR-ACT-0285). classify_group_rc maps each group's
+# exit code to OK | DEGRADED | FAIL using the shared contract: only contract-aware
+# groups (observability tools + auth-e2e) may DEGRADE via exit 2; every other group
+# is pass/fail (any non-zero — incl. make's 2-on-failure — is a FAILURE). Sourced so
+# the same logic is unit-tested in scripts/tests/tests/aggregate-confidence.test.mjs.
+# shellcheck source=scripts/tests/aggregate-confidence.sh
+. "$(dirname "$0")/aggregate-confidence.sh"
+
 while IFS= read -r group || [ -n "$group" ]; do
     [ -z "$group" ] && continue
-    run_group "$group"
+    # Capture the group's exit code WITHOUT aborting (set -e is suppressed by `||`).
+    _rc=0
+    run_group "$group" || _rc=$?
+    case "$(classify_group_rc "$group" "$_rc")" in
+        OK) ;;
+        DEGRADED)
+            E2E_DEGRADED=1
+            printf '%s⚠ required group %s DEGRADED (exit 2) — recorded; stage will NOT pass promotion%s\n' "$YELLOW" "$group" "$RESET"
+            ;;
+        FAIL)
+            printf '%s✗ required group %s FAILED (exit %s) — failing stage immediately%s\n' "$RED" "$group" "$_rc" "$RESET"
+            exit 1
+            ;;
+    esac
 done < <(printf '%s' "$REQUIRED" | tr ',' '\n')
 
 if [ "$E2E_DEGRADED" = "1" ]; then
-    printf '\n%s⚠ %s completed with DEGRADED confidence (real auth skipped) — does NOT pass promotion%s\n' "$YELLOW" "$STAGE" "$RESET"
+    printf '\n%s⚠ %s completed with DEGRADED confidence — a required group exited 2 (DEGRADED); does NOT pass promotion%s\n' "$YELLOW" "$STAGE" "$RESET"
     exit 2
 fi
 
-printf '\n%s✓ all test groups complete for %s — FULL confidence%s\n' "$GREEN" "$STAGE" "$RESET"
+printf '\n%s✓ all required groups passed for %s — FULL confidence%s\n' "$GREEN" "$STAGE" "$RESET"
+exit 0

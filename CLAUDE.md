@@ -50,11 +50,11 @@ Direct (dev server / port-mapped):
 React dev              http://localhost:5173
 platform-api health    http://localhost:3001/healthz
 platform-api session   http://localhost:3001/api/session
-Keycloak admin         http://localhost:8080/kc/admin
+Keycloak admin         http://localhost:8090/kc/admin   (dev; per-env 8090–8093, ADR-ACT-0157)
 Mailpit UI             http://localhost:8025
 MinIO console          http://localhost:9001
 SonarQube              http://localhost:9064/sonar
-WireMock admin         http://localhost:8089/__admin/
+WireMock admin         http://localhost:8089/__admin/   (direct-port only — NOT exposed via Caddy)
 ClickHouse play        http://localhost:8124/play
 Tilt UI                http://localhost:10350
 ```
@@ -64,21 +64,25 @@ Via Caddy (aldous.info super-global ? requires `make compose-up-web`):
 ```text
 App (super-admin)      http://aldous.info
 Keycloak all-realms    http://aldous.info/kc
-Mailpit (all tenants)  http://aldous.info/mailpit
+Mailpit (global)       http://aldous.info/mailpit
 SonarQube              http://aldous.info/sonar
 MinIO console          http://aldous.info/minio
-Sentry                 http://aldous.info/sentry
-WireMock admin         http://aldous.info/wiremock
-ClickHouse             http://aldous.info/clickhouse
+Sentry (global)        http://aldous.info/sentry
+Grafana                http://aldous.info/grafana
+pgAdmin                http://aldous.info/pgadmin
+ClickHouse             http://aldous.info/clickhouse/play
 ```
+
+LocalStack is profile-gated (`cloud-mocks`, dev/test only) and is NOT linked via
+Caddy in production (`devOnly` / `forbiddenInProduction` — the click-through link is
+locked there; see `service-clickthrough.ts`). WireMock is direct-port only (no Caddy
+route). Mailpit and Sentry are global-only services — they are NOT served per-tenant.
 
 Per-tenant (via Caddy, requires /etc/hosts or DNS):
 
 ```text
 App                    http://{slug}.aldous.info
 Keycloak realm admin   http://{slug}.aldous.info/kc
-Mailpit (tenant)       http://{slug}.aldous.info/mailpit
-Sentry (tenant)        http://{slug}.aldous.info/sentry
 ```
 
 ## Production awareness

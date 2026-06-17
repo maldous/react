@@ -16,6 +16,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { resolve, join } from "node:path";
 import process from "node:process";
+import { exitCodeForResult, worstResult } from "../../result-contract.mjs";
 
 const ROOT = resolve(".");
 const STAGE = (process.env["STAGE"] || process.env["E2E_STAGE"] || "local").toLowerCase();
@@ -99,7 +100,6 @@ const gl = {
   lines: [],
   generatedFor: "ADR-ACT-0285 Phase 5",
 };
-let exitCode = 0;
 
 // --- 1. Trigger a denial failure path (unauthenticated → protected route) ---
 let reqId = null;
@@ -168,7 +168,6 @@ if (triggered) {
       );
     } else {
       frc.result = "FAILED";
-      exitCode = 1;
       frc.lines.push(
         "FAILED: the denial produced no http.request.rejected log with reason+requestId for this testRunId — not root-causeable."
       );
@@ -192,7 +191,6 @@ try {
   gl.forbiddenLabelsPresent = FORBIDDEN_LABELS.filter((l) => labels.includes(l));
   if (gl.forbiddenLabelsPresent.length) {
     gl.result = "FAILED";
-    exitCode = 1;
     gl.lines.push(
       `FAILED: high-cardinality fields promoted to Loki LABELS (index bloat, ADR-0035): ${gl.forbiddenLabelsPresent.join(", ")}`
     );
@@ -220,4 +218,5 @@ console.log(
 console.log(
   `${tag(gl.result)} e2e grafana-loki: ${gl.result} → docs/evidence/e2e/${STAGE}-grafana-loki-latest.md`
 );
-process.exit(exitCode);
+// Combined contract: any FAILED → 1, else any DEGRADED → 2, else PASSED → 0.
+process.exit(exitCodeForResult(worstResult([frc.result, gl.result])));

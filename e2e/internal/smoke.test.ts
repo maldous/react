@@ -1,4 +1,7 @@
-import { test, expect } from "@playwright/test";
+// Use the correlation fixture (not @playwright/test) so every browser/API request
+// carries x-e2e-test-run-id/scenarioId/stage → platform-api logs them → the
+// e2e-observability-correlation harness can find this run's lines in Loki (ADR-ACT-0285).
+import { test, expect } from "../support/correlation.ts";
 
 /**
  * Platform substrate E2E smoke tests.

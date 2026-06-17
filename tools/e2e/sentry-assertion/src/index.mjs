@@ -22,6 +22,7 @@ import { resolve, join } from "node:path";
 import process from "node:process";
 import { setTimeout as sleep } from "node:timers/promises";
 import { runAssertion } from "./lib.mjs";
+import { exitCodeForResult } from "../../result-contract.mjs";
 
 const ROOT = resolve(".");
 const STAGE = (process.env["STAGE"] || process.env["E2E_STAGE"] || "local").toLowerCase();
@@ -104,4 +105,6 @@ console.log(
 );
 for (const line of payload.lines) console.log(`  • ${line}`);
 
-process.exit(payload.result === "FAILED" ? 1 : 0);
+// PASSED → 0, FAILED → 1, DEGRADED → 2 (DEGRADED is NOT a pass — it must
+// prevent promotion via the stage runner's aggregation).
+process.exit(exitCodeForResult(payload.result));
