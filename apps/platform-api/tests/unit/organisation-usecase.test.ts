@@ -11,7 +11,7 @@ import type { OrganisationRepository } from "../../src/ports/organisation-reposi
 import type { OrganisationProfile } from "@platform/contracts-organisation";
 
 const FIXTURE_PROFILE: OrganisationProfile = {
-  id: "00000000-0000-0000-0000-000000000001",
+  id: "00000000-0000-4000-8000-000000000001",
   slug: "fixture-org",
   displayName: "Fixture Organisation",
   createdAt: "2024-01-01T00:00:00.000Z",

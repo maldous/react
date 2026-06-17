@@ -5,7 +5,7 @@ const POSTGRES_URL =
   process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
 
 export const FIXTURE = {
-  ORG_ID: "00000000-0000-0000-0000-000000000001",
+  ORG_ID: "00000000-0000-4000-8000-000000000001",
   ORG_SLUG: "fixture-org",
   ADMIN_ID: "00000000-0000-0000-0000-000000000002",
   VIEWER_ID: "00000000-0000-0000-0000-000000000003",

@@ -296,7 +296,7 @@ export const tenantReadinessBlockedFixture: TenantReadinessResponse = {
 export const tenantsLookupFixture: TenantLookupResponse = {
   tenants: [
     {
-      id: "00000000-0000-0000-0000-000000000001",
+      id: "00000000-0000-4000-8000-000000000001",
       slug: "fixture-org",
       displayName: "Fixture Organisation",
     },
@@ -421,7 +421,7 @@ export const eventsFixture: EventListResponse = {
   events: [
     {
       id: "00000000-0000-0000-0000-0000000000e1",
-      organisationId: "00000000-0000-0000-0000-000000000001",
+      organisationId: "00000000-0000-4000-8000-000000000001",
       eventType: "thing.created",
       status: "processed",
       attempts: 1,
@@ -438,7 +438,7 @@ export const deadLettersFixture: DeadLetterListResponse = {
     {
       id: "00000000-0000-0000-0000-0000000000d1",
       eventId: "00000000-0000-0000-0000-0000000000e2",
-      organisationId: "00000000-0000-0000-0000-000000000001",
+      organisationId: "00000000-0000-4000-8000-000000000001",
       eventType: "boom.event",
       attempts: 5,
       lastError: "handler failed",

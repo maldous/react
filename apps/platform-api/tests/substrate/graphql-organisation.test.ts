@@ -13,7 +13,7 @@ import process from "node:process";
 import { createRouter } from "../../src/server/pipeline.ts";
 import { routes } from "../../src/server/routes.ts";
 
-const FIXTURE_ORG_ID = "00000000-0000-0000-0000-000000000001";
+const FIXTURE_ORG_ID = "00000000-0000-4000-8000-000000000001";
 
 interface GraphQLBody {
   data?: Record<string, unknown> | null;

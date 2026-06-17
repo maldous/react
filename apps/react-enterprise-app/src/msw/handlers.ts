@@ -295,7 +295,7 @@ const emailSenderFixture = {
 // --- Tenant object storage readiness (ADR-0049) ---
 const storageReadinessFixture = {
   status: "configured",
-  prefix: "00000000-0000-0000-0000-000000000001/",
+  prefix: "00000000-0000-4000-8000-000000000001/",
   endpointConfigured: true,
   isolationEnforced: true,
 };

@@ -22,6 +22,11 @@ import type { IncomingMessage } from "node:http";
 import pg from "pg";
 
 import { classifyHostIdentity } from "@platform/domain-identity";
+import { createLogger } from "@platform/platform-logging";
+
+import { getFixtureSession } from "./session.ts";
+
+const logger = createLogger({ name: "tenant-resolver" });
 
 function getApexDomain(): string {
   return process.env["APEX_DOMAIN"] ?? "aldous.info";
@@ -32,8 +37,8 @@ export interface TenantContext {
   organisationId: string;
   /** Keycloak realm name for this tenant: "tenant-{organisationId}" */
   realmName: string;
-  /** Which host identity resolved this tenant (ADR-ACT-0231). */
-  hostSource: "slug" | "custom_domain";
+  /** Which identity resolved this tenant (ADR-ACT-0231; "fixture" = non-prod single-org session). */
+  hostSource: "slug" | "custom_domain" | "fixture";
 }
 
 /**
@@ -133,6 +138,26 @@ export async function resolveOrganisationByActiveCustomDomain(
 }
 
 /**
+ * Resolve an organisation by id. Used by the non-prod fixture-session path,
+ * where the operating tenant is the seeded organisation rather than one derived
+ * from a Host subdomain.
+ */
+export async function resolveOrganisationById(
+  pool: pg.Pool,
+  id: string
+): Promise<{ id: string; slug: string } | null> {
+  try {
+    const { rows } = await pool.query<{ id: string; slug: string }>(
+      "SELECT id, slug FROM public.organisations WHERE id = $1 LIMIT 1",
+      [id]
+    );
+    return rows[0] ?? null;
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Resolve the full tenant context from an HTTP request's Host header.
  * Returns null when:
  *   - The host is the super-global root (aldous.info)
@@ -144,12 +169,44 @@ export async function resolveTenantFromRequest(
   req: IncomingMessage,
   pool: pg.Pool
 ): Promise<TenantContext | null> {
+  // Non-prod fixture mode ("only prod has tenants"): there is no tenant
+  // subdomain — the request arrives on the apex (e.g. dev.localhost) and the
+  // seeded organisation IS the operating tenant. Resolve it from the fixture
+  // session so org-scoped routes work without a per-tenant FQDN. The request
+  // pipeline only calls resolveTenantFromRequest when NOT in fixture mode
+  // (see pipeline.ts), so this branch is exercised solely by org-scoped route
+  // handlers — never by FQDN cross-check / scope enforcement.
+  const fixture = getFixtureSession();
+  if (fixture?.organisationId) {
+    const org = await resolveOrganisationById(pool, fixture.organisationId);
+    if (org) {
+      return {
+        slug: org.slug,
+        organisationId: org.id,
+        realmName: `tenant-${org.id}`,
+        hostSource: "fixture",
+      };
+    }
+    logger.warn(
+      { organisationId: fixture.organisationId },
+      "tenant.resolution.failed: fixture session organisation not found in database (reseed needed?)"
+    );
+    return null;
+  }
+
   const host = requestHostFromHeaders(req);
-  const identity = classifyHostIdentity(host, getApexDomain());
+  const apexDomain = getApexDomain();
+  const identity = classifyHostIdentity(host, apexDomain);
 
   if (identity.kind === "tenant_slug" && identity.slug) {
     const org = await resolveOrganisationBySlug(pool, identity.slug);
-    if (!org) return null;
+    if (!org) {
+      logger.warn(
+        { host, apexDomain, classification: identity.kind, slug: identity.slug },
+        "tenant.resolution.failed: host carries a tenant slug with no matching organisation"
+      );
+      return null;
+    }
     return {
       slug: org.slug,
       organisationId: org.id,
@@ -160,7 +217,13 @@ export async function resolveTenantFromRequest(
 
   if (identity.kind === "custom_domain_candidate") {
     const org = await resolveOrganisationByActiveCustomDomain(pool, identity.hostname);
-    if (!org) return null;
+    if (!org) {
+      logger.warn(
+        { host, apexDomain, classification: identity.kind, hostname: identity.hostname },
+        "tenant.resolution.failed: host is not the apex or a tenant slug and matches no active custom domain"
+      );
+      return null;
+    }
     return {
       slug: org.slug,
       organisationId: org.id,
@@ -169,5 +232,9 @@ export async function resolveTenantFromRequest(
     };
   }
 
+  logger.warn(
+    { host, apexDomain, classification: identity.kind },
+    "tenant.resolution.failed: host does not resolve to any tenant (apex/reserved/invalid/malformed)"
+  );
   return null;
 }

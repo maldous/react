@@ -76,7 +76,7 @@ describe("organisation profile: GET /api/organisation/profile", () => {
       createdAt: string;
       updatedAt: string;
     };
-    assert.equal(body.id, "00000000-0000-0000-0000-000000000001");
+    assert.equal(body.id, "00000000-0000-4000-8000-000000000001");
     assert.equal(body.slug, "fixture-org");
     assert.equal(typeof body.displayName, "string");
     assert.ok(body.displayName.length > 0);
@@ -87,7 +87,7 @@ describe("organisation profile: GET /api/organisation/profile", () => {
     const res = await fetch(`${url}/api/organisation/profile`);
     assert.equal(res.status, 200);
     const body = (await res.json()) as { id: string; slug: string };
-    assert.equal(body.id, "00000000-0000-0000-0000-000000000001");
+    assert.equal(body.id, "00000000-0000-4000-8000-000000000001");
     assert.equal(body.slug, "fixture-org");
   });
 
@@ -155,7 +155,7 @@ describe("organisation profile: PATCH /api/organisation/profile", () => {
     assert.equal(res.status, 200);
     const body = (await res.json()) as { displayName: string; id: string; slug: string };
     assert.equal(body.displayName, "Updated Fixture Org");
-    assert.equal(body.id, "00000000-0000-0000-0000-000000000001");
+    assert.equal(body.id, "00000000-0000-4000-8000-000000000001");
     // Restore
     const restore = await fetch(`${url}/api/organisation/profile`, {
       method: "PATCH",
@@ -270,7 +270,7 @@ describe("organisation profile: PATCH /api/organisation/profile", () => {
     const verify = await fetch(`${url}/api/organisation/profile`);
     assert.equal(verify.status, 200);
     const profile = (await verify.json()) as { id: string; slug: string; displayName: string };
-    assert.equal(profile.id, "00000000-0000-0000-0000-000000000001");
+    assert.equal(profile.id, "00000000-0000-4000-8000-000000000001");
     assert.equal(profile.slug, "fixture-org");
     assert.notEqual(profile.displayName, "Should Not Apply");
   });

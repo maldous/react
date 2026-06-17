@@ -36,7 +36,7 @@ describe("AdminStoragePage (ADR-0049)", () => {
     );
     expect(screen.getByTestId("admin-storage-readiness-text")).not.toBeEmptyDOMElement();
     expect(screen.getByTestId("admin-storage-prefix")).toHaveTextContent(
-      "00000000-0000-0000-0000-000000000001/"
+      "00000000-0000-4000-8000-000000000001/"
     );
     expect(screen.getByTestId("admin-storage-isolation")).toHaveTextContent(/enforced/i);
   });

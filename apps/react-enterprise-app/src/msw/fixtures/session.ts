@@ -7,8 +7,8 @@ import type { SessionActor } from "@platform/contracts-auth";
 
 export type SessionPersona = "tenantAdmin" | "viewer" | "systemAdmin" | "noMembership";
 
-const TENANT_ID = "00000000-0000-0000-0000-000000000001";
-const ORGANISATION_ID = "00000000-0000-0000-0000-000000000001";
+const TENANT_ID = "00000000-0000-4000-8000-000000000001";
+const ORGANISATION_ID = "00000000-0000-4000-8000-000000000001";
 
 export const sessionFixtures: Record<SessionPersona, SessionActor> = {
   tenantAdmin: {

@@ -33,7 +33,7 @@ const FIXTURE_EI = {
 const FIXTURE_MEMBERSHIP = {
   id: "m-1",
   userId: FIXTURE_USER.id,
-  organisationId: "00000000-0000-0000-0000-000000000001",
+  organisationId: "00000000-0000-4000-8000-000000000001",
   role: "tenant-admin" as const,
   createdAt: new Date("2024-01-01"),
   updatedAt: new Date("2024-01-01"),

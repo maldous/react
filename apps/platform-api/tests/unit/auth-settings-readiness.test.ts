@@ -29,7 +29,7 @@ import { classifyRealmError } from "../../src/usecases/realm-error.ts";
 import { mutateAuthSetting } from "../../src/usecases/auth-settings.ts";
 import type { TenantAdminCredential } from "../../src/ports/tenant-credential-store.ts";
 
-const ORG = "00000000-0000-0000-0000-000000000001";
+const ORG = "00000000-0000-4000-8000-000000000001";
 const REALM = `tenant-${ORG}`;
 const ACTOR = "user-system-admin";
 const ROLES = ["system-admin"];
