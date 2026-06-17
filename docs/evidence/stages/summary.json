@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-17T03:48:24.948Z",
+  "generatedAt": "2026-06-17T06:21:05.571Z",
   "stages": {
     "dev": {
       "stage": "dev",
-      "gitSha": "70c8dfb",
-      "timestamp": "2026-06-17T03:24:27.808Z",
+      "gitSha": "7d3498f",
+      "timestamp": "2026-06-17T05:56:24.904Z",
       "envFile": "/home/user/src/react/.env/dev.env",
       "composeProject": "react-dev",
       "profiles": [
@@ -15,26 +15,22 @@
         "e2e-coverage-validate",
         "minimal-smoke",
         "unit",
-        "e2e-smoke",
-        "e2e-clickability",
-        "e2e-accessibility",
-        "e2e-persona-authz",
-        "e2e-persona-matrix"
+        "e2e-smoke"
       ],
       "testGroupsSkipped": [],
       "e2eCommand": "make e2e-internal",
       "urlsChecked": [
         "http://localhost:3001/healthz"
       ],
-      "result": "degraded",
-      "confidence": "DEGRADED",
-      "durationSeconds": 142,
-      "failureSummary": "Real-auth E2E was skipped — staging/prod cannot pass promotion without FULL confidence (real auth against a real domain)."
+      "result": "passed",
+      "confidence": "FULL",
+      "durationSeconds": 140,
+      "failureSummary": null
     },
     "test": {
       "stage": "test",
-      "gitSha": "70c8dfb",
-      "timestamp": "2026-06-17T03:30:50.357Z",
+      "gitSha": "7d3498f",
+      "timestamp": "2026-06-17T06:03:26.136Z",
       "envFile": "/home/user/src/react/.env/test.env",
       "composeProject": "react-test",
       "profiles": [
@@ -62,15 +58,15 @@
       "urlsChecked": [
         "http://localhost:3002/healthz"
       ],
-      "result": "degraded",
-      "confidence": "DEGRADED",
-      "durationSeconds": 383,
-      "failureSummary": "Real-auth E2E was skipped — staging/prod cannot pass promotion without FULL confidence (real auth against a real domain)."
+      "result": "passed",
+      "confidence": "FULL",
+      "durationSeconds": 422,
+      "failureSummary": null
     },
     "staging": {
       "stage": "staging",
-      "gitSha": "70c8dfb",
-      "timestamp": "2026-06-17T03:36:13.419Z",
+      "gitSha": "7d3498f",
+      "timestamp": "2026-06-17T06:08:55.518Z",
       "envFile": "/home/user/src/react/.env/staging.env",
       "composeProject": "react-staging",
       "profiles": [
@@ -102,13 +98,13 @@
       ],
       "result": "passed",
       "confidence": "FULL",
-      "durationSeconds": 322,
+      "durationSeconds": 330,
       "failureSummary": null
     },
     "prod": {
       "stage": "prod",
-      "gitSha": "70c8dfb",
-      "timestamp": "2026-06-17T03:48:24.915Z",
+      "gitSha": "7d3498f",
+      "timestamp": "2026-06-17T06:21:05.538Z",
       "envFile": "/home/user/src/react/.env/prod.env",
       "composeProject": "react-prod",
       "profiles": [
@@ -142,7 +138,7 @@
       ],
       "result": "passed",
       "confidence": "FULL",
-      "durationSeconds": 732,
+      "durationSeconds": 731,
       "failureSummary": null
     }
   }

@@ -1,7 +1,7 @@
 {
   "stage": "test",
-  "gitSha": "70c8dfb",
-  "timestamp": "2026-06-17T03:30:50.357Z",
+  "gitSha": "7d3498f",
+  "timestamp": "2026-06-17T06:03:26.136Z",
   "envFile": "/home/user/src/react/.env/test.env",
   "composeProject": "react-test",
   "profiles": [
@@ -29,8 +29,8 @@
   "urlsChecked": [
     "http://localhost:3002/healthz"
   ],
-  "result": "degraded",
-  "confidence": "DEGRADED",
-  "durationSeconds": 383,
-  "failureSummary": "Real-auth E2E was skipped — staging/prod cannot pass promotion without FULL confidence (real auth against a real domain)."
+  "result": "passed",
+  "confidence": "FULL",
+  "durationSeconds": 422,
+  "failureSummary": null
 }

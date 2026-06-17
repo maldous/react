@@ -1,0 +1,371 @@
+{
+  "stage": "test",
+  "generatedFor": "ADR-ACT-0285 Phase 6 sub-project A (persona-matrix)",
+  "credsPresent": true,
+  "personas": [
+    {
+      "persona": "unauthenticated-visitor",
+      "authMode": "unauthenticated",
+      "status": "RAN",
+      "reason": null
+    },
+    {
+      "persona": "fixture-tenant-admin",
+      "authMode": "fixture",
+      "status": "RAN",
+      "reason": null
+    },
+    {
+      "persona": "fixture-viewer",
+      "authMode": "fixture",
+      "status": "RAN",
+      "reason": null
+    },
+    {
+      "persona": "fixture-no-membership",
+      "authMode": "fixture",
+      "status": "RAN",
+      "reason": null
+    }
+  ],
+  "checks": [
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "forbidden-route",
+      "target": "/admin",
+      "expected": "denied (redirect / sign-in / forbidden-state)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "forbidden-route",
+      "target": "/admin/members",
+      "expected": "denied (redirect / sign-in / forbidden-state)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "forbidden-route",
+      "target": "/admin/logs",
+      "expected": "denied (redirect / sign-in / forbidden-state)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "forbidden-api",
+      "target": "GET /api/admin/tenants",
+      "expected": "401/403",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "forbidden-api",
+      "target": "GET /api/auth/settings/providers",
+      "expected": "401/403",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "expected-route",
+      "target": "/",
+      "expected": "loads + data APIs 2xx",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "expected-route",
+      "target": "/login",
+      "expected": "loads + data APIs 2xx",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "clickthrough-forbidden",
+      "target": "grafana /grafana/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "clickthrough-forbidden",
+      "target": "mailpit /mailpit/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "clickthrough-forbidden",
+      "target": "sonarqube /sonar/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "clickthrough-forbidden",
+      "target": "minio /minio/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "clickthrough-forbidden",
+      "target": "pgadmin /pgadmin/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "clickthrough-forbidden",
+      "target": "sentry /sentry/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "clickthrough-forbidden",
+      "target": "clickhouse /clickhouse/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "unauthenticated-visitor",
+      "kind": "clickthrough-forbidden",
+      "target": "keycloak /kc/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "fixture-tenant-admin",
+      "kind": "forbidden-route",
+      "target": "/admin/logs",
+      "expected": "denied (redirect / sign-in / forbidden-state)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "persona": "fixture-tenant-admin",
+      "kind": "forbidden-route",
+      "target": "/admin/events",
+      "expected": "denied (redirect / sign-in / forbidden-state)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "persona": "fixture-tenant-admin",
+      "kind": "forbidden-api",
+      "target": "GET /api/admin/tenants",
+      "expected": "401/403",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "fixture-tenant-admin",
+      "kind": "expected-route",
+      "target": "/",
+      "expected": "loads + data APIs 2xx",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "fixture-tenant-admin",
+      "kind": "expected-route",
+      "target": "/admin",
+      "expected": "loads + data APIs 2xx",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "fixture-tenant-admin",
+      "kind": "expected-route",
+      "target": "/admin/members",
+      "expected": "loads + data APIs 2xx",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "fixture-tenant-admin",
+      "kind": "clickthrough-granted",
+      "target": "keycloak /kc/",
+      "expected": "tenant-host-scoped",
+      "actual": "deferred to sub-project B (tenant FQDN); apex correctly denies",
+      "ok": true
+    },
+    {
+      "persona": "fixture-tenant-admin",
+      "kind": "clickthrough-forbidden",
+      "target": "grafana /grafana/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "fixture-tenant-admin",
+      "kind": "clickthrough-forbidden",
+      "target": "sentry /sentry/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "fixture-tenant-admin",
+      "kind": "clickthrough-forbidden",
+      "target": "sonarqube /sonar/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "fixture-tenant-admin",
+      "kind": "clickthrough-forbidden",
+      "target": "pgadmin /pgadmin/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "fixture-tenant-admin",
+      "kind": "clickthrough-forbidden",
+      "target": "minio /minio/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "fixture-tenant-admin",
+      "kind": "clickthrough-forbidden",
+      "target": "clickhouse /clickhouse/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "fixture-viewer",
+      "kind": "forbidden-route",
+      "target": "/admin",
+      "expected": "denied (redirect / sign-in / forbidden-state)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "persona": "fixture-viewer",
+      "kind": "forbidden-route",
+      "target": "/admin/members",
+      "expected": "denied (redirect / sign-in / forbidden-state)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "persona": "fixture-viewer",
+      "kind": "forbidden-api",
+      "target": "GET /api/auth/settings/providers",
+      "expected": "401/403",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "fixture-viewer",
+      "kind": "forbidden-api",
+      "target": "PATCH /api/auth/settings/providers",
+      "expected": "401/403",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "fixture-viewer",
+      "kind": "expected-route",
+      "target": "/",
+      "expected": "loads + data APIs 2xx",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "fixture-viewer",
+      "kind": "clickthrough-forbidden",
+      "target": "keycloak /kc/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "fixture-viewer",
+      "kind": "clickthrough-forbidden",
+      "target": "grafana /grafana/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "fixture-viewer",
+      "kind": "clickthrough-forbidden",
+      "target": "sentry /sentry/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "fixture-no-membership",
+      "kind": "forbidden-route",
+      "target": "/admin",
+      "expected": "denied (redirect / sign-in / forbidden-state)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "persona": "fixture-no-membership",
+      "kind": "forbidden-route",
+      "target": "/admin/members",
+      "expected": "denied (redirect / sign-in / forbidden-state)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "persona": "fixture-no-membership",
+      "kind": "forbidden-api",
+      "target": "GET /api/admin/tenants",
+      "expected": "401/403",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "fixture-no-membership",
+      "kind": "expected-route",
+      "target": "/",
+      "expected": "loads + data APIs 2xx",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "persona": "fixture-no-membership",
+      "kind": "clickthrough-forbidden",
+      "target": "keycloak /kc/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "persona": "fixture-no-membership",
+      "kind": "clickthrough-forbidden",
+      "target": "grafana /grafana/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "401",
+      "ok": true
+    }
+  ],
+  "failureCount": 0,
+  "result": "PASSED"
+}

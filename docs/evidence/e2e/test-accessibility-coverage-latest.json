@@ -1,0 +1,60 @@
+{
+  "stage": "test",
+  "baseURL": "http://localhost:8081",
+  "profiles": [
+    "default",
+    "reduced-motion",
+    "low-vision-high-contrast"
+  ],
+  "routesTested": [
+    "/",
+    "/login"
+  ],
+  "results": [
+    {
+      "route": "/",
+      "profile": "default",
+      "hasMain": true,
+      "hasHeading": true,
+      "violations": []
+    },
+    {
+      "route": "/login",
+      "profile": "default",
+      "hasMain": true,
+      "hasHeading": true,
+      "violations": []
+    },
+    {
+      "route": "/",
+      "profile": "reduced-motion",
+      "hasMain": true,
+      "hasHeading": true,
+      "violations": []
+    },
+    {
+      "route": "/login",
+      "profile": "reduced-motion",
+      "hasMain": true,
+      "hasHeading": true,
+      "violations": []
+    },
+    {
+      "route": "/",
+      "profile": "low-vision-high-contrast",
+      "hasMain": true,
+      "hasHeading": true,
+      "violations": []
+    },
+    {
+      "route": "/login",
+      "profile": "low-vision-high-contrast",
+      "hasMain": true,
+      "hasHeading": true,
+      "violations": []
+    }
+  ],
+  "failureCount": 0,
+  "result": "PASSED",
+  "generatedFor": "ADR-ACT-0285 Phase 6 / ADR-0075"
+}

@@ -1,17 +1,56 @@
 {
   "stage": "test",
-  "testRunId": "sentry-test-1781528699948",
-  "result": "DEGRADED",
+  "testRunId": "sentry-test-1781676193526",
+  "result": "PASSED",
   "checks": [
     {
       "name": "trigger-synthetic-failure",
-      "httpStatus": 404,
-      "requestId": "eb611137-2aae-41f5-925e-814a51c85bd9",
+      "httpStatus": 500,
+      "requestId": "5fe2e808-8c5e-4ef0-9f34-6e9980299656",
       "expected": 500
+    },
+    {
+      "name": "event-metadata",
+      "eventId": "08b81c878f9947a49bf42fdad2ef9a16",
+      "ok": true,
+      "failures": [],
+      "checks": [
+        {
+          "name": "environment",
+          "expected": "test",
+          "actual": "test"
+        },
+        {
+          "name": "release",
+          "note": "not asserted (no release configured)",
+          "actual": null
+        },
+        {
+          "name": "tag:requestId",
+          "expected": "5fe2e808-8c5e-4ef0-9f34-6e9980299656",
+          "actual": "5fe2e808-8c5e-4ef0-9f34-6e9980299656"
+        },
+        {
+          "name": "tag:testRunId",
+          "expected": "sentry-test-1781676193526",
+          "actual": "sentry-test-1781676193526"
+        },
+        {
+          "name": "tag:scenarioId",
+          "expected": "synthetic-failure-sentry-capture",
+          "actual": "synthetic-failure-sentry-capture"
+        },
+        {
+          "name": "tag:trace_id",
+          "present": true,
+          "actual": "e6c02ca4b0aa816cb30b19ca274bf449"
+        }
+      ]
     }
   ],
   "lines": [
-    "Synthetic-failure endpoint returned 404 — E2E_FAILURE_ENDPOINT_ENABLED not set for this stage; cannot assert — DEGRADED."
+    "Triggered synthetic failure → HTTP 500 (x-request-id=5fe2e808-8c5e-4ef0-9f34-6e9980299656).",
+    "Sentry event 08b81c878f9947a49bf42fdad2ef9a16 carries environment + requestId + trace_id + testRunId + scenarioId."
   ],
   "generatedFor": "ADR-ACT-0285 Phase 5.5"
 }

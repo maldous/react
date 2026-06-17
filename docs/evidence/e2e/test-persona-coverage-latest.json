@@ -1,0 +1,60 @@
+{
+  "stage": "test",
+  "persona": "unauthenticated-visitor",
+  "authMode": "unauthenticated",
+  "baseURL": "http://localhost:8081",
+  "checks": [
+    {
+      "kind": "forbidden-route",
+      "target": "/admin",
+      "expected": "denied (redirect/sign-in)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "kind": "forbidden-route",
+      "target": "/admin/members",
+      "expected": "denied (redirect/sign-in)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "kind": "forbidden-route",
+      "target": "/admin/logs",
+      "expected": "denied (redirect/sign-in)",
+      "actual": "denied",
+      "ok": true
+    },
+    {
+      "kind": "forbidden-api",
+      "target": "GET /api/admin/tenants",
+      "expected": "401/403",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "kind": "forbidden-api",
+      "target": "GET /api/auth/settings/providers",
+      "expected": "401/403",
+      "actual": "401",
+      "ok": true
+    },
+    {
+      "kind": "expected-route",
+      "target": "/",
+      "expected": "loads (non-blank)",
+      "actual": "loads",
+      "ok": true
+    },
+    {
+      "kind": "expected-route",
+      "target": "/login",
+      "expected": "loads (non-blank)",
+      "actual": "loads",
+      "ok": true
+    }
+  ],
+  "failureCount": 0,
+  "result": "PASSED",
+  "generatedFor": "ADR-ACT-0285 Phase 6"
+}

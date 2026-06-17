@@ -11,4 +11,4 @@ Generated (ADR-ACT-0285 Phase 3). DO NOT EDIT — regenerate via the e2e-observa
 
 ## Notes
 
-- Loki pipeline reachable: 0 platform-api stream(s) present.
+- Loki pipeline reachable: 15 platform-api stream(s) present.
