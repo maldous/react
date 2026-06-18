@@ -5,16 +5,10 @@ import { useTranslation } from "@platform/i18n-runtime";
 import type { LogEntry } from "../admin-logs-client";
 import { LogLevelBadge } from "./LogLevelBadge";
 import { LogEntryDetails } from "./LogEntryDetails";
+import { asText } from "../../../lib/as-text";
 
 function messageOf(entry: LogEntry): string {
   return typeof entry.fields["msg"] === "string" ? entry.fields["msg"] : entry.line;
-}
-
-function asText(v: unknown): string {
-  if (v == null) return "";
-  if (typeof v === "string") return v;
-  if (typeof v === "number" || typeof v === "boolean" || typeof v === "bigint") return String(v);
-  return JSON.stringify(v);
 }
 
 function buildLogColumns(t: ReturnType<typeof useTranslation>): ColumnDef<LogEntry>[] {

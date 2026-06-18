@@ -111,6 +111,12 @@ OIDC flow and the session carries the mapped role. Static: `make infra-check`,
 - Real (non-local) deployment must use HTTPS issuer URLs + per-env redirect URIs and
   real client secrets seeded via OpenBao (not local-bootstrap derived).
 - SonarQube OIDC requires bundling the `sonar-auth-oidc` plugin into the image/volume.
+  Not delivered (ADR-ACT-0290, Option B): the plugin is NOT bundled (`SONAR_OIDC_PLUGIN_URL`
+  empty), so SonarQube 25.9 runs on native managed auth behind the forward-auth gate
+  (ADR-0030). The enable path is pinning `SONAR_OIDC_PLUGIN_URL` to vaulttec
+  `sonar-auth-oidc` **v3.0.0** (the build compatible with SonarQube 25.x/2025.x — v2.1.1
+  used the removed `ServletFilter` API and crash-loops). `provision-oidc.sh` now detects
+  the missing plugin and makes no SSO claim.
 
 ## Consequences
 

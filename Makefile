@@ -76,3 +76,17 @@ _all-promote-internal:
 ## (verify-ladder), which FAILS on any non-FULL/degraded/stale stage. (ADR-ACT-0285 closure —
 ## direct invocation no longer reports success when a stage DEGRADED.)
 all-promote: _all-promote-internal evidence
+
+# ── Authoritative full-confidence gate ───────────────────────────────────────
+# `make all` IS the authoritative full-confidence command: its test stage runs
+# the Sonar absolute-zero quality gate (scripts/stages/run-stage.sh §9 — `make
+# sonar`, test-stage only, the gating stage before staging/prod promote). So a
+# green `make all` already proves Sonar passed; Sonar runs EXACTLY ONCE in the
+# ladder. `release-confidence` is a discoverable alias for that authoritative run
+# — it deliberately does NOT append a second `make sonar` (that would re-scan).
+# The fast `make check` never runs Sonar (ADR-ACT-0290 / ADR-ACT-0291).
+.PHONY: release-confidence
+## release-confidence — Authoritative full-confidence run (alias for `make all`, which runs the Sonar gate at the test stage)
+release-confidence:
+	$(MAKE) all
+	$(call OK,release-confidence complete — full ladder incl. Sonar absolute-zero gate (authoritative))

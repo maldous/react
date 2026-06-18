@@ -7,6 +7,7 @@ import {
   createChildLogger,
   createRequestLogger,
   safeErrorMeta,
+  safeStringify,
   safeContextMeta,
   createBrowserLogger,
   normaliseError,
@@ -128,6 +129,65 @@ describe("safeErrorMeta", () => {
     const meta = safeErrorMeta(err);
     assert.ok(!("internalDetails" in meta));
     assert.ok(!("query" in meta));
+  });
+});
+
+describe("safeStringify (non-throwing, ADR-ACT-0290)", () => {
+  it("passes strings through unchanged", () => {
+    assert.equal(safeStringify("hello"), "hello");
+  });
+
+  it("renders null, undefined, numbers, booleans and symbols readably", () => {
+    assert.equal(safeStringify(null), "null");
+    assert.equal(safeStringify(undefined), "undefined");
+    assert.equal(safeStringify(42), "42");
+    assert.equal(safeStringify(true), "true");
+    assert.equal(safeStringify(false), "false");
+    assert.equal(safeStringify(Symbol("s")), "Symbol(s)");
+  });
+
+  it("renders functions without dumping their body", () => {
+    function namedFn() {
+      return undefined; // body irrelevant; we stringify the function value itself
+    }
+    assert.equal(safeStringify(namedFn), "[Function: namedFn]");
+    assert.match(
+      safeStringify(() => undefined),
+      /^\[Function: /
+    );
+  });
+
+  it("serialises ordinary JSON-compatible objects as JSON", () => {
+    assert.equal(safeStringify({ a: 1, b: "x" }), '{"a":1,"b":"x"}');
+    assert.equal(safeStringify([1, 2, 3]), "[1,2,3]");
+  });
+
+  it("coerces nested BigInt to its decimal string instead of throwing", () => {
+    assert.equal(safeStringify({ big: 10n }), '{"big":"10"}');
+    assert.equal(safeStringify(10n), "10");
+  });
+
+  it("returns a safe marker for circular references (no throw)", () => {
+    const circular: Record<string, unknown> = { name: "root" };
+    circular["self"] = circular;
+    assert.equal(safeStringify(circular), "[unserializable]");
+  });
+
+  it("returns a safe marker when toJSON throws (no second error)", () => {
+    const hostile = {
+      toJSON() {
+        throw new Error("boom");
+      },
+    };
+    assert.equal(safeStringify(hostile), "[unserializable]");
+  });
+
+  it("does not leak property values in the fallback marker", () => {
+    const secretHolder: Record<string, unknown> = { apiKey: "super-secret-value" };
+    secretHolder["self"] = secretHolder; // force the circular fallback
+    const out = safeStringify(secretHolder);
+    assert.equal(out, "[unserializable]");
+    assert.ok(!out.includes("super-secret-value"));
   });
 });
 

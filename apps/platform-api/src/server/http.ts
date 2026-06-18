@@ -30,8 +30,15 @@ process.on("unhandledRejection", (reason: unknown) => {
 process.on("uncaughtException", (err: unknown) => {
   const error = err instanceof Error ? err : new Error(String(err));
   log.fatal({ err: error }, "uncaughtException — exiting for clean restart");
-  sentry.captureError(error);
-  void sentry.flush(2000).finally(() => process.exit(1));
+  // Await init before capture so an exception thrown before Sentry finished
+  // initialising is still reported, then flush before exiting. ready() resolves
+  // immediately when Sentry is disabled, so this stays fast in that case.
+  void (async () => {
+    await sentry.ready();
+    sentry.captureError(error);
+    await sentry.flush(2000);
+    process.exit(1);
+  })();
 });
 
 async function start(): Promise<void> {
@@ -92,8 +99,10 @@ start().catch(async (err: unknown) => {
   const error = err instanceof Error ? err : new Error(String(err));
   // Log locally first so the line appears even if Sentry transport is slow.
   process.stderr.write(`fatal startup error: ${error.message}\n`);
-  // Note: sentry.sentry may still be null here if the dynamic import has not
-  // resolved yet (init race). captureError guards against that internally.
+  // Await initialisation before capture so the fatal error is actually reported
+  // (previously the dynamic import often had not resolved yet, so captureError
+  // silently dropped the most important error the process will ever emit).
+  await sentry.ready();
   sentry.captureError(error);
   await sentry.flush(2000);
   process.exit(1);

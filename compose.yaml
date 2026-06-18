@@ -227,7 +227,12 @@ services:
   # that the historical vaulttec v2.1.1 plugin used, so installing that build crash-loops
   # the server. The installer therefore NO LONGER ships a default plugin: OIDC UI SSO is
   # opt-in only, by pinning SONAR_OIDC_PLUGIN_URL to a build compatible with the running
-  # SonarQube image. Token-based CI analysis (the quality gate) never needs this plugin.
+  # SonarQube image — vaulttec sonar-auth-oidc v3.0.0 is the 25.x/2025.x-compatible build.
+  # Token-based CI analysis (the quality gate) never needs this plugin.
+  #
+  # DEFAULT STATE (ADR-ACT-0290, Option B): SONAR_OIDC_PLUGIN_URL is empty, so the plugin
+  # is NOT installed and SonarQube runs on native managed auth behind the forward-auth gate
+  # (ADR-0030). provision-oidc.sh detects the missing plugin and makes no SSO claim.
   sonar-oidc-plugin:
     image: curlimages/curl:8.11.1
     profiles: [external-sonar]

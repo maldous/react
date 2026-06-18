@@ -1,0 +1,30 @@
+-- Migration 034: rotate platform_app password to the managed application credential
+--
+-- Background: migration 010 creates the platform_app LOGIN role with a fixed
+-- local-dev bootstrap password ('platformapppassword'). Migration 010 is already
+-- applied in long-lived environments (staging/prod), so its file content — and
+-- therefore its migration checksum — MUST remain byte-for-byte stable. It cannot
+-- be edited to carry a managed secret (doing so caused a checksum mismatch that
+-- bricked migrate.ts; see ADR-ACT-0290).
+--
+-- This forward-only migration brings the role password in line with the managed
+-- application credential WITHOUT touching 010. The ${PLATFORM_APP_PASSWORD}
+-- placeholder is substituted at apply-time by the migration runner (migrate.ts)
+-- with the password component of POSTGRES_APP_URL — the managed env value
+-- (ADR-0072 generated env / ADR-0069 OpenBao-backed secret material). The app
+-- connects as platform_app using that same POSTGRES_APP_URL, so after this
+-- migration the role password always matches the app connection string.
+--
+-- Why ALTER ROLE (not CREATE ROLE IF NOT EXISTS): platform_app already exists by
+-- the time this runs (010 created it; migrations apply in code-point order), so
+-- this is a pure password rotation. ALTER ROLE rotates the credential on every
+-- environment — including ones where 010 was applied long ago with the bootstrap
+-- default — instead of silently no-op'ing when the role is already present.
+--
+-- Checksum stability: the file is hashed with the literal ${PLATFORM_APP_PASSWORD}
+-- placeholder in place (migrate.ts checksums committed file content, then
+-- materialises the placeholder only at execution time), so the migration checksum
+-- is identical across every environment regardless of the actual secret. No real
+-- password is ever stored in source or migration history.
+
+ALTER ROLE platform_app PASSWORD '${PLATFORM_APP_PASSWORD}';

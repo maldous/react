@@ -23,17 +23,7 @@ import { AdminSectionHeader } from "../../components/AdminLayout";
 import { AdminQueryError } from "../admin/AdminQueryError";
 import { AuditTrailPanel } from "../admin/AuditTrailPanel";
 import { useConfig, useSetConfigValue, useClearConfigValue } from "./use-admin-config";
-
-/**
- * Render a config value as text exactly as before for scalars, while avoiding the
- * "[object Object]" stringification hazard for non-null object values (S6551).
- */
-function asText(v: unknown): string {
-  if (v == null) return "";
-  if (typeof v === "string") return v;
-  if (typeof v === "number" || typeof v === "boolean" || typeof v === "bigint") return String(v);
-  return JSON.stringify(v);
-}
+import { asText } from "../../lib/as-text";
 
 /**
  * Platform configuration (ADR-0039). Effective tenant config grouped by category;

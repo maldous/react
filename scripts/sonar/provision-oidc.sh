@@ -84,7 +84,33 @@ if [ -z "${SONAR_OIDC_CLIENT_SECRET:-}" ]; then
   exit 1
 fi
 
-# ── 5. Write the OIDC plugin settings ───────────────────────────────────────────
+# ── 4b. Honesty gate: only provision OIDC if the plugin is actually installed ────
+#
+# SonarQube Community Build 25.9 has NO native OIDC. The sonar-auth-oidc plugin is
+# the only way to add it, and it is NOT bundled in this deployment by default
+# (SONAR_OIDC_PLUGIN_URL is empty; see compose.yaml sonar-oidc-plugin). Writing the
+# sonar.auth.oidc.* settings when no plugin is present would leave the server
+# advertising an SSO login that cannot work and let this script falsely report
+# "OIDC provisioned". Instead we detect the plugin and, when it is absent, state the
+# truthful posture — native managed auth behind the forward-auth gate (ADR-0030) —
+# and make NO SSO claim (ADR-ACT-0290, Option B).
+#
+# To deliver OIDC, pin SONAR_OIDC_PLUGIN_URL to vaulttec sonar-auth-oidc v3.0.0 (the
+# build compatible with SonarQube 25.x — v2.1.1 used the removed ServletFilter API
+# and crash-loops) and re-run `make sonar-provision`.
+oidc_plugin_installed() {
+  curl -sf --max-time 10 "${A[@]}" "${SONAR_HOST}/api/plugins/installed" 2>/dev/null \
+    | grep -q '"key":"authoidc"'
+}
+if ! oidc_plugin_installed; then
+  printf '%sℹ SonarQube OIDC plugin not installed — SonarQube uses native managed auth behind the forward-auth gate (ADR-0030).%s\n' \
+    "$YELLOW" "$RESET"
+  printf '%s  To enable SSO: pin SONAR_OIDC_PLUGIN_URL to sonar-auth-oidc v3.0.0 (SonarQube 25.x-compatible) and re-run. Skipping OIDC settings — no SSO claimed (ADR-ACT-0290).%s\n' \
+    "$YELLOW" "$RESET"
+  exit 0
+fi
+
+# ── 5. Write the OIDC plugin settings (plugin confirmed present) ─────────────────
 
 ISSUER="${SONAR_OIDC_ISSUER:-https://aldous.info/kc/realms/platform-production}"
 PUBLIC_URL="${SONAR_PUBLIC_URL:-https://aldous.info/sonar}"

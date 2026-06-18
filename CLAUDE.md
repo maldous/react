@@ -131,6 +131,7 @@ Key targets:
 make help
 make check
 make all
+make release-confidence
 make fix
 make clean
 make compose-up-default
@@ -147,9 +148,14 @@ make redis-flush-local
 make readmes
 ```
 
-`make check` is the minimum normal gate after code or governance changes.
+`make check` is the minimum normal gate after code or governance changes (fast; no Sonar, no compose smoke).
 
-`make all` is required before claiming the complete local baseline passes.
+`make all` is the **authoritative full-confidence command**: it runs the dev → test → staging → prod
+confidence ladder, and its **test stage runs the Sonar absolute-zero quality gate** (`make sonar`, via
+`scripts/stages/run-stage.sh` §9 — test-stage only, the gating stage before promotion). So a green
+`make all` already proves the Sonar gate passed; **Sonar runs exactly once** in the ladder.
+`make release-confidence` is a discoverable alias for `make all` (it does NOT append a second `make sonar`
+— that would re-scan). Keep `make check` fast — never add Sonar to it (ADR-ACT-0290 / ADR-ACT-0291).
 
 ## Compose services
 

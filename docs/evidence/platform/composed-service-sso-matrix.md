@@ -17,7 +17,7 @@ redirects — see "Live verification" below).
 | **Grafana** | Native generic OAuth (OIDC) | confidential `grafana` (+ realm-role mapper) | `GF_AUTH_GENERIC_OAUTH_*` in compose (gated); `auto_login`; `ROOT_URL` from `APP_BASE_URL` | `roles` claim → `system-admin`=GrafanaAdmin, else Admin (`role_attribute_strict=false`) | **Wired + verified** |
 | **MinIO** | Native console OIDC | public `minio` (ADR-0030), **PKCE mandate removed** + hardcoded `policy` mapper | `MINIO_IDENTITY_OPENID_*`; `MINIO_IDENTITY_OPENID_CLAIM_NAME=policy` | client emits `policy=consoleAdmin` for all client users → console admin | **Wired + verified live** (SSO completes → /minio/browser, session 200; 2026-06-16) |
 | **pgAdmin** | Native OAuth2 | **confidential** `pgadmin` (+ realm-role mapper) | `config_local.py` `OAUTH2_CONFIG`: `OAUTH2_CLIENT_SECRET` + **`OAUTH2_SERVER_METADATA_URL`** (discovery → `jwks_uri`) + **`OAUTH2_ADDITIONAL_CLAIMS: None`**; `OAUTH2_AUTO_CREATE_USER` | auto-created users manage their own server connections | **Wired + verified live** (lands on /pgadmin/browser/; 2026-06-16) |
-| **SonarQube** | Via `sonar-auth-oidc` plugin (no native OIDC in community) | confidential `sonarqube` (+ realm-role mapper) | plugin jar via init service **+ settings written by `scripts/sonar/provision-oidc.sh`** (NOT env vars — see gotcha) | `roles` claim → group sync → `system-admin` Sonar group with global admin | **Wired + verified** |
+| **SonarQube** | No native OIDC in Community Build; third-party plugin needed | confidential `sonarqube` client ready (+ realm-role mapper) | **plugin NOT bundled** (`SONAR_OIDC_PLUGIN_URL` empty). OIDC opt-in: pin to vaulttec `sonar-auth-oidc` **v3.0.0** (the build compatible with SonarQube 25.x — v2.1.1 crash-loops, it used the removed `ServletFilter` API) + `provision-oidc.sh` | `roles` claim → group sync → `system-admin` group (only once the plugin is installed) | **Native auth behind forward-auth** (ADR-0030); OIDC opt-in, not delivered (ADR-ACT-0290) |
 | **Keycloak** | N/A (it IS the IdP) | — | admin console uses Keycloak's own auth | — | N/A |
 | **Sentry** (self-hosted) | SSO is a business/paid feature; community self-hosted is limited | — | — | — | **Not wired** (documented) |
 | **Mailpit / ClickHouse / WireMock / LocalStack / Tilt** | No SSO support | — | — | — | **N/A** |
@@ -92,8 +92,11 @@ redirects — see "Live verification" below).
   `COMPOSE_SSO_ENABLED=true` (common.json + shared.json sonar).
 - `keycloak-provision` exports `TF_VAR_enable_composed_sso` + all three client secrets.
 - compose: Grafana `GF_AUTH_GENERIC_OAUTH_*` (gated, auto-login, role mapping); MinIO
-  OpenID; pgAdmin `PGADMIN_OIDC_CLIENT_SECRET`; SonarQube plugin init service.
-- `scripts/sonar/provision-oidc.sh` writes the Sonar OIDC settings + admin group.
+  OpenID; pgAdmin `PGADMIN_OIDC_CLIENT_SECRET`; SonarQube plugin init service
+  (installs nothing while `SONAR_OIDC_PLUGIN_URL` is empty — see SonarQube row).
+- `scripts/sonar/provision-oidc.sh` writes the Sonar OIDC settings + admin group **only
+  when the plugin is actually installed**; otherwise it reports that SonarQube is using
+  native managed auth behind the forward-auth gate and makes no SSO claim (ADR-ACT-0290).
 
 ## Live verification (prod stack, this session)
 
@@ -103,10 +106,14 @@ redirects — see "Live verification" below).
   `…/grafana/login/generic_oauth`, sonar `…/sonar/oauth2/callback/oidc`, pgadmin
   `…/pgadmin/oauth2/authorize`, minio `…/minio/oauth_callback`).
 - Grafana login-init redirect now carries the correct `redirect_uri` (no `:3000`).
-- SonarQube: plugin `authoidc 2.1.1` loaded; container reaches the issuer discovery
-  doc; login-init redirects to Keycloak with the registered callback; `system-admin`
-  group holds `admin`/`gateadmin`/`profileadmin`/`provisioning`/`scan`.
-- Realm roles confirmed: `sysadmin@aldous.info` carries `system-admin`.
+- SonarQube: **OIDC NOT active** — no plugin is bundled (`SONAR_OIDC_PLUGIN_URL` empty),
+  so SonarQube 25.9 runs on native managed auth behind the platform forward-auth gate
+  (ADR-0030). The earlier "plugin authoidc 2.1.1 loaded" claim was incorrect: v2.1.1 uses
+  the `ServletFilter` API that SonarQube 25.x removed and would crash-loop the server. To
+  enable OIDC, pin `SONAR_OIDC_PLUGIN_URL` to vaulttec `sonar-auth-oidc` v3.0.0 (25.x-
+  compatible) and re-run `make sonar-provision` (ADR-ACT-0290).
+- Realm roles confirmed: `sysadmin@aldous.info` carries `system-admin` (used by the
+  Sonar group sync only once the plugin is installed).
 
 Browser-driven end-to-end click-through (actual cookie + role landing) remains a
 human/Playwright step on a stack with the prod realm reachable.

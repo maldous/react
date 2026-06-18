@@ -8,10 +8,11 @@ help:
 	@printf '\n'
 	@printf '$(BOLD)── DAILY WORKFLOW ───────────────────────────────────────────────────$(RESET)\n'
 	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
-	  check        'Fast local gate: format / lint / typecheck / architecture' \
-	  all          'Full confidence ladder: preflight → dev → test → staging → prod' \
-	  fix          'Auto-fix Prettier formatting' \
-	  install      'Install all npm dependencies (root + governance tools)'
+	  check               'Fast local gate: format / lint / typecheck / architecture (no Sonar)' \
+	  all                 'AUTHORITATIVE full confidence: dev → test → staging → prod; Sonar gate runs at the test stage' \
+	  release-confidence  'Alias for make all (the authoritative full-confidence run, incl. the Sonar gate)' \
+	  fix                 'Auto-fix Prettier formatting' \
+	  install             'Install all npm dependencies (root + governance tools)'
 	@printf '\n'
 	@printf '$(BOLD)── DEVELOPMENT ──────────────────────────────────────────────────────$(RESET)\n'
 	@printf '  $(GREEN)%-28s$(RESET) %s\n' \

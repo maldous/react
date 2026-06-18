@@ -15,11 +15,9 @@
 -- NOLOGIN role, so pg_has_role(current_user, 'rls_bypass', 'MEMBER') = true,
 -- and the RLS bypass policies allow cross-tenant reads when needed.
 --
--- IMPORTANT: The role password is NOT hardcoded here. The ${PLATFORM_APP_PASSWORD}
--- placeholder is substituted at apply-time by the migration runner (migrate.ts)
--- with the password from POSTGRES_APP_URL (managed env, ADR-0072 / OpenBao-backed
--- secret material, ADR-0069), so the role password always matches the app
--- connection string. Production sets POSTGRES_APP_URL to a strong managed value.
+-- IMPORTANT: The default password 'platformapppassword' is for local dev only.
+-- Override in production via ALTER ROLE platform_app PASSWORD '<strong-pw>'
+-- or by managing the credential in your secrets manager / Terraform.
 
 -- ---------------------------------------------------------------------------
 -- 1. Ensure rls_bypass exists (migration 008 creates it; idempotent guard)
@@ -40,7 +38,7 @@ BEGIN
   IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'platform_app') THEN
     CREATE ROLE platform_app
       LOGIN
-      PASSWORD '${PLATFORM_APP_PASSWORD}'
+      PASSWORD 'platformapppassword'
       NOSUPERUSER
       NOCREATEDB
       NOCREATEROLE

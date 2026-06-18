@@ -45,36 +45,85 @@ export interface SentryUser {
   username?: string;
 }
 
+// The subset of @sentry/node the adapter actually uses. Declaring it lets tests
+// inject a fake module (see SentryAdapterDeps.importSentry) so the enabled init
+// lifecycle is exercised without a real DSN or network.
+export interface SentryModuleLike {
+  init(options: Record<string, unknown>): void;
+  captureException(error: Error, hint?: unknown): string;
+  captureMessage(message: string, hint?: unknown): string;
+  setUser(user: SentryUser | null): void;
+  flush(timeout?: number): Promise<boolean>;
+}
+
+export interface SentryAdapterDeps {
+  /** Importer for the SDK. Defaults to the real @sentry/node dynamic import. */
+  importSentry?: () => Promise<SentryModuleLike>;
+  /**
+   * Diagnostic sink invoked once if SDK initialisation fails. The error is NEVER
+   * rethrown (that would turn a telemetry outage into an app crash); routing it
+   * here keeps the failure visible instead of silently swallowed.
+   */
+  onInitError?: (error: Error) => void;
+}
+
 export class SentryErrorAdapter {
   private readonly enabled: boolean;
   private readonly config: SentryConfig;
-  private started = false;
-  private sentry: typeof import("@sentry/node") | null = null;
+  private readonly deps: SentryAdapterDeps;
+  // Memoised init promise — the single source of "initialisation done". It is
+  // created at most once (idempotent start()/ready()) and resolves even on
+  // failure, so awaiting it can never produce an unhandled rejection.
+  private initPromise: Promise<void> | null = null;
+  private sentry: SentryModuleLike | null = null;
+  private initError: Error | null = null;
 
-  constructor(config: SentryConfig) {
-    // Constructor is synchronous (no async work — Sonar S7059); the SDK import is
-    // kicked off by start(), invoked from the factory immediately after construction.
+  constructor(config: SentryConfig, deps: SentryAdapterDeps = {}) {
+    // Constructor stays synchronous (no async work — Sonar S7059); initialisation
+    // is triggered by start()/ready().
     this.config = config;
+    this.deps = deps;
     this.enabled = (config.enabled ?? true) && config.dsn.length > 0;
   }
 
   /**
-   * Begin (fire-and-forget) SDK initialisation. Called by createSentryAdapter right
-   * after construction, so init is still eager but the async trigger lives outside
-   * the constructor. Idempotent; the adapter methods guard on `this.sentry` until it
-   * resolves.
+   * Trigger SDK initialisation. Kept for call sites that don't need to await
+   * (e.g. the factory at startup). Idempotent and equivalent to `void ready()`.
    */
   start(): void {
-    if (!this.enabled || this.started) return;
-    this.started = true;
-    void this.initSentry(this.config);
+    void this.ready();
+  }
+
+  /**
+   * Resolve when initialisation has completed (successfully or not). Disabled
+   * Sentry is a fast no-op that resolves immediately. Memoised: repeated calls —
+   * and repeated start() — share one initialisation, never re-importing the SDK.
+   * Fatal-error paths await this BEFORE capture/flush so a startup error is not
+   * dropped by the init race.
+   */
+  ready(): Promise<void> {
+    if (!this.enabled) return Promise.resolve();
+    this.initPromise ??= this.initSentry(this.config);
+    return this.initPromise;
+  }
+
+  /** True only after a successful init; lets callers branch on real availability. */
+  isInitialised(): boolean {
+    return this.sentry !== null;
+  }
+
+  /** The initialisation error, if init was attempted and failed; else null. */
+  getInitError(): Error | null {
+    return this.initError;
   }
 
   private async initSentry(config: SentryConfig): Promise<void> {
     try {
-      // Dynamic import to avoid hard dependency when Sentry is not configured
-      const mod = await import("@sentry/node");
-      this.sentry = mod;
+      // Dynamic import to avoid a hard dependency when Sentry is not configured.
+      const importSentry =
+        this.deps.importSentry ??
+        (() => import("@sentry/node") as unknown as Promise<SentryModuleLike>);
+      const mod = await importSentry();
       mod.init({
         dsn: config.dsn,
         environment: config.environment,
@@ -88,8 +137,15 @@ export class SentryErrorAdapter {
         // stays error-capture-only (ADR-ACT-0284).
         skipOpenTelemetrySetup: true,
       });
-    } catch {
+      // Publish the module only AFTER init() succeeds, so capture/flush never
+      // touch a half-initialised SDK.
+      this.sentry = mod;
+    } catch (err) {
       this.sentry = null;
+      this.initError = err instanceof Error ? err : new Error(String(err));
+      // Diagnosable, never rethrown — a telemetry init failure must not crash
+      // the app or reject the awaited init promise.
+      this.deps.onInitError?.(this.initError);
     }
   }
 
@@ -131,13 +187,22 @@ export class SentryErrorAdapter {
   }
 
   async flush(timeoutMs = 2000): Promise<boolean> {
-    if (!this.enabled || !this.sentry) return true;
+    if (!this.enabled) return true;
+    // Wait for initialisation before flushing. Previously flush() returned true
+    // immediately while init was still pending, so a fatal-startup flush reported
+    // success having flushed nothing. After ready(), either the SDK is available
+    // (real flush) or init failed (nothing to flush — true is then honest).
+    await this.ready();
+    if (!this.sentry) return true;
     return this.sentry.flush(timeoutMs);
   }
 }
 
-export function createSentryAdapter(config: SentryConfig): SentryErrorAdapter {
-  const adapter = new SentryErrorAdapter(config);
+export function createSentryAdapter(
+  config: SentryConfig,
+  deps?: SentryAdapterDeps
+): SentryErrorAdapter {
+  const adapter = new SentryErrorAdapter(config, deps);
   adapter.start();
   return adapter;
 }

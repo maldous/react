@@ -12,33 +12,68 @@ function checksumSql(sql: string): string {
   return crypto.createHash("sha256").update(sql).digest("hex").slice(0, 16);
 }
 
-// The platform_app role password is NEVER hardcoded in a migration (Sonar
-// secrets:S6698). Migration 010 carries a ${PLATFORM_APP_PASSWORD} placeholder;
-// the value is sourced at apply-time from the managed env (POSTGRES_APP_URL, in
-// turn the ADR-0072 generated env / OpenBao-backed secret material per ADR-0069),
-// so the role's password always matches the app connection string. The checksum
-// is computed on the FILE content (with the placeholder), so it stays stable.
-function platformAppRolePassword(): string {
-  for (const url of [process.env["POSTGRES_APP_URL"], POSTGRES_URL]) {
-    try {
-      const pw = url ? new URL(url).password : "";
-      if (pw) return decodeURIComponent(pw);
-    } catch {
-      /* not a URL — try the next */
-    }
+// The platform_app role password is NEVER hardcoded in a managed-secret migration
+// (Sonar secrets:S6698). Migration 034 carries a ${PLATFORM_APP_PASSWORD}
+// placeholder; the value is sourced at apply-time from POSTGRES_APP_URL — the
+// dedicated managed application-role credential (ADR-0072 generated env /
+// OpenBao-backed secret material per ADR-0069). It is sourced ONLY from
+// POSTGRES_APP_URL: the superuser credential in POSTGRES_URL must never become
+// the platform_app password, so there is deliberately no fallback to it. The
+// checksum is computed on the FILE content (with the placeholder), so it stays
+// stable across environments regardless of the actual secret.
+export function platformAppRolePassword(env: NodeJS.ProcessEnv = process.env): string {
+  const url = env["POSTGRES_APP_URL"];
+  if (!url) {
+    throw new Error(
+      "Cannot resolve platform_app role password — set POSTGRES_APP_URL (managed env, ADR-0072). " +
+        "POSTGRES_URL (superuser) is intentionally NOT used as a fallback."
+    );
   }
-  throw new Error(
-    "Cannot resolve platform_app role password — set POSTGRES_APP_URL (managed env, ADR-0072)"
-  );
+  let pw: string;
+  try {
+    pw = new URL(url).password;
+  } catch {
+    throw new Error("POSTGRES_APP_URL is not a valid connection URL");
+  }
+  if (!pw) {
+    throw new Error("POSTGRES_APP_URL carries no password component");
+  }
+  return decodeURIComponent(pw);
 }
 
-function materializeSql(sql: string): string {
-  if (!sql.includes("${PLATFORM_APP_PASSWORD}")) return sql;
-  const pw = platformAppRolePassword();
-  if (pw.includes("'") || pw.includes("\\")) {
-    throw new Error("platform_app password must not contain a quote/backslash (SQL safety)");
+// Reject any password that cannot be safely single-quoted into the ALTER ROLE
+// statement: a single quote or backslash would let the value break out of the
+// string literal, and a control character (newline/CR/etc.) would split the
+// statement. The placeholder is the ONLY interpolation point, so this is the
+// single trust boundary for migration SQL.
+export function assertSafeRolePassword(pw: string): void {
+  // A control character (newline/CR/null/etc.) could split the statement; a
+  // single quote or backslash could break out of the string literal. Detect
+  // control chars by code point (no control-char regex literal — Sonar S6324).
+  const hasControlChar = [...pw].some((ch) => ch.charCodeAt(0) < 0x20);
+  if (pw.includes("'") || pw.includes("\\") || hasControlChar) {
+    throw new Error(
+      "platform_app password must not contain a quote, backslash, or control character (SQL safety)"
+    );
   }
+}
+
+export function materializeSql(sql: string, env: NodeJS.ProcessEnv = process.env): string {
+  if (!sql.includes("${PLATFORM_APP_PASSWORD}")) return sql;
+  const pw = platformAppRolePassword(env);
+  assertSafeRolePassword(pw);
   return sql.split("${PLATFORM_APP_PASSWORD}").join(pw);
+}
+
+// Deterministic, locale-independent ordering for migration filenames. Default
+// String#localeCompare can reorder names under some locale collations (e.g.
+// punctuation/digit handling), which would change apply order; migration order
+// must be byte/code-point stable everywhere. Filenames are zero-padded and
+// ASCII, so a plain code-point comparison is the correct total order.
+export function compareMigrationNames(a: string, b: string): number {
+  if (a < b) return -1;
+  if (a > b) return 1;
+  return 0;
 }
 
 export async function runMigrations(): Promise<{ applied: string[]; skipped: string[] }> {
@@ -58,7 +93,7 @@ export async function runMigrations(): Promise<{ applied: string[]; skipped: str
     // Read migration files in deterministic order
     const files = readdirSync(MIGRATIONS_DIR)
       .filter((f) => f.endsWith(".sql"))
-      .sort((a, b) => a.localeCompare(b));
+      .sort(compareMigrationNames);
 
     const applied: string[] = [];
     const skipped: string[] = [];

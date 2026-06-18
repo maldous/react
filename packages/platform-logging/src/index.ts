@@ -119,6 +119,35 @@ export function createRequestLogger(
   return parent.child(Object.fromEntries(Object.entries(ctx).filter(([, v]) => v !== undefined)));
 }
 
+/**
+ * Stringify ANY value without ever throwing (ADR-ACT-0290).
+ *
+ * Plain JSON.stringify throws on circular references, BigInt, a throwing
+ * `toJSON`, and some proxies — turning a logging call (the thing reporting an
+ * error) into a second error. This helper renders scalars readably, serialises
+ * JSON-compatible objects as JSON (BigInt coerced to its decimal string), and
+ * returns a constant safe marker for anything unserialisable. The marker is a
+ * fixed string and never inspects property VALUES, so a fallback cannot leak a
+ * secret held inside the object.
+ */
+export function safeStringify(value: unknown): string {
+  if (typeof value === "string") return value;
+  if (value === null) return "null";
+  if (value === undefined) return "undefined";
+  if (typeof value === "bigint") return value.toString();
+  if (typeof value === "number" || typeof value === "boolean") return String(value);
+  if (typeof value === "symbol") return value.toString();
+  if (typeof value === "function") return `[Function: ${value.name || "anonymous"}]`;
+  try {
+    const json = JSON.stringify(value, (_key, v) => (typeof v === "bigint" ? v.toString() : v));
+    // JSON.stringify returns undefined for values with no JSON representation.
+    return json ?? "[unserializable]";
+  } catch {
+    // Circular, throwing toJSON, exotic proxy, etc. — never rethrow.
+    return "[unserializable]";
+  }
+}
+
 export function safeErrorMeta(err: unknown): Record<string, unknown> {
   if (err instanceof Error) {
     const meta: Record<string, unknown> = {
@@ -130,7 +159,7 @@ export function safeErrorMeta(err: unknown): Record<string, unknown> {
       if (typeof errCode === "string") meta["errCode"] = errCode;
       else if (typeof errCode === "number" || typeof errCode === "bigint")
         meta["errCode"] = String(errCode);
-      else meta["errCode"] = JSON.stringify(errCode);
+      else meta["errCode"] = safeStringify(errCode);
     }
     return meta;
   }
