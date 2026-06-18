@@ -134,7 +134,7 @@ export type MemberListResponse = z.infer<typeof MemberListResponseSchema>;
 
 export const InviteMemberRequestSchema = z
   .object({
-    email: z.string().email("Enter a valid email address"),
+    email: z.email("Enter a valid email address"),
     role: TenantRoleSchema,
   })
   .strict();
@@ -168,7 +168,7 @@ export type SetMemberStatusRequest = z.infer<typeof SetMemberStatusRequestSchema
 
 /** POST /api/org/members/resend-invite — re-issue a pending invitation by email. */
 export const ResendInviteRequestSchema = z
-  .object({ email: z.string().email("Enter a valid email address") })
+  .object({ email: z.email("Enter a valid email address") })
   .strict();
 export type ResendInviteRequest = z.infer<typeof ResendInviteRequestSchema>;
 
@@ -452,7 +452,7 @@ export const EMAIL_SENDER_READINESS_STATUSES = [
 export const EmailSenderReadinessStatusSchema = z.enum(EMAIL_SENDER_READINESS_STATUSES);
 export type EmailSenderReadinessStatus = z.infer<typeof EmailSenderReadinessStatusSchema>;
 
-const EmailZ = z.string().email().max(254);
+const EmailZ = z.email().max(254);
 
 /** `GET /api/org/email-sender` — redacted; never carries the secret. */
 export const EmailSenderSettingsSchema = z
@@ -1205,7 +1205,7 @@ export type AuthSettingsReadiness = z.infer<typeof AuthSettingsReadinessSchema>;
  */
 export const AttachAuthCredentialRequestSchema = z
   .object({
-    organisationId: z.string().uuid(),
+    organisationId: z.uuid(),
     clientId: z.string().min(1).max(255),
     clientSecret: z.string().min(1).max(4096),
   })
@@ -1799,7 +1799,7 @@ export type SearchReadinessResponse = z.infer<typeof SearchReadinessResponseSche
 
 /** `POST /api/admin/search/reindex` — operator-only, audited. Rebuilds the
  * tsvector for a tenant's documents. */
-export const ReindexRequestSchema = z.object({ tenantId: z.string().uuid() }).strict();
+export const ReindexRequestSchema = z.object({ tenantId: z.uuid() }).strict();
 export type ReindexRequest = z.infer<typeof ReindexRequestSchema>;
 
 export const ReindexResponseSchema = z.object({
@@ -2028,7 +2028,7 @@ export type AlertListResponse = z.infer<typeof AlertListResponseSchema>;
 /** `POST /api/admin/alerts` — operator-only, audited. */
 export const CreateAlertRuleRequestSchema = z
   .object({
-    organisationId: z.string().uuid(),
+    organisationId: z.uuid(),
     ruleKey: z.string().min(1).max(100),
     signalKey: z.string().min(1).max(100),
     comparator: AlertComparatorSchema,
@@ -2121,7 +2121,7 @@ export type ScheduledJobListResponse = z.infer<typeof ScheduledJobListResponseSc
 /** `POST /api/admin/scheduled-jobs` — operator-only, audited. */
 export const CreateScheduledJobRequestSchema = z
   .object({
-    organisationId: z.string().uuid(),
+    organisationId: z.uuid(),
     jobKey: z.string().min(1).max(100),
     eventType: z.string().min(1).max(100),
     intervalSeconds: z.number().int().positive().max(2592000),
@@ -2178,7 +2178,7 @@ export type SecretRefListResponse = z.infer<typeof SecretRefListResponseSchema>;
  * Body never carries a tenant id (operator passes organisationId explicitly). */
 export const PutSecretRequestSchema = z
   .object({
-    organisationId: z.string().uuid(),
+    organisationId: z.uuid(),
     name: z
       .string()
       .min(1)
@@ -2194,7 +2194,7 @@ export type PutSecretRequest = z.infer<typeof PutSecretRequestSchema>;
 
 /** `POST /api/admin/secrets/revoke` and `/delete` — opaque ref + tenant. */
 export const SecretRefActionRequestSchema = z
-  .object({ organisationId: z.string().uuid(), ref: z.string().min(1).max(128) })
+  .object({ organisationId: z.uuid(), ref: z.string().min(1).max(128) })
   .strict();
 export type SecretRefActionRequest = z.infer<typeof SecretRefActionRequestSchema>;
 

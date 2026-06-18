@@ -1938,7 +1938,7 @@ export const routes: Route[] = [
     scope: "global" as const,
     handler: async (req, res) => {
       const SupportSessionRequestSchema = z.object({
-        targetOrganisationId: z.string().uuid("targetOrganisationId must be a valid UUID"),
+        targetOrganisationId: z.uuid("targetOrganisationId must be a valid UUID"),
         supportAccessReason: z.string().min(1, "supportAccessReason must not be empty").max(500),
       });
 

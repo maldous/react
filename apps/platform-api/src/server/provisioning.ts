@@ -74,16 +74,16 @@ export const CreateTenantRequestSchema = z.object({
       message: "This slug is reserved and cannot be used as a tenant slug",
     }),
   displayName: z.string().min(2).max(120),
-  adminEmail: z.string().email(),
+  adminEmail: z.email(),
   resources: z
     .object({
       database: z
-        .object({ tier: ResourceTierSchema, connectionUrl: z.string().url().optional() })
+        .object({ tier: ResourceTierSchema, connectionUrl: z.url().optional() })
         .optional(),
       identity: z
         .object({
           tier: ResourceTierSchema,
-          keycloakUrl: z.string().url().optional(),
+          keycloakUrl: z.url().optional(),
           provisionerClientId: z.string().optional(),
           provisionerClientSecret: z.string().optional(),
         })
@@ -100,7 +100,7 @@ export const CreateTenantRequestSchema = z.object({
           tier: ResourceTierSchema,
           bucket: z.string().optional(),
           region: z.string().optional(),
-          endpoint: z.string().url().optional(),
+          endpoint: z.url().optional(),
           adminAccessKeyId: z.string().optional(),
           adminSecretAccessKey: z.string().optional(),
         })

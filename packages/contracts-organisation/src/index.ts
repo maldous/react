@@ -3,7 +3,7 @@ import { z } from "zod";
 export const packageName = "@platform/contracts-organisation";
 
 export const OrganisationProfileSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   slug: z.string(),
   displayName: z.string(),
   createdAt: z.string(),

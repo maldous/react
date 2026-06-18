@@ -146,7 +146,7 @@ export const InviteMemberSchema = z.object({
   // Email is normalized to lowercase before all DB operations so JIT consume
   // (case-insensitive match) finds the right invitation regardless of how
   // Keycloak returns the user's email at login time.
-  email: z.string().email("email must be a valid email address"),
+  email: z.email("email must be a valid email address"),
   role: z.enum(["tenant-admin", "manager", "member", "viewer"]),
 });
 
