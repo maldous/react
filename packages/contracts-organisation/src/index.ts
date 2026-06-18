@@ -28,5 +28,5 @@ export type UpdateOrganisationProfileRequest = z.infer<
   typeof UpdateOrganisationProfileRequestSchema
 >;
 
-export type GetOrganisationProfileResponse = OrganisationProfile;
-export type UpdateOrganisationProfileResponse = OrganisationProfile;
+// The get/update profile responses ARE the OrganisationProfile shape; consumers
+// import OrganisationProfile directly rather than redundant response aliases (S6564).

@@ -29,7 +29,10 @@ import { useConfig, useSetConfigValue, useClearConfigValue } from "./use-admin-c
  * "[object Object]" stringification hazard for non-null object values (S6551).
  */
 function asText(v: unknown): string {
-  return typeof v === "object" && v !== null ? JSON.stringify(v) : String(v ?? "");
+  if (v == null) return "";
+  if (typeof v === "string") return v;
+  if (typeof v === "number" || typeof v === "boolean" || typeof v === "bigint") return String(v);
+  return JSON.stringify(v);
 }
 
 /**

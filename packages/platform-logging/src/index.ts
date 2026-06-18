@@ -127,8 +127,10 @@ export function safeErrorMeta(err: unknown): Record<string, unknown> {
     };
     const errCode = (err as { code?: unknown }).code;
     if (errCode !== undefined) {
-      meta["errCode"] =
-        typeof errCode === "object" && errCode !== null ? JSON.stringify(errCode) : String(errCode);
+      if (typeof errCode === "string") meta["errCode"] = errCode;
+      else if (typeof errCode === "number" || typeof errCode === "bigint")
+        meta["errCode"] = String(errCode);
+      else meta["errCode"] = JSON.stringify(errCode);
     }
     return meta;
   }

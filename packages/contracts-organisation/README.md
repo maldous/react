@@ -42,7 +42,7 @@ Semver policy: internal-traceable
 
 - Own OrganisationProfile Zod schema and TypeScript type
 - Define UpdateOrganisationProfileRequest schema with validation constraints
-- Export GetOrganisationProfileResponse and UpdateOrganisationProfileResponse type aliases
+- Expose the OrganisationProfile shape as the get/update profile response type
 
 ## Non-responsibilities
 

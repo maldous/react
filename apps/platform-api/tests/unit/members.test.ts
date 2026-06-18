@@ -84,7 +84,10 @@ type SpyPoolOpts = {
   existingInvite?: boolean;
 };
 
-function routeClientQuery(t: string, opts: SpyPoolOpts) {
+type SpyResult = { rows: Array<Record<string, unknown>>; rowCount: number };
+
+// Membership read paths (updateMemberRole / removeMember / invite-conflict / admin-count).
+function routeMembershipReads(t: string, opts: SpyPoolOpts): SpyResult | null {
   // SELECT role FROM memberships (updateMemberRole / removeMember check)
   if (t.startsWith("select role from memberships")) {
     if (!opts.memberExists) return { rows: [], rowCount: 0 };
@@ -101,6 +104,11 @@ function routeClientQuery(t: string, opts: SpyPoolOpts) {
   if (t.includes("count(*)") && t.includes("role = 'tenant-admin'")) {
     return { rows: [{ cnt: opts.adminCount ?? 1 }], rowCount: 1 };
   }
+  return null;
+}
+
+// User-lookup / invitation / insert paths.
+function routeInviteAndWriteReads(t: string, opts: SpyPoolOpts): SpyResult | null {
   // User lookup by email
   if (t.includes("from public.users")) {
     if (opts.userEmail) return { rows: [{ id: "user-existing-1" }], rowCount: 1 };
@@ -121,8 +129,14 @@ function routeClientQuery(t: string, opts: SpyPoolOpts) {
   if (t.includes("insert into public.pending_invitations")) {
     return { rows: [], rowCount: 1 };
   }
-  // UPDATE / DELETE / BEGIN / COMMIT / ROLLBACK / SET LOCAL
-  return { rows: [], rowCount: 1 };
+  return null;
+}
+
+function routeClientQuery(t: string, opts: SpyPoolOpts): SpyResult {
+  // UPDATE / DELETE / BEGIN / COMMIT / ROLLBACK / SET LOCAL fall through to the default.
+  return (
+    routeMembershipReads(t, opts) ?? routeInviteAndWriteReads(t, opts) ?? { rows: [], rowCount: 1 }
+  );
 }
 
 function makeSpyPool(opts: SpyPoolOpts = {}) {

@@ -240,60 +240,69 @@ interface AuthEnforcementInput {
   testDeps?: RouterTestDeps;
 }
 
+/** Map a persisted session record to the in-memory actor, preserving the
+ *  support-mode (ADR-ACT-0187) and UMA token (ADR-ACT-0153) fields. */
+function buildActorFromRecord(record: NonNullable<Awaited<ReturnType<SessionStore["find"]>>>) {
+  return {
+    userId: record.userId,
+    tenantId: record.tenantId,
+    organisationId: record.organisationId,
+    roles: record.roles,
+    permissions: record.permissions,
+    displayName: record.displayName,
+    ...(record.supportMode
+      ? {
+          supportMode: record.supportMode,
+          effectiveOrganisationId: record.effectiveOrganisationId,
+          supportAccessReason: record.supportAccessReason,
+        }
+      : {}),
+    ...(record.accessTokenEnc ? { accessTokenEnc: record.accessTokenEnc } : {}),
+  };
+}
+
+/** Find the first cookie candidate that resolves to a live session record. */
+async function findSessionRecord(
+  candidateIds: string[],
+  store: SessionStore
+): Promise<{
+  record: Awaited<ReturnType<SessionStore["find"]>>;
+  resolvedSessionId: string | null;
+}> {
+  for (const id of candidateIds) {
+    const record = await store.find(id);
+    if (record) return { record, resolvedSessionId: id };
+  }
+  return { record: null, resolvedSessionId: null };
+}
+
 /** Resolve the actor for a route that requires auth (fixture or real session). */
 async function resolveRouteActor(
   req: http.IncomingMessage,
   reqLogger: ReturnType<typeof createLogger>,
   testDeps?: RouterTestDeps
 ): Promise<{ actor: SessionActor | null; resolvedSessionId: string | null }> {
-  let actor = getFixtureSession();
-  let resolvedSessionId: string | null = null;
-  if (actor) return { actor, resolvedSessionId };
+  const fixture = getFixtureSession();
+  if (fixture) return { actor: fixture, resolvedSessionId: null };
 
   // Real session: read the HTTP-only cookie(s). A browser may present more
   // than one platform_session (host-only + domain-scoped after a
   // SESSION_COOKIE_DOMAIN change); try EVERY candidate and use the first that
   // resolves so a stale cookie can't shadow a valid session (ADR-ACT-0278).
   const candidateIds = parseSessionCookies(req.headers["cookie"]);
-  if (candidateIds.length > 0) {
-    try {
-      const store = testDeps?.sessionStore ?? getSessionStore();
-      let record: Awaited<ReturnType<SessionStore["find"]>> = null;
-      for (const id of candidateIds) {
-        record = await store.find(id);
-        if (record) {
-          resolvedSessionId = id;
-          break;
-        }
-      }
-      if (record) {
-        actor = {
-          userId: record.userId,
-          tenantId: record.tenantId,
-          organisationId: record.organisationId,
-          roles: record.roles,
-          permissions: record.permissions,
-          displayName: record.displayName,
-          // Preserve support-mode fields (ADR-ACT-0187)
-          ...(record.supportMode
-            ? {
-                supportMode: record.supportMode,
-                effectiveOrganisationId: record.effectiveOrganisationId,
-                supportAccessReason: record.supportAccessReason,
-              }
-            : {}),
-          // Preserve UMA token fields (ADR-ACT-0153) — needed for pipeline checkAccess
-          ...(record.accessTokenEnc ? { accessTokenEnc: record.accessTokenEnc } : {}),
-        };
-      }
-    } catch (err) {
-      // Redis unavailable -> treat as unauthenticated (do not crash). Log it:
-      // a session-store outage makes the whole platform fail auth, so it must
-      // be diagnosable rather than silently 401 every request (ADR-ACT-0284).
-      reqLogger.error({ err }, "session store unavailable during auth resolution");
-    }
+  if (candidateIds.length === 0) return { actor: null, resolvedSessionId: null };
+
+  try {
+    const store = testDeps?.sessionStore ?? getSessionStore();
+    const { record, resolvedSessionId } = await findSessionRecord(candidateIds, store);
+    return { actor: record ? buildActorFromRecord(record) : null, resolvedSessionId };
+  } catch (err) {
+    // Redis unavailable -> treat as unauthenticated (do not crash). Log it:
+    // a session-store outage makes the whole platform fail auth, so it must
+    // be diagnosable rather than silently 401 every request (ADR-ACT-0284).
+    reqLogger.error({ err }, "session store unavailable during auth resolution");
+    return { actor: null, resolvedSessionId: null };
   }
-  return { actor, resolvedSessionId };
 }
 
 /**
@@ -601,6 +610,77 @@ async function enforceRouteAuth(input: AuthEnforcementInput): Promise<AuthEnforc
   return { denied: false, actor };
 }
 
+/** Build the per-request child-logger fields (trace + E2E correlation are
+ *  searchable metadata only, included only when present). */
+function buildRequestLogFields(
+  base: { requestId: string; method: string; path: string },
+  trace: { traceId?: string | null; spanId?: string | null },
+  e2e: { testRunId?: string | null; scenarioId?: string | null; e2eStage?: string | null }
+): Record<string, unknown> {
+  return {
+    requestId: base.requestId,
+    method: base.method,
+    path: base.path,
+    ...(trace.traceId ? { traceId: trace.traceId } : {}),
+    ...(trace.spanId ? { spanId: trace.spanId } : {}),
+    // E2E correlation (ADR-ACT-0285 Phase 3) — searchable metadata only.
+    ...(e2e.testRunId ? { testRunId: e2e.testRunId } : {}),
+    ...(e2e.scenarioId ? { scenarioId: e2e.scenarioId } : {}),
+    ...(e2e.e2eStage ? { e2eStage: e2e.e2eStage } : {}),
+  };
+}
+
+/** Correlation ids attached to a captured Sentry event (ADR-ACT-0285 Phase 5.5). */
+function buildCaptureContext(
+  requestId: string,
+  e2e: { testRunId?: string | null; scenarioId?: string | null }
+): Record<string, string> {
+  const ctx: Record<string, string> = { requestId };
+  if (e2e.testRunId) ctx["testRunId"] = e2e.testRunId;
+  if (e2e.scenarioId) ctx["scenarioId"] = e2e.scenarioId;
+  return ctx;
+}
+
+/** Resolve the route for (method, path). On a 404 (no path) or 405 (wrong method)
+ *  miss, writes the rejection log + JSON response and returns null. */
+function resolveMatchingRoute(
+  routes: Route[],
+  method: string,
+  path: string,
+  res: http.ServerResponse,
+  requestId: string,
+  logRejection: (status: number, reason: string, fields?: Record<string, unknown>) => void
+): Route | null {
+  const matchingMethod = routes.filter((r) => matchesPath(r.path, path));
+  const matchingRoute = matchingMethod.find((r) => r.method === method.toUpperCase());
+  if (matchingMethod.length === 0) {
+    logRejection(404, "path_not_found", { path });
+    jsonResponse(
+      res,
+      404,
+      { code: "NOT_FOUND", message: serverT("api.error.pathNotFound", { path }) },
+      requestId
+    );
+    return null;
+  }
+  if (!matchingRoute) {
+    const allowed = matchingMethod.map((r) => r.method).join(", ");
+    res.setHeader("Allow", allowed);
+    logRejection(405, "method_not_allowed", { allowed });
+    jsonResponse(
+      res,
+      405,
+      {
+        code: "METHOD_NOT_ALLOWED",
+        message: serverT("api.error.methodNotAllowed", { method, path }),
+      },
+      requestId
+    );
+    return null;
+  }
+  return matchingRoute;
+}
+
 // Create the HTTP request handler from a route list
 export function createRouter(
   routes: Route[],
@@ -643,17 +723,7 @@ export function createRouter(
       spanId: active.spanId ?? inbound.spanId,
     };
     const e2e = getE2ECorrelation(req);
-    const reqLogger = logger.child({
-      requestId,
-      method,
-      path,
-      ...(trace.traceId ? { traceId: trace.traceId } : {}),
-      ...(trace.spanId ? { spanId: trace.spanId } : {}),
-      // E2E correlation (ADR-ACT-0285 Phase 3) — searchable metadata only.
-      ...(e2e.testRunId ? { testRunId: e2e.testRunId } : {}),
-      ...(e2e.scenarioId ? { scenarioId: e2e.scenarioId } : {}),
-      ...(e2e.e2eStage ? { e2eStage: e2e.e2eStage } : {}),
-    });
+    const reqLogger = logger.child(buildRequestLogFields({ requestId, method, path }, trace, e2e));
     reqLogger.debug("http.request.start");
 
     // Structured rejection log (ADR-ACT-0278). Pipeline-level non-2xx outcomes
@@ -693,35 +763,10 @@ export function createRouter(
       return;
     }
 
-    // Find matching route (supports :param wildcard segments)
-    const matchingMethod = routes.filter((r) => matchesPath(r.path, path));
-    const matchingRoute = matchingMethod.find((r) => r.method === method.toUpperCase());
-
-    if (matchingMethod.length === 0) {
-      logRejection(404, "path_not_found", { path });
-      jsonResponse(
-        res,
-        404,
-        { code: "NOT_FOUND", message: serverT("api.error.pathNotFound", { path }) },
-        requestId
-      );
-      return;
-    }
-    if (!matchingRoute) {
-      const allowed = matchingMethod.map((r) => r.method).join(", ");
-      res.setHeader("Allow", allowed);
-      logRejection(405, "method_not_allowed", { allowed });
-      jsonResponse(
-        res,
-        405,
-        {
-          code: "METHOD_NOT_ALLOWED",
-          message: serverT("api.error.methodNotAllowed", { method, path }),
-        },
-        requestId
-      );
-      return;
-    }
+    // Find matching route (supports :param wildcard segments). On a 404/405 miss
+    // the helper writes the response + rejection log and returns null.
+    const matchingRoute = resolveMatchingRoute(routes, method, path, res, requestId, logRejection);
+    if (!matchingRoute) return;
 
     // Auth check ? resolve actor (null when unauthenticated)
     //
@@ -807,9 +852,7 @@ export function createRouter(
       // Sentry event is searchable by requestId (pivots to Loki) and by the E2E
       // testRunId/scenarioId that triggered it (ADR-ACT-0285 Phase 5.5). Only
       // defined keys are passed; the adapter promotes them to searchable tags.
-      const captureContext: Record<string, string> = { requestId };
-      if (e2e.testRunId) captureContext["testRunId"] = e2e.testRunId;
-      if (e2e.scenarioId) captureContext["scenarioId"] = e2e.scenarioId;
+      const captureContext = buildCaptureContext(requestId, e2e);
       sentry?.captureError(err instanceof Error ? err : new Error(String(err)), captureContext);
       const safe = toSafeResponse(err);
       jsonResponse(res, 500, safe, requestId);

@@ -7,5 +7,7 @@ export function createSentryAdapter(): SentryErrorAdapter {
   const environment = process.env["PLATFORM_ENV"] ?? process.env["NODE_ENV"] ?? "development";
   const release = process.env["APP_VERSION"];
 
-  return new SentryErrorAdapter({ dsn, environment, release, enabled });
+  const adapter = new SentryErrorAdapter({ dsn, environment, release, enabled });
+  adapter.start();
+  return adapter;
 }

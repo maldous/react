@@ -47,15 +47,27 @@ export interface SentryUser {
 
 export class SentryErrorAdapter {
   private readonly enabled: boolean;
+  private readonly config: SentryConfig;
+  private started = false;
   private sentry: typeof import("@sentry/node") | null = null;
 
   constructor(config: SentryConfig) {
+    // Constructor is synchronous (no async work — Sonar S7059); the SDK import is
+    // kicked off by start(), invoked from the factory immediately after construction.
+    this.config = config;
     this.enabled = (config.enabled ?? true) && config.dsn.length > 0;
-    if (!this.enabled) return;
-    // Kick off SDK initialisation eagerly (fire-and-forget). The async work lives
-    // in a dedicated method so the constructor itself stays synchronous; the
-    // adapter methods already guard on `this.sentry` until init resolves.
-    void this.initSentry(config);
+  }
+
+  /**
+   * Begin (fire-and-forget) SDK initialisation. Called by createSentryAdapter right
+   * after construction, so init is still eager but the async trigger lives outside
+   * the constructor. Idempotent; the adapter methods guard on `this.sentry` until it
+   * resolves.
+   */
+  start(): void {
+    if (!this.enabled || this.started) return;
+    this.started = true;
+    void this.initSentry(this.config);
   }
 
   private async initSentry(config: SentryConfig): Promise<void> {
@@ -125,5 +137,7 @@ export class SentryErrorAdapter {
 }
 
 export function createSentryAdapter(config: SentryConfig): SentryErrorAdapter {
-  return new SentryErrorAdapter(config);
+  const adapter = new SentryErrorAdapter(config);
+  adapter.start();
+  return adapter;
 }

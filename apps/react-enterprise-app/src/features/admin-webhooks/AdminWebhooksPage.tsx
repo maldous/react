@@ -42,12 +42,20 @@ interface AddWebhookForm {
   enabled?: boolean;
 }
 
-function toggleEventType(
+// Two distinct operations rather than one boolean-driven toggle (Sonar S2301): the
+// Checkbox onChange selects between them by the `checked` value at the call site.
+function addEventType(
   current: WebhookEventType[],
-  eventType: WebhookEventType,
-  checked: boolean
+  eventType: WebhookEventType
 ): WebhookEventType[] {
-  return checked ? [...current, eventType] : current.filter((e) => e !== eventType);
+  return [...current, eventType];
+}
+
+function removeEventType(
+  current: WebhookEventType[],
+  eventType: WebhookEventType
+): WebhookEventType[] {
+  return current.filter((e) => e !== eventType);
 }
 
 /**
@@ -169,7 +177,11 @@ function AddWebhookCard() {
                       key={eventType}
                       isSelected={field.value.includes(eventType)}
                       onChange={(checked) =>
-                        field.onChange(toggleEventType(field.value, eventType, checked))
+                        field.onChange(
+                          checked
+                            ? addEventType(field.value, eventType)
+                            : removeEventType(field.value, eventType)
+                        )
                       }
                       data-testid={`admin-webhooks-event-${eventType}`}
                     >
