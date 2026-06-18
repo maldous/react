@@ -31,10 +31,22 @@ The final 197-finding baseline was then cleared by rule:
 | S6478 nested components | 27 | hoist TanStack Table column arrays to module-scope `buildXColumns()` factories |
 | S3776 cognitive complexity | 16 | behaviour-identical helper extraction (two passes to land under 15) |
 | S2187 no test cases | 12 | wrap `node:test` assertion-scripts in `test()` blocks |
-| S1874 other deprecations | 16 | node-redis `disconnect()`→`destroy()`; zod `z.string().url()`→`z.url()`; OTEL `SpanAttributes`→`Attributes`; Checkbox/Radio/Switch → react-aria Field+Button split |
+| S1874 other deprecations | 7 | node-redis `disconnect()`→`destroy()`; zod `z.string().url()`→`z.url()`; OTEL `SpanAttributes`→`Attributes` |
 | S6819 a11y | 8 | `role="status"`→`<output>`, `role="group"`→`<fieldset>` |
 | S6606/S6582/S4323/S6571/S6564 | 22 | `??=`, optional chains, repeated-union aliases, redundant-member/alias removal |
 | S4325/S6551/S2004/S2301 + ~11 singletons | ~30 | per-case (drop no-op assertions, narrow `unknown`→string, un-nest, split boolean-selector, etc.) |
+
+## Accepted debt — S1874 Checkbox/Radio/Switch component deprecation (9)
+
+react-aria 1.18 deprecated the single `Checkbox`/`Radio`/`Switch` components in favour of the
+`XField` + `XButton` split. A migration was attempted but **reverted**: the split moves the
+`<input>` into `XField` while the label/`aria-label` sits on `XButton`, so the input loses its
+accessible name (axe *"Form elements must have labels"* — caught by the AdminConfig/AdminFeatures
+a11y suites). The deprecated single-component API is fully functional and accessible. The 9 findings
+are therefore **accepted in SonarQube** (issue transition `accept`, with the justification above) as
+tracked debt; a proper Field+Button migration requires dedicated a11y verification and is deferred.
+Accepted issues are excluded from the gate's `code_smells` count, so the gate stays at absolute zero
+without shipping an accessibility regression.
 
 ## Security hotspots — review decisions (59, all REVIEWED = SAFE)
 
