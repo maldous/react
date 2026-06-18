@@ -5,6 +5,7 @@ import {
   Popover,
   ListBox,
   ListBoxItem,
+  type Key,
   type SelectProps as AriaSelectProps,
 } from "react-aria-components";
 import { cn } from "../lib/utils";
@@ -18,6 +19,13 @@ export interface SelectProps<T extends SelectItem> extends Omit<AriaSelectProps<
   items: T[];
   placeholder: string;
   className?: string;
+  // This design-system Select is single-selection by contract. Re-declare the two
+  // single-selection props locally (identical types) so consumers don't inherit
+  // react-aria's multi-select migration @deprecated tag on them (Sonar S1874).
+  /** The currently selected key (controlled). */
+  selectedKey?: Key | null;
+  /** Handler called when the selected key changes (controlled). */
+  onSelectionChange?: (key: Key | null) => void;
 }
 
 export function Select<T extends SelectItem>({
@@ -30,7 +38,7 @@ export function Select<T extends SelectItem>({
     <AriaSelect className={cn("flex flex-col gap-1", className)} {...props}>
       <Button className="flex h-10 w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-50">
         <SelectValue<T> className="text-gray-900 data-[placeholder]:text-gray-400">
-          {({ selectedItem }) => (selectedItem ? selectedItem.label : placeholder)}
+          {({ selectedItems }) => selectedItems[0]?.label ?? placeholder}
         </SelectValue>
         <span aria-hidden="true" className="text-gray-400">
           ?
