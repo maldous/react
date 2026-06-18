@@ -237,7 +237,7 @@
     "v2AdrId": "V2-ADR-0020",
     "title": "Define observability, diagnostics, and runtime introspection primitives",
     "status": "Accepted",
-    "decision": "Adopt OpenTelemetry as the observability standard with W3C trace-context propagation: the browser forwards traceparent, the Node BFF creates/continues the request span, and use cases create child spans. The OpenTelemetry SDK is confined to the adapter layer; the observability package exposes only the API surface.",
+    "decision": "Adopt OpenTelemetry as the observability standard with W3C trace-context propagation: the browser forwards traceparent, the Node BFF creates/continues the request span, and use cases create child spans. The OpenTelemetry SDK is confined to the adapter layer (adapters/opentelemetry). The generic @platform/observability package is NOT carried into V2: the cross-cutting ObservabilityPort is deliberately abandoned (ADR-0020) and replaced by the platform-logging + platform-observability + platform-runtime-context + platform-errors split; platform/observability exposes the API-surface facade only (no OTEL SDK import).",
     "alternativesConsidered": [
       "Vendor-specific agent instrumentation",
       "Ad-hoc logging without tracing",

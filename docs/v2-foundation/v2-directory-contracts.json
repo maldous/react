@@ -189,7 +189,7 @@
   },
   {
     "path": "packages/runtime",
-    "responsibility": "Framework-agnostic application runtimes exposing ports and orchestration logic (api, authorisation, config, email, graphql-api, i18n, notification, profile-configuration, queue, search, session, storage, runtime-context, worker).",
+    "responsibility": "Framework-agnostic application runtimes exposing ports and orchestration logic (api, authorisation, config, email, graphql-api, i18n, session, storage, runtime-context). The deprecated zero-consumer scaffolds notification/profile-configuration/queue/search/worker are removed before the cut (delete-after-proof; superseded by application-local ports — ADR-0006/ADR-ACT-0289).",
     "allowedContents": ["runtime services", "port definitions", "orchestration logic"],
     "forbiddenContents": ["concrete external SDKs", "React", "pino in non-logging runtimes"],
     "owner": "platform-architecture",
@@ -218,7 +218,7 @@
   },
   {
     "path": "packages/platform",
-    "responsibility": "Cross-cutting platform primitives: errors, logging, observability, access-control, security-auth, audit-events, observability-signals.",
+    "responsibility": "Cross-cutting platform primitives: errors, logging, observability (platform-observability — NO OTEL SDK), audit-events. The deprecated scaffolds access-control/security-auth (superseded by authorisation-runtime + adapters-keycloak) and observability-signals (folded into application-local /api/admin/observability/signals) are removed before the cut — ADR-0006/ADR-ACT-0289.",
     "allowedContents": [
       "typed error envelope",
       "logging facade (pino)",

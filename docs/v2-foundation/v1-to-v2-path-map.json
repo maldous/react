@@ -4103,7 +4103,7 @@
     "protectingTests": [],
     "decisionRefs": [],
     "migrationSeq": 96,
-    "deletionCondition": "n/a \u2014 guard must be updated to reflect V2 hand-maintained test list after merges/renames in this shard"
+    "deletionCondition": "n/a — guard must be updated to reflect V2 hand-maintained test list after merges/renames in this shard"
   },
   {
     "v1Path": "apps/platform-api/tests/unit/token-crypto.test.ts",
@@ -4181,7 +4181,7 @@
     "protectingTests": [],
     "decisionRefs": [],
     "migrationSeq": 10,
-    "deletionCondition": "n/a \u2014 path map must be reconciled with final V2 package set after package moves/renames"
+    "deletionCondition": "n/a — path map must be reconciled with final V2 package set after package moves/renames"
   },
   {
     "v1Path": "apps/react-enterprise-app/Dockerfile",
@@ -4207,7 +4207,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-0019"],
     "migrationSeq": 12,
-    "deletionCondition": "n/a \u2014 HTML entry shell regenerated for AI-generated V2 UI; mount contract preserved"
+    "deletionCondition": "n/a — HTML entry shell regenerated for AI-generated V2 UI; mount contract preserved"
   },
   {
     "v1Path": "apps/react-enterprise-app/package.json",
@@ -4220,7 +4220,7 @@
     "protectingTests": [],
     "decisionRefs": [],
     "migrationSeq": 13,
-    "deletionCondition": "n/a \u2014 dependency set updated for V2 UI; package identity and export contract preserved"
+    "deletionCondition": "n/a — dependency set updated for V2 UI; package identity and export contract preserved"
   },
   {
     "v1Path": "apps/react-enterprise-app/package-lock.json",
@@ -4266,7 +4266,7 @@
     "fileType": "generated",
     "owner": "apps/react-enterprise-app",
     "authoritative": "generated",
-    "v2Path": "apps/react-enterprise-app/src/app/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -4302,7 +4302,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-0019"],
     "migrationSeq": 19,
-    "deletionCondition": "n/a \u2014 routeTree.gen regenerated; router wiring contract preserved for V2 UI"
+    "deletionCondition": "n/a — routeTree.gen regenerated; router wiring contract preserved for V2 UI"
   },
   {
     "v1Path": "apps/react-enterprise-app/src/app/shell-store.ts",
@@ -4315,7 +4315,7 @@
     "protectingTests": [],
     "decisionRefs": [],
     "migrationSeq": 20,
-    "deletionCondition": "n/a \u2014 behaviour reusable; V2 UI may re-skin sidebar but state contract preserved"
+    "deletionCondition": "n/a — behaviour reusable; V2 UI may re-skin sidebar but state contract preserved"
   },
   {
     "v1Path": "apps/react-enterprise-app/src/auth/login-providers.ts",
@@ -4332,7 +4332,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-ACT-0157"],
     "migrationSeq": 21,
-    "deletionCondition": "n/a \u2014 BFF provider contract is the semantic source for the V2 login UI"
+    "deletionCondition": "n/a — BFF provider contract is the semantic source for the V2 login UI"
   },
   {
     "v1Path": "apps/react-enterprise-app/src/components/AdminLayout.tsx",
@@ -4351,7 +4351,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-0027", "ADR-0036"],
     "migrationSeq": 22,
-    "deletionCondition": "n/a \u2014 visual layer replaced by AI-generated V2 UI; navigation behaviour, landmark/a11y semantics and permission gating are the preserved semantic source"
+    "deletionCondition": "n/a — visual layer replaced by AI-generated V2 UI; navigation behaviour, landmark/a11y semantics and permission gating are the preserved semantic source"
   },
   {
     "v1Path": "apps/react-enterprise-app/src/components/AppShell.tsx",
@@ -4429,7 +4429,7 @@
     "fileType": "config",
     "owner": "apps/react-enterprise-app",
     "authoritative": "generated",
-    "v2Path": "n/a",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -5926,7 +5926,7 @@
     "fileType": "config",
     "owner": "apps/web",
     "authoritative": "generated",
-    "v2Path": "apps/web/src/features/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -6094,7 +6094,7 @@
     "fileType": "config",
     "owner": "apps/web",
     "authoritative": "generated",
-    "v2Path": "n/a",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -6639,7 +6639,7 @@
     "fileType": "config",
     "owner": "apps/web",
     "authoritative": "generated",
-    "v2Path": "n/a",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -6736,7 +6736,7 @@
     "fileType": "placeholder",
     "owner": "app/react-enterprise-app",
     "authoritative": "authoritative",
-    "v2Path": "apps/web/src/services/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -6749,7 +6749,7 @@
     "fileType": "placeholder",
     "owner": "app/react-enterprise-app",
     "authoritative": "authoritative",
-    "v2Path": "apps/web/src/styles/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -6840,7 +6840,7 @@
     "fileType": "placeholder",
     "owner": "app/react-enterprise-app",
     "authoritative": "authoritative",
-    "v2Path": "apps/web/src/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -10393,7 +10393,7 @@
     "protectingTests": ["npm run test:frontend:run"],
     "decisionRefs": ["ADR-ACT-0203"],
     "migrationSeq": 8,
-    "deletionCondition": "n/a \u2014 historical V1 UI baseline; superseded by V2 AI-generated UI proofs"
+    "deletionCondition": "n/a — historical V1 UI baseline; superseded by V2 AI-generated UI proofs"
   },
   {
     "v1Path": "docs/evidence/frontend/react-component-platform-baseline.md",
@@ -10406,7 +10406,7 @@
     "protectingTests": ["npm run test:frontend:run"],
     "decisionRefs": ["ADR-ACT-0203"],
     "migrationSeq": 9,
-    "deletionCondition": "n/a \u2014 historical V1 UI baseline; semantic source for V2 UI"
+    "deletionCondition": "n/a — historical V1 UI baseline; semantic source for V2 UI"
   },
   {
     "v1Path": "docs/evidence/i18n/i18n-runtime-baseline.md",
@@ -10419,7 +10419,7 @@
     "protectingTests": ["node tools/architecture/validate-i18n/src/index.mjs ."],
     "decisionRefs": ["ADR-0026"],
     "migrationSeq": 10,
-    "deletionCondition": "n/a \u2014 historical i18n baseline proof"
+    "deletionCondition": "n/a — historical i18n baseline proof"
   },
   {
     "v1Path": "docs/evidence/i18n/i18n-runtime-correctness.md",
@@ -10432,7 +10432,7 @@
     "protectingTests": ["node tools/architecture/validate-i18n/src/index.mjs ."],
     "decisionRefs": ["ADR-0026"],
     "migrationSeq": 11,
-    "deletionCondition": "n/a \u2014 historical i18n correctness proof"
+    "deletionCondition": "n/a — historical i18n correctness proof"
   },
   {
     "v1Path": "docs/evidence/i18n/i18n-validation-baseline.md",
@@ -10445,7 +10445,7 @@
     "protectingTests": ["node tools/architecture/validate-i18n/src/index.mjs ."],
     "decisionRefs": ["ADR-0026"],
     "migrationSeq": 12,
-    "deletionCondition": "n/a \u2014 historical i18n validation proof"
+    "deletionCondition": "n/a — historical i18n validation proof"
   },
   {
     "v1Path": "docs/evidence/identity/identity-access-baseline.json",
@@ -10458,7 +10458,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0157"],
     "migrationSeq": 13,
-    "deletionCondition": "n/a \u2014 historical identity baseline proof"
+    "deletionCondition": "n/a — historical identity baseline proof"
   },
   {
     "v1Path": "docs/evidence/identity/identity-access-baseline.md",
@@ -10471,7 +10471,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0157"],
     "migrationSeq": 14,
-    "deletionCondition": "n/a \u2014 historical identity baseline proof"
+    "deletionCondition": "n/a — historical identity baseline proof"
   },
   {
     "v1Path": "docs/evidence/identity/keycloak-login-callback.json",
@@ -10484,7 +10484,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0157"],
     "migrationSeq": 15,
-    "deletionCondition": "n/a \u2014 historical login-callback proof"
+    "deletionCondition": "n/a — historical login-callback proof"
   },
   {
     "v1Path": "docs/evidence/identity/keycloak-login-callback.md",
@@ -10497,7 +10497,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0157"],
     "migrationSeq": 16,
-    "deletionCondition": "n/a \u2014 historical login-callback proof"
+    "deletionCondition": "n/a — historical login-callback proof"
   },
   {
     "v1Path": "docs/evidence/identity/keycloak-provisioning-baseline.json",
@@ -10510,7 +10510,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0157"],
     "migrationSeq": 17,
-    "deletionCondition": "n/a \u2014 historical provisioning baseline proof"
+    "deletionCondition": "n/a — historical provisioning baseline proof"
   },
   {
     "v1Path": "docs/evidence/identity/keycloak-provisioning-baseline.md",
@@ -10523,7 +10523,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0157"],
     "migrationSeq": 18,
-    "deletionCondition": "n/a \u2014 historical provisioning baseline proof"
+    "deletionCondition": "n/a — historical provisioning baseline proof"
   },
   {
     "v1Path": "docs/evidence/identity/tenant-identity-membership-v2.md",
@@ -10536,7 +10536,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0157", "ADR-ACT-0230"],
     "migrationSeq": 19,
-    "deletionCondition": "n/a \u2014 rename drops transitional -v2 suffix to clean V2 name"
+    "deletionCondition": "n/a — rename drops transitional -v2 suffix to clean V2 name"
   },
   {
     "v1Path": "docs/evidence/import-boundaries/initial-import-boundary-validation.json",
@@ -10549,7 +10549,7 @@
     "protectingTests": ["npm run test:architecture"],
     "decisionRefs": [],
     "migrationSeq": 20,
-    "deletionCondition": "n/a \u2014 historical import-boundary baseline proof"
+    "deletionCondition": "n/a — historical import-boundary baseline proof"
   },
   {
     "v1Path": "docs/evidence/import-boundaries/initial-import-boundary-validation.md",
@@ -10562,7 +10562,7 @@
     "protectingTests": ["npm run test:architecture"],
     "decisionRefs": [],
     "migrationSeq": 21,
-    "deletionCondition": "n/a \u2014 historical import-boundary baseline proof"
+    "deletionCondition": "n/a — historical import-boundary baseline proof"
   },
   {
     "v1Path": "docs/evidence/import-boundaries/source-import-boundary-validation.json",
@@ -10601,7 +10601,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-0072"],
     "migrationSeq": 24,
-    "deletionCondition": "n/a \u2014 historical provisioning baseline proof"
+    "deletionCondition": "n/a — historical provisioning baseline proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/declarative-provisioning-baseline.md",
@@ -10614,7 +10614,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-0072"],
     "migrationSeq": 25,
-    "deletionCondition": "n/a \u2014 historical provisioning baseline proof"
+    "deletionCondition": "n/a — historical provisioning baseline proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/final-pre-slice-hardening.json",
@@ -10627,7 +10627,7 @@
     "protectingTests": ["make check"],
     "decisionRefs": [],
     "migrationSeq": 26,
-    "deletionCondition": "n/a \u2014 historical pre-slice hardening proof"
+    "deletionCondition": "n/a — historical pre-slice hardening proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/final-pre-slice-hardening.md",
@@ -10640,7 +10640,7 @@
     "protectingTests": ["make check"],
     "decisionRefs": [],
     "migrationSeq": 27,
-    "deletionCondition": "n/a \u2014 historical pre-slice hardening proof"
+    "deletionCondition": "n/a — historical pre-slice hardening proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/local-platform-substrate-smoke.json",
@@ -10679,7 +10679,7 @@
     "protectingTests": ["make db-migrate"],
     "decisionRefs": [],
     "migrationSeq": 30,
-    "deletionCondition": "n/a \u2014 historical migration-runner baseline proof"
+    "deletionCondition": "n/a — historical migration-runner baseline proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/migration-runner-baseline.md",
@@ -10692,7 +10692,7 @@
     "protectingTests": ["make db-migrate"],
     "decisionRefs": [],
     "migrationSeq": 31,
-    "deletionCondition": "n/a \u2014 historical migration-runner baseline proof"
+    "deletionCondition": "n/a — historical migration-runner baseline proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/mock-oidc-broker-tests.md",
@@ -10705,7 +10705,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0220"],
     "migrationSeq": 32,
-    "deletionCondition": "n/a \u2014 historical mock-oidc broker proof"
+    "deletionCondition": "n/a — historical mock-oidc broker proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/platform-api-pipeline-baseline.json",
@@ -10718,7 +10718,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": [],
     "migrationSeq": 33,
-    "deletionCondition": "n/a \u2014 historical platform-api pipeline baseline proof"
+    "deletionCondition": "n/a — historical platform-api pipeline baseline proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/platform-api-pipeline-baseline.md",
@@ -10731,7 +10731,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": [],
     "migrationSeq": 34,
-    "deletionCondition": "n/a \u2014 historical platform-api pipeline baseline proof"
+    "deletionCondition": "n/a — historical platform-api pipeline baseline proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/slice-readiness-enforcement.json",
@@ -10796,7 +10796,7 @@
     "protectingTests": ["tilt up"],
     "decisionRefs": ["ADR-0027"],
     "migrationSeq": 39,
-    "deletionCondition": "n/a \u2014 historical Tilt feedback-loop proof"
+    "deletionCondition": "n/a — historical Tilt feedback-loop proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/wiremock-contract-tests.md",
@@ -10809,7 +10809,7 @@
     "protectingTests": ["make compose-up-external-mocks"],
     "decisionRefs": [],
     "migrationSeq": 40,
-    "deletionCondition": "n/a \u2014 historical wiremock contract proof"
+    "deletionCondition": "n/a — historical wiremock contract proof"
   },
   {
     "v1Path": "docs/evidence/integrations/webhook-delivery-worker.md",
@@ -10822,7 +10822,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-0068"],
     "migrationSeq": 41,
-    "deletionCondition": "n/a \u2014 historical webhook delivery worker proof"
+    "deletionCondition": "n/a — historical webhook delivery worker proof"
   },
   {
     "v1Path": "docs/evidence/integrations/webhook-redrive-metrics.md",
@@ -10835,7 +10835,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-0068"],
     "migrationSeq": 42,
-    "deletionCondition": "n/a \u2014 historical webhook redrive metrics proof"
+    "deletionCondition": "n/a — historical webhook redrive metrics proof"
   },
   {
     "v1Path": "docs/evidence/integrations/webhooks-plumbing.md",
@@ -10848,7 +10848,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-0068"],
     "migrationSeq": 43,
-    "deletionCondition": "n/a \u2014 historical webhooks plumbing proof"
+    "deletionCondition": "n/a — historical webhooks plumbing proof"
   },
   {
     "v1Path": "docs/evidence/lifecycle/adr-act-0288-c1-deprecation.md",
@@ -10861,7 +10861,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-ACT-0288"],
     "migrationSeq": 44,
-    "deletionCondition": "n/a \u2014 historical C1 deprecation lifecycle proof"
+    "deletionCondition": "n/a — historical C1 deprecation lifecycle proof"
   },
   {
     "v1Path": "docs/evidence/lifecycle/README.md",
@@ -10913,7 +10913,7 @@
     "protectingTests": ["npm run test:architecture"],
     "decisionRefs": [],
     "migrationSeq": 48,
-    "deletionCondition": "n/a \u2014 historical package-naming baseline proof"
+    "deletionCondition": "n/a — historical package-naming baseline proof"
   },
   {
     "v1Path": "docs/evidence/naming/initial-package-naming-validation.md",
@@ -10926,7 +10926,7 @@
     "protectingTests": ["npm run test:architecture"],
     "decisionRefs": [],
     "migrationSeq": 49,
-    "deletionCondition": "n/a \u2014 historical package-naming baseline proof"
+    "deletionCondition": "n/a — historical package-naming baseline proof"
   },
   {
     "v1Path": "docs/evidence/observability/alloy-label-policy-and-test-ingestion.md",
@@ -10939,7 +10939,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-ACT-0284"],
     "migrationSeq": 50,
-    "deletionCondition": "n/a \u2014 historical alloy label-policy proof"
+    "deletionCondition": "n/a — historical alloy label-policy proof"
   },
   {
     "v1Path": "docs/evidence/observability/observability-runtime-baseline.json",
@@ -10952,7 +10952,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0284"],
     "migrationSeq": 51,
-    "deletionCondition": "n/a \u2014 historical observability runtime baseline proof"
+    "deletionCondition": "n/a — historical observability runtime baseline proof"
   },
   {
     "v1Path": "docs/evidence/observability/observability-runtime-baseline.md",
@@ -10965,7 +10965,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0284"],
     "migrationSeq": 52,
-    "deletionCondition": "n/a \u2014 historical observability runtime baseline proof"
+    "deletionCondition": "n/a — historical observability runtime baseline proof"
   },
   {
     "v1Path": "docs/evidence/observability/tenant-observability-readiness.md",
@@ -10978,7 +10978,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0284"],
     "migrationSeq": 53,
-    "deletionCondition": "n/a \u2014 historical tenant observability readiness proof"
+    "deletionCondition": "n/a — historical tenant observability readiness proof"
   },
   {
     "v1Path": "docs/evidence/operations/local-backup-foundation.md",
@@ -10991,7 +10991,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-ACT-0229"],
     "migrationSeq": 54,
-    "deletionCondition": "n/a \u2014 historical local-backup foundation proof"
+    "deletionCondition": "n/a — historical local-backup foundation proof"
   },
   {
     "v1Path": "docs/evidence/operations/README.md",
@@ -13559,34 +13559,34 @@
     "fileType": "config",
     "owner": "packages/access-control",
     "authoritative": "authoritative",
-    "v2Path": "packages/access-control/package.json",
-    "disposition": "archive-evidence",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": ["@platform/access-control package metadata"],
     "protectingTests": ["packages/access-control/tests/access-control.test.ts"],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 20,
-    "deletionCondition": "Package is lifecycle=deprecated; archive once consumers migrated to active access policy package"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/access-control (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: authorisation-runtime + adapters-keycloak."
   },
   {
     "v1Path": "packages/access-control/README.md",
     "fileType": "doc",
     "owner": "packages/access-control",
     "authoritative": "generated",
-    "v2Path": "packages/access-control/README.md",
-    "disposition": "archive-evidence",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 20,
-    "deletionCondition": "Deprecated package README; archive with package"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/access-control (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: authorisation-runtime + adapters-keycloak."
   },
   {
     "v1Path": "packages/access-control/src/index.ts",
     "fileType": "source",
     "owner": "packages/access-control",
     "authoritative": "authoritative",
-    "v2Path": "packages/access-control/src/index.ts",
-    "disposition": "archive-evidence",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [
       "Policy",
       "createRbacPolicy",
@@ -13596,35 +13596,35 @@
       "RolePermissionMap"
     ],
     "protectingTests": ["packages/access-control/tests/access-control.test.ts"],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 20,
-    "deletionCondition": "Deprecated; semantics captured for V2 access policy; archive once no runtime importers remain"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/access-control (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: authorisation-runtime + adapters-keycloak."
   },
   {
     "v1Path": "packages/access-control/tests/access-control.test.ts",
     "fileType": "test",
     "owner": "packages/access-control",
     "authoritative": "authoritative",
-    "v2Path": "packages/access-control/tests/access-control.test.ts",
-    "disposition": "archive-evidence",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": ["packages/access-control/tests/access-control.test.ts"],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 20,
-    "deletionCondition": "Retained as behavioural evidence for V2 access policy; archive with deprecated package"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/access-control (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: authorisation-runtime + adapters-keycloak."
   },
   {
     "v1Path": "packages/access-control/tests/.gitkeep",
     "fileType": "fixture",
     "owner": "packages/access-control",
     "authoritative": "generated",
-    "v2Path": "n/a",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 30,
-    "deletionCondition": "Placeholder; tests dir non-empty so .gitkeep unneeded in V2"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/access-control (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: authorisation-runtime + adapters-keycloak."
   },
   {
     "v1Path": "packages/adapters-brevo/package.json",
@@ -13683,7 +13683,7 @@
     "fileType": "fixture",
     "owner": "packages/adapters-brevo",
     "authoritative": "generated",
-    "v2Path": "n/a",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -13761,7 +13761,7 @@
     "fileType": "fixture",
     "owner": "packages/adapters-clickhouse",
     "authoritative": "generated",
-    "v2Path": "n/a",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -13839,7 +13839,7 @@
     "fileType": "fixture",
     "owner": "packages/adapters-graphql",
     "authoritative": "generated",
-    "v2Path": "n/a",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -13917,7 +13917,7 @@
     "fileType": "config",
     "owner": "packages/adapters-ingestion",
     "authoritative": "generated",
-    "v2Path": "packages/adapters-ingestion/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -14000,7 +14000,7 @@
     "fileType": "config",
     "owner": "packages/adapters-keycloak",
     "authoritative": "generated",
-    "v2Path": "packages/adapters-keycloak/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -14143,7 +14143,7 @@
     "fileType": "config",
     "owner": "packages/adapters-object-storage",
     "authoritative": "generated",
-    "v2Path": "packages/adapters-object-storage/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -14221,7 +14221,7 @@
     "fileType": "config",
     "owner": "packages/adapters-opentelemetry",
     "authoritative": "generated",
-    "v2Path": "packages/adapters-opentelemetry/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -14358,7 +14358,7 @@
     "fileType": "config",
     "owner": "packages/adapters-postgres",
     "authoritative": "generated",
-    "v2Path": "packages/adapters-postgres/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -14436,7 +14436,7 @@
     "fileType": "config",
     "owner": "packages/adapters-redis",
     "authoritative": "generated",
-    "v2Path": "packages/adapters-redis/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -14514,7 +14514,7 @@
     "fileType": "config",
     "owner": "packages/adapters-sentry",
     "authoritative": "generated",
-    "v2Path": "packages/adapters-sentry/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -14579,7 +14579,7 @@
     "fileType": "config",
     "owner": "packages/api-runtime",
     "authoritative": "generated",
-    "v2Path": "packages/api-runtime/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -14670,7 +14670,7 @@
     "fileType": "placeholder",
     "owner": "packages/audit-events",
     "authoritative": "generated",
-    "v2Path": "packages/audit-events/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -14800,7 +14800,7 @@
     "fileType": "placeholder",
     "owner": "packages/config-runtime",
     "authoritative": "generated",
-    "v2Path": "packages/config-runtime/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -14943,7 +14943,7 @@
     "fileType": "placeholder",
     "owner": "packages/contracts-analytics",
     "authoritative": "generated",
-    "v2Path": "packages/contracts-analytics/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -15099,7 +15099,7 @@
     "fileType": "placeholder",
     "owner": "packages/contracts-graphql",
     "authoritative": "generated",
-    "v2Path": "packages/contracts-graphql/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -15164,7 +15164,7 @@
     "fileType": "placeholder",
     "owner": "packages/contracts-ingestion",
     "authoritative": "generated",
-    "v2Path": "packages/contracts-ingestion/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -15268,7 +15268,7 @@
     "fileType": "placeholder",
     "owner": "packages/dev-services",
     "authoritative": "generated",
-    "v2Path": "packages/dev-services/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -15281,65 +15281,65 @@
     "fileType": "config",
     "owner": "packages/domain-core",
     "authoritative": "authoritative",
-    "v2Path": "packages/domain-core/package.json",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": ["ADR-0006", "ADR-ACT-0288"],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0288", "ADR-ACT-0289"],
     "migrationSeq": 53,
-    "deletionCondition": "Deprecated package (ADR-0006/ADR-ACT-0288); remove after V2 proves no consumers remain (removal review 2026-12-18); replace usage with node:crypto randomUUID + Date.toISOString"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/domain-core (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: stdlib/typed-package helpers (stdlib-helper-no-replacement, ADR-ACT-0289)."
   },
   {
     "v1Path": "packages/domain-core/README.md",
     "fileType": "doc",
     "owner": "packages/domain-core",
     "authoritative": "generated",
-    "v2Path": "packages/domain-core/README.md",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": ["ADR-0006", "ADR-0007", "ADR-ACT-0288"],
+    "decisionRefs": ["ADR-0006", "ADR-0007", "ADR-ACT-0288", "ADR-ACT-0289"],
     "migrationSeq": 54,
-    "deletionCondition": "Removed alongside deprecated domain-core package once no consumers remain in V2"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/domain-core (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: stdlib/typed-package helpers (stdlib-helper-no-replacement, ADR-ACT-0289)."
   },
   {
     "v1Path": "packages/domain-core/src/index.ts",
     "fileType": "source",
     "owner": "packages/domain-core",
     "authoritative": "authoritative",
-    "v2Path": "packages/domain-core/src/index.ts",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": ["ADR-0006", "ADR-ACT-0288"],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0288", "ADR-ACT-0289"],
     "migrationSeq": 55,
-    "deletionCondition": "Deprecated id/timestamp/event helpers; delete after proving zero V2 consumers (use node:crypto randomUUID + Date.toISOString directly); removal review 2026-12-18"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/domain-core (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: stdlib/typed-package helpers (stdlib-helper-no-replacement, ADR-ACT-0289)."
   },
   {
     "v1Path": "packages/domain-core/tests/domain-core.test.ts",
     "fileType": "test",
     "owner": "packages/domain-core",
     "authoritative": "authoritative",
-    "v2Path": "packages/domain-core/tests/domain-core.test.ts",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": ["packages/domain-core/tests/domain-core.test.ts"],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 10,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/domain-core (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: stdlib/typed-package helpers (stdlib-helper-no-replacement, ADR-ACT-0289)."
   },
   {
     "v1Path": "packages/domain-core/tests/.gitkeep",
     "fileType": "placeholder",
     "owner": "packages/domain-core",
     "authoritative": "generated",
-    "v2Path": "packages/domain-core/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 99,
-    "deletionCondition": "Remove once tests/ directory contains committed test files in V2."
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/domain-core (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: stdlib/typed-package helpers (stdlib-helper-no-replacement, ADR-ACT-0289)."
   },
   {
     "v1Path": "packages/domain-identity/package.json",
@@ -15463,7 +15463,7 @@
     "fileType": "placeholder",
     "owner": "packages/email-runtime",
     "authoritative": "generated",
-    "v2Path": "packages/email-runtime/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -15489,65 +15489,65 @@
     "fileType": "config",
     "owner": "packages/feature-workflow",
     "authoritative": "authoritative",
-    "v2Path": "packages/feature-workflow/package.json",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": ["@platform/feature-workflow"],
     "protectingTests": ["packages/feature-workflow/tests/feature-workflow.test.ts"],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 20,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/feature-workflow (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: speculative-no-replacement (no consumer, removed)."
   },
   {
     "v1Path": "packages/feature-workflow/README.md",
     "fileType": "doc",
     "owner": "packages/feature-workflow",
     "authoritative": "generated",
-    "v2Path": "packages/feature-workflow/README.md",
-    "disposition": "regenerate",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": ["ADR-0007"],
+    "decisionRefs": ["ADR-0007", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 90,
-    "deletionCondition": "Regenerated by tools/architecture/generate-package-readmes; never hand-edited."
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/feature-workflow (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: speculative-no-replacement (no consumer, removed)."
   },
   {
     "v1Path": "packages/feature-workflow/src/index.ts",
     "fileType": "source",
     "owner": "packages/feature-workflow",
     "authoritative": "authoritative",
-    "v2Path": "packages/feature-workflow/src/index.ts",
-    "disposition": "replace-retain-contract",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": ["@platform/feature-workflow"],
     "protectingTests": ["packages/feature-workflow/tests/feature-workflow.test.ts"],
-    "decisionRefs": ["ADR-ACT-0203"],
+    "decisionRefs": ["ADR-ACT-0203", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 40,
-    "deletionCondition": "V1 visual/feature layer is a proof harness; V2 UI regenerated against retained behaviours/contract. Remove V1 impl once V2 feature passes the protecting tests."
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/feature-workflow (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: speculative-no-replacement (no consumer, removed)."
   },
   {
     "v1Path": "packages/feature-workflow/tests/feature-workflow.test.ts",
     "fileType": "test",
     "owner": "packages/feature-workflow",
     "authoritative": "authoritative",
-    "v2Path": "packages/feature-workflow/tests/feature-workflow.test.ts",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": ["packages/feature-workflow/tests/feature-workflow.test.ts"],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 20,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/feature-workflow (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: speculative-no-replacement (no consumer, removed)."
   },
   {
     "v1Path": "packages/feature-workflow/tests/.gitkeep",
     "fileType": "placeholder",
     "owner": "packages/feature-workflow",
     "authoritative": "generated",
-    "v2Path": "packages/feature-workflow/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 99,
-    "deletionCondition": "Remove once tests/ directory contains committed test files in V2."
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/feature-workflow (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: speculative-no-replacement (no consumer, removed)."
   },
   {
     "v1Path": "packages/graphql-api-runtime/package.json",
@@ -15593,7 +15593,7 @@
     "fileType": "placeholder",
     "owner": "packages/graphql-api-runtime",
     "authoritative": "generated",
-    "v2Path": "packages/graphql-api-runtime/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -15833,7 +15833,7 @@
     "fileType": "placeholder",
     "owner": "packages/infra-aws",
     "authoritative": "generated",
-    "v2Path": "packages/infra-aws/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -15885,7 +15885,7 @@
     "fileType": "placeholder",
     "owner": "packages/infra-cloudflare",
     "authoritative": "generated",
-    "v2Path": "packages/infra-cloudflare/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -15898,143 +15898,143 @@
     "fileType": "config",
     "owner": "packages/notification-runtime",
     "authoritative": "authoritative",
-    "v2Path": "packages/notification-runtime/package.json",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": ["@platform/notification-runtime"],
     "protectingTests": ["packages/notification-runtime/tests/notification-runtime.test.ts"],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 10,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/notification-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local NotificationTransportPort + transport adapters."
   },
   {
     "v1Path": "packages/notification-runtime/README.md",
     "fileType": "doc",
     "owner": "packages/notification-runtime",
     "authoritative": "generated",
-    "v2Path": "packages/notification-runtime/README.md",
-    "disposition": "regenerate",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": ["ADR-0007"],
+    "decisionRefs": ["ADR-0007", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 90,
-    "deletionCondition": "Regenerated by tools/architecture/generate-package-readmes; never hand-edited."
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/notification-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local NotificationTransportPort + transport adapters."
   },
   {
     "v1Path": "packages/notification-runtime/src/index.ts",
     "fileType": "source",
     "owner": "packages/notification-runtime",
     "authoritative": "authoritative",
-    "v2Path": "packages/notification-runtime/src/index.ts",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": ["@platform/notification-runtime"],
     "protectingTests": ["packages/notification-runtime/tests/notification-runtime.test.ts"],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 10,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/notification-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local NotificationTransportPort + transport adapters."
   },
   {
     "v1Path": "packages/notification-runtime/tests/.gitkeep",
     "fileType": "placeholder",
     "owner": "packages/notification-runtime",
     "authoritative": "generated",
-    "v2Path": "packages/notification-runtime/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 99,
-    "deletionCondition": "Remove once tests/ directory contains committed test files in V2."
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/notification-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local NotificationTransportPort + transport adapters."
   },
   {
     "v1Path": "packages/notification-runtime/tests/notification-runtime.test.ts",
     "fileType": "test",
     "owner": "packages/notification-runtime",
     "authoritative": "authoritative",
-    "v2Path": "packages/notification-runtime/tests/notification-runtime.test.ts",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": ["packages/notification-runtime/tests/notification-runtime.test.ts"],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 10,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/notification-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local NotificationTransportPort + transport adapters."
   },
   {
     "v1Path": "packages/notification-runtime/tsconfig.json",
     "fileType": "config",
     "owner": "packages/notification-runtime",
     "authoritative": "authoritative",
-    "v2Path": "packages/notification-runtime/tsconfig.json",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 10,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/notification-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local NotificationTransportPort + transport adapters."
   },
   {
     "v1Path": "packages/observability/package.json",
     "fileType": "config",
     "owner": "packages/observability",
     "authoritative": "authoritative",
-    "v2Path": "packages/observability/package.json",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": ["@platform/observability"],
     "protectingTests": ["packages/observability/tests/observability.test.ts"],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 10,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/observability (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: platform-logging + platform-observability + platform-runtime-context + platform-errors split (generic ObservabilityPort abandoned per ADR-0020)."
   },
   {
     "v1Path": "packages/observability/README.md",
     "fileType": "doc",
     "owner": "packages/observability",
     "authoritative": "generated",
-    "v2Path": "packages/observability/README.md",
-    "disposition": "regenerate",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": ["ADR-0007"],
+    "decisionRefs": ["ADR-0007", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 90,
-    "deletionCondition": "Regenerated by tools/architecture/generate-package-readmes; never hand-edited."
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/observability (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: platform-logging + platform-observability + platform-runtime-context + platform-errors split (generic ObservabilityPort abandoned per ADR-0020)."
   },
   {
     "v1Path": "packages/observability/src/index.ts",
     "fileType": "source",
     "owner": "packages/observability",
     "authoritative": "authoritative",
-    "v2Path": "packages/observability/src/index.ts",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": ["ObservabilityLogger", "ObservabilitySpan", "LogLevel", "LogFields"],
     "protectingTests": ["packages/observability/tests/observability.test.ts"],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 10,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/observability (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: platform-logging + platform-observability + platform-runtime-context + platform-errors split (generic ObservabilityPort abandoned per ADR-0020)."
   },
   {
     "v1Path": "packages/observability/tests/.gitkeep",
     "fileType": "placeholder",
     "owner": "packages/observability",
     "authoritative": "generated",
-    "v2Path": "packages/observability/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 99,
-    "deletionCondition": "Remove once tests/ directory contains committed test files in V2."
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/observability (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: platform-logging + platform-observability + platform-runtime-context + platform-errors split (generic ObservabilityPort abandoned per ADR-0020)."
   },
   {
     "v1Path": "packages/observability/tests/observability.test.ts",
     "fileType": "test",
     "owner": "packages/observability",
     "authoritative": "authoritative",
-    "v2Path": "packages/observability/tests/observability.test.ts",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": ["packages/observability/tests/observability.test.ts"],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 10,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/observability (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: platform-logging + platform-observability + platform-runtime-context + platform-errors split (generic ObservabilityPort abandoned per ADR-0020)."
   },
   {
     "v1Path": "packages/platform-errors/package.json",
@@ -16342,286 +16342,286 @@
     "fileType": "config",
     "owner": "package/@platform/profile-configuration",
     "authoritative": "authoritative",
-    "v2Path": "packages/profile-configuration/package.json",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": ["@platform/profile-configuration"],
     "protectingTests": ["packages/profile-configuration/tests/profile-configuration.test.ts"],
-    "decisionRefs": ["ADR-0068"],
+    "decisionRefs": ["ADR-0068", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 23,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/profile-configuration (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local profile port in apps/platform-api."
   },
   {
     "v1Path": "packages/profile-configuration/README.md",
     "fileType": "generated-doc",
     "owner": "package/@platform/profile-configuration",
     "authoritative": "generated",
-    "v2Path": "packages/profile-configuration/README.md",
-    "disposition": "regenerate",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": ["ADR-0007"],
+    "decisionRefs": ["ADR-0007", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 24,
-    "deletionCondition": "regenerated by tools/architecture/generate-package-readmes"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/profile-configuration (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local profile port in apps/platform-api."
   },
   {
     "v1Path": "packages/profile-configuration/src/index.ts",
     "fileType": "source",
     "owner": "package/@platform/profile-configuration",
     "authoritative": "authoritative",
-    "v2Path": "packages/profile-configuration/src/index.ts",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": ["@platform/profile-configuration"],
     "protectingTests": ["packages/profile-configuration/tests/profile-configuration.test.ts"],
-    "decisionRefs": ["ADR-0068"],
+    "decisionRefs": ["ADR-0068", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 25,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/profile-configuration (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local profile port in apps/platform-api."
   },
   {
     "v1Path": "packages/profile-configuration/tests/.gitkeep",
     "fileType": "placeholder",
     "owner": "package/@platform/profile-configuration",
     "authoritative": "generated",
-    "v2Path": "packages/profile-configuration/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 26,
-    "deletionCondition": "tests directory has committed test files; placeholder no longer needed"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/profile-configuration (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local profile port in apps/platform-api."
   },
   {
     "v1Path": "packages/profile-configuration/tests/profile-configuration.test.ts",
     "fileType": "test",
     "owner": "package/@platform/profile-configuration",
     "authoritative": "authoritative",
-    "v2Path": "packages/profile-configuration/tests/profile-configuration.test.ts",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": ["packages/profile-configuration/tests/profile-configuration.test.ts"],
-    "decisionRefs": ["ADR-0068"],
+    "decisionRefs": ["ADR-0068", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 27,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/profile-configuration (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local profile port in apps/platform-api."
   },
   {
     "v1Path": "packages/queue-runtime/package.json",
     "fileType": "config",
     "owner": "package/@platform/queue-runtime",
     "authoritative": "authoritative",
-    "v2Path": "packages/queue-runtime/package.json",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": ["@platform/queue-runtime"],
     "protectingTests": ["packages/queue-runtime/tests/queue-runtime.test.ts"],
-    "decisionRefs": ["ADR-0068"],
+    "decisionRefs": ["ADR-0068", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 28,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/queue-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local queue/event port (USF event-bus)."
   },
   {
     "v1Path": "packages/queue-runtime/README.md",
     "fileType": "generated-doc",
     "owner": "package/@platform/queue-runtime",
     "authoritative": "generated",
-    "v2Path": "packages/queue-runtime/README.md",
-    "disposition": "regenerate",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": ["ADR-0007"],
+    "decisionRefs": ["ADR-0007", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 29,
-    "deletionCondition": "regenerated by tools/architecture/generate-package-readmes"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/queue-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local queue/event port (USF event-bus)."
   },
   {
     "v1Path": "packages/queue-runtime/src/index.ts",
     "fileType": "source",
     "owner": "package/@platform/queue-runtime",
     "authoritative": "authoritative",
-    "v2Path": "packages/queue-runtime/src/index.ts",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": ["@platform/queue-runtime"],
     "protectingTests": ["packages/queue-runtime/tests/queue-runtime.test.ts"],
-    "decisionRefs": ["ADR-0068"],
+    "decisionRefs": ["ADR-0068", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 30,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/queue-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local queue/event port (USF event-bus)."
   },
   {
     "v1Path": "packages/queue-runtime/tests/.gitkeep",
     "fileType": "placeholder",
     "owner": "package/@platform/queue-runtime",
     "authoritative": "generated",
-    "v2Path": "packages/queue-runtime/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 31,
-    "deletionCondition": "tests directory has committed test files; placeholder no longer needed"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/queue-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local queue/event port (USF event-bus)."
   },
   {
     "v1Path": "packages/queue-runtime/tests/queue-runtime.test.ts",
     "fileType": "test",
     "owner": "package/@platform/queue-runtime",
     "authoritative": "authoritative",
-    "v2Path": "packages/queue-runtime/tests/queue-runtime.test.ts",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": ["packages/queue-runtime/tests/queue-runtime.test.ts"],
-    "decisionRefs": ["ADR-0068"],
+    "decisionRefs": ["ADR-0068", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 32,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/queue-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local queue/event port (USF event-bus)."
   },
   {
     "v1Path": "packages/queue-runtime/tsconfig.json",
     "fileType": "config",
     "owner": "package/@platform/queue-runtime",
     "authoritative": "authoritative",
-    "v2Path": "packages/queue-runtime/tsconfig.json",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 33,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/queue-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local queue/event port (USF event-bus)."
   },
   {
     "v1Path": "packages/search-runtime/package.json",
     "fileType": "config",
     "owner": "package/@platform/search-runtime",
     "authoritative": "authoritative",
-    "v2Path": "packages/search-runtime/package.json",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": ["@platform/search-runtime"],
     "protectingTests": ["packages/search-runtime/tests/search-runtime.test.ts"],
-    "decisionRefs": ["ADR-0068"],
+    "decisionRefs": ["ADR-0068", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 34,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/search-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local SearchPort + PostgresFtsSearchAdapter."
   },
   {
     "v1Path": "packages/search-runtime/README.md",
     "fileType": "generated-doc",
     "owner": "package/@platform/search-runtime",
     "authoritative": "generated",
-    "v2Path": "packages/search-runtime/README.md",
-    "disposition": "regenerate",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": ["ADR-0007"],
+    "decisionRefs": ["ADR-0007", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 35,
-    "deletionCondition": "regenerated by tools/architecture/generate-package-readmes"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/search-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local SearchPort + PostgresFtsSearchAdapter."
   },
   {
     "v1Path": "packages/search-runtime/src/index.ts",
     "fileType": "source",
     "owner": "package/@platform/search-runtime",
     "authoritative": "authoritative",
-    "v2Path": "packages/search-runtime/src/index.ts",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": ["@platform/search-runtime"],
     "protectingTests": ["packages/search-runtime/tests/search-runtime.test.ts"],
-    "decisionRefs": ["ADR-0068"],
+    "decisionRefs": ["ADR-0068", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 36,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/search-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local SearchPort + PostgresFtsSearchAdapter."
   },
   {
     "v1Path": "packages/search-runtime/tests/.gitkeep",
     "fileType": "placeholder",
     "owner": "package/@platform/search-runtime",
     "authoritative": "generated",
-    "v2Path": "packages/search-runtime/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 37,
-    "deletionCondition": "tests directory has committed test files; placeholder no longer needed"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/search-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local SearchPort + PostgresFtsSearchAdapter."
   },
   {
     "v1Path": "packages/search-runtime/tests/search-runtime.test.ts",
     "fileType": "test",
     "owner": "package/@platform/search-runtime",
     "authoritative": "authoritative",
-    "v2Path": "packages/search-runtime/tests/search-runtime.test.ts",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": ["packages/search-runtime/tests/search-runtime.test.ts"],
-    "decisionRefs": ["ADR-0068"],
+    "decisionRefs": ["ADR-0068", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 38,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/search-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local SearchPort + PostgresFtsSearchAdapter."
   },
   {
     "v1Path": "packages/search-runtime/tsconfig.json",
     "fileType": "config",
     "owner": "package/@platform/search-runtime",
     "authoritative": "authoritative",
-    "v2Path": "packages/search-runtime/tsconfig.json",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 39,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/search-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: application-local SearchPort + PostgresFtsSearchAdapter."
   },
   {
     "v1Path": "packages/security-auth/package.json",
     "fileType": "config",
     "owner": "package/@platform/security-auth",
     "authoritative": "authoritative",
-    "v2Path": "packages/security-auth/package.json",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": ["@platform/security-auth"],
     "protectingTests": ["packages/security-auth/tests/security-auth.test.ts"],
-    "decisionRefs": ["ADR-ACT-0157"],
+    "decisionRefs": ["ADR-ACT-0157", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 40,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/security-auth (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: authorisation-runtime + adapters-keycloak."
   },
   {
     "v1Path": "packages/security-auth/README.md",
     "fileType": "generated-doc",
     "owner": "package/@platform/security-auth",
     "authoritative": "generated",
-    "v2Path": "packages/security-auth/README.md",
-    "disposition": "regenerate",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": ["ADR-0007"],
+    "decisionRefs": ["ADR-0007", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 41,
-    "deletionCondition": "regenerated by tools/architecture/generate-package-readmes"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/security-auth (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: authorisation-runtime + adapters-keycloak."
   },
   {
     "v1Path": "packages/security-auth/src/index.ts",
     "fileType": "source",
     "owner": "package/@platform/security-auth",
     "authoritative": "authoritative",
-    "v2Path": "packages/security-auth/src/index.ts",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": ["@platform/security-auth"],
     "protectingTests": ["packages/security-auth/tests/security-auth.test.ts"],
-    "decisionRefs": ["ADR-ACT-0157"],
+    "decisionRefs": ["ADR-ACT-0157", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 42,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/security-auth (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: authorisation-runtime + adapters-keycloak."
   },
   {
     "v1Path": "packages/security-auth/tests/.gitkeep",
     "fileType": "placeholder",
     "owner": "package/@platform/security-auth",
     "authoritative": "generated",
-    "v2Path": "packages/security-auth/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 43,
-    "deletionCondition": "tests directory has committed test files; placeholder no longer needed"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/security-auth (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: authorisation-runtime + adapters-keycloak."
   },
   {
     "v1Path": "packages/security-auth/tests/security-auth.test.ts",
     "fileType": "test",
     "owner": "package/@platform/security-auth",
     "authoritative": "authoritative",
-    "v2Path": "packages/security-auth/tests/security-auth.test.ts",
-    "disposition": "reuse-unchanged",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": ["packages/security-auth/tests/security-auth.test.ts"],
-    "decisionRefs": ["ADR-ACT-0157"],
+    "decisionRefs": ["ADR-ACT-0157", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 44,
-    "deletionCondition": "n/a"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/security-auth (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: authorisation-runtime + adapters-keycloak."
   },
   {
     "v1Path": "packages/session-runtime/package.json",
@@ -16667,7 +16667,7 @@
     "fileType": "placeholder",
     "owner": "package/@platform/session-runtime",
     "authoritative": "generated",
-    "v2Path": "packages/session-runtime/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -16745,7 +16745,7 @@
     "fileType": "placeholder",
     "owner": "package/@platform/storage-runtime",
     "authoritative": "generated",
-    "v2Path": "packages/storage-runtime/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
@@ -17056,7 +17056,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-0001"],
     "migrationSeq": 5,
-    "deletionCondition": "n/a \u2014 references list updated as packages move in V2"
+    "deletionCondition": "n/a — references list updated as packages move in V2"
   },
   {
     "v1Path": "packages/ui-design-system/package.json",
@@ -17150,7 +17150,7 @@
     "protectingTests": ["packages/ui-design-system/tests/accessible-controls.test.tsx"],
     "decisionRefs": ["ADR-0005", "ADR-ACT-0290", "ADR-ACT-0291"],
     "migrationSeq": 84,
-    "deletionCondition": "V2 keeps single-component react-aria Checkbox API (do not split Field+Button \u2014 breaks a11y per ADR-ACT-0290)"
+    "deletionCondition": "V2 keeps single-component react-aria Checkbox API (do not split Field+Button — breaks a11y per ADR-ACT-0290)"
   },
   {
     "v1Path": "packages/ui-design-system/src/components/DataTable.tsx",
@@ -17280,7 +17280,7 @@
     "protectingTests": ["packages/ui-design-system/tests/accessible-controls.test.tsx"],
     "decisionRefs": ["ADR-0005"],
     "migrationSeq": 94,
-    "deletionCondition": "n/a \u2014 aria-live behaviour is the contract, no visual layer to replace"
+    "deletionCondition": "n/a — aria-live behaviour is the contract, no visual layer to replace"
   },
   {
     "v1Path": "packages/ui-design-system/src/components/LoadingState.tsx",
@@ -17332,7 +17332,7 @@
     "protectingTests": ["packages/ui-design-system/tests/accessible-controls.test.tsx"],
     "decisionRefs": ["ADR-0005", "ADR-ACT-0290", "ADR-ACT-0291"],
     "migrationSeq": 98,
-    "deletionCondition": "V2 keeps single-component react-aria RadioGroup API (do not split Field+Button \u2014 breaks a11y per ADR-ACT-0290)"
+    "deletionCondition": "V2 keeps single-component react-aria RadioGroup API (do not split Field+Button — breaks a11y per ADR-ACT-0290)"
   },
   {
     "v1Path": "packages/ui-design-system/src/components/SectionHeader.tsx",
@@ -17371,7 +17371,7 @@
     "protectingTests": ["packages/ui-design-system/tests/accessible-controls.test.tsx"],
     "decisionRefs": ["ADR-0005", "ADR-ACT-0290", "ADR-ACT-0291"],
     "migrationSeq": 101,
-    "deletionCondition": "V2 keeps single-component react-aria Switch API (do not split Field+Button \u2014 breaks a11y per ADR-ACT-0290)"
+    "deletionCondition": "V2 keeps single-component react-aria Switch API (do not split Field+Button — breaks a11y per ADR-ACT-0290)"
   },
   {
     "v1Path": "packages/ui-design-system/src/components/Tabs.tsx",
@@ -17440,7 +17440,7 @@
     ],
     "decisionRefs": ["ADR-0005"],
     "migrationSeq": 106,
-    "deletionCondition": "n/a \u2014 barrel re-export list updated as components are regenerated"
+    "deletionCondition": "n/a — barrel re-export list updated as components are regenerated"
   },
   {
     "v1Path": "packages/ui-design-system/src/lib/utils.ts",
@@ -17466,7 +17466,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-0005", "ADR-ACT-0290"],
     "migrationSeq": 110,
-    "deletionCondition": "n/a \u2014 semantic a11y proof for V2 control components"
+    "deletionCondition": "n/a — semantic a11y proof for V2 control components"
   },
   {
     "v1Path": "packages/ui-design-system/tests/button.test.tsx",
@@ -17479,7 +17479,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-0005"],
     "migrationSeq": 111,
-    "deletionCondition": "n/a \u2014 semantic behaviour proof for V2 Button"
+    "deletionCondition": "n/a — semantic behaviour proof for V2 Button"
   },
   {
     "v1Path": "packages/ui-design-system/tests/data-table.test.tsx",
@@ -17492,7 +17492,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-0005"],
     "migrationSeq": 112,
-    "deletionCondition": "n/a \u2014 semantic behaviour proof for V2 DataTable"
+    "deletionCondition": "n/a — semantic behaviour proof for V2 DataTable"
   },
   {
     "v1Path": "packages/ui-design-system/tests/.gitkeep",
@@ -17525,33 +17525,33 @@
     "fileType": "config",
     "owner": "packages/worker-runtime",
     "authoritative": "authoritative",
-    "v2Path": "packages/worker-runtime/package.json",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": ["packages/worker-runtime/tests/worker-runtime.test.ts"],
-    "decisionRefs": ["ADR-0001", "ADR-0002", "ADR-0003", "ADR-0005", "ADR-0006"],
+    "decisionRefs": ["ADR-0001", "ADR-0002", "ADR-0003", "ADR-0005", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 200,
-    "deletionCondition": "delete once no consumer imports @platform/worker-runtime and replacement worker substrate is proven (lifecycle stage=deprecated)"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/worker-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: USF event-bus + workers (apps/platform-api)."
   },
   {
     "v1Path": "packages/worker-runtime/README.md",
     "fileType": "doc",
     "owner": "packages/worker-runtime",
     "authoritative": "generated",
-    "v2Path": "packages/worker-runtime/README.md",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": ["ADR-0001"],
+    "decisionRefs": ["ADR-0001", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 201,
-    "deletionCondition": "delete with the deprecated worker-runtime package"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/worker-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: USF event-bus + workers (apps/platform-api)."
   },
   {
     "v1Path": "packages/worker-runtime/src/index.ts",
     "fileType": "source",
     "owner": "packages/worker-runtime",
     "authoritative": "authoritative",
-    "v2Path": "packages/worker-runtime/src/index.ts",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [
       "WorkerPort",
@@ -17561,48 +17561,48 @@
       "WorkerError"
     ],
     "protectingTests": ["packages/worker-runtime/tests/worker-runtime.test.ts"],
-    "decisionRefs": ["ADR-0001", "ADR-0002"],
+    "decisionRefs": ["ADR-0001", "ADR-0002", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 202,
-    "deletionCondition": "delete once WorkerPort behaviour is superseded by the USF event-bus/worker substrate and no importer remains"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/worker-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: USF event-bus + workers (apps/platform-api)."
   },
   {
     "v1Path": "packages/worker-runtime/tests/.gitkeep",
     "fileType": "placeholder",
     "owner": "packages/worker-runtime",
     "authoritative": "generated",
-    "v2Path": "packages/worker-runtime/tests/.gitkeep",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 203,
-    "deletionCondition": "delete with the deprecated worker-runtime package"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/worker-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: USF event-bus + workers (apps/platform-api)."
   },
   {
     "v1Path": "packages/worker-runtime/tests/worker-runtime.test.ts",
     "fileType": "test",
     "owner": "packages/worker-runtime",
     "authoritative": "authoritative",
-    "v2Path": "packages/worker-runtime/tests/worker-runtime.test.ts",
-    "disposition": "archive-evidence",
+    "v2Path": null,
+    "disposition": "delete-after-proof",
     "retainedInterfaces": ["WorkerPort"],
     "protectingTests": [],
-    "decisionRefs": ["ADR-0001"],
+    "decisionRefs": ["ADR-0001", "ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 204,
-    "deletionCondition": "archive as behavioural evidence for the replacement worker substrate, then delete with the package"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/worker-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: USF event-bus + workers (apps/platform-api)."
   },
   {
     "v1Path": "packages/worker-runtime/tsconfig.json",
     "fileType": "config",
     "owner": "packages/worker-runtime",
     "authoritative": "authoritative",
-    "v2Path": "packages/worker-runtime/tsconfig.json",
+    "v2Path": null,
     "disposition": "delete-after-proof",
     "retainedInterfaces": [],
     "protectingTests": [],
-    "decisionRefs": [],
+    "decisionRefs": ["ADR-0006", "ADR-ACT-0289"],
     "migrationSeq": 205,
-    "deletionCondition": "delete with the deprecated worker-runtime package"
+    "deletionCondition": "Remove after orchestrator strict run proves zero consumers of @platform/worker-runtime (ADR-0006 active→deprecated→removed; ADR-ACT-0289). Superseded by: USF event-bus + workers (apps/platform-api)."
   },
   {
     "v1Path": "playwright.build.config.ts",
@@ -18157,7 +18157,7 @@
     "authoritative": "authoritative",
     "v2Path": "scripts/stages/run-stage.sh",
     "disposition": "reuse-unchanged",
-    "retainedInterfaces": ["policy-driven stage runner", "sonar gate \u00a79"],
+    "retainedInterfaces": ["policy-driven stage runner", "sonar gate §9"],
     "protectingTests": [],
     "decisionRefs": ["ADR-ACT-0285", "ADR-ACT-0290", "ADR-ACT-0291"],
     "migrationSeq": 88,

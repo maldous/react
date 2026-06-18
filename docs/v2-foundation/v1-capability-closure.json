@@ -13,7 +13,9 @@
     "evidence": "ADR-0029, ADR-0021",
     "proof": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "acceptablePartialRoute": true,
+    "acceptablePartialRouteReason": "Tenant record + FQDN lifecycle is fully delivered and proven (proof:domain-identity-matrix; proof:tenant-custom-domain-resolution); provisioning operates via the system-admin surface. A richer self-service provisioning UI is not part of this capability — the '(partial UI)' note is cosmetic, not a closure gap."
   },
   {
     "capability": "User identity + tenant membership",
@@ -66,7 +68,7 @@
   {
     "capability": "Tenant groups",
     "category": "identity-access",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "missing (no groups page)",
     "permission": "tenant.groups.read/create/update/delete",
     "contract": "/api/org/groups* (present)",
@@ -76,13 +78,14 @@
     "readinessCheck": "invariant-ready",
     "evidence": "ADR-0021, ADR-0058",
     "proof": "groups unit tests",
-    "openAction": "ADR-ACT-0234 \u2014 V1 status 'api-only'; blocker: no admin UI [must close before V2 cut]",
-    "v2Target": "reuse-and-extend: V1 API+permissions+contract are the semantic source; V2 must add the missing admin UI slice (no behaviour change)"
+    "openAction": "ADR-ACT-0234 — V1 status 'api-only'; blocker: no admin UI [must close before V2 cut]",
+    "v2Target": "reuse-and-extend: V1 API+permissions+contract are the semantic source; V2 must add the missing admin UI slice (no behaviour change)",
+    "completionAction": "V1C-01"
   },
   {
     "capability": "Sub-organisations",
     "category": "identity-access",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "missing",
     "permission": "tenant.suborgs.read/create/update/delete",
     "contract": "/api/org/sub-organisations*",
@@ -92,8 +95,9 @@
     "readinessCheck": "invariant-ready",
     "evidence": "ADR-0021, ADR-0058",
     "proof": "sub-organisations unit tests",
-    "openAction": "ADR-ACT-0234 \u2014 V1 status 'api-only'; blocker: no admin UI [must close before V2 cut]",
-    "v2Target": "reuse-and-extend: V1 API+permissions+contract are the semantic source; V2 must add the missing admin UI slice (no behaviour change)"
+    "openAction": "ADR-ACT-0234 — V1 status 'api-only'; blocker: no admin UI [must close before V2 cut]",
+    "v2Target": "reuse-and-extend: V1 API+permissions+contract are the semantic source; V2 must add the missing admin UI slice (no behaviour change)",
+    "completionAction": "V1C-02"
   },
   {
     "capability": "RBAC (roles + permissions)",
@@ -114,7 +118,7 @@
   {
     "capability": "ABAC / Policy Decision Point",
     "category": "identity-access",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "partial (auth settings)",
     "permission": "resource + umaScope on routes (pipeline PEP)",
     "contract": "/api/auth/settings/resource-policies",
@@ -124,13 +128,14 @@
     "readinessCheck": "invariant-ready",
     "evidence": "ADR-0058",
     "proof": "authorize-resource unit tests; proof:entitlement-policy-chain",
-    "openAction": "ADR-ACT-0242 \u2014 V1 status 'partial'; blocker: no general ABAC attribute model beyond UMA scopes; the entitlement step of the chain is delivered (Phase 1) but real quota enforcement is Phase 2 [must close before V2 cut]",
-    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut"
+    "openAction": "ADR-ACT-0242 — V1 status 'partial'; blocker: no general ABAC attribute model beyond UMA scopes; the entitlement step of the chain is delivered (Phase 1) but real quota enforcement is Phase 2 [must close before V2 cut]",
+    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
+    "completionAction": "V1C-03"
   },
   {
     "capability": "Delegated administration roles",
     "category": "identity-access",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "missing",
     "permission": "to define",
     "contract": "missing",
@@ -140,8 +145,9 @@
     "readinessCheck": "deferred",
     "evidence": "ADR-0058",
     "proof": "not-yet-proven",
-    "openAction": "ADR-ACT-0242 \u2014 V1 status 'deferred'; blocker: needs ADR before implementation [must close before V2 cut]",
-    "v2Target": "design-then-build: needs an ADR in V2 before implementation (no V1 asset to reuse)"
+    "openAction": "ADR-ACT-0242 — V1 status 'deferred'; blocker: needs ADR before implementation [must close before V2 cut]",
+    "v2Target": "design-then-build: needs an ADR in V2 before implementation (no V1 asset to reuse)",
+    "completionAction": "V1C-04"
   },
   {
     "capability": "Entitlement engine",
@@ -153,7 +159,7 @@
     "port": "EntitlementPort",
     "adapter": "PostgresEntitlementAdapter",
     "auditAction": "entitlement.granted / entitlement.revoked (audit-before-change)",
-    "readinessCheck": "to define",
+    "readinessCheck": "n/a (always-on once built; entitlement reads are deterministic)",
     "evidence": "ADR-0057",
     "proof": "proof:entitlements; proof:entitlement-policy-chain; proof:entitlements-postgres; proof:entitlements-routes",
     "openAction": null,
@@ -162,7 +168,7 @@
   {
     "capability": "Support-mode / break-glass access",
     "category": "identity-access",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "partial",
     "permission": "platform.admin.access; resource platform:support, scope enter",
     "contract": "POST /api/admin/support-session",
@@ -172,8 +178,9 @@
     "readinessCheck": "n/a",
     "evidence": "ADR-0066",
     "proof": "support-mode unit tests",
-    "openAction": "ADR-ACT-0251 \u2014 V1 status 'partial'; blocker: no approval workflow; host-origin escalation deferred (per bedrock evidence) [must close before V2 cut]",
-    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut"
+    "openAction": "ADR-ACT-0251 — V1 status 'partial'; blocker: no approval workflow; host-origin escalation deferred (per bedrock evidence) [must close before V2 cut]",
+    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
+    "completionAction": "V1C-05"
   },
   {
     "capability": "Audit of privileged access",
@@ -226,7 +233,7 @@
   {
     "capability": "Claim mapping + group/role mapping",
     "category": "authentication",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "/admin/auth (partial)",
     "permission": "tenant.auth.settings.write",
     "contract": "/api/auth/settings/idps/:alias/mapping",
@@ -236,8 +243,9 @@
     "readinessCheck": "deferred (capability-registry)",
     "evidence": "ADR-0046",
     "proof": "oidc-mapping unit tests",
-    "openAction": "ADR-ACT-0220 \u2014 V1 status 'partial'; blocker: real-IdP mapping proof blocked (ADR-ACT-0220) [must close before V2 cut]",
-    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut"
+    "openAction": "ADR-ACT-0220 — V1 status 'partial'; blocker: real-IdP mapping proof blocked (ADR-ACT-0220) [must close before V2 cut]",
+    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
+    "completionAction": "V1C-06"
   },
   {
     "capability": "Real IdP login simulation",
@@ -253,12 +261,12 @@
     "evidence": "ADR-0046",
     "proof": "blocked",
     "openAction": null,
-    "v2Target": "carry-forward-blocked: V1 mechanism reused; real-IdP proof remains external \u2014 accept as not-applicable in self-contained V2 stack"
+    "v2Target": "carry-forward-blocked: V1 mechanism reused; real-IdP proof remains external — accept as not-applicable in self-contained V2 stack"
   },
   {
     "capability": "MFA + session policy + lockout",
     "category": "authentication",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "/admin/auth (MFA + session tabs)",
     "permission": "tenant.auth.settings.read/write",
     "contract": "/api/auth/settings/mfa, /session",
@@ -268,8 +276,9 @@
     "readinessCheck": "credential-derived",
     "evidence": "ADR-0042",
     "proof": "proof:auth-settings; MFA-required E2E deferred (ADR-ACT-0158)",
-    "openAction": "ADR-ACT-0158 \u2014 V1 status 'partial'; blocker: account lockout/recovery surface not exposed; MFA-required login E2E deferred [must close before V2 cut]",
-    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut"
+    "openAction": "ADR-ACT-0158 — V1 status 'partial'; blocker: account lockout/recovery surface not exposed; MFA-required login E2E deferred [must close before V2 cut]",
+    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
+    "completionAction": "V1C-07"
   },
   {
     "capability": "Configuration registry + history",
@@ -290,7 +299,7 @@
   {
     "capability": "Branding + theming",
     "category": "configuration",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "/admin/config (branding partial)",
     "permission": "tenant.config.read",
     "contract": "GET /api/theme",
@@ -300,13 +309,14 @@
     "readinessCheck": "invariant-ready",
     "evidence": "ADR-0029",
     "proof": "local-caddy-routing theme proof",
-    "openAction": "ADR-ACT-0237 \u2014 V1 status 'partial'; blocker: branding capability marked partial in registry [must close before V2 cut]",
-    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut"
+    "openAction": "ADR-ACT-0237 — V1 status 'partial'; blocker: branding capability marked partial in registry [must close before V2 cut]",
+    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
+    "completionAction": "V1C-08"
   },
   {
     "capability": "Custom domains, DNS ownership, TLS, canonical",
     "category": "configuration",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "/admin/domains",
     "permission": "tenant.domains.read/write",
     "contract": "/api/org/domains*",
@@ -316,8 +326,9 @@
     "readinessCheck": "tenant-domains readiness kind",
     "evidence": "ADR-0048, ADR-0033",
     "proof": "proof:tenant-domains; proof:tenant-domain-canonical; proof:tenant-domain-claim-lifecycle",
-    "openAction": "ADR-ACT-0232 \u2014 V1 status 'partial'; blocker: public DNS verification blocked locally; canonical redirect cutover not proven [must close before V2 cut]",
-    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut"
+    "openAction": "ADR-ACT-0232 — V1 status 'partial'; blocker: public DNS verification blocked locally; canonical redirect cutover not proven [must close before V2 cut]",
+    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
+    "completionAction": "V1C-09"
   },
   {
     "capability": "Write-only secret settings",
@@ -338,23 +349,24 @@
   {
     "capability": "Product catalog, plans, prices",
     "category": "entitlements-billing",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "missing",
     "permission": "platform.billing.* / tenant.billing.read",
     "contract": "missing",
-    "port": "ObservabilityPort",
-    "adapter": "LokiAdapter / OtelCollector",
+    "port": "n/a (net-new — no V1 port)",
+    "adapter": "n/a (net-new — no V1 adapter)",
     "auditAction": "plan/price change audit",
     "readinessCheck": "to define",
     "evidence": "ADR-0057",
     "proof": "not-yet-proven",
-    "openAction": "ADR-ACT-0241 \u2014 V1 status 'missing'; blocker: no billing engine composed or adapted [must close before V2 cut]",
-    "v2Target": "net-new-in-v2: no V1 asset; design + build from the V1 semantic placeholders (permission model + audit shape already named)"
+    "openAction": "ADR-ACT-0241 — V1 status 'missing'; blocker: no billing engine composed or adapted [must close before V2 cut]",
+    "v2Target": "net-new-in-v2: no V1 asset; design + build from the V1 semantic placeholders (permission model + audit shape already named)",
+    "completionAction": "V1C-10"
   },
   {
     "capability": "Subscriptions, invoices, payment methods, dunning",
     "category": "entitlements-billing",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "missing",
     "permission": "tenant.billing.* ",
     "contract": "missing",
@@ -364,8 +376,9 @@
     "readinessCheck": "to define",
     "evidence": "ADR-0057",
     "proof": "not-yet-proven",
-    "openAction": "ADR-ACT-0241 \u2014 V1 status 'missing'; blocker: payment provider is paid/external; no local payment proof possible [must close before V2 cut]",
-    "v2Target": "net-new-in-v2: no V1 asset; design + build from the V1 semantic placeholders (permission model + audit shape already named)"
+    "openAction": "ADR-ACT-0241 — V1 status 'missing'; blocker: payment provider is paid/external; no local payment proof possible [must close before V2 cut]",
+    "v2Target": "net-new-in-v2: no V1 asset; design + build from the V1 semantic placeholders (permission model + audit shape already named)",
+    "completionAction": "V1C-11"
   },
   {
     "capability": "Usage metering + meter event ingestion",
@@ -434,7 +447,7 @@
   {
     "capability": "PITR, retention, legal hold, data residency",
     "category": "data-platform",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "missing",
     "permission": "platform.data.* ",
     "contract": "missing",
@@ -444,29 +457,31 @@
     "readinessCheck": "to define",
     "evidence": "ADR-0064, ADR-0063",
     "proof": "not-yet-proven",
-    "openAction": "ADR-ACT-0248 \u2014 V1 status 'missing'; blocker: no PITR, retention, legal hold, or residency machinery [must close before V2 cut]",
-    "v2Target": "net-new-in-v2: no V1 asset; design + build from the V1 semantic placeholders (permission model + audit shape already named)"
+    "openAction": "ADR-ACT-0248 — V1 status 'missing'; blocker: no PITR, retention, legal hold, or residency machinery [must close before V2 cut]",
+    "v2Target": "net-new-in-v2: no V1 asset; design + build from the V1 semantic placeholders (permission model + audit shape already named)",
+    "completionAction": "V1C-12"
   },
   {
     "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
     "category": "data-platform",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "missing",
     "permission": "platform.governance.* / tenant DSR",
     "contract": "missing",
-    "port": "ObservabilityPort",
-    "adapter": "LokiAdapter / OtelCollector",
+    "port": "n/a (net-new — no V1 port)",
+    "adapter": "n/a (net-new — no V1 adapter)",
     "auditAction": "DSR fulfilment audited",
     "readinessCheck": "to define",
     "evidence": "ADR-0063",
     "proof": "not-yet-proven",
-    "openAction": "ADR-ACT-0247 \u2014 V1 status 'missing'; blocker: no catalog, lineage, classification, PII discovery, or DSR workflow [must close before V2 cut]",
-    "v2Target": "net-new-in-v2: no V1 asset; design + build from the V1 semantic placeholders (permission model + audit shape already named)"
+    "openAction": "ADR-ACT-0247 — V1 status 'missing'; blocker: no catalog, lineage, classification, PII discovery, or DSR workflow [must close before V2 cut]",
+    "v2Target": "net-new-in-v2: no V1 asset; design + build from the V1 semantic placeholders (permission model + audit shape already named)",
+    "completionAction": "V1C-13"
   },
   {
     "capability": "Tenant data import / export",
     "category": "data-platform",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "missing",
     "permission": "tenant.data.export",
     "contract": "missing",
@@ -476,8 +491,9 @@
     "readinessCheck": "to define",
     "evidence": "ADR-0063",
     "proof": "not-yet-proven",
-    "openAction": "ADR-ACT-0247 \u2014 V1 status 'missing'; blocker: absent; pairs with tenant deletion/portability [must close before V2 cut]",
-    "v2Target": "net-new-in-v2: no V1 asset; design + build from the V1 semantic placeholders (permission model + audit shape already named)"
+    "openAction": "ADR-ACT-0247 — V1 status 'missing'; blocker: absent; pairs with tenant deletion/portability [must close before V2 cut]",
+    "v2Target": "net-new-in-v2: no V1 asset; design + build from the V1 semantic placeholders (permission model + audit shape already named)",
+    "completionAction": "V1C-14"
   },
   {
     "capability": "Search + indexing (product search)",
@@ -498,7 +514,7 @@
   {
     "capability": "Object storage + tenant prefixes + signed URLs",
     "category": "storage",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "/admin/storage (readiness only, no browser)",
     "permission": "tenant.storage.read/write",
     "contract": "/api/org/storage/readiness, /probe",
@@ -508,8 +524,9 @@
     "readinessCheck": "tenant-storage readiness kind",
     "evidence": "ADR-0049, ADR-0064",
     "proof": "proof:tenant-storage (live MinIO)",
-    "openAction": "ADR-ACT-0223 \u2014 V1 status 'partial'; blocker: no file CRUD API/UI, no quotas, lifecycle, AV scan, or legal hold [must close before V2 cut]",
-    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut"
+    "openAction": "ADR-ACT-0223 — V1 status 'partial'; blocker: no file CRUD API/UI, no quotas, lifecycle, AV scan, or legal hold [must close before V2 cut]",
+    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
+    "completionAction": "V1C-15"
   },
   {
     "capability": "Event bus, durable queues, DLQ, redrive",
@@ -530,7 +547,7 @@
   {
     "capability": "Workflow engine, scheduled jobs, approvals",
     "category": "events-workflow",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "missing (workflow visibility)",
     "permission": "platform.workflow.* / tenant.workflow.read",
     "contract": "missing",
@@ -540,8 +557,9 @@
     "readinessCheck": "to define (engine health)",
     "evidence": "ADR-0059",
     "proof": "not-yet-proven",
-    "openAction": "ADR-ACT-0262 \u2014 V1 status 'partial'; blocker: no engine, scheduler, approval workflow, or visibility [must close before V2 cut]",
-    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut"
+    "openAction": "ADR-ACT-0262 — V1 status 'partial'; blocker: no engine, scheduler, approval workflow, or visibility [must close before V2 cut]",
+    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
+    "completionAction": "V1C-16"
   },
   {
     "capability": "Scheduled jobs (built-in, on the event substrate)",
@@ -604,8 +622,8 @@
     "readinessCheck": "n/a",
     "evidence": "ADR-0055",
     "proof": "not-yet-proven",
-    "openAction": "ADR-ACT-0239 \u2014 V1 status 'missing'; blocker: no runtime; high security surface [must close before V2 cut]",
-    "v2Target": "net-new-in-v2: no V1 asset; design + build from the V1 semantic placeholders (permission model + audit shape already named)"
+    "openAction": null,
+    "v2Target": "out-of-scope-future: net-new post-cut product capability; no V1 asset to migrate; explicitly NOT a V1→V2 foundation-closure blocker (decided not-applicable to the self-contained V2 stack for the cut)"
   },
   {
     "capability": "Runtime secrets management",
@@ -617,7 +635,7 @@
     "port": "SecretStorePort",
     "adapter": "OpenBaoSecretAdapter / PostgresSecretAdapter",
     "auditAction": "secret_ref.created / secret_ref.revoked / secret_ref.deleted (audit-before-change; name/ref only, never the value)",
-    "readinessCheck": "operator secret-store readiness (built-in Postgres SELECT 1 / OpenBao sys/health; never faked \u2014 OpenBao down \u21d2 degraded)",
+    "readinessCheck": "operator secret-store readiness (built-in Postgres SELECT 1 / OpenBao sys/health; never faked — OpenBao down ⇒ degraded)",
     "evidence": "ADR-0069, ADR-0055, ADR-0031",
     "proof": "proof:secret-store-contract; proof:secrets-openbao; proof:provider-secrets-readiness",
     "openAction": null,
@@ -642,7 +660,7 @@
   {
     "capability": "Metrics + traces",
     "category": "observability-ops",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "/admin/observability (signal status only)",
     "permission": "operator",
     "contract": "observability readiness route",
@@ -652,13 +670,14 @@
     "readinessCheck": "observability readiness signals (metrics/traces status)",
     "evidence": "ADR-0062, ADR-0020",
     "proof": "observability-smoke; proof:tenant-observability",
-    "openAction": "ADR-ACT-0261 \u2014 V1 status 'partial'; blocker: OTEL collector ingests but no metrics/trace backend or dashboards [must close before V2 cut]",
-    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut"
+    "openAction": "ADR-ACT-0261 — V1 status 'partial'; blocker: OTEL collector ingests but no metrics/trace backend or dashboards [must close before V2 cut]",
+    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
+    "completionAction": "V1C-17"
   },
   {
     "capability": "Alerting, incident management, on-call, status page",
     "category": "observability-ops",
-    "status": "delivered-and-proven",
+    "status": "superseded-by-proven-canonical",
     "route": "/admin/platform (readiness); no incident UI",
     "permission": "platform.ops.*",
     "contract": "platform services readiness (internal); no incident API",
@@ -668,11 +687,13 @@
     "readinessCheck": "service readiness already exists internally",
     "evidence": "ADR-0062",
     "proof": "proof:platform-services (readiness only)",
-    "openAction": "ADR-ACT-0261 \u2014 V1 status 'partial'; blocker: no alert rules, notification channels, SLOs, incident lifecycle, on-call, or status page [must close before V2 cut]",
-    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut"
+    "openAction": null,
+    "v2Target": "superseded: alerting + incidents reuse the proven built-in capability; descoped on-call/status-page/SLO are not migrated",
+    "supersededBy": "Observability — built-in alerting + incidents",
+    "residualScope": "rejected-final: on-call rotation, status page and SLOs are descoped — NOT a V1→V2 cut blocker. Core alerting + incident management is delivered+proven by the canonical built-in capability (/admin/monitoring; /api/admin/alerts; /api/admin/incidents)."
   },
   {
-    "capability": "Observability \u2014 built-in alerting + incidents",
+    "capability": "Observability — built-in alerting + incidents",
     "category": "observability-ops",
     "status": "delivered-and-proven",
     "route": "/admin/monitoring",
@@ -706,7 +727,7 @@
   {
     "capability": "Code quality + secret + dependency scanning",
     "category": "security-governance",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "Sonar clickthrough (global-only)",
     "permission": "admin:sonarqube clickthrough (global-only)",
     "contract": "n/a (CI)",
@@ -716,13 +737,14 @@
     "readinessCheck": "sonarqube probe (status UP)",
     "evidence": "ADR-0016",
     "proof": "semgrep:gate; CI gitleaks (recent commit)",
-    "openAction": "ADR-ACT-0247 \u2014 V1 status 'partial'; blocker: dependency scanning not yet a hard gate [must close before V2 cut]",
-    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut"
+    "openAction": "ADR-ACT-0247 — V1 status 'partial'; blocker: dependency scanning not yet a hard gate [must close before V2 cut]",
+    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
+    "completionAction": "V1C-18"
   },
   {
     "capability": "Compliance reports, access reviews, evidence packs",
     "category": "security-governance",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "audit panels only",
     "permission": "platform.compliance.*",
     "contract": "audit read only; no review/report API",
@@ -732,8 +754,9 @@
     "readinessCheck": "to define",
     "evidence": "ADR-0063",
     "proof": "evidence-bundle governance; audit tests",
-    "openAction": "ADR-ACT-0247 \u2014 V1 status 'partial'; blocker: no compliance report generation, access-review or role-review workflow [must close before V2 cut]",
-    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut"
+    "openAction": "ADR-ACT-0247 — V1 status 'partial'; blocker: no compliance report generation, access-review or role-review workflow [must close before V2 cut]",
+    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
+    "completionAction": "V1C-19"
   },
   {
     "capability": "Tenant isolation proof",
@@ -770,7 +793,7 @@
   {
     "capability": "API docs, developer portal, SDKs, rate limits",
     "category": "developer-platform",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "missing (portal)",
     "permission": "tenant.developer.*",
     "contract": "openapi.json (drift not enforced); GraphQL",
@@ -780,8 +803,9 @@
     "readinessCheck": "to define",
     "evidence": "ADR-0065",
     "proof": "openapi:drift (not complete)",
-    "openAction": "ADR-ACT-0257 \u2014 V1 status 'partial'; blocker: no external portal, SDK gen, sandbox/test mode, or schema-level OpenAPI drift (rate limits now delivered \u2014 see `rate-limiting`) [must close before V2 cut]",
-    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut"
+    "openAction": "ADR-ACT-0257 — V1 status 'partial'; blocker: no external portal, SDK gen, sandbox/test mode, or schema-level OpenAPI drift (rate limits now delivered — see `rate-limiting`) [must close before V2 cut]",
+    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
+    "completionAction": "V1C-20"
   },
   {
     "capability": "Rate limiting (API)",
@@ -818,7 +842,7 @@
   {
     "capability": "Tenant lifecycle: provision, suspend, delete, export",
     "category": "support-admin",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "partial (provision)",
     "permission": "platform.tenants.*",
     "contract": "POST /api/admin/tenants (create only)",
@@ -828,13 +852,14 @@
     "readinessCheck": "n/a",
     "evidence": "ADR-0066, ADR-0063",
     "proof": "tenant provisioning tests",
-    "openAction": "ADR-ACT-0251 \u2014 V1 status 'partial'; blocker: no suspend, delete, or export; deletion must coordinate data + storage + realm + DSR [must close before V2 cut]",
-    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut"
+    "openAction": "ADR-ACT-0251 — V1 status 'partial'; blocker: no suspend, delete, or export; deletion must coordinate data + storage + realm + DSR [must close before V2 cut]",
+    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
+    "completionAction": "V1C-21"
   },
   {
     "capability": "Support tickets, customer health, announcements",
     "category": "support-admin",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "missing",
     "permission": "platform.support.*",
     "contract": "missing",
@@ -844,8 +869,9 @@
     "readinessCheck": "to define",
     "evidence": "ADR-0066",
     "proof": "not-yet-proven",
-    "openAction": "ADR-ACT-0251 \u2014 V1 status 'missing'; blocker: no ticketing, health, comms, or announcements [must close before V2 cut]",
-    "v2Target": "net-new-in-v2: no V1 asset; design + build from the V1 semantic placeholders (permission model + audit shape already named)"
+    "openAction": "ADR-ACT-0251 — V1 status 'missing'; blocker: no ticketing, health, comms, or announcements [must close before V2 cut]",
+    "v2Target": "net-new-in-v2: no V1 asset; design + build from the V1 semantic placeholders (permission model + audit shape already named)",
+    "completionAction": "V1C-22"
   },
   {
     "capability": "Universal Service Foundation scope + principles",
@@ -882,7 +908,7 @@
   {
     "capability": "Service catalog + provider integration model",
     "category": "foundation",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "/admin/platform",
     "permission": "tenant.platform.read",
     "contract": "platform services readiness; GET /api/platform/service-catalog (catalog v2)",
@@ -892,8 +918,9 @@
     "readinessCheck": "service readiness",
     "evidence": "ADR-0055",
     "proof": "proof:platform-services; proof:service-clickthrough-policy; proof:service-catalog-registry; proof:entitlements-routes",
-    "openAction": "ADR-ACT-0239 \u2014 V1 status 'partial'; blocker: catalog v2 seam + provider registry + no-mock-in-production invariant delivered (static seed); full generalisation of platform-services/service-clickthrough int\u2026 [must close before V2 cut]",
-    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut"
+    "openAction": "ADR-ACT-0239 — V1 status 'partial'; blocker: catalog v2 seam + provider registry + no-mock-in-production invariant delivered (static seed); full generalisation of platform-services/service-clickthrough int… [must close before V2 cut]",
+    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
+    "completionAction": "V1C-23"
   },
   {
     "capability": "Environment-specific vs shared service model",
@@ -921,7 +948,7 @@
     "port": "ProviderConfigPort / ProviderReadinessPort",
     "adapter": "HttpHealthProbeAdapter",
     "auditAction": "provider_config.set / provider_config.deleted (audit-before-change; no secret)",
-    "readinessCheck": "adapter-confirmed lifecycle (deriveReadinessLifecycle) \u2014 config alone never implies ready",
+    "readinessCheck": "adapter-confirmed lifecycle (deriveReadinessLifecycle) — config alone never implies ready",
     "evidence": "ADR-0070",
     "proof": "proof:provider-config; proof:provider-readiness-contract",
     "openAction": null,
@@ -1042,7 +1069,7 @@
   {
     "capability": "Tenant canonical domain set/unset",
     "category": "configuration",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "/admin/domains",
     "permission": "tenant.domains.write",
     "contract": "/api/org/domains/canonical",
@@ -1052,8 +1079,9 @@
     "readinessCheck": "deferred",
     "evidence": "ADR-ACT-0232",
     "proof": "proof:tenant-domain-canonical (local routing only)",
-    "openAction": "ADR-ACT-0232 \u2014 public canonical cutover + redirects not proven (local routing only) [must close before V2 cut]",
-    "v2Target": "refine-and-complete: prove public canonical cutover in self-contained V2 stack"
+    "openAction": "ADR-ACT-0232 — public canonical cutover + redirects not proven (local routing only) [must close before V2 cut]",
+    "v2Target": "refine-and-complete: prove public canonical cutover in self-contained V2 stack",
+    "completionAction": "V1C-24"
   },
   {
     "capability": "Tenant custom-domain auth callback",
@@ -1065,11 +1093,12 @@
     "port": "TenantDomainPort",
     "adapter": "KeycloakAuthClientAdapter",
     "auditAction": null,
-    "readinessCheck": "deferred",
+    "readinessCheck": "invariant-ready (realm/redirect-URI derivation is deterministic)",
     "evidence": "ADR-ACT-0232",
     "proof": "proof:tenant-custom-domain-auth-origin",
-    "openAction": "ADR-ACT-0220 \u2014 real brokered login on a custom domain blocked [must close before V2 cut]",
-    "v2Target": "carry-forward-blocked: derivation reused; live brokered login external"
+    "openAction": null,
+    "v2Target": "carry-forward-blocked: derivation reused; live brokered login external",
+    "externalProofLimitation": "Live brokered login on a custom domain requires a real external IdP and is not provable in the self-contained V2 stack. The derivation is delivered and proven (proof:tenant-custom-domain-auth-origin); the live end-to-end proof is carried as the separate not-applicable-final capability [Real IdP login simulation] / [OIDC login simulation]. Not a V2-cut blocker."
   },
   {
     "capability": "Tenant service clickthrough policy",
@@ -1093,7 +1122,7 @@
     "status": "delivered-and-proven",
     "route": "ops port",
     "permission": "platform.environments.read/write",
-    "contract": "manifests \u2192 generated .env/",
+    "contract": "manifests → generated .env/",
     "port": "EnvRegistryPort",
     "adapter": "ManifestEnvAdapter",
     "auditAction": "environment.bootstrapped",
@@ -1154,7 +1183,7 @@
   {
     "capability": "i18n runtime + validation",
     "category": "foundation",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "n/a",
     "permission": "n/a",
     "contract": "packages/i18n-runtime",
@@ -1164,8 +1193,9 @@
     "readinessCheck": "n/a",
     "evidence": "ADR-0026",
     "proof": "validate-i18n",
-    "openAction": "ADR-0026 \u2014 React provider/hook migration + API/auth message migration not complete; i18n not yet a hard gate [must close before V2 cut]",
-    "v2Target": "refine-and-complete: finish provider/hook + message migration; i18n is a V2 UI-semantics contract"
+    "openAction": "ADR-0026 — React provider/hook migration + API/auth message migration not complete; i18n not yet a hard gate [must close before V2 cut]",
+    "v2Target": "refine-and-complete: finish provider/hook + message migration; i18n is a V2 UI-semantics contract",
+    "completionAction": "V1C-25"
   },
   {
     "capability": "Accessibility (a11y) gate",

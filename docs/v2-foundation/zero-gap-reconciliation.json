@@ -1,90 +1,255 @@
 {
-  "pass": "two-reverse-reconciliation",
-  "verdict": "ZERO UNRESOLVED GAPS",
+  "pass": "two-reverse-reconciliation (semantic-closure pass)",
+  "verdict": "NOT-ZERO-GAPS — semantic closure is incomplete; branch cut is BLOCKED. 25 capabilities require V1 completion, 10 deprecated zero-consumer packages await delete-after-proof execution, and the config-runtime package fate is an open decision. Zero gaps may only be claimed when `npm run v2:readiness` exits 0.",
+  "vocabulary": {
+    "fileDispositions": [
+      "reuse-unchanged",
+      "git-move",
+      "split",
+      "merge",
+      "regenerate",
+      "archive-evidence",
+      "delete-after-proof",
+      "refactor-behind-contract",
+      "replace-retain-contract"
+    ],
+    "commandDispositions": ["carry", "merge", "retire"],
+    "testMigrationTypes": ["carry", "retarget", "promote-to-conformance", "retire"],
+    "capabilityStatuses": [
+      "delivered-and-proven",
+      "not-applicable-final",
+      "rejected-final",
+      "superseded-by-proven-canonical",
+      "requires-v1-completion"
+    ]
+  },
   "files": {
-    "trackedV1": {
-      "declared": 1673,
-      "inventory": 1673,
-      "pathMap": 1673,
-      "bijective": true,
-      "reuse": 1239,
-      "gitMove": 19,
+    "trackedV1": 1673,
+    "buckets": {
+      "reuse-unchanged": 1059,
+      "refactor-behind-contract": 104,
+      "regenerate": 179,
       "split": 1,
       "merge": 1,
-      "regenerate": 186,
-      "archive": 179,
-      "deleteAfterProof": 48,
-      "sum": 1673
-    }
+      "delete-after-proof": 85,
+      "replace-retain-contract": 51,
+      "git-move": 19,
+      "archive-evidence": 174
+    },
+    "sum": 1673,
+    "bijective": true
   },
   "commands": {
     "total": 299,
-    "npm": 130,
-    "make": 121,
-    "shell": 27,
-    "compose": 12,
-    "node": 9,
-    "carry": 256,
-    "merge": 42,
-    "retire": 1,
-    "bijectiveWithV2Map": true,
-    "makeTargetsCarriedOrRetired": true,
-    "npmScriptsCarriedOrRetired": true
+    "buckets": {
+      "carry": 256,
+      "merge": 42,
+      "retire": 1
+    },
+    "sum": 299
   },
   "tests": {
     "total": 307,
-    "carry": 168,
-    "promoteToConformance": 76,
-    "retarget": 61,
-    "retire": 2,
-    "allHaveMigrationType": true,
-    "retiredHaveJustification": true,
-    "activeHaveV2Path": true
+    "buckets": {
+      "carry": 158,
+      "promote-to-conformance": 76,
+      "retire": 12,
+      "retarget": 61
+    },
+    "sum": 307
   },
   "capabilities": {
     "total": 75,
-    "deliveredAndProven": 71,
-    "notApplicableFinal": 4,
-    "pendingOrAmbiguous": 0,
-    "allDeliveredHaveV2Target": true,
-    "notApplicableJustified": true
+    "buckets": {
+      "delivered-and-proven": 45,
+      "requires-v1-completion": 25,
+      "not-applicable-final": 4,
+      "superseded-by-proven-canonical": 1
+    },
+    "sum": 75
   },
   "decisions": {
     "total": 74,
-    "accepted": 74,
-    "proposedOrPending": 0,
-    "allHaveLineage": true,
-    "allLineageHaveV1Source": true
+    "accepted": 74
   },
-  "invariantChecks": {
-    "trackedV1FilesEqualDisposition": "1673 == reuse+git-move+split+merge+regenerate+archive+delete-after-proof (1673)",
+  "semanticGapsRemaining": {
+    "count": 26,
+    "note": "Capabilities not delivered-and-proven that need design/build/extension before the cut, plus the config-runtime package-fate decision. NOT hidden inside any delivered count.",
+    "capabilities": [
+      {
+        "capability": "Tenant groups",
+        "action": "V1C-01",
+        "openAction": "ADR-ACT-0234 — V1 status 'api-only'; blocker: no admin UI [must close before V2 cut]"
+      },
+      {
+        "capability": "Sub-organisations",
+        "action": "V1C-02",
+        "openAction": "ADR-ACT-0234 — V1 status 'api-only'; blocker: no admin UI [must close before V2 cut]"
+      },
+      {
+        "capability": "ABAC / Policy Decision Point",
+        "action": "V1C-03",
+        "openAction": "ADR-ACT-0242 — V1 status 'partial'; blocker: no general ABAC attribute model beyond UMA scopes; the entitlement step of the chain is delivered (Phase 1) but real quota enforcement is Phase 2 [must close before V2 cut]"
+      },
+      {
+        "capability": "Delegated administration roles",
+        "action": "V1C-04",
+        "openAction": "ADR-ACT-0242 — V1 status 'deferred'; blocker: needs ADR before implementation [must close before V2 cut]"
+      },
+      {
+        "capability": "Support-mode / break-glass access",
+        "action": "V1C-05",
+        "openAction": "ADR-ACT-0251 — V1 status 'partial'; blocker: no approval workflow; host-origin escalation deferred (per bedrock evidence) [must close before V2 cut]"
+      },
+      {
+        "capability": "Claim mapping + group/role mapping",
+        "action": "V1C-06",
+        "openAction": "ADR-ACT-0220 — V1 status 'partial'; blocker: real-IdP mapping proof blocked (ADR-ACT-0220) [must close before V2 cut]"
+      },
+      {
+        "capability": "MFA + session policy + lockout",
+        "action": "V1C-07",
+        "openAction": "ADR-ACT-0158 — V1 status 'partial'; blocker: account lockout/recovery surface not exposed; MFA-required login E2E deferred [must close before V2 cut]"
+      },
+      {
+        "capability": "Branding + theming",
+        "action": "V1C-08",
+        "openAction": "ADR-ACT-0237 — V1 status 'partial'; blocker: branding capability marked partial in registry [must close before V2 cut]"
+      },
+      {
+        "capability": "Custom domains, DNS ownership, TLS, canonical",
+        "action": "V1C-09",
+        "openAction": "ADR-ACT-0232 — V1 status 'partial'; blocker: public DNS verification blocked locally; canonical redirect cutover not proven [must close before V2 cut]"
+      },
+      {
+        "capability": "Product catalog, plans, prices",
+        "action": "V1C-10",
+        "openAction": "ADR-ACT-0241 — V1 status 'missing'; blocker: no billing engine composed or adapted [must close before V2 cut]"
+      },
+      {
+        "capability": "Subscriptions, invoices, payment methods, dunning",
+        "action": "V1C-11",
+        "openAction": "ADR-ACT-0241 — V1 status 'missing'; blocker: payment provider is paid/external; no local payment proof possible [must close before V2 cut]"
+      },
+      {
+        "capability": "PITR, retention, legal hold, data residency",
+        "action": "V1C-12",
+        "openAction": "ADR-ACT-0248 — V1 status 'missing'; blocker: no PITR, retention, legal hold, or residency machinery [must close before V2 cut]"
+      },
+      {
+        "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+        "action": "V1C-13",
+        "openAction": "ADR-ACT-0247 — V1 status 'missing'; blocker: no catalog, lineage, classification, PII discovery, or DSR workflow [must close before V2 cut]"
+      },
+      {
+        "capability": "Tenant data import / export",
+        "action": "V1C-14",
+        "openAction": "ADR-ACT-0247 — V1 status 'missing'; blocker: absent; pairs with tenant deletion/portability [must close before V2 cut]"
+      },
+      {
+        "capability": "Object storage + tenant prefixes + signed URLs",
+        "action": "V1C-15",
+        "openAction": "ADR-ACT-0223 — V1 status 'partial'; blocker: no file CRUD API/UI, no quotas, lifecycle, AV scan, or legal hold [must close before V2 cut]"
+      },
+      {
+        "capability": "Workflow engine, scheduled jobs, approvals",
+        "action": "V1C-16",
+        "openAction": "ADR-ACT-0262 — V1 status 'partial'; blocker: no engine, scheduler, approval workflow, or visibility [must close before V2 cut]"
+      },
+      {
+        "capability": "Metrics + traces",
+        "action": "V1C-17",
+        "openAction": "ADR-ACT-0261 — V1 status 'partial'; blocker: OTEL collector ingests but no metrics/trace backend or dashboards [must close before V2 cut]"
+      },
+      {
+        "capability": "Code quality + secret + dependency scanning",
+        "action": "V1C-18",
+        "openAction": "ADR-ACT-0247 — V1 status 'partial'; blocker: dependency scanning not yet a hard gate [must close before V2 cut]"
+      },
+      {
+        "capability": "Compliance reports, access reviews, evidence packs",
+        "action": "V1C-19",
+        "openAction": "ADR-ACT-0247 — V1 status 'partial'; blocker: no compliance report generation, access-review or role-review workflow [must close before V2 cut]"
+      },
+      {
+        "capability": "API docs, developer portal, SDKs, rate limits",
+        "action": "V1C-20",
+        "openAction": "ADR-ACT-0257 — V1 status 'partial'; blocker: no external portal, SDK gen, sandbox/test mode, or schema-level OpenAPI drift (rate limits now delivered — see `rate-limiting`) [must close before V2 cut]"
+      },
+      {
+        "capability": "Tenant lifecycle: provision, suspend, delete, export",
+        "action": "V1C-21",
+        "openAction": "ADR-ACT-0251 — V1 status 'partial'; blocker: no suspend, delete, or export; deletion must coordinate data + storage + realm + DSR [must close before V2 cut]"
+      },
+      {
+        "capability": "Support tickets, customer health, announcements",
+        "action": "V1C-22",
+        "openAction": "ADR-ACT-0251 — V1 status 'missing'; blocker: no ticketing, health, comms, or announcements [must close before V2 cut]"
+      },
+      {
+        "capability": "Service catalog + provider integration model",
+        "action": "V1C-23",
+        "openAction": "ADR-ACT-0239 — V1 status 'partial'; blocker: catalog v2 seam + provider registry + no-mock-in-production invariant delivered (static seed); full generalisation of platform-services/service-clickthrough int… [must close before V2 cut]"
+      },
+      {
+        "capability": "Tenant canonical domain set/unset",
+        "action": "V1C-24",
+        "openAction": "ADR-ACT-0232 — public canonical cutover + redirects not proven (local routing only) [must close before V2 cut]"
+      },
+      {
+        "capability": "i18n runtime + validation",
+        "action": "V1C-25",
+        "openAction": "ADR-0026 — React provider/hook migration + API/auth message migration not complete; i18n not yet a hard gate [must close before V2 cut]"
+      }
+    ],
+    "openDecisions": [
+      {
+        "subject": "packages/config-runtime",
+        "action": "V1C-PKG-CONFIG",
+        "decision": "Decide typed composition-root config object (validation + secret handling) THEN keep config-runtime canonical (deprecated status removed + proof) or remove it. ADR-ACT-0289 explicitly deferred this; scattered process.env reads are NOT canonical."
+      }
+    ]
+  },
+  "executionOnlyActionsRemaining": {
+    "note": "Zero discovery; mechanical execution of resolved dispositions.",
+    "deleteAfterProof": {
+      "count": 85,
+      "packagesToRemove": [
+        "domain-core",
+        "access-control",
+        "feature-workflow",
+        "profile-configuration",
+        "security-auth",
+        "queue-runtime",
+        "search-runtime",
+        "notification-runtime",
+        "worker-runtime",
+        "observability"
+      ],
+      "gatedBy": "orchestrator strict zero-consumer proof (ADR-0006/ADR-ACT-0289); removal review 2026-12-18"
+    },
+    "gitMove": 19,
+    "regenerate": 179,
+    "archiveEvidence": 174,
+    "refactorBehindContract": 104,
+    "replaceRetainContract": 51,
+    "split": 1,
+    "merge": 1,
+    "commandMerges": 42,
+    "testRetargets": 61,
+    "testPromotions": 76
+  },
+  "branchCutBlockers": {
+    "note": "Must all close before §1 of v2-branch-cut-runbook.md; the validator (tools/v2-readiness) fails closed while any remain.",
+    "capabilityCompletions": 25,
+    "deprecatedPackageRemovals": 10,
+    "openPackageDecisions": 1
+  },
+  "invariants": {
     "everyV1FileMapped": true,
-    "noOrphanV1": true,
-    "noMultiMapWithoutExplanation": true,
-    "makeTargets": "all carried or explicitly retired",
-    "npmScripts": "all carried or explicitly retired",
-    "testsProofs": "carried+retargeted+promoted+retired all accounted",
-    "adrsActionsHistory": "74 V2 decisions, all with V1 lineage; historical records preserved as archive-evidence",
-    "capabilities": "delivered + not-applicable-final, none rejected/superseded outstanding",
-    "everyV2JustifiedByV1": true
-  },
-  "softMappingsExplained": [
-    {
-      "item": "46 delete-after-proof entries without protectingTests",
-      "reason": "41 are .gitkeep placeholders + 5 deprecated-package metadata/README (domain-core, worker-runtime); deletion gated by deletionCondition citing ADR-0006/ADR-ACT-0288, no behaviour to protect",
-      "gap": false
-    },
-    {
-      "item": "149 non-reuse entries without decisionRefs",
-      "reason": "41 .gitkeep, 12 build manifests (package.json/lock/tsconfig/loader), 96 evidence/spec/image/superpowers docs that are archived or regenerated artefacts (they ARE the historical record, not decisions)",
-      "gap": false
-    },
-    {
-      "item": "2 refactor-behind-contract docs without retainedInterfaces",
-      "reason": "compose-services.md + ui-feature-template.md are documentation refactors with no programmatic interface; covered by directory contracts",
-      "gap": false
-    }
-  ],
-  "unresolvedGaps": [],
-  "unresolvedGapCount": 0
+    "activeDispositionsHaveV2Path": true,
+    "deleteAfterProofHaveNoV2Home": true,
+    "everyRequiresHasAction": true,
+    "retiredTestsJustified": true
+  }
 }

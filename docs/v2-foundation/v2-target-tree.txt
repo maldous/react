@@ -109,7 +109,7 @@ react-v2/
 │       ├── tsconfig.json
 │       └── README.md
 │
-├── packages/                              # ~52 workspace libraries, layered by hexagon role
+├── packages/                              # ~42 workspace libraries (10 deprecated zero-consumer scaffolds removed before cut; see v1-completion-programme.md)
 │   ├── contracts/                         # [~] PURE shared types/schemas (no runtime deps)
 │   │   ├── admin/                         # [~] was contracts-admin
 │   │   ├── analytics/                     # [~] was contracts-analytics
@@ -118,7 +118,6 @@ react-v2/
 │   │   ├── ingestion/                     # [~] was contracts-ingestion
 │   │   └── organisation/                  # [~] was contracts-organisation
 │   ├── domain/                            # [~] pure domain logic (no IO)
-│   │   ├── core/                          # [~] was domain-core
 │   │   └── identity/                      # [~] was domain-identity
 │   ├── runtime/                           # [~] framework-agnostic application runtimes (ports + logic)
 │   │   ├── api/                           # [~] api-runtime
@@ -127,14 +126,9 @@ react-v2/
 │   │   ├── email/                         # [~] email-runtime
 │   │   ├── graphql-api/                   # [~] graphql-api-runtime
 │   │   ├── i18n/                          # [~] i18n-runtime (ADR-0026; react.ts bootstrap status-gated)
-│   │   ├── notification/                  # [~] notification-runtime
-│   │   ├── profile-configuration/         # [~] profile-configuration
-│   │   ├── queue/                         # [~] queue-runtime
-│   │   ├── search/                        # [~] search-runtime
 │   │   ├── session/                       # [~] session-runtime
 │   │   ├── storage/                       # [~] storage-runtime
-│   │   ├── runtime-context/               # [~] platform-runtime-context
-│   │   └── worker/                        # [~] worker-runtime
+│   │   └── runtime-context/               # [~] platform-runtime-context
 │   ├── adapters/                          # [~] driven adapters (the ONLY packages allowed external SDKs)
 │   │   ├── brevo/                         # [~] adapters-brevo
 │   │   ├── clickhouse/                    # [~] adapters-clickhouse
@@ -151,10 +145,7 @@ react-v2/
 │   │   ├── errors/                        # [~] platform-errors (typed error envelope; never raw Error)
 │   │   ├── logging/                       # [~] platform-logging (pino confined here + adapters/api)
 │   │   ├── observability/                 # [~] platform-observability (NO OTEL SDK import)
-│   │   ├── access-control/                # [~] access-control (permission model)
-│   │   ├── security-auth/                 # [~] security-auth
-│   │   ├── audit-events/                  # [~] audit-events
-│   │   └── observability-signals/         # [~] observability (signal taxonomy)
+│   │   └── audit-events/                  # [~] audit-events
 │   ├── frontend/                          # [~] browser-side shared libraries
 │   │   ├── ui-design-system/              # [AI] components/ + lib/ — visual layer regenerated
 │   │   └── graphql-browser-client/        # [~] graphql-browser-client (TypedDocumentNode + TanStack)

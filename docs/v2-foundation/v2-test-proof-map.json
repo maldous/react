@@ -577,11 +577,11 @@
   },
   {
     "v1Path": "packages/access-control/tests/access-control.test.ts",
-    "v2Path": "packages/access-control/tests/access-control.test.ts",
-    "migrationType": "carry",
+    "v2Path": null,
+    "migrationType": "retire",
     "selectorsOrImportsChange": false,
     "becomesReusableContract": true,
-    "retirementJustification": null
+    "retirementJustification": "Package removed before V2 cut (delete-after-proof; zero-consumer superseded scaffold per ADR-0006/ADR-ACT-0289); the scaffold's smoke test is retired with it. No behaviour is lost — the capability is delivered by the replacement noted in v1-to-v2-path-map.json."
   },
   {
     "v1Path": "packages/adapters-brevo/tests/adapters-brevo.test.ts",
@@ -737,11 +737,11 @@
   },
   {
     "v1Path": "packages/domain-core/tests/domain-core.test.ts",
-    "v2Path": "packages/domain-core/tests/domain-core.test.ts",
-    "migrationType": "carry",
+    "v2Path": null,
+    "migrationType": "retire",
     "selectorsOrImportsChange": false,
     "becomesReusableContract": false,
-    "retirementJustification": null
+    "retirementJustification": "Package removed before V2 cut (delete-after-proof; zero-consumer superseded scaffold per ADR-0006/ADR-ACT-0289); the scaffold's smoke test is retired with it. No behaviour is lost — the capability is delivered by the replacement noted in v1-to-v2-path-map.json."
   },
   {
     "v1Path": "packages/domain-identity/tests/domain-identity.test.ts",
@@ -761,11 +761,11 @@
   },
   {
     "v1Path": "packages/feature-workflow/tests/feature-workflow.test.ts",
-    "v2Path": "packages/feature-workflow/tests/feature-workflow.test.ts",
-    "migrationType": "carry",
+    "v2Path": null,
+    "migrationType": "retire",
     "selectorsOrImportsChange": false,
     "becomesReusableContract": false,
-    "retirementJustification": null
+    "retirementJustification": "Package removed before V2 cut (delete-after-proof; zero-consumer superseded scaffold per ADR-0006/ADR-ACT-0289); the scaffold's smoke test is retired with it. No behaviour is lost — the capability is delivered by the replacement noted in v1-to-v2-path-map.json."
   },
   {
     "v1Path": "packages/graphql-api-runtime/tests/graphql-api-runtime.test.ts",
@@ -793,19 +793,19 @@
   },
   {
     "v1Path": "packages/notification-runtime/tests/notification-runtime.test.ts",
-    "v2Path": "packages/notification-runtime/tests/notification-runtime.test.ts",
-    "migrationType": "carry",
+    "v2Path": null,
+    "migrationType": "retire",
     "selectorsOrImportsChange": false,
     "becomesReusableContract": false,
-    "retirementJustification": null
+    "retirementJustification": "Package removed before V2 cut (delete-after-proof; zero-consumer superseded scaffold per ADR-0006/ADR-ACT-0289); the scaffold's smoke test is retired with it. No behaviour is lost — the capability is delivered by the replacement noted in v1-to-v2-path-map.json."
   },
   {
     "v1Path": "packages/observability/tests/observability.test.ts",
-    "v2Path": "packages/observability/tests/observability.test.ts",
-    "migrationType": "carry",
+    "v2Path": null,
+    "migrationType": "retire",
     "selectorsOrImportsChange": false,
     "becomesReusableContract": false,
-    "retirementJustification": null
+    "retirementJustification": "Package removed before V2 cut (delete-after-proof; zero-consumer superseded scaffold per ADR-0006/ADR-ACT-0289); the scaffold's smoke test is retired with it. No behaviour is lost — the capability is delivered by the replacement noted in v1-to-v2-path-map.json."
   },
   {
     "v1Path": "packages/platform-errors/tests/platform-errors-auth.test.ts",
@@ -849,35 +849,35 @@
   },
   {
     "v1Path": "packages/profile-configuration/tests/profile-configuration.test.ts",
-    "v2Path": "packages/profile-configuration/tests/profile-configuration.test.ts",
-    "migrationType": "carry",
+    "v2Path": null,
+    "migrationType": "retire",
     "selectorsOrImportsChange": false,
     "becomesReusableContract": false,
-    "retirementJustification": null
+    "retirementJustification": "Package removed before V2 cut (delete-after-proof; zero-consumer superseded scaffold per ADR-0006/ADR-ACT-0289); the scaffold's smoke test is retired with it. No behaviour is lost — the capability is delivered by the replacement noted in v1-to-v2-path-map.json."
   },
   {
     "v1Path": "packages/queue-runtime/tests/queue-runtime.test.ts",
-    "v2Path": "packages/queue-runtime/tests/queue-runtime.test.ts",
-    "migrationType": "carry",
+    "v2Path": null,
+    "migrationType": "retire",
     "selectorsOrImportsChange": false,
     "becomesReusableContract": false,
-    "retirementJustification": null
+    "retirementJustification": "Package removed before V2 cut (delete-after-proof; zero-consumer superseded scaffold per ADR-0006/ADR-ACT-0289); the scaffold's smoke test is retired with it. No behaviour is lost — the capability is delivered by the replacement noted in v1-to-v2-path-map.json."
   },
   {
     "v1Path": "packages/search-runtime/tests/search-runtime.test.ts",
-    "v2Path": "packages/search-runtime/tests/search-runtime.test.ts",
-    "migrationType": "carry",
+    "v2Path": null,
+    "migrationType": "retire",
     "selectorsOrImportsChange": false,
     "becomesReusableContract": false,
-    "retirementJustification": null
+    "retirementJustification": "Package removed before V2 cut (delete-after-proof; zero-consumer superseded scaffold per ADR-0006/ADR-ACT-0289); the scaffold's smoke test is retired with it. No behaviour is lost — the capability is delivered by the replacement noted in v1-to-v2-path-map.json."
   },
   {
     "v1Path": "packages/security-auth/tests/security-auth.test.ts",
-    "v2Path": "packages/security-auth/tests/security-auth.test.ts",
-    "migrationType": "carry",
+    "v2Path": null,
+    "migrationType": "retire",
     "selectorsOrImportsChange": false,
     "becomesReusableContract": true,
-    "retirementJustification": null
+    "retirementJustification": "Package removed before V2 cut (delete-after-proof; zero-consumer superseded scaffold per ADR-0006/ADR-ACT-0289); the scaffold's smoke test is retired with it. No behaviour is lost — the capability is delivered by the replacement noted in v1-to-v2-path-map.json."
   },
   {
     "v1Path": "packages/session-runtime/tests/session-runtime.test.ts",
@@ -921,11 +921,11 @@
   },
   {
     "v1Path": "packages/worker-runtime/tests/worker-runtime.test.ts",
-    "v2Path": "packages/worker-runtime/tests/worker-runtime.test.ts",
-    "migrationType": "carry",
+    "v2Path": null,
+    "migrationType": "retire",
     "selectorsOrImportsChange": false,
     "becomesReusableContract": false,
-    "retirementJustification": null
+    "retirementJustification": "Package removed before V2 cut (delete-after-proof; zero-consumer superseded scaffold per ADR-0006/ADR-ACT-0289); the scaffold's smoke test is retired with it. No behaviour is lost — the capability is delivered by the replacement noted in v1-to-v2-path-map.json."
   },
   {
     "v1Path": "apps/react-enterprise-app/src/features/_template/__tests__/FeaturePage.test.tsx",

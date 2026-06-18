@@ -1,7 +1,7 @@
 # V2 Branch-Cut Runbook
 
 > Governing intent: V1 (repo `maldous/react`, hexagonal enterprise monorepo, audited
-> source commit **`<undefined>`**) is the **complete reference** for V2. V2
+> source commit **`918cd148569f6473eeaa58284933abdc0fe5bafe`**) is the **complete reference** for V2. V2
 > **reuses / moves / refines / wraps** proven V1 assets; it requires **zero discovery**.
 > The final V2 tree is clean — no `legacy/`, `temp/`, `transitional`, `-old`, `-new`,
 > `-v2` naming and no deprecated runtime packages. The V1 UI is a **proof harness**: its
@@ -24,14 +24,23 @@ The cut may not begin until the V2-foundation artefacts in `docs/v2-foundation/`
 (`tools/v2-readiness/`, specified in `v2-readiness-validator-spec.md`) reports **green**:
 
 - `v1-file-inventory.json` — every tracked V1 file enumerated.
-- `v1-to-v2-path-map.json` — every tracked file has a `v2Path` + `disposition`
-  (`reuse-unchanged` / `move` / `refine` / `wrap` / `retire`); **no file unmapped**.
+- `v1-to-v2-path-map.json` — every tracked file has a `disposition` from the canonical
+  vocabulary (`reuse-unchanged` / `git-move` / `split` / `merge` / `regenerate` /
+  `archive-evidence` / `delete-after-proof` / `refactor-behind-contract` /
+  `replace-retain-contract`); active dispositions carry a `v2Path`, `delete-after-proof` carries
+  `v2Path: null`; **no file unmapped**.
 - `v1-command-catalog.json` / `v2-command-map.json` — every Make target and npm script
-  has a `disposition` (`carry` / `merge` / `rename` / `retire`); **none unmapped**.
+  has a `disposition` (`carry` / `merge` / `retire`); `merge`/`retire` carry a `retireReason`;
+  **none unmapped**.
 - `v1-test-proof-inventory.json` / `v2-test-proof-map.json` — every test/proof has a
-  `migrationType` disposition (`carry` / `retarget` / `becomes-contract` / `retire`).
-- `v1-capability-closure.json` — every capability resolved; none `partial` / `deferred`
-  / `candidate` / `missing` / `blocked` without an explicit recorded resolution.
+  `migrationType` (`carry` / `retarget` / `promote-to-conformance` / `retire`); `retire` carries a
+  `retirementJustification`.
+- `v1-capability-closure.json` — every capability has one honest `status`
+  (`delivered-and-proven` / `not-applicable-final` / `rejected-final` /
+  `superseded-by-proven-canonical` / `requires-v1-completion`); **`delivered-and-proven` is forbidden**
+  when route is missing/partial (without `acceptablePartialRoute`), contract missing, permission "to
+  define", readiness deferred, proof not-yet-proven, or the `openAction` says "must close before V2
+  cut"; every `requires-v1-completion` has a `completionAction` in `v1-completion-programme.md`.
 - `v2-decision-catalog.json` + `v2-decision-lineage.json` — every V2-ADR `Accepted`,
   every V1 ADR/action it descends from resolved (no open/proposed lineage).
 - `authentication-authorisation-matrix.json`, `service-and-clickthrough-matrix.json`,
@@ -46,15 +55,18 @@ The cut may not begin until the V2-foundation artefacts in `docs/v2-foundation/`
 
 ## 1. Final V1 source commit
 
-1. Resolve and **pin** the final V1 source commit. The governing audited commit is
-   recorded as `<undefined>`; before the cut this MUST be replaced by the concrete SHA
-   that HEAD of `main` resolves to at freeze time. Record it in this runbook and in the
-   validator's `pinnedV1Commit` input.
+1. Resolve and **pin** the final V1 source (freeze) commit. The artefacts in
+   `docs/v2-foundation/` were built against the **audited** commit
+   `918cd148569f6473eeaa58284933abdc0fe5bafe` (concrete, fixed). The **freeze** commit is the
+   distinct SHA that HEAD of `main` resolves to at cut time — parameterised here as
+   `{{PINNED_V1_COMMIT}}` until pinned. At freeze, replace `{{PINNED_V1_COMMIT}}` with the concrete
+   SHA in this runbook and pass it as the validator's `pinnedV1Commit` input (which rejects
+   `{{PINNED_V1_COMMIT}}`/`<undefined>` under `--strict`).
 2. Confirm working tree clean: `git status --short` is empty.
 3. Confirm CI baseline green on that SHA: `make all` (authoritative ladder, Sonar runs
    once) passes on a clean machine / Testbox.
 
-**Gate:** `git rev-parse --verify <SHA>` resolves; `make all` green on `<SHA>`.
+**Gate:** `git rev-parse --verify {{PINNED_V1_COMMIT}}` resolves; `make all` green on it.
 **Rollback:** abort the cut; the source commit is unchanged on `main`.
 
 ---
@@ -80,7 +92,7 @@ history for audit.
 ## 3. Immutable final V1 tag
 
 1. Tag the attestation commit as the immutable V1 frontier:
-   `git tag -a v1-final -m "V1 frozen frontier; semantic source for V2 (<SHA>)"`.
+   `git tag -a v1-final -m "V1 frozen frontier; semantic source for V2 ({{PINNED_V1_COMMIT}})"`.
 2. Push the tag: `git push origin v1-final`.
 3. Treat `v1-final` as **immutable** — it is never moved, deleted, or re-pointed. All V2
    lineage and rollback references resolve to this tag, not to a moving branch.
