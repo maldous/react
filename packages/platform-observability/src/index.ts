@@ -6,13 +6,14 @@ import {
   SpanStatusCode,
   type Tracer,
   type Span,
-  type SpanAttributes,
+  type Attributes,
   type Context,
 } from "@opentelemetry/api";
 
 export const packageName = "@platform/platform-observability";
 
-export type OtelSpanAttributes = SpanAttributes;
+// `Attributes` replaces the deprecated `SpanAttributes` alias in @opentelemetry/api.
+export type OtelSpanAttributes = Attributes;
 
 export type SpanCallback<T> = (span: Span) => T | Promise<T>;
 

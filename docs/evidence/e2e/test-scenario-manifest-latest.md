@@ -7,13 +7,13 @@ Generated (ADR-0075 / ADR-ACT-0285 closure). DO NOT EDIT — regenerate via `npm
 
 ## Notes
 
-- expanded scenarios: 21 (5 static, 16 dynamic); exemptions: 18
+- expanded scenarios: 22 (6 static, 16 dynamic); exemptions: 18
 
 ## Summary
 
-- testFilesOnDisk: 23
-- correlatedSpecs: 5
-- staticScenarios: 5
+- testFilesOnDisk: 24
+- correlatedSpecs: 6
+- staticScenarios: 6
 - dynamicScenarios: 1
-- expandedScenarios: 21
+- expandedScenarios: 22
 - exemptions: 18

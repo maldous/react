@@ -248,7 +248,6 @@ const IdpAliasSchema = z
 
 /** Only http/https URLs — rejects javascript:, data:, file:, etc. */
 const SafeUrlSchema = z
-  .string()
   .url()
   .refine((u) => /^https?:\/\//i.test(u), { message: "URL must use http or https" });
 
@@ -899,7 +898,6 @@ export type WebhookReadinessStatus = z.infer<typeof WebhookReadinessStatusSchema
  * receiver/proof). Any non-http(s) scheme (file:, gopher:, ftp:, …) is rejected.
  */
 const WebhookUrlZ = z
-  .string()
   .url()
   .max(2048)
   .refine(

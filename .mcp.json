@@ -1,5 +1,9 @@
 {
   "mcpServers": {
+    "memory_palace": {
+      "command": "node",
+      "args": ["/home/user/.npm-global/lib/node_modules/mempalace/dist/index.js", "mcp"]
+    },
     "platform-governor": {
       "command": "node",
       "args": ["tools/mcp/platform-governor/src/index.mjs"]

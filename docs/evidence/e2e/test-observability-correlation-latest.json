@@ -1,11 +1,11 @@
 {
   "stage": "test",
-  "testRunId": "run-test-1781704174-7bba3124",
+  "testRunId": "run-test-1781752233-a39df920",
   "result": "FULL",
   "loki": {
     "status": "reachable",
     "reason": null,
-    "lineCount": 17,
+    "lineCount": 18,
     "truncated": false
   },
   "tempo": {
@@ -17,6 +17,7 @@
   "expectedRequired": [
     "pipeline-health-probe",
     "persona-authz",
+    "browser-bff-trace",
     "persona-matrix:unauthenticated-visitor",
     "persona-matrix:fixture-tenant-admin",
     "persona-matrix:fixture-viewer",
@@ -31,7 +32,7 @@
       "observed": true,
       "lines": 1,
       "traceIds": [
-        "27af743f456d70b36dc2941e83f52556"
+        "d6c0b063cd3695eac7accdb8df8d25aa"
       ],
       "result": "OK"
     },
@@ -65,10 +66,20 @@
       "observed": true,
       "lines": 4,
       "traceIds": [
-        "68eefa5a0f3964d50b0b3ad9c97cb79a",
-        "5ca3443df29d8dbcaa36900880f04fb0",
-        "9febc41c537a0cd5bd3208e3d6790870",
-        "12b3057ca2096e20da5caed587be33ff"
+        "8eba472622d0b700dbec24ef4d669b68",
+        "20c6f0f9dd31670a7046811b6c5abb82",
+        "e39a7c44b6f5365216398686b8b52230",
+        "5baab86a62fb0a39430748f4a02b4903"
+      ],
+      "result": "OK"
+    },
+    {
+      "scenarioId": "browser-bff-trace",
+      "required": true,
+      "observed": true,
+      "lines": 1,
+      "traceIds": [
+        "d3ff722a83bb1f5b567ca3a98eedebe2"
       ],
       "result": "OK"
     },
@@ -78,10 +89,10 @@
       "observed": true,
       "lines": 4,
       "traceIds": [
-        "63ddad28f7af2c504e8debb5cb3eeae4",
-        "8f120d7cb4809fe6125da4531ebd2770",
-        "db5d9dda37f96a63e2000e1d9bf35cb9",
-        "6527a5b52c14deb0cfb5cd0d2a11449b"
+        "5bfe415abe854d9386edeac7fce0d389",
+        "4e52d0059a1fee20b5120cc297e3e771",
+        "8fdeac74e526ac0ae6391f19527694a2",
+        "78a902b6fe576cd550f441ac761ddfb1"
       ],
       "result": "OK"
     },
@@ -91,8 +102,8 @@
       "observed": true,
       "lines": 2,
       "traceIds": [
-        "d8e3d292e2bec78fb62e9f1869f2c07a",
-        "064d1083be91b5948dd0da6a36a4460b"
+        "88da6d9e19e469a973ca21c593352df2",
+        "99c15039e15120c8f0de63100d9eea38"
       ],
       "result": "OK"
     },
@@ -102,10 +113,10 @@
       "observed": true,
       "lines": 4,
       "traceIds": [
-        "774c8236a7f86a79d97d4e13b7ad8792",
-        "0235c8ff69974e8fc3c7a550499c19c7",
-        "a05143d5bb59b98de13c59f4881b1da4",
-        "88d42aa5e24c9839886829c58ba1b3c3"
+        "1bd92b43b4eb3519acc92c079739cd1e",
+        "ee6a83e9ea81a2eee058e3c93e290269",
+        "245219f0e540f836a2b46cc7706ebe6f",
+        "a1e7f51d2aea29270d3bb90c1e15b473"
       ],
       "result": "OK"
     },
@@ -115,8 +126,8 @@
       "observed": true,
       "lines": 2,
       "traceIds": [
-        "6312dc6f0b1319f383ab85d7215c2536",
-        "8353bef64f4201a9534d2d3e2c5ba0ec"
+        "3a262a6a3d9b7ebf608b6acef8c2a14b",
+        "b63edb39d79c5c6ea3c5b38427f3b8a7"
       ],
       "result": "OK"
     }
@@ -124,7 +135,11 @@
   "traces": [
     {
       "scenarioId": "pipeline-health-probe",
-      "traceId": "27af743f456d70b36dc2941e83f52556",
+      "result": "PASSED",
+      "chosenTraceId": "d6c0b063cd3695eac7accdb8df8d25aa",
+      "candidateTraceIds": [
+        "d6c0b063cd3695eac7accdb8df8d25aa"
+      ],
       "found": true,
       "services": [
         "platform-api"
@@ -132,13 +147,32 @@
       "missingServices": [],
       "routeFound": true,
       "secretHits": [],
-      "result": "PASSED",
+      "traceIdMismatches": [],
       "spanCount": 2
+    },
+    {
+      "scenarioId": "browser-bff-trace",
+      "result": "PASSED",
+      "chosenTraceId": "d3ff722a83bb1f5b567ca3a98eedebe2",
+      "candidateTraceIds": [
+        "d3ff722a83bb1f5b567ca3a98eedebe2"
+      ],
+      "found": true,
+      "services": [
+        "react-enterprise-app",
+        "platform-api"
+      ],
+      "missingServices": [],
+      "routeFound": true,
+      "secretHits": [],
+      "traceIdMismatches": [],
+      "spanCount": 3
     }
   ],
   "notes": [
-    "Correlated 17 line(s); all 6 required scenario(s) observed.",
-    "Trace 27af743f456d70b36dc2941e83f52556 for 'pipeline-health-probe' matched in Tempo: services [platform-api], route true."
+    "Correlated 18 line(s); all 7 required scenario(s) observed.",
+    "Trace d6c0b063cd3695eac7accdb8df8d25aa for 'pipeline-health-probe' matched in Tempo: services [platform-api].",
+    "Trace d3ff722a83bb1f5b567ca3a98eedebe2 for 'browser-bff-trace' matched in Tempo: services [react-enterprise-app, platform-api]."
   ],
   "probe": {
     "scenario": "pipeline-health-probe",

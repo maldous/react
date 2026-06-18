@@ -463,7 +463,13 @@ async function provisionCache(
     await adapter.createTenantUser(organisationId, password);
     log.info({ tier: config.tier, organisationId }, "provisioning.cache.done");
   } finally {
-    await adminClient.disconnect().catch(() => undefined);
+    // destroy() is the non-deprecated synchronous close (node-redis v6); the admin
+    // command above has completed, so this matches the old best-effort disconnect().
+    try {
+      adminClient.destroy();
+    } catch {
+      // best-effort cleanup — never mask the original outcome
+    }
   }
 }
 
@@ -481,7 +487,13 @@ async function deprovisionCache(
     const adapter = new RedisProvisioningAdapter(adminClient);
     await adapter.revokeTenantUser(organisationId);
   } finally {
-    await adminClient.disconnect().catch(() => undefined);
+    // destroy() is the non-deprecated synchronous close (node-redis v6); the admin
+    // command above has completed, so this matches the old best-effort disconnect().
+    try {
+      adminClient.destroy();
+    } catch {
+      // best-effort cleanup — never mask the original outcome
+    }
   }
 }
 

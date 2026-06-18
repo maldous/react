@@ -322,7 +322,9 @@ export async function connectRedis(): Promise<void> {
 export async function disconnectRedis(): Promise<void> {
   if (redisClient) {
     try {
-      await redisClient.disconnect();
+      // destroy() is the non-deprecated synchronous immediate-close (node-redis v6);
+      // no pending commands here, so equivalent to the old disconnect().
+      redisClient.destroy();
     } catch {
       // Swallow disconnect errors so test after() hooks always complete.
     }
