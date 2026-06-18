@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-06-18
 
-48 packages organized by role: domain, contracts, adapters, runtimes, features, tooling, and apps.
+51 packages organized by role: domain, contracts, adapters, runtimes, features, tooling, and apps.
 
 ## Domain & Policy (3)
 
@@ -12,7 +12,7 @@
 | @platform/domain-identity       | experimental | domain-core           | —              |
 | @platform/profile-configuration | deprecated   | profile-configuration | —              |
 
-## Contracts (4)
+## Contracts (6)
 
 | Name                             | Lifecycle    | Context                      | @platform Deps |
 | -------------------------------- | ------------ | ---------------------------- | -------------- |
@@ -21,6 +21,7 @@
 | @platform/contracts-graphql      | active       | graphql-contracts            | —              |
 | @platform/contracts-ingestion    | active       | external-ingestion-contracts | —              |
 | @platform/contracts-organisation | experimental | profile-configuration        | —              |
+| @platform/contracts-admin        | experimental | tenant-administration        | —              |
 
 ## Policy/Control (2)
 
@@ -53,24 +54,25 @@
 | @platform/adapters-postgres       | active    | postgres-runtime           | —              |
 | @platform/adapters-redis          | active    | cache-queue-redis          | —              |
 | @platform/adapters-sentry         | active    | error-monitoring           | —              |
-| @platform/adapters-ingestion      | active    | external-ingestion-runtime | —              |
+| @platform/adapters-loki           | active    | loki-runtime               | —              |
 
-## Runtimes (16)
+## Runtimes (13)
 
-| Name                           | Lifecycle  | Context              | @platform Deps |
-| ------------------------------ | ---------- | -------------------- | -------------- |
-| @platform/api-runtime          | active     | api-server           | —              |
-| @platform/graphql-api-runtime  | active     | graphql-server       | —              |
-| @platform/worker-runtime       | deprecated | worker-server        | —              |
-| @platform/session-runtime      | active     | session-service      | —              |
-| @platform/security-auth        | deprecated | auth-gateway         | —              |
-| @platform/audit-events         | active     | audit-service        | —              |
-| @platform/config-runtime       | active     | config-service       | —              |
-| @platform/email-runtime        | active     | email-service        | —              |
-| @platform/notification-runtime | deprecated | notification-service | —              |
-| @platform/queue-runtime        | deprecated | queue-service        | —              |
-| @platform/search-runtime       | deprecated | search-service       | —              |
-| @platform/storage-runtime      | active     | storage-service      | —              |
+| Name                             | Lifecycle  | Context              | @platform Deps |
+| -------------------------------- | ---------- | -------------------- | -------------- |
+| @platform/api-runtime            | active     | api-server           | —              |
+| @platform/graphql-api-runtime    | active     | graphql-server       | —              |
+| @platform/worker-runtime         | deprecated | worker-server        | —              |
+| @platform/session-runtime        | active     | session-service      | —              |
+| @platform/security-auth          | deprecated | auth-gateway         | —              |
+| @platform/audit-events           | active     | audit-service        | —              |
+| @platform/config-runtime         | active     | config-service       | —              |
+| @platform/email-runtime          | active     | email-service        | —              |
+| @platform/notification-runtime   | deprecated | notification-service | —              |
+| @platform/queue-runtime          | deprecated | queue-service        | —              |
+| @platform/search-runtime         | deprecated | search-service       | —              |
+| @platform/storage-runtime        | active     | storage-service      | —              |
+| @platform/graphql-browser-client | active     | graphql-client       | —              |
 
 ## UI & Features (2)
 
@@ -98,9 +100,9 @@
 | @platform/dev-services      | active    | dev-local          | —              |
 | @platform/test-support      | active    | test-support       | —              |
 
-## Total: 48 packages
+## Total: 51 packages
 
-**Lifecycle Distribution**: 5 stable, 31 active, 9 experimental, 9 deprecated (ADR-ACT-0288 — superseded scaffolding, pending removal review 2026-12-18)
+**Lifecycle Distribution**: 33 active, 9 experimental, 9 deprecated (ADR-ACT-0289 — superseded scaffolding deprecated, pending removal review 2026-12-18)
 
 **Dependency Density**: Most packages have zero @platform/\* dependencies (leaf nodes per ADR-0020). Only platform-logging and platform-observability import platform-runtime-context.
 
