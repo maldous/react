@@ -307,10 +307,15 @@ export async function redriveDeadDeliveries(
       ...(input.deliveryId ? { deliveryId: input.deliveryId } : {}),
     }
   );
-  const redriven = input.deliveryId
-    ? (await deps.store.redriveDeadDelivery(input.organisationId, input.deliveryId))
-      ? 1
-      : 0
-    : await deps.store.redriveDeadForSubscription(input.organisationId, input.subscriptionId);
+  let redriven: number;
+  if (input.deliveryId) {
+    const ok = await deps.store.redriveDeadDelivery(input.organisationId, input.deliveryId);
+    redriven = ok ? 1 : 0;
+  } else {
+    redriven = await deps.store.redriveDeadForSubscription(
+      input.organisationId,
+      input.subscriptionId
+    );
+  }
   return { kind: "ok", redriven };
 }

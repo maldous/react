@@ -180,6 +180,17 @@ function buildAuthClientDomainPort(
   };
 }
 
+/**
+ * Map a vanity-domain verify result kind to the public status string.
+ * ok / already_verified → verified; dns_mismatch → dns_mismatch;
+ * dns_not_found (and any other) → pending_dns (keep waiting on DNS propagation).
+ */
+function domainVerifyStatus(kind: string): string {
+  if (kind === "ok" || kind === "already_verified") return "verified";
+  if (kind === "dns_mismatch") return "dns_mismatch";
+  return "pending_dns";
+}
+
 // ---------------------------------------------------------------------------
 // Shared mapping of an Auth Settings mutation result to an HTTP response
 // (ADR-0041). Returns true when it sent a failure response; false on "ok" so the
@@ -3422,12 +3433,7 @@ export const routes: Route[] = [
         });
         return;
       }
-      const status =
-        result.kind === "ok" || result.kind === "already_verified"
-          ? "verified"
-          : result.kind === "dns_mismatch"
-            ? "dns_mismatch"
-            : "pending_dns"; // dns_not_found — keep waiting on DNS propagation
+      const status = domainVerifyStatus(result.kind);
       res.json(200, { domain, status, txtRecord, token: null });
     },
   },

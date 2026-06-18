@@ -123,8 +123,14 @@ export function parseLokiResponse(body: unknown): LogEntry[] {
     }
   }
   // Newest first.
-  entries.sort((a, b) => (a.timestamp < b.timestamp ? 1 : a.timestamp > b.timestamp ? -1 : 0));
+  entries.sort((a, b) => compareTimestampsDesc(a.timestamp, b.timestamp));
   return entries;
+}
+
+function compareTimestampsDesc(a: string, b: string): number {
+  if (a < b) return 1;
+  if (a > b) return -1;
+  return 0;
 }
 
 function nanosToIso(tsNanos: string): string {

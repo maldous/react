@@ -177,6 +177,27 @@ export function AdminMembersPage() {
     [t, roleItems, canUpdate, canRemove, updateRole]
   );
 
+  const renderTable = () => {
+    if (isLoading) return <LoadingState message={t("auth.status.loading")} />;
+    if (isError) return <AdminQueryError error={error} onRetry={() => void refetch()} />;
+    if (!data || data.members.length === 0)
+      return <EmptyState title={t("feature.admin.members.empty")} />;
+    return (
+      <Card>
+        <CardBody>
+          <DataTable
+            data={data.members}
+            columns={columns}
+            rowTestId="member-row"
+            renderSubComponent={(row) => (
+              <MemberDetail member={row.original} canUpdate={canUpdate} />
+            )}
+          />
+        </CardBody>
+      </Card>
+    );
+  };
+
   return (
     <section data-testid="admin-members">
       <AdminSectionHeader
@@ -191,26 +212,7 @@ export function AdminMembersPage() {
         }
       />
 
-      {isLoading ? (
-        <LoadingState message={t("auth.status.loading")} />
-      ) : isError ? (
-        <AdminQueryError error={error} onRetry={() => void refetch()} />
-      ) : !data || data.members.length === 0 ? (
-        <EmptyState title={t("feature.admin.members.empty")} />
-      ) : (
-        <Card>
-          <CardBody>
-            <DataTable
-              data={data.members}
-              columns={columns}
-              rowTestId="member-row"
-              renderSubComponent={(row) => (
-                <MemberDetail member={row.original} canUpdate={canUpdate} />
-              )}
-            />
-          </CardBody>
-        </Card>
-      )}
+      {renderTable()}
 
       {data && data.pendingInvitations.length > 0 && (
         <PendingInvitations
@@ -274,6 +276,25 @@ function MemberDetail({
 
   const usernameErr = editUsername.error as { status?: number } | null;
   const nextStatus = member.status === "disabled" ? "active" : "disabled";
+
+  const renderExternalIds = () => {
+    if (externalIds.isLoading)
+      return <p className="text-sm text-fg-muted">{t("auth.status.loading")}</p>;
+    if (externalIds.isError) return <AdminQueryError error={externalIds.error} />;
+    if ((externalIds.data?.identities ?? []).length === 0)
+      return (
+        <p className="text-sm text-fg-muted">{t("feature.admin.members.noExternalIdentities")}</p>
+      );
+    return (
+      <ul className="space-y-1 text-sm" data-testid={`member-external-${member.userId}`}>
+        {externalIds.data!.identities.map((id) => (
+          <li key={id.id} className="text-fg-muted">
+            <span className="font-medium text-fg">{id.provider}</span> · {id.email ?? id.subject}
+          </li>
+        ))}
+      </ul>
+    );
+  };
 
   return (
     <div
@@ -351,22 +372,7 @@ function MemberDetail({
         <h3 className="text-sm font-semibold text-fg">
           {t("feature.admin.members.externalIdentities")}
         </h3>
-        {externalIds.isLoading ? (
-          <p className="text-sm text-fg-muted">{t("auth.status.loading")}</p>
-        ) : externalIds.isError ? (
-          <AdminQueryError error={externalIds.error} />
-        ) : (externalIds.data?.identities ?? []).length === 0 ? (
-          <p className="text-sm text-fg-muted">{t("feature.admin.members.noExternalIdentities")}</p>
-        ) : (
-          <ul className="space-y-1 text-sm" data-testid={`member-external-${member.userId}`}>
-            {externalIds.data!.identities.map((id) => (
-              <li key={id.id} className="text-fg-muted">
-                <span className="font-medium text-fg">{id.provider}</span> ·{" "}
-                {id.email ?? id.subject}
-              </li>
-            ))}
-          </ul>
-        )}
+        {renderExternalIds()}
         <div className="pt-4">
           <AuditTrailPanel
             resource="member"

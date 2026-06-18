@@ -96,6 +96,14 @@ function JobsCard({ tenantId }: Readonly<{ tenantId: string }>) {
     [t, run, toggle]
   );
 
+  const renderJobs = () => {
+    if (jobs.isError)
+      return <AdminQueryError error={jobs.error} onRetry={() => void jobs.refetch()} />;
+    if (jobs.data && jobs.data.jobs.length > 0)
+      return <DataTable data={jobs.data.jobs} columns={columns} rowTestId="job-row" />;
+    return <EmptyState title={t("feature.admin.scheduledJobs.noJobs")} />;
+  };
+
   return (
     <Card>
       <CardBody>
@@ -139,13 +147,7 @@ function JobsCard({ tenantId }: Readonly<{ tenantId: string }>) {
             {t("feature.admin.scheduledJobs.create")}
           </Button>
         </div>
-        {jobs.isError ? (
-          <AdminQueryError error={jobs.error} onRetry={() => void jobs.refetch()} />
-        ) : jobs.data && jobs.data.jobs.length > 0 ? (
-          <DataTable data={jobs.data.jobs} columns={columns} rowTestId="job-row" />
-        ) : (
-          <EmptyState title={t("feature.admin.scheduledJobs.noJobs")} />
-        )}
+        {renderJobs()}
       </CardBody>
     </Card>
   );

@@ -49,6 +49,39 @@ export function AdminReadinessPage() {
   const t = useTranslation();
   const { data, isLoading, isError, error } = useTenantReadiness();
 
+  const renderBody = () => {
+    if (isLoading) return <LoadingState message={t("auth.status.loading")} />;
+    if (isError) return <AdminQueryError error={error} />;
+    if (!data) return <EmptyState title={t("feature.admin.readiness.unavailable")} />;
+    return (
+      <div className="space-y-6">
+        <div data-testid="readiness-overall">
+          <Card>
+            <CardBody className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-sm font-semibold text-fg">
+                  {t("feature.admin.readiness.overall")}
+                </p>
+                <p className="text-sm text-fg-muted">
+                  {t(`feature.admin.readiness.overallHint.${data.overall}` as const)}
+                </p>
+              </div>
+              <Badge variant={OVERALL_VARIANT[data.overall]}>
+                {t(`feature.admin.readiness.status.${data.overall}` as const)}
+              </Badge>
+            </CardBody>
+          </Card>
+        </div>
+
+        {CAPABILITY_CATEGORIES.map((category) => {
+          const caps = data.capabilities.filter((c) => c.category === category);
+          if (caps.length === 0) return null;
+          return <CategoryGroup key={category} category={category} capabilities={caps} />;
+        })}
+      </div>
+    );
+  };
+
   return (
     <section data-testid="admin-readiness">
       <AdminSectionHeader
@@ -56,39 +89,7 @@ export function AdminReadinessPage() {
         description={t("feature.admin.readiness.description")}
       />
 
-      {isLoading ? (
-        <LoadingState message={t("auth.status.loading")} />
-      ) : isError ? (
-        <AdminQueryError error={error} />
-      ) : !data ? (
-        <EmptyState title={t("feature.admin.readiness.unavailable")} />
-      ) : (
-        <div className="space-y-6">
-          <div data-testid="readiness-overall">
-            <Card>
-              <CardBody className="flex flex-wrap items-center justify-between gap-3">
-                <div>
-                  <p className="text-sm font-semibold text-fg">
-                    {t("feature.admin.readiness.overall")}
-                  </p>
-                  <p className="text-sm text-fg-muted">
-                    {t(`feature.admin.readiness.overallHint.${data.overall}` as const)}
-                  </p>
-                </div>
-                <Badge variant={OVERALL_VARIANT[data.overall]}>
-                  {t(`feature.admin.readiness.status.${data.overall}` as const)}
-                </Badge>
-              </CardBody>
-            </Card>
-          </div>
-
-          {CAPABILITY_CATEGORIES.map((category) => {
-            const caps = data.capabilities.filter((c) => c.category === category);
-            if (caps.length === 0) return null;
-            return <CategoryGroup key={category} category={category} capabilities={caps} />;
-          })}
-        </div>
-      )}
+      {renderBody()}
     </section>
   );
 }

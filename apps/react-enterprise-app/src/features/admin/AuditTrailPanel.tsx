@@ -29,30 +29,37 @@ export function AuditTrailPanel({
   const { data, isLoading, isError, error } = useAudit({ resource, resourceId, action }, enabled);
   const events = data?.events ?? [];
 
+  function renderBody() {
+    if (isLoading) {
+      return <LoadingState message={t("auth.status.loading")} />;
+    }
+    if (isError) {
+      return <AdminQueryError error={error} />;
+    }
+    if (events.length === 0) {
+      return <EmptyState title={t("feature.admin.audit.empty")} />;
+    }
+    return (
+      <ul className="space-y-1 text-sm" data-testid={`${testId}-list`}>
+        {events.map((e) => (
+          <li key={e.id} className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+            <Badge variant="secondary">{e.action}</Badge>
+            <span className="text-fg-muted">
+              {t("feature.admin.audit.by", { actor: e.actorId })}
+            </span>
+            <time className="font-mono text-xs text-fg-muted" dateTime={e.timestamp}>
+              {e.timestamp.slice(0, 19).replace("T", " ")}
+            </time>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
   return (
     <div data-testid={testId} role="group" aria-label={heading}>
       <p className="mb-2 text-sm font-semibold text-fg">{heading}</p>
-      {isLoading ? (
-        <LoadingState message={t("auth.status.loading")} />
-      ) : isError ? (
-        <AdminQueryError error={error} />
-      ) : events.length === 0 ? (
-        <EmptyState title={t("feature.admin.audit.empty")} />
-      ) : (
-        <ul className="space-y-1 text-sm" data-testid={`${testId}-list`}>
-          {events.map((e) => (
-            <li key={e.id} className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
-              <Badge variant="secondary">{e.action}</Badge>
-              <span className="text-fg-muted">
-                {t("feature.admin.audit.by", { actor: e.actorId })}
-              </span>
-              <time className="font-mono text-xs text-fg-muted" dateTime={e.timestamp}>
-                {e.timestamp.slice(0, 19).replace("T", " ")}
-              </time>
-            </li>
-          ))}
-        </ul>
-      )}
+      {renderBody()}
     </div>
   );
 }

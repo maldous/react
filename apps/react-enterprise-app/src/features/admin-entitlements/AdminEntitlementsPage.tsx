@@ -114,25 +114,26 @@ function OperatorConsole() {
         />
       </div>
 
-      {tenantId === "" ? (
-        <EmptyState title={t("feature.admin.entitlements.enterTenant")} />
-      ) : query.isLoading ? (
-        <LoadingState message={t("auth.status.loading")} />
-      ) : query.isError ? (
-        <AdminQueryError error={query.error} onRetry={() => void query.refetch()} />
-      ) : query.data && query.data.entitlements.length > 0 ? (
-        <Card>
-          <CardBody>
-            <DataTable
-              data={query.data.entitlements}
-              columns={columns}
-              rowTestId="entitlement-row"
-            />
-          </CardBody>
-        </Card>
-      ) : (
-        <EmptyState title={t("feature.admin.entitlements.empty")} />
-      )}
+      {(() => {
+        if (tenantId === "")
+          return <EmptyState title={t("feature.admin.entitlements.enterTenant")} />;
+        if (query.isLoading) return <LoadingState message={t("auth.status.loading")} />;
+        if (query.isError)
+          return <AdminQueryError error={query.error} onRetry={() => void query.refetch()} />;
+        if (query.data && query.data.entitlements.length > 0)
+          return (
+            <Card>
+              <CardBody>
+                <DataTable
+                  data={query.data.entitlements}
+                  columns={columns}
+                  rowTestId="entitlement-row"
+                />
+              </CardBody>
+            </Card>
+          );
+        return <EmptyState title={t("feature.admin.entitlements.empty")} />;
+      })()}
       <p className="text-xs text-fg-muted" data-testid="entitlement-quota-note">
         {t("feature.admin.entitlements.quotaNote")}
       </p>
@@ -172,23 +173,24 @@ function TenantReadOnlyView() {
       <p className="text-sm text-fg-muted" data-testid="entitlement-readonly-note">
         {t("feature.admin.entitlements.readOnlyNote")}
       </p>
-      {query.isLoading ? (
-        <LoadingState message={t("auth.status.loading")} />
-      ) : query.isError ? (
-        <AdminQueryError error={query.error} onRetry={() => void query.refetch()} />
-      ) : query.data && query.data.entitlements.length > 0 ? (
-        <Card>
-          <CardBody>
-            <DataTable
-              data={query.data.entitlements}
-              columns={columns}
-              rowTestId="entitlement-row"
-            />
-          </CardBody>
-        </Card>
-      ) : (
-        <EmptyState title={t("feature.admin.entitlements.empty")} />
-      )}
+      {(() => {
+        if (query.isLoading) return <LoadingState message={t("auth.status.loading")} />;
+        if (query.isError)
+          return <AdminQueryError error={query.error} onRetry={() => void query.refetch()} />;
+        if (query.data && query.data.entitlements.length > 0)
+          return (
+            <Card>
+              <CardBody>
+                <DataTable
+                  data={query.data.entitlements}
+                  columns={columns}
+                  rowTestId="entitlement-row"
+                />
+              </CardBody>
+            </Card>
+          );
+        return <EmptyState title={t("feature.admin.entitlements.empty")} />;
+      })()}
     </div>
   );
 }

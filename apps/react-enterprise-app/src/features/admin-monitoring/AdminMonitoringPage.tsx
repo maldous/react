@@ -150,6 +150,14 @@ function AlertsCard({ tenantId }: Readonly<{ tenantId: string }>) {
     [t, evaluate]
   );
 
+  const renderAlerts = () => {
+    if (alerts.isError)
+      return <AdminQueryError error={alerts.error} onRetry={() => void alerts.refetch()} />;
+    if (alerts.data && alerts.data.rules.length > 0)
+      return <DataTable data={alerts.data.rules} columns={columns} rowTestId="alert-row" />;
+    return <EmptyState title={t("feature.admin.monitoring.noAlerts")} />;
+  };
+
   return (
     <Card>
       <CardBody>
@@ -203,13 +211,7 @@ function AlertsCard({ tenantId }: Readonly<{ tenantId: string }>) {
             {t("feature.admin.monitoring.createAlert")}
           </Button>
         </div>
-        {alerts.isError ? (
-          <AdminQueryError error={alerts.error} onRetry={() => void alerts.refetch()} />
-        ) : alerts.data && alerts.data.rules.length > 0 ? (
-          <DataTable data={alerts.data.rules} columns={columns} rowTestId="alert-row" />
-        ) : (
-          <EmptyState title={t("feature.admin.monitoring.noAlerts")} />
-        )}
+        {renderAlerts()}
       </CardBody>
     </Card>
   );

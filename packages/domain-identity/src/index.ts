@@ -432,6 +432,14 @@ function isWellFormedHostname(hostname: string): boolean {
  * (every input maps to exactly one kind). Port suffixes are stripped before
  * matching ? consistent with the resolver behaviour proven in ADR-ACT-0225.
  */
+function normalizePort(portPart: string | null): string | null {
+  if (portPart === null) return null;
+  // A port suffix, when present, must be purely numeric (rejects IPv6 literals
+  // and header smuggling like "host:port:junk" ? neither is a tenant host).
+  if (/^\d{1,5}$/.test(portPart)) return portPart;
+  return null;
+}
+
 export function classifyHostIdentity(rawHost: string, apexDomain: string): HostIdentity {
   const trimmed = (rawHost ?? "").trim().toLowerCase();
   const malformed: HostIdentity = { kind: "malformed", hostname: "", port: null, slug: null };
@@ -440,9 +448,7 @@ export function classifyHostIdentity(rawHost: string, apexDomain: string): HostI
   const colonIdx = trimmed.indexOf(":");
   const hostname = colonIdx === -1 ? trimmed : (trimmed.slice(0, colonIdx) ?? "");
   const portPart = colonIdx === -1 ? null : trimmed.slice(colonIdx + 1);
-  // A port suffix, when present, must be purely numeric (rejects IPv6 literals
-  // and header smuggling like "host:port:junk" ? neither is a tenant host).
-  const port = portPart === null ? null : /^\d{1,5}$/.test(portPart) ? portPart : null;
+  const port = normalizePort(portPart);
   if (portPart !== null && port === null) return malformed;
   if (!isWellFormedHostname(hostname)) return malformed;
 

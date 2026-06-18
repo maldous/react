@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import type { ColumnDef } from "@tanstack/react-table";
 import {
   Badge,
@@ -266,23 +266,28 @@ function TenantDeveloperView() {
   const columns = useApiKeyColumns((id) => revoke.mutate(id));
   const rlColumns = useRateLimitColumns();
 
+  let keysContent: ReactNode;
+  if (keys.isLoading) {
+    keysContent = <LoadingState message={t("auth.status.loading")} />;
+  } else if (keys.isError) {
+    keysContent = <AdminQueryError error={keys.error} onRetry={() => void keys.refetch()} />;
+  } else if (keys.data && keys.data.apiKeys.length > 0) {
+    keysContent = (
+      <Card>
+        <CardBody>
+          <DataTable data={keys.data.apiKeys} columns={columns} rowTestId="api-key-row" />
+        </CardBody>
+      </Card>
+    );
+  } else {
+    keysContent = <EmptyState title={t("feature.admin.developer.noKeys")} />;
+  }
+
   return (
     <div className="space-y-4">
       <DeveloperFoundationCard />
       <CreateApiKeyForm />
-      {keys.isLoading ? (
-        <LoadingState message={t("auth.status.loading")} />
-      ) : keys.isError ? (
-        <AdminQueryError error={keys.error} onRetry={() => void keys.refetch()} />
-      ) : keys.data && keys.data.apiKeys.length > 0 ? (
-        <Card>
-          <CardBody>
-            <DataTable data={keys.data.apiKeys} columns={columns} rowTestId="api-key-row" />
-          </CardBody>
-        </Card>
-      ) : (
-        <EmptyState title={t("feature.admin.developer.noKeys")} />
-      )}
+      {keysContent}
       {rateLimits.data && rateLimits.data.policies.length > 0 && (
         <Card>
           <CardBody>
@@ -398,6 +403,24 @@ function OperatorConsole() {
     [tenants.data]
   );
 
+  let tenantKeysContent: ReactNode;
+  if (keys.isError) {
+    tenantKeysContent = <AdminQueryError error={keys.error} onRetry={() => void keys.refetch()} />;
+  } else if (keys.data && keys.data.apiKeys.length > 0) {
+    tenantKeysContent = (
+      <Card>
+        <CardBody>
+          <h2 className="mb-2 text-sm font-semibold text-fg">
+            {t("feature.admin.developer.tenantKeysTitle")}
+          </h2>
+          <DataTable data={keys.data.apiKeys} columns={keyColumns} rowTestId="api-key-row" />
+        </CardBody>
+      </Card>
+    );
+  } else {
+    tenantKeysContent = <EmptyState title={t("feature.admin.developer.noKeys")} />;
+  }
+
   return (
     <div className="space-y-4">
       <div className="max-w-md" data-testid="developer-tenant-form">
@@ -431,20 +454,7 @@ function OperatorConsole() {
           ) : (
             <EmptyState title={t("feature.admin.developer.noRateLimits")} />
           )}
-          {keys.isError ? (
-            <AdminQueryError error={keys.error} onRetry={() => void keys.refetch()} />
-          ) : keys.data && keys.data.apiKeys.length > 0 ? (
-            <Card>
-              <CardBody>
-                <h2 className="mb-2 text-sm font-semibold text-fg">
-                  {t("feature.admin.developer.tenantKeysTitle")}
-                </h2>
-                <DataTable data={keys.data.apiKeys} columns={keyColumns} rowTestId="api-key-row" />
-              </CardBody>
-            </Card>
-          ) : (
-            <EmptyState title={t("feature.admin.developer.noKeys")} />
-          )}
+          {tenantKeysContent}
         </>
       )}
     </div>

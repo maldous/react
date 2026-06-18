@@ -25,6 +25,7 @@ import {
   type UpdateIdpRequest,
   type IdpMappingConfig,
   type OidcDiscoveryMetadata,
+  type OidcConnectionResult,
 } from "@platform/contracts-admin";
 import { AdminQueryError } from "../admin/AdminQueryError";
 import {
@@ -43,6 +44,23 @@ import {
 // here for UX; empty optional fields are stripped before hitting the typed client,
 // and the BFF re-validates strictly. URLs must be blank or http/https.
 const httpsish = (v: string) => v === "" || /^https?:\/\/\S+$/i.test(v);
+
+/**
+ * Live-region label for an async OIDC probe (test connection / discovery):
+ * loading while pending, the given error key on failure, the classified result
+ * label once available, else empty.
+ */
+function probeStatusLabel(
+  t: (k: string) => string,
+  probe: Readonly<{ isPending: boolean; isError: boolean }>,
+  result: OidcConnectionResult | undefined,
+  errorKey: string
+): string {
+  if (probe.isPending) return t("auth.status.loading");
+  if (probe.isError) return t(errorKey);
+  if (result) return t(`feature.admin.auth.idps.testResult.${result}`);
+  return "";
+}
 
 const CreateIdpFormSchema = z
   .object({
@@ -272,13 +290,7 @@ function IdpRow({
         className="text-xs"
         data-testid={`auth-idp-test-result-${idp.alias}`}
       >
-        {test.isPending
-          ? t("auth.status.loading")
-          : test.isError
-            ? t("feature.admin.auth.idps.testError")
-            : testResult
-              ? t(`feature.admin.auth.idps.testResult.${testResult}`)
-              : ""}
+        {probeStatusLabel(t, test, testResult, "feature.admin.auth.idps.testError")}
       </LiveRegion>
     </div>
   );
@@ -626,13 +638,7 @@ function DiscoveryImport({
           {t("feature.admin.auth.idps.discoveryImport")}
         </Button>
         <LiveRegion tone="polite" className="text-xs" data-testid="auth-idp-discovery-status">
-          {discover.isPending
-            ? t("auth.status.loading")
-            : discover.isError
-              ? t("feature.admin.auth.idps.discoveryError")
-              : result
-                ? t(`feature.admin.auth.idps.testResult.${result}`)
-                : ""}
+          {probeStatusLabel(t, discover, result, "feature.admin.auth.idps.discoveryError")}
         </LiveRegion>
       </div>
     </div>

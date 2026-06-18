@@ -73,15 +73,16 @@ function WorkersCard() {
         <h2 className="mb-2 text-sm font-semibold text-fg">
           {t("feature.admin.events.workersTitle")}
         </h2>
-        {workers.isLoading ? (
-          <LoadingState message={t("auth.status.loading")} />
-        ) : workers.isError ? (
-          <AdminQueryError error={workers.error} onRetry={() => void workers.refetch()} />
-        ) : workers.data && workers.data.workers.length > 0 ? (
-          <DataTable data={workers.data.workers} columns={columns} rowTestId="worker-row" />
-        ) : (
-          <EmptyState title={t("feature.admin.events.noWorkers")} />
-        )}
+        {(() => {
+          if (workers.isLoading) return <LoadingState message={t("auth.status.loading")} />;
+          if (workers.isError)
+            return <AdminQueryError error={workers.error} onRetry={() => void workers.refetch()} />;
+          if (workers.data && workers.data.workers.length > 0)
+            return (
+              <DataTable data={workers.data.workers} columns={columns} rowTestId="worker-row" />
+            );
+          return <EmptyState title={t("feature.admin.events.noWorkers")} />;
+        })()}
       </CardBody>
     </Card>
   );

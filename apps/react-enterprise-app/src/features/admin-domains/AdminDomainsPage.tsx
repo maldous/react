@@ -14,6 +14,8 @@ import { useTranslation } from "@platform/i18n-runtime";
 import {
   CreateTenantDomainRequestSchema,
   type TenantDomainSummary,
+  type TenantDomainStatus,
+  type TenantDomainReadinessStatus,
 } from "@platform/contracts-admin";
 import { useSession } from "../../hooks/use-session";
 import { AdminQueryError } from "../admin/AdminQueryError";
@@ -33,6 +35,39 @@ import type { TenantDomainVerificationResponse } from "./admin-domains-client";
 
 interface AddDomainForm {
   domain: string;
+}
+
+type StatusTone = "success" | "warning" | "secondary";
+
+/** Maps a domain/readiness status to its banner/badge tone. */
+function statusToTone(status: TenantDomainStatus | TenantDomainReadinessStatus): StatusTone {
+  if (status === "verified") return "success";
+  if (status === "degraded") return "warning";
+  return "secondary";
+}
+
+/** Picks the announce label for the most recent successful lifecycle action. */
+function lifecycleAnnounceLabel(
+  t: (k: string) => string,
+  state: Readonly<{
+    activated: boolean;
+    deactivated: boolean;
+    probed: boolean;
+    probeMatched: boolean;
+    canonicalSet: boolean;
+    canonicalUnset: boolean;
+  }>
+): string {
+  if (state.activated) return t("feature.admin.domains.activated");
+  if (state.deactivated) return t("feature.admin.domains.deactivated");
+  if (state.probed) {
+    return state.probeMatched
+      ? t("feature.admin.domains.probeMatched")
+      : t("feature.admin.domains.probeUnmatched");
+  }
+  if (state.canonicalSet) return t("feature.admin.domains.canonicalSet");
+  if (state.canonicalUnset) return t("feature.admin.domains.canonicalUnset");
+  return "";
 }
 
 /**
@@ -69,8 +104,7 @@ function ReadinessBanner() {
 
   if (isLoading || !data) return null;
 
-  const tone =
-    data.status === "verified" ? "success" : data.status === "degraded" ? "warning" : "secondary";
+  const tone = statusToTone(data.status);
 
   return (
     <Card>
@@ -252,12 +286,7 @@ function DomainRow({
   const setCanonical = useSetCanonicalDomain();
   const unsetCanonical = useUnsetCanonicalDomain();
 
-  const statusTone =
-    domain.status === "verified"
-      ? "success"
-      : domain.status === "degraded"
-        ? "warning"
-        : "secondary";
+  const statusTone = statusToTone(domain.status);
 
   // Action availability mirrors the server-side guards (ADR-ACT-0232) so the
   // UI never offers an operation the BFF would reject. Unsupported actions are
@@ -423,19 +452,14 @@ function DomainRow({
               className="sr-only"
               data-testid={`admin-domains-lifecycle-announce-${domain.domain}`}
             >
-              {activate.isSuccess
-                ? t("feature.admin.domains.activated")
-                : deactivate.isSuccess
-                  ? t("feature.admin.domains.deactivated")
-                  : probe.isSuccess
-                    ? probe.data?.tenantContextMatched
-                      ? t("feature.admin.domains.probeMatched")
-                      : t("feature.admin.domains.probeUnmatched")
-                    : setCanonical.isSuccess
-                      ? t("feature.admin.domains.canonicalSet")
-                      : unsetCanonical.isSuccess
-                        ? t("feature.admin.domains.canonicalUnset")
-                        : ""}
+              {lifecycleAnnounceLabel(t, {
+                activated: activate.isSuccess,
+                deactivated: deactivate.isSuccess,
+                probed: probe.isSuccess,
+                probeMatched: probe.data?.tenantContextMatched ?? false,
+                canonicalSet: setCanonical.isSuccess,
+                canonicalUnset: unsetCanonical.isSuccess,
+              })}
             </LiveRegion>
             <LiveRegion
               tone="polite"

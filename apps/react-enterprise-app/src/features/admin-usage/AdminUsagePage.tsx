@@ -191,6 +191,25 @@ function OperatorConsole() {
     [tenants.data]
   );
 
+  function renderQuotas() {
+    if (quotas.isLoading) {
+      return <LoadingState message={t("auth.status.loading")} />;
+    }
+    if (quotas.isError) {
+      return <AdminQueryError error={quotas.error} onRetry={() => void quotas.refetch()} />;
+    }
+    if (quotas.data && quotas.data.quotas.length > 0) {
+      return (
+        <Card>
+          <CardBody>
+            <DataTable data={quotas.data.quotas} columns={quotaColumns} rowTestId="quota-row" />
+          </CardBody>
+        </Card>
+      );
+    }
+    return <EmptyState title={t("feature.admin.usage.noQuotas")} />;
+  }
+
   return (
     <div className="space-y-4">
       <div className="max-w-md" data-testid="usage-tenant-form">
@@ -212,19 +231,7 @@ function OperatorConsole() {
       ) : (
         <>
           <SetQuotaForm tenantId={tenantId} />
-          {quotas.isLoading ? (
-            <LoadingState message={t("auth.status.loading")} />
-          ) : quotas.isError ? (
-            <AdminQueryError error={quotas.error} onRetry={() => void quotas.refetch()} />
-          ) : quotas.data && quotas.data.quotas.length > 0 ? (
-            <Card>
-              <CardBody>
-                <DataTable data={quotas.data.quotas} columns={quotaColumns} rowTestId="quota-row" />
-              </CardBody>
-            </Card>
-          ) : (
-            <EmptyState title={t("feature.admin.usage.noQuotas")} />
-          )}
+          {renderQuotas()}
           {usage.data && (
             <Card>
               <CardBody>
@@ -245,22 +252,31 @@ function TenantReadOnlyView() {
   const usageColumns = useUsageColumns();
   const quotaColumns = useQuotaColumns();
 
-  return (
-    <div className="space-y-4">
-      <p className="text-sm text-fg-muted" data-testid="usage-readonly-note">
-        {t("feature.admin.usage.readOnlyNote")}
-      </p>
-      {usage.isLoading ? (
-        <LoadingState message={t("auth.status.loading")} />
-      ) : usage.isError ? (
-        <AdminQueryError error={usage.error} onRetry={() => void usage.refetch()} />
-      ) : usage.data ? (
+  function renderUsage() {
+    if (usage.isLoading) {
+      return <LoadingState message={t("auth.status.loading")} />;
+    }
+    if (usage.isError) {
+      return <AdminQueryError error={usage.error} onRetry={() => void usage.refetch()} />;
+    }
+    if (usage.data) {
+      return (
         <Card>
           <CardBody>
             <DataTable data={usage.data.usage} columns={usageColumns} rowTestId="usage-row" />
           </CardBody>
         </Card>
-      ) : null}
+      );
+    }
+    return null;
+  }
+
+  return (
+    <div className="space-y-4">
+      <p className="text-sm text-fg-muted" data-testid="usage-readonly-note">
+        {t("feature.admin.usage.readOnlyNote")}
+      </p>
+      {renderUsage()}
       {quotas.data && quotas.data.quotas.length > 0 && (
         <Card>
           <CardBody>

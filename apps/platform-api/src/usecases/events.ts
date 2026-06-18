@@ -152,6 +152,19 @@ export async function redriveEvent(
   return redriven ? { kind: "ok", eventId: redriven.eventId } : { kind: "not_found" };
 }
 
+type WorkerStatus = WorkerListResponse["workers"][number]["status"];
+
+/** Derive worker liveness: explicitly stopped, else stale past the threshold, else alive. */
+function deriveWorkerStatus(
+  rawStatus: string,
+  secondsSinceHeartbeat: number,
+  staleAfterS: number
+): WorkerStatus {
+  if (rawStatus === "stopped") return "stopped";
+  if (secondsSinceHeartbeat > staleAfterS) return "stale";
+  return "alive";
+}
+
 /** Operator worker registry view with a derived liveness status. */
 export async function listWorkers(
   deps: EventsDeps,
@@ -165,16 +178,11 @@ export async function listWorkers(
         0,
         Math.round((nowMs - Date.parse(w.lastHeartbeatAt)) / 1000)
       );
-      const status =
-        w.status === "stopped"
-          ? "stopped"
-          : secondsSinceHeartbeat > STALE_AFTER_S
-            ? "stale"
-            : "alive";
+      const status = deriveWorkerStatus(w.status, secondsSinceHeartbeat, STALE_AFTER_S);
       return {
         workerId: w.workerId,
         workerKind: w.workerKind,
-        status: status as WorkerListResponse["workers"][number]["status"],
+        status,
         lastHeartbeatAt: w.lastHeartbeatAt,
         secondsSinceHeartbeat,
       };

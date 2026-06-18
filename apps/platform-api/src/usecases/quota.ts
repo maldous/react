@@ -17,8 +17,30 @@ import type {
   QuotaWindow,
 } from "@platform/contracts-admin";
 import type { MeteringRepository } from "../ports/metering-repository.ts";
-import type { QuotaRepository } from "../ports/quota-repository.ts";
+import type { QuotaRecord, QuotaRepository } from "../ports/quota-repository.ts";
 import type { EntitlementRepository } from "../ports/entitlement-repository.ts";
+
+/** Aggregate usage for a quota: zero when not entitled, else operator vs tenant aggregate. */
+async function resolveUsage(
+  deps: QuotaDeps,
+  organisationId: string,
+  q: QuotaRecord,
+  entitled: boolean,
+  operator: boolean
+): Promise<number> {
+  if (!entitled) return 0;
+  if (operator) {
+    return deps.metering.aggregateAsOperator(organisationId, q.meterKey, q.window);
+  }
+  return deps.metering.aggregate(organisationId, q.meterKey, q.window);
+}
+
+/** Live quota state: no entitlement → exceeded → within. */
+function resolveQuotaState(entitled: boolean, exceeded: boolean): QuotaState {
+  if (!entitled) return "no_entitlement";
+  if (exceeded) return "exceeded";
+  return "within";
+}
 
 export interface QuotaDeps {
   quota: QuotaRepository;
@@ -126,13 +148,9 @@ export async function listQuotas(
   const quotas = await Promise.all(
     defs.map(async (q) => {
       const entitled = await isEntitled(deps.entitlements, organisationId, q.entitlementKey);
-      const usage = entitled
-        ? opts.operator
-          ? await deps.metering.aggregateAsOperator(organisationId, q.meterKey, q.window)
-          : await deps.metering.aggregate(organisationId, q.meterKey, q.window)
-        : 0;
+      const usage = await resolveUsage(deps, organisationId, q, entitled, opts.operator ?? false);
       const exceeded = entitled && q.action === "deny" && usage >= q.limit;
-      const state: QuotaState = !entitled ? "no_entitlement" : exceeded ? "exceeded" : "within";
+      const state = resolveQuotaState(entitled, exceeded);
       return {
         quotaKey: q.quotaKey,
         entitlementKey: q.entitlementKey,

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import {
   Card,
   CardBody,
@@ -46,6 +46,50 @@ export function AdminConfigPage() {
     return map;
   }, [data]);
 
+  let content: ReactNode;
+  if (isLoading) {
+    content = <LoadingState message={t("auth.status.loading")} />;
+  } else if (isError) {
+    content = <AdminQueryError error={error} onRetry={() => void refetch()} />;
+  } else if (!data || data.items.length === 0) {
+    content = <EmptyState title={t("feature.admin.config.empty")} />;
+  } else {
+    content = (
+      <div className="space-y-6">
+        {CONFIG_CATEGORIES.filter((c) => byCategory.has(c)).map((category) => (
+          <div key={category} data-testid={`config-category-${category}`}>
+            <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-fg-muted">
+              {t(`feature.admin.config.category.${category}`)}
+            </h2>
+            <Card>
+              <CardBody className="divide-y divide-border">
+                {byCategory.get(category)!.map((item) => (
+                  <ConfigItemRow
+                    key={item.definition.key}
+                    item={item}
+                    onSet={(value) => setValue.mutate({ key: item.definition.key, value })}
+                    onReset={() => clearValue.mutate(item.definition.key)}
+                    busy={setValue.isPending || clearValue.isPending}
+                  />
+                ))}
+              </CardBody>
+            </Card>
+          </div>
+        ))}
+
+        <Card>
+          <CardBody>
+            <AuditTrailPanel
+              resource="config"
+              heading={t("feature.admin.config.recentChanges")}
+              testId="config-audit"
+            />
+          </CardBody>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <section data-testid="admin-config">
       <AdminSectionHeader
@@ -53,46 +97,7 @@ export function AdminConfigPage() {
         description={t("feature.admin.config.description")}
       />
 
-      {isLoading ? (
-        <LoadingState message={t("auth.status.loading")} />
-      ) : isError ? (
-        <AdminQueryError error={error} onRetry={() => void refetch()} />
-      ) : !data || data.items.length === 0 ? (
-        <EmptyState title={t("feature.admin.config.empty")} />
-      ) : (
-        <div className="space-y-6">
-          {CONFIG_CATEGORIES.filter((c) => byCategory.has(c)).map((category) => (
-            <div key={category} data-testid={`config-category-${category}`}>
-              <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-fg-muted">
-                {t(`feature.admin.config.category.${category}`)}
-              </h2>
-              <Card>
-                <CardBody className="divide-y divide-border">
-                  {byCategory.get(category)!.map((item) => (
-                    <ConfigItemRow
-                      key={item.definition.key}
-                      item={item}
-                      onSet={(value) => setValue.mutate({ key: item.definition.key, value })}
-                      onReset={() => clearValue.mutate(item.definition.key)}
-                      busy={setValue.isPending || clearValue.isPending}
-                    />
-                  ))}
-                </CardBody>
-              </Card>
-            </div>
-          ))}
-
-          <Card>
-            <CardBody>
-              <AuditTrailPanel
-                resource="config"
-                heading={t("feature.admin.config.recentChanges")}
-                testId="config-audit"
-              />
-            </CardBody>
-          </Card>
-        </div>
-      )}
+      {content}
 
       <LiveRegion tone="polite" className="mt-2 text-sm text-success" data-testid="config-status">
         {setValue.isSuccess || clearValue.isSuccess ? t("feature.admin.config.saved") : ""}

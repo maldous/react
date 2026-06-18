@@ -21,6 +21,13 @@ import type { RateLimitRepository } from "../ports/rate-limit-repository.ts";
 import type { EntitlementRepository } from "../ports/entitlement-repository.ts";
 import type { ApiKeyRepository } from "../ports/api-key-repository.ts";
 
+/** Live policy state: no entitlement → exceeded → within. */
+function resolveRateLimitState(entitled: boolean, exceeded: boolean): RateLimitState {
+  if (!entitled) return "no_entitlement";
+  if (exceeded) return "exceeded";
+  return "within";
+}
+
 export interface RateLimitDeps {
   rateLimits: RateLimitRepository;
   entitlements: EntitlementRepository;
@@ -136,7 +143,7 @@ export async function listRateLimits(
         ? await deps.rateLimits.currentCount(organisationId, p.policyKey, p.windowSeconds)
         : 0;
       const exceeded = entitled && p.action === "deny" && used >= p.limit;
-      const state: RateLimitState = !entitled ? "no_entitlement" : exceeded ? "exceeded" : "within";
+      const state = resolveRateLimitState(entitled, exceeded);
       return {
         policyKey: p.policyKey,
         entitlementKey:

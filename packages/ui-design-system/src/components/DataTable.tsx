@@ -30,6 +30,15 @@ export interface DataTableProps<TData> {
   rowTestId?: string;
 }
 
+const SORT_INDICATORS: Record<"asc" | "desc", string> = {
+  asc: " ?",
+  desc: " ?",
+};
+
+function sortIndicator(sorted: false | "asc" | "desc"): string | null {
+  return sorted ? SORT_INDICATORS[sorted] : null;
+}
+
 export function DataTable<TData>({
   data,
   columns,
@@ -80,11 +89,7 @@ export function DataTable<TData>({
                     {header.isPlaceholder
                       ? null
                       : flexRender(header.column.columnDef.header, header.getContext())}
-                    {header.column.getIsSorted() === "asc"
-                      ? " ?"
-                      : header.column.getIsSorted() === "desc"
-                        ? " ?"
-                        : null}
+                    {sortIndicator(header.column.getIsSorted())}
                   </th>
                 ))}
               </tr>

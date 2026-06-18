@@ -80,14 +80,15 @@ export function AdminEmailPage() {
   );
 }
 
+function readinessTone(readiness: EmailSenderSettings["readiness"]): string {
+  if (readiness === "configured") return "success";
+  if (readiness === "missing_sender") return "secondary";
+  return "warning";
+}
+
 function ReadinessBanner({ readiness }: Readonly<{ readiness: EmailSenderSettings["readiness"] }>) {
   const t = useTranslation();
-  const tone =
-    readiness === "configured"
-      ? "success"
-      : readiness === "missing_sender"
-        ? "secondary"
-        : "warning";
+  const tone = readinessTone(readiness);
   return (
     <Card>
       <CardBody>
@@ -301,6 +302,16 @@ function SettingsForm({
   );
 }
 
+function testResultText(
+  t: (k: string) => string,
+  state: Readonly<{ isPending: boolean; isError: boolean; result: string | undefined }>
+): string {
+  if (state.isPending) return t("auth.status.loading");
+  if (state.isError) return t("feature.admin.email.testError");
+  if (state.result) return t(`feature.admin.email.testResult.${state.result}`);
+  return "";
+}
+
 function TestEmailCard({ canWrite, provider }: Readonly<{ canWrite: boolean; provider: string }>) {
   const t = useTranslation();
   const test = useTestEmailSender();
@@ -332,13 +343,11 @@ function TestEmailCard({ canWrite, provider }: Readonly<{ canWrite: boolean; pro
             </Button>
           )}
           <LiveRegion tone="polite" className="text-sm" data-testid="admin-email-test-result">
-            {test.isPending
-              ? t("auth.status.loading")
-              : test.isError
-                ? t("feature.admin.email.testError")
-                : result
-                  ? t(`feature.admin.email.testResult.${result}`)
-                  : ""}
+            {testResultText(t, {
+              isPending: test.isPending,
+              isError: test.isError,
+              result,
+            })}
           </LiveRegion>
         </div>
       </CardBody>

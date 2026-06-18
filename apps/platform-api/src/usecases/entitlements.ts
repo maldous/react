@@ -114,13 +114,21 @@ const CATALOG_BY_KEY = new Map<string, EntitlementDefinition>(
   ENTITLEMENT_CATALOG.map((d) => [d.key, d])
 );
 
+/** Deny-by-default summary state: no row OR a non-granted row is unavailable. */
+function resolveEntitlementState(
+  record: EntitlementGrantRecord | null
+): EntitlementSummary["state"] {
+  if (record == null) return "not_granted";
+  if (record.state === "granted") return "granted";
+  return "revoked";
+}
+
 function toSummary(
   def: EntitlementDefinition,
   record: EntitlementGrantRecord | null
 ): EntitlementSummary {
   // Deny-by-default: no row OR a revoked row both mean the capability is unavailable.
-  const state: EntitlementSummary["state"] =
-    record == null ? "not_granted" : record.state === "granted" ? "granted" : "revoked";
+  const state = resolveEntitlementState(record);
   const note =
     record && typeof record.metadata?.["note"] === "string"
       ? (record.metadata["note"] as string)

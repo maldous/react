@@ -9,6 +9,25 @@ export interface AuthUseCaseDeps {
   sessions: SessionStore;
 }
 
+type ResolvedMembership = Awaited<ReturnType<IdentityRepository["findMembershipByUser"]>>;
+
+/** Roles for a session: realm system-admin, else the DB membership role, else none. */
+function resolveRoles(isSystemAdmin: boolean, membership: ResolvedMembership): string[] {
+  if (isSystemAdmin) return ["system-admin"];
+  if (membership) return [membership.role];
+  return [];
+}
+
+/** Permissions for a session, resolved from the effective role (ADR-0021). */
+function resolveSessionPermissions(
+  isSystemAdmin: boolean,
+  membership: ResolvedMembership
+): string[] {
+  if (isSystemAdmin) return resolvePermissions("system-admin");
+  if (membership) return resolvePermissions(membership.role);
+  return [];
+}
+
 /** Tokens returned by the Keycloak token exchange. Optional — absent for fixture sessions. */
 export interface TokenSet {
   accessToken: string;
@@ -100,12 +119,8 @@ export async function resolveSessionFromIdentity(
 
   const tenantId = membership?.organisationId ?? "";
   const organisationId = membership?.organisationId ?? "";
-  const roles: string[] = isSystemAdmin ? ["system-admin"] : membership ? [membership.role] : [];
-  const permissions = isSystemAdmin
-    ? resolvePermissions("system-admin")
-    : membership
-      ? resolvePermissions(membership.role)
-      : [];
+  const roles = resolveRoles(isSystemAdmin, membership);
+  const permissions = resolveSessionPermissions(isSystemAdmin, membership);
 
   // Step 4: Create server-side session.
   // Tokens are encrypted before storage (ADR-ACT-0153 / ADR-0022 amendment).

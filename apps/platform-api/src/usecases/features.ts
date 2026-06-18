@@ -39,6 +39,13 @@ export interface FeaturesDeps {
   pool: pg.Pool;
 }
 
+/** Normalise a possibly-null Date|string timestamp to an ISO string or null. */
+function isoOrNull(v: Date | string | null): string | null {
+  if (v == null) return null;
+  if (v instanceof Date) return v.toISOString();
+  return String(v);
+}
+
 export async function listFeatures(
   organisationId: string,
   pool: pg.Pool
@@ -62,11 +69,7 @@ export async function listFeatures(
     return {
       key: k,
       enabled: row?.value?.enabled ?? false,
-      updatedAt: row
-        ? row.updated_at instanceof Date
-          ? row.updated_at.toISOString()
-          : String(row.updated_at)
-        : null,
+      updatedAt: isoOrNull(row?.updated_at ?? null),
     };
   });
 }

@@ -94,26 +94,32 @@ export function AdminLogsPage({
         </Card>
 
         <div data-testid="admin-logs-results-region" aria-live="polite">
-          {submitted === null ? (
-            <EmptyState
-              title={t("feature.adminLogs.prompt.title")}
-              description={t("feature.adminLogs.prompt.description")}
-            />
-          ) : query.isFetching && !query.data ? (
-            <LoadingState message={t("feature.adminLogs.searching")} />
-          ) : query.isError ? (
-            <ErrorState
-              title={t("feature.adminLogs.error")}
-              description={errorCode ?? t("feature.adminLogs.errorGeneric")}
-            />
-          ) : entries.length === 0 ? (
-            <EmptyState
-              title={t("feature.adminLogs.empty.title")}
-              description={t("feature.adminLogs.empty.description")}
-            />
-          ) : (
-            <LogResultsTable entries={entries} />
-          )}
+          {(() => {
+            if (submitted === null)
+              return (
+                <EmptyState
+                  title={t("feature.adminLogs.prompt.title")}
+                  description={t("feature.adminLogs.prompt.description")}
+                />
+              );
+            if (query.isFetching && !query.data)
+              return <LoadingState message={t("feature.adminLogs.searching")} />;
+            if (query.isError)
+              return (
+                <ErrorState
+                  title={t("feature.adminLogs.error")}
+                  description={errorCode ?? t("feature.adminLogs.errorGeneric")}
+                />
+              );
+            if (entries.length === 0)
+              return (
+                <EmptyState
+                  title={t("feature.adminLogs.empty.title")}
+                  description={t("feature.adminLogs.empty.description")}
+                />
+              );
+            return <LogResultsTable entries={entries} />;
+          })()}
         </div>
       </div>
     </PageLayout>

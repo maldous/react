@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   Badge,
   Button,
@@ -206,25 +206,32 @@ function OperatorNotifications() {
   );
   const categoryItems: SelectItem[] = NOTIFICATION_CATEGORIES.map((c) => ({ id: c, label: c }));
 
+  let readinessContent: ReactNode = null;
+  if (readiness.isLoading) {
+    readinessContent = <LoadingState message={t("auth.status.loading")} />;
+  } else if (readiness.isError) {
+    readinessContent = (
+      <AdminQueryError error={readiness.error} onRetry={() => void readiness.refetch()} />
+    );
+  } else if (readiness.data) {
+    readinessContent = (
+      <div className="mb-3 flex flex-wrap gap-2" data-testid="notification-readiness">
+        {readiness.data.channels.map((c) => (
+          <Badge key={c.channel} variant={c.available ? "default" : "secondary"}>
+            {c.channel}: {c.transport}
+          </Badge>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <Card>
       <CardBody>
         <h2 className="mb-2 text-sm font-semibold text-fg">
           {t("feature.admin.account.notificationsTitle")}
         </h2>
-        {readiness.isLoading ? (
-          <LoadingState message={t("auth.status.loading")} />
-        ) : readiness.isError ? (
-          <AdminQueryError error={readiness.error} onRetry={() => void readiness.refetch()} />
-        ) : readiness.data ? (
-          <div className="mb-3 flex flex-wrap gap-2" data-testid="notification-readiness">
-            {readiness.data.channels.map((c) => (
-              <Badge key={c.channel} variant={c.available ? "default" : "secondary"}>
-                {c.channel}: {c.transport}
-              </Badge>
-            ))}
-          </div>
-        ) : null}
+        {readinessContent}
         <div className="flex flex-wrap items-end gap-3" data-testid="notification-test-form">
           <div className="min-w-56">
             <label className="mb-1 block text-sm font-medium text-fg" id="notif-tenant-label">

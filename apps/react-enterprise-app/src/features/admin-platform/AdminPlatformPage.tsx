@@ -125,23 +125,9 @@ function SummaryItem({
 }
 
 function ServiceRow({ service, t }: Readonly<{ service: PlatformServiceSummary; t: Translate }>) {
-  return (
-    <li
-      className="flex flex-wrap items-center gap-3"
-      data-testid={`admin-platform-service-${service.key}`}
-    >
-      <span className="font-medium text-fg">{t(service.labelKey)}</span>
-      <Badge variant={service.status === "healthy" ? "default" : "secondary"}>
-        {t(`feature.admin.platform.status.${service.status}`)}
-      </Badge>
-      <Badge variant="outline">{t(`feature.admin.platform.category.${service.category}`)}</Badge>
-      {service.localOnly ? (
-        <Badge variant="secondary">{t("feature.admin.platform.localOnly")}</Badge>
-      ) : null}
-      {service.detailKey ? (
-        <span className="text-sm text-fg-muted">{t(service.detailKey)}</span>
-      ) : null}
-      {service.consoleUrl ? (
+  const renderConsole = () => {
+    if (service.consoleUrl) {
+      return (
         <>
           <a
             href={service.consoleUrl}
@@ -159,12 +145,36 @@ function ServiceRow({ service, t }: Readonly<{ service: PlatformServiceSummary; 
             </Badge>
           ) : null}
         </>
-      ) : service.consoleAccess === "global_only" ? (
-        // The BFF withholds global-only console links from non-system-admin viewers.
+      );
+    }
+    if (service.consoleAccess === "global_only") {
+      // The BFF withholds global-only console links from non-system-admin viewers.
+      return (
         <span className="text-sm text-fg-muted">
           {t("feature.admin.platform.systemOperatorOnly")}
         </span>
+      );
+    }
+    return null;
+  };
+
+  return (
+    <li
+      className="flex flex-wrap items-center gap-3"
+      data-testid={`admin-platform-service-${service.key}`}
+    >
+      <span className="font-medium text-fg">{t(service.labelKey)}</span>
+      <Badge variant={service.status === "healthy" ? "default" : "secondary"}>
+        {t(`feature.admin.platform.status.${service.status}`)}
+      </Badge>
+      <Badge variant="outline">{t(`feature.admin.platform.category.${service.category}`)}</Badge>
+      {service.localOnly ? (
+        <Badge variant="secondary">{t("feature.admin.platform.localOnly")}</Badge>
       ) : null}
+      {service.detailKey ? (
+        <span className="text-sm text-fg-muted">{t(service.detailKey)}</span>
+      ) : null}
+      {renderConsole()}
     </li>
   );
 }

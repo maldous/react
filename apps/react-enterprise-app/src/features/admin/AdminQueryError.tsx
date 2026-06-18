@@ -15,9 +15,9 @@ export function AdminQueryError({
   const t = useTranslation();
   const kind = classifyAdminError(error);
 
-  return (
-    <div data-testid={`admin-error-${kind}`}>
-      {kind === "unauthorized" ? (
+  function renderState() {
+    if (kind === "unauthorized") {
+      return (
         <EmptyState
           title={t("feature.admin.error.sessionExpired")}
           description={t("feature.admin.error.signInAgain")}
@@ -31,19 +31,26 @@ export function AdminQueryError({
             </a>
           }
         />
-      ) : kind === "forbidden" ? (
+      );
+    }
+    if (kind === "forbidden") {
+      return (
         <ForbiddenState
           title={t("ui.accessDenied.title")}
           description={t("feature.admin.error.forbidden")}
         />
-      ) : kind === "not_configured" ? (
-        <EmptyState title={t("feature.admin.auth.notConfigured")} />
-      ) : (
-        <ErrorState
-          title={t("feature.admin.error.generic")}
-          {...(onRetry ? { onRetry, retryLabel: t("ui.error.retry") } : {})}
-        />
-      )}
-    </div>
-  );
+      );
+    }
+    if (kind === "not_configured") {
+      return <EmptyState title={t("feature.admin.auth.notConfigured")} />;
+    }
+    return (
+      <ErrorState
+        title={t("feature.admin.error.generic")}
+        {...(onRetry ? { onRetry, retryLabel: t("ui.error.retry") } : {})}
+      />
+    );
+  }
+
+  return <div data-testid={`admin-error-${kind}`}>{renderState()}</div>;
 }

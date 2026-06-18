@@ -26,8 +26,11 @@ interface SubRow {
   updated_at: Date | string | null;
 }
 
-const iso = (v: Date | string | null): string | null =>
-  v == null ? null : v instanceof Date ? v.toISOString() : new Date(v).toISOString();
+function iso(v: Date | string | null): string | null {
+  if (v == null) return null;
+  if (v instanceof Date) return v.toISOString();
+  return new Date(v).toISOString();
+}
 
 function toRecord(r: SubRow): WebhookSubscriptionRecord {
   return {

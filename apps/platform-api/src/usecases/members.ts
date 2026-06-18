@@ -95,8 +95,11 @@ export async function listOrgMembers(
        ORDER BY m.created_at ASC`,
       [organisationId]
     );
-    const iso = (d: Date | null) =>
-      d == null ? null : d instanceof Date ? d.toISOString() : String(d);
+    function iso(d: Date | null): string | null {
+      if (d == null) return null;
+      if (d instanceof Date) return d.toISOString();
+      return String(d);
+    }
     return rows.map((r) => ({
       userId: r.user_id,
       email: r.email,
@@ -616,8 +619,11 @@ export async function listMemberExternalIdentities(
   });
   if (!isMember) return [];
 
-  const iso = (d: Date | null) =>
-    d == null ? null : d instanceof Date ? d.toISOString() : String(d);
+  function iso(d: Date | null): string | null {
+    if (d == null) return null;
+    if (d instanceof Date) return d.toISOString();
+    return String(d);
+  }
 
   return withSystemAdmin(pool, async (client) => {
     const { rows } = await client.query<{

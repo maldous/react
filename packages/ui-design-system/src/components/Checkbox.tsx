@@ -11,6 +11,29 @@ export interface CheckboxProps extends AriaCheckboxProps {
   children?: ReactNode;
 }
 
+function renderCheckboxMark(isSelected: boolean, isIndeterminate: boolean): ReactNode {
+  if (isIndeterminate) {
+    return <span className="h-0.5 w-2 bg-current" />;
+  }
+  if (isSelected) {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={3}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="h-3 w-3"
+      >
+        <polyline points="20 6 9 17 4 12" />
+      </svg>
+    );
+  }
+  return null;
+}
+
 export function Checkbox({ className, children, ...props }: Readonly<CheckboxProps>) {
   return (
     <AriaCheckbox
@@ -31,22 +54,7 @@ export function Checkbox({ className, children, ...props }: Readonly<CheckboxPro
                 : "border-gray-300 bg-white"
             )}
           >
-            {isIndeterminate ? (
-              <span className="h-0.5 w-2 bg-current" />
-            ) : isSelected ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={3}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-3 w-3"
-              >
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-            ) : null}
+            {renderCheckboxMark(isSelected, isIndeterminate)}
           </div>
           {children}
         </>
