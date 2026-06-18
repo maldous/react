@@ -58,7 +58,7 @@ export async function runMigrations(): Promise<{ applied: string[]; skipped: str
     // Read migration files in deterministic order
     const files = readdirSync(MIGRATIONS_DIR)
       .filter((f) => f.endsWith(".sql"))
-      .sort();
+      .sort((a, b) => a.localeCompare(b));
 
     const applied: string[] = [];
     const skipped: string[] = [];

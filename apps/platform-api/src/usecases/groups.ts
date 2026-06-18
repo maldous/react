@@ -65,8 +65,14 @@ function validateGroupName(name: string): { ok: true } | { ok: false; message: s
   if (!trimmed) return { ok: false, message: "group name is required" };
   if (trimmed.length > 64)
     return { ok: false, message: "group name must not exceed 64 characters" };
-  // Reject path separators and control characters (ASCII 0-31, 127, slash, backslash)
-  if (/[/\\\x00-\x1F\x7F]/.test(trimmed)) {
+  // Reject path separators and control characters (ASCII 0-31, 127, slash, backslash).
+  // Control chars are checked by code point (not a control-char regex range) to keep
+  // the intent explicit and avoid an error-prone literal-control-char pattern (S6324).
+  const hasControlChar = [...trimmed].some((ch) => {
+    const code = ch.charCodeAt(0);
+    return code <= 0x1f || code === 0x7f;
+  });
+  if (/[/\\]/.test(trimmed) || hasControlChar) {
     return {
       ok: false,
       message:

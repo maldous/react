@@ -14,7 +14,15 @@ import type { OrganisationRepository } from "../ports/organisation-repository.ts
  * use case stays testable as plain TypeScript with a fake repository.
  */
 
-const CONTROL_CHAR_RE = /[\x00-\x1F\x7F]/;
+// Detect ASCII control characters by code point (0-31, 127) rather than a
+// literal-control-char regex range (error-prone — Sonar S6324).
+function hasControlChar(value: string): boolean {
+  for (let i = 0; i < value.length; i++) {
+    const code = value.charCodeAt(i);
+    if (code <= 0x1f || code === 0x7f) return true;
+  }
+  return false;
+}
 
 export function normaliseOrganisationDisplayName(value: string): string {
   const trimmed = value.trim();
@@ -27,7 +35,7 @@ export function normaliseOrganisationDisplayName(value: string): string {
   if (trimmed.length > 120) {
     throw new ValidationError("feature.organisation.profile.form.displayName.validation.tooLong");
   }
-  if (CONTROL_CHAR_RE.test(trimmed)) {
+  if (hasControlChar(trimmed)) {
     throw new ValidationError("feature.organisation.profile.form.displayName.validation.invalid");
   }
   return trimmed;

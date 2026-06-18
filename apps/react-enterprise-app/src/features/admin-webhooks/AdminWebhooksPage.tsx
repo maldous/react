@@ -605,12 +605,7 @@ function DeliveryRow({
   const redriveDelivery = useRedriveDelivery(subscriptionId);
   const [announce, setAnnounce] = useState("");
 
-  const variant =
-    delivery.status === "delivered"
-      ? "default"
-      : delivery.status === "failed"
-        ? "secondary"
-        : "secondary";
+  const variant = delivery.status === "delivered" ? "default" : "secondary";
 
   function handleRedrive() {
     redriveDelivery.mutate(delivery.id, {

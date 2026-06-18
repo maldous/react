@@ -91,7 +91,7 @@ export class OpenBaoSecretStore implements SecretStore {
     this.address = opts.address.replace(/\/+$/, "");
     this.token = opts.token;
     this.mount = opts.mount ?? "secret";
-    this.kvBasePath = (opts.kvBasePath ?? "platform").replace(/^\/+|\/+$/g, "");
+    this.kvBasePath = (opts.kvBasePath ?? "platform").replace(/^\/+/, "").replace(/\/+$/, "");
     this.fetchImpl = opts.fetchImpl ?? fetch;
     this.warn = opts.warn ?? (() => {});
   }
