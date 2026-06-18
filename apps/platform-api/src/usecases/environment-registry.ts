@@ -39,7 +39,7 @@ export interface EnvironmentActor {
   actorId: string;
   actorRoles: string[];
   actorPermissions: string[];
-  sourceHost?: string | undefined;
+  sourceHost?: string;
 }
 
 export interface EnvironmentRegistryDeps {

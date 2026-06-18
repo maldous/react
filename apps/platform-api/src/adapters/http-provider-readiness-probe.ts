@@ -26,11 +26,11 @@ export interface HttpProviderReadinessOptions {
   /** Full health URL, or null/empty when the provider is not configured. */
   healthUrl: string | null | undefined;
   /** Optional auth header value (e.g. Meilisearch master key, Vault token). Never logged. */
-  authHeader?: { name: string; value: string } | undefined;
+  authHeader?: { name: string; value: string };
   /** Optional predicate over the (already size-bounded) response body text. */
-  okBody?: ((bodyText: string) => boolean) | undefined;
-  fetchImpl?: FetchImpl | undefined;
-  timeoutMs?: number | undefined;
+  okBody?: (bodyText: string) => boolean;
+  fetchImpl?: FetchImpl;
+  timeoutMs?: number;
 }
 
 function hostOf(url: string): string {

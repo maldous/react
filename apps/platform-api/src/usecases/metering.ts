@@ -82,10 +82,10 @@ export async function recordMeterEvent(
     meterKey: string;
     quantity: number;
     idempotencyKey: string;
-    subjectId?: string | undefined;
-    occurredAt?: string | undefined;
-    source?: string | undefined;
-    metadata?: Record<string, unknown> | undefined;
+    subjectId?: string;
+    occurredAt?: string;
+    source?: string;
+    metadata?: Record<string, unknown>;
   },
   deps: MeteringDeps
 ): Promise<RecordMeterEventResult> {

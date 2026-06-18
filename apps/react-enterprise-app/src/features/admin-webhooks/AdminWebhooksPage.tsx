@@ -483,7 +483,7 @@ function WebhookRow({
   );
 }
 
-function DeliveriesPanel({ id, canWrite }: { id: string; canWrite: boolean }) {
+function DeliveriesPanel({ id, canWrite }: Readonly<{ id: string; canWrite: boolean }>) {
   const t = useTranslation();
   const { data, isLoading } = useWebhookDeliveries(id);
   const { data: metrics, isLoading: metricsLoading } = useWebhookMetrics(id);

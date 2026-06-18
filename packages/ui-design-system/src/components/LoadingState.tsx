@@ -6,7 +6,7 @@ export interface LoadingStateProps {
   className?: string;
 }
 
-export function LoadingState({ message, ariaLabel, className }: LoadingStateProps) {
+export function LoadingState({ message, ariaLabel, className }: Readonly<LoadingStateProps>) {
   return (
     <div
       role="status"

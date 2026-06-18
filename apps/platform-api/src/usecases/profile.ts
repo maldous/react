@@ -20,7 +20,7 @@ export interface ProfileDeps {
 export interface ProfileActor {
   actorId: string;
   actorRoles: string[];
-  sourceHost?: string | undefined;
+  sourceHost?: string;
 }
 
 const DEFAULT_PROFILE: UserProfile = { displayName: "", locale: "en-GB", timezone: "UTC" };

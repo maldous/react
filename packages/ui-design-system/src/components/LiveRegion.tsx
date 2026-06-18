@@ -15,7 +15,7 @@ export interface LiveRegionProps extends HTMLAttributes<HTMLDivElement> {
  * tone="polite"  → role="status",  aria-live="polite"   (success / progress)
  * tone="assertive" → role="alert", aria-live="assertive" (errors)
  */
-export function LiveRegion({ tone = "polite", className, children, ...props }: LiveRegionProps) {
+export function LiveRegion({ tone = "polite", className, children, ...props }: Readonly<LiveRegionProps>) {
   return (
     <div
       role={tone === "assertive" ? "alert" : "status"}

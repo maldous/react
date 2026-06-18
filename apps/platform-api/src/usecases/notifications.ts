@@ -29,13 +29,13 @@ export interface NotificationsDeps {
   notifications: NotificationRepository;
   audit: AuditEventPort;
   /** Local channel transports. Default sink is used for any channel not provided. */
-  transports?: NotificationTransportRegistry | undefined;
+  transports?: NotificationTransportRegistry;
 }
 
 export interface NotificationsActor {
   actorId: string;
   actorRoles: string[];
-  sourceHost?: string | undefined;
+  sourceHost?: string;
 }
 
 const SECRET_KEY_RE = /secret|password|token|credential|api[_-]?key|private[_-]?key/i;
@@ -94,7 +94,7 @@ export async function dispatchNotification(
     userId: string;
     category: NotificationCategory;
     subject: string;
-    payload?: Record<string, unknown> | undefined;
+    payload?: Record<string, unknown>;
   },
   deps: NotificationsDeps,
   opts: { operator?: boolean } = {}

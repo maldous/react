@@ -5,7 +5,7 @@ export interface LabelProps extends AriaLabelProps {
   className?: string;
 }
 
-export function Label({ className, ...props }: LabelProps) {
+export function Label({ className, ...props }: Readonly<LabelProps>) {
   return (
     <AriaLabel
       className={cn(

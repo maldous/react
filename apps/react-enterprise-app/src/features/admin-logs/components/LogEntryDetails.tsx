@@ -7,7 +7,7 @@ function asString(value: unknown): string | undefined {
 }
 
 /** Expanded-row details: correlation id copy actions + the raw structured line. */
-export function LogEntryDetails({ entry }: { entry: LogEntry }) {
+export function LogEntryDetails({ entry }: Readonly<{ entry: LogEntry }>) {
   const t = useTranslation();
   const requestId = asString(entry.fields["requestId"]);
   const traceId = asString(entry.fields["traceId"]);

@@ -28,9 +28,9 @@ export interface RegisterSignalInput {
   organisationId: string;
   signalKey: string;
   displayName: string;
-  unit?: string | undefined;
-  kind?: MetricKind | undefined;
-  description?: string | undefined;
+  unit?: string;
+  kind?: MetricKind;
+  description?: string;
 }
 
 export interface MetricRepository {
@@ -65,7 +65,7 @@ export interface UpsertAlertRuleInput {
   threshold: number;
   severity: AlertSeverity;
   enabled: boolean;
-  notifyUserId?: string | undefined;
+  notifyUserId?: string;
   notifyCategory: NotificationCategory;
   updatedBy: string;
 }

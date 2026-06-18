@@ -15,7 +15,7 @@ export interface RequirePermissionProps {
  * when it is missing. Pair with {@link AuthenticatedLayout}; do not duplicate the
  * authentication checks here.
  */
-export function RequirePermission({ permission, children }: RequirePermissionProps) {
+export function RequirePermission({ permission, children }: Readonly<RequirePermissionProps>) {
   const { hasPermission } = useSession();
   const t = useTranslation();
 

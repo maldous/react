@@ -262,7 +262,10 @@ export function AdminMembersPage() {
 }
 
 /** Expandable per-member detail: username edit, enable/disable, external identities. */
-function MemberDetail({ member, canUpdate }: { member: MemberSummary; canUpdate: boolean }) {
+function MemberDetail({
+  member,
+  canUpdate,
+}: Readonly<{ member: MemberSummary; canUpdate: boolean }>) {
   const t = useTranslation();
   const editUsername = useEditUsername();
   const setStatus = useSetMemberStatus();

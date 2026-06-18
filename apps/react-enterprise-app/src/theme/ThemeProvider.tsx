@@ -13,7 +13,7 @@ const ThemeContext = createContext<Theme>(DEFAULT_THEME);
  * resolves, the built-in @theme defaults render — no flash of broken UI. Theme
  * values are validated before reaching the DOM (no unsafe CSS injection).
  */
-export function ThemeProvider({ children }: { children: ReactNode }) {
+export function ThemeProvider({ children }: Readonly<{ children: ReactNode }>) {
   const { data: theme } = useThemeQuery();
   const resolved = theme ?? DEFAULT_THEME;
 

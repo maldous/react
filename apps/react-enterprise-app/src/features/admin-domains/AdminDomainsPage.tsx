@@ -166,7 +166,7 @@ function AddDomainCard() {
   );
 }
 
-function TxtRecordPanel({ record }: { record: TenantDomainVerificationResponse }) {
+function TxtRecordPanel({ record }: Readonly<{ record: TenantDomainVerificationResponse }>) {
   const t = useTranslation();
   return (
     <div
@@ -239,7 +239,10 @@ function DomainListCard({
   );
 }
 
-function DomainRow({ domain, canWrite }: { domain: TenantDomainSummary; canWrite: boolean }) {
+function DomainRow({
+  domain,
+  canWrite,
+}: Readonly<{ domain: TenantDomainSummary; canWrite: boolean }>) {
   const t = useTranslation();
   const verify = useVerifyDomain();
   const remove = useRemoveDomain();

@@ -10,7 +10,7 @@ function messageOf(entry: LogEntry): string {
   return typeof entry.fields["msg"] === "string" ? (entry.fields["msg"] as string) : entry.line;
 }
 
-export function LogResultsTable({ entries }: { entries: LogEntry[] }) {
+export function LogResultsTable({ entries }: Readonly<{ entries: LogEntry[] }>) {
   const t = useTranslation();
 
   const columns = useMemo<ColumnDef<LogEntry>[]>(

@@ -33,6 +33,6 @@ export interface ButtonProps extends AriaButtonProps, VariantProps<typeof button
   className?: string;
 }
 
-export function Button({ className, variant, size, ...props }: ButtonProps) {
+export function Button({ className, variant, size, ...props }: Readonly<ButtonProps>) {
   return <AriaButton className={cn(buttonVariants({ variant, size }), className)} {...props} />;
 }

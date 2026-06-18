@@ -31,7 +31,7 @@ export interface LogDispatchInput {
   channel: NotificationChannel;
   category: NotificationCategory;
   status: NotificationDispatchStatus;
-  subject?: string | undefined;
+  subject?: string;
 }
 
 export interface NotificationRepository {

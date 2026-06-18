@@ -35,15 +35,11 @@ import { webhookSignatureHeader, type WebhookDispatchPort } from "../usecases/we
  */
 export class ConfiguredNotificationRecipientResolver implements NotificationRecipientResolver {
   private readonly opts: {
-    emailDomain?: string | undefined;
-    emailOverride?: string | undefined;
-    webhookUrl?: string | undefined;
+    emailDomain?: string;
+    emailOverride?: string;
+    webhookUrl?: string;
   };
-  constructor(opts: {
-    emailDomain?: string | undefined;
-    emailOverride?: string | undefined;
-    webhookUrl?: string | undefined;
-  }) {
+  constructor(opts: { emailDomain?: string; emailOverride?: string; webhookUrl?: string }) {
     this.opts = opts;
   }
   async resolveEmail(_organisationId: string, userId: string): Promise<string | null> {
@@ -106,7 +102,7 @@ export function createWebhookTransport(deps: {
   resolver: NotificationRecipientResolver;
   dispatch: WebhookDispatchPort;
   /** Signing secret; when set, a replay-protected X-Platform-Signature is attached. */
-  secret?: string | undefined;
+  secret?: string;
   now?: () => number;
   warn?: (message: string, meta: Record<string, unknown>) => void;
 }): NotificationTransport {

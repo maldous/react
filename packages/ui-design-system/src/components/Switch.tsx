@@ -11,7 +11,7 @@ export interface SwitchProps extends AriaSwitchProps {
   children?: ReactNode;
 }
 
-export function Switch({ className, children, ...props }: SwitchProps) {
+export function Switch({ className, children, ...props }: Readonly<SwitchProps>) {
   return (
     <AriaSwitch
       className={cn(

@@ -7,7 +7,7 @@ export interface ForbiddenStateProps {
   className?: string;
 }
 
-export function ForbiddenState({ title, description, className }: ForbiddenStateProps) {
+export function ForbiddenState({ title, description, className }: Readonly<ForbiddenStateProps>) {
   return (
     <div
       role="alert"

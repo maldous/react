@@ -1,7 +1,7 @@
 import { useRouter } from "@tanstack/react-router";
 import { useTranslation } from "@platform/i18n-runtime";
 
-export function DefaultErrorComponent({ error }: { error: Error }) {
+export function DefaultErrorComponent({ error }: Readonly<{ error: Error }>) {
   const router = useRouter();
   const t = useTranslation();
   return (

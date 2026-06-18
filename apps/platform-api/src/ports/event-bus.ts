@@ -12,8 +12,8 @@ export interface PublishEventInput {
   organisationId: string;
   eventType: string;
   idempotencyKey: string;
-  payload?: Record<string, unknown> | undefined;
-  maxAttempts?: number | undefined;
+  payload?: Record<string, unknown>;
+  maxAttempts?: number;
 }
 
 export interface ClaimedEvent {

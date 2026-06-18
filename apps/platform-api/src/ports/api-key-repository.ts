@@ -31,7 +31,7 @@ export interface CreateApiKeyRecordInput {
   keySalt: string;
   scopes: ApiKeyScope[];
   createdBy: string;
-  expiresAt?: string | undefined;
+  expiresAt?: string;
 }
 
 /** Verification material for a presented prefix — salt + hash + tenant + lifecycle. */

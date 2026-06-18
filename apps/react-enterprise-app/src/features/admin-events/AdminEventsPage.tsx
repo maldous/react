@@ -87,7 +87,7 @@ function WorkersCard() {
   );
 }
 
-function DeadLetterTable({ tenantId }: { tenantId: string }) {
+function DeadLetterTable({ tenantId }: Readonly<{ tenantId: string }>) {
   const t = useTranslation();
   const dlq = useDeadLetters(tenantId);
   const redrive = useRedriveEvent(tenantId);
@@ -127,7 +127,7 @@ function DeadLetterTable({ tenantId }: { tenantId: string }) {
   return <DataTable data={dlq.data.deadLetters} columns={columns} rowTestId="dlq-row" />;
 }
 
-function EventsTable({ tenantId }: { tenantId: string }) {
+function EventsTable({ tenantId }: Readonly<{ tenantId: string }>) {
   const t = useTranslation();
   const events = useEvents(tenantId);
   const columns = useEventColumns();

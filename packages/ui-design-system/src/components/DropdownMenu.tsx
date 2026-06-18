@@ -14,7 +14,7 @@ export interface DropdownMenuProps extends Omit<MenuProps<DropdownMenuItem>, "ch
   className?: string;
 }
 
-export function DropdownMenu({ trigger, items, className, ...props }: DropdownMenuProps) {
+export function DropdownMenu({ trigger, items, className, ...props }: Readonly<DropdownMenuProps>) {
   function handleAction(key: Key) {
     const item = items.find((i) => i.id === key);
     item?.onAction?.();

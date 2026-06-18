@@ -109,7 +109,11 @@ export function AdminPlatformPage() {
   );
 }
 
-function SummaryItem({ label, value, testId }: { label: string; value: string; testId: string }) {
+function SummaryItem({
+  label,
+  value,
+  testId,
+}: Readonly<{ label: string; value: string; testId: string }>) {
   return (
     <div className="flex items-center gap-2">
       <dt className="font-medium text-fg">{label}:</dt>
@@ -120,7 +124,7 @@ function SummaryItem({ label, value, testId }: { label: string; value: string; t
   );
 }
 
-function ServiceRow({ service, t }: { service: PlatformServiceSummary; t: Translate }) {
+function ServiceRow({ service, t }: Readonly<{ service: PlatformServiceSummary; t: Translate }>) {
   return (
     <li
       className="flex flex-wrap items-center gap-3"
@@ -165,7 +169,7 @@ function ServiceRow({ service, t }: { service: PlatformServiceSummary; t: Transl
   );
 }
 
-function WorkerRow({ worker, t }: { worker: PlatformWorkerSummary; t: Translate }) {
+function WorkerRow({ worker, t }: Readonly<{ worker: PlatformWorkerSummary; t: Translate }>) {
   return (
     <li
       className="flex flex-wrap items-center gap-3"

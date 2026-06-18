@@ -157,9 +157,9 @@ export function normaliseError(err: unknown): Record<string, unknown> {
 
 export function safeContextMeta(ctx: {
   requestId: string;
-  traceId?: string | undefined;
-  spanId?: string | undefined;
-  operationName?: string | undefined;
+  traceId?: string;
+  spanId?: string;
+  operationName?: string;
 }): Record<string, unknown> {
   const meta: Record<string, unknown> = { requestId: ctx.requestId };
   if (ctx.traceId !== undefined) meta["traceId"] = ctx.traceId;

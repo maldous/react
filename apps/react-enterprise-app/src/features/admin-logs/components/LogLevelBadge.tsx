@@ -10,7 +10,7 @@ const LEVEL_VARIANT: Record<string, BadgeProps["variant"]> = {
   fatal: "destructive",
 };
 
-export function LogLevelBadge({ level }: { level?: string }) {
+export function LogLevelBadge({ level }: Readonly<{ level?: string }>) {
   if (!level) return null;
   return (
     <Badge variant={LEVEL_VARIANT[level] ?? "secondary"} data-testid="log-level-badge">

@@ -80,7 +80,7 @@ export function AdminEmailPage() {
   );
 }
 
-function ReadinessBanner({ readiness }: { readiness: EmailSenderSettings["readiness"] }) {
+function ReadinessBanner({ readiness }: Readonly<{ readiness: EmailSenderSettings["readiness"] }>) {
   const t = useTranslation();
   const tone =
     readiness === "configured"
@@ -301,7 +301,7 @@ function SettingsForm({
   );
 }
 
-function TestEmailCard({ canWrite, provider }: { canWrite: boolean; provider: string }) {
+function TestEmailCard({ canWrite, provider }: Readonly<{ canWrite: boolean; provider: string }>) {
   const t = useTranslation();
   const test = useTestEmailSender();
   const [to, setTo] = useState("");

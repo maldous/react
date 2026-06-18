@@ -46,7 +46,7 @@ const METERS: { meterKey: MeterKey; entitlementKey: EntitlementKey; label: strin
 ];
 const WINDOWS: QuotaWindow[] = ["daily", "monthly", "rolling_30d", "lifetime"];
 
-function QuotaStateBadge({ state }: { state: QuotaSummary["state"] }) {
+function QuotaStateBadge({ state }: Readonly<{ state: QuotaSummary["state"] }>) {
   const t = useTranslation();
   return (
     <Badge variant={state === "within" ? "default" : "secondary"}>
@@ -97,7 +97,7 @@ function useQuotaColumns(): ColumnDef<QuotaSummary>[] {
   );
 }
 
-function SetQuotaForm({ tenantId }: { tenantId: string }) {
+function SetQuotaForm({ tenantId }: Readonly<{ tenantId: string }>) {
   const t = useTranslation();
   const setQuota = useSetQuota(tenantId);
   const [meterKey, setMeterKey] = useState<MeterKey>("webhooks.deliveries");

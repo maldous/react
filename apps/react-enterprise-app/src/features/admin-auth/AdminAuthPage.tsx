@@ -97,7 +97,7 @@ export function AdminAuthPage() {
   );
 }
 
-function ProvidersTab({ canWrite }: { canWrite: boolean }) {
+function ProvidersTab({ canWrite }: Readonly<{ canWrite: boolean }>) {
   const t = useTranslation();
   const { data, isLoading, isError, error, refetch } = useAuthProviders();
   const mutation = useSetAuthProviders();
@@ -238,7 +238,7 @@ function IdpsTab() {
   );
 }
 
-function Detail({ label, value }: { label: string; value: string }) {
+function Detail({ label, value }: Readonly<{ label: string; value: string }>) {
   return (
     <div className="flex justify-between gap-4 py-2 text-sm">
       <span className="text-fg-muted">{label}</span>
@@ -288,7 +288,7 @@ function MfaTab() {
   );
 }
 
-function MfaPolicyView({ editable }: { editable: boolean }) {
+function MfaPolicyView({ editable }: Readonly<{ editable: boolean }>) {
   const t = useTranslation();
   const { data, isLoading, isError, error } = useMfaPolicy();
 
@@ -315,7 +315,7 @@ function MfaPolicyView({ editable }: { editable: boolean }) {
   );
 }
 
-function MfaPolicyForm({ policy }: { policy: MfaPolicyDto }) {
+function MfaPolicyForm({ policy }: Readonly<{ policy: MfaPolicyDto }>) {
   const t = useTranslation();
   const mutation = useSetMfaPolicy();
   const { control, handleSubmit, formState } = useForm<MfaPolicyDto>({
@@ -434,7 +434,7 @@ function SessionTab() {
 /** Loads the session policy then renders either the read-only details or the
  * editable form. The policy GET 503s when no credential exists, so it is only
  * fetched when we have a chance of data (configured or any non-missing state). */
-function SessionPolicyView({ editable }: { editable: boolean }) {
+function SessionPolicyView({ editable }: Readonly<{ editable: boolean }>) {
   const t = useTranslation();
   const { data, isLoading, isError, error } = useSessionPolicy();
 
@@ -473,7 +473,7 @@ function SessionPolicyView({ editable }: { editable: boolean }) {
   );
 }
 
-function SessionPolicyForm({ policy }: { policy: SessionPolicyDto }) {
+function SessionPolicyForm({ policy }: Readonly<{ policy: SessionPolicyDto }>) {
   const t = useTranslation();
   const mutation = useSetSessionPolicy();
   const { control, handleSubmit, formState } = useForm<SessionPolicyDto>({

@@ -38,7 +38,11 @@ export interface AdminLogsPageProps {
  * construction lives in admin-logs.query-state; server access in the feature
  * client/hook. The page wires the typed URL state, the form, and the results.
  */
-export function AdminLogsPage({ search, onSearchChange, now = Date.now }: AdminLogsPageProps) {
+export function AdminLogsPage({
+  search,
+  onSearchChange,
+  now = Date.now,
+}: Readonly<AdminLogsPageProps>) {
   const t = useTranslation();
   const [copied, setCopied] = useState(false);
 

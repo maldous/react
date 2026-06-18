@@ -30,7 +30,7 @@ export interface RateLimitDeps {
 export interface RateLimitActor {
   actorId: string;
   actorRoles: string[];
-  sourceHost?: string | undefined;
+  sourceHost?: string;
 }
 
 async function isEntitled(
@@ -164,7 +164,7 @@ export async function setRateLimit(
     entitlementKey: string;
     limit: number;
     windowSeconds: number;
-    action?: RateLimitAction | undefined;
+    action?: RateLimitAction;
     actor: RateLimitActor;
   },
   deps: RateLimitDeps

@@ -20,7 +20,7 @@ export interface TabsProps extends Omit<AriaTabsProps, "children"> {
   className?: string;
 }
 
-export function Tabs({ tabs, className, ...props }: TabsProps) {
+export function Tabs({ tabs, className, ...props }: Readonly<TabsProps>) {
   return (
     <AriaTabs className={cn("flex flex-col gap-4", className)} {...props}>
       <TabList className="flex border-b border-gray-200">

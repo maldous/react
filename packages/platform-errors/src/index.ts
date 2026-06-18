@@ -23,8 +23,8 @@ export abstract class AppError extends Error {
   abstract readonly retryable: boolean;
 
   readonly safeMessage: string;
-  readonly safeDetails?: Record<string, unknown> | undefined;
-  readonly internalDetails?: Record<string, unknown> | undefined;
+  readonly safeDetails?: Record<string, unknown>;
+  readonly internalDetails?: Record<string, unknown>;
 
   constructor(
     safeMessage: string,

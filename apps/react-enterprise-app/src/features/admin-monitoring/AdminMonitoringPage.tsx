@@ -60,7 +60,7 @@ function ReadinessCard() {
   );
 }
 
-function SignalsCard({ tenantId }: { tenantId: string }) {
+function SignalsCard({ tenantId }: Readonly<{ tenantId: string }>) {
   const t = useTranslation();
   const signals = useSignals(tenantId);
   const columns: ColumnDef<MetricSignalSummary>[] = useMemo(
@@ -94,7 +94,7 @@ function SignalsCard({ tenantId }: { tenantId: string }) {
   );
 }
 
-function AlertsCard({ tenantId }: { tenantId: string }) {
+function AlertsCard({ tenantId }: Readonly<{ tenantId: string }>) {
   const t = useTranslation();
   const alerts = useAlerts(tenantId);
   const create = useCreateAlert(tenantId);
@@ -215,7 +215,7 @@ function AlertsCard({ tenantId }: { tenantId: string }) {
   );
 }
 
-function IncidentsCard({ tenantId }: { tenantId: string }) {
+function IncidentsCard({ tenantId }: Readonly<{ tenantId: string }>) {
   const t = useTranslation();
   const incidents = useIncidents(tenantId);
   const update = useUpdateIncident(tenantId);

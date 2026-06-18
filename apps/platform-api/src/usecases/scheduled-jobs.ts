@@ -23,7 +23,7 @@ export interface ScheduledJobsDeps {
 export interface ScheduledJobsActor {
   actorId: string;
   actorRoles: string[];
-  sourceHost?: string | undefined;
+  sourceHost?: string;
 }
 
 /** Idempotency key for a due-window enqueue: stable within the same window bucket. */
@@ -50,7 +50,7 @@ export async function setScheduledJob(
     jobKey: string;
     eventType: string;
     intervalSeconds: number;
-    enabled?: boolean | undefined;
+    enabled?: boolean;
     actor: ScheduledJobsActor;
   },
   deps: ScheduledJobsDeps

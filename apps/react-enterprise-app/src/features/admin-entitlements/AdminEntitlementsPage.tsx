@@ -23,7 +23,7 @@ import {
   useTenantLookup,
 } from "./use-admin-entitlements";
 
-function StateBadge({ state }: { state: EntitlementSummary["state"] }) {
+function StateBadge({ state }: Readonly<{ state: EntitlementSummary["state"] }>) {
   const t = useTranslation();
   return (
     <Badge variant={state === "granted" ? "default" : "secondary"}>

@@ -19,7 +19,7 @@ export interface AppShellProps {
  * same markup works in browser, PWA, and a future Capacitor webview. Brand colour
  * and logo come from the tenant theme (ADR-0029).
  */
-export function AppShell({ children }: AppShellProps) {
+export function AppShell({ children }: Readonly<AppShellProps>) {
   const t = useTranslation();
   const { actor } = useSession();
   const theme = useTheme();

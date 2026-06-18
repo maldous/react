@@ -11,7 +11,7 @@ export interface CheckboxProps extends AriaCheckboxProps {
   children?: ReactNode;
 }
 
-export function Checkbox({ className, children, ...props }: CheckboxProps) {
+export function Checkbox({ className, children, ...props }: Readonly<CheckboxProps>) {
   return (
     <AriaCheckbox
       className={cn(

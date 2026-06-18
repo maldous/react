@@ -32,7 +32,7 @@ export interface ProviderConfigDeps {
 export interface ProviderConfigActor {
   actorId: string;
   actorRoles: string[];
-  sourceHost?: string | undefined;
+  sourceHost?: string;
 }
 
 const SECRET_KEY = /secret|password|token|credential|api[_-]?key|private[_-]?key/i;

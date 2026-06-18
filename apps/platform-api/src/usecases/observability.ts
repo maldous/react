@@ -44,7 +44,7 @@ export interface ObservabilityDeps {
 export interface ObservabilityActor {
   actorId: string;
   actorRoles: string[];
-  sourceHost?: string | undefined;
+  sourceHost?: string;
 }
 
 function compare(value: number, comparator: AlertComparator, threshold: number): boolean {
@@ -116,10 +116,10 @@ export async function setAlertRule(
     signalKey: string;
     comparator: AlertComparator;
     threshold: number;
-    severity?: AlertSeverity | undefined;
-    enabled?: boolean | undefined;
-    notifyUserId?: string | undefined;
-    notifyCategory?: NotificationCategory | undefined;
+    severity?: AlertSeverity;
+    enabled?: boolean;
+    notifyUserId?: string;
+    notifyCategory?: NotificationCategory;
     actor: ObservabilityActor;
   },
   deps: ObservabilityDeps

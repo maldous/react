@@ -42,7 +42,7 @@ const ENTITLEMENTS: EntitlementKey[] = [
   "advanced_observability",
 ];
 
-function ApiKeyStateBadge({ state }: { state: ApiKeySummary["state"] }) {
+function ApiKeyStateBadge({ state }: Readonly<{ state: ApiKeySummary["state"] }>) {
   const t = useTranslation();
   return (
     <Badge variant={state === "active" ? "default" : "secondary"}>
@@ -301,7 +301,7 @@ function TenantDeveloperView() {
   );
 }
 
-function SetRateLimitForm({ tenantId }: { tenantId: string }) {
+function SetRateLimitForm({ tenantId }: Readonly<{ tenantId: string }>) {
   const t = useTranslation();
   const setRl = useSetRateLimit(tenantId);
   const [policyKey, setPolicyKey] = useState("api.requests");

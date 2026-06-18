@@ -8,7 +8,10 @@ import { classifyAdminError } from "./admin-error";
  * anything else → a generic, retryable error. Avoids treating every failure as an
  * empty/generic state.
  */
-export function AdminQueryError({ error, onRetry }: { error: unknown; onRetry?: () => void }) {
+export function AdminQueryError({
+  error,
+  onRetry,
+}: Readonly<{ error: unknown; onRetry?: () => void }>) {
   const t = useTranslation();
   const kind = classifyAdminError(error);
 

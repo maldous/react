@@ -13,19 +13,19 @@ export interface SearchDocumentInput {
   documentType: string;
   title: string;
   body: string;
-  url?: string | undefined;
+  url?: string;
   /** NULL = visible to any tenant member; else the caller must hold this permission. */
-  permissionKey?: string | undefined;
-  metadata?: Record<string, unknown> | undefined;
+  permissionKey?: string;
+  metadata?: Record<string, unknown>;
 }
 
 export interface SearchQueryInput {
   q: string;
-  documentType?: string | undefined;
+  documentType?: string;
   /** Permissions held by the caller; rows whose permission_key is set are filtered to these. */
   permissions: string[];
-  page?: number | undefined;
-  limit?: number | undefined;
+  page?: number;
+  limit?: number;
 }
 
 export interface SearchHitRow {

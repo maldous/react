@@ -97,7 +97,7 @@ type DialogState =
  * the product login allowlist on the Providers tab. Renders read-only unless
  * `editable`; secrets are never displayed (only `hasClientSecret`).
  */
-export function IdpManager({ editable }: { editable: boolean }) {
+export function IdpManager({ editable }: Readonly<{ editable: boolean }>) {
   const t = useTranslation();
   const { data, isLoading, isError, error } = useIdps();
   const [dialog, setDialog] = useState<DialogState>(null);
@@ -291,7 +291,7 @@ function providerItems(t: (k: string) => string): SelectItem[] {
   }));
 }
 
-function CreateIdpDialog({ onClose }: { onClose: () => void }) {
+function CreateIdpDialog({ onClose }: Readonly<{ onClose: () => void }>) {
   const t = useTranslation();
   const create = useCreateIdp();
   const { control, handleSubmit, watch, setValue } = useForm<CreateIdpForm>({
@@ -434,7 +434,7 @@ function CreateIdpDialog({ onClose }: { onClose: () => void }) {
   );
 }
 
-function EditIdpDialog({ idp, onClose }: { idp: IdpSummary; onClose: () => void }) {
+function EditIdpDialog({ idp, onClose }: Readonly<{ idp: IdpSummary; onClose: () => void }>) {
   const t = useTranslation();
   const update = useUpdateIdp();
   const { control, handleSubmit } = useForm<EditIdpForm>({
@@ -543,7 +543,7 @@ function EditIdpDialog({ idp, onClose }: { idp: IdpSummary; onClose: () => void 
   );
 }
 
-function DeleteIdpDialog({ idp, onClose }: { idp: IdpSummary; onClose: () => void }) {
+function DeleteIdpDialog({ idp, onClose }: Readonly<{ idp: IdpSummary; onClose: () => void }>) {
   const t = useTranslation();
   const del = useDeleteIdp();
   return (
@@ -584,7 +584,9 @@ function DeleteIdpDialog({ idp, onClose }: { idp: IdpSummary; onClose: () => voi
  * the discovery document and JWKS, and on success the parent populates the URL
  * fields from the returned minimal metadata. No secret involved.
  */
-function DiscoveryImport({ onImported }: { onImported: (m: OidcDiscoveryMetadata) => void }) {
+function DiscoveryImport({
+  onImported,
+}: Readonly<{ onImported: (m: OidcDiscoveryMetadata) => void }>) {
   const t = useTranslation();
   const discover = useDiscoverOidc();
   const [issuer, setIssuer] = useState("");

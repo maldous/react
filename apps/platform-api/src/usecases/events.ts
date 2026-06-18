@@ -31,7 +31,7 @@ export interface EventsDeps {
 export interface EventsActor {
   actorId: string;
   actorRoles: string[];
-  sourceHost?: string | undefined;
+  sourceHost?: string;
 }
 
 /** A handler returns processed (ack) or throws to signal failure (retry / dead-letter). */

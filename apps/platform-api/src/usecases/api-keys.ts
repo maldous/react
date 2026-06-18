@@ -27,7 +27,7 @@ export interface ApiKeysDeps {
 export interface ApiKeyActor {
   actorId: string;
   actorRoles: string[];
-  sourceHost?: string | undefined;
+  sourceHost?: string;
 }
 
 async function isEntitled(
@@ -73,8 +73,8 @@ export async function createApiKey(
   input: {
     organisationId: string;
     name: string;
-    scopes?: ApiKeyScope[] | undefined;
-    expiresAt?: string | undefined;
+    scopes?: ApiKeyScope[];
+    expiresAt?: string;
     actor: ApiKeyActor;
   },
   deps: ApiKeysDeps,

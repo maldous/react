@@ -57,7 +57,7 @@ export interface WebhookDispatchPort {
 export interface WebhookActor {
   actorId: string;
   actorRoles: string[];
-  sourceHost?: string | undefined;
+  sourceHost?: string;
 }
 export interface WebhookDeps {
   store: WebhookStore;

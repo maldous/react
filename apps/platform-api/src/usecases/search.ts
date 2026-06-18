@@ -26,7 +26,7 @@ export interface SearchDeps {
 export interface SearchActor {
   actorId: string;
   actorRoles: string[];
-  sourceHost?: string | undefined;
+  sourceHost?: string;
 }
 
 // Metadata keys that must never be indexed (secret-bearing). The index step rejects a
@@ -68,9 +68,9 @@ export async function searchProducts(
   organisationId: string,
   input: {
     q: string;
-    documentType?: string | undefined;
-    page?: number | undefined;
-    limit?: number | undefined;
+    documentType?: string;
+    page?: number;
+    limit?: number;
   },
   permissions: string[],
   deps: SearchDeps

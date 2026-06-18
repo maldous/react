@@ -115,7 +115,7 @@ function CategoryGroup({
   );
 }
 
-function CapabilityCard({ capability: c }: { capability: CapabilitySummary }) {
+function CapabilityCard({ capability: c }: Readonly<{ capability: CapabilitySummary }>) {
   const t = useTranslation();
   return (
     <div data-testid={`readiness-cap-${c.key}`}>

@@ -30,7 +30,7 @@ export interface QuotaDeps {
 export interface EntitlementActor {
   actorId: string;
   actorRoles: string[];
-  sourceHost?: string | undefined;
+  sourceHost?: string;
 }
 
 export interface EvaluateQuotaResult {
@@ -163,7 +163,7 @@ export async function setQuota(
     meterKey: string;
     limit: number;
     window: QuotaWindow;
-    action?: QuotaAction | undefined;
+    action?: QuotaAction;
     actor: EntitlementActor;
   },
   deps: QuotaDeps

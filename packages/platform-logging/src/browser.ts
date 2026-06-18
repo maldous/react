@@ -25,7 +25,7 @@ const LOG_LEVEL_ORDER: Record<BrowserLogLevel, number> = {
 
 export function createBrowserLogger(options: {
   name: string;
-  level?: BrowserLogLevel | undefined;
+  level?: BrowserLogLevel;
 }): BrowserLogger {
   const minLevel = options.level ?? "info";
   const minOrder = LOG_LEVEL_ORDER[minLevel];

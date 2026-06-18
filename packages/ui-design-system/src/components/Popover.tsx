@@ -12,7 +12,7 @@ export interface PopoverProps extends Omit<AriaPopoverProps, "trigger"> {
   children: ReactNode;
 }
 
-export function Popover({ triggerElement, className, children, ...props }: PopoverProps) {
+export function Popover({ triggerElement, className, children, ...props }: Readonly<PopoverProps>) {
   return (
     <DialogTrigger>
       {triggerElement}

@@ -23,7 +23,7 @@ import {
   useSetScheduledJobEnabled,
 } from "./use-admin-scheduled-jobs";
 
-function JobsCard({ tenantId }: { tenantId: string }) {
+function JobsCard({ tenantId }: Readonly<{ tenantId: string }>) {
   const t = useTranslation();
   const jobs = useScheduledJobs(tenantId);
   const create = useCreateScheduledJob(tenantId);

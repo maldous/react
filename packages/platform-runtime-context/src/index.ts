@@ -2,14 +2,14 @@ export const packageName = "@platform/platform-runtime-context";
 
 export interface RuntimeContext {
   requestId: string;
-  traceId?: string | undefined;
-  spanId?: string | undefined;
-  actorId?: string | undefined;
-  tenantId?: string | undefined;
-  organisationId?: string | undefined;
-  correlationId?: string | undefined;
-  featureName?: string | undefined;
-  operationName?: string | undefined;
+  traceId?: string;
+  spanId?: string;
+  actorId?: string;
+  tenantId?: string;
+  organisationId?: string;
+  correlationId?: string;
+  featureName?: string;
+  operationName?: string;
 }
 
 export function createContext(fields: RuntimeContext): RuntimeContext {

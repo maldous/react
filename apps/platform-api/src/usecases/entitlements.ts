@@ -35,7 +35,7 @@ export interface EntitlementDeps {
 export interface EntitlementActor {
   actorId: string;
   actorRoles: string[];
-  sourceHost?: string | undefined;
+  sourceHost?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -179,7 +179,7 @@ export async function setEntitlement(
     organisationId: string;
     key: string;
     state: EntitlementGrantState;
-    note?: string | undefined;
+    note?: string;
     actor: EntitlementActor;
   },
   deps: EntitlementDeps

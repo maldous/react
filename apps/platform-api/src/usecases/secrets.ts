@@ -25,7 +25,7 @@ export interface SecretsDeps {
 export interface SecretsActor {
   actorId: string;
   actorRoles: string[];
-  sourceHost?: string | undefined;
+  sourceHost?: string;
 }
 
 function toSummary(m: SecretMetadata): SecretRefSummary {

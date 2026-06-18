@@ -77,7 +77,10 @@ export function AdminClickthroughPage() {
   );
 }
 
-function ClickthroughRow({ service, t }: { service: ClickthroughServiceRow; t: Translate }) {
+function ClickthroughRow({
+  service,
+  t,
+}: Readonly<{ service: ClickthroughServiceRow; t: Translate }>) {
   return (
     <li
       className="flex flex-col gap-1 border-b border-border pb-3 last:border-0 last:pb-0"
@@ -110,7 +113,10 @@ function ClickthroughRow({ service, t }: { service: ClickthroughServiceRow; t: T
   );
 }
 
-function ProviderRow({ provider, t }: { provider: ComposedProviderReadinessRow; t: Translate }) {
+function ProviderRow({
+  provider,
+  t,
+}: Readonly<{ provider: ComposedProviderReadinessRow; t: Translate }>) {
   return (
     <li
       className="flex flex-wrap items-center gap-3"

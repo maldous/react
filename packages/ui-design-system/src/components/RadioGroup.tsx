@@ -16,7 +16,7 @@ export interface RadioGroupProps extends AriaRadioGroupProps {
   className?: string;
 }
 
-export function RadioGroup({ items, className, ...props }: RadioGroupProps) {
+export function RadioGroup({ items, className, ...props }: Readonly<RadioGroupProps>) {
   return (
     <AriaRadioGroup className={cn("flex flex-col gap-2", className)} {...props}>
       {items.map((item) => (
