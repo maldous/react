@@ -445,7 +445,9 @@ function WebhookRow({
                 data-testid={`admin-webhooks-tested-announce-${subscription.id}`}
               >
                 {test.isSuccess
-                  ? `${t("feature.admin.webhooks.tested")} ${t(`feature.admin.webhooks.deliveryStatus.${test.data!.status}`)}`
+                  ? t("feature.admin.webhooks.tested") +
+                    " " +
+                    t(`feature.admin.webhooks.deliveryStatus.${test.data!.status}`)
                   : ""}
               </LiveRegion>
               <LiveRegion

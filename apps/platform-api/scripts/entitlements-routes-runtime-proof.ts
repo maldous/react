@@ -35,7 +35,7 @@ const SECRET_FIELD = /secret|password|token|credential|api[_-]?key|private[_-]?k
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
-  console.log(`${ok ? "PASS" : "FAIL"}  ${label}${detail ? ` — ${detail}` : ""}`);
+  console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
 }
 

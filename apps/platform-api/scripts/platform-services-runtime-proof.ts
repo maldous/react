@@ -24,7 +24,7 @@ import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
-  console.log(`${ok ? "PASS" : "FAIL"}  ${label}${detail ? ` — ${detail}` : ""}`);
+  console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
 }
 
@@ -63,9 +63,8 @@ async function main(): Promise<void> {
     });
 
     for (const s of readiness.services) {
-      console.log(
-        `  - ${s.key.padEnd(16)} ${s.status}${s.consoleUrl ? `  (${s.consoleUrl})` : ""}`
-      );
+      const consoleSuffix = s.consoleUrl ? `  (${s.consoleUrl})` : "";
+      console.log(`  - ${s.key.padEnd(16)} ${s.status}${consoleSuffix}`);
     }
 
     const byKey = (k: string) => readiness.services.find((s) => s.key === k)?.status;

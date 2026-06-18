@@ -31,7 +31,7 @@ import {
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
-  console.log(`${ok ? "PASS" : "FAIL"}  ${label}${detail ? ` — ${detail}` : ""}`);
+  console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
 }
 function capturingAudit(): { port: AuditEventPort; events: AuditEvent[] } {
@@ -250,7 +250,7 @@ async function main(): Promise<void> {
     okRun.ok && audit.events.some((e) => e.action === "environment.operation_invoked")
   );
 
-  console.log(`\n${failures === 0 ? "# PASS" : `# FAIL (${failures})`}`);
+  console.log(`\n` + (failures === 0 ? "# PASS" : `# FAIL (${failures})`));
   process.exit(failures === 0 ? 0 : 1);
 }
 

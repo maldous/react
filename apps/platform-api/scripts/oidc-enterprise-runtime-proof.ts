@@ -43,7 +43,7 @@ const silentAudit: AuditEventPort = { emit: async () => {}, query: async () => [
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
-  console.log(`${ok ? "PASS" : "FAIL"}  ${label}${detail ? ` — ${detail}` : ""}`);
+  console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
 }
 
@@ -137,7 +137,7 @@ async function main(): Promise<void> {
   }
   check("temporary IdP cleaned up", (await adapter.getIdentityProvider(ALIAS)) === null);
 
-  console.log(`\n# ${failures === 0 ? "ALL CHECKS PASSED" : `${failures} CHECK(S) FAILED`}`);
+  console.log(`\n# ` + (failures === 0 ? "ALL CHECKS PASSED" : `${failures} CHECK(S) FAILED`));
   process.exit(failures === 0 ? 0 : 1);
 }
 

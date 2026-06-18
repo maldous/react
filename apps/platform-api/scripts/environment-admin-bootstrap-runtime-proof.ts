@@ -21,7 +21,7 @@ import process from "node:process";
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
-  console.log(`${ok ? "PASS" : "FAIL"}  ${label}${detail ? ` — ${detail}` : ""}`);
+  console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
 }
 function run(args: string[]): string {
@@ -84,7 +84,7 @@ function main(): void {
     /Username:/.test(reprint) && /re-printed from/.test(reprint)
   );
 
-  console.log(`\n${failures === 0 ? "# PASS" : `# FAIL (${failures})`}`);
+  console.log(`\n` + (failures === 0 ? "# PASS" : `# FAIL (${failures})`));
   process.exit(failures === 0 ? 0 : 1);
 }
 

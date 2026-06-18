@@ -30,7 +30,7 @@ const ACTOR = { actorId: "op-1", actorRoles: ["system_operator"] };
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
-  console.log(`${ok ? "PASS" : "FAIL"}  ${label}${detail ? ` — ${detail}` : ""}`);
+  console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
 }
 async function reachable(url: string): Promise<boolean> {

@@ -19,7 +19,7 @@ import { CLICKTHROUGH_SERVICES } from "../src/usecases/service-clickthrough.ts";
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
-  console.log(`${ok ? "PASS" : "FAIL"}  ${label}${detail ? ` — ${detail}` : ""}`);
+  console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
 }
 
@@ -78,7 +78,7 @@ async function main(): Promise<void> {
       sys.providers.every((p) => ["ready", "degraded", "not_configured"].includes(p.status))
   );
 
-  console.log(`\n${failures === 0 ? "# PASS" : `# FAIL (${failures})`}`);
+  console.log(`\n` + (failures === 0 ? "# PASS" : `# FAIL (${failures})`));
   process.exit(failures === 0 ? 0 : 1);
 }
 

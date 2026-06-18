@@ -27,7 +27,7 @@ const OVERRIDE = `proof-routes-${Date.now().toString(36)}@mailpit.local`;
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
-  console.log(`${ok ? "PASS" : "FAIL"}  ${label}${detail ? ` — ${detail}` : ""}`);
+  console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
 }
 async function pgReachable(url: string): Promise<boolean> {
