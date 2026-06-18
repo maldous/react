@@ -2,7 +2,7 @@
 
 # @platform/search-runtime
 
-Search service abstraction: query interface, index management contracts, and search provider interface.
+DEPRECATED (ADR-0006 / ADR-ACT-0288): superseded by apps/platform-api usecases/search.ts + adapters/postgres-search-repository.ts; do not add new usage; removal review 2026-12-18. Search service abstraction: query interface, index management contracts, and search provider interface.
 
 ## Package identity
 
@@ -20,12 +20,12 @@ Owner: team-platform
 ## Lifecycle
 
 ```text
-Stage: active
+Stage: deprecated
 Role: platform
-Class: active.platform
-Catalog lifecycle: production
-Visibility: internal
-Support level: standard
+Class: deprecated.platform
+Catalog lifecycle: deprecated
+Visibility: deprecated
+Support level: deprecated
 Review cadence: quarterly
 ```
 
@@ -33,9 +33,9 @@ Review cadence: quarterly
 
 ```text
 Owner: team-platform
-Change control: owner-review
-Promotion eligible: true
-Semver policy: internal-traceable
+Change control: deprecation-review
+Promotion eligible: false
+Semver policy: deprecated
 ```
 
 ## Responsibilities
@@ -130,6 +130,7 @@ ADR-0001
 ADR-0002
 ADR-0003
 ADR-0005
+ADR-0006
 ```
 
 ## Validation

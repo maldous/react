@@ -18,12 +18,12 @@
       "owner": "team-security"
     },
     "lifecycle": {
-      "stage": "stable",
+      "stage": "deprecated",
       "role": "platform",
-      "class": "stable.platform",
-      "catalogLifecycle": "production",
-      "visibility": "internal",
-      "supportLevel": "standard",
+      "class": "deprecated.platform",
+      "catalogLifecycle": "deprecated",
+      "visibility": "deprecated",
+      "supportLevel": "deprecated",
       "reviewCadence": "quarterly"
     },
     "governance": {
@@ -33,11 +33,12 @@
         "ADR-0003",
         "ADR-0005",
         "ADR-0007",
-        "ADR-0008"
+        "ADR-0008",
+        "ADR-0006"
       ],
-      "semverPolicy": "internal-traceable",
-      "changeControl": "owner-review",
-      "promotionEligible": true
+      "semverPolicy": "deprecated",
+      "changeControl": "deprecation-review",
+      "promotionEligible": false
     },
     "runtime": {
       "production": false,
@@ -65,10 +66,7 @@
       ]
     },
     "relations": {
-      "dependsOn": [
-        "@platform/domain-core",
-        "@platform/profile-configuration"
-      ],
+      "dependsOn": [],
       "providesApis": [
         "access-policy",
         "role-model"
@@ -86,7 +84,7 @@
     },
     "readme": {
       "generated": true,
-      "summary": "Generic access-control package for admin, staff, user, service, and support role models and permission policy.",
+      "summary": "DEPRECATED (ADR-0006 / ADR-ACT-0288): superseded by apps/platform-api authorisation-runtime + adapters-keycloak (server-side authz); do not add new usage; removal review 2026-12-18. Generic access-control package for admin, staff, user, service, and support role models and permission policy.",
       "responsibilities": [
         "Own generic role and permission model definitions",
         "Define admin, staff, user, service, and support role policy primitives",

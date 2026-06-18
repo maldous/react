@@ -101,8 +101,6 @@ production
 
 ```text
 @platform/ui-design-system
-@platform/feature-workflow
-@platform/access-control
 @platform/contracts-graphql
 @platform/graphql-browser-client
 @platform/contracts-auth

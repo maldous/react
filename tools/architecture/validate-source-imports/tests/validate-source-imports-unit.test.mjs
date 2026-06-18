@@ -331,7 +331,76 @@ test("writeSelfEvidence: writes a timestamped run.json file", () => {
 
 // ??? rules.mjs ???????????????????????????????????????????????????????????????
 
-import { UNIVERSAL_RULES, PACKAGE_RULES } from "../src/rules.mjs";
+import { UNIVERSAL_RULES, PACKAGE_RULES, deprecatedImportTarget } from "../src/rules.mjs";
+
+// Lifecycle-aware deprecated-import rule (ADR-0006 / ADR-ACT-0288). Driven by
+// package metadata, so the tests build a synthetic package map rather than
+// hard-coding the live deprecated set.
+const deprecatedMap = new Map([
+  ["@platform/search-runtime", { architecture: { lifecycle: { stage: "deprecated" } } }],
+  ["@platform/audit-events", { architecture: { lifecycle: { stage: "active" } } }],
+]);
+
+test("deprecatedImportTarget: a NEW import of a deprecated package is a violation", () => {
+  assert.equal(
+    deprecatedImportTarget("@platform/api-runtime", "@platform/search-runtime", deprecatedMap),
+    "@platform/search-runtime"
+  );
+});
+
+test("deprecatedImportTarget: a deep import of a deprecated package is a violation", () => {
+  assert.equal(
+    deprecatedImportTarget("@platform/api-runtime", "@platform/search-runtime/sub", deprecatedMap),
+    "@platform/search-runtime"
+  );
+});
+
+test("deprecatedImportTarget: an import of an ACTIVE package passes", () => {
+  assert.equal(
+    deprecatedImportTarget("@platform/api-runtime", "@platform/audit-events", deprecatedMap),
+    null
+  );
+});
+
+test("deprecatedImportTarget: a deprecated package referencing ITSELF passes", () => {
+  assert.equal(
+    deprecatedImportTarget("@platform/search-runtime", "@platform/search-runtime", deprecatedMap),
+    null
+  );
+});
+
+test("deprecatedImportTarget: a narrow documented exception (from->to) passes", () => {
+  const exceptions = [
+    {
+      from: "@platform/api-runtime",
+      to: "@platform/search-runtime",
+      reason: "in-flight migration",
+    },
+  ];
+  assert.equal(
+    deprecatedImportTarget(
+      "@platform/api-runtime",
+      "@platform/search-runtime",
+      deprecatedMap,
+      exceptions
+    ),
+    null
+  );
+  // ...but the exception is narrow: a DIFFERENT importer is still blocked.
+  assert.equal(
+    deprecatedImportTarget(
+      "@platform/adapters-keycloak",
+      "@platform/search-runtime",
+      deprecatedMap,
+      exceptions
+    ),
+    "@platform/search-runtime"
+  );
+});
+
+test("deprecatedImportTarget: unknown / non-mapped specifier passes (external dep)", () => {
+  assert.equal(deprecatedImportTarget("@platform/api-runtime", "react", deprecatedMap), null);
+});
 
 test("UNIVERSAL_RULES: no-deep-import matches deep platform imports", () => {
   const rule = UNIVERSAL_RULES.find((r) => r.id === "no-deep-import");

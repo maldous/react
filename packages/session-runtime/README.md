@@ -98,7 +98,6 @@ production
 ### Depends on
 
 ```text
-@platform/security-auth
 @platform/adapters-redis
 ```
 

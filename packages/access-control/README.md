@@ -2,7 +2,7 @@
 
 # @platform/access-control
 
-Generic access-control package for admin, staff, user, service, and support role models and permission policy.
+DEPRECATED (ADR-0006 / ADR-ACT-0288): superseded by apps/platform-api authorisation-runtime + adapters-keycloak (server-side authz); do not add new usage; removal review 2026-12-18. Generic access-control package for admin, staff, user, service, and support role models and permission policy.
 
 ## Package identity
 
@@ -20,12 +20,12 @@ Owner: team-security
 ## Lifecycle
 
 ```text
-Stage: stable
+Stage: deprecated
 Role: platform
-Class: stable.platform
-Catalog lifecycle: production
-Visibility: internal
-Support level: standard
+Class: deprecated.platform
+Catalog lifecycle: deprecated
+Visibility: deprecated
+Support level: deprecated
 Review cadence: quarterly
 ```
 
@@ -33,9 +33,9 @@ Review cadence: quarterly
 
 ```text
 Owner: team-security
-Change control: owner-review
-Promotion eligible: true
-Semver policy: internal-traceable
+Change control: deprecation-review
+Promotion eligible: false
+Semver policy: deprecated
 ```
 
 ## Responsibilities
@@ -96,8 +96,7 @@ test
 ### Depends on
 
 ```text
-@platform/domain-core
-@platform/profile-configuration
+None
 ```
 
 ### Provides APIs
@@ -127,6 +126,7 @@ ADR-0003
 ADR-0005
 ADR-0007
 ADR-0008
+ADR-0006
 ```
 
 ## Validation

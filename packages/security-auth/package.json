@@ -18,12 +18,12 @@
       "owner": "team-security"
     },
     "lifecycle": {
-      "stage": "active",
+      "stage": "deprecated",
       "role": "platform",
-      "class": "active.platform",
-      "catalogLifecycle": "production",
-      "visibility": "internal",
-      "supportLevel": "standard",
+      "class": "deprecated.platform",
+      "catalogLifecycle": "deprecated",
+      "visibility": "deprecated",
+      "supportLevel": "deprecated",
       "reviewCadence": "quarterly"
     },
     "governance": {
@@ -31,11 +31,12 @@
         "ADR-0001",
         "ADR-0002",
         "ADR-0003",
-        "ADR-0005"
+        "ADR-0005",
+        "ADR-0006"
       ],
-      "semverPolicy": "internal-traceable",
-      "changeControl": "owner-review",
-      "promotionEligible": true
+      "semverPolicy": "deprecated",
+      "changeControl": "deprecation-review",
+      "promotionEligible": false
     },
     "runtime": {
       "production": true,
@@ -83,7 +84,7 @@
     },
     "readme": {
       "generated": true,
-      "summary": "Authentication abstraction: token validation, identity contracts, RBAC primitives, and auth provider interface.",
+      "summary": "DEPRECATED (ADR-0006 / ADR-ACT-0288): superseded by authorisation-runtime + adapters-keycloak; do not add new usage; removal review 2026-12-18. Authentication abstraction: token validation, identity contracts, RBAC primitives, and auth provider interface.",
       "responsibilities": [
         "Define the auth provider interface that concrete adapters (e.g. adapters-keycloak) must implement",
         "Expose typed identity and claims contracts for use across platform packages",

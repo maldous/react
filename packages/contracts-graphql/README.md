@@ -97,8 +97,6 @@ test
 ### Depends on
 
 ```text
-@platform/profile-configuration
-@platform/access-control
 @platform/contracts-analytics
 ```
 

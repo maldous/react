@@ -97,7 +97,6 @@ production
 ### Depends on
 
 ```text
-@platform/security-auth
 @platform/config-runtime
 @platform/authorisation-runtime
 @platform/platform-logging

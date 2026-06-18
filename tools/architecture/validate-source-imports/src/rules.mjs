@@ -7,6 +7,45 @@ const RULES_JSON_PATH = path.resolve(
   "../../../../docs/architecture/import-boundary-rules.json"
 );
 
+function loadDeprecatedExceptions() {
+  const parsed = JSON.parse(fs.readFileSync(RULES_JSON_PATH, "utf8"));
+  return Array.isArray(parsed.deprecatedImportExceptions) ? parsed.deprecatedImportExceptions : [];
+}
+
+// Documented, narrow exceptions where an importer may still depend on a
+// lifecycle.stage=deprecated package (e.g. an in-flight migration shim). Each
+// entry is { from, to, reason }. Empty by default — deprecated packages have
+// zero source consumers, so no exception is currently warranted (ADR-ACT-0288).
+export const DEPRECATED_IMPORT_EXCEPTIONS = loadDeprecatedExceptions();
+
+// Resolve the bare package name a specifier targets: "@scope/name/sub" -> "@scope/name".
+function packageNameOf(specifier) {
+  if (specifier.startsWith("@")) return specifier.split("/").slice(0, 2).join("/");
+  return specifier.split("/")[0];
+}
+
+// Pure, metadata-DRIVEN deprecated-import check (no hard-coded package names):
+// returns the deprecated target package name when `importerPackage` importing
+// `specifier` is a forbidden new edge into a lifecycle.stage=deprecated package,
+// or null when it is allowed (target not deprecated / not in the map / a
+// self-reference / covered by a documented exception). The deprecated set is
+// derived live from the package map's architecture.lifecycle.stage.
+export function deprecatedImportTarget(
+  importerPackage,
+  specifier,
+  packageMap,
+  exceptions = DEPRECATED_IMPORT_EXCEPTIONS
+) {
+  if (!packageMap) return null;
+  const target = packageNameOf(specifier);
+  const info = packageMap.get(target);
+  if (!info) return null;
+  if (info.architecture?.lifecycle?.stage !== "deprecated") return null;
+  if (importerPackage === target) return null; // a deprecated package may reference itself
+  const exempt = exceptions.some((e) => e.from === importerPackage && e.to === target);
+  return exempt ? null : target;
+}
+
 function loadPackageRules() {
   const { packageRules } = JSON.parse(fs.readFileSync(RULES_JSON_PATH, "utf8"));
 

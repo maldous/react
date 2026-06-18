@@ -2,7 +2,7 @@
 
 # @platform/domain-core
 
-Generic pure TypeScript domain-core package for enterprise policy, validation, and state-transition examples.
+DEPRECATED (ADR-0006 / ADR-ACT-0288): superseded by no replacement required — unused id/timestamp/event helpers; use node:crypto randomUUID + Date.toISOString directly; do not add new usage; removal review 2026-12-18. Generic pure TypeScript domain-core package for enterprise policy, validation, and state-transition examples.
 
 ## Package identity
 
@@ -20,12 +20,12 @@ Owner: team-domain
 ## Lifecycle
 
 ```text
-Stage: stable
+Stage: deprecated
 Role: platform
-Class: stable.platform
-Catalog lifecycle: production
-Visibility: internal
-Support level: standard
+Class: deprecated.platform
+Catalog lifecycle: deprecated
+Visibility: deprecated
+Support level: deprecated
 Review cadence: quarterly
 ```
 
@@ -33,9 +33,9 @@ Review cadence: quarterly
 
 ```text
 Owner: team-domain
-Change control: owner-review
-Promotion eligible: true
-Semver policy: internal-traceable
+Change control: deprecation-review
+Promotion eligible: false
+Semver policy: deprecated
 ```
 
 ## Responsibilities
@@ -127,6 +127,7 @@ ADR-0003
 ADR-0005
 ADR-0007
 ADR-0008
+ADR-0006
 ```
 
 ## Validation

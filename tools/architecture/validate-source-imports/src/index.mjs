@@ -4,7 +4,7 @@ import path from "node:path";
 import process from "node:process";
 
 import { findRepoRoot as sharedFindRepoRoot } from "../../_shared/repo-root.mjs";
-import { UNIVERSAL_RULES, PACKAGE_RULES } from "./rules.mjs";
+import { UNIVERSAL_RULES, PACKAGE_RULES, deprecatedImportTarget } from "./rules.mjs";
 import { scanRoots } from "./scanner.mjs";
 import { buildPackageMap } from "./package-map.mjs";
 import { loadTsConfig } from "./tsconfig-loader.mjs";
@@ -304,6 +304,29 @@ function checkUnexportedPackageEntry(fileInfo, specifier, edge, packageMap, viol
   }
 }
 
+// Lifecycle-aware boundary: source must not introduce NEW imports of a
+// lifecycle.stage=deprecated package (ADR-0006 / ADR-ACT-0288). The deprecated
+// set is derived from package metadata (not hard-coded names); narrow, documented
+// migration exceptions live in import-boundary-rules.json deprecatedImportExceptions.
+function checkDeprecatedImport(fileInfo, specifier, edge, packageMap, violations) {
+  // This tool's own test fixtures reference real package names as sample data to
+  // exercise the hexagonal rules; they are not real source and must not be judged
+  // by the lifecycle rule (the rule's logic is covered by unit tests directly).
+  const parts = fileInfo.file.split(path.sep);
+  if (parts.includes("tests") && parts.includes("fixtures")) return;
+  const target = deprecatedImportTarget(fileInfo.packageName, specifier, packageMap);
+  if (!target) return;
+  violations.push(
+    makeViolation(
+      fileInfo,
+      specifier,
+      edge,
+      "no-import-from-deprecated",
+      `${fileInfo.packageName} must not import deprecated package ${target} (lifecycle.stage=deprecated). Migrate to its replacement, or add a documented exception to import-boundary-rules.json deprecatedImportExceptions.`
+    )
+  );
+}
+
 function checkUnlistedPlatformImport(fileInfo, specifier, edge, violations) {
   let targetPackage = null;
   const isBarePlatform =
@@ -422,6 +445,7 @@ function checkFileViolations(
     checkPackageRules(fileInfo, specifier, edge, violations);
     checkSubpathImport(fileInfo, specifier, edge, packageMap, violations);
     checkUnexportedPackageEntry(fileInfo, specifier, edge, packageMap, violations);
+    checkDeprecatedImport(fileInfo, specifier, edge, packageMap, violations);
     checkUnlistedPlatformImport(fileInfo, specifier, edge, violations);
     checkStrictViolations(
       fileInfo,

@@ -153,6 +153,8 @@ transactional business data
 
 Domain packages (`@platform/domain-core`, `@platform/profile-configuration`, `@platform/access-control`) define models, value objects, and repository interfaces.
 
+> **Supersession note (ADR-ACT-0288, 2026-06-18):** `@platform/domain-core`, `@platform/profile-configuration`, and `@platform/access-control` are now **deprecated** (ADR-0006) — they were never wired (zero source consumers). The canonical homes for these concerns are application-local ports under `apps/platform-api/src/ports/` with postgres adapters (e.g. `ports/profile-repository.ts`), and `authorisation-runtime` + `adapters-keycloak` for authorisation. This note records the supersession; the historical design above is left intact.
+
 `@platform/adapters-postgres` provides the repository implementations and owns:
 
 ```text

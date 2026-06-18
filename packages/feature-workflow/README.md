@@ -2,7 +2,7 @@
 
 # @platform/feature-workflow
 
-Generic React feature workflow package for enterprise user-flow composition.
+DEPRECATED (ADR-0006 / ADR-ACT-0288): superseded by no replacement required — speculative workflow engine, never wired; do not add new usage; removal review 2026-12-18. Generic React feature workflow package for enterprise user-flow composition.
 
 ## Package identity
 
@@ -20,12 +20,12 @@ Owner: team-feature
 ## Lifecycle
 
 ```text
-Stage: active
+Stage: deprecated
 Role: feature
-Class: active.feature
-Catalog lifecycle: production
-Visibility: internal
-Support level: standard
+Class: deprecated.feature
+Catalog lifecycle: deprecated
+Visibility: deprecated
+Support level: deprecated
 Review cadence: quarterly
 ```
 
@@ -33,9 +33,9 @@ Review cadence: quarterly
 
 ```text
 Owner: team-feature
-Change control: owner-review
-Promotion eligible: true
-Semver policy: internal-traceable
+Change control: deprecation-review
+Promotion eligible: false
+Semver policy: deprecated
 ```
 
 ## Responsibilities
@@ -97,11 +97,7 @@ test
 ### Depends on
 
 ```text
-@platform/domain-core
-@platform/profile-configuration
-@platform/access-control
-@platform/contracts-graphql
-@platform/contracts-analytics
+None
 ```
 
 ### Provides APIs
@@ -134,6 +130,7 @@ ADR-0003
 ADR-0005
 ADR-0007
 ADR-0008
+ADR-0006
 ```
 
 ## Validation

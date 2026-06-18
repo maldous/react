@@ -99,7 +99,6 @@ production
 
 ```text
 @platform/config-runtime
-@platform/security-auth
 @platform/observability
 @platform/audit-events
 ```

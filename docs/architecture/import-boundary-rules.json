@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "version": "1.0",
   "description": "Machine-readable per-package import boundary rules. Loaded by tools/architecture/validate-source-imports. Human-readable companion: import-boundary-rules.md.",
+  "deprecatedImportExceptions": [],
   "packageRules": [
     {
       "id": "no-react-in-domain",

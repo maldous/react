@@ -156,6 +156,8 @@ The React application (`@platform/react-enterprise-app`) imports from feature pa
 
 API access is authenticated via `@platform/security-auth` and `@platform/adapters-keycloak`.
 
+> **Supersession note (ADR-ACT-0288, 2026-06-18):** `@platform/security-auth`, `@platform/feature-workflow`, and `@platform/access-control` referenced here are now **deprecated** (ADR-0006) — never wired (zero source consumers). Authentication/authorisation is delivered by `authorisation-runtime` + `adapters-keycloak` and platform-api server-side authz; the workflow feature was speculative and is unimplemented. The historical boundary description above is left intact.
+
 The allowed client-side API import boundary is:
 
 ```text
