@@ -77,7 +77,7 @@ export class S3ObjectStorageAdapter implements ObjectStoragePort {
         new S3PutCommand({
           Bucket: this.bucket,
           Key: command.key,
-          Body: command.body as Buffer | ReadableStream | string,
+          Body: command.body,
           ContentType: command.contentType,
           Metadata: command.metadata,
         })

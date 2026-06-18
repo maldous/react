@@ -52,27 +52,33 @@ export class SentryErrorAdapter {
   constructor(config: SentryConfig) {
     this.enabled = (config.enabled ?? true) && config.dsn.length > 0;
     if (!this.enabled) return;
-    // Dynamic import to avoid hard dependency when Sentry is not configured
-    import("@sentry/node")
-      .then((mod) => {
-        this.sentry = mod;
-        mod.init({
-          dsn: config.dsn,
-          environment: config.environment,
-          release: config.release,
-          tracesSampleRate: config.tracesSampleRate ?? 0.1,
-          // @sentry/node v10 is OpenTelemetry-based and would register its OWN
-          // global TracerProvider + http instrumentation, fighting the NodeSDK
-          // in adapters-opentelemetry (last-one-wins → dropped spans, double
-          // instrumentation). Skip Sentry's OTEL setup so the platform NodeSDK
-          // is the sole OTEL owner and Tempo is the single trace store; Sentry
-          // stays error-capture-only (ADR-ACT-0284).
-          skipOpenTelemetrySetup: true,
-        });
-      })
-      .catch(() => {
-        this.sentry = null;
+    // Kick off SDK initialisation eagerly (fire-and-forget). The async work lives
+    // in a dedicated method so the constructor itself stays synchronous; the
+    // adapter methods already guard on `this.sentry` until init resolves.
+    void this.initSentry(config);
+  }
+
+  private async initSentry(config: SentryConfig): Promise<void> {
+    try {
+      // Dynamic import to avoid hard dependency when Sentry is not configured
+      const mod = await import("@sentry/node");
+      this.sentry = mod;
+      mod.init({
+        dsn: config.dsn,
+        environment: config.environment,
+        release: config.release,
+        tracesSampleRate: config.tracesSampleRate ?? 0.1,
+        // @sentry/node v10 is OpenTelemetry-based and would register its OWN
+        // global TracerProvider + http instrumentation, fighting the NodeSDK
+        // in adapters-opentelemetry (last-one-wins → dropped spans, double
+        // instrumentation). Skip Sentry's OTEL setup so the platform NodeSDK
+        // is the sole OTEL owner and Tempo is the single trace store; Sentry
+        // stays error-capture-only (ADR-ACT-0284).
+        skipOpenTelemetrySetup: true,
       });
+    } catch {
+      this.sentry = null;
+    }
   }
 
   captureError(error: Error, context?: Record<string, unknown>): string | undefined {

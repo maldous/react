@@ -40,6 +40,14 @@ import {
 // scope:"tenant" so it only runs from authenticated tenant FQDN sessions.
 // ---------------------------------------------------------------------------
 
+// Normalise a timestamp column (Date | null, or a driver-provided string) to an
+// ISO-8601 string or null. Shared by the member-listing read paths.
+function iso(d: Date | null): string | null {
+  if (d == null) return null;
+  if (d instanceof Date) return d.toISOString();
+  return String(d);
+}
+
 export interface MembersDeps {
   audit: AuditEventPort;
   pool: pg.Pool;
@@ -95,11 +103,6 @@ export async function listOrgMembers(
        ORDER BY m.created_at ASC`,
       [organisationId]
     );
-    function iso(d: Date | null): string | null {
-      if (d == null) return null;
-      if (d instanceof Date) return d.toISOString();
-      return String(d);
-    }
     return rows.map((r) => ({
       userId: r.user_id,
       email: r.email,
@@ -618,12 +621,6 @@ export async function listMemberExternalIdentities(
     return rows.length > 0;
   });
   if (!isMember) return [];
-
-  function iso(d: Date | null): string | null {
-    if (d == null) return null;
-    if (d instanceof Date) return d.toISOString();
-    return String(d);
-  }
 
   return withSystemAdmin(pool, async (client) => {
     const { rows } = await client.query<{

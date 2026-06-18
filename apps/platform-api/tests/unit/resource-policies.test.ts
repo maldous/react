@@ -40,17 +40,12 @@ describe("getResourcePolicies", () => {
 // ── setResourcePolicy ─────────────────────────────────────────────────────────
 describe("setResourcePolicy", () => {
   it("returns { kind: 'ok' } on success", async () => {
-    const callOrder: string[] = [];
     const audit = {
-      emit: mock.fn(async () => {
-        callOrder.push("audit");
-      }),
+      emit: mock.fn(async () => {}),
     } as never;
     const adapter = {
       getResourcePolicy: mock.fn(async () => []),
-      setResourcePolicy: mock.fn(async () => {
-        callOrder.push("adapter");
-      }),
+      setResourcePolicy: mock.fn(async () => {}),
     } as never;
     const result = await setResourcePolicy(
       { ...baseInput, resourceName: "organisation:profile", policy: fakePolicy },

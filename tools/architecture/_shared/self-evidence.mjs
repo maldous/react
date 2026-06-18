@@ -44,7 +44,7 @@ export function writeSelfEvidence({ evidence, toolingReportDir, noReports }) {
     throw new Error("writeSelfEvidence: evidence must be a non-null object");
   }
   for (const field of REQUIRED_EVIDENCE_FIELDS) {
-    if (!Object.prototype.hasOwnProperty.call(evidence, field)) {
+    if (!Object.hasOwn(evidence, field)) {
       throw new Error(`writeSelfEvidence: evidence missing required field "${field}"`);
     }
   }

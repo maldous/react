@@ -84,7 +84,7 @@ export async function getTenantObservabilityReadiness(
   const window = boundedWindow(deps.now ?? new Date());
 
   let logIngestion: ObservabilitySignalStatus;
-  let tenantScopedQuery: ObservabilitySignalStatus;
+  let tenantScopedQuery: ObservabilitySignalStatus = "unknown";
 
   try {
     await deps.port.search({ limit: 1, direction: "backward", ...window });
@@ -105,8 +105,6 @@ export async function getTenantObservabilityReadiness(
     } catch {
       tenantScopedQuery = "unreachable";
     }
-  } else {
-    tenantScopedQuery = "unknown";
   }
 
   const status = classifyObservability({ logIngestion, tenantScopedQuery, highCardinalityGuard });

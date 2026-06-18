@@ -22,7 +22,7 @@ export interface GraphqlResponseBody {
 
 export type GraphqlResolver = (ctx: GraphqlMockContext) => GraphqlResponseBody;
 
-const OPERATION_NAME_RE = /\b(?:query|mutation|subscription)\s+([A-Za-z_][A-Za-z0-9_]*)/;
+const OPERATION_NAME_RE = /\b(?:query|mutation|subscription)\s+([A-Za-z_]\w*)/;
 
 export function operationNameFromQuery(query: string): string | null {
   const match = OPERATION_NAME_RE.exec(query);
@@ -40,7 +40,10 @@ export const defaultGraphqlResolvers: Record<string, GraphqlResolver> = {
     const data: UpdateOrganisationProfileMutation = {
       updateOrganisationProfile: {
         ...organisationFixture,
-        displayName: String(variables["displayName"] ?? organisationFixture.displayName),
+        displayName:
+          typeof variables["displayName"] === "string"
+            ? variables["displayName"]
+            : organisationFixture.displayName,
       },
     };
     return { data };

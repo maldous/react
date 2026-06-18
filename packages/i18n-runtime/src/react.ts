@@ -56,7 +56,7 @@ export function I18nProvider({ locale, messages, fallback, children }: I18nProvi
     () => createI18n({ locale, messages, fallback }),
     [locale, messages, fallback]
   );
-  return createElement(I18nContext.Provider, { value, children });
+  return createElement(I18nContext.Provider, { value }, children);
 }
 
 export function useTranslation() {

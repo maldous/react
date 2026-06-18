@@ -19,7 +19,7 @@
  *   Overrides: CADDY_BASE_URL, ROUTING_PROOF_PG_URL, ROUTING_PROOF_APP_ROLE.
  */
 
-import { request as httpGet } from "node:http";
+import { request as httpGet, type IncomingMessage } from "node:http";
 import pg from "pg";
 import type { AuditEventPort } from "@platform/audit-events";
 import {
@@ -147,9 +147,25 @@ async function main(): Promise<void> {
     );
     // .example does not resolve in DNS — connect to the proxy directly and set
     // Host explicitly via node:http (undici fetch silently DROPS a host override).
-    const hostIdentity = (
-      host: string
-    ): Promise<{ kind?: string; tenant?: { slug?: string; hostSource?: string } | null }> =>
+    type HostIdentity = { kind?: string; tenant?: { slug?: string; hostSource?: string } | null };
+    const collectResponse = (
+      res: IncomingMessage,
+      resolve: (value: HostIdentity) => void,
+      reject: (reason: Error) => void
+    ): void => {
+      let data = "";
+      res.on("data", (c: Buffer) => {
+        data += c.toString();
+      });
+      res.on("end", () => {
+        try {
+          resolve(JSON.parse(data) as never);
+        } catch (e) {
+          reject(e as Error);
+        }
+      });
+    };
+    const hostIdentity = (host: string): Promise<HostIdentity> =>
       new Promise((resolve, reject) => {
         const base = new URL(CADDY_BASE);
         const req = httpGet(
@@ -162,19 +178,7 @@ async function main(): Promise<void> {
             setHost: false,
             timeout: 4000,
           },
-          (res) => {
-            let data = "";
-            res.on("data", (c: Buffer) => {
-              data += c.toString();
-            });
-            res.on("end", () => {
-              try {
-                resolve(JSON.parse(data) as never);
-              } catch (e) {
-                reject(e as Error);
-              }
-            });
-          }
+          (res) => collectResponse(res, resolve, reject)
         );
         req.on("error", reject);
         req.end();

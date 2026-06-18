@@ -95,7 +95,7 @@ export class PostgresObservabilityRepository
           input.signalKey,
           input.displayName,
           input.unit ?? "",
-          (input.kind ?? "gauge") as MetricKind,
+          input.kind ?? "gauge",
           input.description ?? "",
         ]
       )

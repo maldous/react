@@ -1424,7 +1424,6 @@ export const routes: Route[] = [
       if (sendAuthSettingsFailure(res, result)) return;
       if (result.kind === "ok") {
         res.json(200, result.config);
-        return;
       }
     },
   },

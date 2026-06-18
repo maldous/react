@@ -232,7 +232,7 @@ export async function provisionTenant(
   } catch (err) {
     log.error({ slug: input.slug, organisationId, err: String(err) }, "provisioning.failed");
     // Best-effort cleanup in reverse order
-    for (const cleanup of cleanupSteps.reverse()) {
+    for (const cleanup of [...cleanupSteps].reverse()) {
       await cleanup().catch((e: unknown) => {
         log.error({ err: String(e) }, "provisioning.cleanup.failed");
       });

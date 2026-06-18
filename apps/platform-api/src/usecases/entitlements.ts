@@ -130,9 +130,7 @@ function toSummary(
   // Deny-by-default: no row OR a revoked row both mean the capability is unavailable.
   const state = resolveEntitlementState(record);
   const note =
-    record && typeof record.metadata?.["note"] === "string"
-      ? (record.metadata["note"] as string)
-      : null;
+    record && typeof record.metadata?.["note"] === "string" ? record.metadata["note"] : null;
   return {
     key: def.key,
     displayName: def.displayName,

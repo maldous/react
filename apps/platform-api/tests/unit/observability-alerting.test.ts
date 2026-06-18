@@ -242,7 +242,7 @@ describe("observability/alerting usecase", () => {
       d
     );
     const id = (await repo.listRules(ORG))[0]!.id;
-    assert.equal((await evaluateAlert(id, d, ACTOR)).kind === "ok" && true, true);
+    assert.equal((await evaluateAlert(id, d, ACTOR)).kind === "ok", true);
     const r = await evaluateAlert(id, d, ACTOR);
     assert.equal(r.kind === "ok" && r.response.state, "no_data");
   });

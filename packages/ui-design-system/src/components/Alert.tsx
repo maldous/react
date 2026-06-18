@@ -30,8 +30,19 @@ export function Alert({ className, variant, icon, children, ...props }: Readonly
   );
 }
 
-export function AlertTitle({ className, ...props }: Readonly<HTMLAttributes<HTMLHeadingElement>>) {
-  return <h5 className={cn("mb-1 font-medium leading-none", className)} {...props} />;
+export function AlertTitle({
+  className,
+  children,
+  ...props
+}: Readonly<HTMLAttributes<HTMLHeadingElement>>) {
+  if (children == null || children === false || children === "") {
+    return null;
+  }
+  return (
+    <h5 className={cn("mb-1 font-medium leading-none", className)} {...props}>
+      {children}
+    </h5>
+  );
 }
 
 export function AlertDescription({

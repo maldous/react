@@ -24,14 +24,20 @@ function makeServer(
 ): Promise<{ server: http.Server; url: string }> {
   const randomPort = () => Math.floor(Math.random() * 10000) + 50000;
 
+  const onListenError = (
+    server: http.Server,
+    reject: (err: NodeJS.ErrnoException) => void,
+    err: NodeJS.ErrnoException
+  ): void => {
+    server.close(() => reject(err));
+  };
+
   const attempt = (): Promise<{ server: http.Server; url: string }> =>
     new Promise((resolve, reject) => {
       const port = randomPort();
       const router = createRouter(routes, testDeps);
       const server = http.createServer(router);
-      server.once("error", (err: NodeJS.ErrnoException) => {
-        server.close(() => reject(err));
-      });
+      server.once("error", (err: NodeJS.ErrnoException) => onListenError(server, reject, err));
       server.listen(port, "127.0.0.1", () => {
         resolve({ server, url: `http://127.0.0.1:${port}` });
       });

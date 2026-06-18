@@ -80,7 +80,7 @@ export function mapKeycloakClaims(claims: Record<string, unknown>): KeycloakIden
     providerSubject: kc.sub,
     provider: "keycloak",
     email: kc.email,
-    displayName: (kc.preferred_username ?? kc.email) as string,
+    displayName: kc.preferred_username ?? kc.email,
     realmRoles: kc.realm_access?.roles ?? [],
   };
 }
@@ -284,10 +284,12 @@ export class KeycloakAuthorisationAdapter implements AuthorisationPort {
         return { granted: true, rpt: data.access_token ?? "" };
       }
       const err = (await response.json().catch(() => ({}))) as Record<string, unknown>;
-      const errorCode = String(err["error"] ?? "");
+      const errorCode = typeof err["error"] === "string" ? err["error"] : "";
+      const errorDescription =
+        typeof err["error_description"] === "string" ? err["error_description"] : "";
       if (errorCode === "insufficient_scope")
         return { granted: false, reason: "insufficient_scope" };
-      if (String(err["error_description"] ?? "").includes("auth_level"))
+      if (errorDescription.includes("auth_level"))
         return { granted: false, reason: "insufficient_auth_level" };
       // Keycloak returns invalid_request ("Resource with id [X] does not exist." /
       // "Scope [...] does not exist.") when the requested permission's resource or
@@ -307,7 +309,7 @@ export class KeycloakAuthorisationAdapter implements AuthorisationPort {
           scope: resource.scope,
           status: response.status,
           kcError: errorCode || undefined,
-          kcErrorDescription: String(err["error_description"] ?? "") || undefined,
+          kcErrorDescription: errorDescription || undefined,
         },
         "keycloak checkAccess denied"
       );
