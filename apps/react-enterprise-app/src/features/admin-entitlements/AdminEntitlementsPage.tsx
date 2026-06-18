@@ -32,6 +32,82 @@ function StateBadge({ state }: Readonly<{ state: EntitlementSummary["state"] }>)
   );
 }
 
+type Translate = ReturnType<typeof useTranslation>;
+
+function buildOperatorColumns(args: {
+  t: Translate;
+  setEntitlement: ReturnType<typeof useSetEntitlement>;
+}): ColumnDef<EntitlementSummary>[] {
+  const { t, setEntitlement } = args;
+  return [
+    {
+      header: t("feature.admin.entitlements.colCapability"),
+      accessorKey: "key",
+      cell: ({ row }) => (
+        <div>
+          <div className="font-medium text-fg">{row.original.displayName}</div>
+          <div className="text-xs text-fg-muted">{row.original.key}</div>
+        </div>
+      ),
+    },
+    {
+      header: t("feature.admin.entitlements.colCategory"),
+      accessorKey: "category",
+    },
+    {
+      header: t("feature.admin.entitlements.colState"),
+      accessorKey: "state",
+      cell: ({ row }) => <StateBadge state={row.original.state} />,
+    },
+    {
+      header: t("feature.admin.entitlements.colActions"),
+      id: "actions",
+      cell: ({ row }) => {
+        const granted = row.original.state === "granted";
+        return (
+          <Button
+            variant="outline"
+            size="sm"
+            isDisabled={setEntitlement.isPending}
+            onPress={() =>
+              setEntitlement.mutate({
+                key: row.original.key,
+                state: granted ? "revoked" : "granted",
+              })
+            }
+            data-testid={`entitlement-toggle-${row.original.key}`}
+          >
+            {granted
+              ? t("feature.admin.entitlements.revoke")
+              : t("feature.admin.entitlements.grant")}
+          </Button>
+        );
+      },
+    },
+  ];
+}
+
+function buildReadOnlyColumns(t: Translate): ColumnDef<EntitlementSummary>[] {
+  return [
+    {
+      header: t("feature.admin.entitlements.colCapability"),
+      accessorKey: "key",
+      cell: ({ row }) => (
+        <div>
+          <div className="font-medium text-fg">{row.original.displayName}</div>
+          <div className="text-xs text-fg-muted">{row.original.description}</div>
+        </div>
+      ),
+    },
+    { header: t("feature.admin.entitlements.colCategory"), accessorKey: "category" },
+    {
+      header: t("feature.admin.entitlements.colState"),
+      accessorKey: "state",
+      cell: ({ row }) => <StateBadge state={row.original.state} />,
+    },
+  ];
+}
+
 /** System-operator console: load a tenant's entitlements and grant/revoke them. */
 function OperatorConsole() {
   const t = useTranslation();
@@ -49,52 +125,7 @@ function OperatorConsole() {
   );
 
   const columns = useMemo<ColumnDef<EntitlementSummary>[]>(
-    () => [
-      {
-        header: t("feature.admin.entitlements.colCapability"),
-        accessorKey: "key",
-        cell: ({ row }) => (
-          <div>
-            <div className="font-medium text-fg">{row.original.displayName}</div>
-            <div className="text-xs text-fg-muted">{row.original.key}</div>
-          </div>
-        ),
-      },
-      {
-        header: t("feature.admin.entitlements.colCategory"),
-        accessorKey: "category",
-      },
-      {
-        header: t("feature.admin.entitlements.colState"),
-        accessorKey: "state",
-        cell: ({ row }) => <StateBadge state={row.original.state} />,
-      },
-      {
-        header: t("feature.admin.entitlements.colActions"),
-        id: "actions",
-        cell: ({ row }) => {
-          const granted = row.original.state === "granted";
-          return (
-            <Button
-              variant="outline"
-              size="sm"
-              isDisabled={setEntitlement.isPending}
-              onPress={() =>
-                setEntitlement.mutate({
-                  key: row.original.key,
-                  state: granted ? "revoked" : "granted",
-                })
-              }
-              data-testid={`entitlement-toggle-${row.original.key}`}
-            >
-              {granted
-                ? t("feature.admin.entitlements.revoke")
-                : t("feature.admin.entitlements.grant")}
-            </Button>
-          );
-        },
-      },
-    ],
+    () => buildOperatorColumns({ t, setEntitlement }),
     [t, setEntitlement]
   );
 
@@ -146,27 +177,7 @@ function TenantReadOnlyView() {
   const t = useTranslation();
   const query = useMyEntitlements();
 
-  const columns = useMemo<ColumnDef<EntitlementSummary>[]>(
-    () => [
-      {
-        header: t("feature.admin.entitlements.colCapability"),
-        accessorKey: "key",
-        cell: ({ row }) => (
-          <div>
-            <div className="font-medium text-fg">{row.original.displayName}</div>
-            <div className="text-xs text-fg-muted">{row.original.description}</div>
-          </div>
-        ),
-      },
-      { header: t("feature.admin.entitlements.colCategory"), accessorKey: "category" },
-      {
-        header: t("feature.admin.entitlements.colState"),
-        accessorKey: "state",
-        cell: ({ row }) => <StateBadge state={row.original.state} />,
-      },
-    ],
-    [t]
-  );
+  const columns = useMemo<ColumnDef<EntitlementSummary>[]>(() => buildReadOnlyColumns(t), [t]);
 
   return (
     <div className="space-y-4">

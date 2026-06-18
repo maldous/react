@@ -16,7 +16,7 @@ export function SectionHeader({
   action,
   className,
   level = 2,
-}: SectionHeaderProps) {
+}: Readonly<SectionHeaderProps>) {
   const Heading = level === 1 ? "h1" : "h2";
   return (
     <div className={cn("flex items-start justify-between gap-4", className)}>

@@ -35,7 +35,7 @@ export function FormField({
   isInvalid,
   inputProps,
   ...props
-}: FormFieldProps) {
+}: Readonly<FormFieldProps>) {
   return (
     <TextField
       className={cn("flex flex-col gap-1.5", className)}

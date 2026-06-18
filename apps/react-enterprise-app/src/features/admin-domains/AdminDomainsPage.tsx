@@ -232,10 +232,10 @@ function TxtRecordPanel({ record }: Readonly<{ record: TenantDomainVerificationR
 function DomainListCard({
   domains,
   canWrite,
-}: {
+}: Readonly<{
   domains: TenantDomainSummary[];
   canWrite: boolean;
-}) {
+}>) {
   const t = useTranslation();
 
   return (

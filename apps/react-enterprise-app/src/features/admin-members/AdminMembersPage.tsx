@@ -44,6 +44,125 @@ const statusVariant: Record<MemberSummary["status"], "default" | "secondary"> = 
   disabled: "secondary",
 };
 
+type BuildMemberColumnsArgs = Readonly<{
+  t: ReturnType<typeof useTranslation>;
+  roleItems: SelectItem[];
+  canUpdate: boolean;
+  canRemove: boolean;
+  updateRole: ReturnType<typeof useUpdateMemberRole>;
+  setRemoving: (member: MemberSummary) => void;
+}>;
+
+function buildMemberColumns({
+  t,
+  roleItems,
+  canUpdate,
+  canRemove,
+  updateRole,
+  setRemoving,
+}: BuildMemberColumnsArgs): ColumnDef<MemberSummary>[] {
+  return [
+    {
+      id: "expand",
+      header: () => <span className="sr-only">{t("feature.admin.members.column.details")}</span>,
+      cell: ({ row }) => (
+        <Button
+          variant="ghost"
+          size="sm"
+          aria-expanded={row.getIsExpanded()}
+          aria-label={t("feature.admin.members.toggleDetails")}
+          onPress={() => row.toggleExpanded()}
+          data-testid={`member-expand-${row.original.userId}`}
+        >
+          <span aria-hidden="true">{row.getIsExpanded() ? "▾" : "▸"}</span>
+        </Button>
+      ),
+    },
+    {
+      id: "member",
+      header: () => t("feature.admin.members.column.member"),
+      cell: ({ row }) => (
+        <div>
+          <p className="text-sm font-medium text-fg">{row.original.displayName}</p>
+          <p className="text-xs text-fg-muted">{row.original.email}</p>
+        </div>
+      ),
+    },
+    {
+      id: "username",
+      header: () => t("feature.admin.members.column.username"),
+      cell: ({ row }) => (
+        <span className="font-mono text-sm" data-testid={`member-username-${row.original.userId}`}>
+          {row.original.username ?? t("feature.admin.members.noUsername")}
+        </span>
+      ),
+    },
+    {
+      id: "role",
+      header: () => t("feature.admin.members.column.role"),
+      cell: ({ row }) =>
+        canUpdate ? (
+          <Select
+            items={roleItems}
+            placeholder={t("feature.admin.members.column.role")}
+            selectedKey={row.original.role}
+            aria-label={t("feature.admin.members.changeRoleFor", {
+              name: row.original.displayName,
+            })}
+            onSelectionChange={(key) =>
+              updateRole.mutate({
+                userId: row.original.userId,
+                input: { role: key as (typeof TENANT_ROLES)[number] },
+              })
+            }
+            className="max-w-[11rem]"
+            data-testid={`member-role-${row.original.userId}`}
+          />
+        ) : (
+          <Badge>{t(`feature.admin.members.role.${row.original.role}`)}</Badge>
+        ),
+    },
+    {
+      id: "status",
+      header: () => t("feature.admin.members.column.status"),
+      cell: ({ row }) => (
+        <Badge
+          variant={statusVariant[row.original.status]}
+          data-testid={`member-status-${row.original.userId}`}
+        >
+          {t(`feature.admin.members.status.${row.original.status}`)}
+        </Badge>
+      ),
+    },
+    {
+      id: "lastLogin",
+      header: () => t("feature.admin.members.column.lastLogin"),
+      cell: ({ row }) => (
+        <span className="whitespace-nowrap text-sm text-fg-muted">
+          {row.original.lastLoginAt
+            ? row.original.lastLoginAt.slice(0, 10)
+            : t("feature.admin.members.neverLoggedIn")}
+        </span>
+      ),
+    },
+    {
+      id: "actions",
+      header: () => <span className="sr-only">{t("feature.admin.members.column.actions")}</span>,
+      cell: ({ row }) =>
+        canRemove ? (
+          <Button
+            variant="outline"
+            size="sm"
+            onPress={() => setRemoving(row.original)}
+            data-testid={`member-remove-${row.original.userId}`}
+          >
+            {t("feature.admin.members.remove")}
+          </Button>
+        ) : null,
+    },
+  ];
+}
+
 /**
  * Members section (ADR-0036, ADR-ACT-0206). Tenant-scoped identity: username,
  * lifecycle status, last login. Invite / change-role / remove are preserved; an
@@ -70,110 +189,8 @@ export function AdminMembersPage() {
     [t]
   );
 
-  const columns = useMemo<ColumnDef<MemberSummary>[]>(
-    () => [
-      {
-        id: "expand",
-        header: () => <span className="sr-only">{t("feature.admin.members.column.details")}</span>,
-        cell: ({ row }) => (
-          <Button
-            variant="ghost"
-            size="sm"
-            aria-expanded={row.getIsExpanded()}
-            aria-label={t("feature.admin.members.toggleDetails")}
-            onPress={() => row.toggleExpanded()}
-            data-testid={`member-expand-${row.original.userId}`}
-          >
-            <span aria-hidden="true">{row.getIsExpanded() ? "▾" : "▸"}</span>
-          </Button>
-        ),
-      },
-      {
-        id: "member",
-        header: () => t("feature.admin.members.column.member"),
-        cell: ({ row }) => (
-          <div>
-            <p className="text-sm font-medium text-fg">{row.original.displayName}</p>
-            <p className="text-xs text-fg-muted">{row.original.email}</p>
-          </div>
-        ),
-      },
-      {
-        id: "username",
-        header: () => t("feature.admin.members.column.username"),
-        cell: ({ row }) => (
-          <span
-            className="font-mono text-sm"
-            data-testid={`member-username-${row.original.userId}`}
-          >
-            {row.original.username ?? t("feature.admin.members.noUsername")}
-          </span>
-        ),
-      },
-      {
-        id: "role",
-        header: () => t("feature.admin.members.column.role"),
-        cell: ({ row }) =>
-          canUpdate ? (
-            <Select
-              items={roleItems}
-              placeholder={t("feature.admin.members.column.role")}
-              selectedKey={row.original.role}
-              aria-label={t("feature.admin.members.changeRoleFor", {
-                name: row.original.displayName,
-              })}
-              onSelectionChange={(key) =>
-                updateRole.mutate({
-                  userId: row.original.userId,
-                  input: { role: key as (typeof TENANT_ROLES)[number] },
-                })
-              }
-              className="max-w-[11rem]"
-              data-testid={`member-role-${row.original.userId}`}
-            />
-          ) : (
-            <Badge>{t(`feature.admin.members.role.${row.original.role}`)}</Badge>
-          ),
-      },
-      {
-        id: "status",
-        header: () => t("feature.admin.members.column.status"),
-        cell: ({ row }) => (
-          <Badge
-            variant={statusVariant[row.original.status]}
-            data-testid={`member-status-${row.original.userId}`}
-          >
-            {t(`feature.admin.members.status.${row.original.status}`)}
-          </Badge>
-        ),
-      },
-      {
-        id: "lastLogin",
-        header: () => t("feature.admin.members.column.lastLogin"),
-        cell: ({ row }) => (
-          <span className="whitespace-nowrap text-sm text-fg-muted">
-            {row.original.lastLoginAt
-              ? row.original.lastLoginAt.slice(0, 10)
-              : t("feature.admin.members.neverLoggedIn")}
-          </span>
-        ),
-      },
-      {
-        id: "actions",
-        header: () => <span className="sr-only">{t("feature.admin.members.column.actions")}</span>,
-        cell: ({ row }) =>
-          canRemove ? (
-            <Button
-              variant="outline"
-              size="sm"
-              onPress={() => setRemoving(row.original)}
-              data-testid={`member-remove-${row.original.userId}`}
-            >
-              {t("feature.admin.members.remove")}
-            </Button>
-          ) : null,
-      },
-    ],
+  const columns = useMemo(
+    () => buildMemberColumns({ t, roleItems, canUpdate, canRemove, updateRole, setRemoving }),
     [t, roleItems, canUpdate, canRemove, updateRole]
   );
 
@@ -390,11 +407,11 @@ function PendingInvitations({
   invitations,
   canResend,
   roleLabel,
-}: {
+}: Readonly<{
   invitations: { email: string; role: MemberSummary["role"] }[];
   canResend: boolean;
   roleLabel: (role: MemberSummary["role"]) => string;
-}) {
+}>) {
   const t = useTranslation();
   const resend = useResendInvite();
   return (
@@ -436,10 +453,10 @@ function PendingInvitations({
 function InviteMemberDialog({
   roleItems,
   onClose,
-}: {
+}: Readonly<{
   roleItems: SelectItem[];
   onClose: () => void;
-}) {
+}>) {
   const t = useTranslation();
   const invite = useInviteMember();
   const { control, handleSubmit } = useForm<InviteMemberRequest>({

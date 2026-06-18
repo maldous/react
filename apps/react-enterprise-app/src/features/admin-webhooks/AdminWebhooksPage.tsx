@@ -42,6 +42,14 @@ interface AddWebhookForm {
   enabled?: boolean;
 }
 
+function toggleEventType(
+  current: WebhookEventType[],
+  eventType: WebhookEventType,
+  checked: boolean
+): WebhookEventType[] {
+  return checked ? [...current, eventType] : current.filter((e) => e !== eventType);
+}
+
 /**
  * Tenant outbound webhooks management page (ADR-0051). Read-only unless the actor
  * holds `tenant.webhooks.write`. The signing secret is reveal-once — it is shown
@@ -118,7 +126,7 @@ function AddWebhookCard() {
     createWebhook.mutate(
       {
         url: values.url,
-        eventTypes: values.eventTypes as (typeof WEBHOOK_EVENT_TYPES)[number][],
+        eventTypes: values.eventTypes,
         enabled: values.enabled,
       },
       {
@@ -160,12 +168,9 @@ function AddWebhookCard() {
                     <Checkbox
                       key={eventType}
                       isSelected={field.value.includes(eventType)}
-                      onChange={(checked) => {
-                        const next = checked
-                          ? [...field.value, eventType]
-                          : field.value.filter((e) => e !== eventType);
-                        field.onChange(next);
-                      }}
+                      onChange={(checked) =>
+                        field.onChange(toggleEventType(field.value, eventType, checked))
+                      }
                       data-testid={`admin-webhooks-event-${eventType}`}
                     >
                       {eventType}
@@ -236,11 +241,11 @@ function SecretRevealPanel({
   secret,
   onDismiss,
   "data-testid": testId,
-}: {
+}: Readonly<{
   secret: string;
   onDismiss: () => void;
   "data-testid"?: string;
-}) {
+}>) {
   const t = useTranslation();
   return (
     <div
@@ -271,10 +276,10 @@ function SecretRevealPanel({
 function WebhookListCard({
   subscriptions,
   canWrite,
-}: {
+}: Readonly<{
   subscriptions: WebhookSubscriptionSummary[];
   canWrite: boolean;
-}) {
+}>) {
   const t = useTranslation();
 
   return (
@@ -315,10 +320,10 @@ function WebhookListCard({
 function WebhookRow({
   subscription,
   canWrite,
-}: {
+}: Readonly<{
   subscription: WebhookSubscriptionSummary;
   canWrite: boolean;
-}) {
+}>) {
   const t = useTranslation();
   const rotate = useRotateSecret();
   const test = useTestWebhook();
@@ -447,7 +452,7 @@ function WebhookRow({
                 {test.isSuccess
                   ? t("feature.admin.webhooks.tested") +
                     " " +
-                    t(`feature.admin.webhooks.deliveryStatus.${test.data!.status}`)
+                    t(`feature.admin.webhooks.deliveryStatus.${test.data.status}`)
                   : ""}
               </LiveRegion>
               <LiveRegion
@@ -598,11 +603,11 @@ function DeliveryRow({
   delivery,
   subscriptionId,
   canWrite,
-}: {
+}: Readonly<{
   delivery: WebhookDeliverySummary;
   subscriptionId: string;
   canWrite: boolean;
-}) {
+}>) {
   const t = useTranslation();
   const redriveDelivery = useRedriveDelivery(subscriptionId);
   const [announce, setAnnounce] = useState("");

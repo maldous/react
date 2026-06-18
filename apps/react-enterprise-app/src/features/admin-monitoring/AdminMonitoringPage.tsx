@@ -34,6 +34,89 @@ import {
 
 const COMPARATORS: AlertComparator[] = ["gt", "gte", "lt", "lte"];
 
+type Translate = ReturnType<typeof useTranslation>;
+
+function buildAlertColumns(
+  t: Translate,
+  evaluate: ReturnType<typeof useEvaluateAlert>
+): ColumnDef<AlertRuleSummary>[] {
+  return [
+    { header: t("feature.admin.monitoring.colRule"), accessorKey: "ruleKey" },
+    {
+      header: t("feature.admin.monitoring.colCondition"),
+      id: "cond",
+      cell: ({ row }) =>
+        `${row.original.signalKey} ${row.original.comparator} ${row.original.threshold}`,
+    },
+    {
+      header: t("feature.admin.monitoring.colSeverity"),
+      accessorKey: "severity",
+      cell: ({ row }) => <Badge variant="secondary">{row.original.severity}</Badge>,
+    },
+    {
+      header: t("feature.admin.monitoring.colActions"),
+      id: "actions",
+      cell: ({ row }) => (
+        <Button
+          size="sm"
+          variant="ghost"
+          onPress={() => evaluate.mutate(row.original.id)}
+          data-testid="alert-evaluate"
+        >
+          {t("feature.admin.monitoring.evaluate")}
+        </Button>
+      ),
+    },
+  ];
+}
+
+function buildIncidentColumns(
+  t: Translate,
+  update: ReturnType<typeof useUpdateIncident>
+): ColumnDef<IncidentSummary>[] {
+  return [
+    { header: t("feature.admin.monitoring.colIncident"), accessorKey: "title" },
+    {
+      header: t("feature.admin.monitoring.colStatus"),
+      accessorKey: "status",
+      cell: ({ row }) => (
+        <Badge variant={row.original.status === "resolved" ? "default" : "secondary"}>
+          {row.original.status}
+        </Badge>
+      ),
+    },
+    {
+      header: t("feature.admin.monitoring.colActions"),
+      id: "actions",
+      cell: ({ row }) =>
+        row.original.status !== "resolved" ? (
+          <div className="flex gap-2">
+            {row.original.status === "open" && (
+              <Button
+                size="sm"
+                variant="ghost"
+                onPress={() =>
+                  update.mutate({ incidentId: row.original.id, status: "acknowledged" })
+                }
+                data-testid="incident-ack"
+              >
+                {t("feature.admin.monitoring.ack")}
+              </Button>
+            )}
+            <Button
+              size="sm"
+              variant="ghost"
+              onPress={() => update.mutate({ incidentId: row.original.id, status: "resolved" })}
+              data-testid="incident-resolve"
+            >
+              {t("feature.admin.monitoring.resolve")}
+            </Button>
+          </div>
+        ) : null,
+    },
+  ];
+}
+
 function ReadinessCard() {
   const t = useTranslation();
   const readiness = useObservabilityReadiness(true);
@@ -119,34 +202,7 @@ function AlertsCard({ tenantId }: Readonly<{ tenantId: string }>) {
   }
 
   const columns: ColumnDef<AlertRuleSummary>[] = useMemo(
-    () => [
-      { header: t("feature.admin.monitoring.colRule"), accessorKey: "ruleKey" },
-      {
-        header: t("feature.admin.monitoring.colCondition"),
-        id: "cond",
-        cell: ({ row }) =>
-          `${row.original.signalKey} ${row.original.comparator} ${row.original.threshold}`,
-      },
-      {
-        header: t("feature.admin.monitoring.colSeverity"),
-        accessorKey: "severity",
-        cell: ({ row }) => <Badge variant="secondary">{row.original.severity}</Badge>,
-      },
-      {
-        header: t("feature.admin.monitoring.colActions"),
-        id: "actions",
-        cell: ({ row }) => (
-          <Button
-            size="sm"
-            variant="ghost"
-            onPress={() => evaluate.mutate(row.original.id)}
-            data-testid="alert-evaluate"
-          >
-            {t("feature.admin.monitoring.evaluate")}
-          </Button>
-        ),
-      },
-    ],
+    () => buildAlertColumns(t, evaluate),
     [t, evaluate]
   );
 
@@ -222,47 +278,7 @@ function IncidentsCard({ tenantId }: Readonly<{ tenantId: string }>) {
   const incidents = useIncidents(tenantId);
   const update = useUpdateIncident(tenantId);
   const columns: ColumnDef<IncidentSummary>[] = useMemo(
-    () => [
-      { header: t("feature.admin.monitoring.colIncident"), accessorKey: "title" },
-      {
-        header: t("feature.admin.monitoring.colStatus"),
-        accessorKey: "status",
-        cell: ({ row }) => (
-          <Badge variant={row.original.status === "resolved" ? "default" : "secondary"}>
-            {row.original.status}
-          </Badge>
-        ),
-      },
-      {
-        header: t("feature.admin.monitoring.colActions"),
-        id: "actions",
-        cell: ({ row }) =>
-          row.original.status !== "resolved" ? (
-            <div className="flex gap-2">
-              {row.original.status === "open" && (
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onPress={() =>
-                    update.mutate({ incidentId: row.original.id, status: "acknowledged" })
-                  }
-                  data-testid="incident-ack"
-                >
-                  {t("feature.admin.monitoring.ack")}
-                </Button>
-              )}
-              <Button
-                size="sm"
-                variant="ghost"
-                onPress={() => update.mutate({ incidentId: row.original.id, status: "resolved" })}
-                data-testid="incident-resolve"
-              >
-                {t("feature.admin.monitoring.resolve")}
-              </Button>
-            </div>
-          ) : null,
-      },
-    ],
+    () => buildIncidentColumns(t, update),
     [t, update]
   );
   if (incidents.isError)

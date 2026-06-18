@@ -15,7 +15,7 @@ export function ErrorState({
   onRetry,
   retryLabel,
   className,
-}: ErrorStateProps) {
+}: Readonly<ErrorStateProps>) {
   return (
     <div
       role="alert"

@@ -184,13 +184,13 @@ function IdpRow({
   onEdit,
   onDelete,
   onMapping,
-}: {
+}: Readonly<{
   idp: IdpSummary;
   editable: boolean;
   onEdit: () => void;
   onDelete: () => void;
   onMapping: () => void;
-}) {
+}>) {
   const t = useTranslation();
   const [showCallback, setShowCallback] = useState(false);
   const callback = useIdpCallbackUrl(showCallback ? idp.alias : null);
@@ -277,7 +277,7 @@ function IdpRow({
           <Button
             size="sm"
             variant="outline"
-            onPress={() => void navigator.clipboard?.writeText(callback.data!.callbackUrl)}
+            onPress={() => void navigator.clipboard?.writeText(callback.data.callbackUrl)}
             data-testid={`auth-idp-callback-copy-${idp.alias}`}
           >
             {t("feature.admin.auth.idps.copy")}
@@ -666,11 +666,11 @@ function MappingDialog({
   idp,
   editable,
   onClose,
-}: {
+}: Readonly<{
   idp: IdpSummary;
   editable: boolean;
   onClose: () => void;
-}) {
+}>) {
   const t = useTranslation();
   const mapping = useIdpMapping(idp.alias);
   const update = useUpdateIdpMapping();
@@ -844,12 +844,12 @@ function DialogActions({
   pending,
   submitLabel,
   submitTestId,
-}: {
+}: Readonly<{
   onClose: () => void;
   pending: boolean;
   submitLabel: string;
   submitTestId: string;
-}) {
+}>) {
   const t = useTranslation();
   return (
     <div className="flex items-center justify-end gap-2 pt-2">
@@ -872,14 +872,14 @@ function TextField({
   label,
   type,
   description,
-}: {
+}: Readonly<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: any;
   name: string;
   label: string;
   type?: string;
   description?: string;
-}) {
+}>) {
   return (
     <Controller
       control={control}

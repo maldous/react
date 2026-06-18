@@ -97,10 +97,10 @@ export function AdminReadinessPage() {
 function CategoryGroup({
   category,
   capabilities,
-}: {
+}: Readonly<{
   category: CapabilityCategory;
   capabilities: CapabilitySummary[];
-}) {
+}>) {
   const t = useTranslation();
   return (
     <div data-testid={`readiness-category-${category}`}>

@@ -33,7 +33,7 @@ export function Select<T extends SelectItem>({
   placeholder,
   className,
   ...props
-}: SelectProps<T>) {
+}: Readonly<SelectProps<T>>) {
   return (
     <AriaSelect className={cn("flex flex-col gap-1", className)} {...props}>
       <Button className="flex h-10 w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-50">

@@ -129,10 +129,10 @@ function useRateLimitColumns(): ColumnDef<RateLimitPolicySummary>[] {
 function SecretReveal({
   created,
   onDismiss,
-}: {
+}: Readonly<{
   created: CreateApiKeyResponse;
   onDismiss: () => void;
-}) {
+}>) {
   const t = useTranslation();
   return (
     <Card>

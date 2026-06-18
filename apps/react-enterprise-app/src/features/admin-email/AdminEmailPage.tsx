@@ -119,10 +119,10 @@ function providerItems(t: (k: string) => string): SelectItem[] {
 function SettingsForm({
   settings,
   canWrite,
-}: {
+}: Readonly<{
   settings: EmailSenderSettings;
   canWrite: boolean;
-}) {
+}>) {
   const t = useTranslation();
   const update = useUpdateEmailSender();
   const { control, handleSubmit, watch } = useForm<EmailForm>({ values: toForm(settings) });
@@ -362,7 +362,7 @@ function Field({
   type,
   description,
   disabled,
-}: {
+}: Readonly<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: any;
   name: keyof EmailForm;
@@ -370,7 +370,7 @@ function Field({
   type?: string;
   description?: string;
   disabled?: boolean;
-}) {
+}>) {
   return (
     <Controller
       control={control}

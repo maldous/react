@@ -23,6 +23,63 @@ import {
   useSetScheduledJobEnabled,
 } from "./use-admin-scheduled-jobs";
 
+type Translate = ReturnType<typeof useTranslation>;
+
+function buildJobColumns(
+  t: Translate,
+  run: ReturnType<typeof useRunScheduledJob>,
+  toggle: ReturnType<typeof useSetScheduledJobEnabled>
+): ColumnDef<ScheduledJobSummary>[] {
+  return [
+    { header: t("feature.admin.scheduledJobs.colJob"), accessorKey: "jobKey" },
+    { header: t("feature.admin.scheduledJobs.colEvent"), accessorKey: "eventType" },
+    {
+      header: t("feature.admin.scheduledJobs.colInterval"),
+      accessorKey: "intervalSeconds",
+      cell: ({ row }) => `${row.original.intervalSeconds}s`,
+    },
+    {
+      header: t("feature.admin.scheduledJobs.colState"),
+      accessorKey: "enabled",
+      cell: ({ row }) => (
+        <Badge variant={row.original.enabled ? "default" : "secondary"}>
+          {row.original.enabled
+            ? t("feature.admin.scheduledJobs.enabled")
+            : t("feature.admin.scheduledJobs.paused")}
+        </Badge>
+      ),
+    },
+    {
+      header: t("feature.admin.scheduledJobs.colActions"),
+      id: "actions",
+      cell: ({ row }) => (
+        <div className="flex gap-2">
+          <Button
+            size="sm"
+            variant="ghost"
+            onPress={() => run.mutate(row.original.id)}
+            data-testid="job-run"
+          >
+            {t("feature.admin.scheduledJobs.runNow")}
+          </Button>
+          <Button
+            size="sm"
+            variant="ghost"
+            onPress={() =>
+              toggle.mutate({ jobId: row.original.id, enabled: !row.original.enabled })
+            }
+            data-testid="job-toggle"
+          >
+            {row.original.enabled
+              ? t("feature.admin.scheduledJobs.pause")
+              : t("feature.admin.scheduledJobs.resume")}
+          </Button>
+        </div>
+      ),
+    },
+  ];
+}
+
 function JobsCard({ tenantId }: Readonly<{ tenantId: string }>) {
   const t = useTranslation();
   const jobs = useScheduledJobs(tenantId);
@@ -45,54 +102,7 @@ function JobsCard({ tenantId }: Readonly<{ tenantId: string }>) {
   }
 
   const columns: ColumnDef<ScheduledJobSummary>[] = useMemo(
-    () => [
-      { header: t("feature.admin.scheduledJobs.colJob"), accessorKey: "jobKey" },
-      { header: t("feature.admin.scheduledJobs.colEvent"), accessorKey: "eventType" },
-      {
-        header: t("feature.admin.scheduledJobs.colInterval"),
-        accessorKey: "intervalSeconds",
-        cell: ({ row }) => `${row.original.intervalSeconds}s`,
-      },
-      {
-        header: t("feature.admin.scheduledJobs.colState"),
-        accessorKey: "enabled",
-        cell: ({ row }) => (
-          <Badge variant={row.original.enabled ? "default" : "secondary"}>
-            {row.original.enabled
-              ? t("feature.admin.scheduledJobs.enabled")
-              : t("feature.admin.scheduledJobs.paused")}
-          </Badge>
-        ),
-      },
-      {
-        header: t("feature.admin.scheduledJobs.colActions"),
-        id: "actions",
-        cell: ({ row }) => (
-          <div className="flex gap-2">
-            <Button
-              size="sm"
-              variant="ghost"
-              onPress={() => run.mutate(row.original.id)}
-              data-testid="job-run"
-            >
-              {t("feature.admin.scheduledJobs.runNow")}
-            </Button>
-            <Button
-              size="sm"
-              variant="ghost"
-              onPress={() =>
-                toggle.mutate({ jobId: row.original.id, enabled: !row.original.enabled })
-              }
-              data-testid="job-toggle"
-            >
-              {row.original.enabled
-                ? t("feature.admin.scheduledJobs.pause")
-                : t("feature.admin.scheduledJobs.resume")}
-            </Button>
-          </div>
-        ),
-      },
-    ],
+    () => buildJobColumns(t, run, toggle),
     [t, run, toggle]
   );
 

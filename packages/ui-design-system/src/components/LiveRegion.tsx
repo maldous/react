@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from "react";
 import { cn } from "../lib/utils";
 
-export interface LiveRegionProps extends HTMLAttributes<HTMLDivElement> {
+export interface LiveRegionProps extends HTMLAttributes<HTMLOutputElement> {
   /** "polite" (status, default) or "assertive" (alert). */
   tone?: "polite" | "assertive";
 }
@@ -22,13 +22,13 @@ export function LiveRegion({
   ...props
 }: Readonly<LiveRegionProps>) {
   return (
-    <div
-      role={tone === "assertive" ? "alert" : "status"}
+    <output
+      role={tone === "assertive" ? "alert" : undefined}
       aria-live={tone}
       className={cn("min-h-[1.25rem] text-sm", className)}
       {...props}
     >
       {children}
-    </div>
+    </output>
   );
 }

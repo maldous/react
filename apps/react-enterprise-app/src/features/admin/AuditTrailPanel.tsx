@@ -16,7 +16,7 @@ export function AuditTrailPanel({
   heading,
   testId,
   enabled = true,
-}: {
+}: Readonly<{
   resource: AuditResource;
   resourceId?: string;
   /** Optional exact audit-action filter (e.g. "auth_settings.session.changed"). */
@@ -24,7 +24,7 @@ export function AuditTrailPanel({
   heading: string;
   testId: string;
   enabled?: boolean;
-}) {
+}>) {
   const t = useTranslation();
   const { data, isLoading, isError, error } = useAudit({ resource, resourceId, action }, enabled);
   const events = data?.events ?? [];
@@ -57,9 +57,9 @@ export function AuditTrailPanel({
   }
 
   return (
-    <div data-testid={testId} role="group" aria-label={heading}>
+    <fieldset data-testid={testId} aria-label={heading}>
       <p className="mb-2 text-sm font-semibold text-fg">{heading}</p>
       {renderBody()}
-    </div>
+    </fieldset>
   );
 }

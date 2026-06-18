@@ -18,6 +18,62 @@ import { AdminQueryError } from "../admin/AdminQueryError";
 import { useTenantLookup } from "../admin-entitlements/use-admin-entitlements";
 import { useDeadLetters, useEvents, useRedriveEvent, useWorkers } from "./use-admin-events";
 
+type Translate = ReturnType<typeof useTranslation>;
+
+function buildWorkerColumns(t: Translate): ColumnDef<WorkerSummary>[] {
+  return [
+    { header: t("feature.admin.events.colWorker"), accessorKey: "workerId" },
+    { header: t("feature.admin.events.colKind"), accessorKey: "workerKind" },
+    {
+      header: t("feature.admin.events.colWorkerStatus"),
+      accessorKey: "status",
+      cell: ({ row }) => (
+        <Badge variant={row.original.status === "alive" ? "default" : "secondary"}>
+          {row.original.status}
+        </Badge>
+      ),
+    },
+    {
+      header: t("feature.admin.events.colHeartbeat"),
+      accessorKey: "secondsSinceHeartbeat",
+      cell: ({ row }) =>
+        t("feature.admin.events.secondsAgo", { s: row.original.secondsSinceHeartbeat }),
+    },
+  ];
+}
+
+function buildDeadLetterColumns(
+  t: Translate,
+  redrive: ReturnType<typeof useRedriveEvent>
+): ColumnDef<DeadLetterSummary>[] {
+  return [
+    { header: t("feature.admin.events.colType"), accessorKey: "eventType" },
+    { header: t("feature.admin.events.colAttempts"), accessorKey: "attempts" },
+    {
+      header: t("feature.admin.events.colError"),
+      accessorKey: "lastError",
+      cell: ({ row }) => row.original.lastError ?? "—",
+    },
+    {
+      header: t("feature.admin.events.colActions"),
+      id: "actions",
+      cell: ({ row }) =>
+        row.original.redrivenAt ? (
+          <span className="text-xs text-fg-muted">{t("feature.admin.events.redriven")}</span>
+        ) : (
+          <Button
+            size="sm"
+            variant="ghost"
+            onPress={() => redrive.mutate(row.original.id)}
+            data-testid="event-redrive"
+          >
+            {t("feature.admin.events.redrive")}
+          </Button>
+        ),
+    },
+  ];
+}
+
 function useEventColumns(): ColumnDef<EventSummary>[] {
   const t = useTranslation();
   return useMemo(
@@ -45,28 +101,7 @@ function useEventColumns(): ColumnDef<EventSummary>[] {
 function WorkersCard() {
   const t = useTranslation();
   const workers = useWorkers();
-  const columns: ColumnDef<WorkerSummary>[] = useMemo(
-    () => [
-      { header: t("feature.admin.events.colWorker"), accessorKey: "workerId" },
-      { header: t("feature.admin.events.colKind"), accessorKey: "workerKind" },
-      {
-        header: t("feature.admin.events.colWorkerStatus"),
-        accessorKey: "status",
-        cell: ({ row }) => (
-          <Badge variant={row.original.status === "alive" ? "default" : "secondary"}>
-            {row.original.status}
-          </Badge>
-        ),
-      },
-      {
-        header: t("feature.admin.events.colHeartbeat"),
-        accessorKey: "secondsSinceHeartbeat",
-        cell: ({ row }) =>
-          t("feature.admin.events.secondsAgo", { s: row.original.secondsSinceHeartbeat }),
-      },
-    ],
-    [t]
-  );
+  const columns: ColumnDef<WorkerSummary>[] = useMemo(() => buildWorkerColumns(t), [t]);
   return (
     <Card>
       <CardBody>
@@ -93,32 +128,7 @@ function DeadLetterTable({ tenantId }: Readonly<{ tenantId: string }>) {
   const dlq = useDeadLetters(tenantId);
   const redrive = useRedriveEvent(tenantId);
   const columns: ColumnDef<DeadLetterSummary>[] = useMemo(
-    () => [
-      { header: t("feature.admin.events.colType"), accessorKey: "eventType" },
-      { header: t("feature.admin.events.colAttempts"), accessorKey: "attempts" },
-      {
-        header: t("feature.admin.events.colError"),
-        accessorKey: "lastError",
-        cell: ({ row }) => row.original.lastError ?? "—",
-      },
-      {
-        header: t("feature.admin.events.colActions"),
-        id: "actions",
-        cell: ({ row }) =>
-          row.original.redrivenAt ? (
-            <span className="text-xs text-fg-muted">{t("feature.admin.events.redriven")}</span>
-          ) : (
-            <Button
-              size="sm"
-              variant="ghost"
-              onPress={() => redrive.mutate(row.original.id)}
-              data-testid="event-redrive"
-            >
-              {t("feature.admin.events.redrive")}
-            </Button>
-          ),
-      },
-    ],
+    () => buildDeadLetterColumns(t, redrive),
     [t, redrive]
   );
   if (dlq.isLoading) return <LoadingState message={t("auth.status.loading")} />;

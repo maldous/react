@@ -23,7 +23,7 @@ export function Dialog({
   className,
   children,
   ...props
-}: DialogProps) {
+}: Readonly<DialogProps>) {
   const content = (
     <ModalOverlay
       isOpen={isOpen}

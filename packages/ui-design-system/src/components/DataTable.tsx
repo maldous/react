@@ -46,7 +46,7 @@ export function DataTable<TData>({
   className,
   renderSubComponent,
   rowTestId,
-}: DataTableProps<TData>) {
+}: Readonly<DataTableProps<TData>>) {
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({

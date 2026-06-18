@@ -37,7 +37,7 @@ export function Textarea({
   textAreaProps,
   placeholder,
   ...props
-}: TextareaProps) {
+}: Readonly<TextareaProps>) {
   return (
     <TextField {...props}>
       <AriaTextArea

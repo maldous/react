@@ -37,7 +37,7 @@ export function LogSearchForm({
   isSearching,
   onCopyContext,
   copied,
-}: LogSearchFormProps) {
+}: Readonly<LogSearchFormProps>) {
   const t = useTranslation();
   const { control, handleSubmit } = useForm<LogSearchFormValues>({
     resolver: zodResolver(LogSearchFormSchema),

@@ -219,9 +219,9 @@ function IdpsTab() {
       {status && status !== "configured" && (
         <Card>
           <CardBody>
-            <p role="status" className="text-sm text-fg-muted" data-testid="auth-idps-readiness">
+            <output className="text-sm text-fg-muted" data-testid="auth-idps-readiness">
               {t(`feature.admin.auth.readiness.${status}` as const)}
-            </p>
+            </output>
           </CardBody>
         </Card>
       )}
@@ -269,9 +269,9 @@ function MfaTab() {
       {status && status !== "configured" && (
         <Card>
           <CardBody>
-            <p role="status" className="text-sm text-fg-muted" data-testid="auth-mfa-readiness">
+            <output className="text-sm text-fg-muted" data-testid="auth-mfa-readiness">
               {t(`feature.admin.auth.readiness.${status}` as const)}
-            </p>
+            </output>
           </CardBody>
         </Card>
       )}
@@ -412,9 +412,9 @@ function SessionTab() {
       {status && status !== "configured" && (
         <Card>
           <CardBody>
-            <p role="status" className="text-sm text-fg-muted" data-testid="auth-session-readiness">
+            <output className="text-sm text-fg-muted" data-testid="auth-session-readiness">
               {t(`feature.admin.auth.readiness.${status}` as const)}
-            </p>
+            </output>
           </CardBody>
         </Card>
       )}

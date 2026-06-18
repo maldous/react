@@ -185,11 +185,11 @@ export function AdminSectionHeader({
   heading,
   description,
   action,
-}: {
+}: Readonly<{
   heading: string;
   description?: string;
   action?: React.ReactNode;
-}) {
+}>) {
   return (
     <SectionHeader
       level={1}

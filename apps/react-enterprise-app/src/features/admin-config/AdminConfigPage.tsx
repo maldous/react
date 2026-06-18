@@ -25,6 +25,14 @@ import { AuditTrailPanel } from "../admin/AuditTrailPanel";
 import { useConfig, useSetConfigValue, useClearConfigValue } from "./use-admin-config";
 
 /**
+ * Render a config value as text exactly as before for scalars, while avoiding the
+ * "[object Object]" stringification hazard for non-null object values (S6551).
+ */
+function asText(v: unknown): string {
+  return typeof v === "object" && v !== null ? JSON.stringify(v) : String(v ?? "");
+}
+
+/**
  * Platform configuration (ADR-0039). Effective tenant config grouped by category;
  * type-appropriate editors (Switch / Select / field), with the value source and a
  * reset-to-default action. Write controls require the definition's permission; the
@@ -111,12 +119,12 @@ function ConfigItemRow({
   onSet,
   onReset,
   busy,
-}: {
+}: Readonly<{
   item: EffectiveConfigItem;
   onSet: (value: unknown) => void;
   onReset: () => void;
   busy: boolean;
-}) {
+}>) {
   const t = useTranslation();
   const { hasPermission } = useSession();
   const def: ConfigDefinitionDto = item.definition;
@@ -166,12 +174,12 @@ function ConfigEditor({
   canWrite,
   busy,
   onSet,
-}: {
+}: Readonly<{
   item: EffectiveConfigItem;
   canWrite: boolean;
   busy: boolean;
   onSet: (value: unknown) => void;
-}) {
+}>) {
   const t = useTranslation();
   const def = item.definition;
   const testId = `config-value-${def.key}`;
@@ -195,7 +203,7 @@ function ConfigEditor({
         items={items}
         placeholder={t(def.labelKey)}
         aria-label={t(def.labelKey)}
-        selectedKey={String(item.value ?? "")}
+        selectedKey={asText(item.value)}
         isDisabled={!canWrite || busy}
         onSelectionChange={(key) => onSet(String(key))}
         className="min-w-[10rem]"
@@ -227,19 +235,19 @@ function ScalarEditor({
   busy,
   onSet,
   testId,
-}: {
+}: Readonly<{
   item: EffectiveConfigItem;
   canWrite: boolean;
   busy: boolean;
   onSet: (value: unknown) => void;
   testId: string;
-}) {
+}>) {
   const t = useTranslation();
   const def = item.definition;
-  const [draft, setDraft] = useState(String(item.value ?? ""));
+  const [draft, setDraft] = useState(asText(item.value));
 
   if (!canWrite) {
-    return <span className="text-sm text-fg">{String(item.value ?? "")}</span>;
+    return <span className="text-sm text-fg">{asText(item.value)}</span>;
   }
   return (
     <form

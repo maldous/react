@@ -119,12 +119,12 @@ function SignalRow({
   signal,
   testId,
   t,
-}: {
+}: Readonly<{
   label: string;
   signal: ObservabilitySignalStatus;
   testId: string;
   t: (key: string) => string;
-}) {
+}>) {
   return (
     <div className="flex items-center gap-3">
       <dt className="font-medium text-fg">{label}:</dt>
