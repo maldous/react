@@ -36,7 +36,15 @@ function check(label: string, ok: boolean, detail = ""): void {
 }
 function capturingAudit(): { port: AuditEventPort; events: AuditEvent[] } {
   const events: AuditEvent[] = [];
-  return { events, port: { emit: async (e) => void events.push(e), query: async () => events } };
+  return {
+    events,
+    port: {
+      emit: async (e) => {
+        events.push(e);
+      },
+      query: async () => events,
+    },
+  };
 }
 
 // A fake runner records the argv it is asked to run; it never spawns a process.

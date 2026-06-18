@@ -70,7 +70,11 @@ async function main(): Promise<void> {
     // happy path: publish → worker consumes → processed
     await publishEvent({ organisationId: orgA, eventType: "ok.event", idempotencyKey: "k1" }, deps);
     const handled: string[] = [];
-    const okHandlers = { "ok.event": async (e: ClaimedEvent) => void handled.push(e.id) };
+    const okHandlers = {
+      "ok.event": async (e: ClaimedEvent) => {
+        handled.push(e.id);
+      },
+    };
     const r1 = await processNext(okHandlers, deps, {
       workerId,
       workerKind: "event-worker",

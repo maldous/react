@@ -31,7 +31,15 @@ const ACTOR = { actorId: "op", actorRoles: ["system-admin"] };
 
 function capturingAudit(): { port: AuditEventPort; events: AuditEvent[] } {
   const events: AuditEvent[] = [];
-  return { events, port: { emit: async (e) => void events.push(e), query: async () => events } };
+  return {
+    events,
+    port: {
+      emit: async (e) => {
+        events.push(e);
+      },
+      query: async () => events,
+    },
+  };
 }
 
 function fakeRepo(): MetricRepository &
@@ -153,7 +161,9 @@ function fakeNotifications(prefs: PreferenceRecord[]): {
       listPreferences: async () => prefs,
       listPreferencesAsOperator: async () => prefs,
       upsertPreferences: async () => {},
-      logDispatch: async (i) => void log.push({ channel: i.channel, status: i.status }),
+      logDispatch: async (i) => {
+        log.push({ channel: i.channel, status: i.status });
+      },
       countLog: async () => log.length,
     },
     audit: capturingAudit().port,

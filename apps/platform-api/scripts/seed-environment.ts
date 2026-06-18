@@ -45,7 +45,12 @@ const actor: EnvironmentActor = {
 
 function auditSink(): AuditEventPort {
   const events: AuditEvent[] = [];
-  return { emit: async (e) => void events.push(e), query: async () => events };
+  return {
+    emit: async (e) => {
+      events.push(e);
+    },
+    query: async () => events,
+  };
 }
 function loadManifest(stage: string): EnvironmentManifestDescriptor {
   return JSON.parse(

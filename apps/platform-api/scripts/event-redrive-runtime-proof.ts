@@ -171,9 +171,17 @@ async function main(): Promise<void> {
 
     // the requeued event is processable
     const handled: string[] = [];
-    const after = await processNext({ "boom.event": async (e) => void handled.push(e.id) }, deps, {
-      batch: 10,
-    });
+    const after = await processNext(
+      {
+        "boom.event": async (e) => {
+          handled.push(e.id);
+        },
+      },
+      deps,
+      {
+        batch: 10,
+      }
+    );
     check(
       "the requeued event is processed on the next worker tick",
       after.processed === 1 && handled.length === 1

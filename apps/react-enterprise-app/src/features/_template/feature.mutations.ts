@@ -15,8 +15,6 @@ export function useCreateWidget() {
   return useMutation({
     mutationFn: (input: WidgetFormValues) =>
       graphqlRequest(CreateWidgetDocument, { name: input.name }),
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: widgetListQueryKey });
-    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: widgetListQueryKey }),
   });
 }

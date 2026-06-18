@@ -36,7 +36,7 @@ export function useInviteMember() {
   const invalidate = useInvalidateMembers();
   return useMutation({
     mutationFn: (input: InviteMemberRequest) => inviteMember(input),
-    onSuccess: () => void invalidate(),
+    onSuccess: () => invalidate(),
   });
 }
 
@@ -45,7 +45,7 @@ export function useUpdateMemberRole() {
   return useMutation({
     mutationFn: ({ userId, input }: { userId: string; input: UpdateMemberRoleRequest }) =>
       updateMemberRole(userId, input),
-    onSuccess: () => void invalidate(),
+    onSuccess: () => invalidate(),
   });
 }
 
@@ -53,7 +53,7 @@ export function useRemoveMember() {
   const invalidate = useInvalidateMembers();
   return useMutation({
     mutationFn: (userId: string) => removeMember(userId),
-    onSuccess: () => void invalidate(),
+    onSuccess: () => invalidate(),
   });
 }
 
@@ -62,7 +62,7 @@ export function useEditUsername() {
   return useMutation({
     mutationFn: ({ userId, input }: { userId: string; input: EditUsernameRequest }) =>
       setMemberUsername(userId, input),
-    onSuccess: () => void invalidate(),
+    onSuccess: () => invalidate(),
   });
 }
 
@@ -71,7 +71,7 @@ export function useSetMemberStatus() {
   return useMutation({
     mutationFn: ({ userId, input }: { userId: string; input: SetMemberStatusRequest }) =>
       setMemberStatus(userId, input),
-    onSuccess: () => void invalidate(),
+    onSuccess: () => invalidate(),
   });
 }
 

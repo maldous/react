@@ -60,7 +60,15 @@ function fakeSearch(): SearchIndexPort &
 
 function capturingAudit(): { port: AuditEventPort; events: AuditEvent[] } {
   const events: AuditEvent[] = [];
-  return { events, port: { emit: async (e) => void events.push(e), query: async () => events } };
+  return {
+    events,
+    port: {
+      emit: async (e) => {
+        events.push(e);
+      },
+      query: async () => events,
+    },
+  };
 }
 
 function deps() {

@@ -20,7 +20,7 @@ export function useSetConfigValue() {
   const invalidate = useInvalidateConfig();
   return useMutation({
     mutationFn: ({ key, value }: { key: string; value: unknown }) => setConfigValue(key, value),
-    onSuccess: () => void invalidate(),
+    onSuccess: () => invalidate(),
   });
 }
 
@@ -28,6 +28,6 @@ export function useClearConfigValue() {
   const invalidate = useInvalidateConfig();
   return useMutation({
     mutationFn: (key: string) => clearConfigValue(key),
-    onSuccess: () => void invalidate(),
+    onSuccess: () => invalidate(),
   });
 }

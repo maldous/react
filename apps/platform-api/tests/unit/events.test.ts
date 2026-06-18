@@ -149,7 +149,15 @@ function fakeWorkers(): WorkerRegistryPort & { _beats: Map<string, WorkerRecord>
 
 function capturingAudit(): { port: AuditEventPort; events: AuditEvent[] } {
   const events: AuditEvent[] = [];
-  return { events, port: { emit: async (e) => void events.push(e), query: async () => events } };
+  return {
+    events,
+    port: {
+      emit: async (e) => {
+        events.push(e);
+      },
+      query: async () => events,
+    },
+  };
 }
 
 function deps() {
@@ -191,7 +199,11 @@ describe("events usecase", () => {
       d
     );
     const handled: string[] = [];
-    const handlers = { "thing.created": async (e: ClaimedEvent) => void handled.push(e.id) };
+    const handlers = {
+      "thing.created": async (e: ClaimedEvent) => {
+        handled.push(e.id);
+      },
+    };
     const r1 = await processNext(handlers, d, { workerId: "w1", workerKind: "test" });
     assert.equal(r1.processed, 1);
     const r2 = await processNext(handlers, d);
@@ -250,7 +262,14 @@ describe("events usecase", () => {
     );
     // the requeued event is processable
     const handled: string[] = [];
-    await processNext({ boom: async (e: ClaimedEvent) => void handled.push(e.id) }, d);
+    await processNext(
+      {
+        boom: async (e: ClaimedEvent) => {
+          handled.push(e.id);
+        },
+      },
+      d
+    );
     assert.equal(handled.length, 1);
     assert.equal(bus._dlq[0]?.redrivenAt != null, true);
   });

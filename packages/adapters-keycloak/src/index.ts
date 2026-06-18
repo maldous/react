@@ -227,8 +227,7 @@ export function buildAuthorizationUrl(
  * caching complexity. This stub is preserved for future use cases where
  * the platform receives inbound tokens from external callers.
  */
-export async function verifyKeycloakToken(token: string): Promise<Record<string, unknown> | null> {
-  void token;
+export async function verifyKeycloakToken(_token: string): Promise<Record<string, unknown> | null> {
   return null;
 }
 
@@ -779,7 +778,7 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
     await this.assertAdminOk(res, `setResourcePolicy(${resourceName}/${policy.type})`, [409]);
   }
 
-  async removeResourcePolicy(resourceName: string, policyName: string): Promise<void> {
+  async removeResourcePolicy(_resourceName: string, policyName: string): Promise<void> {
     const token = await this.getAdminToken();
     const clientUuid = await this._getBffClientUuid(token);
     // No BFF client → no policies to remove (idempotent no-op).
@@ -800,7 +799,6 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
       { method: "DELETE", headers: { Authorization: `Bearer ${token}` } }
     );
     await this.assertAdminOk(delRes, `removeResourcePolicy(${policyName})`, [404]);
-    void resourceName;
   }
 
   /** Helper: resolve the BFF client UUID (platform-api) by clientId. Cached-free (called per operation). */
