@@ -16,15 +16,31 @@ const findRepoRoot = (startDir) => sharedFindRepoRoot(startDir, "docs/CODEMAPS/p
 const SECTION_RE = /^## ([^()]+) \((\d+)\)$/;
 const TOTAL_RE = /^## Total: (\d+) packages/;
 const DISTRIBUTION_RE = /^\*\*Lifecycle Distribution\*\*:(.*)$/;
-const DIST_PAIR_RE = /(\d+) ([a-z]+)/g;
 const ROW_RE = /^\| (@platform\/[a-z0-9-]+) +\| ([a-z]+) +\|/;
+
+const isLowerAlpha = (s) => s.length > 0 && [...s].every((c) => c >= "a" && c <= "z");
+
+// Parse "33 active, 9 experimental, 9 deprecated (…)" into {active:33,…} using
+// pure string ops (no regex → no ReDoS surface) — each comma-part's first two
+// space-separated tokens are the count and the stage.
+function parseDistribution(text) {
+  const out = {};
+  for (const part of text.split(",")) {
+    const [countToken, stageToken] = part.trim().split(" ");
+    const count = Number(countToken);
+    if (Number.isInteger(count) && stageToken && isLowerAlpha(stageToken)) {
+      out[stageToken] = count;
+    }
+  }
+  return out;
+}
 
 // Parse the codemap into { sections:[{name,declaredCount,rows:[{name,lifecycle}]}], total, distribution }.
 export function parseCodemap(markdown) {
   const sections = [];
   let current = null;
   let total = null;
-  const distribution = {};
+  let distribution = {};
   for (const raw of markdown.split("\n")) {
     const line = raw.trim();
     const sec = SECTION_RE.exec(line);
@@ -41,7 +57,7 @@ export function parseCodemap(markdown) {
     }
     const distMatch = DISTRIBUTION_RE.exec(line);
     if (distMatch) {
-      for (const m of distMatch[1].matchAll(DIST_PAIR_RE)) distribution[m[2]] = Number(m[1]);
+      distribution = parseDistribution(distMatch[1]);
       continue;
     }
     const row = ROW_RE.exec(line);
