@@ -31,7 +31,13 @@ export interface InputProps
   placeholder?: string;
 }
 
-export function Input({ className, variant, inputProps, placeholder, ...props }: Readonly<InputProps>) {
+export function Input({
+  className,
+  variant,
+  inputProps,
+  placeholder,
+  ...props
+}: Readonly<InputProps>) {
   return (
     <TextField {...props}>
       <AriaInput

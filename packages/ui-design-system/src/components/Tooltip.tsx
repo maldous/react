@@ -13,7 +13,13 @@ export interface TooltipProps extends AriaTooltipProps {
   children: ReactNode;
 }
 
-export function Tooltip({ trigger, delay = 700, className, children, ...props }: Readonly<TooltipProps>) {
+export function Tooltip({
+  trigger,
+  delay = 700,
+  className,
+  children,
+  ...props
+}: Readonly<TooltipProps>) {
   return (
     <TooltipTrigger delay={delay}>
       {trigger}

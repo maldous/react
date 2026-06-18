@@ -34,6 +34,9 @@ export function AlertTitle({ className, ...props }: Readonly<HTMLAttributes<HTML
   return <h5 className={cn("mb-1 font-medium leading-none", className)} {...props} />;
 }
 
-export function AlertDescription({ className, ...props }: Readonly<HTMLAttributes<HTMLParagraphElement>>) {
+export function AlertDescription({
+  className,
+  ...props
+}: Readonly<HTMLAttributes<HTMLParagraphElement>>) {
   return <p className={cn("text-sm opacity-90", className)} {...props} />;
 }
