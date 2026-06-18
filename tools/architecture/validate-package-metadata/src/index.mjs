@@ -221,6 +221,7 @@ export function validatePackage(
   validateLifecycle(architecture.lifecycle, errors);
   validateGovernance(architecture.governance, errors);
   validateLifecycleGovernanceConsistency(architecture.lifecycle, architecture.governance, errors);
+  validateTagProjection(architecture.lifecycle, architecture.tags, errors);
   validateRuntime(architecture.runtime, errors);
   validateBoundaries(architecture.boundaries, errors);
   validateRelations(architecture.relations, errors);
@@ -349,6 +350,24 @@ export function validateLifecycle(lifecycle, errors) {
         "architecture.lifecycle.supportLevel must be deprecated or unsupported for deprecated lifecycle stage"
       );
     }
+  }
+}
+
+// The architecture.tags block is a denormalised projection of lifecycle facts
+// used by catalog tooling. It must never drift from the authoritative lifecycle
+// fields, or a package can read as (e.g.) active in one surface and deprecated in
+// another. Fail closed when the projections disagree (ADR-0006 / ADR-ACT-0289).
+export function validateTagProjection(lifecycle, tags, errors) {
+  if (!isObject(lifecycle) || !isObject(tags)) return;
+  if (tags.stage !== lifecycle.stage) {
+    errors.push(
+      `architecture.tags.stage (${tags.stage}) must equal architecture.lifecycle.stage (${lifecycle.stage})`
+    );
+  }
+  if (tags.role !== lifecycle.role) {
+    errors.push(
+      `architecture.tags.role (${tags.role}) must equal architecture.lifecycle.role (${lifecycle.role})`
+    );
   }
 }
 

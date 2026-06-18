@@ -80,7 +80,7 @@
     "tags": {
       "scope": "operations",
       "type": "library",
-      "stage": "active",
+      "stage": "deprecated",
       "role": "platform",
       "layer": "runtime"
     },
@@ -99,8 +99,9 @@
         "Does not interact with HTTP request/response cycle"
       ],
       "usage": [
-        "Imported by application packages to start background worker processes",
-        "Job processor functions are registered from feature or domain packages"
+        "Do not add new consumers — this package is deprecated (ADR-0006), retained only until its removal review 2026-12-18.",
+        "Existing migration exceptions: none.",
+        "Canonical replacement: apps/platform-api server/worker-registry.ts + usecases/webhook-worker.ts."
       ],
       "operationalNotes": [
         "Graceful shutdown drains in-flight jobs before exiting",

@@ -79,7 +79,7 @@
     "tags": {
       "scope": "initial",
       "type": "library",
-      "stage": "active",
+      "stage": "deprecated",
       "role": "feature",
       "layer": "feature"
     },
@@ -99,9 +99,9 @@
         "Does not persist profile configuration or evaluate role policy directly"
       ],
       "usage": [
-        "Import from the React app shell through public feature exports",
-        "Use domain-core and contract packages as dependencies",
-        "Keep adapter integration at the edge of the feature boundary"
+        "Do not add new consumers — this package is deprecated (ADR-0006), retained only until its removal review 2026-12-18.",
+        "Existing migration exceptions: none.",
+        "No replacement required — speculative workflow scaffold, never wired."
       ],
       "operationalNotes": [
         "This package is intentionally generic and can represent any enterprise workflow"

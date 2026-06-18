@@ -4,6 +4,8 @@
 
 DEPRECATED (ADR-0006 / ADR-ACT-0288): superseded by apps/platform-api webhook delivery queue (migration 020) + server/worker-registry.ts; do not add new usage; removal review 2026-12-18. Queue abstraction: job enqueue interface, queue topology contracts, and delivery guarantee definitions.
 
+> **⚠️ DEPRECATED — do not add new consumers.** Retained only until its removal review (ADR-0006); new imports are blocked by the `no-import-from-deprecated` boundary rule. See **Public exports and usage** for the canonical replacement.
+
 ## Package identity
 
 ```text
@@ -58,9 +60,9 @@ Public exports only: true
 Deep imports allowed: false
 ```
 
-- Imported by feature packages to enqueue jobs without coupling to the broker
-- worker-runtime imports topology contracts to register consumers
-- adapters-redis implements the enqueue interface against BullMQ
+- Do not add new consumers — this package is deprecated (ADR-0006), retained only until its removal review 2026-12-18.
+- Existing migration exceptions: none.
+- Canonical replacement: apps/platform-api webhook delivery queue (migration 020) + server/worker-registry.ts.
 
 ## Boundaries
 

@@ -4,6 +4,8 @@
 
 DEPRECATED (ADR-0006 / ADR-ACT-0288): superseded by apps/platform-api usecases/search.ts + adapters/postgres-search-repository.ts; do not add new usage; removal review 2026-12-18. Search service abstraction: query interface, index management contracts, and search provider interface.
 
+> **⚠️ DEPRECATED — do not add new consumers.** Retained only until its removal review (ADR-0006); new imports are blocked by the `no-import-from-deprecated` boundary rule. See **Public exports and usage** for the canonical replacement.
+
 ## Package identity
 
 ```text
@@ -58,9 +60,9 @@ Public exports only: true
 Deep imports allowed: false
 ```
 
-- Imported by feature packages to execute search queries
-- Imported by background workers to index or re-index documents
-- Concrete adapters are registered at application startup via the provider interface
+- Do not add new consumers — this package is deprecated (ADR-0006), retained only until its removal review 2026-12-18.
+- Existing migration exceptions: none.
+- Canonical replacement: apps/platform-api usecases/search.ts + adapters/postgres-search-repository.ts.
 
 ## Boundaries
 

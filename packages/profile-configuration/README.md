@@ -4,6 +4,8 @@
 
 DEPRECATED (ADR-0006 / ADR-ACT-0288): superseded by apps/platform-api usecases/profile.ts + ports/profile-repository.ts; do not add new usage; removal review 2026-12-18. Generic user profile and configuration domain package for preferences, settings, entitlements, and runtime configuration models.
 
+> **⚠️ DEPRECATED — do not add new consumers.** Retained only until its removal review (ADR-0006); new imports are blocked by the `no-import-from-deprecated` boundary rule. See **Public exports and usage** for the canonical replacement.
+
 ## Package identity
 
 ```text
@@ -57,8 +59,9 @@ Public exports only: true
 Deep imports allowed: false
 ```
 
-- Consumed by workflow, access-control, GraphQL contract, and persistence adapter packages through public exports
-- Used to define storage-independent profile/configuration rules
+- Do not add new consumers — this package is deprecated (ADR-0006), retained only until its removal review 2026-12-18.
+- Existing migration exceptions: none.
+- Canonical replacement: apps/platform-api usecases/profile.ts + ports/profile-repository.ts.
 
 ## Boundaries
 

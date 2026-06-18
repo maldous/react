@@ -4,6 +4,8 @@
 
 DEPRECATED (ADR-0006 / ADR-ACT-0288): superseded by authorisation-runtime + adapters-keycloak; do not add new usage; removal review 2026-12-18. Authentication abstraction: token validation, identity contracts, RBAC primitives, and auth provider interface.
 
+> **⚠️ DEPRECATED — do not add new consumers.** Retained only until its removal review (ADR-0006); new imports are blocked by the `no-import-from-deprecated` boundary rule. See **Public exports and usage** for the canonical replacement.
+
 ## Package identity
 
 ```text
@@ -58,8 +60,9 @@ Public exports only: true
 Deep imports allowed: false
 ```
 
-- Imported by api-runtime and session-runtime to enforce authentication
-- adapters-keycloak implements the auth provider interface defined here
+- Do not add new consumers — this package is deprecated (ADR-0006), retained only until its removal review 2026-12-18.
+- Existing migration exceptions: none.
+- Canonical replacement: @platform/authorisation-runtime + @platform/adapters-keycloak.
 
 ## Boundaries
 

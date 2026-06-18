@@ -78,7 +78,7 @@
     "tags": {
       "scope": "operations",
       "type": "library",
-      "stage": "active",
+      "stage": "deprecated",
       "role": "platform",
       "layer": "platform"
     },
@@ -97,8 +97,9 @@
         "Does not manage notification history or read-state persistence"
       ],
       "usage": [
-        "Imported by feature packages to dispatch notifications across channels",
-        "Concrete channel adapters are registered at application startup via the channel registry"
+        "Do not add new consumers — this package is deprecated (ADR-0006), retained only until its removal review 2026-12-18.",
+        "Existing migration exceptions: none.",
+        "Canonical replacement: apps/platform-api usecases/notifications.ts + adapters/postgres-notification-repository.ts."
       ],
       "operationalNotes": [
         "Delivery is best-effort by default ? channels that require at-least-once must be backed by queue-runtime",

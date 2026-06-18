@@ -77,7 +77,7 @@
     "tags": {
       "scope": "operations",
       "type": "library",
-      "stage": "active",
+      "stage": "deprecated",
       "role": "platform",
       "layer": "platform"
     },
@@ -96,9 +96,9 @@
         "Does not manage dead-letter queue reprocessing"
       ],
       "usage": [
-        "Imported by feature packages to enqueue jobs without coupling to the broker",
-        "worker-runtime imports topology contracts to register consumers",
-        "adapters-redis implements the enqueue interface against BullMQ"
+        "Do not add new consumers — this package is deprecated (ADR-0006), retained only until its removal review 2026-12-18.",
+        "Existing migration exceptions: none.",
+        "Canonical replacement: apps/platform-api webhook delivery queue (migration 020) + server/worker-registry.ts."
       ],
       "operationalNotes": [
         "Queue name changes require coordinated migration ? names are part of the topology contract",

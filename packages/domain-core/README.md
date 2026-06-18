@@ -4,6 +4,8 @@
 
 DEPRECATED (ADR-0006 / ADR-ACT-0288): superseded by no replacement required — unused id/timestamp/event helpers; use node:crypto randomUUID + Date.toISOString directly; do not add new usage; removal review 2026-12-18. Generic pure TypeScript domain-core package for enterprise policy, validation, and state-transition examples.
 
+> **⚠️ DEPRECATED — do not add new consumers.** Retained only until its removal review (ADR-0006); new imports are blocked by the `no-import-from-deprecated` boundary rule. See **Public exports and usage** for the canonical replacement.
+
 ## Package identity
 
 ```text
@@ -59,8 +61,9 @@ Public exports only: true
 Deep imports allowed: false
 ```
 
-- Import from feature and adapter mapping packages through public exports
-- Use in tests without browser runtime
+- Do not add new consumers — this package is deprecated (ADR-0006), retained only until its removal review 2026-12-18.
+- Existing migration exceptions: none.
+- No replacement required — generic id/timestamp/event helpers; use node:crypto randomUUID and Date.toISOString directly.
 
 ## Boundaries
 

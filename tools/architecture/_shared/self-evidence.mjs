@@ -49,9 +49,20 @@ export function writeSelfEvidence({ evidence, toolingReportDir, noReports }) {
     }
   }
   const { finishedAt } = evidence;
-  if (typeof finishedAt !== "string" || finishedAt.length === 0 || /[\\/]/.test(finishedAt)) {
+  // finishedAt must be a real, canonical ISO-8601 timestamp — not merely a
+  // non-empty path-safe string (which would let "not-a-date" through and break
+  // the deterministic filename / auditability). Require it to round-trip:
+  // Date.parse must be finite AND re-serialise to the exact same string. This
+  // also rejects impossible dates, path separators, empties and non-strings.
+  if (typeof finishedAt !== "string" || finishedAt.length === 0) {
     throw new Error(
-      `writeSelfEvidence: evidence.finishedAt must be a non-empty path-safe string for filename generation (got ${JSON.stringify(finishedAt)})`
+      `writeSelfEvidence: evidence.finishedAt must be a non-empty ISO-8601 string (got ${JSON.stringify(finishedAt)})`
+    );
+  }
+  const parsed = Date.parse(finishedAt);
+  if (!Number.isFinite(parsed) || new Date(parsed).toISOString() !== finishedAt) {
+    throw new Error(
+      `writeSelfEvidence: evidence.finishedAt must be a canonical ISO-8601 timestamp (e.g. 2026-05-26T00:00:00.000Z) that round-trips for filename generation (got ${JSON.stringify(finishedAt)})`
     );
   }
   fs.mkdirSync(toolingReportDir, { recursive: true });

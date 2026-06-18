@@ -4,6 +4,8 @@
 
 DEPRECATED (ADR-0006 / ADR-ACT-0288): superseded by apps/platform-api usecases/notifications.ts + adapters/postgres-notification-repository.ts; do not add new usage; removal review 2026-12-18. Notification service abstraction: push, in-app, and browser notification channel interface and delivery contracts.
 
+> **⚠️ DEPRECATED — do not add new consumers.** Retained only until its removal review (ADR-0006); new imports are blocked by the `no-import-from-deprecated` boundary rule. See **Public exports and usage** for the canonical replacement.
+
 ## Package identity
 
 ```text
@@ -58,8 +60,9 @@ Public exports only: true
 Deep imports allowed: false
 ```
 
-- Imported by feature packages to dispatch notifications across channels
-- Concrete channel adapters are registered at application startup via the channel registry
+- Do not add new consumers — this package is deprecated (ADR-0006), retained only until its removal review 2026-12-18.
+- Existing migration exceptions: none.
+- Canonical replacement: apps/platform-api usecases/notifications.ts + adapters/postgres-notification-repository.ts.
 
 ## Boundaries
 

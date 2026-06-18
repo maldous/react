@@ -75,7 +75,7 @@
     "tags": {
       "scope": "initial",
       "type": "library",
-      "stage": "stable",
+      "stage": "deprecated",
       "role": "platform",
       "layer": "domain"
     },
@@ -95,8 +95,9 @@
         "Does not own PostgreSQL persistence, ClickHouse analytics, or identity-provider integration"
       ],
       "usage": [
-        "Import from feature and adapter mapping packages through public exports",
-        "Use in tests without browser runtime"
+        "Do not add new consumers — this package is deprecated (ADR-0006), retained only until its removal review 2026-12-18.",
+        "Existing migration exceptions: none.",
+        "No replacement required — generic id/timestamp/event helpers; use node:crypto randomUUID and Date.toISOString directly."
       ],
       "operationalNotes": [
         "Domain-core proves architectural separation without assuming business purpose"

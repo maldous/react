@@ -78,7 +78,7 @@
     "tags": {
       "scope": "initial",
       "type": "library",
-      "stage": "stable",
+      "stage": "deprecated",
       "role": "platform",
       "layer": "domain"
     },
@@ -96,8 +96,9 @@
         "Does not render role-specific React screens"
       ],
       "usage": [
-        "Consumed by app, workflow, profile configuration, GraphQL contract, and adapter packages",
-        "Used to keep role policy independent from application UI and storage technology"
+        "Do not add new consumers — this package is deprecated (ADR-0006), retained only until its removal review 2026-12-18.",
+        "Existing migration exceptions: none.",
+        "Canonical replacement: @platform/authorisation-runtime + @platform/adapters-keycloak (server-side authorisation)."
       ],
       "operationalNotes": [
         "Role examples are generic enterprise roles and not product-specific personas"

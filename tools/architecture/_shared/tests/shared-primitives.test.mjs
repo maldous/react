@@ -178,15 +178,33 @@ test("writeSelfEvidence throws when evidence is not a plain object", () => {
   }
 });
 
-test("writeSelfEvidence throws when finishedAt is missing or invalid for a filename", () => {
+test("writeSelfEvidence accepts a valid canonical ISO-8601 finishedAt", () => {
   const dir = path.join(tmp(), "tooling", "sample-tool");
-  for (const bad of [null, "", 1748217600000, "2026/05/26"]) {
+  const evidence = completeEvidence({ finishedAt: "2026-05-26T12:34:56.789Z" });
+  const result = writeSelfEvidence({ evidence, toolingReportDir: dir, noReports: false });
+  assert.ok(result && fs.existsSync(result));
+});
+
+test("writeSelfEvidence requires a real ISO-8601 finishedAt (rejects date-like junk)", () => {
+  const dir = path.join(tmp(), "tooling", "sample-tool");
+  const invalid = [
+    null, // non-string
+    "", // empty
+    1748217600000, // non-string (epoch number)
+    "not-a-date", // arbitrary text that previously slipped through
+    "2026-13-45T99:99:99.000Z", // impossible date
+    "2026/05/26", // path separator + non-ISO
+    "2026-05-26", // valid date but NOT canonical (does not round-trip)
+  ];
+  for (const bad of invalid) {
     const evidence = completeEvidence({ finishedAt: bad });
     assert.throws(
       () => writeSelfEvidence({ evidence, toolingReportDir: dir, noReports: false }),
-      /finishedAt/
+      /finishedAt/,
+      `expected finishedAt=${JSON.stringify(bad)} to be rejected`
     );
   }
+  assert.equal(fs.existsSync(dir), false);
 });
 
 test("writeSelfEvidence with noReports returns null BEFORE validation and writes nothing", () => {

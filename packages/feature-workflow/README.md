@@ -4,6 +4,8 @@
 
 DEPRECATED (ADR-0006 / ADR-ACT-0288): superseded by no replacement required — speculative workflow engine, never wired; do not add new usage; removal review 2026-12-18. Generic React feature workflow package for enterprise user-flow composition.
 
+> **⚠️ DEPRECATED — do not add new consumers.** Retained only until its removal review (ADR-0006); new imports are blocked by the `no-import-from-deprecated` boundary rule. See **Public exports and usage** for the canonical replacement.
+
 ## Package identity
 
 ```text
@@ -59,9 +61,9 @@ Public exports only: true
 Deep imports allowed: false
 ```
 
-- Import from the React app shell through public feature exports
-- Use domain-core and contract packages as dependencies
-- Keep adapter integration at the edge of the feature boundary
+- Do not add new consumers — this package is deprecated (ADR-0006), retained only until its removal review 2026-12-18.
+- Existing migration exceptions: none.
+- No replacement required — speculative workflow scaffold, never wired.
 
 ## Boundaries
 

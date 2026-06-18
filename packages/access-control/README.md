@@ -4,6 +4,8 @@
 
 DEPRECATED (ADR-0006 / ADR-ACT-0288): superseded by apps/platform-api authorisation-runtime + adapters-keycloak (server-side authz); do not add new usage; removal review 2026-12-18. Generic access-control package for admin, staff, user, service, and support role models and permission policy.
 
+> **⚠️ DEPRECATED — do not add new consumers.** Retained only until its removal review (ADR-0006); new imports are blocked by the `no-import-from-deprecated` boundary rule. See **Public exports and usage** for the canonical replacement.
+
 ## Package identity
 
 ```text
@@ -57,8 +59,9 @@ Public exports only: true
 Deep imports allowed: false
 ```
 
-- Consumed by app, workflow, profile configuration, GraphQL contract, and adapter packages
-- Used to keep role policy independent from application UI and storage technology
+- Do not add new consumers — this package is deprecated (ADR-0006), retained only until its removal review 2026-12-18.
+- Existing migration exceptions: none.
+- Canonical replacement: @platform/authorisation-runtime + @platform/adapters-keycloak (server-side authorisation).
 
 ## Boundaries
 

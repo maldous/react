@@ -26,6 +26,7 @@ import {
   validateTags,
   validateReadme,
   validateLifecycleGovernanceConsistency,
+  validateTagProjection,
   applySchemaValidation,
   REQUIRED_ARCHITECTURE_GROUPS,
   listPackageJsonFiles,
@@ -329,6 +330,63 @@ test("validateLifecycle: non-object produces error", () => {
   const errors = [];
   validateLifecycle(null, errors);
   assert.ok(errors.some((e) => e.includes("lifecycle must be an object")));
+});
+
+test("validateTagProjection: matching stage+role projection passes", () => {
+  const errors = [];
+  validateTagProjection(
+    { stage: "deprecated", role: "platform" },
+    { stage: "deprecated", role: "platform" },
+    errors
+  );
+  assert.equal(errors.length, 0);
+});
+
+test("validateTagProjection: mismatched stage fails", () => {
+  const errors = [];
+  validateTagProjection(
+    { stage: "deprecated", role: "platform" },
+    { stage: "active", role: "platform" },
+    errors
+  );
+  assert.ok(errors.some((e) => e.includes("tags.stage") && e.includes("lifecycle.stage")));
+});
+
+test("validateTagProjection: mismatched role fails", () => {
+  const errors = [];
+  validateTagProjection(
+    { stage: "active", role: "platform" },
+    { stage: "active", role: "feature" },
+    errors
+  );
+  assert.ok(errors.some((e) => e.includes("tags.role") && e.includes("lifecycle.role")));
+});
+
+test("validateTagProjection: deprecated lifecycle with active tag projection fails", () => {
+  const errors = [];
+  validateTagProjection(
+    { stage: "deprecated", role: "platform" },
+    { stage: "active", role: "platform" },
+    errors
+  );
+  assert.ok(errors.length > 0, "a deprecated package whose tags say active must fail");
+});
+
+test("validateTagProjection: deprecated passes only when BOTH projections are deprecated", () => {
+  const ok = [];
+  validateTagProjection(
+    { stage: "deprecated", role: "platform" },
+    { stage: "deprecated", role: "platform" },
+    ok
+  );
+  assert.equal(ok.length, 0);
+  const bad = [];
+  validateTagProjection(
+    { stage: "deprecated", role: "platform" },
+    { stage: "stable", role: "platform" },
+    bad
+  );
+  assert.ok(bad.length > 0);
 });
 
 // ??? validateGovernance ???????????????????????????????????????????????????????
