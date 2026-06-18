@@ -84,6 +84,47 @@ type SpyPoolOpts = {
   existingInvite?: boolean;
 };
 
+function routeClientQuery(t: string, opts: SpyPoolOpts) {
+  // SELECT role FROM memberships (updateMemberRole / removeMember check)
+  if (t.startsWith("select role from memberships")) {
+    if (!opts.memberExists) return { rows: [], rowCount: 0 };
+    return { rows: [{ role: opts.memberRole ?? "tenant-admin" }], rowCount: 1 };
+  }
+  // SELECT id FROM memberships (inviteOrgMember conflict check)
+  if (t.startsWith("select id from memberships")) {
+    return {
+      rows: opts.memberExists ? [{ id: "mem-1" }] : [],
+      rowCount: opts.memberExists ? 1 : 0,
+    };
+  }
+  // count(*) for admin count
+  if (t.includes("count(*)") && t.includes("role = 'tenant-admin'")) {
+    return { rows: [{ cnt: opts.adminCount ?? 1 }], rowCount: 1 };
+  }
+  // User lookup by email
+  if (t.includes("from public.users")) {
+    if (opts.userEmail) return { rows: [{ id: "user-existing-1" }], rowCount: 1 };
+    return { rows: [], rowCount: 0 };
+  }
+  // Existing invitation check
+  if (t.includes("from public.pending_invitations") && t.includes("select id")) {
+    return {
+      rows: opts.existingInvite ? [{ id: "inv-1" }] : [],
+      rowCount: opts.existingInvite ? 1 : 0,
+    };
+  }
+  // INSERT memberships
+  if (t.startsWith("insert into memberships")) {
+    return { rows: [], rowCount: 1 };
+  }
+  // INSERT pending_invitations
+  if (t.includes("insert into public.pending_invitations")) {
+    return { rows: [], rowCount: 1 };
+  }
+  // UPDATE / DELETE / BEGIN / COMMIT / ROLLBACK / SET LOCAL
+  return { rows: [], rowCount: 1 };
+}
+
 function makeSpyPool(opts: SpyPoolOpts = {}) {
   const calls: { text: string; values?: unknown[] }[] = [];
 
@@ -91,46 +132,7 @@ function makeSpyPool(opts: SpyPoolOpts = {}) {
     escapeIdentifier: (s: string) => `"${s.replace(/"/g, '""')}"`,
     async query(text: string, values?: unknown[]) {
       calls.push({ text, values });
-      const t = text.toLowerCase().trim();
-
-      // SELECT role FROM memberships (updateMemberRole / removeMember check)
-      if (t.startsWith("select role from memberships")) {
-        if (!opts.memberExists) return { rows: [], rowCount: 0 };
-        return { rows: [{ role: opts.memberRole ?? "tenant-admin" }], rowCount: 1 };
-      }
-      // SELECT id FROM memberships (inviteOrgMember conflict check)
-      if (t.startsWith("select id from memberships")) {
-        return {
-          rows: opts.memberExists ? [{ id: "mem-1" }] : [],
-          rowCount: opts.memberExists ? 1 : 0,
-        };
-      }
-      // count(*) for admin count
-      if (t.includes("count(*)") && t.includes("role = 'tenant-admin'")) {
-        return { rows: [{ cnt: opts.adminCount ?? 1 }], rowCount: 1 };
-      }
-      // User lookup by email
-      if (t.includes("from public.users")) {
-        if (opts.userEmail) return { rows: [{ id: "user-existing-1" }], rowCount: 1 };
-        return { rows: [], rowCount: 0 };
-      }
-      // Existing invitation check
-      if (t.includes("from public.pending_invitations") && t.includes("select id")) {
-        return {
-          rows: opts.existingInvite ? [{ id: "inv-1" }] : [],
-          rowCount: opts.existingInvite ? 1 : 0,
-        };
-      }
-      // INSERT memberships
-      if (t.startsWith("insert into memberships")) {
-        return { rows: [], rowCount: 1 };
-      }
-      // INSERT pending_invitations
-      if (t.includes("insert into public.pending_invitations")) {
-        return { rows: [], rowCount: 1 };
-      }
-      // UPDATE / DELETE / BEGIN / COMMIT / ROLLBACK / SET LOCAL
-      return { rows: [], rowCount: 1 };
+      return routeClientQuery(text.toLowerCase().trim(), opts);
     },
     release() {},
   };

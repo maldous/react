@@ -48,33 +48,43 @@ type Opts = {
   userEmail?: string;
 };
 
+function routeMembershipReads(t: string, opts: Opts) {
+  if (t.includes("lower(username) = lower"))
+    return { rows: opts.usernameTaken ? [{ x: 1 }] : [], rowCount: 0 };
+  if (t.includes("select 1 from memberships where user_id"))
+    return { rows: opts.memberExists ? [{ x: 1 }] : [], rowCount: 0 };
+  if (t.includes("select role, status from memberships"))
+    return {
+      rows: opts.memberExists
+        ? [{ role: opts.memberRole ?? "member", status: opts.memberStatus ?? "active" }]
+        : [],
+      rowCount: 0,
+    };
+  if (t.includes("count(*)") && t.includes("status = 'active'"))
+    return { rows: [{ cnt: opts.activeAdminCount ?? 1 }], rowCount: 1 };
+  return null;
+}
+
+function routeRelatedReads(t: string, opts: Opts) {
+  if (t.includes("from public.pending_invitations") && t.includes("select id"))
+    return { rows: opts.pendingInvite ? [{ id: "inv-1" }] : [], rowCount: 0 };
+  if (t.includes("from public.external_identities"))
+    return { rows: opts.externalIdentities ?? [], rowCount: 0 };
+  if (t.includes("from public.users"))
+    return { rows: opts.userEmail ? [{ id: "user-1" }] : [], rowCount: 0 };
+  if (t.startsWith("select id from memberships"))
+    return { rows: opts.memberExists ? [{ id: "mem-1" }] : [], rowCount: 0 };
+  return null;
+}
+
+function routeSpyQuery(text: string, opts: Opts) {
+  const t = text.toLowerCase().trim();
+  return routeMembershipReads(t, opts) ?? routeRelatedReads(t, opts) ?? { rows: [], rowCount: 1 };
+}
+
 function makeSpyPool(opts: Opts = {}) {
   const calls: { text: string; values?: unknown[] }[] = [];
-  function route(text: string) {
-    const t = text.toLowerCase().trim();
-    if (t.includes("lower(username) = lower"))
-      return { rows: opts.usernameTaken ? [{ x: 1 }] : [], rowCount: 0 };
-    if (t.includes("select 1 from memberships where user_id"))
-      return { rows: opts.memberExists ? [{ x: 1 }] : [], rowCount: 0 };
-    if (t.includes("select role, status from memberships"))
-      return {
-        rows: opts.memberExists
-          ? [{ role: opts.memberRole ?? "member", status: opts.memberStatus ?? "active" }]
-          : [],
-        rowCount: 0,
-      };
-    if (t.includes("count(*)") && t.includes("status = 'active'"))
-      return { rows: [{ cnt: opts.activeAdminCount ?? 1 }], rowCount: 1 };
-    if (t.includes("from public.pending_invitations") && t.includes("select id"))
-      return { rows: opts.pendingInvite ? [{ id: "inv-1" }] : [], rowCount: 0 };
-    if (t.includes("from public.external_identities"))
-      return { rows: opts.externalIdentities ?? [], rowCount: 0 };
-    if (t.includes("from public.users"))
-      return { rows: opts.userEmail ? [{ id: "user-1" }] : [], rowCount: 0 };
-    if (t.startsWith("select id from memberships"))
-      return { rows: opts.memberExists ? [{ id: "mem-1" }] : [], rowCount: 0 };
-    return { rows: [], rowCount: 1 };
-  }
+  const route = (text: string) => routeSpyQuery(text, opts);
   const client = {
     escapeIdentifier: (s: string) => `"${s}"`,
     async query(text: string, values?: unknown[]) {

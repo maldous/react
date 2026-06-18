@@ -73,10 +73,7 @@ function get(pathName: string, host: string): Promise<ProbeResult | null> {
   });
 }
 
-async function main(): Promise<void> {
-  console.log("# Service clickthrough policy runtime proof\n");
-
-  // 1. Pure decision matrix.
+function checkDecisionMatrix(): void {
   check(
     "tenant-safe set is exactly {admin:keycloak}",
     TENANT_ADMIN_RESOURCES.size === 1 && TENANT_ADMIN_RESOURCES.has("admin:keycloak")
@@ -111,43 +108,54 @@ async function main(): Promise<void> {
     });
     check(`tenant-admin cross-tenant ${s.resource}: denied`, !cross.granted);
   }
+}
 
-  // 2/3. Live web-profile checks.
+async function checkLiveWebProfile(): Promise<void> {
   const apexHealth = await get("/healthz", APEX);
   if (!apexHealth) {
     console.log(
       `SKIP  live route checks — web profile not reachable @ ${CADDY_BASE} (make compose-up-web ENV=test)`
     );
-  } else {
-    const apexMailpit = await get("/mailpit/", APEX);
-    check(
-      "live: apex /mailpit/ without session → 401 (forward-auth gate)",
-      apexMailpit?.status === 401,
-      String(apexMailpit?.status)
-    );
-    const tenantMailpit = await get("/mailpit/", `clickthrough-proof.${APEX}`);
-    const isSpaFallback =
-      tenantMailpit?.status === 200 &&
-      tenantMailpit.contentType.includes("text/html") &&
-      !tenantMailpit.body.toLowerCase().includes("mailpit");
-    check(
-      "live: tenant host /mailpit/ is SPA fallback, NOT the Mailpit UI (route removed)",
-      isSpaFallback,
-      `${tenantMailpit?.status} ${tenantMailpit?.contentType}`
-    );
-    const customMailpit = await get("/mailpit/", "clickthrough-proof.example");
-    check(
-      "live: custom-domain catch-all /mailpit/ is SPA fallback (no tool routes)",
-      customMailpit?.status === 200 && !customMailpit.body.toLowerCase().includes("mailpit"),
-      String(customMailpit?.status)
-    );
-    const kcRealms = await get("/kc/realms/master/.well-known/openid-configuration", APEX);
-    check(
-      "live: apex /kc/realms/* reachable without session (public by design)",
-      kcRealms !== null && kcRealms.status > 0 && kcRealms.status !== 401,
-      `status ${kcRealms?.status} (Keycloak ${kcRealms && kcRealms.status >= 500 ? "may not be running — still proves the route is not forward-auth-gated" : "reachable"})`
-    );
+    return;
   }
+  const apexMailpit = await get("/mailpit/", APEX);
+  check(
+    "live: apex /mailpit/ without session → 401 (forward-auth gate)",
+    apexMailpit?.status === 401,
+    String(apexMailpit?.status)
+  );
+  const tenantMailpit = await get("/mailpit/", `clickthrough-proof.${APEX}`);
+  const isSpaFallback =
+    tenantMailpit?.status === 200 &&
+    tenantMailpit.contentType.includes("text/html") &&
+    !tenantMailpit.body.toLowerCase().includes("mailpit");
+  check(
+    "live: tenant host /mailpit/ is SPA fallback, NOT the Mailpit UI (route removed)",
+    isSpaFallback,
+    `${tenantMailpit?.status} ${tenantMailpit?.contentType}`
+  );
+  const customMailpit = await get("/mailpit/", "clickthrough-proof.example");
+  check(
+    "live: custom-domain catch-all /mailpit/ is SPA fallback (no tool routes)",
+    customMailpit?.status === 200 && !customMailpit.body.toLowerCase().includes("mailpit"),
+    String(customMailpit?.status)
+  );
+  const kcRealms = await get("/kc/realms/master/.well-known/openid-configuration", APEX);
+  check(
+    "live: apex /kc/realms/* reachable without session (public by design)",
+    kcRealms !== null && kcRealms.status > 0 && kcRealms.status !== 401,
+    `status ${kcRealms?.status} (Keycloak ${kcRealms && kcRealms.status >= 500 ? "may not be running — still proves the route is not forward-auth-gated" : "reachable"})`
+  );
+}
+
+async function main(): Promise<void> {
+  console.log("# Service clickthrough policy runtime proof\n");
+
+  // 1. Pure decision matrix.
+  checkDecisionMatrix();
+
+  // 2/3. Live web-profile checks.
+  await checkLiveWebProfile();
 
   console.log(
     failures === 0 ? "\n# ALL CHECKS PASSED (local-only proof)" : `\n# ${failures} FAILED`

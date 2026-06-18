@@ -41,6 +41,103 @@ function backoffFor(attempt: number, schedule: readonly number[]): number {
   return schedule[Math.min(attempt, schedule.length - 1)] ?? 0;
 }
 
+/** Which summary counter a single delivery contributed to. */
+type DeliveryOutcome = "delivered" | "retried" | "dead";
+
+type ClaimedDelivery = Awaited<ReturnType<WebhookStore["claimDueDeliveries"]>>[number];
+
+/** Build the signed request body + headers for a delivery. */
+function buildDeliveryRequest(
+  d: ClaimedDelivery,
+  timestamp: number,
+  secret: string | null
+): { body: string; headers: Record<string, string> } {
+  let data: unknown = {};
+  try {
+    data = d.payload ? JSON.parse(d.payload) : {};
+  } catch {
+    data = {};
+  }
+  // The delivery row id is the stable event id (idempotency key for receivers).
+  const body = JSON.stringify({ id: d.id, event: d.event, timestamp, data });
+  const headers: Record<string, string> = {
+    "content-type": "application/json",
+    "x-platform-event": d.event,
+    ...(secret ? { "x-platform-signature": webhookSignatureHeader(secret, timestamp, body) } : {}),
+  };
+  return { body, headers };
+}
+
+/** Dispatch one claimed delivery and record its result. Returns the outcome. */
+async function processDelivery(
+  deps: WorkerDeps,
+  d: ClaimedDelivery,
+  now: Date,
+  maxAttempts: number,
+  backoff: readonly number[]
+): Promise<DeliveryOutcome> {
+  const attempt = d.attempt + 1;
+  const sub = await deps.store.get(d.organisationId, d.subscriptionId);
+
+  // A deleted or disabled subscription cannot be delivered — dead-letter it.
+  if (!sub?.enabled) {
+    await deps.store.markDeliveryResult(d.id, {
+      status: "dead",
+      responseStatus: null,
+      attempt,
+      error: sub ? "subscription disabled" : "subscription deleted",
+      nextAttemptAt: null,
+    });
+    return "dead";
+  }
+
+  const secret = await deps.store.getSecret(d.organisationId, d.subscriptionId);
+  const timestamp = now.getTime();
+  const { body, headers } = buildDeliveryRequest(d, timestamp, secret);
+
+  let ok = false;
+  let responseStatus: number | null = null;
+  let error: string | null = null;
+  try {
+    const res = await deps.dispatch.dispatch({ url: sub.url, headers, body });
+    ok = res.ok;
+    responseStatus = res.status;
+    error = res.error;
+  } catch (err) {
+    error = err instanceof Error ? err.message : "dispatch failed";
+  }
+
+  if (ok) {
+    await deps.store.markDeliveryResult(d.id, {
+      status: "delivered",
+      responseStatus,
+      attempt,
+      error: null,
+      nextAttemptAt: null,
+    });
+    return "delivered";
+  }
+  if (attempt < maxAttempts) {
+    const nextAttemptAt = new Date(now.getTime() + backoffFor(attempt, backoff) * 1000);
+    await deps.store.markDeliveryResult(d.id, {
+      status: "pending",
+      responseStatus,
+      attempt,
+      error,
+      nextAttemptAt,
+    });
+    return "retried";
+  }
+  await deps.store.markDeliveryResult(d.id, {
+    status: "dead",
+    responseStatus,
+    attempt,
+    error,
+    nextAttemptAt: null,
+  });
+  return "dead";
+}
+
 /** Process one batch of due deliveries. Returns a summary; never throws per-row. */
 export async function processDueDeliveries(
   deps: WorkerDeps,
@@ -55,81 +152,8 @@ export async function processDueDeliveries(
   const summary: WorkerTickSummary = { claimed: claimed.length, delivered: 0, retried: 0, dead: 0 };
 
   for (const d of claimed) {
-    const attempt = d.attempt + 1;
-    const sub = await deps.store.get(d.organisationId, d.subscriptionId);
-
-    // A deleted or disabled subscription cannot be delivered — dead-letter it.
-    if (!sub || !sub.enabled) {
-      await deps.store.markDeliveryResult(d.id, {
-        status: "dead",
-        responseStatus: null,
-        attempt,
-        error: sub ? "subscription disabled" : "subscription deleted",
-        nextAttemptAt: null,
-      });
-      summary.dead += 1;
-      continue;
-    }
-
-    const secret = await deps.store.getSecret(d.organisationId, d.subscriptionId);
-    const timestamp = now.getTime();
-    let data: unknown = {};
-    try {
-      data = d.payload ? JSON.parse(d.payload) : {};
-    } catch {
-      data = {};
-    }
-    // The delivery row id is the stable event id (idempotency key for receivers).
-    const body = JSON.stringify({ id: d.id, event: d.event, timestamp, data });
-    const headers: Record<string, string> = {
-      "content-type": "application/json",
-      "x-platform-event": d.event,
-      ...(secret
-        ? { "x-platform-signature": webhookSignatureHeader(secret, timestamp, body) }
-        : {}),
-    };
-
-    let ok = false;
-    let responseStatus: number | null = null;
-    let error: string | null = null;
-    try {
-      const res = await deps.dispatch.dispatch({ url: sub.url, headers, body });
-      ok = res.ok;
-      responseStatus = res.status;
-      error = res.error;
-    } catch (err) {
-      error = err instanceof Error ? err.message : "dispatch failed";
-    }
-
-    if (ok) {
-      await deps.store.markDeliveryResult(d.id, {
-        status: "delivered",
-        responseStatus,
-        attempt,
-        error: null,
-        nextAttemptAt: null,
-      });
-      summary.delivered += 1;
-    } else if (attempt < maxAttempts) {
-      const nextAttemptAt = new Date(now.getTime() + backoffFor(attempt, backoff) * 1000);
-      await deps.store.markDeliveryResult(d.id, {
-        status: "pending",
-        responseStatus,
-        attempt,
-        error,
-        nextAttemptAt,
-      });
-      summary.retried += 1;
-    } else {
-      await deps.store.markDeliveryResult(d.id, {
-        status: "dead",
-        responseStatus,
-        attempt,
-        error,
-        nextAttemptAt: null,
-      });
-      summary.dead += 1;
-    }
+    const outcome = await processDelivery(deps, d, now, maxAttempts, backoff);
+    summary[outcome] += 1;
   }
 
   return summary;

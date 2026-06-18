@@ -121,26 +121,33 @@ function denyResponse(outcome: Exclude<AuthzOutcome, { ok: true }>): {
   };
 }
 
-export const handleGraphql: PipelineHandler = async (req, res) => {
-  const actor = req.actor;
-  if (!actor) {
-    // requiresAuth on the route guarantees this, but keep the guard explicit.
-    res.json(
-      401,
-      toSafeResponse(new UnauthorizedError("api.error.authenticationRequired"), (m) => serverT(m))
-    );
-    return;
-  }
+/** A parsed, hardened GraphQL request, or a denial response to send. */
+type GraphqlRequest =
+  | {
+      ok: true;
+      query: string;
+      operationName: string | undefined;
+      variables: Record<string, unknown> | undefined;
+      fields: string[];
+    }
+  | { ok: false; status: number; body: unknown };
 
-  const body = req.body as
+/**
+ * Parse + harden the GraphQL request body: query presence, document parse,
+ * introspection gate, and the operation allowlist. No I/O — pure of the request body.
+ */
+function parseGraphqlRequest(rawBody: unknown): GraphqlRequest {
+  const body = rawBody as
     | { query?: unknown; variables?: unknown; operationName?: unknown }
     | undefined;
   if (!body || typeof body.query !== "string" || body.query.trim().length === 0) {
-    res.json(
-      400,
-      toSafeResponse(new ValidationError("api.error.graphqlQueryRequired"), (m) => serverT(m))
-    );
-    return;
+    return {
+      ok: false,
+      status: 400,
+      body: toSafeResponse(new ValidationError("api.error.graphqlQueryRequired"), (m) =>
+        serverT(m)
+      ),
+    };
   }
   const operationName = typeof body.operationName === "string" ? body.operationName : undefined;
   const variables =
@@ -153,53 +160,85 @@ export const handleGraphql: PipelineHandler = async (req, res) => {
   try {
     fields = extractOperationFields(body.query, operationName);
   } catch {
-    res.json(
-      400,
-      toSafeResponse(new ValidationError("api.error.graphqlInvalidDocument"), (m) => serverT(m))
-    );
-    return;
+    return {
+      ok: false,
+      status: 400,
+      body: toSafeResponse(new ValidationError("api.error.graphqlInvalidDocument"), (m) =>
+        serverT(m)
+      ),
+    };
   }
 
   // Hardening — introspection off outside development.
   const introspectionAllowed = (process.env["PLATFORM_ENV"] ?? "") === "development";
   if (!introspectionAllowed && fields.some((f) => INTROSPECTION_FIELDS.has(f))) {
-    res.json(
-      400,
-      toSafeResponse(new ValidationError("api.error.graphqlIntrospectionDisabled"), (m) =>
+    return {
+      ok: false,
+      status: 400,
+      body: toSafeResponse(new ValidationError("api.error.graphqlIntrospectionDisabled"), (m) =>
         serverT(m)
-      )
-    );
-    return;
+      ),
+    };
   }
 
   // Hardening — operation allowlist (ignore __typename, always benign).
   const unknown = fields.filter((f) => f !== "__typename" && !ALLOWED_FIELDS.has(f));
   if (unknown.length > 0) {
+    return {
+      ok: false,
+      status: 400,
+      body: toSafeResponse(new ValidationError("api.error.graphqlUnknownOperation"), (m) =>
+        serverT(m)
+      ),
+    };
+  }
+
+  return { ok: true, query: body.query, operationName, variables, fields };
+}
+
+/**
+ * Resolve the session id from the FIRST presented platform_session cookie that
+ * exists in the store, so a stale cookie can't break UMA token resolution
+ * (ADR-ACT-0278). Returns null for fixture sessions or on store failure.
+ */
+async function resolveGraphqlSessionId(
+  req: Parameters<PipelineHandler>[0]
+): Promise<string | null> {
+  if (getFixtureSession()) return null;
+  try {
+    const store = getSessionStore();
+    for (const id of parseSessionCookies(req.raw.headers["cookie"])) {
+      if (await store.find(id)) {
+        return id;
+      }
+    }
+  } catch (err) {
+    gqlLog.error({ err }, "graphql: session store unavailable during resolution");
+    return null;
+  }
+  return null;
+}
+
+export const handleGraphql: PipelineHandler = async (req, res) => {
+  const actor = req.actor;
+  if (!actor) {
+    // requiresAuth on the route guarantees this, but keep the guard explicit.
     res.json(
-      400,
-      toSafeResponse(new ValidationError("api.error.graphqlUnknownOperation"), (m) => serverT(m))
+      401,
+      toSafeResponse(new UnauthorizedError("api.error.authenticationRequired"), (m) => serverT(m))
     );
     return;
   }
 
-  // Per-operation UMA authorisation — mirrors the REST route gate. Resolve the
-  // session id from the FIRST presented platform_session cookie that exists in the
-  // store, so a stale cookie can't break UMA token resolution (ADR-ACT-0278).
-  let sessionId: string | null = null;
-  if (!getFixtureSession()) {
-    try {
-      const store = getSessionStore();
-      for (const id of parseSessionCookies(req.raw.headers["cookie"])) {
-        if (await store.find(id)) {
-          sessionId = id;
-          break;
-        }
-      }
-    } catch (err) {
-      gqlLog.error({ err }, "graphql: session store unavailable during resolution");
-      sessionId = null;
-    }
+  const parsed = parseGraphqlRequest(req.body);
+  if (!parsed.ok) {
+    res.json(parsed.status, parsed.body);
+    return;
   }
+  const { query, operationName, variables, fields } = parsed;
+
+  // Per-operation UMA authorisation — mirrors the REST route gate.
+  const sessionId = await resolveGraphqlSessionId(req);
   const fqdnTenant = getFixtureSession()
     ? null
     : await resolveTenantFromRequest(req.raw, getApplicationPool()).catch(() => null);
@@ -219,7 +258,7 @@ export const handleGraphql: PipelineHandler = async (req, res) => {
   // translate i18n keys so the response does not leak raw message keys.
   const context: GraphQLContext = { organisationId: actor.organisationId };
   const result = await executeOperation(schema, {
-    query: body.query,
+    query,
     operationName,
     variables,
     context,

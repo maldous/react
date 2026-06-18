@@ -55,7 +55,7 @@ function getApexDomain(): string {
 let _pgPool: pg.Pool | undefined;
 
 function getPool(): pg.Pool {
-  if (!_pgPool) _pgPool = new pg.Pool({ connectionString: getPostgresAppUrl(), max: 2 });
+  _pgPool ??= new pg.Pool({ connectionString: getPostgresAppUrl(), max: 2 });
   return _pgPool;
 }
 
@@ -89,21 +89,29 @@ function extractSlugFromHost(host: string, apexDomain = getApexDomain()): string
 // Handler
 // ---------------------------------------------------------------------------
 
-export const handleForwardAuth: PipelineHandler = async (req, res) => {
-  // 1. Validate Caddy internal secret ? rejects external callers.
-  //
-  //    Fail-closed: if no secret is configured in production, deny all.
-  //    In development (NODE_ENV !== production) an unset secret is permitted
-  //    for local iteration, but a warning is emitted once at startup.
-  //    Constant-time comparison prevents timing side-channel attacks.
+/** Outcome of the Caddy internal-secret validation. */
+type SecretCheck = { ok: true } | { ok: false; status: number; body: unknown };
+
+/**
+ * Validate the Caddy internal secret — rejects external callers.
+ *
+ * Fail-closed: if no secret is configured in production, deny all.
+ * In development (NODE_ENV !== production) an unset secret is permitted
+ * for local iteration, but a warning is emitted once at startup.
+ * Constant-time comparison prevents timing side-channel attacks.
+ */
+function checkInternalSecret(req: Parameters<PipelineHandler>[0]): SecretCheck {
   const internalSecret = process.env["CADDY_INTERNAL_SECRET"] ?? "";
   const isProduction = process.env["NODE_ENV"] === "production";
 
   if (!internalSecret && isProduction) {
     // Production with no secret configured ? deny everything. This is a
     // misconfiguration; fail closed rather than exposing the endpoint.
-    res.json(503, { code: "MISCONFIGURED", message: "Internal secret not configured" });
-    return;
+    return {
+      ok: false,
+      status: 503,
+      body: { code: "MISCONFIGURED", message: "Internal secret not configured" },
+    };
   }
 
   if (internalSecret) {
@@ -114,9 +122,66 @@ export const handleForwardAuth: PipelineHandler = async (req, res) => {
     const b = Buffer.from(internalSecret);
     const match = a.length === b.length && crypto.timingSafeEqual(a, b);
     if (!match) {
-      res.json(403, { code: "FORBIDDEN", message: "Invalid internal secret" });
-      return;
+      return {
+        ok: false,
+        status: 403,
+        body: { code: "FORBIDDEN", message: "Invalid internal secret" },
+      };
     }
+  }
+
+  return { ok: true };
+}
+
+/** Resolved actor identity, or a denial response to send. */
+type ActorResolution =
+  | { ok: true; roles: string[]; tenantId: string | null }
+  | { ok: false; status: number; body: unknown };
+
+/** Resolve the actor from fixture session (dev) or real session cookie. */
+async function resolveActorIdentity(req: Parameters<PipelineHandler>[0]): Promise<ActorResolution> {
+  const fixtureActor = getFixtureSession();
+  if (fixtureActor) {
+    return { ok: true, roles: fixtureActor.roles, tenantId: fixtureActor.tenantId };
+  }
+
+  // Try EVERY presented platform_session so a stale cookie can't shadow a valid
+  // session and wrongly deny a clickthrough service (ADR-ACT-0278).
+  const candidateIds = parseSessionCookies(req.raw.headers["cookie"]);
+  if (candidateIds.length === 0) {
+    return { ok: false, status: 401, body: { code: "UNAUTHENTICATED", message: "No session" } };
+  }
+  try {
+    const store = getSessionStore();
+    let record = null;
+    for (const id of candidateIds) {
+      record = await store.find(id);
+      if (record) break;
+    }
+    if (!record) {
+      return {
+        ok: false,
+        status: 401,
+        body: { code: "UNAUTHENTICATED", message: "Session expired" },
+      };
+    }
+    return { ok: true, roles: record.roles, tenantId: record.tenantId };
+  } catch (err) {
+    faLog.error({ err }, "forward-auth: session store unavailable — denying clickthrough");
+    return {
+      ok: false,
+      status: 401,
+      body: { code: "UNAUTHENTICATED", message: "Session store unavailable" },
+    };
+  }
+}
+
+export const handleForwardAuth: PipelineHandler = async (req, res) => {
+  // 1. Validate Caddy internal secret ? rejects external callers.
+  const secretCheck = checkInternalSecret(req);
+  if (!secretCheck.ok) {
+    res.json(secretCheck.status, secretCheck.body);
+    return;
   }
 
   // 2. Parse resource + scope from query string
@@ -125,40 +190,12 @@ export const handleForwardAuth: PipelineHandler = async (req, res) => {
   const scope = url.searchParams.get("scope") ?? "read";
 
   // 3. Resolve actor from fixture session (dev) or real session cookie
-  let roles: string[] = [];
-  let tenantId: string | null = null;
-
-  const fixtureActor = getFixtureSession();
-  if (fixtureActor) {
-    roles = fixtureActor.roles;
-    tenantId = fixtureActor.tenantId;
-  } else {
-    // Try EVERY presented platform_session so a stale cookie can't shadow a valid
-    // session and wrongly deny a clickthrough service (ADR-ACT-0278).
-    const candidateIds = parseSessionCookies(req.raw.headers["cookie"]);
-    if (candidateIds.length === 0) {
-      res.json(401, { code: "UNAUTHENTICATED", message: "No session" });
-      return;
-    }
-    try {
-      const store = getSessionStore();
-      let record = null;
-      for (const id of candidateIds) {
-        record = await store.find(id);
-        if (record) break;
-      }
-      if (!record) {
-        res.json(401, { code: "UNAUTHENTICATED", message: "Session expired" });
-        return;
-      }
-      roles = record.roles;
-      tenantId = record.tenantId;
-    } catch (err) {
-      faLog.error({ err }, "forward-auth: session store unavailable — denying clickthrough");
-      res.json(401, { code: "UNAUTHENTICATED", message: "Session store unavailable" });
-      return;
-    }
+  const identity = await resolveActorIdentity(req);
+  if (!identity.ok) {
+    res.json(identity.status, identity.body);
+    return;
   }
+  const { roles, tenantId } = identity;
 
   // 4 & 5. Access decision ? resolve host slug, look up tenant ownership, delegate to
   // checkResourceAccess() so tests and production use the same logic path.

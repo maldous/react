@@ -54,28 +54,34 @@ type ResolvedConfig<S extends ConfigSchema> = {
   [K in keyof S]: ConfigValue<S[K]>;
 };
 
+/** Resolve a single config field's value (or default), throwing on invalid input. */
+function resolveConfigField(fieldName: string, def: ConfigFieldDef): unknown {
+  const raw = process.env[def.key];
+  if (raw === undefined || raw === "") {
+    if ("default" in def && def.default !== undefined) {
+      return def.default;
+    }
+    throw new ConfigError(`Required config "${fieldName}" (env: ${def.key}) is not set`);
+  }
+  if (def.type === "number") {
+    const parsed = Number(raw);
+    if (isNaN(parsed)) {
+      throw new ConfigError(`Config "${fieldName}" must be a number, got "${raw}"`);
+    }
+    return parsed;
+  }
+  if (def.type === "boolean") {
+    if (raw === "true" || raw === "1") return true;
+    if (raw === "false" || raw === "0") return false;
+    throw new ConfigError(`Config "${fieldName}" must be true/false, got "${raw}"`);
+  }
+  return raw;
+}
+
 export function loadConfig<S extends ConfigSchema>(schema: S): ResolvedConfig<S> {
   const result: Record<string, unknown> = {};
   for (const [fieldName, def] of Object.entries(schema)) {
-    const raw = process.env[def.key];
-    if (raw === undefined || raw === "") {
-      if ("default" in def && def.default !== undefined) {
-        result[fieldName] = def.default;
-      } else {
-        throw new ConfigError(`Required config "${fieldName}" (env: ${def.key}) is not set`);
-      }
-    } else if (def.type === "number") {
-      const parsed = Number(raw);
-      if (isNaN(parsed))
-        throw new ConfigError(`Config "${fieldName}" must be a number, got "${raw}"`);
-      result[fieldName] = parsed;
-    } else if (def.type === "boolean") {
-      if (raw === "true" || raw === "1") result[fieldName] = true;
-      else if (raw === "false" || raw === "0") result[fieldName] = false;
-      else throw new ConfigError(`Config "${fieldName}" must be true/false, got "${raw}"`);
-    } else {
-      result[fieldName] = raw;
-    }
+    result[fieldName] = resolveConfigField(fieldName, def);
   }
   return result as ResolvedConfig<S>;
 }

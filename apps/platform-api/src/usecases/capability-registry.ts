@@ -357,23 +357,98 @@ export interface ReadinessSignals {
   webhooksReadiness: WebhookReadinessStatus;
 }
 
+function authCredentialReadiness(status: AuthReadinessStatus): CapabilityReadiness {
+  switch (status) {
+    case "configured":
+      return "ready";
+    case "missing_credential":
+      return "blocked";
+    case "invalid_credential":
+    case "forbidden_realm_operation":
+    case "realm_unreachable":
+      return "degraded";
+    default:
+      return "unknown";
+  }
+}
+
+function emailSenderReadiness(status: EmailSenderReadinessStatus): CapabilityReadiness {
+  switch (status) {
+    case "configured":
+      return "ready";
+    case "missing_sender":
+    case "missing_credential":
+      return "incomplete";
+    case "invalid_credential":
+    case "provider_unreachable":
+      return "degraded";
+    default:
+      return "unknown";
+  }
+}
+
+function domainsReadiness(status: TenantDomainReadinessStatus): CapabilityReadiness {
+  switch (status) {
+    case "verified":
+      return "ready";
+    case "no_domains":
+    case "pending_verification":
+      return "incomplete";
+    case "degraded":
+      return "degraded";
+    default:
+      return "unknown";
+  }
+}
+
+function storageReadiness(status: TenantStorageReadinessStatus): CapabilityReadiness {
+  switch (status) {
+    case "configured":
+      return "ready";
+    case "not_configured":
+      return "incomplete";
+    case "provider_unreachable":
+    case "isolation_failed":
+      return "degraded";
+    default:
+      return "unknown";
+  }
+}
+
+function observabilityReadiness(status: TenantObservabilityReadinessStatus): CapabilityReadiness {
+  switch (status) {
+    case "configured":
+      return "ready";
+    case "not_configured":
+      return "incomplete";
+    case "provider_unreachable":
+    case "degraded":
+      return "degraded";
+    default:
+      return "unknown";
+  }
+}
+
+function webhooksReadiness(status: WebhookReadinessStatus): CapabilityReadiness {
+  switch (status) {
+    case "configured":
+      return "ready";
+    case "no_subscriptions":
+      return "incomplete";
+    case "has_dead_deliveries": // needs operator redrive; optional cap → non-blocking
+    case "degraded":
+      return "degraded";
+    default:
+      return "unknown";
+  }
+}
+
 function capabilityReadiness(kind: ReadinessKind, s: ReadinessSignals): CapabilityReadiness {
   switch (kind) {
     case "tenant-context":
       return "ready";
     case "auth-credential":
-      switch (s.authCredential) {
-        case "configured":
-          return "ready";
-        case "missing_credential":
-          return "blocked";
-        case "invalid_credential":
-        case "forbidden_realm_operation":
-        case "realm_unreachable":
-          return "degraded";
-        default:
-          return "unknown";
-      }
+      return authCredentialReadiness(s.authCredential);
     case "credential-derived":
       return s.authCredential === "configured" ? "ready" : "unknown";
     case "idp-count":
@@ -384,66 +459,15 @@ function capabilityReadiness(kind: ReadinessKind, s: ReadinessSignals): Capabili
     case "providers":
       return "ready";
     case "email-sender":
-      switch (s.emailSender) {
-        case "configured":
-          return "ready";
-        case "missing_sender":
-        case "missing_credential":
-          return "incomplete";
-        case "invalid_credential":
-        case "provider_unreachable":
-          return "degraded";
-        default:
-          return "unknown";
-      }
+      return emailSenderReadiness(s.emailSender);
     case "tenant-domains":
-      switch (s.domainReadiness) {
-        case "verified":
-          return "ready";
-        case "no_domains":
-        case "pending_verification":
-          return "incomplete";
-        case "degraded":
-          return "degraded";
-        default:
-          return "unknown";
-      }
+      return domainsReadiness(s.domainReadiness);
     case "tenant-storage":
-      switch (s.storageReadiness) {
-        case "configured":
-          return "ready";
-        case "not_configured":
-          return "incomplete";
-        case "provider_unreachable":
-        case "isolation_failed":
-          return "degraded";
-        default:
-          return "unknown";
-      }
+      return storageReadiness(s.storageReadiness);
     case "tenant-observability":
-      switch (s.observabilityReadiness) {
-        case "configured":
-          return "ready";
-        case "not_configured":
-          return "incomplete";
-        case "provider_unreachable":
-        case "degraded":
-          return "degraded";
-        default:
-          return "unknown";
-      }
+      return observabilityReadiness(s.observabilityReadiness);
     case "tenant-webhooks":
-      switch (s.webhooksReadiness) {
-        case "configured":
-          return "ready";
-        case "no_subscriptions":
-          return "incomplete";
-        case "has_dead_deliveries": // needs operator redrive; optional cap → non-blocking
-        case "degraded":
-          return "degraded";
-        default:
-          return "unknown";
-      }
+      return webhooksReadiness(s.webhooksReadiness);
     case "invariant-ready":
       return "ready";
     case "deferred":
@@ -467,7 +491,7 @@ function aggregate(required: CapabilityReadiness[]): TenantReadinessStatus {
     if (SEVERITY[r] > SEVERITY[worst]) worst = r;
   }
   // `deferred` never appears among required capabilities; clamp defensively to ready.
-  return (worst === "deferred" ? "ready" : worst) as TenantReadinessStatus;
+  return worst === "deferred" ? "ready" : worst;
 }
 
 /** Pure: map the registry + signals → the tenant readiness response. */

@@ -89,15 +89,17 @@ async function reachable(url: string): Promise<boolean> {
   }
 }
 
-async function main(): Promise<void> {
-  console.log("# API keys + rate limits LIVE route proof\n");
-  if (!(await reachable(APP_URL))) {
-    console.log("SKIP  api-key route proof — Postgres not reachable");
-    console.log("\n# SKIPPED (no live Postgres) — not counted as pass or fail");
-    process.exit(0);
-  }
+interface ApiKeyRoutes {
+  orgList: Route;
+  orgCreate: Route;
+  orgRevoke: Route;
+  orgDev: Route;
+  adminKeys: Route;
+  adminRlRead: Route;
+  adminRlWrite: Route;
+}
 
-  // access-control metadata
+function checkAccessControlMetadata(): ApiKeyRoutes {
   const orgList = findRoute("GET", "/api/org/api-keys");
   check(
     "org api-keys list is tenant-scoped + tenant.api_keys.read",
@@ -132,6 +134,122 @@ async function main(): Promise<void> {
       adminRlWrite.scope === "global" &&
       adminRlWrite.requiredPermission === "platform.rate_limits.write"
   );
+  return { orgList, orgCreate, orgRevoke, orgDev, adminKeys, adminRlRead, adminRlWrite };
+}
+
+async function checkOrgSelfService(
+  r: ApiKeyRoutes,
+  ctx: { host: string; actor: { userId: string; roles: string[] } }
+): Promise<{ keyId: string }> {
+  const { actor, host } = ctx;
+
+  // org create WITHOUT a tenant context → 400
+  check(
+    "org create without a tenant context is rejected",
+    (await invoke(r.orgCreate, { body: { name: "x" }, actor })).status === 400
+  );
+
+  // org create WITH tenant context → 201 + secret once
+  const created = await invoke(r.orgCreate, {
+    host,
+    body: { name: "ci", scopes: ["read"] },
+    actor,
+  });
+  const cbody = created.body as {
+    secret?: string;
+    secretShownOnce?: boolean;
+    apiKey?: { id: string };
+  };
+  check(
+    "tenant self-service create returns 201 with the secret once",
+    created.status === 201 && !!cbody.secret?.startsWith("sk_") && cbody.secretShownOnce === true
+  );
+  const keyId = cbody.apiKey?.id ?? "";
+  const secret = cbody.secret ?? "";
+
+  // org list → key present, NO secret
+  const listed = await invoke(r.orgList, { host, actor });
+  check(
+    "org list returns the key without the secret",
+    listed.status === 200 &&
+      !JSON.stringify(listed.body).includes(secret) &&
+      !SECRET_FIELD.test(JSON.stringify(listed.body))
+  );
+
+  // developer portal foundation
+  const dev = await invoke(r.orgDev, { host, actor });
+  const devBody = dev.body as { apiAccessEntitled?: boolean; activeKeyCount?: number };
+  check(
+    "developer portal reports entitlement + active key count",
+    dev.status === 200 && devBody.apiAccessEntitled === true && (devBody.activeKeyCount ?? 0) >= 1
+  );
+  return { keyId };
+}
+
+async function checkOperatorRoutes(
+  r: ApiKeyRoutes,
+  ctx: { orgA: string; actor: { userId: string; roles: string[] } }
+): Promise<void> {
+  const { actor, orgA } = ctx;
+
+  // operator list (by tenantId) → key present, no secret
+  const opKeys = await invoke(r.adminKeys, { params: { tenantId: orgA }, actor });
+  check(
+    "operator api-keys read returns the key with no secret",
+    opKeys.status === 200 && !SECRET_FIELD.test(JSON.stringify(opKeys.body))
+  );
+  check(
+    "operator api-keys read rejects an invalid tenant id",
+    (await invoke(r.adminKeys, { params: { tenantId: "nope" }, actor })).status === 400
+  );
+
+  // operator sets a rate-limit policy → 200, then reads it
+  const setRl = await invoke(r.adminRlWrite, {
+    params: { tenantId: orgA },
+    body: {
+      policyKey: "api.requests",
+      entitlementKey: "api_access",
+      limit: 10,
+      windowSeconds: 60,
+    },
+    actor,
+  });
+  check("operator sets a rate-limit policy via real handler (200)", setRl.status === 200);
+  const rlList = await invoke(r.adminRlRead, { params: { tenantId: orgA }, actor });
+  const rlBody = rlList.body as { policies?: { policyKey: string }[] };
+  check(
+    "operator rate-limit read returns the configured policy",
+    rlList.status === 200 && !!rlBody.policies?.some((p) => p.policyKey === "api.requests")
+  );
+}
+
+async function checkOrgRevoke(
+  r: ApiKeyRoutes,
+  ctx: { host: string; keyId: string; actor: { userId: string; roles: string[] } }
+): Promise<void> {
+  const { actor, host, keyId } = ctx;
+
+  // revoke via real handler → 200, then invalid id → 400
+  check(
+    "org revoke succeeds via real handler (200)",
+    (await invoke(r.orgRevoke, { host, params: { keyId }, actor })).status === 200
+  );
+  check(
+    "org revoke rejects an invalid key id",
+    (await invoke(r.orgRevoke, { host, params: { keyId: "nope" }, actor })).status === 400
+  );
+}
+
+async function main(): Promise<void> {
+  console.log("# API keys + rate limits LIVE route proof\n");
+  if (!(await reachable(APP_URL))) {
+    console.log("SKIP  api-key route proof — Postgres not reachable");
+    console.log("\n# SKIPPED (no live Postgres) — not counted as pass or fail");
+    process.exit(0);
+  }
+
+  // access-control metadata
+  const r = checkAccessControlMetadata();
 
   const su = new pg.Pool({ connectionString: SU_URL });
   const app = new pg.Pool({ connectionString: APP_URL });
@@ -155,86 +273,9 @@ async function main(): Promise<void> {
       updatedBy: "op",
     });
 
-    // org create WITHOUT a tenant context → 400
-    check(
-      "org create without a tenant context is rejected",
-      (await invoke(orgCreate, { body: { name: "x" }, actor })).status === 400
-    );
-
-    // org create WITH tenant context → 201 + secret once
-    const created = await invoke(orgCreate, {
-      host,
-      body: { name: "ci", scopes: ["read"] },
-      actor,
-    });
-    const cbody = created.body as {
-      secret?: string;
-      secretShownOnce?: boolean;
-      apiKey?: { id: string };
-    };
-    check(
-      "tenant self-service create returns 201 with the secret once",
-      created.status === 201 && !!cbody.secret?.startsWith("sk_") && cbody.secretShownOnce === true
-    );
-    const keyId = cbody.apiKey?.id ?? "";
-    const secret = cbody.secret ?? "";
-
-    // org list → key present, NO secret
-    const listed = await invoke(orgList, { host, actor });
-    check(
-      "org list returns the key without the secret",
-      listed.status === 200 &&
-        !JSON.stringify(listed.body).includes(secret) &&
-        !SECRET_FIELD.test(JSON.stringify(listed.body))
-    );
-
-    // developer portal foundation
-    const dev = await invoke(orgDev, { host, actor });
-    const devBody = dev.body as { apiAccessEntitled?: boolean; activeKeyCount?: number };
-    check(
-      "developer portal reports entitlement + active key count",
-      dev.status === 200 && devBody.apiAccessEntitled === true && (devBody.activeKeyCount ?? 0) >= 1
-    );
-
-    // operator list (by tenantId) → key present, no secret
-    const opKeys = await invoke(adminKeys, { params: { tenantId: orgA }, actor });
-    check(
-      "operator api-keys read returns the key with no secret",
-      opKeys.status === 200 && !SECRET_FIELD.test(JSON.stringify(opKeys.body))
-    );
-    check(
-      "operator api-keys read rejects an invalid tenant id",
-      (await invoke(adminKeys, { params: { tenantId: "nope" }, actor })).status === 400
-    );
-
-    // operator sets a rate-limit policy → 200, then reads it
-    const setRl = await invoke(adminRlWrite, {
-      params: { tenantId: orgA },
-      body: {
-        policyKey: "api.requests",
-        entitlementKey: "api_access",
-        limit: 10,
-        windowSeconds: 60,
-      },
-      actor,
-    });
-    check("operator sets a rate-limit policy via real handler (200)", setRl.status === 200);
-    const rlList = await invoke(adminRlRead, { params: { tenantId: orgA }, actor });
-    const rlBody = rlList.body as { policies?: { policyKey: string }[] };
-    check(
-      "operator rate-limit read returns the configured policy",
-      rlList.status === 200 && !!rlBody.policies?.some((p) => p.policyKey === "api.requests")
-    );
-
-    // revoke via real handler → 200, then invalid id → 400
-    check(
-      "org revoke succeeds via real handler (200)",
-      (await invoke(orgRevoke, { host, params: { keyId }, actor })).status === 200
-    );
-    check(
-      "org revoke rejects an invalid key id",
-      (await invoke(orgRevoke, { host, params: { keyId: "nope" }, actor })).status === 400
-    );
+    const { keyId } = await checkOrgSelfService(r, { host, actor });
+    await checkOperatorRoutes(r, { orgA, actor });
+    await checkOrgRevoke(r, { host, keyId, actor });
   } catch (err) {
     check("live api-key route proof", false, err instanceof Error ? err.message : String(err));
   } finally {

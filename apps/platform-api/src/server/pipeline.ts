@@ -224,6 +224,383 @@ function getE2ECorrelation(req: http.IncomingMessage): {
   };
 }
 
+// Outcome of route auth/authorisation enforcement. When `denied`, the response
+// has already been written by enforceRouteAuth; the caller must simply return.
+type AuthEnforcement = { denied: true } | { denied: false; actor: SessionActor | null };
+
+interface AuthEnforcementInput {
+  req: http.IncomingMessage;
+  res: http.ServerResponse;
+  matchingRoute: Route;
+  fqdnTenant: TenantContext | null;
+  isFixtureMode: boolean;
+  requestId: string;
+  reqLogger: ReturnType<typeof createLogger>;
+  logRejection: (status: number, reason: string, fields?: Record<string, unknown>) => void;
+  testDeps?: RouterTestDeps;
+}
+
+/** Resolve the actor for a route that requires auth (fixture or real session). */
+async function resolveRouteActor(
+  req: http.IncomingMessage,
+  reqLogger: ReturnType<typeof createLogger>,
+  testDeps?: RouterTestDeps
+): Promise<{ actor: SessionActor | null; resolvedSessionId: string | null }> {
+  let actor = getFixtureSession();
+  let resolvedSessionId: string | null = null;
+  if (actor) return { actor, resolvedSessionId };
+
+  // Real session: read the HTTP-only cookie(s). A browser may present more
+  // than one platform_session (host-only + domain-scoped after a
+  // SESSION_COOKIE_DOMAIN change); try EVERY candidate and use the first that
+  // resolves so a stale cookie can't shadow a valid session (ADR-ACT-0278).
+  const candidateIds = parseSessionCookies(req.headers["cookie"]);
+  if (candidateIds.length > 0) {
+    try {
+      const store = testDeps?.sessionStore ?? getSessionStore();
+      let record: Awaited<ReturnType<SessionStore["find"]>> = null;
+      for (const id of candidateIds) {
+        record = await store.find(id);
+        if (record) {
+          resolvedSessionId = id;
+          break;
+        }
+      }
+      if (record) {
+        actor = {
+          userId: record.userId,
+          tenantId: record.tenantId,
+          organisationId: record.organisationId,
+          roles: record.roles,
+          permissions: record.permissions,
+          displayName: record.displayName,
+          // Preserve support-mode fields (ADR-ACT-0187)
+          ...(record.supportMode
+            ? {
+                supportMode: record.supportMode,
+                effectiveOrganisationId: record.effectiveOrganisationId,
+                supportAccessReason: record.supportAccessReason,
+              }
+            : {}),
+          // Preserve UMA token fields (ADR-ACT-0153) — needed for pipeline checkAccess
+          ...(record.accessTokenEnc ? { accessTokenEnc: record.accessTokenEnc } : {}),
+        };
+      }
+    } catch (err) {
+      // Redis unavailable -> treat as unauthenticated (do not crash). Log it:
+      // a session-store outage makes the whole platform fail auth, so it must
+      // be diagnosable rather than silently 401 every request (ADR-ACT-0284).
+      reqLogger.error({ err }, "session store unavailable during auth resolution");
+    }
+  }
+  return { actor, resolvedSessionId };
+}
+
+/**
+ * UMA dynamic authorisation (ADR-ACT-0145, Done). Runs when route declares
+ * resource+umaScope AND actor has a stored token. Returns:
+ *   - { denied: true } when the response was already written (deny / step-up).
+ *   - { denied: false; umaGranted } otherwise (granted, or degraded fallthrough).
+ */
+async function enforceUmaAuthorisation(
+  input: AuthEnforcementInput,
+  actor: SessionActor,
+  resolvedSessionId: string | null
+): Promise<{ denied: true } | { denied: false; umaGranted: boolean }> {
+  const { res, matchingRoute, fqdnTenant, requestId, logRejection, testDeps } = input;
+  const effectiveResolveToken = testDeps?.resolveAccessToken ?? resolveAccessToken;
+  const effectiveAuthorisationPort = testDeps?.authorisationPort ?? getAuthorisationPort;
+
+  if (!(matchingRoute.resource && matchingRoute.umaScope && actor.accessTokenEnc)) {
+    return { denied: false, umaGranted: false };
+  }
+
+  const store = testDeps?.sessionStore ?? getSessionStore();
+  const rawToken = resolvedSessionId ? await effectiveResolveToken(resolvedSessionId, store) : null;
+
+  // Unresolvable UMA access token (refresh token invalidated by a client
+  // rotation, or expired). If the route has a static requiredPermission
+  // fallback, DEGRADE to it — the session itself is authenticated, so don't
+  // force a re-login (ADR-ACT-0278). If the route is sole-UMA (no static
+  // fallback), 401 so the client can re-login and obtain a fresh token.
+  if (!rawToken && !matchingRoute.requiredPermission) {
+    logRejection(401, "access_token_unresolved", {
+      route: matchingRoute.path,
+      operationName: matchingRoute.operationName,
+      actorId: actor.userId,
+    });
+    jsonResponse(
+      res,
+      401,
+      toSafeResponse(new UnauthorizedError("api.error.authenticationRequired"), (m) => serverT(m)),
+      requestId
+    );
+    return { denied: true };
+  }
+  // Synthesise a degradable decision when there is no token so it flows
+  // through the same fallback path as keycloak_unavailable below.
+  const decision = rawToken
+    ? await effectiveAuthorisationPort(fqdnTenant).checkAccess(
+        { name: matchingRoute.resource, scope: matchingRoute.umaScope },
+        rawToken
+      )
+    : ({ granted: false, reason: "token_unresolved" } as const);
+
+  if (decision.granted) {
+    return { denied: false, umaGranted: true };
+  }
+  if (
+    decision.reason === "keycloak_unavailable" ||
+    decision.reason === "resource_not_registered" ||
+    decision.reason === "token_unresolved"
+  ) {
+    // Degrade gracefully — fall through to static check. "keycloak_unavailable"
+    // is a transient outage; "resource_not_registered" is a provisioning gap
+    // (the resource is not yet a protected resource on the BFF client). In both
+    // cases the route's static requiredPermission is the effective gate
+    // (ADR-ACT-0145). Routes without a requiredPermission still fail closed below.
+    const log = createLogger({ name: "pipeline" });
+    log.warn(
+      {
+        resource: matchingRoute.resource,
+        scope: matchingRoute.umaScope,
+        reason: decision.reason,
+      },
+      "UMA check not decisive — falling back to static permission check"
+    );
+    return { denied: false, umaGranted: false };
+  }
+  if (decision.reason === "insufficient_auth_level") {
+    logRejection(401, "step_up_required", {
+      route: matchingRoute.path,
+      operationName: matchingRoute.operationName,
+      actorId: actor.userId,
+      resource: matchingRoute.resource,
+      umaScope: matchingRoute.umaScope,
+    });
+    jsonResponse(
+      res,
+      401,
+      { code: "STEP_UP_REQUIRED", message: "Additional authentication required" },
+      requestId
+    );
+    return { denied: true };
+  }
+  logRejection(403, "uma_policy_denied", {
+    route: matchingRoute.path,
+    operationName: matchingRoute.operationName,
+    actorId: actor.userId,
+    roles: actor.roles,
+    resource: matchingRoute.resource,
+    umaScope: matchingRoute.umaScope,
+    umaReason: decision.reason,
+    requiredPermission: matchingRoute.requiredPermission,
+  });
+  const err = new ForbiddenError("api.error.permissionRequired", {
+    safeDetails: {
+      permission: `${matchingRoute.resource}#${matchingRoute.umaScope}`,
+    },
+  });
+  jsonResponse(
+    res,
+    403,
+    toSafeResponse(err, (m) => serverT(m, { permission: matchingRoute.resource! })),
+    requestId
+  );
+  return { denied: true };
+}
+
+/**
+ * Route FQDN scope enforcement (ADR-0029 §3). "global" routes must arrive at the
+ * apex host (no tenant FQDN); "tenant" routes require a resolved tenant. Returns
+ * true when a denial response has been written (caller must return).
+ */
+function enforceRouteScope(input: AuthEnforcementInput, actor: SessionActor): boolean {
+  const { req, res, matchingRoute, fqdnTenant, requestId, logRejection } = input;
+  // ADR-ACT-0231 hardening: global routes must reject ANY subdomain of the
+  // apex zone — including reserved and unknown subdomains that resolve no
+  // tenant. Those hosts share the apex cookie scope and the wildcard Caddy
+  // vhost, so treating them as the global host would let global-only APIs
+  // be driven from non-apex origins. Non-apex hosts (e.g. direct localhost
+  // access to the API) are unaffected.
+  if (matchingRoute.scope === "global" && isApexSubdomain(requestHostFromHeaders(req))) {
+    logRejection(403, "global_host_required", {
+      route: matchingRoute.path,
+      operationName: matchingRoute.operationName,
+      actorId: actor.userId,
+      detail: "apex_subdomain",
+    });
+    const err = new ForbiddenError("api.error.permissionRequired", {
+      safeDetails: { permission: "platform:global-host-required" },
+    });
+    jsonResponse(
+      res,
+      403,
+      toSafeResponse(err, (m) => serverT(m, { permission: "global host" })),
+      requestId
+    );
+    return true;
+  }
+  if (matchingRoute.scope === "global" && fqdnTenant !== null) {
+    logRejection(403, "global_host_required", {
+      route: matchingRoute.path,
+      operationName: matchingRoute.operationName,
+      actorId: actor.userId,
+      detail: "tenant_fqdn_resolved",
+      fqdnOrganisationId: fqdnTenant.organisationId,
+    });
+    const err = new ForbiddenError("api.error.permissionRequired", {
+      safeDetails: { permission: "platform:global-host-required" },
+    });
+    jsonResponse(
+      res,
+      403,
+      toSafeResponse(err, (m) => serverT(m, { permission: "global host" })),
+      requestId
+    );
+    return true;
+  }
+  if (matchingRoute.scope === "tenant" && fqdnTenant === null) {
+    logRejection(403, "tenant_fqdn_required", {
+      route: matchingRoute.path,
+      operationName: matchingRoute.operationName,
+      actorId: actor.userId,
+    });
+    const err = new ForbiddenError("api.error.permissionRequired", {
+      safeDetails: { permission: "tenant:fqdn-required" },
+    });
+    jsonResponse(
+      res,
+      403,
+      toSafeResponse(err, (m) => serverT(m, { permission: "tenant host" })),
+      requestId
+    );
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Resolve + authorise the actor for a route that requires auth: session
+ * resolution, FQDN tenant cross-check, UMA + static-permission gates, and FQDN
+ * scope enforcement. On denial the response is already written; otherwise the
+ * resolved actor is returned for the handler (ADR-0029/0030/ADR-ACT-0145/0187).
+ */
+async function enforceRouteAuth(input: AuthEnforcementInput): Promise<AuthEnforcement> {
+  const { req, res, matchingRoute, fqdnTenant, isFixtureMode, requestId, reqLogger, logRejection } =
+    input;
+
+  const { actor, resolvedSessionId } = await resolveRouteActor(req, reqLogger, input.testDeps);
+
+  // FQDN tenant cross-check (ADR-0029 invariant #2, ADR-ACT-0187):
+  // If the request came in on a tenant subdomain, the session must have
+  // explicit access to that tenant. canAccessTenantFqdn enforces:
+  //   - Regular users: only their own tenant.
+  //   - System-admin (no support mode): always blocked on tenant FQDNs.
+  //   - System-admin (support mode): only the specific effective tenant.
+  if (actor && fqdnTenant && !canAccessTenantFqdn(actor, fqdnTenant.organisationId)) {
+    logRejection(403, "tenant_fqdn_forbidden", {
+      route: matchingRoute.path,
+      operationName: matchingRoute.operationName,
+      actorId: actor.userId,
+      roles: actor.roles,
+      fqdnOrganisationId: fqdnTenant.organisationId,
+      supportMode: actor.supportMode ?? false,
+    });
+    const err = new ForbiddenError("api.error.permissionRequired", {
+      safeDetails: { permission: "tenant:own" },
+    });
+    jsonResponse(
+      res,
+      403,
+      toSafeResponse(err, (m) => serverT(m, { permission: "own tenant" })),
+      requestId
+    );
+    return { denied: true };
+  }
+
+  if (!actor) {
+    logRejection(401, "authentication_required", {
+      route: matchingRoute.path,
+      operationName: matchingRoute.operationName,
+      hadCookie: !!req.headers["cookie"],
+    });
+    const err = new UnauthorizedError("api.error.authenticationRequired");
+    jsonResponse(
+      res,
+      401,
+      toSafeResponse(err, (message) => serverT(message)),
+      requestId
+    );
+    return { denied: true };
+  }
+
+  const uma = await enforceUmaAuthorisation(input, actor, resolvedSessionId);
+  if (uma.denied) return { denied: true };
+  const umaGranted = uma.umaGranted;
+
+  // Fail-closed gate: if UMA was the sole declared gate (resource+umaScope present,
+  // no requiredPermission fallback) and UMA did not grant access, deny unconditionally.
+  // This prevents fail-open when Keycloak is unavailable and no static fallback exists.
+  const umaConfigured = !!(matchingRoute.resource && matchingRoute.umaScope);
+  if (umaConfigured && !umaGranted && !matchingRoute.requiredPermission) {
+    logRejection(403, "uma_fail_closed", {
+      route: matchingRoute.path,
+      operationName: matchingRoute.operationName,
+      actorId: actor.userId,
+      resource: matchingRoute.resource,
+      umaScope: matchingRoute.umaScope,
+    });
+    const err = new ForbiddenError("api.error.permissionRequired", {
+      safeDetails: { permission: `${matchingRoute.resource}#${matchingRoute.umaScope}` },
+    });
+    jsonResponse(
+      res,
+      403,
+      toSafeResponse(err, (m) => serverT(m, { permission: matchingRoute.resource! })),
+      requestId
+    );
+    return { denied: true };
+  }
+
+  // Static permission check — backward compat and UMA degraded fallback
+  if (
+    !umaGranted &&
+    matchingRoute.requiredPermission &&
+    !actor.permissions.includes(matchingRoute.requiredPermission)
+  ) {
+    const requiredPermission = matchingRoute.requiredPermission;
+    logRejection(403, "static_permission_denied", {
+      route: matchingRoute.path,
+      operationName: matchingRoute.operationName,
+      actorId: actor.userId,
+      roles: actor.roles,
+      requiredPermission,
+      ...(umaConfigured
+        ? { resource: matchingRoute.resource, umaScope: matchingRoute.umaScope }
+        : {}),
+    });
+    const err = new ForbiddenError("api.error.permissionRequired", {
+      safeDetails: { permission: requiredPermission },
+    });
+    jsonResponse(
+      res,
+      403,
+      toSafeResponse(err, (message) => serverT(message, { permission: requiredPermission })),
+      requestId
+    );
+    return { denied: true };
+  }
+
+  // Route scope enforcement (ADR-0029 §3). Fixture mode skips FQDN resolution
+  // so scope checks are also skipped.
+  if (!isFixtureMode && enforceRouteScope(input, actor)) {
+    return { denied: true };
+  }
+
+  return { denied: false, actor };
+}
+
 // Create the HTTP request handler from a route list
 export function createRouter(
   routes: Route[],
@@ -360,324 +737,25 @@ export function createRouter(
     //   1. LOCAL_FIXTURE_SESSION env var ? fixture actor (no Redis/DB)
     //   2. session cookie ? real Redis-backed session actor
     //   3. neither ? unauthenticated (null)
+    //
+    // For routes requiring auth, resolution + FQDN cross-check + UMA/static
+    // permission gates + FQDN scope enforcement are delegated to enforceRouteAuth.
+    // On denial it has already written the response (caller just returns).
     let actor: SessionActor | null = null;
-    let resolvedSessionId: string | null = null; // captured for UMA token refresh
     if (matchingRoute.requiresAuth) {
-      actor = getFixtureSession();
-      if (!actor) {
-        // Real session: read the HTTP-only cookie(s). A browser may present more
-        // than one platform_session (host-only + domain-scoped after a
-        // SESSION_COOKIE_DOMAIN change); try EVERY candidate and use the first that
-        // resolves so a stale cookie can't shadow a valid session (ADR-ACT-0278).
-        const candidateIds = parseSessionCookies(req.headers["cookie"]);
-        if (candidateIds.length > 0) {
-          try {
-            const store = _testDeps?.sessionStore ?? getSessionStore();
-            let record: Awaited<ReturnType<SessionStore["find"]>> = null;
-            for (const id of candidateIds) {
-              record = await store.find(id);
-              if (record) {
-                resolvedSessionId = id;
-                break;
-              }
-            }
-            if (record) {
-              actor = {
-                userId: record.userId,
-                tenantId: record.tenantId,
-                organisationId: record.organisationId,
-                roles: record.roles,
-                permissions: record.permissions,
-                displayName: record.displayName,
-                // Preserve support-mode fields (ADR-ACT-0187)
-                ...(record.supportMode
-                  ? {
-                      supportMode: record.supportMode,
-                      effectiveOrganisationId: record.effectiveOrganisationId,
-                      supportAccessReason: record.supportAccessReason,
-                    }
-                  : {}),
-                // Preserve UMA token fields (ADR-ACT-0153) — needed for pipeline checkAccess
-                ...(record.accessTokenEnc ? { accessTokenEnc: record.accessTokenEnc } : {}),
-              };
-            }
-          } catch (err) {
-            // Redis unavailable -> treat as unauthenticated (do not crash). Log it:
-            // a session-store outage makes the whole platform fail auth, so it must
-            // be diagnosable rather than silently 401 every request (ADR-ACT-0284).
-            reqLogger.error({ err }, "session store unavailable during auth resolution");
-          }
-        }
-      }
-
-      // FQDN tenant cross-check (ADR-0029 invariant #2, ADR-ACT-0187):
-      // If the request came in on a tenant subdomain, the session must have
-      // explicit access to that tenant. canAccessTenantFqdn enforces:
-      //   - Regular users: only their own tenant.
-      //   - System-admin (no support mode): always blocked on tenant FQDNs.
-      //   - System-admin (support mode): only the specific effective tenant.
-      if (actor && fqdnTenant) {
-        if (!canAccessTenantFqdn(actor, fqdnTenant.organisationId)) {
-          logRejection(403, "tenant_fqdn_forbidden", {
-            route: matchingRoute.path,
-            operationName: matchingRoute.operationName,
-            actorId: actor.userId,
-            roles: actor.roles,
-            fqdnOrganisationId: fqdnTenant.organisationId,
-            supportMode: actor.supportMode ?? false,
-          });
-          const err = new ForbiddenError("api.error.permissionRequired", {
-            safeDetails: { permission: "tenant:own" },
-          });
-          jsonResponse(
-            res,
-            403,
-            toSafeResponse(err, (m) => serverT(m, { permission: "own tenant" })),
-            requestId
-          );
-          return;
-        }
-      }
-
-      if (!actor) {
-        logRejection(401, "authentication_required", {
-          route: matchingRoute.path,
-          operationName: matchingRoute.operationName,
-          hadCookie: !!req.headers["cookie"],
-        });
-        const err = new UnauthorizedError("api.error.authenticationRequired");
-        jsonResponse(
-          res,
-          401,
-          toSafeResponse(err, (message) => serverT(message)),
-          requestId
-        );
-        return;
-      }
-      // UMA dynamic authorisation (ADR-ACT-0145, Done)
-      // Runs when route declares resource+umaScope AND actor has a stored token.
-      // Falls back to static requiredPermission when: no token (fixture sessions,
-      // pre-0153 sessions) OR Keycloak unavailable — degraded mode, see ADR-0030.
-      const effectiveResolveToken = _testDeps?.resolveAccessToken ?? resolveAccessToken;
-      const effectiveAuthorisationPort = _testDeps?.authorisationPort ?? getAuthorisationPort;
-      let umaGranted = false;
-      if (matchingRoute.resource && matchingRoute.umaScope && actor.accessTokenEnc) {
-        const store = _testDeps?.sessionStore ?? getSessionStore();
-        const rawToken = resolvedSessionId
-          ? await effectiveResolveToken(resolvedSessionId, store)
-          : null;
-
-        // Unresolvable UMA access token (refresh token invalidated by a client
-        // rotation, or expired). If the route has a static requiredPermission
-        // fallback, DEGRADE to it — the session itself is authenticated, so don't
-        // force a re-login (ADR-ACT-0278). If the route is sole-UMA (no static
-        // fallback), 401 so the client can re-login and obtain a fresh token.
-        if (!rawToken && !matchingRoute.requiredPermission) {
-          logRejection(401, "access_token_unresolved", {
-            route: matchingRoute.path,
-            operationName: matchingRoute.operationName,
-            actorId: actor.userId,
-          });
-          jsonResponse(
-            res,
-            401,
-            toSafeResponse(new UnauthorizedError("api.error.authenticationRequired"), (m) =>
-              serverT(m)
-            ),
-            requestId
-          );
-          return;
-        }
-        // Synthesise a degradable decision when there is no token so it flows
-        // through the same fallback path as keycloak_unavailable below.
-        const decision = rawToken
-          ? await effectiveAuthorisationPort(fqdnTenant).checkAccess(
-              { name: matchingRoute.resource, scope: matchingRoute.umaScope },
-              rawToken
-            )
-          : ({ granted: false, reason: "token_unresolved" } as const);
-
-        if (decision.granted) {
-          umaGranted = true;
-        } else if (
-          decision.reason === "keycloak_unavailable" ||
-          decision.reason === "resource_not_registered" ||
-          decision.reason === "token_unresolved"
-        ) {
-          // Degrade gracefully — fall through to static check. "keycloak_unavailable"
-          // is a transient outage; "resource_not_registered" is a provisioning gap
-          // (the resource is not yet a protected resource on the BFF client). In both
-          // cases the route's static requiredPermission is the effective gate
-          // (ADR-ACT-0145). Routes without a requiredPermission still fail closed below.
-          const log = createLogger({ name: "pipeline" });
-          log.warn(
-            {
-              resource: matchingRoute.resource,
-              scope: matchingRoute.umaScope,
-              reason: decision.reason,
-            },
-            "UMA check not decisive — falling back to static permission check"
-          );
-        } else if (decision.reason === "insufficient_auth_level") {
-          logRejection(401, "step_up_required", {
-            route: matchingRoute.path,
-            operationName: matchingRoute.operationName,
-            actorId: actor.userId,
-            resource: matchingRoute.resource,
-            umaScope: matchingRoute.umaScope,
-          });
-          jsonResponse(
-            res,
-            401,
-            { code: "STEP_UP_REQUIRED", message: "Additional authentication required" },
-            requestId
-          );
-          return;
-        } else {
-          logRejection(403, "uma_policy_denied", {
-            route: matchingRoute.path,
-            operationName: matchingRoute.operationName,
-            actorId: actor.userId,
-            roles: actor.roles,
-            resource: matchingRoute.resource,
-            umaScope: matchingRoute.umaScope,
-            umaReason: decision.reason,
-            requiredPermission: matchingRoute.requiredPermission,
-          });
-          const err = new ForbiddenError("api.error.permissionRequired", {
-            safeDetails: {
-              permission: `${matchingRoute.resource}#${matchingRoute.umaScope}`,
-            },
-          });
-          jsonResponse(
-            res,
-            403,
-            toSafeResponse(err, (m) => serverT(m, { permission: matchingRoute.resource! })),
-            requestId
-          );
-          return;
-        }
-      }
-
-      // Fail-closed gate: if UMA was the sole declared gate (resource+umaScope present,
-      // no requiredPermission fallback) and UMA did not grant access, deny unconditionally.
-      // This prevents fail-open when Keycloak is unavailable and no static fallback exists.
-      const umaConfigured = !!(matchingRoute.resource && matchingRoute.umaScope);
-      if (umaConfigured && !umaGranted && !matchingRoute.requiredPermission) {
-        logRejection(403, "uma_fail_closed", {
-          route: matchingRoute.path,
-          operationName: matchingRoute.operationName,
-          actorId: actor.userId,
-          resource: matchingRoute.resource,
-          umaScope: matchingRoute.umaScope,
-        });
-        const err = new ForbiddenError("api.error.permissionRequired", {
-          safeDetails: { permission: `${matchingRoute.resource}#${matchingRoute.umaScope}` },
-        });
-        jsonResponse(
-          res,
-          403,
-          toSafeResponse(err, (m) => serverT(m, { permission: matchingRoute.resource! })),
-          requestId
-        );
-        return;
-      }
-
-      // Static permission check — backward compat and UMA degraded fallback
-      if (
-        !umaGranted &&
-        matchingRoute.requiredPermission &&
-        !actor.permissions.includes(matchingRoute.requiredPermission)
-      ) {
-        const requiredPermission = matchingRoute.requiredPermission;
-        logRejection(403, "static_permission_denied", {
-          route: matchingRoute.path,
-          operationName: matchingRoute.operationName,
-          actorId: actor.userId,
-          roles: actor.roles,
-          requiredPermission,
-          ...(umaConfigured
-            ? { resource: matchingRoute.resource, umaScope: matchingRoute.umaScope }
-            : {}),
-        });
-        const err = new ForbiddenError("api.error.permissionRequired", {
-          safeDetails: { permission: requiredPermission },
-        });
-        jsonResponse(
-          res,
-          403,
-          toSafeResponse(err, (message) => serverT(message, { permission: requiredPermission })),
-          requestId
-        );
-        return;
-      }
-
-      // Route scope enforcement (ADR-0029 §3):
-      // "global" routes require no tenant in FQDN — must arrive at the apex host.
-      // "tenant" routes require a tenant resolved from FQDN.
-      // Fixture mode skips FQDN resolution so scope checks are also skipped.
-      if (!isFixtureMode) {
-        // ADR-ACT-0231 hardening: global routes must reject ANY subdomain of the
-        // apex zone — including reserved and unknown subdomains that resolve no
-        // tenant. Those hosts share the apex cookie scope and the wildcard Caddy
-        // vhost, so treating them as the global host would let global-only APIs
-        // be driven from non-apex origins. Non-apex hosts (e.g. direct localhost
-        // access to the API) are unaffected.
-        if (matchingRoute.scope === "global" && isApexSubdomain(requestHostFromHeaders(req))) {
-          logRejection(403, "global_host_required", {
-            route: matchingRoute.path,
-            operationName: matchingRoute.operationName,
-            actorId: actor.userId,
-            detail: "apex_subdomain",
-          });
-          const err = new ForbiddenError("api.error.permissionRequired", {
-            safeDetails: { permission: "platform:global-host-required" },
-          });
-          jsonResponse(
-            res,
-            403,
-            toSafeResponse(err, (m) => serverT(m, { permission: "global host" })),
-            requestId
-          );
-          return;
-        }
-        if (matchingRoute.scope === "global" && fqdnTenant !== null) {
-          logRejection(403, "global_host_required", {
-            route: matchingRoute.path,
-            operationName: matchingRoute.operationName,
-            actorId: actor.userId,
-            detail: "tenant_fqdn_resolved",
-            fqdnOrganisationId: fqdnTenant.organisationId,
-          });
-          const err = new ForbiddenError("api.error.permissionRequired", {
-            safeDetails: { permission: "platform:global-host-required" },
-          });
-          jsonResponse(
-            res,
-            403,
-            toSafeResponse(err, (m) => serverT(m, { permission: "global host" })),
-            requestId
-          );
-          return;
-        }
-        if (matchingRoute.scope === "tenant" && fqdnTenant === null) {
-          logRejection(403, "tenant_fqdn_required", {
-            route: matchingRoute.path,
-            operationName: matchingRoute.operationName,
-            actorId: actor.userId,
-          });
-          const err = new ForbiddenError("api.error.permissionRequired", {
-            safeDetails: { permission: "tenant:fqdn-required" },
-          });
-          jsonResponse(
-            res,
-            403,
-            toSafeResponse(err, (m) => serverT(m, { permission: "tenant host" })),
-            requestId
-          );
-          return;
-        }
-      }
+      const enforcement = await enforceRouteAuth({
+        req,
+        res,
+        matchingRoute,
+        fqdnTenant,
+        isFixtureMode,
+        requestId,
+        reqLogger,
+        logRejection,
+        testDeps: _testDeps,
+      });
+      if (enforcement.denied) return;
+      actor = enforcement.actor;
     }
 
     // Build RuntimeContext after auth resolution

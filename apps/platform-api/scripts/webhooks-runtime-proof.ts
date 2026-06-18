@@ -34,10 +34,7 @@ function check(label: string, ok: boolean, detail = ""): void {
   if (!ok) failures++;
 }
 
-async function main(): Promise<void> {
-  console.log("# Tenant webhooks runtime proof\n");
-
-  // 1. Pure.
+function checkPureHmacAndReadiness(): void {
   check(
     "HMAC signing is verifiable",
     signWebhookBody("s", 1, "b") === crypto.createHmac("sha256", "s").update("1.b").digest("hex")
@@ -46,8 +43,12 @@ async function main(): Promise<void> {
     "readiness: enabled subscription → configured",
     classifyWebhookReadiness({ total: 1, enabled: 1 }) === "configured"
   );
+}
 
-  // 2. Live: a local receiver captures the signed delivery.
+function startReceiver(): {
+  server: http.Server;
+  received: { headers: http.IncomingHttpHeaders; body: string }[];
+} {
   const received: { headers: http.IncomingHttpHeaders; body: string }[] = [];
   const server = http.createServer((req, res) => {
     let body = "";
@@ -57,6 +58,78 @@ async function main(): Promise<void> {
       res.writeHead(200).end("ok");
     });
   });
+  return { server, received };
+}
+
+function verifyDelivery(
+  received: { headers: http.IncomingHttpHeaders; body: string }[],
+  secret: string
+): void {
+  const got = received[0];
+  check("local receiver got exactly one delivery", received.length === 1);
+  if (got) {
+    const sigHeader = String(got.headers["x-platform-signature"] ?? "");
+    const m = /^t=(\d+),v1=([0-9a-f]+)$/.exec(sigHeader);
+    const verified = !!m && m[2] === signWebhookBody(secret, Number(m[1]), got.body);
+    check("received payload is correctly HMAC-signed (verified vs secret)", verified);
+    check("payload does not contain the secret", !got.body.includes(secret));
+    check("event header is platform.test", got.headers["x-platform-event"] === "platform.test");
+  }
+}
+
+async function runLifecycle(deps: {
+  organisationId: string;
+  url: string;
+  store: PostgresWebhookStore;
+  secret: string;
+  received: { headers: http.IncomingHttpHeaders; body: string }[];
+  setCreatedId: (id: string | null) => void;
+}): Promise<void> {
+  const { organisationId, url, store, secret, received, setCreatedId } = deps;
+  const created = await createWebhook(
+    {
+      organisationId,
+      data: { url, eventTypes: ["platform.test"], enabled: true },
+      actor: ACTOR,
+    },
+    { store, audit: noopAudit, genSecret: () => secret }
+  );
+  const createdId = created.subscription.id;
+  setCreatedId(createdId);
+  check("created webhook reveals the secret once", created.secret === secret);
+
+  const test = await testWebhook(
+    { organisationId, id: createdId, actor: ACTOR },
+    { store, audit: noopAudit, dispatch: new HttpWebhookDispatcher() }
+  );
+  check(
+    "test dispatch delivered (HTTP 200)",
+    test.kind === "ok" && test.result.status === "delivered"
+  );
+
+  verifyDelivery(received, secret);
+
+  const deliveries = await listWebhookDeliveries(organisationId, createdId, store);
+  check(
+    "delivery log records a delivered attempt",
+    deliveries.kind === "ok" && deliveries.deliveries.some((d) => d.status === "delivered")
+  );
+
+  // cleanup
+  const removed = await store.delete(organisationId, createdId);
+  const gone = (await store.get(organisationId, createdId)) === null;
+  setCreatedId(null);
+  check("cleanup removed the temp webhook", removed && gone);
+}
+
+async function main(): Promise<void> {
+  console.log("# Tenant webhooks runtime proof\n");
+
+  // 1. Pure.
+  checkPureHmacAndReadiness();
+
+  // 2. Live: a local receiver captures the signed delivery.
+  const { server, received } = startReceiver();
   await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
   const port = (server.address() as { port: number }).port;
   const url = `http://127.0.0.1:${port}/hook`;
@@ -73,48 +146,16 @@ async function main(): Promise<void> {
     if (!organisationId) {
       console.log("SKIP  live lifecycle — no organisation seeded (run `make seed-demo`)");
     } else {
-      const created = await createWebhook(
-        {
-          organisationId,
-          data: { url, eventTypes: ["platform.test"], enabled: true },
-          actor: ACTOR,
+      await runLifecycle({
+        organisationId,
+        url,
+        store,
+        secret: SECRET,
+        received,
+        setCreatedId: (id) => {
+          createdId = id;
         },
-        { store, audit: noopAudit, genSecret: () => SECRET }
-      );
-      createdId = created.subscription.id;
-      check("created webhook reveals the secret once", created.secret === SECRET);
-
-      const test = await testWebhook(
-        { organisationId, id: createdId, actor: ACTOR },
-        { store, audit: noopAudit, dispatch: new HttpWebhookDispatcher() }
-      );
-      check(
-        "test dispatch delivered (HTTP 200)",
-        test.kind === "ok" && test.result.status === "delivered"
-      );
-
-      const got = received[0];
-      check("local receiver got exactly one delivery", received.length === 1);
-      if (got) {
-        const sigHeader = String(got.headers["x-platform-signature"] ?? "");
-        const m = /^t=(\d+),v1=([0-9a-f]+)$/.exec(sigHeader);
-        const verified = !!m && m[2] === signWebhookBody(SECRET, Number(m[1]), got.body);
-        check("received payload is correctly HMAC-signed (verified vs secret)", verified);
-        check("payload does not contain the secret", !got.body.includes(SECRET));
-        check("event header is platform.test", got.headers["x-platform-event"] === "platform.test");
-      }
-
-      const deliveries = await listWebhookDeliveries(organisationId, createdId, store);
-      check(
-        "delivery log records a delivered attempt",
-        deliveries.kind === "ok" && deliveries.deliveries.some((d) => d.status === "delivered")
-      );
-
-      // cleanup
-      const removed = await store.delete(organisationId, createdId);
-      const gone = (await store.get(organisationId, createdId)) === null;
-      createdId = null;
-      check("cleanup removed the temp webhook", removed && gone);
+      });
     }
   } catch (err) {
     check("live lifecycle", false, err instanceof Error ? err.message : String(err));

@@ -31,75 +31,74 @@ function makeAudit(opts: { fail?: boolean } = {}): AuditEventPort & { events: Au
   };
 }
 
-function makePool(opts: { slugExists?: boolean; subOrgExists?: boolean } = {}) {
+type PoolOpts = { slugExists?: boolean; subOrgExists?: boolean };
+type QueryResult = { rows: Record<string, unknown>[]; rowCount: number };
+
+const fullSubOrgRow = (displayName: string) => ({
+  id: SUB_ORG_ID,
+  slug: "sub-a",
+  display_name: displayName,
+  is_active: true,
+  created_at: new Date(),
+  updated_at: new Date(),
+});
+const newSubOrgRow = () => ({
+  id: SUB_ORG_ID,
+  slug: "new-sub",
+  display_name: "New Sub",
+  is_active: true,
+  created_at: new Date(),
+  updated_at: new Date(),
+});
+
+const slugLookupResult = (opts: PoolOpts): QueryResult => ({
+  rows: opts.slugExists ? [{ id: "eid" }] : [],
+  rowCount: opts.slugExists ? 1 : 0,
+});
+const idLookupResult = (opts: PoolOpts): QueryResult => ({
+  rows: opts.subOrgExists ? [{ id: SUB_ORG_ID }] : [],
+  rowCount: opts.subOrgExists ? 1 : 0,
+});
+const fullRowResult = (opts: PoolOpts, displayName: string): QueryResult =>
+  opts.subOrgExists
+    ? { rows: [fullSubOrgRow(displayName)], rowCount: 1 }
+    : { rows: [], rowCount: 0 };
+const insertResult = (): QueryResult => ({ rows: [newSubOrgRow()], rowCount: 1 });
+const updateResult = (): QueryResult => ({ rows: [fullSubOrgRow("Updated")], rowCount: 1 });
+
+// client.query routing — order: slug, id, full-row(where id), insert, update.
+function routeClientQuery(t: string, opts: PoolOpts): QueryResult {
+  if (t.includes("select id from public.organisations where slug")) return slugLookupResult(opts);
+  if (t.includes("select id from public.organisations where id")) return idLookupResult(opts);
+  if (
+    t.includes("select id, slug, display_name") &&
+    t.includes("from public.organisations where id")
+  )
+    return fullRowResult(opts, "Sub A");
+  if (t.includes("insert into public.organisations")) return insertResult();
+  if (t.includes("update public.organisations")) return updateResult();
+  return { rows: [], rowCount: 0 };
+}
+
+// pool.query routing — order: slug, full-row, id, insert, update.
+function routePoolQuery(t: string, opts: PoolOpts): QueryResult {
+  if (t.includes("select id from public.organisations where slug")) return slugLookupResult(opts);
+  // Full-row SELECT used by updateSubOrg/deactivateSubOrg
+  if (t.includes("select id, slug, display_name") && t.includes("from public.organisations"))
+    return fullRowResult(opts, "Sub A");
+  if (t.includes("select id from public.organisations where id")) return idLookupResult(opts);
+  if (t.includes("insert into public.organisations")) return insertResult();
+  if (t.includes("update public.organisations")) return updateResult();
+  return { rows: [], rowCount: 0 };
+}
+
+function makePool(opts: PoolOpts = {}) {
   const calls: { text: string; values?: unknown[] }[] = [];
   const client = {
     escapeIdentifier: (s: string) => `"${s.replace(/"/g, '""')}"`,
     async query(text: string, values?: unknown[]) {
       calls.push({ text, values });
-      const t = text.toLowerCase().trim();
-      if (t.includes("select id from public.organisations where slug")) {
-        return {
-          rows: opts.slugExists ? [{ id: "eid" }] : [],
-          rowCount: opts.slugExists ? 1 : 0,
-        };
-      }
-      if (t.includes("select id from public.organisations where id")) {
-        return {
-          rows: opts.subOrgExists ? [{ id: SUB_ORG_ID }] : [],
-          rowCount: opts.subOrgExists ? 1 : 0,
-        };
-      }
-      if (
-        t.includes("select id, slug, display_name") &&
-        t.includes("from public.organisations where id")
-      ) {
-        if (!opts.subOrgExists) return { rows: [], rowCount: 0 };
-        return {
-          rows: [
-            {
-              id: SUB_ORG_ID,
-              slug: "sub-a",
-              display_name: "Sub A",
-              is_active: true,
-              created_at: new Date(),
-              updated_at: new Date(),
-            },
-          ],
-          rowCount: 1,
-        };
-      }
-      if (t.includes("insert into public.organisations")) {
-        return {
-          rows: [
-            {
-              id: SUB_ORG_ID,
-              slug: "new-sub",
-              display_name: "New Sub",
-              is_active: true,
-              created_at: new Date(),
-              updated_at: new Date(),
-            },
-          ],
-          rowCount: 1,
-        };
-      }
-      if (t.includes("update public.organisations")) {
-        return {
-          rows: [
-            {
-              id: SUB_ORG_ID,
-              slug: "sub-a",
-              display_name: "Updated",
-              is_active: true,
-              created_at: new Date(),
-              updated_at: new Date(),
-            },
-          ],
-          rowCount: 1,
-        };
-      }
-      return { rows: [], rowCount: 0 };
+      return routeClientQuery(text.toLowerCase().trim(), opts);
     },
     release() {},
   };
@@ -109,64 +108,7 @@ function makePool(opts: { slugExists?: boolean; subOrgExists?: boolean } = {}) {
     },
     async query(text: string, values?: unknown[]) {
       calls.push({ text, values });
-      const t = text.toLowerCase().trim();
-      if (t.includes("select id from public.organisations where slug")) {
-        return { rows: opts.slugExists ? [{ id: "eid" }] : [], rowCount: opts.slugExists ? 1 : 0 };
-      }
-      // Full-row SELECT used by updateSubOrg/deactivateSubOrg
-      if (t.includes("select id, slug, display_name") && t.includes("from public.organisations")) {
-        if (!opts.subOrgExists) return { rows: [], rowCount: 0 };
-        return {
-          rows: [
-            {
-              id: SUB_ORG_ID,
-              slug: "sub-a",
-              display_name: "Sub A",
-              is_active: true,
-              created_at: new Date(),
-              updated_at: new Date(),
-            },
-          ],
-          rowCount: 1,
-        };
-      }
-      if (t.includes("select id from public.organisations where id")) {
-        return {
-          rows: opts.subOrgExists ? [{ id: SUB_ORG_ID }] : [],
-          rowCount: opts.subOrgExists ? 1 : 0,
-        };
-      }
-      if (t.includes("insert into public.organisations")) {
-        return {
-          rows: [
-            {
-              id: SUB_ORG_ID,
-              slug: "new-sub",
-              display_name: "New Sub",
-              is_active: true,
-              created_at: new Date(),
-              updated_at: new Date(),
-            },
-          ],
-          rowCount: 1,
-        };
-      }
-      if (t.includes("update public.organisations")) {
-        return {
-          rows: [
-            {
-              id: SUB_ORG_ID,
-              slug: "sub-a",
-              display_name: "Updated",
-              is_active: true,
-              created_at: new Date(),
-              updated_at: new Date(),
-            },
-          ],
-          rowCount: 1,
-        };
-      }
-      return { rows: [], rowCount: 0 };
+      return routePoolQuery(text.toLowerCase().trim(), opts);
     },
   };
   return { calls, pool: pool as never };

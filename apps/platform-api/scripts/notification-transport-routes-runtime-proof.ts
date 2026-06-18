@@ -59,18 +59,7 @@ async function mailpitMatches(query: string): Promise<number> {
   }
 }
 
-async function main(): Promise<void> {
-  console.log("# Notification transport ROUTES LIVE proof\n");
-  const [pgOk, mpOk] = await Promise.all([pgReachable(APP_URL), mailpitReachable()]);
-  if (!pgOk || !mpOk) {
-    const missing = [!pgOk ? "Postgres" : null, !mpOk ? "Mailpit" : null]
-      .filter(Boolean)
-      .join(" + ");
-    console.log(`SKIP  notification-transport-routes — ${missing} not reachable`);
-    console.log("\n# SKIPPED (no live backend) — not counted as pass or fail");
-    process.exit(0);
-  }
-
+function resolveTestRoute(): (typeof routes)[number] | null {
   // Wire the real email transport for buildNotificationsDeps (env-gated selection).
   process.env["NOTIFICATION_EMAIL_TRANSPORT"] = "smtp";
   process.env["NOTIFICATION_EMAIL_OVERRIDE"] = OVERRIDE;
@@ -81,19 +70,21 @@ async function main(): Promise<void> {
   );
   if (!testRoute) {
     check("test route exists", false);
-    process.exit(1);
+    return null;
   }
   check(
     "test route is operator-only (platform.notifications.write, global)",
     testRoute.requiredPermission === "platform.notifications.write" && testRoute.scope === "global"
   );
+  return testRoute;
+}
 
-  const su = new pg.Pool({ connectionString: SU_URL });
-  const app = new pg.Pool({ connectionString: APP_URL });
-  const repo = new PostgresNotificationRepository(app);
-  const userId = "user-" + Date.now().toString(36);
+async function proveWiredTestSend(
+  testRoute: (typeof routes)[number],
+  deps: { su: pg.Pool; repo: PostgresNotificationRepository; userId: string }
+): Promise<void> {
+  const { su, repo, userId } = deps;
   let orgA: string | null = null;
-
   try {
     orgA = (
       await su.query<{ id: string }>(
@@ -155,6 +146,32 @@ async function main(): Promise<void> {
     delete process.env["NOTIFICATION_EMAIL_OVERRIDE"];
     if (orgA)
       await su.query("DELETE FROM public.organisations WHERE id=$1", [orgA]).catch(() => {});
+  }
+}
+
+async function main(): Promise<void> {
+  console.log("# Notification transport ROUTES LIVE proof\n");
+  const [pgOk, mpOk] = await Promise.all([pgReachable(APP_URL), mailpitReachable()]);
+  if (!pgOk || !mpOk) {
+    const missing = [!pgOk ? "Postgres" : null, !mpOk ? "Mailpit" : null]
+      .filter(Boolean)
+      .join(" + ");
+    console.log(`SKIP  notification-transport-routes — ${missing} not reachable`);
+    console.log("\n# SKIPPED (no live backend) — not counted as pass or fail");
+    process.exit(0);
+  }
+
+  const testRoute = resolveTestRoute();
+  if (!testRoute) process.exit(1);
+
+  const su = new pg.Pool({ connectionString: SU_URL });
+  const app = new pg.Pool({ connectionString: APP_URL });
+  const repo = new PostgresNotificationRepository(app);
+  const userId = "user-" + Date.now().toString(36);
+
+  try {
+    await proveWiredTestSend(testRoute, { su, repo, userId });
+  } finally {
     await app.end().catch(() => {});
     await su.end().catch(() => {});
   }

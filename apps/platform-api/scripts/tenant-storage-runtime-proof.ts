@@ -39,10 +39,7 @@ function isConnRefused(err: unknown): boolean {
   return /ECONNREFUSED|ENOTFOUND|EAI_AGAIN|fetch failed|socket hang up/i.test(msg);
 }
 
-async function main(): Promise<void> {
-  console.log("# Tenant storage runtime proof\n");
-
-  // 1. Pure classifier.
+function checkPureClassifier(): void {
   check(
     "round-trip + isolation → configured",
     classifyStorageProbe({ wrote: true, read: true, deleted: true, foreignKeyRejected: true }) ===
@@ -53,16 +50,18 @@ async function main(): Promise<void> {
     classifyStorageProbe({ wrote: true, read: true, deleted: true, foreignKeyRejected: false }) ===
       "isolation_failed"
   );
+}
 
-  // 2. In-memory probe round-trip.
+async function checkInMemoryProbe(): Promise<void> {
   const mem = await probeTenantStorage({
     prefix: tenantStoragePrefix("org-proof"),
     port: createInMemoryObjectStoragePort(),
     assertIsolation: async () => true,
   });
   check("in-memory probe write/read/delete + isolation → configured", mem.status === "configured");
+}
 
-  // 3. Isolation guard — always provable, no network.
+async function checkIsolationGuard(): Promise<void> {
   const guarded = new S3ObjectStorageAdapter({
     bucket: "proof-bucket",
     region: "us-east-1",
@@ -75,8 +74,24 @@ async function main(): Promise<void> {
     rejected = true;
   }
   check("prefix-locked adapter rejects a foreign cross-prefix key (ADR-0029 §6)", rejected);
+}
 
-  // 4. LIVE MinIO probe (by default — loads local env so it does not skip in dev).
+async function ensureBucket(client: S3Client, bucket: string): Promise<void> {
+  // Deterministic bucket provisioning (idempotent).
+  try {
+    await client.send(new HeadBucketCommand({ Bucket: bucket }));
+  } catch {
+    try {
+      await client.send(new CreateBucketCommand({ Bucket: bucket }));
+    } catch (err) {
+      const name = (err as S3ServiceException)?.name ?? "";
+      if (!/BucketAlreadyOwnedByYou|BucketAlreadyExists/.test(name)) throw err;
+    }
+  }
+}
+
+async function checkLiveMinioProbe(): Promise<void> {
+  // LIVE MinIO probe (by default — loads local env so it does not skip in dev).
   loadLocalEnv();
   const s3 = resolveLocalS3();
   const safeEndpoint = s3.endpoint.replace(/\/\/[^@]*@/, "//"); // strip any creds in URL
@@ -88,17 +103,7 @@ async function main(): Promise<void> {
   });
 
   try {
-    // Deterministic bucket provisioning (idempotent).
-    try {
-      await client.send(new HeadBucketCommand({ Bucket: s3.bucket }));
-    } catch {
-      try {
-        await client.send(new CreateBucketCommand({ Bucket: s3.bucket }));
-      } catch (err) {
-        const name = (err as S3ServiceException)?.name ?? "";
-        if (!/BucketAlreadyOwnedByYou|BucketAlreadyExists/.test(name)) throw err;
-      }
-    }
+    await ensureBucket(client, s3.bucket);
     check(`live MinIO reachable + bucket ready @ ${safeEndpoint} (${s3.bucket})`, true);
 
     const port = new S3ObjectStorageAdapter({
@@ -137,6 +142,22 @@ async function main(): Promise<void> {
   } finally {
     client.destroy();
   }
+}
+
+async function main(): Promise<void> {
+  console.log("# Tenant storage runtime proof\n");
+
+  // 1. Pure classifier.
+  checkPureClassifier();
+
+  // 2. In-memory probe round-trip.
+  await checkInMemoryProbe();
+
+  // 3. Isolation guard — always provable, no network.
+  await checkIsolationGuard();
+
+  // 4. LIVE MinIO probe (by default — loads local env so it does not skip in dev).
+  await checkLiveMinioProbe();
 
   // 5. Bucket-policy / IAM-level isolation: NOT automated locally (honest).
   console.log(
