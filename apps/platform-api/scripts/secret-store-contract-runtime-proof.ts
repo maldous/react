@@ -19,17 +19,14 @@
  */
 
 import pg from "pg";
-import { loadLocalEnv } from "./lib/local-env.ts";
+import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 import type { AuditEvent, AuditEventPort } from "@platform/audit-events";
 import { PostgresSecretStore } from "../src/adapters/postgres-secret-store.ts";
 import { deleteSecret, listSecrets, putSecret, revokeSecret } from "../src/usecases/secrets.ts";
 
 loadLocalEnv();
-const SU_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
-const APP_URL =
-  process.env["POSTGRES_APP_URL"] ??
-  "postgresql://platform_app:platformapppassword@localhost:5433/platform";
+const SU_URL = requireEnv("POSTGRES_URL");
+const APP_URL = requireEnv("POSTGRES_APP_URL");
 const SECRET_FIELD = /secret|password|token|credential|api[_-]?key|private[_-]?key|value/i;
 const PLAINTEXT = "s3cr3t-smtp-p@ssw0rd-" + Math.floor(Date.now() / 1000).toString(36);
 const ROTATED = "rotated-" + Math.floor(Date.now() / 1000).toString(36);

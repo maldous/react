@@ -19,6 +19,7 @@
  */
 
 import crypto from "node:crypto";
+import { requireEnv } from "./lib/local-env.ts";
 import pg from "pg";
 import type { AuditEventPort } from "@platform/audit-events";
 import { PostgresTenantDomainRegistry } from "../src/adapters/postgres-tenant-domain-registry.ts";
@@ -30,8 +31,7 @@ import {
   type AuthClientDomainPort,
 } from "../src/usecases/tenant-domain-lifecycle.ts";
 
-const POSTGRES_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
+const POSTGRES_URL = requireEnv("POSTGRES_URL");
 
 const noopAudit: AuditEventPort = { emit: async () => {} };
 const noopAuthClient: AuthClientDomainPort = {

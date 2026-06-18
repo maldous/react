@@ -13,6 +13,7 @@
  */
 
 import http from "node:http";
+import { requireEnv } from "./lib/local-env.ts";
 import pg from "pg";
 import type { AuditEventPort } from "@platform/audit-events";
 import { PostgresWebhookStore } from "../src/adapters/postgres-webhook-store.ts";
@@ -24,8 +25,7 @@ import {
 } from "../src/usecases/webhooks.ts";
 import { emitWebhookEvent, processDueDeliveries } from "../src/usecases/webhook-worker.ts";
 
-const POSTGRES_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
+const POSTGRES_URL = requireEnv("POSTGRES_URL");
 const noopAudit: AuditEventPort = { emit: async () => {} };
 const ACTOR = { actorId: "00000000-0000-0000-0000-000000000000", actorRoles: ["tenant-admin"] };
 const OPTS = { maxAttempts: 2, backoffSeconds: [0, 0] as number[] };

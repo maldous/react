@@ -23,7 +23,7 @@ import { readFileSync, rmSync, statSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import pg from "pg";
-import { loadLocalEnv } from "./lib/local-env.ts";
+import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
@@ -34,8 +34,7 @@ function check(label: string, ok: boolean, detail = ""): void {
 async function main(): Promise<void> {
   console.log("# Local backup integrity runtime proof\n");
   loadLocalEnv();
-  const url =
-    process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
+  const url = requireEnv("POSTGRES_URL");
   const pool = new pg.Pool({ connectionString: url });
   const marker = `backup-proof-${Date.now()}`;
   const backupDir = join(tmpdir(), marker);

@@ -1,7 +1,6 @@
 import pg from "pg";
 
-const POSTGRES_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
+const POSTGRES_URL = process.env["POSTGRES_URL"] ?? "";
 
 export async function resetDatabase(): Promise<void> {
   // SAFETY: only run in local/test environments

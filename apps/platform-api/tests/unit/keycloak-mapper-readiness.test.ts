@@ -140,7 +140,7 @@ const STUB_ADMIN_CONFIG: MapperCheckConfig = {
 
 // Use an unreachable URL so Postgres doesn't hang — the check returns "failed"
 // for DB but "ok"/"unknown"/"failed" for mapper, which is what we're testing.
-const NO_POSTGRES_URL = "postgresql://noop:noop@localhost:1/noop";
+const NO_POSTGRES_URL = "postgresql://localhost:1/noop";
 
 function mapperStatus(result: ReadinessResponse): DependencyStatus {
   return result.dependencies["keycloak_mapper"] as DependencyStatus;

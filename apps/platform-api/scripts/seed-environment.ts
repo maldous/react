@@ -15,7 +15,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import process from "node:process";
 import pg from "pg";
-import { loadLocalEnv } from "./lib/local-env.ts";
+import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 import type { AuditEvent, AuditEventPort } from "@platform/audit-events";
 import { PostgresEnvironmentRegistryRepository } from "../src/adapters/postgres-environment-registry-repository.ts";
 import { PostgresProviderConfigRepository } from "../src/adapters/postgres-provider-config-repository.ts";
@@ -68,11 +68,8 @@ async function main(): Promise<void> {
   loadLocalEnv();
   const [sub, target] = process.argv.slice(2);
   const stages = !target || target === "--all" ? [...STAGES] : [target];
-  const SU_URL =
-    process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
-  const APP_URL =
-    process.env["POSTGRES_APP_URL"] ??
-    "postgresql://platform_app:platformapppassword@localhost:5433/platform";
+  const SU_URL = requireEnv("POSTGRES_URL");
+  const APP_URL = requireEnv("POSTGRES_APP_URL");
 
   if (!(await pgReachable(SU_URL))) {
     console.log(

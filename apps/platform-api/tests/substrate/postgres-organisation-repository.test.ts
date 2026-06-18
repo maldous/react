@@ -7,8 +7,7 @@ import assert from "node:assert/strict";
 import pg from "pg";
 import { PostgresOrganisationRepository } from "@platform/adapters-postgres";
 
-const POSTGRES_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
+const POSTGRES_URL = process.env["POSTGRES_URL"] ?? "";
 
 const FIXTURE_ORG_ID = "00000000-0000-4000-8000-000000000001";
 const FIXTURE_ORG_SLUG = "fixture-org";

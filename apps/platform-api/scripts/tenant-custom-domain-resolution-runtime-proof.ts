@@ -21,12 +21,12 @@
  */
 
 import http from "node:http";
+import { requireEnv } from "./lib/local-env.ts";
 import crypto from "node:crypto";
 import pg from "pg";
 import { resolveTenantFromRequest } from "../src/server/tenant-resolver.ts";
 
-const POSTGRES_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
+const POSTGRES_URL = requireEnv("POSTGRES_URL");
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {

@@ -19,7 +19,7 @@
 
 import http from "node:http";
 import pg from "pg";
-import { loadLocalEnv } from "./lib/local-env.ts";
+import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 import { routes } from "../src/server/routes.ts";
 import type { PipelineRequest, PipelineResponse, Route } from "../src/server/pipeline.ts";
 import type { AuditEventPort } from "@platform/audit-events";
@@ -27,11 +27,8 @@ import { PostgresEventBus, PostgresWorkerRegistry } from "../src/adapters/postgr
 import { processNext, publishEvent } from "../src/usecases/events.ts";
 
 loadLocalEnv();
-const SU_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
-const APP_URL =
-  process.env["POSTGRES_APP_URL"] ??
-  "postgresql://platform_app:platformapppassword@localhost:5433/platform";
+const SU_URL = requireEnv("POSTGRES_URL");
+const APP_URL = requireEnv("POSTGRES_APP_URL");
 const noopAudit: AuditEventPort = { emit: async () => {}, query: async () => [] };
 const OP = {
   userId: "00000000-0000-0000-0000-000000000000",

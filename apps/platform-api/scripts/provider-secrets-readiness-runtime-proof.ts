@@ -13,14 +13,12 @@
  */
 
 import pg from "pg";
-import { loadLocalEnv } from "./lib/local-env.ts";
+import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 import { PostgresSecretStore } from "../src/adapters/postgres-secret-store.ts";
 import { OpenBaoSecretStore } from "../src/adapters/openbao-secret-store.ts";
 
 loadLocalEnv();
-const APP_URL =
-  process.env["POSTGRES_APP_URL"] ??
-  "postgresql://platform_app:platformapppassword@localhost:5433/platform";
+const APP_URL = requireEnv("POSTGRES_APP_URL");
 const SECRET_FIELD = /secret|password|token|credential|api[_-]?key|private[_-]?key|value/i;
 
 let failures = 0;

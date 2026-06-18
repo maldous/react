@@ -1,8 +1,7 @@
 import pg from "pg";
 import { isMigrated } from "./migrate.ts";
 
-const POSTGRES_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
+const POSTGRES_URL = process.env["POSTGRES_URL"] ?? "";
 
 export const FIXTURE = {
   ORG_ID: "00000000-0000-4000-8000-000000000001",

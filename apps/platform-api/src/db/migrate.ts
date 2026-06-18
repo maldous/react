@@ -5,12 +5,40 @@ import { fileURLToPath } from "node:url";
 import crypto from "node:crypto";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const POSTGRES_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
+const POSTGRES_URL = process.env["POSTGRES_URL"] ?? "";
 const MIGRATIONS_DIR = join(__dirname, "migrations");
 
 function checksumSql(sql: string): string {
   return crypto.createHash("sha256").update(sql).digest("hex").slice(0, 16);
+}
+
+// The platform_app role password is NEVER hardcoded in a migration (Sonar
+// secrets:S6698). Migration 010 carries a ${PLATFORM_APP_PASSWORD} placeholder;
+// the value is sourced at apply-time from the managed env (POSTGRES_APP_URL, in
+// turn the ADR-0072 generated env / OpenBao-backed secret material per ADR-0069),
+// so the role's password always matches the app connection string. The checksum
+// is computed on the FILE content (with the placeholder), so it stays stable.
+function platformAppRolePassword(): string {
+  for (const url of [process.env["POSTGRES_APP_URL"], POSTGRES_URL]) {
+    try {
+      const pw = url ? new URL(url).password : "";
+      if (pw) return decodeURIComponent(pw);
+    } catch {
+      /* not a URL — try the next */
+    }
+  }
+  throw new Error(
+    "Cannot resolve platform_app role password — set POSTGRES_APP_URL (managed env, ADR-0072)"
+  );
+}
+
+function materializeSql(sql: string): string {
+  if (!sql.includes("${PLATFORM_APP_PASSWORD}")) return sql;
+  const pw = platformAppRolePassword();
+  if (pw.includes("'") || pw.includes("\\")) {
+    throw new Error("platform_app password must not contain a quote/backslash (SQL safety)");
+  }
+  return sql.split("${PLATFORM_APP_PASSWORD}").join(pw);
 }
 
 export async function runMigrations(): Promise<{ applied: string[]; skipped: string[] }> {
@@ -63,7 +91,7 @@ export async function runMigrations(): Promise<{ applied: string[]; skipped: str
       // Apply in a transaction
       await client.query("BEGIN");
       try {
-        await client.query(sql);
+        await client.query(materializeSql(sql));
         await client.query("INSERT INTO schema_migrations (name, checksum) VALUES ($1, $2)", [
           name,
           checksum,

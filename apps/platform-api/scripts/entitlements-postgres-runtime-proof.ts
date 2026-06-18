@@ -16,7 +16,7 @@
  */
 
 import pg from "pg";
-import { loadLocalEnv } from "./lib/local-env.ts";
+import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 import { withSystemAdmin, withTenant } from "@platform/adapters-postgres";
 import type { AuditEvent, AuditEventPort } from "@platform/audit-events";
 import { PostgresEntitlementRepository } from "../src/adapters/postgres-entitlement-repository.ts";
@@ -24,11 +24,8 @@ import { isEntitled, setEntitlement } from "../src/usecases/entitlements.ts";
 
 loadLocalEnv();
 
-const SU_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
-const APP_URL =
-  process.env["POSTGRES_APP_URL"] ??
-  "postgresql://platform_app:platformapppassword@localhost:5433/platform";
+const SU_URL = requireEnv("POSTGRES_URL");
+const APP_URL = requireEnv("POSTGRES_APP_URL");
 
 const SECRET_FIELD = /secret|password|token|credential|api[_-]?key|private[_-]?key/i;
 const ACTOR = { actorId: "00000000-0000-0000-0000-000000000000", actorRoles: ["system_operator"] };

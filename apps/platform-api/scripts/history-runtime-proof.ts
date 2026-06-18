@@ -14,16 +14,13 @@
  */
 
 import pg from "pg";
-import { loadLocalEnv } from "./lib/local-env.ts";
+import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 import { PostgresHistoryRepository } from "../src/adapters/postgres-history-repository.ts";
 import { getHistory } from "../src/usecases/history.ts";
 
 loadLocalEnv();
-const SU_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
-const APP_URL =
-  process.env["POSTGRES_APP_URL"] ??
-  "postgresql://platform_app:platformapppassword@localhost:5433/platform";
+const SU_URL = requireEnv("POSTGRES_URL");
+const APP_URL = requireEnv("POSTGRES_APP_URL");
 const SECRET_FIELD = /metadata|payload|secret|password|token|credential|api[_-]?key/i;
 const SENTINEL = "hist-secret-" + Date.now().toString(36);
 

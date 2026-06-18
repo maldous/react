@@ -22,14 +22,14 @@
  */
 
 import http from "node:http";
+import { requireEnv } from "./lib/local-env.ts";
 import crypto from "node:crypto";
 import pg from "pg";
 import { connectRedis, disconnectRedis } from "../src/server/dependencies.ts";
 import { handleAuthLogin } from "../src/server/auth.ts";
 import type { PipelineRequest, PipelineResponse } from "../src/server/pipeline.ts";
 
-const POSTGRES_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
+const POSTGRES_URL = requireEnv("POSTGRES_URL");
 const APEX = process.env["APEX_DOMAIN"] ?? "aldous.info";
 
 let failures = 0;

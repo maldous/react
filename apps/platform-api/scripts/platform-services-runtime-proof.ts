@@ -20,7 +20,7 @@ import {
   buildPlatformServicesReadiness,
   type HttpProbeResult,
 } from "../src/usecases/platform-services.ts";
-import { loadLocalEnv } from "./lib/local-env.ts";
+import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
@@ -33,8 +33,7 @@ async function main(): Promise<void> {
   // Env files load BEFORE any connection-string resolution (ADR-ACT-0235 fix):
   // with ENV=test this proof probes the .env.test stack, not the dev default.
   loadLocalEnv();
-  const POSTGRES_URL =
-    process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
+  const POSTGRES_URL = requireEnv("POSTGRES_URL");
   const pool = new pg.Pool({ connectionString: POSTGRES_URL });
   const httpProbe = async (url: string): Promise<HttpProbeResult | null> => {
     try {

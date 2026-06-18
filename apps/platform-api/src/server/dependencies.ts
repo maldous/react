@@ -38,27 +38,25 @@ import { decryptToken } from "./token-crypto.ts";
 import { getFixtureSession } from "./session.ts";
 import type { TenantContext } from "./tenant-resolver.ts";
 
-const DEFAULT_POSTGRES_URL = "postgresql://platform:platformpassword@localhost:5433/platform";
-const DEFAULT_POSTGRES_APP_URL =
-  "postgresql://platform_app:platformapppassword@localhost:5433/platform";
-
 // Superuser URL — used only by migration runner, seed, and reset scripts.
-// Never use this for the runtime application pool.
+// Never use this for the runtime application pool. Sourced from the managed env
+// (ADR-0072 generated env / .env/secrets, OpenBao-backed per ADR-0069) in every
+// stage — tests load it via tests/lib/preload-env.mjs. NO hardcoded credential
+// fallback (Sonar secrets:S6698).
 export function getPostgresUrl(): string {
-  if (process.env["NODE_ENV"] === "production" && !process.env["POSTGRES_URL"]) {
-    throw new Error("POSTGRES_URL must be set in production");
-  }
-  return process.env["POSTGRES_URL"] ?? DEFAULT_POSTGRES_URL;
+  const url = process.env["POSTGRES_URL"];
+  if (!url)
+    throw new Error("POSTGRES_URL must be set (managed env, ADR-0072) — no hardcoded fallback");
+  return url;
 }
 
 // Non-superuser app role URL — used by the runtime application pool (ADR-ACT-0189).
-// Falls back to DEFAULT_POSTGRES_APP_URL for local dev without POSTGRES_APP_URL set.
-// Production must set POSTGRES_APP_URL to the platform_app role connection string.
+// Sourced from the managed env in every stage; no hardcoded fallback.
 export function getPostgresAppUrl(): string {
-  if (process.env["NODE_ENV"] === "production" && !process.env["POSTGRES_APP_URL"]) {
-    throw new Error("POSTGRES_APP_URL must be set in production");
-  }
-  return process.env["POSTGRES_APP_URL"] ?? DEFAULT_POSTGRES_APP_URL;
+  const url = process.env["POSTGRES_APP_URL"];
+  if (!url)
+    throw new Error("POSTGRES_APP_URL must be set (managed env, ADR-0072) — no hardcoded fallback");
+  return url;
 }
 
 // Shared application pool — used by withTenant, withSystemAdmin, provisioning.

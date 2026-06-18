@@ -28,11 +28,11 @@ import {
   type DnsResolverPort,
 } from "../src/usecases/vanity-domain-challenge.ts";
 import { classifyLocalRouting } from "../src/usecases/tenant-domains.ts";
+import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 
+loadLocalEnv();
 const CADDY_BASE = process.env["CADDY_BASE_URL"] ?? "http://test.localhost:8081";
-const PG_URL =
-  process.env["ROUTING_PROOF_PG_URL"] ??
-  "postgresql://platform:platformpassword@localhost:5434/platform";
+const PG_URL = process.env["ROUTING_PROOF_PG_URL"] ?? requireEnv("POSTGRES_URL");
 const APP_ROLE = process.env["ROUTING_PROOF_APP_ROLE"] ?? "platform_app";
 const APEX = new URL(CADDY_BASE).hostname; // e.g. test.localhost
 const PORT = new URL(CADDY_BASE).port || "80";

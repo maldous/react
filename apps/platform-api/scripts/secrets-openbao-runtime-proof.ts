@@ -18,17 +18,14 @@
  */
 
 import pg from "pg";
-import { loadLocalEnv } from "./lib/local-env.ts";
+import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 import { OpenBaoSecretStore } from "../src/adapters/openbao-secret-store.ts";
 
 loadLocalEnv();
-const SU_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
-const APP_URL =
-  process.env["POSTGRES_APP_URL"] ??
-  "postgresql://platform_app:platformapppassword@localhost:5433/platform";
+const SU_URL = requireEnv("POSTGRES_URL");
+const APP_URL = requireEnv("POSTGRES_APP_URL");
 const OPENBAO_ADDR = process.env["OPENBAO_ADDR"] ?? "http://localhost:8200";
-const OPENBAO_TOKEN = process.env["OPENBAO_TOKEN"] ?? "platform-dev-root-token";
+const OPENBAO_TOKEN = requireEnv("OPENBAO_TOKEN");
 const PLAINTEXT = "openbao-value-" + Math.floor(Date.now() / 1000).toString(36);
 
 let failures = 0;

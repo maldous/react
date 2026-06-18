@@ -34,7 +34,7 @@ import {
   activateDomainAuthClient,
   type AuthClientDomainPort,
 } from "../src/usecases/tenant-domain-lifecycle.ts";
-import { loadLocalEnv } from "./lib/local-env.ts";
+import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
@@ -45,8 +45,7 @@ function check(label: string, ok: boolean, detail = ""): void {
 async function main(): Promise<void> {
   console.log("# Tenant domain-claim lifecycle runtime proof\n");
   loadLocalEnv();
-  const POSTGRES_URL =
-    process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
+  const POSTGRES_URL = requireEnv("POSTGRES_URL");
   const pool = new pg.Pool({ connectionString: POSTGRES_URL });
   const registry = new PostgresTenantDomainRegistry(pool);
 

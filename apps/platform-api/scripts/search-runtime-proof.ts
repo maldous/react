@@ -13,7 +13,7 @@
  */
 
 import pg from "pg";
-import { loadLocalEnv } from "./lib/local-env.ts";
+import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 import type { AuditEventPort } from "@platform/audit-events";
 import { PostgresSearchRepository } from "../src/adapters/postgres-search-repository.ts";
 import {
@@ -25,11 +25,8 @@ import {
 } from "../src/usecases/search.ts";
 
 loadLocalEnv();
-const SU_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
-const APP_URL =
-  process.env["POSTGRES_APP_URL"] ??
-  "postgresql://platform_app:platformapppassword@localhost:5433/platform";
+const SU_URL = requireEnv("POSTGRES_URL");
+const APP_URL = requireEnv("POSTGRES_APP_URL");
 const SECRET_FIELD = /secret|password|token|credential|api[_-]?key|private[_-]?key/i;
 const noopAudit: AuditEventPort = { emit: async () => {}, query: async () => [] };
 

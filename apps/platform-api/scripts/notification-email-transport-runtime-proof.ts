@@ -12,7 +12,7 @@
  */
 
 import pg from "pg";
-import { loadLocalEnv } from "./lib/local-env.ts";
+import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 import type { AuditEvent, AuditEventPort } from "@platform/audit-events";
 import { PostgresNotificationRepository } from "../src/adapters/postgres-notification-repository.ts";
 import { SmtpEmailAdapter } from "../src/adapters/smtp-email-adapter.ts";
@@ -23,11 +23,8 @@ import {
 import { dispatchNotification } from "../src/usecases/notifications.ts";
 
 loadLocalEnv();
-const SU_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
-const APP_URL =
-  process.env["POSTGRES_APP_URL"] ??
-  "postgresql://platform_app:platformapppassword@localhost:5433/platform";
+const SU_URL = requireEnv("POSTGRES_URL");
+const APP_URL = requireEnv("POSTGRES_APP_URL");
 const SMTP_PORT = Number(process.env["MAILPIT_SMTP_PORT"] ?? 1025);
 const MAILPIT_API = process.env["MAILPIT_API"] ?? "http://localhost:8025/mailpit";
 const UNIQUE = "ProofEmail-" + Date.now().toString(36);

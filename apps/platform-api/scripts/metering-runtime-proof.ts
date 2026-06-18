@@ -13,18 +13,15 @@
  */
 
 import pg from "pg";
-import { loadLocalEnv } from "./lib/local-env.ts";
+import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 import { withSystemAdmin, withTenant } from "@platform/adapters-postgres";
 import { PostgresMeteringRepository } from "../src/adapters/postgres-metering-repository.ts";
 import { PostgresEntitlementRepository } from "../src/adapters/postgres-entitlement-repository.ts";
 import { recordMeterEvent } from "../src/usecases/metering.ts";
 
 loadLocalEnv();
-const SU_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
-const APP_URL =
-  process.env["POSTGRES_APP_URL"] ??
-  "postgresql://platform_app:platformapppassword@localhost:5433/platform";
+const SU_URL = requireEnv("POSTGRES_URL");
+const APP_URL = requireEnv("POSTGRES_APP_URL");
 const SECRET_FIELD = /secret|password|token|credential|api[_-]?key|private[_-]?key/i;
 
 let failures = 0;

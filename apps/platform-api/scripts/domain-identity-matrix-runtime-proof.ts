@@ -18,6 +18,7 @@
  */
 
 import http from "node:http";
+import { requireEnv } from "./lib/local-env.ts";
 import pg from "pg";
 import { classifyHostIdentity } from "@platform/domain-identity";
 import {
@@ -26,8 +27,7 @@ import {
   isApexSubdomain,
 } from "../src/server/tenant-resolver.ts";
 
-const POSTGRES_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
+const POSTGRES_URL = requireEnv("POSTGRES_URL");
 const APEX = process.env["APEX_DOMAIN"] ?? "aldous.info";
 
 let failures = 0;

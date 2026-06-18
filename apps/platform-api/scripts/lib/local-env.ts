@@ -77,6 +77,23 @@ export function resolveLocalS3(): {
     region: e["S3_DEFAULT_REGION"] ?? "us-east-1",
     bucket: e["S3_DEFAULT_BUCKET"] ?? "platform-data",
     accessKeyId: e["S3_ADMIN_ACCESS_KEY_ID"] ?? e["MINIO_ROOT_USER"] ?? "minioadmin",
-    secretAccessKey: e["S3_ADMIN_SECRET_ACCESS_KEY"] ?? e["MINIO_ROOT_PASSWORD"] ?? "minioadmin",
+    secretAccessKey: requireEnv("S3_ADMIN_SECRET_ACCESS_KEY", "MINIO_ROOT_PASSWORD"),
   };
+}
+
+/**
+ * Resolve a credential from the managed environment (ADR-0072 generated env /
+ * .env/secrets, ultimately the OpenBao-backed secret material per ADR-0069).
+ * Returns the first key that is set; throws if none are. NEVER hardcode a
+ * credential literal as a fallback — that bypasses the secrets pipeline and is
+ * flagged by Sonar secrets:S6698.
+ */
+export function requireEnv(...keys: string[]): string {
+  for (const k of keys) {
+    const v = process.env[k];
+    if (v !== undefined && v !== "") return v;
+  }
+  throw new Error(
+    `Missing required environment value: ${keys.join(" / ")} — ensure the managed env is generated (ADR-0072) and seeded (make env-seed-secrets); do not hardcode a fallback.`
+  );
 }

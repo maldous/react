@@ -19,7 +19,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import pg from "pg";
-import { loadLocalEnv } from "./lib/local-env.ts";
+import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 import type { AuditEvent, AuditEventPort } from "@platform/audit-events";
 import { PostgresEnvironmentRegistryRepository } from "../src/adapters/postgres-environment-registry-repository.ts";
 import {
@@ -34,11 +34,8 @@ import {
 } from "../src/usecases/environment-registry.ts";
 
 loadLocalEnv();
-const SU_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
-const APP_URL =
-  process.env["POSTGRES_APP_URL"] ??
-  "postgresql://platform_app:platformapppassword@localhost:5433/platform";
+const SU_URL = requireEnv("POSTGRES_URL");
+const APP_URL = requireEnv("POSTGRES_APP_URL");
 // Detects actual secret MATERIAL in serialised records (not field names like
 // "secretStoreProvider"): hex/crypto material, the local-bootstrap password prefix,
 // or the pinned container-bootstrap passwords.

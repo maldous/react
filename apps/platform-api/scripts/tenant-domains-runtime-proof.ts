@@ -21,6 +21,7 @@
  */
 
 import pg from "pg";
+import { requireEnv } from "./lib/local-env.ts";
 import {
   computeDomainReadiness,
   getTenantDomainReadiness,
@@ -34,8 +35,7 @@ import {
 } from "../src/usecases/vanity-domain-challenge.ts";
 import type { AuditEventPort } from "@platform/audit-events";
 
-const POSTGRES_URL =
-  process.env["POSTGRES_URL"] ?? "postgresql://platform:platformpassword@localhost:5433/platform";
+const POSTGRES_URL = requireEnv("POSTGRES_URL");
 
 const noopAudit: AuditEventPort = { emit: async () => {} };
 
