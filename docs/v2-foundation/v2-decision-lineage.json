@@ -1,0 +1,639 @@
+[
+  {
+    "v2AdrId": "V2-ADR-0001",
+    "v1Adrs": ["ADR-0001"],
+    "v1Actions": [],
+    "v1Evidence": ["docs/architecture/context-map.md"],
+    "v1Commits": ["8f7850e"],
+    "notes": "Foundational architectural style; established at repo inception."
+  },
+  {
+    "v2AdrId": "V2-ADR-0002",
+    "v1Adrs": ["ADR-0002"],
+    "v1Actions": [],
+    "v1Evidence": ["docs/architecture/context-map.md"],
+    "v1Commits": ["8f7850e"],
+    "notes": "Domain/context map refined during skeleton development."
+  },
+  {
+    "v2AdrId": "V2-ADR-0003",
+    "v1Adrs": ["ADR-0003"],
+    "v1Actions": [],
+    "v1Evidence": ["reports/package-inventory/package-inventory.json"],
+    "v1Commits": ["8f7850e"],
+    "notes": "Monorepo promotion criteria; affected-graph CI."
+  },
+  {
+    "v2AdrId": "V2-ADR-0004",
+    "v1Adrs": ["ADR-0004"],
+    "v1Actions": [],
+    "v1Evidence": ["reports/lifecycle/package-lifecycle-summary.json"],
+    "v1Commits": [],
+    "notes": "Lifecycle class <stage>.<role> drives metadata validation."
+  },
+  {
+    "v2AdrId": "V2-ADR-0005",
+    "v1Adrs": ["ADR-0005"],
+    "v1Actions": [],
+    "v1Evidence": ["packages/*/package.json (architecture object)"],
+    "v1Commits": [],
+    "notes": "package.json single source of truth; namespaced architecture object."
+  },
+  {
+    "v2AdrId": "V2-ADR-0006",
+    "v1Adrs": ["ADR-0006"],
+    "v1Actions": ["ADR-ACT-0288", "ADR-ACT-0289"],
+    "v1Evidence": [
+      "docs/evidence/lifecycle/",
+      "docs/evidence/lifecycle/adr-act-0288-c1-deprecation.md"
+    ],
+    "v1Commits": [],
+    "notes": "V1 LINEAGE ONLY: ADR-ACT-0288/0289 governed the deprecation of nine never-wired runtime port packages and a scheduled removal review (2026-12-18). V2 begins from the clean post-removal target tree; the deprecated runtime packages and their transitional naming are NOT carried into V2 active decisions."
+  },
+  {
+    "v2AdrId": "V2-ADR-0007",
+    "v1Adrs": ["ADR-0007"],
+    "v1Actions": [],
+    "v1Evidence": ["docs/adr/", "docs/schemas/", "docs/evidence/", "reports/"],
+    "v1Commits": ["8f7850e"],
+    "notes": "Artifact/repository layout."
+  },
+  {
+    "v2AdrId": "V2-ADR-0008",
+    "v1Adrs": ["ADR-0008"],
+    "v1Actions": [],
+    "v1Evidence": ["packages/*/README.md (generated)"],
+    "v1Commits": [],
+    "notes": "Generated README from metadata; manual-extension blocks."
+  },
+  {
+    "v2AdrId": "V2-ADR-0009",
+    "v1Adrs": ["ADR-0009"],
+    "v1Actions": [],
+    "v1Evidence": ["reports/package-inventory/", "reports/lifecycle/"],
+    "v1Commits": [],
+    "notes": "Generated inventory/lifecycle reports."
+  },
+  {
+    "v2AdrId": "V2-ADR-0010",
+    "v1Adrs": ["ADR-0010"],
+    "v1Actions": [],
+    "v1Evidence": [
+      "docs/evidence/lifecycle/<package-slug>/<timestamp>-<from>-to-<to>/transition-evidence.json"
+    ],
+    "v1Commits": [],
+    "notes": "Per-transition evidence bundle format."
+  },
+  {
+    "v2AdrId": "V2-ADR-0011",
+    "v1Adrs": ["ADR-0011"],
+    "v1Actions": ["ADR-ACT-0007", "ADR-ACT-0288"],
+    "v1Evidence": [
+      "tools/architecture/",
+      "tools/architecture/_shared/",
+      "tools/architecture/orchestrator/tests/self-evidence.test.mjs"
+    ],
+    "v1Commits": ["8f7850e"],
+    "notes": "V1 LINEAGE: ADR-ACT-0288 Workstream A/B consolidated shared tooling primitives and the self-evidence writer; the Workstream C package-retirement narrative is V1 history and is not part of the V2 active tooling decision."
+  },
+  {
+    "v2AdrId": "V2-ADR-0012",
+    "v1Adrs": ["ADR-0012"],
+    "v1Actions": ["ADR-ACT-0288"],
+    "v1Evidence": [
+      "tools/architecture/_shared/self-evidence.mjs",
+      "tools/architecture/_shared/tests/shared-primitives.test.mjs"
+    ],
+    "v1Commits": [],
+    "notes": "18-field self-evidence schema; fail-closed writer."
+  },
+  {
+    "v2AdrId": "V2-ADR-0013",
+    "v1Adrs": ["ADR-0013"],
+    "v1Actions": ["ADR-ACT-0288"],
+    "v1Evidence": ["docs/architecture/import-boundary-rules.json"],
+    "v1Commits": [],
+    "notes": "V1 LINEAGE ONLY: the ADR-ACT-0288 (2026-06-18) supersession note recorded @platform/security-auth, @platform/feature-workflow, @platform/access-control as deprecated/never-wired in V1. V2-ADR-0013 names only the proven wired entries (authorisation-runtime + adapters-keycloak + platform-api server-side authz) and omits the speculative/unimplemented workflow feature; the deprecated-package history is kept here, not in the active V2 decision."
+  },
+  {
+    "v2AdrId": "V2-ADR-0014",
+    "v1Adrs": ["ADR-0014"],
+    "v1Actions": ["ADR-ACT-0288"],
+    "v1Evidence": [
+      "apps/platform-api/src/ports/",
+      "apps/platform-api/src/ports/profile-repository.ts"
+    ],
+    "v1Commits": [],
+    "notes": "V1 LINEAGE ONLY: ADR-ACT-0288 supersession note recorded domain-core/profile-configuration/access-control as deprecated/never-wired; canonical homes are application-local ports + postgres adapters + authorisation-runtime. V2-ADR-0014 adopts the application-local port model directly; deprecated-package history kept here only."
+  },
+  {
+    "v2AdrId": "V2-ADR-0015",
+    "v1Adrs": ["ADR-0015"],
+    "v1Actions": [],
+    "v1Evidence": ["packages/adapters-clickhouse", "packages/contracts-analytics"],
+    "v1Commits": [],
+    "notes": "Analytical ownership; contract-typed emission."
+  },
+  {
+    "v2AdrId": "V2-ADR-0016",
+    "v1Adrs": ["ADR-0016"],
+    "v1Actions": ["ADR-ACT-0290", "ADR-ACT-0291"],
+    "v1Evidence": [
+      "docs/evidence/quality-gates/sonar-25.9-remediation.md",
+      "scripts/stages/run-stage.sh",
+      "Makefile"
+    ],
+    "v1Commits": ["918cd14", "e7b6c84", "8373cca"],
+    "notes": "Three-tier gate model; ADR-ACT-0291 fixed the single-Sonar-scan contract and the release-confidence alias; Sonar runs once at the test stage."
+  },
+  {
+    "v2AdrId": "V2-ADR-0017",
+    "v1Adrs": ["ADR-0017"],
+    "v1Actions": [],
+    "v1Evidence": ["compose.yaml", "docs/local-development/compose-services.md"],
+    "v1Commits": [],
+    "notes": "Profile-gated, pinned Compose substrate."
+  },
+  {
+    "v2AdrId": "V2-ADR-0019",
+    "v1Adrs": ["ADR-0019"],
+    "v1Actions": ["ADR-ACT-0008", "ADR-ACT-0203"],
+    "v1Evidence": ["apps/react-enterprise-app", "packages/i18n-runtime/src/react.ts"],
+    "v1Commits": [],
+    "notes": "Frontend stack; V1 UI is the proof harness whose behaviours/validation/a11y/journeys are the V2 semantic source while visuals may be regenerated."
+  },
+  {
+    "v2AdrId": "V2-ADR-0020",
+    "v1Adrs": ["ADR-0020"],
+    "v1Actions": ["ADR-ACT-0284"],
+    "v1Evidence": [
+      "packages/platform-observability",
+      "packages/adapters-opentelemetry",
+      "docs/evidence/observability/"
+    ],
+    "v1Commits": [],
+    "notes": "OpenTelemetry primitives; SDK confined to adapters."
+  },
+  {
+    "v2AdrId": "V2-ADR-0021",
+    "v1Adrs": ["ADR-0021"],
+    "v1Actions": [],
+    "v1Evidence": ["apps/platform-api/src/db"],
+    "v1Commits": [],
+    "notes": "Identity/tenancy/roles/permissions model."
+  },
+  {
+    "v2AdrId": "V2-ADR-0022",
+    "v1Adrs": ["ADR-0022"],
+    "v1Actions": ["ADR-ACT-0157"],
+    "v1Evidence": ["packages/adapters-keycloak"],
+    "v1Commits": [],
+    "notes": "Auth/session/SSO boundary; PKCE; BFF session actor."
+  },
+  {
+    "v2AdrId": "V2-ADR-0023",
+    "v1Adrs": ["ADR-0023"],
+    "v1Actions": [],
+    "v1Evidence": ["infra/bin/tf", "infra/"],
+    "v1Commits": [],
+    "notes": "OpenTofu-compatible HCL via tf wrapper."
+  },
+  {
+    "v2AdrId": "V2-ADR-0024",
+    "v1Adrs": ["ADR-0024"],
+    "v1Actions": [],
+    "v1Evidence": ["docs/evidence/lifecycle/"],
+    "v1Commits": [],
+    "notes": "Five-tier progressive readiness."
+  },
+  {
+    "v2AdrId": "V2-ADR-0025",
+    "v1Adrs": ["ADR-0025"],
+    "v1Actions": ["ADR-ACT-0110"],
+    "v1Evidence": ["e2e/", "playwright config"],
+    "v1Commits": [],
+    "notes": "Playwright proofs are the V2 semantic acceptance source."
+  },
+  {
+    "v2AdrId": "V2-ADR-0026",
+    "v1Adrs": ["ADR-0026"],
+    "v1Actions": [],
+    "v1Evidence": ["packages/i18n-runtime/locales/en-GB.json", "tools/architecture/validate-i18n"],
+    "v1Commits": [],
+    "notes": "i18n key/JSON model; en-GB default."
+  },
+  {
+    "v2AdrId": "V2-ADR-0027",
+    "v1Adrs": ["ADR-0027"],
+    "v1Actions": [],
+    "v1Evidence": ["Tiltfile", "docs/local-development/tilt-workflow.md"],
+    "v1Commits": [],
+    "notes": "Tilt inner loop wrapping Make."
+  },
+  {
+    "v2AdrId": "V2-ADR-0028",
+    "v1Adrs": ["ADR-0028"],
+    "v1Actions": [],
+    "v1Evidence": ["packages/contracts-graphql", "tools/architecture/validate-source-imports"],
+    "v1Commits": [],
+    "notes": "Schema-first GraphQL governance."
+  },
+  {
+    "v2AdrId": "V2-ADR-0029",
+    "v1Adrs": ["ADR-0029"],
+    "v1Actions": ["ADR-ACT-0230", "ADR-ACT-0231", "ADR-ACT-0232", "ADR-ACT-0233", "ADR-ACT-0234"],
+    "v1Evidence": ["docs/architecture/context-map.md"],
+    "v1Commits": [],
+    "notes": "Five-layer tenant isolation; host classifier + tenant_domains lifecycle."
+  },
+  {
+    "v2AdrId": "V2-ADR-0030",
+    "v1Adrs": ["ADR-0030"],
+    "v1Actions": [],
+    "v1Evidence": ["packages/adapters-keycloak"],
+    "v1Commits": [],
+    "notes": "PEP via Keycloak Authorization Services; realm-admin self-service."
+  },
+  {
+    "v2AdrId": "V2-ADR-0031",
+    "v1Adrs": ["ADR-0031"],
+    "v1Actions": [],
+    "v1Evidence": ["apps/platform-api/src"],
+    "v1Commits": [],
+    "notes": "Trusted provisioning broker; service accounts in secret store."
+  },
+  {
+    "v2AdrId": "V2-ADR-0032",
+    "v1Adrs": ["ADR-0032"],
+    "v1Actions": ["ADR-ACT-0285"],
+    "v1Evidence": ["e2e/internal/", "e2e/external/", "e2e/prod/"],
+    "v1Commits": [],
+    "notes": "E2E directory/tier strategy."
+  },
+  {
+    "v2AdrId": "V2-ADR-0033",
+    "v1Adrs": ["ADR-0033"],
+    "v1Actions": ["ADR-ACT-0157"],
+    "v1Evidence": ["config/environments/", "scripts/env/"],
+    "v1Commits": [],
+    "notes": "Per-environment domain/hostname configuration."
+  },
+  {
+    "v2AdrId": "V2-ADR-0034",
+    "v1Adrs": ["ADR-0034"],
+    "v1Actions": [],
+    "v1Evidence": ["Makefile (env-up-all, promote)"],
+    "v1Commits": [],
+    "notes": "Four isolated environments + promotion ladder."
+  },
+  {
+    "v2AdrId": "V2-ADR-0035",
+    "v1Adrs": ["ADR-0035"],
+    "v1Actions": ["ADR-ACT-0284"],
+    "v1Evidence": ["docs/evidence/observability/"],
+    "v1Commits": [],
+    "notes": "Loki/Grafana/Alloy logging backend."
+  },
+  {
+    "v2AdrId": "V2-ADR-0036",
+    "v1Adrs": ["ADR-0036"],
+    "v1Actions": [],
+    "v1Evidence": [
+      "apps/react-enterprise-app/src/features/admin-logs",
+      "apps/react-enterprise-app/src/features/admin-logs/admin-logs-client.ts"
+    ],
+    "v1Commits": [],
+    "notes": "/admin control plane; REST-over-BFF admin pattern."
+  },
+  {
+    "v2AdrId": "V2-ADR-0037",
+    "v1Adrs": ["ADR-0037"],
+    "v1Actions": [],
+    "v1Evidence": ["packages/contracts-admin", "tenant_settings (auth.providers)"],
+    "v1Commits": [],
+    "notes": "Per-tenant provider config with env fallback."
+  },
+  {
+    "v2AdrId": "V2-ADR-0038",
+    "v1Adrs": ["ADR-0038"],
+    "v1Actions": [],
+    "v1Evidence": ["apps/platform-api/src/db (memberships)"],
+    "v1Commits": [],
+    "notes": "Global user + tenant-scoped membership/username."
+  },
+  {
+    "v2AdrId": "V2-ADR-0039",
+    "v1Adrs": ["ADR-0039"],
+    "v1Actions": [],
+    "v1Evidence": ["PlatformConfigDefinition registry"],
+    "v1Commits": [],
+    "notes": "Platform configuration registry; tenant-override resolution."
+  },
+  {
+    "v2AdrId": "V2-ADR-0040",
+    "v1Adrs": ["ADR-0040"],
+    "v1Actions": ["ADR-ACT-0204", "ADR-ACT-0206", "ADR-ACT-0207", "ADR-ACT-0208"],
+    "v1Evidence": ["docs/evidence/audit/admin-contextual-audit-trail.md"],
+    "v1Commits": [],
+    "notes": "GET /api/org/audit; contextual audit panels; tenant-scoped + redacted."
+  },
+  {
+    "v2AdrId": "V2-ADR-0041",
+    "v1Adrs": ["ADR-0041"],
+    "v1Actions": [],
+    "v1Evidence": ["apps/platform-api/src (provisioning.ts)"],
+    "v1Commits": [],
+    "notes": "Auth-settings credential provisioning; readiness substrate."
+  },
+  {
+    "v2AdrId": "V2-ADR-0042",
+    "v1Adrs": ["ADR-0042"],
+    "v1Actions": [],
+    "v1Evidence": ["proof:auth-settings runtime proof"],
+    "v1Commits": [],
+    "notes": "Writable MFA via required-actions; runtime proof."
+  },
+  {
+    "v2AdrId": "V2-ADR-0043",
+    "v1Adrs": ["ADR-0043"],
+    "v1Actions": [],
+    "v1Evidence": ["toIdpSummary mapping (unit-tested no-secret-leakage)"],
+    "v1Commits": [],
+    "notes": "Writable IdP mgmt; redacted DTO; write-only secrets."
+  },
+  {
+    "v2AdrId": "V2-ADR-0044",
+    "v1Adrs": ["ADR-0044"],
+    "v1Actions": [],
+    "v1Evidence": ["apps/platform-api/src (token endpoint per grant)"],
+    "v1Commits": [],
+    "notes": "Credential lifecycle: rotation/repair/recovery; tenant-realm token endpoint."
+  },
+  {
+    "v2AdrId": "V2-ADR-0045",
+    "v1Adrs": ["ADR-0045"],
+    "v1Actions": [],
+    "v1Evidence": ["capability-registry.ts", "docs/evidence (capability-map)"],
+    "v1Commits": [],
+    "notes": "Server-owned capability registry; honest readiness."
+  },
+  {
+    "v2AdrId": "V2-ADR-0046",
+    "v1Adrs": ["ADR-0046"],
+    "v1Actions": ["ADR-ACT-0220"],
+    "v1Evidence": ["RealmAdminPort"],
+    "v1Commits": [],
+    "notes": "OIDC hardening; login simulation deferred (blocked on real IdPs)."
+  },
+  {
+    "v2AdrId": "V2-ADR-0047",
+    "v1Adrs": ["ADR-0047"],
+    "v1Actions": [],
+    "v1Evidence": ["tenant_settings", "AES-256-GCM secret table"],
+    "v1Commits": [],
+    "notes": "Tenant email sender config + test-send."
+  },
+  {
+    "v2AdrId": "V2-ADR-0048",
+    "v1Adrs": ["ADR-0048"],
+    "v1Actions": [],
+    "v1Evidence": ["apps/react-enterprise-app/src/features (admin/domains)"],
+    "v1Commits": [],
+    "notes": "Tenant custom domains; DNS proof implemented, TLS/cutover deferred."
+  },
+  {
+    "v2AdrId": "V2-ADR-0049",
+    "v1Adrs": ["ADR-0049"],
+    "v1Actions": [],
+    "v1Evidence": ["GET /api/org/storage/readiness", "POST /api/org/storage/probe"],
+    "v1Commits": [],
+    "notes": "Storage readiness + cross-prefix isolation proof."
+  },
+  {
+    "v2AdrId": "V2-ADR-0050",
+    "v1Adrs": ["ADR-0050"],
+    "v1Actions": [],
+    "v1Evidence": ["GET /api/org/observability/readiness"],
+    "v1Commits": [],
+    "notes": "Observability readiness; per-signal status; timeout-bounded."
+  },
+  {
+    "v2AdrId": "V2-ADR-0051",
+    "v1Adrs": ["ADR-0051"],
+    "v1Actions": [],
+    "v1Evidence": ["/api/org/webhooks routes"],
+    "v1Commits": [],
+    "notes": "Webhook subscriptions + HMAC signing + delivery log."
+  },
+  {
+    "v2AdrId": "V2-ADR-0052",
+    "v1Adrs": ["ADR-0052"],
+    "v1Actions": [],
+    "v1Evidence": ["emitWebhookEvent + delivery worker"],
+    "v1Commits": [],
+    "notes": "Durable webhook worker with backoff + dead-letter."
+  },
+  {
+    "v2AdrId": "V2-ADR-0053",
+    "v1Adrs": ["ADR-0053"],
+    "v1Actions": [
+      "ADR-ACT-0237",
+      "ADR-ACT-0238",
+      "ADR-ACT-0239",
+      "ADR-ACT-0240",
+      "ADR-ACT-0241",
+      "ADR-ACT-0242",
+      "ADR-ACT-0243",
+      "ADR-ACT-0244",
+      "ADR-ACT-0245",
+      "ADR-ACT-0246",
+      "ADR-ACT-0247",
+      "ADR-ACT-0248",
+      "ADR-ACT-0249",
+      "ADR-ACT-0250",
+      "ADR-ACT-0251"
+    ],
+    "v1Evidence": ["USF matrix registry JSON", "usf:validate"],
+    "v1Commits": [],
+    "notes": "USF scope/principles; governs ADR-0053..0066 (ADR-ACT 0237-0251)."
+  },
+  {
+    "v2AdrId": "V2-ADR-0054",
+    "v1Adrs": ["ADR-0054"],
+    "v1Actions": [],
+    "v1Evidence": ["docs/architecture/build-versus-compose-decision-framework.md"],
+    "v1Commits": [],
+    "notes": "Scored build/compose rubric with default biases."
+  },
+  {
+    "v2AdrId": "V2-ADR-0055",
+    "v1Adrs": ["ADR-0055"],
+    "v1Actions": [],
+    "v1Evidence": ["platform-services.ts", "service-clickthrough.ts", "capability-registry.ts"],
+    "v1Commits": [],
+    "notes": "Unified service catalog + provider model driving /admin/platform."
+  },
+  {
+    "v2AdrId": "V2-ADR-0056",
+    "v1Adrs": ["ADR-0056"],
+    "v1Actions": [],
+    "v1Evidence": ["docs/architecture/environment-service-classification.md"],
+    "v1Commits": [],
+    "notes": "Service classification vocabulary + shared-service checklist."
+  },
+  {
+    "v2AdrId": "V2-ADR-0057",
+    "v1Adrs": ["ADR-0057"],
+    "v1Actions": [],
+    "v1Evidence": ["docs/architecture (build-versus-compose)"],
+    "v1Commits": [],
+    "notes": "Billing provider decision; sequenced after metering."
+  },
+  {
+    "v2AdrId": "V2-ADR-0058",
+    "v1Adrs": ["ADR-0058"],
+    "v1Actions": [],
+    "v1Evidence": ["PolicyDecisionPort", "entitlement engine"],
+    "v1Commits": [],
+    "notes": "Keycloak UMA PDP behind a port; built entitlement engine; delegated admin."
+  },
+  {
+    "v2AdrId": "V2-ADR-0059",
+    "v1Adrs": ["ADR-0059"],
+    "v1Actions": ["ADR-ACT-0271"],
+    "v1Evidence": ["event bus / workers (USF Phase 5)"],
+    "v1Commits": ["8132fee"],
+    "notes": "Workflow/event/queue architecture."
+  },
+  {
+    "v2AdrId": "V2-ADR-0060",
+    "v1Adrs": ["ADR-0060"],
+    "v1Actions": [],
+    "v1Evidence": ["search (USF Phase 4)"],
+    "v1Commits": ["ae57be0"],
+    "notes": "Search/indexing architecture."
+  },
+  {
+    "v2AdrId": "V2-ADR-0061",
+    "v1Adrs": ["ADR-0061", "ADR-0067"],
+    "v1Actions": [],
+    "v1Evidence": ["MeteringRepository port", "ClickHouse analytics"],
+    "v1Commits": [],
+    "notes": "Metering (system of record on Postgres) vs analytics (ClickHouse) boundary."
+  },
+  {
+    "v2AdrId": "V2-ADR-0062",
+    "v1Adrs": ["ADR-0062"],
+    "v1Actions": [],
+    "v1Evidence": ["observability/alerting/incidents (USF Phase 7)"],
+    "v1Commits": ["6508590"],
+    "notes": "Observability/alerting/incident architecture on Grafana stack."
+  },
+  {
+    "v2AdrId": "V2-ADR-0063",
+    "v1Adrs": ["ADR-0063"],
+    "v1Actions": [],
+    "v1Evidence": ["data governance ADRs/registry"],
+    "v1Commits": [],
+    "notes": "Data governance and compliance architecture."
+  },
+  {
+    "v2AdrId": "V2-ADR-0064",
+    "v1Adrs": ["ADR-0064"],
+    "v1Actions": ["ADR-ACT-0227", "ADR-ACT-0228", "ADR-ACT-0229"],
+    "v1Evidence": ["local backup scripts", "/admin/platform service-readiness"],
+    "v1Commits": [],
+    "notes": "Backup/recovery/retention/legal-hold architecture."
+  },
+  {
+    "v2AdrId": "V2-ADR-0065",
+    "v1Adrs": ["ADR-0065"],
+    "v1Actions": [],
+    "v1Evidence": ["API keys + rate limits + dev portal (USF Phase 3)"],
+    "v1Commits": ["25f6cc0"],
+    "notes": "Developer platform; gateway/SDK/sandbox remain proposed follow-ups."
+  },
+  {
+    "v2AdrId": "V2-ADR-0066",
+    "v1Adrs": ["ADR-0066"],
+    "v1Actions": ["ADR-ACT-0278"],
+    "v1Evidence": ["support/break-glass model"],
+    "v1Commits": [],
+    "notes": "Support administration and break-glass architecture."
+  },
+  {
+    "v2AdrId": "V2-ADR-0067",
+    "v1Adrs": ["ADR-0067"],
+    "v1Actions": [],
+    "v1Evidence": [
+      "MeteringRepository + Postgres adapter (migration 024)",
+      "QuotaRepository + tenant_quotas"
+    ],
+    "v1Commits": [],
+    "notes": "Built-in Postgres metering + quota; ClickHouse/OpenMeter later behind the port."
+  },
+  {
+    "v2AdrId": "V2-ADR-0068",
+    "v1Adrs": ["ADR-0068"],
+    "v1Actions": [],
+    "v1Evidence": ["profile/notifications (USF Phase 6)"],
+    "v1Commits": ["92dc461"],
+    "notes": "Profile self-service + notification substrate."
+  },
+  {
+    "v2AdrId": "V2-ADR-0069",
+    "v1Adrs": ["ADR-0069"],
+    "v1Actions": [],
+    "v1Evidence": ["OpenBao secrets + provider-config (slices A-I)"],
+    "v1Commits": ["e88c739"],
+    "notes": "Central runtime secrets store; built-in Postgres + composed OpenBao."
+  },
+  {
+    "v2AdrId": "V2-ADR-0070",
+    "v1Adrs": ["ADR-0070"],
+    "v1Actions": [],
+    "v1Evidence": ["provider-config plane"],
+    "v1Commits": [],
+    "notes": "Provider configuration plane bound to catalog + secrets."
+  },
+  {
+    "v2AdrId": "V2-ADR-0071",
+    "v1Adrs": ["ADR-0071"],
+    "v1Actions": [],
+    "v1Evidence": ["composed-provider readiness (search/observability/workflow)"],
+    "v1Commits": [],
+    "notes": "Composed-provider readiness probes."
+  },
+  {
+    "v2AdrId": "V2-ADR-0072",
+    "v1Adrs": ["ADR-0072"],
+    "v1Actions": [],
+    "v1Evidence": [".env/ (generated)", "environment registry manifests", "ops port"],
+    "v1Commits": [],
+    "notes": "Manifest-driven environment registry + Makefile bootstrap."
+  },
+  {
+    "v2AdrId": "V2-ADR-0073",
+    "v1Adrs": ["ADR-0073"],
+    "v1Actions": ["ADR-ACT-0291"],
+    "v1Evidence": ["docs/evidence/platform/composed-service-sso-matrix.md"],
+    "v1Commits": ["918cd14"],
+    "notes": "Composed-service SSO via Keycloak OIDC; SonarQube corrected to native managed auth behind forward-auth (no native OIDC plugin bundled)."
+  },
+  {
+    "v2AdrId": "V2-ADR-0074",
+    "v1Adrs": ["ADR-0074"],
+    "v1Actions": [],
+    "v1Evidence": ["apps/react-enterprise-app/src/observability/faro.ts"],
+    "v1Commits": [],
+    "notes": "Grafana Faro browser diagnostics to same-origin Alloy receiver."
+  },
+  {
+    "v2AdrId": "V2-ADR-0075",
+    "v1Adrs": ["ADR-0075"],
+    "v1Actions": ["ADR-ACT-0285"],
+    "v1Evidence": ["e2e/suite-registry.json", "e2e/persona-registry.json"],
+    "v1Commits": [],
+    "notes": "E2E contract registries; bind regenerated V2 UI to the proven persona/surface/scenario matrix."
+  }
+]

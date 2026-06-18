@@ -1,0 +1,90 @@
+{
+  "pass": "two-reverse-reconciliation",
+  "verdict": "ZERO UNRESOLVED GAPS",
+  "files": {
+    "trackedV1": {
+      "declared": 1673,
+      "inventory": 1673,
+      "pathMap": 1673,
+      "bijective": true,
+      "reuse": 1239,
+      "gitMove": 19,
+      "split": 1,
+      "merge": 1,
+      "regenerate": 186,
+      "archive": 179,
+      "deleteAfterProof": 48,
+      "sum": 1673
+    }
+  },
+  "commands": {
+    "total": 299,
+    "npm": 130,
+    "make": 121,
+    "shell": 27,
+    "compose": 12,
+    "node": 9,
+    "carry": 256,
+    "merge": 42,
+    "retire": 1,
+    "bijectiveWithV2Map": true,
+    "makeTargetsCarriedOrRetired": true,
+    "npmScriptsCarriedOrRetired": true
+  },
+  "tests": {
+    "total": 307,
+    "carry": 168,
+    "promoteToConformance": 76,
+    "retarget": 61,
+    "retire": 2,
+    "allHaveMigrationType": true,
+    "retiredHaveJustification": true,
+    "activeHaveV2Path": true
+  },
+  "capabilities": {
+    "total": 75,
+    "deliveredAndProven": 71,
+    "notApplicableFinal": 4,
+    "pendingOrAmbiguous": 0,
+    "allDeliveredHaveV2Target": true,
+    "notApplicableJustified": true
+  },
+  "decisions": {
+    "total": 74,
+    "accepted": 74,
+    "proposedOrPending": 0,
+    "allHaveLineage": true,
+    "allLineageHaveV1Source": true
+  },
+  "invariantChecks": {
+    "trackedV1FilesEqualDisposition": "1673 == reuse+git-move+split+merge+regenerate+archive+delete-after-proof (1673)",
+    "everyV1FileMapped": true,
+    "noOrphanV1": true,
+    "noMultiMapWithoutExplanation": true,
+    "makeTargets": "all carried or explicitly retired",
+    "npmScripts": "all carried or explicitly retired",
+    "testsProofs": "carried+retargeted+promoted+retired all accounted",
+    "adrsActionsHistory": "74 V2 decisions, all with V1 lineage; historical records preserved as archive-evidence",
+    "capabilities": "delivered + not-applicable-final, none rejected/superseded outstanding",
+    "everyV2JustifiedByV1": true
+  },
+  "softMappingsExplained": [
+    {
+      "item": "46 delete-after-proof entries without protectingTests",
+      "reason": "41 are .gitkeep placeholders + 5 deprecated-package metadata/README (domain-core, worker-runtime); deletion gated by deletionCondition citing ADR-0006/ADR-ACT-0288, no behaviour to protect",
+      "gap": false
+    },
+    {
+      "item": "149 non-reuse entries without decisionRefs",
+      "reason": "41 .gitkeep, 12 build manifests (package.json/lock/tsconfig/loader), 96 evidence/spec/image/superpowers docs that are archived or regenerated artefacts (they ARE the historical record, not decisions)",
+      "gap": false
+    },
+    {
+      "item": "2 refactor-behind-contract docs without retainedInterfaces",
+      "reason": "compose-services.md + ui-feature-template.md are documentation refactors with no programmatic interface; covered by directory contracts",
+      "gap": false
+    }
+  ],
+  "unresolvedGaps": [],
+  "unresolvedGapCount": 0
+}

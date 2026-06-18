@@ -1,0 +1,469 @@
+[
+  {
+    "path": "apps/platform-api",
+    "responsibility": "Backend-for-frontend and server-only authority: HTTP edge, GraphQL mount, application usecases, ports, driven adapters, and DB migrations. The only place token exchange, Keycloak SDK, DB/Redis access, migrations, and server observability live.",
+    "allowedContents": [
+      "src/server",
+      "src/usecases",
+      "src/ports",
+      "src/adapters",
+      "src/db",
+      "src/config",
+      "src/types",
+      "index.ts",
+      "package.json",
+      "tsconfig.json",
+      "README.md"
+    ],
+    "forbiddenContents": [
+      "React/JSX/browser code",
+      "client-side routing",
+      "direct imports of feature/UI packages",
+      "test fixtures shared with web app outside test-support"
+    ],
+    "owner": "platform-api",
+    "dependencyDirection": "Depends inward on packages/domain, packages/runtime, packages/contracts, packages/platform, and packages/adapters. Never imports apps/web.",
+    "publicApi": "Exposes only HTTP (REST/BFF + GraphQL) over the network; no TS package export surface.",
+    "tests": "npm run test:platform-api (node:test, explicit file list); OpenAPI drift gate; architecture orchestrator.",
+    "architectureRule": "Hexagonal core. Usecases depend on ports; adapters implement ports; server wires DI. No DB/Redis/Keycloak/token logic outside adapters. Typed platform-errors only; platform-logging only (no console)."
+  },
+  {
+    "path": "apps/platform-api/src/server",
+    "responsibility": "HTTP edge and request pipeline: routing, auth, forward-auth, resource authorization, tenant resolution, session, GraphQL mount, health, OTEL init, worker/webhook runtimes, DI composition.",
+    "allowedContents": [
+      "pipeline.ts",
+      "routes.ts",
+      "auth.ts",
+      "forward-auth.ts",
+      "authorize-resource.ts",
+      "tenant-resolver.ts",
+      "session.ts",
+      "graphql.ts",
+      "health.ts",
+      "otel-init.ts",
+      "dependencies.ts",
+      "worker-registry.ts",
+      "webhook-worker-runtime.ts",
+      "token-crypto.ts",
+      "oidc-http-fetcher.ts"
+    ],
+    "forbiddenContents": [
+      "business rules (belong in usecases)",
+      "SQL/HTTP-client calls (belong in adapters)",
+      "raw Error throws"
+    ],
+    "owner": "platform-api",
+    "dependencyDirection": "Depends on usecases and ports; wires adapters via dependencies.ts. Inbound only from index.ts.",
+    "publicApi": "Internal to platform-api; exposed as HTTP routes.",
+    "tests": "Route/pipeline tests under test:platform-api; forward-auth and tenant-resolver covered explicitly.",
+    "architectureRule": "Server-side tenant authority: org context derived server-side, never trusted from client. Permission gating before usecase invocation."
+  },
+  {
+    "path": "apps/platform-api/src/usecases",
+    "responsibility": "Application services, one file per capability (auth, members, groups, organisation, audit, api-keys, rate-limits, quota, entitlements, features, search, events, notifications, observability, metering, history, secrets, provider-config, composed-providers, environment-registry, scheduled-jobs, capability-registry, clickthrough-services, idp-*, oidc-discovery, profile, platform-config, platform-services).",
+    "allowedContents": [
+      "one .ts file per capability",
+      "capability-local crypto helpers (e.g. api-key-crypto.ts)"
+    ],
+    "forbiddenContents": ["direct DB/Redis/HTTP clients", "Express/HTTP types", "React"],
+    "owner": "platform-api",
+    "dependencyDirection": "Depends on ports and packages/domain + packages/contracts. Never on adapters or server.",
+    "publicApi": "Imported by src/server only.",
+    "tests": "Per-capability node:test in test:platform-api list.",
+    "architectureRule": "Pure application logic over ports; all external effects via injected ports. Typed errors only."
+  },
+  {
+    "path": "apps/platform-api/src/ports",
+    "responsibility": "Interfaces (repositories, event-bus, billing-provider, routing-probe, registries) that the core depends on; the contract adapters must satisfy.",
+    "allowedContents": ["interface/type declarations per port"],
+    "forbiddenContents": ["implementations", "external SDK imports"],
+    "owner": "platform-api",
+    "dependencyDirection": "Depends only on packages/contracts and packages/domain types. Pure.",
+    "publicApi": "Imported by usecases and implemented by adapters.",
+    "tests": "Compile-time typing; exercised via usecase + adapter tests.",
+    "architectureRule": "Dependency inversion boundary. No concrete dependency may appear here."
+  },
+  {
+    "path": "apps/platform-api/src/adapters",
+    "responsibility": "Driven adapters implementing ports: postgres-*, redis-*, smtp/notification transports, openbao-secret-store, http-webhook-dispatcher, compose-environment-operation, readiness probes, tenant-secret crypto.",
+    "allowedContents": [
+      "one .ts per concrete adapter",
+      "external SDK usage (pg, redis, nodemailer, openbao, http clients)"
+    ],
+    "forbiddenContents": ["business rules", "HTTP route handlers", "React"],
+    "owner": "platform-api",
+    "dependencyDirection": "Depends on ports + packages/adapters + packages/platform. Wired by server/dependencies.ts. Not imported by usecases.",
+    "publicApi": "Constructed in dependencies.ts; satisfies port interfaces.",
+    "tests": "Adapter-level tests with real/in-memory backends under test:platform-api.",
+    "architectureRule": "Only layer permitted to touch DB, Redis, Keycloak SDK, SMTP, secret stores. pino/console permitted only via platform-logging."
+  },
+  {
+    "path": "apps/platform-api/src/db",
+    "responsibility": "Database lifecycle: migrate, seed, reset, and forward-only migrations.",
+    "allowedContents": ["migrate.ts", "seed.ts", "reset.ts", "index.ts", "migrations/"],
+    "forbiddenContents": [
+      "editing committed migrations",
+      "destructive DROP SCHEMA without re-GRANT USAGE TO PUBLIC"
+    ],
+    "owner": "platform-api",
+    "dependencyDirection": "Depends on adapters-postgres. Standalone from server runtime.",
+    "publicApi": "Invoked via make db-migrate / db-shell / seed-demo.",
+    "tests": "Migration application verified in compose smoke; checksum immutability enforced.",
+    "architectureRule": "Committed migrations are checksum-immutable: add forward-only, never edit."
+  },
+  {
+    "path": "apps/web",
+    "responsibility": "React SPA (renamed from V1 react-enterprise-app). Routing, feature slices, app shell, client auth glue, MSW. Consumes server data only via the BFF.",
+    "allowedContents": [
+      "src/app",
+      "src/routes",
+      "src/features",
+      "src/components",
+      "src/auth",
+      "src/hooks",
+      "src/observability",
+      "src/theme",
+      "src/styles",
+      "src/msw",
+      "src/tests",
+      "main.tsx",
+      "routeTree.gen.ts"
+    ],
+    "forbiddenContents": [
+      "DB/Redis/Keycloak SDK",
+      "token exchange",
+      "server-only observability SDK",
+      "direct non-BFF server data fetches"
+    ],
+    "owner": "web",
+    "dependencyDirection": "Depends on packages/frontend (ui-design-system, graphql-browser-client), packages/contracts, packages/platform/errors. Never imports adapters or platform-api source.",
+    "publicApi": "None (deployable app).",
+    "tests": "npm run test:frontend:run (vitest), MSW-backed; e2e Playwright suites.",
+    "architectureRule": "BFF-only data access. Visual layer may be AI-regenerated; behaviours/queries/mutations/permissions/error-states/a11y/journeys are preserved from V1."
+  },
+  {
+    "path": "apps/web/src/features",
+    "responsibility": "Capability feature slices (one dir per capability), each owning its page, components, TanStack Query queries, mutations, Zod schema, and tests, following _template.",
+    "allowedContents": [
+      "_template/",
+      "one dir per capability matching a BFF capability",
+      "FeaturePage.tsx",
+      "feature.queries.ts",
+      "feature.mutations.ts",
+      "feature.schema.ts",
+      "components/",
+      "__tests__/"
+    ],
+    "forbiddenContents": [
+      "cross-feature imports of another feature's internals",
+      "direct fetch bypassing BFF client",
+      "permission checks faked client-side as authority"
+    ],
+    "owner": "web",
+    "dependencyDirection": "Depends on packages/frontend and packages/contracts. Sibling features do not import each other.",
+    "publicApi": "Each slice exposes its route-mounted page; internals private.",
+    "tests": "Co-located __tests__ (vitest + MSW); journeys in e2e/.",
+    "architectureRule": "Slice isolation. Feature-owned TanStack Query hooks over TypedDocumentNode. Contextual audit refresh after mutations; permission gating via RequirePermission."
+  },
+  {
+    "path": "packages/contracts",
+    "responsibility": "Pure shared types and schemas (admin, analytics, auth, graphql, ingestion, organisation) shared between BFF and clients with zero runtime dependencies.",
+    "allowedContents": ["type definitions", "Zod/JSON schemas", "GraphQL document types"],
+    "forbiddenContents": ["runtime IO", "adapter imports", "React"],
+    "owner": "platform-architecture",
+    "dependencyDirection": "Leaf layer; depended on by everything, depends on nothing internal.",
+    "publicApi": "Named exports via each subpackage index.ts.",
+    "tests": "Type-level + schema validation tests.",
+    "architectureRule": "No package may import an adapter from contracts. Contracts import nothing inward."
+  },
+  {
+    "path": "packages/domain",
+    "responsibility": "Pure domain logic (core, identity) with no IO and no framework dependencies.",
+    "allowedContents": ["domain entities", "value objects", "pure functions/policies"],
+    "forbiddenContents": ["DB/HTTP/Redis", "pino", "React", "adapter imports"],
+    "owner": "platform-architecture",
+    "dependencyDirection": "Depends only on packages/contracts. Depended on by runtime, usecases.",
+    "publicApi": "index.ts exports per subpackage.",
+    "tests": "Unit tests under each package tests/.",
+    "architectureRule": "No pino, no adapters, no side effects in domain."
+  },
+  {
+    "path": "packages/runtime",
+    "responsibility": "Framework-agnostic application runtimes exposing ports and orchestration logic (api, authorisation, config, email, graphql-api, i18n, notification, profile-configuration, queue, search, session, storage, runtime-context, worker).",
+    "allowedContents": ["runtime services", "port definitions", "orchestration logic"],
+    "forbiddenContents": ["concrete external SDKs", "React", "pino in non-logging runtimes"],
+    "owner": "platform-architecture",
+    "dependencyDirection": "Depends on packages/domain, packages/contracts, packages/platform. Implemented/wired by adapters at the app layer.",
+    "publicApi": "index.ts per subpackage.",
+    "tests": "Per-package unit tests.",
+    "architectureRule": "Runtimes depend on ports, not adapters. i18n-runtime react.ts remains a bootstrap placeholder until ADR-0026 actions are Done."
+  },
+  {
+    "path": "packages/adapters",
+    "responsibility": "Reusable driven-adapter libraries wrapping external systems (brevo, clickhouse, graphql, ingestion, keycloak, loki, object-storage, opentelemetry, postgres, redis, sentry).",
+    "allowedContents": [
+      "external SDK integration code",
+      "adapter implementations of runtime ports"
+    ],
+    "forbiddenContents": [
+      "domain logic",
+      "React",
+      "being imported BY domain/feature/UI/contract packages"
+    ],
+    "owner": "platform-architecture",
+    "dependencyDirection": "Depends on packages/runtime ports, packages/contracts, packages/platform. Never imported by domain/contracts/frontend.",
+    "publicApi": "index.ts per subpackage.",
+    "tests": "Integration tests against local/test backends.",
+    "architectureRule": "Adapters are the only packages permitted to import external SDKs (Keycloak SDK confined to adapters/keycloak)."
+  },
+  {
+    "path": "packages/platform",
+    "responsibility": "Cross-cutting platform primitives: errors, logging, observability, access-control, security-auth, audit-events, observability-signals.",
+    "allowedContents": [
+      "typed error envelope",
+      "logging facade (pino)",
+      "observability facade",
+      "permission/access model",
+      "audit taxonomy"
+    ],
+    "forbiddenContents": [
+      "OpenTelemetry SDK packages in platform/observability",
+      "pino in domain/feature/UI/contract consumers"
+    ],
+    "owner": "platform-architecture",
+    "dependencyDirection": "Low-level; depends only on packages/contracts. Imported broadly.",
+    "publicApi": "index.ts per subpackage.",
+    "tests": "Unit tests; boundary tests verifying forbidden imports.",
+    "architectureRule": "platform-observability must NOT import OTEL SDK. Use platform-errors for expected failures; platform-logging instead of console."
+  },
+  {
+    "path": "packages/frontend",
+    "responsibility": "Browser-side shared libraries: ui-design-system (components + lib) and graphql-browser-client (TypedDocumentNode + TanStack Query helpers).",
+    "allowedContents": ["React components", "design tokens", "browser GraphQL client"],
+    "forbiddenContents": ["server-only code", "adapter imports", "Node-only APIs"],
+    "owner": "web",
+    "dependencyDirection": "Depends on packages/contracts and packages/platform/errors. Imported by apps/web.",
+    "publicApi": "index.ts exports.",
+    "tests": "Component tests (vitest); a11y assertions.",
+    "architectureRule": "ui-design-system visual layer may be AI-regenerated; component contracts and accessibility semantics preserved (keep deprecated Checkbox/Radio/Switch single-component API per ADR-ACT-0290)."
+  },
+  {
+    "path": "packages/infra",
+    "responsibility": "Cloud infrastructure TypeScript modules (aws, cloudflare) — programmatic infra helpers, not Terraform HCL.",
+    "allowedContents": ["typed infra config builders", "provider client wrappers"],
+    "forbiddenContents": ["secrets/tfvars/state files", "React"],
+    "owner": "platform-infra",
+    "dependencyDirection": "Leaf utility; depends on packages/contracts/platform only.",
+    "publicApi": "index.ts exports.",
+    "tests": "Unit tests for config generation.",
+    "architectureRule": "Never hardcode secrets; source via TF_VAR_*/env keys (secrets/env/tf policy)."
+  },
+  {
+    "path": "packages/tooling",
+    "responsibility": "Build and developer tooling libraries: ci, codegen, docker, terraform.",
+    "allowedContents": ["codegen helpers", "CI scripting libs", "docker/terraform generation libs"],
+    "forbiddenContents": ["runtime product code", "secrets"],
+    "owner": "platform-tooling",
+    "dependencyDirection": "Standalone; may depend on contracts. Not imported by product runtime.",
+    "publicApi": "index.ts exports / CLI entrypoints.",
+    "tests": "Unit tests for generators.",
+    "architectureRule": "Tooling must not become a runtime dependency of apps."
+  },
+  {
+    "path": "packages/testing",
+    "responsibility": "Test-only shared code: test-support (fixtures, builders, helpers) and dev-services (local stand-ins).",
+    "allowedContents": ["fixtures", "test builders", "local mock services"],
+    "forbiddenContents": ["being imported by production runtime code paths"],
+    "owner": "platform-tooling",
+    "dependencyDirection": "Depends on contracts/domain for typed fixtures. Imported only by tests and dev flows.",
+    "publicApi": "index.ts exports.",
+    "tests": "Self-tests for builders.",
+    "architectureRule": "Never imported by shipped runtime; fixture org ids must be valid v4 UUIDs (dev tenant model)."
+  },
+  {
+    "path": "tools",
+    "responsibility": "Repository automation: architecture governance orchestrator + validators, coverage normalisation, e2e result contracts, feature scaffolder, quality gate, semgrep rules, platform-governor MCP.",
+    "allowedContents": [
+      "architecture/",
+      "coverage/",
+      "e2e/",
+      "generate-feature/",
+      "quality/",
+      "semgrep/",
+      "mcp/"
+    ],
+    "forbiddenContents": ["product runtime code", "committed reports/output"],
+    "owner": "platform-tooling",
+    "dependencyDirection": "Operates on the repo; not part of app dependency graph.",
+    "publicApi": "Node CLI entrypoints invoked by Makefile.",
+    "tests": "Self-tests (e.g. result-contract.test.mjs, scenario-manifest.test.mjs).",
+    "architectureRule": "Architecture orchestrator enforces import boundaries, README generation, inventory, lifecycle evidence, slice readiness, i18n."
+  },
+  {
+    "path": "scripts",
+    "responsibility": "Operational shell/node scripts invoked by the Makefile: confidence-ladder stages, compose validation, env-manifest generation, keycloak proofs, backup, sonar/sentry/smoke/preflight/evidence/tilt/clean.",
+    "allowedContents": [
+      "stages/",
+      "compose/",
+      "env/",
+      "keycloak/",
+      "backup/",
+      "sonar/",
+      "sentry/",
+      "smoke/",
+      "preflight/",
+      "evidence/",
+      "tests/",
+      "tilt/",
+      "clean/"
+    ],
+    "forbiddenContents": ["secrets", "committed .env files (these are generated)"],
+    "owner": "platform-tooling",
+    "dependencyDirection": "Repo automation; not in app graph.",
+    "publicApi": "Invoked via Make targets.",
+    "tests": "Exercised by make check / make all stages.",
+    "architectureRule": "run-stage.sh §9 runs Sonar exactly once in the test stage; never add Sonar to make check."
+  },
+  {
+    "path": "e2e",
+    "responsibility": "Stage-aware Playwright suites and registries (internal, identity, external, discovery, prod, support) plus suite/scenario/persona registries and the semantic ui-contract.",
+    "allowedContents": [
+      "internal/",
+      "identity/",
+      "external/",
+      "discovery/",
+      "prod/",
+      "support/",
+      "suite-registry.json",
+      "scenario-manifest.json",
+      "persona-registry.json",
+      "ui-contract.json"
+    ],
+    "forbiddenContents": [
+      "committed screenshots/traces/results",
+      "real secrets or production payloads"
+    ],
+    "owner": "qa",
+    "dependencyDirection": "Drives apps over HTTP/browser; no source import of app internals.",
+    "publicApi": "Run via playwright.*.config.ts and make e2e targets.",
+    "tests": "Self-validating via tools/e2e result-contract; gated by make all.",
+    "architectureRule": "ADR-0075/ADR-ACT-0285: make all fails on coverage/auth/a11y/authz gaps. ui-contract.json anchors AI-regenerated UI behaviour. Dev e2e targets Caddy, not Vite."
+  },
+  {
+    "path": "services",
+    "responsibility": "Auxiliary standalone services for local/test only (mock-oidc IdP).",
+    "allowedContents": ["mock-oidc/ (src, Dockerfile, package.json)"],
+    "forbiddenContents": ["production-only services", "real credentials"],
+    "owner": "platform-infra",
+    "dependencyDirection": "Independent process; not imported by apps.",
+    "publicApi": "HTTP endpoints for tests.",
+    "tests": "Used by identity e2e suite.",
+    "architectureRule": "Mock OIDC cannot substitute for real-IdP login-simulation proof (ADR-ACT-0220 remains blocked)."
+  },
+  {
+    "path": "docker",
+    "responsibility": "Container build and service configuration, one directory per composed service, plus entrypoint and compose-wrapper scripts.",
+    "allowedContents": [
+      "caddy/",
+      "postgres/",
+      "clickhouse/",
+      "keycloak/",
+      "grafana/",
+      "loki/",
+      "tempo/",
+      "otel/",
+      "alloy/",
+      "sentry/",
+      "pgadmin/",
+      "wiremock/",
+      "entrypoint-api.sh",
+      "compose-wrapper.sh"
+    ],
+    "forbiddenContents": [
+      "real payloads/secrets/tokens in WireMock mappings",
+      "production customer samples"
+    ],
+    "owner": "platform-infra",
+    "dependencyDirection": "Consumed by compose.yaml/Tiltfile.",
+    "publicApi": "Referenced by compose profiles.",
+    "tests": "npm run compose:config / compose:config:all; compose-port validator.",
+    "architectureRule": "Every composed service with a GUI needs a clickthrough policy row + platform.clickthrough.<svc> permission (ADR-ACT-0233). WireMock is direct-port only."
+  },
+  {
+    "path": "infra",
+    "responsibility": "Terraform HCL: tf wrapper bin, reusable modules, and one canonical env directory per stage (dev/staging/prod/test).",
+    "allowedContents": [
+      "bin/",
+      "modules/",
+      "env/dev",
+      "env/staging",
+      "env/prod",
+      "env/test",
+      "*.tf",
+      "*.tfvars.example"
+    ],
+    "forbiddenContents": [
+      "committed terraform.tfstate*",
+      "real .tfvars with secrets",
+      "duplicate stage aliases (dev+development, prod+production)"
+    ],
+    "owner": "platform-infra",
+    "dependencyDirection": "Provisions cloud; not in app graph.",
+    "publicApi": "Applied via infra/bin/tf.",
+    "tests": "tf validate/plan in CI.",
+    "architectureRule": "One canonical name per stage. State files never committed. Secrets sourced via TF_VAR_* env, never hardcoded in committed tfvars."
+  },
+  {
+    "path": "config/environments",
+    "responsibility": "Non-secret stage configuration: common/shared base plus per-stage dev/test/staging/prod JSON.",
+    "allowedContents": [
+      "common.json",
+      "shared.json",
+      "dev.json",
+      "test.json",
+      "staging.json",
+      "prod.json"
+    ],
+    "forbiddenContents": ["secrets", "tokens", "generated .env files"],
+    "owner": "platform-infra",
+    "dependencyDirection": "Read by env-manifest generation (scripts/env) and runtime config loaders.",
+    "publicApi": "Consumed by config-runtime and env registry.",
+    "tests": "Validated by env registry/bootstrap (ADR-0072).",
+    "architectureRule": "Manifests replace all hand-maintained env files; .env/ is generated, never committed."
+  },
+  {
+    "path": "make",
+    "responsibility": "Makefile includes split by concern (core, compose, test, e2e, quality, env, stages, evidence, tools, clean, help).",
+    "allowedContents": ["*.mk include files"],
+    "forbiddenContents": ["secrets", "ad-hoc one-off targets duplicating scripts"],
+    "owner": "platform-tooling",
+    "dependencyDirection": "Included by root Makefile; orchestrates scripts and tools.",
+    "publicApi": "make targets (help, check, all, release-confidence, compose-up-*, etc.).",
+    "tests": "Exercised by make check / make all.",
+    "architectureRule": "make check stays fast (no Sonar). make all is the authoritative gate running Sonar exactly once (ADR-ACT-0290/0291)."
+  },
+  {
+    "path": "docs",
+    "responsibility": "Governance and design source of truth: ADRs + ACTION-REGISTER, architecture rules, OpenAPI baseline, CODEMAPS, evidence bundles, patterns, schemas, security, slices, specs, local-development, v2-foundation.",
+    "allowedContents": [
+      "adr/",
+      "architecture/",
+      "api/",
+      "CODEMAPS/",
+      "evidence/",
+      "patterns/",
+      "schemas/",
+      "security/",
+      "slices/",
+      "specs/",
+      "local-development/",
+      "v2-foundation/"
+    ],
+    "forbiddenContents": ["secrets", "marking ACTION-REGISTER rows Done without evidence"],
+    "owner": "platform-architecture",
+    "dependencyDirection": "Documentation; governs all layers.",
+    "publicApi": "docs/api/openapi.json is the REST baseline; docs/architecture/import-boundary-rules.json drives the boundary gate.",
+    "tests": "adr-compliance, validate-action-register, openapi drift gate, markdownlint.",
+    "architectureRule": "Every structural decision needs an ADR or ACTION-REGISTER update; authoritative next ADR/action numbers live in ACTION-REGISTER.md."
+  }
+]

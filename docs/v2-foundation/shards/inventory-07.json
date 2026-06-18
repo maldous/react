@@ -1,0 +1,795 @@
+[
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-logs/admin-logs-client.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-logs",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-logs/admin-logs-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["searchLogs", "LogSearchFilters", "LogEntry", "LogSearchResult"],
+    "protectingTests": ["apps/react-enterprise-app/src/features/admin-logs/__tests__"],
+    "decisionRefs": ["ADR-0035", "ADR-ACT-0195", "ADR-0022", "ADR-ACT-0284"],
+    "migrationSeq": 10,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-logs/AdminLogsPage.tsx",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-logs",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-logs/AdminLogsPage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["AdminLogsPage"],
+    "protectingTests": ["e2e/specs/admin-logs"],
+    "decisionRefs": ["ADR-ACT-0203", "ADR-0026"],
+    "migrationSeq": 30,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-logs/admin-logs.query-state.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-logs",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-logs/admin-logs.query-state.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["paramsToBffFilters"],
+    "protectingTests": ["apps/react-enterprise-app/src/features/admin-logs/__tests__"],
+    "decisionRefs": ["ADR-0001", "ADR-0019"],
+    "migrationSeq": 10,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-logs/admin-logs.schema.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-logs",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-logs/admin-logs.schema.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [
+      "LogSearchParamsSchema",
+      "parseLogSearchParams",
+      "DEFAULT_LOG_SEARCH_PARAMS",
+      "LOG_LEVELS",
+      "LOG_RANGES",
+      "LOG_DIRECTIONS"
+    ],
+    "protectingTests": ["apps/react-enterprise-app/src/features/admin-logs/__tests__"],
+    "decisionRefs": ["ADR-0019"],
+    "migrationSeq": 5,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-logs/components/LogEntryDetails.tsx",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-logs",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-logs/components/LogEntryDetails.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["LogEntryDetails"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 30,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-logs/components/LogLevelBadge.tsx",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-logs",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-logs/components/LogLevelBadge.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["LogLevelBadge"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 30,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-logs/components/LogResultsTable.tsx",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-logs",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-logs/components/LogResultsTable.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["LogResultsTable"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 30,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-logs/components/LogSearchForm.tsx",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-logs",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-logs/components/LogSearchForm.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["LogSearchForm"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0203", "ADR-0019"],
+    "migrationSeq": 30,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-logs/use-log-search.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-logs",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-logs/use-log-search.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["useLogSearch"],
+    "protectingTests": ["apps/react-enterprise-app/src/features/admin-logs/__tests__"],
+    "decisionRefs": ["ADR-ACT-0195"],
+    "migrationSeq": 15,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-members/admin-members-client.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-members",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-members/admin-members-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [
+      "listMembers",
+      "inviteMember",
+      "updateMemberRole",
+      "removeMember",
+      "setMemberUsername",
+      "setMemberStatus",
+      "resendInvite",
+      "listExternalIdentities"
+    ],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-members/__tests__/AdminMembersPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0035", "ADR-0036"],
+    "migrationSeq": 10,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-members/AdminMembersPage.tsx",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-members",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-members/AdminMembersPage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["AdminMembersPage"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-members/__tests__/AdminMembersPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203", "ADR-0026"],
+    "migrationSeq": 30,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-members/__tests__/AdminMembersPage.test.tsx",
+    "fileType": "test",
+    "owner": "apps/web/features/admin-members",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-members/__tests__/AdminMembersPage.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 40,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-members/use-admin-members.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-members",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-members/use-admin-members.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["useMembers", "adminMembersQueryKey"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-members/__tests__/AdminMembersPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 15,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-monitoring/admin-monitoring-client.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-monitoring",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-monitoring/admin-monitoring-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-monitoring BFF client"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-monitoring/__tests__/AdminMonitoringPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0035"],
+    "migrationSeq": 10,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-monitoring/AdminMonitoringPage.tsx",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-monitoring",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-monitoring/AdminMonitoringPage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["AdminMonitoringPage"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-monitoring/__tests__/AdminMonitoringPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203", "ADR-0026"],
+    "migrationSeq": 30,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-monitoring/__tests__/AdminMonitoringPage.test.tsx",
+    "fileType": "test",
+    "owner": "apps/web/features/admin-monitoring",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-monitoring/__tests__/AdminMonitoringPage.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 40,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-monitoring/use-admin-monitoring.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-monitoring",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-monitoring/use-admin-monitoring.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["useAdminMonitoring"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-monitoring/__tests__/AdminMonitoringPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 15,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-observability/admin-observability-client.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-observability",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-observability/admin-observability-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-observability BFF client"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-observability/__tests__/AdminObservabilityPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0035", "ADR-ACT-0284"],
+    "migrationSeq": 10,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-observability/AdminObservabilityPage.tsx",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-observability",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-observability/AdminObservabilityPage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["AdminObservabilityPage"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-observability/__tests__/AdminObservabilityPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203", "ADR-ACT-0284"],
+    "migrationSeq": 30,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-observability/__tests__/AdminObservabilityPage.test.tsx",
+    "fileType": "test",
+    "owner": "apps/web/features/admin-observability",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-observability/__tests__/AdminObservabilityPage.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 40,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-observability/use-admin-observability.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-observability",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-observability/use-admin-observability.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["useAdminObservability"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-observability/__tests__/AdminObservabilityPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 15,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-platform/admin-platform-client.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-platform",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-platform/admin-platform-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-platform BFF client"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-platform/__tests__/AdminPlatformPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0035", "ADR-ACT-0227"],
+    "migrationSeq": 10,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-platform/AdminPlatformPage.tsx",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-platform",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-platform/AdminPlatformPage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["AdminPlatformPage"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-platform/__tests__/AdminPlatformPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203", "ADR-ACT-0227"],
+    "migrationSeq": 30,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-platform/__tests__/AdminPlatformPage.test.tsx",
+    "fileType": "test",
+    "owner": "apps/web/features/admin-platform",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-platform/__tests__/AdminPlatformPage.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 40,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-platform/use-admin-platform.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-platform",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-platform/use-admin-platform.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["useAdminPlatform"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-platform/__tests__/AdminPlatformPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 15,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-readiness/admin-readiness-client.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-readiness",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-readiness/admin-readiness-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-readiness BFF client"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-readiness/__tests__/AdminReadinessPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0035"],
+    "migrationSeq": 10,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-readiness/AdminReadinessPage.tsx",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-readiness",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-readiness/AdminReadinessPage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["AdminReadinessPage"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-readiness/__tests__/AdminReadinessPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 30,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-readiness/__tests__/AdminReadinessPage.test.tsx",
+    "fileType": "test",
+    "owner": "apps/web/features/admin-readiness",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-readiness/__tests__/AdminReadinessPage.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 40,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-readiness/use-admin-readiness.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-readiness",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-readiness/use-admin-readiness.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["useAdminReadiness"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-readiness/__tests__/AdminReadinessPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 15,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-scheduled-jobs/admin-scheduled-jobs-client.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-scheduled-jobs",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-scheduled-jobs/admin-scheduled-jobs-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-scheduled-jobs BFF client"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-scheduled-jobs/__tests__/AdminScheduledJobsPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0035", "ADR-0068"],
+    "migrationSeq": 10,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-scheduled-jobs/AdminScheduledJobsPage.tsx",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-scheduled-jobs",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-scheduled-jobs/AdminScheduledJobsPage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["AdminScheduledJobsPage"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-scheduled-jobs/__tests__/AdminScheduledJobsPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203", "ADR-0068"],
+    "migrationSeq": 30,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-scheduled-jobs/__tests__/AdminScheduledJobsPage.test.tsx",
+    "fileType": "test",
+    "owner": "apps/web/features/admin-scheduled-jobs",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-scheduled-jobs/__tests__/AdminScheduledJobsPage.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 40,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-scheduled-jobs/use-admin-scheduled-jobs.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-scheduled-jobs",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-scheduled-jobs/use-admin-scheduled-jobs.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["useAdminScheduledJobs"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-scheduled-jobs/__tests__/AdminScheduledJobsPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 15,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-search/admin-search-client.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-search",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-search/admin-search-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-search BFF client"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-search/__tests__/AdminSearchPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0035"],
+    "migrationSeq": 10,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-search/AdminSearchPage.tsx",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-search",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-search/AdminSearchPage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["AdminSearchPage"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-search/__tests__/AdminSearchPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 30,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-search/__tests__/AdminSearchPage.test.tsx",
+    "fileType": "test",
+    "owner": "apps/web/features/admin-search",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-search/__tests__/AdminSearchPage.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 40,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-search/use-admin-search.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-search",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-search/use-admin-search.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["useAdminSearch"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-search/__tests__/AdminSearchPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 15,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-storage/admin-storage-client.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-storage",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-storage/admin-storage-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-storage BFF client"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-storage/__tests__/AdminStoragePage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0035"],
+    "migrationSeq": 10,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-storage/AdminStoragePage.tsx",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-storage",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-storage/AdminStoragePage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["AdminStoragePage"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-storage/__tests__/AdminStoragePage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 30,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-storage/__tests__/AdminStoragePage.test.tsx",
+    "fileType": "test",
+    "owner": "apps/web/features/admin-storage",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-storage/__tests__/AdminStoragePage.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 40,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-storage/use-admin-storage.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-storage",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-storage/use-admin-storage.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["useAdminStorage"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-storage/__tests__/AdminStoragePage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 15,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin/__tests__/admin-error.test.tsx",
+    "fileType": "test",
+    "owner": "apps/web/features/admin",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin/__tests__/admin-error.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 40,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin/__tests__/AuditTrailPanel.test.tsx",
+    "fileType": "test",
+    "owner": "apps/web/features/admin",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin/__tests__/AuditTrailPanel.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 40,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-usage/admin-usage-client.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-usage",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-usage/admin-usage-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-usage BFF client"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-usage/__tests__/AdminUsagePage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0035"],
+    "migrationSeq": 10,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-usage/AdminUsagePage.tsx",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-usage",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-usage/AdminUsagePage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["AdminUsagePage"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-usage/__tests__/AdminUsagePage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 30,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-usage/__tests__/AdminUsagePage.test.tsx",
+    "fileType": "test",
+    "owner": "apps/web/features/admin-usage",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-usage/__tests__/AdminUsagePage.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 40,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-usage/use-admin-usage.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-usage",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-usage/use-admin-usage.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["useAdminUsage"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-usage/__tests__/AdminUsagePage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 15,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin/use-audit.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin/use-audit.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["useAudit"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin/__tests__/AuditTrailPanel.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203", "ADR-0036"],
+    "migrationSeq": 15,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-webhooks/admin-webhooks-client.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-webhooks",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-webhooks/admin-webhooks-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-webhooks BFF client"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-webhooks/__tests__/AdminWebhooksPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0035", "ADR-0068"],
+    "migrationSeq": 10,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-webhooks/AdminWebhooksPage.tsx",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-webhooks",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-webhooks/AdminWebhooksPage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["AdminWebhooksPage"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-webhooks/__tests__/AdminWebhooksPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203", "ADR-0068"],
+    "migrationSeq": 30,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-webhooks/__tests__/AdminWebhooksPage.test.tsx",
+    "fileType": "test",
+    "owner": "apps/web/features/admin-webhooks",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-webhooks/__tests__/AdminWebhooksPage.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 40,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-webhooks/use-admin-webhooks.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/admin-webhooks",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-webhooks/use-admin-webhooks.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["useAdminWebhooks"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-webhooks/__tests__/AdminWebhooksPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 15,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/.gitkeep",
+    "fileType": "config",
+    "owner": "apps/web",
+    "authoritative": "generated",
+    "v2Path": "apps/web/src/features/.gitkeep",
+    "disposition": "delete-after-proof",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": [],
+    "migrationSeq": 99,
+    "deletionCondition": "delete once at least one V2 feature directory exists under apps/web/src/features so the tree is non-empty"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/organisation/organisation.mutations.ts",
+    "fileType": "source",
+    "owner": "apps/web/features/organisation",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/organisation/organisation.mutations.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["useUpdateOrganisationProfile"],
+    "protectingTests": ["apps/react-enterprise-app/src/features/organisation/__tests__"],
+    "decisionRefs": ["ADR-ACT-0203", "ADR-0013"],
+    "migrationSeq": 15,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/organisation/OrganisationProfilePage.tsx",
+    "fileType": "source",
+    "owner": "apps/web/features/organisation",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/organisation/OrganisationProfilePage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["OrganisationProfilePage"],
+    "protectingTests": ["apps/react-enterprise-app/src/features/organisation/__tests__"],
+    "decisionRefs": ["ADR-ACT-0203", "ADR-0013", "ADR-0026"],
+    "migrationSeq": 30,
+    "deletionCondition": "n/a"
+  }
+]

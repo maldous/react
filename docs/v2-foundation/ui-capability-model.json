@@ -1,0 +1,2182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$comment": "V2 AI-UI capability model. Concrete UI definitions for the real V1 capabilities, each conforming to ui-definition.schema.json. Derived ONLY from V1 behaviour sources (feature hooks, contracts, e2e/persona-registry.json, e2e/ui-contract.json, e2e/scenario-manifest.json, ADMIN_NAV_ITEMS, i18n keys), never from V1 JSX styling. The V2 generator consumes this; it must never read old JSX.",
+  "schemaRef": "./ui-definition.schema.json",
+  "version": 1,
+  "personasIndex": [
+    "unauthenticated-visitor",
+    "fixture-tenant-admin",
+    "fixture-viewer",
+    "fixture-no-membership",
+    "scaffold-system-admin",
+    "scaffold-tenant-admin",
+    "scaffold-tenant-manager",
+    "scaffold-tenant-member",
+    "tenant-entitlement-disabled",
+    "tenant-entitlement-enabled",
+    "tenant-quota-limited",
+    "tenant-rate-limited"
+  ],
+  "capabilities": [
+    {
+      "capabilityId": "landing",
+      "titleI18nKey": "feature.landing.title",
+      "route": "/",
+      "owningCapability": "service-catalog-readiness",
+      "dataBoundary": "rest-over-bff",
+      "personas": [
+        { "personaId": "fixture-tenant-admin", "access": "full" },
+        { "personaId": "fixture-viewer", "access": "full" },
+        { "personaId": "scaffold-system-admin", "access": "full" },
+        { "personaId": "scaffold-tenant-admin", "access": "full" }
+      ],
+      "navEligibility": { "inNav": false, "navGroup": "none" },
+      "tasks": [
+        {
+          "taskId": "view-landing",
+          "summary": "See actor identity and entry points (admin, status, tool links).",
+          "playwrightJourneyRefs": ["ui-contract#landing"]
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "success": { "component": "Card" },
+        "authRequired": { "handledBy": "route-guard", "recoveryAction": "sign-in" }
+      },
+      "i18nKeys": ["feature.landing.title", "ui.action.openAdmin"],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.landing.title" },
+        "roles": ["link", "heading"]
+      },
+      "telemetryEvents": [{ "eventId": "http.request.complete", "trigger": "page-load" }],
+      "playwrightJourneyRefs": ["e2e/discovery/clickability.spec.ts", "ui-contract#landing"]
+    },
+    {
+      "capabilityId": "login",
+      "titleI18nKey": "auth.login.title",
+      "route": "/login",
+      "owningCapability": "platform-login",
+      "dataBoundary": "rest-over-bff",
+      "personas": [
+        { "personaId": "unauthenticated-visitor", "access": "full" },
+        {
+          "personaId": "scaffold-disabled-user",
+          "access": "denied",
+          "notes": "Login refused for disabled Keycloak account."
+        },
+        {
+          "personaId": "scaffold-expired-session",
+          "access": "full",
+          "notes": "Expired session redirects here."
+        }
+      ],
+      "navEligibility": { "inNav": false, "navGroup": "none" },
+      "tasks": [
+        {
+          "taskId": "start-login",
+          "summary": "Begin IdP-brokered sign-in; users never see Keycloak chrome.",
+          "playwrightJourneyRefs": ["e2e/external/login.spec.ts"]
+        }
+      ],
+      "commands": [
+        {
+          "commandId": "start-login",
+          "transport": "rest",
+          "method": "POST",
+          "endpoint": "/api/auth/login",
+          "requiredPermission": "",
+          "summary": "Initiate brokered login.",
+          "failureStates": ["domainFailure"]
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "success": { "recoveryAction": "none" },
+        "domainFailure": {
+          "component": "Alert",
+          "tone": "danger",
+          "descriptionI18nKey": "auth.login.error",
+          "recoveryAction": "retry"
+        }
+      },
+      "i18nKeys": ["auth.login.title", "auth.login.cta", "auth.login.error", "auth.status.loading"],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "auth.login.title" },
+        "roles": ["heading", "button"],
+        "keyboard": ["Login control keyboard-reachable; visible focus."]
+      },
+      "playwrightJourneyRefs": [
+        "e2e/external/login.spec.ts",
+        "e2e/external/auth-negative.spec.ts",
+        "ui-contract#login"
+      ]
+    },
+    {
+      "capabilityId": "admin-overview",
+      "titleI18nKey": "feature.admin.nav.overview",
+      "route": "/admin",
+      "owningCapability": "rbac",
+      "dataBoundary": "rest-over-bff",
+      "personas": [
+        { "personaId": "fixture-tenant-admin", "access": "full" },
+        { "personaId": "scaffold-tenant-admin", "access": "full" },
+        { "personaId": "scaffold-tenant-member", "access": "denied" }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.overview",
+        "order": 1,
+        "requiredPermission": "tenant.admin.access",
+        "exact": true
+      },
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "success": { "component": "Card" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" },
+        "authRequired": { "handledBy": "route-guard", "recoveryAction": "sign-in" }
+      },
+      "i18nKeys": ["feature.admin.nav.overview"],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.nav.overview" }
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-overview", "e2e/discovery/persona-authz.spec.ts"]
+    },
+    {
+      "capabilityId": "admin-members",
+      "titleI18nKey": "feature.admin.members.title",
+      "descriptionI18nKey": "feature.admin.members.description",
+      "route": "/admin/members",
+      "owningCapability": "tenant-identity",
+      "dataBoundary": "rest-over-bff",
+      "persona": "tenant-admin",
+      "personas": [
+        { "personaId": "fixture-tenant-admin", "roles": ["tenant-admin"], "access": "full" },
+        { "personaId": "scaffold-tenant-admin", "roles": ["tenant-admin"], "access": "full" },
+        {
+          "personaId": "scaffold-tenant-manager",
+          "roles": ["manager"],
+          "access": "read-only",
+          "notes": "manager can read/invite/update_role per persona perms but lacks tenant.admin.access nav."
+        },
+        { "personaId": "fixture-viewer", "access": "denied" },
+        { "personaId": "scaffold-tenant-member", "access": "denied" }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.members",
+        "order": 3,
+        "requiredPermission": "tenant.members.read"
+      },
+      "tasks": [
+        {
+          "taskId": "list-members",
+          "summary": "View tenant members with username, role, status, last login.",
+          "requiredPermission": "tenant.members.read"
+        },
+        {
+          "taskId": "invite-member",
+          "summary": "Invite a new member by email with a role.",
+          "requiredPermission": "tenant.members.invite"
+        },
+        {
+          "taskId": "change-role",
+          "summary": "Change a member's role inline.",
+          "requiredPermission": "tenant.members.update_role"
+        },
+        {
+          "taskId": "remove-member",
+          "summary": "Remove a member (confirmed; last-admin guard server-side).",
+          "requiredPermission": "tenant.members.delete"
+        },
+        {
+          "taskId": "edit-username",
+          "summary": "Edit a member's username from the expanded row.",
+          "requiredPermission": "tenant.members.update_role"
+        },
+        {
+          "taskId": "toggle-status",
+          "summary": "Enable/disable a member.",
+          "requiredPermission": "tenant.members.update_role"
+        },
+        {
+          "taskId": "resend-invite",
+          "summary": "Resend a pending invitation.",
+          "requiredPermission": "tenant.members.invite"
+        },
+        {
+          "taskId": "view-external-identities",
+          "summary": "List a member's linked external identities (lazy).",
+          "requiredPermission": "tenant.members.read"
+        }
+      ],
+      "queries": [
+        {
+          "queryId": "members",
+          "summary": "List members + pending invitations.",
+          "transport": "rest",
+          "endpoint": "GET /api/org/members",
+          "responseSchemaRef": "@platform/contracts-admin#MemberListResponse",
+          "queryKey": ["admin", "members"],
+          "requiredPermission": "tenant.members.read",
+          "retry": false,
+          "feedsTables": ["members-table"]
+        },
+        {
+          "queryId": "external-identities",
+          "summary": "List a member's external identities.",
+          "transport": "rest",
+          "endpoint": "GET /api/org/members/{userId}/external-identities",
+          "responseSchemaRef": "@platform/contracts-admin#ExternalIdentityListResponse",
+          "queryKey": ["admin", "members", "external-identities"],
+          "requiredPermission": "tenant.members.read",
+          "lazy": true
+        }
+      ],
+      "commands": [
+        {
+          "commandId": "invite-member",
+          "summary": "Invite member.",
+          "transport": "rest",
+          "method": "POST",
+          "endpoint": "/api/org/members/invite",
+          "requestSchemaRef": "@platform/contracts-admin#InviteMemberRequestSchema",
+          "requiredPermission": "tenant.members.invite",
+          "auditAction": "member.invited",
+          "invalidatesQueries": ["members"],
+          "successState": "success",
+          "failureStates": ["validationFailure", "domainFailure"],
+          "telemetryEvents": ["member.invite.submitted"]
+        },
+        {
+          "commandId": "update-member-role",
+          "summary": "Change role.",
+          "transport": "rest",
+          "method": "PATCH",
+          "endpoint": "/api/org/members/{userId}",
+          "requestSchemaRef": "@platform/contracts-admin#UpdateMemberRoleRequest",
+          "requiredPermission": "tenant.members.update_role",
+          "auditAction": "member.role_changed",
+          "invalidatesQueries": ["members"],
+          "successState": "success"
+        },
+        {
+          "commandId": "remove-member",
+          "summary": "Remove member.",
+          "transport": "rest",
+          "method": "DELETE",
+          "endpoint": "/api/org/members/{userId}",
+          "requiredPermission": "tenant.members.delete",
+          "destructive": true,
+          "destructiveConfirmationRef": "remove-member-confirm",
+          "auditAction": "member.removed",
+          "invalidatesQueries": ["members"],
+          "successState": "success"
+        },
+        {
+          "commandId": "edit-username",
+          "summary": "Edit username.",
+          "transport": "rest",
+          "method": "PATCH",
+          "endpoint": "/api/org/members/{userId}/username",
+          "requestSchemaRef": "@platform/contracts-admin#EditUsernameRequest",
+          "requiredPermission": "tenant.members.update_role",
+          "auditAction": "member.username_changed",
+          "invalidatesQueries": ["members"],
+          "successState": "success",
+          "failureStates": ["domainFailure"]
+        },
+        {
+          "commandId": "set-member-status",
+          "summary": "Enable/disable member.",
+          "transport": "rest",
+          "method": "PATCH",
+          "endpoint": "/api/org/members/{userId}/status",
+          "requestSchemaRef": "@platform/contracts-admin#SetMemberStatusRequest",
+          "requiredPermission": "tenant.members.update_role",
+          "auditAction": "member.status_changed",
+          "invalidatesQueries": ["members"],
+          "successState": "success"
+        },
+        {
+          "commandId": "resend-invite",
+          "summary": "Resend invitation.",
+          "transport": "rest",
+          "method": "POST",
+          "endpoint": "/api/org/members/resend-invite",
+          "requestSchemaRef": "@platform/contracts-admin#ResendInviteRequest",
+          "requiredPermission": "tenant.members.invite",
+          "auditAction": "member.invite_resent",
+          "successState": "success"
+        }
+      ],
+      "forms": [
+        {
+          "formId": "invite-member",
+          "summary": "Invite a member.",
+          "schemaRef": "@platform/contracts-admin#InviteMemberRequestSchema",
+          "submitCommandId": "invite-member",
+          "presentation": "dialog",
+          "fields": [
+            {
+              "name": "email",
+              "type": "email",
+              "labelI18nKey": "feature.admin.members.emailLabel",
+              "required": true,
+              "validation": [{ "rule": "email" }, { "rule": "required" }],
+              "testId": "member-invite-email"
+            },
+            {
+              "name": "role",
+              "type": "select",
+              "labelI18nKey": "feature.admin.members.roleLabel",
+              "required": true,
+              "optionsSource": "enum:TENANT_ROLES",
+              "defaultValue": "member",
+              "validation": [{ "rule": "enum" }],
+              "testId": "member-invite-role"
+            }
+          ]
+        },
+        {
+          "formId": "edit-username",
+          "summary": "Edit member username.",
+          "schemaRef": "@platform/contracts-admin#EditUsernameRequest",
+          "submitCommandId": "edit-username",
+          "presentation": "row-detail",
+          "fields": [
+            {
+              "name": "username",
+              "type": "text",
+              "labelI18nKey": "feature.admin.members.usernameLabel",
+              "validation": [{ "rule": "required" }],
+              "testId": "member-username-input"
+            }
+          ]
+        }
+      ],
+      "tables": [
+        {
+          "tableId": "members-table",
+          "dataQueryId": "members",
+          "rowTestId": "member-row",
+          "expandable": true,
+          "rowDetailQueryId": "external-identities",
+          "columns": [
+            {
+              "id": "expand",
+              "kind": "expander",
+              "headerI18nKey": "feature.admin.members.column.details",
+              "srOnlyHeader": true
+            },
+            {
+              "id": "member",
+              "kind": "text",
+              "headerI18nKey": "feature.admin.members.column.member"
+            },
+            {
+              "id": "username",
+              "kind": "mono",
+              "headerI18nKey": "feature.admin.members.column.username"
+            },
+            {
+              "id": "role",
+              "kind": "select-inline",
+              "headerI18nKey": "feature.admin.members.column.role",
+              "rowActionCommandIds": ["update-member-role"]
+            },
+            {
+              "id": "status",
+              "kind": "badge",
+              "headerI18nKey": "feature.admin.members.column.status"
+            },
+            {
+              "id": "lastLogin",
+              "kind": "date",
+              "headerI18nKey": "feature.admin.members.column.lastLogin"
+            },
+            {
+              "id": "actions",
+              "kind": "actions",
+              "headerI18nKey": "feature.admin.members.column.actions",
+              "srOnlyHeader": true,
+              "rowActionCommandIds": ["remove-member"]
+            }
+          ],
+          "pagination": { "mode": "client" }
+        }
+      ],
+      "stateMachines": [
+        {
+          "machineId": "member-status",
+          "states": ["active", "invited", "disabled"],
+          "initial": "invited",
+          "transitions": [
+            { "from": "invited", "to": "active", "on": "first-login" },
+            { "from": "active", "to": "disabled", "on": "set-member-status" },
+            { "from": "disabled", "to": "active", "on": "set-member-status" }
+          ]
+        }
+      ],
+      "states": {
+        "loading": {
+          "component": "LoadingState",
+          "titleI18nKey": "auth.status.loading",
+          "handledBy": "page"
+        },
+        "empty": { "component": "EmptyState", "titleI18nKey": "feature.admin.members.empty" },
+        "success": { "component": "DataTable" },
+        "validationFailure": { "component": "FormField", "recoveryAction": "none" },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry",
+          "descriptionI18nKey": "feature.admin.members.usernameError"
+        },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" },
+        "authRequired": { "handledBy": "route-guard", "recoveryAction": "sign-in" }
+      },
+      "destructiveConfirmation": [
+        {
+          "confirmationId": "remove-member-confirm",
+          "commandId": "remove-member",
+          "presentation": "dialog",
+          "titleI18nKey": "feature.admin.members.removeConfirmTitle",
+          "bodyI18nKey": "feature.admin.members.removeConfirmBody",
+          "confirmLabelI18nKey": "feature.admin.members.remove",
+          "cancelLabelI18nKey": "feature.admin.members.cancel"
+        }
+      ],
+      "auditImpact": [
+        {
+          "auditAction": "member.invited",
+          "triggeredByCommandId": "invite-member",
+          "refreshesAuditPanel": true,
+          "resource": "member"
+        },
+        {
+          "auditAction": "member.role_changed",
+          "triggeredByCommandId": "update-member-role",
+          "refreshesAuditPanel": true,
+          "resource": "member"
+        },
+        {
+          "auditAction": "member.removed",
+          "triggeredByCommandId": "remove-member",
+          "refreshesAuditPanel": true,
+          "resource": "member"
+        },
+        {
+          "auditAction": "member.username_changed",
+          "triggeredByCommandId": "edit-username",
+          "refreshesAuditPanel": true,
+          "resource": "member"
+        },
+        {
+          "auditAction": "member.status_changed",
+          "triggeredByCommandId": "set-member-status",
+          "refreshesAuditPanel": true,
+          "resource": "member"
+        }
+      ],
+      "readiness": { "readinessCheckId": "tenant-identity", "surfacesReadinessState": false },
+      "help": {
+        "terminology": [
+          { "term": "member", "definitionI18nKey": "feature.admin.members.help.member" },
+          {
+            "term": "external identity",
+            "definitionI18nKey": "feature.admin.members.help.externalIdentity"
+          }
+        ]
+      },
+      "i18nKeys": [
+        "feature.admin.members.title",
+        "feature.admin.members.description",
+        "feature.admin.members.invite",
+        "feature.admin.members.remove",
+        "feature.admin.members.cancel",
+        "feature.admin.members.saved",
+        "feature.admin.members.empty",
+        "feature.admin.members.column.details",
+        "feature.admin.members.column.member",
+        "feature.admin.members.column.username",
+        "feature.admin.members.column.role",
+        "feature.admin.members.column.status",
+        "feature.admin.members.column.lastLogin",
+        "feature.admin.members.column.actions",
+        "feature.admin.members.toggleDetails",
+        "feature.admin.members.changeRoleFor",
+        "feature.admin.members.noUsername",
+        "feature.admin.members.neverLoggedIn",
+        "feature.admin.members.usernameLabel",
+        "feature.admin.members.usernameConflict",
+        "feature.admin.members.usernameError",
+        "feature.admin.members.usernameSaved",
+        "feature.admin.members.saveUsername",
+        "feature.admin.members.enable",
+        "feature.admin.members.disable",
+        "feature.admin.members.externalIdentities",
+        "feature.admin.members.noExternalIdentities",
+        "feature.admin.members.recentActivity",
+        "feature.admin.members.emailLabel",
+        "feature.admin.members.roleLabel",
+        "feature.admin.members.inviteError",
+        "feature.admin.members.pendingTitle",
+        "feature.admin.members.resend",
+        "feature.admin.members.resendSent",
+        "feature.admin.members.removeConfirmTitle",
+        "feature.admin.members.removeConfirmBody",
+        "auth.status.loading"
+      ],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.members.title" },
+        "roles": ["heading", "table", "row", "button", "dialog", "combobox", "status"],
+        "accessibleNames": [
+          {
+            "control": "expand-row",
+            "role": "button",
+            "nameI18nKey": "feature.admin.members.toggleDetails"
+          },
+          {
+            "control": "role-select",
+            "role": "combobox",
+            "nameI18nKey": "feature.admin.members.changeRoleFor"
+          },
+          {
+            "control": "remove-dialog",
+            "role": "dialog",
+            "nameI18nKey": "feature.admin.members.removeConfirmTitle"
+          }
+        ],
+        "keyboard": [
+          "Row expander toggles via Enter/Space.",
+          "Invite/remove dialogs trap and restore focus.",
+          "Inline role select is keyboard-operable."
+        ],
+        "announces": [
+          { "i18nKey": "feature.admin.members.saved", "tone": "polite" },
+          { "i18nKey": "feature.admin.members.resendSent", "tone": "polite" }
+        ],
+        "noColourOnlyMeaning": true
+      },
+      "responsivePriority": [
+        { "region": "members-table", "priority": 1, "collapseBehaviour": "horizontal-scroll" },
+        { "region": "invite-action", "priority": 2, "collapseBehaviour": "overflow-menu" },
+        { "region": "pending-invitations", "priority": 3, "collapseBehaviour": "stack" }
+      ],
+      "telemetryEvents": [
+        { "eventId": "http.request.complete", "trigger": "members-load" },
+        { "eventId": "member.invite.submitted", "trigger": "invite-submit", "attributes": ["role"] }
+      ],
+      "exampleData": {
+        "members": {
+          "members": [
+            {
+              "userId": "11111111-1111-4111-8111-111111111111",
+              "displayName": "Ada Lovelace",
+              "email": "ada@fixture.local",
+              "username": "ada",
+              "role": "admin",
+              "status": "active",
+              "lastLoginAt": "2026-06-10T08:30:00.000Z"
+            },
+            {
+              "userId": "22222222-2222-4222-8222-222222222222",
+              "displayName": "Grace Hopper",
+              "email": "grace@fixture.local",
+              "username": null,
+              "role": "member",
+              "status": "invited",
+              "lastLoginAt": null
+            }
+          ],
+          "pendingInvitations": [{ "email": "newhire@fixture.local", "role": "member" }]
+        },
+        "external-identities": {
+          "identities": [
+            {
+              "id": "idp-1",
+              "provider": "google",
+              "email": "ada@fixture.local",
+              "subject": "sub-123"
+            }
+          ]
+        }
+      },
+      "apiEventContractRefs": [
+        "@platform/contracts-admin",
+        "docs/api/openapi.json#/paths/~1api~1org~1members"
+      ],
+      "playwrightJourneyRefs": [
+        "ui-contract#admin-members",
+        "e2e/discovery/persona-authz.spec.ts",
+        "e2e/discovery/persona-matrix.spec.ts",
+        "scenario-manifest#persona-matrix"
+      ]
+    },
+    {
+      "capabilityId": "organisation-profile",
+      "titleI18nKey": "feature.organisation.title",
+      "route": "/organisation/profile",
+      "owningCapability": "tenant-identity",
+      "dataBoundary": "graphql",
+      "personas": [
+        { "personaId": "fixture-tenant-admin", "access": "full" },
+        {
+          "personaId": "fixture-viewer",
+          "roles": ["viewer"],
+          "access": "read-only",
+          "notes": "organisation.read but no write permission."
+        }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "primary",
+        "labelI18nKey": "feature.organisation.nav",
+        "requiredPermission": "organisation.read"
+      },
+      "tasks": [
+        {
+          "taskId": "view-profile",
+          "summary": "View the organisation profile.",
+          "requiredPermission": "organisation.read"
+        },
+        {
+          "taskId": "update-profile",
+          "summary": "Update the organisation display name.",
+          "requiredPermission": "organisation.update"
+        }
+      ],
+      "queries": [
+        {
+          "queryId": "organisation-profile",
+          "summary": "Read organisation profile.",
+          "transport": "graphql-query",
+          "endpoint": "OrganisationProfileDocument",
+          "responseSchemaRef": "@platform/contracts-graphql#OrganisationProfile",
+          "queryKey": ["organisation", "profile"],
+          "requiredPermission": "organisation.read",
+          "staleTimeMs": 30000,
+          "retry": false
+        }
+      ],
+      "commands": [
+        {
+          "commandId": "update-organisation-profile",
+          "summary": "Update organisation profile.",
+          "transport": "graphql-mutation",
+          "method": "GRAPHQL",
+          "endpoint": "UpdateOrganisationProfileDocument",
+          "requestSchemaRef": "@platform/contracts-organisation#UpdateOrganisationProfileRequestSchema",
+          "requiredPermission": "organisation.update",
+          "auditAction": "organisation.profile_updated",
+          "invalidatesQueries": ["organisation-profile"],
+          "successState": "success",
+          "failureStates": ["validationFailure", "domainFailure"]
+        }
+      ],
+      "forms": [
+        {
+          "formId": "organisation-profile",
+          "summary": "Edit organisation profile.",
+          "schemaRef": "@platform/contracts-organisation#UpdateOrganisationProfileRequestSchema",
+          "submitCommandId": "update-organisation-profile",
+          "presentation": "page-section",
+          "fields": [
+            {
+              "name": "displayName",
+              "type": "text",
+              "labelI18nKey": "feature.organisation.form.displayName.label",
+              "required": true,
+              "validation": [
+                { "rule": "minLength", "value": 1 },
+                { "rule": "maxLength", "value": 120 }
+              ]
+            }
+          ]
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "success": { "component": "Card" },
+        "validationFailure": { "component": "FormField" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" },
+        "authRequired": { "handledBy": "route-guard", "recoveryAction": "sign-in" }
+      },
+      "auditImpact": [
+        {
+          "auditAction": "organisation.profile_updated",
+          "triggeredByCommandId": "update-organisation-profile",
+          "refreshesAuditPanel": true,
+          "resource": "organisation"
+        }
+      ],
+      "i18nKeys": [
+        "feature.organisation.title",
+        "feature.organisation.nav",
+        "feature.organisation.form.displayName.label",
+        "ui.action.save",
+        "ui.error.saveFailed"
+      ],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.organisation.title" },
+        "roles": ["heading", "form"],
+        "announces": [{ "i18nKey": "ui.error.saveFailed", "tone": "assertive" }]
+      },
+      "apiEventContractRefs": ["@platform/contracts-graphql", "@platform/contracts-organisation"],
+      "playwrightJourneyRefs": ["scenario-manifest#internal-smoke", "graphql:organisationProfile"]
+    },
+    {
+      "capabilityId": "admin-readiness",
+      "titleI18nKey": "feature.admin.nav.readiness",
+      "route": "/admin/readiness",
+      "owningCapability": "service-catalog-readiness",
+      "dataBoundary": "rest-over-bff",
+      "personas": [
+        { "personaId": "fixture-tenant-admin", "access": "full" },
+        { "personaId": "scaffold-tenant-admin", "access": "full" }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.readiness",
+        "order": 2,
+        "requiredPermission": "tenant.admin.access"
+      },
+      "tasks": [
+        {
+          "taskId": "view-readiness",
+          "summary": "View capability readiness (server-truth, never faked)."
+        }
+      ],
+      "queries": [
+        {
+          "queryId": "readiness",
+          "summary": "Readiness map.",
+          "transport": "rest",
+          "endpoint": "GET /api/org/readiness",
+          "queryKey": ["admin", "readiness"],
+          "requiredPermission": "tenant.admin.access"
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState" },
+        "success": { "component": "DataTable" },
+        "degraded": { "component": "Alert", "tone": "warning" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+      },
+      "readiness": {
+        "readinessCheckId": "service-catalog-readiness",
+        "surfacesReadinessState": true,
+        "degradedBehaviour": "Show per-capability degraded badge with server reason."
+      },
+      "i18nKeys": ["feature.admin.nav.readiness", "feature.admin.readiness.title"],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.readiness.title" },
+        "noColourOnlyMeaning": true
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-readiness"]
+    },
+    {
+      "capabilityId": "admin-auth",
+      "titleI18nKey": "feature.admin.nav.authentication",
+      "route": "/admin/auth",
+      "owningCapability": "idp-brokering",
+      "dataBoundary": "rest-over-bff",
+      "personas": [
+        { "personaId": "fixture-tenant-admin", "access": "full" },
+        { "personaId": "fixture-viewer", "access": "denied" }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.authentication",
+        "order": 4,
+        "requiredPermission": "tenant.auth.settings.read"
+      },
+      "tasks": [
+        {
+          "taskId": "view-auth-settings",
+          "summary": "View IdP/auth providers.",
+          "requiredPermission": "tenant.auth.settings.read"
+        },
+        {
+          "taskId": "update-auth-settings",
+          "summary": "Update auth provider settings.",
+          "requiredPermission": "tenant.auth.settings.write"
+        }
+      ],
+      "queries": [
+        {
+          "queryId": "auth-providers",
+          "summary": "List providers.",
+          "transport": "rest",
+          "endpoint": "GET /api/auth/settings/providers",
+          "queryKey": ["admin", "auth", "providers"],
+          "requiredPermission": "tenant.auth.settings.read"
+        }
+      ],
+      "commands": [
+        {
+          "commandId": "update-auth-providers",
+          "summary": "Update providers.",
+          "transport": "rest",
+          "method": "PATCH",
+          "endpoint": "/api/auth/settings/providers",
+          "requiredPermission": "tenant.auth.settings.write",
+          "auditAction": "auth.settings_updated",
+          "invalidatesQueries": ["auth-providers"],
+          "successState": "success"
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState" },
+        "success": { "component": "Card" },
+        "validationFailure": { "component": "FormField" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+      },
+      "auditImpact": [
+        {
+          "auditAction": "auth.settings_updated",
+          "triggeredByCommandId": "update-auth-providers",
+          "refreshesAuditPanel": true,
+          "resource": "auth-settings"
+        }
+      ],
+      "i18nKeys": ["feature.admin.nav.authentication", "feature.admin.auth.title"],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.auth.title" }
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-auth", "e2e/discovery/persona-authz.spec.ts"]
+    },
+    {
+      "capabilityId": "admin-features",
+      "titleI18nKey": "feature.admin.nav.features",
+      "route": "/admin/features",
+      "owningCapability": "tenant-config-registry",
+      "dataBoundary": "rest-over-bff",
+      "personas": [{ "personaId": "fixture-tenant-admin", "access": "full" }],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.features",
+        "order": 5,
+        "requiredPermission": "tenant.features.read"
+      },
+      "tasks": [
+        { "taskId": "list-features", "summary": "View feature flags." },
+        {
+          "taskId": "toggle-feature",
+          "summary": "Toggle a feature flag.",
+          "requiredPermission": "tenant.config.write"
+        }
+      ],
+      "queries": [
+        {
+          "queryId": "features",
+          "summary": "List feature flags.",
+          "transport": "rest",
+          "endpoint": "GET /api/org/features",
+          "queryKey": ["admin", "features"],
+          "requiredPermission": "tenant.features.read",
+          "feedsTables": ["features-table"]
+        }
+      ],
+      "commands": [
+        {
+          "commandId": "toggle-feature",
+          "summary": "Toggle flag.",
+          "transport": "rest",
+          "method": "PATCH",
+          "endpoint": "/api/org/features/{key}",
+          "requiredPermission": "tenant.config.write",
+          "auditAction": "feature.toggled",
+          "invalidatesQueries": ["features"],
+          "successState": "success"
+        }
+      ],
+      "tables": [
+        {
+          "tableId": "features-table",
+          "dataQueryId": "features",
+          "rowTestId": "feature-row",
+          "columns": [
+            { "id": "feature", "kind": "text" },
+            { "id": "enabled", "kind": "custom", "rowActionCommandIds": ["toggle-feature"] }
+          ],
+          "pagination": { "mode": "client" }
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState" },
+        "success": { "component": "DataTable" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+      },
+      "i18nKeys": ["feature.admin.nav.features", "feature.admin.features.title"],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.features.title" },
+        "roles": ["switch", "table"]
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-features"]
+    },
+    {
+      "capabilityId": "admin-config",
+      "titleI18nKey": "feature.admin.nav.configuration",
+      "route": "/admin/config",
+      "owningCapability": "tenant-config-registry",
+      "dataBoundary": "rest-over-bff",
+      "personas": [
+        { "personaId": "fixture-tenant-admin", "access": "full" },
+        { "personaId": "fixture-viewer", "access": "denied" }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.configuration",
+        "order": 6,
+        "requiredPermission": "tenant.config.read"
+      },
+      "tasks": [
+        { "taskId": "view-config", "summary": "View tenant configuration." },
+        {
+          "taskId": "update-config",
+          "summary": "Update configuration.",
+          "requiredPermission": "tenant.config.write"
+        }
+      ],
+      "queries": [
+        {
+          "queryId": "config",
+          "summary": "Read config.",
+          "transport": "rest",
+          "endpoint": "GET /api/org/config",
+          "queryKey": ["admin", "config"],
+          "requiredPermission": "tenant.config.read"
+        }
+      ],
+      "commands": [
+        {
+          "commandId": "update-config",
+          "summary": "Update config.",
+          "transport": "rest",
+          "method": "PATCH",
+          "endpoint": "/api/org/config",
+          "requiredPermission": "tenant.config.write",
+          "auditAction": "config.updated",
+          "invalidatesQueries": ["config"],
+          "successState": "success",
+          "failureStates": ["validationFailure", "domainFailure"]
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState" },
+        "success": { "component": "Card" },
+        "validationFailure": { "component": "FormField" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+      },
+      "i18nKeys": ["feature.admin.nav.configuration", "feature.admin.config.title"],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.config.title" }
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-config"]
+    },
+    {
+      "capabilityId": "admin-email",
+      "titleI18nKey": "feature.admin.nav.email",
+      "route": "/admin/email",
+      "owningCapability": "notifications",
+      "dataBoundary": "rest-over-bff",
+      "personas": [{ "personaId": "fixture-tenant-admin", "access": "full" }],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.email",
+        "order": 7,
+        "requiredPermission": "tenant.email.settings.read"
+      },
+      "tasks": [
+        { "taskId": "view-email-settings", "summary": "View email/notification settings." }
+      ],
+      "queries": [
+        {
+          "queryId": "email-settings",
+          "summary": "Read email settings.",
+          "transport": "rest",
+          "endpoint": "GET /api/org/email/settings",
+          "queryKey": ["admin", "email"],
+          "requiredPermission": "tenant.email.settings.read"
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState" },
+        "success": { "component": "Card" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+      },
+      "i18nKeys": ["feature.admin.nav.email", "feature.admin.email.title"],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.email.title" }
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-email"]
+    },
+    {
+      "capabilityId": "admin-domains",
+      "titleI18nKey": "feature.admin.nav.domains",
+      "route": "/admin/domains",
+      "owningCapability": "tenant-identity",
+      "dataBoundary": "rest-over-bff",
+      "personas": [
+        { "personaId": "fixture-tenant-admin", "access": "full" },
+        {
+          "personaId": "tenant-entitlement-disabled",
+          "access": "unavailable-entitlement",
+          "notes": "custom_domains entitlement not granted."
+        }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.domains",
+        "order": 8,
+        "requiredPermission": "tenant.domains.read"
+      },
+      "tasks": [
+        { "taskId": "list-domains", "summary": "List tenant custom domains." },
+        {
+          "taskId": "remove-domain",
+          "summary": "Remove a custom domain.",
+          "requiredPermission": "tenant.domains.write"
+        }
+      ],
+      "queries": [
+        {
+          "queryId": "domains",
+          "summary": "List domains.",
+          "transport": "rest",
+          "endpoint": "GET /api/org/domains",
+          "queryKey": ["admin", "domains"],
+          "requiredPermission": "tenant.domains.read",
+          "requiredEntitlement": "custom_domains",
+          "feedsTables": ["domains-table"]
+        }
+      ],
+      "commands": [
+        {
+          "commandId": "remove-domain",
+          "summary": "Remove domain.",
+          "transport": "rest",
+          "method": "DELETE",
+          "endpoint": "/api/org/domains/{id}",
+          "requiredPermission": "tenant.domains.write",
+          "requiredEntitlement": "custom_domains",
+          "destructive": true,
+          "destructiveConfirmationRef": "remove-domain-confirm",
+          "auditAction": "domain.removed",
+          "invalidatesQueries": ["domains"],
+          "successState": "success"
+        }
+      ],
+      "tables": [
+        {
+          "tableId": "domains-table",
+          "dataQueryId": "domains",
+          "rowTestId": "domain-row",
+          "columns": [
+            { "id": "domain", "kind": "mono" },
+            { "id": "status", "kind": "badge" },
+            {
+              "id": "actions",
+              "kind": "actions",
+              "srOnlyHeader": true,
+              "rowActionCommandIds": ["remove-domain"]
+            }
+          ],
+          "pagination": { "mode": "client" }
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState" },
+        "success": { "component": "DataTable" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" },
+        "entitlementUnavailable": {
+          "component": "Alert",
+          "tone": "info",
+          "descriptionI18nKey": "feature.admin.domains.entitlementUnavailable",
+          "recoveryAction": "contact-admin"
+        }
+      },
+      "destructiveConfirmation": [
+        {
+          "confirmationId": "remove-domain-confirm",
+          "commandId": "remove-domain",
+          "presentation": "dialog",
+          "titleI18nKey": "feature.admin.domains.removeConfirmTitle",
+          "bodyI18nKey": "feature.admin.domains.removeConfirmBody",
+          "requiresTypedValue": "domain"
+        }
+      ],
+      "auditImpact": [
+        {
+          "auditAction": "domain.removed",
+          "triggeredByCommandId": "remove-domain",
+          "refreshesAuditPanel": true,
+          "resource": "domain"
+        }
+      ],
+      "i18nKeys": [
+        "feature.admin.nav.domains",
+        "feature.admin.domains.title",
+        "feature.admin.domains.entitlementUnavailable",
+        "feature.admin.domains.removeConfirmTitle",
+        "feature.admin.domains.removeConfirmBody"
+      ],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.domains.title" },
+        "roles": ["table", "dialog"]
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-domains"]
+    },
+    {
+      "capabilityId": "admin-storage",
+      "titleI18nKey": "feature.admin.nav.storage",
+      "route": "/admin/storage",
+      "owningCapability": "relational-storage",
+      "dataBoundary": "rest-over-bff",
+      "personas": [
+        { "personaId": "fixture-tenant-admin", "access": "full" },
+        { "personaId": "tenant-entitlement-disabled", "access": "unavailable-entitlement" },
+        { "personaId": "tenant-entitlement-enabled", "access": "full" }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.storage",
+        "order": 9,
+        "requiredPermission": "tenant.storage.read"
+      },
+      "tasks": [{ "taskId": "view-storage", "summary": "View tenant storage usage." }],
+      "queries": [
+        {
+          "queryId": "storage",
+          "summary": "Storage usage.",
+          "transport": "rest",
+          "endpoint": "GET /api/org/storage",
+          "queryKey": ["admin", "storage"],
+          "requiredPermission": "tenant.storage.read",
+          "requiredEntitlement": "storage"
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState" },
+        "success": { "component": "Card" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" },
+        "entitlementUnavailable": {
+          "component": "Alert",
+          "tone": "info",
+          "descriptionI18nKey": "feature.admin.storage.entitlementUnavailable"
+        }
+      },
+      "i18nKeys": [
+        "feature.admin.nav.storage",
+        "feature.admin.storage.title",
+        "feature.admin.storage.entitlementUnavailable"
+      ],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.storage.title" }
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-storage"]
+    },
+    {
+      "capabilityId": "admin-observability",
+      "titleI18nKey": "feature.admin.nav.observability",
+      "route": "/admin/observability",
+      "owningCapability": "observability-alerting-builtin",
+      "dataBoundary": "rest-over-bff",
+      "personas": [{ "personaId": "fixture-tenant-admin", "access": "full" }],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.observability",
+        "order": 10,
+        "requiredPermission": "tenant.observability.read"
+      },
+      "tasks": [
+        { "taskId": "view-observability", "summary": "View tenant observability/alerting." }
+      ],
+      "queries": [
+        {
+          "queryId": "observability",
+          "summary": "Observability summary.",
+          "transport": "rest",
+          "endpoint": "GET /api/org/observability",
+          "queryKey": ["admin", "observability"],
+          "requiredPermission": "tenant.observability.read",
+          "requiredEntitlement": "advanced_observability"
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState" },
+        "success": { "component": "Card" },
+        "degraded": { "component": "Alert", "tone": "warning" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" },
+        "entitlementUnavailable": { "component": "Alert", "tone": "info" }
+      },
+      "i18nKeys": ["feature.admin.nav.observability", "feature.admin.observability.title"],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.observability.title" }
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-observability"]
+    },
+    {
+      "capabilityId": "admin-webhooks",
+      "titleI18nKey": "feature.admin.nav.webhooks",
+      "route": "/admin/webhooks",
+      "owningCapability": "webhooks-developer",
+      "dataBoundary": "rest-over-bff",
+      "personas": [
+        { "personaId": "fixture-tenant-admin", "access": "full" },
+        { "personaId": "tenant-entitlement-disabled", "access": "unavailable-entitlement" },
+        { "personaId": "tenant-entitlement-enabled", "access": "full" }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.webhooks",
+        "order": 11,
+        "requiredPermission": "tenant.webhooks.read"
+      },
+      "tasks": [
+        { "taskId": "list-webhooks", "summary": "List webhook endpoints." },
+        {
+          "taskId": "delete-webhook",
+          "summary": "Delete a webhook.",
+          "requiredPermission": "tenant.webhooks.write"
+        }
+      ],
+      "queries": [
+        {
+          "queryId": "webhooks",
+          "summary": "List webhooks.",
+          "transport": "rest",
+          "endpoint": "GET /api/org/webhooks",
+          "queryKey": ["admin", "webhooks"],
+          "requiredPermission": "tenant.webhooks.read",
+          "requiredEntitlement": "webhooks",
+          "feedsTables": ["webhooks-table"]
+        }
+      ],
+      "commands": [
+        {
+          "commandId": "delete-webhook",
+          "summary": "Delete webhook.",
+          "transport": "rest",
+          "method": "DELETE",
+          "endpoint": "/api/org/webhooks/{id}",
+          "requiredPermission": "tenant.webhooks.write",
+          "requiredEntitlement": "webhooks",
+          "destructive": true,
+          "destructiveConfirmationRef": "delete-webhook-confirm",
+          "auditAction": "webhook.deleted",
+          "invalidatesQueries": ["webhooks"],
+          "successState": "success"
+        }
+      ],
+      "tables": [
+        {
+          "tableId": "webhooks-table",
+          "dataQueryId": "webhooks",
+          "rowTestId": "webhook-row",
+          "columns": [
+            { "id": "url", "kind": "mono" },
+            { "id": "events", "kind": "text" },
+            { "id": "status", "kind": "badge" },
+            {
+              "id": "actions",
+              "kind": "actions",
+              "srOnlyHeader": true,
+              "rowActionCommandIds": ["delete-webhook"]
+            }
+          ],
+          "pagination": { "mode": "client" }
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState" },
+        "success": { "component": "DataTable" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" },
+        "entitlementUnavailable": {
+          "component": "Alert",
+          "tone": "info",
+          "descriptionI18nKey": "feature.admin.webhooks.entitlementUnavailable"
+        }
+      },
+      "destructiveConfirmation": [
+        {
+          "confirmationId": "delete-webhook-confirm",
+          "commandId": "delete-webhook",
+          "presentation": "dialog",
+          "titleI18nKey": "feature.admin.webhooks.deleteConfirmTitle",
+          "bodyI18nKey": "feature.admin.webhooks.deleteConfirmBody"
+        }
+      ],
+      "auditImpact": [
+        {
+          "auditAction": "webhook.deleted",
+          "triggeredByCommandId": "delete-webhook",
+          "refreshesAuditPanel": true,
+          "resource": "webhook"
+        }
+      ],
+      "i18nKeys": [
+        "feature.admin.nav.webhooks",
+        "feature.admin.webhooks.title",
+        "feature.admin.webhooks.entitlementUnavailable",
+        "feature.admin.webhooks.deleteConfirmTitle",
+        "feature.admin.webhooks.deleteConfirmBody"
+      ],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.webhooks.title" },
+        "roles": ["table", "dialog"]
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-webhooks"]
+    },
+    {
+      "capabilityId": "admin-platform",
+      "titleI18nKey": "feature.admin.nav.platform",
+      "route": "/admin/platform",
+      "owningCapability": "service-catalog-readiness",
+      "dataBoundary": "rest-over-bff",
+      "personas": [
+        { "personaId": "fixture-tenant-admin", "access": "full" },
+        { "personaId": "scaffold-system-admin", "access": "full" }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.platform",
+        "order": 12,
+        "requiredPermission": "tenant.platform.read"
+      },
+      "tasks": [
+        { "taskId": "view-platform-services", "summary": "View platform service readiness." }
+      ],
+      "queries": [
+        {
+          "queryId": "platform-services",
+          "summary": "Service readiness.",
+          "transport": "rest",
+          "endpoint": "GET /api/admin/platform/services",
+          "queryKey": ["admin", "platform"],
+          "requiredPermission": "tenant.platform.read"
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState" },
+        "success": { "component": "DataTable" },
+        "degraded": { "component": "Alert", "tone": "warning" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+      },
+      "readiness": {
+        "readinessCheckId": "service-catalog-readiness",
+        "surfacesReadinessState": true
+      },
+      "i18nKeys": ["feature.admin.nav.platform", "feature.admin.platform.title"],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.platform.title" },
+        "noColourOnlyMeaning": true
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-platform"]
+    },
+    {
+      "capabilityId": "admin-clickthrough",
+      "titleI18nKey": "feature.admin.nav.clickthrough",
+      "route": "/admin/clickthrough",
+      "owningCapability": "composed-provider-readiness",
+      "dataBoundary": "rest-over-bff",
+      "personas": [
+        { "personaId": "scaffold-system-admin", "access": "full" },
+        { "personaId": "fixture-tenant-admin", "access": "denied" }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.clickthrough",
+        "order": 13,
+        "requiredPermission": "platform.providers.read"
+      },
+      "tasks": [
+        {
+          "taskId": "list-clickthrough-services",
+          "summary": "List composed-provider clickthrough services and open them."
+        }
+      ],
+      "queries": [
+        {
+          "queryId": "clickthrough",
+          "summary": "List clickthrough services.",
+          "transport": "rest",
+          "endpoint": "GET /api/admin/clickthrough",
+          "queryKey": ["admin", "clickthrough"],
+          "requiredPermission": "platform.providers.read",
+          "feedsTables": ["clickthrough-table"]
+        }
+      ],
+      "tables": [
+        {
+          "tableId": "clickthrough-table",
+          "dataQueryId": "clickthrough",
+          "rowTestId": "clickthrough-row",
+          "columns": [
+            { "id": "service", "kind": "text" },
+            { "id": "status", "kind": "badge" },
+            { "id": "open", "kind": "actions", "srOnlyHeader": true }
+          ],
+          "pagination": { "mode": "none" }
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState" },
+        "success": { "component": "DataTable" },
+        "degraded": { "component": "Alert", "tone": "warning" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+      },
+      "i18nKeys": ["feature.admin.nav.clickthrough", "feature.admin.clickthrough.title"],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.clickthrough.title" },
+        "roles": ["table", "link"]
+      },
+      "playwrightJourneyRefs": [
+        "ui-contract#admin-clickthrough",
+        "e2e/external/caddy-links.spec.ts",
+        "e2e/external/tool-services.spec.ts"
+      ]
+    },
+    {
+      "capabilityId": "admin-logs",
+      "titleI18nKey": "feature.admin.nav.logs",
+      "route": "/admin/logs",
+      "owningCapability": "logs",
+      "dataBoundary": "rest-over-bff",
+      "personas": [
+        { "personaId": "scaffold-system-admin", "access": "full" },
+        { "personaId": "fixture-tenant-admin", "access": "denied" }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.logs",
+        "order": 14,
+        "requiredPermission": "platform.logs.read"
+      },
+      "tasks": [{ "taskId": "search-logs", "summary": "Search platform logs with filters." }],
+      "queries": [
+        {
+          "queryId": "logs",
+          "summary": "Search logs.",
+          "transport": "rest",
+          "endpoint": "GET /api/admin/logs",
+          "queryKey": ["admin", "logs"],
+          "requiredPermission": "platform.logs.read",
+          "feedsTables": ["logs-table"]
+        }
+      ],
+      "tables": [
+        {
+          "tableId": "logs-table",
+          "dataQueryId": "logs",
+          "rowTestId": "log-row",
+          "columns": [
+            { "id": "timestamp", "kind": "date", "sortable": true },
+            { "id": "level", "kind": "badge" },
+            { "id": "message", "kind": "text" },
+            { "id": "requestId", "kind": "mono" }
+          ],
+          "filters": [
+            {
+              "field": "level",
+              "type": "select",
+              "labelI18nKey": "feature.admin.logs.filter.level"
+            },
+            { "field": "q", "type": "text", "labelI18nKey": "feature.admin.logs.filter.query" },
+            {
+              "field": "range",
+              "type": "date-range",
+              "labelI18nKey": "feature.admin.logs.filter.range"
+            }
+          ],
+          "sorting": { "defaultSort": "timestamp", "defaultDirection": "desc" },
+          "pagination": { "mode": "server-cursor", "pageSize": 50 }
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState" },
+        "success": { "component": "DataTable" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+      },
+      "i18nKeys": [
+        "feature.admin.nav.logs",
+        "feature.admin.logs.title",
+        "feature.admin.logs.filter.level",
+        "feature.admin.logs.filter.query",
+        "feature.admin.logs.filter.range"
+      ],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.logs.title" },
+        "roles": ["table", "searchbox"]
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-logs", "e2e/discovery/persona-authz.spec.ts"]
+    },
+    {
+      "capabilityId": "admin-entitlements",
+      "titleI18nKey": "feature.admin.nav.entitlements",
+      "route": "/admin/entitlements",
+      "owningCapability": "entitlements",
+      "dataBoundary": "rest-over-bff",
+      "personas": [
+        { "personaId": "fixture-tenant-admin", "access": "full" },
+        { "personaId": "tenant-entitlement-disabled", "access": "full" }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.entitlements",
+        "order": 15,
+        "requiredPermission": "tenant.entitlements.read"
+      },
+      "tasks": [
+        { "taskId": "view-entitlements", "summary": "View tenant entitlements (deny-by-default)." }
+      ],
+      "queries": [
+        {
+          "queryId": "entitlements",
+          "summary": "List entitlements.",
+          "transport": "rest",
+          "endpoint": "GET /api/org/entitlements",
+          "queryKey": ["admin", "entitlements"],
+          "requiredPermission": "tenant.entitlements.read",
+          "feedsTables": ["entitlements-table"]
+        }
+      ],
+      "tables": [
+        {
+          "tableId": "entitlements-table",
+          "dataQueryId": "entitlements",
+          "rowTestId": "entitlement-row",
+          "columns": [
+            { "id": "entitlement", "kind": "text" },
+            { "id": "granted", "kind": "badge" }
+          ],
+          "pagination": { "mode": "none" }
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState" },
+        "success": { "component": "DataTable" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+      },
+      "i18nKeys": ["feature.admin.nav.entitlements", "feature.admin.entitlements.title"],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.entitlements.title" },
+        "noColourOnlyMeaning": true
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-entitlements"]
+    },
+    {
+      "capabilityId": "admin-usage",
+      "titleI18nKey": "feature.admin.nav.usage",
+      "route": "/admin/usage",
+      "owningCapability": "metering-usage-meters",
+      "dataBoundary": "rest-over-bff",
+      "personas": [
+        { "personaId": "fixture-tenant-admin", "access": "full" },
+        {
+          "personaId": "tenant-quota-limited",
+          "access": "quota-limited",
+          "notes": "quota at/over limit must be visible with stable reason."
+        }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.usage",
+        "order": 16,
+        "requiredPermission": "tenant.metering.read"
+      },
+      "tasks": [{ "taskId": "view-usage", "summary": "View metering usage and quotas." }],
+      "queries": [
+        {
+          "queryId": "usage",
+          "summary": "Usage + quotas.",
+          "transport": "rest",
+          "endpoint": "GET /api/org/usage",
+          "queryKey": ["admin", "usage"],
+          "requiredPermission": "tenant.metering.read"
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState" },
+        "success": { "component": "Card" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" },
+        "quotaExceeded": {
+          "component": "Alert",
+          "tone": "warning",
+          "descriptionI18nKey": "feature.admin.usage.quotaExceeded",
+          "recoveryAction": "contact-admin"
+        }
+      },
+      "i18nKeys": [
+        "feature.admin.nav.usage",
+        "feature.admin.usage.title",
+        "feature.admin.usage.quotaExceeded"
+      ],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.usage.title" },
+        "noColourOnlyMeaning": true
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-usage"]
+    },
+    {
+      "capabilityId": "admin-developer",
+      "titleI18nKey": "feature.admin.nav.developer",
+      "route": "/admin/developer",
+      "owningCapability": "api-keys-pat",
+      "dataBoundary": "rest-over-bff",
+      "personas": [
+        { "personaId": "fixture-tenant-admin", "access": "full" },
+        {
+          "personaId": "tenant-rate-limited",
+          "access": "rate-limited",
+          "notes": "rate-limit denial must be visible with stable reason."
+        }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.developer",
+        "order": 17,
+        "requiredPermission": "tenant.developer.read"
+      },
+      "tasks": [
+        { "taskId": "view-developer-portal", "summary": "View API keys / PATs and rate limits." },
+        {
+          "taskId": "create-api-key",
+          "summary": "Create an API key.",
+          "requiredPermission": "tenant.developer.write"
+        },
+        {
+          "taskId": "revoke-api-key",
+          "summary": "Revoke an API key.",
+          "requiredPermission": "tenant.developer.write"
+        }
+      ],
+      "queries": [
+        {
+          "queryId": "api-keys",
+          "summary": "List API keys.",
+          "transport": "rest",
+          "endpoint": "GET /api/org/api-keys",
+          "queryKey": ["admin", "developer", "api-keys"],
+          "requiredPermission": "tenant.developer.read",
+          "requiredEntitlement": "api_access",
+          "feedsTables": ["api-keys-table"]
+        }
+      ],
+      "commands": [
+        {
+          "commandId": "create-api-key",
+          "summary": "Create key.",
+          "transport": "rest",
+          "method": "POST",
+          "endpoint": "/api/org/api-keys",
+          "requiredPermission": "tenant.developer.write",
+          "requiredEntitlement": "api_access",
+          "auditAction": "api_key.created",
+          "invalidatesQueries": ["api-keys"],
+          "successState": "success",
+          "failureStates": ["validationFailure", "rateLimited"]
+        },
+        {
+          "commandId": "revoke-api-key",
+          "summary": "Revoke key.",
+          "transport": "rest",
+          "method": "DELETE",
+          "endpoint": "/api/org/api-keys/{id}",
+          "requiredPermission": "tenant.developer.write",
+          "destructive": true,
+          "destructiveConfirmationRef": "revoke-api-key-confirm",
+          "auditAction": "api_key.revoked",
+          "invalidatesQueries": ["api-keys"],
+          "successState": "success"
+        }
+      ],
+      "tables": [
+        {
+          "tableId": "api-keys-table",
+          "dataQueryId": "api-keys",
+          "rowTestId": "api-key-row",
+          "columns": [
+            { "id": "name", "kind": "text" },
+            { "id": "prefix", "kind": "mono" },
+            { "id": "created", "kind": "date" },
+            {
+              "id": "actions",
+              "kind": "actions",
+              "srOnlyHeader": true,
+              "rowActionCommandIds": ["revoke-api-key"]
+            }
+          ],
+          "pagination": { "mode": "client" }
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState" },
+        "success": { "component": "DataTable" },
+        "validationFailure": { "component": "FormField" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" },
+        "entitlementUnavailable": { "component": "Alert", "tone": "info" },
+        "rateLimited": {
+          "component": "Alert",
+          "tone": "warning",
+          "descriptionI18nKey": "feature.admin.developer.rateLimited",
+          "recoveryAction": "retry"
+        }
+      },
+      "destructiveConfirmation": [
+        {
+          "confirmationId": "revoke-api-key-confirm",
+          "commandId": "revoke-api-key",
+          "presentation": "dialog",
+          "titleI18nKey": "feature.admin.developer.revokeConfirmTitle",
+          "bodyI18nKey": "feature.admin.developer.revokeConfirmBody"
+        }
+      ],
+      "auditImpact": [
+        {
+          "auditAction": "api_key.created",
+          "triggeredByCommandId": "create-api-key",
+          "refreshesAuditPanel": true,
+          "resource": "api-key"
+        },
+        {
+          "auditAction": "api_key.revoked",
+          "triggeredByCommandId": "revoke-api-key",
+          "refreshesAuditPanel": true,
+          "resource": "api-key"
+        }
+      ],
+      "i18nKeys": [
+        "feature.admin.nav.developer",
+        "feature.admin.developer.title",
+        "feature.admin.developer.rateLimited",
+        "feature.admin.developer.revokeConfirmTitle",
+        "feature.admin.developer.revokeConfirmBody"
+      ],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.developer.title" },
+        "roles": ["table", "dialog"]
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-developer"]
+    },
+    {
+      "capabilityId": "admin-search",
+      "titleI18nKey": "feature.admin.nav.search",
+      "route": "/admin/search",
+      "owningCapability": "search-indexing",
+      "dataBoundary": "rest-over-bff",
+      "personas": [{ "personaId": "fixture-tenant-admin", "access": "full" }],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.search",
+        "order": 18,
+        "requiredPermission": "tenant.search.read"
+      },
+      "tasks": [{ "taskId": "search", "summary": "Search indexed content." }],
+      "queries": [
+        {
+          "queryId": "search",
+          "summary": "Run search.",
+          "transport": "rest",
+          "endpoint": "GET /api/org/search",
+          "queryKey": ["admin", "search"],
+          "requiredPermission": "tenant.search.read",
+          "feedsTables": ["search-results-table"]
+        }
+      ],
+      "forms": [
+        {
+          "formId": "search-query",
+          "summary": "Search input.",
+          "submitCommandId": null,
+          "presentation": "inline",
+          "fields": [
+            {
+              "name": "q",
+              "type": "text",
+              "labelI18nKey": "feature.admin.search.queryLabel",
+              "testId": "search-input"
+            }
+          ]
+        }
+      ],
+      "tables": [
+        {
+          "tableId": "search-results-table",
+          "dataQueryId": "search",
+          "rowTestId": "search-result-row",
+          "columns": [
+            { "id": "title", "kind": "text" },
+            { "id": "type", "kind": "badge" }
+          ],
+          "pagination": { "mode": "server-offset", "pageSize": 25 }
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState", "titleI18nKey": "feature.admin.search.empty" },
+        "success": { "component": "DataTable" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+      },
+      "i18nKeys": [
+        "feature.admin.nav.search",
+        "feature.admin.search.title",
+        "feature.admin.search.queryLabel",
+        "feature.admin.search.empty"
+      ],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.search.title" },
+        "roles": ["searchbox", "table"]
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-search"]
+    },
+    {
+      "capabilityId": "admin-events",
+      "titleI18nKey": "feature.admin.nav.events",
+      "route": "/admin/events",
+      "owningCapability": "event-bus-queues-dlq",
+      "dataBoundary": "rest-over-bff",
+      "personas": [
+        { "personaId": "scaffold-system-admin", "access": "full" },
+        { "personaId": "fixture-tenant-admin", "access": "denied" }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.events",
+        "order": 19,
+        "requiredPermission": "platform.events.read"
+      },
+      "tasks": [{ "taskId": "view-events", "summary": "View event bus / queue / DLQ activity." }],
+      "queries": [
+        {
+          "queryId": "events",
+          "summary": "List events / DLQ.",
+          "transport": "rest",
+          "endpoint": "GET /api/admin/events",
+          "queryKey": ["admin", "events"],
+          "requiredPermission": "platform.events.read",
+          "feedsTables": ["events-table"]
+        }
+      ],
+      "tables": [
+        {
+          "tableId": "events-table",
+          "dataQueryId": "events",
+          "rowTestId": "event-row",
+          "columns": [
+            { "id": "timestamp", "kind": "date", "sortable": true },
+            { "id": "type", "kind": "text" },
+            { "id": "status", "kind": "badge" }
+          ],
+          "sorting": { "defaultSort": "timestamp", "defaultDirection": "desc" },
+          "pagination": { "mode": "server-cursor", "pageSize": 50 }
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState" },
+        "success": { "component": "DataTable" },
+        "degraded": { "component": "Alert", "tone": "warning" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+      },
+      "i18nKeys": ["feature.admin.nav.events", "feature.admin.events.title"],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.events.title" },
+        "roles": ["table"],
+        "noColourOnlyMeaning": true
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-events"]
+    },
+    {
+      "capabilityId": "admin-account",
+      "titleI18nKey": "feature.admin.nav.account",
+      "route": "/admin/account",
+      "owningCapability": "end-user-profile-self-service",
+      "dataBoundary": "rest-over-bff",
+      "personas": [
+        { "personaId": "fixture-tenant-admin", "access": "full" },
+        { "personaId": "fixture-viewer", "access": "full" },
+        { "personaId": "scaffold-tenant-member", "access": "full" }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "account",
+        "labelI18nKey": "feature.admin.nav.account",
+        "order": 20,
+        "requiredPermission": "profile.read_self"
+      },
+      "tasks": [
+        {
+          "taskId": "view-account",
+          "summary": "View own profile.",
+          "requiredPermission": "profile.read_self"
+        },
+        {
+          "taskId": "update-account",
+          "summary": "Update own profile.",
+          "requiredPermission": "profile.update_self"
+        }
+      ],
+      "queries": [
+        {
+          "queryId": "profile",
+          "summary": "Read own profile.",
+          "transport": "rest",
+          "endpoint": "GET /api/me/profile",
+          "queryKey": ["me", "profile"],
+          "requiredPermission": "profile.read_self"
+        }
+      ],
+      "commands": [
+        {
+          "commandId": "update-profile",
+          "summary": "Update own profile.",
+          "transport": "rest",
+          "method": "PATCH",
+          "endpoint": "/api/me/profile",
+          "requiredPermission": "profile.update_self",
+          "auditAction": "profile.updated",
+          "invalidatesQueries": ["profile"],
+          "successState": "success",
+          "failureStates": ["validationFailure", "domainFailure"]
+        }
+      ],
+      "forms": [
+        {
+          "formId": "profile",
+          "summary": "Edit own profile.",
+          "submitCommandId": "update-profile",
+          "presentation": "page-section",
+          "fields": [
+            {
+              "name": "displayName",
+              "type": "text",
+              "labelI18nKey": "feature.account.form.displayName.label",
+              "required": true,
+              "validation": [
+                { "rule": "minLength", "value": 1 },
+                { "rule": "maxLength", "value": 120 }
+              ]
+            },
+            {
+              "name": "locale",
+              "type": "select",
+              "labelI18nKey": "feature.account.form.locale.label",
+              "optionsSource": "query:locales"
+            }
+          ]
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState" },
+        "success": { "component": "Card" },
+        "validationFailure": { "component": "FormField" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "authRequired": { "handledBy": "route-guard", "recoveryAction": "sign-in" }
+      },
+      "auditImpact": [
+        {
+          "auditAction": "profile.updated",
+          "triggeredByCommandId": "update-profile",
+          "refreshesAuditPanel": false,
+          "resource": "profile"
+        }
+      ],
+      "i18nKeys": [
+        "feature.admin.nav.account",
+        "feature.account.title",
+        "feature.account.form.displayName.label",
+        "feature.account.form.locale.label"
+      ],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.account.title" },
+        "roles": ["form"],
+        "announces": [{ "i18nKey": "ui.error.saveFailed", "tone": "assertive" }]
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-account"]
+    },
+    {
+      "capabilityId": "admin-monitoring",
+      "titleI18nKey": "feature.admin.nav.monitoring",
+      "route": "/admin/monitoring",
+      "owningCapability": "observability-alerting-builtin",
+      "dataBoundary": "rest-over-bff",
+      "personas": [
+        { "personaId": "scaffold-system-admin", "access": "full" },
+        { "personaId": "fixture-tenant-admin", "access": "denied" }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.monitoring",
+        "order": 21,
+        "requiredPermission": "platform.observability.read"
+      },
+      "tasks": [
+        { "taskId": "view-monitoring", "summary": "View platform monitoring / incidents / alerts." }
+      ],
+      "queries": [
+        {
+          "queryId": "monitoring",
+          "summary": "Monitoring summary.",
+          "transport": "rest",
+          "endpoint": "GET /api/admin/monitoring",
+          "queryKey": ["admin", "monitoring"],
+          "requiredPermission": "platform.observability.read"
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState" },
+        "success": { "component": "Card" },
+        "degraded": { "component": "Alert", "tone": "warning" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+      },
+      "i18nKeys": ["feature.admin.nav.monitoring", "feature.admin.monitoring.title"],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.monitoring.title" },
+        "noColourOnlyMeaning": true
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-monitoring"]
+    },
+    {
+      "capabilityId": "admin-scheduled-jobs",
+      "titleI18nKey": "feature.admin.nav.scheduledJobs",
+      "route": "/admin/scheduled-jobs",
+      "owningCapability": "scheduled-jobs-builtin",
+      "dataBoundary": "rest-over-bff",
+      "personas": [
+        { "personaId": "scaffold-system-admin", "access": "full" },
+        { "personaId": "fixture-tenant-admin", "access": "denied" }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.scheduledJobs",
+        "order": 22,
+        "requiredPermission": "platform.jobs.read"
+      },
+      "tasks": [{ "taskId": "list-jobs", "summary": "List scheduled jobs and their last run." }],
+      "queries": [
+        {
+          "queryId": "jobs",
+          "summary": "List scheduled jobs.",
+          "transport": "rest",
+          "endpoint": "GET /api/admin/scheduled-jobs",
+          "queryKey": ["admin", "scheduled-jobs"],
+          "requiredPermission": "platform.jobs.read",
+          "feedsTables": ["jobs-table"]
+        }
+      ],
+      "tables": [
+        {
+          "tableId": "jobs-table",
+          "dataQueryId": "jobs",
+          "rowTestId": "job-row",
+          "columns": [
+            { "id": "name", "kind": "text" },
+            { "id": "schedule", "kind": "mono" },
+            { "id": "lastRun", "kind": "date", "sortable": true },
+            { "id": "status", "kind": "badge" }
+          ],
+          "sorting": { "defaultSort": "lastRun", "defaultDirection": "desc" },
+          "pagination": { "mode": "client" }
+        }
+      ],
+      "states": {
+        "loading": { "component": "LoadingState" },
+        "empty": { "component": "EmptyState" },
+        "success": { "component": "DataTable" },
+        "degraded": { "component": "Alert", "tone": "warning" },
+        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
+        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+      },
+      "i18nKeys": ["feature.admin.nav.scheduledJobs", "feature.admin.scheduledJobs.title"],
+      "a11y": {
+        "landmark": "main",
+        "heading": { "level": 1, "i18nKey": "feature.admin.scheduledJobs.title" },
+        "roles": ["table"],
+        "noColourOnlyMeaning": true
+      },
+      "playwrightJourneyRefs": ["ui-contract#admin-scheduled-jobs"]
+    }
+  ]
+}

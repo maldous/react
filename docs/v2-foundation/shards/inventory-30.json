@@ -1,0 +1,331 @@
+[
+  {
+    "v1Path": "tools/e2e/result-contract.mjs",
+    "fileType": "source",
+    "owner": "tool/e2e",
+    "authoritative": "authoritative",
+    "v2Path": "tools/e2e/result-contract.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["exitCodeForResult", "PASSED/FULL/FAILED/DEGRADED contract"],
+    "protectingTests": ["tools/e2e/result-contract.test.mjs"],
+    "decisionRefs": ["ADR-ACT-0285"],
+    "migrationSeq": 1,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/e2e/result-contract.test.mjs",
+    "fileType": "test",
+    "owner": "tool/e2e",
+    "authoritative": "authoritative",
+    "v2Path": "tools/e2e/result-contract.test.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": ["tools/e2e/result-contract.test.mjs"],
+    "decisionRefs": ["ADR-ACT-0285"],
+    "migrationSeq": 2,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/e2e/scenario-manifest.mjs",
+    "fileType": "source",
+    "owner": "tool/e2e",
+    "authoritative": "authoritative",
+    "v2Path": "tools/e2e/scenario-manifest.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["loadModel", "ladderFrom", "LADDER"],
+    "protectingTests": [
+      "tools/e2e/scenario-manifest.test.mjs",
+      "tools/e2e/validate-scenario-manifest/tests/"
+    ],
+    "decisionRefs": ["ADR-ACT-0285"],
+    "migrationSeq": 3,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/e2e/scenario-manifest.test.mjs",
+    "fileType": "test",
+    "owner": "tool/e2e",
+    "authoritative": "authoritative",
+    "v2Path": "tools/e2e/scenario-manifest.test.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": ["tools/e2e/scenario-manifest.test.mjs"],
+    "decisionRefs": ["ADR-ACT-0285"],
+    "migrationSeq": 4,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/e2e/sentry-assertion/README.md",
+    "fileType": "doc",
+    "owner": "tool/e2e",
+    "authoritative": "authoritative",
+    "v2Path": "tools/e2e/sentry-assertion/README.md",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0285"],
+    "migrationSeq": 5,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/e2e/sentry-assertion/src/index.mjs",
+    "fileType": "source",
+    "owner": "tool/e2e",
+    "authoritative": "authoritative",
+    "v2Path": "tools/e2e/sentry-assertion/src/index.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [
+      "sentry-assertion CLI",
+      "docs/evidence/e2e/<stage>-sentry-events-latest output"
+    ],
+    "protectingTests": ["tools/e2e/sentry-assertion/tests/sentry-assertion.test.mjs"],
+    "decisionRefs": ["ADR-ACT-0285"],
+    "migrationSeq": 6,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/e2e/sentry-assertion/src/lib.mjs",
+    "fileType": "source",
+    "owner": "tool/e2e",
+    "authoritative": "authoritative",
+    "v2Path": "tools/e2e/sentry-assertion/src/lib.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["tagsToMap", "assertEventMetadata"],
+    "protectingTests": ["tools/e2e/sentry-assertion/tests/sentry-assertion.test.mjs"],
+    "decisionRefs": ["ADR-ACT-0285"],
+    "migrationSeq": 7,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/e2e/sentry-assertion/tests/sentry-assertion.test.mjs",
+    "fileType": "test",
+    "owner": "tool/e2e",
+    "authoritative": "authoritative",
+    "v2Path": "tools/e2e/sentry-assertion/tests/sentry-assertion.test.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": ["tools/e2e/sentry-assertion/tests/sentry-assertion.test.mjs"],
+    "decisionRefs": ["ADR-ACT-0285"],
+    "migrationSeq": 8,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/e2e/tempo-trace.mjs",
+    "fileType": "source",
+    "owner": "tool/e2e",
+    "authoritative": "authoritative",
+    "v2Path": "tools/e2e/tempo-trace.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["parseTraceId", "normalizeTraceId", "Tempo trace assertion"],
+    "protectingTests": ["tools/e2e/tempo-trace.test.mjs"],
+    "decisionRefs": ["ADR-ACT-0285"],
+    "migrationSeq": 9,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/e2e/tempo-trace.test.mjs",
+    "fileType": "test",
+    "owner": "tool/e2e",
+    "authoritative": "authoritative",
+    "v2Path": "tools/e2e/tempo-trace.test.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": ["tools/e2e/tempo-trace.test.mjs"],
+    "decisionRefs": ["ADR-ACT-0285"],
+    "migrationSeq": 10,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/e2e/validate-e2e/src/index.mjs",
+    "fileType": "source",
+    "owner": "tool/e2e",
+    "authoritative": "authoritative",
+    "v2Path": "tools/e2e/validate-e2e/src/index.mjs",
+    "disposition": "refactor-behind-contract",
+    "retainedInterfaces": [
+      "coverage|personas|ui-contract|all subcommands",
+      "exit-1-on-coverage-gap gate"
+    ],
+    "protectingTests": ["tools/e2e/validate-e2e/tests/"],
+    "decisionRefs": ["ADR-0075", "ADR-ACT-0285"],
+    "migrationSeq": 11,
+    "deletionCondition": "V2 e2e registries + inventories wired and validator green against them"
+  },
+  {
+    "v1Path": "tools/e2e/validate-scenario-manifest/src/index.mjs",
+    "fileType": "source",
+    "owner": "tool/e2e",
+    "authoritative": "authoritative",
+    "v2Path": "tools/e2e/validate-scenario-manifest/src/index.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["scenario-manifest gate (exit 1 on violation)"],
+    "protectingTests": ["tools/e2e/validate-scenario-manifest/tests/"],
+    "decisionRefs": ["ADR-0075", "ADR-ACT-0285"],
+    "migrationSeq": 12,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/generate-feature/index.mjs",
+    "fileType": "source",
+    "owner": "tool/generate-feature",
+    "authoritative": "authoritative",
+    "v2Path": "tools/generate-feature/index.mjs",
+    "disposition": "refactor-behind-contract",
+    "retainedInterfaces": [
+      "generate:feature CLI",
+      "feature-type set (form-edit|read-only-detail|table-search|admin-settings)"
+    ],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 13,
+    "deletionCondition": "V2 app path + UI feature template stabilised; generator emits compiling V2 skeletons"
+  },
+  {
+    "v1Path": "tools/generate-feature/README.md",
+    "fileType": "doc",
+    "owner": "tool/generate-feature",
+    "authoritative": "authoritative",
+    "v2Path": "tools/generate-feature/README.md",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0203"],
+    "migrationSeq": 14,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/mcp/platform-governor/package.json",
+    "fileType": "config",
+    "owner": "tool/mcp/platform-governor",
+    "authoritative": "authoritative",
+    "v2Path": "tools/mcp/platform-governor/package.json",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["@platform/mcp-platform-governor", "bin: platform-governor-mcp"],
+    "protectingTests": ["tools/mcp/platform-governor/tests/handshake.test.mjs"],
+    "decisionRefs": ["ADR-ACT-0214"],
+    "migrationSeq": 15,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/mcp/platform-governor/README.md",
+    "fileType": "doc",
+    "owner": "tool/mcp/platform-governor",
+    "authoritative": "authoritative",
+    "v2Path": "tools/mcp/platform-governor/README.md",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0214"],
+    "migrationSeq": 16,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/mcp/platform-governor/src/index.mjs",
+    "fileType": "source",
+    "owner": "tool/mcp/platform-governor",
+    "authoritative": "authoritative",
+    "v2Path": "tools/mcp/platform-governor/src/index.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [
+      "MCP stdio JSON-RPC (initialize/tools/list/tools/call/ping)",
+      "governance tool allowlist"
+    ],
+    "protectingTests": ["tools/mcp/platform-governor/tests/handshake.test.mjs"],
+    "decisionRefs": ["ADR-ACT-0214"],
+    "migrationSeq": 17,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/mcp/platform-governor/tests/handshake.test.mjs",
+    "fileType": "test",
+    "owner": "tool/mcp/platform-governor",
+    "authoritative": "authoritative",
+    "v2Path": "tools/mcp/platform-governor/tests/handshake.test.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": ["tools/mcp/platform-governor/tests/handshake.test.mjs"],
+    "decisionRefs": ["ADR-ACT-0214"],
+    "migrationSeq": 18,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/quality/sonar-quality-gate.mjs",
+    "fileType": "source",
+    "owner": "tool/quality",
+    "authoritative": "authoritative",
+    "v2Path": "tools/quality/sonar-quality-gate.mjs",
+    "disposition": "refactor-behind-contract",
+    "retainedInterfaces": [
+      "sonar:quality-gate CLI",
+      "SONAR_HOST_URL/SONAR_TOKEN/SONAR_PROJECT_KEY env contract",
+      "non-zero exit on gate failure"
+    ],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0016", "ADR-ACT-0093", "ADR-ACT-0290", "ADR-ACT-0291"],
+    "migrationSeq": 19,
+    "deletionCondition": "V2 SONAR_PROJECT_KEY/host defaults rebased; absolute-zero gate green in V2 make all"
+  },
+  {
+    "v1Path": "tools/semgrep/README.md",
+    "fileType": "doc",
+    "owner": "tool/semgrep",
+    "authoritative": "authoritative",
+    "v2Path": "tools/semgrep/README.md",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0214"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/semgrep/rules.yml",
+    "fileType": "config",
+    "owner": "tool/semgrep",
+    "authoritative": "authoritative",
+    "v2Path": "tools/semgrep/rules.yml",
+    "disposition": "refactor-behind-contract",
+    "retainedInterfaces": [
+      "semgrep rule ids (no-adapter-import-in-spa, no-server-runtime-import-in-spa, ...)",
+      "CLAUDE.md hard-constraint encoding"
+    ],
+    "protectingTests": [],
+    "decisionRefs": [
+      "ADR-0001",
+      "ADR-0013",
+      "ADR-0029",
+      "ADR-0030",
+      "ADR-0037",
+      "ADR-0043",
+      "ADR-ACT-0214"
+    ],
+    "migrationSeq": 21,
+    "deletionCondition": "V2 app/package paths rebased into include/exclude globs"
+  },
+  {
+    "v1Path": "tsconfig.base.json",
+    "fileType": "config",
+    "owner": "area/build-root",
+    "authoritative": "authoritative",
+    "v2Path": "tsconfig.base.json",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["shared strict compilerOptions baseline"],
+    "protectingTests": [],
+    "decisionRefs": [],
+    "migrationSeq": 22,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tsconfig.sonar.json",
+    "fileType": "config",
+    "owner": "area/build-root",
+    "authoritative": "authoritative",
+    "v2Path": "tsconfig.sonar.json",
+    "disposition": "refactor-behind-contract",
+    "retainedInterfaces": ["Sonar-bridge nodenext tsconfig", "include set (apps + packages src)"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0290"],
+    "migrationSeq": 23,
+    "deletionCondition": "V2 app/package include globs rebased; Sonar TS bridge version revalidated"
+  }
+]

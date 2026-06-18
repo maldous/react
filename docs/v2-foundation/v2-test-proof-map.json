@@ -1,0 +1,2458 @@
+[
+  {
+    "v1Path": "apps/platform-api/tests/substrate/admin-logs.test.ts",
+    "v2Path": "apps/api/tests/substrate/admin-logs.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/substrate/api-pipeline.test.ts",
+    "v2Path": "apps/api/tests/substrate/api-pipeline.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/substrate/auth-routes.test.ts",
+    "v2Path": "apps/api/tests/substrate/auth-routes.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/substrate/graphql-organisation.test.ts",
+    "v2Path": "apps/platform-api/tests/substrate/graphql-organisation.test.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/substrate/health-handlers.test.ts",
+    "v2Path": "apps/api/tests/substrate/health-handlers.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/substrate/observability-smoke.test.ts",
+    "v2Path": "apps/api/tests/substrate/observability-smoke.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/substrate/organisation-profile.test.ts",
+    "v2Path": "apps/api/tests/substrate/organisation-profile.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/substrate/postgres-identity-repository.test.ts",
+    "v2Path": "apps/api/tests/substrate/postgres-identity-repository.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/substrate/postgres-organisation-repository.test.ts",
+    "v2Path": "apps/api/tests/substrate/postgres-organisation-repository.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/substrate/session-fixture.test.ts",
+    "v2Path": "apps/api/tests/substrate/session-fixture.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/admin-tenants.test.ts",
+    "v2Path": "apps/api/tests/unit/admin-tenants.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/api-keys.test.ts",
+    "v2Path": "apps/api/tests/unit/api-keys.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/audit.test.ts",
+    "v2Path": "apps/api/tests/unit/audit.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/authorize-resource.test.ts",
+    "v2Path": "apps/api/tests/unit/authorize-resource.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/auth-provider-config.test.ts",
+    "v2Path": "apps/api/tests/unit/auth-provider-config.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/auth-providers.test.ts",
+    "v2Path": "apps/api/tests/unit/auth-providers.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/auth-settings-audit.test.ts",
+    "v2Path": "apps/api/tests/unit/auth-settings-audit.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/auth-settings-readiness.test.ts",
+    "v2Path": "apps/api/tests/unit/auth-settings-readiness.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/auth-usecase.test.ts",
+    "v2Path": "apps/api/tests/unit/auth-usecase.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/capability-registry.test.ts",
+    "v2Path": "apps/api/tests/unit/capability-registry.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/config-contracts.test.ts",
+    "v2Path": "apps/platform-api/tests/unit/config-contracts.test.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/contracts-admin-drift.test.ts",
+    "v2Path": "apps/platform-api/tests/unit/contracts-admin-drift.test.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/cookie-security.test.ts",
+    "v2Path": "apps/api/tests/unit/cookie-security.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/email-sender.test.ts",
+    "v2Path": "apps/api/tests/unit/email-sender.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/entitlements.test.ts",
+    "v2Path": "apps/api/tests/unit/entitlements.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/events.test.ts",
+    "v2Path": "apps/api/tests/unit/events.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/features.test.ts",
+    "v2Path": "apps/api/tests/unit/features.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/forward-auth.test.ts",
+    "v2Path": "apps/api/tests/unit/forward-auth.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/groups.test.ts",
+    "v2Path": "apps/api/tests/unit/groups.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/idp-management.test.ts",
+    "v2Path": "apps/api/tests/unit/idp-management.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/keycloak-mapper-readiness.test.ts",
+    "v2Path": "apps/api/tests/unit/keycloak-mapper-readiness.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/logs-usecase.test.ts",
+    "v2Path": "apps/api/tests/unit/logs-usecase.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/members.test.ts",
+    "v2Path": "apps/api/tests/unit/members.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/members-v2.test.ts",
+    "v2Path": "apps/api/tests/unit/members-v2.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/metering.test.ts",
+    "v2Path": "apps/api/tests/unit/metering.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/migrations.test.ts",
+    "v2Path": "apps/api/tests/unit/migrations.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/notifications.test.ts",
+    "v2Path": "apps/api/tests/unit/notifications.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/observability-alerting.test.ts",
+    "v2Path": "apps/api/tests/unit/observability-alerting.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/observability.test.ts",
+    "v2Path": "apps/api/tests/unit/observability.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/oidc-discovery.test.ts",
+    "v2Path": "apps/api/tests/unit/oidc-discovery.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/oidc-mapping.test.ts",
+    "v2Path": "apps/api/tests/unit/oidc-mapping.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/organisation-usecase.test.ts",
+    "v2Path": "apps/api/tests/unit/organisation-usecase.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/organisation-validation.test.ts",
+    "v2Path": "apps/api/tests/unit/organisation-validation.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/platform-config.test.ts",
+    "v2Path": "apps/api/tests/unit/platform-config.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/platform-services.test.ts",
+    "v2Path": "apps/api/tests/unit/platform-services.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/profile.test.ts",
+    "v2Path": "apps/api/tests/unit/profile.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/proof-registry.test.ts",
+    "v2Path": "apps/api/conformance/registry.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/quota.test.ts",
+    "v2Path": "apps/api/tests/unit/quota.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/rate-limits.test.ts",
+    "v2Path": "apps/api/tests/unit/rate-limits.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/redis-rate-limit-repository.test.ts",
+    "v2Path": "apps/api/tests/unit/redis-rate-limit-repository.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/resolve-access-token.test.ts",
+    "v2Path": "apps/api/tests/unit/resolve-access-token.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/resource-policies.test.ts",
+    "v2Path": "apps/api/tests/unit/resource-policies.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/scheduled-jobs.test.ts",
+    "v2Path": "apps/api/tests/unit/scheduled-jobs.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/search.test.ts",
+    "v2Path": "apps/api/tests/unit/search.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/service-catalog.test.ts",
+    "v2Path": "apps/api/tests/unit/service-catalog.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/service-clickthrough.test.ts",
+    "v2Path": "apps/api/tests/unit/service-clickthrough.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/sub-organisations.test.ts",
+    "v2Path": "apps/api/tests/unit/sub-organisations.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/support-mode.test.ts",
+    "v2Path": "apps/api/tests/unit/support-mode.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/synthetic-failure-endpoint.test.ts",
+    "v2Path": "apps/api/tests/unit/synthetic-failure-endpoint.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/tenant-credential.test.ts",
+    "v2Path": "apps/api/tests/unit/tenant-credential.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/tenant-domain-lifecycle.test.ts",
+    "v2Path": "apps/api/tests/unit/tenant-domain-lifecycle.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/tenant-domains.test.ts",
+    "v2Path": "apps/api/tests/unit/tenant-domains.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/tenant-observability.test.ts",
+    "v2Path": "apps/api/tests/unit/tenant-observability.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/tenant-resolver.test.ts",
+    "v2Path": "apps/api/tests/unit/tenant-resolver.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/tenant-storage.test.ts",
+    "v2Path": "apps/api/tests/unit/tenant-storage.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/test-env-preload.test.ts",
+    "v2Path": null,
+    "migrationType": "retire",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": "V1 loader/preload harness self-test; V2 uses standard tooling (vitest), no custom loader"
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/test-suite-completeness.test.ts",
+    "v2Path": null,
+    "migrationType": "retire",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": "V1-specific hardcoded npm-script test-list guard; not a behaviour; V2 discovers tests by convention"
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/token-crypto.test.ts",
+    "v2Path": "apps/api/tests/unit/token-crypto.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/vanity-domain-challenge.test.ts",
+    "v2Path": "apps/api/tests/unit/vanity-domain-challenge.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/vanity-domain.test.ts",
+    "v2Path": "apps/api/tests/unit/vanity-domain.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/webhooks.test.ts",
+    "v2Path": "apps/api/tests/unit/webhooks.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/webhook-worker.test.ts",
+    "v2Path": "apps/api/tests/unit/webhook-worker.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/access-control/tests/access-control.test.ts",
+    "v2Path": "packages/access-control/tests/access-control.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/adapters-brevo/tests/adapters-brevo.test.ts",
+    "v2Path": "packages/adapters-brevo/tests/adapters-brevo.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/adapters-clickhouse/tests/adapters-clickhouse.test.ts",
+    "v2Path": "packages/adapters-clickhouse/tests/adapters-clickhouse.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/adapters-graphql/tests/adapters-graphql.test.ts",
+    "v2Path": "packages/adapters-graphql/tests/adapters-graphql.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/adapters-ingestion/tests/adapters-ingestion.test.ts",
+    "v2Path": "packages/adapters-ingestion/tests/adapters-ingestion.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/adapters-keycloak/tests/adapters-keycloak.test.ts",
+    "v2Path": "packages/adapters-keycloak/tests/adapters-keycloak.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/adapters-loki/tests/adapters-loki.test.ts",
+    "v2Path": "packages/adapters-loki/tests/adapters-loki.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/adapters-object-storage/tests/adapters-object-storage.test.ts",
+    "v2Path": "packages/adapters-object-storage/tests/adapters-object-storage.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/adapters-opentelemetry/tests/adapters-opentelemetry.test.ts",
+    "v2Path": "packages/adapters-opentelemetry/tests/adapters-opentelemetry.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/adapters-postgres/tests/adapters-postgres.test.ts",
+    "v2Path": "packages/adapters-postgres/tests/adapters-postgres.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/adapters-redis/tests/adapters-redis.test.ts",
+    "v2Path": "packages/adapters-redis/tests/adapters-redis.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/adapters-sentry/tests/adapters-sentry.test.ts",
+    "v2Path": "packages/adapters-sentry/tests/adapters-sentry.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/api-runtime/tests/health-contract.test.ts",
+    "v2Path": "packages/api-runtime/tests/health-contract.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/audit-events/tests/audit-events.test.ts",
+    "v2Path": "packages/audit-events/tests/audit-events.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/authorisation-runtime/tests/authorisation-runtime.test.ts",
+    "v2Path": "packages/authorisation-runtime/tests/authorisation-runtime.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/config-runtime/tests/config-runtime.test.ts",
+    "v2Path": "packages/config-runtime/tests/config-runtime.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/contracts-analytics/tests/contracts-analytics.test.ts",
+    "v2Path": "packages/contracts-analytics/tests/contracts-analytics.test.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/contracts-auth/tests/contracts-auth.test.ts",
+    "v2Path": "packages/contracts-auth/tests/contracts-auth.test.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/contracts-graphql/tests/contracts-graphql.test.ts",
+    "v2Path": "packages/contracts-graphql/tests/contracts-graphql.test.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/contracts-ingestion/tests/contracts-ingestion.test.ts",
+    "v2Path": "packages/contracts-ingestion/tests/contracts-ingestion.test.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/domain-core/tests/domain-core.test.ts",
+    "v2Path": "packages/domain-core/tests/domain-core.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/domain-identity/tests/domain-identity.test.ts",
+    "v2Path": "packages/domain-identity/tests/domain-identity.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/email-runtime/tests/email-runtime.test.ts",
+    "v2Path": "packages/email-runtime/tests/email-runtime.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/feature-workflow/tests/feature-workflow.test.ts",
+    "v2Path": "packages/feature-workflow/tests/feature-workflow.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/graphql-api-runtime/tests/graphql-api-runtime.test.ts",
+    "v2Path": "packages/graphql-api-runtime/tests/graphql-api-runtime.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/graphql-browser-client/tests/client.test.ts",
+    "v2Path": "packages/graphql-browser-client/tests/client.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/i18n-runtime/tests/i18n-runtime.test.ts",
+    "v2Path": "packages/i18n-runtime/tests/i18n-runtime.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/notification-runtime/tests/notification-runtime.test.ts",
+    "v2Path": "packages/notification-runtime/tests/notification-runtime.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/observability/tests/observability.test.ts",
+    "v2Path": "packages/observability/tests/observability.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/platform-errors/tests/platform-errors-auth.test.ts",
+    "v2Path": "packages/platform-errors/tests/platform-errors-auth.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/platform-errors/tests/platform-errors.test.ts",
+    "v2Path": "packages/platform-errors/tests/platform-errors.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/platform-logging/tests/platform-logging.test.ts",
+    "v2Path": "packages/platform-logging/tests/platform-logging.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/platform-observability/tests/platform-observability.test.ts",
+    "v2Path": "packages/platform-observability/tests/platform-observability.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/platform-runtime-context/tests/platform-runtime-context.test.ts",
+    "v2Path": "packages/platform-runtime-context/tests/platform-runtime-context.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/profile-configuration/tests/profile-configuration.test.ts",
+    "v2Path": "packages/profile-configuration/tests/profile-configuration.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/queue-runtime/tests/queue-runtime.test.ts",
+    "v2Path": "packages/queue-runtime/tests/queue-runtime.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/search-runtime/tests/search-runtime.test.ts",
+    "v2Path": "packages/search-runtime/tests/search-runtime.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/security-auth/tests/security-auth.test.ts",
+    "v2Path": "packages/security-auth/tests/security-auth.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/session-runtime/tests/session-runtime.test.ts",
+    "v2Path": "packages/session-runtime/tests/session-runtime.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/storage-runtime/tests/storage-runtime.test.ts",
+    "v2Path": "packages/storage-runtime/tests/storage-runtime.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/ui-design-system/tests/accessible-controls.test.tsx",
+    "v2Path": "packages/ui-design-system/tests/accessible-controls.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/ui-design-system/tests/button.test.tsx",
+    "v2Path": "packages/ui-design-system/tests/button.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/ui-design-system/tests/data-table.test.tsx",
+    "v2Path": "packages/ui-design-system/tests/data-table.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "packages/worker-runtime/tests/worker-runtime.test.ts",
+    "v2Path": "packages/worker-runtime/tests/worker-runtime.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/_template/__tests__/FeaturePage.test.tsx",
+    "v2Path": "apps/web/src/features/_template/__tests__/FeaturePage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-scheduled-jobs/__tests__/AdminScheduledJobsPage.test.tsx",
+    "v2Path": "apps/web/src/features/admin-scheduled-jobs/__tests__/AdminScheduledJobsPage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-storage/__tests__/AdminStoragePage.test.tsx",
+    "v2Path": "apps/web/src/features/admin-storage/__tests__/AdminStoragePage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-members/__tests__/AdminMembersPage.test.tsx",
+    "v2Path": "apps/web/src/features/admin-members/__tests__/AdminMembersPage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-features/__tests__/AdminFeaturesPage.test.tsx",
+    "v2Path": "apps/web/src/features/admin-features/__tests__/AdminFeaturesPage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-usage/__tests__/AdminUsagePage.test.tsx",
+    "v2Path": "apps/web/src/features/admin-usage/__tests__/AdminUsagePage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-readiness/__tests__/AdminReadinessPage.test.tsx",
+    "v2Path": "apps/web/src/features/admin-readiness/__tests__/AdminReadinessPage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/organisation/__tests__/OrganisationProfilePage.test.tsx",
+    "v2Path": "apps/web/src/features/organisation/__tests__/OrganisationProfilePage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-webhooks/__tests__/AdminWebhooksPage.test.tsx",
+    "v2Path": "apps/web/src/features/admin-webhooks/__tests__/AdminWebhooksPage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-config/__tests__/AdminConfigPage.test.tsx",
+    "v2Path": "apps/web/src/features/admin-config/__tests__/AdminConfigPage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-platform/__tests__/AdminPlatformPage.test.tsx",
+    "v2Path": "apps/web/src/features/admin-platform/__tests__/AdminPlatformPage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-observability/__tests__/AdminObservabilityPage.test.tsx",
+    "v2Path": "apps/web/src/features/admin-observability/__tests__/AdminObservabilityPage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-domains/__tests__/AdminDomainsPage.test.tsx",
+    "v2Path": "apps/web/src/features/admin-domains/__tests__/AdminDomainsPage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-monitoring/__tests__/AdminMonitoringPage.test.tsx",
+    "v2Path": "apps/web/src/features/admin-monitoring/__tests__/AdminMonitoringPage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-entitlements/__tests__/AdminEntitlementsPage.test.tsx",
+    "v2Path": "apps/web/src/features/admin-entitlements/__tests__/AdminEntitlementsPage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-email/__tests__/AdminEmailPage.test.tsx",
+    "v2Path": "apps/web/src/features/admin-email/__tests__/AdminEmailPage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin/__tests__/AuditTrailPanel.test.tsx",
+    "v2Path": "apps/web/src/features/admin/__tests__/AuditTrailPanel.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin/__tests__/admin-error.test.tsx",
+    "v2Path": "apps/web/src/features/admin/__tests__/admin-error.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-events/__tests__/AdminEventsPage.test.tsx",
+    "v2Path": "apps/web/src/features/admin-events/__tests__/AdminEventsPage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-search/__tests__/AdminSearchPage.test.tsx",
+    "v2Path": "apps/web/src/features/admin-search/__tests__/AdminSearchPage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-auth/__tests__/IdpManager.oidc.test.tsx",
+    "v2Path": "apps/web/src/features/admin-auth/__tests__/IdpManager.oidc.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-auth/__tests__/AdminAuthPage.test.tsx",
+    "v2Path": "apps/web/src/features/admin-auth/__tests__/AdminAuthPage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-developer/__tests__/AdminDeveloperPage.test.tsx",
+    "v2Path": "apps/web/src/features/admin-developer/__tests__/AdminDeveloperPage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-account/__tests__/AdminAccountPage.test.tsx",
+    "v2Path": "apps/web/src/features/admin-account/__tests__/AdminAccountPage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/components/__tests__/AdminLayout.test.tsx",
+    "v2Path": "apps/web/src/components/__tests__/AdminLayout.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/tests/as-text.test.ts",
+    "v2Path": "apps/web/src/tests/as-text.test.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/tests/use-session.test.ts",
+    "v2Path": "apps/web/src/tests/use-session.test.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/tests/theme/theme.test.tsx",
+    "v2Path": "apps/web/src/tests/theme/theme.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/tests/app.test.tsx",
+    "v2Path": "apps/web/src/tests/app.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/tests/substrate/require-permission.test.tsx",
+    "v2Path": "apps/web/src/tests/substrate/require-permission.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/tests/substrate/authenticated-layout.test.tsx",
+    "v2Path": "apps/web/src/tests/substrate/authenticated-layout.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/tests/admin-logs/AdminLogsPage.test.tsx",
+    "v2Path": "apps/web/src/tests/admin-logs/AdminLogsPage.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/tests/admin-logs/admin-logs-client.test.ts",
+    "v2Path": "apps/web/src/tests/admin-logs/admin-logs-client.test.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/tests/msw/msw-substrate.test.ts",
+    "v2Path": "apps/web/src/tests/msw/msw-substrate.test.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/routes/__tests__/login.test.tsx",
+    "v2Path": "apps/web/src/routes/__tests__/login.test.tsx",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/validate-action-register/tests/validate-action-register.test.mjs",
+    "v2Path": "tools/architecture/validate-action-register/tests/validate-action-register.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/validate-universal-foundation/tests/validate-universal-foundation.test.mjs",
+    "v2Path": "tools/architecture/validate-universal-foundation/tests/validate-universal-foundation.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/validate-openapi-drift/tests/validate-openapi-drift.test.mjs",
+    "v2Path": "tools/architecture/validate-openapi-drift/tests/validate-openapi-drift.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/_shared/tests/shared-primitives.test.mjs",
+    "v2Path": "tools/architecture/_shared/tests/shared-primitives.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/validate-slice-readiness/tests/validate-slice-readiness.test.mjs",
+    "v2Path": "tools/architecture/validate-slice-readiness/tests/validate-slice-readiness.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/validate-source-imports/tests/validate-source-imports.test.mjs",
+    "v2Path": "tools/architecture/validate-source-imports/tests/validate-source-imports.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/validate-source-imports/tests/validate-source-imports-unit.test.mjs",
+    "v2Path": "tools/architecture/validate-source-imports/tests/validate-source-imports-unit.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/validate-package-codemap/tests/validate-package-codemap.test.mjs",
+    "v2Path": "tools/architecture/validate-package-codemap/tests/validate-package-codemap.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/validate-package-metadata/tests/validate-package-metadata-unit.test.mjs",
+    "v2Path": "tools/architecture/validate-package-metadata/tests/validate-package-metadata-unit.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/validate-package-metadata/tests/validate-package-metadata.test.mjs",
+    "v2Path": "tools/architecture/validate-package-metadata/tests/validate-package-metadata.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/validate-i18n/tests/validate-i18n.test.mjs",
+    "v2Path": "tools/architecture/validate-i18n/tests/validate-i18n.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/generate-package-readmes-unit.test.mjs",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/generate-package-readmes-unit.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/validate-frontend-conventions/tests/validate-frontend-conventions.test.mjs",
+    "v2Path": "tools/architecture/validate-frontend-conventions/tests/validate-frontend-conventions.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-inventory/tests/generate-package-inventory.test.mjs",
+    "v2Path": "tools/architecture/generate-package-inventory/tests/generate-package-inventory.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence.test.mjs",
+    "v2Path": "tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence-unit.test.mjs",
+    "v2Path": "tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence-unit.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/orchestrator/tests/dependency-order.test.mjs",
+    "v2Path": "tools/architecture/orchestrator/tests/dependency-order.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/orchestrator/tests/check-mode.test.mjs",
+    "v2Path": "tools/architecture/orchestrator/tests/check-mode.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/orchestrator/tests/self-evidence.test.mjs",
+    "v2Path": "tools/architecture/orchestrator/tests/self-evidence.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/orchestrator/tests/write-mode.test.mjs",
+    "v2Path": "tools/architecture/orchestrator/tests/write-mode.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/orchestrator/tests/no-default-evidence-generation.test.mjs",
+    "v2Path": "tools/architecture/orchestrator/tests/no-default-evidence-generation.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/orchestrator/tests/failure-stop.test.mjs",
+    "v2Path": "tools/architecture/orchestrator/tests/failure-stop.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/orchestrator/tests/orchestrator-unit.test.mjs",
+    "v2Path": "tools/architecture/orchestrator/tests/orchestrator-unit.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/architecture/generate-lifecycle-reports/tests/generate-lifecycle-reports.test.mjs",
+    "v2Path": "tools/architecture/generate-lifecycle-reports/tests/generate-lifecycle-reports.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/e2e/scenario-manifest.test.mjs",
+    "v2Path": "tools/e2e/scenario-manifest.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/e2e/result-contract.test.mjs",
+    "v2Path": "tools/e2e/result-contract.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/e2e/sentry-assertion/tests/sentry-assertion.test.mjs",
+    "v2Path": "tools/e2e/sentry-assertion/tests/sentry-assertion.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/e2e/correlation-headers.test.mjs",
+    "v2Path": "tools/e2e/correlation-headers.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/e2e/observability-correlation/tests/classify.test.mjs",
+    "v2Path": "tools/e2e/observability-correlation/tests/classify.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/e2e/tempo-trace.test.mjs",
+    "v2Path": "tools/e2e/tempo-trace.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/mcp/platform-governor/tests/handshake.test.mjs",
+    "v2Path": "tools/mcp/platform-governor/tests/handshake.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "scripts/evidence/tests/deprecation-evidence-facts.test.mjs",
+    "v2Path": "scripts/evidence/tests/deprecation-evidence-facts.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "scripts/evidence/tests/verify-ladder.test.mjs",
+    "v2Path": "scripts/evidence/tests/verify-ladder.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "scripts/tests/tests/aggregate-confidence.test.mjs",
+    "v2Path": "scripts/tests/tests/aggregate-confidence.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "scripts/tests/tests/release-confidence-contract.test.mjs",
+    "v2Path": "scripts/tests/tests/release-confidence-contract.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "scripts/tests/tests/sonar-oidc-honesty.test.mjs",
+    "v2Path": "scripts/tests/tests/sonar-oidc-honesty.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "scripts/tests/tests/stage-exit.test.mjs",
+    "v2Path": "scripts/tests/tests/stage-exit.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/alerting-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/alerting.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/alert-notification-bridge.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/api-key-routes.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/api-keys-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/api-keys.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/auth-settings.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/backup-local.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/clickthrough-services.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/composed-provider-readiness.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/credential-lifecycle.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/domain-identity-matrix.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/email-sender.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/entitlement-policy-chain.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/entitlements-postgres.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/entitlements-routes.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/entitlements-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/entitlements.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/environment-admin-bootstrap.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/environment-operations-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/environment-operations.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/environment-registry-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/environment-registry.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/event-bus-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/event-bus.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/event-redrive.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/event-worker-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/event-worker.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/history-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/history.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/idp-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/idp.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/incident-foundation.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/metering-quota-routes.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/metering-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/metering.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/notification-dispatch.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/notification-email-transport-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/notification-email-transport.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/notification-preferences.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/notification-transport-routes.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/notification-webhook-transport.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/observability-signals.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/oidc-enterprise.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/platform-services.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/profile-self-service.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/provider-config.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/provider-environment-classification.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/provider-readiness-contract.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/provider-secrets-readiness.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/quota-enforcement.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/rate-limits-redis.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/rate-limits.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/scheduled-job-routes.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/scheduled-jobs.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/search-isolation-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/search-isolation.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/search-routes.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/search-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/search.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/secrets-openbao-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/secrets-openbao.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/secret-store-contract-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/secret-store-contract.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/service-catalog-registry.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/service-clickthrough-policy.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/tenant-custom-domain-auth-origin.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/tenant-custom-domain-resolution.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/tenant-domain-canonical.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/tenant-domain-claim-lifecycle.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/tenant-domains-routing.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/tenant-domains-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/tenant-domains.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/tenant-observability.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/tenant-storage.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/webhook-redrive.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/webhooks-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/webhooks.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
+    "v2Path": "apps/api/conformance/webhook-worker.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/discovery/browser-bff-trace.spec.ts",
+    "v2Path": "e2e/discovery/browser-bff-trace.spec.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/discovery/accessibility.spec.ts",
+    "v2Path": "e2e/discovery/accessibility.spec.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/discovery/persona-authz.spec.ts",
+    "v2Path": "e2e/discovery/persona-authz.spec.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/discovery/clickability.spec.ts",
+    "v2Path": "e2e/discovery/clickability.spec.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/discovery/persona-matrix.spec.ts",
+    "v2Path": "e2e/discovery/persona-matrix.spec.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/identity/broker-login.spec.ts",
+    "v2Path": "e2e/identity/broker-login.spec.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/external/login.spec.ts",
+    "v2Path": "e2e/external/login.spec.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/external/tenant-prod.spec.ts",
+    "v2Path": "e2e/external/tenant-prod.spec.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/external/logout.spec.ts",
+    "v2Path": "e2e/external/logout.spec.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/external/tool-services.spec.ts",
+    "v2Path": "e2e/external/tool-services.spec.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/external/auth-negative.spec.ts",
+    "v2Path": "e2e/external/auth-negative.spec.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/external/caddy-links.spec.ts",
+    "v2Path": "e2e/external/caddy-links.spec.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/identity/redirect-merge.test.ts",
+    "v2Path": "e2e/identity/redirect-merge.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/prod/cross-cutting.test.ts",
+    "v2Path": "e2e/prod/cross-cutting.test.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/prod/asset-integrity.test.ts",
+    "v2Path": "e2e/prod/asset-integrity.test.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/prod/performance-budget.test.ts",
+    "v2Path": "e2e/prod/performance-budget.test.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/prod/security-headers.test.ts",
+    "v2Path": "e2e/prod/security-headers.test.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/prod/error-handling.test.ts",
+    "v2Path": "e2e/prod/error-handling.test.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/prod/cookie-security.test.ts",
+    "v2Path": "e2e/prod/cookie-security.test.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/prod/admin-tools.test.ts",
+    "v2Path": "e2e/prod/admin-tools.test.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/prod/api-contract.test.ts",
+    "v2Path": "e2e/prod/api-contract.test.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/internal/smoke.test.ts",
+    "v2Path": "e2e/internal/smoke.test.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/internal/build.test.ts",
+    "v2Path": "e2e/internal/build.test.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "e2e/external/smoke.test.ts",
+    "v2Path": "e2e/external/smoke.test.ts",
+    "migrationType": "retarget",
+    "selectorsOrImportsChange": true,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "playwright.build.config.ts",
+    "v2Path": "playwright.build.config.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "playwright.discovery.config.ts",
+    "v2Path": "playwright.discovery.config.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "playwright.external.config.ts",
+    "v2Path": "playwright.external.config.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "playwright.identity.config.ts",
+    "v2Path": "playwright.identity.config.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "playwright.internal.config.ts",
+    "v2Path": "playwright.internal.config.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "playwright.prod.config.ts",
+    "v2Path": "playwright.prod.config.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/vitest.config.ts",
+    "v2Path": "apps/react-enterprise-app/vitest.config.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/semgrep/rules.yml",
+    "v2Path": "tools/semgrep/rules.yml",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": ".github/codeql/codeql-config.yml",
+    "v2Path": ".github/codeql/codeql-config.yml",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "osv-scanner.toml",
+    "v2Path": "osv-scanner.toml",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": ".gitleaks.toml",
+    "v2Path": ".gitleaks.toml",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#license:policy",
+    "v2Path": "package.json#license:policy",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#sbom:generate",
+    "v2Path": "package.json#sbom:generate",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": ".spectral.yaml",
+    "v2Path": ".spectral.yaml",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#audit:deps",
+    "v2Path": "package.json#audit:deps",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#depcruise",
+    "v2Path": "package.json#depcruise",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "knip.json",
+    "v2Path": "knip.json",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "sonar-project.properties",
+    "v2Path": "sonar-project.properties",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "eslint.config.mjs",
+    "v2Path": "eslint.config.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#openapi:drift",
+    "v2Path": "package.json#openapi:drift",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#usf:validate",
+    "v2Path": "package.json#usf:validate",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#frontend:conventions",
+    "v2Path": "package.json#frontend:conventions",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#codegen:check",
+    "v2Path": "package.json#codegen:check",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "scripts/stages/run-stage.sh",
+    "v2Path": "scripts/stages/run-stage.sh",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "scripts/stages/stage-exit.sh",
+    "v2Path": "scripts/stages/stage-exit.sh",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "scripts/evidence/verify-ladder.mjs",
+    "v2Path": "scripts/evidence/verify-ladder.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "scripts/evidence/write-stage-evidence.mjs",
+    "v2Path": "scripts/evidence/write-stage-evidence.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "scripts/smoke/compose-smoke.sh",
+    "v2Path": "scripts/smoke/compose-smoke.sh",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "scripts/smoke/http-smoke.sh",
+    "v2Path": "scripts/smoke/http-smoke.sh",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "scripts/smoke/loki-smoke.sh",
+    "v2Path": "scripts/smoke/loki-smoke.sh",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "scripts/smoke/observability-smoke.sh",
+    "v2Path": "scripts/smoke/observability-smoke.sh",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "scripts/smoke/sentry-smoke.sh",
+    "v2Path": "scripts/smoke/sentry-smoke.sh",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  }
+]

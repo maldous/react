@@ -1,0 +1,770 @@
+[
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/src/index.mjs",
+    "fileType": "source",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/src/index.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["generate-package-readmes CLI"],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs",
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes-unit.test.mjs"
+    ],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 10,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/golden/app/README.md",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/golden/app/README.md",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/invalid/missing-readme-metadata/package.json",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/invalid/missing-readme-metadata/package.json",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/golden/domain/README.md",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/golden/domain/README.md",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/golden/feature/README.md",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/golden/feature/README.md",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/golden/graphql-adapter/README.md",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/golden/graphql-adapter/README.md",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/golden/graphql-contract/README.md",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/golden/graphql-contract/README.md",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/golden/react-app/README.md",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/golden/react-app/README.md",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/golden/test/README.md",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/golden/test/README.md",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/golden/tooling/README.md",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/golden/tooling/README.md",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/golden/ui/README.md",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/golden/ui/README.md",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/valid/docs/schemas/package-json-architecture.schema.json",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/valid/docs/schemas/package-json-architecture.schema.json",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/valid/domain/package.json",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/valid/domain/package.json",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/valid/feature/package.json",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/valid/feature/package.json",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/valid/graphql-adapter/package.json",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/valid/graphql-adapter/package.json",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/valid/graphql-contract/package.json",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/valid/graphql-contract/package.json",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/valid/react-app/package.json",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/valid/react-app/package.json",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/valid/test/package.json",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/valid/test/package.json",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/valid/tooling/package.json",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/valid/tooling/package.json",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/valid/ui/package.json",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/valid/ui/package.json",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/valid/app/package.json",
+    "fileType": "fixture",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/fixtures/valid/app/package.json",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [
+      "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs"
+    ],
+    "decisionRefs": [],
+    "migrationSeq": 11,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs",
+    "fileType": "test",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 12,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/generate-package-readmes/tests/generate-package-readmes-unit.test.mjs",
+    "fileType": "test",
+    "owner": "tool/architecture/generate-package-readmes",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/generate-package-readmes/tests/generate-package-readmes-unit.test.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 12,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/orchestrator/package.json",
+    "fileType": "config",
+    "owner": "tool/architecture/orchestrator",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/orchestrator/package.json",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["@architecture/orchestrator"],
+    "protectingTests": ["tools/architecture/orchestrator/tests/orchestrator-unit.test.mjs"],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 5,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/orchestrator/README.md",
+    "fileType": "doc",
+    "owner": "tool/architecture/orchestrator",
+    "authoritative": "generated",
+    "v2Path": "tools/architecture/orchestrator/README.md",
+    "disposition": "regenerate",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 6,
+    "deletionCondition": "regenerated by generate-package-readmes from package.json metadata"
+  },
+  {
+    "v1Path": "tools/architecture/orchestrator/src/index.mjs",
+    "fileType": "source",
+    "owner": "tool/architecture/orchestrator",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/orchestrator/src/index.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["orchestrator CLI", "parseArgs"],
+    "protectingTests": [
+      "tools/architecture/orchestrator/tests/orchestrator-unit.test.mjs",
+      "tools/architecture/orchestrator/tests/dependency-order.test.mjs",
+      "tools/architecture/orchestrator/tests/failure-stop.test.mjs"
+    ],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 5,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/orchestrator/tests/check-mode.test.mjs",
+    "fileType": "test",
+    "owner": "tool/architecture/orchestrator",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/orchestrator/tests/check-mode.test.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 6,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/orchestrator/tests/dependency-order.test.mjs",
+    "fileType": "test",
+    "owner": "tool/architecture/orchestrator",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/orchestrator/tests/dependency-order.test.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 6,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/orchestrator/tests/failure-stop.test.mjs",
+    "fileType": "test",
+    "owner": "tool/architecture/orchestrator",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/orchestrator/tests/failure-stop.test.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 6,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/orchestrator/tests/no-default-evidence-generation.test.mjs",
+    "fileType": "test",
+    "owner": "tool/architecture/orchestrator",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/orchestrator/tests/no-default-evidence-generation.test.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 6,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/orchestrator/tests/orchestrator-unit.test.mjs",
+    "fileType": "test",
+    "owner": "tool/architecture/orchestrator",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/orchestrator/tests/orchestrator-unit.test.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 6,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/orchestrator/tests/self-evidence.test.mjs",
+    "fileType": "test",
+    "owner": "tool/architecture/orchestrator",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/orchestrator/tests/self-evidence.test.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 6,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/orchestrator/tests/write-mode.test.mjs",
+    "fileType": "test",
+    "owner": "tool/architecture/orchestrator",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/orchestrator/tests/write-mode.test.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 6,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/_shared/files.mjs",
+    "fileType": "source",
+    "owner": "tool/architecture/_shared",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/_shared/files.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["walkPackageJson"],
+    "protectingTests": ["tools/architecture/_shared/tests/shared-primitives.test.mjs"],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 1,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/_shared/json.mjs",
+    "fileType": "source",
+    "owner": "tool/architecture/_shared",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/_shared/json.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["readJson", "writeJson"],
+    "protectingTests": ["tools/architecture/_shared/tests/shared-primitives.test.mjs"],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 1,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/_shared/repo-root.mjs",
+    "fileType": "source",
+    "owner": "tool/architecture/_shared",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/_shared/repo-root.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["findRepoRoot"],
+    "protectingTests": ["tools/architecture/_shared/tests/shared-primitives.test.mjs"],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 1,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/_shared/self-evidence.mjs",
+    "fileType": "source",
+    "owner": "tool/architecture/_shared",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/_shared/self-evidence.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["writeSelfEvidence"],
+    "protectingTests": ["tools/architecture/_shared/tests/shared-primitives.test.mjs"],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 1,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/_shared/tests/shared-primitives.test.mjs",
+    "fileType": "test",
+    "owner": "tool/architecture/_shared",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/_shared/tests/shared-primitives.test.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 2,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/validate-action-register/src/index.mjs",
+    "fileType": "source",
+    "owner": "tool/architecture/validate-action-register",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/validate-action-register/src/index.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["validate-action-register CLI"],
+    "protectingTests": [
+      "tools/architecture/validate-action-register/tests/validate-action-register.test.mjs"
+    ],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 7,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/validate-action-register/tests/validate-action-register.test.mjs",
+    "fileType": "test",
+    "owner": "tool/architecture/validate-action-register",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/validate-action-register/tests/validate-action-register.test.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 8,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/validate-compose-ports/src/index.mjs",
+    "fileType": "source",
+    "owner": "tool/architecture/validate-compose-ports",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/validate-compose-ports/src/index.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["validate-compose-ports CLI"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 7,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/validate-frontend-conventions/package.json",
+    "fileType": "config",
+    "owner": "tool/architecture/validate-frontend-conventions",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/validate-frontend-conventions/package.json",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["@architecture/validate-frontend-conventions"],
+    "protectingTests": [
+      "tools/architecture/validate-frontend-conventions/tests/validate-frontend-conventions.test.mjs"
+    ],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 7,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/validate-frontend-conventions/README.md",
+    "fileType": "doc",
+    "owner": "tool/architecture/validate-frontend-conventions",
+    "authoritative": "generated",
+    "v2Path": "tools/architecture/validate-frontend-conventions/README.md",
+    "disposition": "regenerate",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 8,
+    "deletionCondition": "regenerated by generate-package-readmes from package.json metadata"
+  },
+  {
+    "v1Path": "tools/architecture/validate-frontend-conventions/src/index.mjs",
+    "fileType": "source",
+    "owner": "tool/architecture/validate-frontend-conventions",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/validate-frontend-conventions/src/index.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["validate-frontend-conventions CLI"],
+    "protectingTests": [
+      "tools/architecture/validate-frontend-conventions/tests/validate-frontend-conventions.test.mjs"
+    ],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 7,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/validate-frontend-conventions/tests/validate-frontend-conventions.test.mjs",
+    "fileType": "test",
+    "owner": "tool/architecture/validate-frontend-conventions",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/validate-frontend-conventions/tests/validate-frontend-conventions.test.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 8,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/validate-i18n/package.json",
+    "fileType": "config",
+    "owner": "tool/architecture/validate-i18n",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/validate-i18n/package.json",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["@architecture/validate-i18n"],
+    "protectingTests": ["tools/architecture/validate-i18n/tests/validate-i18n.test.mjs"],
+    "decisionRefs": ["ADR-0011", "ADR-0012", "ADR-0026"],
+    "migrationSeq": 7,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/validate-i18n/README.md",
+    "fileType": "doc",
+    "owner": "tool/architecture/validate-i18n",
+    "authoritative": "generated",
+    "v2Path": "tools/architecture/validate-i18n/README.md",
+    "disposition": "regenerate",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0011", "ADR-0012", "ADR-0026"],
+    "migrationSeq": 8,
+    "deletionCondition": "regenerated by generate-package-readmes from package.json metadata"
+  },
+  {
+    "v1Path": "tools/architecture/validate-i18n/src/index.mjs",
+    "fileType": "source",
+    "owner": "tool/architecture/validate-i18n",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/validate-i18n/src/index.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["validate-i18n CLI"],
+    "protectingTests": ["tools/architecture/validate-i18n/tests/validate-i18n.test.mjs"],
+    "decisionRefs": ["ADR-0011", "ADR-0012", "ADR-0026"],
+    "migrationSeq": 7,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/validate-i18n/tests/validate-i18n.test.mjs",
+    "fileType": "test",
+    "owner": "tool/architecture/validate-i18n",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/validate-i18n/tests/validate-i18n.test.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0011", "ADR-0012", "ADR-0026"],
+    "migrationSeq": 8,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/validate-lifecycle-evidence/package.json",
+    "fileType": "config",
+    "owner": "tool/architecture/validate-lifecycle-evidence",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/validate-lifecycle-evidence/package.json",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["@architecture/validate-lifecycle-evidence"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0007", "ADR-0011", "ADR-0012"],
+    "migrationSeq": 7,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/validate-lifecycle-evidence/package-lock.json",
+    "fileType": "generated",
+    "owner": "tool/architecture/validate-lifecycle-evidence",
+    "authoritative": "generated",
+    "v2Path": "tools/architecture/validate-lifecycle-evidence/package-lock.json",
+    "disposition": "regenerate",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0011", "ADR-0012"],
+    "migrationSeq": 8,
+    "deletionCondition": "regenerated by npm install from package.json"
+  },
+  {
+    "v1Path": "tools/architecture/validate-lifecycle-evidence/README.md",
+    "fileType": "doc",
+    "owner": "tool/architecture/validate-lifecycle-evidence",
+    "authoritative": "generated",
+    "v2Path": "tools/architecture/validate-lifecycle-evidence/README.md",
+    "disposition": "regenerate",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0007", "ADR-0011", "ADR-0012"],
+    "migrationSeq": 8,
+    "deletionCondition": "regenerated by generate-package-readmes from package.json metadata"
+  },
+  {
+    "v1Path": "tools/architecture/validate-lifecycle-evidence/src/index.mjs",
+    "fileType": "source",
+    "owner": "tool/architecture/validate-lifecycle-evidence",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/validate-lifecycle-evidence/src/index.mjs",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["validate-lifecycle-evidence CLI"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0007", "ADR-0011", "ADR-0012"],
+    "migrationSeq": 7,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/validate-lifecycle-evidence/tests/fixtures/coverage/invalid/invalid-adr-ref/docs/evidence/lifecycle/invalid-adr-ref/2026-05-26-active-feature-to-stable-platform/transition-evidence.json",
+    "fileType": "fixture",
+    "owner": "tool/architecture/validate-lifecycle-evidence",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/validate-lifecycle-evidence/tests/fixtures/coverage/invalid/invalid-adr-ref/docs/evidence/lifecycle/invalid-adr-ref/2026-05-26-active-feature-to-stable-platform/transition-evidence.json",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0007"],
+    "migrationSeq": 8,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "tools/architecture/validate-lifecycle-evidence/tests/fixtures/coverage/invalid/invalid-adr-ref/docs/schemas/lifecycle-transition-evidence.schema.json",
+    "fileType": "fixture",
+    "owner": "tool/architecture/validate-lifecycle-evidence",
+    "authoritative": "authoritative",
+    "v2Path": "tools/architecture/validate-lifecycle-evidence/tests/fixtures/coverage/invalid/invalid-adr-ref/docs/schemas/lifecycle-transition-evidence.schema.json",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0007"],
+    "migrationSeq": 8,
+    "deletionCondition": "n/a"
+  }
+]

@@ -1,0 +1,2765 @@
+[
+  {
+    "id": "apps/platform-api/tests/substrate/admin-logs.test.ts",
+    "path": "apps/platform-api/tests/substrate/admin-logs.test.ts",
+    "kind": "integration",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose-backed (postgres/redis) via preload-env loader",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/substrate/api-pipeline.test.ts",
+    "path": "apps/platform-api/tests/substrate/api-pipeline.test.ts",
+    "kind": "integration",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose-backed (postgres/redis) via preload-env loader",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/substrate/auth-routes.test.ts",
+    "path": "apps/platform-api/tests/substrate/auth-routes.test.ts",
+    "kind": "integration",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose-backed (postgres/redis) via preload-env loader",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/substrate/graphql-organisation.test.ts",
+    "path": "apps/platform-api/tests/substrate/graphql-organisation.test.ts",
+    "kind": "contract",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose-backed (postgres/redis) via preload-env loader",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/substrate/health-handlers.test.ts",
+    "path": "apps/platform-api/tests/substrate/health-handlers.test.ts",
+    "kind": "integration",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose-backed (postgres/redis) via preload-env loader",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/substrate/observability-smoke.test.ts",
+    "path": "apps/platform-api/tests/substrate/observability-smoke.test.ts",
+    "kind": "integration",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose-backed (postgres/redis) via preload-env loader",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/substrate/organisation-profile.test.ts",
+    "path": "apps/platform-api/tests/substrate/organisation-profile.test.ts",
+    "kind": "integration",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose-backed (postgres/redis) via preload-env loader",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/substrate/postgres-identity-repository.test.ts",
+    "path": "apps/platform-api/tests/substrate/postgres-identity-repository.test.ts",
+    "kind": "db",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose-backed (postgres/redis) via preload-env loader",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/substrate/postgres-organisation-repository.test.ts",
+    "path": "apps/platform-api/tests/substrate/postgres-organisation-repository.test.ts",
+    "kind": "db",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose-backed (postgres/redis) via preload-env loader",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/substrate/session-fixture.test.ts",
+    "path": "apps/platform-api/tests/substrate/session-fixture.test.ts",
+    "kind": "integration",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose-backed (postgres/redis) via preload-env loader",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/admin-tenants.test.ts",
+    "path": "apps/platform-api/tests/unit/admin-tenants.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/api-keys.test.ts",
+    "path": "apps/platform-api/tests/unit/api-keys.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/audit.test.ts",
+    "path": "apps/platform-api/tests/unit/audit.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/authorize-resource.test.ts",
+    "path": "apps/platform-api/tests/unit/authorize-resource.test.ts",
+    "kind": "security",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/auth-provider-config.test.ts",
+    "path": "apps/platform-api/tests/unit/auth-provider-config.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/auth-providers.test.ts",
+    "path": "apps/platform-api/tests/unit/auth-providers.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/auth-settings-audit.test.ts",
+    "path": "apps/platform-api/tests/unit/auth-settings-audit.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/auth-settings-readiness.test.ts",
+    "path": "apps/platform-api/tests/unit/auth-settings-readiness.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/auth-usecase.test.ts",
+    "path": "apps/platform-api/tests/unit/auth-usecase.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/capability-registry.test.ts",
+    "path": "apps/platform-api/tests/unit/capability-registry.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/config-contracts.test.ts",
+    "path": "apps/platform-api/tests/unit/config-contracts.test.ts",
+    "kind": "contract",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/contracts-admin-drift.test.ts",
+    "path": "apps/platform-api/tests/unit/contracts-admin-drift.test.ts",
+    "kind": "contract",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/cookie-security.test.ts",
+    "path": "apps/platform-api/tests/unit/cookie-security.test.ts",
+    "kind": "security",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/email-sender.test.ts",
+    "path": "apps/platform-api/tests/unit/email-sender.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/entitlements.test.ts",
+    "path": "apps/platform-api/tests/unit/entitlements.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/events.test.ts",
+    "path": "apps/platform-api/tests/unit/events.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/features.test.ts",
+    "path": "apps/platform-api/tests/unit/features.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/forward-auth.test.ts",
+    "path": "apps/platform-api/tests/unit/forward-auth.test.ts",
+    "kind": "security",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/groups.test.ts",
+    "path": "apps/platform-api/tests/unit/groups.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/idp-management.test.ts",
+    "path": "apps/platform-api/tests/unit/idp-management.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/keycloak-mapper-readiness.test.ts",
+    "path": "apps/platform-api/tests/unit/keycloak-mapper-readiness.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/logs-usecase.test.ts",
+    "path": "apps/platform-api/tests/unit/logs-usecase.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/members.test.ts",
+    "path": "apps/platform-api/tests/unit/members.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/members-v2.test.ts",
+    "path": "apps/platform-api/tests/unit/members-v2.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/metering.test.ts",
+    "path": "apps/platform-api/tests/unit/metering.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/migrations.test.ts",
+    "path": "apps/platform-api/tests/unit/migrations.test.ts",
+    "kind": "db",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/notifications.test.ts",
+    "path": "apps/platform-api/tests/unit/notifications.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/observability-alerting.test.ts",
+    "path": "apps/platform-api/tests/unit/observability-alerting.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/observability.test.ts",
+    "path": "apps/platform-api/tests/unit/observability.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/oidc-discovery.test.ts",
+    "path": "apps/platform-api/tests/unit/oidc-discovery.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/oidc-mapping.test.ts",
+    "path": "apps/platform-api/tests/unit/oidc-mapping.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/organisation-usecase.test.ts",
+    "path": "apps/platform-api/tests/unit/organisation-usecase.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/organisation-validation.test.ts",
+    "path": "apps/platform-api/tests/unit/organisation-validation.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/platform-config.test.ts",
+    "path": "apps/platform-api/tests/unit/platform-config.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/platform-services.test.ts",
+    "path": "apps/platform-api/tests/unit/platform-services.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/profile.test.ts",
+    "path": "apps/platform-api/tests/unit/profile.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/proof-registry.test.ts",
+    "path": "apps/platform-api/tests/unit/proof-registry.test.ts",
+    "kind": "evidence-verifier",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/quota.test.ts",
+    "path": "apps/platform-api/tests/unit/quota.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/rate-limits.test.ts",
+    "path": "apps/platform-api/tests/unit/rate-limits.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/redis-rate-limit-repository.test.ts",
+    "path": "apps/platform-api/tests/unit/redis-rate-limit-repository.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-backing-service (compose) when integration; mocked otherwise",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/resolve-access-token.test.ts",
+    "path": "apps/platform-api/tests/unit/resolve-access-token.test.ts",
+    "kind": "security",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/resource-policies.test.ts",
+    "path": "apps/platform-api/tests/unit/resource-policies.test.ts",
+    "kind": "security",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/scheduled-jobs.test.ts",
+    "path": "apps/platform-api/tests/unit/scheduled-jobs.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/search.test.ts",
+    "path": "apps/platform-api/tests/unit/search.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/service-catalog.test.ts",
+    "path": "apps/platform-api/tests/unit/service-catalog.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/service-clickthrough.test.ts",
+    "path": "apps/platform-api/tests/unit/service-clickthrough.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/sub-organisations.test.ts",
+    "path": "apps/platform-api/tests/unit/sub-organisations.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/support-mode.test.ts",
+    "path": "apps/platform-api/tests/unit/support-mode.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/synthetic-failure-endpoint.test.ts",
+    "path": "apps/platform-api/tests/unit/synthetic-failure-endpoint.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/tenant-credential.test.ts",
+    "path": "apps/platform-api/tests/unit/tenant-credential.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/tenant-domain-lifecycle.test.ts",
+    "path": "apps/platform-api/tests/unit/tenant-domain-lifecycle.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/tenant-domains.test.ts",
+    "path": "apps/platform-api/tests/unit/tenant-domains.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/tenant-observability.test.ts",
+    "path": "apps/platform-api/tests/unit/tenant-observability.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/tenant-resolver.test.ts",
+    "path": "apps/platform-api/tests/unit/tenant-resolver.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/tenant-storage.test.ts",
+    "path": "apps/platform-api/tests/unit/tenant-storage.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/test-env-preload.test.ts",
+    "path": "apps/platform-api/tests/unit/test-env-preload.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/test-suite-completeness.test.ts",
+    "path": "apps/platform-api/tests/unit/test-suite-completeness.test.ts",
+    "kind": "evidence-verifier",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/token-crypto.test.ts",
+    "path": "apps/platform-api/tests/unit/token-crypto.test.ts",
+    "kind": "security",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/vanity-domain-challenge.test.ts",
+    "path": "apps/platform-api/tests/unit/vanity-domain-challenge.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/vanity-domain.test.ts",
+    "path": "apps/platform-api/tests/unit/vanity-domain.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/webhooks.test.ts",
+    "path": "apps/platform-api/tests/unit/webhooks.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/webhook-worker.test.ts",
+    "path": "apps/platform-api/tests/unit/webhook-worker.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/access-control/tests/access-control.test.ts",
+    "path": "packages/access-control/tests/access-control.test.ts",
+    "kind": "security",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/adapters-brevo/tests/adapters-brevo.test.ts",
+    "path": "packages/adapters-brevo/tests/adapters-brevo.test.ts",
+    "kind": "adapter",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/adapters-clickhouse/tests/adapters-clickhouse.test.ts",
+    "path": "packages/adapters-clickhouse/tests/adapters-clickhouse.test.ts",
+    "kind": "adapter",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-backing-service (compose) when integration; mocked otherwise",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/adapters-graphql/tests/adapters-graphql.test.ts",
+    "path": "packages/adapters-graphql/tests/adapters-graphql.test.ts",
+    "kind": "adapter",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/adapters-ingestion/tests/adapters-ingestion.test.ts",
+    "path": "packages/adapters-ingestion/tests/adapters-ingestion.test.ts",
+    "kind": "adapter",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-backing-service (compose) when integration; mocked otherwise",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/adapters-keycloak/tests/adapters-keycloak.test.ts",
+    "path": "packages/adapters-keycloak/tests/adapters-keycloak.test.ts",
+    "kind": "adapter",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-backing-service (compose) when integration; mocked otherwise",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/adapters-loki/tests/adapters-loki.test.ts",
+    "path": "packages/adapters-loki/tests/adapters-loki.test.ts",
+    "kind": "adapter",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-backing-service (compose) when integration; mocked otherwise",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/adapters-object-storage/tests/adapters-object-storage.test.ts",
+    "path": "packages/adapters-object-storage/tests/adapters-object-storage.test.ts",
+    "kind": "adapter",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-backing-service (compose) when integration; mocked otherwise",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/adapters-opentelemetry/tests/adapters-opentelemetry.test.ts",
+    "path": "packages/adapters-opentelemetry/tests/adapters-opentelemetry.test.ts",
+    "kind": "adapter",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/adapters-postgres/tests/adapters-postgres.test.ts",
+    "path": "packages/adapters-postgres/tests/adapters-postgres.test.ts",
+    "kind": "adapter",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-backing-service (compose) when integration; mocked otherwise",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/adapters-redis/tests/adapters-redis.test.ts",
+    "path": "packages/adapters-redis/tests/adapters-redis.test.ts",
+    "kind": "adapter",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-backing-service (compose) when integration; mocked otherwise",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/adapters-sentry/tests/adapters-sentry.test.ts",
+    "path": "packages/adapters-sentry/tests/adapters-sentry.test.ts",
+    "kind": "adapter",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/api-runtime/tests/health-contract.test.ts",
+    "path": "packages/api-runtime/tests/health-contract.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/audit-events/tests/audit-events.test.ts",
+    "path": "packages/audit-events/tests/audit-events.test.ts",
+    "kind": "security",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/authorisation-runtime/tests/authorisation-runtime.test.ts",
+    "path": "packages/authorisation-runtime/tests/authorisation-runtime.test.ts",
+    "kind": "security",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/config-runtime/tests/config-runtime.test.ts",
+    "path": "packages/config-runtime/tests/config-runtime.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/contracts-analytics/tests/contracts-analytics.test.ts",
+    "path": "packages/contracts-analytics/tests/contracts-analytics.test.ts",
+    "kind": "contract",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/contracts-auth/tests/contracts-auth.test.ts",
+    "path": "packages/contracts-auth/tests/contracts-auth.test.ts",
+    "kind": "contract",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/contracts-graphql/tests/contracts-graphql.test.ts",
+    "path": "packages/contracts-graphql/tests/contracts-graphql.test.ts",
+    "kind": "contract",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/contracts-ingestion/tests/contracts-ingestion.test.ts",
+    "path": "packages/contracts-ingestion/tests/contracts-ingestion.test.ts",
+    "kind": "contract",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/domain-core/tests/domain-core.test.ts",
+    "path": "packages/domain-core/tests/domain-core.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/domain-identity/tests/domain-identity.test.ts",
+    "path": "packages/domain-identity/tests/domain-identity.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/email-runtime/tests/email-runtime.test.ts",
+    "path": "packages/email-runtime/tests/email-runtime.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/feature-workflow/tests/feature-workflow.test.ts",
+    "path": "packages/feature-workflow/tests/feature-workflow.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/graphql-api-runtime/tests/graphql-api-runtime.test.ts",
+    "path": "packages/graphql-api-runtime/tests/graphql-api-runtime.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/graphql-browser-client/tests/client.test.ts",
+    "path": "packages/graphql-browser-client/tests/client.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/i18n-runtime/tests/i18n-runtime.test.ts",
+    "path": "packages/i18n-runtime/tests/i18n-runtime.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/notification-runtime/tests/notification-runtime.test.ts",
+    "path": "packages/notification-runtime/tests/notification-runtime.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/observability/tests/observability.test.ts",
+    "path": "packages/observability/tests/observability.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/platform-errors/tests/platform-errors-auth.test.ts",
+    "path": "packages/platform-errors/tests/platform-errors-auth.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/platform-errors/tests/platform-errors.test.ts",
+    "path": "packages/platform-errors/tests/platform-errors.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/platform-logging/tests/platform-logging.test.ts",
+    "path": "packages/platform-logging/tests/platform-logging.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/platform-observability/tests/platform-observability.test.ts",
+    "path": "packages/platform-observability/tests/platform-observability.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/platform-runtime-context/tests/platform-runtime-context.test.ts",
+    "path": "packages/platform-runtime-context/tests/platform-runtime-context.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/profile-configuration/tests/profile-configuration.test.ts",
+    "path": "packages/profile-configuration/tests/profile-configuration.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/queue-runtime/tests/queue-runtime.test.ts",
+    "path": "packages/queue-runtime/tests/queue-runtime.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/search-runtime/tests/search-runtime.test.ts",
+    "path": "packages/search-runtime/tests/search-runtime.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/security-auth/tests/security-auth.test.ts",
+    "path": "packages/security-auth/tests/security-auth.test.ts",
+    "kind": "security",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/session-runtime/tests/session-runtime.test.ts",
+    "path": "packages/session-runtime/tests/session-runtime.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/storage-runtime/tests/storage-runtime.test.ts",
+    "path": "packages/storage-runtime/tests/storage-runtime.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/ui-design-system/tests/accessible-controls.test.tsx",
+    "path": "packages/ui-design-system/tests/accessible-controls.test.tsx",
+    "kind": "a11y",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (no live services)",
+    "stageCoverage": "dev,test,staging,prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "packages/ui-design-system/tests/button.test.tsx",
+    "path": "packages/ui-design-system/tests/button.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (no live services)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/ui-design-system/tests/data-table.test.tsx",
+    "path": "packages/ui-design-system/tests/data-table.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (no live services)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "packages/worker-runtime/tests/worker-runtime.test.ts",
+    "path": "packages/worker-runtime/tests/worker-runtime.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/_template/__tests__/FeaturePage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/_template/__tests__/FeaturePage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-scheduled-jobs/__tests__/AdminScheduledJobsPage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-scheduled-jobs/__tests__/AdminScheduledJobsPage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-storage/__tests__/AdminStoragePage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-storage/__tests__/AdminStoragePage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-members/__tests__/AdminMembersPage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-members/__tests__/AdminMembersPage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-features/__tests__/AdminFeaturesPage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-features/__tests__/AdminFeaturesPage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-usage/__tests__/AdminUsagePage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-usage/__tests__/AdminUsagePage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-readiness/__tests__/AdminReadinessPage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-readiness/__tests__/AdminReadinessPage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/organisation/__tests__/OrganisationProfilePage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/organisation/__tests__/OrganisationProfilePage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-webhooks/__tests__/AdminWebhooksPage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-webhooks/__tests__/AdminWebhooksPage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-config/__tests__/AdminConfigPage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-config/__tests__/AdminConfigPage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-platform/__tests__/AdminPlatformPage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-platform/__tests__/AdminPlatformPage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-observability/__tests__/AdminObservabilityPage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-observability/__tests__/AdminObservabilityPage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-domains/__tests__/AdminDomainsPage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-domains/__tests__/AdminDomainsPage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-monitoring/__tests__/AdminMonitoringPage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-monitoring/__tests__/AdminMonitoringPage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-entitlements/__tests__/AdminEntitlementsPage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-entitlements/__tests__/AdminEntitlementsPage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-email/__tests__/AdminEmailPage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-email/__tests__/AdminEmailPage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin/__tests__/AuditTrailPanel.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin/__tests__/AuditTrailPanel.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin/__tests__/admin-error.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin/__tests__/admin-error.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-events/__tests__/AdminEventsPage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-events/__tests__/AdminEventsPage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-search/__tests__/AdminSearchPage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-search/__tests__/AdminSearchPage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-auth/__tests__/IdpManager.oidc.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-auth/__tests__/IdpManager.oidc.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-auth/__tests__/AdminAuthPage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-auth/__tests__/AdminAuthPage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-developer/__tests__/AdminDeveloperPage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-developer/__tests__/AdminDeveloperPage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/features/admin-account/__tests__/AdminAccountPage.test.tsx",
+    "path": "apps/react-enterprise-app/src/features/admin-account/__tests__/AdminAccountPage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/components/__tests__/AdminLayout.test.tsx",
+    "path": "apps/react-enterprise-app/src/components/__tests__/AdminLayout.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/tests/as-text.test.ts",
+    "path": "apps/react-enterprise-app/src/tests/as-text.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/tests/use-session.test.ts",
+    "path": "apps/react-enterprise-app/src/tests/use-session.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/tests/theme/theme.test.tsx",
+    "path": "apps/react-enterprise-app/src/tests/theme/theme.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/tests/app.test.tsx",
+    "path": "apps/react-enterprise-app/src/tests/app.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/tests/substrate/require-permission.test.tsx",
+    "path": "apps/react-enterprise-app/src/tests/substrate/require-permission.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/tests/substrate/authenticated-layout.test.tsx",
+    "path": "apps/react-enterprise-app/src/tests/substrate/authenticated-layout.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/tests/admin-logs/AdminLogsPage.test.tsx",
+    "path": "apps/react-enterprise-app/src/tests/admin-logs/AdminLogsPage.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/tests/admin-logs/admin-logs-client.test.ts",
+    "path": "apps/react-enterprise-app/src/tests/admin-logs/admin-logs-client.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/tests/msw/msw-substrate.test.ts",
+    "path": "apps/react-enterprise-app/src/tests/msw/msw-substrate.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/routes/__tests__/login.test.tsx",
+    "path": "apps/react-enterprise-app/src/routes/__tests__/login.test.tsx",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom + MSW (vitest)",
+    "stageCoverage": "test (test:frontend:run)",
+    "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "tools/architecture/validate-action-register/tests/validate-action-register.test.mjs",
+    "path": "tools/architecture/validate-action-register/tests/validate-action-register.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/validate-universal-foundation/tests/validate-universal-foundation.test.mjs",
+    "path": "tools/architecture/validate-universal-foundation/tests/validate-universal-foundation.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/validate-openapi-drift/tests/validate-openapi-drift.test.mjs",
+    "path": "tools/architecture/validate-openapi-drift/tests/validate-openapi-drift.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/_shared/tests/shared-primitives.test.mjs",
+    "path": "tools/architecture/_shared/tests/shared-primitives.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/validate-slice-readiness/tests/validate-slice-readiness.test.mjs",
+    "path": "tools/architecture/validate-slice-readiness/tests/validate-slice-readiness.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/validate-source-imports/tests/validate-source-imports.test.mjs",
+    "path": "tools/architecture/validate-source-imports/tests/validate-source-imports.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/validate-source-imports/tests/validate-source-imports-unit.test.mjs",
+    "path": "tools/architecture/validate-source-imports/tests/validate-source-imports-unit.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/validate-package-codemap/tests/validate-package-codemap.test.mjs",
+    "path": "tools/architecture/validate-package-codemap/tests/validate-package-codemap.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/validate-package-metadata/tests/validate-package-metadata-unit.test.mjs",
+    "path": "tools/architecture/validate-package-metadata/tests/validate-package-metadata-unit.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/validate-package-metadata/tests/validate-package-metadata.test.mjs",
+    "path": "tools/architecture/validate-package-metadata/tests/validate-package-metadata.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/validate-i18n/tests/validate-i18n.test.mjs",
+    "path": "tools/architecture/validate-i18n/tests/validate-i18n.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/generate-package-readmes/tests/generate-package-readmes-unit.test.mjs",
+    "path": "tools/architecture/generate-package-readmes/tests/generate-package-readmes-unit.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs",
+    "path": "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/validate-frontend-conventions/tests/validate-frontend-conventions.test.mjs",
+    "path": "tools/architecture/validate-frontend-conventions/tests/validate-frontend-conventions.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/generate-package-inventory/tests/generate-package-inventory.test.mjs",
+    "path": "tools/architecture/generate-package-inventory/tests/generate-package-inventory.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence.test.mjs",
+    "path": "tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence-unit.test.mjs",
+    "path": "tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence-unit.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/orchestrator/tests/dependency-order.test.mjs",
+    "path": "tools/architecture/orchestrator/tests/dependency-order.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/orchestrator/tests/check-mode.test.mjs",
+    "path": "tools/architecture/orchestrator/tests/check-mode.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/orchestrator/tests/self-evidence.test.mjs",
+    "path": "tools/architecture/orchestrator/tests/self-evidence.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/orchestrator/tests/write-mode.test.mjs",
+    "path": "tools/architecture/orchestrator/tests/write-mode.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/orchestrator/tests/no-default-evidence-generation.test.mjs",
+    "path": "tools/architecture/orchestrator/tests/no-default-evidence-generation.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/orchestrator/tests/failure-stop.test.mjs",
+    "path": "tools/architecture/orchestrator/tests/failure-stop.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/orchestrator/tests/orchestrator-unit.test.mjs",
+    "path": "tools/architecture/orchestrator/tests/orchestrator-unit.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/architecture/generate-lifecycle-reports/tests/generate-lifecycle-reports.test.mjs",
+    "path": "tools/architecture/generate-lifecycle-reports/tests/generate-lifecycle-reports.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/e2e/scenario-manifest.test.mjs",
+    "path": "tools/e2e/scenario-manifest.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/e2e/result-contract.test.mjs",
+    "path": "tools/e2e/result-contract.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/e2e/sentry-assertion/tests/sentry-assertion.test.mjs",
+    "path": "tools/e2e/sentry-assertion/tests/sentry-assertion.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/e2e/correlation-headers.test.mjs",
+    "path": "tools/e2e/correlation-headers.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/e2e/observability-correlation/tests/classify.test.mjs",
+    "path": "tools/e2e/observability-correlation/tests/classify.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/e2e/tempo-trace.test.mjs",
+    "path": "tools/e2e/tempo-trace.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "tools/mcp/platform-governor/tests/handshake.test.mjs",
+    "path": "tools/mcp/platform-governor/tests/handshake.test.mjs",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "scripts/evidence/tests/deprecation-evidence-facts.test.mjs",
+    "path": "scripts/evidence/tests/deprecation-evidence-facts.test.mjs",
+    "kind": "evidence-verifier",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "scripts/evidence/tests/verify-ladder.test.mjs",
+    "path": "scripts/evidence/tests/verify-ladder.test.mjs",
+    "kind": "evidence-verifier",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "scripts/tests/tests/aggregate-confidence.test.mjs",
+    "path": "scripts/tests/tests/aggregate-confidence.test.mjs",
+    "kind": "evidence-verifier",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "scripts/tests/tests/release-confidence-contract.test.mjs",
+    "path": "scripts/tests/tests/release-confidence-contract.test.mjs",
+    "kind": "gate",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (gate stage, via make all/check)",
+    "failureEvidence": "make target non-zero; aggregate-confidence/verify-ladder evidence"
+  },
+  {
+    "id": "scripts/tests/tests/sonar-oidc-honesty.test.mjs",
+    "path": "scripts/tests/tests/sonar-oidc-honesty.test.mjs",
+    "kind": "gate",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (gate stage, via make all/check)",
+    "failureEvidence": "make target non-zero; aggregate-confidence/verify-ladder evidence"
+  },
+  {
+    "id": "scripts/tests/tests/stage-exit.test.mjs",
+    "path": "scripts/tests/tests/stage-exit.test.mjs",
+    "kind": "stage",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "all (dev->test->staging->prod ladder)",
+    "failureEvidence": "stage-exit.sh writes stage evidence; non-zero halts ladder"
+  },
+  {
+    "id": "apps/platform-api/scripts/alerting-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/alerting-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/api-keys-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/api-keys-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/entitlements-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/entitlements-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/environment-operations-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/environment-operations-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/environment-registry-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/environment-registry-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/event-bus-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/event-bus-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/event-worker-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/event-worker-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/history-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/history-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/idp-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/idp-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/metering-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/metering-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/notification-email-transport-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/notification-email-transport-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/search-isolation-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/search-isolation-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/search-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/search-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/secrets-openbao-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/secrets-openbao-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/secret-store-contract-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/secret-store-contract-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/tenant-domains-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/tenant-domains-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/webhooks-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/webhooks-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "e2e/discovery/browser-bff-trace.spec.ts",
+    "path": "e2e/discovery/browser-bff-trace.spec.ts",
+    "kind": "playwright-journey",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose web profile, fixture session personas",
+    "stageCoverage": "dev,test,staging,prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/discovery/accessibility.spec.ts",
+    "path": "e2e/discovery/accessibility.spec.ts",
+    "kind": "a11y",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose web profile, fixture session personas",
+    "stageCoverage": "dev,test,staging,prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/discovery/persona-authz.spec.ts",
+    "path": "e2e/discovery/persona-authz.spec.ts",
+    "kind": "persona",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose web profile, fixture session personas",
+    "stageCoverage": "dev,test,staging,prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/discovery/clickability.spec.ts",
+    "path": "e2e/discovery/clickability.spec.ts",
+    "kind": "playwright-journey",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose web profile, fixture session personas",
+    "stageCoverage": "dev,test,staging,prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/discovery/persona-matrix.spec.ts",
+    "path": "e2e/discovery/persona-matrix.spec.ts",
+    "kind": "persona",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose web profile, fixture session personas",
+    "stageCoverage": "dev,test,staging,prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/identity/broker-login.spec.ts",
+    "path": "e2e/identity/broker-login.spec.ts",
+    "kind": "e2e",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose identity profile (Keycloak)",
+    "stageCoverage": "staging,prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/external/login.spec.ts",
+    "path": "e2e/external/login.spec.ts",
+    "kind": "e2e",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose web profile + Caddy :8080",
+    "stageCoverage": "staging,prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/external/tenant-prod.spec.ts",
+    "path": "e2e/external/tenant-prod.spec.ts",
+    "kind": "e2e",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose web profile + Caddy :8080",
+    "stageCoverage": "prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/external/logout.spec.ts",
+    "path": "e2e/external/logout.spec.ts",
+    "kind": "e2e",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose web profile + Caddy :8080",
+    "stageCoverage": "staging,prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/external/tool-services.spec.ts",
+    "path": "e2e/external/tool-services.spec.ts",
+    "kind": "e2e",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose web profile + Caddy :8080",
+    "stageCoverage": "staging,prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/external/auth-negative.spec.ts",
+    "path": "e2e/external/auth-negative.spec.ts",
+    "kind": "e2e",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose web profile + Caddy :8080",
+    "stageCoverage": "staging,prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/external/caddy-links.spec.ts",
+    "path": "e2e/external/caddy-links.spec.ts",
+    "kind": "e2e",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose web profile + Caddy :8080",
+    "stageCoverage": "staging,prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/identity/redirect-merge.test.ts",
+    "path": "e2e/identity/redirect-merge.test.ts",
+    "kind": "integration",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose identity profile (Keycloak)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "e2e/prod/cross-cutting.test.ts",
+    "path": "e2e/prod/cross-cutting.test.ts",
+    "kind": "e2e",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live prod target (aldous.info)",
+    "stageCoverage": "prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/prod/asset-integrity.test.ts",
+    "path": "e2e/prod/asset-integrity.test.ts",
+    "kind": "e2e",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live prod target (aldous.info)",
+    "stageCoverage": "prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/prod/performance-budget.test.ts",
+    "path": "e2e/prod/performance-budget.test.ts",
+    "kind": "e2e",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live prod target (aldous.info)",
+    "stageCoverage": "prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/prod/security-headers.test.ts",
+    "path": "e2e/prod/security-headers.test.ts",
+    "kind": "e2e",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live prod target (aldous.info)",
+    "stageCoverage": "prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/prod/error-handling.test.ts",
+    "path": "e2e/prod/error-handling.test.ts",
+    "kind": "e2e",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live prod target (aldous.info)",
+    "stageCoverage": "prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/prod/cookie-security.test.ts",
+    "path": "e2e/prod/cookie-security.test.ts",
+    "kind": "e2e",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live prod target (aldous.info)",
+    "stageCoverage": "prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/prod/admin-tools.test.ts",
+    "path": "e2e/prod/admin-tools.test.ts",
+    "kind": "e2e",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live prod target (aldous.info)",
+    "stageCoverage": "prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/prod/api-contract.test.ts",
+    "path": "e2e/prod/api-contract.test.ts",
+    "kind": "e2e",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live prod target (aldous.info)",
+    "stageCoverage": "prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/internal/smoke.test.ts",
+    "path": "e2e/internal/smoke.test.ts",
+    "kind": "e2e",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "dev,test,staging,prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/internal/build.test.ts",
+    "path": "e2e/internal/build.test.ts",
+    "kind": "e2e",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "dev,test,staging,prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "e2e/external/smoke.test.ts",
+    "path": "e2e/external/smoke.test.ts",
+    "kind": "e2e",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose web profile + Caddy :8080",
+    "stageCoverage": "staging,prod",
+    "failureEvidence": "playwright HTML report + trace/screenshot/video on failure"
+  },
+  {
+    "id": "playwright.build.config.ts",
+    "path": "playwright.build.config.ts",
+    "kind": "gate",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "defines playwright project/baseURL per stage",
+    "stageCoverage": "test (prod-build)",
+    "failureEvidence": "playwright report config"
+  },
+  {
+    "id": "playwright.discovery.config.ts",
+    "path": "playwright.discovery.config.ts",
+    "kind": "gate",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "defines playwright project/baseURL per stage",
+    "stageCoverage": "dev,test",
+    "failureEvidence": "playwright report config"
+  },
+  {
+    "id": "playwright.external.config.ts",
+    "path": "playwright.external.config.ts",
+    "kind": "gate",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "defines playwright project/baseURL per stage",
+    "stageCoverage": "staging,prod",
+    "failureEvidence": "playwright report config"
+  },
+  {
+    "id": "playwright.identity.config.ts",
+    "path": "playwright.identity.config.ts",
+    "kind": "gate",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "defines playwright project/baseURL per stage",
+    "stageCoverage": "staging,prod",
+    "failureEvidence": "playwright report config"
+  },
+  {
+    "id": "playwright.internal.config.ts",
+    "path": "playwright.internal.config.ts",
+    "kind": "gate",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "defines playwright project/baseURL per stage",
+    "stageCoverage": "dev,test,staging",
+    "failureEvidence": "playwright report config"
+  },
+  {
+    "id": "playwright.prod.config.ts",
+    "path": "playwright.prod.config.ts",
+    "kind": "gate",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "defines playwright project/baseURL per stage",
+    "stageCoverage": "prod",
+    "failureEvidence": "playwright report config"
+  },
+  {
+    "id": "apps/react-enterprise-app/vitest.config.ts",
+    "path": "apps/react-enterprise-app/vitest.config.ts",
+    "kind": "gate",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "jsdom + MSW setup",
+    "stageCoverage": "test",
+    "failureEvidence": "vitest config"
+  },
+  {
+    "id": "tools/semgrep/rules.yml",
+    "path": "tools/semgrep/rules.yml",
+    "kind": "semgrep",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (static/CLI gate): npm run semgrep / semgrep:gate",
+    "stageCoverage": "test (gate stage, via make all/check)",
+    "failureEvidence": "SARIF/console findings, semgrep:gate exits on ERROR"
+  },
+  {
+    "id": ".github/codeql/codeql-config.yml",
+    "path": ".github/codeql/codeql-config.yml",
+    "kind": "codeql",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (static/CLI gate): npm run codeql",
+    "stageCoverage": "test (gate stage, via make all/check)",
+    "failureEvidence": ".codeql/react.sarif"
+  },
+  {
+    "id": "osv-scanner.toml",
+    "path": "osv-scanner.toml",
+    "kind": "osv",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (static/CLI gate): npm run audit:osv",
+    "stageCoverage": "test (gate stage, via make all/check)",
+    "failureEvidence": "osv-scanner report, non-zero on vuln"
+  },
+  {
+    "id": ".gitleaks.toml",
+    "path": ".gitleaks.toml",
+    "kind": "gitleaks",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (static/CLI gate): npm run secrets:scan",
+    "stageCoverage": "test (gate stage, via make all/check)",
+    "failureEvidence": "gitleaks findings report"
+  },
+  {
+    "id": "package.json#license:policy",
+    "path": "package.json#license:policy",
+    "kind": "license",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (static/CLI gate): npm run license:policy",
+    "stageCoverage": "test (gate stage, via make all/check)",
+    "failureEvidence": "license-checker failOn list, non-zero on blocked license"
+  },
+  {
+    "id": "package.json#sbom:generate",
+    "path": "package.json#sbom:generate",
+    "kind": "sbom",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (static/CLI gate): npm run sbom:generate",
+    "stageCoverage": "test (gate stage, via make all/check)",
+    "failureEvidence": "CycloneDX SBOM at docs/evidence/security/sbom-baseline.json"
+  },
+  {
+    "id": ".spectral.yaml",
+    "path": ".spectral.yaml",
+    "kind": "gate",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (static/CLI gate): npm run openapi:lint (spectral)",
+    "stageCoverage": "test (gate stage, via make all/check)",
+    "failureEvidence": "make target non-zero; aggregate-confidence/verify-ladder evidence"
+  },
+  {
+    "id": "package.json#audit:deps",
+    "path": "package.json#audit:deps",
+    "kind": "gate",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (static/CLI gate): npm audit high",
+    "stageCoverage": "test (gate stage, via make all/check)",
+    "failureEvidence": "make target non-zero; aggregate-confidence/verify-ladder evidence"
+  },
+  {
+    "id": "package.json#depcruise",
+    "path": "package.json#depcruise",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (static/CLI gate): dependency-cruiser import boundaries",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "knip.json",
+    "path": "knip.json",
+    "kind": "gate",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (static/CLI gate): npm run knip (dead code)",
+    "stageCoverage": "test (gate stage, via make all/check)",
+    "failureEvidence": "make target non-zero; aggregate-confidence/verify-ladder evidence"
+  },
+  {
+    "id": "sonar-project.properties",
+    "path": "sonar-project.properties",
+    "kind": "gate",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (static/CLI gate): make sonar (absolute-zero, test stage only)",
+    "stageCoverage": "test (gate stage, via make all/check)",
+    "failureEvidence": "make target non-zero; aggregate-confidence/verify-ladder evidence"
+  },
+  {
+    "id": "eslint.config.mjs",
+    "path": "eslint.config.mjs",
+    "kind": "gate",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (static/CLI gate): npm run lint",
+    "stageCoverage": "test (gate stage, via make all/check)",
+    "failureEvidence": "make target non-zero; aggregate-confidence/verify-ladder evidence"
+  },
+  {
+    "id": "package.json#openapi:drift",
+    "path": "package.json#openapi:drift",
+    "kind": "contract",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (static/CLI gate): validate-openapi-drift --strict (hard gate)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "package.json#usf:validate",
+    "path": "package.json#usf:validate",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (static/CLI gate): validate-universal-foundation",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "package.json#frontend:conventions",
+    "path": "package.json#frontend:conventions",
+    "kind": "architecture",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (static/CLI gate): validate-frontend-conventions",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "package.json#codegen:check",
+    "path": "package.json#codegen:check",
+    "kind": "contract",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (static/CLI gate): graphql-codegen drift gate",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "scripts/stages/run-stage.sh",
+    "path": "scripts/stages/run-stage.sh",
+    "kind": "stage",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "compose stack per stage policy (env/stage-policy.yaml)",
+    "stageCoverage": "all (dev->test->staging->prod ladder)",
+    "failureEvidence": "stage-exit.sh writes stage evidence; non-zero halts ladder"
+  },
+  {
+    "id": "scripts/stages/stage-exit.sh",
+    "path": "scripts/stages/stage-exit.sh",
+    "kind": "stage",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "compose stack per stage policy (env/stage-policy.yaml)",
+    "stageCoverage": "all (dev->test->staging->prod ladder)",
+    "failureEvidence": "stage-exit.sh writes stage evidence; non-zero halts ladder"
+  },
+  {
+    "id": "scripts/evidence/verify-ladder.mjs",
+    "path": "scripts/evidence/verify-ladder.mjs",
+    "kind": "evidence-verifier",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "compose stack per stage policy (env/stage-policy.yaml)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "scripts/evidence/write-stage-evidence.mjs",
+    "path": "scripts/evidence/write-stage-evidence.mjs",
+    "kind": "evidence-verifier",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "compose stack per stage policy (env/stage-policy.yaml)",
+    "stageCoverage": "test (make check/architecture)",
+    "failureEvidence": "node:test assertion output; orchestrator report"
+  },
+  {
+    "id": "scripts/smoke/compose-smoke.sh",
+    "path": "scripts/smoke/compose-smoke.sh",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose default/observability services (curl smoke)",
+    "stageCoverage": "test,staging,prod",
+    "failureEvidence": "curl/http smoke non-zero exit"
+  },
+  {
+    "id": "scripts/smoke/http-smoke.sh",
+    "path": "scripts/smoke/http-smoke.sh",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose default/observability services (curl smoke)",
+    "stageCoverage": "test,staging,prod",
+    "failureEvidence": "curl/http smoke non-zero exit"
+  },
+  {
+    "id": "scripts/smoke/loki-smoke.sh",
+    "path": "scripts/smoke/loki-smoke.sh",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose default/observability services (curl smoke)",
+    "stageCoverage": "test,staging,prod",
+    "failureEvidence": "curl/http smoke non-zero exit"
+  },
+  {
+    "id": "scripts/smoke/observability-smoke.sh",
+    "path": "scripts/smoke/observability-smoke.sh",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose default/observability services (curl smoke)",
+    "stageCoverage": "test,staging,prod",
+    "failureEvidence": "curl/http smoke non-zero exit"
+  },
+  {
+    "id": "scripts/smoke/sentry-smoke.sh",
+    "path": "scripts/smoke/sentry-smoke.sh",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose default/observability services (curl smoke)",
+    "stageCoverage": "test,staging,prod",
+    "failureEvidence": "curl/http smoke non-zero exit"
+  }
+]

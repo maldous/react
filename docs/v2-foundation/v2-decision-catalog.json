@@ -1,0 +1,964 @@
+[
+  {
+    "v2AdrId": "V2-ADR-0001",
+    "title": "Use modular hexagonal architecture",
+    "status": "Accepted",
+    "decision": "Adopt modular hexagonal architecture as the base application structure. Organise the product around domain modules and application use cases. Treat frameworks, databases, APIs, external systems, background jobs, and UI delivery mechanisms as adapters behind ports. Implement inside a modular monorepo.",
+    "alternativesConsidered": [
+      "Layered/MVC monolith where the framework defines the structure",
+      "Microservices from day one",
+      "Polyrepo per concern"
+    ],
+    "rationale": "Keeping framework, database, and UI choices as adapters prevents accidental architecture and preserves testability and substitution. Proven across the V1 tree; reused wholesale.",
+    "supersedesV1Adrs": ["ADR-0001"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0002",
+    "title": "Model the platform around bounded contexts",
+    "status": "Accepted",
+    "decision": "Model the platform around bounded contexts that define the primary domain boundaries within the modular architecture. Contexts are modular boundaries within one repository and runtime, not independently deployed services. Each context owns its language, use cases, domain rules, and data. Carry forward the proven domain/context map (experience, core, integration, persistence, analytics, operations).",
+    "alternativesConsidered": [
+      "A single undifferentiated domain model",
+      "Microservice-per-context split immediately",
+      "Technical-layer decomposition instead of domain decomposition"
+    ],
+    "rationale": "Bounded contexts give clear ownership and isolation while deferring distribution cost. The V1 context map was validated during skeleton development and is reused.",
+    "supersedesV1Adrs": ["ADR-0002"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0003",
+    "title": "Use a modular monorepo with promotion-ready package boundaries",
+    "status": "Accepted",
+    "decision": "Use a modular monorepo as the development and architecture-validation model. Design every package with explicit ownership, public exports, dependency rules, and test boundaries so it can be promoted to a versioned package or extracted later. Promote only when justified (stable contract, independent owner/cadence, external consumers, security boundary, deployment lifecycle, reuse value). Support affected-package build and test workflows.",
+    "alternativesConsidered": [
+      "Polyrepo from the start",
+      "Flat single-package repository",
+      "Monorepo without promotion criteria"
+    ],
+    "rationale": "A monorepo with promotion criteria gives fast iteration now and a clean extraction path later, with affected-graph CI to avoid full-sweep cost.",
+    "supersedesV1Adrs": ["ADR-0003"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0004",
+    "title": "Define package lifecycle classes",
+    "status": "Accepted",
+    "decision": "Define package lifecycle classes using the format <stage>.<role>, where stage is one of experimental, candidate, active, stable, and role describes the package's purpose. The class is canonical metadata for every package.",
+    "alternativesConsidered": [
+      "Free-text maturity labels",
+      "No lifecycle classification",
+      "Separate maturity and role registries instead of a combined class"
+    ],
+    "rationale": "A regular two-part class makes maturity and role machine-checkable and drives generated docs, inventory, and transition gates.",
+    "supersedesV1Adrs": ["ADR-0004"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0005",
+    "title": "Define package metadata vocabulary and format",
+    "status": "Accepted",
+    "decision": "Use package.json as the single package metadata source of truth. Do not introduce a separate package.metadata.json or hand-maintain README metadata or external-model projection files. Reuse standard package.json fields where they fit; place architecture-specific fields under one namespaced \"architecture\" object aligned with recognised external models without adopting them wholesale.",
+    "alternativesConsidered": [
+      "A bespoke package.metadata.json sidecar",
+      "Adopting Backstage/C4/SPDX schemas wholesale as sources of truth",
+      "Hand-maintained README metadata"
+    ],
+    "rationale": "One source of truth in package.json keeps metadata co-located, tool-readable, and free of drift; the namespaced object avoids polluting standard fields.",
+    "supersedesV1Adrs": ["ADR-0005"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0006",
+    "title": "Define package lifecycle transition rules",
+    "status": "Accepted",
+    "decision": "Govern package lifecycle transitions with standard transition gates and proportional evidence. A transition that follows the rules, passes the gates, updates package.json architecture metadata, regenerates docs, and records evidence does not require a new ADR. Canonical fields are architecture.lifecycle.stage and architecture.lifecycle.role.",
+    "alternativesConsidered": [
+      "Require a new ADR for every transition",
+      "No governance on transitions",
+      "Transition tracking outside package metadata"
+    ],
+    "rationale": "Proportional, gate-backed transitions allow normal lifecycle movement without ADR overhead while keeping an auditable evidence trail.",
+    "supersedesV1Adrs": ["ADR-0006"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0007",
+    "title": "Define architecture artifact and repository directory layout",
+    "status": "Accepted",
+    "decision": "Use an explicit, separated architecture-artifact layout: docs/adr (ADRs, template, action register), docs/schemas, docs/evidence, docs/architecture, reports, and tools/architecture, each with a defined purpose and naming convention.",
+    "alternativesConsidered": [
+      "Ad-hoc placement of architecture documents",
+      "A single docs folder without separation",
+      "Storing generated reports alongside source ADRs"
+    ],
+    "rationale": "A fixed layout makes governance artifacts discoverable and lets tooling locate ADRs, schemas, evidence, and reports deterministically.",
+    "supersedesV1Adrs": ["ADR-0007"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0008",
+    "title": "Define generated package README structure",
+    "status": "Accepted",
+    "decision": "Generate package READMEs with a deterministic structure from package-local package.json architecture metadata. READMEs live at predictable paths per package/app/tool. Manual content is confined to explicit manual-extension blocks.",
+    "alternativesConsidered": [
+      "Hand-written READMEs",
+      "No standard README structure",
+      "Metadata duplicated into the README as source of truth"
+    ],
+    "rationale": "Generation from metadata removes drift and keeps documentation consistent and reviewable; manual blocks preserve necessary human context.",
+    "supersedesV1Adrs": ["ADR-0008"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0009",
+    "title": "Define package inventory and report structure",
+    "status": "Accepted",
+    "decision": "Generate package inventory and lifecycle reports from package-local package.json architecture metadata into canonical files under reports/ (package-inventory and lifecycle summaries in JSON and Markdown).",
+    "alternativesConsidered": [
+      "Manually maintained inventory spreadsheets",
+      "No inventory",
+      "Inventory derived from directory scanning rather than metadata"
+    ],
+    "rationale": "A generated inventory from authoritative metadata stays accurate and supports lifecycle governance and audits.",
+    "supersedesV1Adrs": ["ADR-0009"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0010",
+    "title": "Define lifecycle transition evidence bundle format",
+    "status": "Accepted",
+    "decision": "Use one evidence bundle per lifecycle transition under docs/evidence/lifecycle/<package-slug>/<timestamp>-<from-class>-to-<to-class>/transition-evidence.json. This path holds reviewed transition evidence, distinct from generated reports.",
+    "alternativesConsidered": [
+      "No transition evidence",
+      "Evidence embedded only in commit messages",
+      "Storing evidence in generated reports"
+    ],
+    "rationale": "A standard committed bundle makes each transition auditable and reproducible, separate from regenerated outputs.",
+    "supersedesV1Adrs": ["ADR-0010"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0011",
+    "title": "Define architecture tooling execution model",
+    "status": "Accepted",
+    "decision": "Use small composable architecture tools under tools/architecture/, each with a standard structure (package.json, README, src/index.mjs), coordinated by a required dependency-managing orchestrator. Shared primitives are factored into a dependency-free shared module; CLI parsers stay per-tool.",
+    "alternativesConsidered": [
+      "One monolithic architecture-validation tool",
+      "A universal CLI argument parser across all tools",
+      "Third-party governance tool as the engine"
+    ],
+    "rationale": "Composable tools with an orchestrator keep concerns isolated and testable; shared primitives reduce duplication without forcing a universal CLI that would change per-tool behaviour.",
+    "supersedesV1Adrs": ["ADR-0011"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0012",
+    "title": "Define architecture tooling test, validation, and self-evidence strategy",
+    "status": "Accepted",
+    "decision": "Use a strict local deterministic tooling-quality strategy covering tests, validation, third-party validator usage, orchestrator dependency tests, TUI rules, quality gates, and tool self-evidence. Each tool follows a baseline test layout and emits self-evidence against a single 18-field schema via a shared writer that fails closed.",
+    "alternativesConsidered": [
+      "Tooling without its own tests",
+      "Per-tool ad-hoc self-evidence formats",
+      "Non-deterministic/network-dependent tooling tests"
+    ],
+    "rationale": "Deterministic tests and a single self-evidence schema make the governance tooling itself trustworthy and reproducible.",
+    "supersedesV1Adrs": ["ADR-0012"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0013",
+    "title": "Define client-facing API boundary",
+    "status": "Accepted",
+    "decision": "Use GraphQL as the primary client-facing API boundary, with REST as a supplementary BFF surface for health, webhooks, uploads, and integration callbacks. The React app consumes server data only through the BFF and the GraphQL adapter; it never imports domain, contract, or operations packages directly. Authorisation is delivered by authorisation-runtime + adapters-keycloak and platform-api server-side authz.",
+    "alternativesConsidered": [
+      "REST-first as the primary client API",
+      "Direct database/Keycloak access from the client",
+      "A speculative workflow feature package as the client entry"
+    ],
+    "rationale": "A GraphQL primary boundary with a thin REST BFF surface keeps the client decoupled and the server authoritative. V2 wires only the entries proven in V1 and omits the never-wired speculative ones.",
+    "supersedesV1Adrs": ["ADR-0013"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0014",
+    "title": "Define transactional data ownership",
+    "status": "Accepted",
+    "decision": "The Postgres adapter owns all transactional persistence (profile configuration, role assignments, operational and session state, audit records, transactional business data). Domain concerns are expressed through application-local ports under apps/platform-api/src/ports/ with Postgres adapters; authorisation lives in authorisation-runtime + adapters-keycloak.",
+    "alternativesConsidered": [
+      "Shared mutable database access from feature packages",
+      "Standalone domain port packages with no consumers",
+      "ORM-as-architecture with persistence leaking into domain"
+    ],
+    "rationale": "Centralising transactional ownership in one adapter behind ports keeps persistence substitutable and the domain pure. V2 adopts the application-local port homes proven in V1.",
+    "supersedesV1Adrs": ["ADR-0014"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0015",
+    "title": "Define analytical data ownership",
+    "status": "Accepted",
+    "decision": "The ClickHouse adapter owns analytical persistence (analytical events, ingestion history, high-volume reporting). The analytics contracts package owns analytical event contracts; feature packages emit events via those contract types and never import the ClickHouse adapter directly.",
+    "alternativesConsidered": [
+      "Storing analytical data in the transactional store",
+      "Direct ClickHouse access from features",
+      "No separation of analytical and transactional contracts"
+    ],
+    "rationale": "Separating analytical ownership keeps high-volume reporting off the transactional store and behind contract-typed emission.",
+    "supersedesV1Adrs": ["ADR-0015"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0016",
+    "title": "Define enterprise quality gate and security baseline",
+    "status": "Accepted",
+    "decision": "Use a three-tier quality-gate model: Tier 1 authoritative architecture gates (package metadata, import boundaries, lifecycle evidence, tooling tests) always hard; Tier 2 hard quality and security gates on every push/PR; Tier 3 advisory. validate-source-imports is the sole authority for import boundaries. The Sonar absolute-zero gate runs exactly once, at the test stage of the full-confidence ladder.",
+    "alternativesConsidered": [
+      "A single flat gate set",
+      "Multiple overlapping import-boundary validators",
+      "Running Sonar in the fast check gate or twice in the ladder"
+    ],
+    "rationale": "Tiering separates authoritative blocking gates from advisory signal; a single import authority and a single Sonar scan avoid duplication and double-scan cost.",
+    "supersedesV1Adrs": ["ADR-0016"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0017",
+    "title": "Define local integration service substrate",
+    "status": "Accepted",
+    "decision": "Use Docker Compose with profile-gated services. Default profile provides postgres, redis, clickhouse, minio, mailpit, otel-collector; named profiles add sonar, identity (Keycloak), cloud-mocks (LocalStack), external-mocks (WireMock), sentry, and web. All images are pinned to explicit tags; latest is never used.",
+    "alternativesConsidered": [
+      "Each developer installs services locally by hand",
+      "A single always-on compose stack with no profiles",
+      "Floating latest image tags"
+    ],
+    "rationale": "Profile-gated, pinned Compose gives a reproducible free local-first substrate that mirrors adapters without requiring paid services.",
+    "supersedesV1Adrs": ["ADR-0017"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0019",
+    "title": "Define React component platform and frontend integration stack",
+    "status": "Accepted",
+    "decision": "Adopt a Vite-built React 19 SPA with a separate Node BFF/API runtime, TanStack Router and Query, RHF + Zod forms, and a design-system component layer. The React app never imports adapter/server-only/Node-only modules. The V2 visual layer may be regenerated, but the behaviours, validation, permissions, error states, accessibility, and journeys are the binding semantic contract.",
+    "alternativesConsidered": [
+      "Server-rendered framework (Next.js) with co-located server code",
+      "Client co-located server data access",
+      "A bespoke router/data layer instead of TanStack"
+    ],
+    "rationale": "A clean SPA + BFF split with established libraries keeps the client free of server concerns; treating V1 UI behaviour as the semantic source lets V2 regenerate visuals without losing proven behaviour.",
+    "supersedesV1Adrs": ["ADR-0019"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0020",
+    "title": "Define observability, diagnostics, and runtime introspection primitives",
+    "status": "Accepted",
+    "decision": "Adopt OpenTelemetry as the observability standard with W3C trace-context propagation: the browser forwards traceparent, the Node BFF creates/continues the request span, and use cases create child spans. The OpenTelemetry SDK is confined to the adapter layer; the observability package exposes only the API surface.",
+    "alternativesConsidered": [
+      "Vendor-specific agent instrumentation",
+      "Ad-hoc logging without tracing",
+      "SDK imports spread across runtime packages"
+    ],
+    "rationale": "A standard tracing model with strict SDK containment keeps telemetry portable and the boundary clean.",
+    "supersedesV1Adrs": ["ADR-0020"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0021",
+    "title": "Define identity, tenancy, roles, and permissions model",
+    "status": "Accepted",
+    "decision": "Define a platform-internal User identity created once per person independent of any IdP, tenant-scoped membership, and a server-authoritative role/permission model. Runtime context carries actorId, tenantId, and permissions; IdP claims are mapped to internal types at the adapter boundary.",
+    "alternativesConsidered": [
+      "Treating IdP identities directly as the platform identity",
+      "Client-supplied tenant/permission context",
+      "Per-IdP claim objects flowing through the domain"
+    ],
+    "rationale": "A platform-owned identity and server-authoritative permissions keep the model IdP-agnostic and tamper-resistant.",
+    "supersedesV1Adrs": ["ADR-0021"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0022",
+    "title": "Define authentication, session, and SSO integration boundary",
+    "status": "Accepted",
+    "decision": "Treat Keycloak (or any future IdP) as an adapter. Only adapters-keycloak imports Keycloak libraries; claims are mapped to internal types at the boundary. Login uses OAuth 2.0 Authorization Code with PKCE; the BFF adapter reads the token and writes an internal session actor. Domain packages never receive raw IdP claims.",
+    "alternativesConsidered": [
+      "IdP SDK usage spread across packages",
+      "Implicit/password OAuth grants",
+      "Frontend-managed tokens without a BFF session"
+    ],
+    "rationale": "Confining the IdP to an adapter and using PKCE with a BFF session keeps authentication substitutable and secure.",
+    "supersedesV1Adrs": ["ADR-0022"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0023",
+    "title": "Define declarative infrastructure provisioning model",
+    "status": "Accepted",
+    "decision": "Use OpenTofu-compatible Terraform HCL via a wrapper (tf) that prefers tofu and falls back to terraform. Validate without cloud credentials (fmt-check, init -backend=false) in CI; canonical commands and Makefile targets use the wrapper.",
+    "alternativesConsidered": [
+      "Imperative provisioning scripts",
+      "A cloud-specific IaC tool locking to one provider",
+      "No credential-free validation path"
+    ],
+    "rationale": "Declarative OpenTofu-compatible HCL with credential-free validation keeps infrastructure reviewable and provider-portable.",
+    "supersedesV1Adrs": ["ADR-0023"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0024",
+    "title": "Define slice readiness and dependency gate model",
+    "status": "Accepted",
+    "decision": "Use a five-tier progressive readiness model from local substrate up through delivered slices, with each tier proving capabilities the prior tier cannot (compose health, migrations/seed, substrate tests, architecture and import-boundary checks, then slice-specific gates).",
+    "alternativesConsidered": [
+      "A single ready/not-ready flag",
+      "No formal readiness gating",
+      "Readiness asserted without proof"
+    ],
+    "rationale": "Progressive, evidence-backed readiness prevents declaring slices done before their dependencies are genuinely working.",
+    "supersedesV1Adrs": ["ADR-0024"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0025",
+    "title": "Define Playwright end-to-end testing strategy",
+    "status": "Accepted",
+    "decision": "Use Playwright as the browser E2E standard covering the full browser to SPA to BFF to DB roundtrip. Vitest with RTL and MSW owns component/hook tests; MSW is never used in Playwright E2E. The V1 Playwright proofs are the semantic acceptance source for the regenerated V2 UI.",
+    "alternativesConsidered": [
+      "Cypress or Selenium for E2E",
+      "Using MSW mocks inside E2E",
+      "Component tests substituting for end-to-end coverage"
+    ],
+    "rationale": "Playwright over the real stack proves journeys end to end; keeping MSW out of E2E preserves honesty. V2 reuses the proofs as behaviour contracts.",
+    "supersedesV1Adrs": ["ADR-0025"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0026",
+    "title": "Define internationalisation and translation resource model",
+    "status": "Accepted",
+    "decision": "Use a platform-wide i18n model with en-GB as the default locale. All public-facing text is referenced through translation keys resolved against locale JSON resources following a fixed file shape per BCP-47 locale.",
+    "alternativesConsidered": [
+      "Hard-coded UI strings",
+      "Per-component string catalogues",
+      "A non-JSON resource format"
+    ],
+    "rationale": "Key-based JSON resources keep public text translatable and validatable from one model.",
+    "supersedesV1Adrs": ["ADR-0026"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0027",
+    "title": "Define Tilt local development feedback loop",
+    "status": "Accepted",
+    "decision": "Use Tilt as the local development inner loop for service orchestration, file-watch rebuild/restart, change-impact assessment, grouped resource health, and manual triggers for expensive flows. Tilt wraps Make commands and never replaces the Makefile (canonical command index/CI gate) or CI (authoritative gate).",
+    "alternativesConsidered": [
+      "Hand-run dev servers and scripts",
+      "Tilt reimplementing Make/CI logic",
+      "Skaffold or docker-compose-only dev loop"
+    ],
+    "rationale": "Tilt gives a fast, observable inner loop while leaving Make and CI as the single authoritative command and gate layers.",
+    "supersedesV1Adrs": ["ADR-0027"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0028",
+    "title": "Define GraphQL schema boundary governance",
+    "status": "Accepted",
+    "decision": "Govern the GraphQL schema with three rules: schema-first in the contracts package (no resolver type without a contract declaration); breaking changes require architecture review plus a linked action; resolver data ownership matches bounded-context ownership, with cross-context reads via published use cases. Import-boundary validation enforces resolvers-as-adapters.",
+    "alternativesConsidered": [
+      "Resolver-first schema with no contract package",
+      "Allowing breaking changes without review",
+      "Cross-context reads via direct adapter imports"
+    ],
+    "rationale": "Schema-first contracts plus change control and ownership rules keep the API boundary stable and aligned with bounded contexts.",
+    "supersedesV1Adrs": ["ADR-0028"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0029",
+    "title": "Define multi-tenant isolation boundaries",
+    "status": "Accepted",
+    "decision": "Implement full-stack per-tenant isolation across five independently enforced layers: FQDN-based routing (apex for global admin, {slug} subdomain per tenant), auth, database, cache, and storage. Each layer enforces the tenant boundary on its own.",
+    "alternativesConsidered": [
+      "Single-layer (app-only) tenant checks",
+      "Shared schema without row/prefix isolation",
+      "Tenant inferred from client-supplied headers"
+    ],
+    "rationale": "Defence-in-depth across five layers makes cross-tenant leakage require multiple independent failures.",
+    "supersedesV1Adrs": ["ADR-0029"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0030",
+    "title": "Define dynamic authorisation and tenant admin self-service",
+    "status": "Accepted",
+    "decision": "Adopt the Policy Enforcement Point pattern using Keycloak Authorization Services: authorisation decisions for protected resources are evaluated at runtime, not hardcoded in the BFF. The initial tenant-admin holds realm-admin for their realm, enabling full self-service realm control without platform intervention.",
+    "alternativesConsidered": [
+      "Hardcoded role checks in the BFF",
+      "Platform-mediated tenant admin operations",
+      "Static RBAC only"
+    ],
+    "rationale": "Runtime PEP evaluation plus delegated realm administration lets tenants self-serve while the BFF stays the enforcement point.",
+    "supersedesV1Adrs": ["ADR-0030"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0031",
+    "title": "Define infrastructure provisioning privilege model",
+    "status": "Accepted",
+    "decision": "The platform acts as a trusted provisioning broker: privileged service accounts per infrastructure type are held in a secret store; the provisioning API validates caller authority via Keycloak Authorization Services then executes operations with those accounts. No infrastructure credentials are exposed to tenants or request contexts. The human sysadmin owns initial deployment, credential provisioning, rotation, and quota policy.",
+    "alternativesConsidered": [
+      "Manual sysadmin action for every resource creation",
+      "Exposing infrastructure credentials to tenant admins",
+      "Per-request credential passing"
+    ],
+    "rationale": "Brokered provisioning with held service accounts enables recursive self-service without leaking privileged credentials.",
+    "supersedesV1Adrs": ["ADR-0031"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0032",
+    "title": "E2E testing directory and tier strategy",
+    "status": "Accepted",
+    "decision": "Organise E2E tests into e2e/internal (localhost, fixture sessions, no real Keycloak), e2e/external (deployed stack, real auth, no fixtures), and e2e/prod (exhaustive non-functional: security, perf, contracts), mapped to environments per the per-environment composition model.",
+    "alternativesConsidered": [
+      "A single flat E2E suite for all environments",
+      "Mixing fixture and real-auth tests in one directory",
+      "No dedicated production non-functional tier"
+    ],
+    "rationale": "Tiering by environment and auth mode keeps each suite honest about what it proves and where it runs.",
+    "supersedesV1Adrs": ["ADR-0032"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0033",
+    "title": "Define environment-specific domain and hostname configuration",
+    "status": "Accepted",
+    "decision": "Define per-environment domain and Keycloak hostname configuration: dev/test on auto-resolving .localhost TLDs over HTTP, staging on a staging subdomain over HTTPS, production on the apex over HTTPS with Cloudflare TLS termination, with consistent FQDN conventions per environment.",
+    "alternativesConsidered": [
+      "One shared domain across environments",
+      "Hosts file hacks instead of .localhost auto-resolution",
+      "HTTPS-only everywhere including local dev"
+    ],
+    "rationale": "Per-environment domains keep environments isolated and routable while .localhost gives a zero-config local experience.",
+    "supersedesV1Adrs": ["ADR-0033"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0034",
+    "title": "Define per-environment test composition",
+    "status": "Accepted",
+    "decision": "Run four concurrently isolated environments (dev, test, staging, prod) with fully isolated Docker project namespaces, started via make env-up-all and validated in order via make promote. Each stage validates what the prior cannot (live loop, built artefacts, staging parity, production smoke).",
+    "alternativesConsidered": [
+      "A single shared environment reused for all stages",
+      "Tearing down each environment before the next",
+      "No promotion ladder"
+    ],
+    "rationale": "Persistent isolated environments with an ordered promotion ladder give progressive confidence without cross-contamination.",
+    "supersedesV1Adrs": ["ADR-0034"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0035",
+    "title": "Enterprise log indexing and search",
+    "status": "Accepted",
+    "decision": "Use Grafana Loki + Grafana + Grafana Alloy as the contained logging backend: application code emits Pino structured JSON to stdout, Alloy discovers/parses/labels container logs into Loki, and queries run via LogQL through Grafana Explore and the platform log-search API.",
+    "alternativesConsidered": [
+      "ELK/Elasticsearch stack",
+      "A hosted log SaaS",
+      "Unstructured file logging without indexing"
+    ],
+    "rationale": "The Grafana/Loki/Alloy stack is free, local-first, and contained, with structured JSON enabling labelled tenant-aware search.",
+    "supersedesV1Adrs": ["ADR-0035"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0036",
+    "title": "Tenant administration control plane",
+    "status": "Accepted",
+    "decision": "Build a React tenant administration control plane at /admin consuming existing BFF endpoints, delivering an admin shell plus Members, Authentication, and Features sections, with remaining sections registered as follow-ups. Admin data access is REST-over-BFF; the SPA never calls Keycloak/Postgres directly and the AppShell owns the single main landmark.",
+    "alternativesConsidered": [
+      "GraphQL for admin CRUD",
+      "A separate admin app outside the SPA",
+      "Direct Keycloak/DB access from the admin UI"
+    ],
+    "rationale": "REST-over-BFF admin CRUD reuses the audited admin-logs pattern and keeps the SPA behind the BFF while fitting the existing API boundary.",
+    "supersedesV1Adrs": ["ADR-0036"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0037",
+    "title": "Per-tenant authentication provider configuration",
+    "status": "Accepted",
+    "decision": "Move provider mode and provider enablement from environment-global to per-tenant configuration with the environment value as the default fallback, stored per tenant in tenant_settings under auth.providers (mode: mock|real|disabled|default; enabledProviders subset of the product providers).",
+    "alternativesConsidered": [
+      "Environment-global provider configuration only",
+      "Hardcoded provider lists",
+      "Storing provider config in a new bespoke table"
+    ],
+    "rationale": "Per-tenant config with environment fallback lets tenants control providers while reusing the existing settings store.",
+    "supersedesV1Adrs": ["ADR-0037"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0038",
+    "title": "Tenant identity and membership v2",
+    "status": "Accepted",
+    "decision": "Keep User global (one row per email) and Membership tenant-scoped, carrying username, status, last_login_at, invited_by, and role. Username is tenant-scoped, case-insensitively unique within an organisation, rule-validated, tenant-admin owned with an audit trail, and never auto-derived or overwritten from IdP claims.",
+    "alternativesConsidered": [
+      "User row per tenant membership",
+      "Global usernames",
+      "Usernames auto-derived from IdP profile claims"
+    ],
+    "rationale": "Global users with tenant-scoped membership and admin-owned usernames support multi-tenant membership with no schema conflict and protect username authority from upstream IdP changes.",
+    "supersedesV1Adrs": ["ADR-0038"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0039",
+    "title": "Platform configuration registry",
+    "status": "Accepted",
+    "decision": "Introduce a Platform Configuration Registry: a typed catalogue of config definitions (key, category, i18n labels, value type, default, allowed values, overridability, read/write permissions, audit action, Zod validate, lifecycle) plus per-tenant values resolving to an effective value (tenant override then default). Definitions are server-side source of truth, serialised to a dependency-free DTO for the SPA.",
+    "alternativesConsidered": [
+      "Scattered ad-hoc config flags",
+      "Client-defined configuration",
+      "A flat key-value store without typed definitions"
+    ],
+    "rationale": "A typed registry with server-side definitions and tenant override resolution centralises configuration with permissions, audit, and validation built in.",
+    "supersedesV1Adrs": ["ADR-0039"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0040",
+    "title": "Administrative audit trail and control-plane verification",
+    "status": "Accepted",
+    "decision": "Expose a tenant-scoped contextual audit query via a single BFF endpoint over the audit-events store (logical-resource to stored-resource mapping, per-context read permissions, tenant scope authoritative from session/FQDN, resourceId filter) and surface compact read-only audit panels in admin surfaces refreshed after mutations.",
+    "alternativesConsidered": [
+      "No queryable audit surface",
+      "Client-supplied tenant scope on audit queries",
+      "Raw stored resource strings exposed to the SPA"
+    ],
+    "rationale": "A single tenant-scoped audit endpoint with logical resources and authoritative server scope makes the control plane verifiable without cross-tenant leakage.",
+    "supersedesV1Adrs": ["ADR-0040"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0041",
+    "title": "Per-tenant auth settings credential provisioning",
+    "status": "Accepted",
+    "decision": "Deliver the auth-settings readiness substrate and make Session policy the first writable Auth tab. Credentials are provisioned automatically per-tenant during creation and, for pre-existing tenants, attached/rotated via a system-admin endpoint that validates via the readiness probe before storing. A tenant-scoped readiness endpoint classifies whether editing is possible.",
+    "alternativesConsidered": [
+      "Manual credential setup outside the platform",
+      "Exposing realm-admin credentials to tenant admins",
+      "Writable auth settings without a readiness gate"
+    ],
+    "rationale": "Provisioned, readiness-gated credentials make per-tenant auth settings safely writable while keeping privileged credentials server-side.",
+    "supersedesV1Adrs": ["ADR-0041"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0042",
+    "title": "Writable MFA policy and auth settings runtime proof",
+    "status": "Accepted",
+    "decision": "Make MFA the second writable Auth tab reusing the credential substrate, mapping get/setMfaPolicy onto Keycloak realm required-actions (enabled/defaultAction per required|optional|none; type selects the alias), and add a repeatable runtime proof that the credentialed realm-write path works end to end.",
+    "alternativesConsidered": [
+      "Mapping MFA to a non-round-tripping Keycloak setting",
+      "No runtime proof of the write path",
+      "Client-side MFA enforcement"
+    ],
+    "rationale": "Mapping onto required-actions makes MFA policy genuinely govern prompts and round-trip reliably, and the runtime proof verifies the realm-write path honestly.",
+    "supersedesV1Adrs": ["ADR-0042"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0043",
+    "title": "Writable identity provider management with secret redaction",
+    "status": "Accepted",
+    "decision": "Make the IdPs tab safely tenant-admin writable reusing the auth-settings substrate with a security-first model: explicitly-mapped redacted IdpSummary DTOs (never raw Keycloak config, derived hasClientSecret boolean, secret never returned), write-only secrets that preserve on blank update, a constrained provider allowlist, and strict input validation.",
+    "alternativesConsidered": [
+      "Passing through raw Keycloak IdP config",
+      "Returning/logging client secrets",
+      "Unconstrained provider configuration"
+    ],
+    "rationale": "Explicit redacted DTOs and write-only secrets make IdP management tenant-writable without leaking credentials or raw config.",
+    "supersedesV1Adrs": ["ADR-0043"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0044",
+    "title": "Auth settings credential lifecycle: rotation, repair, recovery",
+    "status": "Accepted",
+    "decision": "Authenticate the per-tenant service-account client_credentials path against the tenant realm's token endpoint while keeping the admin-cli password grant on master. System-admins may attach, rotate, repair, and inspect readiness for any tenant; tenant-admins see readiness and use writable settings but never see or manage the realm-admin secret. Tenant-admin self-service rotation is deferred.",
+    "alternativesConsidered": [
+      "Authenticating the per-tenant path against master",
+      "Tenant-admin self-service secret rotation",
+      "No operator repair/recovery path"
+    ],
+    "rationale": "Using the correct token endpoint per grant makes the credential path work; the system-admin lifecycle covers operational recovery without exposing realm-admin power.",
+    "supersedesV1Adrs": ["ADR-0044"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0045",
+    "title": "Enterprise tenant onboarding and control-plane capability map",
+    "status": "Accepted",
+    "decision": "Maintain a server-owned capability registry enumerating every control-plane capability with key, category, adminRoute, requiredPermission, implementationStatus (implemented|partial|deferred), whether required, how readiness is determined, and its audit actions/contracts/ports/adapters/evidence. Readiness is never faked.",
+    "alternativesConsidered": [
+      "An informal capability checklist",
+      "Capability status asserted without readiness logic",
+      "Client-owned capability metadata"
+    ],
+    "rationale": "A server-owned registry with honest readiness ties each capability to its route, permission, audit, evidence, and real status.",
+    "supersedesV1Adrs": ["ADR-0045"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0046",
+    "title": "OIDC enterprise hardening",
+    "status": "Accepted",
+    "decision": "Add BFF-mediated OIDC discovery import, issuer/JWKS validation, callback-URL display, a non-interactive connection test, and bounded claim/group/role mapping via the Keycloak RealmAdminPort. Outbound fetches use a hard timeout, response-size cap, and HTTPS-only policy (http for local/dev only). Responses are minimal redacted DTOs; no secret or raw document is returned/logged/audited. Login simulation and SAML remain out of scope.",
+    "alternativesConsidered": [
+      "Direct client-side OIDC discovery",
+      "Returning raw discovery/JWKS documents",
+      "Including SAML and live login simulation in this scope"
+    ],
+    "rationale": "BFF-mediated, bounded, redacted OIDC hardening adds enterprise SSO safely while honestly deferring what cannot be non-interactively proven.",
+    "supersedesV1Adrs": ["ADR-0046"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0047",
+    "title": "Tenant email sender configuration and readiness",
+    "status": "Accepted",
+    "decision": "Add tenant email sender configuration (provider disabled|local|smtp|brevo, fromName, fromEmail, replyToEmail, enabled), readiness classification, and a non-interactive test-send under the tenant BFF boundary. Non-secret config lives in tenant_settings; SMTP password/API key lives in an AES-256-GCM encrypted, write-only table. New read/write permissions gate the surface; mutations are audit-first and tenant-scoped.",
+    "alternativesConsidered": [
+      "Global email configuration only",
+      "Storing email secrets in plaintext or returning them",
+      "Full notification system and DNS verification in this scope"
+    ],
+    "rationale": "Per-tenant sender config with encrypted write-only secrets and a test-send delivers configurable email safely while scoping out the larger notification system.",
+    "supersedesV1Adrs": ["ADR-0047"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0048",
+    "title": "Tenant custom domains with DNS/TLS readiness",
+    "status": "Accepted",
+    "decision": "Add tenant custom-domain endpoints (list with honest verification/TLS/routing status, readiness, create ownership challenge, verify, delete) gated by new tenant.domains permissions, delegating to existing challenge/verify/add/remove use cases, audit-first, tenant authority from FQDN/session. DNS-ownership proof and auth-client add/remove are implemented; TLS issuance and live cutover are honestly deferred.",
+    "alternativesConsidered": [
+      "Claiming full domain readiness without TLS/routing proof",
+      "Client-supplied tenant scope on domain operations",
+      "No ownership challenge before adding a domain"
+    ],
+    "rationale": "Honest per-domain status with an ownership challenge delivers custom domains while clearly marking the unproven TLS/cutover steps.",
+    "supersedesV1Adrs": ["ADR-0048"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0049",
+    "title": "Tenant storage readiness and isolation proof",
+    "status": "Accepted",
+    "decision": "Add storage readiness with statuses (configured = write/read/delete roundtrip plus foreign cross-prefix key rejected; not_configured; provider_unreachable; isolation_failed; unknown) via a readiness endpoint and a deep probe endpoint, gated by tenant.storage permissions, audit-first, with tenant authority and key prefix from FQDN/session. The aggregate readiness uses a cheap configured-check; the deep probe is separate.",
+    "alternativesConsidered": [
+      "Treating a reachable bucket as configured without an isolation check",
+      "Running the deep probe on every aggregate readiness call",
+      "Client-supplied key prefixes"
+    ],
+    "rationale": "Proving cross-prefix isolation as part of readiness keeps storage status honest while a cheap aggregate check avoids per-call object IO.",
+    "supersedesV1Adrs": ["ADR-0049"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0050",
+    "title": "Tenant observability readiness",
+    "status": "Accepted",
+    "decision": "Add observability readiness with statuses (configured = ingestion reachable, tenant-scoped query ok, label guard holds; provider_unreachable; degraded; not_configured; unknown) and per-signal statuses, gated by a tenant.observability.read permission, with tenant authority/filter from FQDN/session and every backend query raced against a hard timeout. Trace correlation is honestly not_applicable this pass.",
+    "alternativesConsidered": [
+      "Reporting observability healthy without a tenant-scoped query check",
+      "Unbounded backend queries that can stall the response",
+      "Claiming trace correlation before it is wired"
+    ],
+    "rationale": "Multi-signal, timeout-bounded readiness with an honest not_applicable for traces keeps observability status accurate and non-blocking.",
+    "supersedesV1Adrs": ["ADR-0050"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0051",
+    "title": "Integrations and webhooks plumbing",
+    "status": "Accepted",
+    "decision": "Add per-tenant webhook subscriptions (url, eventTypes, enabled), a reveal-once AES-256-GCM signing secret, HMAC-SHA-256 replay-protected payload signing, a delivery log, and an immediate single-attempt test dispatch, via tenant.webhooks-gated routes. URLs must be https (http for localhost only); mutations are audit-first with safe metadata.",
+    "alternativesConsidered": [
+      "Unsigned webhook payloads",
+      "Returning signing secrets repeatedly",
+      "Including the async retry worker in this pass"
+    ],
+    "rationale": "Signed, replay-protected webhooks with a delivery log and synchronous test deliver integrations safely while deferring the durable worker.",
+    "supersedesV1Adrs": ["ADR-0051"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0052",
+    "title": "Webhook durable delivery worker and event fan-out",
+    "status": "Accepted",
+    "decision": "Make real webhook events durable: emitWebhookEvent enqueues and a best-effort worker delivers with backoff and dead-letter (status vocabulary gains dead), disabled via WEBHOOK_WORKER_DISABLED. The synchronous test path is unchanged. A bad worker tick is logged, never thrown.",
+    "alternativesConsidered": [
+      "Synchronous-only delivery with no durability",
+      "A worker that throws on bad ticks",
+      "An external queue system for this scope"
+    ],
+    "rationale": "A best-effort durable worker with backoff and dead-letter completes reliable webhook delivery without destabilising the runtime.",
+    "supersedesV1Adrs": ["ADR-0052"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0053",
+    "title": "Universal Service Foundation scope and principles",
+    "status": "Accepted",
+    "decision": "Adopt one governing decision that every later capability inherits: the platform targets a universal service foundation expressed through the hexagonal style; free local-first is mandatory; no fake readiness (controlled vocabulary, the word complete is not permitted); every capability requires the full architecture compliance set; the USF matrix is the single planning source of truth with a CI-validated registry.",
+    "alternativesConsidered": [
+      "No scope ADR; decide per capability",
+      "A product roadmap document instead of an ADR",
+      "Per-capability-only governance"
+    ],
+    "rationale": "One enforceable scope/principles decision prevents scope creep, fake readiness, and inconsistent local-first/isolation guarantees; a roadmap carries no governance force and per-capability-only invites the failure mode this ADR prevents.",
+    "supersedesV1Adrs": ["ADR-0053"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0054",
+    "title": "Build-versus-compose decision framework",
+    "status": "Accepted",
+    "decision": "Adopt a scored rubric with default biases for every capability (local-first feasibility, license, compose/operational burden, tenant-isolation fit, maturity of existing capability, production-adapter path), recording the decision in the matrix registry. Prefer build for thin/security-sensitive/partially-present capabilities, compose for mature commodity engines, adapter where a provider is unavoidable but a local equivalent exists, defer when no need is proven, reject when out of scope.",
+    "alternativesConsidered": [
+      "Always build in-house",
+      "Always compose OSS",
+      "Per-service ad-hoc decisions"
+    ],
+    "rationale": "A scored rubric with biases gives consistent, reviewable decisions and records the trigger that would change a defer/reject; always-build reinvents commodity engines and always-compose adds speculative operational sprawl.",
+    "supersedesV1Adrs": ["ADR-0054"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0055",
+    "title": "Service catalog and provider integration model",
+    "status": "Accepted",
+    "decision": "Generalise the existing registries into one catalog plus provider model: treat the platform-services catalog as the seed, bind each entry to its environment classification, clickthrough policy, isolation invariant, and (where provider-backed) a port plus provider registry entry. Provider selection is environment-driven; all provider access is through server-side ports/adapters; the catalog drives the /admin/platform surface; mocks stay profile-gated and non-selectable in production.",
+    "alternativesConsidered": [
+      "Backstage as the system of record",
+      "Per-service ad-hoc wiring (status quo extended)",
+      "A generic service mesh / sidecar registry"
+    ],
+    "rationale": "Reusing the existing registries gives consistent readiness/isolation and clean provider swapping; Backstage adds operational weight and governance coupling, ad-hoc wiring is the failure mode, and a service mesh solves transport, not capability governance.",
+    "supersedesV1Adrs": ["ADR-0055"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0056",
+    "title": "Environment-specific versus shared service model",
+    "status": "Accepted",
+    "decision": "Classify every service with a controlled vocabulary (per-environment, shared-cross-environment, local-only, test-only, mock-only, production-external, production-internal, forbidden-in-production). Tenant runtime data defaults to per-environment; a service may be shared-cross-environment only if it satisfies a strict checklist including a written data-leakage analysis. Mocks are forbidden in production.",
+    "alternativesConsidered": [
+      "Share infrastructure freely to cut cost",
+      "Everything strictly per-environment",
+      "No classification vocabulary"
+    ],
+    "rationale": "A controlled vocabulary plus a strict sharing checklist defaults tenant data to per-environment and only allows sharing when leakage is provably controlled; share-freely violates isolation and strict-per-environment needlessly duplicates engineering tooling.",
+    "supersedesV1Adrs": ["ADR-0056"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0057",
+    "title": "Billing, invoicing, and payment architecture",
+    "status": "Accepted",
+    "decision": "Record the billing/invoicing/payment provider decision as a later-phase capability behind a port, with metering and quota delivered first. Payment provider integration is an adapter behind a server-side port; billing is sequenced after measurable usage exists.",
+    "alternativesConsidered": [
+      "Billing before metering",
+      "Embedding a payment provider SDK across the codebase",
+      "A bespoke in-house payment processor"
+    ],
+    "rationale": "You cannot bill what you cannot measure; sequencing billing after metering behind a port keeps the provider substitutable and the order correct.",
+    "supersedesV1Adrs": ["ADR-0057"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0058",
+    "title": "Policy decision point, entitlements, and delegated administration",
+    "status": "Accepted",
+    "decision": "Keep Keycloak UMA as the policy decision point behind a PolicyDecisionPort. Build a server-authoritative entitlement engine (tenant-scoped grants, system-operator assigned, audited). Enforce a fixed evaluation chain centrally in the BFF pipeline, deny-by-default and fail-closed. Deliver delegated admin via Keycloak fine-grained admin (permissions only, subset of granter, audited). Quota is a hook now; real enforcement follows.",
+    "alternativesConsidered": [
+      "Adopt OPA/Cedar now as the general PDP",
+      "Model entitlements as feature flags",
+      "Enforce in the UI / per-route ad-hoc checks"
+    ],
+    "rationale": "The PolicyDecisionPort keeps the door open to OPA/Cedar without premature adoption; flags are not contractual access control; UI/ad-hoc checks are client-inferable and unmaintainable. The BFF owns all checks.",
+    "supersedesV1Adrs": ["ADR-0058"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0059",
+    "title": "Workflow, event, and queue architecture",
+    "status": "Accepted",
+    "decision": "Adopt a workflow/event/queue architecture using the build-versus-compose framework: compose a mature OSS engine where the commodity case holds and tenant isolation is clean, expose it through server-side ports, tenant-tag events, and keep readiness honest. React never accesses the queue directly.",
+    "alternativesConsidered": [
+      "A bespoke in-house workflow engine",
+      "Direct queue access from the client",
+      "Deferring all eventing indefinitely"
+    ],
+    "rationale": "Composing a proven engine behind a port reuses commodity capability while preserving isolation and honest readiness.",
+    "supersedesV1Adrs": ["ADR-0059"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0060",
+    "title": "Search and indexing architecture",
+    "status": "Accepted",
+    "decision": "Adopt a search/indexing architecture by composing a mature OSS search engine behind a server-side search port, with tenant-scoped indices/queries and honest readiness. All search reads go through the BFF; the client never queries the engine directly.",
+    "alternativesConsidered": [
+      "Building a bespoke search index",
+      "Direct engine access from React",
+      "Hosted search SaaS as the only path"
+    ],
+    "rationale": "A composed OSS engine behind a port delivers commodity search with tenant isolation and a free local path.",
+    "supersedesV1Adrs": ["ADR-0060"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0061",
+    "title": "Analytics and metering architecture",
+    "status": "Accepted",
+    "decision": "Treat metering (usage for quota/billing) as the system of record, delivered built-in on per-environment Postgres now, with ClickHouse/OpenMeter as a later provider behind the MeteringRepository port. Product analytics (high-volume behavioural events) is a separate future capability on ClickHouse with tenant partitioning and BFF-only query access. The analytics warehouse is distinct from Sentry's ClickHouse; metering and analytics are not conflated.",
+    "alternativesConsidered": [
+      "One ClickHouse store for both metering and analytics now",
+      "Reuse Sentry's ClickHouse as the usage warehouse",
+      "Direct ClickHouse access from React"
+    ],
+    "rationale": "Postgres metering gives synchronous idempotency required for a billing-critical system of record; ClickHouse is reserved for high-volume analytics later; Sentry's store is errors-only and shared; all analytical reads go through the BFF.",
+    "supersedesV1Adrs": ["ADR-0061"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0062",
+    "title": "Observability, alerting, and incident architecture",
+    "status": "Accepted",
+    "decision": "Adopt an observability/alerting/incident architecture on the contained Grafana stack: tenant-aware signals, alerting rules and incident records expressed through server-side ports with honest readiness, building on the Loki/Grafana/Alloy logging backend and OpenTelemetry tracing.",
+    "alternativesConsidered": [
+      "A hosted observability SaaS as the only path",
+      "Alerting/incidents bolted onto application code ad hoc",
+      "No incident model"
+    ],
+    "rationale": "Extending the contained Grafana stack with ports for alerting and incidents keeps observability free, local-first, and tenant-aware.",
+    "supersedesV1Adrs": ["ADR-0062"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0063",
+    "title": "Data governance and compliance architecture",
+    "status": "Accepted",
+    "decision": "Adopt a data-governance and compliance architecture: classify data, express governance/compliance controls through server-side ports and the configuration registry, with tenant isolation, audit, and honest readiness, and a local-first proof path.",
+    "alternativesConsidered": [
+      "No formal data governance",
+      "A compliance SaaS as the system of record",
+      "Governance asserted without readiness proof"
+    ],
+    "rationale": "Expressing governance through the existing hexagonal/registry pattern keeps compliance controls auditable, tenant-isolated, and provable locally.",
+    "supersedesV1Adrs": ["ADR-0063"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0064",
+    "title": "Backup, recovery, retention, and legal hold architecture",
+    "status": "Accepted",
+    "decision": "Adopt a backup/recovery/retention/legal-hold architecture: per-environment backup and restore models, retention and deletion controls, and legal-hold expressed through server-side ports with audit and honest readiness, with a free local proof path (e.g. local backup scripts).",
+    "alternativesConsidered": [
+      "No defined backup/retention model",
+      "A managed backup SaaS as the only path",
+      "Retention controls without legal hold"
+    ],
+    "rationale": "Defined per-environment backup, retention, and legal-hold through ports keeps data lifecycle governed, recoverable, and locally provable.",
+    "supersedesV1Adrs": ["ADR-0064"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0065",
+    "title": "Developer platform and API management architecture",
+    "status": "Accepted",
+    "decision": "Adopt a developer-platform and API-management architecture: API keys, rate limits, and a developer portal expressed through server-side ports and the existing catalog/registry, with tenant scope, audit, and honest readiness. The portal reads from the service catalog rather than replacing it. The external gateway, SDK generation, and sandbox mode remain proposed follow-ups.",
+    "alternativesConsidered": [
+      "Adopting an external API-gateway product as the system of record now",
+      "Backstage as the developer portal source of truth",
+      "No API key / rate-limit model"
+    ],
+    "rationale": "Building API keys and rate limits behind ports with a catalog-reading portal delivers the developer platform incrementally while keeping the catalog authoritative and deferring the heavier gateway pieces.",
+    "supersedesV1Adrs": ["ADR-0065"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0066",
+    "title": "Support administration and break-glass architecture",
+    "status": "Accepted",
+    "decision": "Adopt a support-administration and break-glass architecture: scoped support access and time-bounded audited break-glass elevation expressed through server-side ports with deny-by-default authorisation, full audit, and honest readiness.",
+    "alternativesConsidered": [
+      "Standing elevated support access",
+      "Unaudited break-glass",
+      "No defined support-access model"
+    ],
+    "rationale": "Time-bounded, fully audited break-glass with scoped support access keeps operational support possible without standing privilege.",
+    "supersedesV1Adrs": ["ADR-0066"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0067",
+    "title": "Metering and quota enforcement architecture",
+    "status": "Accepted",
+    "decision": "Deliver built-in local-first metering via a MeteringRepository port with a Postgres adapter (tenant-scoped, RLS-isolated, idempotent by tenant+meter_key+idempotency_key, append-safe, windowed aggregation) and quota via a QuotaRepository port with a Postgres adapter, evaluating allow/deny after permission and entitlement checks, server-authoritative, deny-by-default for entitlements, opt-in for quotas. Ingestion is operator/internal only. ClickHouse/OpenMeter providerisation is a later phase behind the same port.",
+    "alternativesConsidered": [
+      "ClickHouse meter store now",
+      "OpenMeter composed now",
+      "Redis counters as the durable meter store"
+    ],
+    "rationale": "Postgres gives synchronous unique-constraint idempotency and RLS isolation required for a billing-critical system of record; ClickHouse lacks synchronous uniqueness and in-repo migrations; OpenMeter adds weight before a proven need; Redis is not durable/auditable as the system of record.",
+    "supersedesV1Adrs": ["ADR-0067"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0068",
+    "title": "End-user profile self-service, notification preferences, and notification substrate",
+    "status": "Accepted",
+    "decision": "Deliver end-user profile self-service, notification preferences, and a notification substrate through server-side ports and the BFF, tenant-scoped and audited, with real notification transports behind adapters and honest readiness, on a free local-first path.",
+    "alternativesConsidered": [
+      "No self-service profile/notification surface",
+      "A notification SaaS as the only path",
+      "Client-managed notification preferences without server authority"
+    ],
+    "rationale": "Profile self-service and a port-backed notification substrate deliver end-user capability while keeping preferences server-authoritative and transports substitutable.",
+    "supersedesV1Adrs": ["ADR-0068"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0069",
+    "title": "Central runtime secrets store",
+    "status": "Accepted",
+    "decision": "Provide a central runtime secrets store built-in on Postgres now (encrypted at rest, tenant/scope aware, audited) with composed OpenBao as the production-grade provider behind the same secrets port. All secret access is server-side; secrets are never returned to the client.",
+    "alternativesConsidered": [
+      "Scattered process.env secret access as the model",
+      "A cloud KMS/secret SaaS as the only path",
+      "OpenBao required from day one with no built-in path"
+    ],
+    "rationale": "A built-in Postgres store with an OpenBao provider behind a port gives a free local-first secrets capability now and a production-grade path later without changing consumers.",
+    "supersedesV1Adrs": ["ADR-0069"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0070",
+    "title": "Provider configuration plane",
+    "status": "Accepted",
+    "decision": "Provide a provider-configuration plane: typed provider definitions and per-environment/per-tenant provider selection and configuration resolved server-side, bound to the service catalog and secrets store, with permissions, audit, and honest readiness. Provider access is always through ports/adapters on the server.",
+    "alternativesConsidered": [
+      "Hardcoded per-provider wiring",
+      "Client-supplied provider configuration",
+      "Provider config outside the catalog/registry model"
+    ],
+    "rationale": "A typed provider-config plane centralises provider selection with permissions, audit, and secrets integration while keeping access server-side.",
+    "supersedesV1Adrs": ["ADR-0070"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0071",
+    "title": "Composed provider readiness",
+    "status": "Accepted",
+    "decision": "Define composed-provider readiness for search, observability, and workflow providers: each composed provider exposes a bounded, timeout-protected readiness probe through its port with honest status vocabulary and tenant-aware checks where data is tenant-scoped, never asserting readiness from container presence alone.",
+    "alternativesConsidered": [
+      "Treating a running container as a ready capability",
+      "Unbounded readiness probes",
+      "No per-provider readiness"
+    ],
+    "rationale": "Bounded, honest per-provider readiness keeps composed capabilities truthful about whether they are usable.",
+    "supersedesV1Adrs": ["ADR-0071"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0072",
+    "title": "Environment registry, Makefile-driven bootstrap, and controlled operations",
+    "status": "Accepted",
+    "decision": "Replace hand-maintained environment files with a manifest-driven environment registry: .env files are generated from manifests; bootstrap and controlled operations are Makefile-driven; an ops port and admin handoff manage environment lifecycle. The registry is the single source of truth for environment configuration.",
+    "alternativesConsidered": [
+      "Hand-maintained per-environment .env files",
+      "Ad-hoc bootstrap scripts",
+      "Storing environment config across scattered locations"
+    ],
+    "rationale": "A manifest-driven registry with generated env files and Makefile-controlled operations removes drift and makes environment bootstrap reproducible and governed.",
+    "supersedesV1Adrs": ["ADR-0072"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0073",
+    "title": "Composed-service SSO via Keycloak OIDC",
+    "status": "Accepted",
+    "decision": "Provide SSO for composed services that support OIDC via Keycloak. Services without native OIDC support are protected behind the forward-auth gate as native managed auth, recorded accurately in the SSO matrix and clickthrough policy. No service is claimed to have SSO it does not have.",
+    "alternativesConsidered": [
+      "Per-service bespoke login configuration",
+      "Asserting SSO for services lacking OIDC support",
+      "No unified SSO for composed services"
+    ],
+    "rationale": "Keycloak OIDC for capable services and a forward-auth gate for the rest gives unified access while keeping the SSO matrix honest about each service's real capability.",
+    "supersedesV1Adrs": ["ADR-0073"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0074",
+    "title": "Browser-side diagnostics via Grafana Faro",
+    "status": "Accepted",
+    "decision": "Adopt the Grafana Faro Web SDK in the React app, initialised idempotently and failure-tolerantly at the top of bootstrap, shipping browser telemetry (errors, unhandled rejections, Web Vitals, page views, session) to a same-origin /faro/collect path reverse-proxied by Caddy to the environment's Alloy faro.receiver, which forwards to Loki. Distributed tracing is a documented follow-up behind the same receiver.",
+    "alternativesConsidered": [
+      "A browser monitoring SaaS",
+      "Cross-origin direct posting to the collector",
+      "Init that can throw and take the app down"
+    ],
+    "rationale": "Faro to a same-origin Alloy receiver keeps browser diagnostics free, local-first, and same-origin, with failure-tolerant init so telemetry can never break the app.",
+    "supersedesV1Adrs": ["ADR-0074"]
+  },
+  {
+    "v2AdrId": "V2-ADR-0075",
+    "title": "UI/UX E2E contract and future-change policy",
+    "status": "Accepted",
+    "decision": "Treat three machine-readable registries under e2e/ as the single source of truth for E2E coverage: a suite registry (every suite/scenario with stage, auth mode, surfaces, required capabilities, expected logs/metrics/traces/Sentry events, failure modes, owner), a persona registry (role/permission/entitlement/quota/rate-limit/a11y matrix and expected/forbidden surfaces per persona and stage), and a surface registry. They are validated against live platform inventories and fail the full-confidence ladder on drift; no test may exist without a registry entry and no delivered capability may lack coverage unless explicitly exempt with a reason.",
+    "alternativesConsidered": [
+      "Hand-curated E2E test lists",
+      "Coverage tracked informally outside the repo",
+      "Allowing tests with no registry entry"
+    ],
+    "rationale": "Machine-readable registries validated against live inventories make E2E coverage provable and drift-resistant, and bind the regenerated V2 UI to the proven persona/surface/scenario matrix.",
+    "supersedesV1Adrs": ["ADR-0075"]
+  }
+]

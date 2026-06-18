@@ -1,0 +1,816 @@
+[
+  {
+    "v1Path": "apps/react-enterprise-app/src/components/AppShell.tsx",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/components/AppShell.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": [
+      "AppShellProps",
+      "data-testid:app-shell-home",
+      "data-testid:actor-display",
+      "data-testid:logout-button",
+      "data-testid:app-shell-main"
+    ],
+    "protectingTests": ["apps/react-enterprise-app/src/components/__tests__/AdminLayout.test.tsx"],
+    "decisionRefs": ["ADR-0019", "ADR-ACT-0195", "ADR-ACT-0203", "ADR-0029"],
+    "migrationSeq": 10,
+    "deletionCondition": "V2 AppShell renders brand/actor/logout chrome with same testids and a11y; AdminLayout test green"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/components/AuthenticatedLayout.tsx",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/components/AuthenticatedLayout.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["authenticated layout route wrapper"],
+    "protectingTests": ["apps/react-enterprise-app/src/components/__tests__/AdminLayout.test.tsx"],
+    "decisionRefs": ["ADR-0019", "ADR-ACT-0203"],
+    "migrationSeq": 11,
+    "deletionCondition": "V2 _authenticated layout wraps Outlet in AppShell; session gating preserved"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/components/DefaultErrorComponent.tsx",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/components/DefaultErrorComponent.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["router defaultErrorComponent contract"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0019"],
+    "migrationSeq": 12,
+    "deletionCondition": "V2 error boundary renders typed error state; router wires defaultErrorComponent"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/components/DefaultNotFoundComponent.tsx",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/components/DefaultNotFoundComponent.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["router defaultNotFoundComponent contract"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0019"],
+    "migrationSeq": 12,
+    "deletionCondition": "V2 not-found component wired into router; renders 404 state"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/components/DefaultPendingComponent.tsx",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/components/DefaultPendingComponent.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["router defaultPendingComponent contract"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0019"],
+    "migrationSeq": 12,
+    "deletionCondition": "V2 pending/loading component wired into router"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/components/.gitkeep",
+    "fileType": "config",
+    "owner": "apps/react-enterprise-app",
+    "authoritative": "generated",
+    "v2Path": "n/a",
+    "disposition": "delete-after-proof",
+    "retainedInterfaces": [],
+    "protectingTests": [],
+    "decisionRefs": [],
+    "migrationSeq": 99,
+    "deletionCondition": "directory has real files in V2; placeholder unneeded"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/components/index.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/components/index.ts",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["barrel exports of shared components"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0019"],
+    "migrationSeq": 13,
+    "deletionCondition": "V2 barrel re-exports the regenerated component set"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/components/RequirePermission.tsx",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/components/RequirePermission.tsx",
+    "disposition": "refactor-behind-contract",
+    "retainedInterfaces": [
+      "RequirePermission props (permission gating)",
+      "client-side permission check contract"
+    ],
+    "protectingTests": ["apps/react-enterprise-app/src/components/__tests__/AdminLayout.test.tsx"],
+    "decisionRefs": ["ADR-0019", "ADR-0036"],
+    "migrationSeq": 9,
+    "deletionCondition": "V2 permission-gate preserves deny/allow semantics; gating behaviour proven"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/components/__tests__/AdminLayout.test.tsx",
+    "fileType": "test",
+    "owner": "apps/react-enterprise-app",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/components/__tests__/AdminLayout.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["layout + permission gating behaviour spec"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0019"],
+    "migrationSeq": 8,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-account/admin-account-client.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-account",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-account/admin-account-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-account REST client (BFF over fetch)"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-account/__tests__/AdminAccountPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036", "ADR-0013"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-account/AdminAccountPage.tsx",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-account",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-account/AdminAccountPage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["account view/edit behaviour", "form validation", "typed error states"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-account/__tests__/AdminAccountPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036", "ADR-ACT-0203"],
+    "migrationSeq": 21,
+    "deletionCondition": "V2 page reproduces account journeys; page test green"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-account/__tests__/AdminAccountPage.test.tsx",
+    "fileType": "test",
+    "owner": "apps/react-enterprise-app/features/admin-account",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-account/__tests__/AdminAccountPage.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-account page behaviour spec"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0036"],
+    "migrationSeq": 19,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-account/use-admin-account.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-account",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-account/use-admin-account.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["TanStack Query hooks", "query keys", "audit invalidation"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-account/__tests__/AdminAccountPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036", "ADR-0040"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin/admin-error.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin/admin-error.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["AdminRequestError typing", "error code mapping"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0036", "ADR-0013"],
+    "migrationSeq": 5,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin/admin-fetch.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin/admin-fetch.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [
+      "adminGet",
+      "adminSend",
+      "AdminRequestError",
+      "BFF-over-fetch credentials contract"
+    ],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0036", "ADR-0013"],
+    "migrationSeq": 4,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin/AdminQueryError.tsx",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin/AdminQueryError.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["query error display contract", "typed error semantics"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0036"],
+    "migrationSeq": 14,
+    "deletionCondition": "V2 shared admin query-error component renders typed error states"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin/audit-client.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin/audit-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["audit trail REST client"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0036", "ADR-0040"],
+    "migrationSeq": 5,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin/AuditTrailPanel.tsx",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin/AuditTrailPanel.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["audit trail panel display", "contextual refresh after mutations"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0040"],
+    "migrationSeq": 15,
+    "deletionCondition": "V2 audit panel reproduces audit listing + refresh behaviour"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-auth/admin-auth-client.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-auth",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-auth/admin-auth-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-auth/IdP REST client"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-auth/__tests__/AdminAuthPage.test.tsx",
+      "apps/react-enterprise-app/src/features/admin-auth/__tests__/IdpManager.oidc.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036", "ADR-ACT-0157"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-auth/AdminAuthPage.tsx",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-auth",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-auth/AdminAuthPage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": [
+      "auth config journeys",
+      "permission gating",
+      "typed error states",
+      "secret redaction (no raw KC config)"
+    ],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-auth/__tests__/AdminAuthPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0157", "ADR-0036"],
+    "migrationSeq": 21,
+    "deletionCondition": "V2 auth page reproduces IdP journeys; page test green; redaction preserved"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-auth/IdpManager.tsx",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-auth",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-auth/IdpManager.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["IdP CRUD journeys", "OIDC option fields", "form validation"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-auth/__tests__/IdpManager.oidc.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0157", "ADR-ACT-0220"],
+    "migrationSeq": 21,
+    "deletionCondition": "V2 IdP manager reproduces OIDC config behaviour; oidc test green"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-auth/__tests__/AdminAuthPage.test.tsx",
+    "fileType": "test",
+    "owner": "apps/react-enterprise-app/features/admin-auth",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-auth/__tests__/AdminAuthPage.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-auth page behaviour spec"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0157"],
+    "migrationSeq": 19,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-auth/__tests__/IdpManager.oidc.test.tsx",
+    "fileType": "test",
+    "owner": "apps/react-enterprise-app/features/admin-auth",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-auth/__tests__/IdpManager.oidc.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["OIDC IdP manager behaviour spec"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0157", "ADR-ACT-0220"],
+    "migrationSeq": 19,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-auth/use-admin-auth.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-auth",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-auth/use-admin-auth.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["TanStack Query hooks", "query keys", "audit invalidation"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-auth/__tests__/AdminAuthPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036", "ADR-0040"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-clickthrough/admin-clickthrough-client.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-clickthrough",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-clickthrough/admin-clickthrough-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["clickthrough policy REST client"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0036", "ADR-ACT-0233"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-clickthrough/AdminClickthroughPage.tsx",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-clickthrough",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-clickthrough/AdminClickthroughPage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": [
+      "clickthrough policy journeys",
+      "permission gating",
+      "typed error states"
+    ],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0233"],
+    "migrationSeq": 21,
+    "deletionCondition": "V2 clickthrough page reproduces policy management behaviour"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-clickthrough/use-admin-clickthrough.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-clickthrough",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-clickthrough/use-admin-clickthrough.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["TanStack Query hooks", "query keys"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0036", "ADR-ACT-0233"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-config/admin-config-client.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-config",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-config/admin-config-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["listConfig", "setConfigValue", "clearConfigValue"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-config/__tests__/AdminConfigPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-config/AdminConfigPage.tsx",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-config",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-config/AdminConfigPage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": [
+      "config view/set/clear journeys",
+      "permission gating",
+      "typed error states"
+    ],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-config/__tests__/AdminConfigPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036", "ADR-0040"],
+    "migrationSeq": 21,
+    "deletionCondition": "V2 config page reproduces config journeys; page test green"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-config/__tests__/AdminConfigPage.test.tsx",
+    "fileType": "test",
+    "owner": "apps/react-enterprise-app/features/admin-config",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-config/__tests__/AdminConfigPage.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-config page behaviour spec"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0036"],
+    "migrationSeq": 19,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-config/use-admin-config.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-config",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-config/use-admin-config.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": [
+      "useConfig",
+      "useSetConfigValue",
+      "useClearConfigValue",
+      "adminConfigQueryKey",
+      "audit invalidation"
+    ],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-config/__tests__/AdminConfigPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036", "ADR-0040"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-developer/admin-developer-client.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-developer",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-developer/admin-developer-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["developer platform (API keys/rate limits) REST client"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-developer/__tests__/AdminDeveloperPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036", "ADR-0065"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-developer/AdminDeveloperPage.tsx",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-developer",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-developer/AdminDeveloperPage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": [
+      "API key + rate limit journeys",
+      "permission gating",
+      "secret reveal-once semantics",
+      "typed error states"
+    ],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-developer/__tests__/AdminDeveloperPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0065", "ADR-ACT-0250"],
+    "migrationSeq": 21,
+    "deletionCondition": "V2 developer page reproduces key/rate journeys; page test green"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-developer/__tests__/AdminDeveloperPage.test.tsx",
+    "fileType": "test",
+    "owner": "apps/react-enterprise-app/features/admin-developer",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-developer/__tests__/AdminDeveloperPage.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-developer page behaviour spec"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0065"],
+    "migrationSeq": 19,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-developer/use-admin-developer.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-developer",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-developer/use-admin-developer.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["TanStack Query hooks", "query keys", "audit invalidation"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-developer/__tests__/AdminDeveloperPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036", "ADR-0065"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-domains/admin-domains-client.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-domains",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-domains/admin-domains-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["tenant domains REST client"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-domains/__tests__/AdminDomainsPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036", "ADR-ACT-0230"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-domains/AdminDomainsPage.tsx",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-domains",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-domains/AdminDomainsPage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["domain lifecycle journeys", "permission gating", "typed error states"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-domains/__tests__/AdminDomainsPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-ACT-0230", "ADR-ACT-0234"],
+    "migrationSeq": 21,
+    "deletionCondition": "V2 domains page reproduces domain lifecycle journeys; page test green"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-domains/__tests__/AdminDomainsPage.test.tsx",
+    "fileType": "test",
+    "owner": "apps/react-enterprise-app/features/admin-domains",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-domains/__tests__/AdminDomainsPage.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-domains page behaviour spec"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-ACT-0230"],
+    "migrationSeq": 19,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-domains/use-admin-domains.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-domains",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-domains/use-admin-domains.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["TanStack Query hooks", "query keys", "audit invalidation"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-domains/__tests__/AdminDomainsPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036", "ADR-ACT-0230"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-email/admin-email-client.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-email",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-email/admin-email-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["email settings REST client"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-email/__tests__/AdminEmailPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-email/AdminEmailPage.tsx",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-email",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-email/AdminEmailPage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["email config journeys", "permission gating", "typed error states"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-email/__tests__/AdminEmailPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036"],
+    "migrationSeq": 21,
+    "deletionCondition": "V2 email page reproduces email config journeys; page test green"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-email/__tests__/AdminEmailPage.test.tsx",
+    "fileType": "test",
+    "owner": "apps/react-enterprise-app/features/admin-email",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-email/__tests__/AdminEmailPage.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-email page behaviour spec"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0036"],
+    "migrationSeq": 19,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-email/use-admin-email.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-email",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-email/use-admin-email.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["TanStack Query hooks", "query keys", "audit invalidation"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-email/__tests__/AdminEmailPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-entitlements/admin-entitlements-client.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-entitlements",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-entitlements/admin-entitlements-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["entitlements REST client"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-entitlements/__tests__/AdminEntitlementsPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-entitlements/AdminEntitlementsPage.tsx",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-entitlements",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-entitlements/AdminEntitlementsPage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["entitlements journeys", "permission gating", "typed error states"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-entitlements/__tests__/AdminEntitlementsPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036"],
+    "migrationSeq": 21,
+    "deletionCondition": "V2 entitlements page reproduces entitlement journeys; page test green"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-entitlements/__tests__/AdminEntitlementsPage.test.tsx",
+    "fileType": "test",
+    "owner": "apps/react-enterprise-app/features/admin-entitlements",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-entitlements/__tests__/AdminEntitlementsPage.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-entitlements page behaviour spec"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0036"],
+    "migrationSeq": 19,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-entitlements/use-admin-entitlements.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-entitlements",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-entitlements/use-admin-entitlements.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["TanStack Query hooks", "query keys", "audit invalidation"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-entitlements/__tests__/AdminEntitlementsPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-events/admin-events-client.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-events",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-events/admin-events-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["events/event-bus REST client"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-events/__tests__/AdminEventsPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036", "ADR-0068"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-events/AdminEventsPage.tsx",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-events",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-events/AdminEventsPage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": ["event listing journeys", "permission gating", "typed error states"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-events/__tests__/AdminEventsPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0068"],
+    "migrationSeq": 21,
+    "deletionCondition": "V2 events page reproduces event journeys; page test green"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-events/__tests__/AdminEventsPage.test.tsx",
+    "fileType": "test",
+    "owner": "apps/react-enterprise-app/features/admin-events",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-events/__tests__/AdminEventsPage.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-events page behaviour spec"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0068"],
+    "migrationSeq": 19,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-events/use-admin-events.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-events",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-events/use-admin-events.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["TanStack Query hooks", "query keys"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-events/__tests__/AdminEventsPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036", "ADR-0068"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-features/admin-features-client.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-features",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-features/admin-features-client.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["feature flags REST client"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-features/__tests__/AdminFeaturesPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-features/AdminFeaturesPage.tsx",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-features",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-features/AdminFeaturesPage.tsx",
+    "disposition": "regenerate",
+    "retainedInterfaces": [
+      "feature flag toggle journeys",
+      "permission gating",
+      "typed error states"
+    ],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-features/__tests__/AdminFeaturesPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036"],
+    "migrationSeq": 21,
+    "deletionCondition": "V2 features page reproduces flag journeys; page test green"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-features/__tests__/AdminFeaturesPage.test.tsx",
+    "fileType": "test",
+    "owner": "apps/react-enterprise-app/features/admin-features",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-features/__tests__/AdminFeaturesPage.test.tsx",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["admin-features page behaviour spec"],
+    "protectingTests": [],
+    "decisionRefs": ["ADR-0036"],
+    "migrationSeq": 19,
+    "deletionCondition": "n/a"
+  },
+  {
+    "v1Path": "apps/react-enterprise-app/src/features/admin-features/use-admin-features.ts",
+    "fileType": "source",
+    "owner": "apps/react-enterprise-app/features/admin-features",
+    "authoritative": "authoritative",
+    "v2Path": "apps/web/src/features/admin-features/use-admin-features.ts",
+    "disposition": "reuse-unchanged",
+    "retainedInterfaces": ["TanStack Query hooks", "query keys", "audit invalidation"],
+    "protectingTests": [
+      "apps/react-enterprise-app/src/features/admin-features/__tests__/AdminFeaturesPage.test.tsx"
+    ],
+    "decisionRefs": ["ADR-0036"],
+    "migrationSeq": 20,
+    "deletionCondition": "n/a"
+  }
+]

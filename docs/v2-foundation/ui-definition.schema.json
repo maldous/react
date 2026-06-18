@@ -1,0 +1,640 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aldous.info/v2-foundation/ui-definition.schema.json",
+  "title": "V2 AI-UI Capability Definition",
+  "description": "Machine-readable, per-capability UI definition. This is the SEMANTIC SOURCE for the AI-generated V2 UI: the V2 UI generator consumes objects of this shape and MUST NEVER inspect V1 JSX. Each instance fully describes one capability's behaviour, commands, queries, forms, tables, state machines, async/error states, destructive confirmations, audit impact, readiness, terminology, i18n, accessibility, responsive priority, telemetry, example data, and references to the API/event contracts and Playwright journeys that pin the behaviour. The visual layer is free; everything in this object is contractual.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "capabilityId",
+    "route",
+    "owningCapability",
+    "personas",
+    "navEligibility",
+    "states",
+    "i18nKeys",
+    "a11y"
+  ],
+  "properties": {
+    "capabilityId": {
+      "type": "string",
+      "description": "Stable kebab-case id for the UI capability surface (e.g. 'admin-members'). Matches the V1 feature directory / e2e surfaceId.",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "title": {
+      "type": "string",
+      "description": "Human title (resolved from titleI18nKey at runtime; this is a fallback/dev label only)."
+    },
+    "titleI18nKey": { "type": "string" },
+    "descriptionI18nKey": { "type": "string" },
+    "route": {
+      "type": "string",
+      "description": "Canonical route path that mounts this capability (e.g. '/admin/members').",
+      "pattern": "^/"
+    },
+    "owningCapability": {
+      "type": "string",
+      "description": "Enterprise capability-registry id this UI surface belongs to (e.g. 'tenant-identity'). Ties the UI back to the readiness/permission/contract/audit chain."
+    },
+    "dataBoundary": {
+      "type": "string",
+      "description": "How this surface reaches server data. Never bypasses the BFF (CLAUDE.md constraint 1).",
+      "enum": ["graphql", "rest-over-bff"]
+    },
+    "persona": {
+      "type": "string",
+      "description": "Single dominant persona, when a surface is persona-specific. Prefer 'personas' for the full matrix."
+    },
+    "personas": {
+      "type": "array",
+      "description": "Personas (from e2e/persona-registry.json) that may use this surface, and the access expectation for each.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["personaId", "access"],
+        "properties": {
+          "personaId": { "type": "string" },
+          "roles": { "type": "array", "items": { "type": "string" } },
+          "access": {
+            "type": "string",
+            "enum": [
+              "full",
+              "read-only",
+              "denied",
+              "unavailable-entitlement",
+              "quota-limited",
+              "rate-limited"
+            ]
+          },
+          "accessibilityProfile": {
+            "type": ["string", "null"],
+            "enum": [
+              "keyboard-only",
+              "screen-reader",
+              "low-vision-high-contrast",
+              "reduced-motion",
+              "mobile-touch",
+              null
+            ]
+          },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "navEligibility": {
+      "type": "object",
+      "description": "Whether and where this capability appears in navigation, and what gates its visibility. Nav items are HIDDEN (not just disabled) when the gating permission is absent.",
+      "additionalProperties": false,
+      "required": ["inNav"],
+      "properties": {
+        "inNav": { "type": "boolean" },
+        "navGroup": { "type": "string", "enum": ["primary", "admin", "account", "none"] },
+        "labelI18nKey": { "type": "string" },
+        "order": { "type": "integer" },
+        "requiredPermission": {
+          "type": "string",
+          "description": "Permission that makes the nav item visible (e.g. 'tenant.members.read'). Absence hides the item entirely."
+        },
+        "requiredEntitlement": { "type": "string" },
+        "exact": {
+          "type": "boolean",
+          "description": "Exact-match active state (used by the overview/root item)."
+        }
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "description": "Top-level user tasks/journeys the surface supports, as outcome statements.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["taskId", "summary"],
+        "properties": {
+          "taskId": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+          "summary": { "type": "string" },
+          "persona": { "type": "array", "items": { "type": "string" } },
+          "requiredPermission": { "type": "string" },
+          "steps": { "type": "array", "items": { "type": "string" } },
+          "playwrightJourneyRefs": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "commands": {
+      "type": "array",
+      "description": "Write operations (mutations). Each maps to a BFF/GraphQL endpoint, a permission gate, optional confirmation, audit impact, and the state transitions it can trigger.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["commandId", "transport", "endpoint", "requiredPermission"],
+        "properties": {
+          "commandId": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+          "summary": { "type": "string" },
+          "transport": { "type": "string", "enum": ["graphql-mutation", "rest"] },
+          "method": { "type": "string", "enum": ["POST", "PATCH", "PUT", "DELETE", "GRAPHQL"] },
+          "endpoint": { "type": "string", "description": "Path or GraphQL document name." },
+          "requestSchemaRef": {
+            "type": "string",
+            "description": "Contract package schema (e.g. '@platform/contracts-admin#InviteMemberRequestSchema')."
+          },
+          "requiredPermission": { "type": "string" },
+          "requiredEntitlement": { "type": "string" },
+          "destructive": { "type": "boolean", "default": false },
+          "destructiveConfirmationRef": {
+            "type": "string",
+            "description": "Points at a destructiveConfirmation[].confirmationId."
+          },
+          "auditAction": {
+            "type": "string",
+            "description": "Audit action emitted server-side (used to refresh the contextual audit panel on success)."
+          },
+          "invalidatesQueries": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Query ids whose cache is invalidated on success."
+          },
+          "successState": {
+            "type": "string",
+            "description": "states[].stateId reached on success (usually 'success')."
+          },
+          "failureStates": { "type": "array", "items": { "type": "string" } },
+          "optimistic": { "type": "boolean", "default": false },
+          "telemetryEvents": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "queries": {
+      "type": "array",
+      "description": "Read operations. Each maps to an endpoint/document, a permission gate, a query key, and the data shape it returns.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["queryId", "transport", "endpoint"],
+        "properties": {
+          "queryId": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+          "summary": { "type": "string" },
+          "transport": { "type": "string", "enum": ["graphql-query", "rest"] },
+          "endpoint": { "type": "string" },
+          "responseSchemaRef": { "type": "string" },
+          "queryKey": { "type": "array", "items": { "type": "string" } },
+          "requiredPermission": { "type": "string" },
+          "requiredEntitlement": { "type": "string" },
+          "staleTimeMs": { "type": "integer" },
+          "retry": { "type": "boolean" },
+          "lazy": {
+            "type": "boolean",
+            "description": "Fetched only when a containing UI region is expanded/opened."
+          },
+          "feedsTables": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "forms": {
+      "type": "array",
+      "description": "Forms on the surface. RHF + Zod in V1; the V2 generator binds fields to the same validation contract.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["formId", "fields"],
+        "properties": {
+          "formId": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+          "summary": { "type": "string" },
+          "schemaRef": {
+            "type": "string",
+            "description": "Zod schema source (contract package or feature-local) the form resolves against."
+          },
+          "submitCommandId": {
+            "type": "string",
+            "description": "commands[].commandId invoked on submit."
+          },
+          "presentation": {
+            "type": "string",
+            "enum": ["inline", "dialog", "page-section", "row-detail"],
+            "default": "inline"
+          },
+          "resetOnSuccess": { "type": "boolean" },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["name", "type"],
+              "properties": {
+                "name": { "type": "string" },
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "text",
+                    "email",
+                    "password",
+                    "number",
+                    "textarea",
+                    "select",
+                    "multiselect",
+                    "checkbox",
+                    "switch",
+                    "radio",
+                    "date",
+                    "datetime",
+                    "url",
+                    "hidden"
+                  ]
+                },
+                "labelI18nKey": { "type": "string" },
+                "placeholderI18nKey": { "type": "string" },
+                "helpI18nKey": { "type": "string" },
+                "required": { "type": "boolean" },
+                "defaultValue": {},
+                "optionsSource": {
+                  "type": "string",
+                  "description": "Where select/radio options come from (e.g. 'enum:TENANT_ROLES', 'query:roles')."
+                },
+                "validation": {
+                  "type": "array",
+                  "description": "Validation rules mirrored from the Zod schema; messageI18nKey is the i18n key the schema emits.",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["rule"],
+                    "properties": {
+                      "rule": {
+                        "type": "string",
+                        "enum": [
+                          "required",
+                          "min",
+                          "max",
+                          "minLength",
+                          "maxLength",
+                          "regex",
+                          "email",
+                          "url",
+                          "enum",
+                          "custom"
+                        ]
+                      },
+                      "value": {},
+                      "messageI18nKey": { "type": "string" }
+                    }
+                  }
+                },
+                "dependsOn": {
+                  "type": "array",
+                  "description": "Other field names whose values this field's value/options depend on.",
+                  "items": { "type": "string" }
+                },
+                "conditionalVisibility": {
+                  "type": "object",
+                  "description": "Field shown only when the expression over sibling fields / session / entitlement is true.",
+                  "additionalProperties": false,
+                  "properties": {
+                    "when": {
+                      "type": "string",
+                      "description": "Boolean expression, e.g. \"role === 'admin'\" or \"entitlement('webhooks')\"."
+                    }
+                  }
+                },
+                "testId": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "tables": {
+      "type": "array",
+      "description": "Tabular surfaces with their columns, filters, sorting, pagination, row actions, and expandable detail.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["tableId", "columns"],
+        "properties": {
+          "tableId": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+          "dataQueryId": { "type": "string" },
+          "rowTestId": { "type": "string" },
+          "expandable": { "type": "boolean" },
+          "rowDetailQueryId": {
+            "type": "string",
+            "description": "Lazy query fired when a row is expanded."
+          },
+          "columns": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id"],
+              "properties": {
+                "id": { "type": "string" },
+                "headerI18nKey": { "type": "string" },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "text",
+                    "badge",
+                    "select-inline",
+                    "date",
+                    "actions",
+                    "expander",
+                    "mono",
+                    "custom"
+                  ]
+                },
+                "sortable": { "type": "boolean" },
+                "srOnlyHeader": { "type": "boolean" },
+                "rowActionCommandIds": { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["field", "type"],
+              "properties": {
+                "field": { "type": "string" },
+                "type": {
+                  "type": "string",
+                  "enum": ["text", "select", "multiselect", "date-range", "boolean"]
+                },
+                "labelI18nKey": { "type": "string" },
+                "optionsSource": { "type": "string" }
+              }
+            }
+          },
+          "sorting": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "defaultSort": { "type": "string" },
+              "defaultDirection": { "type": "string", "enum": ["asc", "desc"] },
+              "multiSort": { "type": "boolean" }
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": ["none", "client", "server-offset", "server-cursor"]
+              },
+              "pageSize": { "type": "integer" }
+            }
+          }
+        }
+      }
+    },
+    "stateMachines": {
+      "type": "array",
+      "description": "Explicit lifecycle/state machines beyond async fetch states (e.g. member status active->disabled, invitation pending->sent).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["machineId", "states", "transitions"],
+        "properties": {
+          "machineId": { "type": "string" },
+          "states": { "type": "array", "items": { "type": "string" } },
+          "initial": { "type": "string" },
+          "transitions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["from", "to", "on"],
+              "properties": {
+                "from": { "type": "string" },
+                "to": { "type": "string" },
+                "on": {
+                  "type": "string",
+                  "description": "commandId or event that triggers the transition."
+                },
+                "guard": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "states": {
+      "type": "object",
+      "description": "Every async/render state the surface MUST handle. Each entry declares how the state is presented and which i18n keys it uses. The V2 generator must render all declared states.",
+      "additionalProperties": false,
+      "properties": {
+        "loading": { "$ref": "#/$defs/stateSpec" },
+        "empty": { "$ref": "#/$defs/stateSpec" },
+        "success": { "$ref": "#/$defs/stateSpec" },
+        "validationFailure": { "$ref": "#/$defs/stateSpec" },
+        "domainFailure": { "$ref": "#/$defs/stateSpec" },
+        "degraded": { "$ref": "#/$defs/stateSpec" },
+        "permissionDenied": { "$ref": "#/$defs/stateSpec" },
+        "authRequired": { "$ref": "#/$defs/stateSpec" },
+        "entitlementUnavailable": { "$ref": "#/$defs/stateSpec" },
+        "quotaExceeded": { "$ref": "#/$defs/stateSpec" },
+        "rateLimited": { "$ref": "#/$defs/stateSpec" }
+      }
+    },
+    "destructiveConfirmation": {
+      "type": "array",
+      "description": "Confirmation contracts for destructive commands. The action must not proceed without explicit confirm.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["confirmationId", "commandId"],
+        "properties": {
+          "confirmationId": { "type": "string" },
+          "commandId": { "type": "string" },
+          "presentation": {
+            "type": "string",
+            "enum": ["dialog", "inline-typed-confirm"],
+            "default": "dialog"
+          },
+          "titleI18nKey": { "type": "string" },
+          "bodyI18nKey": { "type": "string" },
+          "confirmLabelI18nKey": { "type": "string" },
+          "cancelLabelI18nKey": { "type": "string" },
+          "requiresTypedValue": {
+            "type": "string",
+            "description": "If set, user must type this value (e.g. the resource name) to enable confirm."
+          }
+        }
+      }
+    },
+    "auditImpact": {
+      "type": "array",
+      "description": "Audit actions this surface emits and how the UI reflects them (contextual audit panel refresh).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["auditAction"],
+        "properties": {
+          "auditAction": { "type": "string" },
+          "triggeredByCommandId": { "type": "string" },
+          "refreshesAuditPanel": { "type": "boolean" },
+          "resource": { "type": "string" }
+        }
+      }
+    },
+    "readiness": {
+      "type": "object",
+      "description": "Capability readiness binding. Readiness is server-truth and must never be faked in the UI.",
+      "additionalProperties": false,
+      "properties": {
+        "readinessCheckId": { "type": "string" },
+        "surfacesReadinessState": { "type": "boolean" },
+        "degradedBehaviour": {
+          "type": "string",
+          "description": "What the UI shows when the capability is degraded (maps to states.degraded)."
+        }
+      }
+    },
+    "help": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "overviewI18nKey": { "type": "string" },
+        "terminology": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["term", "definitionI18nKey"],
+            "properties": {
+              "term": { "type": "string" },
+              "definitionI18nKey": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "i18nKeys": {
+      "type": "array",
+      "description": "Exhaustive list of i18n keys this surface references. All visible text is i18n-only (no literals).",
+      "items": { "type": "string" }
+    },
+    "a11y": {
+      "type": "object",
+      "description": "Accessibility contract. Mirrors e2e/ui-contract.json accessibilityBaseline.",
+      "additionalProperties": false,
+      "required": ["landmark", "heading"],
+      "properties": {
+        "landmark": {
+          "type": "string",
+          "description": "Owning landmark; usually inherited from AppShell <main>."
+        },
+        "heading": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "level": { "type": "integer", "minimum": 1, "maximum": 6 },
+            "i18nKey": { "type": "string" }
+          }
+        },
+        "roles": { "type": "array", "items": { "type": "string" } },
+        "accessibleNames": {
+          "type": "array",
+          "description": "Controls that require an explicit accessible name and the i18n key supplying it.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["control", "nameI18nKey"],
+            "properties": {
+              "control": { "type": "string" },
+              "role": { "type": "string" },
+              "nameI18nKey": { "type": "string" },
+              "descriptionI18nKey": { "type": "string" }
+            }
+          }
+        },
+        "keyboard": {
+          "type": "array",
+          "description": "Keyboard interaction contract (focus order, dialog trap/restore, key handlers).",
+          "items": { "type": "string" }
+        },
+        "announces": {
+          "type": "array",
+          "description": "Status messages announced via live regions and their tone.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["i18nKey", "tone"],
+            "properties": {
+              "i18nKey": { "type": "string" },
+              "tone": { "type": "string", "enum": ["polite", "assertive"] }
+            }
+          }
+        },
+        "noColourOnlyMeaning": { "type": "boolean", "default": true }
+      }
+    },
+    "responsivePriority": {
+      "type": "array",
+      "description": "Ordered region priority for responsive collapse. Highest priority survives smallest viewport; touch targets must remain reachable.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["region", "priority"],
+        "properties": {
+          "region": { "type": "string" },
+          "priority": { "type": "integer", "minimum": 1 },
+          "collapseBehaviour": {
+            "type": "string",
+            "enum": ["hide", "stack", "overflow-menu", "horizontal-scroll"]
+          }
+        }
+      }
+    },
+    "telemetryEvents": {
+      "type": "array",
+      "description": "Telemetry/observability events the surface emits. Loading completes an http.request span per ui-contract observability baseline.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["eventId"],
+        "properties": {
+          "eventId": { "type": "string" },
+          "trigger": { "type": "string" },
+          "attributes": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "exampleData": {
+      "type": "object",
+      "description": "Representative fixture payloads per query, so the generator can render realistic states without a live backend. Keyed by queryId.",
+      "additionalProperties": true
+    },
+    "apiEventContractRefs": {
+      "type": "array",
+      "description": "References to the contract packages / OpenAPI paths / GraphQL documents that pin this surface's API and event contracts.",
+      "items": { "type": "string" }
+    },
+    "playwrightJourneyRefs": {
+      "type": "array",
+      "description": "References to e2e specs / scenario-manifest scenarioIds / ui-contract surfaceIds that are the executable proof of this surface's behaviour.",
+      "items": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "stateSpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "present": { "type": "boolean", "default": true },
+        "component": {
+          "type": "string",
+          "description": "Design-system semantic component used (e.g. 'LoadingState', 'EmptyState', 'ErrorState', 'ForbiddenState', 'Alert')."
+        },
+        "titleI18nKey": { "type": "string" },
+        "descriptionI18nKey": { "type": "string" },
+        "tone": { "type": "string", "enum": ["info", "neutral", "danger", "success", "warning"] },
+        "recoveryAction": {
+          "type": "string",
+          "description": "e.g. 'retry', 'sign-in', 'request-access', 'contact-admin', 'none'."
+        },
+        "handledBy": {
+          "type": "string",
+          "enum": ["page", "route-guard", "app-shell"],
+          "description": "Where the state is rendered; permissionDenied/authRequired are often handled by the route guard."
+        }
+      }
+    }
+  }
+}

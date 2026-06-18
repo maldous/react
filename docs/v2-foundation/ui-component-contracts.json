@@ -1,0 +1,309 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aldous.info/v2-foundation/ui-component-contracts.json",
+  "title": "V2 AI-UI Component & Design Contracts",
+  "description": "The design substrate for the AI-generated V2 UI. Derived from V1 packages/ui-design-system + app theme tokens (globals.css @theme, src/theme). The VISUAL layer may be regenerated, but the semantic roles, component contracts, variants, interaction contracts, content style, notification/error presentation, navigation composition, and theming extension points here are the binding behavioural source. Colour is never the sole carrier of meaning; all text is i18n-resolved; data access is BFF-only.",
+  "version": 1,
+  "sourceOfTruth": {
+    "tokens": "apps/react-enterprise-app/src/styles/globals.css (@theme) + src/theme/theme.ts",
+    "components": "packages/ui-design-system/src/components/*",
+    "exports": "packages/ui-design-system/src/index.ts"
+  },
+
+  "designTokens": {
+    "colour": {
+      "model": "Semantic CSS custom properties exposed via Tailwind v4 @theme. Runtime tenant theming overrides ONLY --color-primary; the hover shade and *-primary utilities derive from it. Strict hex allow-list (3/6/8 digit) guards against CSS injection.",
+      "tokens": {
+        "--color-primary": "#4f46e5",
+        "--color-primary-hover": "color-mix(in srgb, var(--color-primary) 88%, black)",
+        "--color-primary-foreground": "#ffffff",
+        "--color-surface": "#ffffff",
+        "--color-surface-muted": "#f9fafb",
+        "--color-fg": "#111827",
+        "--color-fg-muted": "#4b5563",
+        "--color-border": "#e5e7eb",
+        "--color-danger": "#b91c1c",
+        "--color-danger-surface": "#fef2f2",
+        "--color-success": "#15803d",
+        "--color-success-surface": "#f0fdf4",
+        "--color-warning": "#b45309",
+        "--color-warning-surface": "#fffbeb",
+        "--color-info": "#1d4ed8"
+      },
+      "tenantOverridable": ["--color-primary"]
+    },
+    "radius": { "--radius-card": "0.5rem" },
+    "shadow": { "--shadow-card": "0 1px 2px 0 rgb(0 0 0 / 0.05)" },
+    "safeArea": {
+      "model": "Capacitor SystemBars injects --safe-area-inset-*; the app maps them to --app-safe-* and pads the shell. On web, app-safe-x resolves to 0.",
+      "tokens": ["--app-safe-top", "--app-safe-bottom", "--app-safe-left", "--app-safe-right"]
+    },
+    "focus": "Focus is always visible: 2px solid var(--color-primary) outline; forced-colors keeps focus visible via system colours."
+  },
+
+  "semanticRoles": {
+    "colour": {
+      "primary": "Brand/primary action surfaces (--color-primary / --color-primary-foreground).",
+      "fg": "Default body text.",
+      "fg-muted": "Secondary/meta text (timestamps, helper text, descriptions).",
+      "surface": "Default container background (cards, dialogs).",
+      "surface-muted": "Hover/zebra/secondary surfaces.",
+      "border": "Hairline dividers and control borders.",
+      "danger": "Destructive actions, validation/domain errors. Paired with danger-surface for backgrounds.",
+      "success": "Positive confirmation / saved state.",
+      "warning": "Caution / degraded-but-usable.",
+      "info": "Neutral informational emphasis."
+    },
+    "typography": {
+      "heading-1": "Page title; one per page; bound to a11y meaningful-h1.",
+      "section-heading": "SectionHeader / AdminSectionHeader region titles.",
+      "body": "text-sm default body.",
+      "meta": "text-xs / text-fg-muted secondary detail.",
+      "mono": "font-mono for identifiers (usernames, ids, keys)."
+    },
+    "spacing": {
+      "model": "Tailwind spacing scale; sections use mb-6 between blocks, gap-2/gap-3 between inline controls, p-2 for row-detail padding.",
+      "rhythm": ["section-gap=6", "control-gap=2", "form-field-gap=4"]
+    },
+    "layout": {
+      "app-shell": "Owns the single <main> landmark, primary nav, header, and safe-area padding. Feature pages never render <main>.",
+      "admin-shell": "Two-pane: permission-filtered admin nav rail + content region with AdminSectionHeader.",
+      "content-width": "Forms/detail constrained (max-w-3xl); tables full width.",
+      "page-section": "A <section> with a SectionHeader and the surface's primary content."
+    }
+  },
+
+  "componentContracts": {
+    "Button": {
+      "source": "components/Button.tsx (react-aria-components Button)",
+      "variants": ["default", "destructive", "outline", "ghost", "link"],
+      "sizes": ["sm", "md", "lg"],
+      "props": ["variant", "size", "isDisabled", "onPress", "type"],
+      "rules": [
+        "Use onPress (not onClick) — react-aria.",
+        "destructive variant is reserved for destructive commands and pairs with a confirmation contract.",
+        "Disabled state: isDisabled + opacity-50; never remove from tab order silently.",
+        "Visible focus ring (ring-2 ring-offset-2)."
+      ]
+    },
+    "Input": {
+      "source": "components/Input.tsx",
+      "rules": [
+        "Always labelled (via FormField or aria-label).",
+        "Invalid state exposes aria-invalid + linked error."
+      ]
+    },
+    "Textarea": {
+      "source": "components/Textarea.tsx",
+      "rules": ["Same labelling/invalid contract as Input."]
+    },
+    "Label": { "source": "components/Label.tsx" },
+    "FormField": {
+      "source": "components/FormField.tsx",
+      "purpose": "Composes Label + Input + error message + invalid state. Canonical field wrapper for RHF Controller.",
+      "props": [
+        "label",
+        "value",
+        "onChange",
+        "onBlur",
+        "name",
+        "isInvalid",
+        "errorMessage",
+        "type",
+        "inputProps"
+      ],
+      "rules": [
+        "errorMessage is an i18n-resolved string.",
+        "isInvalid wires aria-invalid and announces the error."
+      ]
+    },
+    "Select": {
+      "source": "components/Select.tsx",
+      "props": [
+        "items (SelectItem[])",
+        "placeholder",
+        "selectedKey",
+        "onSelectionChange",
+        "aria-label"
+      ],
+      "rules": [
+        "items are {id,label}; label is i18n-resolved.",
+        "Inline-in-table selects require an aria-label naming the row subject."
+      ]
+    },
+    "Checkbox": {
+      "source": "components/Checkbox.tsx",
+      "note": "Single-component API retained deliberately (ADR-ACT-0290/0291 — Field+Button split broke a11y)."
+    },
+    "RadioGroup": { "source": "components/RadioGroup.tsx", "props": ["items (RadioItem[])"] },
+    "Switch": {
+      "source": "components/Switch.tsx",
+      "note": "Single-component API retained (ADR-ACT-0290)."
+    },
+    "Dialog": {
+      "source": "components/Dialog.tsx (+ DialogTrigger)",
+      "props": ["isOpen", "onOpenChange", "aria-label"],
+      "rules": [
+        "Focus trap + restore on close.",
+        "aria-label or labelled heading required.",
+        "Used for invite/confirm/destructive flows."
+      ]
+    },
+    "Popover": { "source": "components/Popover.tsx" },
+    "Tooltip": {
+      "source": "components/Tooltip.tsx",
+      "rules": ["Tooltip is supplementary; never the sole carrier of an accessible name."]
+    },
+    "DropdownMenu": {
+      "source": "components/DropdownMenu.tsx",
+      "props": ["items (DropdownMenuItem[])"]
+    },
+    "Tabs": {
+      "source": "components/Tabs.tsx",
+      "props": ["items (TabItem[])"],
+      "rules": ["Arrow-key navigation; selected tab announced."]
+    },
+    "Card": {
+      "source": "components/Card.tsx",
+      "parts": ["Card", "CardHeader", "CardBody", "CardFooter"],
+      "rules": ["Default surface container; uses --radius-card / --shadow-card."]
+    },
+    "Badge": {
+      "source": "components/Badge.tsx",
+      "variants": ["default", "secondary"],
+      "rules": [
+        "Status badges pair a colour with text — never colour alone (e.g. status label text)."
+      ]
+    },
+    "Alert": {
+      "source": "components/Alert.tsx",
+      "parts": ["Alert", "AlertTitle", "AlertDescription"],
+      "tones": ["info", "danger", "success", "warning"]
+    },
+    "LiveRegion": {
+      "source": "components/LiveRegion.tsx",
+      "props": ["tone (polite|assertive)"],
+      "rules": [
+        "Async success/failure announcements go here.",
+        "assertive for failures, polite for saved/confirmation."
+      ]
+    },
+    "Toast": {
+      "source": "components/Toast.tsx",
+      "api": ["Toaster", "toast"],
+      "rules": ["Transient, non-blocking confirmations; not for errors that need recovery actions."]
+    },
+    "PageLayout": { "source": "components/PageLayout.tsx" },
+    "SectionHeader": {
+      "source": "components/SectionHeader.tsx",
+      "props": ["heading", "level", "className"]
+    },
+    "LoadingState": {
+      "source": "components/LoadingState.tsx",
+      "props": ["message"],
+      "rules": ["Standard loading presentation; message is i18n-resolved."]
+    },
+    "EmptyState": { "source": "components/EmptyState.tsx", "props": ["title", "description"] },
+    "ErrorState": {
+      "source": "components/ErrorState.tsx",
+      "props": ["title", "description"],
+      "rules": ["Recoverable error presentation; pair with a retry where applicable."]
+    },
+    "ForbiddenState": {
+      "source": "components/ForbiddenState.tsx",
+      "rules": [
+        "Permission-denied presentation; typically rendered by the route guard (RequirePermission)."
+      ]
+    },
+    "DataTable": {
+      "source": "components/DataTable.tsx (@tanstack/react-table)",
+      "props": ["data", "columns (ColumnDef[])", "rowTestId", "renderSubComponent"],
+      "rules": [
+        "Expandable rows via renderSubComponent.",
+        "Header cells with no visible label use sr-only text.",
+        "Row actions live in a trailing actions column."
+      ]
+    }
+  },
+
+  "interactionContracts": {
+    "form": [
+      "RHF + zodResolver; validation bounds mirror the owning contract schema.",
+      "Submit disabled while pending; label switches to a 'saving' i18n key.",
+      "Field errors are i18n keys emitted by the Zod schema, resolved via t().",
+      "On success, forms that create reset to defaults; dialogs close."
+    ],
+    "mutation": [
+      "Writes re-authorised server-side by the BFF; UI hides controls the persona lacks permission for.",
+      "On success: invalidate the relevant query key, announce via LiveRegion/toast, and refresh the contextual audit panel where one exists.",
+      "Distinguish typed failure semantics (e.g. 409 conflict) from generic failure with a specific message."
+    ],
+    "destructive": [
+      "Never proceed without explicit confirmation (Dialog or typed-confirm).",
+      "Confirm button uses default/destructive emphasis; cancel uses outline.",
+      "The confirmation names the specific resource."
+    ],
+    "keyboard": [
+      "All interactive controls keyboard-reachable in logical order.",
+      "Dialogs trap focus and restore it to the trigger on close.",
+      "Visible focus indicator everywhere."
+    ]
+  },
+
+  "contentStyle": {
+    "voice": "Clear, operator-facing, plain enterprise English. Action labels are imperative verbs (Invite, Remove, Save).",
+    "i18n": "ALL visible text resolves through @platform/i18n-runtime t(). No string literals in UI. Interpolation via named params (e.g. {name}).",
+    "terminology": "Use product terms consistently: member (tenant identity), tenant, entitlement, readiness, clickthrough, persona.",
+    "emptyVsError": "Empty = a valid zero state (no data yet). Error = something failed and may be retried. Keep them distinct."
+  },
+
+  "notificationPatterns": {
+    "inlineLiveRegion": "Per-form/section async outcome (saved / save failed). polite for success, assertive for failure.",
+    "toast": "Transient global confirmations; auto-dismiss; never the only channel for a failure needing action.",
+    "alert": "Persistent in-context banner for degraded/entitlement/quota/rate-limit notices.",
+    "validationSummary": "Form-level error region announced to screen readers on submit failure."
+  },
+
+  "errorPresentation": {
+    "validationFailure": "Field-level via FormField errorMessage + aria-invalid; summary announced.",
+    "domainFailure": "ErrorState or Alert(danger) with a specific, typed message; retry where safe. Typed conflicts (409) get a dedicated message.",
+    "degraded": "Alert(warning) — capability usable but limited; readiness-driven, server-truth.",
+    "permissionDenied": "ForbiddenState, usually at the route guard; write controls are simply absent.",
+    "authRequired": "Redirect to /login (route guard); never a silently-broken SPA.",
+    "entitlementUnavailable": "Alert(info) explaining the feature is not enabled for the tenant — not a crash, not a silent allow.",
+    "quotaExceeded": "Visible, with a stable reason and root-cause hint (ADR-ACT-0285 Phase 5).",
+    "rateLimited": "Visible, with a stable reason; non-destructive guidance to retry later."
+  },
+
+  "navigationComposition": {
+    "appShell": "Single <main> landmark, primary navigation, header with actor display, safe-area padding.",
+    "adminRail": {
+      "source": "components/AdminLayout.tsx ADMIN_NAV_ITEMS",
+      "rule": "Each item declares {to, labelKey, permission}. Items are HIDDEN when hasPermission(permission) is false (filter, not disable).",
+      "activeState": "Route-active styling; the overview item ('/admin') is exact-match."
+    },
+    "labels": "Nav labels are i18n keys (feature.admin.nav.*).",
+    "ordering": "Order is the array order in ADMIN_NAV_ITEMS."
+  },
+
+  "themingExtensionPoints": {
+    "tenantBranding": {
+      "source": "src/theme/theme.ts (ADR-0029)",
+      "endpoint": "GET /api/theme (unauthenticated, tenant-scoped, always returns a usable theme)",
+      "fields": ["displayName", "primaryColour", "logoUrl", "faviconUrl"],
+      "guards": [
+        "primaryColour must match strict hex allow-list (#3/6/8) or default is used.",
+        "logoUrl/faviconUrl must be http(s) URLs or are dropped.",
+        "Only --color-primary is written to the DOM at runtime; all primary shades derive from it."
+      ],
+      "default": {
+        "displayName": "Enterprise Platform",
+        "primaryColour": "#4f46e5",
+        "logoUrl": null,
+        "faviconUrl": null
+      }
+    },
+    "colourScheme": "Dark/prefers-color-scheme handled at :root[data-theme]; tenant override applies on top of scheme.",
+    "forcedColors": "forced-colors/high-contrast keeps focus and meaning intact; no colour-only signalling."
+  }
+}

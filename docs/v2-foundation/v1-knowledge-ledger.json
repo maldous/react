@@ -1,0 +1,186 @@
+[
+  {
+    "topic": "Checkbox/Radio/Switch react-aria Field+Button split breaks accessible name",
+    "originatingCommits": ["35a42fc", "7cf8763", "048155e", "e7b6c84", "918cd14"],
+    "problemDiscovered": "react-aria-components 1.18 deprecated the single Checkbox/Radio/Switch components (Sonar S1874). A codemod migrated the three design-system wrappers to <XField>(state container)+<XButton>(clickable label). The split moved the <input> into XField while the visible/aria label sat on XButton, so the input lost its accessible name. axe 'Form elements must have labels' fired; caught by the AdminConfig/AdminFeatures a11y suites in the pre-push hook.",
+    "rejectedApproach": "Field+Button split migration to silence the S1874 deprecation findings (commit 35a42fc). It compiled clean (tsc+eslint) but had NO unit coverage for these primitives and broke a11y at runtime.",
+    "acceptedResolution": "Revert to the deprecated-but-correct single-component wrappers (7cf8763). Accept the 9 S1874 component-deprecation findings as tracked debt (ADR-ACT-0290). Add an axe accessible-name regression test (918cd14). A proper Field+Button migration needs dedicated a11y verification before it can land.",
+    "currentImplementation": "Single-component accessible Checkbox/Radio/Switch wrappers in packages/ui-design-system; 9 react-aria deprecations are ACCEPTED debt, not fixed.",
+    "regressionTests": "axe accessible-name regression test added in 918cd14; frontend suite 213/213; AdminConfig/AdminFeatures a11y suites.",
+    "v2Implication": "If V2 regenerates the UI on a newer react-aria, the accessible-name contract is the load-bearing semantic — the input must own its accessible name. Do not adopt a Field+Button split without an axe accessible-name test proving the input is still labelled.",
+    "v2TargetDecision": "Preserve the single-component accessible API behaviour as the semantic contract. Any visual replacement MUST keep the accessible name on the actual control and ship an axe regression test."
+  },
+  {
+    "topic": "SonarQube 9.9 silently degraded to type-less analysis; 25.9 upgrade surfaced real findings",
+    "originatingCommits": ["15bec3e", "66c1152", "32e8029", "b2daa1f", "39acb91"],
+    "problemDiscovered": "SonarQube 9.9 LTS bundled an old TypeScript that rejected this repo's TS 5.x config (moduleResolution:bundler, allowImportingTsExtensions). The JS/TS analyzer could not build a program and silently fell back to type-less analysis — the quality gate was effectively a no-op for TS for an unknown period. Upgrading to 25.9 exposed 7 real BUG findings, 87 hardcoded-credential literals (S6698), and many deprecations that had been invisible.",
+    "rejectedApproach": "Trusting a green 9.9 gate as proof of TS quality; shipping the vaulttec sonar-oidc v2.1.1 plugin default (it uses the ServletFilter API removed in 25.x and crash-loops the server).",
+    "acceptedResolution": "Upgrade compose image to sonarqube:25.9.0.112764-community via migration path 9.9->24.12->25.9 (DB preserved so the new-code baseline survives). Pass analysis token via SONAR_TOKEN/-Dsonar.token (scanner CLI 7.3 ignores deprecated -Dsonar.login). OIDC plugin is opt-in via explicit 25.x-compatible URL, not bundled. Then remediated the real findings (S5850 regex precedence, S6324 control-char by code point, S2871 localeCompare migration sort, S6698 managed-env credentials).",
+    "currentImplementation": "25.9 Community Build with type-aware analysis live; absolute-zero gate (0 issues / 0 hotspots); runs exactly once at make all test stage.",
+    "regressionTests": "make all test-stage runs make sonar (absolute-zero); unit suites for the remediated bug fixes.",
+    "v2Implication": "A green static-analysis gate is only trustworthy if the analyzer actually builds a TS program. V2 must verify the analyzer matches the TS version, and treat a sudden zero-findings state as suspect.",
+    "v2TargetDecision": "Adopt 25.9+ from the start with type-aware analysis verified. Keep the absolute-zero gate running exactly once (test stage). Carry forward the credential-from-managed-env rule (no source literals)."
+  },
+  {
+    "topic": "Bulk Sonar codemods introduced behaviour-changing regressions",
+    "originatingCommits": ["918cd14", "e7b6c84"],
+    "problemDiscovered": "The ADR-ACT-0290 automated Sonar remediation claimed to be behaviour-identical but a post-merge review found 11 findings the cleanup itself introduced: migration 010 was not restored byte-for-byte (broke checksum), Sentry init/flush lifecycle was reordered dropping startup errors, safeStringify could throw on circular/BigInt/throwing-toJSON, the Checkbox/Radio/Switch a11y break, and a Sonar-OIDC SSO over-claim.",
+    "rejectedApproach": "Trusting mechanical codemods (S1874, S4782, S6759, S3776, S3358, S3735, S4624) as behaviour-preserving without per-change review and runtime verification.",
+    "acceptedResolution": "ADR-ACT-0291 remediation: restore migration 010 byte-for-byte and add forward-only migration 034 for the role-password change; explicit Sentry ready()/initPromise lifecycle with onInitError; non-throwing safeStringify; keep accessible single-component controls; correct the Sonar-OIDC claim to opt-in.",
+    "currentImplementation": "Sonar gate passes 0/0 after fixing the 11 self-introduced findings; make check stays fast (never includes Sonar).",
+    "regressionTests": "axe accessible-name test, Sentry lifecycle behaviour, safeStringify edge cases; make check + targeted suites.",
+    "v2Implication": "AI-generated/codemodded refactors must be reviewed for behaviour change and runtime-verified, never accepted on a passing type-check alone. Migration files are checksum-immutable — never edit, always add forward-only.",
+    "v2TargetDecision": "In V2, treat any 'behaviour-identical cleanup' claim as requiring runtime proof. Preserve byte-immutable committed migrations and the fast-check / single-Sonar-run contract."
+  },
+  {
+    "topic": "Keycloak UMA Authorization Services incompatible with KC 26.2 server",
+    "originatingCommits": ["c9736eb", "00193d3", "8c5658b", "7bdf2b6"],
+    "problemDiscovered": "The BFF declares 40 UMA-protected resources but UMA authorizationServicesEnabled does not persist on Keycloak 26.2.5 (reverts to null across restart); the UMA token endpoint returns 'Client does not support permissions' even with a ResourceServer present. Proven NOT a realm-data, DB, provider, or realm-rebuild problem: eliminated via full realm rebuild, fresh keycloak-postgres VOLUME RESET, v5 provider, client recreation, API toggles, RS materialisation, cache clears, restarts. Fault isolated to the KC 26.2 server running in start-dev mode.",
+    "rejectedApproach": "Rebuilding the realm to 'restore UMA' (conclusively does not work); keeping UMA authorization{} resources in Terraform (made keycloak-provision hard-error 404 on role policy).",
+    "acceptedResolution": "Remove non-functional UMA resources from the TF keycloak module so make keycloak-provision is green. Migrate the archived mrparkers/keycloak ~4.4 provider to maintained keycloak/keycloak ~5.0 (v5.8.0) via terraform state replace-provider (0 recreations). UMA stays OFF; the static-RBAC degrade (ADR-ACT-0276) is the effective gate and the platform fully works. Prepared but unwired scripts/keycloak/provision-bff-authz.sh (KC-26-native admin-API UMA provisioner). Remaining options (uncertain): pin KC image, switch start-dev->production start, file upstream issue.",
+    "currentImplementation": "UMA degraded; static-RBAC backstop (requiredPermission) is the real authorization gate. keycloak/keycloak v5 provider across all four ladder envs.",
+    "regressionTests": "make keycloak-provision idempotent-green; GraphQL gate + REST pipeline authz tests; static-RBAC backstop tests.",
+    "v2Implication": "Do NOT design V2 authorization assuming KC UMA works on KC 26.x. The static-RBAC/requiredPermission backstop is the proven authority. org/me authz is DB/RLS-driven (not realm-role expressible) and correctly stays on the static backstop.",
+    "v2TargetDecision": "V2 authorization = server-side static-RBAC + DB/RLS as the source of truth. Keep UMA as a deferred/optional layer only if a KC version proves it persists. Do not re-chase realm rebuilds."
+  },
+  {
+    "topic": "Unregistered UMA resource hard-denied every page except admin:tenants",
+    "originatingCommits": ["8c5658b"],
+    "problemDiscovered": "Only admin:tenants was ever registered as a protected UMA resource on the platform-api KC client; the BFF declares 40. Keycloak answered every other permission ticket with invalid_request 'Resource with id [X] does not exist', which the adapter mapped to policy_denied, and pipeline.ts/authorize-resource.ts hard-403'd. Result: the system administrator (and every user) was locked out of ALL admin/org/me pages except tenants, despite all 40 routes carrying a correct requiredPermission static backstop. Root-caused from live prod PERMISSION_TOKEN_ERROR logs.",
+    "rejectedApproach": "Treating a Keycloak invalid_request 'resource does not exist' (a provisioning gap) as a real policy_denied decision and hard-denying.",
+    "acceptedResolution": "New AccessDenialReason 'resource_not_registered'; map KC invalid_request to it; pipeline.ts + authorize-resource.ts treat it like keycloak_unavailable and fall through to the static requiredPermission check. Fail-closed preserved: a registered resource whose policy denies still 403s; a route with no requiredPermission still fails closed.",
+    "currentImplementation": "resource_not_registered degrades to static backstop; provisioning gap distinguished from policy decision.",
+    "regressionTests": "Regression tests for both the GraphQL gate and the REST pipeline (resource_not_registered fall-through + fail-closed cases).",
+    "v2Implication": "Authorization must distinguish a provisioning gap from a real policy denial. A missing IdP resource registration must degrade to the static backstop, never hard-deny — but routes with no permission must still fail closed.",
+    "v2TargetDecision": "Carry forward the three-way denial taxonomy (policy_denied / keycloak_unavailable / resource_not_registered) and the fail-closed-by-default rule into V2's authorization port."
+  },
+  {
+    "topic": "Production 'Access denied' / 'Page not found' — invisible denials, dual cookies, token degrade, me-namespace",
+    "originatingCommits": ["2f73104"],
+    "problemDiscovered": "Customer-reported Access denied/Page not found across Administration, Account, and clickthrough. Four faults: (1) pipeline 404/405/400 and every 401/403 denial returned BEFORE the success log line — invisible in Loki. (2) A browser could carry two platform_session cookies (host-only + .aldous.info after a SESSION_COOKIE_DOMAIN change); parseSessionCookie returned the first, so a stale cookie shadowed a valid session -> 401 login loop + broke forward-auth. (3) A valid session whose UMA token can't be refreshed hard-401'd. (4) /api/me/profile and /api/me/notification-preferences were scope:tenant, so a system-admin with no tenant FQDN got 403 on their own Account page.",
+    "rejectedApproach": "Logging only successful requests; returning the first parsed session cookie; hard-401 on any token-refresh failure; host-gating me-namespace reads.",
+    "acceptedResolution": "(1) Every early return emits one http.request.rejected warn with status + stable machine reason + route + actor + permission/resource. (2) parseSessionCookies tries every candidate; first-that-resolves used by pipeline + /api/session + forward-auth + graphql. (3) token_unresolved degrades to the static backstop for routes with a requiredPermission; sole-UMA routes still 401. (4) me-namespace GET reads no longer host-gated; return identity-derived default when no tenant.",
+    "currentImplementation": "Structured rejection logging; multi-cookie resolution; token-degrade to static backstop; me-namespace self-access (ADR-ACT-0278).",
+    "regressionTests": "Regression tests for dual-cookie stale+valid->200, tokenless valid session->200, clickthrough->200, sysadmin Account->200.",
+    "v2Implication": "Denials must be observable from logs alone (log BEFORE the early return). Cookie-domain changes create multi-cookie hazards — resolution must try all candidates. System-admin self-service (me-namespace) must work without a tenant context.",
+    "v2TargetDecision": "V2 must emit a structured rejection log on every denial/early-return, resolve sessions across all cookie candidates, and keep me-namespace reads tenant-optional."
+  },
+  {
+    "topic": "Composed-service SSO defects — KC backchannel, PKCE, additional-claims, default-admin rotation",
+    "originatingCommits": ["f05981f", "3d02a9f", "1685841", "8cac89d"],
+    "problemDiscovered": "Multiple clickthrough SSO services broke only under real OIDC callbacks (page-load tests couldn't reach the faults). Unifying cause: KC ran KC_HOSTNAME_STRICT=true with deprecated KC_HOSTNAME_STRICT_BACKCHANNEL (ignored under KC 26 hostname-v2), so the OIDC discovery doc advertised PUBLIC token/jwks/userinfo endpoints; containers deriving endpoints from discovery (MinIO, pgAdmin) hit public URLs and got Cloudflare 403. Further: MinIO client mandated PKCE but the console sends no code_challenge (KC 'Missing parameter: code_challenge_method' = the 'No session' symptom); pgAdmin OAUTH2_ADDITIONAL_CLAIMS was {} which matches nothing so every SSO'd user was denied; SonarQube default admin:admin was never rotated because provision-token.sh did exit 0 at the token check BEFORE the password-rotation step.",
+    "rejectedApproach": "Relying on page-load tests to verify SSO; KC_HOSTNAME_STRICT_BACKCHANNEL under KC 26; mandating PKCE for a console that can't do it; setting OAUTH2_ADDITIONAL_CLAIMS={}; ordering the provision-token early-exit before admin rotation.",
+    "acceptedResolution": "KC_HOSTNAME_BACKCHANNEL_DYNAMIC=true (frontend URLs stay public, backchannel resolves internal); remove the PKCE mandate from the minio client; set pgAdmin additional-claims to None (forward-auth gates instead); move the token early-exit AFTER the admin-password rotation; add OIDC discovery URL for pgAdmin jwks; ClickHouse clickthrough -> /clickhouse/play; LocalStack clickthrough locked in prod; re-link accounts by verified email after a realm rebuild rotated subjects; shared sonar-bridge network for /sonar clickthrough.",
+    "currentImplementation": "Composed-service SSO via KC OIDC (ADR-0073); split-horizon backchannel; forward-auth gating; Sentry SSO stays not-wired (paid feature).",
+    "regressionTests": "service-clickthrough.test.ts (+7); login.spec 7/7; tool-services.spec 18/18; real-auth Playwright as sysadmin@aldous.info.",
+    "v2Implication": "SSO must be proven by driving REAL OIDC callbacks, not page loads. Backchannel vs frontchannel endpoint split is critical under KC 26 hostname-v2. Default-admin rotation and credential provisioning ordering are real code defects, not just ops.",
+    "v2TargetDecision": "V2 composed-service SSO must use backchannel-dynamic discovery, gate via forward-auth (not fragile per-service claim checks), and be verified by real-auth E2E. Carry the verified-email account re-link to survive subject rotation."
+  },
+  {
+    "topic": "RLS bypass via SET LOCAL ROLE — NOINHERIT alone insufficient",
+    "originatingCommits": ["149776d"],
+    "problemDiscovered": "Enforcing RLS on platform_app required a way for system-admin transactions to bypass tenant scoping. ALTER ROLE platform_app NOINHERIT alone is insufficient because pg_has_role USAGE is equivalent to MEMBER for role membership.",
+    "rejectedApproach": "Migration 011's USAGE predicate (pg_has_role USAGE) as the RLS bypass check — equivalent to MEMBER, so it did not actually gate.",
+    "acceptedResolution": "Migration 012 replaces the USAGE check with a current_user + rolinherit predicate: current_user = 'rls_bypass' (after SET LOCAL ROLE in withSystemAdmin) OR (pg_has_role MEMBER AND rolinherit). withSystemAdmin() issues SET LOCAL ROLE rls_bypass after BEGIN; the role reverts after COMMIT/ROLLBACK (transaction-scoped), so platform_app stays tenant-scoped everywhere else.",
+    "currentImplementation": "RLS enforced on platform_app; system-admin bypass only inside an explicit withSystemAdmin transaction via SET LOCAL ROLE rls_bypass (ADR-ACT-0189).",
+    "regressionTests": "5 RLS integration tests (role properties, tenant isolation, cross-tenant blocking, current_user=rls_bypass verify, SET LOCAL ROLE path); compose-smoke RLS test simulating real withSystemAdmin.",
+    "v2Implication": "RLS bypass design: NOINHERIT + pg_has_role USAGE is a trap (USAGE == MEMBER). Use current_user + rolinherit and transaction-scoped SET LOCAL ROLE so the privilege never leaks past the transaction.",
+    "v2TargetDecision": "V2 keeps RLS-enforced tenancy with transaction-scoped SET LOCAL ROLE bypass as the proven pattern; do not regress to a USAGE-based predicate."
+  },
+  {
+    "topic": "Empty-string env values defeat ?? and typeof-string guards",
+    "originatingCommits": ["4a94d1d", "cee99f3"],
+    "problemDiscovered": "Two regressions from wiring vars into the platform-api compose env as ${VAR:-} (which passes an EMPTY string when unset, not undefined). (1) AUTH_PROVIDER_MODE='' counted as explicitly-set in modeExplicitlySet() (typeof x === 'string'); the container's NODE_ENV=production made platformEnv prod-like -> getProviderMode defaulted to 'real' -> the 'real with no provider' guard killed startup at stage-test/staging. (2) getVersion used APP_VERSION ?? '0.1.0' but ${APP_VERSION:-} = '' so /version returned '' and the prod api-contract test (version.length>0) failed.",
+    "rejectedApproach": "Using ?? (nullish) and typeof===string against compose env vars that default to empty string; assuming unset == undefined in container env.",
+    "acceptedResolution": "modeExplicitlySet() requires a non-blank string (empty behaves like absent). getVersion switched to || so empty falls back to the default.",
+    "currentImplementation": "Empty env values treated as unset for auth-mode and version fallback.",
+    "regressionTests": "cookie/version contract tests; stage-test + staging web container boot.",
+    "v2Implication": "In containerised env, ${VAR:-} yields '' not undefined. Use || (or explicit non-blank checks) for fallbacks, never ?? alone, and never typeof===string for 'is set'.",
+    "v2TargetDecision": "V2 env handling must normalize empty strings to unset at the boundary; ban ?? / typeof-string 'is-set' checks against compose-provided env."
+  },
+  {
+    "topic": "Fixture org id change broke boot-time seed on existing DBs",
+    "originatingCommits": ["92018af"],
+    "problemDiscovered": "The platform-api container runs migrations+seed on boot. Changing the fixture org id to a valid UUID v4 broke the seed on any DB already seeded with the legacy id (00000000-...-0001): the org insert hit organisations_slug UNIQUE (same slug, new id) and crashed the container -> unhealthy -> web profile failed for staging/test/prod.",
+    "rejectedApproach": "Changing a seeded identity without reconciling already-seeded volumes (insert hit the slug unique constraint).",
+    "acceptedResolution": "Delete the stale fixture row by slug when its id differs, before inserting; FK ON DELETE CASCADE clears only its fixture children (real provisioned tenants have different ids and are untouched). Idempotent once on the v4 id.",
+    "currentImplementation": "Boot-time seed self-heals existing DBs to the v4 fixture org id.",
+    "regressionTests": "Verified by bringing staging web profile up against its legacy-seeded volume -> platform-api Healthy.",
+    "v2Implication": "Boot-time seeds run against pre-existing volumes. Any seeded-identity change needs a self-healing reconcile keyed on a stable natural key (slug), with CASCADE scoped to fixture children only.",
+    "v2TargetDecision": "V2 seeds must be idempotent and self-healing against existing volumes; use a stable natural key for reconciliation and never assume a fresh DB."
+  },
+  {
+    "topic": "Brokered mock IdP login left a live KC session on BFF rejection",
+    "originatingCommits": ["42130f6", "d7e738f"],
+    "problemDiscovered": "Selecting the 'unverified email' mock scenario showed a JSON error then NO further login worked ('can't log in as anyone'). A brokered login completes at Keycloak FIRST (KC issues the code + creates an SSO session); only then does the BFF reject at /auth/callback (email_verified_upstream=false -> 401 JSON). The 401 left the browser logged into KC as the rejected user, so the next login as a different user hit KC's different_user_authenticated guard and failed for everyone.",
+    "rejectedApproach": "Returning a 401 JSON page on post-authentication callback rejection while leaving the Keycloak SSO session intact.",
+    "acceptedResolution": "On post-authentication callback rejection (unverified upstream email or email-conflict), the BFF uses the just-obtained brokered id_token as id_token_hint to RP-logout the KC session, clears its own cookies, and redirects to /login?authError=<code> with a friendly i18n message.",
+    "currentImplementation": "Brokered third-party IdP via mock upstream OIDC (ADR-ACT-0157); AUTH_PROVIDER_MODE mock/real/disabled with fail-fast guardrails; SPA never talks to KC/upstream directly.",
+    "regressionTests": "Auth-negative E2E; login.spec; mock-oidc fixture scenarios.",
+    "v2Implication": "Brokered login is two-phase: IdP/KC authenticates BEFORE the BFF policy check. A BFF rejection MUST tear down the upstream KC session (RP-logout via id_token_hint) or it strands every subsequent login. Note: real-IdP OIDC login-simulation is BLOCKED on real IdPs — mock-oidc cannot substitute against the fixture (ADR-ACT-0220).",
+    "v2TargetDecision": "V2 must RP-logout the IdP session on any post-authentication BFF rejection. Keep the React->BFF->KC->upstream handoff (SPA never touches KC directly)."
+  },
+  {
+    "topic": "E2E confidence ladder was false-FULL — honesty contract",
+    "originatingCommits": [
+      "81b4b84",
+      "7169de6",
+      "3d44518",
+      "4029681",
+      "70917e9",
+      "dab04ee",
+      "c02f50d"
+    ],
+    "problemDiscovered": "The confidence ladder reported FULL while required groups had silently degraded: observability-correlation / sentry-assertion / failure-rootcause exited 0 on DEGRADED, and run-env-tests.sh tracked degradation only from auth-e2e. Run honestly, observability-correlation found ZERO Loki lines because compose stages run at LOG_LEVEL=warn (successful INFO requests filtered; only WARN denials carry testRunId), and persona specs' denial checks use page.request which bypasses the same-origin header interceptor.",
+    "rejectedApproach": "Exit 0 on DEGRADED; tracking degradation from only one group; asserting trace-by-traceId when only Loki log-correlation was actually proven; gitSha==HEAD attestation.",
+    "acceptedResolution": "Shared result/exit contract (result-contract.mjs): PASSED/FULL=0, FAILED=1, DEGRADED=2, aggregated across ALL required groups (any exit2 -> stage exit2, no promotion). One shared E2E_TEST_RUN_ID exported before E2E groups; correlation harness emits one deterministic unauthenticated denial that produces a WARN log carrying testRunId -> Alloy -> Loki. Scenario manifest with stable explicit ids; real Tempo trace-by-id assertion (Loki traceId -> Tempo /api/traces, OTLP parse, span+route assert, no-leaked-secrets guard). verify-ladder requires ALL FOUR stages FULL; evidence-only-commit attestation replaces gitSha==HEAD.",
+    "currentImplementation": "Stage-aware honest ladder (ADR-0075/ADR-ACT-0285): registries + coverage validators; DEGRADED=exit2; Tempo is informational unless E2E_REQUIRE_TEMPO=1.",
+    "regressionTests": "20+ unit suites: exit contract, worstResult combine, classifyCorrelation, shell aggregation, scenario-manifest, tempo-trace, correlation-headers, completeness+pagination; wired into test:architecture + test:coverage.",
+    "v2Implication": "A green ladder is meaningless unless DEGRADED propagates a non-zero exit aggregated across every required group. Observability correlation must account for LOG_LEVEL filtering and same-origin-header interceptor scope (page.request bypasses it).",
+    "v2TargetDecision": "V2 keeps the honest exit contract (DEGRADED=exit2 aggregated), the shared run-id correlation, the scenario manifest with explicit stable ids, and the all-four-stages-FULL gate. UI may be regenerated but these proof semantics are the source of truth."
+  },
+  {
+    "topic": "OpenAPI drift promoted to a hard gate; semantic conformance is NOT covered",
+    "originatingCommits": ["5c7aed9", "e0fc60e", "1b15919", "a0f82ba", "159d082", "47bd4a6"],
+    "problemDiscovered": "Supplementary BFF REST routes drifted from docs/api/openapi.json; dangling $ref (SupportSessionRequest); request bodies and non-bodyless responses lacked schemas.",
+    "rejectedApproach": "Treating OpenAPI as documentation-only with no gate; assuming drift validation also proves runtime conformance.",
+    "acceptedResolution": "validate-openapi-drift --strict is a hard gate (run by make architecture -> make check): enforces path+method presence (code<->spec), local $ref integrity, and schema presence on every request body and non-bodyless response (ADR-ACT-0286/0287). Explicitly NOT enforced: runtime/semantic conformance that a documented schema matches the live response shape (that is contract-testing, not drift).",
+    "currentImplementation": "OpenAPI drift hard gate; GraphQL remains the primary client-facing boundary (ADR-0013); developer portal/SDK gen/sandbox remain Proposed (ADR-0065).",
+    "regressionTests": "validate-openapi-drift --strict; findSchemalessSchemas (complexity-reduced).",
+    "v2Implication": "Drift gating proves presence/integrity, not that the live response matches the schema. V2 must add contract tests if semantic conformance is required, and keep GraphQL as the primary boundary.",
+    "v2TargetDecision": "V2 retains the OpenAPI drift hard gate for supplementary REST and GraphQL-primary; do not over-claim it as conformance."
+  },
+  {
+    "topic": "Secrets removed from VCS — tfvars/state never committed; managed-env source of truth",
+    "originatingCommits": ["e07848255", "32e8029", "9c8d115", "578975cf", "5f77eb5a"],
+    "problemDiscovered": "Committed infra/env/staging/staging.tfvars carried bff/provisioner/admin secrets; .env.staging was tracked; 87 hardcoded credential literals (S6698) lived in proof scripts, the BFF composition root, db tooling, tests, and migration 010; tfstate files hold plaintext secrets.",
+    "rejectedApproach": "Hardcoding secrets in committed tfvars/source; relying on hand-maintained .env files (root .env, .env.<stage>, .env.example).",
+    "acceptedResolution": "Secrets live in gitignored .env.* and are consumed by Terraform via TF_VAR_* (never hardcoded). .gitignore blocks all real *.tfvars/*.tfstate*/*.tfplan; only *.tfvars.example (non-secret) tracked. requireEnv() helper replaces literals across 45+ runtime-proof scripts. Migration 010 role password is a placeholder substituted at apply-time from POSTGRES_APP_URL (checksum stays stable). Then ADR-0072 replaced ALL hand-maintained env files with config/environments/<stage>.json manifests + a generated, gitignored .env/<stage>.env artifact; validate-manifests rejects secret-looking key/values and bans mocks/fixtures in prod.",
+    "currentImplementation": "Manifest-driven env (ADR-0072); .env/ is generated; secrets seeded from OpenBao or derived local-bootstrap; the two connection-URL passwords pinned to match committed URLs (documented Compose limit).",
+    "regressionTests": "semgrep 0 findings; tracked-file secret sweep; validate-manifests; architecture orchestrator incl. validate-action-register.",
+    "v2Implication": "V2 must never commit secrets, tfvars, or tfstate. Env is generated from non-secret manifests + a managed secret store; Terraform reads TF_VAR_*. No source-literal credentials anywhere.",
+    "v2TargetDecision": "Adopt the manifest+generated-env+managed-secrets model from the start; carry the validate-manifests and secret-sweep gates."
+  },
+  {
+    "topic": "React /login dead route — /auth/login is BFF-proxied, never a React component",
+    "originatingCommits": ["5f77eb5a", "c5d09f5"],
+    "problemDiscovered": "The React route at /auth/login was dead code: /auth/login is Caddy-proxied to platform-api (BFF PKCE start) and never rendered as React. ProtectedRoute redirected to /auth/login via a broken router navigate. The pre-UI baseline later found ProtectedRoute itself was the wrong pattern.",
+    "rejectedApproach": "Owning /auth/login as a React route; ProtectedRoute component for the auth gate.",
+    "acceptedResolution": "New themed React /login entry whose button is a full-page <a href=/auth/login> (Caddy proxies to BFF PKCE). /auth/login.tsx deleted; routeTree updated. Later (ADR-ACT-0203) ProtectedRoute removed entirely in favour of the _authenticated pathless layout route owning the auth gate + a single main#main-content via AppShell, with per-route RequirePermission and a skip-link on every route.",
+    "currentImplementation": "/login React entry -> /auth/login BFF PKCE; _authenticated layout owns the gate; ProtectedRoute deleted.",
+    "regressionTests": "login.spec branding (visits React /login); cookie-security.test.ts; auth-negative can still hit /auth/login for KC redirect; E2E loginAs two-hop flow.",
+    "v2Implication": "The auth boundary is the BFF PKCE start at /auth/login (server route), with a thin React /login launcher. Auth gating belongs in a layout route, not a per-page ProtectedRoute wrapper.",
+    "v2TargetDecision": "V2 keeps the BFF-owned PKCE start + thin React launcher + layout-route auth gate (RequirePermission per route). Do not reintroduce a React /auth/login or a ProtectedRoute component."
+  },
+  {
+    "topic": "Sonar OIDC plugin SSO over-claim; auth Option B native managed auth",
+    "originatingCommits": ["918cd14", "15bec3e"],
+    "problemDiscovered": "The cleanup claimed SonarQube SSO via an OIDC plugin, but the vaulttec v2.1.1 default uses the ServletFilter API removed in 25.x and crash-loops the server; the matrix/clickthrough/ADR-0073 wording over-claimed bundled SSO.",
+    "rejectedApproach": "Bundling the vaulttec OIDC plugin; claiming OIDC SSO is wired by default.",
+    "acceptedResolution": "Sonar OIDC Option B = native managed auth behind the forward-auth gate; provision-oidc.sh detects the missing plugin and makes no SSO claim; the v3.0.0 plugin is the opt-in path, not bundled. Matrix/clickthrough/ADR-0073 corrected.",
+    "currentImplementation": "Sonar native managed auth + forward-auth gate; OIDC plugin opt-in only.",
+    "regressionTests": "provision-oidc.sh plugin-detection; clickthrough policy tests.",
+    "v2Implication": "Composed-service SSO claims must match what is actually wired; a crash-looping plugin is worse than honest native auth behind forward-auth.",
+    "v2TargetDecision": "V2 keeps forward-auth-gated native auth as the default for composed services; OIDC plugins are opt-in and version-verified."
+  }
+]

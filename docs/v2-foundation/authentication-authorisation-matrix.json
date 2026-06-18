@@ -1,0 +1,345 @@
+{
+  "$schema": "internal://v2-foundation/authentication-authorisation-matrix",
+  "title": "V2 Authentication / Authorisation / SSO Matrix",
+  "purpose": "Semantic source-of-truth for V2 auth/authz/SSO behaviours, distilled from the audited V1 (maldous/react) hexagonal enterprise monorepo. V1 is the complete reference: V2 reuses/moves/refines/wraps these proven behaviours. The visual layer may be regenerated, but every auth state, error, redirect, cookie rule, scope check, UMA/static decision, persona capability and journey below is binding semantics that the AI-generated V2 UI and BFF MUST preserve. No discovery required.",
+  "generatedFrom": {
+    "repo": "maldous/react",
+    "branch": "main",
+    "keySources": [
+      "apps/platform-api/src/server/auth.ts",
+      "apps/platform-api/src/server/session.ts",
+      "apps/platform-api/src/server/forward-auth.ts",
+      "apps/platform-api/src/server/authorize-resource.ts",
+      "apps/platform-api/src/server/pipeline.ts (enforceRouteAuth/enforceUmaAuthorisation/enforceRouteScope/canAccessTenantFqdn)",
+      "apps/platform-api/src/server/dependencies.ts (resolveAccessToken / _refreshAccessToken)",
+      "apps/platform-api/src/usecases/auth.ts (resolveSessionFromIdentity / resolveRoles / resolveSessionPermissions)",
+      "apps/platform-api/src/usecases/support.ts (support / break-glass session)",
+      "apps/platform-api/src/usecases/{entitlements,rate-limits,api-keys,api-key-crypto}.ts",
+      "apps/platform-api/src/usecases/service-clickthrough.ts (clickthrough policy, single source)",
+      "packages/adapters-keycloak/src/index.ts (checkAccess / ENFORCING resource server)",
+      "packages/{security-auth,session-runtime,authorisation-runtime,access-control,contracts-auth,domain-identity}/src/index.ts",
+      "ADR-0021, 0022, 0029, 0030, 0031, 0037, 0041, 0042, 0044; ADR-ACT-0145, 0153, 0157, 0187, 0200, 0232, 0233, 0276, 0278, 0280, 0281"
+    ]
+  },
+
+  "umaPdpFinalDecision": {
+    "topLevelNote": "FINAL V2 TARGET FOR DYNAMIC AUTHORISATION (UMA/PDP). This resolves the V1 'degraded for now' state — V2 does NOT inherit a degraded posture; it inherits a fully-resolved decision.",
+    "v1ObservedState": "V1 ships the full UMA/PEP architecture (ADR-0030): the route pipeline and the GraphQL authorizeResourceAccess both run a UMA-first -> static-permission-fallback -> fail-closed enforcement order against a Keycloak Authorization Services resource server provisioned in policyEnforcementMode=ENFORCING (ADR-ACT-0200, closing the prior PERMISSIVE fail-open hole). HOWEVER, on the live prod Keycloak 26.2 (start/start-dev) the per-client ResourceServer is non-functional ('Client does not support permissions'; authorizationServicesEnabled reverts to null on restart) — proven a Keycloak SERVER regression, not data/realm/provider/DB (exhaustively eliminated under ADR-ACT-0280: full realm rebuild, client recreation, RS materialisation, cache clear, KC restart, mrparkers->keycloak/keycloak v5 provider migration, fresh keycloak-postgres volume, production `start` mode — none restored UMA). The BFF maps the UMA token error to resource_not_registered/token_unresolved and DEGRADES to the static actor.permissions check (ADR-ACT-0276), which is the real secure gate in prod today.",
+    "finalAcceptedTarget": "DYNAMIC PER-RESOURCE AUTHORISATION (UMA 2.0 / Keycloak Authorization Services PDP) IS THE ACCEPTED V2 TARGET, ENFORCING mode, with the static role->permission map (domain-identity resolvePermissions, ADR-0021) retained PERMANENTLY as the declared fail-closed fallback layer — NOT as a substitute. The two-layer model (UMA decisive when available; static requiredPermission as the explicit, fail-closed gate on every protected route/operation) is the intended steady state, because it gives transient-outage resilience and provisioning-gap tolerance WITHOUT ever failing open: a route with resource+umaScope but no static requiredPermission denies unconditionally when UMA cannot grant (pipeline 'uma_fail_closed'). step-up (insufficient_auth_level -> 401 STEP_UP_REQUIRED) and policy_denied (403) are NEVER degraded — only keycloak_unavailable / resource_not_registered / token_unresolved fall through to static.",
+    "whatClosesItInV1": "The single remaining V1 action to close UMA end-to-end is a Keycloak SERVER version change: pin/upgrade off the broken 26.2 start image to a KC version where per-client ResourceServer lookup works (requires a fresh keycloak DB on that image), OR file/track the upstream Keycloak issue. The provisioner is already prepared and idempotent (scripts/keycloak/provision-bff-authz.sh; authz kept OUT of the Terraform realm module so make keycloak-provision stays green; keycloak/keycloak Terraform provider already migrated to v5 across all envs). When that server fix lands, run the provisioner — no application/code change is required because the BFF already runs UMA-first.",
+    "v2Directive": "V2 carries the UMA-first + static-fail-closed enforcement ORDER as proven semantics. V2 MUST NOT bake the degrade into product behaviour or copy: treat UMA as the primary authorisation source and static permissions as the permanent fail-closed floor. Ship V2 on a KC version with a working ResourceServer so UMA is live from day one; keep the static layer as the guaranteed-correct fallback. Audit/observability of degrade reasons (resource_not_registered/keycloak_unavailable/token_unresolved logged as WARN; denials as http.request.rejected) is retained."
+  },
+
+  "axes": {
+    "hostIdentity": [
+      "apex/global (aldous.info)",
+      "apex-subdomain reserved/unknown (rejected for global routes)",
+      "tenant FQDN ({slug}.aldous.info)",
+      "active custom domain (DB-verified, hostSource=custom_domain)",
+      "non-apex host (direct localhost/API)"
+    ],
+    "routeScope": [
+      "global (apex-only)",
+      "tenant (FQDN-required)",
+      "me-namespace (own-user)",
+      "internal (/internal/* — Caddy-only)"
+    ],
+    "authState": [
+      "unauthenticated",
+      "authenticated (live session)",
+      "session-expired/stale-cookie",
+      "fixture-session (dev only)"
+    ],
+    "sessionTokenState": [
+      "no token (fixture / pre-0153 session)",
+      "valid access token",
+      "near/post-expiry -> silent refresh",
+      "refresh-failure -> session destroyed -> 401",
+      "token unresolved (rotation/expiry)"
+    ],
+    "tenantMembership": [
+      "none (no active membership)",
+      "own tenant",
+      "cross-tenant (denied)",
+      "support/break-glass effective tenant"
+    ],
+    "role": [
+      "system-admin (global realm)",
+      "tenant-admin",
+      "manager",
+      "member",
+      "viewer",
+      "delegated-admin (scoped grants)",
+      "api-key/service-account (entitlement-gated)"
+    ],
+    "staticPermission": [
+      "domain-identity resolvePermissions(role) -> permission bundle (ADR-0021)"
+    ],
+    "resourcePolicy": [
+      "UMA resource+scope (ENFORCING) -> granted | insufficient_auth_level | policy_denied | resource_not_registered | keycloak_unavailable | token_unresolved | no_session"
+    ],
+    "entitlement": ["catalog key (e.g. api_access) -> enabled/disabled per tenant"],
+    "quota": [
+      "Phase-1 not_enforced (hook only, ADR-0057); rate-limit window via rate-limits substrate -> 429/ForbiddenError rateLimited"
+    ],
+    "mfaStepUp": [
+      "insufficient_auth_level -> 401 STEP_UP_REQUIRED (never degraded); MFA policy is tenant-admin self-service writable (ADR-0042)"
+    ]
+  },
+
+  "records": [
+    {
+      "id": "FLOW-LOGIN",
+      "kind": "flow",
+      "name": "GET /auth/login — OIDC authorization-code + PKCE initiation",
+      "scope": "global+tenant (pre-session, resolved from Host)",
+      "behaviour": [
+        "Resolve tenant from Host FIRST (FQDN/custom domain) so stored per-tenant provider config gates which product IdPs are offered (ADR-0037).",
+        "resolveProviderHint(provider, tenantProviderConfig): maps product provider (google/azure/apple/platform) to a VALIDATED kc_idp_hint; unknown/disabled/not-enabled-for-tenant -> 400 ValidationError api.error.invalidProvider. Arbitrary kc_idp_hint injection is impossible.",
+        "PKCE: generate state(uuid)+nonce(uuid)+codeVerifier(32B base64url)+S256 codeChallenge; store {codeVerifier,returnTo,nonce} in Redis auth-state store keyed by state.",
+        "returnTo sanitised to relative path only (open-redirect protection: must start with '/').",
+        "Realm: tenant realm via getKeycloakConfigForRealm(realmName) else global platform realm; publicUrl host-derived (ADR-0029/0032); custom-domain host treated as verified origin (ADR-ACT-0232).",
+        "prompt=login forced so post-logout a DIFFERENT account can sign in (no silent SSO re-auth) — ADR-ACT-0157.",
+        "Set short-lived (300s) HttpOnly pre-auth nonce cookie auth_state_token (SameSite=Lax, Path=/auth) bound to the user-agent; 302 to KC authorization endpoint."
+      ],
+      "v2": "Preserve exactly: PKCE S256, per-tenant provider gating, validated kc_idp_hint, relative-only returnTo, pre-auth nonce cookie, prompt=login."
+    },
+
+    {
+      "id": "FLOW-CALLBACK",
+      "kind": "flow",
+      "name": "GET /auth/callback — token exchange + identity + session create",
+      "scope": "global+tenant",
+      "behaviour": [
+        "Any non-success landing here returns the browser to the APP's /login?authError=signin_failed with ONE generic error — Keycloak stays invisible (ADR-ACT-0157). Never expose raw KC/BFF JSON error pages.",
+        "Guards (each -> bounceToLogin / clearKcAndReturnToLogin): ?error= present OR missing code/state; missing pre-auth nonce cookie (CSRF/replay); auth-state not found (one-time take -> replay protection); nonce mismatch.",
+        "exchangeCodeForTokens with redirectUri EXACTLY matching the authorization request + tenant realm config; failure -> bounce.",
+        "getUserInfo: identity rejected (unverified upstream email / missing email) -> clearKcAndReturnToLogin('email_unverified') — RP-logout via id_token_hint to tear down the dangling KC SSO session so the NEXT login as a different user does not fail with 'different_user_authenticated' (ADR-ACT-0157).",
+        "resolveSessionFromIdentity (ADR-0022): find/create User+ExternalIdentity by (provider,subject); resolve active Membership; ConflictError (email under different identity) -> clearKcAndReturnToLogin('account_conflict').",
+        "On success: store encrypted access/refresh/id tokens in the session (ADR-ACT-0153/0157); set session cookie + clear pre-auth cookie; 302 to callbackAppBase+returnTo (host-derived so multi-tenant/.localhost work without per-domain APP_BASE_URL)."
+      ],
+      "v2": "Preserve invisible-Keycloak guarantee, one-time state consumption, nonce binding, dangling-KC-session teardown on rejection, encrypted token storage, host-derived redirect."
+    },
+
+    {
+      "id": "FLOW-LOGOUT-GET",
+      "kind": "flow",
+      "name": "GET /auth/logout?returnTo= — browser RP-initiated logout",
+      "behaviour": [
+        "Destroy platform Redis session; clear cookie (host-only + domain-scoped headers, see COOKIE-RULES); read stored id_token (decrypt) BEFORE destroy -> pass as id_token_hint so KC skips the logout-confirmation prompt AND ends the SSO session, then redirects to post_logout_redirect_uri (ADR-ACT-0157).",
+        "Realm resolved from session tenant (else platform realm). Custom-domain host = verified origin.",
+        "LOCAL_FIXTURE_SESSION (no real KC): redirect directly to returnTo (safeRelativeRedirect).",
+        "returnTo defaults /login; reconstructed as full URL from request host+scheme."
+      ],
+      "v2": "Preserve id_token_hint logout + dual-cookie clear + fixture short-circuit."
+    },
+
+    {
+      "id": "FLOW-LOGOUT-POST",
+      "kind": "flow",
+      "name": "POST /auth/logout — fetch/API logout",
+      "behaviour": [
+        "Destroy session if cookie present; 204 with clear-cookie headers; NO KC end_session redirect (cannot browser-navigate from a fetch). UI flows needing full SSO logout use GET /auth/logout."
+      ],
+      "v2": "Keep both endpoints; UI uses GET for full SSO termination."
+    },
+
+    {
+      "id": "SESSION-CREATE",
+      "kind": "matrix",
+      "name": "Session create — role + permission resolution",
+      "behaviour": [
+        "resolveRoles: realm system-admin -> ['system-admin']; else DB membership role; else [] (no membership).",
+        "resolveSessionPermissions: resolvePermissions(effective role) (ADR-0021). system-admin gets the platform bundle; tenant roles get tenant-scoped bundles.",
+        "SessionActor (contracts-auth): {userId, tenantId, organisationId, roles, permissions, displayName, [supportMode, effectiveOrganisationId, supportAccessReason], [accessTokenEnc]}.",
+        "TTL: SESSION_TTL_SECONDS default 1800; stored server-side in Redis (SessionStore). Tokens stored encrypted (token-crypto). Real-auth roles come from DB membership, NOT token claims (proven bug: manager/member resolved to zero roles until memberships seeded)."
+      ],
+      "v2": "Role->permission is data-from-DB-membership for real auth; preserve resolvePermissions as the static layer."
+    },
+
+    {
+      "id": "SESSION-RENEW-TOKEN",
+      "kind": "matrix",
+      "name": "Access-token resolution + silent refresh (resolveAccessToken)",
+      "behaviour": [
+        "Decrypt accessTokenEnc; if >30s from expiry -> return as-is.",
+        "Near/past expiry -> silent refresh with stored refresh token via KC token endpoint; success -> re-encrypt + persist new access/refresh + accessTokenExpiresAt (best-effort), return new token.",
+        "REFRESH FAILURE -> destroy session -> return null -> caller forces re-login (401).",
+        "No token (fixture / pre-0153 session) -> null -> static-permission fallback path."
+      ],
+      "v2": "Preserve 30s skew, silent refresh, destroy-on-refresh-failure, null->static fallback."
+    },
+
+    {
+      "id": "COOKIE-RULES",
+      "kind": "matrix",
+      "name": "Session cookie domain, SameSite, Secure, multi-cookie resolution",
+      "behaviour": [
+        "platform_session: HttpOnly; SameSite=Lax (NOT Strict — must survive the cross-site KC->callback->app top-level redirect); Path=/; Max-Age=SESSION_TTL_SECONDS; Domain=SESSION_COOKIE_DOMAIN when set.",
+        "Secure driven by SESSION_COOKIE_SECURE env, NOT NODE_ENV — Cloudflare Flexible SSL means browser->Caddy is plain HTTP; a Secure cookie over HTTP is dropped. Local/Compose=false; HTTPS prod=true.",
+        "pre-auth cookie auth_state_token: HttpOnly, SameSite=Lax, Path=/auth, Max-Age=300.",
+        "DUPLICATE-COOKIE HAZARD (ADR-ACT-0278): a browser can carry >1 platform_session (host-only from older config + domain-scoped from current). parseSessionCookies returns ALL candidates IN ORDER; resolvers (pipeline, forward-auth) MUST try every candidate against the store and use the first that resolves — a single stale cookie must not shadow a valid session (-> spurious 401 -> login loop).",
+        "CLEAR emits TWO Set-Cookie headers (host-only + Domain-scoped, Max-Age=0) to evict both shapes."
+      ],
+      "v2": "Preserve SameSite=Lax, env-driven Secure, multi-candidate resolution, dual clear headers. Load-bearing prod fix — do not simplify to single-cookie."
+    },
+
+    {
+      "id": "ROUTE-SCOPE",
+      "kind": "matrix",
+      "name": "FQDN route scope + tenant cross-check (enforceRouteScope / canAccessTenantFqdn)",
+      "behaviour": [
+        "scope=global: REJECT any apex SUBDOMAIN (reserved/unknown included — they share the apex cookie scope + wildcard Caddy vhost) -> 403 global_host_required; also REJECT if a tenant FQDN resolved. Must arrive on apex.",
+        "scope=tenant: require a resolved tenant FQDN else 403 tenant_fqdn_required.",
+        "FQDN cross-check (ADR-0029 #2 / ADR-ACT-0187): on a tenant FQDN the session must have access to THAT tenant. Regular user -> only own organisationId. system-admin (no support mode) -> ALWAYS blocked on tenant FQDNs (must use global host). system-admin (support mode) -> only the audited effectiveOrganisationId. Mismatch -> 403 tenant_fqdn_forbidden.",
+        "Non-apex hosts (direct localhost/API) unaffected by the apex-subdomain rule. /api/session correctly returns the caller's OWN identity host-agnostically (not a leak)."
+      ],
+      "v2": "Preserve host-as-tenant-identity verified server-side; never trust Host alone for ownership (forward-auth resolves slug via DB)."
+    },
+
+    {
+      "id": "AUTHZ-PIPELINE",
+      "kind": "matrix",
+      "name": "Route authorisation order — UMA-first -> static -> fail-closed (enforceRouteAuth/enforceUmaAuthorisation)",
+      "behaviour": [
+        "No actor -> 401 authentication_required.",
+        "UMA runs only when route declares resource+umaScope AND actor has accessTokenEnc. resolveAccessToken: token unresolved AND no static requiredPermission -> 401 access_token_unresolved; unresolved WITH static fallback -> synthesise token_unresolved decision and degrade.",
+        "checkAccess decision: granted -> allow; keycloak_unavailable | resource_not_registered | token_unresolved -> DEGRADE to static (WARN logged); insufficient_auth_level -> 401 STEP_UP_REQUIRED (NEVER degraded); any other (policy_denied) -> 403 uma_policy_denied.",
+        "Static gate: allow only if actor.permissions includes requiredPermission, else 403 permissionRequired.",
+        "FAIL-CLOSED: route with resource+umaScope but NO requiredPermission and UMA did not grant -> 403 uma_fail_closed (never fail-open when KC unavailable and no static floor).",
+        "Resource server is ENFORCING (ADR-ACT-0200): a UMA resource with no granting policy DENIES at the UMA layer.",
+        "Same order replicated for per-operation GraphQL via authorizeResourceAccess (one HTTP path, many ops)."
+      ],
+      "v2": "This enforcement order IS the final UMA/PDP target (see umaPdpFinalDecision). Preserve verbatim across REST + GraphQL."
+    },
+
+    {
+      "id": "FORWARD-AUTH",
+      "kind": "matrix",
+      "name": "Caddy forward_auth — GET /internal/auth/forward (service clickthrough)",
+      "behaviour": [
+        "X-Internal-Secret validated constant-time (proves caller is Caddy; /internal/* blocked in public Caddyfile — defence in depth). Production with no secret configured -> 503 fail-closed; dev unset permitted.",
+        "Resolve actor: fixture session (dev) OR every platform_session candidate (stale-cookie shadow guard, ADR-ACT-0278); none/expired/store-unavailable -> 401.",
+        "Decision delegated to decideServiceAccess (usecases/service-clickthrough.ts, single source, ADR-ACT-0233). system-admin -> SYSTEM_ADMIN_RESOURCES; tenant-admin -> TENANT_ADMIN_RESOURCES gated by OWNERSHIP: requested slug (extracted from Host, shared validator) compared to DB-resolved slug for the session tenant — Host NEVER trusted alone (cross-tenant IDOR prevention).",
+        "200 granted / 401 no session / 403 wrong tenant or insufficient role.",
+        "Known gotcha: Caddy `copy_headers Cookie` in the forward_auth snippet stripped the browser Cookie before cookie-based tools (Grafana) -> fixed by removal; each composed GUI service needs a clickthrough policy + platform.clickthrough.<svc> permission row (ADR-ACT-0233)."
+      ],
+      "v2": "Preserve internal-secret trust boundary, multi-cookie resolution, DB-verified slug ownership, single decision module."
+    },
+
+    {
+      "id": "PERSONA-SYSTEM-ADMIN",
+      "kind": "persona",
+      "name": "system-admin (global realm)",
+      "host": "apex/global only; BLOCKED on tenant FQDNs unless support mode",
+      "role": "system-admin (GlobalRole; NOT a membership role — validateMembership rejects it as a tenant role)",
+      "permissions": "resolvePermissions('system-admin') — full platform bundle (platform.*, tenant.platform.read, member.*)",
+      "tenantMembership": "none (operates cross-tenant via audited support mode)",
+      "resourcePolicy": "UMA ENFORCING when available; static platform bundle as fail-closed floor",
+      "behaviour": "Cross-tenant access ONLY via explicit audited support/break-glass session (effectiveOrganisationId + supportAccessReason). On apex, full control-plane (/admin). Clickthrough -> SYSTEM_ADMIN_RESOURCES."
+    },
+    {
+      "id": "PERSONA-TENANT-ADMIN",
+      "kind": "persona",
+      "name": "tenant-admin",
+      "host": "own tenant FQDN (+ apex /admin scoped to own org)",
+      "role": "tenant-admin (TENANT_ROLES)",
+      "permissions": "resolvePermissions('tenant-admin') — tenant-scoped admin bundle (members, roles, auth-settings, IdP, domains, branding)",
+      "behaviour": "Self-service: configure IdPs, MFA policy, session lifetimes, login flows at runtime without deploy (ADR-0030/0037/0041/0042/0044). Clickthrough -> TENANT_ADMIN_RESOURCES, ownership DB-verified. RLS-scoped reads."
+    },
+    {
+      "id": "PERSONA-DELEGATED-ADMIN",
+      "kind": "persona",
+      "name": "delegated-admin",
+      "role": "tenant-admin-granted scoped roles (capability delegated_admin_roles, identity context)",
+      "behaviour": "Tenant-admin delegates a SUBSET of admin capabilities to other members via scoped role grants (ADR-0030 dynamic authz). Permissions are the delegated bundle; UMA/static gates enforce the narrower set. Tenant-scoped, never cross-tenant."
+    },
+    {
+      "id": "PERSONA-SUPPORT-BREAKGLASS",
+      "kind": "persona",
+      "name": "support / break-glass",
+      "role": "system-admin acting under support mode",
+      "behaviour": "support.ts mints a session with supportMode=true, effectiveOrganisationId=target tenant, supportAccessReason recorded (AUDITED at creation). canAccessTenantFqdn then permits ONLY that effective tenant's FQDN. Tenant must opt-in to sysadmin cross-domain brokering (ADR-0030). Every policy/access is auditable.",
+      "v2": "Preserve audited, tenant-opt-in, single-effective-tenant break-glass; never an ambient cross-tenant grant."
+    },
+    {
+      "id": "PERSONA-END-USER",
+      "kind": "persona",
+      "name": "end-user (manager / member / viewer)",
+      "role": "manager | member | viewer (TENANT_ROLES)",
+      "permissions": "resolvePermissions(role) — manager > member > viewer; member.* strings are informational signals (routes enforce tenant.members.* / platform.*)",
+      "behaviour": "Own tenant only (organisationId match). /api/me/* is own-user (userId scoped). No-membership authenticated user -> roles=[] perms=[] -> 403 at the static/permission gate before any business logic (fixture 'no-membership' models this with empty-string tenant)."
+    },
+    {
+      "id": "PERSONA-API-KEY-SERVICE-ACCOUNT",
+      "kind": "persona",
+      "name": "api-key / service-account",
+      "host": "tenant-scoped programmatic access",
+      "behaviour": "Server-generated, tenant-scoped API keys, gated by the api_access ENTITLEMENT (entitlements catalog). Keys hashed/verified (api-key-crypto: generateApiKey/prefixForSecret/verifyApiKey). Programmatic calls are RATE-LIMITED via the rate-limits substrate (reuses entitlement substrate): evaluateAndConsume per policyKey -> ForbiddenError api.error.rateLimited (429-class) on window exhaustion.",
+      "quota": "Phase-1 quota not_enforced (hook only, ADR-0057); rate-limit window is the enforced control.",
+      "v2": "Preserve entitlement-gated minting + per-tenant rate-limit consumption; quota remains a declared hook until Phase 2."
+    },
+
+    {
+      "id": "ENTITLEMENT-QUOTA",
+      "kind": "matrix",
+      "name": "Entitlement -> policy -> quota tail",
+      "behaviour": [
+        "Order: permission (pipeline) -> entitlement -> policy -> quota. evaluateEntitlement models entitlement->policy->quota; permission already enforced upstream.",
+        "Entitlement catalog keys (e.g. api_access) -> enabled/disabled per tenant (RLS-scoped self-read GET /api/org/entitlements).",
+        "quotaStatus currently not_enforced | not_applicable (Phase-1 hook, ADR-0057). Enforcement is via rate-limits, not quota, in V1."
+      ],
+      "v2": "Keep the layered tail; entitlement gates capability availability, rate-limit gates throughput, quota is the reserved Phase-2 enforcement point."
+    },
+
+    {
+      "id": "RLS",
+      "kind": "matrix",
+      "name": "Row-Level Security (tenant data isolation)",
+      "behaviour": [
+        "Tenant-scoped reads are RLS-scoped (entitlements, rate-limit policies, members). Operator (system-admin) variants exist (listForTenantAsOperator) for cross-tenant ops.",
+        "Server-side tenant authority is the IDOR boundary: cross-tenant data access is denied server-side even when the SPA shell loads — proven (GET /api/organisation/profile -> 403 on another tenant's FQDN).",
+        "GOTCHA (db memory): DROP SCHEMA public CASCADE breaks rls_bypass visibility — re-GRANT USAGE TO PUBLIC; committed migrations are checksum-immutable (forward-only)."
+      ],
+      "v2": "Preserve RLS + server-side tenant authority as the data isolation floor independent of UI."
+    },
+
+    {
+      "id": "SSO-PER-TENANT-IDP",
+      "kind": "matrix",
+      "name": "Per-tenant IdP + external IdP brokering + per-service SSO + custom domains",
+      "behaviour": [
+        "Per-tenant Keycloak realms; identity brokering to external IdPs (google/azure/apple via validated kc_idp_hint, ADR-0029/0037).",
+        "Per-tenant auth provider config (stored) gates which product providers /auth/login offers (ADR-0037); credential provisioning + lifecycle (ADR-0041/0044); writable MFA policy (ADR-0042) with runtime proof.",
+        "Per-service SSO: composed GUI services (Grafana, etc.) authenticate via Caddy forward_auth -> /internal/auth/forward -> clickthrough policy (ADR-ACT-0233). Cookie must reach cookie-based tools (Caddy copy_headers fix).",
+        "Custom domains: active custom domain (DB-verified, hostSource=custom_domain) is a legitimate auth origin and KC public-URL origin (ADR-ACT-0232).",
+        "OIDC login-simulation proof against real IdPs is BLOCKED on real IdP availability; mock-oidc cannot substitute (ADR-ACT-0220 — do not attempt against the fixture)."
+      ],
+      "v2": "Preserve realm-per-tenant, validated broker hints, per-tenant provider gating, forward-auth per-service SSO, custom-domain verified origin."
+    },
+
+    {
+      "id": "MFA-STEPUP",
+      "kind": "matrix",
+      "name": "MFA / step-up authentication",
+      "behaviour": [
+        "UMA insufficient_auth_level -> 401 STEP_UP_REQUIRED ({code:STEP_UP_REQUIRED}); NEVER degraded to static (a step-up requirement is a real security decision, not an outage).",
+        "MFA policy is tenant-admin self-service writable at runtime (ADR-0042); required-actions mapping; runtime proof via npm run proof:auth-settings.",
+        "AccessDenialReason taxonomy (authorisation-runtime): insufficient_scope, insufficient_auth_level, policy_denied, no_session, resource_not_registered, token_unresolved."
+      ],
+      "v2": "Preserve step-up as a non-degradable 401 with a distinct STEP_UP_REQUIRED code the UI can act on (re-auth/MFA prompt)."
+    },
+
+    {
+      "id": "ERROR-STATES",
+      "kind": "matrix",
+      "name": "Auth error states + redirects (invisible Keycloak)",
+      "behaviour": [
+        "Callback failures -> app /login?authError=<code>: signin_failed (generic), email_unverified, account_conflict. Keycloak JSON errors are NEVER shown (custom KC theme redirects broker errors to app /login, ADR-ACT-0157).",
+        "401 authentication_required / access_token_unresolved (no static floor); 401 STEP_UP_REQUIRED; 403 permissionRequired / uma_policy_denied / uma_fail_closed / global_host_required / tenant_fqdn_required / tenant_fqdn_forbidden; 503 forward-auth misconfigured secret.",
+        "Typed errors only (platform-errors) — never raw Error; safe response mapping via toSafeResponse + serverT i18n; denials logged as http.request.rejected (reason+route+actor+requestId, ADR-ACT-0278) — high-cardinality fields are structured metadata, never Loki labels."
+      ],
+      "v2": "Preserve invisible-KC error UX, the full typed-error/redirect taxonomy, and structured (not labelled) denial logging."
+    }
+  ]
+}
