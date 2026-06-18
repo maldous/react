@@ -221,8 +221,13 @@ services:
   # sonar-auth-oidc plugin installer (ADR-0073). SonarQube community has NO native
   # OIDC; this drops the plugin jar into the shared extensions volume before SonarQube
   # starts. BEST-EFFORT: exits 0 even if the download fails (SonarQube still starts;
-  # OIDC simply stays off) so the quality gate is never blocked. Pin/override the URL
-  # to a version matching the SonarQube image via SONAR_OIDC_PLUGIN_URL.
+  # OIDC simply stays off) so the quality gate is never blocked.
+  #
+  # SonarQube 25.x (Community Build) REMOVED the org.sonar.api.web.ServletFilter API
+  # that the historical vaulttec v2.1.1 plugin used, so installing that build crash-loops
+  # the server. The installer therefore NO LONGER ships a default plugin: OIDC UI SSO is
+  # opt-in only, by pinning SONAR_OIDC_PLUGIN_URL to a build compatible with the running
+  # SonarQube image. Token-based CI analysis (the quality gate) never needs this plugin.
   sonar-oidc-plugin:
     image: curlimages/curl:8.11.1
     profiles: [external-sonar]
@@ -234,17 +239,22 @@ services:
       - -c
       - |
         mkdir -p /ext/plugins
-        if [ "${COMPOSE_SSO_ENABLED:-false}" = "true" ] && ! ls /ext/plugins/sonar-auth-oidc-*.jar >/dev/null 2>&1; then
-          curl -fsSL -o /ext/plugins/sonar-auth-oidc-plugin.jar \
-            "${SONAR_OIDC_PLUGIN_URL:-https://github.com/vaulttec/sonar-auth-oidc/releases/download/v2.1.1/sonar-auth-oidc-plugin-2.1.1.jar}" \
-            && echo "sonar-auth-oidc plugin installed" \
+        if [ "${COMPOSE_SSO_ENABLED:-false}" = "true" ] && [ -n "${SONAR_OIDC_PLUGIN_URL:-}" ] && ! ls /ext/plugins/sonar-auth-oidc-*.jar >/dev/null 2>&1; then
+          curl -fsSL -o /ext/plugins/sonar-auth-oidc-plugin.jar "${SONAR_OIDC_PLUGIN_URL}" \
+            && echo "sonar-auth-oidc plugin installed from pinned URL" \
             || echo "WARN: sonar-auth-oidc download failed — SonarQube will start without OIDC"
+        else
+          echo "sonar-auth-oidc NOT installed (set SONAR_OIDC_PLUGIN_URL to a SonarQube-25.x-compatible build to enable UI SSO; CI token analysis is unaffected)"
         fi
         exit 0
     restart: "no"
 
   sonarqube:
-    image: sonarqube:lts-community
+    # Community Build (25.x) — bundles TypeScript 5.x, so the JS/TS analyzer
+    # supports this repo's moduleResolution:"bundler" + allowImportingTsExtensions
+    # and can build a real TS program (SonarQube 9.9 LTS could not — it degraded
+    # to type-less analysis). ADR-ACT-0289 / quality-gate integrity.
+    image: sonarqube:25.9.0.112764-community
     profiles: [external-sonar]
     depends_on:
       sonar-postgres:

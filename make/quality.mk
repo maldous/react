@@ -73,11 +73,11 @@ sonar:
 	_sonar_login="$${SONAR_TOKEN:-}"; \
 	npm run test:coverage && \
 	npm run coverage:normalize && \
-	SONAR_HOST_URL="$$_sonar_url" SONAR_TOKEN= sonar-scanner \
+	SONAR_HOST_URL="$$_sonar_url" SONAR_TOKEN="$$_sonar_login" sonar-scanner \
 		-Dsonar.projectKey="$$_sonar_key" \
 		-Dsonar.projectName="maldous-react" \
 		-Dsonar.host.url="$$_sonar_url" \
-		-Dsonar.login="$$_sonar_login" && \
+		-Dsonar.token="$$_sonar_login" && \
 	SONAR_HOST_URL="$$_sonar_url" SONAR_TOKEN="$$_sonar_login" SONAR_PROJECT_KEY="$$_sonar_key" \
 		node tools/quality/sonar-quality-gate.mjs \
 		|| { printf '$(RED)✗ Sonar quality gate failed$(RESET)\n'; exit 1; }; \
