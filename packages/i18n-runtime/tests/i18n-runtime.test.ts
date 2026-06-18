@@ -4,12 +4,12 @@ import {
   createI18n,
   serverT,
   flattenLocaleMessages,
-  type I18nLocale,
+  type I18nMessages,
   type I18nLocaleResource,
 } from "../src/index.ts";
 
 // Flat fixture (used by existing tests ? backward compat)
-const EN_GB: I18nLocale = {
+const EN_GB: I18nMessages = {
   "app.shell.nav.organisationProfile": "Organisation profile",
   "feature.organisation.profile.title": "Organisation profile",
   "feature.organisation.profile.form.displayName.label": "Display name",
@@ -90,7 +90,7 @@ describe("createI18n ? flat messages (backward compat)", () => {
   });
 
   it("falls back to en-GB when a key is missing from a non-default locale", () => {
-    const frMessages: I18nLocale = { "api.error.unauthenticated": "Vous devez vous connecter" };
+    const frMessages: I18nMessages = { "api.error.unauthenticated": "Vous devez vous connecter" };
     const i18n = createI18n({ locale: "fr-FR", messages: frMessages, fallback: EN_GB });
     assert.equal(
       i18n.t("api.error.forbidden"),
@@ -155,7 +155,7 @@ describe("serverT", () => {
   });
 
   it("interpolates parameters in serverT", () => {
-    const messages: I18nLocale = { "test.msg": "Hello {name}" };
+    const messages: I18nMessages = { "test.msg": "Hello {name}" };
     const result = serverT(messages, "test.msg", { name: "World" });
     assert.equal(result, "Hello World");
   });

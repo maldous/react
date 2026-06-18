@@ -24,9 +24,6 @@ export type I18nLocaleInput = I18nMessages | I18nLocaleResource;
 /** Named interpolation parameters. Values are auto-escaped for HTML safety. */
 export type I18nParams = Record<string, string | number>;
 
-/** @deprecated Use I18nMessages. I18nLocale kept for backward compatibility. */
-export type I18nLocale = I18nMessages;
-
 /**
  * Flatten a nested JSON locale resource into dot-separated keys.
  * { feature: { title: "x" } } ? { "feature.title": "x" }
