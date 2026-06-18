@@ -9,8 +9,14 @@ import r6 from "./rules/r6-package-removal.mjs";
 import r7 from "./rules/r7-soft-mapping.mjs";
 import r8 from "./rules/r8-runbook.mjs";
 import r9 from "./rules/r9-blockers.mjs";
+import r10 from "./rules/r10-file-coverage.mjs";
+import r11 from "./rules/r11-command-coverage.mjs";
+import r12 from "./rules/r12-test-coverage.mjs";
+import r13 from "./rules/r13-decision-governance.mjs";
+import r14 from "./rules/r14-foundation.mjs";
+import r15 from "./rules/r15-app-path.mjs";
 
-export const RULES = [r1, r2, r3, r4, r5, r6, r7, r8, r9];
+export const RULES = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15];
 
 export function runRules(ctx) {
   return RULES.flatMap((rule) => rule(ctx));

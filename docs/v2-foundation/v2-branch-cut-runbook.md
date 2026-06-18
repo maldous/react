@@ -138,7 +138,8 @@ tree is never left half-moved across a commit boundary. Drive moves by the
 
 1. **Directories / package shells first** (lowest `migrationSeq`): establish the V2
    target directory shells per `v2-target-tree.txt` and `v2-directory-contracts.json`
-   (e.g. `apps/platform-api` → `apps/api`, `apps/web` retained).
+   (the two app roots `apps/platform-api` and `apps/web` are both retained as-is — V2 keeps
+   the V1 application names; see the app-root invariant in `v2-readiness-validator-spec.md` §4 R15).
 2. **Move runtime packages** in dependency order: `packages/domain`, `packages/runtime`,
    `packages/contracts`, `packages/platform`, `packages/adapters`, then `apps/*`, then
    `services/*`.
@@ -196,7 +197,8 @@ subjects from §6.
 ## 9. Import / path update sequence
 
 1. Update internal import specifiers and package names to the V2 paths (e.g.
-   `@platform/...` package renames, `apps/platform-api` → `apps/api` references).
+   `@platform/...` package renames). The app roots `apps/platform-api` and `apps/web` are NOT
+   renamed in V2 (move-as-is); only deprecated-package removals and `packages/*` regrouping apply.
 2. Update `tsconfig.base.json` path aliases, workspace globs in root `package.json`,
    `knip.json`, ESLint/import-boundary config, and `docs/architecture/import-boundary-rules.json`.
 3. Run the architecture orchestrator to enforce hexagonal boundaries hold post-rename:

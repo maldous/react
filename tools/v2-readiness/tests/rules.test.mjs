@@ -11,6 +11,12 @@ import r6 from "../src/rules/r6-package-removal.mjs";
 import r7 from "../src/rules/r7-soft-mapping.mjs";
 import r8 from "../src/rules/r8-runbook.mjs";
 import r9 from "../src/rules/r9-blockers.mjs";
+import r10 from "../src/rules/r10-file-coverage.mjs";
+import r11 from "../src/rules/r11-command-coverage.mjs";
+import r12 from "../src/rules/r12-test-coverage.mjs";
+import r13 from "../src/rules/r13-decision-governance.mjs";
+import r14 from "../src/rules/r14-foundation.mjs";
+import r15 from "../src/rules/r15-app-path.mjs";
 
 const fires = (rule, ctx, ruleId) => {
   const f = rule(ctx);
@@ -140,19 +146,88 @@ test("R8 fires when the v2:readiness script is missing", () => {
   fires(r8, a, "R8-runbook-tooling");
 });
 
-test("R9 reports requires-v1-completion and deprecated packages as blockers", () => {
+test("R9 reports requires-v1-completion + live-present packages + open decisions as blockers", () => {
   const a = clone(cleanCtx());
   a.capabilities.push({
     capability: "G",
     status: "requires-v1-completion",
     completionAction: "V1C-99",
   });
+  // package blockers come from LIVE status, not path-map membership (the bug fix)
+  a.packageStatuses = [{ pkg: "worker-runtime", blocker: true, reasons: ["dir"] }];
+  a.reconciliation.semanticGapsRemaining.openDecisions = [
+    { subject: "packages/config-runtime", action: "V1C-PKG-CONFIG" },
+  ];
+  const f = r9(a);
+  assert.equal(f.length, 3);
+  assert.deepEqual(f.map((x) => x.subject).sort(), [
+    "G",
+    "packages/config-runtime",
+    "packages/worker-runtime",
+  ]);
+});
+
+test("R9 package blocker CLEARS when live status shows removed (path-map entry irrelevant)", () => {
+  const a = clone(cleanCtx());
+  // a permanent path-map record for a removed package must NOT keep the blocker alive
   a.pathMap.push({
-    v1Path: "packages/domain-core/package.json",
+    v1Path: "packages/worker-runtime/package.json",
     disposition: "delete-after-proof",
     v2Path: null,
     deletionCondition: "x (ADR-0006)",
     decisionRefs: ["ADR-0006"],
   });
-  fires(r9, a, "R9-branch-cut-blocker");
+  a.packageStatuses = []; // live: removed + evidence valid
+  assert.deepEqual(r9(a), []);
+});
+
+test("R10 fires on a file-set mismatch (inventory vs path-map)", () => {
+  const a = clone(cleanCtx());
+  a.fileInventory.push({ v1Path: "ghost.ts" });
+  a.shards.push({ v1Path: "ghost.ts" });
+  fires(r10, a, "R10-file-coverage");
+});
+
+test("R11 fires on an uncatalogued live npm script and on a stale catalogue entry", () => {
+  const a = clone(cleanCtx());
+  a.packageJsonScripts.newscript = "x";
+  fires(r11, a, "R11-command-coverage");
+  const b = clone(cleanCtx());
+  b.commandCatalog.push({ name: "npm gone", kind: "npm" });
+  fires(r11, b, "R11-command-coverage");
+});
+
+test("R12 fires on an uninventoried live test and a dangling map record", () => {
+  const a = clone(cleanCtx());
+  a.listTestFiles = () => ["t.test.ts", "new.test.ts"];
+  fires(r12, a, "R12-test-coverage");
+  const b = clone(cleanCtx());
+  b.testMap.push({ v1Path: "orphan.test.ts", v2Path: "x", migrationType: "carry" });
+  fires(r12, b, "R12-test-coverage");
+});
+
+test("R13 fires on missing lineage and unknown referenced action", () => {
+  const a = clone(cleanCtx());
+  a.decisionLineage = []; // V2-ADR-1 now has no lineage
+  fires(r13, a, "R13-decision-governance");
+  const b = clone(cleanCtx());
+  b.capabilities.push({
+    capability: "X",
+    status: "requires-v1-completion",
+    completionAction: "V1C-9",
+    decisionRef: "ADR-ACT-9999",
+  });
+  fires(r13, b, "R13-decision-governance");
+});
+
+test("R14 fires on a missing foundation artefact", () => {
+  const a = clone(cleanCtx());
+  a.foundation["ui-capability-model.json"] = null;
+  fires(r14, a, "R14-foundation");
+});
+
+test("R15 fires on an apps/api reference anywhere", () => {
+  const a = clone(cleanCtx());
+  a.testMap[0].v2Path = "apps/api/tests/x.test.ts";
+  fires(r15, a, "R15-app-path");
 });

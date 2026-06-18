@@ -2761,5 +2761,65 @@
     "fixtureEnvDependency": "compose default/observability services (curl smoke)",
     "stageCoverage": "test,staging,prod",
     "failureEvidence": "curl/http smoke non-zero exit"
+  },
+  {
+    "id": "services/mock-oidc/src/server.test.ts",
+    "path": "services/mock-oidc/src/server.test.ts",
+    "kind": "integration",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure node:test)",
+    "stageCoverage": "test (node --test)",
+    "failureEvidence": "node:test assertion output",
+    "note": "pre-existing; omitted by original inventory"
+  },
+  {
+    "id": "tests/integration/compose-smoke.test.mjs",
+    "path": "tests/integration/compose-smoke.test.mjs",
+    "kind": "integration",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure node:test)",
+    "stageCoverage": "test (node --test)",
+    "failureEvidence": "node:test assertion output",
+    "note": "pre-existing; omitted by original inventory"
+  },
+  {
+    "id": "tools/v2-readiness/tests/rules.test.mjs",
+    "path": "tools/v2-readiness/tests/rules.test.mjs",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure node:test)",
+    "stageCoverage": "test (node --test)",
+    "failureEvidence": "node:test assertion output",
+    "note": "post-audit (ADR-ACT-0292)"
+  },
+  {
+    "id": "tools/v2-readiness/tests/cli.test.mjs",
+    "path": "tools/v2-readiness/tests/cli.test.mjs",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure node:test)",
+    "stageCoverage": "test (node --test)",
+    "failureEvidence": "node:test assertion output",
+    "note": "post-audit (ADR-ACT-0292)"
+  },
+  {
+    "id": "tools/v2-readiness/tests/golden.test.mjs",
+    "path": "tools/v2-readiness/tests/golden.test.mjs",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure node:test)",
+    "stageCoverage": "test (node --test)",
+    "failureEvidence": "node:test assertion output",
+    "note": "post-audit (ADR-ACT-0292)"
+  },
+  {
+    "id": "tools/v2-readiness/tests/package-status.test.mjs",
+    "path": "tools/v2-readiness/tests/package-status.test.mjs",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure node:test, temp dirs)",
+    "stageCoverage": "test (node --test; test:architecture)",
+    "failureEvidence": "node:test assertion output",
+    "note": "post-audit (ADR-ACT-0292)"
   }
 ]

@@ -31,7 +31,23 @@ decision. Until then it is RED, which is the honest cut-gate state (runbook §0)
   `decisionRefs` (no clearing metadata/README as "no runtime behaviour" without a final decision).
 - **R8 runbook-tooling** — the runbook's tool dependency is implemented + scripted + the audited
   commit is recorded.
-- **R9 branch-cut-blocker** — fail-closed gate: lists every `requires-v1-completion`, pending
-  deprecated-package removal, and open decision.
+- **R9 branch-cut-blocker** — fail-closed gate: every `requires-v1-completion`, every deprecated
+  package whose **live** removal status still blocks (determined from the current repo + removal
+  evidence at `docs/evidence/lifecycle/removal/<pkg>.md`, NOT from path-map membership), and every
+  open decision.
+- **R10 file-coverage** — independent bijection: `git ls-tree`(audited) ⇆ inventory ⇆ shards ⇆ path-map.
+- **R11 command-coverage** — live Make targets + npm scripts ⇆ command catalogue + map; no
+  missing/stale/duplicate; `merge`/`retire` carry a `retireReason`.
+- **R12 test-coverage** — live test files inventoried; inventory paths resolve; no dangling map
+  records; `retire` justified.
+- **R13 decision-governance** — every V2 decision Accepted + has lineage; referenced V1 ADRs/actions
+  exist; `requires-v1-completion` `decisionRef`s resolve.
+- **R14 foundation** — the nine foundation artefacts present/shaped; governed contract roots present
+  in the tree.
+- **R15 app-path** — tree/maps/contracts/runbook agree on the app roots (`apps/platform-api` +
+  `apps/web`); `apps/api` appears nowhere.
 
-Tests: `node --test tools/v2-readiness/tests/*.test.mjs`.
+R1–R8 + R10–R15 are the consistency validation (must pass); R9 is the fail-closed cut gate.
+
+Tests: `node --test tools/v2-readiness/tests/*.test.mjs` (also run via the canonical `test:architecture`
+gate, ADR-ACT-0292).

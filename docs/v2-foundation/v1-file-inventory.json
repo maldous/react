@@ -4103,7 +4103,7 @@
     "protectingTests": [],
     "decisionRefs": [],
     "migrationSeq": 96,
-    "deletionCondition": "n/a \u2014 guard must be updated to reflect V2 hand-maintained test list after merges/renames in this shard"
+    "deletionCondition": "n/a — guard must be updated to reflect V2 hand-maintained test list after merges/renames in this shard"
   },
   {
     "v1Path": "apps/platform-api/tests/unit/token-crypto.test.ts",
@@ -4181,7 +4181,7 @@
     "protectingTests": [],
     "decisionRefs": [],
     "migrationSeq": 10,
-    "deletionCondition": "n/a \u2014 path map must be reconciled with final V2 package set after package moves/renames"
+    "deletionCondition": "n/a — path map must be reconciled with final V2 package set after package moves/renames"
   },
   {
     "v1Path": "apps/react-enterprise-app/Dockerfile",
@@ -4207,7 +4207,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-0019"],
     "migrationSeq": 12,
-    "deletionCondition": "n/a \u2014 HTML entry shell regenerated for AI-generated V2 UI; mount contract preserved"
+    "deletionCondition": "n/a — HTML entry shell regenerated for AI-generated V2 UI; mount contract preserved"
   },
   {
     "v1Path": "apps/react-enterprise-app/package.json",
@@ -4220,7 +4220,7 @@
     "protectingTests": [],
     "decisionRefs": [],
     "migrationSeq": 13,
-    "deletionCondition": "n/a \u2014 dependency set updated for V2 UI; package identity and export contract preserved"
+    "deletionCondition": "n/a — dependency set updated for V2 UI; package identity and export contract preserved"
   },
   {
     "v1Path": "apps/react-enterprise-app/package-lock.json",
@@ -4302,7 +4302,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-0019"],
     "migrationSeq": 19,
-    "deletionCondition": "n/a \u2014 routeTree.gen regenerated; router wiring contract preserved for V2 UI"
+    "deletionCondition": "n/a — routeTree.gen regenerated; router wiring contract preserved for V2 UI"
   },
   {
     "v1Path": "apps/react-enterprise-app/src/app/shell-store.ts",
@@ -4315,7 +4315,7 @@
     "protectingTests": [],
     "decisionRefs": [],
     "migrationSeq": 20,
-    "deletionCondition": "n/a \u2014 behaviour reusable; V2 UI may re-skin sidebar but state contract preserved"
+    "deletionCondition": "n/a — behaviour reusable; V2 UI may re-skin sidebar but state contract preserved"
   },
   {
     "v1Path": "apps/react-enterprise-app/src/auth/login-providers.ts",
@@ -4332,7 +4332,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-ACT-0157"],
     "migrationSeq": 21,
-    "deletionCondition": "n/a \u2014 BFF provider contract is the semantic source for the V2 login UI"
+    "deletionCondition": "n/a — BFF provider contract is the semantic source for the V2 login UI"
   },
   {
     "v1Path": "apps/react-enterprise-app/src/components/AdminLayout.tsx",
@@ -4351,7 +4351,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-0027", "ADR-0036"],
     "migrationSeq": 22,
-    "deletionCondition": "n/a \u2014 visual layer replaced by AI-generated V2 UI; navigation behaviour, landmark/a11y semantics and permission gating are the preserved semantic source"
+    "deletionCondition": "n/a — visual layer replaced by AI-generated V2 UI; navigation behaviour, landmark/a11y semantics and permission gating are the preserved semantic source"
   },
   {
     "v1Path": "apps/react-enterprise-app/src/components/AppShell.tsx",
@@ -10393,7 +10393,7 @@
     "protectingTests": ["npm run test:frontend:run"],
     "decisionRefs": ["ADR-ACT-0203"],
     "migrationSeq": 8,
-    "deletionCondition": "n/a \u2014 historical V1 UI baseline; superseded by V2 AI-generated UI proofs"
+    "deletionCondition": "n/a — historical V1 UI baseline; superseded by V2 AI-generated UI proofs"
   },
   {
     "v1Path": "docs/evidence/frontend/react-component-platform-baseline.md",
@@ -10406,7 +10406,7 @@
     "protectingTests": ["npm run test:frontend:run"],
     "decisionRefs": ["ADR-ACT-0203"],
     "migrationSeq": 9,
-    "deletionCondition": "n/a \u2014 historical V1 UI baseline; semantic source for V2 UI"
+    "deletionCondition": "n/a — historical V1 UI baseline; semantic source for V2 UI"
   },
   {
     "v1Path": "docs/evidence/i18n/i18n-runtime-baseline.md",
@@ -10419,7 +10419,7 @@
     "protectingTests": ["node tools/architecture/validate-i18n/src/index.mjs ."],
     "decisionRefs": ["ADR-0026"],
     "migrationSeq": 10,
-    "deletionCondition": "n/a \u2014 historical i18n baseline proof"
+    "deletionCondition": "n/a — historical i18n baseline proof"
   },
   {
     "v1Path": "docs/evidence/i18n/i18n-runtime-correctness.md",
@@ -10432,7 +10432,7 @@
     "protectingTests": ["node tools/architecture/validate-i18n/src/index.mjs ."],
     "decisionRefs": ["ADR-0026"],
     "migrationSeq": 11,
-    "deletionCondition": "n/a \u2014 historical i18n correctness proof"
+    "deletionCondition": "n/a — historical i18n correctness proof"
   },
   {
     "v1Path": "docs/evidence/i18n/i18n-validation-baseline.md",
@@ -10445,7 +10445,7 @@
     "protectingTests": ["node tools/architecture/validate-i18n/src/index.mjs ."],
     "decisionRefs": ["ADR-0026"],
     "migrationSeq": 12,
-    "deletionCondition": "n/a \u2014 historical i18n validation proof"
+    "deletionCondition": "n/a — historical i18n validation proof"
   },
   {
     "v1Path": "docs/evidence/identity/identity-access-baseline.json",
@@ -10458,7 +10458,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0157"],
     "migrationSeq": 13,
-    "deletionCondition": "n/a \u2014 historical identity baseline proof"
+    "deletionCondition": "n/a — historical identity baseline proof"
   },
   {
     "v1Path": "docs/evidence/identity/identity-access-baseline.md",
@@ -10471,7 +10471,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0157"],
     "migrationSeq": 14,
-    "deletionCondition": "n/a \u2014 historical identity baseline proof"
+    "deletionCondition": "n/a — historical identity baseline proof"
   },
   {
     "v1Path": "docs/evidence/identity/keycloak-login-callback.json",
@@ -10484,7 +10484,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0157"],
     "migrationSeq": 15,
-    "deletionCondition": "n/a \u2014 historical login-callback proof"
+    "deletionCondition": "n/a — historical login-callback proof"
   },
   {
     "v1Path": "docs/evidence/identity/keycloak-login-callback.md",
@@ -10497,7 +10497,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0157"],
     "migrationSeq": 16,
-    "deletionCondition": "n/a \u2014 historical login-callback proof"
+    "deletionCondition": "n/a — historical login-callback proof"
   },
   {
     "v1Path": "docs/evidence/identity/keycloak-provisioning-baseline.json",
@@ -10510,7 +10510,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0157"],
     "migrationSeq": 17,
-    "deletionCondition": "n/a \u2014 historical provisioning baseline proof"
+    "deletionCondition": "n/a — historical provisioning baseline proof"
   },
   {
     "v1Path": "docs/evidence/identity/keycloak-provisioning-baseline.md",
@@ -10523,7 +10523,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0157"],
     "migrationSeq": 18,
-    "deletionCondition": "n/a \u2014 historical provisioning baseline proof"
+    "deletionCondition": "n/a — historical provisioning baseline proof"
   },
   {
     "v1Path": "docs/evidence/identity/tenant-identity-membership-v2.md",
@@ -10536,7 +10536,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0157", "ADR-ACT-0230"],
     "migrationSeq": 19,
-    "deletionCondition": "n/a \u2014 rename drops transitional -v2 suffix to clean V2 name"
+    "deletionCondition": "n/a — rename drops transitional -v2 suffix to clean V2 name"
   },
   {
     "v1Path": "docs/evidence/import-boundaries/initial-import-boundary-validation.json",
@@ -10549,7 +10549,7 @@
     "protectingTests": ["npm run test:architecture"],
     "decisionRefs": [],
     "migrationSeq": 20,
-    "deletionCondition": "n/a \u2014 historical import-boundary baseline proof"
+    "deletionCondition": "n/a — historical import-boundary baseline proof"
   },
   {
     "v1Path": "docs/evidence/import-boundaries/initial-import-boundary-validation.md",
@@ -10562,7 +10562,7 @@
     "protectingTests": ["npm run test:architecture"],
     "decisionRefs": [],
     "migrationSeq": 21,
-    "deletionCondition": "n/a \u2014 historical import-boundary baseline proof"
+    "deletionCondition": "n/a — historical import-boundary baseline proof"
   },
   {
     "v1Path": "docs/evidence/import-boundaries/source-import-boundary-validation.json",
@@ -10601,7 +10601,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-0072"],
     "migrationSeq": 24,
-    "deletionCondition": "n/a \u2014 historical provisioning baseline proof"
+    "deletionCondition": "n/a — historical provisioning baseline proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/declarative-provisioning-baseline.md",
@@ -10614,7 +10614,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-0072"],
     "migrationSeq": 25,
-    "deletionCondition": "n/a \u2014 historical provisioning baseline proof"
+    "deletionCondition": "n/a — historical provisioning baseline proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/final-pre-slice-hardening.json",
@@ -10627,7 +10627,7 @@
     "protectingTests": ["make check"],
     "decisionRefs": [],
     "migrationSeq": 26,
-    "deletionCondition": "n/a \u2014 historical pre-slice hardening proof"
+    "deletionCondition": "n/a — historical pre-slice hardening proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/final-pre-slice-hardening.md",
@@ -10640,7 +10640,7 @@
     "protectingTests": ["make check"],
     "decisionRefs": [],
     "migrationSeq": 27,
-    "deletionCondition": "n/a \u2014 historical pre-slice hardening proof"
+    "deletionCondition": "n/a — historical pre-slice hardening proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/local-platform-substrate-smoke.json",
@@ -10679,7 +10679,7 @@
     "protectingTests": ["make db-migrate"],
     "decisionRefs": [],
     "migrationSeq": 30,
-    "deletionCondition": "n/a \u2014 historical migration-runner baseline proof"
+    "deletionCondition": "n/a — historical migration-runner baseline proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/migration-runner-baseline.md",
@@ -10692,7 +10692,7 @@
     "protectingTests": ["make db-migrate"],
     "decisionRefs": [],
     "migrationSeq": 31,
-    "deletionCondition": "n/a \u2014 historical migration-runner baseline proof"
+    "deletionCondition": "n/a — historical migration-runner baseline proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/mock-oidc-broker-tests.md",
@@ -10705,7 +10705,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0220"],
     "migrationSeq": 32,
-    "deletionCondition": "n/a \u2014 historical mock-oidc broker proof"
+    "deletionCondition": "n/a — historical mock-oidc broker proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/platform-api-pipeline-baseline.json",
@@ -10718,7 +10718,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": [],
     "migrationSeq": 33,
-    "deletionCondition": "n/a \u2014 historical platform-api pipeline baseline proof"
+    "deletionCondition": "n/a — historical platform-api pipeline baseline proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/platform-api-pipeline-baseline.md",
@@ -10731,7 +10731,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": [],
     "migrationSeq": 34,
-    "deletionCondition": "n/a \u2014 historical platform-api pipeline baseline proof"
+    "deletionCondition": "n/a — historical platform-api pipeline baseline proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/slice-readiness-enforcement.json",
@@ -10796,7 +10796,7 @@
     "protectingTests": ["tilt up"],
     "decisionRefs": ["ADR-0027"],
     "migrationSeq": 39,
-    "deletionCondition": "n/a \u2014 historical Tilt feedback-loop proof"
+    "deletionCondition": "n/a — historical Tilt feedback-loop proof"
   },
   {
     "v1Path": "docs/evidence/infrastructure/wiremock-contract-tests.md",
@@ -10809,7 +10809,7 @@
     "protectingTests": ["make compose-up-external-mocks"],
     "decisionRefs": [],
     "migrationSeq": 40,
-    "deletionCondition": "n/a \u2014 historical wiremock contract proof"
+    "deletionCondition": "n/a — historical wiremock contract proof"
   },
   {
     "v1Path": "docs/evidence/integrations/webhook-delivery-worker.md",
@@ -10822,7 +10822,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-0068"],
     "migrationSeq": 41,
-    "deletionCondition": "n/a \u2014 historical webhook delivery worker proof"
+    "deletionCondition": "n/a — historical webhook delivery worker proof"
   },
   {
     "v1Path": "docs/evidence/integrations/webhook-redrive-metrics.md",
@@ -10835,7 +10835,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-0068"],
     "migrationSeq": 42,
-    "deletionCondition": "n/a \u2014 historical webhook redrive metrics proof"
+    "deletionCondition": "n/a — historical webhook redrive metrics proof"
   },
   {
     "v1Path": "docs/evidence/integrations/webhooks-plumbing.md",
@@ -10848,7 +10848,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-0068"],
     "migrationSeq": 43,
-    "deletionCondition": "n/a \u2014 historical webhooks plumbing proof"
+    "deletionCondition": "n/a — historical webhooks plumbing proof"
   },
   {
     "v1Path": "docs/evidence/lifecycle/adr-act-0288-c1-deprecation.md",
@@ -10861,7 +10861,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-ACT-0288"],
     "migrationSeq": 44,
-    "deletionCondition": "n/a \u2014 historical C1 deprecation lifecycle proof"
+    "deletionCondition": "n/a — historical C1 deprecation lifecycle proof"
   },
   {
     "v1Path": "docs/evidence/lifecycle/README.md",
@@ -10913,7 +10913,7 @@
     "protectingTests": ["npm run test:architecture"],
     "decisionRefs": [],
     "migrationSeq": 48,
-    "deletionCondition": "n/a \u2014 historical package-naming baseline proof"
+    "deletionCondition": "n/a — historical package-naming baseline proof"
   },
   {
     "v1Path": "docs/evidence/naming/initial-package-naming-validation.md",
@@ -10926,7 +10926,7 @@
     "protectingTests": ["npm run test:architecture"],
     "decisionRefs": [],
     "migrationSeq": 49,
-    "deletionCondition": "n/a \u2014 historical package-naming baseline proof"
+    "deletionCondition": "n/a — historical package-naming baseline proof"
   },
   {
     "v1Path": "docs/evidence/observability/alloy-label-policy-and-test-ingestion.md",
@@ -10939,7 +10939,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-ACT-0284"],
     "migrationSeq": 50,
-    "deletionCondition": "n/a \u2014 historical alloy label-policy proof"
+    "deletionCondition": "n/a — historical alloy label-policy proof"
   },
   {
     "v1Path": "docs/evidence/observability/observability-runtime-baseline.json",
@@ -10952,7 +10952,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0284"],
     "migrationSeq": 51,
-    "deletionCondition": "n/a \u2014 historical observability runtime baseline proof"
+    "deletionCondition": "n/a — historical observability runtime baseline proof"
   },
   {
     "v1Path": "docs/evidence/observability/observability-runtime-baseline.md",
@@ -10965,7 +10965,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0284"],
     "migrationSeq": 52,
-    "deletionCondition": "n/a \u2014 historical observability runtime baseline proof"
+    "deletionCondition": "n/a — historical observability runtime baseline proof"
   },
   {
     "v1Path": "docs/evidence/observability/tenant-observability-readiness.md",
@@ -10978,7 +10978,7 @@
     "protectingTests": ["npm run test:platform-api"],
     "decisionRefs": ["ADR-ACT-0284"],
     "migrationSeq": 53,
-    "deletionCondition": "n/a \u2014 historical tenant observability readiness proof"
+    "deletionCondition": "n/a — historical tenant observability readiness proof"
   },
   {
     "v1Path": "docs/evidence/operations/local-backup-foundation.md",
@@ -10991,7 +10991,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-ACT-0229"],
     "migrationSeq": 54,
-    "deletionCondition": "n/a \u2014 historical local-backup foundation proof"
+    "deletionCondition": "n/a — historical local-backup foundation proof"
   },
   {
     "v1Path": "docs/evidence/operations/README.md",
@@ -17056,7 +17056,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-0001"],
     "migrationSeq": 5,
-    "deletionCondition": "n/a \u2014 references list updated as packages move in V2"
+    "deletionCondition": "n/a — references list updated as packages move in V2"
   },
   {
     "v1Path": "packages/ui-design-system/package.json",
@@ -17150,7 +17150,7 @@
     "protectingTests": ["packages/ui-design-system/tests/accessible-controls.test.tsx"],
     "decisionRefs": ["ADR-0005", "ADR-ACT-0290", "ADR-ACT-0291"],
     "migrationSeq": 84,
-    "deletionCondition": "V2 keeps single-component react-aria Checkbox API (do not split Field+Button \u2014 breaks a11y per ADR-ACT-0290)"
+    "deletionCondition": "V2 keeps single-component react-aria Checkbox API (do not split Field+Button — breaks a11y per ADR-ACT-0290)"
   },
   {
     "v1Path": "packages/ui-design-system/src/components/DataTable.tsx",
@@ -17280,7 +17280,7 @@
     "protectingTests": ["packages/ui-design-system/tests/accessible-controls.test.tsx"],
     "decisionRefs": ["ADR-0005"],
     "migrationSeq": 94,
-    "deletionCondition": "n/a \u2014 aria-live behaviour is the contract, no visual layer to replace"
+    "deletionCondition": "n/a — aria-live behaviour is the contract, no visual layer to replace"
   },
   {
     "v1Path": "packages/ui-design-system/src/components/LoadingState.tsx",
@@ -17332,7 +17332,7 @@
     "protectingTests": ["packages/ui-design-system/tests/accessible-controls.test.tsx"],
     "decisionRefs": ["ADR-0005", "ADR-ACT-0290", "ADR-ACT-0291"],
     "migrationSeq": 98,
-    "deletionCondition": "V2 keeps single-component react-aria RadioGroup API (do not split Field+Button \u2014 breaks a11y per ADR-ACT-0290)"
+    "deletionCondition": "V2 keeps single-component react-aria RadioGroup API (do not split Field+Button — breaks a11y per ADR-ACT-0290)"
   },
   {
     "v1Path": "packages/ui-design-system/src/components/SectionHeader.tsx",
@@ -17371,7 +17371,7 @@
     "protectingTests": ["packages/ui-design-system/tests/accessible-controls.test.tsx"],
     "decisionRefs": ["ADR-0005", "ADR-ACT-0290", "ADR-ACT-0291"],
     "migrationSeq": 101,
-    "deletionCondition": "V2 keeps single-component react-aria Switch API (do not split Field+Button \u2014 breaks a11y per ADR-ACT-0290)"
+    "deletionCondition": "V2 keeps single-component react-aria Switch API (do not split Field+Button — breaks a11y per ADR-ACT-0290)"
   },
   {
     "v1Path": "packages/ui-design-system/src/components/Tabs.tsx",
@@ -17440,7 +17440,7 @@
     ],
     "decisionRefs": ["ADR-0005"],
     "migrationSeq": 106,
-    "deletionCondition": "n/a \u2014 barrel re-export list updated as components are regenerated"
+    "deletionCondition": "n/a — barrel re-export list updated as components are regenerated"
   },
   {
     "v1Path": "packages/ui-design-system/src/lib/utils.ts",
@@ -17466,7 +17466,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-0005", "ADR-ACT-0290"],
     "migrationSeq": 110,
-    "deletionCondition": "n/a \u2014 semantic a11y proof for V2 control components"
+    "deletionCondition": "n/a — semantic a11y proof for V2 control components"
   },
   {
     "v1Path": "packages/ui-design-system/tests/button.test.tsx",
@@ -17479,7 +17479,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-0005"],
     "migrationSeq": 111,
-    "deletionCondition": "n/a \u2014 semantic behaviour proof for V2 Button"
+    "deletionCondition": "n/a — semantic behaviour proof for V2 Button"
   },
   {
     "v1Path": "packages/ui-design-system/tests/data-table.test.tsx",
@@ -17492,7 +17492,7 @@
     "protectingTests": [],
     "decisionRefs": ["ADR-0005"],
     "migrationSeq": 112,
-    "deletionCondition": "n/a \u2014 semantic behaviour proof for V2 DataTable"
+    "deletionCondition": "n/a — semantic behaviour proof for V2 DataTable"
   },
   {
     "v1Path": "packages/ui-design-system/tests/.gitkeep",
@@ -18157,7 +18157,7 @@
     "authoritative": "authoritative",
     "v2Path": "scripts/stages/run-stage.sh",
     "disposition": "reuse-unchanged",
-    "retainedInterfaces": ["policy-driven stage runner", "sonar gate \u00a79"],
+    "retainedInterfaces": ["policy-driven stage runner", "sonar gate §9"],
     "protectingTests": [],
     "decisionRefs": ["ADR-ACT-0285", "ADR-ACT-0290", "ADR-ACT-0291"],
     "migrationSeq": 88,
@@ -19271,7 +19271,7 @@
     "deletionCondition": "n/a"
   },
   {
-    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/valid/ui/package.json",
+    "v1Path": "tools/architecture/generate-package-readmes/tests/fixtures/representative/valid/ui/package.json",
     "fileType": "fixture",
     "owner": "tool/architecture/generate-package-readmes",
     "authoritative": "authoritative",

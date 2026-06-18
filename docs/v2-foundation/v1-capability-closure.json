@@ -128,7 +128,7 @@
     "readinessCheck": "invariant-ready",
     "evidence": "ADR-0058",
     "proof": "authorize-resource unit tests; proof:entitlement-policy-chain",
-    "openAction": "ADR-ACT-0242 — V1 status 'partial'; blocker: no general ABAC attribute model beyond UMA scopes; the entitlement step of the chain is delivered (Phase 1) but real quota enforcement is Phase 2 [must close before V2 cut]",
+    "openAction": "ADR-ACT-0242 — real quota enforcement is DELIVERED (ADR-ACT-0256); remaining: general attribute vocabulary + policy storage/model + PDP/PEP evaluation beyond UMA scopes + UMA relationship mapping + static fail-closed fallback + tests/proof. [V1 completion]",
     "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
     "completionAction": "V1C-03"
   },
@@ -147,7 +147,8 @@
     "proof": "not-yet-proven",
     "openAction": "ADR-ACT-0242 — V1 status 'deferred'; blocker: needs ADR before implementation [must close before V2 cut]",
     "v2Target": "design-then-build: needs an ADR in V2 before implementation (no V1 asset to reuse)",
-    "completionAction": "V1C-04"
+    "completionAction": "V1C-04",
+    "decisionRef": "V1C-04"
   },
   {
     "capability": "Entitlement engine",
@@ -361,7 +362,8 @@
     "proof": "not-yet-proven",
     "openAction": "ADR-ACT-0241 — V1 status 'missing'; blocker: no billing engine composed or adapted [must close before V2 cut]",
     "v2Target": "net-new-in-v2: no V1 asset; design + build from the V1 semantic placeholders (permission model + audit shape already named)",
-    "completionAction": "V1C-10"
+    "completionAction": "V1C-10",
+    "decisionRef": "V1C-10"
   },
   {
     "capability": "Subscriptions, invoices, payment methods, dunning",
@@ -378,7 +380,8 @@
     "proof": "not-yet-proven",
     "openAction": "ADR-ACT-0241 — V1 status 'missing'; blocker: payment provider is paid/external; no local payment proof possible [must close before V2 cut]",
     "v2Target": "net-new-in-v2: no V1 asset; design + build from the V1 semantic placeholders (permission model + audit shape already named)",
-    "completionAction": "V1C-11"
+    "completionAction": "V1C-11",
+    "decisionRef": "V1C-11"
   },
   {
     "capability": "Usage metering + meter event ingestion",
@@ -459,7 +462,8 @@
     "proof": "not-yet-proven",
     "openAction": "ADR-ACT-0248 — V1 status 'missing'; blocker: no PITR, retention, legal hold, or residency machinery [must close before V2 cut]",
     "v2Target": "net-new-in-v2: no V1 asset; design + build from the V1 semantic placeholders (permission model + audit shape already named)",
-    "completionAction": "V1C-12"
+    "completionAction": "V1C-12",
+    "decisionRef": "V1C-12"
   },
   {
     "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
@@ -476,7 +480,8 @@
     "proof": "not-yet-proven",
     "openAction": "ADR-ACT-0247 — V1 status 'missing'; blocker: no catalog, lineage, classification, PII discovery, or DSR workflow [must close before V2 cut]",
     "v2Target": "net-new-in-v2: no V1 asset; design + build from the V1 semantic placeholders (permission model + audit shape already named)",
-    "completionAction": "V1C-13"
+    "completionAction": "V1C-13",
+    "decisionRef": "V1C-13"
   },
   {
     "capability": "Tenant data import / export",
@@ -493,7 +498,8 @@
     "proof": "not-yet-proven",
     "openAction": "ADR-ACT-0247 — V1 status 'missing'; blocker: absent; pairs with tenant deletion/portability [must close before V2 cut]",
     "v2Target": "net-new-in-v2: no V1 asset; design + build from the V1 semantic placeholders (permission model + audit shape already named)",
-    "completionAction": "V1C-14"
+    "completionAction": "V1C-14",
+    "decisionRef": "V1C-14"
   },
   {
     "capability": "Search + indexing (product search)",
@@ -559,7 +565,8 @@
     "proof": "not-yet-proven",
     "openAction": "ADR-ACT-0262 — V1 status 'partial'; blocker: no engine, scheduler, approval workflow, or visibility [must close before V2 cut]",
     "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
-    "completionAction": "V1C-16"
+    "completionAction": "V1C-16",
+    "decisionRef": "V1C-16"
   },
   {
     "capability": "Scheduled jobs (built-in, on the event substrate)",
@@ -670,7 +677,7 @@
     "readinessCheck": "observability readiness signals (metrics/traces status)",
     "evidence": "ADR-0062, ADR-0020",
     "proof": "observability-smoke; proof:tenant-observability",
-    "openAction": "ADR-ACT-0261 — V1 status 'partial'; blocker: OTEL collector ingests but no metrics/trace backend or dashboards [must close before V2 cut]",
+    "openAction": "ADR-ACT-0261 — Tempo tracing, Grafana datasource wiring and browser→BFF tracing are DELIVERED (ADR-0074). Remaining: application metrics exported/queryable via Prometheus + curated dashboards (split: V1C-17a metrics, V1C-17b dashboards; Alertmanager/on-call/status-page are V1C-19-adjacent ops, tracked separately). [V1 completion]",
     "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
     "completionAction": "V1C-17"
   },
@@ -737,7 +744,7 @@
     "readinessCheck": "sonarqube probe (status UP)",
     "evidence": "ADR-0016",
     "proof": "semgrep:gate; CI gitleaks (recent commit)",
-    "openAction": "ADR-ACT-0247 — V1 status 'partial'; blocker: dependency scanning not yet a hard gate [must close before V2 cut]",
+    "openAction": "ADR-ACT-0247 — `make quality` already hard-runs `npm audit` + OSV. Remaining genuine gate gap: CodeQL as authoritative SAST + SBOM freshness/policy validation + gitleaks availability fail-closed in authoritative environments + dependency-scan evidence. (Renamed: 'Authoritative security-scan gate hardening'.) [V1 completion]",
     "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
     "completionAction": "V1C-18"
   },
@@ -803,7 +810,7 @@
     "readinessCheck": "to define",
     "evidence": "ADR-0065",
     "proof": "openapi:drift (not complete)",
-    "openAction": "ADR-ACT-0257 — V1 status 'partial'; blocker: no external portal, SDK gen, sandbox/test mode, or schema-level OpenAPI drift (rate limits now delivered — see `rate-limiting`) [must close before V2 cut]",
+    "openAction": "ADR-ACT-0257 — schema-level OpenAPI drift is DELIVERED (ADR-ACT-0287) and rate limiting is delivered. Remaining: external developer portal + SDK generation + sandbox/test mode + runtime semantic-contract conformance (if retained). [V1 completion]",
     "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
     "completionAction": "V1C-20"
   },
@@ -871,7 +878,8 @@
     "proof": "not-yet-proven",
     "openAction": "ADR-ACT-0251 — V1 status 'missing'; blocker: no ticketing, health, comms, or announcements [must close before V2 cut]",
     "v2Target": "net-new-in-v2: no V1 asset; design + build from the V1 semantic placeholders (permission model + audit shape already named)",
-    "completionAction": "V1C-22"
+    "completionAction": "V1C-22",
+    "decisionRef": "V1C-22"
   },
   {
     "capability": "Universal Service Foundation scope + principles",

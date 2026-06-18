@@ -1,393 +1,341 @@
 # V1 Completion Programme (standalone)
 
 Reconciliation is **not** gap-free (see `zero-gap-reconciliation.json`, `gap-report.md`). This
-programme is split into three honest classes:
+document is split into **two clearly separate programmes** so V1 closure is never entangled with V2
+construction:
 
-- **§A Semantic completions (V1C-01..25 + package decisions)** — design/build/extension; these are
-  **branch-cut blockers**. Each lists source ADR/action, exact work, code paths, contracts/routes,
-  tests/proofs, UI semantic definition, stop condition, and V2 assets produced.
-- **§B Execution-only (P-EXEC)** — resolved dispositions, zero discovery; mechanical.
-- **§C Deprecated package removals (PKG-01..10)** — proven-zero-consumer scaffolds, `delete-after-proof`.
+- **Programme 1 — V1 COMPLETION** (this file, Parts A–C): the work that must land on V1 `main`
+  **before `v1-final`**. These are the branch-cut blockers.
+- **Programme 2 — V2 CONSTRUCTION** (Part D pointer): mechanical tree-building that happens **on
+  `v2-baseline` after the cut**. It is owned by `v2-branch-cut-runbook.md` and is **excluded from the
+  V1 global stop condition**.
 
 Audited V1 commit: `918cd148569f6473eeaa58284933abdc0fe5bafe`. Freeze commit: `{{PINNED_V1_COMMIT}}`
-(pinned at cut time, runbook §1). **No package is deleted by this change** (per instruction).
+(pinned at cut time, runbook §1). **No product capability is implemented and no package is deleted by
+this planning change.**
 
 ---
 
-## §A — Semantic completions (branch-cut blockers)
-
-### Identity & access
-
-**V1C-01 — Tenant groups admin UI.**
-
-- Source: ADR-0021, ADR-0058, ADR-ACT-0234.
-- Work: build the missing `/admin/groups` slice over the existing, proven API; no behaviour change.
-- Code paths: `apps/react-enterprise-app/src/features/groups/`; reuse `apps/platform-api` `/api/org/groups*`.
-- Contracts/routes: `/api/org/groups*` (present); add TanStack Query hooks + routeTree entry.
-- Tests/proofs: carry groups unit tests; add MSW + a11y + Playwright journey for the new slice.
-- UI semantics: list/create/update/delete groups; member assignment; permission `tenant.groups.*`.
-- Stop: `/admin/groups` reachable, permission-gated, journey + a11y green.
-- V2 assets: groups admin slice as AI-UI semantic source.
-
-**V1C-02 — Sub-organisations admin UI.**
-
-- Source: ADR-0021, ADR-0058, ADR-ACT-0234.
-- Work: `/admin/sub-organisations` slice over proven `/api/org/sub-organisations*`.
-- Code paths: `apps/react-enterprise-app/src/features/sub-organisations/`.
-- Contracts/routes: `/api/org/sub-organisations*` (present).
-- Tests/proofs: carry sub-org unit tests; add slice MSW + a11y + journey.
-- UI semantics: CRUD sub-orgs; hierarchy; `tenant.suborgs.*`.
-- Stop: slice reachable + gated; journey + a11y green.
-- V2 assets: sub-org admin slice.
-
-**V1C-03 — ABAC / Policy Decision Point (Phase 2 quota enforcement).**
-
-- Source: ADR-0058, ADR-ACT-0242.
-- Work: extend the entitlement PEP from UMA-scope checks to a general attribute model; wire real
-  quota enforcement (Phase 2) into the BFF pipeline after permission + entitlement.
-- Code paths: `apps/platform-api/src/server` pipeline PEP; `/api/auth/settings/resource-policies`.
-- Contracts/routes: existing resource-policies route; extend policy schema.
-- Tests/proofs: carry `authorize-resource` + `proof:entitlement-policy-chain`; add attribute-model + quota-enforcement proofs.
-- UI semantics: auth-settings policy editor (attributes + quota rules).
-- Stop: attribute decisions + quota enforcement proven end-to-end; no production gap.
-- V2 assets: complete PEP as semantic source.
-
-**V1C-04 — Delegated administration roles (net-new; needs ADR).**
-
-- Source: ADR-0058, ADR-ACT-0242 (status deferred).
-- Work: author a V1 ADR (delegation model: scope, grant/revoke, audit), then build port/adapter/
-  contract/route/UI. No V1 asset to reuse — this is design-then-build.
-- Code paths: new `apps/platform-api` delegation usecases + `IdentityRepositoryPort` extension; `/admin/members` delegation surface.
-- Contracts/routes: define `/api/org/delegations*` (to build).
-- Tests/proofs: new unit + substrate + journey; delegation grant/revoke audit proof.
-- UI semantics: assign delegated admin scopes to members; revoke; audit trail.
-- Stop: ADR Accepted; route+UI+audit delivered; proof green.
-- V2 assets: delegation capability + its first ADR.
-
-**V1C-05 — Support-mode / break-glass approval workflow.**
-
-- Source: ADR-0066, ADR-ACT-0251.
-- Work: add the approval workflow + host-origin escalation that the proven `POST /api/admin/support-session` core lacks.
-- Code paths: `apps/platform-api` support-session usecase; new approval state machine.
-- Contracts/routes: extend support-session route with approve/deny; audit.
-- Tests/proofs: carry support-mode unit tests; add approval-workflow proof.
-- UI semantics: request → approve → time-boxed enter → audited exit.
-- Stop: approval workflow proven; break-glass fully audited.
-- V2 assets: complete support-mode capability.
-
-### Authentication
-
-**V1C-06 — Claim mapping admin UI completion.**
-
-- Source: ADR-0046, ADR-ACT-0220.
-- Work: complete the partial `/admin/auth` mapping editor. Live real-IdP mapping proof is
-  **externally blocked** (ADR-ACT-0220) and is carried as the not-applicable-final
-  `Real IdP login simulation` capability — it is NOT a buildable gap.
-- Code paths: `apps/react-enterprise-app/src/features/auth/` mapping editor; `/api/auth/settings/idps/:alias/mapping`.
-- Contracts/routes: existing mapping route.
-- Tests/proofs: carry `oidc-mapping` unit tests; add mapping-editor MSW + a11y.
-- UI semantics: claim → attribute, group/role mapping rules editor.
-- Stop: mapping UI complete + gated; unit proof green (live IdP accepted external).
-- V2 assets: mapping editor slice.
-
-**V1C-07 — MFA lockout/recovery surface + MFA-required E2E.**
-
-- Source: ADR-0042, ADR-ACT-0158.
-- Work: expose account lockout/recovery; land the deferred MFA-required login E2E.
-- Code paths: `apps/platform-api` `/api/auth/settings/mfa,/session`; lockout/recovery handlers.
-- Contracts/routes: extend mfa/session routes with lockout/recovery.
-- Tests/proofs: `proof:auth-settings`; add MFA-required login E2E (ADR-ACT-0158).
-- UI semantics: MFA + session + lockout/recovery tabs.
-- Stop: lockout/recovery exposed; MFA-required E2E green.
-- V2 assets: complete MFA/session surface.
-
-### Configuration
-
-**V1C-08 — Branding + theming completion.**
-
-- Source: ADR-0029, ADR-ACT-0237.
-- Work: complete the partial branding capability flagged partial in the readiness registry.
-- Code paths: `/admin/config` branding; `GET /api/theme`; theme adapter.
-- Contracts/routes: theme route; branding config schema.
-- Tests/proofs: carry local-caddy theme proof; add branding-complete proof + a11y.
-- UI semantics: logo/colour/theme editor with live preview.
-- Stop: branding registry status no longer partial; proof green.
-- V2 assets: branding editor slice.
-
-**V1C-09 — Custom domains canonical/TLS cutover.**
-
-- Source: ADR-0048, ADR-0033, ADR-ACT-0232.
-- Work: prove the canonical-redirect cutover in the self-contained stack. Public DNS verification is
-  externally limited; prove what is provable locally (Caddy routing, canonical redirect).
-- Code paths: `/admin/domains`; `TenantDomainPort`; `DnsChallengeAdapter`.
-- Contracts/routes: `/api/org/domains*`.
-- Tests/proofs: carry `proof:tenant-domains`, `proof:tenant-domain-canonical`; add canonical-cutover redirect proof.
-- UI semantics: domain add → verify → activate → set canonical.
-- Stop: canonical cutover redirect proven locally; DNS limit documented.
-- V2 assets: domains slice + cutover proof.
-
-### Entitlements & billing
-
-**V1C-10 — Product catalog / plans / prices (billing engine, net-new).**
-
-- Source: ADR-0057, ADR-ACT-0241. (Port/adapter corrected to `n/a (net-new)` — the prior
-  `ObservabilityPort/Loki` was a copy-paste error.)
-- Work: design + build the billing catalog domain on the named permission/audit placeholders.
-- Code paths: new `apps/platform-api` billing usecases + `BillingPort` + Postgres adapter; `/admin/billing`.
-- Contracts/routes: define `/api/admin/billing/catalog*`, `/api/org/billing*`.
-- Tests/proofs: new unit + substrate + routes proof.
-- UI semantics: catalog/plan/price CRUD (operator) + tenant read.
-- Stop: catalog engine delivered + proven.
-- V2 assets: billing catalog capability.
-
-**V1C-11 — Subscriptions / invoices / payments / dunning (net-new).**
-
-- Source: ADR-0057, ADR-ACT-0241.
-- Work: build subscription + invoice + dunning logic on the billing engine (V1C-10). Live payment
-  capture uses an external paid provider — that **live proof is external**; prove ledger/dunning
-  logic locally with a stub provider.
-- Code paths: billing usecases; immutable billing ledger; webhook ingestion.
-- Contracts/routes: `/api/org/billing/subscriptions*,/invoices*`.
-- Tests/proofs: ledger + dunning unit/substrate; stub-provider proof (external capture documented).
-- UI semantics: subscription state, invoices, payment methods, dunning timeline.
-- Stop: ledger + dunning proven; external capture limit documented.
-- V2 assets: subscription/billing capability.
-
-### Data platform
-
-**V1C-12 — PITR / retention / legal hold / residency (net-new).**
-
-- Source: ADR-0064, ADR-0063, ADR-ACT-0248.
-- Work: build PITR config, retention policy engine, legal-hold flags, residency tagging.
-- Code paths: new ops usecases + Postgres/MinIO adapters; `/admin/data`.
-- Contracts/routes: `/api/admin/data/retention*,/legal-hold*`.
-- Tests/proofs: retention + legal-hold + residency proofs; restore drill.
-- UI semantics: retention rules, legal-hold toggle, residency selector.
-- Stop: machinery delivered + proven.
-- V2 assets: data-lifecycle capability.
-
-**V1C-13 — Data governance: catalog/lineage/classification/PII/DSR (net-new).**
-
-- Source: ADR-0063, ADR-ACT-0247. (Port/adapter corrected to `n/a (net-new)`.)
-- Work: build catalog, lineage, PII discovery/classification, and DSR/GDPR workflow.
-- Code paths: new governance usecases + adapters; `/admin/governance`.
-- Contracts/routes: `/api/admin/governance/*`, tenant DSR endpoints.
-- Tests/proofs: DSR fulfilment audit proof; classification proof.
-- UI semantics: catalog browse, DSR request → fulfil, classification labels.
-- Stop: DSR workflow + catalog delivered + proven.
-- V2 assets: governance capability.
-
-**V1C-14 — Tenant data import/export (net-new).**
-
-- Source: ADR-0063, ADR-ACT-0247.
-- Work: build export (and import) pairing with tenant deletion/portability.
-- Code paths: export usecase + StoragePort; `/admin/data`.
-- Contracts/routes: `/api/org/data/export`, `/import`.
-- Tests/proofs: export-audit proof; round-trip proof.
-- UI semantics: request export → download; import upload.
-- Stop: export/import delivered + audited.
-- V2 assets: data portability capability.
-
-**V1C-15 — Object storage file CRUD / quotas / lifecycle / AV.**
-
-- Source: ADR-0049, ADR-0064, ADR-ACT-0223.
-- Work: extend the proven readiness-only storage to file CRUD API/UI, quotas, lifecycle, AV scan, legal hold.
-- Code paths: `apps/platform-api` storage usecases; `StoragePort`/`MinioStorageAdapter`; `/admin/storage`.
-- Contracts/routes: add `/api/org/storage/objects*` CRUD; quota routes.
-- Tests/proofs: carry `proof:tenant-storage`; add file-CRUD + quota + AV proofs.
-- UI semantics: object browser, upload/download/delete, quota, lifecycle rules.
-- Stop: file CRUD + quotas delivered + proven (live MinIO).
-- V2 assets: storage browser capability.
-
-### Events & workflow
-
-**V1C-16 — Workflow engine + approvals.**
-
-- Source: ADR-0059, ADR-ACT-0262.
-- Work: build the workflow engine + approval workflow + visibility on the proven event substrate.
-  (Built-in scheduled jobs are already delivered separately — do not rebuild.)
-- Code paths: `apps/platform-api` workflow usecases on `EventBusPort`/`JobRunnerPort`; `/admin/workflows`.
-- Contracts/routes: define `/api/admin/workflows*`.
-- Tests/proofs: workflow transition audit proof; approval proof.
-- UI semantics: workflow list/state, approve/deny, transitions audit.
-- Stop: engine + approvals + visibility delivered + proven.
-- V2 assets: workflow capability.
-
-### Observability & ops
-
-**V1C-17 — Metrics + traces backend + dashboards.**
-
-- Source: ADR-0062, ADR-0020, ADR-ACT-0261.
-- Work: add the metrics/trace backend + dashboards behind the OTEL collector that already ingests.
-- Code paths: `/admin/observability`; `ObservabilityPort`; Tempo/Prometheus wiring.
-- Contracts/routes: observability readiness + signal routes.
-- Tests/proofs: carry `observability-smoke`, `proof:tenant-observability`; add metrics/trace backend proof.
-- UI semantics: metrics/trace status + dashboard links.
-- Stop: backend + dashboards delivered + proven.
-- V2 assets: metrics/trace surface.
-
-### Security & governance
-
-**V1C-18 — Dependency scanning as a hard gate.**
-
-- Source: ADR-0016, ADR-ACT-0247.
-- Work: promote dependency scanning to a hard CI gate (Sonar + semgrep + gitleaks are already delivered).
-- Code paths: CI config; `make` security gate.
-- Contracts/routes: n/a (CI).
-- Tests/proofs: `semgrep:gate`; add dependency-scan gate proof.
-- UI semantics: n/a.
-- Stop: dependency scan is a hard, failing gate.
-- V2 assets: hardened CI security gate.
-
-**V1C-19 — Compliance reports / access reviews / evidence packs.**
-
-- Source: ADR-0063, ADR-ACT-0247.
-- Work: build compliance report generation + access/role review workflow over the proven audit read model.
-- Code paths: new compliance usecases; `/admin/compliance`.
-- Contracts/routes: define `/api/admin/compliance/reports*,/reviews*`.
-- Tests/proofs: review-completion audit proof; report-generation proof.
-- UI semantics: generate report, run access review, export evidence pack.
-- Stop: reports + reviews delivered + audited.
-- V2 assets: compliance capability.
-
-### Developer platform
-
-**V1C-20 — Developer portal / SDK gen / sandbox.**
-
-- Source: ADR-0065, ADR-0065, ADR-ACT-0250, ADR-ACT-0257.
-- Work: build the external portal + SDK generation + sandbox/test mode. (Rate limiting and the
-  OpenAPI drift hard gate are already delivered separately — do not rebuild.)
-- Code paths: portal app/feature; SDK generator under `tools/`.
-- Contracts/routes: portal BFF routes; existing `openapi.json` (drift gate already enforced).
-- Tests/proofs: portal journey; SDK-gen proof.
-- UI semantics: API docs portal, key management, sandbox console.
-- Stop: portal + SDK + sandbox delivered + proven.
-- V2 assets: developer portal capability.
-
-### Support / admin
-
-**V1C-21 — Tenant lifecycle suspend / delete / export.**
-
-- Source: ADR-0066, ADR-0063, ADR-ACT-0251.
-- Work: extend proven provision-only lifecycle to suspend, delete (coordinating data + storage +
-  realm + DSR), and export.
-- Code paths: `apps/platform-api` tenant lifecycle usecases; `/admin/tenants`.
-- Contracts/routes: extend `/api/admin/tenants` with suspend/delete/export.
-- Tests/proofs: carry provisioning tests; add suspend/delete/export coordination proofs.
-- UI semantics: tenant lifecycle actions with confirmation + audit.
-- Stop: full lifecycle delivered + proven; deletion coordinates all subsystems.
-- V2 assets: tenant lifecycle capability.
-
-**V1C-22 — Support tickets / customer health / announcements (net-new).**
-
-- Source: ADR-0066, ADR-ACT-0251.
-- Work: build ticketing, customer health, comms/announcements.
-- Code paths: new support usecases; `/admin/support`.
-- Contracts/routes: define `/api/admin/support/*`.
-- Tests/proofs: support-action audit proof.
-- UI semantics: ticket list/detail, health dashboard, announcement composer.
-- Stop: ticketing + health + announcements delivered + proven.
-- V2 assets: support capability.
-
-### Foundation
-
-**V1C-23 — Service catalog + provider integration generalisation.**
-
-- Source: ADR-0055, ADR-ACT-0239.
-- Work: generalise the static catalog-v2 seam + provider registry into the no-mock-in-production
-  invariant fully (beyond the static seed).
-- Code paths: `apps/platform-api` service-catalog; provider registry; `/admin/platform`.
-- Contracts/routes: `GET /api/platform/service-catalog`; provider readiness.
-- Tests/proofs: carry `proof:service-catalog-registry`; add generalisation proof.
-- UI semantics: catalog browse + provider lifecycle.
-- Stop: full generalisation delivered + proven.
-- V2 assets: service-catalog capability.
-
-**V1C-24 — Tenant canonical domain public cutover.**
-
-- Source: ADR-ACT-0232.
-- Work: prove public canonical cutover + redirects (local routing already proven). Public DNS portion
-  is externally limited; prove the redirect/cutover logic in the self-contained stack.
-- Code paths: `TenantDomainPort`; `/api/org/domains/canonical`.
-- Contracts/routes: canonical route (present).
-- Tests/proofs: carry `proof:tenant-domain-canonical`; add public-cutover redirect proof.
-- UI semantics: set/unset canonical with redirect preview.
-- Stop: cutover/redirect proven; DNS limit documented.
-- V2 assets: canonical-domain cutover proof.
-
-**V1C-25 — i18n React provider/hook + message migration (hard gate).**
-
-- Source: ADR-0026.
-- Work: finish the React provider/hook (currently a bootstrap placeholder in
-  `packages/i18n-runtime/src/react.ts`) and the API/auth/validation message migration, then promote
-  i18n validation to a hard gate.
-- Code paths: `packages/i18n-runtime/src/react.ts`; API/auth message sites.
-- Contracts/routes: n/a; `tools/architecture/validate-i18n`.
-- Tests/proofs: `validate-i18n`; add provider/hook + migration proofs.
-- UI semantics: i18n is the V2 UI-text semantic contract.
-- Stop: provider/hook + message migration complete; i18n is a hard gate.
-- V2 assets: complete i18n runtime + gate.
-
-### Open package decision
-
-**V1C-PKG-CONFIG — config-runtime fate.**
-
-- Source: ADR-ACT-0289 (explicitly deferred), ADR-0006.
-- Work: decide a typed composition-root config object (validation + secret handling review); do NOT
-  treat the ~122 scattered `process.env` reads as canonical. Then EITHER keep `config-runtime` as the
-  canonical V2 `runtime/config` package (deprecated status removed + full proof) OR remove it and
-  supersede with the typed config object.
-- Code paths: `packages/config-runtime`; composition root in `apps/platform-api`.
-- Contracts/routes: n/a.
-- Tests/proofs: config validation + secret-handling proof.
-- Stop: decision recorded in an ADR; package kept-canonical-with-proof or removed; `v2-target-tree.txt`
-  `runtime/config` line reflects the outcome.
-- V2 assets: typed config contract; resolved package fate.
+## V1 UI proof policy (single binding decision)
+
+**Decision (final, applies to every capability whose V1 API/domain exists but the UI is missing —
+groups, sub-organisations, and all other UI gaps):** V1 completion for a UI gap requires **complete
+machine-readable UI semantics + MSW fixtures + a headless journey proof — NOT a throwaway V1 visual
+build.**
+
+- Rationale: the V2 thesis is that V1 UI _behaviour_ is the semantic source and the _visual layer_ is
+  regenerated by AI. Building disposable V1 visuals would be waste and would not be the V2 source of
+  truth.
+- Concretely, a UI gap is "complete" when: (1) the capability's behaviours/commands/queries/
+  validation/permissions/error-states/a11y/journeys are recorded in `ui-capability-model.json` +
+  `ui-component-contracts.json` against `ui-definition.schema.json`; (2) MSW fixtures exercise the
+  proven BFF contract; (3) a headless Playwright journey proves the semantics against MSW (no
+  hand-built production visual required). No action below may choose a different UI policy.
 
 ---
 
-## §B — Execution-only (zero discovery)
+## PROGRAMME 1 — V1 COMPLETION (branch-cut blockers)
 
-**P-EXEC-1.** Regenerate the 179 `regenerate` artefacts via tooling (`make readmes`, orchestrator
-`all --strict`, SBOM build); never hand-edit.
-**P-EXEC-2.** Git-move the 19 `git-move` files (`git mv`, `git log --follow` proves history).
-**P-EXEC-3.** Apply 104 `refactor-behind-contract` + 51 `replace-retain-contract` migrations behind
-frozen `retainedInterfaces`; protecting tests carried/retargeted/promoted (per `v2-test-proof-map.json`).
-**P-EXEC-4.** Execute the 1 split + 1 merge (path-map) and 42 command merges (`v2-command-map.json`).
-**P-EXEC-5.** Archive the 174 `archive-evidence` records into the V2 historical area (no active gate).
-**P-EXEC-6.** Retire the 12 retired tests (10 are the deprecated-package scaffold smoke tests; each has
-a `retirementJustification`).
+### Part A — Capability completions (V1C-01..25)
 
----
+Each `requires-v1-completion` capability. Net-new build actions are decomposed into **bounded
+sub-actions** with an explicit **selected decision** (no "design and build", no bare "author an ADR").
 
-## §C — Deprecated package removals (delete-after-proof; NOT executed here)
+#### Identity & access
 
-All 10 are zero-consumer, deprecated (ADR-0006 active→deprecated, ADR-ACT-0289), now
-`delete-after-proof` in the path-map and removed from `v2-target-tree.txt`. Each removal is gated on an
-orchestrator strict run proving zero `@platform/<pkg>` consumers. Removal review date 2026-12-18.
+**V1C-01 — Tenant groups (UI gap).** Source: ADR-0021/0058, ADR-ACT-0234. Proven API+contract
+(`/api/org/groups*`); the gap is the admin surface. Per the UI proof policy: record groups UI
+semantics + MSW + headless journey (no throwaway visual). Permission `tenant.groups.*`. Tests: carry
+groups unit tests + add MSW/journey. **Stop:** groups UI semantics + MSW + headless journey green;
+permission-gated. V2 asset: groups UI semantic source.
 
-| Action | Package               | Superseded by                                                                                                                        |
-| ------ | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| PKG-01 | domain-core           | stdlib/typed-package helpers (no replacement package)                                                                                |
-| PKG-02 | access-control        | authorisation-runtime + adapters-keycloak                                                                                            |
-| PKG-03 | feature-workflow      | none (speculative, no consumer)                                                                                                      |
-| PKG-04 | profile-configuration | application-local profile port (apps/platform-api)                                                                                   |
-| PKG-05 | security-auth         | authorisation-runtime + adapters-keycloak                                                                                            |
-| PKG-06 | queue-runtime         | application-local queue/event port (USF event-bus)                                                                                   |
-| PKG-07 | search-runtime        | application-local SearchPort + PostgresFtsSearchAdapter                                                                              |
-| PKG-08 | notification-runtime  | application-local NotificationTransportPort + transport adapters                                                                     |
-| PKG-09 | worker-runtime        | USF event-bus + workers                                                                                                              |
-| PKG-10 | observability         | platform-logging + platform-observability + platform-runtime-context + platform-errors split (ObservabilityPort abandoned, ADR-0020) |
+**V1C-02 — Sub-organisations (UI gap).** Source: ADR-0021/0058, ADR-ACT-0234. Proven
+`/api/org/sub-organisations*`. Same UI proof policy. Permission `tenant.suborgs.*`. **Stop:** sub-org
+UI semantics + MSW + headless journey green.
+
+**V1C-03 — ABAC / Policy Decision Point (extend).** Source: ADR-0058, ADR-ACT-0242. **Quota
+enforcement is already DELIVERED (ADR-ACT-0256) — removed from this gap.** Remaining work only:
+(a) general attribute vocabulary; (b) policy storage/model (Postgres `abac_policies`); (c) PDP/PEP
+evaluation beyond UMA scopes wired into the BFF pipeline after permission+entitlement; (d) UMA
+relationship mapping; (e) static fail-closed fallback when the PDP is unavailable; (f) tests + proof
+(`proof:abac-pdp`). **Stop:** attribute-based decisions evaluated + fail-closed proven; UMA mapping
+documented. V2 asset: complete PEP.
+
+**V1C-04 — Delegated administration roles (net-new). Selected decision (decisionRef V1C-04):** BUILD
+in-house on the existing identity model (no external delegation service). Domain model: `Delegation{
+delegator, delegatee, scopeSet, expiry, state∈{active,revoked,expired}}` (state machine
+active→revoked|expired). Canonical port: `DelegationPort` (extends identity). Adapter:
+`PostgresDelegationAdapter`. Persistence: `delegations` table. Contracts/events: `/api/org/delegations*`
+(grant/list/revoke); event `delegation.granted|revoked`. Permission: `tenant.delegations.manage`.
+Audit: `delegation.granted`/`delegation.revoked` (audit-before-change). Readiness: invariant-ready.
+Ops: none beyond migration. Tests: usecase + substrate + headless journey. Runtime proof:
+`proof:delegated-admin`. AI UI semantics: assign/revoke delegated scopes to a member + audit trail.
+**Stop:** grant/revoke proven + audited; fail-closed when scope invalid.
+
+**V1C-05 — Support-mode / break-glass approval workflow (extend).** Source: ADR-0066, ADR-ACT-0251.
+Proven `POST /api/admin/support-session`. Selected decision: BUILD approval state machine
+(`request→approve|deny→enter(time-boxed)→exit`) in-house. Port: reuse support-session usecase. Audit:
+every transition. Permission `platform.admin.access`. Tests: carry support-mode unit + add approval
+proof. **Stop:** approval workflow + host-origin escalation proven + fully audited.
+
+#### Authentication
+
+**V1C-06 — Claim mapping admin UI (UI gap).** Source: ADR-0046, ADR-ACT-0220. Mapping config proven at
+unit level; complete the `/admin/auth` mapping editor per the UI proof policy. Live real-IdP mapping
+proof is **externally blocked** (carried as not-applicable-final `Real IdP login simulation`) — NOT a
+buildable gap. **Stop:** mapping UI semantics + MSW + headless journey green.
+
+**V1C-07 — MFA lockout/recovery + MFA-required E2E (extend).** Source: ADR-0042, ADR-ACT-0158. Expose
+account lockout/recovery on `/api/auth/settings/mfa,/session`; land the deferred MFA-required login
+E2E. **Stop:** lockout/recovery exposed; MFA-required E2E green.
+
+#### Configuration / domains
+
+**V1C-08 — Branding + theming completion.** Source: ADR-0029, ADR-ACT-0237. Complete the partial
+branding capability flagged in the readiness registry; theme editor UI semantics per policy. **Stop:**
+branding registry no longer partial; proof green.
+
+**V1C-09 — Custom domains: DNS ownership, TLS, activation (de-duplicated).** Source: ADR-0048/0033,
+ADR-ACT-0232. **Scope partitioned: this action owns DNS-ownership verification, TLS issuance, and
+domain _activation_ only. Canonical-domain selection + redirect cutover is V1C-24 (no overlap; each
+behaviour in exactly one action).** Port `TenantDomainPort`; adapter `DnsChallengeAdapter`. Contracts
+`/api/org/domains*` (add/verify/activate). Public DNS verification is externally limited; prove what is
+provable locally (Caddy routing + activation). **Stop:** add→verify→activate proven locally; DNS limit
+documented.
+
+**V1C-24 — Tenant canonical-domain selection + redirect cutover (de-duplicated).** Source:
+ADR-ACT-0232. **Owns canonical selection + public redirect cutover only** (DNS/TLS/activation is
+V1C-09). Contract `/api/org/domains/canonical`. Prove the redirect/cutover logic in the self-contained
+stack; the public-DNS portion is externally limited (documented). **Stop:** canonical set/unset +
+redirect cutover proven locally.
+
+#### Storage
+
+**V1C-15 — Object storage file CRUD / quotas / lifecycle / AV (extend).** Source: ADR-0049/0064,
+ADR-ACT-0223. Selected decision: BUILD file CRUD over the proven `StoragePort`/`MinioStorageAdapter`
+(readiness already live). Add `/api/org/storage/objects*` CRUD + quota routes; lifecycle + AV scan +
+legal-hold hooks. Tests: carry `proof:tenant-storage` + add file-CRUD/quota/AV proofs. **Stop:** file
+CRUD + quotas delivered + proven on live MinIO.
+
+#### Entitlements & billing (decomposed; decisionRef V1C-10 / V1C-11)
+
+**V1C-10 — Billing catalogue.** **Selected decision:** BUILD in-house on Postgres (the catalog is
+internal pricing config, not an external product). Domain model: `Product`,`Plan`,`Price`
+(immutable price versions). Port `BillingCatalogPort`; adapter `PostgresBillingCatalogAdapter`;
+persistence `billing_products|plans|prices`. Contracts `/api/admin/billing/catalog*`,
+`/api/org/billing/catalog` (read); event `billing.catalog.changed`. Permission `platform.billing.*` /
+`tenant.billing.read`. Audit `plan.set`/`price.set` (audit-before-change). Readiness n/a (always-on).
+Ops: seed migration. Tests: usecase+substrate+routes. Proof `proof:billing-catalog`. AI UI: catalog
+CRUD (operator) + tenant read. **Stop:** catalogue CRUD delivered + proven.
+
+**V1C-11a — Subscription / invoice ledger.** **Selected decision:** BUILD immutable Postgres ledger.
+Domain model: `Subscription{state: trialing→active→past_due→canceled}`, `Invoice{open→paid|void}`
+(append-only ledger). Port `BillingLedgerPort`; adapter `PostgresBillingLedgerAdapter`; persistence
+append-only `billing_ledger`. Contracts `/api/org/billing/subscriptions*,/invoices*`; events
+`subscription.*`,`invoice.*`. Permission `tenant.billing.*`. Audit immutable ledger entries. Readiness
+n/a. Tests ledger state-machine + substrate. Proof `proof:billing-ledger`. AI UI: subscription state +
+invoice list. **Stop:** ledger + state machine proven.
+
+**V1C-11b — Payment provider.** **Selected decision:** COMPOSE an external provider (e.g. Stripe)
+behind `PaymentProviderPort`; **live capture is external and not provable in the self-contained stack**
+— prove the port contract + webhook ingestion with a stub adapter locally. Adapter
+`StripePaymentAdapter` (prod) / `StubPaymentAdapter` (local proof). Events `payment.captured|failed`
+via webhook. Audit metadata-only (never card data). **Stop:** port contract + webhook ingestion proven
+with the stub; external capture limit documented.
+
+**V1C-11c — Dunning.** **Selected decision:** BUILD on the proven event/scheduled-job substrate.
+Domain model: dunning state machine (`retry schedule → grace → suspend`). Port reuses
+`BillingLedgerPort` + `EventBusPort`. Contracts internal; events `dunning.*`. Audit dunning transitions.
+Tests scheduled-tick + transition proof. **Stop:** dunning schedule proven on the job substrate.
+
+#### Data platform (decomposed; decisionRef V1C-12 / V1C-13 / V1C-14)
+
+**V1C-12a — PITR.** **Selected decision:** COMPOSE Postgres-native PITR (WAL archiving + pgBackRest);
+do not build a bespoke engine. Ops: WAL archive target + restore drill. Contracts
+`/api/admin/data/pitr` (status). Audit restore actions. Proof `proof:pitr-restore-drill`. **Stop:**
+restore drill to a timestamp proven.
+
+**V1C-12b — Retention.** **Selected decision:** BUILD a policy engine on Postgres + scheduled jobs.
+Domain model `RetentionPolicy{scope, ttl, action}`. Port `RetentionPort`; persistence
+`retention_policies`. Contracts `/api/admin/data/retention*`; event `retention.applied`. Permission
+`platform.data.*`. Audit policy changes + applications. Proof `proof:retention`. **Stop:** policy
+applied on a tick + audited.
+
+**V1C-12c — Legal hold.** **Selected decision:** BUILD a hold flag overriding retention. Domain
+`LegalHold{scope, reason, state}`. Contracts `/api/admin/data/legal-hold*`. Audit hold set/clear.
+**Stop:** held records survive retention; proven.
+
+**V1C-12d — Data residency.** **Selected decision:** BUILD residency tagging + a placement policy
+(single-region default; multi-region is post-V1). Domain `residencyTag` on tenant. Contracts
+`/api/admin/data/residency`. Audit residency changes. **Stop:** residency tag enforced on placement;
+proven for the default region.
+
+**V1C-13a — Data catalogue + lineage.** **Selected decision:** BUILD a metadata catalogue (no external
+catalog service). Domain `DatasetEntry{owner, classification, lineageEdges}`. Port `DataCatalogPort`;
+persistence `data_catalog`. Contracts `/api/admin/governance/catalog*`. Audit catalogue edits. Proof
+`proof:data-catalog`. **Stop:** catalogue + lineage edges queryable.
+
+**V1C-13b — PII classification.** **Selected decision:** BUILD rules-based classification (regex/column
+heuristics; no external ML provider). Domain `classification∈{none,pii,sensitive}`. Port extends
+`DataCatalogPort`. Audit classification changes. Proof `proof:pii-classification`. **Stop:** columns
+classified by rules; proven.
+
+**V1C-13c — DSR / GDPR workflow.** **Selected decision:** BUILD a DSR workflow over the proven audit +
+storage + catalogue. Domain `DSR{type: access|erasure|portability, state: open→fulfilled}`. Port
+`DsrPort`; contracts tenant DSR endpoints + `/api/admin/governance/dsr*`; event `dsr.fulfilled`.
+Permission `tenant DSR` / `platform.governance.*`. Audit DSR fulfilment. Proof `proof:dsr`. **Stop:**
+access + erasure DSR fulfilled + audited.
+
+**V1C-14 — Tenant data import/export.** **Selected decision:** BUILD export/import over `StoragePort`,
+pairing with tenant deletion/portability (V1C-21). Contracts `/api/org/data/export`,`/import`; event
+`data.exported`. Audit export. Proof `proof:data-portability`. **Stop:** round-trip export/import
+proven + audited.
+
+#### Events & workflow (decomposed; decisionRef V1C-16)
+
+**V1C-16a — Workflow engine.** **Selected decision:** BUILD a minimal state-machine engine on the
+proven `EventBusPort`/`JobRunnerPort` (no external engine such as Temporal). Domain
+`WorkflowDef + WorkflowRun{state machine}`. Port `WorkflowPort`; persistence `workflow_runs`. Contracts
+`/api/admin/workflows*`; events `workflow.transition`. Permission `platform.workflow.*`. Audit
+transitions. Readiness engine health. Proof `proof:workflow-engine`. AI UI: workflow list/state.
+**Stop:** definition→run→transition proven + audited. (Built-in scheduled jobs already delivered — not
+rebuilt.)
+
+**V1C-16b — Approval workflows.** **Selected decision:** BUILD on V1C-16a. Domain `Approval{pending→
+approved|rejected}`. Contracts `/api/admin/workflows/:id/approvals*`; events `approval.*`. Audit
+approve/reject. Proof `proof:approval-workflow`. **Stop:** approval gate proven within a workflow run.
+
+#### Security & governance / observability
+
+**V1C-17a — Application metrics (Prometheus).** Source: ADR-0062/0020, ADR-ACT-0261. **Tempo tracing +
+Grafana datasource + browser→BFF tracing are DELIVERED (ADR-0074) — removed from this gap.** Selected
+decision: COMPOSE Prometheus + export app metrics behind `ObservabilityPort`. Contracts
+`/api/admin/observability/metrics` (status). Proof `proof:metrics-prometheus`. **Stop:** app metrics
+queryable in Prometheus.
+
+**V1C-17b — Curated dashboards.** **Selected decision:** COMPOSE Grafana dashboards (datasource already
+wired). Ops: dashboard JSON provisioning. Proof `proof:dashboards`. **Stop:** curated dashboards render
+the metrics/traces.
+
+> On-call/escalation + public status page are operational capabilities tracked with V1C-19 governance
+> ops (Alertmanager routing); they are **separate capabilities**, not part of metrics/dashboards.
+
+**V1C-18 — Authoritative security-scan gate hardening (renamed).** Source: ADR-0016, ADR-ACT-0247.
+**`make quality` already hard-runs `npm audit` + OSV — removed from this gap.** Remaining genuine gate
+work: (a) CodeQL as the authoritative SAST gate; (b) SBOM freshness/policy validation as a gate;
+(c) gitleaks availability fail-closed in authoritative environments; (d) recorded dependency-scan
+evidence. **Stop:** the four gates run authoritatively + fail closed; evidence recorded.
+
+**V1C-19 — Compliance reports / access reviews / evidence packs (+ Alertmanager/on-call/status page
+ops).** Source: ADR-0063, ADR-ACT-0247. **Selected decision:** BUILD report generation + access/role
+review workflow over the proven audit read-model; COMPOSE Alertmanager routing + a status page for the
+ops sub-scope. Contracts `/api/admin/compliance/reports*,/reviews*`. Audit review completion. Proof
+`proof:compliance`. **Stop:** reports + reviews delivered + audited; alert routing + status page
+operational.
+
+#### Developer platform
+
+**V1C-20 — Developer portal / SDK / sandbox (re-scoped).** Source: ADR-0065, ADR-ACT-0250/0257.
+**Schema-level OpenAPI drift is DELIVERED (ADR-ACT-0287) and rate limiting is delivered — removed from
+this gap.** Remaining: (a) external developer portal; (b) SDK generation (`tools/sdk-gen`); (c)
+sandbox/test mode; (d) runtime semantic-contract conformance testing (if retained). Selected decision:
+BUILD portal + SDK-gen in-repo. **Stop:** portal + SDK + sandbox delivered + proven.
+
+#### Support / admin (decomposed; decisionRef V1C-22)
+
+**V1C-21 — Tenant lifecycle suspend/delete/export (extend).** Source: ADR-0066/0063, ADR-ACT-0251.
+Extend proven provision-only lifecycle. **Selected decision:** BUILD suspend/delete/export coordinating
+data+storage+realm+DSR. Contracts extend `/api/admin/tenants` (suspend/delete/export). Audit lifecycle
+transitions. Proof `proof:tenant-lifecycle`. **Stop:** full lifecycle proven; deletion coordinates all
+subsystems.
+
+**V1C-22a — Support tickets.** **Selected decision:** BUILD minimal in-house ticketing on Postgres
+(no external helpdesk for V1). Domain `Ticket{open→pending→resolved→closed}`. Port `SupportPort`;
+persistence `support_tickets`. Contracts `/api/admin/support/tickets*`; events `ticket.*`. Permission
+`platform.support.*`. Audit ticket actions. Proof `proof:support-tickets`. AI UI: ticket list/detail.
+**Stop:** ticket lifecycle proven + audited.
+
+**V1C-22b — Customer health.** **Selected decision:** BUILD an aggregation read-model over existing
+usage/metering/audit signals. Port reuses read-models. Contracts `/api/admin/support/health`. Proof
+`proof:customer-health`. **Stop:** health score computed from real signals.
+
+**V1C-22c — Announcements.** **Selected decision:** BUILD on the proven notification substrate. Domain
+`Announcement{draft→published}`. Contracts `/api/admin/support/announcements*`; event
+`announcement.published`. Audit publish. Proof `proof:announcements`. **Stop:** publish→deliver proven.
+
+#### Foundation
+
+**V1C-23 — Service catalog + provider integration generalisation.** Source: ADR-0055, ADR-ACT-0239.
+Generalise the static catalog-v2 seam + provider registry beyond the static seed (no-mock-in-production
+invariant). **Stop:** generalisation proven.
+
+**V1C-25 — i18n React provider/hook + message migration (hard gate).** Source: ADR-0026. Finish
+`packages/i18n-runtime/src/react.ts` (bootstrap placeholder) + the API/auth/validation message
+migration; promote `validate-i18n` to a hard gate. **Stop:** provider/hook + migration complete; i18n
+is a hard gate.
+
+### Part B — Open package decision
+
+**V1C-PKG-CONFIG — config-runtime fate.** Source: ADR-ACT-0289 (explicitly deferred), ADR-0006.
+**Selected decision to settle:** decide a typed composition-root config object (validation +
+secret-handling review); the ~122 scattered `process.env` reads are NOT canonical. THEN either keep
+`config-runtime` as the canonical V2 `runtime/config` package (deprecated status removed + full proof)
+OR remove it. **Stop:** decision recorded in an ADR; package kept-canonical-with-proof or removed;
+`v2-target-tree.txt` `runtime/config` reflects the outcome.
+
+### Part C — Deprecated package removal (PKG-01..10)
+
+All 10 are zero-consumer, deprecated (ADR-0006, ADR-ACT-0289), `delete-after-proof` in the path-map and
+absent from `v2-target-tree.txt`. **Removal-date decision (settles ADR-ACT-0289’s accidental six-month
+blocker):** removal **MAY occur as soon as all ADR-0006 evidence gates pass** — the gate is the
+**evidence**, not the calendar. The `2026-12-18` date is a **backstop review date**, not a hard block.
+The V2-readiness validator (R9) determines each package’s blocker from the **live repository + removal
+evidence** (`docs/evidence/lifecycle/removal/<pkg>.md` with a clean consumer scan), never from the date
+or from path-map membership.
+
+| Action | Package               | Superseded by                                                              | Removal evidence file                          |
+| ------ | --------------------- | -------------------------------------------------------------------------- | ---------------------------------------------- |
+| PKG-01 | domain-core           | stdlib/typed-package helpers (no replacement)                              | docs/evidence/lifecycle/removal/domain-core.md |
+| PKG-02 | access-control        | authorisation-runtime + adapters-keycloak                                  | …/removal/access-control.md                    |
+| PKG-03 | feature-workflow      | none (speculative, no consumer)                                            | …/removal/feature-workflow.md                  |
+| PKG-04 | profile-configuration | application-local profile port                                             | …/removal/profile-configuration.md             |
+| PKG-05 | security-auth         | authorisation-runtime + adapters-keycloak                                  | …/removal/security-auth.md                     |
+| PKG-06 | queue-runtime         | application-local queue/event port (USF event-bus)                         | …/removal/queue-runtime.md                     |
+| PKG-07 | search-runtime        | application-local SearchPort + PostgresFtsSearchAdapter                    | …/removal/search-runtime.md                    |
+| PKG-08 | notification-runtime  | application-local NotificationTransportPort + transports                   | …/removal/notification-runtime.md              |
+| PKG-09 | worker-runtime        | USF event-bus + workers                                                    | …/removal/worker-runtime.md                    |
+| PKG-10 | observability         | platform-logging + platform-observability + runtime-context + errors split | …/removal/observability.md                     |
 
 Per-package removal steps (each): orchestrator strict zero-consumer proof → loader-alias cleanup →
-import-boundary-row cleanup → `tsconfig.packages.json` reference cleanup → dependency-manifest cleanup
-→ package-directory `git rm` → regenerated inventory/CODEMAPS. Stop: package gone, gate green,
-reconciliation re-run still consistent.
+import-boundary-row cleanup → `tsconfig.packages.json` reference cleanup → dependency-manifest cleanup →
+package-directory `git rm` → regenerated inventory/CODEMAPS → write the removal evidence file (with
+`consumer scan: clean` + `removed`). When dir + all cleanup refs are absent AND evidence validates, R9
+clears that package’s blocker.
+
+### V1 GLOBAL STOP CONDITION (V1 closure only)
+
+V1 is complete when **all of**: every Part-A capability completion delivered + proven; the Part-B
+config-runtime decision recorded; all Part-C packages removed after evidence; final tests/proofs green;
+`make all` (authoritative ladder incl. Sonar absolute-zero gate) green; final evidence attestation
+written; `npm run v2:readiness --strict` exits `0`. **V2-construction work (Programme 2) is explicitly
+NOT part of this stop condition.**
 
 ---
 
-### Global stop condition for declaring V1 complete
+## PROGRAMME 2 — V2 CONSTRUCTION (post-cut; owned by the runbook — NOT a V1 blocker)
 
-All §A completions delivered + proven; all §B executed; all §C removed after proof; `make all`
-(authoritative ladder incl. Sonar absolute-zero gate) green; orchestrator strict pass; zero
-`delete-after-proof` items remaining undeleted; `npm run v2:readiness --strict` exits `0`.
+These execute on `v2-baseline` after `v1-final`, per `v2-branch-cut-runbook.md`. They are **excluded
+from the V1 global stop condition** above:
+
+- git moves (path-map `git-move`, 19) — runbook §7.
+- directory restructuring into the grouped V2 tree (`packages/<group>/…`) — runbook §6.
+- import/path retargeting (`@platform/…` renames, alias/tsconfig updates) — runbook §9.
+- command merges (`v2-command-map` `merge`, 42) — runbook §6.3.
+- V2 test relocation (`retarget` 61, `promote-to-conformance` 76) — runbook §8.
+- AI-generated UI replacement (visual layer regenerated from the V1 UI semantics) — runbook §6/§8.
+- `refactor-behind-contract` (104) + `replace-retain-contract` (51) work performed in the V2 tree —
+  runbook §6.
+- V2 artefact regeneration (`regenerate`, 179) — runbook §6/§15 (`make readmes`, orchestrator, SBOM).
+- V2 historical evidence archiving (`archive-evidence`, 174) — runbook §15.
+
+The runbook’s §15 clean-baseline gate (not this file) governs when `v2-baseline` becomes primary.

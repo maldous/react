@@ -4,24 +4,43 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadContext } from "../src/load.mjs";
 import { runRules } from "../src/index.mjs";
+import { collectImportMap, packageRemovalStatus } from "../src/package-status.mjs";
+import { DEPRECATED_REMOVE_PACKAGES } from "../src/vocab.mjs";
 
 const repoRoot = path.join(path.dirname(fileURLToPath(import.meta.url)), "../../..");
 
-// Runs against the real docs/v2-foundation set. Asserts the artefacts are now honest and
-// self-consistent: NO consistency violation fires (R1–R8), and the only RED is the honest
-// outstanding work (R9 branch-cut blockers). The live tree is NOT green today.
-test("golden: live artefacts have zero consistency violations; only R9 blockers remain", () => {
+// Independently derive the EXACT expected blocker set and assert R9 matches it exactly. A missing
+// package blocker or open decision (or a stray extra) fails this test.
+function expectedBlockerSubjects(ctx) {
+  const caps = ctx.capabilities
+    .filter((c) => c.status === "requires-v1-completion")
+    .map((c) => c.capability);
+  const importMap = collectImportMap(repoRoot);
+  const pkgs = DEPRECATED_REMOVE_PACKAGES.filter(
+    (p) => packageRemovalStatus(repoRoot, p, { importMap }).blocker
+  ).map((p) => `packages/${p}`);
+  const decisions = (ctx.reconciliation?.semanticGapsRemaining?.openDecisions || []).map(
+    (d) => d.subject
+  );
+  return [...caps, ...pkgs, ...decisions].sort();
+}
+
+test("golden: consistency rules clean; R9 matches the exact derived blocker set", () => {
   const ctx = loadContext({ repoRoot, strict: true });
   const findings = runRules(ctx);
+
   const consistency = findings.filter((f) => f.ruleId !== "R9-branch-cut-blocker");
   assert.deepEqual(
     consistency,
     [],
-    `consistency rules must be clean; got:\n${consistency.map((f) => `${f.ruleId} ${f.subject}: ${f.message}`).join("\n")}`
+    `consistency rules (R1–R8, R10–R15) must be clean; got:\n${consistency.map((f) => `${f.ruleId} ${f.subject}: ${f.message}`).join("\n")}`
   );
-  const blockers = findings.filter((f) => f.ruleId === "R9-branch-cut-blocker");
-  assert.ok(
-    blockers.length >= 25,
-    "expected the 25 requires-v1-completion capabilities as blockers"
-  );
+
+  const actual = findings
+    .filter((f) => f.ruleId === "R9-branch-cut-blocker")
+    .map((f) => f.subject)
+    .sort();
+  const expected = expectedBlockerSubjects(ctx);
+  assert.deepEqual(actual, expected, "R9 blocker subjects must exactly equal the derived set");
+  assert.equal(actual.length, expected.length);
 });

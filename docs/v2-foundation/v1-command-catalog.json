@@ -5393,5 +5393,43 @@
     "hidesErrors": false,
     "dead": false,
     "docDriftsFromBehaviour": false
+  },
+  {
+    "name": "npm v2:readiness",
+    "kind": "npm",
+    "purpose": "Run the read-only V2-readiness validator (semantic closure + branch-cut blockers).",
+    "inputs": [],
+    "outputs": [],
+    "prerequisites": [],
+    "sideEffects": [],
+    "envScope": "all",
+    "failureSemantics": "read-only / exit-nonzero on finding",
+    "idempotent": true,
+    "safetyControls": [],
+    "testCoverage": "tools/v2-readiness/tests/*.test.mjs",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false,
+    "postAudit": "ADR-ACT-0292 (added after audited commit; carried into V2)"
+  },
+  {
+    "name": "npm v2:readiness:json",
+    "kind": "npm",
+    "purpose": "V2-readiness validator, machine-readable JSON report.",
+    "inputs": [],
+    "outputs": [],
+    "prerequisites": [],
+    "sideEffects": [],
+    "envScope": "all",
+    "failureSemantics": "read-only / exit-nonzero on finding",
+    "idempotent": true,
+    "safetyControls": [],
+    "testCoverage": "tools/v2-readiness/tests/*.test.mjs",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false,
+    "postAudit": "ADR-ACT-0292 (added after audited commit; carried into V2)"
   }
 ]

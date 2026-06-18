@@ -87,14 +87,14 @@
   {
     "v2AdrId": "V2-ADR-0011",
     "v1Adrs": ["ADR-0011"],
-    "v1Actions": ["ADR-ACT-0007", "ADR-ACT-0288"],
+    "v1Actions": ["ADR-ACT-0288"],
     "v1Evidence": [
       "tools/architecture/",
       "tools/architecture/_shared/",
       "tools/architecture/orchestrator/tests/self-evidence.test.mjs"
     ],
     "v1Commits": ["8f7850e"],
-    "notes": "V1 LINEAGE: ADR-ACT-0288 Workstream A/B consolidated shared tooling primitives and the self-evidence writer; the Workstream C package-retirement narrative is V1 history and is not part of the V2 active tooling decision."
+    "notes": "V1 LINEAGE: ADR-ACT-0288 Workstream A/B consolidated shared tooling primitives and the self-evidence writer; the Workstream C package-retirement narrative is V1 history and is not part of the V2 active tooling decision. (removed dangling action refs ADR-ACT-0007/0203 absent from the corpus; valid V1 ADR/action sources retained)."
   },
   {
     "v2AdrId": "V2-ADR-0012",
@@ -157,10 +157,10 @@
   {
     "v2AdrId": "V2-ADR-0019",
     "v1Adrs": ["ADR-0019"],
-    "v1Actions": ["ADR-ACT-0008", "ADR-ACT-0203"],
+    "v1Actions": ["ADR-ACT-0008"],
     "v1Evidence": ["apps/react-enterprise-app", "packages/i18n-runtime/src/react.ts"],
     "v1Commits": [],
-    "notes": "Frontend stack; V1 UI is the proof harness whose behaviours/validation/a11y/journeys are the V2 semantic source while visuals may be regenerated."
+    "notes": "Frontend stack; V1 UI is the proof harness whose behaviours/validation/a11y/journeys are the V2 semantic source while visuals may be regenerated. (removed dangling action refs ADR-ACT-0007/0203 absent from the corpus; valid V1 ADR/action sources retained)."
   },
   {
     "v2AdrId": "V2-ADR-0020",
