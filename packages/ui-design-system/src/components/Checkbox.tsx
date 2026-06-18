@@ -1,17 +1,14 @@
 import type { ReactNode } from "react";
 import {
-  CheckboxButton as AriaCheckboxButton,
-  CheckboxField as AriaCheckboxField,
-  type CheckboxButtonRenderProps,
-  type CheckboxFieldProps as AriaCheckboxFieldProps,
+  Checkbox as AriaCheckbox,
+  type CheckboxProps as AriaCheckboxProps,
+  type CheckboxRenderProps,
 } from "react-aria-components";
 import { cn } from "../lib/utils";
 
-export interface CheckboxProps extends AriaCheckboxFieldProps {
+export interface CheckboxProps extends AriaCheckboxProps {
   className?: string;
   children?: ReactNode;
-  "data-testid"?: string;
-  "aria-label"?: string;
 }
 
 function renderCheckboxMark(isSelected: boolean, isIndeterminate: boolean): ReactNode {
@@ -37,40 +34,31 @@ function renderCheckboxMark(isSelected: boolean, isIndeterminate: boolean): Reac
   return null;
 }
 
-export function Checkbox({
-  className,
-  children,
-  "data-testid": testId,
-  "aria-label": ariaLabel,
-  ...fieldProps
-}: Readonly<CheckboxProps>) {
+export function Checkbox({ className, children, ...props }: Readonly<CheckboxProps>) {
   return (
-    <AriaCheckboxField {...fieldProps}>
-      <AriaCheckboxButton
-        className={cn(
-          "group flex items-center gap-2 text-sm font-medium",
-          "disabled:cursor-not-allowed disabled:opacity-50",
-          className
-        )}
-        data-testid={testId}
-        aria-label={ariaLabel}
-      >
-        {({ isSelected, isIndeterminate }: CheckboxButtonRenderProps) => (
-          <>
-            <div
-              className={cn(
-                "flex h-4 w-4 items-center justify-center rounded border transition-colors",
-                isSelected || isIndeterminate
-                  ? "border-blue-600 bg-blue-600 text-white"
-                  : "border-gray-300 bg-white"
-              )}
-            >
-              {renderCheckboxMark(isSelected, isIndeterminate)}
-            </div>
-            {children}
-          </>
-        )}
-      </AriaCheckboxButton>
-    </AriaCheckboxField>
+    <AriaCheckbox
+      className={cn(
+        "group flex items-center gap-2 text-sm font-medium",
+        "disabled:cursor-not-allowed disabled:opacity-50",
+        className
+      )}
+      {...props}
+    >
+      {({ isSelected, isIndeterminate }: CheckboxRenderProps) => (
+        <>
+          <div
+            className={cn(
+              "flex h-4 w-4 items-center justify-center rounded border transition-colors",
+              isSelected || isIndeterminate
+                ? "border-blue-600 bg-blue-600 text-white"
+                : "border-gray-300 bg-white"
+            )}
+          >
+            {renderCheckboxMark(isSelected, isIndeterminate)}
+          </div>
+          {children}
+        </>
+      )}
+    </AriaCheckbox>
   );
 }
