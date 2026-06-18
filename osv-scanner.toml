@@ -7,7 +7,9 @@
 # is deterministic (it otherwise fails network-dependently on transient dev-tool CVEs)
 # while still failing hard on any PRODUCTION vulnerability or a NEW advisory not listed
 # here. Re-review when bumping the owning dev tool; drop the entry once patched.
-# Reviewed: 2026-06-16.
+# Reviewed: 2026-06-16. Amended 2026-06-19 (3 dev-only advisories added below, time-bounded).
+# Owner: Architecture owner / platform. Time-bounded entries carry `ignoreUntil`; the gate
+# re-fails automatically once the expiry passes, forcing re-review (upgrade or re-justify).
 
 [[IgnoredVulns]]
 id = "GHSA-fx2h-pf6j-xcff"
@@ -32,3 +34,23 @@ reason = "js-yaml (dev) — used by dev/build tooling only; not loaded by the pr
 [[IgnoredVulns]]
 id = "GHSA-8988-4f7v-96qf"
 reason = "@opentelemetry/core (dev-resolved at repo root) — the production OTEL stack lives in packages/adapters-opentelemetry with its own pinned deps; the root dev copy is not shipped."
+
+# --- Time-bounded governed exceptions (added 2026-06-19; re-fail after ignoreUntil) ---
+# Exposure: `npm audit --omit=dev` reports 0 PRODUCTION vulnerabilities; all three below are
+# dev-only and absent from every shipped artifact. Owner: Architecture owner / platform.
+# Remediation path tracked under ADR-ACT-0292 / V1C-18 (authoritative dependency-scan gate).
+
+[[IgnoredVulns]]
+id = "GHSA-p6gq-j5cr-w38f"
+ignoreUntil = 2026-09-19T00:00:00Z
+reason = "nodemailer@8.0.9 (dev, direct devDependency) — used only by dev/test email tooling; production email is sent through @platform/adapters-brevo (EmailTransportAdapter), never this root dev copy. Not in the platform-api image or the SPA bundle. Time-bounded to 2026-09-19; remediate by bumping nodemailer when a fixed release is available (V1C-18)."
+
+[[IgnoredVulns]]
+id = "GHSA-pr7r-676h-xcf6"
+ignoreUntil = 2026-09-19T00:00:00Z
+reason = "undici@7.26.0 (dev, transitive via jsdom@29.1.1) — loaded only inside the jsdom/Vitest test DOM environment; production HTTP uses the Node runtime's own pinned undici, not this dev copy. Not shipped. Time-bounded to 2026-09-19; remediate via jsdom bump (V1C-18)."
+
+[[IgnoredVulns]]
+id = "GHSA-vmh5-mc38-953g"
+ignoreUntil = 2026-09-19T00:00:00Z
+reason = "undici@7.26.0 (dev, transitive via jsdom@29.1.1) — same dev-only test-environment exposure as GHSA-pr7r-676h-xcf6; not in any shipped artifact. Time-bounded to 2026-09-19; remediate via jsdom bump (V1C-18)."
