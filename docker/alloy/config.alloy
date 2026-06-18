@@ -150,9 +150,11 @@ loki.write "platform_loki" {
 // Receives real-user telemetry from the React app's Faro Web SDK (errors,
 // unhandled rejections, Web Vitals, page views, session metadata). The browser
 // POSTs to the SAME-ORIGIN path /faro/collect, which Caddy reverse-proxies to
-// this receiver's /collect endpoint on :12347. No traces output is wired (the
-// SDK ships browser diagnostics as logs/events only); distributed tracing is a
-// documented follow-up behind the same receiver.
+// this receiver's /collect endpoint on :12347. Browser signals fan out two ways:
+// diagnostics (errors/events/measurements) become Loki logs, and the Faro Web
+// SDK's TracingInstrumentation spans are forwarded to Tempo via the otel-collector
+// (see the output block below) so a browser span joins the BFF server span in one
+// trace (ADR-ACT-0284 / ADR-ACT-0285 browser↔BFF correlation).
 
 faro.receiver "browser" {
   server {

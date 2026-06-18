@@ -31,7 +31,31 @@ test("browser-to-BFF distributed trace — react-enterprise-app + platform-api i
     const r = await fetch("/api/admin/tenants", { headers: { accept: "application/json" } });
     return r.status;
   });
-  // 5. the denial is the dependable correlatable signal; the SHARED trace (browser + BFF) is
+  // 5. FLUSH the browser span before the page closes. Faro's TracingInstrumentation uses an
+  // OTEL BatchSpanProcessor (~5s scheduled delay); the Playwright page closes well before that,
+  // so the react-enterprise-app span would never POST to /faro/collect and the browser↔BFF
+  // trace would be missing it in Tempo — the BFF still joins via the synchronous traceparent
+  // header, which is exactly why platform-api appeared while react-enterprise-app did not
+  // (ADR-ACT-0285 closure). Force-flush the real WebTracerProvider (the ProxyTracerProvider's
+  // delegate) so the span exports deterministically rather than on a timer.
+  await page.evaluate(async () => {
+    const provider = (
+      window as unknown as {
+        faro?: { api?: { getOTEL?: () => { trace?: { getTracerProvider?: () => unknown } } } };
+      }
+    ).faro?.api
+      ?.getOTEL?.()
+      ?.trace?.getTracerProvider?.() as {
+      getDelegate?: () => { forceFlush?: () => Promise<void> };
+    };
+    const delegate = provider?.getDelegate?.();
+    if (typeof delegate?.forceFlush === "function") {
+      await delegate.forceFlush();
+    }
+  });
+  // Let the Faro transport POST the flushed span batch to /faro/collect before teardown.
+  await page.waitForTimeout(1500);
+  // 6. the denial is the dependable correlatable signal; the SHARED trace (browser + BFF) is
   // asserted in Tempo by the observability-correlation harness (this spec only PRODUCES it).
   expect([401, 403]).toContain(status);
 });
