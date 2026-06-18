@@ -71,8 +71,7 @@ export class PostgresHistoryRepository implements HistoryRepository {
   }
 
   async query(q: HistoryQuery): Promise<HistoryPage> {
-    const wanted =
-      q.sources && q.sources.length ? q.sources : (Object.keys(BRANCHES) as HistorySourceType[]);
+    const wanted = q.sources?.length ? q.sources : (Object.keys(BRANCHES) as HistorySourceType[]);
     const union = wanted.map((s) => BRANCHES[s]).join("\n  UNION ALL\n  ");
     const limit = Math.min(Math.max(q.limit, 1), 200);
     const offset = Math.max(q.offset, 0);

@@ -18,6 +18,8 @@ import type {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PgPool = { connect(): Promise<any> };
 
+type DbTimestamp = Date | string | null;
+
 interface Row {
   id: string;
   provider_key: string;
@@ -29,12 +31,12 @@ interface Row {
   endpoint: string | null;
   credential_ref: string | null;
   config: Record<string, unknown> | string;
-  created_at: Date | string | null;
-  updated_at: Date | string | null;
+  created_at: DbTimestamp;
+  updated_at: DbTimestamp;
   updated_by: string | null;
 }
 
-function iso(v: Date | string | null): string | null {
+function iso(v: DbTimestamp): string | null {
   if (v == null) return null;
   return typeof v === "string" ? v : v.toISOString();
 }

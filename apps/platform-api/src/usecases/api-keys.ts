@@ -88,7 +88,7 @@ export async function createApiKey(
       safeDetails: { field: "expiresAt" },
     });
   }
-  const scopes = input.scopes && input.scopes.length ? input.scopes : (["read"] as ApiKeyScope[]);
+  const scopes = input.scopes?.length ? input.scopes : (["read"] as ApiKeyScope[]);
   const generated = generateApiKey();
 
   await deps.audit.emit(

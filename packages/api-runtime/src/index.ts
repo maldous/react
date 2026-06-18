@@ -17,8 +17,8 @@ export interface ReadinessResponse {
 /** Response shape for GET /version ? build metadata. */
 export interface VersionResponse {
   version: string;
-  commit: string | "unknown";
-  buildTime: string | "unknown";
+  commit: string;
+  buildTime: string;
   environment: string;
 }
 

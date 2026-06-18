@@ -16,17 +16,19 @@ import type {
 
 const log = createLogger({ name: "postgres-webhook-store" });
 
+type DbTimestamp = Date | string | null;
+
 interface SubRow {
   id: string;
   url: string;
   enabled: boolean;
   event_types: string[];
   has_secret: boolean;
-  created_at: Date | string | null;
-  updated_at: Date | string | null;
+  created_at: DbTimestamp;
+  updated_at: DbTimestamp;
 }
 
-function iso(v: Date | string | null): string | null {
+function iso(v: DbTimestamp): string | null {
   if (v == null) return null;
   if (v instanceof Date) return v.toISOString();
   return new Date(v).toISOString();
@@ -171,7 +173,7 @@ export class PostgresWebhookStore implements WebhookStore {
       response_status: number | null;
       attempt: number;
       error: string | null;
-      created_at: Date | string | null;
+      created_at: DbTimestamp;
     }>(
       `SELECT id, event, status, response_status, attempt, error, created_at
          FROM public.tenant_webhook_deliveries
@@ -273,9 +275,9 @@ export class PostgresWebhookStore implements WebhookStore {
       dead: number;
       pending: number;
       last_status: string | null;
-      last_delivery_at: Date | string | null;
-      last_success_at: Date | string | null;
-      last_failure_at: Date | string | null;
+      last_delivery_at: DbTimestamp;
+      last_success_at: DbTimestamp;
+      last_failure_at: DbTimestamp;
     }>(
       `SELECT
          count(*)::int AS total,

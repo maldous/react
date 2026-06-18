@@ -64,9 +64,7 @@ export function getPostgresAppUrl(): string {
 let _appPool: pg.Pool | undefined;
 
 export function getApplicationPool(): pg.Pool {
-  if (!_appPool) {
-    _appPool = new pg.Pool({ connectionString: getPostgresAppUrl(), max: 12 });
-  }
+  _appPool ??= new pg.Pool({ connectionString: getPostgresAppUrl(), max: 12 });
   return _appPool;
 }
 
@@ -128,16 +126,12 @@ let organisationRepository: OrganisationRepository | undefined;
 let readinessAdapter: PostgresReadinessAdapter | undefined;
 
 export function getOrganisationRepository(): OrganisationRepository {
-  if (!organisationRepository) {
-    organisationRepository = new PostgresOrganisationRepository(getPostgresAppUrl());
-  }
+  organisationRepository ??= new PostgresOrganisationRepository(getPostgresAppUrl());
   return organisationRepository;
 }
 
 export function getPostgresReadinessAdapter(): PostgresReadinessAdapter {
-  if (!readinessAdapter) {
-    readinessAdapter = new PostgresReadinessAdapter(getPostgresAppUrl());
-  }
+  readinessAdapter ??= new PostgresReadinessAdapter(getPostgresAppUrl());
   return readinessAdapter;
 }
 
@@ -167,30 +161,22 @@ let authStateStore: RedisAuthStateStore | undefined;
 let identityRepository: IdentityRepository | undefined;
 
 export function getRedisClient(): ReturnType<typeof createRedisClient> {
-  if (!redisClient) {
-    redisClient = createRedisClient(getRedisUrl());
-  }
+  redisClient ??= createRedisClient(getRedisUrl());
   return redisClient;
 }
 
 export function getSessionStore(): SessionStore {
-  if (!sessionStore) {
-    sessionStore = new RedisSessionStore(getRedisClient());
-  }
+  sessionStore ??= new RedisSessionStore(getRedisClient());
   return sessionStore;
 }
 
 export function getAuthStateStore(): RedisAuthStateStore {
-  if (!authStateStore) {
-    authStateStore = new RedisAuthStateStore(getRedisClient());
-  }
+  authStateStore ??= new RedisAuthStateStore(getRedisClient());
   return authStateStore;
 }
 
 export function getIdentityRepository(): IdentityRepository {
-  if (!identityRepository) {
-    identityRepository = new PostgresIdentityRepository(getPostgresAppUrl());
-  }
+  identityRepository ??= new PostgresIdentityRepository(getPostgresAppUrl());
   return identityRepository;
 }
 

@@ -26,17 +26,19 @@ import type {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PgPool = { connect(): Promise<any> };
 
+type DbTimestamp = Date | string | null;
+
 interface MetaRow {
   ref: string;
   secret_name: string;
   provider: "builtin" | "openbao";
   version: number;
-  created_at: Date | string | null;
-  updated_at: Date | string | null;
-  revoked_at: Date | string | null;
+  created_at: DbTimestamp;
+  updated_at: DbTimestamp;
+  revoked_at: DbTimestamp;
 }
 
-function iso(v: Date | string | null): string | null {
+function iso(v: DbTimestamp): string | null {
   if (v == null) return null;
   return typeof v === "string" ? v : v.toISOString();
 }

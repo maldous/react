@@ -19,6 +19,8 @@ import type {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PgPool = { connect(): Promise<any> };
 
+type DbTimestamp = Date | string | null;
+
 interface Row {
   id: string;
   organisation_id: string;
@@ -27,12 +29,12 @@ interface Row {
   scopes: string[] | null;
   created_at: Date | string;
   created_by: string | null;
-  last_used_at: Date | string | null;
-  expires_at: Date | string | null;
-  revoked_at: Date | string | null;
+  last_used_at: DbTimestamp;
+  expires_at: DbTimestamp;
+  revoked_at: DbTimestamp;
 }
 
-function iso(v: Date | string | null): string | null {
+function iso(v: DbTimestamp): string | null {
   if (v == null) return null;
   return typeof v === "string" ? v : v.toISOString();
 }
@@ -127,8 +129,8 @@ export class PostgresApiKeyRepository implements ApiKeyRepository {
             key_hash: string;
             key_salt: string;
             scopes: string[] | null;
-            revoked_at: Date | string | null;
-            expires_at: Date | string | null;
+            revoked_at: DbTimestamp;
+            expires_at: DbTimestamp;
           }
         | undefined;
       if (!row) return null;

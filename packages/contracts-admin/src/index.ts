@@ -1396,7 +1396,7 @@ export function validateConfigValue(input: {
       if (typeof value !== "number" || Number.isNaN(value)) errors.push("value must be a number");
       break;
     case "enum":
-      if (typeof value !== "string" || !allowedValues || !allowedValues.includes(value)) {
+      if (typeof value !== "string" || !allowedValues?.includes(value)) {
         errors.push("value must be one of the allowed values");
       }
       break;

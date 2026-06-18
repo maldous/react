@@ -81,7 +81,7 @@ export interface AuditEvent {
   actorId: string;
   actorRoles?: string[];
   tenantId: string;
-  action: AuditAction | string;
+  action: string;
   resource: string;
   resourceId: string;
   metadata?: Record<string, unknown>;

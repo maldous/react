@@ -83,8 +83,8 @@ export async function getTenantObservabilityReadiness(
   const highCardinalityGuard = assertHighCardinalityGuard();
   const window = boundedWindow(deps.now ?? new Date());
 
-  let logIngestion: ObservabilitySignalStatus = "unknown";
-  let tenantScopedQuery: ObservabilitySignalStatus = "unknown";
+  let logIngestion: ObservabilitySignalStatus;
+  let tenantScopedQuery: ObservabilitySignalStatus;
 
   try {
     await deps.port.search({ limit: 1, direction: "backward", ...window });
