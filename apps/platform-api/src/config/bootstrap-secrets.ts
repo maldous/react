@@ -134,6 +134,21 @@ export function loadBootstrapSecretConfig(
 }
 
 /**
+ * Reveal the Tier-0 at-rest encryption root (TENANT_SECRET_ENCRYPTION_KEY) for the crypto modules
+ * that PERFORM at-rest encryption/decryption (token-crypto, tenant-secret-crypto, the credential
+ * store). Unlike managed (Tier-1) secrets, this root cannot be stored in the store it unlocks, so it
+ * is read at the Tier-0 boundary only. Returns the raw value (env or `<KEY>_FILE`) or undefined when
+ * absent — matching the prior direct `process.env` read (empty ⇒ undefined). Never catalogued.
+ */
+export function loadTenantEncryptionKeyHex(
+  source: Source = process.env,
+  readFile: ReadFile = (p) => fs.readFileSync(p, "utf8")
+): string | undefined {
+  const v = bootstrapValue(source, "TENANT_SECRET_ENCRYPTION_KEY", readFile);
+  return v.present ? v.reveal() : undefined;
+}
+
+/**
  * Construct the SecretStorePort from the Tier-0 bootstrap config. EXPLICIT provider — never an
  * implicit fallback. The Postgres store uses the supplied pool (POSTGRES_APP_URL substrate); the
  * OpenBao store uses the Tier-0 address/token. The encryption key / token are read ONLY here.

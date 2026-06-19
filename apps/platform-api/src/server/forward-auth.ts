@@ -103,7 +103,7 @@ type SecretCheck = { ok: true } | { ok: false; status: number; body: unknown };
  * Constant-time comparison prevents timing side-channel attacks.
  */
 function checkInternalSecret(req: Parameters<PipelineHandler>[0]): SecretCheck {
-  const internalSecret = process.env["CADDY_INTERNAL_SECRET"] ?? "";
+  const internalSecret = loadPlatformApiConfig().caddyInternalSecret;
   const isProduction = loadStageConfig().nodeEnv === "production";
 
   if (!internalSecret && isProduction) {

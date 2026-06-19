@@ -22,6 +22,7 @@
 import { createCipheriv, createDecipheriv, randomBytes } from "node:crypto";
 import { createLogger } from "@platform/platform-logging";
 import { withSystemAdmin } from "@platform/adapters-postgres";
+import { loadTenantEncryptionKeyHex } from "../config/bootstrap-secrets.ts";
 import type {
   TenantAdminCredential,
   TenantCredentialStore,
@@ -35,7 +36,7 @@ const log = createLogger({ name: "tenant-credential-store" });
 let _warnedAboutMissingKey = false;
 
 function getEncryptionKey(): Buffer | null {
-  const keyHex = process.env["TENANT_SECRET_ENCRYPTION_KEY"];
+  const keyHex = loadTenantEncryptionKeyHex();
   if (!keyHex) return null;
   if (keyHex.length !== 64) {
     log.warn("TENANT_SECRET_ENCRYPTION_KEY must be 64 hex chars (32 bytes); ignoring");

@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "description": "Machine-readable config catalogue generated from the typed contracts + the two-tier secret model (V1C-CONF-04). secretTier ∈ none|bootstrap|managed-reference. NEVER contains secret values, files, tokens, passwords or keys.",
   "generatedFrom": "app-config.ts, web-config.ts, bootstrap-secrets.ts",
-  "entryCount": 62,
+  "entryCount": 64,
   "entries": [
     {
       "key": "POSTGRES_URL",
@@ -547,6 +547,40 @@
       "rotationSupported": false,
       "consumerProjection": "PlatformApiConfig",
       "description": "Base URL the Caddy local routing probe targets."
+    },
+    {
+      "key": "API_KEY_PEPPER",
+      "application": "platform-api",
+      "type": "string",
+      "required": false,
+      "secret": true,
+      "public": false,
+      "default": null,
+      "source": "env (manifest → generated .env, ADR-0072)",
+      "restartOrReload": "restart-required",
+      "secretTier": "managed-reference",
+      "secretReferenceRequired": false,
+      "secretProvider": "builtin|openbao",
+      "rotationSupported": false,
+      "consumerProjection": "PlatformApiConfig",
+      "description": "HMAC pepper for API-key hashing; the dev default carries no production guarantee."
+    },
+    {
+      "key": "CADDY_INTERNAL_SECRET",
+      "application": "platform-api",
+      "type": "string",
+      "required": false,
+      "secret": true,
+      "public": false,
+      "default": null,
+      "source": "env (manifest → generated .env, ADR-0072)",
+      "restartOrReload": "restart-required",
+      "secretTier": "managed-reference",
+      "secretReferenceRequired": false,
+      "secretProvider": "builtin|openbao",
+      "rotationSupported": false,
+      "consumerProjection": "PlatformApiConfig",
+      "description": "Shared secret Caddy presents on the forward-auth internal endpoint."
     },
     {
       "key": "DEV",

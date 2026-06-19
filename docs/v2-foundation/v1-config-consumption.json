@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "description": "Independently scanned live configuration-key consumption (process.env + compose ${} substitutions). Generated; the source of truth for R18 consumption reconciliation. directAccessOutsideComposition counts PRODUCT-runtime direct reads only (the V1C-CONF-06 target); approvedExceptionAccess counts reads inside an approved NON-product boundary (operator-script: apps/platform-api/scripts/** + scripts/**; dev-ci-tooling: tools/**; web-build: vite.config.*; infra-library: packages/platform-logging/src + packages/adapters-opentelemetry/src — leaf libraries with no composition root, reading own env as option fallbacks / SDK config — each with its own contextual defaults, codified as the enforcement exception list).",
   "generatedFrom": "apps/**, packages/**, scripts/**, tools/**, compose.yaml",
-  "keyCount": 169,
-  "productionKeyCount": 149,
-  "testFixtureKeyCount": 20,
-  "directAccessOutsideCompositionKeyCount": 4,
+  "keyCount": 168,
+  "productionKeyCount": 146,
+  "testFixtureKeyCount": 22,
+  "directAccessOutsideCompositionKeyCount": 1,
   "approvedExceptionKeyCount": 75,
   "keys": [
     {
@@ -128,25 +128,6 @@
       "approvedExceptionAccess": 5,
       "exceptionBoundaries": ["operator-script"],
       "v2Disposition": "carry; direct env access confined to approved non-product boundary (operator-script) — V1C-CONF-06 exception"
-    },
-    {
-      "key": "API_KEY_PEPPER",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/usecases/api-key-crypto.ts"],
-      "type": "string",
-      "secret": true,
-      "testFixtureOnly": false,
-      "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
-      "generatedProjection": true,
-      "envApplicability": "all-stages",
-      "stageRestrictions": null,
-      "rotationPolicy": "secret — rotation via SecretStorePort/OpenBao (see V1C-CONF-04)",
-      "reloadRestart": "process restart",
-      "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "approvedExceptionAccess": 0,
-      "exceptionBoundaries": [],
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
       "key": "APP_BASE_URL",
@@ -293,15 +274,11 @@
     },
     {
       "key": "CADDY_INTERNAL_SECRET",
-      "consumerCount": 2,
-      "sources": [
-        "apps/platform-api/src/server/forward-auth.ts",
-        "apps/platform-api/tests/unit/forward-auth.test.ts",
-        "compose.yaml"
-      ],
+      "consumerCount": 1,
+      "sources": ["apps/platform-api/tests/unit/forward-auth.test.ts", "compose.yaml"],
       "type": "string",
       "secret": true,
-      "testFixtureOnly": false,
+      "testFixtureOnly": true,
       "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
       "generatedProjection": true,
       "envApplicability": "all-stages",
@@ -309,7 +286,7 @@
       "rotationPolicy": "secret — rotation via SecretStorePort/OpenBao (see V1C-CONF-04)",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
@@ -3259,18 +3236,15 @@
     },
     {
       "key": "TENANT_SECRET_ENCRYPTION_KEY",
-      "consumerCount": 5,
+      "consumerCount": 2,
       "sources": [
-        "apps/platform-api/src/adapters/postgres-tenant-credential-store.ts",
-        "apps/platform-api/src/adapters/tenant-secret-crypto.ts",
-        "apps/platform-api/src/server/token-crypto.ts",
         "apps/platform-api/tests/unit/resolve-access-token.test.ts",
         "apps/platform-api/tests/unit/token-crypto.test.ts",
         "compose.yaml"
       ],
       "type": "string",
       "secret": true,
-      "testFixtureOnly": false,
+      "testFixtureOnly": true,
       "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
       "generatedProjection": true,
       "envApplicability": "all-stages",
@@ -3278,7 +3252,7 @@
       "rotationPolicy": "secret — rotation via SecretStorePort/OpenBao (see V1C-CONF-04)",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 3,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"

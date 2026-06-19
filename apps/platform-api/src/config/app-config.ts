@@ -260,6 +260,25 @@ export const PLATFORM_API_CONFIG_SCHEMA = {
     restartOrReload: "restart-required",
     description: "Base URL the Caddy local routing probe targets.",
   },
+  // app secrets (env-loaded; NOT Tier-0 root-of-trust and not store-managed today — typed here for
+  // redaction. Promotion to a Tier-1 SecretRef via SecretStorePort is future work, not this slice.)
+  apiKeyPepper: {
+    key: "API_KEY_PEPPER",
+    type: "string",
+    default: "dev-api-key-pepper-not-for-production",
+    secret: true,
+    restartOrReload: "restart-required",
+    description:
+      "HMAC pepper for API-key hashing; the dev default carries no production guarantee.",
+  },
+  caddyInternalSecret: {
+    key: "CADDY_INTERNAL_SECRET",
+    type: "string",
+    default: "",
+    secret: true,
+    restartOrReload: "restart-required",
+    description: "Shared secret Caddy presents on the forward-auth internal endpoint.",
+  },
 } as const satisfies Record<string, import("@platform/config-runtime").ConfigFieldDef>;
 
 export type PlatformApiConfig = ResolvedConfig<typeof PLATFORM_API_CONFIG_SCHEMA>;

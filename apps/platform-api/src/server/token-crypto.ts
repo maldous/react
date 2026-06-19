@@ -1,6 +1,7 @@
 import { createCipheriv, createDecipheriv, randomBytes } from "node:crypto";
 import { createLogger } from "@platform/platform-logging";
 import { loadStageConfig, resolveStage } from "../config/stage-config.ts";
+import { loadTenantEncryptionKeyHex } from "../config/bootstrap-secrets.ts";
 
 const log = createLogger({ name: "token-crypto" });
 
@@ -8,7 +9,7 @@ const log = createLogger({ name: "token-crypto" });
 let _warnedAboutMissingKey = false;
 
 function getEncryptionKey(): Buffer | null {
-  const keyHex = process.env["TENANT_SECRET_ENCRYPTION_KEY"];
+  const keyHex = loadTenantEncryptionKeyHex();
   if (!keyHex) return null;
   if (keyHex.length !== 64) {
     log.warn(
@@ -68,7 +69,7 @@ export function decryptToken(stored: string): string {
  * Called at startup. Throws in staging or production if the encryption key is absent or malformed.
  */
 export function assertEncryptionKeyConfigured(): void {
-  const keyHex = process.env["TENANT_SECRET_ENCRYPTION_KEY"];
+  const keyHex = loadTenantEncryptionKeyHex();
   const valid = typeof keyHex === "string" && keyHex.length === 64;
   const stageCfg = loadStageConfig();
   const stage = resolveStage(stageCfg);

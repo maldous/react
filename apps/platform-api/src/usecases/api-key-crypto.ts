@@ -14,6 +14,7 @@
 // ---------------------------------------------------------------------------
 
 import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
+import { loadPlatformApiConfig } from "../config/app-config.ts";
 
 const SECRET_PREFIX = "sk_";
 const HANDLE_PREFIX = "pk_";
@@ -21,7 +22,7 @@ const SCRYPT_KEYLEN = 32;
 
 /** Server-wide pepper. MUST be set in production; a fixed dev value is used locally. */
 function serverPepper(): string {
-  return process.env["API_KEY_PEPPER"] ?? "dev-api-key-pepper-not-for-production";
+  return loadPlatformApiConfig().apiKeyPepper;
 }
 
 export interface GeneratedApiKey {
