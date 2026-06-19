@@ -45,10 +45,8 @@ import type { TenantContext } from "./tenant-resolver.ts";
 // stage — tests load it via tests/lib/preload-env.mjs. NO hardcoded credential
 // fallback (Sonar secrets:S6698).
 export function getPostgresUrl(): string {
-  const url = process.env["POSTGRES_URL"];
-  if (!url)
-    throw new Error("POSTGRES_URL must be set (managed env, ADR-0072) — no hardcoded fallback");
-  return url;
+  // Fail-closed via the typed config (postgresUrl is required, no hardcoded fallback — Sonar S6698).
+  return loadPlatformApiConfig().postgresUrl;
 }
 
 // Non-superuser app role URL — used by the runtime application pool (ADR-ACT-0189).
@@ -101,7 +99,7 @@ export function getProvisioningConfig(): ProvisioningConfig {
     : "http";
   return {
     keycloakUrl: cfg.keycloakUrl,
-    keycloakProvisionerClientId: cfg.keycloakProvisionerClientId,
+    keycloakProvisionerClientId: cfg.keycloakProvisionerClientId ?? "platform-provisioner",
     keycloakProvisionerClientSecret: cfg.keycloakProvisionerClientSecret,
     redisAdminUrl: cfg.redisAdminUrl ?? null,
     s3AdminAccessKeyId: cfg.s3AdminAccessKeyId ?? cfg.minioRootUser ?? null,
@@ -147,7 +145,7 @@ export function createOrganisationDependencies(): OrganisationDependencies {
 // ---------------------------------------------------------------------------
 
 export function getRedisUrl(): string {
-  return loadPlatformApiConfig().redisUrl;
+  return loadPlatformApiConfig().redisUrl ?? "redis://localhost:6379";
 }
 
 let redisClient: ReturnType<typeof createRedisClient> | undefined;
@@ -187,20 +185,19 @@ export function getKeycloakConfig(): KeycloakClientConfig {
     realm: cfg.keycloakRealm,
     clientId: cfg.keycloakClientId,
     clientSecret: cfg.keycloakClientSecret,
-    // KEYCLOAK_PUBLIC_URL is an optional field (undefined when absent → KEYCLOAK_URL); the typed
-    // optional-field seam is deferred to V1C-CONF-06, so it remains a direct read here.
-    publicUrl: process.env["KEYCLOAK_PUBLIC_URL"],
+    publicUrl: cfg.keycloakPublicUrl,
   };
 }
 
 /** Per-tenant Keycloak config ? selects the correct realm for the FQDN tenant. ADR-0029 ?2b. */
 export function getKeycloakConfigForRealm(realmName: string): KeycloakClientConfig {
+  const cfg = loadPlatformApiConfig();
   return {
-    url: process.env["KEYCLOAK_URL"] ?? "http://localhost:8090/kc",
+    url: cfg.keycloakUrl,
     realm: realmName,
-    clientId: process.env["KEYCLOAK_CLIENT_ID"] ?? "platform-api",
-    clientSecret: process.env["KEYCLOAK_CLIENT_SECRET"] ?? "",
-    publicUrl: process.env["KEYCLOAK_PUBLIC_URL"],
+    clientId: cfg.keycloakClientId,
+    clientSecret: cfg.keycloakClientSecret,
+    publicUrl: cfg.keycloakPublicUrl,
   };
 }
 
@@ -251,7 +248,7 @@ export function schemeFor(host: string, forwardedProto?: string): string {
 export function isAllowedHost(host: string): boolean {
   const h = (host.split(":")[0] ?? "").toLowerCase();
   if (isLoopback(h)) return true;
-  const apex = (process.env["APEX_DOMAIN"] ?? "aldous.info").toLowerCase();
+  const apex = loadPlatformApiConfig().apexDomain.toLowerCase();
   return h === apex || h.endsWith(`.${apex}`);
 }
 
@@ -270,7 +267,7 @@ export function getAuthCallbackUrl(
   if (host && (verifiedTenantHost || isAllowedHost(host))) {
     return `${schemeFor(host, forwardedProto)}://${host}/auth/callback`;
   }
-  const apiUrl = process.env["PLATFORM_API_URL"] ?? "http://localhost:3001";
+  const apiUrl = loadPlatformApiConfig().platformApiUrl;
   return `${apiUrl}/auth/callback`;
 }
 
@@ -289,13 +286,12 @@ export function getKeycloakPublicUrl(
   if (host && (verifiedTenantHost || isAllowedHost(host))) {
     return `${schemeFor(host, forwardedProto)}://${host}/kc`;
   }
-  return (
-    process.env["KEYCLOAK_PUBLIC_URL"] ?? process.env["KEYCLOAK_URL"] ?? "http://localhost:8090/kc"
-  );
+  const cfg = loadPlatformApiConfig();
+  return cfg.keycloakPublicUrl ?? cfg.keycloakUrl;
 }
 
 export function getAppBaseUrl(): string {
-  return process.env["APP_BASE_URL"] ?? "http://localhost:5173";
+  return loadPlatformApiConfig().appBaseUrl;
 }
 
 /** Connect the Redis client (call once at server startup).
@@ -357,11 +353,12 @@ export function getAuthorisationPort(fqdnTenant: TenantContext | null): Authoris
 //      test 3101, staging 3102, prod 3103), so the host-run dev BFF and host
 //      smoke tests each reach their own environment's Loki.
 export function getLokiUrl(): string {
-  // LOKI_URL is an optional override (deferred to V1C-CONF-06); the LOKI_PORT fallback is sourced
-  // from the typed composition-root config (V1C-CONF-01, observability area).
-  const explicit = process.env["LOKI_URL"];
+  // LOKI_URL is an optional override; falls back to the LOKI_PORT-derived URL — both
+  // sourced from the typed composition-root config (V1C-CONF-06).
+  const cfg = loadPlatformApiConfig();
+  const explicit = cfg.lokiUrl;
   if (explicit && explicit.trim().length > 0) return explicit;
-  return `http://localhost:${loadPlatformApiConfig().lokiPort}`;
+  return `http://localhost:${cfg.lokiPort}`;
 }
 
 export function getLokiAdapter(): LokiLogQueryAdapter {

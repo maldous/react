@@ -25,11 +25,12 @@ import { classifyHostIdentity } from "@platform/domain-identity";
 import { createLogger } from "@platform/platform-logging";
 
 import { getFixtureSession } from "./session.ts";
+import { loadPlatformApiConfig } from "../config/app-config.ts";
 
 const logger = createLogger({ name: "tenant-resolver" });
 
 function getApexDomain(): string {
-  return process.env["APEX_DOMAIN"] ?? "aldous.info";
+  return loadPlatformApiConfig().apexDomain;
 }
 
 export interface TenantContext {

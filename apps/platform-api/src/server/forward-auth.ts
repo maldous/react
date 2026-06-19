@@ -35,6 +35,7 @@ import { parseSessionCookies } from "./auth.ts";
 import { getSessionStore, getPostgresAppUrl } from "./dependencies.ts";
 import { getFixtureSession } from "./session.ts";
 import { loadStageConfig } from "../config/stage-config.ts";
+import { loadPlatformApiConfig } from "../config/app-config.ts";
 
 // Clickthrough service access classification — the policy lives in
 // usecases/service-clickthrough.ts (ADR-ACT-0233, single source of truth).
@@ -46,7 +47,7 @@ import {
 } from "../usecases/service-clickthrough.ts";
 
 function getApexDomain(): string {
-  return process.env["APEX_DOMAIN"] ?? "aldous.info";
+  return loadPlatformApiConfig().apexDomain;
 }
 
 // ---------------------------------------------------------------------------

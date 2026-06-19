@@ -13,6 +13,7 @@ import { getPostgresReadinessAdapter } from "./dependencies.ts";
 import { getFixtureSession } from "./session.ts";
 import { loadStageConfig } from "../config/stage-config.ts";
 import { loadHealthMetadataConfig } from "../config/health-metadata-config.ts";
+import { loadPlatformApiConfig } from "../config/app-config.ts";
 
 export { type HealthResponse, type ReadinessResponse, type VersionResponse };
 
@@ -51,11 +52,12 @@ export function _resetMapperMemo(): void {
 }
 
 function getDefaultMapperConfig(): MapperCheckConfig | null {
-  const url = process.env["KEYCLOAK_URL"];
-  const adminClientId = process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"];
-  const adminClientSecret = process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"];
-  const realm = process.env["KEYCLOAK_REALM"] ?? "platform";
-  const clientId = process.env["KEYCLOAK_CLIENT_ID"] ?? "platform-api";
+  const cfg = loadPlatformApiConfig();
+  const url = cfg.keycloakUrl;
+  const adminClientId = cfg.keycloakProvisionerClientId;
+  const adminClientSecret = cfg.keycloakProvisionerClientSecret;
+  const realm = cfg.keycloakRealm;
+  const clientId = cfg.keycloakClientId;
 
   if (!url || !adminClientId) return null;
 

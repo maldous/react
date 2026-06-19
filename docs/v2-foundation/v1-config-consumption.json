@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "description": "Independently scanned live configuration-key consumption (process.env + compose ${} substitutions). Generated; the source of truth for R18 consumption reconciliation. directAccessOutsideComposition counts PRODUCT-runtime direct reads only (the V1C-CONF-06 target); approvedExceptionAccess counts reads inside an approved NON-product boundary (operator-script: apps/platform-api/scripts/** + scripts/**; dev-ci-tooling: tools/**; web-build: vite.config.*; infra-library: packages/platform-logging/src + packages/adapters-opentelemetry/src — leaf libraries with no composition root, reading own env as option fallbacks / SDK config — each with its own contextual defaults, codified as the enforcement exception list).",
   "generatedFrom": "apps/**, packages/**, scripts/**, tools/**, compose.yaml",
-  "keyCount": 170,
-  "productionKeyCount": 152,
-  "testFixtureKeyCount": 18,
-  "directAccessOutsideCompositionKeyCount": 21,
-  "approvedExceptionKeyCount": 68,
+  "keyCount": 169,
+  "productionKeyCount": 149,
+  "testFixtureKeyCount": 20,
+  "directAccessOutsideCompositionKeyCount": 4,
+  "approvedExceptionKeyCount": 75,
   "keys": [
     {
       "key": "__FORMAT",
@@ -105,14 +105,14 @@
     },
     {
       "key": "APEX_DOMAIN",
-      "consumerCount": 10,
+      "consumerCount": 6,
       "sources": [
         "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
         "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
         "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
         "apps/platform-api/scripts/search-routes-runtime-proof.ts",
         "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
-        "apps/platform-api/src/server/dependencies.ts"
+        "apps/platform-api/tests/unit/tenant-resolver.test.ts"
       ],
       "type": "string",
       "secret": false,
@@ -124,10 +124,10 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 4,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 5,
       "exceptionBoundaries": ["operator-script"],
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "v2Disposition": "carry; direct env access confined to approved non-product boundary (operator-script) — V1C-CONF-06 exception"
     },
     {
       "key": "API_KEY_PEPPER",
@@ -150,8 +150,8 @@
     },
     {
       "key": "APP_BASE_URL",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/dependencies.ts", "compose.yaml"],
+      "consumerCount": 0,
+      "sources": ["compose.yaml"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -162,7 +162,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
@@ -525,8 +525,8 @@
     },
     {
       "key": "DOMAIN_ROUTING_PROBE_BASE_URL",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/adapters/caddy-local-routing-probe.ts", "compose.yaml"],
+      "consumerCount": 0,
+      "sources": ["compose.yaml"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -537,22 +537,21 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
       "key": "E2E_ALLOW_PROD_SYNTHETIC_FAILURE",
-      "consumerCount": 2,
+      "consumerCount": 1,
       "sources": [
-        "apps/platform-api/src/server/routes.ts",
         "apps/platform-api/tests/unit/synthetic-failure-endpoint.test.ts",
         "compose.yaml"
       ],
       "type": "string",
       "secret": false,
-      "testFixtureOnly": false,
+      "testFixtureOnly": true,
       "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
       "generatedProjection": true,
       "envApplicability": "all-stages",
@@ -560,22 +559,21 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
       "key": "E2E_FAILURE_ENDPOINT_ENABLED",
-      "consumerCount": 2,
+      "consumerCount": 1,
       "sources": [
-        "apps/platform-api/src/server/routes.ts",
         "apps/platform-api/tests/unit/synthetic-failure-endpoint.test.ts",
         "compose.yaml"
       ],
       "type": "string",
       "secret": false,
-      "testFixtureOnly": false,
+      "testFixtureOnly": true,
       "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
       "generatedProjection": true,
       "envApplicability": "all-stages",
@@ -583,7 +581,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
@@ -950,13 +948,8 @@
     },
     {
       "key": "KEYCLOAK_CLIENT_ID",
-      "consumerCount": 3,
-      "sources": [
-        "apps/platform-api/scripts/seed-idps.ts",
-        "apps/platform-api/src/server/dependencies.ts",
-        "apps/platform-api/src/server/health.ts",
-        "compose.yaml"
-      ],
+      "consumerCount": 1,
+      "sources": ["apps/platform-api/scripts/seed-idps.ts", "compose.yaml"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -967,15 +960,15 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 1,
       "exceptionBoundaries": ["operator-script"],
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "v2Disposition": "carry; direct env access confined to approved non-product boundary (operator-script) — V1C-CONF-06 exception"
     },
     {
       "key": "KEYCLOAK_CLIENT_SECRET",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/dependencies.ts", "compose.yaml"],
+      "consumerCount": 0,
+      "sources": ["compose.yaml"],
       "type": "string",
       "secret": true,
       "testFixtureOnly": false,
@@ -986,7 +979,7 @@
       "rotationPolicy": "secret — rotation via SecretStorePort/OpenBao (see V1C-CONF-04)",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
@@ -1088,8 +1081,8 @@
     },
     {
       "key": "KEYCLOAK_PROVISIONER_CLIENT_ID",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/health.ts", "compose.yaml"],
+      "consumerCount": 0,
+      "sources": ["compose.yaml"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -1100,15 +1093,15 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
       "key": "KEYCLOAK_PROVISIONER_CLIENT_SECRET",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/health.ts", "compose.yaml"],
+      "consumerCount": 0,
+      "sources": ["compose.yaml"],
       "type": "string",
       "secret": true,
       "testFixtureOnly": false,
@@ -1119,15 +1112,15 @@
       "rotationPolicy": "secret — rotation via SecretStorePort/OpenBao (see V1C-CONF-04)",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
       "key": "KEYCLOAK_PUBLIC_URL",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/dependencies.ts", "compose.yaml"],
+      "consumerCount": 0,
+      "sources": ["compose.yaml"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -1138,19 +1131,15 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
       "key": "KEYCLOAK_REALM",
-      "consumerCount": 2,
-      "sources": [
-        "apps/platform-api/scripts/seed-idps.ts",
-        "apps/platform-api/src/server/health.ts",
-        "compose.yaml"
-      ],
+      "consumerCount": 1,
+      "sources": ["apps/platform-api/scripts/seed-idps.ts", "compose.yaml"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -1161,10 +1150,10 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 1,
       "exceptionBoundaries": ["operator-script"],
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "v2Disposition": "carry; direct env access confined to approved non-product boundary (operator-script) — V1C-CONF-06 exception"
     },
     {
       "key": "KEYCLOAK_TEST_PASSWORD",
@@ -1206,14 +1195,14 @@
     },
     {
       "key": "KEYCLOAK_URL",
-      "consumerCount": 7,
+      "consumerCount": 5,
       "sources": [
         "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
         "apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts",
         "apps/platform-api/scripts/idp-runtime-proof.ts",
         "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
         "apps/platform-api/scripts/seed-idps.ts",
-        "apps/platform-api/src/server/dependencies.ts"
+        "compose.yaml"
       ],
       "type": "string",
       "secret": false,
@@ -1225,10 +1214,10 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 5,
       "exceptionBoundaries": ["operator-script"],
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "v2Disposition": "carry; direct env access confined to approved non-product boundary (operator-script) — V1C-CONF-06 exception"
     },
     {
       "key": "LADDER_MAX_AGE_HOURS",
@@ -1398,11 +1387,8 @@
     },
     {
       "key": "LOKI_URL",
-      "consumerCount": 2,
-      "sources": [
-        "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
-        "apps/platform-api/src/server/dependencies.ts"
-      ],
+      "consumerCount": 1,
+      "sources": ["apps/platform-api/scripts/tenant-observability-runtime-proof.ts"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -1413,10 +1399,10 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 1,
       "exceptionBoundaries": ["operator-script"],
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "v2Disposition": "carry; direct env access confined to approved non-product boundary (operator-script) — V1C-CONF-06 exception"
     },
     {
       "key": "MAIL_SMTP_HOST",
@@ -2294,12 +2280,8 @@
     },
     {
       "key": "PLATFORM_API_PORT",
-      "consumerCount": 2,
-      "sources": [
-        "apps/platform-api/src/server/http.ts",
-        "apps/react-enterprise-app/vite.config.ts",
-        "compose.yaml"
-      ],
+      "consumerCount": 1,
+      "sources": ["apps/react-enterprise-app/vite.config.ts", "compose.yaml"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -2310,15 +2292,15 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 1,
       "exceptionBoundaries": ["web-build"],
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "v2Disposition": "carry; direct env access confined to approved non-product boundary (web-build) — V1C-CONF-06 exception"
     },
     {
       "key": "PLATFORM_API_URL",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/dependencies.ts", "compose.yaml"],
+      "consumerCount": 0,
+      "sources": ["compose.yaml"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -2329,7 +2311,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
@@ -2438,12 +2420,11 @@
     },
     {
       "key": "POSTGRES_URL",
-      "consumerCount": 6,
+      "consumerCount": 5,
       "sources": [
         "apps/platform-api/src/db/migrate.ts",
         "apps/platform-api/src/db/reset.ts",
         "apps/platform-api/src/db/seed.ts",
-        "apps/platform-api/src/server/dependencies.ts",
         "apps/platform-api/tests/substrate/postgres-identity-repository.test.ts",
         "apps/platform-api/tests/substrate/postgres-organisation-repository.test.ts"
       ],
@@ -2457,7 +2438,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 4,
+      "directAccessOutsideComposition": 3,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
@@ -2521,25 +2502,6 @@
       "approvedExceptionAccess": 2,
       "exceptionBoundaries": ["operator-script"],
       "v2Disposition": "carry; direct env access confined to approved non-product boundary (operator-script) — V1C-CONF-06 exception"
-    },
-    {
-      "key": "RATE_LIMIT_PROVIDER",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/routes.ts"],
-      "type": "string",
-      "secret": false,
-      "testFixtureOnly": false,
-      "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
-      "generatedProjection": true,
-      "envApplicability": "all-stages",
-      "stageRestrictions": null,
-      "rotationPolicy": "n/a",
-      "reloadRestart": "process restart",
-      "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "approvedExceptionAccess": 0,
-      "exceptionBoundaries": [],
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
       "key": "REAL_GOOGLE_CLIENT_ID",
@@ -2619,11 +2581,10 @@
     },
     {
       "key": "REDIS_URL",
-      "consumerCount": 3,
+      "consumerCount": 2,
       "sources": [
         "apps/platform-api/scripts/platform-services-runtime-proof.ts",
-        "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
-        "apps/platform-api/src/server/routes.ts"
+        "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts"
       ],
       "type": "string",
       "secret": false,
@@ -2635,10 +2596,10 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 2,
       "exceptionBoundaries": ["operator-script"],
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "v2Disposition": "carry; direct env access confined to approved non-product boundary (operator-script) — V1C-CONF-06 exception"
     },
     {
       "key": "REQUIRED_CFG_VAR",

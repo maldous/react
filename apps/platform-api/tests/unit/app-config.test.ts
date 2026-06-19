@@ -65,17 +65,19 @@ test("PlatformApiConfig loads under the hermetic unit env (no generated stage se
   // preload-unit-env sets fixed fake POSTGRES_URL/POSTGRES_APP_URL; defaults cover the rest.
   const cfg = loadPlatformApiConfig();
   assert.ok(cfg.postgresAppUrl.startsWith("postgresql://"));
-  // env-independent: a real REDIS_URL/KEYCLOAK_REALM may be injected by the managed env (preload-env)
-  // or fall back to the schema default (preload-unit-env). Assert shape, not a stage-specific value.
-  assert.ok(cfg.redisUrl.startsWith("redis://"));
+  // redisUrl is optional (no schema default): undefined when REDIS_URL is unset (preload-unit-env),
+  // a real redis:// value when the managed env injects it (preload-env).
+  assert.ok(cfg.redisUrl === undefined || cfg.redisUrl.startsWith("redis://"));
   assert.ok(typeof cfg.keycloakRealm === "string" && cfg.keycloakRealm.length > 0);
   assert.ok(Object.isFrozen(cfg));
 });
 
 test("PlatformApiConfig applies the schema default when an optional key is unset (hermetic)", () => {
   const cfg = loadPlatformApiConfig({ source: { POSTGRES_URL: "x", POSTGRES_APP_URL: "y" } });
-  assert.equal(cfg.redisUrl, "redis://localhost:6379");
   assert.equal(cfg.keycloakRealm, "platform");
+  assert.equal(cfg.platformApiUrl, "http://localhost:3001");
+  // redisUrl is optional (no default) so an explicit-presence probe can distinguish set vs unset.
+  assert.equal(cfg.redisUrl, undefined);
 });
 
 test("PlatformApiConfig metadata classifies secrets and omits their values", () => {

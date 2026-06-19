@@ -4,7 +4,6 @@ import {
   UnexpectedError,
   ValidationError,
 } from "@platform/platform-errors";
-import process from "node:process";
 import type { Route } from "./pipeline.ts";
 import { getHealth, getReadiness, getVersion } from "./health.ts";
 import { getFixtureSession } from "./session.ts";
@@ -70,6 +69,7 @@ import {
 import { loadNotificationConfig } from "../config/notification-config.ts";
 import { loadStageConfig } from "../config/stage-config.ts";
 import { loadObservabilityProbeConfig } from "../config/observability-probe-config.ts";
+import { loadPlatformApiConfig } from "../config/app-config.ts";
 import { createLogger } from "@platform/platform-logging";
 import { S3ObjectStorageAdapter } from "@platform/adapters-object-storage";
 import type {
@@ -485,7 +485,7 @@ async function selectRateLimitRepository(
   const { PostgresRateLimitRepository } =
     await import("../adapters/postgres-rate-limit-repository.ts");
   const durable = new PostgresRateLimitRepository(pool);
-  if ((process.env["RATE_LIMIT_PROVIDER"] ?? "postgres").toLowerCase() !== "redis") {
+  if (loadPlatformApiConfig().rateLimitProvider.toLowerCase() !== "redis") {
     return durable;
   }
   const { RedisRateLimitRepository } = await import("../adapters/redis-rate-limit-repository.ts");
@@ -778,9 +778,9 @@ export const routes: Route[] = [
     path: "/internal/e2e/trigger-failure",
     operationName: "e2e.synthetic.failure",
     handler: async (_req, res) => {
-      const enabled = process.env["E2E_FAILURE_ENDPOINT_ENABLED"] === "true";
+      const enabled = loadPlatformApiConfig().e2eFailureEndpointEnabled === "true";
       const isProd = (loadStageConfig().platformEnv ?? "") === "production";
-      const prodApproved = process.env["E2E_ALLOW_PROD_SYNTHETIC_FAILURE"] === "true";
+      const prodApproved = loadPlatformApiConfig().e2eAllowProdSyntheticFailure === "true";
       if (!enabled || (isProd && !prodApproved)) {
         res.json(404, { code: "NOT_FOUND", message: "Not found" });
         return;
@@ -963,7 +963,7 @@ export const routes: Route[] = [
     operationName: "host.identity",
     handler: async (req, res) => {
       const host = requestHostFromHeaders(req.raw);
-      const identity = classifyHostIdentity(host, process.env["APEX_DOMAIN"] ?? "aldous.info");
+      const identity = classifyHostIdentity(host, loadPlatformApiConfig().apexDomain);
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool()).catch(
         () => null
       );
@@ -4264,7 +4264,7 @@ export const routes: Route[] = [
       const { buildPlatformServicesReadiness, resolveReadinessAccess } =
         await import("../usecases/platform-services.ts");
       const host = requestHostFromHeaders(req.raw);
-      const identity = classifyHostIdentity(host, process.env["APEX_DOMAIN"] ?? "aldous.info");
+      const identity = classifyHostIdentity(host, loadPlatformApiConfig().apexDomain);
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
       const access = resolveReadinessAccess({
         isSystemAdmin: req.actor!.roles.includes("system-admin"),
@@ -4308,7 +4308,7 @@ export const routes: Route[] = [
             return false;
           }
         },
-        redisConfigured: () => !!process.env["REDIS_URL"],
+        redisConfigured: () => !!loadPlatformApiConfig().redisUrl,
         viewerMode: access.viewerMode,
         tenantHost: access.viewerMode === "tenant_operator" ? host : null,
         getHeartbeat: getWorkerHeartbeat,

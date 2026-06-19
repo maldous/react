@@ -20,6 +20,7 @@ import type {
   LocalRoutingProbePort,
   LocalRoutingProbeResult,
 } from "../ports/domain-routing-probe.ts";
+import { loadPlatformApiConfig } from "../config/app-config.ts";
 
 const PROBE_TIMEOUT_MS = 4000;
 
@@ -71,8 +72,7 @@ export class CaddyLocalRoutingProbe implements LocalRoutingProbePort {
   private readonly baseUrl: string;
 
   constructor(baseUrl?: string) {
-    this.baseUrl =
-      baseUrl ?? process.env["DOMAIN_ROUTING_PROBE_BASE_URL"] ?? "http://localhost:8081";
+    this.baseUrl = baseUrl ?? loadPlatformApiConfig().domainRoutingProbeBaseUrl;
   }
 
   async probe(domain: string, expectedSlug: string): Promise<LocalRoutingProbeResult> {

@@ -12,11 +12,10 @@ import { validateProviderModeAtStartup } from "./auth-providers.ts";
 import { createSentryAdapter } from "./observability.ts";
 import { startWebhookDeliveryWorker } from "./webhook-worker-runtime.ts";
 import { loadObservabilityConfig } from "../config/observability-config.ts";
+import { loadPlatformApiConfig } from "../config/app-config.ts";
 
-// PLATFORM_API_PORT remains a direct read until the server-runtime CONF-06 sub-slice.
 const LOG_LEVEL = loadObservabilityConfig().logLevel as PlatformLogLevel;
 const log = createLogger({ name: "platform-api", service: "platform-api", level: LOG_LEVEL });
-const PORT = Number(process.env["PLATFORM_API_PORT"] ?? 3001);
 const sentry = createSentryAdapter();
 
 // Process-level safety net (ADR-ACT-0284). Without these, an async throw or rejected
@@ -44,6 +43,7 @@ process.on("uncaughtException", (err: unknown) => {
 });
 
 async function start(): Promise<void> {
+  const PORT = loadPlatformApiConfig().platformApiPort;
   // Connect Redis before the server starts accepting requests.
   // The auth flow (PKCE state store, session store) requires an active client.
   assertEncryptionKeyConfigured();

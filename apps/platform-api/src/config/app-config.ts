@@ -36,10 +36,12 @@ export const PLATFORM_API_CONFIG_SCHEMA = {
   redisUrl: {
     key: "REDIS_URL",
     type: "string",
-    default: "redis://localhost:6379",
+    optional: true,
     secret: true,
     restartOrReload: "restart-required",
-    description: "Redis URL — server-side sessions + auth state (ADR-0022).",
+    description:
+      "Redis URL — server-side sessions + auth state (ADR-0022). Optional so an explicit-presence " +
+      "readiness probe can distinguish 'set' from 'defaulted'; getRedisUrl() applies the dev default.",
   },
   // authentication (Keycloak BFF client)
   keycloakUrl: {
@@ -105,9 +107,11 @@ export const PLATFORM_API_CONFIG_SCHEMA = {
   keycloakProvisionerClientId: {
     key: "KEYCLOAK_PROVISIONER_CLIENT_ID",
     type: "string",
-    default: "platform-provisioner",
+    optional: true,
     restartOrReload: "restart-required",
-    description: "Keycloak provisioner client id.",
+    description:
+      "Keycloak provisioner client id. Optional so the health mapper-readiness gate can detect " +
+      "explicit KC-admin configuration; getProvisioningConfig() applies the 'platform-provisioner' default.",
   },
   keycloakProvisionerClientSecret: {
     key: "KEYCLOAK_PROVISIONER_CLIENT_SECRET",
@@ -191,6 +195,70 @@ export const PLATFORM_API_CONFIG_SCHEMA = {
     default: "aldous.info",
     restartOrReload: "restart-required",
     description: "Apex domain for tenant FQDNs.",
+  },
+  // server wiring (V1C-CONF-06)
+  keycloakPublicUrl: {
+    key: "KEYCLOAK_PUBLIC_URL",
+    type: "string",
+    optional: true,
+    restartOrReload: "restart-required",
+    description: "Browser-facing Keycloak base URL (falls back to KEYCLOAK_URL when unset).",
+  },
+  platformApiUrl: {
+    key: "PLATFORM_API_URL",
+    type: "string",
+    default: "http://localhost:3001",
+    restartOrReload: "restart-required",
+    description: "Self base URL the BFF advertises (e.g. for callbacks).",
+  },
+  platformApiPort: {
+    key: "PLATFORM_API_PORT",
+    type: "number",
+    default: 3001,
+    restartOrReload: "restart-required",
+    description: "Port the platform-api HTTP server listens on.",
+  },
+  appBaseUrl: {
+    key: "APP_BASE_URL",
+    type: "string",
+    default: "http://localhost:5173",
+    restartOrReload: "restart-required",
+    description: "React app base URL (post-login redirects).",
+  },
+  lokiUrl: {
+    key: "LOKI_URL",
+    type: "string",
+    optional: true,
+    restartOrReload: "restart-required",
+    description: "Explicit Loki URL (else derived from LOKI_PORT).",
+  },
+  rateLimitProvider: {
+    key: "RATE_LIMIT_PROVIDER",
+    type: "string",
+    default: "postgres",
+    restartOrReload: "restart-required",
+    description: 'Rate-limit backend; Redis path active only when this equals "redis".',
+  },
+  e2eFailureEndpointEnabled: {
+    key: "E2E_FAILURE_ENDPOINT_ENABLED",
+    type: "string",
+    default: "",
+    restartOrReload: "restart-required",
+    description: 'Synthetic-failure E2E endpoint enabled only when this equals "true".',
+  },
+  e2eAllowProdSyntheticFailure: {
+    key: "E2E_ALLOW_PROD_SYNTHETIC_FAILURE",
+    type: "string",
+    default: "",
+    restartOrReload: "restart-required",
+    description: 'Allow the synthetic-failure endpoint in prod only when this equals "true".',
+  },
+  domainRoutingProbeBaseUrl: {
+    key: "DOMAIN_ROUTING_PROBE_BASE_URL",
+    type: "string",
+    default: "http://localhost:8081",
+    restartOrReload: "restart-required",
+    description: "Base URL the Caddy local routing probe targets.",
   },
 } as const satisfies Record<string, import("@platform/config-runtime").ConfigFieldDef>;
 
