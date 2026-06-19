@@ -18,6 +18,7 @@
 import type { IdentityProvider } from "@platform/authorisation-runtime";
 import type { TenantAuthProvidersConfig } from "@platform/contracts-admin";
 import { loadStageConfig, resolveStage } from "../config/stage-config.ts";
+import { loadAuthProviderConfig } from "../config/auth-provider-config.ts";
 
 export type ProviderMode = "mock" | "real" | "disabled";
 
@@ -81,12 +82,12 @@ export function mockOverrideEnabled(): boolean {
  * exactly like an absent variable — otherwise the "real with no provider" guard
  * fires for test/staging containers (NODE_ENV=production → default mode "real"). */
 function modeExplicitlySet(): boolean {
-  const raw = process.env["AUTH_PROVIDER_MODE"];
+  const raw = loadAuthProviderConfig().mode;
   return typeof raw === "string" && raw.trim() !== "";
 }
 
 export function getProviderMode(): ProviderMode {
-  const raw = (process.env["AUTH_PROVIDER_MODE"] ?? "").toLowerCase();
+  const raw = (loadAuthProviderConfig().mode ?? "").toLowerCase();
   if (raw === "mock" || raw === "real" || raw === "disabled") return raw;
   // Default: dev/test → mock; staging/prod → real.
   return isProdLikeEnv() ? "real" : "mock";
@@ -124,14 +125,15 @@ export interface MockOidcSettings {
 
 export function getMockOidcSettings(): MockOidcSettings {
   const strip = (u: string) => u.replace(/\/+$/, "");
+  const cfg = loadAuthProviderConfig();
   return {
-    publicUrl: strip(process.env["MOCK_OIDC_PUBLIC_URL"] ?? "http://localhost:9080"),
+    publicUrl: strip(cfg.mockOidcPublicUrl),
     // Keycloak backchannel (token/jwks/userinfo). mock-oidc runs PER-ENV in the
     // same project as Keycloak, so the backchannel is the in-network service name
     // http://mock-oidc:8080 (resolved on the shared project network), while the
     // browser-facing issuer (publicUrl) stays host/Cloudflare-reachable.
-    internalUrl: strip(process.env["MOCK_OIDC_INTERNAL_URL"] ?? "http://mock-oidc:8080"),
-    clientSecret: process.env["MOCK_OIDC_CLIENT_SECRET"] ?? "mock-oidc-shared-secret",
+    internalUrl: strip(cfg.mockOidcInternalUrl),
+    clientSecret: cfg.mockOidcClientSecret,
   };
 }
 

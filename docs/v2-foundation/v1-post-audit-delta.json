@@ -1061,9 +1061,21 @@
       "v2Target": "apps/platform-api/tests/unit/session-config.test.ts",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/config/auth-provider-config.ts",
+      "introducingCommit": "c20a7a02820be86c02ade74ce7216d8535d20314",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/config/auth-provider-config.ts",
+      "protectingTests": [
+        "apps/platform-api/tests/unit/auth-providers.test.ts",
+        "apps/platform-api/tests/unit/auth-provider-config.test.ts"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
     }
   ],
   "deletions": [],
-  "additionCount": 107,
+  "additionCount": 108,
   "deletionCount": 0
 }

@@ -3,9 +3,9 @@
   "description": "Independently scanned live configuration-key consumption (process.env + compose ${} substitutions). Generated; the source of truth for R18 consumption reconciliation. directAccessOutsideComposition counts PRODUCT-runtime direct reads only (the V1C-CONF-06 target); approvedExceptionAccess counts reads inside an approved NON-product boundary (operator-script: apps/platform-api/scripts/** + scripts/**; dev-ci-tooling: tools/**; web-build: vite.config.* — each a composition root / CI tool with its own contextual defaults, codified as the enforcement exception list).",
   "generatedFrom": "apps/**, packages/**, scripts/**, tools/**, compose.yaml",
   "keyCount": 171,
-  "productionKeyCount": 155,
-  "testFixtureKeyCount": 16,
-  "directAccessOutsideCompositionKeyCount": 39,
+  "productionKeyCount": 153,
+  "testFixtureKeyCount": 18,
+  "directAccessOutsideCompositionKeyCount": 35,
   "approvedExceptionKeyCount": 55,
   "keys": [
     {
@@ -233,16 +233,15 @@
     },
     {
       "key": "AUTH_PROVIDER_MODE",
-      "consumerCount": 3,
+      "consumerCount": 2,
       "sources": [
-        "apps/platform-api/src/server/auth-providers.ts",
         "apps/platform-api/tests/unit/auth-provider-config.test.ts",
         "apps/platform-api/tests/unit/auth-providers.test.ts",
         "compose.yaml"
       ],
       "type": "string",
       "secret": false,
-      "testFixtureOnly": false,
+      "testFixtureOnly": true,
       "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
       "generatedProjection": true,
       "envApplicability": "all-stages",
@@ -250,7 +249,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
@@ -1762,15 +1761,11 @@
     },
     {
       "key": "MOCK_OIDC_CLIENT_SECRET",
-      "consumerCount": 2,
-      "sources": [
-        "apps/platform-api/src/server/auth-providers.ts",
-        "apps/platform-api/tests/unit/auth-providers.test.ts",
-        "compose.yaml"
-      ],
+      "consumerCount": 1,
+      "sources": ["apps/platform-api/tests/unit/auth-providers.test.ts", "compose.yaml"],
       "type": "string",
       "secret": true,
-      "testFixtureOnly": false,
+      "testFixtureOnly": true,
       "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
       "generatedProjection": true,
       "envApplicability": "all-stages",
@@ -1778,7 +1773,7 @@
       "rotationPolicy": "secret — rotation via SecretStorePort/OpenBao (see V1C-CONF-04)",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
@@ -1804,8 +1799,8 @@
     },
     {
       "key": "MOCK_OIDC_INTERNAL_URL",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/auth-providers.ts", "compose.yaml"],
+      "consumerCount": 0,
+      "sources": ["compose.yaml"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -1816,7 +1811,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
@@ -1861,8 +1856,8 @@
     },
     {
       "key": "MOCK_OIDC_PUBLIC_URL",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/auth-providers.ts", "compose.yaml"],
+      "consumerCount": 0,
+      "sources": ["compose.yaml"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -1873,7 +1868,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
