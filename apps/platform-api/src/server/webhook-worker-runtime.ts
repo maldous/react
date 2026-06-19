@@ -4,8 +4,11 @@ import { PostgresWebhookStore } from "../adapters/postgres-webhook-store.ts";
 import { HttpWebhookDispatcher } from "../adapters/http-webhook-dispatcher.ts";
 import { processDueDeliveries } from "../usecases/webhook-worker.ts";
 import { recordWorkerTick, setWorkerStatus } from "./worker-registry.ts";
+import { loadWebhookWorkerConfig } from "../config/notification-config.ts";
 
 const log = createLogger({ name: "webhook-worker" });
+
+const workerConfig = loadWebhookWorkerConfig();
 
 /** Registry key for the webhook delivery worker (surfaced in the ops cockpit). */
 export const WEBHOOK_WORKER_KEY = "webhook-delivery";
@@ -17,11 +20,11 @@ export const WEBHOOK_WORKER_KEY = "webhook-delivery";
 // Disable with WEBHOOK_WORKER_DISABLED=true.
 // ---------------------------------------------------------------------------
 
-const INTERVAL_MS = Number(process.env["WEBHOOK_WORKER_INTERVAL_MS"] ?? 5000);
+const INTERVAL_MS = workerConfig.intervalMs;
 
 /** Start the background delivery worker. Returns a stop function. */
 export function startWebhookDeliveryWorker(): () => void {
-  if (process.env["WEBHOOK_WORKER_DISABLED"] === "true") {
+  if (workerConfig.disabled === "true") {
     log.info("webhook delivery worker disabled (WEBHOOK_WORKER_DISABLED=true)");
     return () => {};
   }

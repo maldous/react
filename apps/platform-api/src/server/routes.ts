@@ -67,6 +67,7 @@ import {
   loadBootstrapSecretConfig,
   createSecretStoreFromBootstrap,
 } from "../config/bootstrap-secrets.ts";
+import { loadNotificationConfig } from "../config/notification-config.ts";
 import { createLogger } from "@platform/platform-logging";
 import { S3ObjectStorageAdapter } from "@platform/adapters-object-storage";
 import type {
@@ -254,11 +255,12 @@ function sendAuthSettingsFailure(
 // dev sink (env-overridable); `smtp` uses the tenant config + decrypted secret as
 // the password; `brevo` needs an API key. Returns null when sending is impossible.
 function createEmailSenderFactory(): EmailSenderFactory {
+  const ncfg = loadNotificationConfig();
   return (provider, config, secret) => {
     if (provider === "local") {
       return new SmtpEmailAdapter({
-        host: process.env["MAIL_SMTP_HOST"] ?? "localhost",
-        port: Number(process.env["MAIL_SMTP_PORT"] ?? 1025),
+        host: ncfg.localSmtpHost,
+        port: ncfg.localSmtpPort,
         secure: false,
       });
     }
@@ -621,29 +623,30 @@ async function buildNotificationsDeps() {
 // Select real notification transports from env (email → SMTP/Mailpit; webhook → signed
 // POST, ADR-0052 signer). Returns undefined (local sink) when none are enabled.
 async function selectNotificationTransports() {
-  const emailOn = (process.env["NOTIFICATION_EMAIL_TRANSPORT"] ?? "").toLowerCase() === "smtp";
-  const webhookOn = (process.env["NOTIFICATION_WEBHOOK_TRANSPORT"] ?? "").toLowerCase() === "on";
+  const ncfg = loadNotificationConfig();
+  const emailOn = ncfg.emailTransport.toLowerCase() === "smtp";
+  const webhookOn = ncfg.webhookTransport.toLowerCase() === "on";
   if (!emailOn && !webhookOn) return undefined;
   const { ConfiguredNotificationRecipientResolver, createEmailTransport, createWebhookTransport } =
     await import("../adapters/notification-transports.ts");
   const resolver = new ConfiguredNotificationRecipientResolver({
-    emailDomain: process.env["NOTIFICATION_EMAIL_DOMAIN"] ?? "mailpit.local",
-    emailOverride: process.env["NOTIFICATION_EMAIL_OVERRIDE"],
-    webhookUrl: process.env["NOTIFICATION_WEBHOOK_URL"],
+    emailDomain: ncfg.emailDomain,
+    emailOverride: ncfg.emailOverride,
+    webhookUrl: ncfg.webhookUrl,
   });
   const registry: import("../ports/notification-repository.ts").NotificationTransportRegistry = {};
   if (emailOn) {
     const { SmtpEmailAdapter } = await import("../adapters/smtp-email-adapter.ts");
     const email = new SmtpEmailAdapter({
-      host: process.env["SMTP_HOST"] ?? "localhost",
-      port: Number(process.env["MAILPIT_SMTP_PORT"] ?? 1025),
+      host: ncfg.smtpHost,
+      port: ncfg.smtpPort,
       secure: false,
     });
     registry.email = createEmailTransport({
       resolver,
       email,
       from: {
-        address: process.env["NOTIFICATION_FROM_EMAIL"] ?? "notifications@platform.local",
+        address: ncfg.fromEmail,
       },
       warn: (m, meta) => notificationProviderLog.warn(meta, m),
     });
@@ -653,7 +656,7 @@ async function selectNotificationTransports() {
     registry.webhook = createWebhookTransport({
       resolver,
       dispatch: new HttpWebhookDispatcher(),
-      secret: process.env["NOTIFICATION_WEBHOOK_SECRET"],
+      secret: ncfg.webhookSecret,
       warn: (m, meta) => notificationProviderLog.warn(meta, m),
     });
   }

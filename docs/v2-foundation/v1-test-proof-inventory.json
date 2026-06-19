@@ -3439,5 +3439,15 @@
     "stageCoverage": "proof script (npm run proof:typed-secret-resolution)",
     "failureEvidence": "assertion output",
     "note": "V1C-CONF-04 (ADR-0069/0076)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/notification-config.test.ts",
+    "path": "apps/platform-api/tests/unit/notification-config.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "hermetic preload-unit-env",
+    "stageCoverage": "test:platform-api + unit-safe",
+    "failureEvidence": "assertion output",
+    "note": "ADR-0076 config slice"
   }
 ]

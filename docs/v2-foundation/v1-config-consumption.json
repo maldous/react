@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "description": "Independently scanned live configuration-key consumption (process.env + compose ${} substitutions). Generated; the source of truth for R18 consumption reconciliation.",
   "generatedFrom": "apps/**, packages/**, scripts/**, tools/**, compose.yaml",
-  "keyCount": 179,
-  "productionKeyCount": 166,
+  "keyCount": 172,
+  "productionKeyCount": 159,
   "testFixtureKeyCount": 13,
-  "directAccessOutsideCompositionKeyCount": 105,
+  "directAccessOutsideCompositionKeyCount": 98,
   "keys": [
     {
       "key": "__FORMAT",
@@ -1310,11 +1310,8 @@
     },
     {
       "key": "MAIL_SMTP_HOST",
-      "consumerCount": 2,
-      "sources": [
-        "apps/platform-api/scripts/email-sender-runtime-proof.ts",
-        "apps/platform-api/src/server/routes.ts"
-      ],
+      "consumerCount": 1,
+      "sources": ["apps/platform-api/scripts/email-sender-runtime-proof.ts"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -1325,16 +1322,13 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
+      "directAccessOutsideComposition": 1,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
       "key": "MAIL_SMTP_PORT",
-      "consumerCount": 2,
-      "sources": [
-        "apps/platform-api/scripts/email-sender-runtime-proof.ts",
-        "apps/platform-api/src/server/routes.ts"
-      ],
+      "consumerCount": 1,
+      "sources": ["apps/platform-api/scripts/email-sender-runtime-proof.ts"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -1345,7 +1339,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
+      "directAccessOutsideComposition": 1,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1388,10 +1382,9 @@
     },
     {
       "key": "MAILPIT_SMTP_PORT",
-      "consumerCount": 2,
+      "consumerCount": 1,
       "sources": [
         "apps/platform-api/scripts/notification-email-transport-runtime-proof.ts",
-        "apps/platform-api/src/server/routes.ts",
         "compose.yaml"
       ],
       "type": "string",
@@ -1404,7 +1397,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
+      "directAccessOutsideComposition": 1,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1725,9 +1718,9 @@
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
-      "key": "NOTIFICATION_EMAIL_DOMAIN",
+      "key": "NOTIFICATION_EMAIL_OVERRIDE",
       "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/routes.ts"],
+      "sources": ["apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -1739,103 +1732,12 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
-    },
-    {
-      "key": "NOTIFICATION_EMAIL_OVERRIDE",
-      "consumerCount": 2,
-      "sources": [
-        "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
-        "apps/platform-api/src/server/routes.ts"
-      ],
-      "type": "string",
-      "secret": false,
-      "testFixtureOnly": false,
-      "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
-      "generatedProjection": true,
-      "envApplicability": "all-stages",
-      "stageRestrictions": null,
-      "rotationPolicy": "n/a",
-      "reloadRestart": "process restart",
-      "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
       "key": "NOTIFICATION_EMAIL_TRANSPORT",
-      "consumerCount": 2,
-      "sources": [
-        "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
-        "apps/platform-api/src/server/routes.ts"
-      ],
-      "type": "string",
-      "secret": false,
-      "testFixtureOnly": false,
-      "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
-      "generatedProjection": true,
-      "envApplicability": "all-stages",
-      "stageRestrictions": null,
-      "rotationPolicy": "n/a",
-      "reloadRestart": "process restart",
-      "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
-    },
-    {
-      "key": "NOTIFICATION_FROM_EMAIL",
       "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/routes.ts"],
-      "type": "string",
-      "secret": false,
-      "testFixtureOnly": false,
-      "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
-      "generatedProjection": true,
-      "envApplicability": "all-stages",
-      "stageRestrictions": null,
-      "rotationPolicy": "n/a",
-      "reloadRestart": "process restart",
-      "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
-    },
-    {
-      "key": "NOTIFICATION_WEBHOOK_SECRET",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/routes.ts"],
-      "type": "string",
-      "secret": true,
-      "testFixtureOnly": false,
-      "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
-      "generatedProjection": true,
-      "envApplicability": "all-stages",
-      "stageRestrictions": null,
-      "rotationPolicy": "secret — rotation via SecretStorePort/OpenBao (see V1C-CONF-04)",
-      "reloadRestart": "process restart",
-      "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
-    },
-    {
-      "key": "NOTIFICATION_WEBHOOK_TRANSPORT",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/routes.ts"],
-      "type": "string",
-      "secret": false,
-      "testFixtureOnly": false,
-      "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
-      "generatedProjection": true,
-      "envApplicability": "all-stages",
-      "stageRestrictions": null,
-      "rotationPolicy": "n/a",
-      "reloadRestart": "process restart",
-      "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
-    },
-    {
-      "key": "NOTIFICATION_WEBHOOK_URL",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/routes.ts"],
+      "sources": ["apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -2851,11 +2753,8 @@
     },
     {
       "key": "SMTP_HOST",
-      "consumerCount": 2,
-      "sources": [
-        "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
-        "apps/platform-api/src/server/routes.ts"
-      ],
+      "consumerCount": 1,
+      "sources": ["apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -2866,7 +2765,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
+      "directAccessOutsideComposition": 1,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -3203,40 +3102,6 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
-    },
-    {
-      "key": "WEBHOOK_WORKER_DISABLED",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/webhook-worker-runtime.ts"],
-      "type": "string",
-      "secret": false,
-      "testFixtureOnly": false,
-      "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
-      "generatedProjection": true,
-      "envApplicability": "all-stages",
-      "stageRestrictions": null,
-      "rotationPolicy": "n/a",
-      "reloadRestart": "process restart",
-      "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
-    },
-    {
-      "key": "WEBHOOK_WORKER_INTERVAL_MS",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/webhook-worker-runtime.ts"],
-      "type": "string",
-      "secret": false,
-      "testFixtureOnly": false,
-      "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
-      "generatedProjection": true,
-      "envApplicability": "all-stages",
-      "stageRestrictions": null,
-      "rotationPolicy": "n/a",
-      "reloadRestart": "process restart",
-      "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
