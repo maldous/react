@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "description": "Independently scanned live configuration-key consumption (process.env + compose ${} substitutions). Generated; the source of truth for R18 consumption reconciliation. directAccessOutsideComposition counts PRODUCT-runtime direct reads only (the V1C-CONF-06 target); approvedExceptionAccess counts reads inside an approved NON-product boundary (operator-script: apps/platform-api/scripts/** + scripts/**; dev-ci-tooling: tools/**; web-build: vite.config.* — each a composition root / CI tool with its own contextual defaults, codified as the enforcement exception list).",
   "generatedFrom": "apps/**, packages/**, scripts/**, tools/**, compose.yaml",
-  "keyCount": 171,
-  "productionKeyCount": 153,
+  "keyCount": 170,
+  "productionKeyCount": 152,
   "testFixtureKeyCount": 18,
-  "directAccessOutsideCompositionKeyCount": 35,
+  "directAccessOutsideCompositionKeyCount": 34,
   "approvedExceptionKeyCount": 55,
   "keys": [
     {
@@ -169,12 +169,8 @@
     },
     {
       "key": "APP_VERSION",
-      "consumerCount": 2,
-      "sources": [
-        "apps/platform-api/src/server/health.ts",
-        "compose.yaml",
-        "packages/platform-logging/src/index.ts"
-      ],
+      "consumerCount": 1,
+      "sources": ["compose.yaml", "packages/platform-logging/src/index.ts"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -185,7 +181,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
+      "directAccessOutsideComposition": 1,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
@@ -269,25 +265,6 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
-      "approvedExceptionAccess": 0,
-      "exceptionBoundaries": [],
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
-    },
-    {
-      "key": "BUILD_TIME",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/health.ts"],
-      "type": "string",
-      "secret": false,
-      "testFixtureOnly": false,
-      "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
-      "generatedProjection": true,
-      "envApplicability": "all-stages",
-      "stageRestrictions": null,
-      "rotationPolicy": "n/a",
-      "reloadRestart": "process restart",
-      "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
@@ -741,11 +718,8 @@
     },
     {
       "key": "GIT_SHA",
-      "consumerCount": 2,
-      "sources": [
-        "apps/platform-api/src/server/health.ts",
-        "packages/platform-logging/src/index.ts"
-      ],
+      "consumerCount": 1,
+      "sources": ["packages/platform-logging/src/index.ts"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -756,7 +730,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
+      "directAccessOutsideComposition": 1,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
@@ -1875,9 +1849,8 @@
     },
     {
       "key": "NODE_ENV",
-      "consumerCount": 6,
+      "consumerCount": 5,
       "sources": [
-        "apps/platform-api/src/server/health.ts",
         "apps/platform-api/tests/unit/cookie-security.test.ts",
         "apps/platform-api/tests/unit/forward-auth.test.ts",
         "apps/platform-api/tests/unit/keycloak-mapper-readiness.test.ts",
@@ -1894,7 +1867,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
+      "directAccessOutsideComposition": 1,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"

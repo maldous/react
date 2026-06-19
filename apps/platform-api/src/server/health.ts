@@ -12,6 +12,7 @@ import { KeycloakRealmAdminAdapter, type KeycloakAdminConfig } from "@platform/a
 import { getPostgresReadinessAdapter } from "./dependencies.ts";
 import { getFixtureSession } from "./session.ts";
 import { loadStageConfig } from "../config/stage-config.ts";
+import { loadHealthMetadataConfig } from "../config/health-metadata-config.ts";
 
 export { type HealthResponse, type ReadinessResponse, type VersionResponse };
 
@@ -127,10 +128,11 @@ export function getVersion(): VersionResponse {
   // Use || (not ??) so an EMPTY APP_VERSION/GIT_SHA/BUILD_TIME (compose passes
   // `${APP_VERSION:-}` which is "" when unset, not undefined) falls back to a valid
   // default — /version must always return a non-empty version (api-contract test).
+  const meta = loadHealthMetadataConfig();
   return createVersionResponse({
-    version: process.env["APP_VERSION"] || "0.1.0",
-    commit: process.env["GIT_SHA"] || "unknown",
-    buildTime: process.env["BUILD_TIME"] || "unknown",
-    environment: process.env["NODE_ENV"] || "development",
+    version: meta.appVersion || "0.1.0",
+    commit: meta.gitSha || "unknown",
+    buildTime: meta.buildTime || "unknown",
+    environment: loadStageConfig().nodeEnv || "development",
   });
 }

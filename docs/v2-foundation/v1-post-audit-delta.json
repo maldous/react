@@ -1073,9 +1073,27 @@
         "apps/platform-api/tests/unit/auth-provider-config.test.ts"
       ],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/config/health-metadata-config.ts",
+      "introducingCommit": "fad000f51d5805cb580d1860b9dd4bb131175f56",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/config/health-metadata-config.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/health-metadata-config.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/health-metadata-config.test.ts",
+      "introducingCommit": "fad000f51d5805cb580d1860b9dd4bb131175f56",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/health-metadata-config.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
     }
   ],
   "deletions": [],
-  "additionCount": 108,
+  "additionCount": 110,
   "deletionCount": 0
 }
