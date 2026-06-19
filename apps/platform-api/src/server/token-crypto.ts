@@ -1,5 +1,6 @@
 import { createCipheriv, createDecipheriv, randomBytes } from "node:crypto";
 import { createLogger } from "@platform/platform-logging";
+import { loadStageConfig, resolveStage } from "../config/stage-config.ts";
 
 const log = createLogger({ name: "token-crypto" });
 
@@ -69,9 +70,10 @@ export function decryptToken(stored: string): string {
 export function assertEncryptionKeyConfigured(): void {
   const keyHex = process.env["TENANT_SECRET_ENCRYPTION_KEY"];
   const valid = typeof keyHex === "string" && keyHex.length === 64;
-  const stage = process.env["PLATFORM_ENV"] ?? process.env["NODE_ENV"] ?? "development";
+  const stageCfg = loadStageConfig();
+  const stage = resolveStage(stageCfg);
   const requiresKey =
-    stage === "staging" || stage === "production" || process.env["NODE_ENV"] === "production";
+    stage === "staging" || stage === "production" || stageCfg.nodeEnv === "production";
   if (!valid && requiresKey) {
     throw new Error(
       "TENANT_SECRET_ENCRYPTION_KEY must be a 64-char hex string (32 bytes). " +

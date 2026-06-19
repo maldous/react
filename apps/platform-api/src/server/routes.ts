@@ -68,6 +68,7 @@ import {
   createSecretStoreFromBootstrap,
 } from "../config/bootstrap-secrets.ts";
 import { loadNotificationConfig } from "../config/notification-config.ts";
+import { loadStageConfig } from "../config/stage-config.ts";
 import { createLogger } from "@platform/platform-logging";
 import { S3ObjectStorageAdapter } from "@platform/adapters-object-storage";
 import type {
@@ -776,7 +777,7 @@ export const routes: Route[] = [
     operationName: "e2e.synthetic.failure",
     handler: async (_req, res) => {
       const enabled = process.env["E2E_FAILURE_ENDPOINT_ENABLED"] === "true";
-      const isProd = (process.env["PLATFORM_ENV"] ?? "") === "production";
+      const isProd = (loadStageConfig().platformEnv ?? "") === "production";
       const prodApproved = process.env["E2E_ALLOW_PROD_SYNTHETIC_FAILURE"] === "true";
       if (!enabled || (isProd && !prodApproved)) {
         res.json(404, { code: "NOT_FOUND", message: "Not found" });

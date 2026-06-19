@@ -34,6 +34,7 @@ import { extractSlugFromHost as sharedExtractSlugFromHost } from "./tenant-resol
 import { parseSessionCookies } from "./auth.ts";
 import { getSessionStore, getPostgresAppUrl } from "./dependencies.ts";
 import { getFixtureSession } from "./session.ts";
+import { loadStageConfig } from "../config/stage-config.ts";
 
 // Clickthrough service access classification — the policy lives in
 // usecases/service-clickthrough.ts (ADR-ACT-0233, single source of truth).
@@ -102,7 +103,7 @@ type SecretCheck = { ok: true } | { ok: false; status: number; body: unknown };
  */
 function checkInternalSecret(req: Parameters<PipelineHandler>[0]): SecretCheck {
   const internalSecret = process.env["CADDY_INTERNAL_SECRET"] ?? "";
-  const isProduction = process.env["NODE_ENV"] === "production";
+  const isProduction = loadStageConfig().nodeEnv === "production";
 
   if (!internalSecret && isProduction) {
     // Production with no secret configured ? deny everything. This is a

@@ -16,6 +16,7 @@ import type {
 } from "@platform/contracts-admin";
 import { CLICKTHROUGH_SERVICES, decideServiceAccess } from "./service-clickthrough.ts";
 import { getComposedProviderReadiness } from "./composed-providers.ts";
+import { loadStageConfig, resolveStage } from "../config/stage-config.ts";
 
 // Map composed-provider readiness (keyed by provider) onto a click-through service
 // where the ids overlap; otherwise readiness is "unknown" (the click-through itself,
@@ -68,7 +69,7 @@ export async function listClickthroughServices(input: {
   const { providers } = await getComposedProviderReadiness();
 
   // Running environment governs whether a dev/mock-only service is linked (ADR-0056).
-  const environment = process.env["PLATFORM_ENV"] ?? process.env["NODE_ENV"] ?? "development";
+  const environment = resolveStage(loadStageConfig());
 
   const services: ClickthroughServiceRow[] = CLICKTHROUGH_SERVICES
     // not_exposed services are never reachable — they never appear on the page.

@@ -1,5 +1,5 @@
-import process from "node:process";
 import { createLogger } from "@platform/platform-logging";
+import { loadStageConfig } from "../config/stage-config.ts";
 import {
   ValidationError,
   UnauthorizedError,
@@ -170,7 +170,7 @@ function parseGraphqlRequest(rawBody: unknown): GraphqlRequest {
   }
 
   // Hardening — introspection off outside development.
-  const introspectionAllowed = (process.env["PLATFORM_ENV"] ?? "") === "development";
+  const introspectionAllowed = (loadStageConfig().platformEnv ?? "") === "development";
   if (!introspectionAllowed && fields.some((f) => INTROSPECTION_FIELDS.has(f))) {
     return {
       ok: false,

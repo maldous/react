@@ -1025,9 +1025,27 @@
       "v2Target": "apps/platform-api/tests/unit/notification-config.test.ts",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/config/stage-config.ts",
+      "introducingCommit": "58cb5b1ff62da361c6e57c37e0fc0611a579001a",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/config/stage-config.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/stage-config.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/stage-config.test.ts",
+      "introducingCommit": "58cb5b1ff62da361c6e57c37e0fc0611a579001a",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/stage-config.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
     }
   ],
   "deletions": [],
-  "additionCount": 103,
+  "additionCount": 105,
   "deletionCount": 0
 }

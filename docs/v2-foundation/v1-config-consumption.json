@@ -1880,14 +1880,14 @@
     },
     {
       "key": "NODE_ENV",
-      "consumerCount": 11,
+      "consumerCount": 6,
       "sources": [
-        "apps/platform-api/src/db/reset.ts",
-        "apps/platform-api/src/server/auth-providers.ts",
-        "apps/platform-api/src/server/forward-auth.ts",
         "apps/platform-api/src/server/health.ts",
-        "apps/platform-api/src/server/token-crypto.ts",
-        "apps/platform-api/src/usecases/clickthrough-services.ts"
+        "apps/platform-api/tests/unit/cookie-security.test.ts",
+        "apps/platform-api/tests/unit/forward-auth.test.ts",
+        "apps/platform-api/tests/unit/keycloak-mapper-readiness.test.ts",
+        "apps/platform-api/tests/unit/token-crypto.test.ts",
+        "packages/platform-logging/src/index.ts"
       ],
       "type": "string",
       "secret": false,
@@ -1899,7 +1899,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 7,
+      "directAccessOutsideComposition": 2,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
@@ -2376,14 +2376,14 @@
     },
     {
       "key": "PLATFORM_ENV",
-      "consumerCount": 10,
+      "consumerCount": 5,
       "sources": [
-        "apps/platform-api/src/server/auth-providers.ts",
-        "apps/platform-api/src/server/graphql.ts",
-        "apps/platform-api/src/server/routes.ts",
-        "apps/platform-api/src/server/token-crypto.ts",
-        "apps/platform-api/src/usecases/clickthrough-services.ts",
-        "apps/platform-api/tests/substrate/graphql-organisation.test.ts"
+        "apps/platform-api/tests/substrate/graphql-organisation.test.ts",
+        "apps/platform-api/tests/unit/auth-providers.test.ts",
+        "apps/platform-api/tests/unit/synthetic-failure-endpoint.test.ts",
+        "apps/platform-api/tests/unit/token-crypto.test.ts",
+        "compose.yaml",
+        "packages/platform-logging/src/index.ts"
       ],
       "type": "string",
       "secret": false,
@@ -2395,7 +2395,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 6,
+      "directAccessOutsideComposition": 1,
       "approvedExceptionAccess": 0,
       "exceptionBoundaries": [],
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"

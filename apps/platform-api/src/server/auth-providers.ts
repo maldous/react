@@ -17,6 +17,7 @@
  */
 import type { IdentityProvider } from "@platform/authorisation-runtime";
 import type { TenantAuthProvidersConfig } from "@platform/contracts-admin";
+import { loadStageConfig, resolveStage } from "../config/stage-config.ts";
 
 export type ProviderMode = "mock" | "real" | "disabled";
 
@@ -60,7 +61,7 @@ const THIRD_PARTY = PRODUCT_PROVIDERS.filter((p) => p.id !== "platform");
 // ---------------------------------------------------------------------------
 
 function platformEnv(): string {
-  return (process.env["PLATFORM_ENV"] ?? process.env["NODE_ENV"] ?? "development").toLowerCase();
+  return resolveStage(loadStageConfig()).toLowerCase();
 }
 
 /** staging / prod are the "production-like" stages where mock must be guarded. */

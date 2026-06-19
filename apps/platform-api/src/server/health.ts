@@ -11,6 +11,7 @@ import { PostgresReadinessAdapter } from "@platform/adapters-postgres";
 import { KeycloakRealmAdminAdapter, type KeycloakAdminConfig } from "@platform/adapters-keycloak";
 import { getPostgresReadinessAdapter } from "./dependencies.ts";
 import { getFixtureSession } from "./session.ts";
+import { loadStageConfig } from "../config/stage-config.ts";
 
 export { type HealthResponse, type ReadinessResponse, type VersionResponse };
 
@@ -90,7 +91,7 @@ async function checkMapperReadiness(cfg: MapperCheckConfig | null): Promise<Depe
     // In production, a missing mapper is a hard dependency failure (503).
     // In dev/test, demote to "unknown" so a not-yet-provisioned local stack
     // doesn't block development.
-    return process.env["NODE_ENV"] === "production" ? "failed" : "unknown";
+    return loadStageConfig().nodeEnv === "production" ? "failed" : "unknown";
   }
 
   // "unavailable" (admin API unreachable / auth error) — always unknown.

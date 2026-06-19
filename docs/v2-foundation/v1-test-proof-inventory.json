@@ -3449,5 +3449,15 @@
     "stageCoverage": "test:platform-api + unit-safe",
     "failureEvidence": "assertion output",
     "note": "ADR-0076 config slice"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/stage-config.test.ts",
+    "path": "apps/platform-api/tests/unit/stage-config.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "hermetic preload-unit-env",
+    "stageCoverage": "test:platform-api + unit-safe",
+    "failureEvidence": "assertion output",
+    "note": "ADR-0076 config slice"
   }
 ]

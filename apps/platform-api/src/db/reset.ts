@@ -1,10 +1,11 @@
 import pg from "pg";
+import { loadStageConfig } from "../config/stage-config.ts";
 
 const POSTGRES_URL = process.env["POSTGRES_URL"] ?? "";
 
 export async function resetDatabase(): Promise<void> {
   // SAFETY: only run in local/test environments
-  const env = process.env["NODE_ENV"] ?? "development";
+  const env = loadStageConfig().nodeEnv ?? "development";
   if (!["development", "test", "local"].includes(env)) {
     throw new Error(`resetDatabase is not allowed in environment: ${env}`);
   }
