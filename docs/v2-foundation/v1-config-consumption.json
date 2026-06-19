@@ -5,8 +5,8 @@
   "keyCount": 170,
   "productionKeyCount": 152,
   "testFixtureKeyCount": 18,
-  "directAccessOutsideCompositionKeyCount": 34,
-  "approvedExceptionKeyCount": 55,
+  "directAccessOutsideCompositionKeyCount": 28,
+  "approvedExceptionKeyCount": 61,
   "keys": [
     {
       "key": "__FORMAT",
@@ -794,10 +794,9 @@
     },
     {
       "key": "GRAFANA_PORT",
-      "consumerCount": 3,
+      "consumerCount": 2,
       "sources": [
         "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
-        "apps/platform-api/src/server/routes.ts",
         "apps/react-enterprise-app/vite.config.ts",
         "compose.yaml"
       ],
@@ -811,18 +810,15 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 2,
       "exceptionBoundaries": ["operator-script", "web-build"],
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "v2Disposition": "carry; direct env access confined to approved non-product boundary (operator-script, web-build) — V1C-CONF-06 exception"
     },
     {
       "key": "GRAFANA_URL",
-      "consumerCount": 2,
-      "sources": [
-        "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
-        "apps/platform-api/src/server/routes.ts"
-      ],
+      "consumerCount": 1,
+      "sources": ["apps/platform-api/scripts/tenant-observability-runtime-proof.ts"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -833,10 +829,10 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 1,
       "exceptionBoundaries": ["operator-script"],
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "v2Disposition": "carry; direct env access confined to approved non-product boundary (operator-script) — V1C-CONF-06 exception"
     },
     {
       "key": "INT_VAR",
@@ -2086,10 +2082,9 @@
     },
     {
       "key": "OTEL_HEALTH_PORT",
-      "consumerCount": 2,
+      "consumerCount": 1,
       "sources": [
         "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
-        "apps/platform-api/src/server/routes.ts",
         "compose.yaml"
       ],
       "type": "string",
@@ -2102,18 +2097,15 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 1,
       "exceptionBoundaries": ["operator-script"],
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "v2Disposition": "carry; direct env access confined to approved non-product boundary (operator-script) — V1C-CONF-06 exception"
     },
     {
       "key": "OTEL_HEALTH_URL",
-      "consumerCount": 2,
-      "sources": [
-        "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
-        "apps/platform-api/src/server/routes.ts"
-      ],
+      "consumerCount": 1,
+      "sources": ["apps/platform-api/scripts/tenant-observability-runtime-proof.ts"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -2124,10 +2116,10 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 1,
       "exceptionBoundaries": ["operator-script"],
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "v2Disposition": "carry; direct env access confined to approved non-product boundary (operator-script) — V1C-CONF-06 exception"
     },
     {
       "key": "OTEL_HTTP_PORT",
@@ -2510,11 +2502,10 @@
     },
     {
       "key": "PROMETHEUS_URL",
-      "consumerCount": 3,
+      "consumerCount": 2,
       "sources": [
         "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
-        "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
-        "apps/platform-api/src/server/routes.ts"
+        "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
       ],
       "type": "string",
       "secret": false,
@@ -2526,10 +2517,10 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 2,
       "exceptionBoundaries": ["operator-script"],
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "v2Disposition": "carry; direct env access confined to approved non-product boundary (operator-script) — V1C-CONF-06 exception"
     },
     {
       "key": "RATE_LIMIT_PROVIDER",
@@ -2841,10 +2832,9 @@
     },
     {
       "key": "SENTRY_DSN",
-      "consumerCount": 3,
+      "consumerCount": 2,
       "sources": [
         "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
-        "apps/platform-api/src/server/routes.ts",
         "apps/platform-api/tests/unit/observability.test.ts",
         "compose.yaml"
       ],
@@ -2858,10 +2848,10 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "approvedExceptionAccess": 1,
       "exceptionBoundaries": ["operator-script"],
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "v2Disposition": "carry; direct env access confined to approved non-product boundary (operator-script) — V1C-CONF-06 exception"
     },
     {
       "key": "SENTRY_ENABLED",

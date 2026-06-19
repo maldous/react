@@ -1091,9 +1091,27 @@
       "v2Target": "apps/platform-api/tests/unit/health-metadata-config.test.ts",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/config/observability-probe-config.ts",
+      "introducingCommit": "a98618745b1acecd167a0db61e21f86184fab81c",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/config/observability-probe-config.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/observability-probe-config.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/observability-probe-config.test.ts",
+      "introducingCommit": "a98618745b1acecd167a0db61e21f86184fab81c",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/observability-probe-config.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
     }
   ],
   "deletions": [],
-  "additionCount": 110,
+  "additionCount": 112,
   "deletionCount": 0
 }

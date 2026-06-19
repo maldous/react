@@ -69,6 +69,7 @@ import {
 } from "../config/bootstrap-secrets.ts";
 import { loadNotificationConfig } from "../config/notification-config.ts";
 import { loadStageConfig } from "../config/stage-config.ts";
+import { loadObservabilityProbeConfig } from "../config/observability-probe-config.ts";
 import { createLogger } from "@platform/platform-logging";
 import { S3ObjectStorageAdapter } from "@platform/adapters-object-storage";
 import type {
@@ -377,15 +378,16 @@ function buildObservabilityInfra(timeoutMs = 1500): ObservabilityInfraProbes {
   // (GRAFANA_PORT / OTEL_HEALTH_PORT), overridable by an explicit *_URL.
   const port = (v: string | undefined): string | undefined =>
     v ? `http://localhost:${v}` : undefined;
-  const grafanaUrl = process.env["GRAFANA_URL"] ?? port(process.env["GRAFANA_PORT"]);
-  const otelUrl = process.env["OTEL_HEALTH_URL"] ?? port(process.env["OTEL_HEALTH_PORT"]);
+  const probe = loadObservabilityProbeConfig();
+  const grafanaUrl = probe.grafanaUrl ?? port(probe.grafanaPort);
+  const otelUrl = probe.otelHealthUrl ?? port(probe.otelHealthPort);
   return {
     // No Prometheus/metrics backend locally → not_applicable unless PROMETHEUS_URL is set.
-    probeMetrics: () => reach(process.env["PROMETHEUS_URL"], true),
+    probeMetrics: () => reach(probe.prometheusUrl, true),
     probeOtelCollector: () => reach(otelUrl),
     probeDashboards: () => reach(grafanaUrl ? `${grafanaUrl}/api/health` : undefined),
     probeErrorCapture: async () => {
-      const dsn = process.env["SENTRY_DSN"];
+      const dsn = probe.sentryDsn;
       if (!dsn) return "not_configured";
       try {
         await fetch(new URL(dsn).origin, { method: "GET", signal: AbortSignal.timeout(timeoutMs) });
