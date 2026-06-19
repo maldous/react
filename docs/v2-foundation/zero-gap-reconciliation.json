@@ -259,7 +259,7 @@
     "cutReady": false,
     "terminology": "consistencyFindings = artefacts vs live-repo self-consistency (must be 0). completionBlockers = R9 outstanding V1 work. cutReady = both zero.",
     "composition": "25 requires-v1-completion capabilities + 10 deprecated packages + 1 remaining config decision(s) (V1C-CONF-06; V1C-CONF-01/02/03/04/05/07/08 delivered — ADR-0076 + the two-tier secret model) = 36.",
-    "configSprawl": "V1C-CONF-06 progress metric (NOT one of the 36; V1C-CONF-06 is the single config blocker until closed): v1-config-consumption.directAccessOutsideCompositionKeyCount = product-runtime direct env reads still to migrate. proofHarnessExceptionKeyCount = operator proof/ops-script reads under the approved exception boundary (apps/platform-api/scripts/**, scripts/** — bounded by loadLocalEnv; per-proof contextual/computed defaults are not product config). The exception list is enforced in the closure commit.",
+    "configSprawl": "V1C-CONF-06 progress metric (NOT one of the 36; V1C-CONF-06 is the single config blocker until closed): v1-config-consumption.directAccessOutsideCompositionKeyCount = product-runtime direct env reads still to migrate into typed projections (the remaining target is the platform-api server runtime). approvedExceptionKeyCount = reads confined to approved NON-product boundaries (operator-script scripts/**, dev-ci-tooling tools/**, web-build vite.config.* — each a composition root / CI tool with its own contextual defaults). The exception list is enforced in the closure commit.",
     "liveTruth": "npm run v2:readiness --json"
   }
 }
