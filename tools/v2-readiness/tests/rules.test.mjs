@@ -19,6 +19,8 @@ import r14 from "../src/rules/r14-foundation.mjs";
 import r15 from "../src/rules/r15-app-path.mjs";
 import r16 from "../src/rules/r16-services.mjs";
 import r17 from "../src/rules/r17-migrations.mjs";
+import r18 from "../src/rules/r18-environment-config.mjs";
+import r19 from "../src/rules/r19-executable-assets.mjs";
 
 const fires = (rule, ctx, ruleId) => {
   const f = rule(ctx);
@@ -332,4 +334,50 @@ test("R17 fires on a tenant-data service with no backup decision", () => {
   const a = clone(cleanCtx());
   a.foundation["service-and-clickthrough-matrix.json"][0].backupRestore = null;
   fires(r17, a, "R17-migrations");
+});
+
+test("R18 fires on a secret-named key not classified secret", () => {
+  const a = clone(cleanCtx());
+  a.configConsumption.keys.push({
+    key: "DB_PASSWORD",
+    consumerCount: 1,
+    sources: ["x"],
+    secret: false,
+    testFixtureOnly: false,
+    authoritativeSource: "m",
+    v2Disposition: "carry",
+    directAccessOutsideComposition: 0,
+  });
+  fires(r18, a, "R18-environment-config");
+});
+
+test("R18 fires on a forbidden mock mode enabled in prod, and an unsafe secret default", () => {
+  const a = clone(cleanCtx());
+  a.envManifests.prod = { ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS: true };
+  fires(r18, a, "R18-environment-config");
+  const b = clone(cleanCtx());
+  b.envManifests.staging = { API_KEY_PEPPER: "changeme" };
+  fires(r18, b, "R18-environment-config");
+});
+
+test("R19 fires on a Playwright spec missing the inventory and an unmapped executable", () => {
+  const a = clone(cleanCtx());
+  a.executableAssets.playwrightSpecs = ["e2e/orphan.spec.ts"]; // not in test inventory
+  fires(r19, a, "R19-executable-assets");
+  const b = clone(cleanCtx());
+  b.executableAssets.shellScripts = ["scripts/orphan.sh"]; // not in path-map/delta
+  fires(r19, b, "R19-executable-assets");
+});
+
+test("R19 fires on a Terraform root with an unrecognised stage", () => {
+  const a = clone(cleanCtx());
+  a.executableAssets.terraformRoots = ["infra/env/wonderland"];
+  a.pathMap.push({
+    v1Path: "infra/env/wonderland/main.tf",
+    disposition: "reuse-unchanged",
+    v2Path: "infra/env/wonderland/main.tf",
+    deletionCondition: "n/a",
+    decisionRefs: [],
+  });
+  fires(r19, a, "R19-executable-assets");
 });

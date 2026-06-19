@@ -101,6 +101,30 @@ export function cleanCtx() {
     },
     caddyfile: "",
     migrations: [{ file: "001-x.sql", checksum: "abc0000000000000" }],
+    configConsumption: {
+      keys: [
+        {
+          key: "APP_BASE_URL",
+          consumerCount: 1,
+          sources: ["apps/platform-api/src/config/index.ts"],
+          secret: false,
+          testFixtureOnly: false,
+          authoritativeSource: "manifest",
+          generatedProjection: true,
+          v2Disposition: "carry",
+          directAccessOutsideComposition: 0,
+        },
+      ],
+    },
+    executableAssets: {
+      shellScripts: [],
+      nodeScripts: [],
+      terraformRoots: [],
+      terraformModules: [],
+      playwrightSpecs: [],
+      playwrightConfigs: [],
+    },
+    envManifests: { common: {}, dev: {}, test: {}, staging: {}, prod: {} },
     foundation: {
       "service-and-clickthrough-matrix.json": [
         {
@@ -119,7 +143,15 @@ export function cleanCtx() {
         },
       ],
       "authentication-authorisation-matrix.json": [{ ok: 1 }],
-      "environment-and-config-catalog.json": [{ ok: 1 }],
+      "environment-and-config-catalog.json": [
+        {
+          key: "database-urls",
+          consumer: "platform-api",
+          secret: true,
+          sourceOfTruth: "manifest",
+          v2Location: "runtime/config",
+        },
+      ],
       "data-and-migration-plan.json": {
         postgres: {
           migrationChain: [{ file: "001-x.sql", intent: "core" }],

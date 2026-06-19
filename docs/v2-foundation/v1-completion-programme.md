@@ -352,14 +352,37 @@ environmentScope, mockability}`; a `ServiceBinding{service, provider, env}` reso
 migration; promote `validate-i18n` to a hard gate. **Stop:** provider/hook + migration complete; i18n
 is a hard gate.
 
-### Part B — Open package decision
+### Part B — config-runtime, decomposed (V1C-CONF-01..08)
 
-**V1C-PKG-CONFIG — config-runtime fate.** Source: ADR-ACT-0289 (explicitly deferred), ADR-0006.
-**Selected decision to settle:** decide a typed composition-root config object (validation +
-secret-handling review); the ~122 scattered `process.env` reads are NOT canonical. THEN either keep
-`config-runtime` as the canonical V2 `runtime/config` package (deprecated status removed + full proof)
-OR remove it. **Stop:** decision recorded in an ADR; package kept-canonical-with-proof or removed;
-`v2-target-tree.txt` `runtime/config` reflects the outcome.
+The §2 environment/config audit (validator R18 + `v1-config-consumption.json`) found **188 consumed
+keys** (176 production, 12 test-fixture) and **123 keys read directly via `process.env` outside the
+composition roots**. The former single `V1C-PKG-CONFIG` is therefore **decomposed into 8 bounded
+decisions** (no generic blocker retained); the `config-runtime` package fate (keep-canonical-as
+`runtime/config` vs remove) is the OUTCOME of settling these, recorded in an ADR.
+
+- **V1C-CONF-01 — typed config loading at composition roots:** one typed config object per app,
+  assembled once at the composition root; no scattered reads downstream. Stop: composition-root loader
+  delivered + proven.
+- **V1C-CONF-02 — schema validation:** zod/typed schema validates every key at boot; **fail-closed**
+  on missing/invalid required keys (no silent fallback). Stop: invalid/missing required key aborts boot.
+- **V1C-CONF-03 — immutable projections:** config frozen + derived once; consumers get read-only
+  projections. Stop: mutation attempts rejected; proven.
+- **V1C-CONF-04 — secret references:** secrets resolved via `SecretStorePort`/OpenBao; no literals;
+  rotation + failure semantics declared per secret. Stop: no secret literal in any manifest; rotation
+  documented.
+- **V1C-CONF-05 — application-specific config objects:** per-app typed shape (api vs web), not a
+  shared untyped bag. Stop: each app consumes only its typed config.
+- **V1C-CONF-06 — direct-environment-access restriction:** eliminate the 123-key `process.env` sprawl
+  outside composition roots; enforce with an import-boundary/lint rule. Stop: boundary rule green; only
+  composition roots read `process.env`.
+- **V1C-CONF-07 — testing overrides:** hermetic typed override seam for tests; no production fallback.
+  Stop: tests override config without env leakage.
+- **V1C-CONF-08 — reload/restart semantics:** declare per-key restart-only vs reloadable + the reload
+  mechanism. Stop: each key classified; reload behaviour proven.
+
+**Package outcome:** once V1C-CONF-01..08 land, keep `config-runtime` as the canonical V2
+`runtime/config` (deprecated status removed + proof) OR remove it; `v2-target-tree.txt` `runtime/config`
+reflects the outcome.
 
 ### Part C — Deprecated package removal (PKG-01..10)
 

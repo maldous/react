@@ -187,6 +187,14 @@ export function loadContext({ repoRoot = process.cwd(), strict = false, pinned }
     fileInventory: j("v1-file-inventory.json"),
     postAuditDelta: optional("v1-post-audit-delta.json"),
     completionActions: optional("v1-completion-actions.json"),
+    configConsumption: optional("v1-config-consumption.json"),
+    executableAssets: optional("v1-executable-assets.json"),
+    envManifests: Object.fromEntries(
+      ["common", "dev", "test", "staging", "prod"].map((s) => [
+        s,
+        readJsonSafe(path.join(repoRoot, `config/environments/${s}.json`)),
+      ])
+    ),
     shards,
     commandMap: j("v2-command-map.json"),
     commandCatalog: j("v1-command-catalog.json"),

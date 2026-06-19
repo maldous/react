@@ -391,6 +391,24 @@
       "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
     },
     {
+      "path": "docs/v2-foundation/v1-config-consumption.json",
+      "introducingCommit": "unknown",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v1-config-consumption.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/v1-executable-assets.json",
+      "introducingCommit": "unknown",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v1-executable-assets.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
       "path": "docs/v2-foundation/v1-file-inventory.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
       "purpose": "V1→V2 planning/closure artefact",
@@ -518,7 +536,7 @@
     },
     {
       "path": "tools/architecture/_shared/import-edges.mjs",
-      "introducingCommit": "unknown",
+      "introducingCommit": "103d4697d7f2e6acd4cb28b3f646e550c20c4b89",
       "purpose": "post-audit addition",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "tools/architecture/_shared/import-edges.mjs",
@@ -670,7 +688,7 @@
     },
     {
       "path": "tools/v2-readiness/src/rules/r16-services.mjs",
-      "introducingCommit": "unknown",
+      "introducingCommit": "103d4697d7f2e6acd4cb28b3f646e550c20c4b89",
       "purpose": "V2-readiness validator implementation",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "tools/v2-readiness/src/rules/r16-services.mjs",
@@ -683,10 +701,36 @@
     },
     {
       "path": "tools/v2-readiness/src/rules/r17-migrations.mjs",
-      "introducingCommit": "unknown",
+      "introducingCommit": "103d4697d7f2e6acd4cb28b3f646e550c20c4b89",
       "purpose": "V2-readiness validator implementation",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "tools/v2-readiness/src/rules/r17-migrations.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r18-environment-config.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r18-environment-config.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r19-executable-assets.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r19-executable-assets.mjs",
       "protectingTests": [
         "tools/v2-readiness/tests/rules.test.mjs",
         "tools/v2-readiness/tests/golden.test.mjs",
@@ -840,7 +884,7 @@
     },
     {
       "path": "tools/v2-readiness/tests/import-parity.test.mjs",
-      "introducingCommit": "unknown",
+      "introducingCommit": "103d4697d7f2e6acd4cb28b3f646e550c20c4b89",
       "purpose": "V2-readiness validator test",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "tools/v2-readiness/tests/import-parity.test.mjs",
@@ -849,7 +893,7 @@
     },
     {
       "path": "tools/v2-readiness/tests/osv-exceptions.test.mjs",
-      "introducingCommit": "unknown",
+      "introducingCommit": "103d4697d7f2e6acd4cb28b3f646e550c20c4b89",
       "purpose": "V2-readiness validator test",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "tools/v2-readiness/tests/osv-exceptions.test.mjs",
@@ -876,6 +920,6 @@
     }
   ],
   "deletions": [],
-  "additionCount": 87,
+  "additionCount": 91,
   "deletionCount": 0
 }

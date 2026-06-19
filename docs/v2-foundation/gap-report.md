@@ -52,8 +52,10 @@ UI semantic definition, stop condition, V2 assets). None is hidden inside a deli
 | V1C-24 | Tenant canonical domain cutover + redirects                                         |
 | V1C-25 | i18n React provider/hook + message migration (hard gate)                            |
 
-Plus **one open package decision** (semantic, not mechanical): `V1C-PKG-CONFIG` — decide the typed
-composition-root config object, then keep or remove `config-runtime` (ADR-ACT-0289 deferred this).
+Plus **8 config-runtime bounded decisions** (`V1C-CONF-01..08`, decomposed from the former single
+`V1C-PKG-CONFIG` by the §2 env/config audit — typed loading, schema validation, immutable projections,
+secret references, app-specific config, direct-env-access restriction, test overrides, reload/restart).
+The `config-runtime` package fate (keep-canonical vs remove) is the outcome.
 
 ### B. Execution-only actions remaining (zero discovery — mechanical)
 
@@ -80,7 +82,10 @@ worker-runtime, observability`. All now `delete-after-proof` in the path-map (wa
    `reuse-unchanged`/`archive-evidence`), all dropped from `v2-target-tree.txt`, all their scaffold
    tests retired. Gated on the orchestrator zero-consumer proof + the ADR-ACT-0289 review (2026-12-18).
    **Not executed in this change** (per instruction).
-3. **1 open package decision** — `config-runtime` (V1C-PKG-CONFIG).
+3. **8 config-runtime bounded decisions** — `V1C-CONF-01..08` (decomposed from `V1C-PKG-CONFIG`).
+
+**Completion-blocker total: 43** = 25 capability completions + 10 package removals + 8 config decisions
+(live truth: `npm run v2:readiness --json` `.completionBlockerCount`).
 
 ## What pass two got wrong (now fixed)
 
@@ -97,14 +102,14 @@ worker-runtime, observability`. All now `delete-after-proof` in the path-map (wa
 
 ## Honest closure status
 
-| Class                          | Count | Blocks cut?         |
-| ------------------------------ | ----- | ------------------- |
-| delivered-and-proven           | 45    | no                  |
-| requires-v1-completion         | 25    | **yes**             |
-| superseded-by-proven-canonical | 1     | no                  |
-| not-applicable-final           | 4     | no                  |
-| open package decision          | 1     | **yes**             |
-| deprecated package removals    | 10    | **yes** (execution) |
+| Class                                      | Count | Blocks cut?         |
+| ------------------------------------------ | ----- | ------------------- |
+| delivered-and-proven                       | 45    | no                  |
+| requires-v1-completion                     | 25    | **yes**             |
+| superseded-by-proven-canonical             | 1     | no                  |
+| not-applicable-final                       | 4     | no                  |
+| config-runtime decisions (V1C-CONF-01..08) | 8     | **yes**             |
+| deprecated package removals                | 10    | **yes** (execution) |
 
 **The project is NOT ready to execute package deletion or cut V2** until the §A completions and the
 §C blockers close and `npm run v2:readiness` exits `0`.
