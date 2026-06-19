@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "description": "Independently scanned live configuration-key consumption (process.env + compose ${} substitutions). Generated; the source of truth for R18 consumption reconciliation.",
   "generatedFrom": "apps/**, packages/**, scripts/**, tools/**, compose.yaml",
-  "keyCount": 188,
-  "productionKeyCount": 176,
+  "keyCount": 187,
+  "productionKeyCount": 175,
   "testFixtureKeyCount": 12,
-  "directAccessOutsideCompositionKeyCount": 123,
+  "directAccessOutsideCompositionKeyCount": 121,
   "keys": [
     {
       "key": "__FORMAT",
@@ -1071,10 +1071,9 @@
     },
     {
       "key": "KEYCLOAK_REALM",
-      "consumerCount": 3,
+      "consumerCount": 2,
       "sources": [
         "apps/platform-api/scripts/seed-idps.ts",
-        "apps/platform-api/src/server/dependencies.ts",
         "apps/platform-api/src/server/health.ts",
         "compose.yaml"
       ],
@@ -1088,7 +1087,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 3,
+      "directAccessOutsideComposition": 2,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1266,8 +1265,8 @@
     },
     {
       "key": "LOKI_PORT",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/dependencies.ts", "compose.yaml"],
+      "consumerCount": 0,
+      "sources": ["compose.yaml"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -1278,7 +1277,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2317,23 +2316,6 @@
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
-      "key": "POSTGRES_APP_URL",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/dependencies.ts"],
-      "type": "string",
-      "secret": false,
-      "testFixtureOnly": false,
-      "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
-      "generatedProjection": true,
-      "envApplicability": "all-stages",
-      "stageRestrictions": null,
-      "rotationPolicy": "n/a",
-      "reloadRestart": "process restart",
-      "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
-    },
-    {
       "key": "POSTGRES_DB",
       "consumerCount": 0,
       "sources": ["compose.yaml"],
@@ -2567,11 +2549,10 @@
     },
     {
       "key": "REDIS_URL",
-      "consumerCount": 4,
+      "consumerCount": 3,
       "sources": [
         "apps/platform-api/scripts/platform-services-runtime-proof.ts",
         "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
-        "apps/platform-api/src/server/dependencies.ts",
         "apps/platform-api/src/server/routes.ts"
       ],
       "type": "string",
@@ -2584,7 +2565,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 4,
+      "directAccessOutsideComposition": 3,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {

@@ -869,7 +869,7 @@
     {
       "id": "V1C-CONF-01",
       "parentCapability": "config-runtime (open package decision, decomposed from V1C-PKG-CONFIG)",
-      "status": "requires-v1-completion",
+      "status": "delivered-and-proven",
       "dependencies": [],
       "decision": "one typed config object per app assembled once at the composition root; no scattered process.env reads downstream",
       "portsAdapters": "ConfigPort / typed config object at composition root",
@@ -881,12 +881,13 @@
       "testsProofs": "config validation + secret-handling proof; import-boundary rule test",
       "uiSemantics": "non-visual",
       "stopCondition": "decision recorded in an ADR; typed configuration loading at composition roots implemented + proven",
-      "v2Assets": "typed config contract"
+      "v2Assets": "typed config contract",
+      "evidence": "ADR-0076; packages/config-runtime typed kernel; apps/platform-api/src/config/app-config.ts; apps/react-enterprise-app/src/config/web-config.ts; tests app-config.test.ts + web-config.test.ts; v1-config-contract-catalogue.json"
     },
     {
       "id": "V1C-CONF-02",
       "parentCapability": "config-runtime (open package decision, decomposed from V1C-PKG-CONFIG)",
-      "status": "requires-v1-completion",
+      "status": "delivered-and-proven",
       "dependencies": [],
       "decision": "zod/typed schema validates all keys at boot; fail-closed on missing/invalid required keys",
       "portsAdapters": "ConfigPort / typed config object at composition root",
@@ -898,12 +899,13 @@
       "testsProofs": "config validation + secret-handling proof; import-boundary rule test",
       "uiSemantics": "non-visual",
       "stopCondition": "decision recorded in an ADR; configuration schema validation implemented + proven",
-      "v2Assets": "typed config contract"
+      "v2Assets": "typed config contract",
+      "evidence": "ADR-0076; packages/config-runtime typed kernel; apps/platform-api/src/config/app-config.ts; apps/react-enterprise-app/src/config/web-config.ts; tests app-config.test.ts + web-config.test.ts; v1-config-contract-catalogue.json"
     },
     {
       "id": "V1C-CONF-03",
       "parentCapability": "config-runtime (open package decision, decomposed from V1C-PKG-CONFIG)",
-      "status": "requires-v1-completion",
+      "status": "delivered-and-proven",
       "dependencies": [],
       "decision": "config frozen + derived once; consumers receive read-only projections",
       "portsAdapters": "ConfigPort / typed config object at composition root",
@@ -915,7 +917,8 @@
       "testsProofs": "config validation + secret-handling proof; import-boundary rule test",
       "uiSemantics": "non-visual",
       "stopCondition": "decision recorded in an ADR; immutable configuration projections implemented + proven",
-      "v2Assets": "typed config contract"
+      "v2Assets": "typed config contract",
+      "evidence": "ADR-0076; packages/config-runtime typed kernel; apps/platform-api/src/config/app-config.ts; apps/react-enterprise-app/src/config/web-config.ts; tests app-config.test.ts + web-config.test.ts; v1-config-contract-catalogue.json"
     },
     {
       "id": "V1C-CONF-04",
@@ -937,7 +940,7 @@
     {
       "id": "V1C-CONF-05",
       "parentCapability": "config-runtime (open package decision, decomposed from V1C-PKG-CONFIG)",
-      "status": "requires-v1-completion",
+      "status": "delivered-and-proven",
       "dependencies": [],
       "decision": "per-app typed config shape (api vs web), not a shared untyped bag",
       "portsAdapters": "ConfigPort / typed config object at composition root",
@@ -949,7 +952,8 @@
       "testsProofs": "config validation + secret-handling proof; import-boundary rule test",
       "uiSemantics": "non-visual",
       "stopCondition": "decision recorded in an ADR; application-specific configuration objects implemented + proven",
-      "v2Assets": "typed config contract"
+      "v2Assets": "typed config contract",
+      "evidence": "ADR-0076; packages/config-runtime typed kernel; apps/platform-api/src/config/app-config.ts; apps/react-enterprise-app/src/config/web-config.ts; tests app-config.test.ts + web-config.test.ts; v1-config-contract-catalogue.json"
     },
     {
       "id": "V1C-CONF-06",
@@ -971,7 +975,7 @@
     {
       "id": "V1C-CONF-07",
       "parentCapability": "config-runtime (open package decision, decomposed from V1C-PKG-CONFIG)",
-      "status": "requires-v1-completion",
+      "status": "delivered-and-proven",
       "dependencies": [],
       "decision": "hermetic typed override seam for tests; no production fallback path",
       "portsAdapters": "ConfigPort / typed config object at composition root",
@@ -983,12 +987,13 @@
       "testsProofs": "config validation + secret-handling proof; import-boundary rule test",
       "uiSemantics": "non-visual",
       "stopCondition": "decision recorded in an ADR; testing overrides implemented + proven",
-      "v2Assets": "typed config contract"
+      "v2Assets": "typed config contract",
+      "evidence": "ADR-0076; packages/config-runtime typed kernel; apps/platform-api/src/config/app-config.ts; apps/react-enterprise-app/src/config/web-config.ts; tests app-config.test.ts + web-config.test.ts; v1-config-contract-catalogue.json"
     },
     {
       "id": "V1C-CONF-08",
       "parentCapability": "config-runtime (open package decision, decomposed from V1C-PKG-CONFIG)",
-      "status": "requires-v1-completion",
+      "status": "delivered-and-proven",
       "dependencies": [],
       "decision": "declare per-key restart-only vs reloadable; document reload mechanism",
       "portsAdapters": "ConfigPort / typed config object at composition root",
@@ -1000,7 +1005,8 @@
       "testsProofs": "config validation + secret-handling proof; import-boundary rule test",
       "uiSemantics": "non-visual",
       "stopCondition": "decision recorded in an ADR; reload/restart semantics implemented + proven",
-      "v2Assets": "typed config contract"
+      "v2Assets": "typed config contract",
+      "evidence": "ADR-0076; packages/config-runtime typed kernel; apps/platform-api/src/config/app-config.ts; apps/react-enterprise-app/src/config/web-config.ts; tests app-config.test.ts + web-config.test.ts; v1-config-contract-catalogue.json"
     }
   ],
   "parentCount": 25,

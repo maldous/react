@@ -126,6 +126,7 @@ production
 @platform/adapters-graphql
 @platform/graphql-api-runtime
 @platform/adapters-loki
+@platform/config-runtime
 ```
 
 ### Provides APIs

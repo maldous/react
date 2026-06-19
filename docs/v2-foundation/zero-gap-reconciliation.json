@@ -49,14 +49,14 @@
     "sum": 301
   },
   "tests": {
-    "total": 377,
+    "total": 379,
     "buckets": {
-      "carry": 228,
+      "carry": 230,
       "promote-to-conformance": 76,
       "retire": 12,
       "retarget": 61
     },
-    "sum": 377
+    "sum": 379
   },
   "capabilities": {
     "total": 75,
@@ -73,7 +73,7 @@
     "accepted": 74
   },
   "semanticGapsRemaining": {
-    "count": 33,
+    "count": 27,
     "note": "Capabilities not delivered-and-proven that need design/build/extension before the cut, plus the config-runtime package-fate decision. NOT hidden inside any delivered count.",
     "capabilities": [
       {
@@ -204,44 +204,14 @@
     ],
     "openDecisions": [
       {
-        "subject": "config-runtime: V1C-CONF-01",
-        "action": "V1C-CONF-01",
-        "decision": "typed configuration loading at composition roots (single typed config object per app; no scattered reads)"
-      },
-      {
-        "subject": "config-runtime: V1C-CONF-02",
-        "action": "V1C-CONF-02",
-        "decision": "configuration schema validation (zod/typed schema, fail-closed on missing/invalid required keys)"
-      },
-      {
-        "subject": "config-runtime: V1C-CONF-03",
-        "action": "V1C-CONF-03",
-        "decision": "immutable configuration projections (frozen, derived once at boot)"
-      },
-      {
         "subject": "config-runtime: V1C-CONF-04",
         "action": "V1C-CONF-04",
         "decision": "secret references via SecretStorePort/OpenBao (no secret literals; rotation + failure semantics)"
       },
       {
-        "subject": "config-runtime: V1C-CONF-05",
-        "action": "V1C-CONF-05",
-        "decision": "application-specific configuration objects (per-app typed config, not a generic bag)"
-      },
-      {
         "subject": "config-runtime: V1C-CONF-06",
         "action": "V1C-CONF-06",
-        "decision": "direct-environment-access restriction (eliminate the 123-key process.env sprawl outside composition roots; lint/boundary rule)"
-      },
-      {
-        "subject": "config-runtime: V1C-CONF-07",
-        "action": "V1C-CONF-07",
-        "decision": "testing overrides (hermetic typed override seam; no production fallback)"
-      },
-      {
-        "subject": "config-runtime: V1C-CONF-08",
-        "action": "V1C-CONF-08",
-        "decision": "reload/restart semantics (declare which keys are restart-only vs reloadable)"
+        "decision": "migrate + prohibit ALL remaining direct process.env reads outside composition roots (import-boundary rule)"
       }
     ]
   },
@@ -289,11 +259,11 @@
   },
   "cutReadiness": {
     "consistencyFindings": 0,
-    "completionBlockerCount": 43,
+    "completionBlockerCount": 37,
     "unexaminedAuditSurfaces": 0,
     "cutReady": false,
     "terminology": "consistencyFindings = artefacts vs live-repo self-consistency (must be 0). completionBlockers = R9 outstanding V1 work. cutReady = both zero.",
-    "composition": "25 requires-v1-completion capabilities + 10 deprecated packages + 8 config-runtime bounded decisions (V1C-CONF-01..08, decomposed from the former single V1C-PKG-CONFIG by the §2 env/config audit) = 43.",
-    "liveTruth": "npm run v2:readiness --json (.consistencyFindings/.completionBlockerCount/.unexaminedAuditSurfaces/.cutReady)"
+    "composition": "25 requires-v1-completion capabilities + 10 deprecated packages + 2 remaining config decisions (V1C-CONF-04 + V1C-CONF-06; V1C-CONF-01/02/03/05/07/08 delivered by config slice 1, ADR-0076) = 37.",
+    "liveTruth": "npm run v2:readiness --json"
   }
 }

@@ -4,6 +4,51 @@
   "description": "Files introduced or deleted on V1 main AFTER the audit-base commit. R10 proves files@cutCandidate == surviving mapped files + these additions - evidence-backed deletions. Every post-audit file (incl. the validator + these planning docs) MUST appear here or in the path-map before the cut.",
   "additions": [
     {
+      "path": "apps/platform-api/src/config/app-config.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/config/app-config.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/app-config.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/app-config.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/react-enterprise-app/src/config/__tests__/web-config.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/react-enterprise-app/src/config/__tests__/web-config.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/react-enterprise-app/src/config/web-config.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/react-enterprise-app/src/config/web-config.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/adr/0076-typed-composition-root-configuration-foundation.md",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/adr/0076-typed-composition-root-configuration-foundation.md",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
       "path": "docs/v2-foundation/authentication-authorisation-matrix.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
       "purpose": "V1→V2 planning/closure artefact",
@@ -392,7 +437,7 @@
     },
     {
       "path": "docs/v2-foundation/v1-config-consumption.json",
-      "introducingCommit": "unknown",
+      "introducingCommit": "2c3b9ae67055a0bd0bf36962afdc279036cba2af",
       "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v1-config-consumption.json",
@@ -400,8 +445,17 @@
       "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
     },
     {
-      "path": "docs/v2-foundation/v1-executable-assets.json",
+      "path": "docs/v2-foundation/v1-config-contract-catalogue.json",
       "introducingCommit": "unknown",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v1-config-contract-catalogue.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/v1-executable-assets.json",
+      "introducingCommit": "2c3b9ae67055a0bd0bf36962afdc279036cba2af",
       "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v1-executable-assets.json",
@@ -714,7 +768,7 @@
     },
     {
       "path": "tools/v2-readiness/src/rules/r18-environment-config.mjs",
-      "introducingCommit": "unknown",
+      "introducingCommit": "2c3b9ae67055a0bd0bf36962afdc279036cba2af",
       "purpose": "V2-readiness validator implementation",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "tools/v2-readiness/src/rules/r18-environment-config.mjs",
@@ -727,7 +781,7 @@
     },
     {
       "path": "tools/v2-readiness/src/rules/r19-executable-assets.mjs",
-      "introducingCommit": "unknown",
+      "introducingCommit": "2c3b9ae67055a0bd0bf36962afdc279036cba2af",
       "purpose": "V2-readiness validator implementation",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "tools/v2-readiness/src/rules/r19-executable-assets.mjs",
@@ -920,6 +974,6 @@
     }
   ],
   "deletions": [],
-  "additionCount": 91,
+  "additionCount": 97,
   "deletionCount": 0
 }

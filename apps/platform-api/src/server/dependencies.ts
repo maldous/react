@@ -35,6 +35,7 @@ import type { OrganisationRepository } from "../ports/organisation-repository.ts
 import type { IdentityRepository } from "../ports/identity-repository.ts";
 import type { SessionStore } from "@platform/session-runtime";
 import { decryptToken } from "./token-crypto.ts";
+import { loadPlatformApiConfig } from "../config/app-config.ts";
 import { getFixtureSession } from "./session.ts";
 import type { TenantContext } from "./tenant-resolver.ts";
 
@@ -52,11 +53,10 @@ export function getPostgresUrl(): string {
 
 // Non-superuser app role URL — used by the runtime application pool (ADR-ACT-0189).
 // Sourced from the managed env in every stage; no hardcoded fallback.
+// Migrated to the typed composition-root config (V1C-CONF-01/02): sourced from the validated,
+// immutable PlatformApiConfig (still fail-closed, no hardcoded fallback — Sonar S6698).
 export function getPostgresAppUrl(): string {
-  const url = process.env["POSTGRES_APP_URL"];
-  if (!url)
-    throw new Error("POSTGRES_APP_URL must be set (managed env, ADR-0072) — no hardcoded fallback");
-  return url;
+  return loadPlatformApiConfig().postgresAppUrl;
 }
 
 // Shared application pool — used by withTenant, withSystemAdmin, provisioning.
@@ -152,7 +152,7 @@ export function createOrganisationDependencies(): OrganisationDependencies {
 // ---------------------------------------------------------------------------
 
 export function getRedisUrl(): string {
-  return process.env["REDIS_URL"] ?? "redis://localhost:6379";
+  return loadPlatformApiConfig().redisUrl;
 }
 
 let redisClient: ReturnType<typeof createRedisClient> | undefined;
@@ -185,13 +185,15 @@ export function getIdentityRepository(): IdentityRepository {
 // ---------------------------------------------------------------------------
 
 export function getKeycloakConfig(): KeycloakClientConfig {
+  // Core fields sourced from the typed composition-root config (V1C-CONF-01); defaults preserved.
+  const cfg = loadPlatformApiConfig();
   return {
-    url: process.env["KEYCLOAK_URL"] ?? "http://localhost:8090/kc",
-    realm: process.env["KEYCLOAK_REALM"] ?? "platform",
-    clientId: process.env["KEYCLOAK_CLIENT_ID"] ?? "platform-api",
-    clientSecret: process.env["KEYCLOAK_CLIENT_SECRET"] ?? "",
-    // KEYCLOAK_PUBLIC_URL: public base URL for browser redirects (e.g. http://aldous.info/kc).
-    // When absent, falls back to KEYCLOAK_URL ? correct for local dev without Caddy proxy.
+    url: cfg.keycloakUrl,
+    realm: cfg.keycloakRealm,
+    clientId: cfg.keycloakClientId,
+    clientSecret: cfg.keycloakClientSecret,
+    // KEYCLOAK_PUBLIC_URL is an optional field (undefined when absent → KEYCLOAK_URL); the typed
+    // optional-field seam is deferred to V1C-CONF-06, so it remains a direct read here.
     publicUrl: process.env["KEYCLOAK_PUBLIC_URL"],
   };
 }
@@ -360,9 +362,11 @@ export function getAuthorisationPort(fqdnTenant: TenantContext | null): Authoris
 //      test 3101, staging 3102, prod 3103), so the host-run dev BFF and host
 //      smoke tests each reach their own environment's Loki.
 export function getLokiUrl(): string {
+  // LOKI_URL is an optional override (deferred to V1C-CONF-06); the LOKI_PORT fallback is sourced
+  // from the typed composition-root config (V1C-CONF-01, observability area).
   const explicit = process.env["LOKI_URL"];
   if (explicit && explicit.trim().length > 0) return explicit;
-  return `http://localhost:${process.env["LOKI_PORT"] ?? "3100"}`;
+  return `http://localhost:${loadPlatformApiConfig().lokiPort}`;
 }
 
 export function getLokiAdapter(): LokiLogQueryAdapter {

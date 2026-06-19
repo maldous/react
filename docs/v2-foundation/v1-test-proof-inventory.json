@@ -3399,5 +3399,25 @@
     "stageCoverage": "test (node --test; test:architecture)",
     "failureEvidence": "node:test assertion output",
     "note": "post-audit (ADR-ACT-0292)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/app-config.test.ts",
+    "path": "apps/platform-api/tests/unit/app-config.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "hermetic preload-unit-env",
+    "stageCoverage": "test:platform-api + unit-safe",
+    "failureEvidence": "assertion output",
+    "note": "ADR-0076 config slice"
+  },
+  {
+    "id": "apps/react-enterprise-app/src/config/__tests__/web-config.test.ts",
+    "path": "apps/react-enterprise-app/src/config/__tests__/web-config.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "jsdom (vitest)",
+    "stageCoverage": "test:frontend:run",
+    "failureEvidence": "assertion output",
+    "note": "ADR-0076 config slice"
   }
 ]
