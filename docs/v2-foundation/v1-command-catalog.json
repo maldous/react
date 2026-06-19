@@ -5431,5 +5431,24 @@
     "dead": false,
     "docDriftsFromBehaviour": false,
     "postAudit": "ADR-ACT-0292 (added after audited commit; carried into V2)"
+  },
+  {
+    "name": "npm proof:typed-secret-resolution",
+    "kind": "npm",
+    "purpose": "Live two-tier secret-resolution proof (bootstrap→store→resolve→rotate; redacted).",
+    "inputs": [],
+    "outputs": [],
+    "prerequisites": ["compose Postgres"],
+    "sideEffects": ["creates+deletes a throwaway org + test secret"],
+    "envScope": "local/test",
+    "failureSemantics": "exit-nonzero on failure; SKIP exit 0 if Postgres unavailable",
+    "idempotent": true,
+    "safetyControls": ["values redacted in output"],
+    "testCoverage": "self (runtime proof)",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false,
+    "postAudit": "ADR-ACT-0294 (V1C-CONF-04)"
   }
 ]

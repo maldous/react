@@ -3030,5 +3030,21 @@
     "selectorsOrImportsChange": false,
     "becomesReusableContract": false,
     "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/bootstrap-secrets.test.ts",
+    "v2Path": "apps/platform-api/tests/unit/bootstrap-secrets.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:typed-secret-resolution",
+    "v2Path": "package.json#proof:typed-secret-resolution",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
   }
 ]

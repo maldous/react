@@ -63,6 +63,10 @@ import {
   getRedisClient,
   connectRedis,
 } from "./dependencies.ts";
+import {
+  loadBootstrapSecretConfig,
+  createSecretStoreFromBootstrap,
+} from "../config/bootstrap-secrets.ts";
 import { createLogger } from "@platform/platform-logging";
 import { S3ObjectStorageAdapter } from "@platform/adapters-object-storage";
 import type {
@@ -506,28 +510,13 @@ async function buildRateLimitDeps() {
 async function selectSecretStore(
   pool: ReturnType<typeof getApplicationPool>
 ): Promise<import("../ports/secret-store.ts").SecretStore> {
-  const { PostgresSecretStore } = await import("../adapters/postgres-secret-store.ts");
-  const builtin = new PostgresSecretStore(pool);
-  if ((process.env["SECRET_STORE_PROVIDER"] ?? "builtin").toLowerCase() !== "openbao") {
-    return builtin;
-  }
-  const address = process.env["OPENBAO_ADDR"];
-  const token = process.env["OPENBAO_TOKEN"];
-  if (!address || !token) {
-    secretStoreProviderLog.warn(
-      { provider: "openbao" },
-      "SECRET_STORE_PROVIDER=openbao but OPENBAO_ADDR/OPENBAO_TOKEN unset; using built-in store"
-    );
-    return builtin;
-  }
-  const { OpenBaoSecretStore } = await import("../adapters/openbao-secret-store.ts");
-  return new OpenBaoSecretStore(pool, {
-    address,
-    token,
-    mount: process.env["OPENBAO_KV_MOUNT"] ?? "secret",
-    kvBasePath: process.env["OPENBAO_KV_BASE_PATH"] ?? "platform",
-    warn: (message, meta) => secretStoreProviderLog.warn(meta, message),
-  });
+  // V1C-CONF-04: provider selection is the EXPLICIT Tier-0 bootstrap root of trust — there is no
+  // implicit OpenBao⇄builtin fallback. SECRET_STORE_PROVIDER=openbao without OPENBAO_ADDR/TOKEN now
+  // fails closed (instead of silently degrading to the built-in store).
+  const bootstrap = loadBootstrapSecretConfig();
+  return createSecretStoreFromBootstrap(pool, bootstrap, (message, meta) =>
+    secretStoreProviderLog.warn(meta, message)
+  );
 }
 
 // Build the secrets usecase deps (secret store + audit) — ADR-ACT-0265.

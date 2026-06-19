@@ -71,6 +71,7 @@ export const PROOF_LADDER = [
   "proof:environment-operations",
   "proof:environment-admin-bootstrap",
   "proof:clickthrough",
+  "proof:typed-secret-resolution",
 ] as const;
 
 export type ProofLadderEntry = (typeof PROOF_LADDER)[number];

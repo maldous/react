@@ -53,5 +53,31 @@ hermetic typed test seam; generated catalogue. Closes `V1C-CONF-01/02/03/05/07/0
 
 - No configuration behaviour changes: migrated getters preserve the same env keys, defaults and
   fail-closed semantics; no historical migration or environment manifest is edited.
-- `V1C-CONF-04` (SecretStorePort/reference migration) and `V1C-CONF-06` (migrate + prohibit all
-  remaining direct `process.env` reads) remain open V2-readiness completion blockers.
+- `V1C-CONF-06` (migrate + prohibit all remaining direct `process.env` reads) remains an open
+  V2-readiness completion blocker.
+
+## Amendment (2026-06-19, ADR-ACT-0294): two-tier secret model — V1C-CONF-04
+
+Secrets are **not** all resolved through `SecretStorePort` (that would deadlock: credentials are
+needed to _open_ OpenBao/Postgres). The final V1 model is two tiers:
+
+- **Tier 0 — bootstrap root of trust** (`apps/platform-api/src/config/bootstrap-secrets.ts`,
+  `BootstrapSecretConfig`): the minimum material to OPEN the store — `SECRET_STORE_PROVIDER`
+  (**explicit**, no implicit OpenBao⇄Postgres fallback), `OPENBAO_ADDR`/`OPENBAO_TOKEN` (or the
+  Postgres substrate + `TENANT_SECRET_ENCRYPTION_KEY`). Loaded only at the composition boundary from a
+  deployment secret source — **mounted files (`<KEY>_FILE`) preferred**, narrow governed env fallback
+  at this boundary only. Validated fail-closed, immutable, restart-required. **Never** in the
+  catalogue, logs, audit, readiness, or the browser bundle. It cannot be resolved from the store it
+  opens (enforced structurally: the loader takes no `SecretStore`).
+- **Tier 1 — managed runtime secrets** (`ManagedSecretReferences`): carried in typed config as opaque
+  `SecretRef` (`secret:…`) values and resolved through `SecretStorePort` **after** bootstrap
+  (`resolveManagedSecret`, required → fail-closed; optional → null for a disabled capability). No
+  Tier-1 plaintext belongs in the normal config object. Rotation: classified `restart-required` by
+  default; `reloadable` only with a delivered+proven reload mechanism.
+
+Composition order (`BootstrapSecretLoader → createSecretStoreFromBootstrap → resolveManagedSecret →
+adapters → server`) is proven by `proof:typed-secret-resolution` (live, redacted) + bootstrap-cycle
+tests. `selectSecretStore` is refactored to this explicit model (the prior implicit openbao→builtin
+fallback is removed). The catalogue carries `secretTier ∈ none|bootstrap|managed-reference` (no
+values). Closes `V1C-CONF-04`. (Wiring every live secret consumer to resolve from the store rides with
+the V1C-CONF-06 per-secret cutover + provisioning.)

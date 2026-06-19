@@ -3419,5 +3419,25 @@
     "stageCoverage": "test:frontend:run",
     "failureEvidence": "assertion output",
     "note": "ADR-0076 config slice"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/bootstrap-secrets.test.ts",
+    "path": "apps/platform-api/tests/unit/bootstrap-secrets.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "hermetic preload-unit-env",
+    "stageCoverage": "test:platform-api + unit-safe",
+    "failureEvidence": "assertion output",
+    "note": "V1C-CONF-04 (ADR-0069/0076)"
+  },
+  {
+    "id": "package.json#proof:typed-secret-resolution",
+    "path": "package.json#proof:typed-secret-resolution",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose Postgres",
+    "stageCoverage": "proof script (npm run proof:typed-secret-resolution)",
+    "failureEvidence": "assertion output",
+    "note": "V1C-CONF-04 (ADR-0069/0076)"
   }
 ]

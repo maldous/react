@@ -923,7 +923,7 @@
     {
       "id": "V1C-CONF-04",
       "parentCapability": "config-runtime (open package decision, decomposed from V1C-PKG-CONFIG)",
-      "status": "requires-v1-completion",
+      "status": "delivered-and-proven",
       "dependencies": [],
       "decision": "secrets resolved through SecretStorePort; no literals; rotation + failure semantics declared",
       "portsAdapters": "ConfigPort / typed config object at composition root",
@@ -935,7 +935,8 @@
       "testsProofs": "config validation + secret-handling proof; import-boundary rule test",
       "uiSemantics": "non-visual",
       "stopCondition": "decision recorded in an ADR; secret references via SecretStorePort/OpenBao implemented + proven",
-      "v2Assets": "typed config contract"
+      "v2Assets": "typed config contract",
+      "evidence": "ADR-0069+ADR-0076 two-tier model; apps/platform-api/src/config/bootstrap-secrets.ts; explicit no-fallback selectSecretStore; proof:typed-secret-resolution (live PASS); bootstrap-secrets.test.ts; v1-config-contract-catalogue.json secretTier"
     },
     {
       "id": "V1C-CONF-05",
