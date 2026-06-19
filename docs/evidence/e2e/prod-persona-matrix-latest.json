@@ -248,7 +248,7 @@
       "kind": "clickthrough-granted",
       "target": "keycloak /kc/",
       "expected": "service UI (status<400, not SPA)",
-      "actual": "status=200 url=https://aldous.info/kc/realms/master/protocol/openid-connect/auth?client_id=security-admin-console&redirect_uri=https%3A%2F%2Faldous.info%2Fkc%2Fadmin%2Fmaster%2Fconsole%2F&state=da4a8b29-f050-49a2-b2c4-07c22afcfa3c&response_mode=query&response_type=code&scope=openid&nonce=68a76405-bc4b-49cc-b899-9be9f68cb7ae&code_challenge=AzGXRjjtC-iecxQhtqpZLevEUQ-2sg1Xdq4K5mvN4S0&code_challenge_method=S256",
+      "actual": "status=200 url=https://aldous.info/kc/admin/master/console/",
       "ok": true
     },
     {
@@ -256,7 +256,7 @@
       "kind": "clickthrough-granted",
       "target": "grafana /grafana/",
       "expected": "service UI (status<400, not SPA)",
-      "actual": "status=200 url=https://aldous.info/grafana/?orgId=1&from=now-6h&to=now&timezone=browser",
+      "actual": "status=200 url=https://aldous.info/grafana/",
       "ok": true
     },
     {

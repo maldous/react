@@ -61,7 +61,7 @@ Generated for git evidence (ADR-0075 / ADR-ACT-0285). DO NOT EDIT — regenerate
 - ⚠️ capability 'tenant-lifecycle-suspend-delete-export' status=partial — not required to have E2E (honest report)
 - ⚠️ capability 'support-tickets-health-comms' status=missing — not required to have E2E (honest report)
 - ⚠️ capability 'service-catalog-provider-model' status=partial — not required to have E2E (honest report)
-- ⚠️ proof scripts present: 62 (capability-evidence mapping audited in ADR-ACT-0285 Phase 5)
+- ⚠️ proof scripts present: 63 (capability-evidence mapping audited in ADR-ACT-0285 Phase 5)
 
 ## Summary
 

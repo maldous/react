@@ -1,6 +1,6 @@
 {
   "stage": "test",
-  "testRunId": "run-test-1781752233-a39df920",
+  "testRunId": "run-test-1781858158-582eeedb",
   "result": "FULL",
   "loki": {
     "status": "reachable",
@@ -32,7 +32,7 @@
       "observed": true,
       "lines": 1,
       "traceIds": [
-        "d6c0b063cd3695eac7accdb8df8d25aa"
+        "994eb4a3d77a33a34b06120a9f7a5606"
       ],
       "result": "OK"
     },
@@ -66,10 +66,10 @@
       "observed": true,
       "lines": 4,
       "traceIds": [
-        "8eba472622d0b700dbec24ef4d669b68",
-        "20c6f0f9dd31670a7046811b6c5abb82",
-        "e39a7c44b6f5365216398686b8b52230",
-        "5baab86a62fb0a39430748f4a02b4903"
+        "cc7a05f27d16170ca01b18228e58c2a6",
+        "5dbdad5800e125c416e75a97d37ee38a",
+        "3885c66c7cf40c3f25fa0ac35b09b1a3",
+        "9a96bc93f6032a58957c43f3d3ed3561"
       ],
       "result": "OK"
     },
@@ -79,7 +79,7 @@
       "observed": true,
       "lines": 1,
       "traceIds": [
-        "d3ff722a83bb1f5b567ca3a98eedebe2"
+        "4afc0e7c1ba6d9182f2788c302e4eedc"
       ],
       "result": "OK"
     },
@@ -89,10 +89,10 @@
       "observed": true,
       "lines": 4,
       "traceIds": [
-        "5bfe415abe854d9386edeac7fce0d389",
-        "4e52d0059a1fee20b5120cc297e3e771",
-        "8fdeac74e526ac0ae6391f19527694a2",
-        "78a902b6fe576cd550f441ac761ddfb1"
+        "e12bb622262016ce522ac32ac8f07979",
+        "db093e4204abd365d1cdc01c3593a9c1",
+        "0acbc7d426bc140555f7b8f3a9bf51b5",
+        "b729763d7c138d4e00c3f597eab88f2c"
       ],
       "result": "OK"
     },
@@ -102,8 +102,8 @@
       "observed": true,
       "lines": 2,
       "traceIds": [
-        "88da6d9e19e469a973ca21c593352df2",
-        "99c15039e15120c8f0de63100d9eea38"
+        "7537bbe4aa8ddb7e38771dcfdf39669b",
+        "11c570681a1c17eec8dd1186c5e3922e"
       ],
       "result": "OK"
     },
@@ -113,10 +113,10 @@
       "observed": true,
       "lines": 4,
       "traceIds": [
-        "1bd92b43b4eb3519acc92c079739cd1e",
-        "ee6a83e9ea81a2eee058e3c93e290269",
-        "245219f0e540f836a2b46cc7706ebe6f",
-        "a1e7f51d2aea29270d3bb90c1e15b473"
+        "45c04b280f2d9cfb204248d58cb58547",
+        "647d2fb80bbc9c25738a6238d3ee0557",
+        "451cb0401089ef65e04f496b9fbb4c56",
+        "8fd8cc28eb425ec60c0e00d1666321c2"
       ],
       "result": "OK"
     },
@@ -126,8 +126,8 @@
       "observed": true,
       "lines": 2,
       "traceIds": [
-        "3a262a6a3d9b7ebf608b6acef8c2a14b",
-        "b63edb39d79c5c6ea3c5b38427f3b8a7"
+        "f75e1d47f8019ca4bde31365b4b957e2",
+        "a41a532639c86fd81780db143cf71625"
       ],
       "result": "OK"
     }
@@ -136,9 +136,9 @@
     {
       "scenarioId": "pipeline-health-probe",
       "result": "PASSED",
-      "chosenTraceId": "d6c0b063cd3695eac7accdb8df8d25aa",
+      "chosenTraceId": "994eb4a3d77a33a34b06120a9f7a5606",
       "candidateTraceIds": [
-        "d6c0b063cd3695eac7accdb8df8d25aa"
+        "994eb4a3d77a33a34b06120a9f7a5606"
       ],
       "found": true,
       "services": [
@@ -153,14 +153,14 @@
     {
       "scenarioId": "browser-bff-trace",
       "result": "PASSED",
-      "chosenTraceId": "d3ff722a83bb1f5b567ca3a98eedebe2",
+      "chosenTraceId": "4afc0e7c1ba6d9182f2788c302e4eedc",
       "candidateTraceIds": [
-        "d3ff722a83bb1f5b567ca3a98eedebe2"
+        "4afc0e7c1ba6d9182f2788c302e4eedc"
       ],
       "found": true,
       "services": [
-        "react-enterprise-app",
-        "platform-api"
+        "platform-api",
+        "react-enterprise-app"
       ],
       "missingServices": [],
       "routeFound": true,
@@ -171,8 +171,8 @@
   ],
   "notes": [
     "Correlated 18 line(s); all 7 required scenario(s) observed.",
-    "Trace d6c0b063cd3695eac7accdb8df8d25aa for 'pipeline-health-probe' matched in Tempo: services [platform-api].",
-    "Trace d3ff722a83bb1f5b567ca3a98eedebe2 for 'browser-bff-trace' matched in Tempo: services [react-enterprise-app, platform-api]."
+    "Trace 994eb4a3d77a33a34b06120a9f7a5606 for 'pipeline-health-probe' matched in Tempo: services [platform-api].",
+    "Trace 4afc0e7c1ba6d9182f2788c302e4eedc for 'browser-bff-trace' matched in Tempo: services [platform-api, react-enterprise-app]."
   ],
   "probe": {
     "scenario": "pipeline-health-probe",

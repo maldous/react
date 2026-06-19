@@ -248,7 +248,7 @@
       "kind": "clickthrough-granted",
       "target": "keycloak /kc/",
       "expected": "service UI (status<400, not SPA)",
-      "actual": "status=200 url=https://staging.aldous.info/kc/admin/master/console/",
+      "actual": "status=200 url=https://staging.aldous.info/kc/realms/master/protocol/openid-connect/auth?client_id=security-admin-console&redirect_uri=https%3A%2F%2Fstaging.aldous.info%2Fkc%2Fadmin%2Fmaster%2Fconsole%2F&state=30bf15db-638f-46dc-a345-7e71f450428d&response_mode=query&response_type=code&scope=openid&nonce=3e31ccad-a08c-428f-bdb1-20023837f78a&code_challenge=EONXSm7JrNdoArNVUQZAsI_O0goMJ91vo1yzNpOXl2I&code_challenge_method=S256",
       "ok": true
     },
     {
