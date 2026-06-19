@@ -9,6 +9,7 @@ import { SESSION_COOKIE_NAME } from "@platform/adapters-redis";
 import { resolveSessionFromIdentity, destroySession } from "../usecases/auth.ts";
 import { decryptToken } from "./token-crypto.ts";
 import { serverT } from "./i18n.ts";
+import { loadSessionConfig } from "../config/session-config.ts";
 import {
   getKeycloakConfig,
   getKeycloakConfigForRealm,
@@ -50,7 +51,7 @@ async function generateCodeChallenge(verifier: string): Promise<string> {
 // ---------------------------------------------------------------------------
 
 function getSessionCookieDomain(): string | undefined {
-  return process.env["SESSION_COOKIE_DOMAIN"];
+  return loadSessionConfig().cookieDomain;
 }
 
 // Exported for unit testing only.
@@ -59,7 +60,7 @@ function getSessionCookieDomain(): string | undefined {
 // NODE_ENV=production does NOT imply Secure — Cloudflare Flexible SSL means the
 // browser→Caddy leg is plain HTTP; browsers reject Secure cookies over HTTP.
 export function isSecureCookie(): boolean {
-  return process.env["SESSION_COOKIE_SECURE"] === "true";
+  return loadSessionConfig().cookieSecure === "true";
 }
 
 function buildSetCookieHeader(sessionId: string): string {
@@ -72,7 +73,7 @@ function buildSetCookieHeader(sessionId: string): string {
   if (isSecureCookie()) parts.push("Secure");
   const domain = getSessionCookieDomain();
   if (domain) parts.push(`Domain=${domain}`);
-  const ttl = parseInt(process.env["SESSION_TTL_SECONDS"] ?? "1800", 10);
+  const ttl = loadSessionConfig().ttlSeconds;
   parts.push(`Max-Age=${ttl}`);
   return parts.join("; ");
 }
@@ -369,7 +370,7 @@ export const handleAuthCallback: PipelineHandler = async (req, res) => {
   }
 
   // Resolve or create platform session
-  const ttlSeconds = parseInt(process.env["SESSION_TTL_SECONDS"] ?? "1800", 10);
+  const ttlSeconds = loadSessionConfig().ttlSeconds;
   let session;
   try {
     session = await resolveSessionFromIdentity(
@@ -464,7 +465,7 @@ export const handleAuthLogoutRedirect: PipelineHandler = async (req, res) => {
   const clearHeaders = buildClearCookieHeaders();
 
   // In fixture / dev mode (no real Keycloak), redirect directly to returnTo
-  if (process.env["LOCAL_FIXTURE_SESSION"]) {
+  if (loadSessionConfig().localFixtureSession) {
     // Reconstruct returnTo as full URL using the request host
     const host =
       (req.raw.headers["x-forwarded-host"] as string | undefined) ??

@@ -1,6 +1,7 @@
 import { type SessionActor } from "@platform/contracts-auth";
 import { resolvePermissions } from "@platform/domain-identity";
 import { FIXTURE } from "../db/seed.ts";
+import { loadSessionConfig } from "../config/session-config.ts";
 
 export type FixtureRole = "tenant-admin" | "viewer" | "no-membership" | "unauthenticated";
 
@@ -18,7 +19,7 @@ export function createFixtureSessionActor(role: "tenant-admin" | "viewer"): Sess
 
 /** Get the fixture session actor for the LOCAL_FIXTURE_SESSION env var role. */
 export function getFixtureSession(): SessionActor | null {
-  const role = process.env["LOCAL_FIXTURE_SESSION"] as FixtureRole | undefined;
+  const role = loadSessionConfig().localFixtureSession as FixtureRole | undefined;
   if (!role || role === "unauthenticated") return null;
   if (role === "no-membership") {
     // Test-only fixture ? not production identity semantics.

@@ -1043,9 +1043,27 @@
       "v2Target": "apps/platform-api/tests/unit/stage-config.test.ts",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/config/session-config.ts",
+      "introducingCommit": "dbb2bbcbf11a38722552997c34ed7c3788685c6f",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/config/session-config.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/session-config.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/session-config.test.ts",
+      "introducingCommit": "dbb2bbcbf11a38722552997c34ed7c3788685c6f",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/session-config.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
     }
   ],
   "deletions": [],
-  "additionCount": 105,
+  "additionCount": 107,
   "deletionCount": 0
 }
