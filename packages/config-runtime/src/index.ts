@@ -138,6 +138,35 @@ export function deepFreeze<T>(value: T): Readonly<T> {
  * ALL missing-required / invalid fields are collected and reported together (fail-closed boot).
  * Unknown `overrides` keys fail (V1C-CONF-07). No production fallback is introduced.
  */
+// Resolve a single field into `result`, pushing any error onto `errors`. Extracted from loadConfig
+// to keep its cognitive complexity low (override → default/optional/required → coerce).
+function resolveField(
+  fieldName: string,
+  def: ConfigFieldDef,
+  source: Record<string, string | undefined>,
+  overrides: Record<string, unknown>,
+  result: Record<string, unknown>,
+  errors: string[]
+): void {
+  if (fieldName in overrides) {
+    result[fieldName] = overrides[fieldName];
+    return;
+  }
+  const raw = source[def.key];
+  if (raw === undefined || raw === "") {
+    if ("default" in def && def.default !== undefined) result[fieldName] = def.default;
+    else if (def.optional)
+      result[fieldName] = undefined; // optional + unset ⇒ undefined (no fallback, no error)
+    else errors.push(`Required config "${fieldName}" (env ${def.key}) is not set`);
+    return;
+  }
+  try {
+    result[fieldName] = coerce(fieldName, def, raw);
+  } catch (e) {
+    errors.push((e as Error).message);
+  }
+}
+
 export function loadConfig<S extends ConfigSchema>(
   schema: S,
   opts: LoadConfigOptions<S> = {}
@@ -152,23 +181,7 @@ export function loadConfig<S extends ConfigSchema>(
 
   const result: Record<string, unknown> = {};
   for (const [fieldName, def] of Object.entries(schema)) {
-    if (fieldName in overrides) {
-      result[fieldName] = overrides[fieldName];
-      continue;
-    }
-    const raw = source[def.key];
-    if (raw === undefined || raw === "") {
-      if ("default" in def && def.default !== undefined) result[fieldName] = def.default;
-      else if (def.optional)
-        result[fieldName] = undefined; // optional + unset ⇒ undefined (no fallback, no error)
-      else errors.push(`Required config "${fieldName}" (env ${def.key}) is not set`);
-      continue;
-    }
-    try {
-      result[fieldName] = coerce(fieldName, def, raw);
-    } catch (e) {
-      errors.push((e as Error).message);
-    }
+    resolveField(fieldName, def, source, overrides, result, errors);
   }
 
   if (errors.length > 0)
@@ -176,6 +189,12 @@ export function loadConfig<S extends ConfigSchema>(
       `Invalid configuration (${errors.length}):\n  - ${errors.join("\n  - ")}`
     );
   return deepFreeze(result) as ResolvedConfig<S>;
+}
+
+/** Metadata default — never reveals a secret's default; non-secret defaults pass through. */
+function metadataDefault(def: ConfigFieldDef): string | number | boolean | null {
+  if (def.secret) return null;
+  return "default" in def && def.default !== undefined ? def.default : null;
 }
 
 /** Machine-readable property metadata — NEVER includes secret values. */
@@ -187,7 +206,7 @@ export function configMetadata(schema: ConfigSchema): ConfigPropertyMetadata[] {
     required: isRequired(def),
     secret: !!def.secret,
     public: !!def.public,
-    default: def.secret ? null : "default" in def && def.default !== undefined ? def.default : null,
+    default: metadataDefault(def),
     restartOrReload: def.restartOrReload ?? "restart-required",
     description: def.description ?? null,
   }));

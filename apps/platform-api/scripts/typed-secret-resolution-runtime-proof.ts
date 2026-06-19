@@ -32,12 +32,21 @@ const ACTOR = { actorId: "00000000-0000-0000-0000-000000000000", actorRoles: ["s
 
 let failures = 0;
 const check = (label: string, ok: boolean, detail = ""): void => {
-  console.log(`${ok ? "PASS" : "FAIL"}  ${label}${detail ? ` — ${detail}` : ""}`);
+  const suffix = detail ? ` — ${detail}` : "";
+  console.log(`${ok ? "PASS" : "FAIL"}  ${label}${suffix}`);
   if (!ok) failures++;
 };
 function capturingAudit(): { port: AuditEventPort; events: AuditEvent[] } {
   const events: AuditEvent[] = [];
-  return { events, port: { emit: async (e) => void events.push(e), query: async () => events } };
+  return {
+    events,
+    port: {
+      emit: async (e: AuditEvent) => {
+        events.push(e);
+      },
+      query: async () => events,
+    },
+  };
 }
 async function pgReachable(url: string): Promise<boolean> {
   const p = new pg.Pool({ connectionString: url, connectionTimeoutMillis: 2000, max: 1 });

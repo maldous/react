@@ -88,8 +88,15 @@ export function loadWebPublicConfig(source: Record<string, unknown> = {}): WebPu
       else errors.push(`Required public web config "${field}" (${def.key}) is not set`);
       continue;
     }
-    result[field] =
-      def.type === "boolean" ? raw === true || raw === "true" || raw === "1" : String(raw);
+    if (def.type === "boolean") {
+      result[field] = raw === true || raw === "true" || raw === "1";
+    } else if (typeof raw === "string") {
+      result[field] = raw;
+    } else {
+      // Primitives only in practice (import.meta.env values are strings); JSON.stringify avoids
+      // String(object) ⇒ "[object Object]" (S6551).
+      result[field] = JSON.stringify(raw);
+    }
   }
   if (errors.length > 0)
     throw new WebConfigError(
