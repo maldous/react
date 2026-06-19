@@ -1,7 +1,8 @@
 # Repo-specific Semgrep rules for the hexagonal multi-tenant platform.
 # These encode the hard constraints from CLAUDE.md and ADR-0001/0013/0029/0030/0037/0043.
 # Run: npm run semgrep   (offline, --metrics=off; never `semgrep login` / --upload from this repo)
-# These are a REVIEW AID. They are NOT wired into `make check` and do not weaken any existing gate.
+# ERROR-severity rules are a HARD GATE: `make check`/`make ci` run `npm run semgrep:gate`
+# (--severity ERROR --error). WARNING/INFO rules are advisory review aids and do not gate.
 rules:
   # --- Constraint #3 / #7: no adapter or server-only imports in the React SPA ---
   - id: no-adapter-import-in-spa
@@ -186,3 +187,43 @@ rules:
     message: >-
       Secret-bearing field referenced in a log or audit/metadata payload. Secrets are write-only and
       must never be logged or audited (ADR-0043, CLAUDE.md constraint #8).
+
+  # --- V1C-CONF-06 / ADR-0076: no direct process.env in product runtime outside the typed-config
+  # boundary. Configuration is read through typed projections (apps/platform-api/src/config/*) via
+  # @platform/config-runtime loadConfig — validated, immutable, fail-closed. Matches LITERAL access
+  # (process.env.FOO / process.env["FOO"]); legitimately DYNAMIC reads (process.env[var],
+  # process.env[`${prefix}_X`] — e.g. per-provider IdP config, the mock-override flag) are allowed.
+  # Approved NON-product boundaries are excluded below (operator scripts/DB-CLI, dev/CI tooling, the
+  # web build, leaf infra libraries, and the config kernel itself).
+  - id: no-direct-process-env-outside-config
+    languages: [generic]
+    severity: ERROR
+    paths:
+      include:
+        - "**/apps/platform-api/src/**/*.ts"
+        - "**/packages/*/src/**/*.ts"
+        - "**/apps/react-enterprise-app/src/**/*.ts"
+        - "**/apps/react-enterprise-app/src/**/*.tsx"
+      exclude:
+        - "**/*.test.ts"
+        - "**/*.test.tsx"
+        - "**/tests/**"
+        # typed-config boundary (projections + Tier-0/Tier-1 bootstrap secrets) — V1C-CONF
+        - "**/apps/platform-api/src/config/**"
+        # operator DB-CLI entrypoints (run via make db-migrate|seed|reset) read superuser POSTGRES_URL
+        - "**/apps/platform-api/src/db/migrate.ts"
+        - "**/apps/platform-api/src/db/seed.ts"
+        - "**/apps/platform-api/src/db/reset.ts"
+        # the typed-config kernel
+        - "**/packages/config-runtime/**"
+        # leaf infra libraries with no composition root (sole OTEL owner: adapters-opentelemetry)
+        - "**/packages/platform-logging/src/**"
+        - "**/packages/adapters-opentelemetry/src/**"
+    patterns:
+      - pattern-regex: "process\\.env\\s*(\\.[A-Za-z_]|\\[\\s*['\"])"
+    message: >-
+      Direct process.env read outside the typed-config boundary. Add the key to a typed projection
+      under apps/platform-api/src/config/* and read it through @platform/config-runtime loadConfig
+      (validated, immutable, fail-closed) — V1C-CONF-06 / ADR-0076. If the access is genuinely dynamic
+      (computed key) or belongs to an approved non-product boundary, use a non-literal read or add the
+      path to this rule's excludes with a one-line justification.
