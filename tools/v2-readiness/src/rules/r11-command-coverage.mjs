@@ -70,11 +70,36 @@ export default function r11CommandCoverage(ctx) {
         )
       );
   }
-  // merge/retire need a retireReason
-  for (const c of ctx.commandMap)
+  // full catalogue <-> map bijection across ALL kinds (make/npm/compose/node/shell), both directions
+  const catNames = new Set(ctx.commandCatalog.map((c) => c.name));
+  const mapV1 = ctx.commandMap.map((c) => c.v1Name);
+  const mapNameSet = new Set(mapV1);
+  for (const n of catNames)
+    if (!mapNameSet.has(n))
+      out.push(finding("R11-command-coverage", n, "catalogue command has no command-map entry"));
+  for (const n of mapNameSet)
+    if (!catNames.has(n))
+      out.push(finding("R11-command-coverage", n, "command-map entry has no catalogue command"));
+  // duplicate map names
+  const seen = new Set();
+  for (const n of mapV1) {
+    if (seen.has(n)) out.push(finding("R11-command-coverage", n, "duplicate command-map v1Name"));
+    seen.add(n);
+  }
+  // merge target must resolve to a surviving command
+  for (const c of ctx.commandMap) {
+    if (c.disposition === "merge" && c.v2Name && !mapNameSet.has(c.v2Name))
+      out.push(
+        finding(
+          "R11-command-coverage",
+          c.v1Name,
+          `merge target "${c.v2Name}" is not a known command`
+        )
+      );
     if ((c.disposition === "merge" || c.disposition === "retire") && !c.retireReason)
       out.push(
         finding("R11-command-coverage", c.v1Name, `${c.disposition} without a retireReason`)
       );
+  }
   return out;
 }

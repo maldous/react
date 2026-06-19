@@ -2821,5 +2821,563 @@
     "stageCoverage": "test (node --test; test:architecture)",
     "failureEvidence": "node:test assertion output",
     "note": "post-audit (ADR-ACT-0292)"
+  },
+  {
+    "id": "package.json#proof:auth-settings",
+    "path": "package.json#proof:auth-settings",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:auth-settings)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:auth-idps",
+    "path": "package.json#proof:auth-idps",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:auth-idps)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:auth-credential-lifecycle",
+    "path": "package.json#proof:auth-credential-lifecycle",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:auth-credential-lifecycle)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:auth-oidc-enterprise",
+    "path": "package.json#proof:auth-oidc-enterprise",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:auth-oidc-enterprise)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:email-sender",
+    "path": "package.json#proof:email-sender",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:email-sender)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:tenant-domains",
+    "path": "package.json#proof:tenant-domains",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:tenant-domains)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:tenant-storage",
+    "path": "package.json#proof:tenant-storage",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:tenant-storage)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:tenant-observability",
+    "path": "package.json#proof:tenant-observability",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:tenant-observability)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:webhooks",
+    "path": "package.json#proof:webhooks",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:webhooks)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:webhook-worker",
+    "path": "package.json#proof:webhook-worker",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:webhook-worker)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:tenant-domains-routing",
+    "path": "package.json#proof:tenant-domains-routing",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:tenant-domains-routing)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:webhook-redrive",
+    "path": "package.json#proof:webhook-redrive",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:webhook-redrive)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:platform-services",
+    "path": "package.json#proof:platform-services",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:platform-services)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:entitlements",
+    "path": "package.json#proof:entitlements",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:entitlements)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:entitlement-policy-chain",
+    "path": "package.json#proof:entitlement-policy-chain",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:entitlement-policy-chain)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:service-catalog-registry",
+    "path": "package.json#proof:service-catalog-registry",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:service-catalog-registry)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:entitlements-postgres",
+    "path": "package.json#proof:entitlements-postgres",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:entitlements-postgres)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:entitlements-routes",
+    "path": "package.json#proof:entitlements-routes",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:entitlements-routes)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:metering",
+    "path": "package.json#proof:metering",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:metering)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:quota-enforcement",
+    "path": "package.json#proof:quota-enforcement",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:quota-enforcement)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:metering-quota-routes",
+    "path": "package.json#proof:metering-quota-routes",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:metering-quota-routes)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:api-keys",
+    "path": "package.json#proof:api-keys",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:api-keys)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:rate-limits",
+    "path": "package.json#proof:rate-limits",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:rate-limits)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:rate-limits-redis",
+    "path": "package.json#proof:rate-limits-redis",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:rate-limits-redis)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:provider-environment-classification",
+    "path": "package.json#proof:provider-environment-classification",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:provider-environment-classification)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:api-key-routes",
+    "path": "package.json#proof:api-key-routes",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:api-key-routes)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:search",
+    "path": "package.json#proof:search",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:search)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:search-isolation",
+    "path": "package.json#proof:search-isolation",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:search-isolation)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:search-routes",
+    "path": "package.json#proof:search-routes",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:search-routes)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:event-bus",
+    "path": "package.json#proof:event-bus",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:event-bus)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:event-worker",
+    "path": "package.json#proof:event-worker",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:event-worker)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:event-redrive",
+    "path": "package.json#proof:event-redrive",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:event-redrive)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:profile-self-service",
+    "path": "package.json#proof:profile-self-service",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:profile-self-service)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:notification-preferences",
+    "path": "package.json#proof:notification-preferences",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:notification-preferences)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:notification-dispatch",
+    "path": "package.json#proof:notification-dispatch",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:notification-dispatch)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:observability-signals",
+    "path": "package.json#proof:observability-signals",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:observability-signals)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:alerting",
+    "path": "package.json#proof:alerting",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:alerting)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:incident-foundation",
+    "path": "package.json#proof:incident-foundation",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:incident-foundation)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:alert-notification-bridge",
+    "path": "package.json#proof:alert-notification-bridge",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:alert-notification-bridge)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:scheduled-jobs",
+    "path": "package.json#proof:scheduled-jobs",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:scheduled-jobs)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:scheduled-job-routes",
+    "path": "package.json#proof:scheduled-job-routes",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:scheduled-job-routes)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:secret-store-contract",
+    "path": "package.json#proof:secret-store-contract",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:secret-store-contract)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:secrets-openbao",
+    "path": "package.json#proof:secrets-openbao",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:secrets-openbao)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:provider-secrets-readiness",
+    "path": "package.json#proof:provider-secrets-readiness",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:provider-secrets-readiness)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:provider-config",
+    "path": "package.json#proof:provider-config",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:provider-config)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:environment-registry",
+    "path": "package.json#proof:environment-registry",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:environment-registry)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:environment-operations",
+    "path": "package.json#proof:environment-operations",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:environment-operations)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:environment-admin-bootstrap",
+    "path": "package.json#proof:environment-admin-bootstrap",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:environment-admin-bootstrap)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:clickthrough",
+    "path": "package.json#proof:clickthrough",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:clickthrough)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:provider-readiness-contract",
+    "path": "package.json#proof:provider-readiness-contract",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:provider-readiness-contract)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:composed-provider-readiness",
+    "path": "package.json#proof:composed-provider-readiness",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:composed-provider-readiness)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:history",
+    "path": "package.json#proof:history",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:history)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:notification-email-transport",
+    "path": "package.json#proof:notification-email-transport",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:notification-email-transport)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:notification-webhook-transport",
+    "path": "package.json#proof:notification-webhook-transport",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:notification-webhook-transport)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:notification-transport-routes",
+    "path": "package.json#proof:notification-transport-routes",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:notification-transport-routes)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:backup-local",
+    "path": "package.json#proof:backup-local",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:backup-local)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:domain-identity-matrix",
+    "path": "package.json#proof:domain-identity-matrix",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:domain-identity-matrix)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:tenant-custom-domain-resolution",
+    "path": "package.json#proof:tenant-custom-domain-resolution",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:tenant-custom-domain-resolution)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:tenant-domain-canonical",
+    "path": "package.json#proof:tenant-domain-canonical",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:tenant-domain-canonical)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:tenant-custom-domain-auth-origin",
+    "path": "package.json#proof:tenant-custom-domain-auth-origin",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:tenant-custom-domain-auth-origin)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:service-clickthrough-policy",
+    "path": "package.json#proof:service-clickthrough-policy",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:service-clickthrough-policy)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:tenant-domain-claim-lifecycle",
+    "path": "package.json#proof:tenant-domain-claim-lifecycle",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
+    "stageCoverage": "proof script (npm run proof:tenant-domain-claim-lifecycle)",
+    "failureEvidence": "proof script assertion output"
   }
 ]

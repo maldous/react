@@ -188,6 +188,46 @@ test("R10 fires on a file-set mismatch (inventory vs path-map)", () => {
   fires(r10, a, "R10-file-coverage");
 });
 
+test("R10: a post-audit file at the cut-candidate FAILS until entered in the delta/map", () => {
+  const a = clone(cleanCtx());
+  a.candidateTracked.files.push("apps/new-after-audit.ts"); // present at candidate, unmapped, no delta
+  fires(r10, a, "R10-file-coverage");
+  // entering it in the delta with all required fields clears it
+  a.postAuditDelta.additions.push({
+    path: "apps/new-after-audit.ts",
+    introducingCommit: "abc1234",
+    purpose: "new V2 capability file",
+    v2Disposition: "reuse-unchanged",
+    v2Target: "apps/new-after-audit.ts",
+    protectingTests: ["t.test.ts"],
+    decisionRefs: ["ADR-ACT-0292"],
+  });
+  assert.deepEqual(r10(a), []);
+});
+
+test("R10: a delta addition with a missing required field fails", () => {
+  const a = clone(cleanCtx());
+  a.candidateTracked.files.push("apps/x.ts");
+  a.postAuditDelta.additions.push({ path: "apps/x.ts", introducingCommit: "abc" }); // missing fields
+  fires(r10, a, "R10-file-coverage");
+});
+
+test("R10: under --strict a pinned non-HEAD candidate fails unless --historical", () => {
+  const a = clone(cleanCtx());
+  a.cutCandidateCommit = "feedface";
+  a.headCommit = "deadbeef";
+  fires(r10, a, "R10-file-coverage");
+  a.historical = true; // historical mode permits a non-HEAD snapshot
+  assert.deepEqual(r10(a), []);
+});
+
+test("R10: --require-clean fails on a dirty working tree", () => {
+  const a = clone(cleanCtx());
+  a.requireClean = true;
+  a.treeClean = false;
+  fires(r10, a, "R10-file-coverage");
+});
+
 test("R11 fires on an uncatalogued live npm script and on a stale catalogue entry", () => {
   const a = clone(cleanCtx());
   a.packageJsonScripts.newscript = "x";
@@ -224,6 +264,41 @@ test("R14 fires on a missing foundation artefact", () => {
   const a = clone(cleanCtx());
   a.foundation["ui-capability-model.json"] = null;
   fires(r14, a, "R14-foundation");
+});
+
+test("R14 fires when a ui-capability-model record misses a schema-required field", () => {
+  const a = clone(cleanCtx());
+  a.foundation["ui-definition.schema.json"] = { required: ["capabilityId", "route", "a11y"] };
+  a.foundation["ui-capability-model.json"] = { capabilities: [{ capabilityId: "x", route: "/x" }] }; // no a11y
+  fires(r14, a, "R14-foundation");
+});
+
+test("R13 fires when a requires-v1-completion capability has no completion-actions entry", () => {
+  const a = clone(cleanCtx());
+  a.capabilities.push({
+    capability: "Z",
+    status: "requires-v1-completion",
+    completionAction: "V1C-77",
+  });
+  // completionActions.actions is empty -> no entry for V1C-77
+  fires(r13, a, "R13-decision-governance");
+});
+
+test("R13 passes when the completion-actions entry exists", () => {
+  const a = clone(cleanCtx());
+  a.capabilities.push({
+    capability: "Z",
+    status: "requires-v1-completion",
+    completionAction: "V1C-77",
+  });
+  a.completionActions.actions.push({
+    id: "V1C-77",
+    parentCapability: "Z",
+    status: "requires-v1-completion",
+    decision: "build",
+    stopCondition: "done",
+  });
+  assert.deepEqual(r13(a), []);
 });
 
 test("R15 fires on an apps/api reference anywhere", () => {

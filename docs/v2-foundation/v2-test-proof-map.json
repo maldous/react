@@ -2249,7 +2249,7 @@
   },
   {
     "v1Path": "apps/react-enterprise-app/vitest.config.ts",
-    "v2Path": "apps/react-enterprise-app/vitest.config.ts",
+    "v2Path": "apps/web/vitest.config.ts",
     "migrationType": "carry",
     "selectorsOrImportsChange": false,
     "becomesReusableContract": false,
@@ -2501,6 +2501,502 @@
     "migrationType": "carry",
     "selectorsOrImportsChange": false,
     "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:auth-settings",
+    "v2Path": "package.json#proof:auth-settings",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:auth-idps",
+    "v2Path": "package.json#proof:auth-idps",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:auth-credential-lifecycle",
+    "v2Path": "package.json#proof:auth-credential-lifecycle",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:auth-oidc-enterprise",
+    "v2Path": "package.json#proof:auth-oidc-enterprise",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:email-sender",
+    "v2Path": "package.json#proof:email-sender",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:tenant-domains",
+    "v2Path": "package.json#proof:tenant-domains",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:tenant-storage",
+    "v2Path": "package.json#proof:tenant-storage",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:tenant-observability",
+    "v2Path": "package.json#proof:tenant-observability",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:webhooks",
+    "v2Path": "package.json#proof:webhooks",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:webhook-worker",
+    "v2Path": "package.json#proof:webhook-worker",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:tenant-domains-routing",
+    "v2Path": "package.json#proof:tenant-domains-routing",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:webhook-redrive",
+    "v2Path": "package.json#proof:webhook-redrive",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:platform-services",
+    "v2Path": "package.json#proof:platform-services",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:entitlements",
+    "v2Path": "package.json#proof:entitlements",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:entitlement-policy-chain",
+    "v2Path": "package.json#proof:entitlement-policy-chain",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:service-catalog-registry",
+    "v2Path": "package.json#proof:service-catalog-registry",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:entitlements-postgres",
+    "v2Path": "package.json#proof:entitlements-postgres",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:entitlements-routes",
+    "v2Path": "package.json#proof:entitlements-routes",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:metering",
+    "v2Path": "package.json#proof:metering",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:quota-enforcement",
+    "v2Path": "package.json#proof:quota-enforcement",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:metering-quota-routes",
+    "v2Path": "package.json#proof:metering-quota-routes",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:api-keys",
+    "v2Path": "package.json#proof:api-keys",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:rate-limits",
+    "v2Path": "package.json#proof:rate-limits",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:rate-limits-redis",
+    "v2Path": "package.json#proof:rate-limits-redis",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:provider-environment-classification",
+    "v2Path": "package.json#proof:provider-environment-classification",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:api-key-routes",
+    "v2Path": "package.json#proof:api-key-routes",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:search",
+    "v2Path": "package.json#proof:search",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:search-isolation",
+    "v2Path": "package.json#proof:search-isolation",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:search-routes",
+    "v2Path": "package.json#proof:search-routes",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:event-bus",
+    "v2Path": "package.json#proof:event-bus",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:event-worker",
+    "v2Path": "package.json#proof:event-worker",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:event-redrive",
+    "v2Path": "package.json#proof:event-redrive",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:profile-self-service",
+    "v2Path": "package.json#proof:profile-self-service",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:notification-preferences",
+    "v2Path": "package.json#proof:notification-preferences",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:notification-dispatch",
+    "v2Path": "package.json#proof:notification-dispatch",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:observability-signals",
+    "v2Path": "package.json#proof:observability-signals",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:alerting",
+    "v2Path": "package.json#proof:alerting",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:incident-foundation",
+    "v2Path": "package.json#proof:incident-foundation",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:alert-notification-bridge",
+    "v2Path": "package.json#proof:alert-notification-bridge",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:scheduled-jobs",
+    "v2Path": "package.json#proof:scheduled-jobs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:scheduled-job-routes",
+    "v2Path": "package.json#proof:scheduled-job-routes",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:secret-store-contract",
+    "v2Path": "package.json#proof:secret-store-contract",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:secrets-openbao",
+    "v2Path": "package.json#proof:secrets-openbao",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:provider-secrets-readiness",
+    "v2Path": "package.json#proof:provider-secrets-readiness",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:provider-config",
+    "v2Path": "package.json#proof:provider-config",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:environment-registry",
+    "v2Path": "package.json#proof:environment-registry",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:environment-operations",
+    "v2Path": "package.json#proof:environment-operations",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:environment-admin-bootstrap",
+    "v2Path": "package.json#proof:environment-admin-bootstrap",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:clickthrough",
+    "v2Path": "package.json#proof:clickthrough",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:provider-readiness-contract",
+    "v2Path": "package.json#proof:provider-readiness-contract",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:composed-provider-readiness",
+    "v2Path": "package.json#proof:composed-provider-readiness",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:history",
+    "v2Path": "package.json#proof:history",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:notification-email-transport",
+    "v2Path": "package.json#proof:notification-email-transport",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:notification-webhook-transport",
+    "v2Path": "package.json#proof:notification-webhook-transport",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:notification-transport-routes",
+    "v2Path": "package.json#proof:notification-transport-routes",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:backup-local",
+    "v2Path": "package.json#proof:backup-local",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:domain-identity-matrix",
+    "v2Path": "package.json#proof:domain-identity-matrix",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:tenant-custom-domain-resolution",
+    "v2Path": "package.json#proof:tenant-custom-domain-resolution",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:tenant-domain-canonical",
+    "v2Path": "package.json#proof:tenant-domain-canonical",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:tenant-custom-domain-auth-origin",
+    "v2Path": "package.json#proof:tenant-custom-domain-auth-origin",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:service-clickthrough-policy",
+    "v2Path": "package.json#proof:service-clickthrough-policy",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:tenant-domain-claim-lifecycle",
+    "v2Path": "package.json#proof:tenant-domain-claim-lifecycle",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
     "retirementJustification": null
   }
 ]

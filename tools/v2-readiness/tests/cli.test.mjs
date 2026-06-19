@@ -33,7 +33,8 @@ test("exit 1 (RED) on the live repo with --json shape", () => {
   const report = JSON.parse(r.stdout);
   assert.equal(report.ok, false);
   assert.ok(Array.isArray(report.findings));
-  assert.equal(report.pinnedV1Commit, AUDITED_V1_COMMIT);
+  assert.equal(report.auditBaseCommit, AUDITED_V1_COMMIT);
+  assert.match(report.cutCandidateCommit, /^[0-9a-f]{7,40}$/);
   assert.equal(typeof report.totalRules, "number");
 });
 

@@ -4,11 +4,13 @@ import path from "node:path";
 const exists = (p) => fs.existsSync(p);
 const readText = (p) => (exists(p) ? fs.readFileSync(p, "utf8") : "");
 
-// Walk source roots once, collecting @platform/<name> import specifiers -> [importing files].
+// Walk source roots once, collecting @platform/<name>[/subpath] specifiers -> [importing files].
+// Captures static import/export-from, dynamic import(), require(), and type-only imports (all are
+// quoted specifiers); subpath imports (@platform/pkg/sub) resolve to the owning package name.
 export function collectImportMap(repoRoot, roots = ["apps", "packages", "tools", "services"]) {
   const map = {};
   const skip = new Set(["node_modules", ".git", "dist", "build", "coverage", ".turbo"]);
-  const re = /['"]@platform\/([a-z0-9-]+)['"]/g;
+  const re = /['"]@platform\/([a-z0-9-]+)(?:\/[^'"]*)?['"]/g;
   const walk = (dir) => {
     let entries;
     try {
@@ -31,53 +33,21 @@ export function collectImportMap(repoRoot, roots = ["apps", "packages", "tools",
   return map;
 }
 
-// Determine live removal status for a deprecated package. Blocker clears only when the package is
-// genuinely gone (dir + all cleanup refs absent, no external import) AND removal evidence validates.
-export function packageRemovalStatus(
-  repoRoot,
-  pkg,
-  { importMap, loaderPath = "apps/platform-api/loader.mjs" } = {}
-) {
-  const R = (p) => path.join(repoRoot, p);
-  const signals = {};
-  signals.dir = exists(R(`packages/${pkg}`));
-  signals.lifecycleMetadata = exists(R(`packages/${pkg}/package.json`));
-  signals.loaderAlias = new RegExp(`@platform/${pkg}\\b|packages/${pkg}\\b`).test(
-    readText(R(loaderPath))
-  );
-  signals.tsconfigRef = new RegExp(`\\b${pkg}\\b`).test(
-    readText(R("packages/tsconfig.packages.json"))
-  );
-  signals.importBoundaryRow = new RegExp(`@platform/${pkg}\\b|packages/${pkg}\\b|"${pkg}"`).test(
-    readText(R("docs/architecture/import-boundary-rules.json"))
-  );
-  // external source import: some file OUTSIDE packages/<pkg> imports @platform/<pkg>
-  const importers = (importMap && importMap[pkg]) || new Set();
-  signals.sourceImport = [...importers].some((f) => !f.includes(`packages/${pkg}/`));
-  // workspace dependency: another package.json declares @platform/<pkg>
-  signals.workspaceDep = workspaceDependsOn(repoRoot, pkg);
-
-  const present = Object.values(signals).some(Boolean);
-
-  // removal evidence convention: docs/evidence/lifecycle/removal/<pkg>.md, validating with a clean scan marker
-  const evPath = R(`docs/evidence/lifecycle/removal/${pkg}.md`);
-  const evText = readText(evPath);
-  const removalEvidenceOk =
-    exists(evPath) && /consumer scan:\s*clean/i.test(evText) && /removed/i.test(evText);
-
-  const removed = !present;
-  const blocker = present || !removalEvidenceOk;
-  const reasons = Object.entries(signals)
-    .filter(([, v]) => v)
-    .map(([k]) => k);
-  if (!removalEvidenceOk) reasons.push("removal-evidence-missing-or-invalid");
-  return { pkg, present, removed, removalEvidenceOk, blocker, signals, reasons };
+// Does any package-lock.json still carry the workspace package?
+function lockfileCarries(repoRoot, pkg) {
+  const locks = [
+    "package-lock.json",
+    "apps/web/package-lock.json",
+    "services/mock-oidc/package-lock.json",
+  ];
+  const needle = new RegExp(`packages/${pkg}"|@platform/${pkg}"`);
+  for (const l of locks) if (needle.test(readText(path.join(repoRoot, l)))) return true;
+  return false;
 }
 
 function workspaceDependsOn(repoRoot, pkg) {
   const spec = `@platform/${pkg}`;
-  const roots = ["packages", "apps", "services"];
-  for (const root of roots) {
+  for (const root of ["packages", "apps", "services"]) {
     let dirs;
     try {
       dirs = fs.readdirSync(path.join(repoRoot, root), { withFileTypes: true });
@@ -99,10 +69,99 @@ function workspaceDependsOn(repoRoot, pkg) {
         "devDependencies",
         "peerDependencies",
         "optionalDependencies",
-      ]) {
+      ])
         if (pj[field] && Object.prototype.hasOwnProperty.call(pj[field], spec)) return true;
-      }
     }
   }
   return false;
+}
+
+const REQUIRED_EVIDENCE_FIELDS = [
+  "schemaVersion",
+  "package",
+  "removedAt",
+  "sourceCommit",
+  "removalCommit",
+  "replacement",
+  "decisionRefs",
+  "commandsRun",
+  "consumerScan",
+  "workspaceDependencyScan",
+  "loaderAliasScan",
+  "tsconfigReferenceScan",
+  "boundaryRuleScan",
+  "lockfileScan",
+  "inventoryScan",
+  "tests",
+  "makeCheckResult",
+  "orchestratorResult",
+];
+const SCAN_FIELDS = [
+  "consumerScan",
+  "workspaceDependencyScan",
+  "loaderAliasScan",
+  "tsconfigReferenceScan",
+  "boundaryRuleScan",
+  "lockfileScan",
+  "inventoryScan",
+];
+
+// Structured, schema-validated removal evidence (§3). Markdown is not the source of truth.
+export function validateRemovalEvidence(repoRoot, pkg) {
+  const p = path.join(repoRoot, `docs/evidence/lifecycle/removal/${pkg}/removal-evidence.json`);
+  if (!exists(p)) return { ok: false, reason: "evidence-file-missing" };
+  let ev;
+  try {
+    ev = JSON.parse(readText(p));
+  } catch {
+    return { ok: false, reason: "evidence-not-json" };
+  }
+  for (const f of REQUIRED_EVIDENCE_FIELDS)
+    if (!(f in ev)) return { ok: false, reason: `evidence-missing-${f}` };
+  if (ev.package !== pkg) return { ok: false, reason: "evidence-package-mismatch" };
+  for (const s of SCAN_FIELDS) {
+    const scan = ev[s] || {};
+    if (scan.status !== "clean") return { ok: false, reason: `${s}-not-clean` };
+    if (typeof scan.count === "number" && scan.count !== 0)
+      return { ok: false, reason: `${s}-count-nonzero` };
+  }
+  return { ok: true, reason: "valid" };
+}
+
+// Determine live removal status for a deprecated package. Blocker clears only when the package is
+// genuinely gone (dir + all cleanup refs absent, no external import, not in any lockfile) AND
+// structured removal evidence validates.
+export function packageRemovalStatus(
+  repoRoot,
+  pkg,
+  { importMap, loaderPath = "apps/platform-api/loader.mjs" } = {}
+) {
+  const R = (p) => path.join(repoRoot, p);
+  const signals = {};
+  signals.dir = exists(R(`packages/${pkg}`));
+  signals.lifecycleMetadata = exists(R(`packages/${pkg}/package.json`));
+  signals.loaderAlias = new RegExp(`@platform/${pkg}\\b|packages/${pkg}\\b`).test(
+    readText(R(loaderPath))
+  );
+  signals.tsconfigRef = new RegExp(`\\b${pkg}\\b`).test(
+    readText(R("packages/tsconfig.packages.json"))
+  );
+  signals.importBoundaryRow = new RegExp(`@platform/${pkg}\\b|packages/${pkg}\\b|"${pkg}"`).test(
+    readText(R("docs/architecture/import-boundary-rules.json"))
+  );
+  const importers = (importMap && importMap[pkg]) || new Set();
+  signals.sourceImport = [...importers].some((f) => !f.includes(`packages/${pkg}/`));
+  signals.workspaceDep = workspaceDependsOn(repoRoot, pkg);
+  signals.lockfile = lockfileCarries(repoRoot, pkg);
+
+  const present = Object.values(signals).some(Boolean);
+  const evidence = validateRemovalEvidence(repoRoot, pkg);
+  const removalEvidenceOk = evidence.ok;
+  const removed = !present;
+  const blocker = present || !removalEvidenceOk;
+  const reasons = Object.entries(signals)
+    .filter(([, v]) => v)
+    .map(([k]) => k);
+  if (!removalEvidenceOk) reasons.push(`removal-evidence:${evidence.reason}`);
+  return { pkg, present, removed, removalEvidenceOk, blocker, signals, reasons };
 }

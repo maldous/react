@@ -5,8 +5,18 @@ export function cleanCtx() {
   return {
     repoRoot: "/fixture",
     strict: true,
-    pinnedV1Commit: AUDITED_V1_COMMIT,
+    historical: false,
+    requireClean: false,
+    auditBaseCommit: AUDITED_V1_COMMIT,
+    cutCandidateCommit: "deadbeefdeadbeefdeadbeefdeadbeefdeadbeef",
+    headCommit: "deadbeefdeadbeefdeadbeefdeadbeefdeadbeef",
+    candidateResolves: true,
+    treeClean: true,
+    pinnedV1Commit: "deadbeefdeadbeefdeadbeefdeadbeefdeadbeef",
     auditedCommit: AUDITED_V1_COMMIT,
+    candidateTracked: { files: ["a.ts", "packages/legacy-thing/package.json"], ok: true },
+    postAuditDelta: { schemaVersion: 1, additions: [], deletions: [] },
+    completionActions: { schemaVersion: 1, actions: [] },
     pathMap: [
       {
         v1Path: "a.ts",
@@ -83,19 +93,19 @@ export function cleanCtx() {
       },
       { path: "apps/web", allowedContents: [], forbiddenContents: [], dependencyDirection: "x" },
     ],
-    foundation: Object.fromEntries(
-      [
-        "service-and-clickthrough-matrix.json",
-        "authentication-authorisation-matrix.json",
-        "environment-and-config-catalog.json",
-        "data-and-migration-plan.json",
-        "v1-knowledge-ledger.json",
-        "v2-directory-contracts.json",
-        "ui-definition.schema.json",
-        "ui-component-contracts.json",
-        "ui-capability-model.json",
-      ].map((k) => [k, [{ ok: 1 }]])
-    ),
+    foundation: {
+      "service-and-clickthrough-matrix.json": [{ ok: 1 }],
+      "authentication-authorisation-matrix.json": [{ ok: 1 }],
+      "environment-and-config-catalog.json": [{ ok: 1 }],
+      "data-and-migration-plan.json": [{ ok: 1 }],
+      "v1-knowledge-ledger.json": [
+        { topic: "x", acceptedResolution: "x", originatingCommits: ["abc"], v2TargetDecision: "x" },
+      ],
+      "v2-directory-contracts.json": [{ ok: 1 }],
+      "ui-definition.schema.json": { required: ["capabilityId"] },
+      "ui-component-contracts.json": [{ ok: 1 }],
+      "ui-capability-model.json": { capabilities: [{ capabilityId: "x" }] },
+    },
     reconciliation: {
       verdict: "NOT-ZERO-GAPS — honest",
       files: { buckets: { "reuse-unchanged": 1, "delete-after-proof": 1 } },
@@ -104,7 +114,7 @@ export function cleanCtx() {
       capabilities: { buckets: { "delivered-and-proven": 1 } },
       semanticGapsRemaining: { count: 0, openDecisions: [] },
     },
-    targetTree: "apps/\n  platform-api/\n  web/\npackages/\n",
+    targetTree: "react-v2/\n├── apps/\n│   ├── platform-api/\n│   └── web/\n└── packages/\n",
     gapReport: "# Gap report\nVerdict: honest — not zero gaps where work remains.\n",
     programme: "# Programme\nwork {{PINNED_V1_COMMIT}}.\n",
     runbook: `runbook depends on tools/v2-readiness; audited ${AUDITED_V1_COMMIT}.`,

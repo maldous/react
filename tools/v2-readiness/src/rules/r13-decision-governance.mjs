@@ -36,19 +36,56 @@ export default function r13DecisionGovernance(ctx) {
         );
   }
 
-  // requires-v1-completion actions that name a decision must link to a real decision/action
-  for (const c of ctx.capabilities) {
-    if (c.status !== "requires-v1-completion" || !c.decisionRef) continue;
-    const ref = c.decisionRef;
-    const known =
-      ctx.actionMentions.has(ref) ||
-      !!ctx.actionRegister[ref] ||
-      ctx.decisions.some((d) => d.v2AdrId === ref) ||
-      /^V1C-/.test(ref);
-    if (!known)
-      out.push(
-        finding("R13-decision-governance", c.capability, `decisionRef does not resolve: ${ref}`)
-      );
+  // Cross-reference V1-completion actions against the structured v1-completion-actions.json artefact
+  // — NOT any string beginning with "V1C-".
+  const actionIds = new Set((ctx.completionActions?.actions || []).map((a) => a.id));
+  if (!ctx.completionActions) {
+    out.push(
+      finding(
+        "R13-decision-governance",
+        "v1-completion-actions.json",
+        "missing structured completion-actions artefact"
+      )
+    );
+  } else {
+    for (const c of ctx.capabilities) {
+      if (c.status !== "requires-v1-completion") continue;
+      if (!actionIds.has(c.completionAction))
+        out.push(
+          finding(
+            "R13-decision-governance",
+            c.capability,
+            `completionAction ${c.completionAction} has no entry in v1-completion-actions.json`
+          )
+        );
+      if (c.decisionRef) {
+        const resolved =
+          actionIds.has(c.decisionRef) ||
+          ctx.actionMentions.has(c.decisionRef) ||
+          !!ctx.actionRegister[c.decisionRef] ||
+          ctx.decisions.some((d) => d.v2AdrId === c.decisionRef);
+        if (!resolved)
+          out.push(
+            finding(
+              "R13-decision-governance",
+              c.capability,
+              `decisionRef does not resolve to a real action/decision: ${c.decisionRef}`
+            )
+          );
+      }
+    }
+    // every completion-action entry carries the required structured fields
+    const REQ = ["id", "parentCapability", "status", "decision", "stopCondition"];
+    for (const a of ctx.completionActions.actions || [])
+      for (const f of REQ)
+        if (!(f in a))
+          out.push(
+            finding(
+              "R13-decision-governance",
+              a.id || "<action>",
+              `completion action missing "${f}"`
+            )
+          );
   }
   return out;
 }

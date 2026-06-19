@@ -23,11 +23,20 @@ export function runRules(ctx) {
 }
 
 function parseArgs(argv) {
-  const a = { strict: false, json: false, repo: process.cwd(), pinned: undefined };
+  const a = {
+    strict: false,
+    json: false,
+    repo: process.cwd(),
+    pinned: undefined,
+    historical: false,
+    requireClean: false,
+  };
   for (let i = 0; i < argv.length; i++) {
     const v = argv[i];
     if (v === "--strict") a.strict = true;
     else if (v === "--json") a.json = true;
+    else if (v === "--historical") a.historical = true;
+    else if (v === "--require-clean") a.requireClean = true;
     else if (v === "--repo") a.repo = argv[++i];
     else if (v === "--pinned") a.pinned = argv[++i];
   }
@@ -39,6 +48,8 @@ function main() {
   let ctx;
   try {
     ctx = loadContext({ repoRoot: args.repo, strict: args.strict, pinned: args.pinned });
+    ctx.historical = args.historical;
+    ctx.requireClean = args.requireClean;
   } catch (err) {
     console.error(`v2-readiness: cannot load artefacts: ${err.message}`);
     process.exit(2);
@@ -46,6 +57,8 @@ function main() {
   const findings = runRules(ctx);
   const errors = findings.filter((f) => f.severity === "error" || args.strict);
   const report = {
+    auditBaseCommit: ctx.auditBaseCommit,
+    cutCandidateCommit: ctx.cutCandidateCommit,
     pinnedV1Commit: ctx.pinnedV1Commit,
     ranAt: new Date().toISOString(),
     totalRules: RULES.length,

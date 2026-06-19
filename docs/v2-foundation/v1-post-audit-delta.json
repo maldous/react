@@ -1,0 +1,828 @@
+{
+  "schemaVersion": 1,
+  "auditBaseCommit": "918cd148569f6473eeaa58284933abdc0fe5bafe",
+  "description": "Files introduced or deleted on V1 main AFTER the audit-base commit. R10 proves files@cutCandidate == surviving mapped files + these additions - evidence-backed deletions. Every post-audit file (incl. the validator + these planning docs) MUST appear here or in the path-map before the cut.",
+  "additions": [
+    {
+      "path": "docs/v2-foundation/authentication-authorisation-matrix.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/authentication-authorisation-matrix.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/data-and-migration-plan.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/data-and-migration-plan.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/environment-and-config-catalog.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/environment-and-config-catalog.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/gap-report.md",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/gap-report.md",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/service-and-clickthrough-matrix.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/service-and-clickthrough-matrix.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-00.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-00.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-01.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-01.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-02.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-02.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-03.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-03.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-04.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-04.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-05.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-05.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-06.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-06.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-07.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-07.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-08.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-08.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-09.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-09.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-10.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-10.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-11.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-11.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-12.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-12.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-13.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-13.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-14.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-14.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-15.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-15.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-16.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-16.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-17.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-17.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-18.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-18.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-19.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-19.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-20.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-20.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-21.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-21.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-22.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-22.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-23.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-23.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-24.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-24.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-25.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-25.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-26.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-26.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-27.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-27.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-28.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-28.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-29.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-29.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/shards/inventory-30.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/shards/inventory-30.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/ui-capability-model.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/ui-capability-model.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/ui-component-contracts.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/ui-component-contracts.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/ui-definition.schema.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/ui-definition.schema.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/v1-capability-closure.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v1-capability-closure.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/v1-command-catalog.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v1-command-catalog.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/v1-completion-actions.json",
+      "introducingCommit": "unknown",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v1-completion-actions.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/v1-completion-programme.md",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v1-completion-programme.md",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/v1-file-inventory.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v1-file-inventory.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/v1-knowledge-ledger.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v1-knowledge-ledger.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/v1-post-audit-delta.json",
+      "introducingCommit": "unknown",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v1-post-audit-delta.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/v1-test-proof-inventory.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v1-test-proof-inventory.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/v1-to-v2-path-map.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v1-to-v2-path-map.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/v2-branch-cut-runbook.md",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v2-branch-cut-runbook.md",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/v2-command-map.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v2-command-map.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/v2-decision-catalog.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v2-decision-catalog.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/v2-decision-lineage.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v2-decision-lineage.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/v2-directory-contracts.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v2-directory-contracts.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/v2-readiness-validator-spec.md",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v2-readiness-validator-spec.md",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/v2-target-tree.txt",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v2-target-tree.txt",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/v2-test-proof-map.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v2-test-proof-map.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/zero-gap-reconciliation.json",
+      "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
+      "purpose": "V1→V2 planning/closure artefact",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/zero-gap-reconciliation.json",
+      "protectingTests": ["npm v2:readiness"],
+      "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/README.md",
+      "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/README.md",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/index.mjs",
+      "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/index.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/load.mjs",
+      "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/load.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/package-status.mjs",
+      "introducingCommit": "e63591266c7e5e83b6ff542f4891da3a3de7f8d7",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/package-status.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r1-placeholder.mjs",
+      "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r1-placeholder.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r10-file-coverage.mjs",
+      "introducingCommit": "e63591266c7e5e83b6ff542f4891da3a3de7f8d7",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r10-file-coverage.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r11-command-coverage.mjs",
+      "introducingCommit": "e63591266c7e5e83b6ff542f4891da3a3de7f8d7",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r11-command-coverage.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r12-test-coverage.mjs",
+      "introducingCommit": "e63591266c7e5e83b6ff542f4891da3a3de7f8d7",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r12-test-coverage.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r13-decision-governance.mjs",
+      "introducingCommit": "e63591266c7e5e83b6ff542f4891da3a3de7f8d7",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r13-decision-governance.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r14-foundation.mjs",
+      "introducingCommit": "e63591266c7e5e83b6ff542f4891da3a3de7f8d7",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r14-foundation.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r15-app-path.mjs",
+      "introducingCommit": "e63591266c7e5e83b6ff542f4891da3a3de7f8d7",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r15-app-path.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r2-capability.mjs",
+      "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r2-capability.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r3-zero-gap.mjs",
+      "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r3-zero-gap.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r4-vocabulary.mjs",
+      "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r4-vocabulary.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r5-count-buckets.mjs",
+      "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r5-count-buckets.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r6-package-removal.mjs",
+      "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r6-package-removal.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r7-soft-mapping.mjs",
+      "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r7-soft-mapping.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r8-runbook.mjs",
+      "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r8-runbook.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r9-blockers.mjs",
+      "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r9-blockers.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/vocab.mjs",
+      "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/vocab.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/tests/cli.test.mjs",
+      "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
+      "purpose": "V2-readiness validator test",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/tests/cli.test.mjs",
+      "protectingTests": ["tools/v2-readiness/tests/cli.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/tests/fixtures.mjs",
+      "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
+      "purpose": "V2-readiness validator test",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/tests/fixtures.mjs",
+      "protectingTests": ["tools/v2-readiness/tests/fixtures.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/tests/golden.test.mjs",
+      "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
+      "purpose": "V2-readiness validator test",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/tests/golden.test.mjs",
+      "protectingTests": ["tools/v2-readiness/tests/golden.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/tests/package-status.test.mjs",
+      "introducingCommit": "e63591266c7e5e83b6ff542f4891da3a3de7f8d7",
+      "purpose": "V2-readiness validator test",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/tests/package-status.test.mjs",
+      "protectingTests": ["tools/v2-readiness/tests/package-status.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/tests/rules.test.mjs",
+      "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
+      "purpose": "V2-readiness validator test",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/tests/rules.test.mjs",
+      "protectingTests": ["tools/v2-readiness/tests/rules.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    }
+  ],
+  "deletions": [],
+  "additionCount": 82,
+  "deletionCount": 0
+}

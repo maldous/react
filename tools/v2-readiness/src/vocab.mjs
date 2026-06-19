@@ -57,7 +57,10 @@ export const HARD_PLACEHOLDERS = [
   "not integrated",
 ];
 
-export const AUDITED_V1_COMMIT = "918cd148569f6473eeaa58284933abdc0fe5bafe";
+// auditBaseCommit: the immutable commit the path-map/inventory describe (original audit lineage).
+export const AUDIT_BASE_COMMIT = "918cd148569f6473eeaa58284933abdc0fe5bafe";
+// Back-compat alias (the validator historically called it AUDITED_V1_COMMIT).
+export const AUDITED_V1_COMMIT = AUDIT_BASE_COMMIT;
 export const UNRESOLVED_PIN = ["<undefined>", "{{PINNED_V1_COMMIT}}", "TBD", "TODO", ""];
 
 export const finding = (ruleId, subject, message, severity = "error") => ({

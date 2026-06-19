@@ -54,5 +54,45 @@ export default function r14Foundation(ctx) {
         )
       );
   }
+
+  // UI semantics: validate ui-capability-model against ui-definition.schema's required fields, and
+  // cross-reference owning capabilities + persona index.
+  const uiModel = ctx.foundation["ui-capability-model.json"];
+  const uiSchema = ctx.foundation["ui-definition.schema.json"];
+  if (uiModel && uiSchema && !Array.isArray(uiModel)) {
+    const required = uiSchema.required || [];
+    const caps = uiModel.capabilities || [];
+    const seenIds = new Set();
+    for (const rec of caps) {
+      const id = rec.capabilityId || "<ui-record>";
+      for (const f of required)
+        if (!(f in rec))
+          out.push(
+            finding(
+              "R14-foundation",
+              id,
+              `ui-capability-model record missing schema-required field "${f}"`
+            )
+          );
+      if (seenIds.has(id))
+        out.push(finding("R14-foundation", id, "duplicate ui-capability-model capabilityId"));
+      seenIds.add(id);
+    }
+  }
+
+  // Knowledge ledger: each entry carries its required reasoning fields (referenced facts present).
+  const ledger = ctx.foundation["v1-knowledge-ledger.json"];
+  if (Array.isArray(ledger)) {
+    for (const e of ledger)
+      for (const f of ["topic", "acceptedResolution", "originatingCommits", "v2TargetDecision"])
+        if (!(f in e))
+          out.push(
+            finding(
+              "R14-foundation",
+              e.topic || "<ledger>",
+              `knowledge-ledger entry missing "${f}"`
+            )
+          );
+  }
   return out;
 }

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
-import { AUDITED_V1_COMMIT } from "./vocab.mjs";
+import { AUDIT_BASE_COMMIT } from "./vocab.mjs";
 
 const readJson = (p) => JSON.parse(fs.readFileSync(p, "utf8"));
 const readText = (p) => (fs.existsSync(p) ? fs.readFileSync(p, "utf8") : "");
@@ -71,7 +71,7 @@ function loadActionRegister(repoRoot) {
   return rows;
 }
 
-// Files tracked at the audited commit (read-only). Empty + ok:false if git/commit unavailable.
+// Files tracked at a commit (read-only). Empty + ok:false if git/commit unavailable.
 function loadGitTrackedAtCommit(repoRoot, sha) {
   try {
     const out = execFileSync("git", ["-C", repoRoot, "ls-tree", "-r", "--name-only", sha], {
@@ -81,6 +81,23 @@ function loadGitTrackedAtCommit(repoRoot, sha) {
   } catch {
     return { files: [], ok: false };
   }
+}
+
+const gitOk = (repoRoot, args) => {
+  try {
+    return execFileSync("git", ["-C", repoRoot, ...args], { encoding: "utf8" }).trim();
+  } catch {
+    return null;
+  }
+};
+
+// The cut-candidate file set = the tracked working tree (reflects HEAD on a clean tree, and the
+// staged set during preparation). This is what the cut will actually freeze.
+function loadCandidateTracked(repoRoot) {
+  const out = gitOk(repoRoot, ["ls-files"]);
+  return out == null
+    ? { files: [], ok: false }
+    : { files: out.split("\n").filter(Boolean), ok: true };
 }
 
 // Build the validation context from the live repo. Pure rules consume this object;
@@ -100,14 +117,28 @@ export function loadContext({ repoRoot = process.cwd(), strict = false, pinned }
       if (/^inventory-\d+\.json$/.test(f))
         shards = shards.concat(readJson(path.join(shardsDir, f)));
 
+  const head = gitOk(repoRoot, ["rev-parse", "HEAD"]);
+  const cutCandidateCommit = pinned ?? head ?? AUDIT_BASE_COMMIT;
+  const treeClean = gitOk(repoRoot, ["status", "--porcelain"]) === "";
+
   return {
     repoRoot,
     strict,
-    pinnedV1Commit: pinned ?? AUDITED_V1_COMMIT,
-    auditedCommit: AUDITED_V1_COMMIT,
+    historical: false,
+    // two explicit commit concepts (§1)
+    auditBaseCommit: AUDIT_BASE_COMMIT,
+    cutCandidateCommit,
+    headCommit: head,
+    treeClean,
+    candidateResolves:
+      gitOk(repoRoot, ["cat-file", "-e", `${cutCandidateCommit}^{commit}`]) !== null,
+    pinnedV1Commit: cutCandidateCommit, // back-compat field name used by older rules/reports
+    auditedCommit: AUDIT_BASE_COMMIT,
     // planning artefacts
     pathMap: j("v1-to-v2-path-map.json"),
     fileInventory: j("v1-file-inventory.json"),
+    postAuditDelta: optional("v1-post-audit-delta.json"),
+    completionActions: optional("v1-completion-actions.json"),
     shards,
     commandMap: j("v2-command-map.json"),
     commandCatalog: j("v1-command-catalog.json"),
@@ -137,7 +168,8 @@ export function loadContext({ repoRoot = process.cwd(), strict = false, pinned }
       "ui-capability-model.json": optional("ui-capability-model.json"),
     },
     // live repo facts
-    gitTracked: loadGitTrackedAtCommit(repoRoot, AUDITED_V1_COMMIT),
+    gitTracked: loadGitTrackedAtCommit(repoRoot, AUDIT_BASE_COMMIT),
+    candidateTracked: loadCandidateTracked(repoRoot),
     makeTargets: loadMakeTargets(repoRoot),
     adrIds: loadAdrIds(repoRoot),
     actionMentions: loadActionMentions(repoRoot),
