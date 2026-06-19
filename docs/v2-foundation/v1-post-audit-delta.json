@@ -998,9 +998,18 @@
       "v2Target": "tools/v2-readiness/tests/rules.test.mjs",
       "protectingTests": ["tools/v2-readiness/tests/rules.test.mjs"],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/config/observability-config.ts",
+      "introducingCommit": "5fce6ca53b9542a9a4db6a9bfd9aad687c364d41",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/config/observability-config.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/observability.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
     }
   ],
   "deletions": [],
-  "additionCount": 100,
+  "additionCount": 101,
   "deletionCount": 0
 }

@@ -25,6 +25,7 @@ import {
   resolveAccessToken,
 } from "./dependencies.ts";
 import { serverT } from "./i18n.ts";
+import { loadObservabilityConfig } from "../config/observability-config.ts";
 import {
   resolveTenantFromRequest,
   requestHostFromHeaders,
@@ -691,7 +692,7 @@ export function createRouter(
     name: "platform-api",
     service: "platform-api",
     boundedContext: "bff",
-    level: (process.env["LOG_LEVEL"] as PlatformLogLevel | undefined) ?? "info",
+    level: loadObservabilityConfig().logLevel as PlatformLogLevel,
   });
 
   const coreHandler = async (

@@ -9,12 +9,19 @@
 // permitted to import the OpenTelemetry SDK (ADR-0020 §10). Sentry is configured
 // elsewhere with skipOpenTelemetrySetup so this NodeSDK is the sole OTEL owner
 // (ADR-ACT-0284).
-import process from "node:process";
 import { startNodeTracing } from "@platform/adapters-opentelemetry";
+import {
+  loadObservabilityConfig,
+  observabilityEnvironment,
+} from "../config/observability-config.ts";
 
+// Minimal typed observability projection (V1C-CONF-06) — never the full PlatformApiConfig, so this
+// first-import instrumentation module never fails the process on a missing required key. Behaviour
+// preserved: serviceVersion defaults to 0.0.0; environment is PLATFORM_ENV → NODE_ENV → development.
+const obs = loadObservabilityConfig();
 await startNodeTracing({
-  serviceName: process.env["OTEL_SERVICE_NAME"] ?? "platform-api",
-  serviceVersion: process.env["APP_VERSION"] ?? "0.0.0",
-  environment: process.env["PLATFORM_ENV"] ?? process.env["NODE_ENV"] ?? "development",
-  exporterEndpoint: process.env["OTEL_EXPORTER_OTLP_ENDPOINT"],
+  serviceName: obs.otelServiceName,
+  serviceVersion: obs.appVersion ?? "0.0.0",
+  environment: observabilityEnvironment(obs),
+  exporterEndpoint: obs.otelExporterEndpoint,
 });

@@ -3,9 +3,9 @@
   "description": "Independently scanned live configuration-key consumption (process.env + compose ${} substitutions). Generated; the source of truth for R18 consumption reconciliation.",
   "generatedFrom": "apps/**, packages/**, scripts/**, tools/**, compose.yaml",
   "keyCount": 179,
-  "productionKeyCount": 167,
-  "testFixtureKeyCount": 12,
-  "directAccessOutsideCompositionKeyCount": 107,
+  "productionKeyCount": 166,
+  "testFixtureKeyCount": 13,
+  "directAccessOutsideCompositionKeyCount": 105,
   "keys": [
     {
       "key": "__FORMAT",
@@ -152,11 +152,9 @@
     },
     {
       "key": "APP_VERSION",
-      "consumerCount": 4,
+      "consumerCount": 2,
       "sources": [
         "apps/platform-api/src/server/health.ts",
-        "apps/platform-api/src/server/observability.ts",
-        "apps/platform-api/src/server/otel-init.ts",
         "compose.yaml",
         "packages/platform-logging/src/index.ts"
       ],
@@ -170,7 +168,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 4,
+      "directAccessOutsideComposition": 2,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1234,10 +1232,8 @@
     },
     {
       "key": "LOG_LEVEL",
-      "consumerCount": 4,
+      "consumerCount": 2,
       "sources": [
-        "apps/platform-api/src/server/http.ts",
-        "apps/platform-api/src/server/pipeline.ts",
         "compose.yaml",
         "packages/platform-logging/src/index.ts",
         "packages/platform-logging/tests/platform-logging.test.ts"
@@ -1252,7 +1248,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 3,
+      "directAccessOutsideComposition": 1,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1706,14 +1702,14 @@
     },
     {
       "key": "NODE_ENV",
-      "consumerCount": 13,
+      "consumerCount": 11,
       "sources": [
         "apps/platform-api/src/db/reset.ts",
         "apps/platform-api/src/server/auth-providers.ts",
         "apps/platform-api/src/server/forward-auth.ts",
         "apps/platform-api/src/server/health.ts",
-        "apps/platform-api/src/server/observability.ts",
-        "apps/platform-api/src/server/otel-init.ts"
+        "apps/platform-api/src/server/token-crypto.ts",
+        "apps/platform-api/src/usecases/clickthrough-services.ts"
       ],
       "type": "string",
       "secret": false,
@@ -1725,7 +1721,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 9,
+      "directAccessOutsideComposition": 7,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1977,11 +1973,8 @@
     },
     {
       "key": "OTEL_EXPORTER_OTLP_ENDPOINT",
-      "consumerCount": 2,
-      "sources": [
-        "apps/platform-api/src/server/otel-init.ts",
-        "packages/adapters-opentelemetry/src/index.ts"
-      ],
+      "consumerCount": 1,
+      "sources": ["packages/adapters-opentelemetry/src/index.ts"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -1992,7 +1985,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
+      "directAccessOutsideComposition": 1,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2089,8 +2082,8 @@
     },
     {
       "key": "OTEL_SERVICE_NAME",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/otel-init.ts", "compose.yaml"],
+      "consumerCount": 0,
+      "sources": ["compose.yaml"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -2101,7 +2094,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2246,14 +2239,14 @@
     },
     {
       "key": "PLATFORM_ENV",
-      "consumerCount": 12,
+      "consumerCount": 10,
       "sources": [
         "apps/platform-api/src/server/auth-providers.ts",
         "apps/platform-api/src/server/graphql.ts",
-        "apps/platform-api/src/server/observability.ts",
-        "apps/platform-api/src/server/otel-init.ts",
         "apps/platform-api/src/server/routes.ts",
-        "apps/platform-api/src/server/token-crypto.ts"
+        "apps/platform-api/src/server/token-crypto.ts",
+        "apps/platform-api/src/usecases/clickthrough-services.ts",
+        "apps/platform-api/tests/substrate/graphql-organisation.test.ts"
       ],
       "type": "string",
       "secret": false,
@@ -2265,7 +2258,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 8,
+      "directAccessOutsideComposition": 6,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2693,10 +2686,9 @@
     },
     {
       "key": "SENTRY_DSN",
-      "consumerCount": 4,
+      "consumerCount": 3,
       "sources": [
         "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
-        "apps/platform-api/src/server/observability.ts",
         "apps/platform-api/src/server/routes.ts",
         "apps/platform-api/tests/unit/observability.test.ts",
         "compose.yaml"
@@ -2711,20 +2703,16 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 3,
+      "directAccessOutsideComposition": 2,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
       "key": "SENTRY_ENABLED",
-      "consumerCount": 2,
-      "sources": [
-        "apps/platform-api/src/server/observability.ts",
-        "apps/platform-api/tests/unit/observability.test.ts",
-        "compose.yaml"
-      ],
+      "consumerCount": 1,
+      "sources": ["apps/platform-api/tests/unit/observability.test.ts", "compose.yaml"],
       "type": "string",
       "secret": false,
-      "testFixtureOnly": false,
+      "testFixtureOnly": true,
       "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
       "generatedProjection": true,
       "envApplicability": "all-stages",
@@ -2732,7 +2720,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {

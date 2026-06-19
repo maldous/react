@@ -11,8 +11,10 @@ import { assertEncryptionKeyConfigured } from "./token-crypto.ts";
 import { validateProviderModeAtStartup } from "./auth-providers.ts";
 import { createSentryAdapter } from "./observability.ts";
 import { startWebhookDeliveryWorker } from "./webhook-worker-runtime.ts";
+import { loadObservabilityConfig } from "../config/observability-config.ts";
 
-const LOG_LEVEL = (process.env["LOG_LEVEL"] ?? "info") as PlatformLogLevel;
+// PLATFORM_API_PORT remains a direct read until the server-runtime CONF-06 sub-slice.
+const LOG_LEVEL = loadObservabilityConfig().logLevel as PlatformLogLevel;
 const log = createLogger({ name: "platform-api", service: "platform-api", level: LOG_LEVEL });
 const PORT = Number(process.env["PLATFORM_API_PORT"] ?? 3001);
 const sentry = createSentryAdapter();
