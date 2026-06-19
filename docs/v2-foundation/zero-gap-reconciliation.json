@@ -49,14 +49,14 @@
     "sum": 301
   },
   "tests": {
-    "total": 375,
+    "total": 377,
     "buckets": {
-      "carry": 226,
+      "carry": 228,
       "promote-to-conformance": 76,
       "retire": 12,
       "retarget": 61
     },
-    "sum": 375
+    "sum": 377
   },
   "capabilities": {
     "total": 75,
@@ -251,5 +251,13 @@
     "deleteAfterProofHaveNoV2Home": true,
     "everyRequiresHasAction": true,
     "retiredTestsJustified": true
+  },
+  "cutReadiness": {
+    "consistencyFindings": 0,
+    "completionBlockers": 36,
+    "cutReady": false,
+    "terminology": "consistencyFindings = artefacts vs live-repo self-consistency (must be 0). completionBlockers = R9 outstanding V1 work (25 requires-v1-completion + 10 deprecated packages + 1 config-runtime decision). cutReady = both zero.",
+    "liveTruth": "npm run v2:readiness --json",
+    "note": "Documentation; the validator output is source of truth. Do not claim ZERO UNRESOLVED GAPS while completionBlockers>0."
   }
 }

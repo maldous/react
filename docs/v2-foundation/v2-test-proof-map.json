@@ -2998,5 +2998,21 @@
     "selectorsOrImportsChange": false,
     "becomesReusableContract": true,
     "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/v2-readiness/tests/import-parity.test.mjs",
+    "v2Path": "tools/v2-readiness/tests/import-parity.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "tools/v2-readiness/tests/osv-exceptions.test.mjs",
+    "v2Path": "tools/v2-readiness/tests/osv-exceptions.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
   }
 ]

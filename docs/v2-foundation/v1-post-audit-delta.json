@@ -374,7 +374,7 @@
     },
     {
       "path": "docs/v2-foundation/v1-completion-actions.json",
-      "introducingCommit": "unknown",
+      "introducingCommit": "0201ff30fb20a97880f9ff00c1c5231ca42e5365",
       "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v1-completion-actions.json",
@@ -410,7 +410,7 @@
     },
     {
       "path": "docs/v2-foundation/v1-post-audit-delta.json",
-      "introducingCommit": "unknown",
+      "introducingCommit": "0201ff30fb20a97880f9ff00c1c5231ca42e5365",
       "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v1-post-audit-delta.json",
@@ -515,6 +515,15 @@
       "v2Target": "docs/v2-foundation/zero-gap-reconciliation.json",
       "protectingTests": ["npm v2:readiness"],
       "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/architecture/_shared/import-edges.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/architecture/_shared/import-edges.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
     },
     {
       "path": "tools/v2-readiness/README.md",
@@ -652,6 +661,32 @@
       "purpose": "V2-readiness validator implementation",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "tools/v2-readiness/src/rules/r15-app-path.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r16-services.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r16-services.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/package-status.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r17-migrations.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "V2-readiness validator implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r17-migrations.mjs",
       "protectingTests": [
         "tools/v2-readiness/tests/rules.test.mjs",
         "tools/v2-readiness/tests/golden.test.mjs",
@@ -804,6 +839,24 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
+      "path": "tools/v2-readiness/tests/import-parity.test.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "V2-readiness validator test",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/tests/import-parity.test.mjs",
+      "protectingTests": ["tools/v2-readiness/tests/import-parity.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/tests/osv-exceptions.test.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "V2-readiness validator test",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/tests/osv-exceptions.test.mjs",
+      "protectingTests": ["tools/v2-readiness/tests/osv-exceptions.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
       "path": "tools/v2-readiness/tests/package-status.test.mjs",
       "introducingCommit": "e63591266c7e5e83b6ff542f4891da3a3de7f8d7",
       "purpose": "V2-readiness validator test",
@@ -823,6 +876,6 @@
     }
   ],
   "deletions": [],
-  "additionCount": 82,
+  "additionCount": 87,
   "deletionCount": 0
 }

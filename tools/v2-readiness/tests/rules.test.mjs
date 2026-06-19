@@ -17,6 +17,8 @@ import r12 from "../src/rules/r12-test-coverage.mjs";
 import r13 from "../src/rules/r13-decision-governance.mjs";
 import r14 from "../src/rules/r14-foundation.mjs";
 import r15 from "../src/rules/r15-app-path.mjs";
+import r16 from "../src/rules/r16-services.mjs";
+import r17 from "../src/rules/r17-migrations.mjs";
 
 const fires = (rule, ctx, ruleId) => {
   const f = rule(ctx);
@@ -305,4 +307,29 @@ test("R15 fires on an apps/api reference anywhere", () => {
   const a = clone(cleanCtx());
   a.testMap[0].v2Path = "apps/api/tests/x.test.ts";
   fires(r15, a, "R15-app-path");
+});
+
+test("R16 fires on a compose service missing from the matrix", () => {
+  const a = clone(cleanCtx());
+  a.compose.services.push({ name: "ghostsvc", profiles: [], image: "x", ports: [] });
+  fires(r16, a, "R16-services");
+});
+
+test("R16 fires on a forward-auth resource without a permission", () => {
+  const a = clone(cleanCtx());
+  a.foundation["service-and-clickthrough-matrix.json"][0].forwardAuthResource = "admin:postgres";
+  a.foundation["service-and-clickthrough-matrix.json"][0].permission = null;
+  fires(r16, a, "R16-services");
+});
+
+test("R17 fires on an on-disk migration absent from the plan", () => {
+  const a = clone(cleanCtx());
+  a.migrations.push({ file: "099-rogue.sql", checksum: "z" });
+  fires(r17, a, "R17-migrations");
+});
+
+test("R17 fires on a tenant-data service with no backup decision", () => {
+  const a = clone(cleanCtx());
+  a.foundation["service-and-clickthrough-matrix.json"][0].backupRestore = null;
+  fires(r17, a, "R17-migrations");
 });

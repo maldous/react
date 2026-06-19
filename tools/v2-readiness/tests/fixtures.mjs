@@ -93,11 +93,41 @@ export function cleanCtx() {
       },
       { path: "apps/web", allowedContents: [], forbiddenContents: [], dependencyDirection: "x" },
     ],
+    compose: {
+      ok: true,
+      services: [{ name: "postgres", profiles: [], image: "postgres", ports: [] }],
+      profiles: [],
+      volumes: ["postgres-data"],
+    },
+    caddyfile: "",
+    migrations: [{ file: "001-x.sql", checksum: "abc0000000000000" }],
     foundation: {
-      "service-and-clickthrough-matrix.json": [{ ok: 1 }],
+      "service-and-clickthrough-matrix.json": [
+        {
+          id: "postgres",
+          classification: "built-in",
+          caddyRoute: null,
+          clickthroughUrl: null,
+          permission: null,
+          forwardAuthResource: "n/a",
+          ssoMechanism: "n/a",
+          readiness: "postgres probe",
+          productionExposure: "internal",
+          directLoginPolicy: "n/a (no UI)",
+          tenantData: true,
+          backupRestore: "pg_dump/pg_restore",
+        },
+      ],
       "authentication-authorisation-matrix.json": [{ ok: 1 }],
       "environment-and-config-catalog.json": [{ ok: 1 }],
-      "data-and-migration-plan.json": [{ ok: 1 }],
+      "data-and-migration-plan.json": {
+        postgres: {
+          migrationChain: [{ file: "001-x.sql", intent: "core" }],
+          schemaMigrationsTable: "schema_migrations",
+        },
+        v2FreshInstallBaseline: "fresh",
+        backupRestore: { postgres: "pg_dump" },
+      },
       "v1-knowledge-ledger.json": [
         { topic: "x", acceptedResolution: "x", originatingCommits: ["abc"], v2TargetDecision: "x" },
       ],

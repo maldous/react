@@ -3379,5 +3379,25 @@
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:tenant-domain-claim-lifecycle)",
     "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "tools/v2-readiness/tests/import-parity.test.mjs",
+    "path": "tools/v2-readiness/tests/import-parity.test.mjs",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure node:test)",
+    "stageCoverage": "test (node --test; test:architecture)",
+    "failureEvidence": "node:test assertion output",
+    "note": "post-audit (ADR-ACT-0292)"
+  },
+  {
+    "id": "tools/v2-readiness/tests/osv-exceptions.test.mjs",
+    "path": "tools/v2-readiness/tests/osv-exceptions.test.mjs",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure node:test)",
+    "stageCoverage": "test (node --test; test:architecture)",
+    "failureEvidence": "node:test assertion output",
+    "note": "post-audit (ADR-ACT-0292)"
   }
 ]

@@ -1,16 +1,16 @@
 import fs from "node:fs";
 import path from "node:path";
+import { extractImports, packageNameOf } from "../../architecture/_shared/import-edges.mjs";
 
 const exists = (p) => fs.existsSync(p);
 const readText = (p) => (exists(p) ? fs.readFileSync(p, "utf8") : "");
 
-// Walk source roots once, collecting @platform/<name>[/subpath] specifiers -> [importing files].
-// Captures static import/export-from, dynamic import(), require(), and type-only imports (all are
-// quoted specifiers); subpath imports (@platform/pkg/sub) resolve to the owning package name.
+// Walk source roots once, collecting @platform/<name> -> [importing files], using the CANONICAL
+// TypeScript-AST parser shared with validate-source-imports (static import/export-from, import-equals,
+// type-only, dynamic import()/require(); subpath @platform/pkg/sub resolves to the owning package).
 export function collectImportMap(repoRoot, roots = ["apps", "packages", "tools", "services"]) {
   const map = {};
   const skip = new Set(["node_modules", ".git", "dist", "build", "coverage", ".turbo"]);
-  const re = /['"]@platform\/([a-z0-9-]+)(?:\/[^'"]*)?['"]/g;
   const walk = (dir) => {
     let entries;
     try {
@@ -22,10 +22,18 @@ export function collectImportMap(repoRoot, roots = ["apps", "packages", "tools",
       if (skip.has(e.name)) continue;
       const full = path.join(dir, e.name);
       if (e.isDirectory()) walk(full);
-      else if (/\.(ts|tsx|mjs|js|cjs)$/.test(e.name)) {
-        const txt = readText(full);
-        let m;
-        while ((m = re.exec(txt))) (map[m[1]] ||= new Set()).add(full);
+      else if (/\.(ts|tsx|mjs|js|cjs)$/.test(e.name) && !full.endsWith(".d.ts")) {
+        let edges;
+        try {
+          edges = extractImports(readText(full), full).imports;
+        } catch {
+          continue;
+        }
+        for (const spec of edges) {
+          if (!spec.startsWith("@platform/")) continue;
+          const pkg = packageNameOf(spec).slice("@platform/".length);
+          (map[pkg] ||= new Set()).add(full);
+        }
       }
     }
   };

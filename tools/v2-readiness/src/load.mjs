@@ -1,7 +1,55 @@
 import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
+import { createRequire } from "node:module";
 import { AUDIT_BASE_COMMIT } from "./vocab.mjs";
+
+const requireFromHere = createRequire(import.meta.url);
+let YAML = null;
+try {
+  YAML = requireFromHere("yaml");
+} catch {
+  YAML = null;
+}
+
+// Parse compose.yaml services + profiles + top-level volumes (read-only).
+function loadCompose(repoRoot) {
+  const p = path.join(repoRoot, "compose.yaml");
+  if (!YAML || !fs.existsSync(p)) return { services: [], profiles: [], volumes: [], ok: false };
+  let doc;
+  try {
+    doc = YAML.parse(fs.readFileSync(p, "utf8"));
+  } catch {
+    return { services: [], profiles: [], volumes: [], ok: false };
+  }
+  const services = Object.entries(doc.services || {}).map(([name, def]) => ({
+    name,
+    profiles: def.profiles || [],
+    image: def.image || null,
+    ports: def.ports || [],
+  }));
+  const profiles = [...new Set(services.flatMap((s) => s.profiles))];
+  return { services, profiles, volumes: Object.keys(doc.volumes || {}), ok: true };
+}
+
+// On-disk SQL migrations (sequence + filename + checksum).
+function loadMigrations(repoRoot) {
+  const dir = path.join(repoRoot, "apps/platform-api/src/db/migrations");
+  if (!fs.existsSync(dir)) return [];
+  const crypto = requireFromHere("node:crypto");
+  return fs
+    .readdirSync(dir)
+    .filter((f) => f.endsWith(".sql"))
+    .sort()
+    .map((f) => ({
+      file: f,
+      checksum: crypto
+        .createHash("sha256")
+        .update(fs.readFileSync(path.join(dir, f)))
+        .digest("hex")
+        .slice(0, 16),
+    }));
+}
 
 const readJson = (p) => JSON.parse(fs.readFileSync(p, "utf8"));
 const readText = (p) => (fs.existsSync(p) ? fs.readFileSync(p, "utf8") : "");
@@ -170,6 +218,9 @@ export function loadContext({ repoRoot = process.cwd(), strict = false, pinned }
     // live repo facts
     gitTracked: loadGitTrackedAtCommit(repoRoot, AUDIT_BASE_COMMIT),
     candidateTracked: loadCandidateTracked(repoRoot),
+    compose: loadCompose(repoRoot),
+    caddyfile: readText(path.join(repoRoot, "docker/caddy/Caddyfile")),
+    migrations: loadMigrations(repoRoot),
     makeTargets: loadMakeTargets(repoRoot),
     adrIds: loadAdrIds(repoRoot),
     actionMentions: loadActionMentions(repoRoot),
