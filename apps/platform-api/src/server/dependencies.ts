@@ -92,31 +92,26 @@ export interface ProvisioningConfig {
 }
 
 export function getProvisioningConfig(): ProvisioningConfig {
-  // Derive the public-facing scheme from KC_HOSTNAME (set per environment).
-  // KC_HOSTNAME reflects whether Cloudflare serves HTTPS (production/staging)
-  // or bare HTTP (.localhost / dev environments). ADR-0033.
-  const kcHostname = process.env["KC_HOSTNAME"] ?? "http://localhost/kc";
-  const tenantUriScheme: "http" | "https" = kcHostname.startsWith("https://") ? "https" : "http";
-
+  // V1C-CONF-06: sourced from the typed composition-root config. KC_HOSTNAME drives the public scheme
+  // (ADR-0033). The MinIO↔S3 dev fallbacks (ADR-ACT-0223) are preserved as `??` over the typed
+  // optional fields — production sets S3_* explicitly and has no MINIO_*, so the fallback never fires.
+  const cfg = loadPlatformApiConfig();
+  const tenantUriScheme: "http" | "https" = cfg.kcHostname.startsWith("https://")
+    ? "https"
+    : "http";
   return {
-    keycloakUrl: process.env["KEYCLOAK_URL"] ?? "http://localhost:8090/kc",
-    keycloakProvisionerClientId:
-      process.env["KEYCLOAK_PROVISIONER_CLIENT_ID"] ?? "platform-provisioner",
-    keycloakProvisionerClientSecret: process.env["KEYCLOAK_PROVISIONER_CLIENT_SECRET"] ?? "",
-    redisAdminUrl: process.env["REDIS_ADMIN_URL"] ?? null,
-    // Local dev falls back to the MinIO root creds/endpoint (ADR-ACT-0223) so storage
-    // readiness probes the live local stack without separate wiring. Production sets
-    // S3_* explicitly and has no MINIO_* env, so the fallback never fires there.
-    s3AdminAccessKeyId:
-      process.env["S3_ADMIN_ACCESS_KEY_ID"] ?? process.env["MINIO_ROOT_USER"] ?? null,
-    s3AdminSecretAccessKey:
-      process.env["S3_ADMIN_SECRET_ACCESS_KEY"] ?? process.env["MINIO_ROOT_PASSWORD"] ?? null,
-    s3DefaultBucket: process.env["S3_DEFAULT_BUCKET"] ?? "platform-data",
-    s3DefaultRegion: process.env["S3_DEFAULT_REGION"] ?? "us-east-1",
-    s3DefaultEndpoint: process.env["S3_DEFAULT_ENDPOINT"] ?? process.env["MINIO_ENDPOINT"] ?? null,
-    apexDomain: process.env["APEX_DOMAIN"] ?? "aldous.info",
+    keycloakUrl: cfg.keycloakUrl,
+    keycloakProvisionerClientId: cfg.keycloakProvisionerClientId,
+    keycloakProvisionerClientSecret: cfg.keycloakProvisionerClientSecret,
+    redisAdminUrl: cfg.redisAdminUrl ?? null,
+    s3AdminAccessKeyId: cfg.s3AdminAccessKeyId ?? cfg.minioRootUser ?? null,
+    s3AdminSecretAccessKey: cfg.s3AdminSecretAccessKey ?? cfg.minioRootPassword ?? null,
+    s3DefaultBucket: cfg.s3DefaultBucket,
+    s3DefaultRegion: cfg.s3DefaultRegion,
+    s3DefaultEndpoint: cfg.s3DefaultEndpoint ?? cfg.minioEndpoint ?? null,
+    apexDomain: cfg.apexDomain,
     tenantUriScheme,
-    bffClientSecret: process.env["KEYCLOAK_CLIENT_SECRET"] ?? "",
+    bffClientSecret: cfg.keycloakClientSecret,
   };
 }
 

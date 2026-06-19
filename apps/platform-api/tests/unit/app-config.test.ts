@@ -86,6 +86,33 @@ test("PlatformApiConfig metadata classifies secrets and omits their values", () 
   assert.equal(meta.length, Object.keys(PLATFORM_API_CONFIG_SCHEMA).length);
 });
 
+test("optional fields resolve to undefined when unset (no default, no error)", () => {
+  const cfg = loadPlatformApiConfig({ source: { POSTGRES_URL: "x", POSTGRES_APP_URL: "y" } });
+  assert.equal(cfg.redisAdminUrl, undefined);
+  assert.equal(cfg.s3DefaultEndpoint, undefined);
+  assert.equal(cfg.minioEndpoint, undefined);
+  // and resolve to the value when set
+  const cfg2 = loadPlatformApiConfig({
+    source: { POSTGRES_URL: "x", POSTGRES_APP_URL: "y", REDIS_ADMIN_URL: "redis://admin:6380" },
+  });
+  assert.equal(cfg2.redisAdminUrl, "redis://admin:6380");
+});
+
+test("provisioning S3↔MinIO dev fallback is preserved over the typed optional fields", () => {
+  const cfg = loadPlatformApiConfig({
+    source: {
+      POSTGRES_URL: "x",
+      POSTGRES_APP_URL: "y",
+      MINIO_ROOT_USER: "minio",
+      MINIO_ENDPOINT: "http://minio:9000",
+    },
+  });
+  // mirrors getProvisioningConfig's `s3Admin ?? minioRoot ?? null` derivation
+  assert.equal(cfg.s3AdminAccessKeyId ?? cfg.minioRootUser ?? null, "minio");
+  assert.equal(cfg.s3DefaultEndpoint ?? cfg.minioEndpoint ?? null, "http://minio:9000");
+  assert.equal(cfg.s3DefaultBucket, "platform-data"); // default preserved
+});
+
 test("explicit typed override seam: a platform-api field can be overridden hermetically", () => {
   const cfg = loadPlatformApiConfig({
     source: {},

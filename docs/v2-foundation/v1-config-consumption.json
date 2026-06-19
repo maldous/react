@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "description": "Independently scanned live configuration-key consumption (process.env + compose ${} substitutions). Generated; the source of truth for R18 consumption reconciliation.",
   "generatedFrom": "apps/**, packages/**, scripts/**, tools/**, compose.yaml",
-  "keyCount": 187,
-  "productionKeyCount": 175,
+  "keyCount": 179,
+  "productionKeyCount": 167,
   "testFixtureKeyCount": 12,
-  "directAccessOutsideCompositionKeyCount": 121,
+  "directAccessOutsideCompositionKeyCount": 107,
   "keys": [
     {
       "key": "__FORMAT",
@@ -801,8 +801,8 @@
     },
     {
       "key": "KC_HOSTNAME",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/dependencies.ts", "compose.yaml"],
+      "consumerCount": 0,
+      "sources": ["compose.yaml"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -813,7 +813,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1012,12 +1012,8 @@
     },
     {
       "key": "KEYCLOAK_PROVISIONER_CLIENT_ID",
-      "consumerCount": 2,
-      "sources": [
-        "apps/platform-api/src/server/dependencies.ts",
-        "apps/platform-api/src/server/health.ts",
-        "compose.yaml"
-      ],
+      "consumerCount": 1,
+      "sources": ["apps/platform-api/src/server/health.ts", "compose.yaml"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -1028,17 +1024,13 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
+      "directAccessOutsideComposition": 1,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
       "key": "KEYCLOAK_PROVISIONER_CLIENT_SECRET",
-      "consumerCount": 2,
-      "sources": [
-        "apps/platform-api/src/server/dependencies.ts",
-        "apps/platform-api/src/server/health.ts",
-        "compose.yaml"
-      ],
+      "consumerCount": 1,
+      "sources": ["apps/platform-api/src/server/health.ts", "compose.yaml"],
       "type": "string",
       "secret": true,
       "testFixtureOnly": false,
@@ -1049,7 +1041,7 @@
       "rotationPolicy": "secret — rotation via SecretStorePort/OpenBao (see V1C-CONF-04)",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
+      "directAccessOutsideComposition": 1,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1556,26 +1548,9 @@
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
-      "key": "MINIO_ENDPOINT",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/dependencies.ts"],
-      "type": "string",
-      "secret": false,
-      "testFixtureOnly": false,
-      "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
-      "generatedProjection": true,
-      "envApplicability": "all-stages",
-      "stageRestrictions": null,
-      "rotationPolicy": "n/a",
-      "reloadRestart": "process restart",
-      "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
-    },
-    {
       "key": "MINIO_ROOT_PASSWORD",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/dependencies.ts", "compose.yaml"],
+      "consumerCount": 0,
+      "sources": ["compose.yaml"],
       "type": "string",
       "secret": true,
       "testFixtureOnly": false,
@@ -1586,13 +1561,13 @@
       "rotationPolicy": "secret — rotation via SecretStorePort/OpenBao (see V1C-CONF-04)",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
       "key": "MINIO_ROOT_USER",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/dependencies.ts", "compose.yaml"],
+      "consumerCount": 0,
+      "sources": ["compose.yaml"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -1603,7 +1578,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1914,10 +1889,9 @@
     },
     {
       "key": "OPENBAO_ADDR",
-      "consumerCount": 3,
+      "consumerCount": 2,
       "sources": [
         "apps/platform-api/scripts/secrets-openbao-runtime-proof.ts",
-        "apps/platform-api/src/server/routes.ts",
         "scripts/env/bootstrap.mjs"
       ],
       "type": "string",
@@ -1930,13 +1904,13 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
+      "directAccessOutsideComposition": 1,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
       "key": "OPENBAO_KV_BASE_PATH",
-      "consumerCount": 2,
-      "sources": ["apps/platform-api/src/server/routes.ts", "scripts/env/bootstrap.mjs"],
+      "consumerCount": 1,
+      "sources": ["scripts/env/bootstrap.mjs"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -1947,13 +1921,13 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
       "key": "OPENBAO_KV_MOUNT",
-      "consumerCount": 2,
-      "sources": ["apps/platform-api/src/server/routes.ts", "scripts/env/bootstrap.mjs"],
+      "consumerCount": 1,
+      "sources": ["scripts/env/bootstrap.mjs"],
       "type": "string",
       "secret": false,
       "testFixtureOnly": false,
@@ -1964,7 +1938,7 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1986,12 +1960,8 @@
     },
     {
       "key": "OPENBAO_TOKEN",
-      "consumerCount": 2,
-      "sources": [
-        "apps/platform-api/src/server/routes.ts",
-        "compose.yaml",
-        "scripts/env/bootstrap.mjs"
-      ],
+      "consumerCount": 1,
+      "sources": ["compose.yaml", "scripts/env/bootstrap.mjs"],
       "type": "string",
       "secret": true,
       "testFixtureOnly": false,
@@ -2002,7 +1972,7 @@
       "rotationPolicy": "secret — rotation via SecretStorePort/OpenBao (see V1C-CONF-04)",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
+      "directAccessOutsideComposition": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2514,23 +2484,6 @@
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
-      "key": "REDIS_ADMIN_URL",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/dependencies.ts"],
-      "type": "string",
-      "secret": false,
-      "testFixtureOnly": false,
-      "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
-      "generatedProjection": true,
-      "envApplicability": "all-stages",
-      "stageRestrictions": null,
-      "rotationPolicy": "n/a",
-      "reloadRestart": "process restart",
-      "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
-    },
-    {
       "key": "REDIS_PORT",
       "consumerCount": 0,
       "sources": ["compose.yaml"],
@@ -2614,108 +2567,6 @@
       "envApplicability": "all-stages",
       "stageRestrictions": null,
       "rotationPolicy": "n/a",
-      "reloadRestart": "process restart",
-      "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
-    },
-    {
-      "key": "S3_ADMIN_ACCESS_KEY_ID",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/dependencies.ts"],
-      "type": "string",
-      "secret": false,
-      "testFixtureOnly": false,
-      "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
-      "generatedProjection": true,
-      "envApplicability": "all-stages",
-      "stageRestrictions": null,
-      "rotationPolicy": "n/a",
-      "reloadRestart": "process restart",
-      "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
-    },
-    {
-      "key": "S3_ADMIN_SECRET_ACCESS_KEY",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/dependencies.ts"],
-      "type": "string",
-      "secret": true,
-      "testFixtureOnly": false,
-      "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
-      "generatedProjection": true,
-      "envApplicability": "all-stages",
-      "stageRestrictions": null,
-      "rotationPolicy": "secret — rotation via SecretStorePort/OpenBao (see V1C-CONF-04)",
-      "reloadRestart": "process restart",
-      "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
-    },
-    {
-      "key": "S3_DEFAULT_BUCKET",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/dependencies.ts"],
-      "type": "string",
-      "secret": false,
-      "testFixtureOnly": false,
-      "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
-      "generatedProjection": true,
-      "envApplicability": "all-stages",
-      "stageRestrictions": null,
-      "rotationPolicy": "n/a",
-      "reloadRestart": "process restart",
-      "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
-    },
-    {
-      "key": "S3_DEFAULT_ENDPOINT",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/dependencies.ts"],
-      "type": "string",
-      "secret": false,
-      "testFixtureOnly": false,
-      "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
-      "generatedProjection": true,
-      "envApplicability": "all-stages",
-      "stageRestrictions": null,
-      "rotationPolicy": "n/a",
-      "reloadRestart": "process restart",
-      "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
-    },
-    {
-      "key": "S3_DEFAULT_REGION",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/dependencies.ts"],
-      "type": "string",
-      "secret": false,
-      "testFixtureOnly": false,
-      "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
-      "generatedProjection": true,
-      "envApplicability": "all-stages",
-      "stageRestrictions": null,
-      "rotationPolicy": "n/a",
-      "reloadRestart": "process restart",
-      "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
-    },
-    {
-      "key": "SECRET_STORE_PROVIDER",
-      "consumerCount": 1,
-      "sources": ["apps/platform-api/src/server/routes.ts"],
-      "type": "string",
-      "secret": true,
-      "testFixtureOnly": false,
-      "authoritativeSource": "config/environments/*.json (manifest) → generated .env (ADR-0072)",
-      "generatedProjection": true,
-      "envApplicability": "all-stages",
-      "stageRestrictions": null,
-      "rotationPolicy": "secret — rotation via SecretStorePort/OpenBao (see V1C-CONF-04)",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,

@@ -62,17 +62,22 @@ interface ConfigFieldBase {
   description?: string;
 }
 export type ConfigFieldDef =
-  | (ConfigFieldBase & { type: "string"; default?: string })
-  | (ConfigFieldBase & { type: "number"; default?: number })
-  | (ConfigFieldBase & { type: "boolean"; default?: boolean });
+  | (ConfigFieldBase & { type: "string"; default?: string; optional?: boolean })
+  | (ConfigFieldBase & { type: "number"; default?: number; optional?: boolean })
+  | (ConfigFieldBase & { type: "boolean"; default?: boolean; optional?: boolean });
 
 export type ConfigSchema = Record<string, ConfigFieldDef>;
 
-type ConfigValue<F extends ConfigFieldDef> = F extends { type: "string" }
+type BaseValue<F extends ConfigFieldDef> = F extends { type: "string" }
   ? string
   : F extends { type: "number" }
     ? number
     : boolean;
+
+// An `optional` field with no value resolves to `undefined` (no default, no error).
+type ConfigValue<F extends ConfigFieldDef> = F extends { optional: true }
+  ? BaseValue<F> | undefined
+  : BaseValue<F>;
 
 export type ResolvedConfig<S extends ConfigSchema> = {
   readonly [K in keyof S]: ConfigValue<S[K]>;
@@ -98,7 +103,7 @@ export interface LoadConfigOptions<S extends ConfigSchema> {
 }
 
 const isRequired = (def: ConfigFieldDef): boolean =>
-  !("default" in def && def.default !== undefined);
+  !def.optional && !("default" in def && def.default !== undefined);
 
 function coerce(fieldName: string, def: ConfigFieldDef, raw: string): string | number | boolean {
   if (def.type === "number") {
@@ -154,6 +159,8 @@ export function loadConfig<S extends ConfigSchema>(
     const raw = source[def.key];
     if (raw === undefined || raw === "") {
       if ("default" in def && def.default !== undefined) result[fieldName] = def.default;
+      else if (def.optional)
+        result[fieldName] = undefined; // optional + unset ⇒ undefined (no fallback, no error)
       else errors.push(`Required config "${fieldName}" (env ${def.key}) is not set`);
       continue;
     }
