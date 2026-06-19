@@ -1,11 +1,12 @@
 {
   "schemaVersion": 1,
-  "description": "Independently scanned live configuration-key consumption (process.env + compose ${} substitutions). Generated; the source of truth for R18 consumption reconciliation.",
+  "description": "Independently scanned live configuration-key consumption (process.env + compose ${} substitutions). Generated; the source of truth for R18 consumption reconciliation. directAccessOutsideComposition counts PRODUCT-runtime direct reads only (the V1C-CONF-06 target); proofHarnessAccess counts reads inside the approved operator-script boundary (apps/platform-api/scripts/**, scripts/** — bounded by loadLocalEnv; codified as the enforcement exception list).",
   "generatedFrom": "apps/**, packages/**, scripts/**, tools/**, compose.yaml",
   "keyCount": 172,
   "productionKeyCount": 159,
   "testFixtureKeyCount": 13,
-  "directAccessOutsideCompositionKeyCount": 98,
+  "directAccessOutsideCompositionKeyCount": 80,
+  "proofHarnessExceptionKeyCount": 18,
   "keys": [
     {
       "key": "__FORMAT",
@@ -22,6 +23,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -39,6 +41,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -55,8 +58,9 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 1,
+      "v2Disposition": "carry; proof-harness direct env access — approved exception (loadLocalEnv boundary; V1C-CONF-06)"
     },
     {
       "key": "ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS",
@@ -73,6 +77,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -90,6 +95,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -113,7 +119,8 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 9,
+      "directAccessOutsideComposition": 4,
+      "proofHarnessAccess": 5,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -131,6 +138,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -148,6 +156,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -169,6 +178,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 2,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -186,6 +196,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -206,6 +217,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 2,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -228,6 +240,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -245,6 +258,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -262,6 +276,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -281,8 +296,9 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 2,
+      "v2Disposition": "carry; proof-harness direct env access — approved exception (loadLocalEnv boundary; V1C-CONF-06)"
     },
     {
       "key": "CADDY_INTERNAL_SECRET",
@@ -303,6 +319,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -320,6 +337,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -337,6 +355,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -354,6 +373,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -371,6 +391,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -388,6 +409,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -405,6 +427,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -422,6 +445,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -439,6 +463,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -456,6 +481,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -473,6 +499,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -490,6 +517,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -507,6 +535,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -528,6 +557,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -549,6 +579,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -566,6 +597,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -587,6 +619,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 3,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -608,6 +641,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 3,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -630,7 +664,8 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 3,
+      "directAccessOutsideComposition": 2,
+      "proofHarnessAccess": 1,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -648,6 +683,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -665,6 +701,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -685,6 +722,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 2,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -702,6 +740,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -719,6 +758,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -736,6 +776,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -757,7 +798,8 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 3,
+      "directAccessOutsideComposition": 2,
+      "proofHarnessAccess": 1,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -777,7 +819,8 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
+      "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 1,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -795,6 +838,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -812,6 +856,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -833,8 +878,9 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 4,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 4,
+      "v2Disposition": "carry; proof-harness direct env access — approved exception (loadLocalEnv boundary; V1C-CONF-06)"
     },
     {
       "key": "KEYCLOAK_ADMIN_PASSWORD",
@@ -857,8 +903,9 @@
       "rotationPolicy": "secret — rotation via SecretStorePort/OpenBao (see V1C-CONF-04)",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 5,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 5,
+      "v2Disposition": "carry; proof-harness direct env access — approved exception (loadLocalEnv boundary; V1C-CONF-06)"
     },
     {
       "key": "KEYCLOAK_ADMIN_USER",
@@ -881,8 +928,9 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 5,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 5,
+      "v2Disposition": "carry; proof-harness direct env access — approved exception (loadLocalEnv boundary; V1C-CONF-06)"
     },
     {
       "key": "KEYCLOAK_CLIENT_ID",
@@ -903,7 +951,8 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 3,
+      "directAccessOutsideComposition": 2,
+      "proofHarnessAccess": 1,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -921,6 +970,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -938,6 +988,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -955,6 +1006,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -972,6 +1024,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -989,6 +1042,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1006,6 +1060,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1023,6 +1078,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1040,6 +1096,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1057,6 +1114,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1077,7 +1135,8 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
+      "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 1,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1095,6 +1154,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1112,6 +1172,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1135,7 +1196,8 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 7,
+      "directAccessOutsideComposition": 2,
+      "proofHarnessAccess": 5,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1152,8 +1214,9 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 1,
+      "v2Disposition": "carry; proof-harness direct env access — approved exception (loadLocalEnv boundary; V1C-CONF-06)"
     },
     {
       "key": "LOCAL_FIXTURE_SESSION",
@@ -1177,6 +1240,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 2,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1194,6 +1258,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1211,6 +1276,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1228,6 +1294,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1249,6 +1316,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1266,6 +1334,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1286,6 +1355,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 2,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1305,7 +1375,8 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
+      "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 1,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1322,8 +1393,9 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 1,
+      "v2Disposition": "carry; proof-harness direct env access — approved exception (loadLocalEnv boundary; V1C-CONF-06)"
     },
     {
       "key": "MAIL_SMTP_PORT",
@@ -1339,8 +1411,9 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 1,
+      "v2Disposition": "carry; proof-harness direct env access — approved exception (loadLocalEnv boundary; V1C-CONF-06)"
     },
     {
       "key": "MAILPIT_API",
@@ -1360,8 +1433,9 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 3,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 3,
+      "v2Disposition": "carry; proof-harness direct env access — approved exception (loadLocalEnv boundary; V1C-CONF-06)"
     },
     {
       "key": "MAILPIT_ROOT_URL",
@@ -1378,6 +1452,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1397,8 +1472,9 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 1,
+      "v2Disposition": "carry; proof-harness direct env access — approved exception (loadLocalEnv boundary; V1C-CONF-06)"
     },
     {
       "key": "MAILPIT_UI_PORT",
@@ -1415,6 +1491,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1432,6 +1509,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1449,6 +1527,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1466,6 +1545,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1482,8 +1562,9 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 1,
+      "v2Disposition": "carry; proof-harness direct env access — approved exception (loadLocalEnv boundary; V1C-CONF-06)"
     },
     {
       "key": "MINIO_API_PORT",
@@ -1500,6 +1581,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1517,6 +1599,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1534,6 +1617,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1551,6 +1635,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1568,6 +1653,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1585,6 +1671,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1606,6 +1693,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1623,6 +1711,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1640,6 +1729,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1657,6 +1747,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1674,6 +1765,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1691,6 +1783,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1715,6 +1808,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 7,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1731,8 +1825,9 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 1,
+      "v2Disposition": "carry; proof-harness direct env access — approved exception (loadLocalEnv boundary; V1C-CONF-06)"
     },
     {
       "key": "NOTIFICATION_EMAIL_TRANSPORT",
@@ -1748,8 +1843,9 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 1,
+      "v2Disposition": "carry; proof-harness direct env access — approved exception (loadLocalEnv boundary; V1C-CONF-06)"
     },
     {
       "key": "OBS_CORR_API_URL",
@@ -1766,6 +1862,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1783,6 +1880,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1802,8 +1900,9 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 1,
+      "v2Disposition": "carry; proof-harness direct env access — approved exception (loadLocalEnv boundary; V1C-CONF-06)"
     },
     {
       "key": "OPENBAO_KV_BASE_PATH",
@@ -1820,6 +1919,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1837,6 +1937,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1854,6 +1955,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1871,6 +1973,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1888,6 +1991,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1905,6 +2009,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1925,7 +2030,8 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
+      "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 1,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1945,7 +2051,8 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
+      "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 1,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1963,6 +2070,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1980,6 +2088,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -1997,6 +2106,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2014,6 +2124,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2031,6 +2142,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2048,6 +2160,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2065,6 +2178,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2082,6 +2196,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2099,6 +2214,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2120,6 +2236,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 2,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2137,6 +2254,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2161,6 +2279,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 6,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2178,6 +2297,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2195,6 +2315,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2212,6 +2333,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2229,6 +2351,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2253,6 +2376,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 4,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2270,6 +2394,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2287,6 +2412,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2307,7 +2433,8 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 3,
+      "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 2,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2325,6 +2452,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2342,6 +2470,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2359,6 +2488,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2376,6 +2506,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2393,6 +2524,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2413,7 +2545,8 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 3,
+      "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 2,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2431,6 +2564,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2447,8 +2581,9 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 1,
+      "v2Disposition": "carry; proof-harness direct env access — approved exception (loadLocalEnv boundary; V1C-CONF-06)"
     },
     {
       "key": "ROUTING_PROOF_PG_URL",
@@ -2464,8 +2599,9 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 1,
+      "v2Disposition": "carry; proof-harness direct env access — approved exception (loadLocalEnv boundary; V1C-CONF-06)"
     },
     {
       "key": "SENTRY_ADMIN_EMAIL",
@@ -2482,6 +2618,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2499,6 +2636,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2516,6 +2654,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2533,6 +2672,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2550,6 +2690,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2567,6 +2708,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2584,6 +2726,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2605,7 +2748,8 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 2,
+      "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 1,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2623,6 +2767,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2640,6 +2785,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2657,6 +2803,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2674,6 +2821,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2691,6 +2839,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2711,6 +2860,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2732,6 +2882,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2749,6 +2900,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2765,8 +2917,9 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 1,
+      "v2Disposition": "carry; proof-harness direct env access — approved exception (loadLocalEnv boundary; V1C-CONF-06)"
     },
     {
       "key": "SONAR_DB_NAME",
@@ -2783,6 +2936,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2800,6 +2954,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2817,6 +2972,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2834,6 +2990,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2851,6 +3008,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2868,6 +3026,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2885,6 +3044,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2902,6 +3062,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2919,6 +3080,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2942,6 +3104,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 5,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2959,6 +3122,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2976,6 +3140,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -2993,6 +3158,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -3010,6 +3176,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -3026,8 +3193,9 @@
       "rotationPolicy": "n/a",
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
-      "directAccessOutsideComposition": 1,
-      "v2Disposition": "carry (typed config object; V1C-CONF-01)"
+      "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 1,
+      "v2Disposition": "carry; proof-harness direct env access — approved exception (loadLocalEnv boundary; V1C-CONF-06)"
     },
     {
       "key": "TENANT_SECRET_ENCRYPTION_KEY",
@@ -3051,6 +3219,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 3,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -3068,6 +3237,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -3085,6 +3255,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -3102,6 +3273,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 0,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     },
     {
@@ -3119,6 +3291,7 @@
       "reloadRestart": "process restart",
       "failureBehaviour": "fail-closed at composition root (target; V1C-CONF-01)",
       "directAccessOutsideComposition": 1,
+      "proofHarnessAccess": 0,
       "v2Disposition": "carry (typed config object; V1C-CONF-01)"
     }
   ]
