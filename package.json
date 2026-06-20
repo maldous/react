@@ -240,7 +240,8 @@
     "proof:tenant-domain-claim-lifecycle": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
     "v2:readiness": "node tools/v2-readiness/src/index.mjs --strict",
     "v2:readiness:json": "node tools/v2-readiness/src/index.mjs --strict --json",
-    "proof:typed-secret-resolution": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts"
+    "proof:typed-secret-resolution": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts",
+    "proof:ui-semantic-groups": "playwright test --config tools/ui-reference-harness/playwright.config.ts tools/ui-reference-harness/playwright/groups.spec.ts"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "3.1056.0",

@@ -3516,5 +3516,23 @@
     "fixtureEnvDependency": "none (in-process)",
     "stageCoverage": "test (ui:harness:test)",
     "failureEvidence": "node:test assertion output"
+  },
+  {
+    "id": "tools/ui-reference-harness/playwright/groups.spec.ts",
+    "path": "tools/ui-reference-harness/playwright/groups.spec.ts",
+    "kind": "playwright-journey",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "self-contained (MSW in-browser; no live backend)",
+    "stageCoverage": "ui:harness:e2e",
+    "failureEvidence": "playwright HTML report + trace on failure"
+  },
+  {
+    "id": "package.json#proof:ui-semantic-groups",
+    "path": "package.json#proof:ui-semantic-groups",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "self-contained (MSW in-browser; no live backend)",
+    "stageCoverage": "proof script (npm run proof:ui-semantic-groups)",
+    "failureEvidence": "proof script assertion output"
   }
 ]

@@ -5504,5 +5504,23 @@
     "hidesErrors": false,
     "dead": false,
     "docDriftsFromBehaviour": false
+  },
+  {
+    "name": "npm proof:ui-semantic-groups",
+    "kind": "npm",
+    "purpose": "Headless journey proving tenant groups UI semantics (V1C-01).",
+    "inputs": [],
+    "outputs": ["playwright report"],
+    "prerequisites": [],
+    "sideEffects": [],
+    "envScope": "all",
+    "failureSemantics": "exit-nonzero-on-failure",
+    "idempotent": true,
+    "safetyControls": [],
+    "testCoverage": "self (headless journey)",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
   }
 ]

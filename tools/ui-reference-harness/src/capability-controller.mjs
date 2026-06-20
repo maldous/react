@@ -85,7 +85,7 @@ export function resolveView({ capability, persona, state }) {
     persona,
     dataState,
     listFixture,
-    table: harness.tables ? harness.tables[0] : null,
+    table: harness.table || (harness.tables ? harness.tables[0] : null),
     commands: allowedCommands(harness, persona),
     fields: harness.fields || [],
   };

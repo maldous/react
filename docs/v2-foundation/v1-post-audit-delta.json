@@ -1307,6 +1307,15 @@
       "v2Target": "tools/v2-readiness/src/rules/r20-harness-semantics.mjs",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/playwright/groups.spec.ts",
+      "introducingCommit": "unknown",
+      "purpose": "Headless journey proving tenant groups UI semantics (V1C-01).",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/playwright/groups.spec.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
     }
   ],
   "deletions": [],

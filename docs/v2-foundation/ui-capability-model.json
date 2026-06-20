@@ -25,12 +25,27 @@
       "owningCapability": "service-catalog-readiness",
       "dataBoundary": "rest-over-bff",
       "personas": [
-        { "personaId": "fixture-tenant-admin", "access": "full" },
-        { "personaId": "fixture-viewer", "access": "full" },
-        { "personaId": "scaffold-system-admin", "access": "full" },
-        { "personaId": "scaffold-tenant-admin", "access": "full" }
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "full"
+        },
+        {
+          "personaId": "fixture-viewer",
+          "access": "full"
+        },
+        {
+          "personaId": "scaffold-system-admin",
+          "access": "full"
+        },
+        {
+          "personaId": "scaffold-tenant-admin",
+          "access": "full"
+        }
       ],
-      "navEligibility": { "inNav": false, "navGroup": "none" },
+      "navEligibility": {
+        "inNav": false,
+        "navGroup": "none"
+      },
       "tasks": [
         {
           "taskId": "view-landing",
@@ -39,17 +54,32 @@
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "success": { "component": "Card" },
-        "authRequired": { "handledBy": "route-guard", "recoveryAction": "sign-in" }
+        "loading": {
+          "component": "LoadingState"
+        },
+        "success": {
+          "component": "Card"
+        },
+        "authRequired": {
+          "handledBy": "route-guard",
+          "recoveryAction": "sign-in"
+        }
       },
       "i18nKeys": ["feature.landing.title", "ui.action.openAdmin"],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.landing.title" },
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.landing.title"
+        },
         "roles": ["link", "heading"]
       },
-      "telemetryEvents": [{ "eventId": "http.request.complete", "trigger": "page-load" }],
+      "telemetryEvents": [
+        {
+          "eventId": "http.request.complete",
+          "trigger": "page-load"
+        }
+      ],
       "playwrightJourneyRefs": ["e2e/discovery/clickability.spec.ts", "ui-contract#landing"]
     },
     {
@@ -59,7 +89,10 @@
       "owningCapability": "platform-login",
       "dataBoundary": "rest-over-bff",
       "personas": [
-        { "personaId": "unauthenticated-visitor", "access": "full" },
+        {
+          "personaId": "unauthenticated-visitor",
+          "access": "full"
+        },
         {
           "personaId": "scaffold-disabled-user",
           "access": "denied",
@@ -71,7 +104,10 @@
           "notes": "Expired session redirects here."
         }
       ],
-      "navEligibility": { "inNav": false, "navGroup": "none" },
+      "navEligibility": {
+        "inNav": false,
+        "navGroup": "none"
+      },
       "tasks": [
         {
           "taskId": "start-login",
@@ -91,8 +127,12 @@
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "success": { "recoveryAction": "none" },
+        "loading": {
+          "component": "LoadingState"
+        },
+        "success": {
+          "recoveryAction": "none"
+        },
         "domainFailure": {
           "component": "Alert",
           "tone": "danger",
@@ -103,7 +143,10 @@
       "i18nKeys": ["auth.login.title", "auth.login.cta", "auth.login.error", "auth.status.loading"],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "auth.login.title" },
+        "heading": {
+          "level": 1,
+          "i18nKey": "auth.login.title"
+        },
         "roles": ["heading", "button"],
         "keyboard": ["Login control keyboard-reachable; visible focus."]
       },
@@ -120,9 +163,18 @@
       "owningCapability": "rbac",
       "dataBoundary": "rest-over-bff",
       "personas": [
-        { "personaId": "fixture-tenant-admin", "access": "full" },
-        { "personaId": "scaffold-tenant-admin", "access": "full" },
-        { "personaId": "scaffold-tenant-member", "access": "denied" }
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "full"
+        },
+        {
+          "personaId": "scaffold-tenant-admin",
+          "access": "full"
+        },
+        {
+          "personaId": "scaffold-tenant-member",
+          "access": "denied"
+        }
       ],
       "navEligibility": {
         "inNav": true,
@@ -133,15 +185,28 @@
         "exact": true
       },
       "states": {
-        "loading": { "component": "LoadingState" },
-        "success": { "component": "Card" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" },
-        "authRequired": { "handledBy": "route-guard", "recoveryAction": "sign-in" }
+        "loading": {
+          "component": "LoadingState"
+        },
+        "success": {
+          "component": "Card"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        },
+        "authRequired": {
+          "handledBy": "route-guard",
+          "recoveryAction": "sign-in"
+        }
       },
       "i18nKeys": ["feature.admin.nav.overview"],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.nav.overview" }
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.nav.overview"
+        }
       },
       "playwrightJourneyRefs": ["ui-contract#admin-overview", "e2e/discovery/persona-authz.spec.ts"]
     },
@@ -154,16 +219,30 @@
       "dataBoundary": "rest-over-bff",
       "persona": "tenant-admin",
       "personas": [
-        { "personaId": "fixture-tenant-admin", "roles": ["tenant-admin"], "access": "full" },
-        { "personaId": "scaffold-tenant-admin", "roles": ["tenant-admin"], "access": "full" },
+        {
+          "personaId": "fixture-tenant-admin",
+          "roles": ["tenant-admin"],
+          "access": "full"
+        },
+        {
+          "personaId": "scaffold-tenant-admin",
+          "roles": ["tenant-admin"],
+          "access": "full"
+        },
         {
           "personaId": "scaffold-tenant-manager",
           "roles": ["manager"],
           "access": "read-only",
           "notes": "manager can read/invite/update_role per persona perms but lacks tenant.admin.access nav."
         },
-        { "personaId": "fixture-viewer", "access": "denied" },
-        { "personaId": "scaffold-tenant-member", "access": "denied" }
+        {
+          "personaId": "fixture-viewer",
+          "access": "denied"
+        },
+        {
+          "personaId": "scaffold-tenant-member",
+          "access": "denied"
+        }
       ],
       "navEligibility": {
         "inNav": true,
@@ -327,7 +406,14 @@
               "type": "email",
               "labelI18nKey": "feature.admin.members.emailLabel",
               "required": true,
-              "validation": [{ "rule": "email" }, { "rule": "required" }],
+              "validation": [
+                {
+                  "rule": "email"
+                },
+                {
+                  "rule": "required"
+                }
+              ],
               "testId": "member-invite-email"
             },
             {
@@ -337,7 +423,11 @@
               "required": true,
               "optionsSource": "enum:TENANT_ROLES",
               "defaultValue": "member",
-              "validation": [{ "rule": "enum" }],
+              "validation": [
+                {
+                  "rule": "enum"
+                }
+              ],
               "testId": "member-invite-role"
             }
           ]
@@ -353,7 +443,11 @@
               "name": "username",
               "type": "text",
               "labelI18nKey": "feature.admin.members.usernameLabel",
-              "validation": [{ "rule": "required" }],
+              "validation": [
+                {
+                  "rule": "required"
+                }
+              ],
               "testId": "member-username-input"
             }
           ]
@@ -407,7 +501,9 @@
               "rowActionCommandIds": ["remove-member"]
             }
           ],
-          "pagination": { "mode": "client" }
+          "pagination": {
+            "mode": "client"
+          }
         }
       ],
       "stateMachines": [
@@ -416,9 +512,21 @@
           "states": ["active", "invited", "disabled"],
           "initial": "invited",
           "transitions": [
-            { "from": "invited", "to": "active", "on": "first-login" },
-            { "from": "active", "to": "disabled", "on": "set-member-status" },
-            { "from": "disabled", "to": "active", "on": "set-member-status" }
+            {
+              "from": "invited",
+              "to": "active",
+              "on": "first-login"
+            },
+            {
+              "from": "active",
+              "to": "disabled",
+              "on": "set-member-status"
+            },
+            {
+              "from": "disabled",
+              "to": "active",
+              "on": "set-member-status"
+            }
           ]
         }
       ],
@@ -428,17 +536,31 @@
           "titleI18nKey": "auth.status.loading",
           "handledBy": "page"
         },
-        "empty": { "component": "EmptyState", "titleI18nKey": "feature.admin.members.empty" },
-        "success": { "component": "DataTable" },
-        "validationFailure": { "component": "FormField", "recoveryAction": "none" },
+        "empty": {
+          "component": "EmptyState",
+          "titleI18nKey": "feature.admin.members.empty"
+        },
+        "success": {
+          "component": "DataTable"
+        },
+        "validationFailure": {
+          "component": "FormField",
+          "recoveryAction": "none"
+        },
         "domainFailure": {
           "component": "ErrorState",
           "tone": "danger",
           "recoveryAction": "retry",
           "descriptionI18nKey": "feature.admin.members.usernameError"
         },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" },
-        "authRequired": { "handledBy": "route-guard", "recoveryAction": "sign-in" }
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        },
+        "authRequired": {
+          "handledBy": "route-guard",
+          "recoveryAction": "sign-in"
+        }
       },
       "destructiveConfirmation": [
         {
@@ -483,10 +605,16 @@
           "resource": "member"
         }
       ],
-      "readiness": { "readinessCheckId": "tenant-identity", "surfacesReadinessState": false },
+      "readiness": {
+        "readinessCheckId": "tenant-identity",
+        "surfacesReadinessState": false
+      },
       "help": {
         "terminology": [
-          { "term": "member", "definitionI18nKey": "feature.admin.members.help.member" },
+          {
+            "term": "member",
+            "definitionI18nKey": "feature.admin.members.help.member"
+          },
           {
             "term": "external identity",
             "definitionI18nKey": "feature.admin.members.help.externalIdentity"
@@ -534,7 +662,10 @@
       ],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.members.title" },
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.members.title"
+        },
         "roles": ["heading", "table", "row", "button", "dialog", "combobox", "status"],
         "accessibleNames": [
           {
@@ -559,19 +690,44 @@
           "Inline role select is keyboard-operable."
         ],
         "announces": [
-          { "i18nKey": "feature.admin.members.saved", "tone": "polite" },
-          { "i18nKey": "feature.admin.members.resendSent", "tone": "polite" }
+          {
+            "i18nKey": "feature.admin.members.saved",
+            "tone": "polite"
+          },
+          {
+            "i18nKey": "feature.admin.members.resendSent",
+            "tone": "polite"
+          }
         ],
         "noColourOnlyMeaning": true
       },
       "responsivePriority": [
-        { "region": "members-table", "priority": 1, "collapseBehaviour": "horizontal-scroll" },
-        { "region": "invite-action", "priority": 2, "collapseBehaviour": "overflow-menu" },
-        { "region": "pending-invitations", "priority": 3, "collapseBehaviour": "stack" }
+        {
+          "region": "members-table",
+          "priority": 1,
+          "collapseBehaviour": "horizontal-scroll"
+        },
+        {
+          "region": "invite-action",
+          "priority": 2,
+          "collapseBehaviour": "overflow-menu"
+        },
+        {
+          "region": "pending-invitations",
+          "priority": 3,
+          "collapseBehaviour": "stack"
+        }
       ],
       "telemetryEvents": [
-        { "eventId": "http.request.complete", "trigger": "members-load" },
-        { "eventId": "member.invite.submitted", "trigger": "invite-submit", "attributes": ["role"] }
+        {
+          "eventId": "http.request.complete",
+          "trigger": "members-load"
+        },
+        {
+          "eventId": "member.invite.submitted",
+          "trigger": "invite-submit",
+          "attributes": ["role"]
+        }
       ],
       "exampleData": {
         "members": {
@@ -595,7 +751,12 @@
               "lastLoginAt": null
             }
           ],
-          "pendingInvitations": [{ "email": "newhire@fixture.local", "role": "member" }]
+          "pendingInvitations": [
+            {
+              "email": "newhire@fixture.local",
+              "role": "member"
+            }
+          ]
         },
         "external-identities": {
           "identities": [
@@ -626,7 +787,10 @@
       "owningCapability": "tenant-identity",
       "dataBoundary": "graphql",
       "personas": [
-        { "personaId": "fixture-tenant-admin", "access": "full" },
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "full"
+        },
         {
           "personaId": "fixture-viewer",
           "roles": ["viewer"],
@@ -694,20 +858,42 @@
               "labelI18nKey": "feature.organisation.form.displayName.label",
               "required": true,
               "validation": [
-                { "rule": "minLength", "value": 1 },
-                { "rule": "maxLength", "value": 120 }
+                {
+                  "rule": "minLength",
+                  "value": 1
+                },
+                {
+                  "rule": "maxLength",
+                  "value": 120
+                }
               ]
             }
           ]
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "success": { "component": "Card" },
-        "validationFailure": { "component": "FormField" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" },
-        "authRequired": { "handledBy": "route-guard", "recoveryAction": "sign-in" }
+        "loading": {
+          "component": "LoadingState"
+        },
+        "success": {
+          "component": "Card"
+        },
+        "validationFailure": {
+          "component": "FormField"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        },
+        "authRequired": {
+          "handledBy": "route-guard",
+          "recoveryAction": "sign-in"
+        }
       },
       "auditImpact": [
         {
@@ -726,9 +912,17 @@
       ],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.organisation.title" },
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.organisation.title"
+        },
         "roles": ["heading", "form"],
-        "announces": [{ "i18nKey": "ui.error.saveFailed", "tone": "assertive" }]
+        "announces": [
+          {
+            "i18nKey": "ui.error.saveFailed",
+            "tone": "assertive"
+          }
+        ]
       },
       "apiEventContractRefs": ["@platform/contracts-graphql", "@platform/contracts-organisation"],
       "playwrightJourneyRefs": ["scenario-manifest#internal-smoke", "graphql:organisationProfile"]
@@ -740,8 +934,14 @@
       "owningCapability": "service-catalog-readiness",
       "dataBoundary": "rest-over-bff",
       "personas": [
-        { "personaId": "fixture-tenant-admin", "access": "full" },
-        { "personaId": "scaffold-tenant-admin", "access": "full" }
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "full"
+        },
+        {
+          "personaId": "scaffold-tenant-admin",
+          "access": "full"
+        }
       ],
       "navEligibility": {
         "inNav": true,
@@ -767,12 +967,28 @@
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState" },
-        "success": { "component": "DataTable" },
-        "degraded": { "component": "Alert", "tone": "warning" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState"
+        },
+        "success": {
+          "component": "DataTable"
+        },
+        "degraded": {
+          "component": "Alert",
+          "tone": "warning"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        }
       },
       "readiness": {
         "readinessCheckId": "service-catalog-readiness",
@@ -782,7 +998,10 @@
       "i18nKeys": ["feature.admin.nav.readiness", "feature.admin.readiness.title"],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.readiness.title" },
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.readiness.title"
+        },
         "noColourOnlyMeaning": true
       },
       "playwrightJourneyRefs": ["ui-contract#admin-readiness"]
@@ -794,8 +1013,14 @@
       "owningCapability": "idp-brokering",
       "dataBoundary": "rest-over-bff",
       "personas": [
-        { "personaId": "fixture-tenant-admin", "access": "full" },
-        { "personaId": "fixture-viewer", "access": "denied" }
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "full"
+        },
+        {
+          "personaId": "fixture-viewer",
+          "access": "denied"
+        }
       ],
       "navEligibility": {
         "inNav": true,
@@ -840,12 +1065,27 @@
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState" },
-        "success": { "component": "Card" },
-        "validationFailure": { "component": "FormField" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState"
+        },
+        "success": {
+          "component": "Card"
+        },
+        "validationFailure": {
+          "component": "FormField"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        }
       },
       "auditImpact": [
         {
@@ -858,7 +1098,10 @@
       "i18nKeys": ["feature.admin.nav.authentication", "feature.admin.auth.title"],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.auth.title" }
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.auth.title"
+        }
       },
       "playwrightJourneyRefs": ["ui-contract#admin-auth", "e2e/discovery/persona-authz.spec.ts"]
     },
@@ -868,7 +1111,12 @@
       "route": "/admin/features",
       "owningCapability": "tenant-config-registry",
       "dataBoundary": "rest-over-bff",
-      "personas": [{ "personaId": "fixture-tenant-admin", "access": "full" }],
+      "personas": [
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "full"
+        }
+      ],
       "navEligibility": {
         "inNav": true,
         "navGroup": "admin",
@@ -877,7 +1125,10 @@
         "requiredPermission": "tenant.features.read"
       },
       "tasks": [
-        { "taskId": "list-features", "summary": "View feature flags." },
+        {
+          "taskId": "list-features",
+          "summary": "View feature flags."
+        },
         {
           "taskId": "toggle-feature",
           "summary": "Toggle a feature flag.",
@@ -914,23 +1165,48 @@
           "dataQueryId": "features",
           "rowTestId": "feature-row",
           "columns": [
-            { "id": "feature", "kind": "text" },
-            { "id": "enabled", "kind": "custom", "rowActionCommandIds": ["toggle-feature"] }
+            {
+              "id": "feature",
+              "kind": "text"
+            },
+            {
+              "id": "enabled",
+              "kind": "custom",
+              "rowActionCommandIds": ["toggle-feature"]
+            }
           ],
-          "pagination": { "mode": "client" }
+          "pagination": {
+            "mode": "client"
+          }
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState" },
-        "success": { "component": "DataTable" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState"
+        },
+        "success": {
+          "component": "DataTable"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        }
       },
       "i18nKeys": ["feature.admin.nav.features", "feature.admin.features.title"],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.features.title" },
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.features.title"
+        },
         "roles": ["switch", "table"]
       },
       "playwrightJourneyRefs": ["ui-contract#admin-features"]
@@ -942,8 +1218,14 @@
       "owningCapability": "tenant-config-registry",
       "dataBoundary": "rest-over-bff",
       "personas": [
-        { "personaId": "fixture-tenant-admin", "access": "full" },
-        { "personaId": "fixture-viewer", "access": "denied" }
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "full"
+        },
+        {
+          "personaId": "fixture-viewer",
+          "access": "denied"
+        }
       ],
       "navEligibility": {
         "inNav": true,
@@ -953,7 +1235,10 @@
         "requiredPermission": "tenant.config.read"
       },
       "tasks": [
-        { "taskId": "view-config", "summary": "View tenant configuration." },
+        {
+          "taskId": "view-config",
+          "summary": "View tenant configuration."
+        },
         {
           "taskId": "update-config",
           "summary": "Update configuration.",
@@ -985,17 +1270,35 @@
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState" },
-        "success": { "component": "Card" },
-        "validationFailure": { "component": "FormField" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState"
+        },
+        "success": {
+          "component": "Card"
+        },
+        "validationFailure": {
+          "component": "FormField"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        }
       },
       "i18nKeys": ["feature.admin.nav.configuration", "feature.admin.config.title"],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.config.title" }
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.config.title"
+        }
       },
       "playwrightJourneyRefs": ["ui-contract#admin-config"]
     },
@@ -1005,7 +1308,12 @@
       "route": "/admin/email",
       "owningCapability": "notifications",
       "dataBoundary": "rest-over-bff",
-      "personas": [{ "personaId": "fixture-tenant-admin", "access": "full" }],
+      "personas": [
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "full"
+        }
+      ],
       "navEligibility": {
         "inNav": true,
         "navGroup": "admin",
@@ -1014,7 +1322,10 @@
         "requiredPermission": "tenant.email.settings.read"
       },
       "tasks": [
-        { "taskId": "view-email-settings", "summary": "View email/notification settings." }
+        {
+          "taskId": "view-email-settings",
+          "summary": "View email/notification settings."
+        }
       ],
       "queries": [
         {
@@ -1027,16 +1338,32 @@
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState" },
-        "success": { "component": "Card" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState"
+        },
+        "success": {
+          "component": "Card"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        }
       },
       "i18nKeys": ["feature.admin.nav.email", "feature.admin.email.title"],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.email.title" }
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.email.title"
+        }
       },
       "playwrightJourneyRefs": ["ui-contract#admin-email"]
     },
@@ -1047,7 +1374,10 @@
       "owningCapability": "tenant-identity",
       "dataBoundary": "rest-over-bff",
       "personas": [
-        { "personaId": "fixture-tenant-admin", "access": "full" },
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "full"
+        },
         {
           "personaId": "tenant-entitlement-disabled",
           "access": "unavailable-entitlement",
@@ -1062,7 +1392,10 @@
         "requiredPermission": "tenant.domains.read"
       },
       "tasks": [
-        { "taskId": "list-domains", "summary": "List tenant custom domains." },
+        {
+          "taskId": "list-domains",
+          "summary": "List tenant custom domains."
+        },
         {
           "taskId": "remove-domain",
           "summary": "Remove a custom domain.",
@@ -1103,8 +1436,14 @@
           "dataQueryId": "domains",
           "rowTestId": "domain-row",
           "columns": [
-            { "id": "domain", "kind": "mono" },
-            { "id": "status", "kind": "badge" },
+            {
+              "id": "domain",
+              "kind": "mono"
+            },
+            {
+              "id": "status",
+              "kind": "badge"
+            },
             {
               "id": "actions",
               "kind": "actions",
@@ -1112,15 +1451,30 @@
               "rowActionCommandIds": ["remove-domain"]
             }
           ],
-          "pagination": { "mode": "client" }
+          "pagination": {
+            "mode": "client"
+          }
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState" },
-        "success": { "component": "DataTable" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" },
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState"
+        },
+        "success": {
+          "component": "DataTable"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        },
         "entitlementUnavailable": {
           "component": "Alert",
           "tone": "info",
@@ -1155,7 +1509,10 @@
       ],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.domains.title" },
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.domains.title"
+        },
         "roles": ["table", "dialog"]
       },
       "playwrightJourneyRefs": ["ui-contract#admin-domains"]
@@ -1167,9 +1524,18 @@
       "owningCapability": "relational-storage",
       "dataBoundary": "rest-over-bff",
       "personas": [
-        { "personaId": "fixture-tenant-admin", "access": "full" },
-        { "personaId": "tenant-entitlement-disabled", "access": "unavailable-entitlement" },
-        { "personaId": "tenant-entitlement-enabled", "access": "full" }
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "full"
+        },
+        {
+          "personaId": "tenant-entitlement-disabled",
+          "access": "unavailable-entitlement"
+        },
+        {
+          "personaId": "tenant-entitlement-enabled",
+          "access": "full"
+        }
       ],
       "navEligibility": {
         "inNav": true,
@@ -1178,7 +1544,12 @@
         "order": 9,
         "requiredPermission": "tenant.storage.read"
       },
-      "tasks": [{ "taskId": "view-storage", "summary": "View tenant storage usage." }],
+      "tasks": [
+        {
+          "taskId": "view-storage",
+          "summary": "View tenant storage usage."
+        }
+      ],
       "queries": [
         {
           "queryId": "storage",
@@ -1191,11 +1562,24 @@
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState" },
-        "success": { "component": "Card" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" },
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState"
+        },
+        "success": {
+          "component": "Card"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        },
         "entitlementUnavailable": {
           "component": "Alert",
           "tone": "info",
@@ -1209,7 +1593,10 @@
       ],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.storage.title" }
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.storage.title"
+        }
       },
       "playwrightJourneyRefs": ["ui-contract#admin-storage"]
     },
@@ -1219,7 +1606,12 @@
       "route": "/admin/observability",
       "owningCapability": "observability-alerting-builtin",
       "dataBoundary": "rest-over-bff",
-      "personas": [{ "personaId": "fixture-tenant-admin", "access": "full" }],
+      "personas": [
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "full"
+        }
+      ],
       "navEligibility": {
         "inNav": true,
         "navGroup": "admin",
@@ -1228,7 +1620,10 @@
         "requiredPermission": "tenant.observability.read"
       },
       "tasks": [
-        { "taskId": "view-observability", "summary": "View tenant observability/alerting." }
+        {
+          "taskId": "view-observability",
+          "summary": "View tenant observability/alerting."
+        }
       ],
       "queries": [
         {
@@ -1242,18 +1637,40 @@
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState" },
-        "success": { "component": "Card" },
-        "degraded": { "component": "Alert", "tone": "warning" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" },
-        "entitlementUnavailable": { "component": "Alert", "tone": "info" }
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState"
+        },
+        "success": {
+          "component": "Card"
+        },
+        "degraded": {
+          "component": "Alert",
+          "tone": "warning"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        },
+        "entitlementUnavailable": {
+          "component": "Alert",
+          "tone": "info"
+        }
       },
       "i18nKeys": ["feature.admin.nav.observability", "feature.admin.observability.title"],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.observability.title" }
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.observability.title"
+        }
       },
       "playwrightJourneyRefs": ["ui-contract#admin-observability"]
     },
@@ -1264,9 +1681,18 @@
       "owningCapability": "webhooks-developer",
       "dataBoundary": "rest-over-bff",
       "personas": [
-        { "personaId": "fixture-tenant-admin", "access": "full" },
-        { "personaId": "tenant-entitlement-disabled", "access": "unavailable-entitlement" },
-        { "personaId": "tenant-entitlement-enabled", "access": "full" }
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "full"
+        },
+        {
+          "personaId": "tenant-entitlement-disabled",
+          "access": "unavailable-entitlement"
+        },
+        {
+          "personaId": "tenant-entitlement-enabled",
+          "access": "full"
+        }
       ],
       "navEligibility": {
         "inNav": true,
@@ -1276,7 +1702,10 @@
         "requiredPermission": "tenant.webhooks.read"
       },
       "tasks": [
-        { "taskId": "list-webhooks", "summary": "List webhook endpoints." },
+        {
+          "taskId": "list-webhooks",
+          "summary": "List webhook endpoints."
+        },
         {
           "taskId": "delete-webhook",
           "summary": "Delete a webhook.",
@@ -1317,9 +1746,18 @@
           "dataQueryId": "webhooks",
           "rowTestId": "webhook-row",
           "columns": [
-            { "id": "url", "kind": "mono" },
-            { "id": "events", "kind": "text" },
-            { "id": "status", "kind": "badge" },
+            {
+              "id": "url",
+              "kind": "mono"
+            },
+            {
+              "id": "events",
+              "kind": "text"
+            },
+            {
+              "id": "status",
+              "kind": "badge"
+            },
             {
               "id": "actions",
               "kind": "actions",
@@ -1327,15 +1765,30 @@
               "rowActionCommandIds": ["delete-webhook"]
             }
           ],
-          "pagination": { "mode": "client" }
+          "pagination": {
+            "mode": "client"
+          }
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState" },
-        "success": { "component": "DataTable" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" },
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState"
+        },
+        "success": {
+          "component": "DataTable"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        },
         "entitlementUnavailable": {
           "component": "Alert",
           "tone": "info",
@@ -1368,7 +1821,10 @@
       ],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.webhooks.title" },
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.webhooks.title"
+        },
         "roles": ["table", "dialog"]
       },
       "playwrightJourneyRefs": ["ui-contract#admin-webhooks"]
@@ -1380,8 +1836,14 @@
       "owningCapability": "service-catalog-readiness",
       "dataBoundary": "rest-over-bff",
       "personas": [
-        { "personaId": "fixture-tenant-admin", "access": "full" },
-        { "personaId": "scaffold-system-admin", "access": "full" }
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "full"
+        },
+        {
+          "personaId": "scaffold-system-admin",
+          "access": "full"
+        }
       ],
       "navEligibility": {
         "inNav": true,
@@ -1391,7 +1853,10 @@
         "requiredPermission": "tenant.platform.read"
       },
       "tasks": [
-        { "taskId": "view-platform-services", "summary": "View platform service readiness." }
+        {
+          "taskId": "view-platform-services",
+          "summary": "View platform service readiness."
+        }
       ],
       "queries": [
         {
@@ -1404,12 +1869,28 @@
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState" },
-        "success": { "component": "DataTable" },
-        "degraded": { "component": "Alert", "tone": "warning" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState"
+        },
+        "success": {
+          "component": "DataTable"
+        },
+        "degraded": {
+          "component": "Alert",
+          "tone": "warning"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        }
       },
       "readiness": {
         "readinessCheckId": "service-catalog-readiness",
@@ -1418,7 +1899,10 @@
       "i18nKeys": ["feature.admin.nav.platform", "feature.admin.platform.title"],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.platform.title" },
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.platform.title"
+        },
         "noColourOnlyMeaning": true
       },
       "playwrightJourneyRefs": ["ui-contract#admin-platform"]
@@ -1430,8 +1914,14 @@
       "owningCapability": "composed-provider-readiness",
       "dataBoundary": "rest-over-bff",
       "personas": [
-        { "personaId": "scaffold-system-admin", "access": "full" },
-        { "personaId": "fixture-tenant-admin", "access": "denied" }
+        {
+          "personaId": "scaffold-system-admin",
+          "access": "full"
+        },
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "denied"
+        }
       ],
       "navEligibility": {
         "inNav": true,
@@ -1463,24 +1953,51 @@
           "dataQueryId": "clickthrough",
           "rowTestId": "clickthrough-row",
           "columns": [
-            { "id": "service", "kind": "text" },
-            { "id": "status", "kind": "badge" },
-            { "id": "open", "kind": "actions", "srOnlyHeader": true }
+            {
+              "id": "service",
+              "kind": "text"
+            },
+            {
+              "id": "status",
+              "kind": "badge"
+            },
+            {
+              "id": "open",
+              "kind": "actions",
+              "srOnlyHeader": true
+            }
           ],
-          "pagination": { "mode": "none" }
+          "pagination": {
+            "mode": "none"
+          }
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState" },
-        "success": { "component": "DataTable" },
-        "degraded": { "component": "Alert", "tone": "warning" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState"
+        },
+        "success": {
+          "component": "DataTable"
+        },
+        "degraded": {
+          "component": "Alert",
+          "tone": "warning"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        }
       },
       "i18nKeys": ["feature.admin.nav.clickthrough", "feature.admin.clickthrough.title"],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.clickthrough.title" },
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.clickthrough.title"
+        },
         "roles": ["table", "link"]
       },
       "playwrightJourneyRefs": [
@@ -1496,8 +2013,14 @@
       "owningCapability": "logs",
       "dataBoundary": "rest-over-bff",
       "personas": [
-        { "personaId": "scaffold-system-admin", "access": "full" },
-        { "personaId": "fixture-tenant-admin", "access": "denied" }
+        {
+          "personaId": "scaffold-system-admin",
+          "access": "full"
+        },
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "denied"
+        }
       ],
       "navEligibility": {
         "inNav": true,
@@ -1506,7 +2029,12 @@
         "order": 14,
         "requiredPermission": "platform.logs.read"
       },
-      "tasks": [{ "taskId": "search-logs", "summary": "Search platform logs with filters." }],
+      "tasks": [
+        {
+          "taskId": "search-logs",
+          "summary": "Search platform logs with filters."
+        }
+      ],
       "queries": [
         {
           "queryId": "logs",
@@ -1524,10 +2052,23 @@
           "dataQueryId": "logs",
           "rowTestId": "log-row",
           "columns": [
-            { "id": "timestamp", "kind": "date", "sortable": true },
-            { "id": "level", "kind": "badge" },
-            { "id": "message", "kind": "text" },
-            { "id": "requestId", "kind": "mono" }
+            {
+              "id": "timestamp",
+              "kind": "date",
+              "sortable": true
+            },
+            {
+              "id": "level",
+              "kind": "badge"
+            },
+            {
+              "id": "message",
+              "kind": "text"
+            },
+            {
+              "id": "requestId",
+              "kind": "mono"
+            }
           ],
           "filters": [
             {
@@ -1535,23 +2076,46 @@
               "type": "select",
               "labelI18nKey": "feature.admin.logs.filter.level"
             },
-            { "field": "q", "type": "text", "labelI18nKey": "feature.admin.logs.filter.query" },
+            {
+              "field": "q",
+              "type": "text",
+              "labelI18nKey": "feature.admin.logs.filter.query"
+            },
             {
               "field": "range",
               "type": "date-range",
               "labelI18nKey": "feature.admin.logs.filter.range"
             }
           ],
-          "sorting": { "defaultSort": "timestamp", "defaultDirection": "desc" },
-          "pagination": { "mode": "server-cursor", "pageSize": 50 }
+          "sorting": {
+            "defaultSort": "timestamp",
+            "defaultDirection": "desc"
+          },
+          "pagination": {
+            "mode": "server-cursor",
+            "pageSize": 50
+          }
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState" },
-        "success": { "component": "DataTable" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState"
+        },
+        "success": {
+          "component": "DataTable"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        }
       },
       "i18nKeys": [
         "feature.admin.nav.logs",
@@ -1562,7 +2126,10 @@
       ],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.logs.title" },
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.logs.title"
+        },
         "roles": ["table", "searchbox"]
       },
       "playwrightJourneyRefs": ["ui-contract#admin-logs", "e2e/discovery/persona-authz.spec.ts"]
@@ -1574,8 +2141,14 @@
       "owningCapability": "entitlements",
       "dataBoundary": "rest-over-bff",
       "personas": [
-        { "personaId": "fixture-tenant-admin", "access": "full" },
-        { "personaId": "tenant-entitlement-disabled", "access": "full" }
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "full"
+        },
+        {
+          "personaId": "tenant-entitlement-disabled",
+          "access": "full"
+        }
       ],
       "navEligibility": {
         "inNav": true,
@@ -1585,7 +2158,10 @@
         "requiredPermission": "tenant.entitlements.read"
       },
       "tasks": [
-        { "taskId": "view-entitlements", "summary": "View tenant entitlements (deny-by-default)." }
+        {
+          "taskId": "view-entitlements",
+          "summary": "View tenant entitlements (deny-by-default)."
+        }
       ],
       "queries": [
         {
@@ -1604,23 +2180,47 @@
           "dataQueryId": "entitlements",
           "rowTestId": "entitlement-row",
           "columns": [
-            { "id": "entitlement", "kind": "text" },
-            { "id": "granted", "kind": "badge" }
+            {
+              "id": "entitlement",
+              "kind": "text"
+            },
+            {
+              "id": "granted",
+              "kind": "badge"
+            }
           ],
-          "pagination": { "mode": "none" }
+          "pagination": {
+            "mode": "none"
+          }
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState" },
-        "success": { "component": "DataTable" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState"
+        },
+        "success": {
+          "component": "DataTable"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        }
       },
       "i18nKeys": ["feature.admin.nav.entitlements", "feature.admin.entitlements.title"],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.entitlements.title" },
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.entitlements.title"
+        },
         "noColourOnlyMeaning": true
       },
       "playwrightJourneyRefs": ["ui-contract#admin-entitlements"]
@@ -1632,7 +2232,10 @@
       "owningCapability": "metering-usage-meters",
       "dataBoundary": "rest-over-bff",
       "personas": [
-        { "personaId": "fixture-tenant-admin", "access": "full" },
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "full"
+        },
         {
           "personaId": "tenant-quota-limited",
           "access": "quota-limited",
@@ -1646,7 +2249,12 @@
         "order": 16,
         "requiredPermission": "tenant.metering.read"
       },
-      "tasks": [{ "taskId": "view-usage", "summary": "View metering usage and quotas." }],
+      "tasks": [
+        {
+          "taskId": "view-usage",
+          "summary": "View metering usage and quotas."
+        }
+      ],
       "queries": [
         {
           "queryId": "usage",
@@ -1658,11 +2266,24 @@
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState" },
-        "success": { "component": "Card" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" },
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState"
+        },
+        "success": {
+          "component": "Card"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        },
         "quotaExceeded": {
           "component": "Alert",
           "tone": "warning",
@@ -1677,7 +2298,10 @@
       ],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.usage.title" },
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.usage.title"
+        },
         "noColourOnlyMeaning": true
       },
       "playwrightJourneyRefs": ["ui-contract#admin-usage"]
@@ -1689,7 +2313,10 @@
       "owningCapability": "api-keys-pat",
       "dataBoundary": "rest-over-bff",
       "personas": [
-        { "personaId": "fixture-tenant-admin", "access": "full" },
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "full"
+        },
         {
           "personaId": "tenant-rate-limited",
           "access": "rate-limited",
@@ -1704,7 +2331,10 @@
         "requiredPermission": "tenant.developer.read"
       },
       "tasks": [
-        { "taskId": "view-developer-portal", "summary": "View API keys / PATs and rate limits." },
+        {
+          "taskId": "view-developer-portal",
+          "summary": "View API keys / PATs and rate limits."
+        },
         {
           "taskId": "create-api-key",
           "summary": "Create an API key.",
@@ -1762,9 +2392,18 @@
           "dataQueryId": "api-keys",
           "rowTestId": "api-key-row",
           "columns": [
-            { "id": "name", "kind": "text" },
-            { "id": "prefix", "kind": "mono" },
-            { "id": "created", "kind": "date" },
+            {
+              "id": "name",
+              "kind": "text"
+            },
+            {
+              "id": "prefix",
+              "kind": "mono"
+            },
+            {
+              "id": "created",
+              "kind": "date"
+            },
             {
               "id": "actions",
               "kind": "actions",
@@ -1772,17 +2411,37 @@
               "rowActionCommandIds": ["revoke-api-key"]
             }
           ],
-          "pagination": { "mode": "client" }
+          "pagination": {
+            "mode": "client"
+          }
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState" },
-        "success": { "component": "DataTable" },
-        "validationFailure": { "component": "FormField" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" },
-        "entitlementUnavailable": { "component": "Alert", "tone": "info" },
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState"
+        },
+        "success": {
+          "component": "DataTable"
+        },
+        "validationFailure": {
+          "component": "FormField"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        },
+        "entitlementUnavailable": {
+          "component": "Alert",
+          "tone": "info"
+        },
         "rateLimited": {
           "component": "Alert",
           "tone": "warning",
@@ -1822,7 +2481,10 @@
       ],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.developer.title" },
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.developer.title"
+        },
         "roles": ["table", "dialog"]
       },
       "playwrightJourneyRefs": ["ui-contract#admin-developer"]
@@ -1833,7 +2495,12 @@
       "route": "/admin/search",
       "owningCapability": "search-indexing",
       "dataBoundary": "rest-over-bff",
-      "personas": [{ "personaId": "fixture-tenant-admin", "access": "full" }],
+      "personas": [
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "full"
+        }
+      ],
       "navEligibility": {
         "inNav": true,
         "navGroup": "admin",
@@ -1841,7 +2508,12 @@
         "order": 18,
         "requiredPermission": "tenant.search.read"
       },
-      "tasks": [{ "taskId": "search", "summary": "Search indexed content." }],
+      "tasks": [
+        {
+          "taskId": "search",
+          "summary": "Search indexed content."
+        }
+      ],
       "queries": [
         {
           "queryId": "search",
@@ -1875,18 +2547,41 @@
           "dataQueryId": "search",
           "rowTestId": "search-result-row",
           "columns": [
-            { "id": "title", "kind": "text" },
-            { "id": "type", "kind": "badge" }
+            {
+              "id": "title",
+              "kind": "text"
+            },
+            {
+              "id": "type",
+              "kind": "badge"
+            }
           ],
-          "pagination": { "mode": "server-offset", "pageSize": 25 }
+          "pagination": {
+            "mode": "server-offset",
+            "pageSize": 25
+          }
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState", "titleI18nKey": "feature.admin.search.empty" },
-        "success": { "component": "DataTable" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState",
+          "titleI18nKey": "feature.admin.search.empty"
+        },
+        "success": {
+          "component": "DataTable"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        }
       },
       "i18nKeys": [
         "feature.admin.nav.search",
@@ -1896,7 +2591,10 @@
       ],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.search.title" },
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.search.title"
+        },
         "roles": ["searchbox", "table"]
       },
       "playwrightJourneyRefs": ["ui-contract#admin-search"]
@@ -1908,8 +2606,14 @@
       "owningCapability": "event-bus-queues-dlq",
       "dataBoundary": "rest-over-bff",
       "personas": [
-        { "personaId": "scaffold-system-admin", "access": "full" },
-        { "personaId": "fixture-tenant-admin", "access": "denied" }
+        {
+          "personaId": "scaffold-system-admin",
+          "access": "full"
+        },
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "denied"
+        }
       ],
       "navEligibility": {
         "inNav": true,
@@ -1918,7 +2622,12 @@
         "order": 19,
         "requiredPermission": "platform.events.read"
       },
-      "tasks": [{ "taskId": "view-events", "summary": "View event bus / queue / DLQ activity." }],
+      "tasks": [
+        {
+          "taskId": "view-events",
+          "summary": "View event bus / queue / DLQ activity."
+        }
+      ],
       "queries": [
         {
           "queryId": "events",
@@ -1936,26 +2645,61 @@
           "dataQueryId": "events",
           "rowTestId": "event-row",
           "columns": [
-            { "id": "timestamp", "kind": "date", "sortable": true },
-            { "id": "type", "kind": "text" },
-            { "id": "status", "kind": "badge" }
+            {
+              "id": "timestamp",
+              "kind": "date",
+              "sortable": true
+            },
+            {
+              "id": "type",
+              "kind": "text"
+            },
+            {
+              "id": "status",
+              "kind": "badge"
+            }
           ],
-          "sorting": { "defaultSort": "timestamp", "defaultDirection": "desc" },
-          "pagination": { "mode": "server-cursor", "pageSize": 50 }
+          "sorting": {
+            "defaultSort": "timestamp",
+            "defaultDirection": "desc"
+          },
+          "pagination": {
+            "mode": "server-cursor",
+            "pageSize": 50
+          }
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState" },
-        "success": { "component": "DataTable" },
-        "degraded": { "component": "Alert", "tone": "warning" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState"
+        },
+        "success": {
+          "component": "DataTable"
+        },
+        "degraded": {
+          "component": "Alert",
+          "tone": "warning"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        }
       },
       "i18nKeys": ["feature.admin.nav.events", "feature.admin.events.title"],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.events.title" },
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.events.title"
+        },
         "roles": ["table"],
         "noColourOnlyMeaning": true
       },
@@ -1968,9 +2712,18 @@
       "owningCapability": "end-user-profile-self-service",
       "dataBoundary": "rest-over-bff",
       "personas": [
-        { "personaId": "fixture-tenant-admin", "access": "full" },
-        { "personaId": "fixture-viewer", "access": "full" },
-        { "personaId": "scaffold-tenant-member", "access": "full" }
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "full"
+        },
+        {
+          "personaId": "fixture-viewer",
+          "access": "full"
+        },
+        {
+          "personaId": "scaffold-tenant-member",
+          "access": "full"
+        }
       ],
       "navEligibility": {
         "inNav": true,
@@ -2028,8 +2781,14 @@
               "labelI18nKey": "feature.account.form.displayName.label",
               "required": true,
               "validation": [
-                { "rule": "minLength", "value": 1 },
-                { "rule": "maxLength", "value": 120 }
+                {
+                  "rule": "minLength",
+                  "value": 1
+                },
+                {
+                  "rule": "maxLength",
+                  "value": 120
+                }
               ]
             },
             {
@@ -2042,12 +2801,27 @@
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState" },
-        "success": { "component": "Card" },
-        "validationFailure": { "component": "FormField" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "authRequired": { "handledBy": "route-guard", "recoveryAction": "sign-in" }
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState"
+        },
+        "success": {
+          "component": "Card"
+        },
+        "validationFailure": {
+          "component": "FormField"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "authRequired": {
+          "handledBy": "route-guard",
+          "recoveryAction": "sign-in"
+        }
       },
       "auditImpact": [
         {
@@ -2065,9 +2839,17 @@
       ],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.account.title" },
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.account.title"
+        },
         "roles": ["form"],
-        "announces": [{ "i18nKey": "ui.error.saveFailed", "tone": "assertive" }]
+        "announces": [
+          {
+            "i18nKey": "ui.error.saveFailed",
+            "tone": "assertive"
+          }
+        ]
       },
       "playwrightJourneyRefs": ["ui-contract#admin-account"]
     },
@@ -2078,8 +2860,14 @@
       "owningCapability": "observability-alerting-builtin",
       "dataBoundary": "rest-over-bff",
       "personas": [
-        { "personaId": "scaffold-system-admin", "access": "full" },
-        { "personaId": "fixture-tenant-admin", "access": "denied" }
+        {
+          "personaId": "scaffold-system-admin",
+          "access": "full"
+        },
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "denied"
+        }
       ],
       "navEligibility": {
         "inNav": true,
@@ -2089,7 +2877,10 @@
         "requiredPermission": "platform.observability.read"
       },
       "tasks": [
-        { "taskId": "view-monitoring", "summary": "View platform monitoring / incidents / alerts." }
+        {
+          "taskId": "view-monitoring",
+          "summary": "View platform monitoring / incidents / alerts."
+        }
       ],
       "queries": [
         {
@@ -2102,17 +2893,36 @@
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState" },
-        "success": { "component": "Card" },
-        "degraded": { "component": "Alert", "tone": "warning" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState"
+        },
+        "success": {
+          "component": "Card"
+        },
+        "degraded": {
+          "component": "Alert",
+          "tone": "warning"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        }
       },
       "i18nKeys": ["feature.admin.nav.monitoring", "feature.admin.monitoring.title"],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.monitoring.title" },
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.monitoring.title"
+        },
         "noColourOnlyMeaning": true
       },
       "playwrightJourneyRefs": ["ui-contract#admin-monitoring"]
@@ -2124,8 +2934,14 @@
       "owningCapability": "scheduled-jobs-builtin",
       "dataBoundary": "rest-over-bff",
       "personas": [
-        { "personaId": "scaffold-system-admin", "access": "full" },
-        { "personaId": "fixture-tenant-admin", "access": "denied" }
+        {
+          "personaId": "scaffold-system-admin",
+          "access": "full"
+        },
+        {
+          "personaId": "fixture-tenant-admin",
+          "access": "denied"
+        }
       ],
       "navEligibility": {
         "inNav": true,
@@ -2134,7 +2950,12 @@
         "order": 22,
         "requiredPermission": "platform.jobs.read"
       },
-      "tasks": [{ "taskId": "list-jobs", "summary": "List scheduled jobs and their last run." }],
+      "tasks": [
+        {
+          "taskId": "list-jobs",
+          "summary": "List scheduled jobs and their last run."
+        }
+      ],
       "queries": [
         {
           "queryId": "jobs",
@@ -2152,31 +2973,469 @@
           "dataQueryId": "jobs",
           "rowTestId": "job-row",
           "columns": [
-            { "id": "name", "kind": "text" },
-            { "id": "schedule", "kind": "mono" },
-            { "id": "lastRun", "kind": "date", "sortable": true },
-            { "id": "status", "kind": "badge" }
+            {
+              "id": "name",
+              "kind": "text"
+            },
+            {
+              "id": "schedule",
+              "kind": "mono"
+            },
+            {
+              "id": "lastRun",
+              "kind": "date",
+              "sortable": true
+            },
+            {
+              "id": "status",
+              "kind": "badge"
+            }
           ],
-          "sorting": { "defaultSort": "lastRun", "defaultDirection": "desc" },
-          "pagination": { "mode": "client" }
+          "sorting": {
+            "defaultSort": "lastRun",
+            "defaultDirection": "desc"
+          },
+          "pagination": {
+            "mode": "client"
+          }
         }
       ],
       "states": {
-        "loading": { "component": "LoadingState" },
-        "empty": { "component": "EmptyState" },
-        "success": { "component": "DataTable" },
-        "degraded": { "component": "Alert", "tone": "warning" },
-        "domainFailure": { "component": "ErrorState", "tone": "danger", "recoveryAction": "retry" },
-        "permissionDenied": { "component": "ForbiddenState", "handledBy": "route-guard" }
+        "loading": {
+          "component": "LoadingState"
+        },
+        "empty": {
+          "component": "EmptyState"
+        },
+        "success": {
+          "component": "DataTable"
+        },
+        "degraded": {
+          "component": "Alert",
+          "tone": "warning"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        }
       },
       "i18nKeys": ["feature.admin.nav.scheduledJobs", "feature.admin.scheduledJobs.title"],
       "a11y": {
         "landmark": "main",
-        "heading": { "level": 1, "i18nKey": "feature.admin.scheduledJobs.title" },
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.scheduledJobs.title"
+        },
         "roles": ["table"],
         "noColourOnlyMeaning": true
       },
       "playwrightJourneyRefs": ["ui-contract#admin-scheduled-jobs"]
+    },
+    {
+      "capabilityId": "admin-groups",
+      "titleI18nKey": "feature.admin.groups.title",
+      "descriptionI18nKey": "feature.admin.groups.description",
+      "route": "/admin/groups",
+      "owningCapability": "tenant-identity",
+      "dataBoundary": "rest-over-bff",
+      "persona": "tenant-admin",
+      "personas": [
+        {
+          "personaId": "fixture-tenant-admin",
+          "roles": ["tenant-admin"],
+          "access": "full"
+        },
+        {
+          "personaId": "scaffold-tenant-admin",
+          "roles": ["tenant-admin"],
+          "access": "full"
+        },
+        {
+          "personaId": "fixture-viewer",
+          "access": "read-only"
+        },
+        {
+          "personaId": "scaffold-tenant-member",
+          "access": "denied"
+        }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.groups",
+        "order": 4,
+        "requiredPermission": "tenant.groups.read"
+      },
+      "states": {
+        "loading": {
+          "component": "LoadingState",
+          "titleI18nKey": "auth.status.loading"
+        },
+        "empty": {
+          "component": "EmptyState",
+          "titleI18nKey": "feature.admin.groups.empty"
+        },
+        "success": {
+          "component": "DataTable"
+        },
+        "validationFailure": {
+          "component": "FormField",
+          "recoveryAction": "none"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        }
+      },
+      "i18nKeys": [
+        "feature.admin.groups.title",
+        "feature.admin.groups.description",
+        "feature.admin.groups.empty",
+        "feature.admin.groups.nameLabel",
+        "feature.admin.groups.create",
+        "feature.admin.groups.created",
+        "feature.admin.groups.updated",
+        "feature.admin.groups.deleted",
+        "feature.admin.groups.removeConfirmTitle"
+      ],
+      "a11y": {
+        "landmark": "main",
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.groups.title"
+        },
+        "roles": ["heading", "table", "row", "button", "textbox", "alertdialog", "status"],
+        "accessibleNames": [
+          {
+            "control": "action-create",
+            "role": "button",
+            "nameI18nKey": "feature.admin.groups.create"
+          }
+        ],
+        "keyboard": [
+          "Create is keyboard-activatable",
+          "Delete confirmation traps and restores focus"
+        ],
+        "announces": [
+          {
+            "i18nKey": "feature.admin.groups.created",
+            "tone": "polite"
+          }
+        ],
+        "noColourOnlyMeaning": true
+      },
+      "apiEventContractRefs": ["docs/api/openapi.json#/paths/~1api~1org~1groups"],
+      "playwrightJourneyRefs": ["tools/ui-reference-harness/playwright/groups.spec.ts"],
+      "harness": {
+        "capabilityKey": "groups",
+        "complete": true,
+        "personas": [
+          {
+            "personaId": "tenant-admin",
+            "permissions": [
+              "tenant.groups.read",
+              "tenant.groups.create",
+              "tenant.groups.update",
+              "tenant.groups.delete"
+            ]
+          },
+          {
+            "personaId": "tenant-viewer",
+            "permissions": ["tenant.groups.read"]
+          },
+          {
+            "personaId": "no-access",
+            "permissions": []
+          }
+        ],
+        "permissions": [
+          {
+            "permission": "tenant.groups.read",
+            "allowedPersonas": ["tenant-admin", "tenant-viewer"],
+            "deniedPersonas": ["no-access"]
+          },
+          {
+            "permission": "tenant.groups.create",
+            "allowedPersonas": ["tenant-admin"],
+            "deniedPersonas": ["tenant-viewer", "no-access"]
+          },
+          {
+            "permission": "tenant.groups.update",
+            "allowedPersonas": ["tenant-admin"],
+            "deniedPersonas": ["tenant-viewer", "no-access"]
+          },
+          {
+            "permission": "tenant.groups.delete",
+            "allowedPersonas": ["tenant-admin"],
+            "deniedPersonas": ["tenant-viewer", "no-access"]
+          }
+        ],
+        "queries": [
+          {
+            "queryId": "list",
+            "method": "GET",
+            "endpoint": "/api/org/groups",
+            "requiredPermission": "tenant.groups.read"
+          }
+        ],
+        "commands": [
+          {
+            "commandId": "create-group",
+            "method": "POST",
+            "endpoint": "/api/org/groups",
+            "requiredPermission": "tenant.groups.create",
+            "resultingState": "success",
+            "failureStates": ["validationError", "serverError"],
+            "successMessage": "Group created"
+          },
+          {
+            "commandId": "update-group",
+            "method": "PATCH",
+            "endpoint": "/api/org/groups/:groupId",
+            "requiredPermission": "tenant.groups.update",
+            "resultingState": "success",
+            "failureStates": ["validationError", "serverError"],
+            "successMessage": "Group updated"
+          },
+          {
+            "commandId": "delete-group",
+            "method": "DELETE",
+            "endpoint": "/api/org/groups/:groupId",
+            "requiredPermission": "tenant.groups.delete",
+            "resultingState": "success",
+            "failureStates": ["serverError"],
+            "destructive": true,
+            "successMessage": "Group deleted"
+          }
+        ],
+        "fields": [
+          {
+            "name": "name",
+            "label": "Group name",
+            "type": "text",
+            "required": true,
+            "validation": ["required", "maxLength:64", "noSlash"],
+            "errorId": "group-name-error",
+            "testId": "field-name"
+          }
+        ],
+        "validation": [
+          {
+            "field": "name",
+            "rule": "required",
+            "errorId": "group-name-error",
+            "accessibleErrorAssociation": "aria-describedby"
+          },
+          {
+            "field": "name",
+            "rule": "maxLength:64",
+            "errorId": "group-name-error",
+            "accessibleErrorAssociation": "aria-describedby"
+          },
+          {
+            "field": "name",
+            "rule": "noSlash",
+            "errorId": "group-name-error",
+            "accessibleErrorAssociation": "aria-describedby"
+          }
+        ],
+        "table": {
+          "collectionKey": "groups",
+          "idField": "id",
+          "columns": [
+            {
+              "field": "name",
+              "label": "Group name"
+            },
+            {
+              "field": "path",
+              "label": "Path"
+            }
+          ]
+        },
+        "states": [
+          "loading",
+          "empty",
+          "loaded",
+          "submitting",
+          "success",
+          "validationError",
+          "forbidden",
+          "serverError",
+          "degraded"
+        ],
+        "transitions": [
+          {
+            "from": "loaded",
+            "on": "create-group",
+            "to": "submitting"
+          },
+          {
+            "from": "submitting",
+            "on": "ok",
+            "to": "success"
+          },
+          {
+            "from": "submitting",
+            "on": "invalid",
+            "to": "validationError"
+          },
+          {
+            "from": "submitting",
+            "on": "error",
+            "to": "serverError"
+          },
+          {
+            "from": "loaded",
+            "on": "delete-group",
+            "to": "submitting"
+          }
+        ],
+        "fixtures": [
+          {
+            "state": "loaded",
+            "route": "/api/org/groups",
+            "method": "GET",
+            "status": 200,
+            "body": {
+              "groups": [
+                {
+                  "id": "g-1",
+                  "name": "Engineering",
+                  "path": "/Engineering"
+                },
+                {
+                  "id": "g-2",
+                  "name": "Finance",
+                  "path": "/Finance"
+                }
+              ]
+            }
+          },
+          {
+            "state": "empty",
+            "route": "/api/org/groups",
+            "method": "GET",
+            "status": 200,
+            "body": {
+              "groups": []
+            }
+          },
+          {
+            "state": "forbidden",
+            "route": "/api/org/groups",
+            "method": "GET",
+            "status": 403,
+            "body": {
+              "code": "FORBIDDEN"
+            }
+          },
+          {
+            "state": "serverError",
+            "route": "/api/org/groups",
+            "method": "GET",
+            "status": 500,
+            "body": {
+              "code": "INTERNAL"
+            }
+          },
+          {
+            "state": "success",
+            "route": "/api/org/groups",
+            "method": "POST",
+            "status": 201,
+            "body": {
+              "groupId": "g-new",
+              "name": "Platform"
+            }
+          },
+          {
+            "state": "validationError",
+            "route": "/api/org/groups",
+            "method": "POST",
+            "status": 422,
+            "triggerField": "name",
+            "triggerValue": "taken",
+            "body": {
+              "code": "VALIDATION",
+              "fieldErrors": {
+                "name": "A group with this name already exists"
+              }
+            }
+          },
+          {
+            "state": "success",
+            "route": "/api/org/groups/:groupId",
+            "method": "PATCH",
+            "status": 200,
+            "body": {
+              "groupId": "g-1",
+              "name": "Engineering"
+            }
+          },
+          {
+            "state": "success",
+            "route": "/api/org/groups/:groupId",
+            "method": "DELETE",
+            "status": 204
+          }
+        ],
+        "accessibleNames": [
+          {
+            "control": "action-create",
+            "role": "button",
+            "name": "Create group"
+          },
+          {
+            "control": "field-name",
+            "role": "textbox",
+            "name": "Group name"
+          },
+          {
+            "control": "confirm-delete",
+            "role": "alertdialog",
+            "name": "Delete group"
+          }
+        ],
+        "keyboardBehaviour": [
+          "Create is reachable and activatable by keyboard",
+          "The create form submits on Enter",
+          "Delete confirmation auto-focuses the confirm action and is keyboard-operable"
+        ],
+        "errorPresentation": {
+          "strategy": "aria-describedby",
+          "liveRegion": "polite",
+          "fieldError": "react-aria FieldError associated to the input"
+        },
+        "journeys": [
+          {
+            "journeyId": "groups-crud",
+            "persona": "tenant-admin",
+            "coversCommands": ["create-group", "update-group", "delete-group"],
+            "coversStates": [
+              "loaded",
+              "empty",
+              "submitting",
+              "success",
+              "validationError",
+              "forbidden",
+              "serverError"
+            ],
+            "proofCommand": "proof:ui-semantic-groups",
+            "spec": "tools/ui-reference-harness/playwright/groups.spec.ts"
+          }
+        ]
+      }
     }
   ]
 }

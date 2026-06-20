@@ -72,6 +72,7 @@ export const PROOF_LADDER = [
   "proof:environment-admin-bootstrap",
   "proof:clickthrough",
   "proof:typed-secret-resolution",
+  "proof:ui-semantic-groups",
 ] as const;
 
 export type ProofLadderEntry = (typeof PROOF_LADDER)[number];
