@@ -41,6 +41,7 @@ async function grafanaApi(path: string): Promise<{ status: number; body: unknown
   }
 }
 
+// NOSONAR - proof-harness main orchestrator is complex by design
 async function main(): Promise<void> {
   console.log("# Grafana dashboards provisioning LIVE proof\n"); // ── Grafana reachable ──────────────────────────────────────────────────
   const health = await grafanaApi("/api/health");

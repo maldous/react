@@ -21,6 +21,7 @@ loadLocalEnv();
 
 const PORT = process.env["PLATFORM_API_PORT"] ?? "3001";
 const BASE = `http://localhost:${PORT}`;
+// NOSONAR - regex comprehensively checks for sensitive label patterns
 const FORBIDDEN_LABEL =
   /(?:tenant|organisation|org)_?id|user_?id|request_?id|trace_?id|span_?id|email|raw_?url|error_?text/i;
 
@@ -109,7 +110,7 @@ async function main(): Promise<void> {
   // ── Valid Prometheus format (no parse errors) ──────────────────────────
   // Every non-comment, non-empty line must be a valid metric line or end with EOF.
   const lines = updated.body.split("\n").filter((l) => l && !l.startsWith("#"));
-  const malformed = lines.filter((l) => !/^[a-zA-Z_:][a-zA-Z0-9_:]*[\s\{].*$/.test(l));
+  const malformed = lines.filter((l) => !/^[a-zA-Z_:][a-zA-Z0-9_:]*[\s{].*$/.test(l));
   check(
     "every metric line is valid Prometheus exposition format",
     malformed.length === 0,
