@@ -21,8 +21,8 @@ loadLocalEnv();
 
 const PORT = process.env["PLATFORM_API_PORT"] ?? "3001";
 const BASE = `http://localhost:${PORT}`;
-const FORBIDDEN_LABEL = // NOSONAR - checks for sensitive label patterns
-  /(?:tenant|organisation|org)_?id|user_?id|request_?id|trace_?id|span_?id|email|raw_?url|error_?text/i;
+const FORBIDDEN_LABEL =
+  /(?:tenant|organisation|org)_?id|user_?id|request_?id|trace_?id|span_?id|email|raw_?url|error_?text/i; // NOSONAR
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
@@ -49,7 +49,8 @@ async function main(): Promise<void> {
   );
 
   // ── Key metric families present ────────────────────────────────────────
-  const hasMetric = (name: string): boolean => // NOSONAR - metric names are constants, no ReDoS risk
+  const hasMetric = (name: string): boolean =>
+    // NOSONAR - metric names are constants, no ReDoS risk
     new RegExp(`^# HELP ${name} `, "m").test(metrics.body) &&
     new RegExp(`^# TYPE ${name} `, "m").test(metrics.body);
 

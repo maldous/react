@@ -41,7 +41,8 @@ const repoRoot = args.find((a) => !a.startsWith("--")) ?? process.cwd();
 
 // ── Locale loading with duplicate detection ─────────────────────────────────
 
-function flattenLocale(obj, prefix) { // NOSONAR
+function flattenLocale(obj, prefix) {
+  // NOSONAR
   const keys = new Map();
   const duplicates = [];
   const p = prefix ?? "";
@@ -124,12 +125,12 @@ function scanDir(dir, usedKeys, paramUsage, rawLiterals) {
 
 // Common English function words and UI-chrome terms that, when found in JSX
 // text children, suggest an un-governed raw literal rather than an i18n key.
-// NOSONAR - comprehensive governed-vocabulary word list (S5843)
-const SUSPECT_WORDS =
+const SUSPECT_WORDS = // NOSONAR - comprehensive governed-vocabulary word list (S5843)
   /\b(access|account|action|add|admin|alert|allow|announce|auth(?:entication|orisation)?|back|blocked|cancel|change|check|close|confirm|connect|copy|create|dashboard|delete|denied|disabled|done|download|edit|email|empty|enable|error|export|fail(?:ed|ure)?|filter|forbidden|form|generate|help|history|home|import|invalid|invite|key|label|limit|load(?:ing)?|log(?:in|out)?|manage|member|menu|message|missing|monitor|name|new|next|notification|off|on|open|optional|page|password|permission|platform|please|preview|previous|profile|read|ready|refresh|remove|required|reset|retry|role|save|search|select|send|setting|sign|status|submit|success|support|team|tenant|test|title|token|tool|try|unauthorised|unauthorized|update|upload|user|validate|verify|version|view|warning|webhook|welcome)\b/i;
 
 /** Scan a single source file for raw user-facing English text in JSX. */
-function scanRawLiterals(filePath, content) { // NOSONAR
+function scanRawLiterals(filePath, content) {
+  // NOSONAR
   const findings = [];
   const lines = content.split("\n");
 
@@ -144,10 +145,10 @@ function scanRawLiterals(filePath, content) { // NOSONAR
     const textMatches = line.matchAll(/>([^<>{}\n]{6,120})</g);
     for (const m of textMatches) {
       const text = m[1].trim();
-      // Skip if it's a number, code reference, or test assertion
-      if (/^[\d\s.,;:!?#$%^&*()[\]{}}/\\@_\-="'`~+<>|]+$/.test(text)) continue;
+      // Skip if it's purely non-alphabetic (numbers, symbols, punctuation)
+      if (!/[a-z]/i.test(text)) continue;
       // Skip variable interpolation braces
-      if (/^[\s]*[{]/.test(text) || /[}]\s*$/.test(text)) continue;
+      if (text.startsWith("{") || text.endsWith("}")) continue;
       if (SUSPECT_WORDS.test(text)) {
         findings.push({ file: filePath, line: i + 1, text: text.slice(0, 80) });
       }
@@ -188,7 +189,8 @@ function checkInterpolation(localeMap, paramUsage) {
 
 // ── Main ────────────────────────────────────────────────────────────────────
 
-function run(root) { // NOSONAR
+function run(root) {
+  // NOSONAR
   const localeResult = loadLocale(root);
   if (!localeResult) {
     console.warn(

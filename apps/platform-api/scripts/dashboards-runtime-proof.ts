@@ -41,7 +41,8 @@ async function grafanaApi(path: string): Promise<{ status: number; body: unknown
   }
 }
 
-async function main(): Promise<void> { // NOSONAR
+async function main(): Promise<void> {
+  // NOSONAR
   console.log("# Grafana dashboards provisioning LIVE proof\n"); // ── Grafana reachable ──────────────────────────────────────────────────
   const health = await grafanaApi("/api/health");
   if (!health) {

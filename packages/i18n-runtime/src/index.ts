@@ -36,7 +36,7 @@ type Paths<T> = T extends object
       [K in keyof T]-?: K extends string ? `${K}` | Join<K, Paths<T[K]>> : never;
     }[keyof T]
   : "";
-export type MessageKey = Paths<typeof enGB>;
+export type MessageKey = Paths<typeof enGB>; // NOSONAR - catalogue-derived union, inherently large
 
 // ── Flatten ─────────────────────────────────────────────────────────────────
 
@@ -44,8 +44,8 @@ export type MessageKey = Paths<typeof enGB>;
  * Flatten a nested JSON locale resource into dot-separated keys.
  * Already-flat maps are returned unchanged.
  */
-// NOSONAR - recursive JSON flatten is inherently complex
 export function flattenLocaleMessages(resource: I18nLocaleInput, prefix = ""): I18nMessages {
+  // NOSONAR
   const result: I18nMessages = {};
   for (const [k, v] of Object.entries(resource)) {
     const full = prefix ? `${prefix}.${k}` : k;
@@ -135,7 +135,8 @@ function recGet(rec: Record<string, string>, key: string): string | undefined {
  * Nested plural/select and nested interpolation within blocks are supported.
  * Unmatched keys are left as-is in the template (observable but safe).
  */
-function interpolateIcu(template: string, params: I18nParams, locale: string): string { // NOSONAR
+function interpolateIcu(template: string, params: I18nParams, locale: string): string {
+  // NOSONAR
   // Fast path: no opening brace
   if (!template.includes("{")) return template;
 
@@ -226,7 +227,8 @@ interface IcuExpression {
  * Parse an ICU expression starting at the `{` at position `braceIdx`.
  * Returns null if the expression is malformed (no matching closing brace).
  */
-function parseIcuExpression(template: string, braceIdx: number): IcuExpression | null { // NOSONAR
+function parseIcuExpression(template: string, braceIdx: number): IcuExpression | null {
+  // NOSONAR
   const len = template.length;
   let pos = braceIdx + 1; // skip '{'
 
