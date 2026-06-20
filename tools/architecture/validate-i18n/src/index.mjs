@@ -1,17 +1,19 @@
 #!/usr/bin/env node
 /**
- * validate-i18n ? ADR-ACT-0123
+ * validate-i18n — ADR-ACT-0123
  *
- * Sub-checks (staged, per ADR-0026 ?Tooling and enforcement):
- *  1. Parse and flatten en-GB.json (nested ? dot-separated keys)
- *  2. Scan source for keys used via t() and serverT()
- *  3. Report keys used in source that are missing from en-GB.json
- *  4. Report interpolation variable mismatches where detectable from inline calls
- *  5. Hard-coded public copy detection (heuristic, always report-only)
+ * Sub-checks (staged, per ADR-0026 "Tooling and enforcement"):
+ *  1. Parse and flatten en-GB.json (nested → dot-separated keys)
+ *  2. Detect duplicate keys in en-GB.json
+ *  3. Detect unused keys in en-GB.json (keys defined but never referenced)
+ *  4. Scan source for keys used via t() and serverT()
+ *  5. Report keys used in source that are missing from en-GB.json
+ *  6. Report interpolation variable mismatches where detectable from inline calls
+ *  7. Hard-coded public copy detection (heuristic, always report-only)
  *
  * Default mode: report-only (exits 0 even when violations found).
- * Strict mode:  exits non-zero for missing keys (ADR-0011 fail-closed).
- *               Promote after ADR-ACT-0121 and ADR-ACT-0122 complete.
+ * Strict mode:  exits non-zero for missing keys, duplicate keys, unused keys,
+ *               and interpolation mismatches (ADR-0011 fail-closed).
  *
  * Usage:
  *   node tools/architecture/validate-i18n/src/index.mjs [repo-root] [--strict]
@@ -23,7 +25,7 @@ import process from "node:process";
 const LOCALE_FILE = "packages/i18n-runtime/locales/en-GB.json";
 const SCAN_DIRS = ["apps/react-enterprise-app/src", "apps/platform-api/src", "packages"];
 
-// Match t("key") and serverT(messages, "key") patterns ? bounded to prevent ReDoS
+// Match t("key") and serverT(messages, "key") patterns — bounded to prevent ReDoS
 const KEY_PATTERN = /(?:\bt|serverT)\s*\(\s*(?:[^,)"']{0,200},\s*)?["']([a-z][a-z0-9._-]*)["']/g;
 
 // Match t("key", { param: ... }) inline objects to extract param names used
@@ -37,37 +39,48 @@ const args = process.argv.slice(2);
 const strictMode = args.includes("--strict");
 const repoRoot = args.find((a) => !a.startsWith("--")) ?? process.cwd();
 
-// ---------------------------------------------------------------------------
-// Locale loading ? supports nested JSON (mirrors en-GB.json shape)
-// ---------------------------------------------------------------------------
+// ── Locale loading with duplicate detection ─────────────────────────────────
 
 function flattenLocale(obj, prefix) {
   const keys = new Map();
+  const duplicates = [];
   const p = prefix ?? "";
   for (const [k, v] of Object.entries(obj)) {
     const full = p ? `${p}.${k}` : k;
     if (typeof v === "string") {
+      if (keys.has(full)) {
+        duplicates.push({ key: full, existing: keys.get(full), duplicate: v });
+      }
       keys.set(full, v);
     } else if (typeof v === "object" && v !== null) {
-      for (const [nk, nv] of flattenLocale(v, full)) keys.set(nk, nv);
+      for (const [nk, nv] of flattenLocale(v, full)) {
+        if (keys.has(nk)) {
+          duplicates.push({
+            key: nk,
+            existing: keys.get(nk),
+            duplicate: nv,
+          });
+        }
+        keys.set(nk, nv);
+      }
     }
   }
-  return keys;
+  return { map: keys, duplicates };
 }
 
 function loadLocale(root) {
   const fp = path.join(root, LOCALE_FILE);
   if (!fs.existsSync(fp)) return null;
   try {
-    return flattenLocale(JSON.parse(fs.readFileSync(fp, "utf8")));
+    const raw = JSON.parse(fs.readFileSync(fp, "utf8"));
+    const { map, duplicates } = flattenLocale(raw);
+    return { map, duplicates };
   } catch {
     return null;
   }
 }
 
-// ---------------------------------------------------------------------------
-// Source scanning
-// ---------------------------------------------------------------------------
+// ── Source scanning ─────────────────────────────────────────────────────────
 
 function processSourceFile(src, usedKeys, paramUsage) {
   for (const m of src.matchAll(KEY_PATTERN)) usedKeys.add(m[1]);
@@ -82,8 +95,6 @@ function processSourceFile(src, usedKeys, paramUsage) {
 function scanDir(dir, usedKeys, paramUsage) {
   if (!fs.existsSync(dir)) return;
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    // _template is reference scaffolding (ADR-ACT-0203): excluded from all gates,
-    // so its placeholder feature.widget.* keys are not real translation usage.
     if (
       entry.name === "node_modules" ||
       entry.name === "dist" ||
@@ -101,9 +112,7 @@ function scanDir(dir, usedKeys, paramUsage) {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Interpolation variable validation
-// ---------------------------------------------------------------------------
+// ── Interpolation variable validation ───────────────────────────────────────
 
 function checkInterpolation(localeMap, paramUsage) {
   const mismatches = [];
@@ -125,18 +134,18 @@ function checkInterpolation(localeMap, paramUsage) {
   return mismatches;
 }
 
-// ---------------------------------------------------------------------------
-// Main
-// ---------------------------------------------------------------------------
+// ── Main ────────────────────────────────────────────────────────────────────
 
 function run(root) {
-  const locale = loadLocale(root);
-  if (!locale) {
+  const localeResult = loadLocale(root);
+  if (!localeResult) {
     console.warn(
-      `[validate-i18n] ${LOCALE_FILE} not found ? skipping (install i18n-runtime first)`
+      `[validate-i18n] ${LOCALE_FILE} not found — skipping (install i18n-runtime first)`
     );
     return { status: "skipped" };
   }
+
+  const { map: locale, duplicates } = localeResult;
 
   const used = new Set();
   const paramUsage = new Map();
@@ -146,11 +155,14 @@ function run(root) {
   }
 
   const missing = [...used].filter((k) => !locale.has(k));
+  const unused = [...locale.keys()].filter((k) => !used.has(k));
   const interpMismatches = checkInterpolation(locale, paramUsage);
 
   return {
     status: "complete",
     missing,
+    unused,
+    duplicates,
     interpMismatches,
     definedCount: locale.size,
     usedCount: used.size,
@@ -163,12 +175,26 @@ if (result.status === "skipped") {
   process.exit(0);
 }
 
-let hasKeyViolations = false;
+let hasViolations = false;
+
+if (result.duplicates.length > 0) {
+  console.warn(`[validate-i18n] ${result.duplicates.length} duplicate key(s) in ${LOCALE_FILE}:`);
+  result.duplicates.forEach(({ key }) => console.warn(`  - ${key}`));
+  hasViolations = true;
+}
 
 if (result.missing.length > 0) {
   console.warn(`[validate-i18n] ${result.missing.length} used key(s) missing from ${LOCALE_FILE}:`);
   result.missing.forEach((k) => console.warn(`  - ${k}`));
-  hasKeyViolations = true;
+  hasViolations = true;
+}
+
+if (result.unused.length > 0) {
+  console.warn(
+    `[validate-i18n] ${result.unused.length} unused key(s) in ${LOCALE_FILE} (defined but never referenced):`
+  );
+  result.unused.forEach((k) => console.warn(`  - ${k}`));
+  hasViolations = true;
 }
 
 if (result.interpMismatches.length > 0) {
@@ -178,18 +204,32 @@ if (result.interpMismatches.length > 0) {
   result.interpMismatches.forEach(({ key, param, template, direction }) =>
     console.warn(`  - ${key}: param '${param}' ${direction} | template: "${template}"`)
   );
+  // In strict mode, interpolation mismatches are violations too
+  if (strictMode) {
+    hasViolations = true;
+  }
 }
 
-if (!hasKeyViolations && result.interpMismatches.length === 0) {
+if (!hasViolations && result.interpMismatches.length === 0) {
   console.log(
-    `[validate-i18n] OK ? all ${result.usedCount} used keys found in en-GB.json (${result.definedCount} defined)`
+    `[validate-i18n] OK — all ${result.usedCount} used keys found in en-GB.json ` +
+      `(${result.definedCount} defined, ${result.unused.length} unused)`
+  );
+} else if (!hasViolations) {
+  console.log(
+    `[validate-i18n] OK — all ${result.usedCount} used keys found ` +
+      `(${result.interpMismatches.length} interpolation mismatches, report-only mode)`
   );
 }
 
-if (hasKeyViolations && strictMode) {
-  console.error("[validate-i18n] Strict mode: failing due to missing i18n keys (ADR-0011).");
+if (hasViolations && strictMode) {
+  const reasons = [];
+  if (result.duplicates.length > 0) reasons.push("duplicate keys");
+  if (result.missing.length > 0) reasons.push("missing keys");
+  if (result.unused.length > 0) reasons.push("unused keys");
+  if (result.interpMismatches.length > 0) reasons.push("interpolation mismatches");
+  console.error(`[validate-i18n] Strict mode: failing due to ${reasons.join(", ")} (ADR-0011).`);
   process.exit(1);
 }
 
-// Always exit 0 in report-only mode; exit 1 only for key violations in strict mode
 process.exit(0);

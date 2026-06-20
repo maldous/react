@@ -58,6 +58,7 @@ export default defineConfig({
       "apps/react-enterprise-app/src/**/*.test.{ts,tsx}",
       "packages/ui-design-system/tests/**/*.test.{ts,tsx}",
       "packages/graphql-browser-client/tests/**/*.test.{ts,tsx}",
+      "packages/i18n-runtime/tests/react.test.tsx",
     ],
     // Canonical feature template is reference scaffolding — never executed.
     exclude: [...configDefaults.exclude, "**/features/_template/**"],
