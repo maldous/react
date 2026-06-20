@@ -5522,5 +5522,23 @@
     "hidesErrors": false,
     "dead": false,
     "docDriftsFromBehaviour": false
+  },
+  {
+    "name": "npm proof:ui-semantic-sub-organisations",
+    "kind": "npm",
+    "purpose": "Headless journey proving sub-organisations (flat list) UI semantics (V1C-02).",
+    "inputs": [],
+    "outputs": ["playwright report"],
+    "prerequisites": [],
+    "sideEffects": [],
+    "envScope": "all",
+    "failureSemantics": "exit-nonzero-on-failure",
+    "idempotent": true,
+    "safetyControls": [],
+    "testCoverage": "self (headless journey)",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
   }
 ]

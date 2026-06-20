@@ -73,6 +73,7 @@ export const PROOF_LADDER = [
   "proof:clickthrough",
   "proof:typed-secret-resolution",
   "proof:ui-semantic-groups",
+  "proof:ui-semantic-sub-organisations",
 ] as const;
 
 export type ProofLadderEntry = (typeof PROOF_LADDER)[number];

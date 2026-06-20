@@ -3436,6 +3436,440 @@
           }
         ]
       }
+    },
+    {
+      "capabilityId": "admin-sub-organisations",
+      "titleI18nKey": "feature.admin.subOrgs.title",
+      "descriptionI18nKey": "feature.admin.subOrgs.description",
+      "route": "/admin/sub-organisations",
+      "owningCapability": "tenant-identity",
+      "dataBoundary": "rest-over-bff",
+      "persona": "tenant-admin",
+      "personas": [
+        {
+          "personaId": "fixture-tenant-admin",
+          "roles": ["tenant-admin"],
+          "access": "full"
+        },
+        {
+          "personaId": "scaffold-tenant-admin",
+          "roles": ["tenant-admin"],
+          "access": "full"
+        },
+        {
+          "personaId": "fixture-viewer",
+          "access": "read-only"
+        },
+        {
+          "personaId": "scaffold-tenant-member",
+          "access": "denied"
+        }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.subOrgs",
+        "order": 5,
+        "requiredPermission": "tenant.suborgs.read"
+      },
+      "states": {
+        "loading": {
+          "component": "LoadingState",
+          "titleI18nKey": "auth.status.loading"
+        },
+        "empty": {
+          "component": "EmptyState",
+          "titleI18nKey": "feature.admin.subOrgs.empty"
+        },
+        "success": {
+          "component": "DataTable"
+        },
+        "validationFailure": {
+          "component": "FormField",
+          "recoveryAction": "none"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        }
+      },
+      "i18nKeys": [
+        "feature.admin.subOrgs.title",
+        "feature.admin.subOrgs.description",
+        "feature.admin.subOrgs.empty",
+        "feature.admin.subOrgs.slugLabel",
+        "feature.admin.subOrgs.displayNameLabel",
+        "feature.admin.subOrgs.create",
+        "feature.admin.subOrgs.created",
+        "feature.admin.subOrgs.updated",
+        "feature.admin.subOrgs.deleted"
+      ],
+      "a11y": {
+        "landmark": "main",
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.subOrgs.title"
+        },
+        "roles": ["heading", "table", "row", "button", "textbox", "alertdialog", "status"],
+        "accessibleNames": [
+          {
+            "control": "action-create",
+            "role": "button",
+            "nameI18nKey": "feature.admin.subOrgs.create"
+          }
+        ],
+        "keyboard": [
+          "Create is keyboard-activatable",
+          "Delete confirmation traps and restores focus"
+        ],
+        "announces": [
+          {
+            "i18nKey": "feature.admin.subOrgs.created",
+            "tone": "polite"
+          }
+        ],
+        "noColourOnlyMeaning": true
+      },
+      "apiEventContractRefs": ["docs/api/openapi.json#/paths/~1api~1org~1sub-organisations"],
+      "playwrightJourneyRefs": ["tools/ui-reference-harness/playwright/sub-organisations.spec.ts"],
+      "harness": {
+        "capabilityKey": "sub-organisations",
+        "complete": true,
+        "_note": "Sub-orgs are a FLAT tenant-scoped list. parent_id is internal-only (one level) and is NOT exposed by the API — there is deliberately no hierarchy/tree/nesting UI.",
+        "personas": [
+          {
+            "personaId": "tenant-admin",
+            "permissions": [
+              "tenant.suborgs.read",
+              "tenant.suborgs.create",
+              "tenant.suborgs.update",
+              "tenant.suborgs.delete"
+            ]
+          },
+          {
+            "personaId": "tenant-viewer",
+            "permissions": ["tenant.suborgs.read"]
+          },
+          {
+            "personaId": "no-access",
+            "permissions": []
+          }
+        ],
+        "permissions": [
+          {
+            "permission": "tenant.suborgs.read",
+            "allowedPersonas": ["tenant-admin", "tenant-viewer"],
+            "deniedPersonas": ["no-access"]
+          },
+          {
+            "permission": "tenant.suborgs.create",
+            "allowedPersonas": ["tenant-admin"],
+            "deniedPersonas": ["tenant-viewer", "no-access"]
+          },
+          {
+            "permission": "tenant.suborgs.update",
+            "allowedPersonas": ["tenant-admin"],
+            "deniedPersonas": ["tenant-viewer", "no-access"]
+          },
+          {
+            "permission": "tenant.suborgs.delete",
+            "allowedPersonas": ["tenant-admin"],
+            "deniedPersonas": ["tenant-viewer", "no-access"]
+          }
+        ],
+        "queries": [
+          {
+            "queryId": "list",
+            "method": "GET",
+            "endpoint": "/api/org/sub-organisations",
+            "requiredPermission": "tenant.suborgs.read"
+          }
+        ],
+        "commands": [
+          {
+            "commandId": "create-sub-org",
+            "method": "POST",
+            "endpoint": "/api/org/sub-organisations",
+            "requiredPermission": "tenant.suborgs.create",
+            "resultingState": "success",
+            "failureStates": ["validationError", "serverError"],
+            "successMessage": "Sub-organisation created"
+          },
+          {
+            "commandId": "update-sub-org",
+            "method": "PATCH",
+            "endpoint": "/api/org/sub-organisations/:subOrgId",
+            "requiredPermission": "tenant.suborgs.update",
+            "resultingState": "success",
+            "failureStates": ["validationError", "serverError"],
+            "successMessage": "Sub-organisation updated"
+          },
+          {
+            "commandId": "delete-sub-org",
+            "method": "DELETE",
+            "endpoint": "/api/org/sub-organisations/:subOrgId",
+            "requiredPermission": "tenant.suborgs.delete",
+            "resultingState": "success",
+            "failureStates": ["serverError"],
+            "destructive": true,
+            "successMessage": "Sub-organisation deleted"
+          }
+        ],
+        "fields": [
+          {
+            "name": "slug",
+            "label": "Slug",
+            "type": "text",
+            "required": true,
+            "validation": [
+              "required",
+              "maxLength:63",
+              "pattern:^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$"
+            ],
+            "errorId": "sub-org-slug-error",
+            "testId": "field-slug"
+          },
+          {
+            "name": "displayName",
+            "label": "Display name",
+            "type": "text",
+            "required": true,
+            "validation": ["required", "maxLength:120"],
+            "errorId": "sub-org-name-error",
+            "testId": "field-displayName"
+          }
+        ],
+        "validation": [
+          {
+            "field": "slug",
+            "rule": "required",
+            "errorId": "sub-org-slug-error",
+            "accessibleErrorAssociation": "aria-describedby"
+          },
+          {
+            "field": "slug",
+            "rule": "pattern",
+            "errorId": "sub-org-slug-error",
+            "accessibleErrorAssociation": "aria-describedby"
+          },
+          {
+            "field": "displayName",
+            "rule": "required",
+            "errorId": "sub-org-name-error",
+            "accessibleErrorAssociation": "aria-describedby"
+          }
+        ],
+        "table": {
+          "collectionKey": "subOrganisations",
+          "idField": "id",
+          "columns": [
+            {
+              "field": "slug",
+              "label": "Slug"
+            },
+            {
+              "field": "displayName",
+              "label": "Display name"
+            },
+            {
+              "field": "isActive",
+              "label": "Active"
+            }
+          ]
+        },
+        "states": [
+          "loading",
+          "empty",
+          "loaded",
+          "submitting",
+          "success",
+          "validationError",
+          "forbidden",
+          "serverError",
+          "degraded"
+        ],
+        "transitions": [
+          {
+            "from": "loaded",
+            "on": "create-sub-org",
+            "to": "submitting"
+          },
+          {
+            "from": "submitting",
+            "on": "ok",
+            "to": "success"
+          },
+          {
+            "from": "submitting",
+            "on": "invalid",
+            "to": "validationError"
+          },
+          {
+            "from": "submitting",
+            "on": "error",
+            "to": "serverError"
+          },
+          {
+            "from": "loaded",
+            "on": "delete-sub-org",
+            "to": "submitting"
+          }
+        ],
+        "fixtures": [
+          {
+            "state": "loaded",
+            "route": "/api/org/sub-organisations",
+            "method": "GET",
+            "status": 200,
+            "body": {
+              "subOrganisations": [
+                {
+                  "id": "so-1",
+                  "slug": "north-region",
+                  "displayName": "North Region",
+                  "isActive": true,
+                  "createdAt": "2026-01-10T08:00:00.000Z",
+                  "updatedAt": "2026-01-10T08:00:00.000Z"
+                },
+                {
+                  "id": "so-2",
+                  "slug": "south-region",
+                  "displayName": "South Region",
+                  "isActive": true,
+                  "createdAt": "2026-02-12T09:30:00.000Z",
+                  "updatedAt": "2026-02-12T09:30:00.000Z"
+                }
+              ]
+            }
+          },
+          {
+            "state": "empty",
+            "route": "/api/org/sub-organisations",
+            "method": "GET",
+            "status": 200,
+            "body": {
+              "subOrganisations": []
+            }
+          },
+          {
+            "state": "forbidden",
+            "route": "/api/org/sub-organisations",
+            "method": "GET",
+            "status": 403,
+            "body": {
+              "code": "FORBIDDEN"
+            }
+          },
+          {
+            "state": "serverError",
+            "route": "/api/org/sub-organisations",
+            "method": "GET",
+            "status": 500,
+            "body": {
+              "code": "INTERNAL"
+            }
+          },
+          {
+            "state": "success",
+            "route": "/api/org/sub-organisations",
+            "method": "POST",
+            "status": 201,
+            "body": {
+              "id": "so-new",
+              "slug": "east-region",
+              "displayName": "East Region",
+              "isActive": true
+            }
+          },
+          {
+            "state": "validationError",
+            "route": "/api/org/sub-organisations",
+            "method": "POST",
+            "status": 422,
+            "triggerField": "slug",
+            "triggerValue": "taken",
+            "body": {
+              "code": "VALIDATION",
+              "fieldErrors": {
+                "slug": "A sub-organisation with this slug already exists"
+              }
+            }
+          },
+          {
+            "state": "success",
+            "route": "/api/org/sub-organisations/:subOrgId",
+            "method": "PATCH",
+            "status": 200,
+            "body": {
+              "id": "so-1",
+              "slug": "north-region",
+              "displayName": "North Region (EMEA)",
+              "isActive": true
+            }
+          },
+          {
+            "state": "success",
+            "route": "/api/org/sub-organisations/:subOrgId",
+            "method": "DELETE",
+            "status": 204
+          }
+        ],
+        "accessibleNames": [
+          {
+            "control": "action-create",
+            "role": "button",
+            "name": "Create sub-organisation"
+          },
+          {
+            "control": "field-slug",
+            "role": "textbox",
+            "name": "Slug"
+          },
+          {
+            "control": "field-displayName",
+            "role": "textbox",
+            "name": "Display name"
+          },
+          {
+            "control": "confirm-delete",
+            "role": "alertdialog",
+            "name": "Delete sub-organisation"
+          }
+        ],
+        "keyboardBehaviour": [
+          "Create is reachable and activatable by keyboard",
+          "The create form submits on Enter",
+          "Delete confirmation auto-focuses the confirm action and is keyboard-operable"
+        ],
+        "errorPresentation": {
+          "strategy": "aria-describedby",
+          "liveRegion": "polite",
+          "fieldError": "react-aria FieldError associated to each input"
+        },
+        "journeys": [
+          {
+            "journeyId": "sub-orgs-crud",
+            "persona": "tenant-admin",
+            "coversCommands": ["create-sub-org", "update-sub-org", "delete-sub-org"],
+            "coversStates": [
+              "loaded",
+              "empty",
+              "submitting",
+              "success",
+              "validationError",
+              "forbidden",
+              "serverError"
+            ],
+            "proofCommand": "proof:ui-semantic-sub-organisations",
+            "spec": "tools/ui-reference-harness/playwright/sub-organisations.spec.ts"
+          }
+        ]
+      }
     }
   ]
 }
