@@ -9,6 +9,15 @@
  * raw URL, or unbounded error text is used as a label value.
  *
  * ADR-ACT-0284 / ADR-0020 §10: external SDK imports stay in adapters.
+ *
+ * V1C-17 closure: application-metrics scope complete.
+ *   - HTTP RED (http_requests_total, http_request_duration_seconds)
+ *   - Infrastructure health (postgres_available, redis_available)
+ *   - Event bus / DLQ (event_bus_pending, dead_letter_count)
+ *   - Worker liveness (worker_liveness)
+ *   - Scheduled jobs (scheduled_job_outcome_total)
+ *   - Notification dispatch (notification_dispatch_total)
+ *   - Provider readiness (provider_readiness)
  */
 import { Counter, Gauge, Histogram, Registry, collectDefaultMetrics } from "prom-client";
 
@@ -19,8 +28,9 @@ const registry = new Registry();
 // Default Node.js metrics (heap, event loop, gc) — no application labels.
 collectDefaultMetrics({ register: registry });
 
-// ── HTTP metrics ─────────────────────────────────────────────────────────────
+// ── HTTP RED metrics ─────────────────────────────────────────────────────────
 
+/** Bounded-label route template path (never raw request path). */
 export const httpRequestsTotal = new Counter({
   name: "http_requests_total",
   help: "Total HTTP requests served.",
@@ -28,11 +38,12 @@ export const httpRequestsTotal = new Counter({
   registers: [registry],
 });
 
-export const httpRequestDurationMs = new Histogram({
-  name: "http_request_duration_ms",
-  help: "HTTP request duration in milliseconds.",
+/** HTTP request duration in seconds (Prometheus base-unit convention). */
+export const httpRequestDurationSeconds = new Histogram({
+  name: "http_request_duration_seconds",
+  help: "HTTP request duration in seconds.",
   labelNames: ["method", "route"],
-  buckets: [1, 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000],
+  buckets: [0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10],
   registers: [registry],
 });
 
@@ -47,6 +58,56 @@ export const postgresAvailable = new Gauge({
 export const redisAvailable = new Gauge({
   name: "redis_available",
   help: "Redis availability (1 = reachable, 0 = unreachable).",
+  registers: [registry],
+});
+
+// ── Event bus / dead-letter queue ────────────────────────────────────────────
+
+export const eventBusPending = new Gauge({
+  name: "event_bus_pending",
+  help: "Number of pending events in the outbox (unprocessed).",
+  registers: [registry],
+});
+
+export const deadLetterCount = new Gauge({
+  name: "dead_letter_count",
+  help: "Number of events in the dead-letter queue.",
+  registers: [registry],
+});
+
+// ── Worker liveness ──────────────────────────────────────────────────────────
+
+export const workerLiveness = new Gauge({
+  name: "worker_liveness",
+  help: "Worker liveness (1 = alive, reported heartbeat within TTL; 0 = dead).",
+  labelNames: ["worker_name"],
+  registers: [registry],
+});
+
+// ── Scheduled jobs ───────────────────────────────────────────────────────────
+
+export const scheduledJobOutcomeTotal = new Counter({
+  name: "scheduled_job_outcome_total",
+  help: "Total scheduled-job executions by outcome.",
+  labelNames: ["job_key", "outcome"],
+  registers: [registry],
+});
+
+// ── Notification dispatch ────────────────────────────────────────────────────
+
+export const notificationDispatchTotal = new Counter({
+  name: "notification_dispatch_total",
+  help: "Total notification dispatches by channel and outcome.",
+  labelNames: ["channel", "outcome"],
+  registers: [registry],
+});
+
+// ── Provider readiness ───────────────────────────────────────────────────────
+
+export const providerReadiness = new Gauge({
+  name: "provider_readiness",
+  help: "Provider readiness (1 = ready, 0 = not ready). Bounded provider names only.",
+  labelNames: ["provider_name"],
   registers: [registry],
 });
 
