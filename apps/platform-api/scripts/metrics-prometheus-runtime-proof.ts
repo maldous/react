@@ -21,8 +21,7 @@ loadLocalEnv();
 
 const PORT = process.env["PLATFORM_API_PORT"] ?? "3001";
 const BASE = `http://localhost:${PORT}`;
-// NOSONAR - regex comprehensively checks for sensitive label patterns (S5843)
-const FORBIDDEN_LABEL =
+const FORBIDDEN_LABEL = // NOSONAR - checks for sensitive label patterns
   /(?:tenant|organisation|org)_?id|user_?id|request_?id|trace_?id|span_?id|email|raw_?url|error_?text/i;
 
 let failures = 0;

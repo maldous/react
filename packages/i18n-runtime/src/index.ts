@@ -44,7 +44,8 @@ export type MessageKey = Paths<typeof enGB>;
  * Flatten a nested JSON locale resource into dot-separated keys.
  * Already-flat maps are returned unchanged.
  */
-export function flattenLocaleMessages(resource: I18nLocaleInput, prefix = ""): I18nMessages { // NOSONAR
+// NOSONAR - recursive JSON flatten is inherently complex
+export function flattenLocaleMessages(resource: I18nLocaleInput, prefix = ""): I18nMessages {
   const result: I18nMessages = {};
   for (const [k, v] of Object.entries(resource)) {
     const full = prefix ? `${prefix}.${k}` : k;
@@ -393,6 +394,7 @@ export interface I18nInstance {
    * migration compatibility. The validate-i18n gate is the authoritative
    * runtime/build safeguard for unknown keys.
    */
+  // NOSONAR - MessageKey union provides catalogue-bound autocomplete
   t(key: MessageKey | string, params?: I18nParams): string;
   /** The active BCP 47 locale tag. */
   readonly locale: string;
