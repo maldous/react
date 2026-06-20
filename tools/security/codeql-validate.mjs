@@ -16,7 +16,7 @@
  * Usage: npm run codeql:validate
  */
 
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { execSync } from "node:child_process";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -82,7 +82,11 @@ if (!config.includes("queries:")) fail("codeql config missing required 'queries'
 pass("codeql config valid");
 
 // ── Minimal database creation (smoke test) ─────────────────────────────────
-const dbPath = resolve(ROOT, ".codeql", "validate-db");
+const dbDir = resolve(ROOT, ".codeql");
+const dbPath = resolve(dbDir, "validate-db");
+if (!existsSync(dbDir)) {
+  mkdirSync(dbDir, { recursive: true });
+}
 try {
   execSync(
     `${codeql} database create "${dbPath}" --language=javascript-typescript --source-root="${ROOT}" --codescanning-config="${configPath}" --overwrite 2>&1`,
