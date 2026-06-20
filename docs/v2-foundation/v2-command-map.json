@@ -1964,7 +1964,7 @@
     "v2Name": "scripts/preflight/check-clean-state.mjs",
     "v2Location": "V2 scripts/preflight/",
     "disposition": "retire",
-    "retireReason": "dead/unwired in V1 — not referenced by any Make target or stage"
+    "retireReason": "dead/unwired in V1 \u2014 not referenced by any Make target or stage"
   },
   {
     "v1Name": "scripts/sentry/ensure-relay-credentials.sh",
@@ -2151,6 +2151,41 @@
   {
     "v1Name": "npm proof:ui-semantic-claim-mapping",
     "v2Name": "npm proof:ui-semantic-claim-mapping",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm codeql:validate",
+    "v2Name": "npm codeql:validate",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm sbom:verify",
+    "v2Name": "npm sbom:verify",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm sbom:policy",
+    "v2Name": "npm sbom:policy",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:metrics-prometheus",
+    "v2Name": "npm proof:metrics-prometheus",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:dashboards",
+    "v2Name": "npm proof:dashboards",
     "v2Location": "V2 package.json scripts",
     "disposition": "carry",
     "retireReason": null

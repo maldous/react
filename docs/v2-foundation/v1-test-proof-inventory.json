@@ -3579,5 +3579,41 @@
     "fixtureEnvDependency": "jsdom + MSW (vitest)",
     "stageCoverage": "test (test:frontend:run)",
     "failureEvidence": "vitest reporter output"
+  },
+  {
+    "id": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: compose postgres/redis via loader + preload-env",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: requires Grafana on compose network",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "proof:metrics-prometheus",
+    "path": "package.json#proof:metrics-prometheus",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: requires platform-api /metrics endpoint",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "proof:dashboards",
+    "path": "package.json#proof:dashboards",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: requires Grafana on compose network",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
   }
 ]
