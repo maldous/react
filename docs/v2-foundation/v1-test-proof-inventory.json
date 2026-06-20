@@ -3615,5 +3615,32 @@
     "fixtureEnvDependency": "live-runtime: requires Grafana on compose network",
     "stageCoverage": "test (live-proof stage)",
     "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/prometheus-metrics.test.ts",
+    "path": "apps/platform-api/tests/unit/prometheus-metrics.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "tools/security/tests/sbom-policy.test.mjs",
+    "path": "tools/security/tests/sbom-policy.test.mjs",
+    "kind": "security",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "tools/security/tests/sbom-verify.test.mjs",
+    "path": "tools/security/tests/sbom-verify.test.mjs",
+    "kind": "security",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
   }
 ]

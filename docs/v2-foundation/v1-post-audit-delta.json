@@ -1451,9 +1451,63 @@
       "protectingTests": [],
       "decisionRefs": ["ADR-0026"],
       "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/tests/unit/prometheus-metrics.test.ts",
+      "purpose": "V1C-17a: Prometheus prom-client metrics adapter tests",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/prometheus-metrics.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "docs/evidence/security/sbom-baseline.lockhash",
+      "purpose": "V1C-18: SBOM baseline SHA-256 lockhash for freshness verification",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/security/sbom-baseline.lockhash",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "docs/evidence/security/sbom-policy-audit.json",
+      "purpose": "V1C-18: SBOM license policy audit evidence",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/security/sbom-policy-audit.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "docs/evidence/security/sbom-verify-report.json",
+      "purpose": "V1C-18: SBOM freshness verification evidence",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/security/sbom-verify-report.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "tools/security/tests/sbom-policy.test.mjs",
+      "purpose": "V1C-18: SBOM license policy tests (SPDX expression parsing)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/security/tests/sbom-policy.test.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "tools/security/tests/sbom-verify.test.mjs",
+      "purpose": "V1C-18: SBOM freshness verification tests (local vs authoritative)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/security/tests/sbom-verify.test.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
     }
   ],
   "deletions": [],
-  "additionCount": 150,
+  "additionCount": 156,
   "deletionCount": 0
 }
