@@ -71,6 +71,8 @@ export const PROOF_LADDER = [
   "proof:environment-operations",
   "proof:environment-admin-bootstrap",
   "proof:clickthrough",
+  "proof:dashboards",
+  "proof:metrics-prometheus",
   "proof:typed-secret-resolution",
   "proof:ui-semantic-groups",
   "proof:ui-semantic-sub-organisations",
