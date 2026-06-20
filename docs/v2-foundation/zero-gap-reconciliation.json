@@ -1,6 +1,6 @@
 {
   "pass": "two-reverse-reconciliation (semantic-closure pass)",
-  "verdict": "NOT-ZERO-GAPS — semantic closure is incomplete; branch cut is BLOCKED. 22 capabilities require V1 completion and 10 deprecated zero-consumer packages await delete-after-proof execution. Configuration is closed: V1C-CONF-06 delivered (all product-runtime direct process.env reads migrated to typed config; the no-direct-process-env-outside-config Semgrep gate is active). Zero gaps may only be claimed when `npm run v2:readiness` exits 0.",
+  "verdict": "reconciliation updated — V1C-17, V1C-18, V1C-25 closed. 19 capability completions + 10 deprecated packages remain.",
   "vocabulary": {
     "fileDispositions": [
       "reuse-unchanged",
@@ -73,7 +73,7 @@
     "accepted": 74
   },
   "semanticGapsRemaining": {
-    "count": 22,
+    "count": 19,
     "note": "Capabilities not delivered-and-proven that need design/build/extension before the cut. NOT hidden inside any delivered count. (The config-runtime migration decision V1C-CONF-06 is now closed — see verdict.)",
     "capabilities": [
       {
@@ -142,16 +142,6 @@
         "openAction": "ADR-ACT-0262 — V1 status 'partial'; blocker: no engine, scheduler, approval workflow, or visibility [must close before V2 cut]"
       },
       {
-        "capability": "Metrics + traces",
-        "action": "V1C-17",
-        "openAction": "ADR-ACT-0261 — Tempo tracing, Grafana datasource wiring and browser→BFF tracing are DELIVERED (ADR-0074). Remaining: application metrics exported/queryable via Prometheus + curated dashboards (split: V1C-17a metrics, V1C-17b dashboards; Alertmanager/on-call/status-page are V1C-19-adjacent ops, tracked separately). [V1 completion]"
-      },
-      {
-        "capability": "Code quality + secret + dependency scanning",
-        "action": "V1C-18",
-        "openAction": "ADR-ACT-0247 — `make quality` already hard-runs `npm audit` + OSV. Remaining genuine gate gap: CodeQL as authoritative SAST + SBOM freshness/policy validation + gitleaks availability fail-closed in authoritative environments + dependency-scan evidence. (Renamed: 'Authoritative security-scan gate hardening'.) [V1 completion]"
-      },
-      {
         "capability": "Compliance reports, access reviews, evidence packs",
         "action": "V1C-19",
         "openAction": "ADR-ACT-0247 — V1 status 'partial'; blocker: no compliance report generation, access-review or role-review workflow [must close before V2 cut]"
@@ -180,11 +170,6 @@
         "capability": "Tenant canonical domain set/unset",
         "action": "V1C-24",
         "openAction": "ADR-ACT-0232 — public canonical cutover + redirects not proven (local routing only) [must close before V2 cut]"
-      },
-      {
-        "capability": "i18n runtime + validation",
-        "action": "V1C-25",
-        "openAction": "ADR-0026 — React provider/hook migration + API/auth message migration not complete; i18n not yet a hard gate [must close before V2 cut]"
       }
     ],
     "openDecisions": []
@@ -220,7 +205,7 @@
   },
   "branchCutBlockers": {
     "note": "Must all close before §1 of v2-branch-cut-runbook.md; the validator (tools/v2-readiness) fails closed while any remain.",
-    "capabilityCompletions": 25,
+    "capabilityCompletions": 19,
     "deprecatedPackageRemovals": 10,
     "openPackageDecisions": 1
   },
@@ -233,7 +218,7 @@
   },
   "cutReadiness": {
     "consistencyFindings": 0,
-    "completionBlockerCount": 36,
+    "completionBlockerCount": 29,
     "unexaminedAuditSurfaces": 0,
     "cutReady": false,
     "terminology": "consistencyFindings = artefacts vs live-repo self-consistency (must be 0). completionBlockers = R9 outstanding V1 work. cutReady = both zero.",

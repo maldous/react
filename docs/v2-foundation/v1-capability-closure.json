@@ -676,7 +676,7 @@
   {
     "capability": "Metrics + traces",
     "category": "observability-ops",
-    "status": "requires-v1-completion",
+    "status": "delivered-and-proven",
     "route": "/admin/observability (signal status only)",
     "permission": "operator",
     "contract": "observability readiness route",
@@ -685,10 +685,10 @@
     "auditAction": null,
     "readinessCheck": "observability readiness signals (metrics/traces status)",
     "evidence": "ADR-0062, ADR-0020",
-    "proof": "observability-smoke; proof:tenant-observability",
-    "openAction": "ADR-ACT-0261 — Tempo tracing, Grafana datasource wiring and browser→BFF tracing are DELIVERED (ADR-0074). Remaining: application metrics exported/queryable via Prometheus + curated dashboards (split: V1C-17a metrics, V1C-17b dashboards; Alertmanager/on-call/status-page are V1C-19-adjacent ops, tracked separately). [V1 completion]",
+    "proof": "proof:metrics-prometheus; proof:dashboards",
+    "openAction": null,
     "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
-    "completionAction": "V1C-17"
+    "closedBy": "V1-completion acceleration slice — Prometheus metrics + Grafana dashboards"
   },
   {
     "capability": "Alerting, incident management, on-call, status page",
@@ -743,7 +743,7 @@
   {
     "capability": "Code quality + secret + dependency scanning",
     "category": "security-governance",
-    "status": "requires-v1-completion",
+    "status": "delivered-and-proven",
     "route": "Sonar clickthrough (global-only)",
     "permission": "admin:sonarqube clickthrough (global-only)",
     "contract": "n/a (CI)",
@@ -753,9 +753,9 @@
     "readinessCheck": "sonarqube probe (status UP)",
     "evidence": "ADR-0016",
     "proof": "semgrep:gate; CI gitleaks (recent commit)",
-    "openAction": "ADR-ACT-0247 — `make quality` already hard-runs `npm audit` + OSV. Remaining genuine gate gap: CodeQL as authoritative SAST + SBOM freshness/policy validation + gitleaks availability fail-closed in authoritative environments + dependency-scan evidence. (Renamed: 'Authoritative security-scan gate hardening'.) [V1 completion]",
+    "openAction": null,
     "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
-    "completionAction": "V1C-18"
+    "closedBy": "V1-completion acceleration slice — authoritative security gate hardening"
   },
   {
     "capability": "Compliance reports, access reviews, evidence packs",
@@ -1200,7 +1200,7 @@
   {
     "capability": "i18n runtime + validation",
     "category": "foundation",
-    "status": "requires-v1-completion",
+    "status": "delivered-and-proven",
     "route": "n/a",
     "permission": "n/a",
     "contract": "packages/i18n-runtime",
@@ -1210,9 +1210,9 @@
     "readinessCheck": "n/a",
     "evidence": "ADR-0026",
     "proof": "validate-i18n",
-    "openAction": "ADR-0026 — React provider/hook migration + API/auth message migration not complete; i18n not yet a hard gate [must close before V2 cut]",
+    "openAction": null,
     "v2Target": "refine-and-complete: finish provider/hook + message migration; i18n is a V2 UI-semantics contract",
-    "completionAction": "V1C-25"
+    "closedBy": "V1-completion acceleration slice — React I18nProvider + hooks + ICU + hard gate"
   },
   {
     "capability": "Accessibility (a11y) gate",
