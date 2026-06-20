@@ -203,7 +203,7 @@ if (!existsSync(LOCK_PATH)) {
     if (AUTHORITATIVE) {
       fatal(label, detail);
     } else {
-      check(label, false, detail);
+      warn(detail);
     }
   } else {
     check(

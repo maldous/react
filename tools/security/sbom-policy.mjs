@@ -72,7 +72,7 @@ const BLOCKED_ALIASES = new Map([
 //
 // Grammar (simplified):
 //   expression = term (("AND" | "OR") term)*
-//   term       = "WITH"? license-id | "(" expression ")" | license-ref
+//   term       = license-id ("WITH" exception-id)? | "(" expression ")" | license-ref
 
 const TOKEN_RE =
   /\b(?:AND|OR|WITH)\b|\(|\)|(?:LicenseRef-[A-Za-z0-9\-_.+]+|[A-Za-z0-9](?:[A-Za-z0-9\-_.+]*[A-Za-z0-9])?)/g;
