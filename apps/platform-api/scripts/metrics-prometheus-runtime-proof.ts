@@ -33,7 +33,7 @@ const API_BASE = `http://localhost:${API_PORT}`;
 const PROM_BASE = `http://localhost:${PROM_PORT}`;
 
 const FORBIDDEN_LABEL =
-  /(?:tenant|organisation|org)_?id|user_?id|request_?id|trace_?id|span_?id|email|raw_?url|error_?text/i; // NOSONAR
+  /(?:tenant|organisation|org)_?id|user_?id|request_?id|trace_?id|span_?id|email|raw_?url|error_?text/i; // NOSONAR - fixed alternation, no ReDoS risk
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
@@ -56,15 +56,54 @@ async function getJson(base: string, path: string): Promise<{ status: number; da
   return { status: res.status, data };
 }
 
-async function main(): Promise<void> {
-  console.log("# Prometheus application metrics LIVE proof\n");
+// ── String-based metric parsing (no ReDoS risk) ──────────────────────────────
 
-  // ── Step 1: Prometheus reachability ───────────────────────────────────
-  let promReachable = false;
+/** Check whether a metric family's HELP and TYPE lines are present in /metrics text. */
+function hasMetricText(name: string, metricsBody: string): boolean {
+  const lines = metricsBody.split("\n");
+  const helpPrefix = `# HELP ${name} `;
+  const typePrefix = `# TYPE ${name} `;
+  let hasHelp = false;
+  let hasType = false;
+  for (const line of lines) {
+    if (line.startsWith(helpPrefix)) hasHelp = true;
+    if (line.startsWith(typePrefix)) hasType = true;
+    if (hasHelp && hasType) return true;
+  }
+  return false;
+}
+
+/**
+ * Extract the summed value of a Prometheus counter from /metrics text.
+ * Handles both labeled (`name{labels} value`) and unlabeled (`name value`) forms.
+ */
+function extractCounter(name: string, metricsBody: string): number | null {
+  let total = 0;
+  let found = false;
+  const labeledPrefix = `${name}{`;
+  const unlabeledPrefix = `${name} `;
+
+  for (const line of metricsBody.split("\n")) {
+    if (line.startsWith(labeledPrefix) || line.startsWith(unlabeledPrefix)) {
+      const lastSpaceIdx = line.lastIndexOf(" ");
+      if (lastSpaceIdx !== -1) {
+        const val = Number.parseFloat(line.slice(lastSpaceIdx + 1));
+        if (!Number.isNaN(val)) {
+          total += val;
+          found = true;
+        }
+      }
+    }
+  }
+  return found ? total : null;
+}
+
+// ── Step functions ───────────────────────────────────────────────────────────
+
+async function checkPrometheusReachability(): Promise<void> {
   try {
     const healthy = await get(PROM_BASE, "/-/healthy");
-    promReachable = healthy.status === 200;
-    check("Prometheus /-/healthy reachable", promReachable, `status=${healthy.status}`);
+    check("Prometheus /-/healthy reachable", healthy.status === 200, `status=${healthy.status}`);
   } catch (err) {
     check(
       "Prometheus /-/healthy reachable",
@@ -74,8 +113,9 @@ async function main(): Promise<void> {
     console.error("\n# PROOF FAILED — Prometheus is not running or unreachable\n");
     process.exit(1);
   }
+}
 
-  // ── Step 2: platform-api target is up ─────────────────────────────────
+async function checkPlatformApiTarget(): Promise<void> {
   try {
     const targets = await getJson(PROM_BASE, "/api/v1/targets");
     const activeTargets =
@@ -108,11 +148,9 @@ async function main(): Promise<void> {
     console.error("\n# PROOF FAILED — Prometheus target query failed\n");
     process.exit(1);
   }
+}
 
-  // ── Step 3: /metrics is NOT externally routed ────────────────────────
-  // The /metrics endpoint must be Compose-internal only — never routed
-  // through Caddy to external traffic. Verify it is NOT reachable on the
-  // external Caddy port.
+async function checkMetricsNotExternallyRouted(): Promise<void> {
   try {
     const external = await get(`http://localhost:${CADDY_PORT}`, "/metrics");
     check(
@@ -121,11 +159,11 @@ async function main(): Promise<void> {
       `Caddy returned ${external.status}`
     );
   } catch {
-    // Network error = unreachable = good
     check("/metrics NOT reachable on external Caddy port", true, "Caddy refused connection");
   }
+}
 
-  // ── Step 4: /metrics endpoint returns valid Prometheus text ──────────
+async function fetchMetricsEndpoint(): Promise<string> {
   let metricsBody = "";
   try {
     const m = await get(API_BASE, "/metrics");
@@ -136,22 +174,15 @@ async function main(): Promise<void> {
       `ct=${m.contentType}`
     );
     metricsBody = m.body;
-    // Verify bounded route label
-    const hasRouteLabel = /http_requests_total\{method="GET",route="\/metrics"/.test(metricsBody);
+    const hasRouteLabel = metricsBody.includes('http_requests_total{method="GET",route="/metrics"');
     check("/metrics route label is registered template (not raw path)", hasRouteLabel);
   } catch (err) {
     check("/metrics endpoint", false, `fetch failed: ${err}`);
   }
+  return metricsBody;
+}
 
-  // ── Step 5: Required metric families in /metrics ─────────────────────
-  const hasMetricText = (name: string): boolean => {
-    // NOSONAR - metric names are constants, no ReDoS risk
-    return (
-      new RegExp(`^# HELP ${name} `, "m").test(metricsBody) &&
-      new RegExp(`^# TYPE ${name} `, "m").test(metricsBody)
-    );
-  };
-
+function checkRequiredMetricFamilies(metricsBody: string): void {
   const requiredFamilies = [
     "http_requests_total",
     "http_request_duration_seconds",
@@ -166,15 +197,12 @@ async function main(): Promise<void> {
   ];
 
   for (const name of requiredFamilies) {
-    check(
-      `${name} family present in /metrics`,
-      hasMetricText(name),
-      hasMetricText(name) ? "" : "HELP/TYPE missing"
-    );
+    const present = hasMetricText(name, metricsBody);
+    check(`${name} family present in /metrics`, present, present ? "" : "HELP/TYPE missing");
   }
+}
 
-  // ── Step 6: Bounded labels ───────────────────────────────────────────
-  // Parse all label=value pairs from /metrics text and check none leak.
+function checkBoundedLabels(metricsBody: string): void {
   const labelPairs = [...metricsBody.matchAll(/\{([^}]+)\}/g)]
     .flatMap((m) => m[1].split(","))
     .map((s) => s.trim());
@@ -184,22 +212,10 @@ async function main(): Promise<void> {
     forbidden.length === 0,
     forbidden.length ? `LEAKED: ${forbidden.slice(0, 5).join(" ; ")}` : ""
   );
+}
 
-  // ── Step 7: Prove request counter changes ────────────────────────────
-  // Query /metrics directly to avoid Prometheus scrape-interval timing race.
-  const extractCounter = (name: string): number | null => {
-    // Sum all label variants of the counter
-    let total = 0;
-    let found = false;
-    const matches = metricsBody.matchAll(new RegExp(`^${name}\\{[^}]*\\}\\s+([0-9.e+]+)`, "gm"));
-    for (const m of matches) {
-      total += Number.parseFloat(m[1]!);
-      found = true;
-    }
-    return found ? total : null;
-  };
-
-  const beforeCount = extractCounter("http_requests_total");
+async function proveCounterIncreases(metricsBody: string): Promise<void> {
+  const beforeCount = extractCounter("http_requests_total", metricsBody);
 
   // Trigger representative API activity
   for (const ep of ["/healthz", "/readyz", "/metrics"]) {
@@ -211,27 +227,27 @@ async function main(): Promise<void> {
   }
 
   const updatedMetrics = await get(API_BASE, "/metrics");
-  metricsBody = updatedMetrics.body;
+  const afterCount = extractCounter("http_requests_total", updatedMetrics.body);
 
-  const afterCount = extractCounter("http_requests_total");
   check(
     "http_requests_total increases after activity",
     beforeCount !== null && afterCount !== null && afterCount > beforeCount,
     `before=${beforeCount} after=${afterCount}`
   );
+}
 
-  // ── Step 8: Required metrics queryable through Prometheus API ────────
-  async function queryExists(query: string): Promise<boolean> {
-    try {
-      const r = await getJson(PROM_BASE, `/api/v1/query?query=${encodeURIComponent(query)}`);
-      const d = r.data as { status?: string; data?: { result?: unknown[] } };
-      return d?.status === "success" && (d?.data?.result?.length ?? 0) > 0;
-    } catch {
-      return false;
-    }
+async function queryExists(query: string): Promise<boolean> {
+  try {
+    const r = await getJson(PROM_BASE, `/api/v1/query?query=${encodeURIComponent(query)}`);
+    const d = r.data as { status?: string; data?: { result?: unknown[] } };
+    return d?.status === "success" && (d?.data?.result?.length ?? 0) > 0;
+  } catch {
+    return false;
   }
+}
 
-  // Metrics that always exist once registered (gauges default to 0, counters start at 0)
+async function checkPrometheusQueries(metricsBody: string): Promise<void> {
+  // Metrics that always exist once registered
   const promQueries = [
     { name: "http_requests_total", query: "http_requests_total" },
     { name: "http_request_duration_seconds", query: "http_request_duration_seconds_count" },
@@ -246,8 +262,7 @@ async function main(): Promise<void> {
     check(`${name} queryable in Prometheus`, exists, exists ? "" : "not found");
   }
 
-  // Label-dependent metrics: may not have series if no worker/job is active.
-  // We prove the metric family EXISTS in Prometheus, even if no series yet.
+  // Label-dependent metrics: may not have series if no worker/job is active
   for (const name of [
     "worker_liveness",
     "scheduled_job_outcome_total",
@@ -261,9 +276,8 @@ async function main(): Promise<void> {
       exists ? "" : "no active series (cold start — metric registered)"
     );
 
-    // Also verify the metric is REGISTERED (present in /metrics even if no data yet)
     if (!exists) {
-      const registered = hasMetricText(name);
+      const registered = hasMetricText(name, metricsBody);
       check(
         `${name} registered in /metrics (family present)`,
         registered,
@@ -271,8 +285,9 @@ async function main(): Promise<void> {
       );
     }
   }
+}
 
-  // ── Step 9: Forbidden labels in Prometheus ───────────────────────────
+async function checkForbiddenLabelsInPrometheus(): Promise<void> {
   try {
     const r = await getJson(PROM_BASE, "/api/v1/label/__name__/values");
     const d = r.data as { status?: string; data?: string[] };
@@ -303,11 +318,10 @@ async function main(): Promise<void> {
     }
   } catch {
     check("Prometheus label scan", true, "label scan skipped (API issue — non-fatal)");
-  } // ── Step 10: /readyz response includes observability signals ────────
-  // Prove that the readiness response carries Prometheus-dependent signals.
-  // When Prometheus is unreachable, these signals degrade → /readyz becomes degraded.
-  // We verify the structure is in place so the degradation path is proven by the
-  // observability infra probes (routes.ts::buildObservabilityInfra).
+  }
+}
+
+async function checkReadyzObservabilitySignal(): Promise<void> {
   try {
     const r = await get(API_BASE, "/readyz");
     check("/readyz returns 200 when Prometheus is up", r.status === 200, `status=${r.status}`);
@@ -318,9 +332,6 @@ async function main(): Promise<void> {
       `status=${data?.status}`
     );
 
-    // Prove the readiness response carries observability infra signals.
-    // If Prometheus became unreachable, probeMetrics() → "unreachable" would
-    // cause the readiness to degrade (ADR-ACT-0224 honesty contract).
     const obs = data?.observability ?? data?.details?.observability ?? {};
     const hasPromSignal = obs?.metrics !== undefined || obs?.prometheus !== undefined;
     check(
@@ -333,8 +344,42 @@ async function main(): Promise<void> {
   } catch (err) {
     check("/readyz health check", false, `fetch failed: ${err}`);
   }
+}
 
-  // ── Final ────────────────────────────────────────────────────────────
+// ── Main orchestrator ────────────────────────────────────────────────────────
+
+async function main(): Promise<void> {
+  console.log("# Prometheus application metrics LIVE proof\n");
+
+  // Steps 1-2: Prometheus reachability and target health
+  await checkPrometheusReachability();
+  await checkPlatformApiTarget();
+
+  // Step 3: /metrics not externally routed
+  await checkMetricsNotExternallyRouted();
+
+  // Step 4: /metrics endpoint returns valid Prometheus text
+  const metricsBody = await fetchMetricsEndpoint();
+
+  // Step 5: Required metric families in /metrics
+  checkRequiredMetricFamilies(metricsBody);
+
+  // Step 6: Bounded labels
+  checkBoundedLabels(metricsBody);
+
+  // Step 7: Prove request counter increases after activity
+  await proveCounterIncreases(metricsBody);
+
+  // Step 8: Required metrics queryable through Prometheus API
+  await checkPrometheusQueries(metricsBody);
+
+  // Step 9: Forbidden labels across all Prometheus metric families
+  await checkForbiddenLabelsInPrometheus();
+
+  // Step 10: /readyz carries observability signal for degradation path
+  await checkReadyzObservabilitySignal();
+
+  // Final
   console.log(failures === 0 ? "\n# ALL CHECKS PASSED" : `\n# ${failures} CHECK(S) FAILED`);
   process.exit(failures === 0 ? 0 : 1);
 }
