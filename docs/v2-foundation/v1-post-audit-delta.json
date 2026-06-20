@@ -1424,9 +1424,27 @@
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"],
       "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/package-lock.json",
+      "purpose": "post-audit addition (Generated npm lockfile (npm ci output))",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/package-lock.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "tools/v2-readiness/register-v1c-entries.py",
+      "purpose": "post-audit addition (V1C registration helper script)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/register-v1c-entries.py",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
     }
   ],
   "deletions": [],
-  "additionCount": 147,
+  "additionCount": 149,
   "deletionCount": 0
 }
