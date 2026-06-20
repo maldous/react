@@ -5,7 +5,7 @@
     "tags": ["platform", "v1c-17b"],
     "timezone": "browser",
     "schemaVersion": 39,
-    "version": 1,
+    "version": 2,
     "refresh": "30s",
     "panels": [
       {
@@ -15,9 +15,10 @@
         "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
         "targets": [
           {
+            "datasource": { "type": "prometheus", "uid": "platform-prometheus" },
             "refId": "A",
             "expr": "rate(http_requests_total[5m])",
-            "legendFormat": "{{method}} {{route_template}} ({{status_code}})"
+            "legendFormat": "{{method}} {{route}} ({{status_class}})"
           }
         ]
       },
@@ -26,7 +27,13 @@
         "title": "Platform API Uptime",
         "type": "stat",
         "gridPos": { "h": 4, "w": 4, "x": 12, "y": 0 },
-        "targets": [{ "refId": "A", "expr": "up{job=\"platform-api\"}" }],
+        "targets": [
+          {
+            "datasource": { "type": "prometheus", "uid": "platform-prometheus" },
+            "refId": "A",
+            "expr": "up{job=\"platform-api\"}"
+          }
+        ],
         "fieldConfig": {
           "defaults": {
             "thresholds": {
@@ -49,8 +56,9 @@
         "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
         "targets": [
           {
+            "datasource": { "type": "prometheus", "uid": "platform-prometheus" },
             "refId": "A",
-            "expr": "rate(http_requests_total{status_code=~\"5..\"}[5m])",
+            "expr": "rate(http_requests_total{status_class=~\"5..\"}[5m])",
             "legendFormat": "5xx errors"
           }
         ]
@@ -62,11 +70,80 @@
         "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
         "targets": [
           {
+            "datasource": { "type": "prometheus", "uid": "platform-prometheus" },
             "refId": "A",
-            "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))",
-            "legendFormat": "{{method}} {{route_template}}"
+            "expr": "histogram_quantile(0.95, rate(http_request_duration_ms_bucket[5m]))",
+            "legendFormat": "{{method}} {{route}}"
           }
         ]
+      },
+      {
+        "id": 5,
+        "title": "HTTP Request Duration (avg)",
+        "type": "timeseries",
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 },
+        "targets": [
+          {
+            "datasource": { "type": "prometheus", "uid": "platform-prometheus" },
+            "refId": "A",
+            "expr": "rate(http_request_duration_ms_sum[5m]) / rate(http_request_duration_ms_count[5m])",
+            "legendFormat": "{{method}} {{route}}"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Postgres Availability",
+        "type": "stat",
+        "gridPos": { "h": 4, "w": 4, "x": 12, "y": 4 },
+        "targets": [
+          {
+            "datasource": { "type": "prometheus", "uid": "platform-prometheus" },
+            "refId": "A",
+            "expr": "postgres_available"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "steps": [
+                { "color": "red", "value": null },
+                { "color": "green", "value": 0 }
+              ]
+            },
+            "mappings": [
+              { "type": "value", "value": "1", "text": "UP" },
+              { "type": "value", "value": "0", "text": "DOWN" }
+            ]
+          }
+        }
+      },
+      {
+        "id": 7,
+        "title": "Redis Availability",
+        "type": "stat",
+        "gridPos": { "h": 4, "w": 4, "x": 16, "y": 4 },
+        "targets": [
+          {
+            "datasource": { "type": "prometheus", "uid": "platform-prometheus" },
+            "refId": "A",
+            "expr": "redis_available"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "steps": [
+                { "color": "red", "value": null },
+                { "color": "green", "value": 0 }
+              ]
+            },
+            "mappings": [
+              { "type": "value", "value": "1", "text": "UP" },
+              { "type": "value", "value": "0", "text": "DOWN" }
+            ]
+          }
+        }
       }
     ]
   }

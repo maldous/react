@@ -228,6 +228,7 @@
     "proof:clickthrough": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
     "proof:provider-readiness-contract": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
     "proof:composed-provider-readiness": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
+    "proof:dashboards": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/dashboards-runtime-proof.ts",
     "proof:history": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/history-runtime-proof.ts",
     "proof:notification-email-transport": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/notification-email-transport-runtime-proof.ts",
     "proof:notification-webhook-transport": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",

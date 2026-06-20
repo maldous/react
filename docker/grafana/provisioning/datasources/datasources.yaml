@@ -39,3 +39,13 @@ datasources:
         query: '{service="$${__span.tags["service.name"]}"} |= "$${__trace.traceId}"'
       nodeGraph:
         enabled: true
+
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    uid: platform-prometheus
+    url: http://prometheus:9090
+    editable: false
+    isDefault: false
+    jsonData:
+      timeInterval: 15s
