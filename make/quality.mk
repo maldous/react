@@ -24,10 +24,16 @@ audit:
 	npm run audit:osv
 	$(call OK,no vulnerabilities)
 
-## security — Secret scan via gitleaks
+## security — Secret scan via gitleaks (authoritative mode: fail-closed when binary missing)
 security:
 	$(call STEP,security \(gitleaks\))
-	npm run secrets:scan
+	@if [ "$${CI:-}" = "true" ] || [ "$${AUTHORITATIVE_SCAN:-}" = "true" ]; then \
+		command -v gitleaks >/dev/null 2>&1 || { printf '$(RED)✗ gitleaks not found — required in authoritative mode$(RESET)\n'; exit 1; }; \
+		gitleaks detect --source . --no-git --verbose || { printf '$(RED)✗ gitleaks scan found secrets$(RESET)\n'; exit 1; }; \
+	else \
+		command -v gitleaks >/dev/null 2>&1 || { printf '$(YELLOW)⚠ gitleaks not found — skipping (install: https://github.com/gitleaks/gitleaks/releases)$(RESET)\n'; exit 0; }; \
+		gitleaks detect --source . || { printf '$(RED)✗ gitleaks scan found secrets$(RESET)\n'; exit 1; }; \
+	fi
 	$(call OK,no secrets detected)
 
 ## compose — Validate compose.yaml syntax (no services started)
@@ -95,6 +101,18 @@ sbom:
 	$(call STEP,sbom)
 	npm run sbom:generate
 	$(call OK,SBOM generated)
+
+## sbom-verify — Verify committed SBOM is fresh (fails when stale)
+sbom-verify:
+	$(call STEP,sbom:verify)
+	npm run security:sbom:verify
+	$(call OK,SBOM verified — no drift)
+
+## sbom-policy — Validate SBOM against license/package policy
+sbom-policy:
+	$(call STEP,sbom:policy)
+	npm run security:sbom:policy
+	$(call OK,SBOM policy passed)
 
 ## license — Show license policy status
 license:
