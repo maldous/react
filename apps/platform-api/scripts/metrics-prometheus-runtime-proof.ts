@@ -203,7 +203,8 @@ function checkRequiredMetricFamilies(metricsBody: string): void {
 }
 
 function checkBoundedLabels(metricsBody: string): void {
-  const labelPairs = [...metricsBody.matchAll(/\{([^}]+)\}/g)]
+  // Parse label=value pairs from /metrics text — negated character class, linear, no ReDoS
+  const labelPairs = [...metricsBody.matchAll(/\{([^}]+)\}/g)] // NOSONAR
     .flatMap((m) => m[1].split(","))
     .map((s) => s.trim());
   const forbidden = labelPairs.filter((lp) => FORBIDDEN_LABEL.test(lp));
@@ -288,33 +289,38 @@ async function checkPrometheusQueries(metricsBody: string): Promise<void> {
 }
 
 async function checkForbiddenLabelsInPrometheus(): Promise<void> {
+  async function scanMetricLabels(name: string): Promise<string[]> {
+    try {
+      const labels = await getJson(PROM_BASE, `/api/v1/labels?match[]=${encodeURIComponent(name)}`);
+      const ld = labels.data as { status?: string; data?: string[] };
+      if (ld?.status === "success" && ld?.data) {
+        return ld.data.filter((l) => FORBIDDEN_LABEL.test(l));
+      }
+    } catch {
+      /* skip */
+    }
+    return [];
+  }
+
   try {
     const r = await getJson(PROM_BASE, "/api/v1/label/__name__/values");
     const d = r.data as { status?: string; data?: string[] };
-    if (d?.status === "success" && d?.data) {
-      const metricNames = d.data.filter((n) => !n.startsWith("__"));
-      let foundLeak = false;
-      for (const name of metricNames.slice(0, 30)) {
-        try {
-          const labels = await getJson(
-            PROM_BASE,
-            `/api/v1/labels?match[]=${encodeURIComponent(name)}`
-          );
-          const ld = labels.data as { status?: string; data?: string[] };
-          if (ld?.status === "success" && ld?.data) {
-            const leaked = ld.data.filter((l) => FORBIDDEN_LABEL.test(l));
-            if (leaked.length > 0) {
-              check(`no forbidden labels in ${name}`, false, `LEAKED: ${leaked.join(", ")}`);
-              foundLeak = true;
-            }
-          }
-        } catch {
-          /* skip */
-        }
+    if (d?.status !== "success" || !d?.data) {
+      check("Prometheus label scan", true, "label scan skipped (API issue — non-fatal)");
+      return;
+    }
+
+    const metricNames = d.data.filter((n) => !n.startsWith("__"));
+    let foundLeak = false;
+    for (const name of metricNames.slice(0, 30)) {
+      const leaked = await scanMetricLabels(name);
+      if (leaked.length > 0) {
+        check(`no forbidden labels in ${name}`, false, `LEAKED: ${leaked.join(", ")}`);
+        foundLeak = true;
       }
-      if (!foundLeak) {
-        check("no forbidden labels across all Prometheus metric families", true);
-      }
+    }
+    if (!foundLeak) {
+      check("no forbidden labels across all Prometheus metric families", true);
     }
   } catch {
     check("Prometheus label scan", true, "label scan skipped (API issue — non-fatal)");
