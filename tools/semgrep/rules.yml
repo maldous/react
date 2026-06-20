@@ -227,3 +227,29 @@ rules:
       (validated, immutable, fail-closed) — V1C-CONF-06 / ADR-0076. If the access is genuinely dynamic
       (computed key) or belongs to an approved non-product boundary, use a non-literal read or add the
       path to this rule's excludes with a one-line justification.
+
+  # --- V1C UI Semantic Reference Harness (tools/ui-reference-harness) is NON-SHIPPING tooling.
+  # Product code (apps/packages/services) must never import it — it carries fixtures and mock
+  # contracts that must not enter a shipped artifact. The harness reads the capability model;
+  # the dependency direction is strictly one-way (harness → model), never product → harness.
+  - id: no-harness-import-in-product
+    languages: [generic]
+    severity: ERROR
+    paths:
+      include:
+        - "**/apps/**/*.ts"
+        - "**/apps/**/*.tsx"
+        - "**/packages/**/*.ts"
+        - "**/packages/**/*.tsx"
+        - "**/services/**/*.ts"
+        - "**/services/**/*.tsx"
+      exclude:
+        - "**/*.test.ts"
+        - "**/*.test.tsx"
+        - "**/tests/**"
+    patterns:
+      - pattern-regex: "from\\s+['\"][^'\"]*ui-reference-harness[^'\"]*['\"]"
+    message: >-
+      Product code must not import the non-shipping Semantic Reference Harness
+      (tools/ui-reference-harness). It carries mock BFF contracts/fixtures that must never enter a
+      shipped artifact; the dependency direction is harness → capability-model only (V1C-01/02/06).

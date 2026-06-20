@@ -21,6 +21,7 @@ import r16 from "../src/rules/r16-services.mjs";
 import r17 from "../src/rules/r17-migrations.mjs";
 import r18 from "../src/rules/r18-environment-config.mjs";
 import r19 from "../src/rules/r19-executable-assets.mjs";
+import r20 from "../src/rules/r20-harness-semantics.mjs";
 
 const fires = (rule, ctx, ruleId) => {
   const f = rule(ctx);
@@ -380,4 +381,35 @@ test("R19 fires on a Terraform root with an unrecognised stage", () => {
     decisionRefs: [],
   });
   fires(r19, a, "R19-executable-assets");
+});
+
+test("R20 ignores capabilities without a harness block (clean model passes)", () => {
+  assert.deepEqual(r20(cleanCtx()), []);
+});
+
+test("R20 fires on an inconsistent harness definition", () => {
+  const a = clone(cleanCtx());
+  a.foundation["ui-capability-model.json"].capabilities.push({
+    capabilityId: "x-broken",
+    harness: {
+      capabilityKey: "broken",
+      personas: [{ personaId: "admin", permissions: ["b.read"] }],
+      // permission missing denied-persona coverage → must fire (#5)
+      permissions: [{ permission: "b.read", allowedPersonas: ["admin"], deniedPersonas: [] }],
+      queries: [
+        { queryId: "list", method: "GET", endpoint: "/api/b", requiredPermission: "b.read" },
+      ],
+      commands: [],
+      fields: [],
+      validation: [],
+      states: ["loaded"],
+      transitions: [],
+      fixtures: [],
+      accessibleNames: [],
+      keyboardBehaviour: [],
+      errorPresentation: {},
+      journeys: [],
+    },
+  });
+  fires(r20, a, "R20-harness-semantics");
 });

@@ -34,3 +34,6 @@ tools/architecture/**/tests/fixtures/
 **/*.tfstate.backup
 
 .playwright-mcp/
+
+# MSW-generated service worker (vendor file; do not reformat)
+tools/ui-reference-harness/public/mockServiceWorker.js

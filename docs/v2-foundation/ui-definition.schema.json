@@ -610,6 +610,45 @@
       "type": "array",
       "description": "References to e2e specs / scenario-manifest scenarioIds / ui-contract surfaceIds that are the executable proof of this surface's behaviour.",
       "items": { "type": "string" }
+    },
+    "harness": {
+      "type": "object",
+      "description": "Semantic Reference Harness definition (tools/ui-reference-harness). Declares the capability's renderable semantics independently of any product screen so the harness can render it generically and a headless Playwright journey can prove it. Internal consistency is enforced by v2-readiness R20 (validate-definition), NOT by this schema.",
+      "additionalProperties": true,
+      "required": [
+        "capabilityKey",
+        "personas",
+        "permissions",
+        "queries",
+        "commands",
+        "fields",
+        "validation",
+        "states",
+        "transitions",
+        "fixtures",
+        "accessibleNames",
+        "keyboardBehaviour",
+        "errorPresentation",
+        "journeys"
+      ],
+      "properties": {
+        "capabilityKey": { "type": "string" },
+        "complete": { "type": "boolean" },
+        "personas": { "type": "array" },
+        "permissions": { "type": "array" },
+        "queries": { "type": "array" },
+        "commands": { "type": "array" },
+        "fields": { "type": "array" },
+        "validation": { "type": "array" },
+        "table": { "type": "object" },
+        "states": { "type": "array", "items": { "type": "string" } },
+        "transitions": { "type": "array" },
+        "fixtures": { "type": "array" },
+        "accessibleNames": { "type": "array" },
+        "keyboardBehaviour": { "type": "array", "items": { "type": "string" } },
+        "errorPresentation": { "type": "object" },
+        "journeys": { "type": "array" }
+      }
     }
   },
   "$defs": {

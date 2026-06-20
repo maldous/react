@@ -20,6 +20,7 @@ import r16 from "./rules/r16-services.mjs";
 import r17 from "./rules/r17-migrations.mjs";
 import r18 from "./rules/r18-environment-config.mjs";
 import r19 from "./rules/r19-executable-assets.mjs";
+import r20 from "./rules/r20-harness-semantics.mjs";
 
 export const RULES = [
   r1,
@@ -41,6 +42,7 @@ export const RULES = [
   r17,
   r18,
   r19,
+  r20,
 ];
 
 export function runRules(ctx) {
@@ -62,6 +64,7 @@ const AUDIT_SURFACES = {
   "migrations-data": "R17",
   "environment-config": "R18",
   "executables-terraform-playwright": "R19",
+  "ui-semantic-harness": "R20",
 };
 // Surface rules wired into RULES. Keep in sync with the imports above.
 const IMPLEMENTED_SURFACE_RULES = [
@@ -75,6 +78,7 @@ const IMPLEMENTED_SURFACE_RULES = [
   "R17",
   "R18",
   "R19",
+  "R20",
 ];
 
 export function summarize(

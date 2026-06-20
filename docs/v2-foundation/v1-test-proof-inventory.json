@@ -3489,5 +3489,32 @@
     "stageCoverage": "test:platform-api + unit-safe",
     "failureEvidence": "assertion output",
     "note": "ADR-0076 config slice"
+  },
+  {
+    "id": "tools/ui-reference-harness/tests/capability-controller.test.mjs",
+    "path": "tools/ui-reference-harness/tests/capability-controller.test.mjs",
+    "kind": "tooling",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (ui:harness:test)",
+    "failureEvidence": "node:test assertion output"
+  },
+  {
+    "id": "tools/ui-reference-harness/tests/harness-model.test.mjs",
+    "path": "tools/ui-reference-harness/tests/harness-model.test.mjs",
+    "kind": "tooling",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (ui:harness:test)",
+    "failureEvidence": "node:test assertion output"
+  },
+  {
+    "id": "tools/ui-reference-harness/tests/validate-definition.test.mjs",
+    "path": "tools/ui-reference-harness/tests/validate-definition.test.mjs",
+    "kind": "tooling",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (in-process)",
+    "stageCoverage": "test (ui:harness:test)",
+    "failureEvidence": "node:test assertion output"
   }
 ]

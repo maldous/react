@@ -1109,6 +1109,204 @@
       "v2Target": "apps/platform-api/tests/unit/observability-probe-config.test.ts",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/ui-reference-harness/index.html",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/index.html",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/playwright.config.ts",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/playwright.config.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/public/mockServiceWorker.js",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/public/mockServiceWorker.js",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/README.md",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/README.md",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/app.tsx",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/app.tsx",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/capability-controller.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/capability-controller.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/load-capability.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/load-capability.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/main.tsx",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/main.tsx",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/msw/browser.ts",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/msw/browser.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/msw/handlers.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/msw/handlers.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/permissions/capability-guard.tsx",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/permissions/capability-guard.tsx",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/renderers/detail-renderer.tsx",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/renderers/detail-renderer.tsx",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/renderers/form-renderer.tsx",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/renderers/form-renderer.tsx",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/renderers/state-view.tsx",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/renderers/state-view.tsx",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/renderers/table-renderer.tsx",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/renderers/table-renderer.tsx",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/validate-definition.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/validate-definition.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/tests/capability-controller.test.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/tests/capability-controller.test.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/tests/harness-model.test.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/tests/harness-model.test.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/tests/validate-definition.test.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/tests/validate-definition.test.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/tsconfig.json",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/tsconfig.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/vite.config.ts",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/vite.config.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r20-harness-semantics.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r20-harness-semantics.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
     }
   ],
   "deletions": [],

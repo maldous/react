@@ -23,6 +23,9 @@ export default tseslint.config(
       "apps/**/README.md",
       "packages/**/README.md",
       "tools/architecture/**/README.md",
+      // Non-shipping Semantic Reference Harness — standalone tooling app (own vite/tsconfig,
+      // verified by node tests + Playwright journeys, never part of the platform lint scope).
+      "tools/ui-reference-harness/**",
     ],
   },
 
