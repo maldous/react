@@ -1442,9 +1442,18 @@
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"],
       "introducingCommit": "unknown"
+    },
+    {
+      "path": "tools/architecture/validate-i18n/governed-paths.json",
+      "purpose": "V1C-25: governed-paths config for strict i18n raw-literal enforcement",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/architecture/validate-i18n/governed-paths.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-0026"],
+      "introducingCommit": "unknown"
     }
   ],
   "deletions": [],
-  "additionCount": 149,
+  "additionCount": 150,
   "deletionCount": 0
 }
