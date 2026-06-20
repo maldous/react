@@ -6,6 +6,7 @@ import {
 } from "@platform/platform-errors";
 import type { Route } from "./pipeline.ts";
 import { getHealth, getReadiness, getVersion } from "./health.ts";
+import { getMetrics, metricsContentType } from "../adapters/prometheus-metrics.ts";
 import { getFixtureSession } from "./session.ts";
 import { handleGetOrganisationProfile, handlePatchOrganisationProfile } from "./organisation.ts";
 import { handleGraphql } from "./graphql.ts";
@@ -765,6 +766,21 @@ export const routes: Route[] = [
     method: "GET",
     path: "/healthz",
     handler: async (_req, res) => res.json(200, getHealth()),
+  },
+  {
+    // Prometheus /metrics scrape endpoint (ADR-0062 / ADR-0020).
+    // Compose-internal only — NOT routed through Caddy to external traffic.
+    // No auth required; Prometheus scrapes this directly on the container port.
+    method: "GET",
+    path: "/metrics",
+    handler: async (_req, res) => {
+      res.raw.writeHead(200, {
+        "Content-Type": metricsContentType(),
+        "X-Content-Type-Options": "nosniff",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+      });
+      res.raw.end(await getMetrics());
+    },
   },
   {
     // Controlled synthetic-failure endpoint (ADR-ACT-0285 Phase 5). E2E uses this

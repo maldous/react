@@ -25,6 +25,7 @@ import {
   resolveAccessToken,
 } from "./dependencies.ts";
 import { serverT } from "./i18n.ts";
+import { httpRequestsTotal, httpRequestDurationMs } from "../adapters/prometheus-metrics.ts";
 import { loadObservabilityConfig } from "../config/observability-config.ts";
 import {
   resolveTenantFromRequest,
@@ -846,9 +847,15 @@ export function createRouter(
       await matchingRoute.handler(pipelineReq, pipelineRes);
       const durationMs = Number(process.hrtime.bigint() - startedAt) / 1_000_000;
       enrichedLogger.info({ ...routeMeta, status: 200, durationMs }, "http.request.complete");
+      // Prometheus application metrics (ADR-0062). No tenant/user/request id labels.
+      httpRequestsTotal.inc({ method, route: matchingRoute.path, status_class: "2xx" });
+      httpRequestDurationMs.observe({ method, route: matchingRoute.path }, durationMs);
     } catch (err) {
       const durationMs = Number(process.hrtime.bigint() - startedAt) / 1_000_000;
       enrichedLogger.error({ err, ...routeMeta, status: 500, durationMs }, "http.request.failed");
+      // Prometheus application metrics (ADR-0062). No tenant/user/request id labels.
+      httpRequestsTotal.inc({ method, route: matchingRoute.path, status_class: "5xx" });
+      httpRequestDurationMs.observe({ method, route: matchingRoute.path }, durationMs);
       // Attach the SAME correlation ids the log line carries so the captured
       // Sentry event is searchable by requestId (pivots to Loki) and by the E2E
       // testRunId/scenarioId that triggered it (ADR-ACT-0285 Phase 5.5). Only

@@ -197,6 +197,7 @@
     "proof:metering": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/metering-runtime-proof.ts",
     "proof:quota-enforcement": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
     "proof:metering-quota-routes": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
+    "proof:metrics-prometheus": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
     "proof:api-keys": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/api-keys-runtime-proof.ts",
     "proof:rate-limits": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/rate-limits-runtime-proof.ts",
     "proof:rate-limits-redis": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",

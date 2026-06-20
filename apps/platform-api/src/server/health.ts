@@ -9,8 +9,9 @@ import {
 } from "@platform/api-runtime";
 import { PostgresReadinessAdapter } from "@platform/adapters-postgres";
 import { KeycloakRealmAdminAdapter, type KeycloakAdminConfig } from "@platform/adapters-keycloak";
-import { getPostgresReadinessAdapter } from "./dependencies.ts";
+import { getPostgresReadinessAdapter, getRedisClient } from "./dependencies.ts";
 import { getFixtureSession } from "./session.ts";
+import { postgresAvailable, redisAvailable } from "../adapters/prometheus-metrics.ts";
 import { loadStageConfig } from "../config/stage-config.ts";
 import { loadHealthMetadataConfig } from "../config/health-metadata-config.ts";
 import { loadPlatformApiConfig } from "../config/app-config.ts";
@@ -116,6 +117,18 @@ export async function getReadiness(opts?: {
     ? new PostgresReadinessAdapter(opts.postgresUrl)
     : getPostgresReadinessAdapter();
   const dbStatus = await adapter.ping();
+
+  // Update Prometheus health gauges (ADR-0062). No tenant/user labels.
+  postgresAvailable.set(dbStatus === "ok" ? 1 : 0);
+
+  // Redis liveness: best-effort ping (non-blocking, safe when disconnected).
+  try {
+    const redis = getRedisClient();
+    const pong = await redis.ping();
+    redisAvailable.set(pong === "PONG" ? 1 : 0);
+  } catch {
+    redisAvailable.set(0);
+  }
 
   // Mapper config: use injected value if provided (allows null to skip check in
   // tests that don't set env vars), otherwise derive from environment.

@@ -19,10 +19,10 @@ scrape_configs:
   # email, raw URL, or unbounded error text is exposed in label values.
   - job_name: platform-api
     metrics_path: /metrics
-    # Per-environment: prometheus reaches platform-api at its Compose-internal
-    # hostname. Override via env PROMETHEUS_PLATFORM_API_TARGET.
+    # Stable Compose-internal target: prometheus reaches platform-api at its
+    # in-network service hostname on the web profile.
     static_configs:
-      - targets: ["${PROMETHEUS_PLATFORM_API_TARGET:-platform-api:3001}"]
+      - targets: ["platform-api:3001"]
     metric_relabel_configs:
       # Drop any label that could carry high-cardinality tenant/user data.
       # These relabel rules are defence-in-depth: the metrics endpoint never
