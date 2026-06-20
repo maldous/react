@@ -5684,5 +5684,41 @@
     "hidesErrors": false,
     "dead": false,
     "docDriftsFromBehaviour": false
+  },
+  {
+    "name": "make test-security",
+    "kind": "make",
+    "purpose": "Security-specific unit tests: sbom-verify.test.mjs + sbom-policy.test.mjs (43 tests).",
+    "inputs": [],
+    "outputs": [],
+    "prerequisites": [],
+    "sideEffects": [],
+    "envScope": "all",
+    "failureSemantics": "exit-nonzero-on-failure",
+    "idempotent": true,
+    "safetyControls": [],
+    "testCoverage": "self (test runner)",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
+  },
+  {
+    "name": "npm test:security",
+    "kind": "npm",
+    "purpose": "Run sbom-verify + sbom-policy unit tests (node --test).",
+    "inputs": [],
+    "outputs": [],
+    "prerequisites": [],
+    "sideEffects": [],
+    "envScope": "all",
+    "failureSemantics": "read-only / exit-nonzero on violation",
+    "idempotent": true,
+    "safetyControls": [],
+    "testCoverage": "self",
+    "duplicateOf": "make test-security",
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
   }
 ]
