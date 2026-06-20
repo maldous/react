@@ -11,6 +11,14 @@ with **honest semantic closure**.
 
 `ZERO UNRESOLVED GAPS` may only be claimed when `npm run v2:readiness` exits `0`. It does not today.
 
+> **Pass Four update — UI semantic closure (V1C-01/02/06).** Three UI semantic gaps are now
+> `delivered-and-proven` via the Semantic Reference Harness (`tools/ui-reference-harness`): **Tenant
+> groups** (`proof:ui-semantic-groups`), **Sub-organisations** (`proof:ui-semantic-sub-organisations`,
+> flat list — no invented hierarchy), and **Claim mapping** (`proof:ui-semantic-claim-mapping`, with
+> the external real-IdP proof limitation kept explicit and separate per ADR-ACT-0220). Each was closed
+> only on a **passing headless journey**, not a schema entry. **Completion-blocker total: 35 → 32**
+> (22 capability completions + 10 package removals). The cut remains BLOCKED.
+
 Audited V1 commit: `918cd148569f6473eeaa58284933abdc0fe5bafe` (the commit the artefacts were built
 against). The freeze/cut commit is pinned separately at cut time (`{{PINNED_V1_COMMIT}}`, runbook §1).
 
@@ -20,37 +28,37 @@ The closure programme is split into the three honest categories the validator di
 
 ### A. Semantic gaps remaining (need design/build/extension — NOT mechanical)
 
-25 capabilities are `requires-v1-completion`. Each has a concrete action in
+22 capabilities are `requires-v1-completion` (V1C-01/02/06 closed in the UI semantic slice — see Pass Four). Each has a concrete action in
 `v1-completion-programme.md` (source ADR, exact work, code paths, contracts/routes, tests/proofs,
 UI semantic definition, stop condition, V2 assets). None is hidden inside a delivered count.
 
-| Action | Capability                                                                          |
-| ------ | ----------------------------------------------------------------------------------- |
-| V1C-01 | Tenant groups (API+contract proven; admin UI missing)                               |
-| V1C-02 | Sub-organisations (API proven; admin UI missing)                                    |
-| V1C-03 | ABAC / Policy Decision Point (entitlement step only; quota Phase 2)                 |
-| V1C-04 | Delegated administration roles (net-new; needs ADR)                                 |
-| V1C-05 | Support-mode / break-glass (no approval workflow)                                   |
-| V1C-06 | Claim mapping + group/role mapping (partial UI; live IdP external)                  |
-| V1C-07 | MFA + session policy + lockout (lockout/recovery surface; MFA E2E)                  |
-| V1C-08 | Branding + theming (registry marks partial)                                         |
-| V1C-09 | Custom domains / DNS / TLS / canonical (cutover unproven)                           |
-| V1C-10 | Product catalog, plans, prices (no billing engine)                                  |
-| V1C-11 | Subscriptions, invoices, payments, dunning (no engine; payment live-proof external) |
-| V1C-12 | PITR, retention, legal hold, residency (net-new)                                    |
-| V1C-13 | Data governance: catalog/lineage/classification/PII/DSR (net-new)                   |
-| V1C-14 | Tenant data import / export (net-new)                                               |
-| V1C-15 | Object storage file CRUD / quotas / lifecycle / AV (readiness-only today)           |
-| V1C-16 | Workflow engine / approvals (scheduled-jobs delivered separately)                   |
-| V1C-17 | Metrics + traces backend + dashboards                                               |
-| V1C-18 | Dependency scanning as a hard gate                                                  |
-| V1C-19 | Compliance reports / access reviews / evidence packs                                |
-| V1C-20 | Developer portal / SDK gen / sandbox (rate-limits delivered separately)             |
-| V1C-21 | Tenant lifecycle suspend / delete / export                                          |
-| V1C-22 | Support tickets / customer health / announcements (net-new)                         |
-| V1C-23 | Service catalog + provider integration generalisation                               |
-| V1C-24 | Tenant canonical domain cutover + redirects                                         |
-| V1C-25 | i18n React provider/hook + message migration (hard gate)                            |
+| Action | Capability                                                                              |
+| ------ | --------------------------------------------------------------------------------------- |
+| V1C-01 | Tenant groups — ✅ CLOSED (proof:ui-semantic-groups)                                    |
+| V1C-02 | Sub-organisations — ✅ CLOSED (proof:ui-semantic-sub-organisations)                     |
+| V1C-03 | ABAC / Policy Decision Point (entitlement step only; quota Phase 2)                     |
+| V1C-04 | Delegated administration roles (net-new; needs ADR)                                     |
+| V1C-05 | Support-mode / break-glass (no approval workflow)                                       |
+| V1C-06 | Claim mapping — ✅ CLOSED (proof:ui-semantic-claim-mapping; live IdP external/ADR-0220) |
+| V1C-07 | MFA + session policy + lockout (lockout/recovery surface; MFA E2E)                      |
+| V1C-08 | Branding + theming (registry marks partial)                                             |
+| V1C-09 | Custom domains / DNS / TLS / canonical (cutover unproven)                               |
+| V1C-10 | Product catalog, plans, prices (no billing engine)                                      |
+| V1C-11 | Subscriptions, invoices, payments, dunning (no engine; payment live-proof external)     |
+| V1C-12 | PITR, retention, legal hold, residency (net-new)                                        |
+| V1C-13 | Data governance: catalog/lineage/classification/PII/DSR (net-new)                       |
+| V1C-14 | Tenant data import / export (net-new)                                                   |
+| V1C-15 | Object storage file CRUD / quotas / lifecycle / AV (readiness-only today)               |
+| V1C-16 | Workflow engine / approvals (scheduled-jobs delivered separately)                       |
+| V1C-17 | Metrics + traces backend + dashboards                                                   |
+| V1C-18 | Dependency scanning as a hard gate                                                      |
+| V1C-19 | Compliance reports / access reviews / evidence packs                                    |
+| V1C-20 | Developer portal / SDK gen / sandbox (rate-limits delivered separately)                 |
+| V1C-21 | Tenant lifecycle suspend / delete / export                                              |
+| V1C-22 | Support tickets / customer health / announcements (net-new)                             |
+| V1C-23 | Service catalog + provider integration generalisation                                   |
+| V1C-24 | Tenant canonical domain cutover + redirects                                             |
+| V1C-25 | i18n React provider/hook + message migration (hard gate)                                |
 
 Plus **8 config-runtime bounded decisions** (`V1C-CONF-01..08`, decomposed from the former single
 `V1C-PKG-CONFIG` by the §2 env/config audit — typed loading, schema validation, immutable projections,
@@ -75,7 +83,7 @@ These carry a resolved disposition; only execution remains (see `v1-completion-p
 
 ### C. Branch-cut blockers (the gate fails closed while any remain)
 
-1. **25 capability completions** (§A) — the runbook §0 invariant requires every capability resolved.
+1. **22 capability completions** (§A) — the runbook §0 invariant requires every capability resolved.
 2. **10 deprecated zero-consumer package removals** — `domain-core, access-control, feature-workflow,
 profile-configuration, security-auth, queue-runtime, search-runtime, notification-runtime,
 worker-runtime, observability`. All now `delete-after-proof` in the path-map (was inconsistently
@@ -84,7 +92,7 @@ worker-runtime, observability`. All now `delete-after-proof` in the path-map (wa
    **Not executed in this change** (per instruction).
 3. **8 config-runtime bounded decisions** — `V1C-CONF-01..08` (decomposed from `V1C-PKG-CONFIG`).
 
-**Completion-blocker total: 43** = 25 capability completions + 10 package removals + 8 config decisions
+**Completion-blocker total: 32** = 22 capability completions + 10 package removals (V1C-CONF-06 config decisions closed; V1C-01/02/06 UI semantics closed)
 (live truth: `npm run v2:readiness --json` `.completionBlockerCount`).
 
 ## What pass two got wrong (now fixed)
@@ -105,7 +113,7 @@ worker-runtime, observability`. All now `delete-after-proof` in the path-map (wa
 | Class                                      | Count | Blocks cut?         |
 | ------------------------------------------ | ----- | ------------------- |
 | delivered-and-proven                       | 45    | no                  |
-| requires-v1-completion                     | 25    | **yes**             |
+| requires-v1-completion                     | 22    | **yes**             |
 | superseded-by-proven-canonical             | 1     | no                  |
 | not-applicable-final                       | 4     | no                  |
 | config-runtime decisions (V1C-CONF-01..08) | 8     | **yes**             |

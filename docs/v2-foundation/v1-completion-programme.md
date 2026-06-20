@@ -55,15 +55,18 @@ sub-actions** with an explicit **selected decision** (no "design and build", no 
 
 #### Identity & access
 
-**V1C-01 — Tenant groups (UI gap).** Source: ADR-0021/0058, ADR-ACT-0234. Proven API+contract
-(`/api/org/groups*`); the gap is the admin surface. Per the UI proof policy: record groups UI
-semantics + MSW + headless journey (no throwaway visual). Permission `tenant.groups.*`. Tests: carry
-groups unit tests + add MSW/journey. **Stop:** groups UI semantics + MSW + headless journey green;
-permission-gated. V2 asset: groups UI semantic source.
+**V1C-01 — Tenant groups (UI gap). ✅ CLOSED (delivered-and-proven).** Closed by the Semantic
+Reference Harness: machine-readable `groups` capability record + MSW fixtures mirroring the live BFF
+contract (`/api/org/groups*`) + a passing headless journey (`proof:ui-semantic-groups`, 11 steps:
+list/empty/create-valid/client-invalid/server-conflict/edit/delete-confirm/permission-denied/
+read-only/server-error/keyboard + accessible errors). Source: ADR-0021/0058, ADR-ACT-0234.
+Permission `tenant.groups.*`. V2 asset: groups UI semantic source.
 
-**V1C-02 — Sub-organisations (UI gap).** Source: ADR-0021/0058, ADR-ACT-0234. Proven
-`/api/org/sub-organisations*`. Same UI proof policy. Permission `tenant.suborgs.*`. **Stop:** sub-org
-UI semantics + MSW + headless journey green.
+**V1C-02 — Sub-organisations (UI gap). ✅ CLOSED (delivered-and-proven).** Closed by the Semantic
+Reference Harness as a FLAT tenant-scoped list (no invented hierarchy — parent_id is internal-only):
+`sub-organisations` record + MSW fixtures (`/api/org/sub-organisations*`) + a passing headless journey
+(`proof:ui-semantic-sub-organisations`, 11 steps). Source: ADR-0021/0058, ADR-ACT-0234. Permission
+`tenant.suborgs.*`.
 
 **V1C-03 — ABAC / Policy Decision Point (extend).** Source: ADR-0058, ADR-ACT-0242. **Quota
 enforcement is already DELIVERED (ADR-ACT-0256) — removed from this gap.** Remaining work only:
@@ -92,10 +95,14 @@ proof. **Stop:** approval workflow + host-origin escalation proven + fully audit
 
 #### Authentication
 
-**V1C-06 — Claim mapping admin UI (UI gap).** Source: ADR-0046, ADR-ACT-0220. Mapping config proven at
-unit level; complete the `/admin/auth` mapping editor per the UI proof policy. Live real-IdP mapping
-proof is **externally blocked** (carried as not-applicable-final `Real IdP login simulation`) — NOT a
-buildable gap. **Stop:** mapping UI semantics + MSW + headless journey green.
+**V1C-06 — Claim mapping admin UI (UI gap). ✅ CLOSED (delivered-and-proven).** Closed by the Semantic
+Reference Harness: `auth-claim-mapping` record (full-replace config-collection mode) + MSW fixtures
+(`/api/auth/settings/idps/:alias/mapping`) + a passing headless journey
+(`proof:ui-semantic-claim-mapping`, 12 steps: load/empty/add/edit/remove/save-success/server-conflict/
+server-failure/permission-denied/read-only/keyboard + accessible errors). The live real-IdP mapping
+proof remains **externally blocked** (ADR-ACT-0220, carried as not-applicable-final `Real IdP login
+simulation`) and is kept explicit and SEPARATE from these locally-proven UI semantics. Source:
+ADR-0046, ADR-ACT-0220.
 
 **V1C-07 — MFA lockout/recovery + MFA-required E2E (extend).** Source: ADR-0042, ADR-ACT-0158. Expose
 account lockout/recovery on `/api/auth/settings/mfa,/session`; land the deferred MFA-required login

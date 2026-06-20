@@ -1,6 +1,6 @@
 {
   "pass": "two-reverse-reconciliation (semantic-closure pass)",
-  "verdict": "NOT-ZERO-GAPS — semantic closure is incomplete; branch cut is BLOCKED. 25 capabilities require V1 completion and 10 deprecated zero-consumer packages await delete-after-proof execution. Configuration is closed: V1C-CONF-06 delivered (all product-runtime direct process.env reads migrated to typed config; the no-direct-process-env-outside-config Semgrep gate is active). Zero gaps may only be claimed when `npm run v2:readiness` exits 0.",
+  "verdict": "NOT-ZERO-GAPS — semantic closure is incomplete; branch cut is BLOCKED. 22 capabilities require V1 completion and 10 deprecated zero-consumer packages await delete-after-proof execution. Configuration is closed: V1C-CONF-06 delivered (all product-runtime direct process.env reads migrated to typed config; the no-direct-process-env-outside-config Semgrep gate is active). Zero gaps may only be claimed when `npm run v2:readiness` exits 0.",
   "vocabulary": {
     "fileDispositions": [
       "reuse-unchanged",
@@ -61,8 +61,8 @@
   "capabilities": {
     "total": 75,
     "buckets": {
-      "delivered-and-proven": 45,
-      "requires-v1-completion": 25,
+      "delivered-and-proven": 48,
+      "requires-v1-completion": 22,
       "not-applicable-final": 4,
       "superseded-by-proven-canonical": 1
     },
@@ -73,19 +73,9 @@
     "accepted": 74
   },
   "semanticGapsRemaining": {
-    "count": 25,
+    "count": 22,
     "note": "Capabilities not delivered-and-proven that need design/build/extension before the cut. NOT hidden inside any delivered count. (The config-runtime migration decision V1C-CONF-06 is now closed — see verdict.)",
     "capabilities": [
-      {
-        "capability": "Tenant groups",
-        "action": "V1C-01",
-        "openAction": "ADR-ACT-0234 — V1 status 'api-only'; blocker: no admin UI [must close before V2 cut]"
-      },
-      {
-        "capability": "Sub-organisations",
-        "action": "V1C-02",
-        "openAction": "ADR-ACT-0234 — V1 status 'api-only'; blocker: no admin UI [must close before V2 cut]"
-      },
       {
         "capability": "ABAC / Policy Decision Point",
         "action": "V1C-03",
@@ -100,11 +90,6 @@
         "capability": "Support-mode / break-glass access",
         "action": "V1C-05",
         "openAction": "ADR-ACT-0251 — V1 status 'partial'; blocker: no approval workflow; host-origin escalation deferred (per bedrock evidence) [must close before V2 cut]"
-      },
-      {
-        "capability": "Claim mapping + group/role mapping",
-        "action": "V1C-06",
-        "openAction": "ADR-ACT-0220 — V1 status 'partial'; blocker: real-IdP mapping proof blocked (ADR-ACT-0220) [must close before V2 cut]"
       },
       {
         "capability": "MFA + session policy + lockout",
