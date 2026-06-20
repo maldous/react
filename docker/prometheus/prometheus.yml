@@ -1,0 +1,31 @@
+# Prometheus configuration — application metrics (ADR-0062 / ADR-0020)
+# Pinned image: prom/prometheus:v2.54.1
+# Profile: observability-provider
+
+global:
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  evaluation_interval: 30s
+
+# Scrape Prometheus itself (internal health)
+scrape_configs:
+  - job_name: prometheus
+    metrics_path: /metrics
+    static_configs:
+      - targets: [localhost:9090]
+
+  # Application metrics from the platform-api Prometheus scrape endpoint.
+  # Label policy: no tenantId, organisationId, userId, requestId, traceId,
+  # email, raw URL, or unbounded error text is exposed in label values.
+  - job_name: platform-api
+    metrics_path: /metrics
+    # Per-environment: prometheus reaches platform-api at its Compose-internal
+    # hostname. Override via env PROMETHEUS_PLATFORM_API_TARGET.
+    static_configs:
+      - targets: ["${PROMETHEUS_PLATFORM_API_TARGET:-platform-api:3001}"]
+    metric_relabel_configs:
+      # Drop any label that could carry high-cardinality tenant/user data.
+      # These relabel rules are defence-in-depth: the metrics endpoint never
+      # emits these labels, but if a bug introduced one, Prometheus drops it.
+      - regex: (tenantId|organisationId|userId|requestId|traceId|email|url|errorText)
+        action: labeldrop
