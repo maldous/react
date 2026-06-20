@@ -94,7 +94,7 @@ function processSourceFile(src, usedKeys, paramUsage) {
   }
 }
 
-function scanDir(dir, usedKeys, paramUsage) {
+function scanDir(dir, usedKeys, paramUsage, rawLiterals) {
   if (!fs.existsSync(dir)) return;
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     if (
@@ -106,12 +106,61 @@ function scanDir(dir, usedKeys, paramUsage) {
       continue;
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
-      scanDir(full, usedKeys, paramUsage);
+      scanDir(full, usedKeys, paramUsage, rawLiterals);
       continue;
     }
     if (!/\.(ts|tsx|js|mjs)$/.test(entry.name)) continue;
-    processSourceFile(fs.readFileSync(full, "utf8"), usedKeys, paramUsage);
+    const content = fs.readFileSync(full, "utf8");
+    processSourceFile(content, usedKeys, paramUsage);
+    // Raw-literal scan on governed UI files (advisory)
+    if (/\.tsx$/.test(entry.name) && rawLiterals) {
+      const relPath = full.replace(repoRoot + "/", "");
+      rawLiterals.push(...scanRawLiterals(relPath, content));
+    }
   }
+}
+
+// ── Raw-literal detection (governed-surface heuristic) ──────────────────────
+
+// Common English function words and UI-chrome terms that, when found in JSX
+// text children, suggest an un-governed raw literal rather than an i18n key.
+const SUSPECT_WORDS =
+  /\b(access|account|action|add|admin|alert|allow|announce|auth(?:entication|orisation)?|back|blocked|cancel|change|check|close|confirm|connect|copy|create|dashboard|delete|denied|disabled|done|download|edit|email|empty|enable|error|export|fail(?:ed|ure)?|filter|forbidden|form|generate|help|history|home|import|invalid|invite|key|label|limit|load(?:ing)?|log(?:in|out)?|manage|member|menu|message|missing|monitor|name|new|next|notification|off|on|open|optional|page|password|permission|platform|please|preview|previous|profile|read|ready|refresh|remove|required|reset|retry|role|save|search|select|send|setting|sign|status|submit|success|support|team|tenant|test|title|token|tool|try|unauthorised|unauthorized|update|upload|user|validate|verify|version|view|warning|webhook|welcome)\b/i;
+
+/** Scan a single source file for raw user-facing English text in JSX. */
+function scanRawLiterals(filePath, content) {
+  const findings = [];
+  const lines = content.split("\n");
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    // Match JSX text children: >Some English text<
+    // Exclude lines that already call t(), useMessage, or <LocalizedText
+    if (/\bt\(|useMessage\(|<LocalizedText\b/.test(line)) continue;
+    // Exclude test files
+    if (/\.test\.(ts|tsx)$/.test(filePath)) continue;
+
+    const textMatches = line.matchAll(/>([^<>{}\n]{6,120})</g);
+    for (const m of textMatches) {
+      const text = m[1].trim();
+      // Skip if it's a number, code reference, or test assertion
+      if (/^[\d\s.,;:!?#$%^&*()[\]{}/\\@_\-="'`~+<>|]+$/.test(text)) continue;
+      // Skip variable interpolation braces
+      if (/^[\s]*[{]/.test(text) || /[}]\s*$/.test(text)) continue;
+      if (SUSPECT_WORDS.test(text)) {
+        findings.push({ file: filePath, line: i + 1, text: text.slice(0, 80) });
+      }
+    }
+
+    // Match aria-label / aria-description attributes with raw English
+    const ariaMatches = line.matchAll(/aria-(?:label|description)=["']([^"']{8,120})["']/g);
+    for (const m of ariaMatches) {
+      if (SUSPECT_WORDS.test(m[1]) && !/^\{/.test(m[1])) {
+        findings.push({ file: filePath, line: i + 1, text: `aria: ${m[1].slice(0, 80)}` });
+      }
+    }
+  }
+  return findings;
 }
 
 // ── Interpolation variable validation ───────────────────────────────────────
@@ -151,9 +200,32 @@ function run(root) {
 
   const used = new Set();
   const paramUsage = new Map();
+  const rawLiterals = [];
 
   for (const dir of SCAN_DIRS) {
-    scanDir(path.join(root, dir), used, paramUsage);
+    const absDir = path.join(root, dir);
+    if (!fs.existsSync(absDir)) continue;
+    for (const entry of fs.readdirSync(absDir, { withFileTypes: true })) {
+      if (
+        entry.name === "node_modules" ||
+        entry.name === "dist" ||
+        entry.name === "tests" ||
+        entry.name === "_template"
+      )
+        continue;
+      const full = path.join(absDir, entry.name);
+      if (entry.isDirectory()) {
+        scanDir(full, used, paramUsage, rawLiterals);
+        continue;
+      }
+      if (!/\.(ts|tsx|js|mjs)$/.test(entry.name)) continue;
+      const content = fs.readFileSync(full, "utf8");
+      processSourceFile(content, used, paramUsage);
+      // Raw-literal scan on governed UI source files only (advisory, top-level scans)
+      if (/\.tsx$/.test(entry.name)) {
+        rawLiterals.push(...scanRawLiterals(full.replace(root + "/", ""), content));
+      }
+    }
   }
 
   const missing = [...used].filter((k) => !locale.has(k));
@@ -166,6 +238,7 @@ function run(root) {
     unused,
     duplicates,
     interpMismatches,
+    rawLiterals,
     definedCount: locale.size,
     usedCount: used.size,
   };
@@ -209,6 +282,17 @@ if (result.interpMismatches.length > 0) {
   // In strict mode, interpolation mismatches are violations too
   if (strictMode) {
     hasViolations = true;
+  }
+}
+
+if (result.rawLiterals && result.rawLiterals.length > 0) {
+  console.warn(
+    `[validate-i18n] ${result.rawLiterals.length} raw-literal suspect(s) (ungoverned English in JSX — advisory):`
+  );
+  const shown = result.rawLiterals.slice(0, 20);
+  shown.forEach(({ file, line, text }) => console.warn(`  - ${file}:${line}  ${text}`));
+  if (result.rawLiterals.length > 20) {
+    console.warn(`  ... and ${result.rawLiterals.length - 20} more`);
   }
 }
 

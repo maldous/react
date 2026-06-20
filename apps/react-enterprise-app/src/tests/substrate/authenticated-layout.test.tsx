@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import type { SessionActor } from "@platform/contracts-auth";
+import { I18nProvider, enGB } from "@platform/i18n-runtime";
 
 // Mock useSession and the router primitives the layout + AppShell use.
 vi.mock("../../hooks/use-session", () => ({
@@ -19,6 +20,14 @@ vi.mock("@tanstack/react-router", () => ({
 
 import { useSession } from "../../hooks/use-session";
 import { AuthenticatedLayout } from "../../components/AuthenticatedLayout";
+
+function wrap(node: React.ReactNode) {
+  return (
+    <I18nProvider locale="en-GB" messages={enGB}>
+      {node}
+    </I18nProvider>
+  );
+}
 
 const actor: SessionActor = {
   userId: "u1",
@@ -43,7 +52,7 @@ function mockSession(overrides: Partial<ReturnType<typeof useSession>>) {
 describe("AuthenticatedLayout", () => {
   it("shows the loading state while the session is loading", () => {
     mockSession({ isLoading: true });
-    render(<AuthenticatedLayout />);
+    render(wrap(<AuthenticatedLayout />));
     expect(screen.getByText(/checking authentication/i)).toBeInTheDocument();
   });
 
@@ -51,7 +60,7 @@ describe("AuthenticatedLayout", () => {
     mockSession({
       error: Object.assign(new Error("Session unavailable (503)"), { status: 503, code: "x" }),
     });
-    render(<AuthenticatedLayout />);
+    render(wrap(<AuthenticatedLayout />));
     expect(screen.getByRole("alert")).toBeInTheDocument();
     // Shell chrome is not rendered in the error state.
     expect(screen.queryByTestId("app-shell-main")).not.toBeInTheDocument();
@@ -59,13 +68,13 @@ describe("AuthenticatedLayout", () => {
 
   it("redirects to /login when unauthenticated", () => {
     mockSession({ isAuthenticated: false });
-    render(<AuthenticatedLayout />);
+    render(wrap(<AuthenticatedLayout />));
     expect(screen.getByTestId("navigate")).toHaveAttribute("data-to", "/login");
   });
 
   it("renders the AppShell with a single main landmark and the routed Outlet when authenticated", () => {
     mockSession({ actor, isAuthenticated: true });
-    const { container } = render(<AuthenticatedLayout />);
+    const { container } = render(wrap(<AuthenticatedLayout />));
 
     const mains = container.querySelectorAll("main#main-content");
     expect(mains).toHaveLength(1);
@@ -75,7 +84,7 @@ describe("AuthenticatedLayout", () => {
 
   it("authenticated layout has no accessibility violations", async () => {
     mockSession({ actor, isAuthenticated: true });
-    const { container } = render(<AuthenticatedLayout />);
+    const { container } = render(wrap(<AuthenticatedLayout />));
     expect(await axe(container)).toHaveNoViolations();
   });
 });

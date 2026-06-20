@@ -28,11 +28,13 @@ describe("validate-i18n", () => {
     );
   });
 
-  it("correctly reads nested en-GB.json (no 'not found' warning)", () => {
+  it("correctly reads nested en-GB.json (no locale-file 'not found' warning)", () => {
     const r = spawnSync(process.execPath, [TOOL, REPO_ROOT], { encoding: "utf8" });
     const combined = (r.stdout ?? "") + (r.stderr ?? "");
+    // The locale-file skip message is: "en-GB.json not found — skipping"
+    // Raw-literal findings like "Page not found" are unrelated and advisory.
     assert.ok(
-      !combined.includes("not found"),
+      !combined.includes("en-GB.json not found"),
       `en-GB.json should be found and parsed; got: ${combined.slice(0, 200)}`
     );
   });

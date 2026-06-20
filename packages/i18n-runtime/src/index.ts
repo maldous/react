@@ -21,11 +21,22 @@ export type I18nLocaleInput = I18nMessages | I18nLocaleResource;
 export type I18nParams = Record<string, string | number>;
 
 /**
- * Canonical message key type. Every key in the committed en-GB.json catalogue.
- * The validate-i18n gate enforces that only keys from the canonical catalogue
- * are used in product code.
+ * Canonical message key type — derived from the committed en-GB.json catalogue.
+ *
+ * Every key in the catalogue is a valid MessageKey. The validate-i18n gate
+ * enforces that only keys from the canonical catalogue are used in product code.
  */
-export type MessageKey = string;
+type Join<K, P> = K extends string | number
+  ? P extends string | number
+    ? `${K}${P extends "" ? "" : "."}${P}`
+    : never
+  : never;
+type Paths<T> = T extends object
+  ? {
+      [K in keyof T]-?: K extends string ? `${K}` | Join<K, Paths<T[K]>> : never;
+    }[keyof T]
+  : "";
+export type MessageKey = Paths<typeof enGB>;
 
 // ── Flatten ─────────────────────────────────────────────────────────────────
 
@@ -367,12 +378,16 @@ export interface I18nInstance {
    * Resolve a message key to its localized string.
    * Supports ICU plural/select syntax in message templates.
    *
+   * Accepts canonical MessageKey (for strict catalogue-bound usage) or any
+   * string (for migration / dynamic keys). The validate-i18n gate is the
+   * authoritative runtime/build safeguard for unknown keys.
+   *
    * Resolution order:
    *   1. Primary locale messages
    *   2. Fallback locale messages
    *   3. The key itself (missing key — observable but safe)
    */
-  t(key: MessageKey, params?: I18nParams): string;
+  t(key: MessageKey | (string & {}), params?: I18nParams): string;
   /** The active BCP 47 locale tag. */
   readonly locale: string;
 }

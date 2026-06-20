@@ -594,9 +594,9 @@ function DeliveriesPanel({ id, canWrite }: Readonly<{ id: string; canWrite: bool
         <table className="w-full text-xs" data-testid={`admin-webhooks-deliveries-table-${id}`}>
           <thead>
             <tr className="border-b border-border text-left font-semibold text-fg-muted">
-              <th className="pb-1 pr-4">Event</th>
-              <th className="pb-1 pr-4">Status</th>
-              <th className="pb-1 pr-4">HTTP</th>
+              <th className="pb-1 pr-4">{t("feature.admin.webhooks.table.eventHeader")}</th>
+              <th className="pb-1 pr-4">{t("feature.admin.webhooks.table.statusHeader")}</th>
+              <th className="pb-1 pr-4">{t("feature.admin.webhooks.table.httpHeader")}</th>
               {canWrite && <th className="pb-1" />}
             </tr>
           </thead>

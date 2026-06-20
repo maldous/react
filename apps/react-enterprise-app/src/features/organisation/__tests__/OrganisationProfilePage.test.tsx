@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
+import { I18nProvider, enGB } from "@platform/i18n-runtime";
 import {
   server,
   sessionHandler,
@@ -19,7 +20,11 @@ import { OrganisationProfilePage } from "../OrganisationProfilePage";
 function renderPage(): { wrapper: ({ children }: { children: ReactNode }) => ReactNode } {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   function Wrapper({ children }: { children: ReactNode }) {
-    return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+    return (
+      <I18nProvider locale="en-GB" messages={enGB}>
+        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      </I18nProvider>
+    );
   }
   render(<OrganisationProfilePage />, { wrapper: Wrapper });
   return { wrapper: Wrapper };
@@ -70,9 +75,11 @@ describe("OrganisationProfilePage (canonical feature)", () => {
     const { container } = (() => {
       const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
       return render(
-        <QueryClientProvider client={queryClient}>
-          <OrganisationProfilePage />
-        </QueryClientProvider>
+        <I18nProvider locale="en-GB" messages={enGB}>
+          <QueryClientProvider client={queryClient}>
+            <OrganisationProfilePage />
+          </QueryClientProvider>
+        </I18nProvider>
       );
     })();
 

@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { axe } from "vitest-axe";
 import type { SessionActor } from "@platform/contracts-auth";
+import { I18nProvider, enGB } from "@platform/i18n-runtime";
 
 vi.mock("../../hooks/use-session", () => ({
   useSession: vi.fn(),
@@ -9,6 +10,14 @@ vi.mock("../../hooks/use-session", () => ({
 
 import { useSession } from "../../hooks/use-session";
 import { RequirePermission } from "../../components/RequirePermission";
+
+function wrap(node: React.ReactNode) {
+  return (
+    <I18nProvider locale="en-GB" messages={enGB}>
+      {node}
+    </I18nProvider>
+  );
+}
 
 const actor: SessionActor = {
   userId: "u1",
@@ -33,9 +42,11 @@ describe("RequirePermission", () => {
   it("renders the forbidden state when the permission is missing", () => {
     mockSession(["organisation.read"]);
     render(
-      <RequirePermission permission="organisation.update">
-        <div>secret</div>
-      </RequirePermission>
+      wrap(
+        <RequirePermission permission="organisation.update">
+          <div>secret</div>
+        </RequirePermission>
+      )
     );
     expect(screen.getByText(/access denied/i)).toBeInTheDocument();
     expect(screen.queryByText("secret")).not.toBeInTheDocument();
@@ -44,9 +55,11 @@ describe("RequirePermission", () => {
   it("renders children when the permission is present", () => {
     mockSession(["organisation.read", "organisation.update"]);
     render(
-      <RequirePermission permission="organisation.update">
-        <div>secret</div>
-      </RequirePermission>
+      wrap(
+        <RequirePermission permission="organisation.update">
+          <div>secret</div>
+        </RequirePermission>
+      )
     );
     expect(screen.getByText("secret")).toBeInTheDocument();
   });
@@ -54,9 +67,11 @@ describe("RequirePermission", () => {
   it("forbidden state has no accessibility violations", async () => {
     mockSession([]);
     const { container } = render(
-      <RequirePermission permission="organisation.read">
-        <div>secret</div>
-      </RequirePermission>
+      wrap(
+        <RequirePermission permission="organisation.read">
+          <div>secret</div>
+        </RequirePermission>
+      )
     );
     expect(await axe(container)).toHaveNoViolations();
   });

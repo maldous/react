@@ -17,7 +17,6 @@
  */
 
 import { createContext, createElement, useContext, useMemo, type ReactNode, type FC } from "react";
-import _enGB from "../locales/en-GB.json" with { type: "json" };
 import {
   createI18n,
   type I18nInstance,
@@ -75,34 +74,19 @@ export function I18nProvider({
 /**
  * Hook to access the i18n instance from any descendent of I18nProvider.
  *
- * **Fails clearly in production** when called outside an I18nProvider.
- * In development and test environments, falls back to a default en-GB
- * instance so component tests remain backward-compatible without requiring
- * every test to wrap in I18nProvider. The production throw guarantees
- * every translated string has a configured locale source.
+ * **Fails clearly** when called outside an I18nProvider — in every environment.
+ * There is no silent fallback. Every translated string must have a configured
+ * locale source via an explicit I18nProvider in the component tree.
  */
 export function useI18n(): I18nInstance {
   const ctx = useContext(I18nContext);
   if (!ctx) {
-    if (typeof process !== "undefined" && process.env?.NODE_ENV === "production") {
-      throw new Error(
-        "useI18n() was called outside an <I18nProvider>. " +
-          'Wrap your app with <I18nProvider locale="…" messages={…}>.'
-      );
-    }
-    // Non-production: fall back to a default en-GB instance.
-    return _getDefaultInstance();
+    throw new Error(
+      "useI18n() was called outside an <I18nProvider>. " +
+        'Wrap your app with <I18nProvider locale="…" messages={…}>.'
+    );
   }
   return ctx;
-}
-
-/** Lazily-initialised default instance for non-production environments. */
-let _defaultInstance: I18nInstance | undefined;
-function _getDefaultInstance(): I18nInstance {
-  if (!_defaultInstance) {
-    _defaultInstance = createI18n({ locale: "en-GB", messages: _enGB });
-  }
-  return _defaultInstance;
 }
 
 /**

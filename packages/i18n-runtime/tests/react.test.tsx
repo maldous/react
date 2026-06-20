@@ -3,6 +3,9 @@
  *
  * Tests: provider existence, hooks outside provider, useMessage,
  * LocalizedText component, ICU plural/select in React context, locale fallback.
+ *
+ * Every hook and component must be inside an <I18nProvider> — there is no
+ * silent default instance in any environment.
  */
 
 import { createElement, act, type ReactNode } from "react";
@@ -54,46 +57,23 @@ function captureError(fn: () => void): Error | null {
   }
 }
 
+// ── Provider wrapper helper ─────────────────────────────────────────────────
+
+function wrapInProvider(locale: string, messages: I18nMessages, ...children: ReactNode[]) {
+  return createElement(I18nProvider, { locale, messages }, ...children);
+}
+
 // ── useI18n ─────────────────────────────────────────────────────────────────
 
 describe("useI18n", () => {
-  it("returns a default instance when called outside provider (non-production)", () => {
-    let captured: unknown = null;
-    function OutsideComponent() {
-      captured = useI18n();
+  it("throws when called outside I18nProvider in every environment", () => {
+    function BadComponent() {
+      useI18n();
       return createElement("div", null, "ok");
     }
-    render(createElement(OutsideComponent));
-    expect(captured).toBeTruthy();
-    expect(typeof (captured as Record<string, unknown>).t).toBe("function");
-    expect((captured as Record<string, unknown>).locale).toBe("en-GB");
-  });
-
-  it("throws in production when called outside provider", () => {
-    const prevEnv = (globalThis as Record<string, unknown>).process;
-    const prevNodeEnv = typeof process !== "undefined" ? process.env?.NODE_ENV : undefined;
-    try {
-      // Simulate production by setting NODE_ENV
-      if (typeof process !== "undefined" && process.env) {
-        process.env.NODE_ENV = "production";
-      }
-      function BadComponent() {
-        useI18n();
-        return createElement("div", null, "ok");
-      }
-      const err = captureError(() => render(createElement(BadComponent)));
-      expect(err).toBeTruthy();
-      expect(err!.message).toContain("outside an <I18nProvider>");
-    } finally {
-      if (prevEnv !== undefined) {
-        (globalThis as Record<string, unknown>).process = prevEnv;
-      } else {
-        delete (globalThis as Record<string, unknown>).process;
-      }
-      if (typeof process !== "undefined" && process.env) {
-        process.env.NODE_ENV = prevNodeEnv ?? "test";
-      }
-    }
+    const err = captureError(() => render(createElement(BadComponent)));
+    expect(err).toBeTruthy();
+    expect(err!.message).toContain("outside an <I18nProvider>");
   });
 
   it("returns the i18n instance when inside provider", () => {
@@ -118,16 +98,14 @@ describe("useI18n", () => {
 // ── useTranslation ──────────────────────────────────────────────────────────
 
 describe("useTranslation", () => {
-  it("works with default en-GB instance outside provider", () => {
-    let result = "";
-    function OutsideComponent() {
-      const t = useTranslation();
-      result = t("greeting");
-      return createElement("div", null, result);
+  it("throws when called outside I18nProvider", () => {
+    function BadComponent() {
+      useTranslation();
+      return createElement("div", null, "ok");
     }
-    render(createElement(OutsideComponent));
-    // "greeting" not in en-GB catalogue → returns key itself
-    expect(typeof result).toBe("string");
+    const err = captureError(() => render(createElement(BadComponent)));
+    expect(err).toBeTruthy();
+    expect(err!.message).toContain("outside an <I18nProvider>");
   });
 
   it("returns t() function that resolves keys", () => {
@@ -137,13 +115,7 @@ describe("useTranslation", () => {
       result = t("greeting");
       return createElement("div", null, result);
     }
-    render(
-      createElement(
-        I18nProvider,
-        { locale: "en-GB", messages: EN_GB_FLAT },
-        createElement(GoodComponent)
-      )
-    );
+    render(wrapInProvider("en-GB", EN_GB_FLAT, createElement(GoodComponent)));
     expect(result).toBe("Hello");
   });
 
@@ -154,13 +126,7 @@ describe("useTranslation", () => {
       result = t("farewell", { name: "Alice" });
       return createElement("div", null, result);
     }
-    render(
-      createElement(
-        I18nProvider,
-        { locale: "en-GB", messages: EN_GB_FLAT },
-        createElement(GoodComponent)
-      )
-    );
+    render(wrapInProvider("en-GB", EN_GB_FLAT, createElement(GoodComponent)));
     expect(result).toBe("Goodbye Alice");
   });
 });
@@ -168,14 +134,14 @@ describe("useTranslation", () => {
 // ── useMessage ──────────────────────────────────────────────────────────────
 
 describe("useMessage", () => {
-  it("works with default en-GB instance outside provider", () => {
-    let result = "";
-    function OutsideComponent() {
-      result = useMessage("greeting");
-      return createElement("div", null, result);
+  it("throws when called outside I18nProvider", () => {
+    function BadComponent() {
+      useMessage("greeting");
+      return createElement("div", null, "ok");
     }
-    render(createElement(OutsideComponent));
-    expect(typeof result).toBe("string");
+    const err = captureError(() => render(createElement(BadComponent)));
+    expect(err).toBeTruthy();
+    expect(err!.message).toContain("outside an <I18nProvider>");
   });
 
   it("resolves a single message key", () => {
@@ -184,13 +150,7 @@ describe("useMessage", () => {
       result = useMessage("greeting");
       return createElement("div", null, result);
     }
-    render(
-      createElement(
-        I18nProvider,
-        { locale: "en-GB", messages: EN_GB_FLAT },
-        createElement(GoodComponent)
-      )
-    );
+    render(wrapInProvider("en-GB", EN_GB_FLAT, createElement(GoodComponent)));
     expect(result).toBe("Hello");
   });
 
@@ -200,13 +160,7 @@ describe("useMessage", () => {
       result = useMessage("items.count", { count: 3 });
       return createElement("div", null, result);
     }
-    render(
-      createElement(
-        I18nProvider,
-        { locale: "en-GB", messages: EN_GB_FLAT },
-        createElement(GoodComponent)
-      )
-    );
+    render(wrapInProvider("en-GB", EN_GB_FLAT, createElement(GoodComponent)));
     expect(result).toBe("3 items");
   });
 
@@ -216,13 +170,7 @@ describe("useMessage", () => {
       result = useMessage("auth.greeting", { gender: "male" });
       return createElement("div", null, result);
     }
-    render(
-      createElement(
-        I18nProvider,
-        { locale: "en-GB", messages: EN_GB_FLAT },
-        createElement(GoodComponent)
-      )
-    );
+    render(wrapInProvider("en-GB", EN_GB_FLAT, createElement(GoodComponent)));
     expect(result).toBe("Welcome, sir");
   });
 });
@@ -231,13 +179,7 @@ describe("useMessage", () => {
 
 describe("LocalizedText", () => {
   it("renders a localized message as a span", () => {
-    render(
-      createElement(
-        I18nProvider,
-        { locale: "en-GB", messages: EN_GB_FLAT },
-        createElement(LocalizedText, { k: "greeting" })
-      )
-    );
+    render(wrapInProvider("en-GB", EN_GB_FLAT, createElement(LocalizedText, { k: "greeting" })));
     const span = container.querySelector("span");
     expect(span).toBeTruthy();
     expect(span!.textContent).toBe("Hello");
@@ -245,9 +187,9 @@ describe("LocalizedText", () => {
 
   it("renders with interpolated params", () => {
     render(
-      createElement(
-        I18nProvider,
-        { locale: "en-GB", messages: EN_GB_FLAT },
+      wrapInProvider(
+        "en-GB",
+        EN_GB_FLAT,
         createElement(LocalizedText, { k: "farewell", params: { name: "Charlie" } })
       )
     );
@@ -256,11 +198,7 @@ describe("LocalizedText", () => {
 
   it("respects the `as` prop", () => {
     render(
-      createElement(
-        I18nProvider,
-        { locale: "en-GB", messages: EN_GB_FLAT },
-        createElement(LocalizedText, { k: "greeting", as: "h1" })
-      )
+      wrapInProvider("en-GB", EN_GB_FLAT, createElement(LocalizedText, { k: "greeting", as: "h1" }))
     );
     expect(container.querySelector("h1")).toBeTruthy();
     expect(container.querySelector("h1")!.textContent).toBe("Hello");
@@ -268,9 +206,9 @@ describe("LocalizedText", () => {
 
   it("supports ICU plural in LocalizedText", () => {
     render(
-      createElement(
-        I18nProvider,
-        { locale: "en-GB", messages: EN_GB_FLAT },
+      wrapInProvider(
+        "en-GB",
+        EN_GB_FLAT,
         createElement(LocalizedText, { k: "items.count", params: { count: 5 } })
       )
     );
@@ -279,11 +217,7 @@ describe("LocalizedText", () => {
 
   it("falls through to 'other' when no params for select", () => {
     render(
-      createElement(
-        I18nProvider,
-        { locale: "en-GB", messages: EN_GB_FLAT },
-        createElement(LocalizedText, { k: "auth.greeting" })
-      )
+      wrapInProvider("en-GB", EN_GB_FLAT, createElement(LocalizedText, { k: "auth.greeting" }))
     );
     expect(container.querySelector("span")!.textContent).toBe("Welcome");
   });
@@ -344,13 +278,7 @@ describe("XSS safety", () => {
       result = useMessage("farewell", { name: "<script>alert(1)</script>" });
       return createElement("div", null, result);
     }
-    render(
-      createElement(
-        I18nProvider,
-        { locale: "en-GB", messages: EN_GB_FLAT },
-        createElement(GoodComponent)
-      )
-    );
+    render(wrapInProvider("en-GB", EN_GB_FLAT, createElement(GoodComponent)));
     expect(result).not.toContain("<script>");
     expect(result).toContain("&lt;script&gt;");
   });
