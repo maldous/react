@@ -31,6 +31,13 @@ function runVerify(env = {}) {
   });
 }
 
+/** Local-mode subprocess: explicitly unset AUTHORITATIVE_SCAN and CI
+ *  so that a global CI/AUTHORITATIVE_SCAN env does not leak into what
+ *  should be advisory-only behaviour. */
+function runLocalVerify() {
+  return runVerify({ AUTHORITATIVE_SCAN: "", CI: "" });
+}
+
 describe("sbom-verify local vs authoritative freshness behaviour", () => {
   let savedHash = null;
 
@@ -57,7 +64,7 @@ describe("sbom-verify local vs authoritative freshness behaviour", () => {
       .digest("hex");
     writeFileSync(LOCKHASH_PATH, `${currentHash}\n`, "utf8");
 
-    const result = runVerify();
+    const result = runLocalVerify();
     assert.strictEqual(result.status, 0, "exit code should be 0");
     assert.ok(result.stdout.includes("SBOM VERIFY PASSED"), "output should contain PASSED");
   });
@@ -70,7 +77,7 @@ describe("sbom-verify local vs authoritative freshness behaviour", () => {
       "utf8"
     );
 
-    const result = runVerify();
+    const result = runLocalVerify();
     assert.strictEqual(result.status, 0, "local mismatch must exit 0 (advisory only)");
     assert.ok(result.stdout.includes("WARN"), "output should contain WARN advisory");
     assert.ok(result.stdout.includes("regenerate with"), "output should mention regeneration");
@@ -124,7 +131,7 @@ describe("sbom-verify local vs authoritative freshness behaviour", () => {
       unlinkSync(LOCKHASH_PATH);
     }
 
-    const result = runVerify();
+    const result = runLocalVerify();
     assert.strictEqual(result.status, 0, "local missing lockhash exits 0");
     assert.ok(
       result.stdout.includes("No lockfile hash on record"),

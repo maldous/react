@@ -180,6 +180,7 @@
     "codeql:validate": "node tools/security/codeql-validate.mjs",
     "sbom:verify": "node tools/security/sbom-verify.mjs",
     "sbom:policy": "node tools/security/sbom-policy.mjs",
+    "test:security": "node --test tools/security/tests/sbom-verify.test.mjs tools/security/tests/sbom-policy.test.mjs",
     "mcp:governor": "node tools/mcp/platform-governor/src/index.mjs",
     "mcp:governor:selftest": "node tools/mcp/platform-governor/tests/handshake.test.mjs",
     "proof:auth-oidc-enterprise": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",

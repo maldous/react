@@ -3,7 +3,9 @@
  * Tests for tools/security/sbom-policy.mjs — ADR-ACT-0247 / V1C-18.
  *
  * Tests the SPDX expression parser, license normalization, and blocked-license
- * detection. Covers the specific expressions requested:
+ * detection by importing the real exported functions from sbom-policy.mjs.
+ *
+ * Covers the specific expressions requested:
  *   - MIT OR GPL-3.0       → should pass (user can choose MIT)
  *   - MIT AND GPL-3.0      → should fail (must accept GPL-3.0)
  *   - GPL-3.0 OR AGPL-3.0  → should fail (all alternatives blocked)
@@ -12,167 +14,18 @@
  *
  * Also exercises parenthesized groups and WITH handling.
  *
- * NOTE: The SPDX parser, tokenizer, and license policy constants below are
- * duplicated from sbom-policy.mjs (canonical source of truth). The script
- * uses process.exit() and doesn't export its internals, so we replicate the
- * logic here for isolated unit testing. Keep in sync with the source.
- *
  * Uses Node built-in test runner.
  * Run: node --test tools/security/tests/sbom-policy.test.mjs
  */
 
 import { describe, it } from "node:test";
 import { strict as assert } from "node:assert";
-
-// ── Copy of the SPDX parser logic from sbom-policy.mjs ─────────────────────
-// Duplicated here so the tests are self-contained and don't depend on
-// the script's module export structure (which uses process.exit, etc.)
-
-const BLOCKED_LICENSES = new Set([
-  "GPL-1.0",
-  "GPL-1.0-only",
-  "GPL-1.0-or-later",
-  "GPL-2.0",
-  "GPL-2.0-only",
-  "GPL-2.0-or-later",
-  "GPL-2.0-with-autoconf-exception",
-  "GPL-2.0-with-bison-exception",
-  "GPL-2.0-with-classpath-exception",
-  "GPL-2.0-with-font-exception",
-  "GPL-2.0-with-GCC-exception",
-  "GPL-3.0",
-  "GPL-3.0-only",
-  "GPL-3.0-or-later",
-  "GPL-3.0-with-autoconf-exception",
-  "GPL-3.0-with-GCC-exception",
-  "AGPL-1.0",
-  "AGPL-1.0-only",
-  "AGPL-1.0-or-later",
-  "AGPL-3.0",
-  "AGPL-3.0-only",
-  "AGPL-3.0-or-later",
-  "SSPL-1.0",
-  "LicenseRef-Commons-Clause",
-  "BUSL-1.1",
-]);
-
-const BLOCKED_ALIASES = new Map([
-  ["Commons Clause", "LicenseRef-Commons-Clause"],
-  ["Commons-Clause", "LicenseRef-Commons-Clause"],
-]);
-
-const TOKEN_RE =
-  /\b(?:AND|OR|WITH)\b|\(|\)|(?:LicenseRef-[A-Za-z0-9\-_.+]+|[A-Za-z0-9](?:[A-Za-z0-9\-_.+]*[A-Za-z0-9])?)/g;
-
-function tokenize(expr) {
-  const tokens = [];
-  let m;
-  while ((m = TOKEN_RE.exec(expr)) !== null) {
-    tokens.push(m[0]);
-  }
-  return tokens.length > 0 ? tokens : null;
-}
-
-function normalizeLicense(id) {
-  if (!id || typeof id !== "string") return "";
-  const trimmed = id.trim();
-  if (trimmed.startsWith("LicenseRef-")) {
-    if (trimmed.toLowerCase().includes("commons-clause")) {
-      return "LicenseRef-Commons-Clause";
-    }
-    return trimmed;
-  }
-  if (trimmed.toLowerCase().includes("commons")) {
-    return "LicenseRef-Commons-Clause";
-  }
-  if (BLOCKED_ALIASES.has(trimmed)) return BLOCKED_ALIASES.get(trimmed);
-  return trimmed;
-}
-
-function isBlockedLicense(id) {
-  return BLOCKED_LICENSES.has(id);
-}
-
-class SpdxParser {
-  constructor(tokens) {
-    this.tokens = tokens;
-    this.pos = 0;
-  }
-
-  peek() {
-    return this.pos < this.tokens.length ? this.tokens[this.pos] : null;
-  }
-
-  consume() {
-    return this.pos < this.tokens.length ? this.tokens[this.pos++] : null;
-  }
-
-  parseExpression() {
-    let result = this.parseTerm();
-    if (result === null) return null;
-
-    while (true) {
-      const op = this.peek();
-      if (op === "AND" || op === "OR") {
-        this.consume();
-        const right = this.parseTerm();
-        if (right === null) return null;
-
-        if (op === "AND") {
-          result = result && right;
-        } else {
-          result = result || right;
-        }
-      } else {
-        break;
-      }
-    }
-
-    return result;
-  }
-
-  parseTerm() {
-    const token = this.peek();
-    if (token === null) return null;
-
-    if (token === "(") {
-      this.consume();
-      const inner = this.parseExpression();
-      if (inner === null) return null;
-      const close = this.consume();
-      if (close !== ")") return null;
-      return inner;
-    }
-
-    this.consume();
-    const normalized = normalizeLicense(token);
-    let result = !isBlockedLicense(normalized);
-
-    if (this.peek() === "WITH") {
-      this.consume();
-      this.consume();
-    }
-
-    return result;
-  }
-}
-
-function isExpressionBlocked(expr) {
-  const tok = tokenize(expr);
-  if (!tok) return false;
-
-  const parser = new SpdxParser(tok);
-  const result = parser.parseExpression();
-
-  if (result === null) {
-    const licenseTokens = tok.filter(
-      (t) => t !== "AND" && t !== "OR" && t !== "WITH" && t !== "(" && t !== ")"
-    );
-    return licenseTokens.some((t) => isBlockedLicense(normalizeLicense(t)));
-  }
-
-  return !result;
-}
+import {
+  tokenize,
+  normalizeLicense,
+  isExpressionBlocked,
+  isBlockedLicense,
+} from "../sbom-policy.mjs";
 
 // ── Tests ──────────────────────────────────────────────────────────────────
 
@@ -345,6 +198,54 @@ describe("SPDX expression parsing", () => {
     it("passes through unknown IDs unchanged", () => {
       assert.strictEqual(normalizeLicense("MIT"), "MIT");
       assert.strictEqual(normalizeLicense("Apache-2.0"), "Apache-2.0");
+    });
+  });
+
+  describe("tokenize", () => {
+    it("tokenizes a simple license ID", () => {
+      const tokens = tokenize("MIT");
+      assert.deepStrictEqual(tokens, ["MIT"]);
+    });
+
+    it("tokenizes an OR expression", () => {
+      const tokens = tokenize("MIT OR GPL-3.0");
+      assert.deepStrictEqual(tokens, ["MIT", "OR", "GPL-3.0"]);
+    });
+
+    it("tokenizes a parenthesized expression", () => {
+      const tokens = tokenize("(MIT OR Apache-2.0)");
+      assert.deepStrictEqual(tokens, ["(", "MIT", "OR", "Apache-2.0", ")"]);
+    });
+
+    it("tokenizes a WITH expression", () => {
+      const tokens = tokenize("MIT WITH Classpath-exception-2.0");
+      assert.deepStrictEqual(tokens, ["MIT", "WITH", "Classpath-exception-2.0"]);
+    });
+
+    it("returns null for empty expression", () => {
+      assert.strictEqual(tokenize(""), null);
+    });
+  });
+
+  describe("isBlockedLicense", () => {
+    it("returns true for GPL-3.0", () => {
+      assert.strictEqual(isBlockedLicense("GPL-3.0"), true);
+    });
+
+    it("returns true for AGPL-3.0", () => {
+      assert.strictEqual(isBlockedLicense("AGPL-3.0"), true);
+    });
+
+    it("returns true for BUSL-1.1", () => {
+      assert.strictEqual(isBlockedLicense("BUSL-1.1"), true);
+    });
+
+    it("returns false for MIT", () => {
+      assert.strictEqual(isBlockedLicense("MIT"), false);
+    });
+
+    it("returns false for Apache-2.0", () => {
+      assert.strictEqual(isBlockedLicense("Apache-2.0"), false);
     });
   });
 });

@@ -12,6 +12,12 @@
  *   - Any SPDX expression resolves to ONLY flagged licenses (via OR)
  *   - Any SPDX expression includes a flagged license via AND (dual-licensing trap)
  *
+ * Exportable API (usable by tests and tooling):
+ *   tokenize(expr)          — tokenize an SPDX expression string
+ *   normalizeLicense(id)    — normalize a license string to canonical SPDX ID
+ *   isBlockedLicense(id)    — check if a license ID is in the blocked set
+ *   isExpressionBlocked(expr) — parse an SPDX expression and return true if blocked
+ *
  * Usage: npm run sbom:policy
  */
 
@@ -19,15 +25,10 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = resolve(__dirname, "..", "..");
-
-const SBOM_PATH = resolve(ROOT, "docs", "evidence", "security", "sbom-baseline.json");
-
 // ── Canonical blocked-license policy ───────────────────────────────────────
 // This is the single source of truth for blocked licenses.
 // SPDX identifiers: https://spdx.org/licenses/
-const BLOCKED_LICENSES = new Set([
+export const BLOCKED_LICENSES = new Set([
   // GNU General Public License (all versions and variants)
   "GPL-1.0",
   "GPL-1.0-only",
@@ -61,7 +62,7 @@ const BLOCKED_LICENSES = new Set([
 ]);
 
 // ── Non-SPDX identifiers that map to blocked categories ────────────────────
-const BLOCKED_ALIASES = new Map([
+export const BLOCKED_ALIASES = new Map([
   ["Commons Clause", "LicenseRef-Commons-Clause"],
   ["Commons-Clause", "LicenseRef-Commons-Clause"],
 ]);
@@ -81,7 +82,7 @@ const TOKEN_RE =
  * Tokenize an SPDX expression string into an array of tokens.
  * Returns null if the expression is empty or unparseable.
  */
-function tokenize(expr) {
+export function tokenize(expr) {
   const tokens = [];
   let m;
   while ((m = TOKEN_RE.exec(expr)) !== null) {
@@ -180,7 +181,7 @@ class SpdxParser {
  * Parse an SPDX license expression and return true if it is blocked
  * (i.e., would require accepting a flagged license in any usage scenario).
  */
-function isExpressionBlocked(expr) {
+export function isExpressionBlocked(expr) {
   const tokens = tokenize(expr);
   if (!tokens) return false; // empty → not blocked
 
@@ -203,7 +204,7 @@ function isExpressionBlocked(expr) {
 /**
  * Normalize a license string to a canonical SPDX ID or alias.
  */
-function normalizeLicense(id) {
+export function normalizeLicense(id) {
   if (!id || typeof id !== "string") return "";
   const trimmed = id.trim();
   // Handle LicenseRef-* custom identifiers
@@ -225,162 +226,169 @@ function normalizeLicense(id) {
 /**
  * Check whether a license ID is in the blocked set.
  */
-function isBlockedLicense(id) {
+export function isBlockedLicense(id) {
   return BLOCKED_LICENSES.has(id);
 }
 
-// ── Helper functions ───────────────────────────────────────────────────────
+// ── CLI entrypoint guard ───────────────────────────────────────────────────
+const isMain = resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (isMain) {
+  const __dirname = dirname(fileURLToPath(import.meta.url));
+  const ROOT = resolve(__dirname, "..", "..");
+  const SBOM_PATH = resolve(ROOT, "docs", "evidence", "security", "sbom-baseline.json");
 
-let failures = 0;
-let warnings = 0;
+  // ── Helper functions ───────────────────────────────────────────────────────
+  let failures = 0;
+  let warnings = 0;
 
-function check(label, ok, detail = "") {
-  console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
-  if (!ok) failures++;
-}
+  function check(label, ok, detail = "") {
+    console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
+    if (!ok) failures++;
+  }
 
-function warnFn(msg) {
-  console.log(`WARN  ${msg}`);
-  warnings++;
-}
+  function warnFn(msg) {
+    console.log(`WARN  ${msg}`);
+    warnings++;
+  }
 
-function fatal(label, detail) {
-  console.log(`FAIL  ${label} — ${detail}`);
-  console.error(`\n# SBOM POLICY FAILED — ${detail}\n`);
-  process.exit(1);
-}
+  function fatal(label, detail) {
+    console.log(`FAIL  ${label} — ${detail}`);
+    console.error(`\n# SBOM POLICY FAILED — ${detail}\n`);
+    process.exit(1);
+  }
 
-// ── Load SBOM ──────────────────────────────────────────────────────────────
-let sbom;
-try {
-  sbom = JSON.parse(readFileSync(SBOM_PATH, "utf8"));
-  check("SBOM loaded successfully", true);
-} catch {
-  fatal(
-    "SBOM loaded successfully",
-    `${SBOM_PATH} not found or invalid — generate with: npm run sbom:generate`
-  );
-}
+  // ── Load SBOM ──────────────────────────────────────────────────────────────
+  let sbom;
+  try {
+    sbom = JSON.parse(readFileSync(SBOM_PATH, "utf8"));
+    check("SBOM loaded successfully", true);
+  } catch {
+    fatal(
+      "SBOM loaded successfully",
+      `${SBOM_PATH} not found or invalid — generate with: npm run sbom:generate`
+    );
+  }
 
-// ── Component count ────────────────────────────────────────────────────────
-const components = Array.isArray(sbom.components) ? sbom.components : [];
-const componentCount = components.length;
-check("SBOM contains components", componentCount > 0, `n=${componentCount}`);
-if (componentCount > 0 && componentCount < 20) {
-  warnFn(
-    `SBOM contains only ${componentCount} components — may be incomplete (check sbom:generate output)`
-  );
-}
+  // ── Component count ────────────────────────────────────────────────────────
+  const components = Array.isArray(sbom.components) ? sbom.components : [];
+  const componentCount = components.length;
+  check("SBOM contains components", componentCount > 0, `n=${componentCount}`);
+  if (componentCount > 0 && componentCount < 20) {
+    warnFn(
+      `SBOM contains only ${componentCount} components — may be incomplete (check sbom:generate output)`
+    );
+  }
 
-// ── License audit (with SPDX expression parsing) ───────────────────────────
-const flagged = [];
-const spdxParseIssues = [];
+  // ── License audit (with SPDX expression parsing) ───────────────────────────
+  const flagged = [];
+  const spdxParseIssues = [];
 
-for (const comp of components) {
-  const licenses = comp.licenses ?? [];
-  for (const lic of Array.isArray(licenses) ? licenses : [licenses]) {
-    // Extract the license identifier or expression
-    let id = "";
-    let expression = null;
+  for (const comp of components) {
+    const licenses = comp.licenses ?? [];
+    for (const lic of Array.isArray(licenses) ? licenses : [licenses]) {
+      // Extract the license identifier or expression
+      let id = "";
+      let expression = null;
 
-    if (typeof lic === "object" && lic) {
-      // CycloneDX 1.4+: license.expression for SPDX expressions
-      if (typeof lic.expression === "string" && lic.expression.trim()) {
-        expression = lic.expression.trim();
+      if (typeof lic === "object" && lic) {
+        // CycloneDX 1.4+: license.expression for SPDX expressions
+        if (typeof lic.expression === "string" && lic.expression.trim()) {
+          expression = lic.expression.trim();
+        }
+        // Standard form: license.id
+        id = lic.license?.id ?? lic.id ?? "";
+      } else if (typeof lic === "string") {
+        id = lic;
       }
-      // Standard form: license.id
-      id = lic.license?.id ?? lic.id ?? "";
-    } else if (typeof lic === "string") {
-      id = lic;
-    }
 
-    const normalizedId = normalizeLicense(String(id));
+      const normalizedId = normalizeLicense(String(id));
 
-    // If we have an SPDX expression, parse it
-    if (expression) {
-      try {
-        if (isExpressionBlocked(expression)) {
-          flagged.push({
+      // If we have an SPDX expression, parse it
+      if (expression) {
+        try {
+          if (isExpressionBlocked(expression)) {
+            flagged.push({
+              name: String(comp.name ?? "unknown"),
+              version: String(comp.version ?? "unknown"),
+              license: expression,
+              reason: "SPDX expression resolves to blocked license(s)",
+            });
+          }
+        } catch {
+          spdxParseIssues.push({
             name: String(comp.name ?? "unknown"),
             version: String(comp.version ?? "unknown"),
-            license: expression,
-            reason: "SPDX expression resolves to blocked license(s)",
+            expression,
           });
         }
-      } catch {
-        spdxParseIssues.push({
+      } else if (normalizedId && isBlockedLicense(normalizedId)) {
+        // Simple license ID check
+        flagged.push({
           name: String(comp.name ?? "unknown"),
           version: String(comp.version ?? "unknown"),
-          expression,
+          license: normalizedId,
+          reason: "flagged license",
         });
       }
-    } else if (normalizedId && isBlockedLicense(normalizedId)) {
-      // Simple license ID check
-      flagged.push({
-        name: String(comp.name ?? "unknown"),
-        version: String(comp.version ?? "unknown"),
-        license: normalizedId,
-        reason: "flagged license",
-      });
     }
   }
-}
 
-// Report SPDX parse issues as warnings (not failures — we still check simple IDs)
-if (spdxParseIssues.length > 0) {
-  warnFn(
-    `${spdxParseIssues.length} component(s) have unparseable SPDX expressions (fell back to simple ID check)`
-  );
-  for (const issue of spdxParseIssues.slice(0, 5)) {
-    warnFn(`  ${issue.name}@${issue.version}: "${issue.expression}"`);
+  // Report SPDX parse issues as warnings (not failures — we still check simple IDs)
+  if (spdxParseIssues.length > 0) {
+    warnFn(
+      `${spdxParseIssues.length} component(s) have unparseable SPDX expressions (fell back to simple ID check)`
+    );
+    for (const issue of spdxParseIssues.slice(0, 5)) {
+      warnFn(`  ${issue.name}@${issue.version}: "${issue.expression}"`);
+    }
   }
-}
 
-// Report flagged licenses
-if (flagged.length > 0) {
-  for (const f of flagged) {
-    check(`flagged license: ${f.name}@${f.version}`, false, `license=${f.license} — ${f.reason}`);
+  // Report flagged licenses
+  if (flagged.length > 0) {
+    for (const f of flagged) {
+      check(`flagged license: ${f.name}@${f.version}`, false, `license=${f.license} — ${f.reason}`);
+    }
+  } else {
+    check(
+      "no blocked licenses (GPL/AGPL/SSPL/Commons Clause/BUSL)",
+      true,
+      `scanned ${componentCount} components`
+    );
   }
-} else {
-  check(
-    "no blocked licenses (GPL/AGPL/SSPL/Commons Clause/BUSL)",
-    true,
-    `scanned ${componentCount} components`
+
+  // ── Summary ────────────────────────────────────────────────────────────────
+  const passed = failures === 0;
+  console.log(
+    passed
+      ? `\n# SBOM POLICY PASSED` + (warnings > 0 ? ` (${warnings} advisory warning(s))` : "")
+      : `\n# SBOM POLICY FAILED — ${failures} violation(s)`
   );
+
+  // ── Evidence report ────────────────────────────────────────────────────────
+  const EVIDENCE_PATH = resolve(ROOT, "docs", "evidence", "security", "sbom-policy-audit.json");
+  const report = {
+    timestamp: new Date().toISOString(),
+    result: passed ? "pass" : "fail",
+    componentCount,
+    blockedLicensesFound: flagged.length,
+    flagged: flagged.map((f) => ({
+      name: f.name,
+      version: f.version,
+      license: f.license,
+      reason: f.reason,
+    })),
+    spdxParseWarnings: spdxParseIssues.length,
+    advisoryWarnings: warnings,
+    policy: {
+      blockedLicenseCount: BLOCKED_LICENSES.size,
+      blockedAliases: [...BLOCKED_ALIASES.keys()],
+    },
+  };
+  try {
+    writeFileSync(EVIDENCE_PATH, JSON.stringify(report, null, 2) + "\n", "utf8");
+  } catch {
+    // Best-effort evidence write — never fail on evidence file IO
+  }
+
+  process.exit(passed ? 0 : 1);
 }
-
-// ── Summary ────────────────────────────────────────────────────────────────
-const passed = failures === 0;
-console.log(
-  passed
-    ? `\n# SBOM POLICY PASSED` + (warnings > 0 ? ` (${warnings} advisory warning(s))` : "")
-    : `\n# SBOM POLICY FAILED — ${failures} violation(s)`
-);
-
-// ── Evidence report ────────────────────────────────────────────────────────
-const EVIDENCE_PATH = resolve(ROOT, "docs", "evidence", "security", "sbom-policy-audit.json");
-const report = {
-  timestamp: new Date().toISOString(),
-  result: passed ? "pass" : "fail",
-  componentCount,
-  blockedLicensesFound: flagged.length,
-  flagged: flagged.map((f) => ({
-    name: f.name,
-    version: f.version,
-    license: f.license,
-    reason: f.reason,
-  })),
-  spdxParseWarnings: spdxParseIssues.length,
-  advisoryWarnings: warnings,
-  policy: {
-    blockedLicenseCount: BLOCKED_LICENSES.size,
-    blockedAliases: [...BLOCKED_ALIASES.keys()],
-  },
-};
-try {
-  writeFileSync(EVIDENCE_PATH, JSON.stringify(report, null, 2) + "\n", "utf8");
-} catch {
-  // Best-effort evidence write — never fail on evidence file IO
-}
-
-process.exit(passed ? 0 : 1);

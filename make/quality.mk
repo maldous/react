@@ -121,6 +121,12 @@ sbom-policy:
 	npm run sbom:policy
 	$(call OK,SBOM policy passed)
 
+## test-security — Security-specific unit tests (sbom-verify + sbom-policy)
+test-security:
+	$(call STEP,test:security)
+	npm run test:security
+	$(call OK,security tests passed)
+
 # ── Composite quality targets ────────────────────────────────────────────────
 
 ## quality — Full quality gate (used by make all)
@@ -133,7 +139,7 @@ check: format lint typecheck audit compose architecture semgrep
 	$(call OK,check complete)
 
 ## ci — CI-safe subset (includes authoritative SBOM gates)
-ci: install format lint typecheck test audit security compose architecture semgrep sbom-verify sbom-policy
+ci: install format lint typecheck test audit security compose architecture semgrep test-security sbom-verify sbom-policy
 	$(call OK,ci complete)
 
 ## full — Alias for all
