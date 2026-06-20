@@ -13,8 +13,8 @@ export default defineConfig({
   retries: process.env["CI"] ? 1 : 0,
   workers: 1,
   reporter: [["list"]],
-  // Keep artifacts under the already-gitignored e2e-results/ tree (never committed).
-  outputDir: "e2e-results/ui-harness",
+  // Keep artifacts under the already-gitignored repo-root e2e-results/ tree (never committed).
+  outputDir: "../../e2e-results/ui-harness",
   use: {
     baseURL: `http://localhost:${PORT}`,
     trace: "retain-on-failure",

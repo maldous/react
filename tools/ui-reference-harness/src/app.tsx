@@ -10,6 +10,7 @@ import { resolveView } from "./capability-controller.mjs";
 import { StateView } from "./renderers/state-view";
 import { TableRenderer } from "./renderers/table-renderer";
 import { FormRenderer } from "./renderers/form-renderer";
+import { ConfigCollectionView } from "./renderers/config-collection";
 
 interface Selection {
   capability: string | null;
@@ -66,6 +67,39 @@ export function App({ capability, selection }: { capability: unknown; selection:
       <main>
         <h1>{capabilityKey}</h1>
         <StateView state="forbidden" capabilityKey={capabilityKey} />
+      </main>
+    );
+  }
+
+  if (harness["mode"] === "collection-config") {
+    const collection = harness["collection"] as never;
+    const collKey = (harness["collection"] as { collectionKey: string }).collectionKey;
+    const body =
+      (view as { listFixture?: { body?: Record<string, unknown> } }).listFixture?.body || {};
+    const initialRows = (Array.isArray(body[collKey]) ? body[collKey] : []) as Array<
+      Record<string, string>
+    >;
+    const cmds = (view as { commands?: Array<Record<string, unknown>> }).commands || [];
+    const saveCommand = cmds[0]
+      ? {
+          endpoint: String(cmds[0]["endpoint"]),
+          method: String(cmds[0]["method"]),
+          successMessage: cmds[0]["successMessage"] as string | undefined,
+        }
+      : null;
+    const otherConfig = (harness["otherConfig"] as Record<string, unknown>) || {};
+    return (
+      <main>
+        <h1>{capabilityKey}</h1>
+        <ConfigCollectionView
+          capabilityKey={capabilityKey}
+          collection={collection}
+          initialRows={initialRows}
+          otherConfig={otherConfig}
+          canEdit={cmds.length > 0}
+          saveCommand={saveCommand}
+          notice={harness["notice"] as string | undefined}
+        />
       </main>
     );
   }

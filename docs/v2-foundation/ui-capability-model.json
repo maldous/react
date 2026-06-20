@@ -3870,6 +3870,390 @@
           }
         ]
       }
+    },
+    {
+      "capabilityId": "admin-claim-mapping",
+      "titleI18nKey": "feature.admin.claimMapping.title",
+      "descriptionI18nKey": "feature.admin.claimMapping.description",
+      "route": "/admin/auth/claim-mapping",
+      "owningCapability": "tenant-auth",
+      "dataBoundary": "rest-over-bff",
+      "persona": "tenant-admin",
+      "personas": [
+        {
+          "personaId": "fixture-tenant-admin",
+          "roles": ["tenant-admin"],
+          "access": "full"
+        },
+        {
+          "personaId": "scaffold-tenant-admin",
+          "roles": ["tenant-admin"],
+          "access": "full"
+        },
+        {
+          "personaId": "fixture-viewer",
+          "access": "read-only"
+        },
+        {
+          "personaId": "scaffold-tenant-member",
+          "access": "denied"
+        }
+      ],
+      "navEligibility": {
+        "inNav": true,
+        "navGroup": "admin",
+        "labelI18nKey": "feature.admin.nav.claimMapping",
+        "order": 6,
+        "requiredPermission": "tenant.auth.settings.read"
+      },
+      "states": {
+        "loading": {
+          "component": "LoadingState",
+          "titleI18nKey": "auth.status.loading"
+        },
+        "empty": {
+          "component": "EmptyState",
+          "titleI18nKey": "feature.admin.claimMapping.empty"
+        },
+        "success": {
+          "component": "DataTable"
+        },
+        "validationFailure": {
+          "component": "FormField",
+          "recoveryAction": "none"
+        },
+        "domainFailure": {
+          "component": "ErrorState",
+          "tone": "danger",
+          "recoveryAction": "retry"
+        },
+        "permissionDenied": {
+          "component": "ForbiddenState",
+          "handledBy": "route-guard"
+        }
+      },
+      "i18nKeys": [
+        "feature.admin.claimMapping.title",
+        "feature.admin.claimMapping.description",
+        "feature.admin.claimMapping.empty",
+        "feature.admin.claimMapping.upstreamClaimLabel",
+        "feature.admin.claimMapping.userAttributeLabel",
+        "feature.admin.claimMapping.add",
+        "feature.admin.claimMapping.save",
+        "feature.admin.claimMapping.saved",
+        "feature.admin.claimMapping.externalIdpLimitation"
+      ],
+      "a11y": {
+        "landmark": "main",
+        "heading": {
+          "level": 1,
+          "i18nKey": "feature.admin.claimMapping.title"
+        },
+        "roles": ["heading", "table", "row", "button", "textbox", "status", "alert"],
+        "accessibleNames": [
+          {
+            "control": "action-add",
+            "role": "button",
+            "nameI18nKey": "feature.admin.claimMapping.add"
+          },
+          {
+            "control": "action-save",
+            "role": "button",
+            "nameI18nKey": "feature.admin.claimMapping.save"
+          }
+        ],
+        "keyboard": ["Add/Save are keyboard-activatable", "The add form submits on Enter"],
+        "announces": [
+          {
+            "i18nKey": "feature.admin.claimMapping.saved",
+            "tone": "polite"
+          }
+        ],
+        "noColourOnlyMeaning": true
+      },
+      "apiEventContractRefs": [
+        "docs/api/openapi.json#/paths/~1api~1auth~1settings~1idps~1{alias}~1mapping"
+      ],
+      "playwrightJourneyRefs": ["tools/ui-reference-harness/playwright/claim-mapping.spec.ts"],
+      "harness": {
+        "capabilityKey": "auth-claim-mapping",
+        "complete": true,
+        "mode": "collection-config",
+        "notice": "Claim-to-attribute mappings are applied in Keycloak; verifying them end-to-end against a real external IdP (Google/Azure/Apple) is an externally-limited proof (ADR-ACT-0220), separate from these locally-proven UI semantics.",
+        "collection": {
+          "collectionKey": "claimMappings",
+          "idField": "upstreamClaim",
+          "alias": "google",
+          "conflictMessage": "This claim is already mapped",
+          "fields": [
+            {
+              "name": "upstreamClaim",
+              "label": "Upstream claim",
+              "type": "text",
+              "required": true,
+              "validation": ["required", "maxLength:128"],
+              "errorId": "upstream-claim-error",
+              "testId": "field-upstreamClaim"
+            },
+            {
+              "name": "userAttribute",
+              "label": "User attribute",
+              "type": "text",
+              "required": true,
+              "validation": ["required", "maxLength:128"],
+              "errorId": "user-attribute-error",
+              "testId": "field-userAttribute"
+            }
+          ]
+        },
+        "otherConfig": {
+          "roleMappings": []
+        },
+        "saveCommandId": "save-mapping",
+        "personas": [
+          {
+            "personaId": "tenant-admin",
+            "permissions": ["tenant.auth.settings.read", "tenant.auth.settings.write"]
+          },
+          {
+            "personaId": "tenant-viewer",
+            "permissions": ["tenant.auth.settings.read"]
+          },
+          {
+            "personaId": "no-access",
+            "permissions": []
+          }
+        ],
+        "permissions": [
+          {
+            "permission": "tenant.auth.settings.read",
+            "allowedPersonas": ["tenant-admin", "tenant-viewer"],
+            "deniedPersonas": ["no-access"]
+          },
+          {
+            "permission": "tenant.auth.settings.write",
+            "allowedPersonas": ["tenant-admin"],
+            "deniedPersonas": ["tenant-viewer", "no-access"]
+          }
+        ],
+        "queries": [
+          {
+            "queryId": "mapping",
+            "method": "GET",
+            "endpoint": "/api/auth/settings/idps/:alias/mapping",
+            "requiredPermission": "tenant.auth.settings.read"
+          }
+        ],
+        "commands": [
+          {
+            "commandId": "save-mapping",
+            "method": "PATCH",
+            "endpoint": "/api/auth/settings/idps/:alias/mapping",
+            "requiredPermission": "tenant.auth.settings.write",
+            "resultingState": "success",
+            "failureStates": ["validationError", "serverError"],
+            "successMessage": "Mappings saved"
+          }
+        ],
+        "fields": [
+          {
+            "name": "upstreamClaim",
+            "label": "Upstream claim",
+            "type": "text",
+            "required": true,
+            "validation": ["required", "maxLength:128"],
+            "errorId": "upstream-claim-error",
+            "testId": "field-upstreamClaim"
+          },
+          {
+            "name": "userAttribute",
+            "label": "User attribute",
+            "type": "text",
+            "required": true,
+            "validation": ["required", "maxLength:128"],
+            "errorId": "user-attribute-error",
+            "testId": "field-userAttribute"
+          }
+        ],
+        "validation": [
+          {
+            "field": "upstreamClaim",
+            "rule": "required",
+            "errorId": "upstream-claim-error",
+            "accessibleErrorAssociation": "aria-describedby"
+          },
+          {
+            "field": "userAttribute",
+            "rule": "required",
+            "errorId": "user-attribute-error",
+            "accessibleErrorAssociation": "aria-describedby"
+          }
+        ],
+        "states": [
+          "loading",
+          "empty",
+          "loaded",
+          "submitting",
+          "success",
+          "validationError",
+          "forbidden",
+          "serverError",
+          "degraded"
+        ],
+        "transitions": [
+          {
+            "from": "loaded",
+            "on": "save-mapping",
+            "to": "submitting"
+          },
+          {
+            "from": "submitting",
+            "on": "ok",
+            "to": "success"
+          },
+          {
+            "from": "submitting",
+            "on": "invalid",
+            "to": "validationError"
+          },
+          {
+            "from": "submitting",
+            "on": "error",
+            "to": "serverError"
+          }
+        ],
+        "fixtures": [
+          {
+            "state": "loaded",
+            "route": "/api/auth/settings/idps/:alias/mapping",
+            "method": "GET",
+            "status": 200,
+            "body": {
+              "claimMappings": [
+                {
+                  "upstreamClaim": "email",
+                  "userAttribute": "email"
+                },
+                {
+                  "upstreamClaim": "given_name",
+                  "userAttribute": "firstName"
+                }
+              ],
+              "roleMappings": []
+            }
+          },
+          {
+            "state": "empty",
+            "route": "/api/auth/settings/idps/:alias/mapping",
+            "method": "GET",
+            "status": 200,
+            "body": {
+              "claimMappings": [],
+              "roleMappings": []
+            }
+          },
+          {
+            "state": "forbidden",
+            "route": "/api/auth/settings/idps/:alias/mapping",
+            "method": "GET",
+            "status": 403,
+            "body": {
+              "code": "FORBIDDEN"
+            }
+          },
+          {
+            "state": "serverError",
+            "route": "/api/auth/settings/idps/:alias/mapping",
+            "method": "GET",
+            "status": 500,
+            "body": {
+              "code": "INTERNAL"
+            }
+          },
+          {
+            "state": "success",
+            "route": "/api/auth/settings/idps/:alias/mapping",
+            "method": "PATCH",
+            "status": 200,
+            "body": {
+              "claimMappings": [],
+              "roleMappings": []
+            }
+          },
+          {
+            "state": "validationError",
+            "route": "/api/auth/settings/idps/:alias/mapping",
+            "method": "PATCH",
+            "status": 422,
+            "triggerContains": "conflict-claim",
+            "body": {
+              "code": "VALIDATION",
+              "fieldErrors": {
+                "upstreamClaim": "This claim is already mapped on the server"
+              }
+            }
+          },
+          {
+            "state": "serverError",
+            "route": "/api/auth/settings/idps/:alias/mapping",
+            "method": "PATCH",
+            "status": 500,
+            "triggerContains": "trigger-error",
+            "body": {
+              "code": "INTERNAL"
+            }
+          }
+        ],
+        "accessibleNames": [
+          {
+            "control": "action-add",
+            "role": "button",
+            "name": "Add mapping"
+          },
+          {
+            "control": "action-save",
+            "role": "button",
+            "name": "Save mappings"
+          },
+          {
+            "control": "field-upstreamClaim",
+            "role": "textbox",
+            "name": "Upstream claim"
+          },
+          {
+            "control": "field-userAttribute",
+            "role": "textbox",
+            "name": "User attribute"
+          }
+        ],
+        "keyboardBehaviour": [
+          "Add and Save are reachable and activatable by keyboard",
+          "The add form submits on Enter"
+        ],
+        "errorPresentation": {
+          "strategy": "aria-describedby",
+          "liveRegion": "polite",
+          "fieldError": "react-aria FieldError associated to each input; save errors via role=alert"
+        },
+        "journeys": [
+          {
+            "journeyId": "claim-mapping-config",
+            "persona": "tenant-admin",
+            "coversCommands": ["save-mapping"],
+            "coversStates": [
+              "loaded",
+              "empty",
+              "submitting",
+              "success",
+              "validationError",
+              "forbidden",
+              "serverError"
+            ],
+            "proofCommand": "proof:ui-semantic-claim-mapping",
+            "spec": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+          }
+        ]
+      }
     }
   ]
 }

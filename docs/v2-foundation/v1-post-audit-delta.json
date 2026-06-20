@@ -1325,6 +1325,24 @@
       "v2Target": "tools/ui-reference-harness/playwright/sub-organisations.spec.ts",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts",
+      "introducingCommit": "unknown",
+      "purpose": "Headless journey proving IdP claim-mapping admin UI semantics (V1C-06).",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/renderers/config-collection.tsx",
+      "introducingCommit": "unknown",
+      "purpose": "Generic full-replace config-collection renderer (V1C-06 claim-mapping; capability-agnostic)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/renderers/config-collection.tsx",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
     }
   ],
   "deletions": [],

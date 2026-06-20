@@ -17,20 +17,22 @@ function readResponse(harness, state) {
   return json(fx.status || 200, fx.body);
 }
 
+// A fixture trips when the submitted body either has a scalar field === triggerValue (per-row CRUD)
+// or, for full-replace config payloads, when the serialised body contains triggerContains.
+function bodyTrips(fixture, body) {
+  if (!fixture || !body) return false;
+  if (fixture.triggerField) return body[fixture.triggerField] === fixture.triggerValue;
+  if (fixture.triggerContains) return JSON.stringify(body).includes(fixture.triggerContains);
+  return false;
+}
+
 function mutationResponse(harness, command, body) {
   // Declared server-validation trigger (e.g. a name the BFF reports as a conflict) → 422.
   const invalid = pickFixture(harness, "validationError", command.method);
-  if (
-    invalid &&
-    invalid.triggerField &&
-    body &&
-    body[invalid.triggerField] === invalid.triggerValue
-  )
-    return json(invalid.status || 422, invalid.body);
+  if (bodyTrips(invalid, body)) return json(invalid.status || 422, invalid.body);
 
   const fail = pickFixture(harness, "serverError", command.method);
-  if (fail && fail.triggerField && body && body[fail.triggerField] === fail.triggerValue)
-    return json(fail.status || 500, fail.body);
+  if (bodyTrips(fail, body)) return json(fail.status || 500, fail.body);
 
   const ok = pickFixture(harness, command.resultingState || "success", command.method);
   if (ok) return json(ok.status || 200, ok.body);

@@ -164,7 +164,7 @@ Each proven capability is backed by a repeatable, runnable proof — a single so
 - **Real notification transports (email/Mailpit + signed webhook)** — `proof:notification-email-transport`, `proof:notification-webhook-transport`, `proof:notification-transport-routes`
 - **Environment registry, bootstrap & controlled operations (ADR-0072)** — `proof:environment-registry`, `proof:environment-operations`, `proof:environment-admin-bootstrap`
 - **Click-through services (composed Compose GUIs, OpenBao-validated readiness)** — `proof:clickthrough`
-- **UI semantic reference harness (headless capability journeys, MSW-backed)** — `proof:ui-semantic-groups`, `proof:ui-semantic-sub-organisations`
+- **UI semantic reference harness (headless capability journeys, MSW-backed)** — `proof:ui-semantic-groups`, `proof:ui-semantic-sub-organisations`, `proof:ui-semantic-claim-mapping`
 
 ![Honest readiness — a running service is not a delivered capability](docs/images/usf-readiness-honesty.svg)
 
