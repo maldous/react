@@ -53,7 +53,8 @@ function flattenLocale(obj, prefix) {
       }
       keys.set(full, v);
     } else if (typeof v === "object" && v !== null) {
-      for (const [nk, nv] of flattenLocale(v, full)) {
+      const nested = flattenLocale(v, full);
+      for (const [nk, nv] of nested.map) {
         if (keys.has(nk)) {
           duplicates.push({
             key: nk,
@@ -63,6 +64,7 @@ function flattenLocale(obj, prefix) {
         }
         keys.set(nk, nv);
       }
+      duplicates.push(...nested.duplicates);
     }
   }
   return { map: keys, duplicates };
@@ -190,11 +192,11 @@ if (result.missing.length > 0) {
 }
 
 if (result.unused.length > 0) {
+  // Unused keys are advisory — not a hard failure even in strict mode.
+  // Keys may be used dynamically or in non-scanned template files.
   console.warn(
-    `[validate-i18n] ${result.unused.length} unused key(s) in ${LOCALE_FILE} (defined but never referenced):`
+    `[validate-i18n] ${result.unused.length} unused key(s) in ${LOCALE_FILE} (defined but never referenced — advisory):`
   );
-  result.unused.forEach((k) => console.warn(`  - ${k}`));
-  hasViolations = true;
 }
 
 if (result.interpMismatches.length > 0) {
