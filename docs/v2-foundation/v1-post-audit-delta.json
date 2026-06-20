@@ -1343,9 +1343,36 @@
       "v2Target": "tools/ui-reference-harness/src/renderers/config-collection.tsx",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "docker/grafana/dashboards/platform-overview.json",
+      "purpose": "post-audit addition (Grafana dashboard JSON for platform overview)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docker/grafana/dashboards/platform-overview.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "2ab7e9c7c8f5a611edbaead02b08ba9a708fc56f"
+    },
+    {
+      "path": "docker/prometheus/prometheus.yml",
+      "purpose": "post-audit addition (Prometheus scrape configuration)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docker/prometheus/prometheus.yml",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "2ab7e9c7c8f5a611edbaead02b08ba9a708fc56f"
+    },
+    {
+      "path": "packages/i18n-runtime/tests/react.test.tsx",
+      "purpose": "post-audit addition (React provider/hook tests)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "packages/i18n-runtime/tests/react.test.tsx",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "2ab7e9c7c8f5a611edbaead02b08ba9a708fc56f"
     }
   ],
   "deletions": [],
-  "additionCount": 112,
+  "additionCount": 141,
   "deletionCount": 0
 }

@@ -243,10 +243,7 @@
     "proof:typed-secret-resolution": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts",
     "proof:ui-semantic-groups": "playwright test --config tools/ui-reference-harness/playwright.config.ts tools/ui-reference-harness/playwright/groups.spec.ts",
     "proof:ui-semantic-sub-organisations": "playwright test --config tools/ui-reference-harness/playwright.config.ts tools/ui-reference-harness/playwright/sub-organisations.spec.ts",
-    "proof:ui-semantic-claim-mapping": "playwright test --config tools/ui-reference-harness/playwright.config.ts tools/ui-reference-harness/playwright/claim-mapping.spec.ts",
-    "security:sbom:verify": "diff -q docs/evidence/security/sbom-baseline.json <(npx cyclonedx-npm --output-format JSON --output-file - --package-lock-only --ignore-npm-errors 2>/dev/null) || { echo \"SBOM is stale — regenerate with npm run sbom:generate\"; exit 1; }",
-    "security:sbom:policy": "node -e \"const sbom = require(\"./docs/evidence/security/sbom-baseline.json\"); const blocked = [\"GPL-2.0\", \"GPL-3.0\", \"AGPL-3.0\", \"SSPL\"]; const comps = sbom.components || []; const violations = comps.filter(c => c.licenses && c.licenses.some(l => blocked.some(b => (l.license?.id || l.license?.name || \"\").includes(b)))); if (violations.length) { console.error(\"Blocked license found:\", violations.map(v => v.name + \" (\" + (v.licenses || []).map(l => l.license?.id || l.license?.name).join(\",\") + \")\").join(\", \")); process.exit(1); } console.log(\"SBOM policy passed — no blocked licenses\");\"",
-    "codeql:validate": "node -e \"const fs = require(\"fs\"); const yml = fs.readFileSync(\".github/workflows/codeql.yml\", \"utf8\"); if (!yml.includes(\"javascript-typescript\")) { console.error(\"CodeQL workflow missing javascript-typescript language\"); process.exit(1); } if (!yml.includes(\"codeql-action/analyze@v3\")) { console.error(\"CodeQL workflow missing analyze step\"); process.exit(1); } console.log(\"CodeQL workflow validated\");\""
+    "proof:ui-semantic-claim-mapping": "playwright test --config tools/ui-reference-harness/playwright.config.ts tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "3.1056.0",

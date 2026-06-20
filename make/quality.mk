@@ -102,18 +102,6 @@ sbom:
 	npm run sbom:generate
 	$(call OK,SBOM generated)
 
-## sbom-verify — Verify committed SBOM is fresh (fails when stale)
-sbom-verify:
-	$(call STEP,sbom:verify)
-	npm run security:sbom:verify
-	$(call OK,SBOM verified — no drift)
-
-## sbom-policy — Validate SBOM against license/package policy
-sbom-policy:
-	$(call STEP,sbom:policy)
-	npm run security:sbom:policy
-	$(call OK,SBOM policy passed)
-
 ## license — Show license policy status
 license:
 	$(call STEP,license policy)

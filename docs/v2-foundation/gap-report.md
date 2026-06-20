@@ -16,8 +16,11 @@ with **honest semantic closure**.
 > groups** (`proof:ui-semantic-groups`), **Sub-organisations** (`proof:ui-semantic-sub-organisations`,
 > flat list — no invented hierarchy), and **Claim mapping** (`proof:ui-semantic-claim-mapping`, with
 > the external real-IdP proof limitation kept explicit and separate per ADR-ACT-0220). Each was closed
-> only on a **passing headless journey**, not a schema entry. **Completion-blocker total: 35 → 32**
-> (22 capability completions + 10 package removals). The cut remains BLOCKED.
+> only on a **passing headless journey**, not a schema entry. **Completion-blocker total: 32**
+> (22 capability completions + 10 package removals). V1C-17, V1C-18, V1C-25 were prematurely closed
+> and have been reopened — Prometheus has no application instrumentation, Grafana dashboard format is
+> invalid, security scripts (sbom:verify, sbom:policy, codeql:validate) are broken, and i18n has gaps
+> (typed keys, provider behaviour, product message migration). The cut remains BLOCKED.
 
 Audited V1 commit: `918cd148569f6473eeaa58284933abdc0fe5bafe` (the commit the artefacts were built
 against). The freeze/cut commit is pinned separately at cut time (`{{PINNED_V1_COMMIT}}`, runbook §1).
