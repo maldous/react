@@ -21,9 +21,45 @@
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
+import { fileURLToPath } from "node:url";
 
 const LOCALE_FILE = "packages/i18n-runtime/locales/en-GB.json";
 const SCAN_DIRS = ["apps/react-enterprise-app/src", "apps/platform-api/src", "packages"];
+
+// Load governed-paths config (ADR-0026 strict enforcement)
+let governedConfig = { governed: [], exclude: [], exceptions: [], strictFailOnRawLiteral: false };
+try {
+  const configPath = fileURLToPath(new URL("../governed-paths.json", import.meta.url));
+  if (fs.existsSync(configPath)) {
+    governedConfig = JSON.parse(fs.readFileSync(configPath, "utf8"));
+  }
+} catch {
+  // Fallback to advisory-only when config is absent or unparseable
+}
+
+function shouldScanForRaw(relPath) {
+  if (!/\.tsx$/.test(relPath)) return false;
+  if (!governedConfig.governed || governedConfig.governed.length === 0) return true;
+
+  const inGoverned = governedConfig.governed.some((g) => relPath.startsWith(g));
+  if (!inGoverned) return false;
+
+  if (governedConfig.exclude) {
+    const inExclude = governedConfig.exclude.some((ex) => {
+      const regexStr = "^" + ex.replace(/\*\*/g, ".*").replace(/\*/g, "[^/]*");
+      return new RegExp(regexStr).test(relPath);
+    });
+    if (inExclude) return false;
+  }
+  return true;
+}
+
+function isException(file, line, text) {
+  if (!governedConfig.exceptions) return false;
+  return governedConfig.exceptions.some(
+    (ex) => ex.file === file && ex.line === line && text.includes(ex.text)
+  );
+}
 
 // Match t("key") and serverT(messages, "key") patterns — bounded to prevent ReDoS
 const KEY_PATTERN = /(?:\bt|serverT)\s*\(\s*(?:[^,)"']{0,200},\s*)?["']([a-z][a-z0-9._-]*)["']/g;
@@ -113,10 +149,12 @@ function scanDir(dir, usedKeys, paramUsage, rawLiterals) {
     if (!/\.(ts|tsx|js|mjs)$/.test(entry.name)) continue;
     const content = fs.readFileSync(full, "utf8");
     processSourceFile(content, usedKeys, paramUsage);
-    // Raw-literal scan on governed UI files (advisory)
-    if (/\.tsx$/.test(entry.name) && rawLiterals) {
+    // Raw-literal scan on governed UI files
+    if (rawLiterals) {
       const relPath = full.replace(repoRoot + "/", "");
-      rawLiterals.push(...scanRawLiterals(relPath, content));
+      if (shouldScanForRaw(relPath)) {
+        rawLiterals.push(...scanRawLiterals(relPath, content));
+      }
     }
   }
 }
@@ -150,7 +188,9 @@ function scanRawLiterals(filePath, content) {
       // Skip variable interpolation braces
       if (text.startsWith("{") || text.endsWith("}")) continue;
       if (SUSPECT_WORDS.test(text)) {
-        findings.push({ file: filePath, line: i + 1, text: text.slice(0, 80) });
+        if (!isException(filePath, i + 1, text)) {
+          findings.push({ file: filePath, line: i + 1, text: text.slice(0, 80) });
+        }
       }
     }
 
@@ -158,7 +198,9 @@ function scanRawLiterals(filePath, content) {
     const ariaMatches = line.matchAll(/aria-(?:label|description)=["']([^"']{8,120})["']/g);
     for (const m of ariaMatches) {
       if (SUSPECT_WORDS.test(m[1]) && !/^\{/.test(m[1])) {
-        findings.push({ file: filePath, line: i + 1, text: `aria: ${m[1].slice(0, 80)}` });
+        if (!isException(filePath, i + 1, m[1])) {
+          findings.push({ file: filePath, line: i + 1, text: `aria: ${m[1].slice(0, 80)}` });
+        }
       }
     }
   }
@@ -224,9 +266,10 @@ function run(root) {
       if (!/\.(ts|tsx|js|mjs)$/.test(entry.name)) continue;
       const content = fs.readFileSync(full, "utf8");
       processSourceFile(content, used, paramUsage);
-      // Raw-literal scan on governed UI source files only (advisory, top-level scans)
-      if (/\.tsx$/.test(entry.name)) {
-        rawLiterals.push(...scanRawLiterals(full.replace(root + "/", ""), content));
+      // Raw-literal scan on governed UI source files only
+      const relPath = full.replace(root + "/", "");
+      if (shouldScanForRaw(relPath)) {
+        rawLiterals.push(...scanRawLiterals(relPath, content));
       }
     }
   }
@@ -289,8 +332,10 @@ if (result.interpMismatches.length > 0) {
 }
 
 if (result.rawLiterals && result.rawLiterals.length > 0) {
+  const failOnRaw = governedConfig.strictFailOnRawLiteral && strictMode;
+  const label = failOnRaw ? "strict" : "advisory";
   console.warn(
-    `[validate-i18n] ${result.rawLiterals.length} raw-literal suspect(s) (ungoverned English in JSX — advisory):`
+    `[validate-i18n] ${result.rawLiterals.length} raw-literal suspect(s) (ungoverned English in JSX — ${label}):`
   );
   const shown = result.rawLiterals.slice(0, 20);
   shown.forEach(({ file, line, text }) => console.warn(`  - ${file}:${line}  ${text}`));
@@ -311,12 +356,22 @@ if (!hasViolations && result.interpMismatches.length === 0) {
   );
 }
 
+if (
+  result.rawLiterals &&
+  result.rawLiterals.length > 0 &&
+  governedConfig.strictFailOnRawLiteral &&
+  strictMode
+) {
+  hasViolations = true;
+}
+
 if (hasViolations && strictMode) {
   const reasons = [];
   if (result.duplicates.length > 0) reasons.push("duplicate keys");
   if (result.missing.length > 0) reasons.push("missing keys");
   if (result.unused.length > 0) reasons.push("unused keys");
   if (result.interpMismatches.length > 0) reasons.push("interpolation mismatches");
+  if (result.rawLiterals && result.rawLiterals.length > 0) reasons.push("raw governed literals");
   console.error(`[validate-i18n] Strict mode: failing due to ${reasons.join(", ")} (ADR-0011).`);
   process.exit(1);
 }

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "description": "Governed-surface configuration for validate-i18n --strict (ADR-0026). Only raw user-facing English text in governed directories is a strict-mode failure. Excluded paths never produce raw-literal findings. Exceptions are explicitly reviewed strings that may appear as raw literals without failing (e.g. E2E harness labels, developer-only diagnostics).",
+  "governed": [
+    "apps/react-enterprise-app/src",
+    "apps/platform-api/src/server",
+    "apps/platform-api/src/usecases"
+  ],
+  "exclude": [
+    "apps/react-enterprise-app/src/tests",
+    "apps/react-enterprise-app/src/**/__tests__",
+    "apps/platform-api/src/tests",
+    "apps/platform-api/src/**/tests",
+    "apps/platform-api/src/**/__tests__",
+    "apps/platform-api/src/config",
+    "apps/platform-api/src/adapters",
+    "apps/platform-api/src/db",
+    "apps/platform-api/scripts"
+  ],
+  "exceptions": [],
+  "strictFailOnRawLiteral": true
+}

@@ -3,6 +3,7 @@
 import { createRoute } from "@tanstack/react-router";
 import { Route as AuthenticatedRoute } from "./_authenticated";
 import { RequirePermission } from "../components/RequirePermission";
+import { useTranslation } from "@platform/i18n-runtime";
 
 export const Route = createRoute({
   getParentRoute: () => AuthenticatedRoute,
@@ -11,12 +12,13 @@ export const Route = createRoute({
 });
 
 function E2EHarnessPage() {
+  const t = useTranslation();
   if (!import.meta.env.DEV) return null;
   return (
     <RequirePermission permission="organisation.read">
       <div data-testid="protected-content">
-        <h1>E2E Harness Route</h1>
-        <p>You are authenticated with organisation.read permission.</p>
+        <h1>{t("e2e.harness.title")}</h1>
+        <p>{t("e2e.harness.authenticatedMessage")}</p>
       </div>
     </RequirePermission>
   );
