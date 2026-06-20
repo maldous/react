@@ -3,13 +3,20 @@
  * codeql:validate — ADR-ACT-0247 / V1C-18.
  *
  * Validates the CodeQL setup is working: codeql binary reachable, config file
- * valid, and a minimal database can be created. Gracefully skips (exit 0) when
- * codeql is not installed — never blocks the gate on missing local tooling.
+ * valid, and a minimal database can be created.
+ *
+ * In authoritative mode (CI=true or AUTHORITATIVE_SCAN=true):
+ *   - Missing codeql binary → exit 1 (fail-closed)
+ *   - Database creation failure → exit 1 (fail-closed)
+ *
+ * In non-authoritative (local developer) mode:
+ *   - Missing codeql binary → exit 0 with warning (honest skip)
+ *   - Database creation failure → exit 0 with warning
  *
  * Usage: npm run codeql:validate
  */
 
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { execSync } from "node:child_process";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -17,7 +24,13 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..", "..");
 
-function skip(reason) {
+const AUTHORITATIVE = process.env.CI === "true" || process.env.AUTHORITATIVE_SCAN === "true";
+
+function skipOrFail(reason) {
+  if (AUTHORITATIVE) {
+    console.error(`FAIL  codeql not available — ${reason} (authoritative mode — fail-closed)`);
+    process.exit(1);
+  }
   console.log(`SKIP  codeql not available — ${reason} (ADR-ACT-0247 honest skip)`);
   process.exit(0);
 }
@@ -42,15 +55,19 @@ try {
 }
 
 if (!codeql) {
-  skip("install codeql from https://github.com/github/codeql-cli-binaries/releases");
+  skipOrFail("install codeql from https://github.com/github/codeql-cli-binaries/releases");
 }
 
+let codeqlVersion = "";
 try {
-  execSync(`${codeql} --version 2>&1`, { encoding: "utf8", stdio: "pipe" });
+  codeqlVersion = execSync(`${codeql} --version 2>&1`, {
+    encoding: "utf8",
+    stdio: "pipe",
+  }).trim();
+  pass(`codeql binary reachable (${codeqlVersion.split("\n")[0] || codeqlVersion.slice(0, 80)})`);
 } catch {
-  skip("codeql binary found but --version failed");
+  skipOrFail("codeql binary found but --version failed");
 }
-pass("codeql binary reachable");
 
 // ── Config file valid ──────────────────────────────────────────────────────
 const configPath = resolve(ROOT, ".github", "codeql", "codeql-config.yml");
@@ -64,7 +81,7 @@ if (!config.includes("name:")) fail("codeql config missing required 'name' field
 if (!config.includes("queries:")) fail("codeql config missing required 'queries' field");
 pass("codeql config valid");
 
-// ── Minimal database creation (quick smoke test) ───────────────────────────
+// ── Minimal database creation (smoke test) ─────────────────────────────────
 const dbPath = resolve(ROOT, ".codeql", "validate-db");
 try {
   execSync(
@@ -74,7 +91,12 @@ try {
   pass("codeql database creation succeeded");
 } catch (err) {
   const msg = err instanceof Error ? err.message : String(err);
-  skip(`database creation did not complete cleanly (${msg.slice(0, 200)})`);
+
+  if (AUTHORITATIVE) {
+    fail(`database creation failed (authoritative mode) — ${msg.slice(0, 200)}`);
+  } else {
+    console.log(`WARN  database creation did not complete cleanly — ${msg.slice(0, 200)}`);
+  }
 }
 
 // ── Cleanup ────────────────────────────────────────────────────────────────
@@ -84,5 +106,9 @@ try {
   // best-effort cleanup
 }
 
-console.log("\n# codeql:validate PASSED");
+if (AUTHORITATIVE) {
+  console.log("\n# codeql:validate PASSED (authoritative)");
+} else {
+  console.log("\n# codeql:validate PASSED");
+}
 process.exit(0);

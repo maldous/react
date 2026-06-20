@@ -1,5 +1,5 @@
 .PHONY: test test-compose audit security compose architecture semgrep \
-        sonar advisory sbom license \
+        sonar advisory sbom sbom-verify sbom-policy license \
         quality check ci full
 
 ## test — Run all tests with V8 LCOV coverage
@@ -24,7 +24,7 @@ audit:
 	npm run audit:osv
 	$(call OK,no vulnerabilities)
 
-## security — Secret scan via gitleaks (authoritative mode: fail-closed when binary missing)
+## security — Secret scan via gitleaks (fail-closed in CI/authoritative; skips locally)
 security:
 	$(call STEP,security \(gitleaks\))
 	@if [ "$${CI:-}" = "true" ] || [ "$${AUTHORITATIVE_SCAN:-}" = "true" ]; then \
@@ -96,11 +96,12 @@ advisory:
 	-npm run depcruise
 	$(call OK,advisory complete)
 
-## sbom — Generate CycloneDX 1.6 SBOM
+## sbom — Generate CycloneDX 1.6 SBOM and record lockfile hash for semantic freshness
 sbom:
 	$(call STEP,sbom)
 	npm run sbom:generate
-	$(call OK,SBOM generated)
+	@sha256sum package-lock.json | cut -d' ' -f1 > docs/evidence/security/sbom-baseline.lockhash
+	$(call OK,SBOM generated + lockfile hash recorded)
 
 ## license — Show license policy status
 license:
@@ -108,19 +109,31 @@ license:
 	npm run license:policy
 	$(call OK,license policy noted)
 
+## sbom-verify — Verify SBOM semantic freshness (SHA-256 hash vs package-lock.json)
+sbom-verify:
+	$(call STEP,sbom:verify)
+	npm run sbom:verify
+	$(call OK,SBOM verified)
+
+## sbom-policy — Check SBOM license policy (fail on GPL/AGPL/SSPL/Commons/BUSL)
+sbom-policy:
+	$(call STEP,sbom:policy)
+	npm run sbom:policy
+	$(call OK,SBOM policy passed)
+
 # ── Composite quality targets ────────────────────────────────────────────────
 
 ## quality — Full quality gate (used by make all)
 ## advisory (knip/depcruise) is report-only — it runs in make all but never fails it.
-quality: install format lint typecheck audit security compose architecture semgrep license advisory
+quality: install format lint typecheck audit security compose architecture semgrep license sbom-verify sbom-policy advisory
 	$(call OK,quality gate passed)
 
 ## check — Fast local check: format/lint/typecheck/audit/compose/architecture/semgrep
 check: format lint typecheck audit compose architecture semgrep
 	$(call OK,check complete)
 
-## ci — CI-safe subset
-ci: install format lint typecheck test audit security compose architecture semgrep
+## ci — CI-safe subset (includes authoritative SBOM gates)
+ci: install format lint typecheck test audit security compose architecture semgrep sbom-verify sbom-policy
 	$(call OK,ci complete)
 
 ## full — Alias for all
