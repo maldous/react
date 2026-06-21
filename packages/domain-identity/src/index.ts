@@ -235,6 +235,11 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     "platform.clickthrough.grafana",
     "platform.audit.read_all",
     "platform.logs.read",
+    // V1C-12c Legal Hold (ADR-0064 / V1C-12c): operator-only read + write of the
+    // platform-owned legal_holds table. Sole-owner of the hold flag; tenant-admin
+    // never grants/releases (retention + storage consume LegalHoldGuard.failClosed).
+    "platform.data.read",
+    "platform.data.write",
     // Platform operations cockpit (ADR-ACT-0235): the readiness payload is
     // platform-global infra, readable by both operator roles. System-admin gets
     // global-only console links; tenant-admin gets tenant-safe links only.

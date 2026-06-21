@@ -761,6 +761,23 @@ const SysadminBrokeringBodySchema = z.object({
   auditAllAccess: z.boolean().default(true),
 });
 
+// V1C-12c: request schemas for /api/admin/data/legal-holds (ADR-0064).
+// resourceTable enum mirrors the HOLDABLE_TABLES constant in usecases/legal-hold.ts
+// (audit_events + object_storage). The usecase re-validates + emits the audit;
+// this schema is a defence-in-depth at the BFF boundary.
+const SetLegalHoldBodySchema = z.object({
+  organisationId: z.uuid("organisationId must be a valid UUID"),
+  resourceTable: z.enum(["audit_events", "object_storage"]),
+  rowId: z.string().min(1).max(256),
+  reason: z.string().min(8).max(500),
+});
+
+const ReleaseLegalHoldBodySchema = z.object({
+  organisationId: z.uuid("organisationId must be a valid UUID"),
+  resourceTable: z.enum(["audit_events", "object_storage"]),
+  rowId: z.string().min(1).max(256),
+});
+
 export const routes: Route[] = [
   {
     method: "GET",
@@ -6277,6 +6294,124 @@ export const routes: Route[] = [
           await buildHistoryDeps()
         )
       );
+    },
+  },
+
+  // -------------------------------------------------------------------
+  // V1C-12c Legal Hold operator routes (ADR-0064 / V1C-12c, decisionRef V1C-12c).
+  // Sole platform owner of legal hold; sole consumer seam for retention (V1C-12b)
+  // and object storage (V1C-15). Audit-before-change on every set/release.
+  // -------------------------------------------------------------------
+  {
+    method: "POST",
+    path: "/api/admin/data/legal-holds",
+    operationName: "admin.data.legalHold.set",
+    requiresAuth: true,
+    requiredPermission: "platform.data.write",
+    resource: "admin:data",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const { setLegalHold } = await import("../usecases/legal-hold.ts");
+      const { PostgresLegalHoldRepository } = await import("../adapters/postgres-legal-hold.ts");
+      const parsed = SetLegalHoldBodySchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid request body",
+        });
+        return;
+      }
+      const r = await setLegalHold(
+        {
+          organisationId: parsed.data.organisationId,
+          resourceTable: parsed.data.resourceTable,
+          rowId: parsed.data.rowId,
+          reason: parsed.data.reason,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        {
+          repository: new PostgresLegalHoldRepository(getApplicationPool()),
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+        }
+      );
+      if (r.kind === "invalid") {
+        res.json(400, { code: "VALIDATION_ERROR", message: r.message });
+        return;
+      }
+      res.json(201, r.hold);
+    },
+  },
+  {
+    method: "DELETE",
+    path: "/api/admin/data/legal-holds",
+    operationName: "admin.data.legalHold.release",
+    requiresAuth: true,
+    requiredPermission: "platform.data.write",
+    resource: "admin:data",
+    umaScope: "delete" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const { releaseLegalHold } = await import("../usecases/legal-hold.ts");
+      const { PostgresLegalHoldRepository } = await import("../adapters/postgres-legal-hold.ts");
+      const parsed = ReleaseLegalHoldBodySchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid request body",
+        });
+        return;
+      }
+      const r = await releaseLegalHold(
+        {
+          organisationId: parsed.data.organisationId,
+          resourceTable: parsed.data.resourceTable,
+          rowId: parsed.data.rowId,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        {
+          repository: new PostgresLegalHoldRepository(getApplicationPool()),
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+        }
+      );
+      if (r.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Legal hold not found" });
+        return;
+      }
+      res.json(200, r.hold);
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/data/legal-holds",
+    operationName: "admin.data.legalHold.list",
+    requiresAuth: true,
+    requiredPermission: "platform.data.read",
+    resource: "admin:data",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const { listLegalHoldsAsOperator } = await import("../usecases/legal-hold.ts");
+      const { PostgresLegalHoldRepository } = await import("../adapters/postgres-legal-hold.ts");
+      const url = new URL(req.raw.url ?? "", "http://localhost");
+      const org = url.searchParams.get("organisationId") ?? "";
+      if (!UUID_RE.test(org)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "organisationId must be a UUID" });
+        return;
+      }
+      const list = await listLegalHoldsAsOperator(org, {
+        repository: new PostgresLegalHoldRepository(getApplicationPool()),
+        audit: createPostgresAuditEventPort(getApplicationPool()),
+      });
+      res.json(200, { holds: list });
     },
   },
 ];

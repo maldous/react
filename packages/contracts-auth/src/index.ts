@@ -38,6 +38,11 @@ export type Permission =
   | "platform.clickthrough.grafana"
   | "platform.audit.read_all"
   | "platform.logs.read"
+  // V1C-12c Legal Hold (ADR-0064 / V1C-12c): operator-only read + write of the
+  // platform-owned legal_holds table. Sole consumer seam is LegalHoldGuard,
+  // consumed by V1C-12b (retention) + V1C-15 (storage lifecycle).
+  | "platform.data.read"
+  | "platform.data.write"
   // Tenant-scoped permissions (tenant-admin only)
   | "tenant.admin.access"
   | "tenant.members.read"

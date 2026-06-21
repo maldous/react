@@ -1,0 +1,51 @@
+{
+  "capability": "V1C-12b Retention",
+  "decisionRef": "V1C-12b",
+  "stopCondition": "policy applied on a tick + audited",
+  "command": "proof:retention",
+  "script": "apps/platform-api/scripts/retention-runtime-proof.ts",
+  "result": "PASSED",
+  "checks": [
+    { "name": "tick1.policiesEvaluated", "observed": 1, "expected": 1 },
+    { "name": "tick1.candidatesFound", "observed": 2, "expected": 2 },
+    { "name": "tick1.deleted", "observed": 1, "expected": 1 },
+    { "name": "tick1.skippedLegalHold", "observed": 1, "expected": 1 },
+    { "name": "ledger.deleted", "observed": 1, "expected": 1 },
+    { "name": "ledger.skipped_legal_hold", "observed": 1, "expected": 1 },
+    { "name": "tick2.deleted", "observed": 1, "expected": 1 },
+    { "name": "tick2.skippedLegalHold", "observed": 1, "expected": 1 },
+    { "name": "audit.retention_applied_count", "observed": 2, "expected": 2 },
+    { "name": "audit.retention_skipped_count", "observed": 2, "expected": 2 },
+    { "name": "audit.tick_completed_count", "observed": 2, "expected": 2 }
+  ],
+  "evidence": {
+    "auditEventsEmitted": 8,
+    "candidates": 2
+  },
+  "substrate": {
+    "testsFile": "apps/platform-api/tests/unit/retention.test.ts",
+    "testNames": [
+      "filter validation: accepts 'all'",
+      "filter validation: accepts 'by_status' with non-empty array",
+      "filter validation: rejects free-form or unknown kind",
+      "filter validation: rejects empty by_status array",
+      "filter validation: rejects status string longer than 64 chars",
+      "set: validates resource_table, ttl_seconds, and emits audit BEFORE write",
+      "set: audit-before-change: a failing audit port means the DB write never runs",
+      "disable: emits audit BEFORE the disable update + transitions state",
+      "disable: returns not_found when no enabled policy exists for the (org, table)",
+      "runRetentionTick: deletes un-held rows + records outcome + emits per-row audit events",
+      "runRetentionTick: skips_legal_hold: held rows are PRESERVED (consumes V1C-12c LegalHoldGuard)",
+      "runRetentionTick: skips: the (org, table) has no candidates",
+      "runRetentionTick: skips: filter yields zero candidates (in-memory: by_status with zero matching)",
+      "read: listForTenant only returns enabled policies; listAsOperator returns all"
+    ]
+  },
+  "outOfScopeForThisSlice": [
+    "Routes: /api/admin/data/retention* (GET, POST, DELETE) — pending wiring",
+    "OpenAPI: docs/api/openapi.json entries — pending wiring",
+    "Permission registration addition (reusing platform.data.read|write already granted) — pending",
+    "Live-Postgres substrate test — pending wiring"
+  ],
+  "generatedAt": "2026-06-21T00:00:00.000Z"
+}

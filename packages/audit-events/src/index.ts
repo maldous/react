@@ -72,6 +72,13 @@ export const AuditAction = {
   EnvironmentOperationInvoked: "environment.operation_invoked",
   EnvironmentAdminSeeded: "environment.admin_seeded",
   EnvironmentSecretRotated: "environment.secret_rotated",
+  LegalHoldSet: "legal_hold.set",
+  LegalHoldReleased: "legal_hold.released",
+  RetentionPolicySet: "retention.policy.set",
+  RetentionPolicyRemoved: "retention.policy.removed",
+  RetentionApplied: "retention.applied",
+  RetentionTickCompleted: "retention.tick_completed",
+  RetentionSkippedLegalHold: "retention.skipped_legal_hold",
 } as const;
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction];

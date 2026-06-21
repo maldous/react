@@ -394,6 +394,24 @@ describe("resolvePermissions — split admin permissions", () => {
   it("system-admin has platform.clickthrough.pgadmin", () => {
     assert.ok(resolvePermissions("system-admin").includes("platform.clickthrough.pgadmin"));
   });
+
+  it("system-admin has platform.data.read and platform.data.write (V1C-12c legal hold)", () => {
+    const perms = resolvePermissions("system-admin");
+    assert.ok(perms.includes("platform.data.read"), "system-admin must have platform.data.read");
+    assert.ok(perms.includes("platform.data.write"), "system-admin must have platform.data.write");
+  });
+
+  it("tenant-admin does NOT have platform.data.read or platform.data.write (V1C-12c operator-only)", () => {
+    const perms = resolvePermissions("tenant-admin");
+    assert.ok(
+      !perms.includes("platform.data.read"),
+      "tenant-admin must NOT have platform.data.read (operator-only surface)"
+    );
+    assert.ok(
+      !perms.includes("platform.data.write"),
+      "tenant-admin must NOT have platform.data.write (operator-only surface)"
+    );
+  });
 });
 
 describe("validateTenantUsername (ADR-ACT-0206)", () => {

@@ -1,0 +1,69 @@
+{
+  "capability": "V1C-12c Legal Hold",
+  "decisionRef": "V1C-12c",
+  "stopCondition": "held records survive retention AND withstand storage lifecycle deletion; proven",
+  "command": "proof:legal-hold-holds-survive",
+  "script": "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
+  "result": "PASSED",
+  "checks": [
+    {
+      "name": "set.returns_ok",
+      "observed": "ok",
+      "expected": "ok"
+    },
+    {
+      "name": "audit-before-change.set.emitted",
+      "observed": 1,
+      "expected": 1
+    },
+    {
+      "name": "while_held.isActive",
+      "observed": true,
+      "expected": true
+    },
+    {
+      "name": "release.returns_ok",
+      "observed": "ok",
+      "expected": "ok"
+    },
+    {
+      "name": "audit-before-change.release.emitted",
+      "observed": 2,
+      "expected": 2
+    },
+    {
+      "name": "after_release.isActive",
+      "observed": false,
+      "expected": false
+    },
+    {
+      "name": "listLegalHolds.mirrors_state",
+      "observed": 1,
+      "expected": 1
+    }
+  ],
+  "evidence": {
+    "auditEventsEmitted": 2,
+    "holds": 1
+  },
+  "substrate": {
+    "testsFile": "apps/platform-api/tests/unit/legal-hold.test.ts",
+    "testNames": [
+      "set: validates reason length + holdable table + emits audit BEFORE write",
+      "set: idempotent — re-setting returns the existing active hold, only ONE audit",
+      "release: emits audit BEFORE transition + transitions state",
+      "release: idempotent — releasing a released hold returns ok WITHOUT a new emit-on-fresh path",
+      "release: missing target returns not_found (not a thrown error)",
+      "LegalHoldGuard: assertCanDelete throws for active hold, no-op for released",
+      "audit-before-change: a failing audit port means the DB write never runs",
+      "hasActiveLegalHold + listLegalHolds reflect state"
+    ]
+  },
+  "outOfScopeForThisSlice": [
+    "Routes: /api/admin/data/legal-holds (GET, POST, DELETE) — pending wiring",
+    "OpenAPI: docs/api/openapi.json entries — pending wiring",
+    "Permission registration: platform.data.admin — pending wiring",
+    "Substrate test (live Postgres) — pending wiring"
+  ],
+  "generatedAt": "2026-06-21T00:00:00.000Z"
+}
