@@ -122,7 +122,6 @@ const guard = {
     },
   },
 };
-void guard;
 
 const out: Out = {
   capability: "V1C-12b Retention",

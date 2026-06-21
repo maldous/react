@@ -166,7 +166,6 @@ function standardUserCtx(actorId: string): AuthContext {
 
 async function main(): Promise<void> {
   console.log("# V1C-04 delegated-admin-roles runtime proof (local-only)\n");
-  const now = new Date().toISOString();
 
   // 1. deny-by-default
   {
@@ -413,10 +412,6 @@ async function main(): Promise<void> {
       revokeAttempt.kind === "static_permission_denied"
     );
   }
-
-  // suppress unused-vars warnings from the constant
-  void now;
-
   console.log(
     failures === 0 ? "\n# ALL CHECKS PASSED (local-only proof)" : `\n# ${failures} CHECK(S) FAILED`
   );

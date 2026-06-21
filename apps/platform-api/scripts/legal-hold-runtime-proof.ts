@@ -75,10 +75,8 @@ const repo = {
         resourceTable: input.resourceTable,
         rowId: input.rowId,
         reason:
-          existing.setBy === input.setBy
-            ? existing.releasedBy === null
-              ? input.reason
-              : existing.releasedBy
+          existing.setBy === input.setBy && existing.releasedBy === null
+            ? input.reason
             : existing.releasedBy,
         state: "active" as const,
         setBy: input.setBy,

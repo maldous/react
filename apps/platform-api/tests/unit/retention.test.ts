@@ -307,16 +307,6 @@ describe("retention use case (V1C-12b) — set", () => {
   });
 
   it("audit-before-change: a failing audit port means the DB write never runs", async () => {
-    const innerAudit = createInMemoryAuditEventPort();
-    const collected: AuditEvent[] = [];
-    const capture: AuditEventPort = {
-      async emit(e) {
-        collected.push(e);
-        await innerAudit.emit(e);
-      },
-      query: innerAudit.query,
-    };
-    void collected;
     const failingAudit: AuditEventPort = {
       async emit(): Promise<void> {
         throw new Error("audit storage unavailable");
@@ -332,7 +322,6 @@ describe("retention use case (V1C-12b) — set", () => {
       audit: failingAudit,
       guard: { repository: holdingRepo as Pick<LegalHoldRepository, "isActive"> },
     };
-    void capture;
     await assert.rejects(
       () =>
         setRetentionPolicy(
@@ -388,8 +377,7 @@ describe("retention use case (V1C-12b) — disable", () => {
 // ─── Tick ────────────────────────────────────────────────────────────────
 describe("retention use case (V1C-12b) — runRetentionTick", () => {
   async function scenarioWithTwoCandidates(buildingDeps: ReturnType<typeof build>): Promise<void> {
-    const { retentionRepo, audit, deps } = buildingDeps;
-    void audit;
+    const { retentionRepo, deps } = buildingDeps;
     await setRetentionPolicy(
       {
         organisationId: "org-1",
