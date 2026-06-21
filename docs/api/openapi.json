@@ -11500,6 +11500,141 @@
           }
         }
       }
+    },
+    "/api/admin/tenants/:tenantId/delegations": {
+      "get": {
+        "summary": "List a tenant's delegated admin roles (system operator)",
+        "operationId": "listTenantDelegations",
+        "description": "System-operator read of a tenant's delegated administration grants. V1C-04 / ADR-0063.",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delegation list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["delegations"],
+                  "properties": {
+                    "delegations": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DelegatedRole"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
+      "post": {
+        "summary": "Grant a delegated admin role (system operator)",
+        "operationId": "grantTenantDelegation",
+        "description": "System-operator grant of a delegated admin scope to a user. deny-by-default + audited; tenants can never self-grant. V1C-04 / ADR-0063.",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrantDelegationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Delegation granted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["delegation"],
+                  "properties": {
+                    "delegation": {
+                      "$ref": "#/components/schemas/DelegatedRole"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "409": {
+            "description": "Delegation already active",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/tenants/:tenantId/delegations/:delegationId": {
+      "delete": {
+        "summary": "Revoke a delegated admin role (system admin)",
+        "operationId": "revokeTenantDelegation",
+        "description": "System-admin revocation of a delegation by id. Audited; idempotent not_found. V1C-04 / ADR-0063.",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delegation revoked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["revoked"],
+                  "properties": {
+                    "revoked": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -11937,6 +12072,74 @@
           "resourceTable": {
             "type": "string",
             "enum": ["audit_events", "tenant_invitations"]
+          }
+        }
+      },
+      "DelegatedRole": {
+        "type": "object",
+        "required": [
+          "id",
+          "organisationId",
+          "granterUserId",
+          "granteeUserId",
+          "scope",
+          "grantedAt",
+          "grantedBy",
+          "expiresAt",
+          "revokedAt",
+          "revokedBy"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "organisationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "granterUserId": {
+            "type": "string"
+          },
+          "granteeUserId": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "grantedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "grantedBy": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": ["string", "null"],
+            "format": "date-time"
+          },
+          "revokedAt": {
+            "type": ["string", "null"],
+            "format": "date-time"
+          },
+          "revokedBy": {
+            "type": ["string", "null"]
+          }
+        }
+      },
+      "GrantDelegationRequest": {
+        "type": "object",
+        "required": ["granteeUserId", "scope"],
+        "properties": {
+          "granteeUserId": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": ["string", "null"],
+            "format": "date-time"
           }
         }
       }

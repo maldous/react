@@ -79,6 +79,9 @@ export const AuditAction = {
   RetentionApplied: "retention.applied",
   RetentionTickCompleted: "retention.tick_completed",
   RetentionSkippedLegalHold: "retention.skipped_legal_hold",
+  DelegationGranted: "delegation.granted",
+  DelegationRevoked: "delegation.revoked",
+  DelegationListed: "delegation.listed",
 } as const;
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction];

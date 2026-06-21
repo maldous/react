@@ -471,6 +471,57 @@ async function buildApiKeysDeps() {
   };
 }
 
+// Build the delegated-admin usecase deps (port + audit + logger) — V1C-04 / ADR-0063.
+// The usecase carries its own stub-shaped AuditEventPort (action string literals);
+// this adapter maps those onto the canonical @platform/audit-events port so grants
+// and revocations land in the same audit ledger as every other admin mutation.
+const delegationLog = createLogger({ name: "delegations" });
+const DELEGATION_AUDIT_ACTION: Record<string, string> = {
+  "Delegation.Granted": AuditAction.DelegationGranted,
+  "Delegation.Revoked": AuditAction.DelegationRevoked,
+  "Delegation.Listed": AuditAction.DelegationListed,
+};
+async function buildDelegationDeps() {
+  const { PostgresDelegatedAdminRoles } =
+    await import("../adapters/postgres-delegated-admin-roles.ts");
+  const pool = getApplicationPool();
+  const realAudit = createPostgresAuditEventPort(pool);
+  return {
+    port: new PostgresDelegatedAdminRoles(pool),
+    audit: {
+      async emit(e: {
+        action: string;
+        actorId: string;
+        organisationId: string | null;
+        delegationId?: string;
+      }): Promise<void> {
+        await realAudit.emit(
+          createAuditEvent({
+            actorId: e.actorId,
+            tenantId: e.organisationId ?? "",
+            action: DELEGATION_AUDIT_ACTION[e.action] ?? e.action,
+            resource: "delegated_admin_roles",
+            resourceId: e.delegationId ?? "",
+          })
+        );
+      },
+    },
+    logger: {
+      async warn(w: {
+        event: string;
+        actorId: string;
+        organisationId: string | null;
+        reason: string;
+      }): Promise<void> {
+        delegationLog.warn(
+          { actorId: w.actorId, organisationId: w.organisationId, reason: w.reason },
+          w.event
+        );
+      },
+    },
+  };
+}
+
 const rateLimitProviderLog = createLogger({ name: "rate-limit-provider" });
 const secretStoreProviderLog = createLogger({ name: "secret-store-provider" });
 const notificationProviderLog = createLogger({ name: "notification-transport" });
@@ -798,6 +849,14 @@ const SetRetentionPolicyBodySchema = z.object({
 const DisableRetentionPolicyBodySchema = z.object({
   organisationId: z.uuid("organisationId must be a valid UUID"),
   resourceTable: z.enum(["audit_events", "tenant_invitations"]),
+});
+
+// V1C-04 delegated-admin grant body (ADR-0063). organisationId comes from the
+// path; grantedBy/granterUserId are server-stamped from the actor, never the body.
+const GrantDelegationBodySchema = z.object({
+  granteeUserId: z.string().min(1).max(256),
+  scope: z.string().min(1).max(128),
+  expiresAt: z.iso.datetime({ message: "expiresAt must be an ISO-8601 timestamp" }).nullish(),
 });
 
 export const routes: Route[] = [
@@ -4768,6 +4827,125 @@ export const routes: Route[] = [
         return;
       }
       res.json(200, { entitlement: result.entitlement });
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Delegated admin roles (V1C-04 / ADR-0063). Operator-scoped grant/list/revoke
+  // of tenant-scoped delegated administration. deny-by-default + audited; a
+  // tenant can never self-grant. The usecase enforces authority + fail-closed
+  // scope validation; persistence runs under the documented auth wrappers.
+  // ---------------------------------------------------------------------------
+  {
+    method: "GET",
+    path: "/api/admin/tenants/:tenantId/delegations",
+    operationName: "admin.tenants.delegations.list",
+    requiresAuth: true,
+    requiredPermission: "platform.delegations.read",
+    resource: "admin:delegations",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      if (!UUID_RE.test(tenantId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const { makeDelegationsUseCases } = await import("../usecases/delegations.ts");
+      const uc = makeDelegationsUseCases(await buildDelegationDeps());
+      const result = await uc.listDelegationsForTenant(tenantId, {
+        systemAdmin: req.actor!.roles.includes("system-admin"),
+        tenantAdmin: req.actor!.roles.includes("tenant-admin"),
+        userId: req.actor!.userId,
+      });
+      if (result.kind === "static_permission_denied") {
+        res.json(403, { code: "FORBIDDEN", message: result.message });
+        return;
+      }
+      res.json(200, { delegations: result.delegations });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/tenants/:tenantId/delegations",
+    operationName: "admin.tenants.delegations.grant",
+    requiresAuth: true,
+    requiredPermission: "platform.delegations.write",
+    resource: "admin:delegations",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      if (!UUID_RE.test(tenantId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const parsed = GrantDelegationBodySchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid delegation request",
+        });
+        return;
+      }
+      const { makeDelegationsUseCases } = await import("../usecases/delegations.ts");
+      const uc = makeDelegationsUseCases(await buildDelegationDeps());
+      const result = await uc.delegateGrant(
+        {
+          organisationId: tenantId,
+          granterUserId: req.actor!.userId,
+          granteeUserId: parsed.data.granteeUserId,
+          grantedBy: req.actor!.userId,
+          scope: parsed.data.scope,
+          expiresAt: parsed.data.expiresAt ?? null,
+        },
+        {
+          systemAdmin: req.actor!.roles.includes("system-admin"),
+          tenantAdmin: req.actor!.roles.includes("tenant-admin"),
+          userId: req.actor!.userId,
+        }
+      );
+      if (result.kind === "static_permission_denied") {
+        res.json(403, { code: "FORBIDDEN", message: result.message });
+        return;
+      }
+      if (result.kind === "delegation_already_active") {
+        res.json(409, { code: "CONFLICT", message: "Delegation already active" });
+        return;
+      }
+      res.json(200, { delegation: result.delegation });
+    },
+  },
+  {
+    method: "DELETE",
+    path: "/api/admin/tenants/:tenantId/delegations/:delegationId",
+    operationName: "admin.tenants.delegations.revoke",
+    requiresAuth: true,
+    requiredPermission: "platform.delegations.write",
+    resource: "admin:delegations",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const delegationId = req.params["delegationId"] ?? "";
+      if (!UUID_RE.test(delegationId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid delegation id" });
+        return;
+      }
+      const { makeDelegationsUseCases } = await import("../usecases/delegations.ts");
+      const uc = makeDelegationsUseCases(await buildDelegationDeps());
+      const result = await uc.delegateRevoke(delegationId, {
+        systemAdmin: req.actor!.roles.includes("system-admin"),
+        tenantAdmin: req.actor!.roles.includes("tenant-admin"),
+        userId: req.actor!.userId,
+      });
+      if (result.kind === "static_permission_denied") {
+        res.json(403, { code: "FORBIDDEN", message: result.message });
+        return;
+      }
+      if (result.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Delegation not found" });
+        return;
+      }
+      res.json(200, { revoked: true });
     },
   },
   {

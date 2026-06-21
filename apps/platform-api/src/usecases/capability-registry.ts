@@ -124,14 +124,16 @@ export const CAPABILITIES: readonly CapabilityDefinition[] = [
     implementationStatus: "partial",
     readinessKind: "invariant-ready",
   }),
-  // Delegated admin roles (domain-reader/manager, auth-reader/manager,
-  // integration-manager, observability-reader, support-operator): NOT
-  // implemented — tenant roles remain exactly tenant-admin/manager/member/
-  // viewer (@platform/domain-identity). Deliberately deferred: new roles need
-  // an ADR (role bundles are an authorisation surface, not a registry tweak).
+  // Delegated admin roles (V1C-04 / ADR-0063): operator-assigned, tenant-scoped
+  // delegation grants (grant/list/revoke) over a fixed scope vocabulary, deny-by-
+  // default + audited, with a Postgres-backed adapter under the documented RLS
+  // wrappers. A tenant can never self-grant. Richer custom role bundles remain a
+  // separate future authorisation surface.
   cap("delegated_admin_roles", "identity", {
-    implementationStatus: "deferred",
-    readinessKind: "deferred",
+    adminRoute: "/admin/delegations",
+    requiredPermission: "platform.delegations.write",
+    implementationStatus: "implemented",
+    readinessKind: "invariant-ready",
   }),
 
   // --- Authentication (OIDC-first) ---

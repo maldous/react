@@ -1,6 +1,6 @@
 {
   "pass": "two-reverse-reconciliation (semantic-closure pass)",
-  "verdict": "reconciliation reopened \u2014 V1C-17, V1C-18, V1C-25 returned to requires-v1-completion. 22 capability completions + 10 deprecated packages remain.",
+  "verdict": "reconciliation in progress \u2014 V1C-04 (delegated administration) delivered-and-proven and closed. 21 capability completions + 10 deprecated packages remain before the cut.",
   "vocabulary": {
     "fileDispositions": [
       "reuse-unchanged",
@@ -61,8 +61,8 @@
   "capabilities": {
     "total": 75,
     "buckets": {
-      "delivered-and-proven": 48,
-      "requires-v1-completion": 22,
+      "delivered-and-proven": 49,
+      "requires-v1-completion": 21,
       "not-applicable-final": 4,
       "superseded-by-proven-canonical": 1
     },
@@ -73,18 +73,13 @@
     "accepted": 74
   },
   "semanticGapsRemaining": {
-    "count": 22,
+    "count": 21,
     "note": "Capabilities not delivered-and-proven that need design/build/extension before the cut. NOT hidden inside any delivered count. (V1C-17/V1C-18/V1C-25 reopened \u2014 proofs unproven.)",
     "capabilities": [
       {
         "capability": "ABAC / Policy Decision Point",
         "action": "V1C-03",
         "openAction": "ADR-ACT-0242 \u2014 real quota enforcement is DELIVERED (ADR-ACT-0256); remaining: general attribute vocabulary + policy storage/model + PDP/PEP evaluation beyond UMA scopes + UMA relationship mapping + static fail-closed fallback + tests/proof. [V1 completion]"
-      },
-      {
-        "capability": "Delegated administration roles",
-        "action": "V1C-04",
-        "openAction": "ADR-ACT-0242 \u2014 V1 status 'deferred'; blocker: needs ADR before implementation [must close before V2 cut]"
       },
       {
         "capability": "Support-mode / break-glass access",
@@ -220,7 +215,7 @@
   },
   "branchCutBlockers": {
     "note": "Must all close before \u00a71 of v2-branch-cut-runbook.md; the validator (tools/v2-readiness) fails closed while any remain.",
-    "capabilityCompletions": 22,
+    "capabilityCompletions": 21,
     "deprecatedPackageRemovals": 10,
     "openPackageDecisions": 1
   },
@@ -233,11 +228,11 @@
   },
   "cutReadiness": {
     "consistencyFindings": 0,
-    "completionBlockerCount": 32,
+    "completionBlockerCount": 31,
     "unexaminedAuditSurfaces": 0,
     "cutReady": false,
     "terminology": "consistencyFindings = artefacts vs live-repo self-consistency (must be 0). completionBlockers = R9 outstanding V1 work. cutReady = both zero.",
-    "composition": "25 requires-v1-completion capabilities + 10 deprecated packages = 35.",
+    "composition": "21 requires-v1-completion capabilities + 10 deprecated packages = 31.",
     "configSprawl": "V1C-CONF-06 progress metric (NOT one of the 36; V1C-CONF-06 is the single config blocker until closed): v1-config-consumption.directAccessOutsideCompositionKeyCount = product-runtime direct env reads still to migrate into typed projections (the remaining target is the platform-api server runtime). approvedExceptionKeyCount = reads confined to approved NON-product boundaries (operator-script scripts/**, dev-ci-tooling tools/**, web-build vite.config.* \u2014 each a composition root / CI tool with its own contextual defaults). The exception list is enforced in the closure commit.",
     "liveTruth": "npm run v2:readiness --json"
   }

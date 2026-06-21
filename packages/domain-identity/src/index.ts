@@ -176,6 +176,10 @@ const ROLE_PERMISSION_MAP: Record<AnyRole, string[]> = {
     // Read alias so the (tenant-scoped) entitlement/usage console nav is visible to
     // operators too — mirrors the existing tenant.platform.read grant on system-admin.
     "tenant.entitlements.read",
+    // Delegated administration (V1C-04, ADR-0063): operators grant/list/revoke a
+    // tenant's delegated admin roles; a tenant can never self-grant.
+    "platform.delegations.read",
+    "platform.delegations.write",
     // Metering + quota (Phase 2, ADR-0067 / ADR-ACT-0256): operators ingest usage,
     // read usage, and set quotas; tenants only read their own.
     "platform.metering.read",
