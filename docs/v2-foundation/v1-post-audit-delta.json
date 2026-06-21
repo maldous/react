@@ -1838,6 +1838,33 @@
       "v2Target": "docs/evidence/lifecycle/removal/observability/removal-evidence.json",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/domain-core/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package domain-core.",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/domain-core/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/feature-workflow/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package feature-workflow.",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/feature-workflow/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package profile-configuration.",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
     }
   ],
   "deletions": [
@@ -2113,8 +2140,113 @@
       "deletionDecision": "Deprecated package observability removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
       "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
       "evidence": "docs/evidence/lifecycle/removal/observability/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/domain-core/package.json",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package domain-core removed (ADR-0006/ADR-ACT-0289); only synthetic test-fixture references remained.",
+      "replacementOrNa": "n/a (deprecated package, zero real consumers)",
+      "evidence": "docs/evidence/lifecycle/removal/domain-core/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/domain-core/README.md",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package domain-core removed (ADR-0006/ADR-ACT-0289); only synthetic test-fixture references remained.",
+      "replacementOrNa": "n/a (deprecated package, zero real consumers)",
+      "evidence": "docs/evidence/lifecycle/removal/domain-core/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/domain-core/src/index.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package domain-core removed (ADR-0006/ADR-ACT-0289); only synthetic test-fixture references remained.",
+      "replacementOrNa": "n/a (deprecated package, zero real consumers)",
+      "evidence": "docs/evidence/lifecycle/removal/domain-core/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/domain-core/tests/domain-core.test.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package domain-core removed (ADR-0006/ADR-ACT-0289); only synthetic test-fixture references remained.",
+      "replacementOrNa": "n/a (deprecated package, zero real consumers)",
+      "evidence": "docs/evidence/lifecycle/removal/domain-core/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/domain-core/tests/.gitkeep",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package domain-core removed (ADR-0006/ADR-ACT-0289); only synthetic test-fixture references remained.",
+      "replacementOrNa": "n/a (deprecated package, zero real consumers)",
+      "evidence": "docs/evidence/lifecycle/removal/domain-core/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/feature-workflow/package.json",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package feature-workflow removed (ADR-0006/ADR-ACT-0289); only synthetic test-fixture references remained.",
+      "replacementOrNa": "n/a (deprecated package, zero real consumers)",
+      "evidence": "docs/evidence/lifecycle/removal/feature-workflow/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/feature-workflow/README.md",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package feature-workflow removed (ADR-0006/ADR-ACT-0289); only synthetic test-fixture references remained.",
+      "replacementOrNa": "n/a (deprecated package, zero real consumers)",
+      "evidence": "docs/evidence/lifecycle/removal/feature-workflow/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/feature-workflow/src/index.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package feature-workflow removed (ADR-0006/ADR-ACT-0289); only synthetic test-fixture references remained.",
+      "replacementOrNa": "n/a (deprecated package, zero real consumers)",
+      "evidence": "docs/evidence/lifecycle/removal/feature-workflow/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/feature-workflow/tests/feature-workflow.test.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package feature-workflow removed (ADR-0006/ADR-ACT-0289); only synthetic test-fixture references remained.",
+      "replacementOrNa": "n/a (deprecated package, zero real consumers)",
+      "evidence": "docs/evidence/lifecycle/removal/feature-workflow/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/feature-workflow/tests/.gitkeep",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package feature-workflow removed (ADR-0006/ADR-ACT-0289); only synthetic test-fixture references remained.",
+      "replacementOrNa": "n/a (deprecated package, zero real consumers)",
+      "evidence": "docs/evidence/lifecycle/removal/feature-workflow/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/profile-configuration/package.json",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package profile-configuration removed (ADR-0006/ADR-ACT-0289); only synthetic test-fixture references remained.",
+      "replacementOrNa": "n/a (deprecated package, zero real consumers)",
+      "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/profile-configuration/README.md",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package profile-configuration removed (ADR-0006/ADR-ACT-0289); only synthetic test-fixture references remained.",
+      "replacementOrNa": "n/a (deprecated package, zero real consumers)",
+      "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/profile-configuration/src/index.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package profile-configuration removed (ADR-0006/ADR-ACT-0289); only synthetic test-fixture references remained.",
+      "replacementOrNa": "n/a (deprecated package, zero real consumers)",
+      "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/profile-configuration/tests/.gitkeep",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package profile-configuration removed (ADR-0006/ADR-ACT-0289); only synthetic test-fixture references remained.",
+      "replacementOrNa": "n/a (deprecated package, zero real consumers)",
+      "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/profile-configuration/tests/profile-configuration.test.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package profile-configuration removed (ADR-0006/ADR-ACT-0289); only synthetic test-fixture references remained.",
+      "replacementOrNa": "n/a (deprecated package, zero real consumers)",
+      "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 193,
-  "deletionCount": 39
+  "additionCount": 196,
+  "deletionCount": 54
 }

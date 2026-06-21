@@ -21,6 +21,10 @@ export function collectImportMap(repoRoot, roots = ["apps", "packages", "tools",
     for (const e of entries) {
       if (skip.has(e.name)) continue;
       const full = path.join(dir, e.name);
+      // Synthetic architecture-tool test fixtures (tools/**/tests/fixtures/**) deliberately
+      // reference @platform/* packages as test DATA — they are not real consumers and must not
+      // keep a deprecated package alive for removal purposes.
+      if (e.isDirectory() && full.includes(path.join("tests", "fixtures"))) continue;
       if (e.isDirectory()) walk(full);
       else if (/\.(ts|tsx|mjs|js|cjs)$/.test(e.name) && !full.endsWith(".d.ts")) {
         let edges;

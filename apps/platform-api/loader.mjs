@@ -50,16 +50,10 @@ const PLATFORM_MAP = {
     "packages/adapters-opentelemetry/src/index.ts"
   ),
   "@platform/adapters-sentry": resolvePath(repoRoot, "packages/adapters-sentry/src/index.ts"),
-  "@platform/domain-core": resolvePath(repoRoot, "packages/domain-core/src/index.ts"),
   "@platform/config-runtime": resolvePath(repoRoot, "packages/config-runtime/src/index.ts"),
   "@platform/email-runtime": resolvePath(repoRoot, "packages/email-runtime/src/index.ts"),
   "@platform/storage-runtime": resolvePath(repoRoot, "packages/storage-runtime/src/index.ts"),
   "@platform/audit-events": resolvePath(repoRoot, "packages/audit-events/src/index.ts"),
-  "@platform/profile-configuration": resolvePath(
-    repoRoot,
-    "packages/profile-configuration/src/index.ts"
-  ),
-  "@platform/feature-workflow": resolvePath(repoRoot, "packages/feature-workflow/src/index.ts"),
   "@platform/contracts-analytics": resolvePath(
     repoRoot,
     "packages/contracts-analytics/src/index.ts"

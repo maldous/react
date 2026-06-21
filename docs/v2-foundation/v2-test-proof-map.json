@@ -728,14 +728,6 @@
     "retirementJustification": null
   },
   {
-    "v1Path": "packages/domain-core/tests/domain-core.test.ts",
-    "v2Path": null,
-    "migrationType": "retire",
-    "selectorsOrImportsChange": false,
-    "becomesReusableContract": false,
-    "retirementJustification": "Package removed before V2 cut (delete-after-proof; zero-consumer superseded scaffold per ADR-0006/ADR-ACT-0289); the scaffold's smoke test is retired with it. No behaviour is lost \u2014 the capability is delivered by the replacement noted in v1-to-v2-path-map.json."
-  },
-  {
     "v1Path": "packages/domain-identity/tests/domain-identity.test.ts",
     "v2Path": "packages/domain-identity/tests/domain-identity.test.ts",
     "migrationType": "carry",
@@ -750,14 +742,6 @@
     "selectorsOrImportsChange": false,
     "becomesReusableContract": false,
     "retirementJustification": null
-  },
-  {
-    "v1Path": "packages/feature-workflow/tests/feature-workflow.test.ts",
-    "v2Path": null,
-    "migrationType": "retire",
-    "selectorsOrImportsChange": false,
-    "becomesReusableContract": false,
-    "retirementJustification": "Package removed before V2 cut (delete-after-proof; zero-consumer superseded scaffold per ADR-0006/ADR-ACT-0289); the scaffold's smoke test is retired with it. No behaviour is lost \u2014 the capability is delivered by the replacement noted in v1-to-v2-path-map.json."
   },
   {
     "v1Path": "packages/graphql-api-runtime/tests/graphql-api-runtime.test.ts",
@@ -822,14 +806,6 @@
     "selectorsOrImportsChange": false,
     "becomesReusableContract": false,
     "retirementJustification": null
-  },
-  {
-    "v1Path": "packages/profile-configuration/tests/profile-configuration.test.ts",
-    "v2Path": null,
-    "migrationType": "retire",
-    "selectorsOrImportsChange": false,
-    "becomesReusableContract": false,
-    "retirementJustification": "Package removed before V2 cut (delete-after-proof; zero-consumer superseded scaffold per ADR-0006/ADR-ACT-0289); the scaffold's smoke test is retired with it. No behaviour is lost \u2014 the capability is delivered by the replacement noted in v1-to-v2-path-map.json."
   },
   {
     "v1Path": "packages/session-runtime/tests/session-runtime.test.ts",

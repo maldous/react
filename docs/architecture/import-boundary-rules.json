@@ -5,76 +5,11 @@
   "deprecatedImportExceptions": [],
   "packageRules": [
     {
-      "id": "no-react-in-domain",
-      "appliesTo": ["@platform/domain-core"],
-      "forbiddenPrefixes": [],
-      "forbiddenExact": ["react", "react-dom"],
-      "rationale": "Domain packages must remain pure TypeScript policy/model packages with no React runtime dependency."
-    },
-    {
-      "id": "no-graphql-in-domain",
-      "appliesTo": ["@platform/domain-core"],
-      "forbiddenPrefixes": ["@apollo/", "@graphql-codegen/"],
-      "forbiddenExact": ["graphql"],
-      "rationale": "Domain packages must not import GraphQL client or runtime packages."
-    },
-    {
-      "id": "no-adapters-in-domain",
-      "appliesTo": ["@platform/domain-core"],
-      "forbiddenPrefixes": ["@platform/adapters-"],
-      "forbiddenExact": ["@platform/react-enterprise-app", "@platform/feature-workflow"],
-      "rationale": "Domain packages must not import adapters, application packages, or feature packages."
-    },
-    {
-      "id": "no-operations-in-domain",
-      "appliesTo": ["@platform/domain-core"],
-      "forbiddenPrefixes": ["@platform/api-runtime", "@platform/graphql-api-runtime"],
-      "forbiddenExact": [
-        "@platform/session-runtime",
-        "@platform/audit-events",
-        "@platform/storage-runtime",
-        "@platform/config-runtime"
-      ],
-      "rationale": "Domain packages must not import any operations or delivery packages."
-    },
-    {
       "id": "no-domain-in-ui",
       "appliesTo": ["@platform/ui-design-system"],
       "forbiddenPrefixes": ["@platform/adapters-", "@platform/contracts-"],
-      "forbiddenExact": ["@platform/domain-core", "@platform/profile-configuration"],
+      "forbiddenExact": [],
       "rationale": "UI packages are presentational and data-source agnostic; they must not import domain, contract, or adapter packages."
-    },
-    {
-      "id": "no-adapters-in-profile",
-      "appliesTo": ["@platform/profile-configuration"],
-      "forbiddenPrefixes": [],
-      "forbiddenExact": [
-        "@platform/adapters-postgres",
-        "@platform/adapters-clickhouse",
-        "@platform/adapters-graphql",
-        "react",
-        "react-dom"
-      ],
-      "rationale": "Profile/configuration policy is storage-independent. PostgreSQL persistence belongs to adapters-postgres."
-    },
-    {
-      "id": "no-operations-in-profile",
-      "appliesTo": ["@platform/profile-configuration"],
-      "forbiddenPrefixes": [
-        "@platform/api-runtime",
-        "@platform/graphql-api-runtime",
-        "@platform/adapters-keycloak",
-        "@platform/adapters-redis",
-        "@platform/adapters-sentry",
-        "@platform/adapters-opentelemetry",
-        "@platform/adapters-object-storage"
-      ],
-      "forbiddenExact": [
-        "@platform/session-runtime",
-        "@platform/storage-runtime",
-        "@platform/config-runtime"
-      ],
-      "rationale": "Profile/configuration must not import operations or delivery packages."
     },
     {
       "id": "no-adapters-in-contracts-graphql",
@@ -114,38 +49,6 @@
       "rationale": "ADR-0036/0037: contracts-admin is a pure zod contract package. It must remain runtime- and framework-free and must not import adapters, other contracts, domain, or React. Role/provider-id literals are kept in lock-step with domain-identity by review, not by import."
     },
     {
-      "id": "no-adapters-in-feature",
-      "appliesTo": ["@platform/feature-workflow"],
-      "forbiddenPrefixes": [],
-      "forbiddenExact": ["@platform/adapters-postgres", "@platform/adapters-clickhouse"],
-      "rationale": "Feature packages compose workflows; they do not own persistence."
-    },
-    {
-      "id": "no-operations-adapters-in-feature",
-      "appliesTo": ["@platform/feature-workflow"],
-      "forbiddenPrefixes": [],
-      "forbiddenExact": [
-        "@platform/adapters-keycloak",
-        "@platform/adapters-redis",
-        "@platform/adapters-sentry",
-        "@platform/adapters-opentelemetry",
-        "@platform/adapters-object-storage",
-        "@platform/adapters-brevo"
-      ],
-      "rationale": "Feature packages must not import operations adapter packages."
-    },
-    {
-      "id": "no-server-runtime-in-feature",
-      "appliesTo": ["@platform/feature-workflow"],
-      "forbiddenPrefixes": [],
-      "forbiddenExact": [
-        "@platform/api-runtime",
-        "@platform/graphql-api-runtime",
-        "@platform/session-runtime"
-      ],
-      "rationale": "Feature packages must not import server-side platform runtime packages."
-    },
-    {
       "id": "no-platform-deps-in-storage-runtime",
       "appliesTo": ["@platform/storage-runtime"],
       "forbiddenPrefixes": ["@platform/"],
@@ -172,34 +75,6 @@
       "forbiddenPrefixes": ["@platform/"],
       "forbiddenExact": [],
       "rationale": "email-runtime is a leaf interface node with zero @platform/* dependencies."
-    },
-    {
-      "id": "no-raw-observability-in-domain",
-      "appliesTo": ["@platform/domain-core", "@platform/profile-configuration"],
-      "forbiddenPrefixes": [
-        "@opentelemetry/",
-        "@sentry/",
-        "@platform/platform-logging",
-        "@platform/platform-observability",
-        "@platform/adapters-opentelemetry",
-        "@platform/adapters-sentry"
-      ],
-      "forbiddenExact": ["pino"],
-      "rationale": "Domain packages must not depend on logging, observability, or error-monitoring SDKs. ADR-0020: observability flows through platform abstractions in adapter/use-case layers only. Domain may receive RuntimeContext types but must not import the logging or tracing implementations."
-    },
-    {
-      "id": "no-raw-observability-in-feature",
-      "appliesTo": ["@platform/feature-workflow"],
-      "forbiddenPrefixes": [
-        "@opentelemetry/sdk-",
-        "@sentry/",
-        "@platform/platform-logging",
-        "@platform/platform-observability",
-        "@platform/adapters-opentelemetry",
-        "@platform/adapters-sentry"
-      ],
-      "forbiddenExact": ["pino"],
-      "rationale": "Feature packages must not import pino, Sentry, OTel SDK, or platform logging/observability packages directly. ADR-0020: features may import @platform/platform-errors (safe client types) and @platform/platform-runtime-context (requestId types only)."
     },
     {
       "id": "no-observability-in-ui",
@@ -260,13 +135,7 @@
         "@platform/adapters-",
         "@platform/platform-logging"
       ],
-      "forbiddenExact": [
-        "pino",
-        "@platform/feature-workflow",
-        "@platform/ui-design-system",
-        "@platform/domain-core",
-        "@platform/profile-configuration"
-      ],
+      "forbiddenExact": ["pino", "@platform/ui-design-system"],
       "rationale": "ADR-0020 \u00a710: platform-observability wraps @opentelemetry/api only \u2014 the SDK (sdk-node, auto-instrumentations, exporters, instrumentation-*) is wired exclusively by packages/adapters-opentelemetry at application startup. platform-observability must not import Sentry, platform-logging, adapters, features, domain, or UI."
     },
     {
@@ -279,10 +148,7 @@
         "@platform/platform-observability"
       ],
       "forbiddenExact": [
-        "@platform/feature-workflow",
         "@platform/ui-design-system",
-        "@platform/domain-core",
-        "@platform/profile-configuration",
         "@platform/contracts-graphql",
         "@platform/contracts-analytics",
         "@platform/contracts-ingestion"
@@ -291,21 +157,10 @@
     },
     {
       "id": "no-keycloak-sdk-in-domain",
-      "appliesTo": [
-        "@platform/domain-core",
-        "@platform/profile-configuration",
-        "@platform/domain-identity"
-      ],
+      "appliesTo": ["@platform/domain-identity"],
       "forbiddenPrefixes": ["@keycloak/"],
       "forbiddenExact": ["keycloak-js"],
       "rationale": "ADR-0022: Domain packages must not import Keycloak SDK. Keycloak integration is owned exclusively by packages/adapters-keycloak. Note: @platform/adapters-keycloak is already forbidden by no-adapters-in-domain."
-    },
-    {
-      "id": "no-keycloak-sdk-in-features",
-      "appliesTo": ["@platform/feature-workflow"],
-      "forbiddenPrefixes": ["@keycloak/"],
-      "forbiddenExact": ["keycloak-js"],
-      "rationale": "ADR-0022: Feature packages must not import Keycloak SDK. Note: @platform/adapters-keycloak is already forbidden by no-operations-adapters-in-feature."
     },
     {
       "id": "no-keycloak-sdk-in-contracts",
@@ -323,12 +178,7 @@
       "id": "no-react-in-adapters-keycloak",
       "appliesTo": ["@platform/adapters-keycloak"],
       "forbiddenPrefixes": ["@platform/feature-", "@platform/ui-"],
-      "forbiddenExact": [
-        "react",
-        "react-dom",
-        "@platform/ui-design-system",
-        "@platform/feature-workflow"
-      ],
+      "forbiddenExact": ["react", "react-dom", "@platform/ui-design-system"],
       "rationale": "ADR-0022: The Keycloak adapter must not import React, UI components, or feature packages. It is a server-side adapter only. All Keycloak-React wiring (if ever needed) must go through a separate browser-side adapter, not this package."
     },
     {

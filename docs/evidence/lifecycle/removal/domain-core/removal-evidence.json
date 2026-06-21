@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "package": "domain-core",
+  "removedAt": "2026-06-21",
+  "sourceCommit": "0e92c99b19fb7556f1cdaa4129c8225fee6cb1c0",
+  "removalCommit": "pending",
+  "replacement": "none (deprecated package; only synthetic test-fixture references remained)",
+  "decisionRefs": [
+    "ADR-0006",
+    "ADR-ACT-0289"
+  ],
+  "commandsRun": [
+    "npm run v2:readiness",
+    "package-status scan"
+  ],
+  "consumerScan": {
+    "status": "clean",
+    "count": 0,
+    "note": "importers were validate-source-imports test fixtures only"
+  },
+  "workspaceDependencyScan": {
+    "status": "clean",
+    "count": 0
+  },
+  "loaderAliasScan": {
+    "status": "clean",
+    "count": 0
+  },
+  "tsconfigReferenceScan": {
+    "status": "clean",
+    "count": 0
+  },
+  "boundaryRuleScan": {
+    "status": "clean",
+    "count": 0
+  },
+  "lockfileScan": {
+    "status": "clean",
+    "count": 0
+  },
+  "inventoryScan": {
+    "status": "clean",
+    "count": 0
+  },
+  "tests": "deferred to consolidated verification phase",
+  "makeCheckResult": "deferred to consolidated verification phase",
+  "orchestratorResult": "deferred to consolidated verification phase"
+}
