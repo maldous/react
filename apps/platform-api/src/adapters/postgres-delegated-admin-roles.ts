@@ -75,7 +75,10 @@ function toRecord(r: Row): DelegatedRole {
 }
 
 export class PostgresDelegatedAdminRoles implements DelegatedAdminRolesPort {
-  constructor(private readonly pool: PgPool) {}
+  private readonly pool: PgPool;
+  constructor(pool: PgPool) {
+    this.pool = pool;
+  }
 
   async grantDelegation(input: GrantDelegationInput): Promise<DelegatedRole> {
     return withSystemAdmin(this.pool as never, async (client) => {

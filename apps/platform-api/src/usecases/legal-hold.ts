@@ -191,7 +191,10 @@ export interface LegalHoldGuardDeps {
  * the held-row invariant is preserved across infrastructure faults.
  */
 export class LegalHoldGuard {
-  constructor(private readonly deps: LegalHoldGuardDeps) {}
+  private readonly deps: LegalHoldGuardDeps;
+  constructor(deps: LegalHoldGuardDeps) {
+    this.deps = deps;
+  }
 
   async assertCanDelete(
     organisationId: string,
