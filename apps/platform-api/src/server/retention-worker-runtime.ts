@@ -19,6 +19,7 @@ import { PostgresRetentionRepository } from "../adapters/postgres-retention.ts";
 import { PostgresLegalHoldRepository } from "../adapters/postgres-legal-hold.ts";
 import { runRetentionTick, type RetentionActor } from "../usecases/retention.ts";
 import { recordWorkerTick, setWorkerStatus } from "./worker-registry.ts";
+import { loadRetentionTickWorkerConfig } from "../config/retention-config.ts";
 
 const log = createLogger({ name: "retention-worker" });
 
@@ -35,8 +36,7 @@ export const V1C12B_SCHEDULER_ACTOR: RetentionActor = {
   sourceHost: "platform-retention-worker",
 };
 
-const INTERVAL_MS = 15 * 60 * 1000; // 15 minutes per ADR-0064 (configurable via env)
-const ENV_DISABLED = process.env["V1C12B_RETENTION_TICK_DISABLED"] === "true";
+const INTERVAL_MS = 15 * 60 * 1000; // 15 minutes per ADR-0064
 
 /**
  * Start the background retention tick worker. Returns a stop function so the
@@ -44,7 +44,11 @@ const ENV_DISABLED = process.env["V1C12B_RETENTION_TICK_DISABLED"] === "true";
  * worker.
  */
 export function startRetentionTickWorker(): () => void {
-  if (ENV_DISABLED) {
+  // V1C12B_RETENTION_TICK_DISABLED is read through the typed-config boundary
+  // (V1C-CONF-06 / ADR-0076) rather than via direct process.env access — see
+  // ../config/retention-config.ts. The load is deferred into the function body
+  // (not module-load) so importing this module does not touch process.env.
+  if (loadRetentionTickWorkerConfig().tickDisabled) {
     log.info("retention tick worker disabled (V1C12B_RETENTION_TICK_DISABLED=true)");
     return () => {};
   }
