@@ -17,7 +17,7 @@ with **honest semantic closure**.
 > flat list — no invented hierarchy), and **Claim mapping** (`proof:ui-semantic-claim-mapping`, with
 > the external real-IdP proof limitation kept explicit and separate per ADR-ACT-0220). Each was closed
 > only on a **passing headless journey**, not a schema entry. **Completion-blocker total: 31**
-> (21 capability completions + 10 package removals). V1C-18 remains reopened pending fresh proof;
+> (14 capability completions + 0 package removals). V1C-18 remains reopened pending fresh proof;
 > V1C-17 is now closed by live runtime proofs (`proof:metrics-prometheus`, `proof:dashboards`) against
 > the env-specific Prometheus scrape target. The cut remains BLOCKED.
 
@@ -94,7 +94,7 @@ worker-runtime, observability`. All now `delete-after-proof` in the path-map (wa
    **Not executed in this change** (per instruction).
 3. **8 config-runtime bounded decisions** — `V1C-CONF-01..08` (decomposed from `V1C-PKG-CONFIG`).
 
-**Completion-blocker total: 29** = 17 capability completions + 10 package removals + 2 reopened V1C-17/V1C-18 capability completions (V1C-CONF-06 config decisions closed; V1C-01/02/05/06 and V1C-25 validation semantics closed)
+**Completion-blocker total: 14** = 14 capability completions + 0 package removals (V1C-CONF-06 config decisions closed; V1C-01/02/05/06/07/08/17 validation semantics closed)
 (live truth: `npm run v2:readiness --json` `.completionBlockerCount`).
 
 ## What pass two got wrong (now fixed)
@@ -114,8 +114,8 @@ worker-runtime, observability`. All now `delete-after-proof` in the path-map (wa
 
 | Class                                      | Count | Blocks cut?         |
 | ------------------------------------------ | ----- | ------------------- |
-| delivered-and-proven                       | 55    | no                  |
-| requires-v1-completion                     | 15    | **yes**             |
+| delivered-and-proven                       | 56    | no                  |
+| requires-v1-completion                     | 14    | **yes**             |
 | superseded-by-proven-canonical             | 1     | no                  |
 | not-applicable-final                       | 4     | no                  |
 | config-runtime decisions (V1C-CONF-01..08) | 8     | **yes**             |
