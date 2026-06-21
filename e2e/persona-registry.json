@@ -193,7 +193,11 @@
         "platform.events.read",
         "platform.jobs.read",
         "platform.observability.read",
-        "platform.clickthrough.*"
+        "platform.clickthrough.*",
+        "platform.clickthrough.prometheus",
+        "platform.clickthrough.alertmanager",
+        "platform.clickthrough.windmill",
+        "platform.clickthrough.temporal"
       ],
       "deniedPermissions": [],
       "entitlements": [],
@@ -222,7 +226,11 @@
         "minio",
         "pgadmin",
         "sentry",
-        "clickhouse"
+        "clickhouse",
+        "prometheus",
+        "alertmanager",
+        "windmill",
+        "temporal"
       ],
       "forbiddenClickthroughAccess": [],
       "notes": "On a tenant FQDN, system-admin is BLOCKED without explicit audited support mode (canAccessTenantFqdn). Global/apex host only."
@@ -252,7 +260,15 @@
       "expectedApiAccess": ["GET /api/session", "GET /api/auth/settings/providers"],
       "forbiddenApiAccess": ["GET /api/admin/tenants"],
       "expectedClickthroughAccess": ["keycloak"],
-      "forbiddenClickthroughAccess": ["grafana", "sentry", "sonarqube"]
+      "forbiddenClickthroughAccess": [
+        "grafana",
+        "sentry",
+        "sonarqube",
+        "prometheus",
+        "alertmanager",
+        "windmill",
+        "temporal"
+      ]
     },
     {
       "personaId": "scaffold-tenant-manager",

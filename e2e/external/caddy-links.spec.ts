@@ -22,6 +22,10 @@ const PROTECTED_ROUTES = [
   { path: "/mailpit/", label: "Mailpit", resource: "admin:mailpit" },
   { path: "/minio/", label: "MinIO", resource: "admin:minio" },
   { path: "/sonar/", label: "SonarQube", resource: "admin:sonarqube" },
+  { path: "/prometheus/", label: "Prometheus", resource: "admin:prometheus" },
+  { path: "/alertmanager/", label: "Alertmanager", resource: "admin:alertmanager" },
+  { path: "/windmill/", label: "Windmill", resource: "admin:windmill" },
+  { path: "/temporal/", label: "Temporal", resource: "admin:temporal" },
   // /wiremock/ intentionally absent — WireMock was removed from the Caddy clickthrough
   // surface. The route no longer exists; the SPA catch-all serves it (200), which is
   // not a denial. WireMock is accessed directly via WIREMOCK_PORT in dev.
