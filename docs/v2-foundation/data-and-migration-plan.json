@@ -2,17 +2,15 @@
   "$schema": "./v2-foundation/data-and-migration-plan.schema (informal)",
   "artefact": "data-and-migration-plan",
   "version": 1,
-  "generatedFor": "V2 foundation — data + migration continuity",
+  "generatedFor": "V2 foundation \u2014 data + migration continuity",
   "governingIntent": "V1 (maldous/react) is the complete reference for V2. Reuse/move/refine/wrap proven V1 data assets. Zero discovery. No legacy/temp/transitional naming in the final tree. DO NOT modify any product/runtime file; this artefact is read-only-derived and written only under docs/v2-foundation/.",
-  "scope": "PostgreSQL (platform DB, schema-per-tenant), Redis, ClickHouse, MinIO/object-storage, plus migration chain, RLS, seeds/fixtures, backups, restore, destructive-op controls. Keycloak-postgres / Sentry-* / Sonar-postgres / Loki / Grafana / pgAdmin volumes are dependency-stack stores, not platform product data — retained as-is, listed under externalVolumes.",
-
+  "scope": "PostgreSQL (platform DB, schema-per-tenant), Redis, ClickHouse, MinIO/object-storage, plus migration chain, RLS, seeds/fixtures, backups, restore, destructive-op controls. Keycloak-postgres / Sentry-* / Sonar-postgres / Loki / Grafana / pgAdmin volumes are dependency-stack stores, not platform product data \u2014 retained as-is, listed under externalVolumes.",
   "summary": {
     "canonicalStore": "PostgreSQL 16.6 (image postgres:16.6-alpine), database 'platform', single shared instance in dev/test. Local-first: every USF capability substrate (metering, search, event-bus, observability, secrets, scheduled-jobs) is delivered as a Postgres table first; ClickHouse/Meilisearch/Redis-streams/OpenBao etc. are provider adapters behind ports, NOT additional schema owners.",
     "migrationModel": "Hand-rolled forward-only runner (apps/platform-api/src/db/migrate.ts). Numbered SQL files 001..034 in apps/platform-api/src/db/migrations/. Tracked in schema_migrations(name UNIQUE, checksum, applied_at). Checksum = sha256(file bytes).slice(0,16). Already-applied files MUST be byte-stable or the runner throws a checksum-mismatch and refuses to proceed.",
     "tenantIsolation": "Two layers. (1) schema-per-tenant (ADR-0029): per-tenant tenant_settings etc. live in tenant_{uuidv4} schemas applied by the withTenant runner under SET LOCAL search_path. (2) RLS defence-in-depth on public-schema tenant-scoped tables, enforced because the app connects as the non-superuser NOINHERIT role platform_app (ADR-ACT-0189).",
     "rlsBypass": "Role-membership based (rls_bypass NOLOGIN role), NOT a user-settable GUC. Canonical bypass predicate (migration 012/023/024+): current_user = 'rls_bypass' (after withSystemAdmin SET LOCAL ROLE) OR (pg_has_role(current_user,'rls_bypass','MEMBER') AND rolinherit(current_user)). platform_app is NOINHERIT so under withTenant() RLS enforces; superuser/pgadmin_sysadmin inherit and bypass."
   },
-
   "postgres": {
     "image": "postgres:16.6-alpine",
     "database": "platform",
@@ -20,10 +18,10 @@
     "devPort": 5433,
     "connectionRoles": {
       "POSTGRES_URL": "superuser/owner (platform). Used by migrate.ts / seed.ts / reset.ts. Superusers bypass RLS unconditionally.",
-      "POSTGRES_APP_URL": "managed platform_app credential (NOSUPERUSER NOINHERIT NOBYPASSRLS LOGIN). Runtime app connection — RLS applies. Also supplies the ${PLATFORM_APP_PASSWORD} materialised into migration 034 at apply-time. Deliberately NO fallback to POSTGRES_URL.",
+      "POSTGRES_APP_URL": "managed platform_app credential (NOSUPERUSER NOINHERIT NOBYPASSRLS LOGIN). Runtime app connection \u2014 RLS applies. Also supplies the ${PLATFORM_APP_PASSWORD} materialised into migration 034 at apply-time. Deliberately NO fallback to POSTGRES_URL.",
       "platform_app": "runtime role, subject to RLS",
       "rls_bypass": "NOLOGIN role; SET LOCAL ROLE target for withSystemAdmin(); granted DML + GRANT CREATE ON DATABASE for tenant CREATE SCHEMA",
-      "pgadmin_sysadmin": "non-superuser pgAdmin role granted rls_bypass (inherits) — created by docker/postgres/init-extra-databases.sh, grant re-applied idempotently by migration 015"
+      "pgadmin_sysadmin": "non-superuser pgAdmin role granted rls_bypass (inherits) \u2014 created by docker/postgres/init-extra-databases.sh, grant re-applied idempotently by migration 015"
     },
     "bootstrapNonMigration": {
       "file": "docker/postgres/init-extra-databases.sh",
@@ -36,15 +34,13 @@
       ],
       "v2Note": "Migrations 008/010/015 re-create/re-grant these idempotently for volumes that pre-date the script, so the script and the migration chain are mutually redundant by design. Keep both in V2."
     },
-
     "schemaMigrationsTable": {
       "ddl": "CREATE TABLE IF NOT EXISTS schema_migrations (id SERIAL PK, name TEXT UNIQUE, checksum TEXT, applied_at TIMESTAMPTZ DEFAULT now())",
       "checksumAlgo": "sha256(file content bytes).hex().slice(0,16)",
-      "orderingRule": "compareMigrationNames — pure code-point comparison (NOT localeCompare) for locale-stable apply order; filenames are zero-padded ASCII",
+      "orderingRule": "compareMigrationNames \u2014 pure code-point comparison (NOT localeCompare) for locale-stable apply order; filenames are zero-padded ASCII",
       "applyUnit": "one BEGIN/COMMIT transaction per file; INSERT into schema_migrations inside the same txn; ROLLBACK on failure",
       "placeholderMaterialisation": "materializeSql() substitutes ${PLATFORM_APP_PASSWORD} from POSTGRES_APP_URL password ONLY; assertSafeRolePassword() rejects quote/backslash/control-char (sole SQL trust boundary). Checksum is over the FILE (placeholder intact) so it is identical across all environments regardless of the real secret."
     },
-
     "migrationChain": [
       {
         "file": "001-identity-schema.sql",
@@ -58,12 +54,12 @@
       },
       {
         "file": "003-tenant-resource-config.sql",
-        "intent": "public.tenant_resource_config — per-tenant per-resource tier (shared/dedicated/external/air-gapped) + JSONB config for db/identity/cache/storage",
+        "intent": "public.tenant_resource_config \u2014 per-tenant per-resource tier (shared/dedicated/external/air-gapped) + JSONB config for db/identity/cache/storage",
         "rls": "added in 004"
       },
       {
         "file": "004-rls-policies.sql",
-        "intent": "ENABLE+FORCE RLS + tenant_isolation policies on organisations, memberships, tenant_resource_config, users, external_identities (GUC-based bypass — later superseded)",
+        "intent": "ENABLE+FORCE RLS + tenant_isolation policies on organisations, memberships, tenant_resource_config, users, external_identities (GUC-based bypass \u2014 later superseded)",
         "rls": "initial"
       },
       {
@@ -88,12 +84,12 @@
       },
       {
         "file": "009-tenant-auth-settings-credentials.sql",
-        "intent": "public.tenant_auth_settings_credentials — per-tenant realm-admin svc-account client_id + AES-256-GCM client_secret_enc. NO RLS (platform infra secret, withSystemAdmin only)",
+        "intent": "public.tenant_auth_settings_credentials \u2014 per-tenant realm-admin svc-account client_id + AES-256-GCM client_secret_enc. NO RLS (platform infra secret, withSystemAdmin only)",
         "rls": "none by design"
       },
       {
         "file": "010-platform-app-role.sql",
-        "intent": "Create platform_app LOGIN NOSUPERUSER NOBYPASSRLS role (bootstrap password 'platformapppassword'); grant rls_bypass; grant schema privileges. Checksum-frozen in staging/prod — never edit",
+        "intent": "Create platform_app LOGIN NOSUPERUSER NOBYPASSRLS role (bootstrap password 'platformapppassword'); grant rls_bypass; grant schema privileges. Checksum-frozen in staging/prod \u2014 never edit",
         "rls": "enables non-superuser enforcement"
       },
       {
@@ -113,7 +109,7 @@
       },
       {
         "file": "014-vanity-domain-challenges.sql",
-        "intent": "public.vanity_domain_challenges — DNS TXT ownership proof; unique partial idx (domain,org) WHERE unconsumed + verified idx",
+        "intent": "public.vanity_domain_challenges \u2014 DNS TXT ownership proof; unique partial idx (domain,org) WHERE unconsumed + verified idx",
         "rls": "none"
       },
       {
@@ -128,12 +124,12 @@
       },
       {
         "file": "017-auth-settings-credential-lifecycle.sql",
-        "intent": "tenant_auth_settings_credentials +last_validated_at/+last_rotated_at/+rotated_by/+validation_error_kind (no secret, no readiness column — derived live)",
+        "intent": "tenant_auth_settings_credentials +last_validated_at/+last_rotated_at/+rotated_by/+validation_error_kind (no secret, no readiness column \u2014 derived live)",
         "rls": "none"
       },
       {
         "file": "018-tenant-email-sender-credentials.sql",
-        "intent": "public.tenant_email_sender_credentials — AES-256-GCM secret_enc; non-secret config in tenant_settings email.sender. NO RLS (withSystemAdmin)",
+        "intent": "public.tenant_email_sender_credentials \u2014 AES-256-GCM secret_enc; non-secret config in tenant_settings email.sender. NO RLS (withSystemAdmin)",
         "rls": "none by design"
       },
       {
@@ -148,12 +144,12 @@
       },
       {
         "file": "021-tenant-domains-registry.sql",
-        "intent": "public.tenant_domains — first-class custom-domain lifecycle (ownership/auth_client/routing/tls status, canonical, redirect_policy). routing_*/tls_* only upgraded by live probe (ADR-ACT-0231/0232)",
+        "intent": "public.tenant_domains \u2014 first-class custom-domain lifecycle (ownership/auth_client/routing/tls status, canonical, redirect_policy). routing_*/tls_* only upgraded by live probe (ADR-ACT-0231/0232)",
         "rls": "none, explicit filter"
       },
       {
         "file": "022-tenant-entitlements.sql",
-        "intent": "public.tenant_entitlements (UNIQUE org+key, state granted/revoked, deny-by-default). RLS ENABLE+FORCE — but with NAIVE MEMBER predicate (latent leak)",
+        "intent": "public.tenant_entitlements (UNIQUE org+key, state granted/revoked, deny-by-default). RLS ENABLE+FORCE \u2014 but with NAIVE MEMBER predicate (latent leak)",
         "rls": "naive (buggy)"
       },
       {
@@ -203,25 +199,29 @@
       },
       {
         "file": "032-provider-config.sql",
-        "intent": "public.provider_configs — which concrete provider serves a USF capability per environment; credential_ref BY REFERENCE (CHECK LIKE 'secret:%'), no-forbidden-in-production CHECK; lifecycle candidate->ready. Operator-global, withSystemAdmin (ADR-0070)",
+        "intent": "public.provider_configs \u2014 which concrete provider serves a USF capability per environment; credential_ref BY REFERENCE (CHECK LIKE 'secret:%'), no-forbidden-in-production CHECK; lifecycle candidate->ready. Operator-global, withSystemAdmin (ADR-0070)",
         "rls": "none (operator-global)"
       },
       {
         "file": "033-environment-registry.sql",
-        "intent": "public.environment_registry — runtime projection of config/environments/<stage>.json: executor tilt/compose, allowed profiles/mocks, destructive_allowed, data_preservation ephemeral/preserve, secret_store_provider, bootstrap/provider-config status. Operator-global (ADR-0072)",
+        "intent": "public.environment_registry \u2014 runtime projection of config/environments/<stage>.json: executor tilt/compose, allowed profiles/mocks, destructive_allowed, data_preservation ephemeral/preserve, secret_store_provider, bootstrap/provider-config status. Operator-global (ADR-0072)",
         "rls": "none (operator-global)"
       },
       {
         "file": "034-platform-app-role-password-rotation.sql",
-        "intent": "ALTER ROLE platform_app PASSWORD '${PLATFORM_APP_PASSWORD}' — forward-only rotation to the managed credential WITHOUT editing checksum-frozen 010. Placeholder materialised at apply-time; checksum stable (ADR-ACT-0290)",
+        "intent": "ALTER ROLE platform_app PASSWORD '${PLATFORM_APP_PASSWORD}' \u2014 forward-only rotation to the managed credential WITHOUT editing checksum-frozen 010. Placeholder materialised at apply-time; checksum stable (ADR-ACT-0290)",
         "rls": "n/a"
+      },
+      {
+        "file": "037-delegated-admin-roles.sql",
+        "intent": "V1C-04: public.delegated_admin_roles (tenant-scoped delegated admin grants; granter+grantee+scope+(optional TTL); soft-delete via revoked_at+revoked_by; partial UNIQUE (grantee, scope) WHERE revoked_at IS NULL; metadata JSONB). Stop condition: held row invariant NOT relevant (this table tracks LID delegations, not legal hold).",
+        "rls": "canonical RLS predicate (migration 012) \u2014 tenant isolation + rls_bypass"
       }
     ],
-
     "rls": {
       "enforcedBy": "platform_app is NOSUPERUSER + NOINHERIT; FORCE ROW LEVEL SECURITY on every tenant-scoped public table; canonical bypass predicate",
       "canonicalPredicate": "organisation_id::text = current_setting('app.current_tenant_id', true) OR (current_user='rls_bypass' OR (pg_has_role(current_user,'rls_bypass','MEMBER') AND COALESCE((SELECT rolinherit FROM pg_roles WHERE rolname=current_user LIMIT 1),false)))",
-      "sessionContext": "withTenant() sets SET LOCAL app.current_tenant_id; withSystemAdmin() does SET LOCAL ROLE rls_bypass — both transaction-scoped, pool-safe",
+      "sessionContext": "withTenant() sets SET LOCAL app.current_tenant_id; withSystemAdmin() does SET LOCAL ROLE rls_bypass \u2014 both transaction-scoped, pool-safe",
       "rlsTables": [
         "memberships",
         "users",
@@ -258,26 +258,24 @@
         "provider_configs (operator-global)",
         "environment_registry (operator-global)"
       ],
-      "regressionGuard": "live proof scripts (e.g. proof:entitlements-postgres) assert an unfiltered count under another tenant context returns 0 — caught the 022 naive-predicate leak"
+      "regressionGuard": "live proof scripts (e.g. proof:entitlements-postgres) assert an unfiltered count under another tenant context returns 0 \u2014 caught the 022 naive-predicate leak"
     },
-
     "perTenantSchema": {
       "model": "ADR-0029 schema-per-tenant; ADR-0031 withTenant migration runner",
       "tenantSchemaName": "tenant_{organisation_id} where organisation_id MUST be UUID v4 (drives tenantSchemaIdentifier)",
       "perTenantMigrations": [
         "002-tenant-settings.sql (theme/branding/feature config returned by GET /api/theme)"
       ],
-      "note": "Public-schema USF tables (024..031) are tenant-scoped by RLS column, NOT by per-tenant schema — only tenant_settings currently lives in the per-tenant schema."
+      "note": "Public-schema USF tables (024..031) are tenant-scoped by RLS column, NOT by per-tenant schema \u2014 only tenant_settings currently lives in the per-tenant schema."
     }
   },
-
   "externalPersistentServices": {
     "redis": {
       "image": "redis:7.4.2-alpine",
       "volume": "redis-data:/data",
       "persistence": "appendonly yes (AOF)",
-      "role": "cache, rate-limit counters (redis-rate-limit-repository — Phase-3.5 provider behind RateLimitRepository port), session/forward-auth, event-bus provider candidate (Phase-5.5)",
-      "schemaOwnership": "NONE — no migration owns Redis; keys are runtime-managed. Redis is a provider adapter, never canonical state.",
+      "role": "cache, rate-limit counters (redis-rate-limit-repository \u2014 Phase-3.5 provider behind RateLimitRepository port), session/forward-auth, event-bus provider candidate (Phase-5.5)",
+      "schemaOwnership": "NONE \u2014 no migration owns Redis; keys are runtime-managed. Redis is a provider adapter, never canonical state.",
       "retention": "ephemeral semantics; AOF for crash recovery only. Local flush via make redis-flush-local.",
       "v2": "Reuse as-is. No data migration needed (rebuildable cache/counters). Fresh-install = empty volume."
     },
@@ -294,16 +292,15 @@
       "image": "minio/minio:RELEASE.2024-12-18T13-15-44Z",
       "volume": "minio-data:/data",
       "role": "object storage; OIDC-integrated (Keycloak minio client, ADR-0073 claim->policy mapping). storage_tier in tenant_resource_config.",
-      "schemaOwnership": "NONE — buckets/objects are runtime-managed, no SQL migration.",
+      "schemaOwnership": "NONE \u2014 buckets/objects are runtime-managed, no SQL migration.",
       "retention": "durable object data; bucket lifecycle policies are provider-side.",
       "v2": "Reuse as-is; retain the minio-data volume on upgrade (real customer objects). Fresh-install = empty buckets provisioned at first use."
     }
   },
-
   "seedsAndFixtures": {
     "seedScript": "apps/platform-api/src/db/seed.ts (seedFixtures); requires isMigrated()===true",
     "fixtureConstants": {
-      "ORG_ID": "00000000-0000-4000-8000-000000000001 (UUID v4 — required for tenantSchemaIdentifier)",
+      "ORG_ID": "00000000-0000-4000-8000-000000000001 (UUID v4 \u2014 required for tenantSchemaIdentifier)",
       "ORG_SLUG": "fixture-org",
       "users": [
         "ADMIN ...002",
@@ -315,43 +312,39 @@
       "roles": "admin=tenant-admin, viewer, manager, member (forbidden has no membership)"
     },
     "idempotencyGotchas": [
-      "DELETE FROM organisations WHERE slug=fixture-org AND id<>v4id first — reconciles a legacy non-v4 fixture id that would collide on slug UNIQUE (the v4 correction).",
-      "users insert uses bare ON CONFLICT DO NOTHING (covers BOTH id PK and email UNIQUE) — a persona that logged in under its real Keycloak sub must not crash boot-time re-seed.",
-      "memberships resolved by JOIN on email (not hardcoded fixture id) — a persona created by login has its real id, so a hardcoded-id insert would hit memberships_user_id_fkey."
+      "DELETE FROM organisations WHERE slug=fixture-org AND id<>v4id first \u2014 reconciles a legacy non-v4 fixture id that would collide on slug UNIQUE (the v4 correction).",
+      "users insert uses bare ON CONFLICT DO NOTHING (covers BOTH id PK and email UNIQUE) \u2014 a persona that logged in under its real Keycloak sub must not crash boot-time re-seed.",
+      "memberships resolved by JOIN on email (not hardcoded fixture id) \u2014 a persona created by login has its real id, so a hardcoded-id insert would hit memberships_user_id_fkey."
     ],
-    "v2": "Reuse fixture model verbatim — it is the semantic source for V2 E2E personas/journeys (per governing intent). Keep the v4 ORG_ID and email-join idempotency. Fixtures are dev/test only; production never seeds fixtures."
+    "v2": "Reuse fixture model verbatim \u2014 it is the semantic source for V2 E2E personas/journeys (per governing intent). Keep the v4 ORG_ID and email-join idempotency. Fixtures are dev/test only; production never seeds fixtures."
   },
-
   "backupRestore": {
     "backup": {
       "script": "scripts/backup/postgres-backup.sh (ADR-ACT-0229, hardened ADR-ACT-0235)",
       "behaviour": "pg_dump | gzip to .local-artifacts/backups (git-ignored, umask 077 + chmod 600 owner-only)",
-      "guard": "ENV outside dev|test REFUSED unless ALLOW_BACKUP_ENV=<ENV> explicitly set — never quietly dumps a shared DB"
+      "guard": "ENV outside dev|test REFUSED unless ALLOW_BACKUP_ENV=<ENV> explicitly set \u2014 never quietly dumps a shared DB"
     },
     "restore": {
       "script": "scripts/backup/postgres-restore.sh (ADR-ACT-0229)",
       "behaviour": "destructive overwrite of target DB from a .sql.gz",
-      "guard": "refuses unless ENV in {dev,test} AND CONFIRM_RESTORE=restore-<ENV> — intentionally hard to fire by accident"
+      "guard": "refuses unless ENV in {dev,test} AND CONFIRM_RESTORE=restore-<ENV> \u2014 intentionally hard to fire by accident"
     },
-    "scope": "Postgres only. Redis (rebuildable), ClickHouse (analytical mirror), MinIO (provider-native lifecycle) have no platform backup script — they are not canonical state.",
+    "scope": "Postgres only. Redis (rebuildable), ClickHouse (analytical mirror), MinIO (provider-native lifecycle) have no platform backup script \u2014 they are not canonical state.",
     "v2": "Reuse both scripts unchanged. They already encode the destructive-op controls V2 needs."
   },
-
   "destructiveOpControls": {
-    "resetTs": "apps/platform-api/src/db/reset.ts — drops memberships/external_identities/users/organisations/schema_migrations CASCADE; REFUSES unless NODE_ENV in {development,test,local}. Note: only drops the original 001 identity tables, NOT the later USF tables — a true full reset relies on dropping the volume.",
+    "resetTs": "apps/platform-api/src/db/reset.ts \u2014 drops memberships/external_identities/users/organisations/schema_migrations CASCADE; REFUSES unless NODE_ENV in {development,test,local}. Note: only drops the original 001 identity tables, NOT the later USF tables \u2014 a true full reset relies on dropping the volume.",
     "restoreGuard": "CONFIRM_RESTORE token + dev/test-only (above)",
-    "checksumImmutability": "migrate.ts throws on any checksum mismatch for an applied file — committed migrations are effectively immutable; corrections are forward-only (006 corrects 004; 023 corrects 022; 034 corrects 010 without editing it).",
+    "checksumImmutability": "migrate.ts throws on any checksum mismatch for an applied file \u2014 committed migrations are effectively immutable; corrections are forward-only (006 corrects 004; 023 corrects 022; 034 corrects 010 without editing it).",
     "environmentRegistry": "environment_registry.destructive_allowed (default false) + data_preservation (ephemeral|preserve) gate destructive ops per stage (ADR-0072). Mocks forbidden in staging/prod (mock_policy no-mocks).",
     "secretSafety": "platform_app password never hardcoded in a managed-secret migration (Sonar S6698); materialized from POSTGRES_APP_URL at apply-time with assertSafeRolePassword() trust boundary."
   },
-
   "dataVerification": {
-    "isMigrated": "isMigrated() — COUNT(schema_migrations)>0, used as a precondition by seedFixtures",
+    "isMigrated": "isMigrated() \u2014 COUNT(schema_migrations)>0, used as a precondition by seedFixtures",
     "checksumVerify": "every run re-hashes each file and compares to stored checksum (drift detection)",
     "liveProofs": "proof scripts assert RLS isolation (cross-tenant unfiltered count == 0), readiness derived from live probes never stored columns (017/021), idempotent publish/meter invariants",
     "v2": "Reuse the checksum+isMigrated gate and the RLS live-proof pattern as V2 data-verification acceptance gates."
   },
-
   "decisions": {
     "squashedFreshInstallBaseline": {
       "decision": "NO squash for V2. Keep the full 001..034 chain as the V2 fresh-install baseline.",
@@ -359,24 +352,24 @@
         "Checksums of applied migrations are immutable in long-lived staging/prod; a squashed 001 would have a different checksum than the recorded rows and brick migrate.ts (exactly the ADR-ACT-0290 failure mode for editing 010).",
         "Forward-only corrections (006/023/034) carry load-bearing provenance and ADR linkage; squashing erases the audit trail the governing intent wants preserved.",
         "A fresh V2 install applies all 34 files in code-point order in seconds; there is no performance reason to squash.",
-        "Per governing intent the final tree must have no transitional naming — but migration numbers 001..034 are canonical history, not transitional artefacts, so they stay."
+        "Per governing intent the final tree must have no transitional naming \u2014 but migration numbers 001..034 are canonical history, not transitional artefacts, so they stay."
       ],
       "alternativeRejected": "An optional consolidated baseline-snapshot.sql for brand-new envs was considered and rejected: it creates a second source of truth that must be kept byte-identical to the chain forever."
     },
     "v1ToV2UpgradePath": {
-      "decision": "In-place forward migration. An existing V1 install IS a V2 install at the data layer — V2 reuses the identical Postgres schema, roles, RLS, and migration chain.",
+      "decision": "In-place forward migration. An existing V1 install IS a V2 install at the data layer \u2014 V2 reuses the identical Postgres schema, roles, RLS, and migration chain.",
       "steps": [
         "1. V2 ships the same migrations/ directory (001..034) plus any new V2-only forward migrations appended as 035+.",
-        "2. On deploy, migrate.ts skips all already-applied rows (checksum match) and applies only the new tail — zero data movement for 001..034.",
+        "2. On deploy, migrate.ts skips all already-applied rows (checksum match) and applies only the new tail \u2014 zero data movement for 001..034.",
         "3. platform_app password already rotated by 034; POSTGRES_APP_URL unchanged.",
         "4. Per-tenant schemas (tenant_{v4}) and their tenant_settings are untouched.",
-        "5. External volumes (redis/clickhouse/minio) are reattached as-is — no migration."
+        "5. External volumes (redis/clickhouse/minio) are reattached as-is \u2014 no migration."
       ],
       "noDestructiveStep": "No DROP, no reseed, no volume recreation on a real upgrade. Fixtures are not seeded in production."
     },
     "historicalMigrationProvenance": {
       "decision": "All 34 historical migration files remain in apps/platform-api/src/db/migrations/ verbatim, with their leading ADR-reference comment blocks intact.",
-      "rationale": "They are the byte-stable inputs to the checksum invariant AND the human-readable decision lineage (each cites its ADR and explains why a later file corrects an earlier one). Removing or renaming any is forbidden — it would break both checksum continuity and provenance."
+      "rationale": "They are the byte-stable inputs to the checksum invariant AND the human-readable decision lineage (each cites its ADR and explains why a later file corrects an earlier one). Removing or renaming any is forbidden \u2014 it would break both checksum continuity and provenance."
     },
     "checksumPreservation": {
       "decision": "Preserve the sha256-first-16-hex-of-file-bytes scheme and the placeholder-aware materialisation exactly.",
@@ -393,7 +386,7 @@
       "clickhouse-data": "RETAIN if metering analytics provider is active; otherwise empty. Not source of truth.",
       "minio-data": "RETAIN on upgrade (real objects). Fresh install = empty.",
       "dependencyStackVolumes": {
-        "note": "Not platform product data — retained as the dependency stack requires, never migrated by the platform.",
+        "note": "Not platform product data \u2014 retained as the dependency stack requires, never migrated by the platform.",
         "volumes": [
           "keycloak-postgres-data",
           "sonar-postgres-data",
@@ -412,10 +405,9 @@
       }
     }
   },
-
   "v2FreshInstallBaseline": {
     "steps": [
-      "compose up default profile (postgres redis clickhouse minio mailpit otel-collector) — fresh named volumes",
+      "compose up default profile (postgres redis clickhouse minio mailpit otel-collector) \u2014 fresh named volumes",
       "postgres initdb runs docker/postgres/init-extra-databases.sh (rls_bypass, pgadmin_sysadmin, grants)",
       "npm run db:migrate (migrate.ts) applies 001..034 in code-point order, materialising ${PLATFORM_APP_PASSWORD} from POSTGRES_APP_URL",
       "(dev/test only) npm run db:seed (seedFixtures) creates the fixture-org + 5 personas",
@@ -424,24 +416,22 @@
     ],
     "noState": "No production data; per-tenant schemas created on demand by withSystemAdmin CREATE SCHEMA during tenant provisioning."
   },
-
   "rollbackPosition": {
     "policy": "Forward-only. There are no down-migrations and migrate.ts has no rollback path by design.",
     "mechanisms": [
-      "Per-file BEGIN/COMMIT: a failing migration ROLLBACKs its own transaction and is never recorded — safe to fix-forward and re-run.",
+      "Per-file BEGIN/COMMIT: a failing migration ROLLBACKs its own transaction and is never recorded \u2014 safe to fix-forward and re-run.",
       "To revert a deployed schema change, ship a new forward migration (the 006/023/034 pattern), never edit history.",
       "Disaster recovery: restore from a Postgres backup (scripts/backup/postgres-restore.sh, dev/test) or stage-equivalent managed snapshot.",
       "environment_registry.data_preservation gates whether a stage may be torn down at all."
     ]
   },
-
   "v2Actions": [
     "Carry migrations/ 001..034 verbatim into V2; append V2-only changes as 035+ forward files.",
     "Keep migrate.ts checksum + placeholder-materialisation + code-point ordering unchanged.",
-    "Keep the canonical RLS bypass predicate and platform_app NOINHERIT enforcement; add the canonical predicate to every new tenant-scoped table (never the naive MEMBER form — see 022 leak).",
+    "Keep the canonical RLS bypass predicate and platform_app NOINHERIT enforcement; add the canonical predicate to every new tenant-scoped table (never the naive MEMBER form \u2014 see 022 leak).",
     "Reuse seed.ts fixture model as the V2 E2E persona source.",
     "Reuse backup/restore scripts and their guards unchanged.",
-    "Reuse redis/clickhouse/minio as provider adapters behind ports — never as canonical schema owners.",
-    "Consider hardening reset.ts to drop ALL platform tables (currently only the 001 identity tables) OR document that full reset = drop volume — dev/test only."
+    "Reuse redis/clickhouse/minio as provider adapters behind ports \u2014 never as canonical schema owners.",
+    "Consider hardening reset.ts to drop ALL platform tables (currently only the 001 identity tables) OR document that full reset = drop volume \u2014 dev/test only."
   ]
 }

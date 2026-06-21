@@ -8,7 +8,7 @@
       "status": "delivered-and-proven",
       "decisionRef": "ADR-ACT-0285",
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-01",
+      "decision": "see v1-completion-programme.md \u00a7V1C-01",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -17,7 +17,7 @@
       "readiness": "invariant-ready",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-01",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-01",
       "v2Assets": "see programme",
       "closureProof": "proof:ui-semantic-groups (headless journey); groups unit tests"
     },
@@ -27,7 +27,7 @@
       "status": "delivered-and-proven",
       "decisionRef": "ADR-ACT-0285",
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-02",
+      "decision": "see v1-completion-programme.md \u00a7V1C-02",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -36,7 +36,7 @@
       "readiness": "invariant-ready",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-02",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-02",
       "v2Assets": "see programme",
       "closureProof": "proof:ui-semantic-sub-organisations (headless journey); sub-organisations unit tests"
     },
@@ -46,7 +46,7 @@
       "status": "requires-v1-completion",
       "decisionRef": null,
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-03",
+      "decision": "see v1-completion-programme.md \u00a7V1C-03",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -55,16 +55,16 @@
       "readiness": "invariant-ready",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-03",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-03",
       "v2Assets": "see programme"
     },
     {
       "id": "V1C-04",
       "parentCapability": "Delegated administration roles",
-      "status": "requires-v1-completion",
+      "status": "in-progress",
       "decisionRef": "V1C-04",
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-04",
+      "decision": "see v1-completion-programme.md \u00a7V1C-04",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -73,8 +73,27 @@
       "readiness": "deferred",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-04",
-      "v2Assets": "see programme"
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-04",
+      "v2Assets": "see programme",
+      "closureProof": [
+        "apps/platform-api/src/db/migrations/037-delegated-admin-roles.sql (persistence: tenant-scoped delegated_admin_roles table with RLS canonical predicate + soft-delete via revoked_at/revoked_by + partial UNIQUE (grantee, scope) WHERE revoked_at IS NULL)",
+        "apps/platform-api/src/ports/delegated-admin-roles.ts (pure-types port interface: 5 methods with auth-context matrix documented)",
+        "apps/platform-api/src/adapters/postgres-delegated-admin-roles.ts (Postgres adapter implementing the port: withTenant reads + withSystemAdmin writes/hot-path lookups; ACTIVE_PREDICATE constant for active-row filtering)",
+        "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts (7 inline-fake-pool scenarios covering all 5 methods, with .release() no-op on the fake client for withSystemAdmin/withTenant)",
+        "docs/v2-foundation/v1-post-audit-delta.json (4 NEW entries registered)",
+        "docs/v2-foundation/data-and-migration-plan.json (postgres.migrationChain entry for migration 037 appended)",
+        "docs/v2-foundation/v1-test-proof-inventory.json (entry for the new unit test appended)",
+        "ADR-ACT-0304 row in ACTION-REGISTER"
+      ],
+      "evidence": [
+        "apps/platform-api/src/db/migrations/037-delegated-admin-roles.sql",
+        "apps/platform-api/src/ports/delegated-admin-roles.ts",
+        "apps/platform-api/src/adapters/postgres-delegated-admin-roles.ts",
+        "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
+        "ADR-ACT-0304 in ACTION-REGISTER"
+      ],
+      "partialSlice": "1/2 of V1C-04 (Turn 1: persistence + port + adapter + tests). Turn 2 remains: usecase layer + runtime-proof script + OpenAPI delta + registerPlatformResources permission addition + ADR-ACT-0304 closure flip.",
+      "providerRequiredFollowup": "Turn 2 requires (a) choosing the resolvePermissions integration path (route-layer pre-compute vs. domain-identity delegationsPort injection); (b) implementing usecases/delegated-admin-roles.ts with tag-union result types (grant, revoke, listForTenant, listEffectiveForGrantee); (c) apps/platform-api/scripts/delegated-admin-roles-runtime-proof.ts green against live compose (RLS cross-tenant unfiltered count==0 proof pattern + audit-before-mutation order); (d) appending metadata JSONB surfacing (currently persistable at the DB layer, surfaced via Turn 2 DelegatedRole.metadata)."
     },
     {
       "id": "V1C-05",
@@ -82,7 +101,7 @@
       "status": "requires-v1-completion",
       "decisionRef": null,
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-05",
+      "decision": "see v1-completion-programme.md \u00a7V1C-05",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -91,7 +110,7 @@
       "readiness": "n/a",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-05",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-05",
       "v2Assets": "see programme"
     },
     {
@@ -100,7 +119,7 @@
       "status": "delivered-and-proven",
       "decisionRef": "ADR-ACT-0285",
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-06",
+      "decision": "see v1-completion-programme.md \u00a7V1C-06",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -109,7 +128,7 @@
       "readiness": "deferred (capability-registry)",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-06",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-06",
       "v2Assets": "see programme",
       "closureProof": "proof:ui-semantic-claim-mapping (headless journey); oidc-mapping unit tests"
     },
@@ -119,7 +138,7 @@
       "status": "requires-v1-completion",
       "decisionRef": null,
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-07",
+      "decision": "see v1-completion-programme.md \u00a7V1C-07",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -128,7 +147,7 @@
       "readiness": "credential-derived",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-07",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-07",
       "v2Assets": "see programme"
     },
     {
@@ -137,7 +156,7 @@
       "status": "requires-v1-completion",
       "decisionRef": null,
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-08",
+      "decision": "see v1-completion-programme.md \u00a7V1C-08",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -146,7 +165,7 @@
       "readiness": "invariant-ready",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-08",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-08",
       "v2Assets": "see programme"
     },
     {
@@ -155,7 +174,7 @@
       "status": "requires-v1-completion",
       "decisionRef": null,
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-09",
+      "decision": "see v1-completion-programme.md \u00a7V1C-09",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -164,7 +183,7 @@
       "readiness": "tenant-domains readiness kind",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-09",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-09",
       "v2Assets": "see programme"
     },
     {
@@ -173,7 +192,7 @@
       "status": "requires-v1-completion",
       "decisionRef": "V1C-10",
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-10",
+      "decision": "see v1-completion-programme.md \u00a7V1C-10",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -182,7 +201,7 @@
       "readiness": "to define",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-10",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-10",
       "v2Assets": "see programme"
     },
     {
@@ -191,7 +210,7 @@
       "status": "requires-v1-completion",
       "decisionRef": "V1C-11",
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-11",
+      "decision": "see v1-completion-programme.md \u00a7V1C-11",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -200,7 +219,7 @@
       "readiness": "to define",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-11",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-11",
       "v2Assets": "see programme"
     },
     {
@@ -209,7 +228,7 @@
       "status": "requires-v1-completion",
       "decisionRef": "V1C-12",
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-12",
+      "decision": "see v1-completion-programme.md \u00a7V1C-12",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -218,7 +237,7 @@
       "readiness": "to define",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-12",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-12",
       "v2Assets": "see programme"
     },
     {
@@ -227,7 +246,7 @@
       "status": "requires-v1-completion",
       "decisionRef": "V1C-13",
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-13",
+      "decision": "see v1-completion-programme.md \u00a7V1C-13",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -236,7 +255,7 @@
       "readiness": "to define",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-13",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-13",
       "v2Assets": "see programme"
     },
     {
@@ -245,7 +264,7 @@
       "status": "requires-v1-completion",
       "decisionRef": "V1C-14",
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-14",
+      "decision": "see v1-completion-programme.md \u00a7V1C-14",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -254,7 +273,7 @@
       "readiness": "to define",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-14",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-14",
       "v2Assets": "see programme"
     },
     {
@@ -263,7 +282,7 @@
       "status": "requires-v1-completion",
       "decisionRef": null,
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-15",
+      "decision": "see v1-completion-programme.md \u00a7V1C-15",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -272,7 +291,7 @@
       "readiness": "tenant-storage readiness kind",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-15",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-15",
       "v2Assets": "see programme"
     },
     {
@@ -281,7 +300,7 @@
       "status": "requires-v1-completion",
       "decisionRef": "V1C-16",
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-16",
+      "decision": "see v1-completion-programme.md \u00a7V1C-16",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -290,7 +309,7 @@
       "readiness": "to define (engine health)",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-16",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-16",
       "v2Assets": "see programme"
     },
     {
@@ -299,7 +318,7 @@
       "status": "in-progress",
       "decisionRef": null,
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-17",
+      "decision": "see v1-completion-programme.md \u00a7V1C-17",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -308,16 +327,16 @@
       "readiness": "observability readiness signals (metrics/traces status)",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-17",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-17",
       "v2Assets": "see programme",
       "closureProof": [
-        "docker/grafana/dashboards/platform-api-red-method.json (NEW — RED-method HTTP observability for platform-api; 6 panels referencing platform-prometheus datasource uid; complements the cross-service overview + log-overview)",
-        "docker/grafana/dashboards/platform-overview.json (existing — cross-service overview tagged v1c-17b)",
-        "docker/grafana/dashboards/platform-logs-overview.json (existing — Loki log overview)",
-        "tools/v2-readiness/src/rules/r21-v1c17-observability.mjs (NEW — first readiness rule that encodes the V1C-17 ledger connection: ≥3 dashboards on disk + datasource-uid coverage across prometheus/loki/tempo + proof-script presence)",
-        "tools/v2-readiness/tests/r21-v1c17-observability.test.mjs (NEW — 8 unit tests covering all 6 failure modes + clean-fixture pass-through)",
-        "tools/v2-readiness/src/load.mjs (loadV1c17Observability helper — derives ctx.observabilityV1C17 at load time)",
-        "tools/v2-readiness/src/index.mjs (r21 registered alongside r1–r20; closes the readiness-rules ↔ V1C-17 ledger structural gap surfaced in code-review feedback)",
+        "docker/grafana/dashboards/platform-api-red-method.json (NEW \u2014 RED-method HTTP observability for platform-api; 6 panels referencing platform-prometheus datasource uid; complements the cross-service overview + log-overview)",
+        "docker/grafana/dashboards/platform-overview.json (existing \u2014 cross-service overview tagged v1c-17b)",
+        "docker/grafana/dashboards/platform-logs-overview.json (existing \u2014 Loki log overview)",
+        "tools/v2-readiness/src/rules/r21-v1c17-observability.mjs (NEW \u2014 first readiness rule that encodes the V1C-17 ledger connection: \u22653 dashboards on disk + datasource-uid coverage across prometheus/loki/tempo + proof-script presence)",
+        "tools/v2-readiness/tests/r21-v1c17-observability.test.mjs (NEW \u2014 8 unit tests covering all 6 failure modes + clean-fixture pass-through)",
+        "tools/v2-readiness/src/load.mjs (loadV1c17Observability helper \u2014 derives ctx.observabilityV1C17 at load time)",
+        "tools/v2-readiness/src/index.mjs (r21 registered alongside r1\u2013r20; closes the readiness-rules \u2194 V1C-17 ledger structural gap surfaced in code-review feedback)",
         "ADR-ACT-0302 row in ACTION-REGISTER"
       ],
       "evidence": [
@@ -327,7 +346,7 @@
         "tools/v2-readiness/src/load.mjs (loadV1c17Observability)",
         "ADR-ACT-0302 in ACTION-REGISTER"
       ],
-      "partialSlice": "1/3-to-6 dashboards added in this slice (third dashboard authored brings the on-disk count up to the ≥3 partial threshold required by r21). Full V1C-17 closure requires 4+ more dashboards (see providerRequiredFollowup) and live compose-stack proof transcripts.",
+      "partialSlice": "1/3-to-6 dashboards added in this slice (third dashboard authored brings the on-disk count up to the \u22653 partial threshold required by r21). Full V1C-17 closure requires 4+ more dashboards (see providerRequiredFollowup) and live compose-stack proof transcripts.",
       "providerRequiredFollowup": "Live compose-stack bring-up for the observability + observability-provider profiles (`make compose-up-observability` and `make compose-up-observability-provider`), then green runs of `npm run proof:metrics-prometheus` and `npm run proof:dashboards`. A second orphan `react-dev-*` compose project holds host port 3100 on this workstation blocking the observability profile from bringing grafana up (would require explicit operator confirmation to remove the orphan before running the live proofs). 4+ additional dashboards required to satisfy the V1C-17 full-closure observability taxonomy (per ADR-0062): platform-api-quota-enforcement for ADR-0067 / V1C-11a-c, platform-tenant-isolation for ADR-0029 / V1C-02, platform-event-bus for ADR-0051, platform-billing-ledger for V1C-11a. Each requires a corresponding proof-script green run before the closure flip is fully 'delivered-and-proven'. Sub-action scope (this partial slice is bounded): V1C-17a (metrics queryable in Prometheus) and V1C-17b (dashboards render metrics/traces) receive their partial floors from this slice; their full 'delivered-and-proven' flips remain gated on the live compose proof transcripts enumerated above rather than this slice alone."
     },
     {
@@ -336,7 +355,7 @@
       "status": "delivered-and-proven",
       "decisionRef": null,
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-18",
+      "decision": "see v1-completion-programme.md \u00a7V1C-18",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -345,10 +364,10 @@
       "readiness": "sonarqube probe (status UP)",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-18",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-18",
       "v2Assets": "see programme",
       "closureProof": [
-        "`npm run test:security` (43/43 pass — executed this run)",
+        "`npm run test:security` (43/43 pass \u2014 executed this run)",
         "`tools/security/sbom-verify.mjs docs/evidence/security/sbom-baseline.lockhash` (CycloneDX v1.6 semantically fresh, unique IDs intact)",
         "`tools/security/sbom-policy.mjs` (1056 components; zero GPL/AGPL/SSPL/Commons-Clause/BUSL)",
         "`tools/security/codeql-validate.mjs` (CodeQL v2.25.6 reachable; database created clean)"
@@ -366,7 +385,7 @@
       "status": "requires-v1-completion",
       "decisionRef": null,
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-19",
+      "decision": "see v1-completion-programme.md \u00a7V1C-19",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -375,7 +394,7 @@
       "readiness": "to define",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-19",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-19",
       "v2Assets": "see programme"
     },
     {
@@ -384,7 +403,7 @@
       "status": "requires-v1-completion",
       "decisionRef": null,
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-20",
+      "decision": "see v1-completion-programme.md \u00a7V1C-20",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -393,7 +412,7 @@
       "readiness": "to define",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-20",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-20",
       "v2Assets": "see programme"
     },
     {
@@ -402,7 +421,7 @@
       "status": "requires-v1-completion",
       "decisionRef": null,
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-21",
+      "decision": "see v1-completion-programme.md \u00a7V1C-21",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -411,7 +430,7 @@
       "readiness": "n/a",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-21",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-21",
       "v2Assets": "see programme"
     },
     {
@@ -420,7 +439,7 @@
       "status": "requires-v1-completion",
       "decisionRef": "V1C-22",
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-22",
+      "decision": "see v1-completion-programme.md \u00a7V1C-22",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -429,7 +448,7 @@
       "readiness": "to define",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-22",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-22",
       "v2Assets": "see programme"
     },
     {
@@ -438,7 +457,7 @@
       "status": "requires-v1-completion",
       "decisionRef": null,
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-23",
+      "decision": "see v1-completion-programme.md \u00a7V1C-23",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -447,7 +466,7 @@
       "readiness": "service readiness",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-23",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-23",
       "v2Assets": "see programme"
     },
     {
@@ -456,7 +475,7 @@
       "status": "requires-v1-completion",
       "decisionRef": null,
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-24",
+      "decision": "see v1-completion-programme.md \u00a7V1C-24",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -465,7 +484,7 @@
       "readiness": "deferred",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-24",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-24",
       "v2Assets": "see programme"
     },
     {
@@ -474,7 +493,7 @@
       "status": "delivered-and-proven",
       "decisionRef": null,
       "dependencies": [],
-      "decision": "see v1-completion-programme.md §V1C-25",
+      "decision": "see v1-completion-programme.md \u00a7V1C-25",
       "portsAdapters": "see programme",
       "contractsEvents": "see programme",
       "persistence": "see programme",
@@ -483,10 +502,10 @@
       "readiness": "n/a",
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
-      "stopCondition": "see v1-completion-programme.md §V1C-25",
+      "stopCondition": "see v1-completion-programme.md \u00a7V1C-25",
       "v2Assets": "see programme",
       "closureProof": [
-        "tools/architecture/validate-i18n/src/index.mjs (163 used keys present, zero raw-literal violations — executed this run)"
+        "tools/architecture/validate-i18n/src/index.mjs (163 used keys present, zero raw-literal violations \u2014 executed this run)"
       ],
       "evidence": [
         "tools/architecture/validate-i18n/src/index.mjs",
@@ -689,7 +708,7 @@
       "audit": "DSR fulfilment",
       "readiness": "n/a",
       "testsProofs": "proof:dsr",
-      "uiSemantics": "DSR request → fulfil",
+      "uiSemantics": "DSR request \u2192 fulfil",
       "stopCondition": "access + erasure DSR fulfilled + audited",
       "v2Assets": "DSR workflow"
     },
@@ -708,7 +727,7 @@
       "readiness": "engine health",
       "testsProofs": "proof:workflow-engine",
       "uiSemantics": "workflow list/state",
-      "stopCondition": "definition→run→transition proven + audited",
+      "stopCondition": "definition\u2192run\u2192transition proven + audited",
       "v2Assets": "workflow engine"
     },
     {
@@ -797,8 +816,8 @@
       "audit": "attestation",
       "readiness": "n/a",
       "testsProofs": "proof:access-reviews",
-      "uiSemantics": "review open→attest",
-      "stopCondition": "review cycle opens→attests + audited",
+      "uiSemantics": "review open\u2192attest",
+      "stopCondition": "review cycle opens\u2192attests + audited",
       "v2Assets": "access reviews"
     },
     {
@@ -827,7 +846,7 @@
       "dependencies": [],
       "decision": "COMPOSE Alertmanager routing",
       "portsAdapters": "Alertmanager config",
-      "contractsEvents": "alert rule → receiver",
+      "contractsEvents": "alert rule \u2192 receiver",
       "persistence": "n/a",
       "permissions": "platform.ops.*",
       "audit": "n/a",
@@ -924,7 +943,7 @@
       "readiness": "n/a",
       "testsProofs": "proof:announcements",
       "uiSemantics": "announcement composer",
-      "stopCondition": "publish→deliver proven",
+      "stopCondition": "publish\u2192deliver proven",
       "v2Assets": "announcements"
     },
     {

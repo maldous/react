@@ -3642,5 +3642,14 @@
     "fixtureEnvDependency": "none (in-process)",
     "stageCoverage": "test (make check)",
     "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
+    "path": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process; inline-fake pg pool)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
   }
 ]

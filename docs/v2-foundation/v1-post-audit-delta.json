@@ -1505,9 +1505,45 @@
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"],
       "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/src/db/migrations/037-delegated-admin-roles.sql",
+      "purpose": "V1C-04 Turn 1: persisted delegated admin roles (ADR-0063 / V1C-04)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/db/migrations/037-delegated-admin-roles.sql",
+      "protectingTests": ["apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts"],
+      "decisionRefs": ["ADR-ACT-0304"],
+      "introducingCommit": "5a1dff09cc1ef3a014f9c1bd0cc6289da55aeaa0"
+    },
+    {
+      "path": "apps/platform-api/src/ports/delegated-admin-roles.ts",
+      "purpose": "V1C-04 Turn 1: DelegatedAdminRolesPort (pure-types interface)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/ports/delegated-admin-roles.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts"],
+      "decisionRefs": ["ADR-ACT-0304"],
+      "introducingCommit": "5a1dff09cc1ef3a014f9c1bd0cc6289da55aeaa0"
+    },
+    {
+      "path": "apps/platform-api/src/adapters/postgres-delegated-admin-roles.ts",
+      "purpose": "V1C-04 Turn 1: Postgres adapter implementing DelegatedAdminRolesPort (withTenant/withSystemAdmin wrappers)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/postgres-delegated-admin-roles.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts"],
+      "decisionRefs": ["ADR-ACT-0304"],
+      "introducingCommit": "5a1dff09cc1ef3a014f9c1bd0cc6289da55aeaa0"
+    },
+    {
+      "path": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
+      "purpose": "V1C-04 Turn 1: inline-fake-pool unit tests for the adapter (7 scenarios)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0304"],
+      "introducingCommit": "5a1dff09cc1ef3a014f9c1bd0cc6289da55aeaa0"
     }
   ],
   "deletions": [],
-  "additionCount": 156,
+  "additionCount": 160,
   "deletionCount": 0
 }
