@@ -222,7 +222,7 @@ describe("delegations usecase", () => {
     });
   });
 
-  it("delegateRevoke returns not_found if port returns false; audit-of-attempt still emitted (ADR-ACT-0154 invariant)", async () => {
+  it("delegateRevoke returns not_found if port returns false; no audit emitted (audit-trail fidelity per code-review round N+1)", async () => {
     (a.port.revokeDelegation as Mock).mockResolvedValueOnce(false);
 
     const uc = makeDelegationsUseCases(makeDeps(a));
@@ -231,16 +231,15 @@ describe("delegations usecase", () => {
 
     expect(result.kind).toBe("not_found");
 
-    // ADR-ACT-0154 (audit-before-mutation) produces an audit-of-attempt line
-    // even when the underlying revoke row didn't update. This preserves the
-    // invariant: an attempted revocation is always observable in the audit
-    // ledger, with delegationId stable (caller-supplied).
-    expect(a.audit.emit).toHaveBeenCalledWith({
-      action: "Delegation.Revoked",
-      actorId: ctx.userId,
-      organisationId: null,
-      delegationId: "unknown-id",
-    });
+    // Audit-trail fidelity: when the revocation does NOT actually land
+    // (port returns false), the audit ledger must NOT carry a phantom
+    // "Delegation.Revoked" line. delegateRevoke is intentionally
+    // audit-AFTER-mutation (not audit-before) because the downstream
+    // change is a privilege DESTRUCTION (fail-safe to silently apply
+    // without a ledger line) — the audit-before-mutation invariant
+    // ADR-ACT-0154 applies canonically to privilege ESCALATIONS
+    // (delegateGrant) where failing to audit must prevent persistence.
+    expect(a.audit.emit).not.toHaveBeenCalled();
   });
 
   it("delegateRevoke with non-system-admin returns static_permission_denied", async () => {

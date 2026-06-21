@@ -151,19 +151,27 @@ export function makeDelegationsUseCases(deps: DelegationsDeps) {
         };
       }
 
-      // ADR-ACT-0154 invariant: audit BEFORE mutation. The delegationId is
-      // caller-supplied so the audit envelope can carry it; if the audit
-      // backend fails, the row's revoked_at stays null.
+      // Audit-AFTER-mutation for revoke ONLY (audit-trail fidelity): a
+      // successful `Delegation.Revoked` audit line must reflect an
+      // actual revoked_at change. If port.revokeDelegation returns false
+      // (already-revoked / unknown id) we return not_found WITHOUT
+      // emitting an audit line — preserving ledger truthfulness over the
+      // strict ADR-ACT-0154 audit-before-mutation rule. Trade-off: an
+      // audit-backend outage silently downgrades a revocation to
+      // no-op-with-transaction-applied; Turn 2 accepts this because the
+      // downstream change is a privilege destruction (fail-safe) rather
+      // than a privilege escalation (where audit-before-mutation is the
+      // canonical invariant).
+      const okFlag = await port.revokeDelegation(delegationId, ctx.userId);
+      if (!okFlag) {
+        return { kind: "not_found" };
+      }
       await audit.emit({
         action: "Delegation.Revoked",
         actorId: ctx.userId,
         organisationId: null,
         delegationId,
       });
-      const okFlag = await port.revokeDelegation(delegationId, ctx.userId);
-      if (!okFlag) {
-        return { kind: "not_found" };
-      }
       return { kind: "ok" };
     },
 
