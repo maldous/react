@@ -1775,6 +1775,69 @@
       "v2Target": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0304"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/search-runtime/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package search-runtime (ADR-0006/ADR-ACT-0289).",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/search-runtime/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/access-control/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package access-control (ADR-0006/ADR-ACT-0289).",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/access-control/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/security-auth/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package security-auth (ADR-0006/ADR-ACT-0289).",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/security-auth/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/queue-runtime/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package queue-runtime (ADR-0006/ADR-ACT-0289).",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/queue-runtime/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/notification-runtime/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package notification-runtime (ADR-0006/ADR-ACT-0289).",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/notification-runtime/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/worker-runtime/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package worker-runtime (ADR-0006/ADR-ACT-0289).",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/worker-runtime/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/observability/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package observability (ADR-0006/ADR-ACT-0289).",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/observability/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
     }
   ],
   "deletions": [
@@ -1819,8 +1882,239 @@
       "deletionDecision": "Deprecated leaf package search-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); part of the V1 deprecated-package removal campaign.",
       "replacementOrNa": "n/a (V2 search seam supersedes; zero product consumers at removal)",
       "evidence": "docs/evidence/lifecycle/removal/search-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/access-control/package.json",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package access-control removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/access-control/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/access-control/README.md",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package access-control removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/access-control/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/access-control/src/index.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package access-control removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/access-control/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/access-control/tests/access-control.test.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package access-control removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/access-control/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/access-control/tests/.gitkeep",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package access-control removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/access-control/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/security-auth/package.json",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package security-auth removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/security-auth/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/security-auth/README.md",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package security-auth removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/security-auth/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/security-auth/src/index.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package security-auth removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/security-auth/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/security-auth/tests/.gitkeep",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package security-auth removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/security-auth/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/security-auth/tests/security-auth.test.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package security-auth removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/security-auth/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/queue-runtime/package.json",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package queue-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/queue-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/queue-runtime/README.md",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package queue-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/queue-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/queue-runtime/src/index.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package queue-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/queue-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/queue-runtime/tests/.gitkeep",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package queue-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/queue-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/queue-runtime/tests/queue-runtime.test.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package queue-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/queue-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/queue-runtime/tsconfig.json",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package queue-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/queue-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/notification-runtime/package.json",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package notification-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/notification-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/notification-runtime/README.md",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package notification-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/notification-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/notification-runtime/src/index.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package notification-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/notification-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/notification-runtime/tests/.gitkeep",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package notification-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/notification-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/notification-runtime/tests/notification-runtime.test.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package notification-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/notification-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/notification-runtime/tsconfig.json",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package notification-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/notification-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/worker-runtime/package.json",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package worker-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/worker-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/worker-runtime/README.md",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package worker-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/worker-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/worker-runtime/src/index.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package worker-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/worker-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/worker-runtime/tests/.gitkeep",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package worker-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/worker-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/worker-runtime/tests/worker-runtime.test.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package worker-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/worker-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/worker-runtime/tsconfig.json",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package worker-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/worker-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/observability/package.json",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package observability removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/observability/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/observability/README.md",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package observability removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/observability/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/observability/src/index.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package observability removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/observability/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/observability/tests/.gitkeep",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package observability removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/observability/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/observability/tests/observability.test.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated package observability removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (deprecated package, zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/observability/removal-evidence.json"
     }
   ],
-  "additionCount": 186,
-  "deletionCount": 6
+  "additionCount": 193,
+  "deletionCount": 39
 }

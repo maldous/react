@@ -648,15 +648,6 @@
     "failureEvidence": "node:test assertion failure output (spec reporter)"
   },
   {
-    "id": "packages/access-control/tests/access-control.test.ts",
-    "path": "packages/access-control/tests/access-control.test.ts",
-    "kind": "security",
-    "behaviourProtected": true,
-    "fixtureEnvDependency": "none (pure/in-process)",
-    "stageCoverage": "test (make check)",
-    "failureEvidence": "node:test assertion failure output (spec reporter)"
-  },
-  {
     "id": "packages/adapters-brevo/tests/adapters-brevo.test.ts",
     "path": "packages/adapters-brevo/tests/adapters-brevo.test.ts",
     "kind": "adapter",
@@ -891,24 +882,6 @@
     "failureEvidence": "node:test assertion failure output (spec reporter)"
   },
   {
-    "id": "packages/notification-runtime/tests/notification-runtime.test.ts",
-    "path": "packages/notification-runtime/tests/notification-runtime.test.ts",
-    "kind": "unit",
-    "behaviourProtected": true,
-    "fixtureEnvDependency": "none (pure/in-process)",
-    "stageCoverage": "test (make check)",
-    "failureEvidence": "node:test assertion failure output (spec reporter)"
-  },
-  {
-    "id": "packages/observability/tests/observability.test.ts",
-    "path": "packages/observability/tests/observability.test.ts",
-    "kind": "unit",
-    "behaviourProtected": true,
-    "fixtureEnvDependency": "none (pure/in-process)",
-    "stageCoverage": "test (make check)",
-    "failureEvidence": "node:test assertion failure output (spec reporter)"
-  },
-  {
     "id": "packages/platform-errors/tests/platform-errors-auth.test.ts",
     "path": "packages/platform-errors/tests/platform-errors-auth.test.ts",
     "kind": "unit",
@@ -963,24 +936,6 @@
     "failureEvidence": "node:test assertion failure output (spec reporter)"
   },
   {
-    "id": "packages/queue-runtime/tests/queue-runtime.test.ts",
-    "path": "packages/queue-runtime/tests/queue-runtime.test.ts",
-    "kind": "unit",
-    "behaviourProtected": true,
-    "fixtureEnvDependency": "none (pure/in-process)",
-    "stageCoverage": "test (make check)",
-    "failureEvidence": "node:test assertion failure output (spec reporter)"
-  },
-  {
-    "id": "packages/security-auth/tests/security-auth.test.ts",
-    "path": "packages/security-auth/tests/security-auth.test.ts",
-    "kind": "security",
-    "behaviourProtected": true,
-    "fixtureEnvDependency": "none (pure/in-process)",
-    "stageCoverage": "test (make check)",
-    "failureEvidence": "node:test assertion failure output (spec reporter)"
-  },
-  {
     "id": "packages/session-runtime/tests/session-runtime.test.ts",
     "path": "packages/session-runtime/tests/session-runtime.test.ts",
     "kind": "unit",
@@ -1022,15 +977,6 @@
     "kind": "unit",
     "behaviourProtected": true,
     "fixtureEnvDependency": "jsdom + MSW (no live services)",
-    "stageCoverage": "test (make check)",
-    "failureEvidence": "node:test assertion failure output (spec reporter)"
-  },
-  {
-    "id": "packages/worker-runtime/tests/worker-runtime.test.ts",
-    "path": "packages/worker-runtime/tests/worker-runtime.test.ts",
-    "kind": "unit",
-    "behaviourProtected": true,
-    "fixtureEnvDependency": "none (pure/in-process)",
     "stageCoverage": "test (make check)",
     "failureEvidence": "node:test assertion failure output (spec reporter)"
   },

@@ -28,17 +28,10 @@
     {
       "id": "no-operations-in-domain",
       "appliesTo": ["@platform/domain-core"],
-      "forbiddenPrefixes": [
-        "@platform/api-runtime",
-        "@platform/graphql-api-runtime",
-        "@platform/worker-runtime"
-      ],
+      "forbiddenPrefixes": ["@platform/api-runtime", "@platform/graphql-api-runtime"],
       "forbiddenExact": [
         "@platform/session-runtime",
-        "@platform/security-auth",
         "@platform/audit-events",
-        "@platform/observability",
-        "@platform/queue-runtime",
         "@platform/storage-runtime",
         "@platform/config-runtime"
       ],
@@ -48,11 +41,7 @@
       "id": "no-domain-in-ui",
       "appliesTo": ["@platform/ui-design-system"],
       "forbiddenPrefixes": ["@platform/adapters-", "@platform/contracts-"],
-      "forbiddenExact": [
-        "@platform/domain-core",
-        "@platform/profile-configuration",
-        "@platform/access-control"
-      ],
+      "forbiddenExact": ["@platform/domain-core", "@platform/profile-configuration"],
       "rationale": "UI packages are presentational and data-source agnostic; they must not import domain, contract, or adapter packages."
     },
     {
@@ -74,7 +63,6 @@
       "forbiddenPrefixes": [
         "@platform/api-runtime",
         "@platform/graphql-api-runtime",
-        "@platform/worker-runtime",
         "@platform/adapters-keycloak",
         "@platform/adapters-redis",
         "@platform/adapters-sentry",
@@ -83,50 +71,10 @@
       ],
       "forbiddenExact": [
         "@platform/session-runtime",
-        "@platform/security-auth",
-        "@platform/observability",
-        "@platform/queue-runtime",
         "@platform/storage-runtime",
         "@platform/config-runtime"
       ],
       "rationale": "Profile/configuration must not import operations or delivery packages."
-    },
-    {
-      "id": "no-adapters-in-access-control",
-      "appliesTo": ["@platform/access-control"],
-      "forbiddenPrefixes": [],
-      "forbiddenExact": ["@platform/adapters-postgres", "@platform/adapters-clickhouse"],
-      "rationale": "Access-control does not own authentication integration or storage runtime."
-    },
-    {
-      "id": "no-react-in-access-control",
-      "appliesTo": ["@platform/access-control"],
-      "forbiddenPrefixes": [],
-      "forbiddenExact": ["react", "react-dom"],
-      "rationale": "Access-control is a pure policy package with no React runtime dependency."
-    },
-    {
-      "id": "no-operations-in-access-control",
-      "appliesTo": ["@platform/access-control"],
-      "forbiddenPrefixes": [
-        "@platform/api-runtime",
-        "@platform/graphql-api-runtime",
-        "@platform/worker-runtime",
-        "@platform/adapters-keycloak",
-        "@platform/adapters-redis",
-        "@platform/adapters-sentry",
-        "@platform/adapters-opentelemetry",
-        "@platform/adapters-object-storage"
-      ],
-      "forbiddenExact": [
-        "@platform/session-runtime",
-        "@platform/security-auth",
-        "@platform/observability",
-        "@platform/queue-runtime",
-        "@platform/storage-runtime",
-        "@platform/config-runtime"
-      ],
-      "rationale": "Access-control must not import any operations or delivery packages."
     },
     {
       "id": "no-adapters-in-contracts-graphql",
@@ -193,32 +141,9 @@
       "forbiddenExact": [
         "@platform/api-runtime",
         "@platform/graphql-api-runtime",
-        "@platform/worker-runtime",
-        "@platform/session-runtime",
-        "@platform/security-auth"
+        "@platform/session-runtime"
       ],
       "rationale": "Feature packages must not import server-side platform runtime packages."
-    },
-    {
-      "id": "no-platform-deps-in-security-auth",
-      "appliesTo": ["@platform/security-auth"],
-      "forbiddenPrefixes": ["@platform/"],
-      "forbiddenExact": [],
-      "rationale": "security-auth is a leaf interface node with zero @platform/* dependencies."
-    },
-    {
-      "id": "no-platform-deps-in-observability",
-      "appliesTo": ["@platform/observability"],
-      "forbiddenPrefixes": ["@platform/"],
-      "forbiddenExact": [],
-      "rationale": "observability is a leaf interface node with zero @platform/* dependencies."
-    },
-    {
-      "id": "no-platform-deps-in-queue-runtime",
-      "appliesTo": ["@platform/queue-runtime"],
-      "forbiddenPrefixes": ["@platform/"],
-      "forbiddenExact": [],
-      "rationale": "queue-runtime is a leaf interface node with zero @platform/* dependencies."
     },
     {
       "id": "no-platform-deps-in-storage-runtime",
@@ -249,19 +174,8 @@
       "rationale": "email-runtime is a leaf interface node with zero @platform/* dependencies."
     },
     {
-      "id": "no-platform-deps-in-notification-runtime",
-      "appliesTo": ["@platform/notification-runtime"],
-      "forbiddenPrefixes": ["@platform/"],
-      "forbiddenExact": [],
-      "rationale": "notification-runtime is a leaf interface node with zero @platform/* dependencies."
-    },
-    {
       "id": "no-raw-observability-in-domain",
-      "appliesTo": [
-        "@platform/domain-core",
-        "@platform/profile-configuration",
-        "@platform/access-control"
-      ],
+      "appliesTo": ["@platform/domain-core", "@platform/profile-configuration"],
       "forbiddenPrefixes": [
         "@opentelemetry/",
         "@sentry/",
@@ -351,8 +265,7 @@
         "@platform/feature-workflow",
         "@platform/ui-design-system",
         "@platform/domain-core",
-        "@platform/profile-configuration",
-        "@platform/access-control"
+        "@platform/profile-configuration"
       ],
       "rationale": "ADR-0020 \u00a710: platform-observability wraps @opentelemetry/api only \u2014 the SDK (sdk-node, auto-instrumentations, exporters, instrumentation-*) is wired exclusively by packages/adapters-opentelemetry at application startup. platform-observability must not import Sentry, platform-logging, adapters, features, domain, or UI."
     },
@@ -370,7 +283,6 @@
         "@platform/ui-design-system",
         "@platform/domain-core",
         "@platform/profile-configuration",
-        "@platform/access-control",
         "@platform/contracts-graphql",
         "@platform/contracts-analytics",
         "@platform/contracts-ingestion"
@@ -382,7 +294,6 @@
       "appliesTo": [
         "@platform/domain-core",
         "@platform/profile-configuration",
-        "@platform/access-control",
         "@platform/domain-identity"
       ],
       "forbiddenPrefixes": ["@keycloak/"],
@@ -427,7 +338,6 @@
         "@platform/adapters-",
         "@platform/api-runtime",
         "@platform/graphql-api-runtime",
-        "@platform/worker-runtime",
         "@platform/session-runtime",
         "@platform/platform-logging",
         "@platform/platform-observability",

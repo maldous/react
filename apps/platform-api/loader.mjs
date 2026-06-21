@@ -52,18 +52,9 @@ const PLATFORM_MAP = {
   "@platform/adapters-sentry": resolvePath(repoRoot, "packages/adapters-sentry/src/index.ts"),
   "@platform/domain-core": resolvePath(repoRoot, "packages/domain-core/src/index.ts"),
   "@platform/config-runtime": resolvePath(repoRoot, "packages/config-runtime/src/index.ts"),
-  "@platform/access-control": resolvePath(repoRoot, "packages/access-control/src/index.ts"),
-  "@platform/security-auth": resolvePath(repoRoot, "packages/security-auth/src/index.ts"),
   "@platform/email-runtime": resolvePath(repoRoot, "packages/email-runtime/src/index.ts"),
   "@platform/storage-runtime": resolvePath(repoRoot, "packages/storage-runtime/src/index.ts"),
-  "@platform/queue-runtime": resolvePath(repoRoot, "packages/queue-runtime/src/index.ts"),
-  "@platform/worker-runtime": resolvePath(repoRoot, "packages/worker-runtime/src/index.ts"),
-  "@platform/notification-runtime": resolvePath(
-    repoRoot,
-    "packages/notification-runtime/src/index.ts"
-  ),
   "@platform/audit-events": resolvePath(repoRoot, "packages/audit-events/src/index.ts"),
-  "@platform/observability": resolvePath(repoRoot, "packages/observability/src/index.ts"),
   "@platform/profile-configuration": resolvePath(
     repoRoot,
     "packages/profile-configuration/src/index.ts"

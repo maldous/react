@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "package": "security-auth",
+  "removedAt": "2026-06-21",
+  "sourceCommit": "e93c9ed5572afb6ae2289b926526fc2fcfc9d77e",
+  "removalCommit": "pending",
+  "replacement": "none (deprecated package; superseded by V2 composition / no V1 consumer)",
+  "decisionRefs": [
+    "ADR-0006",
+    "ADR-ACT-0289"
+  ],
+  "commandsRun": [
+    "npm run v2:readiness",
+    "package-status scan"
+  ],
+  "consumerScan": {
+    "status": "clean",
+    "count": 0
+  },
+  "workspaceDependencyScan": {
+    "status": "clean",
+    "count": 0
+  },
+  "loaderAliasScan": {
+    "status": "clean",
+    "count": 0
+  },
+  "tsconfigReferenceScan": {
+    "status": "clean",
+    "count": 0
+  },
+  "boundaryRuleScan": {
+    "status": "clean",
+    "count": 0
+  },
+  "lockfileScan": {
+    "status": "clean",
+    "count": 0
+  },
+  "inventoryScan": {
+    "status": "clean",
+    "count": 0
+  },
+  "tests": "deferred to consolidated verification phase (test at end)",
+  "makeCheckResult": "deferred to consolidated verification phase",
+  "orchestratorResult": "deferred to consolidated verification phase"
+}

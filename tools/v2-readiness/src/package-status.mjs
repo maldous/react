@@ -151,7 +151,10 @@ export function packageRemovalStatus(
   signals.loaderAlias = new RegExp(`@platform/${pkg}\\b|packages/${pkg}\\b`).test(
     readText(R(loaderPath))
   );
-  signals.tsconfigRef = new RegExp(`\\b${pkg}\\b`).test(
+  // Match the exact project-reference path ("./<pkg>"), not a bare word — otherwise a
+  // substring package name (e.g. "observability" inside "./platform-observability") yields
+  // a false positive that can never clear while the sibling package legitimately remains.
+  signals.tsconfigRef = new RegExp(`"\\./${pkg}"`).test(
     readText(R("packages/tsconfig.packages.json"))
   );
   signals.importBoundaryRow = new RegExp(`@platform/${pkg}\\b|packages/${pkg}\\b|"${pkg}"`).test(
