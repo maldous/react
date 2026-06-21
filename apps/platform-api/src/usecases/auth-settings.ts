@@ -166,6 +166,26 @@ export function buildMfaAuditMetadata(body: MfaBody): Record<string, unknown> {
   return { required: body.required, type: body.type };
 }
 
+export interface LockoutBody {
+  enabled: boolean;
+  maxFailureWaitSeconds: number;
+  failureFactor: number;
+  waitIncrementSeconds: number;
+  quickLoginCheckMilliSeconds: number;
+  minimumQuickLoginWaitSeconds: number;
+  maxDeltaTimeSeconds: number;
+  failureResetTimeSeconds: number;
+  permanentLockout: boolean;
+}
+
+export function buildLockoutAuditMetadata(body: LockoutBody): Record<string, unknown> {
+  return {
+    enabled: body.enabled,
+    permanentLockout: body.permanentLockout,
+    failureFactor: body.failureFactor,
+  };
+}
+
 export interface SessionBody {
   accessTokenLifespanSeconds: number;
   ssoSessionIdleTimeoutSeconds: number;

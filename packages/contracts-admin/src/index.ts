@@ -1167,6 +1167,19 @@ export const MfaPolicySchema = z.object({
 });
 export type MfaPolicyDto = z.infer<typeof MfaPolicySchema>;
 
+export const LockoutPolicySchema = z.object({
+  enabled: z.boolean(),
+  maxFailureWaitSeconds: z.number().int().positive(),
+  failureFactor: z.number().int().positive(),
+  waitIncrementSeconds: z.number().int().positive(),
+  quickLoginCheckMilliSeconds: z.number().int().positive(),
+  minimumQuickLoginWaitSeconds: z.number().int().positive(),
+  maxDeltaTimeSeconds: z.number().int().positive(),
+  failureResetTimeSeconds: z.number().int().positive(),
+  permanentLockout: z.boolean(),
+});
+export type LockoutPolicyDto = z.infer<typeof LockoutPolicySchema>;
+
 /** `GET/PATCH /api/auth/settings/session`. */
 export const SessionPolicySchema = z.object({
   accessTokenLifespanSeconds: z.number().int().positive(),

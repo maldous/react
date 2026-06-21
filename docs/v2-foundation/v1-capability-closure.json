@@ -280,19 +280,21 @@
   {
     "capability": "MFA + session policy + lockout",
     "category": "authentication",
-    "status": "requires-v1-completion",
-    "route": "/admin/auth (MFA + session tabs)",
+    "status": "delivered-and-proven",
+    "route": "/admin/auth (MFA + session + lockout tabs)",
     "permission": "tenant.auth.settings.read/write",
-    "contract": "/api/auth/settings/mfa, /session",
+    "contract": "/api/auth/settings/mfa, /lockout, /session",
     "port": "AuthSettingsPort / IdentityProviderPort",
     "adapter": "KeycloakAdminAdapter",
-    "auditAction": "AuthSettingsMfaChanged/SessionChanged",
+    "auditAction": "AuthSettingsMfaChanged/AuthSettingsLockoutChanged/SessionChanged",
     "readinessCheck": "credential-derived",
     "evidence": "ADR-0042",
-    "proof": "proof:auth-settings; MFA-required E2E deferred (ADR-ACT-0158)",
+    "proof": "proof:auth-settings; test:platform-api:unit-safe; test:frontend:run",
+    "proofTier": "live-composed-provider",
     "openAction": null,
     "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
-    "completionAction": "V1C-07"
+    "completionAction": "V1C-07",
+    "closedBy": "auth lockout/recovery surface wired through Keycloak realm brute-force settings"
   },
   {
     "capability": "Configuration registry + history",

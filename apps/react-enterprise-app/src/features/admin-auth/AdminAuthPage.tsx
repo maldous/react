@@ -23,6 +23,7 @@ import {
   type ProductProviderId,
   type SessionPolicyDto,
   type MfaPolicyDto,
+  type LockoutPolicyDto,
 } from "@platform/contracts-admin";
 import { useSession } from "../../hooks/use-session";
 import { AdminSectionHeader } from "../../components/AdminLayout";
@@ -34,6 +35,8 @@ import {
   useSetAuthProviders,
   useMfaPolicy,
   useSetMfaPolicy,
+  useLockoutPolicy,
+  useSetLockoutPolicy,
   useSessionPolicy,
   useAuthReadiness,
   useSetSessionPolicy,
@@ -81,6 +84,7 @@ export function AdminAuthPage() {
       },
       { id: "idps", label: t("feature.admin.auth.tab.idps"), content: <IdpsTab /> },
       { id: "mfa", label: t("feature.admin.auth.tab.mfa"), content: <MfaTab /> },
+      { id: "lockout", label: t("feature.admin.auth.tab.lockout"), content: <LockoutTab /> },
       { id: "session", label: t("feature.admin.auth.tab.session"), content: <SessionTab /> },
     ],
     [t, canWrite]
@@ -380,6 +384,208 @@ function MfaPolicyForm({ policy }: Readonly<{ policy: MfaPolicyDto }>) {
               data-testid="auth-mfa-submit"
             >
               {t("feature.admin.auth.mfa.save")}
+            </Button>
+          </div>
+        </form>
+      </CardBody>
+    </Card>
+  );
+}
+
+const LOCKOUT_NUMERIC_FIELDS = [
+  { name: "maxFailureWaitSeconds", labelKey: "feature.admin.auth.lockout.maxFailureWaitSeconds" },
+  { name: "failureFactor", labelKey: "feature.admin.auth.lockout.failureFactor" },
+  {
+    name: "waitIncrementSeconds",
+    labelKey: "feature.admin.auth.lockout.waitIncrementSeconds",
+  },
+  {
+    name: "quickLoginCheckMilliSeconds",
+    labelKey: "feature.admin.auth.lockout.quickLoginCheckMilliSeconds",
+  },
+  {
+    name: "minimumQuickLoginWaitSeconds",
+    labelKey: "feature.admin.auth.lockout.minimumQuickLoginWaitSeconds",
+  },
+  { name: "maxDeltaTimeSeconds", labelKey: "feature.admin.auth.lockout.maxDeltaTimeSeconds" },
+  {
+    name: "failureResetTimeSeconds",
+    labelKey: "feature.admin.auth.lockout.failureResetTimeSeconds",
+  },
+] as const;
+
+type LockoutNumericField = (typeof LOCKOUT_NUMERIC_FIELDS)[number];
+
+function LockoutTab() {
+  const t = useTranslation();
+  const { hasPermission } = useSession();
+  const canWrite = hasPermission("tenant.auth.settings.write");
+  const readiness = useAuthReadiness();
+
+  if (readiness.isLoading) return <LoadingState message={t("auth.status.loading")} />;
+  if (readiness.isError) return <AdminQueryError error={readiness.error} />;
+
+  const status = readiness.data?.status;
+  const editable = status === "configured" && canWrite;
+
+  return (
+    <div className="space-y-4" data-testid="auth-lockout">
+      {status && status !== "configured" && (
+        <Card>
+          <CardBody>
+            <output className="text-sm text-fg-muted" data-testid="auth-lockout-readiness">
+              {t(`feature.admin.auth.readiness.${status}` as const)}
+            </output>
+          </CardBody>
+        </Card>
+      )}
+      <LockoutPolicyView editable={editable} />
+      <div className="border-t border-border pt-4">
+        <AuditTrailPanel
+          resource="auth_settings"
+          action="auth_settings.lockout.changed"
+          heading={t("feature.admin.auth.lockout.recentChanges")}
+          testId="auth-lockout-audit"
+        />
+      </div>
+    </div>
+  );
+}
+
+function LockoutPolicyView({ editable }: Readonly<{ editable: boolean }>) {
+  const t = useTranslation();
+  const { data, isLoading, isError, error } = useLockoutPolicy();
+  if (isLoading) return <LoadingState message={t("auth.status.loading")} />;
+  if (isError) return <AdminQueryError error={error} />;
+  if (!data) return <EmptyState title={t("feature.admin.auth.notConfigured")} />;
+  if (editable) return <LockoutPolicyForm policy={data} />;
+  return (
+    <Card>
+      <CardBody className="divide-y divide-border">
+        <div data-testid="auth-lockout-readonly" className="divide-y divide-border">
+          <Detail
+            label={t("feature.admin.auth.lockout.enabled")}
+            value={
+              data.enabled
+                ? t("feature.admin.auth.session.on")
+                : t("feature.admin.auth.session.off")
+            }
+          />
+          <Detail
+            label={t("feature.admin.auth.lockout.permanentLockout")}
+            value={
+              data.permanentLockout
+                ? t("feature.admin.auth.session.on")
+                : t("feature.admin.auth.session.off")
+            }
+          />
+          {LOCKOUT_NUMERIC_FIELDS.map((f) => (
+            <Detail
+              key={f.name}
+              label={t(f.labelKey)}
+              value={String(data[f.name as LockoutNumericField["name"]] ?? "")}
+            />
+          ))}
+        </div>
+      </CardBody>
+    </Card>
+  );
+}
+
+function LockoutPolicyForm({ policy }: Readonly<{ policy: LockoutPolicyDto }>) {
+  const t = useTranslation();
+  const mutation = useSetLockoutPolicy();
+  const { control, handleSubmit, formState } = useForm<LockoutPolicyDto>({
+    resolver: zodResolver(
+      z.object({
+        enabled: z.boolean(),
+        maxFailureWaitSeconds: z.number().int().min(1),
+        failureFactor: z.number().int().min(1),
+        waitIncrementSeconds: z.number().int().min(1),
+        quickLoginCheckMilliSeconds: z.number().int().min(1),
+        minimumQuickLoginWaitSeconds: z.number().int().min(1),
+        maxDeltaTimeSeconds: z.number().int().min(1),
+        failureResetTimeSeconds: z.number().int().min(1),
+        permanentLockout: z.boolean(),
+      })
+    ),
+    defaultValues: policy,
+  });
+  function onSubmit(values: LockoutPolicyDto) {
+    mutation.mutate(values);
+  }
+  return (
+    <Card>
+      <CardBody>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-4"
+          data-testid="auth-lockout-form"
+        >
+          <Controller
+            name="enabled"
+            control={control}
+            render={({ field }) => (
+              <Switch
+                isSelected={!!field.value}
+                onChange={field.onChange}
+                data-testid="auth-lockout-enabled"
+              >
+                {t("feature.admin.auth.lockout.enabled")}
+              </Switch>
+            )}
+          />
+          <Controller
+            name="permanentLockout"
+            control={control}
+            render={({ field }) => (
+              <Switch
+                isSelected={!!field.value}
+                onChange={field.onChange}
+                data-testid="auth-lockout-permanentLockout"
+              >
+                {t("feature.admin.auth.lockout.permanentLockout")}
+              </Switch>
+            )}
+          />
+          {LOCKOUT_NUMERIC_FIELDS.map((f) => (
+            <Controller
+              key={f.name}
+              name={f.name}
+              control={control}
+              render={({ field }) => (
+                <FormField
+                  label={t(f.labelKey)}
+                  type="number"
+                  value={String(field.value ?? "")}
+                  onChange={(v) => field.onChange(Number(v))}
+                  onBlur={field.onBlur}
+                  name={field.name}
+                  inputProps={{ "data-testid": `auth-lockout-${f.name}` }}
+                />
+              )}
+            />
+          ))}
+          {mutation.isError && (
+            <p role="alert" className="text-sm text-danger" data-testid="auth-lockout-error">
+              {t("feature.admin.auth.lockout.saveError")}
+            </p>
+          )}
+          <div className="flex items-center justify-between gap-4">
+            <LiveRegion
+              tone="polite"
+              className="text-sm text-success"
+              data-testid="auth-lockout-status"
+            >
+              {mutation.isSuccess ? t("feature.admin.auth.lockout.saved") : ""}
+            </LiveRegion>
+            <Button
+              size="sm"
+              type="submit"
+              isDisabled={mutation.isPending || !formState.isDirty}
+              data-testid="auth-lockout-submit"
+            >
+              {t("feature.admin.auth.lockout.save")}
             </Button>
           </div>
         </form>

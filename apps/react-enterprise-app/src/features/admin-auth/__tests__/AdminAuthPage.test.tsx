@@ -11,6 +11,7 @@ import {
   adminAuthProvidersHandler,
   adminIdpsHandler,
   adminAuthReadinessHandler,
+  adminLockoutHandler,
   adminGetErrorHandler,
 } from "../../../msw";
 import { AdminAuthPage } from "../AdminAuthPage";
@@ -23,6 +24,11 @@ async function openSessionTab() {
 async function openMfaTab() {
   await screen.findByTestId("auth-provider-mode");
   await userEvent.click(screen.getByRole("tab", { name: enGB.feature.admin.auth.tab.mfa }));
+}
+
+async function openLockoutTab() {
+  await screen.findByTestId("auth-provider-mode");
+  await userEvent.click(screen.getByRole("tab", { name: enGB.feature.admin.auth.tab.lockout }));
 }
 
 async function openIdpsTab() {
@@ -177,6 +183,37 @@ describe("AdminAuthPage", () => {
     expect(await screen.findByTestId("auth-mfa-form")).toBeInTheDocument();
     expect(screen.getByTestId("auth-mfa-required")).toBeInTheDocument();
     expect(screen.queryByTestId("auth-mfa-readiness")).not.toBeInTheDocument();
+  });
+
+  it("renders an editable lockout form when the credential is configured", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminAuthProvidersHandler(),
+      adminAuthReadinessHandler({ status: "configured" }),
+      adminLockoutHandler()
+    );
+    renderPage();
+    await openLockoutTab();
+    expect(await screen.findByTestId("auth-lockout-form")).toBeInTheDocument();
+    expect(screen.queryByTestId("auth-lockout-readiness")).not.toBeInTheDocument();
+  });
+
+  it("saving the lockout policy announces success", async () => {
+    server.use(
+      sessionHandler("tenantAdmin"),
+      adminAuthProvidersHandler(),
+      adminAuthReadinessHandler({ status: "configured" }),
+      adminLockoutHandler()
+    );
+    renderPage();
+    await openLockoutTab();
+    const input = await screen.findByTestId("auth-lockout-failureFactor");
+    await userEvent.clear(input);
+    await userEvent.type(input, "12");
+    await userEvent.click(screen.getByTestId("auth-lockout-submit"));
+    await waitFor(() =>
+      expect(screen.getByTestId("auth-lockout-status")).toHaveTextContent(/saved/i)
+    );
   });
 
   it("saving the MFA policy announces success", async () => {

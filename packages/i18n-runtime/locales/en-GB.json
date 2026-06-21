@@ -942,6 +942,7 @@
           "providers": "Providers",
           "idps": "Identity providers",
           "mfa": "Multi-factor",
+          "lockout": "Lockout",
           "session": "Sessions"
         },
         "providers": {
@@ -1042,6 +1043,21 @@
           "saved": "MFA policy saved.",
           "saveError": "Could not save the MFA policy. Please try again.",
           "recentChanges": "Recent MFA changes"
+        },
+        "lockout": {
+          "enabled": "Brute-force protection",
+          "permanentLockout": "Permanent lockout",
+          "maxFailureWaitSeconds": "Maximum wait",
+          "failureFactor": "Failure factor",
+          "waitIncrementSeconds": "Wait increment",
+          "quickLoginCheckMilliSeconds": "Quick-login check",
+          "minimumQuickLoginWaitSeconds": "Minimum quick-login wait",
+          "maxDeltaTimeSeconds": "Maximum delta time",
+          "failureResetTimeSeconds": "Failure reset",
+          "save": "Save changes",
+          "saved": "Lockout policy saved.",
+          "saveError": "Could not save the lockout policy. Please try again.",
+          "recentChanges": "Recent lockout changes"
         },
         "session": {
           "accessTokenLifespan": "Access token lifespan",

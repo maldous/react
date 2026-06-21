@@ -35,14 +35,14 @@ The closure programme is split into the three honest categories the validator di
 UI semantic definition, stop condition, V2 assets). None is hidden inside a delivered count.
 
 | Action | Capability                                                                              |
-| ------ | --------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| ------ | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
 | V1C-01 | Tenant groups — ✅ CLOSED (proof:ui-semantic-groups)                                    |
 | V1C-02 | Sub-organisations — ✅ CLOSED (proof:ui-semantic-sub-organisations)                     |
 | V1C-03 | ABAC / Policy Decision Point (entitlement step only; quota Phase 2)                     |
 | V1C-04 | Delegated administration roles (net-new; needs ADR)                                     |
 | V1C-05 | Support-mode / break-glass (approval workflow proven)                                   |
 | V1C-06 | Claim mapping — ✅ CLOSED (proof:ui-semantic-claim-mapping; live IdP external/ADR-0220) |
-| V1C-07 | MFA + session policy + lockout (lockout/recovery surface; MFA E2E)                      |
+| V1C-07 | MFA + session policy + lockout (lockout/recovery surface; MFA E2E)                      | ✅ CLOSED (auth lockout/recovery surface wired through Keycloak realm brute-force settings) |
 | V1C-08 | Branding + theming (registry marks partial)                                             |
 | V1C-09 | Custom domains / DNS / TLS / canonical (cutover unproven)                               |
 | V1C-10 | Product catalog, plans, prices (no billing engine)                                      |
@@ -52,7 +52,7 @@ UI semantic definition, stop condition, V2 assets). None is hidden inside a deli
 | V1C-14 | Tenant data import / export (net-new)                                                   |
 | V1C-15 | Object storage file CRUD / quotas / lifecycle / AV (readiness-only today)               |
 | V1C-16 | Workflow engine / approvals (scheduled-jobs delivered separately)                       |
-| V1C-17 | Metrics + traces backend + dashboards                                                   | ✅ CLOSED (proof:metrics-prometheus; proof:dashboards) |
+| V1C-17 | Metrics + traces backend + dashboards                                                   | ✅ CLOSED (proof:metrics-prometheus; proof:dashboards)                                      |
 | V1C-18 | Dependency scanning as a hard gate                                                      |
 | V1C-19 | Compliance reports / access reviews / evidence packs                                    |
 | V1C-20 | Developer portal / SDK gen / sandbox (rate-limits delivered separately)                 |
@@ -94,7 +94,7 @@ worker-runtime, observability`. All now `delete-after-proof` in the path-map (wa
    **Not executed in this change** (per instruction).
 3. **8 config-runtime bounded decisions** — `V1C-CONF-01..08` (decomposed from `V1C-PKG-CONFIG`).
 
-**Completion-blocker total: 30** = 18 capability completions + 10 package removals + 2 reopened V1C-17/V1C-18 capability completions (V1C-CONF-06 config decisions closed; V1C-01/02/05/06 and V1C-25 validation semantics closed)
+**Completion-blocker total: 29** = 17 capability completions + 10 package removals + 2 reopened V1C-17/V1C-18 capability completions (V1C-CONF-06 config decisions closed; V1C-01/02/05/06 and V1C-25 validation semantics closed)
 (live truth: `npm run v2:readiness --json` `.completionBlockerCount`).
 
 ## What pass two got wrong (now fixed)
@@ -114,8 +114,8 @@ worker-runtime, observability`. All now `delete-after-proof` in the path-map (wa
 
 | Class                                      | Count | Blocks cut?         |
 | ------------------------------------------ | ----- | ------------------- |
-| delivered-and-proven                       | 54    | no                  |
-| requires-v1-completion                     | 16    | **yes**             |
+| delivered-and-proven                       | 55    | no                  |
+| requires-v1-completion                     | 15    | **yes**             |
 | superseded-by-proven-canonical             | 1     | no                  |
 | not-applicable-final                       | 4     | no                  |
 | config-runtime decisions (V1C-CONF-01..08) | 8     | **yes**             |

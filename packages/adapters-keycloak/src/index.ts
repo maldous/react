@@ -247,6 +247,7 @@ import type {
   IdentityProvider,
   IdentityProviderMapper,
   MfaPolicy,
+  LockoutPolicy,
   SessionPolicy,
   ResourcePolicy,
   SysadminBrokeringConfig,
@@ -613,6 +614,10 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
     return this.adminUrl(`/authentication/required-actions/${encodeURIComponent(alias)}`);
   }
 
+  private bruteForceUrl(): string {
+    return this.adminUrl("");
+  }
+
   // enabled + defaultAction → requirement level. defaultAction means every new
   // user is asked to configure it (our "required"); merely enabled is "optional".
   private actionLevel(action: {
@@ -663,6 +668,50 @@ export class KeycloakRealmAdminAdapter implements RealmAdminPort {
       body: JSON.stringify(action),
     });
     await this.assertAdminOk(putRes, `setMfaPolicy(realm ${this.config.realm})`);
+  }
+
+  async getLockoutPolicy(): Promise<LockoutPolicy> {
+    const token = await this.getAdminToken();
+    const res = await fetch(this.bruteForceUrl(), {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    await this.assertAdminOk(res, `getLockoutPolicy(realm ${this.config.realm})`);
+    const realm = (await res.json()) as Record<string, unknown>;
+    return {
+      enabled: Boolean(realm["bruteForceProtected"] ?? false),
+      maxFailureWaitSeconds: Number(realm["maxFailureWaitSeconds"] ?? 900),
+      failureFactor: Number(realm["failureFactor"] ?? 30),
+      waitIncrementSeconds: Number(realm["waitIncrementSeconds"] ?? 60),
+      quickLoginCheckMilliSeconds: Number(realm["quickLoginCheckMilliSeconds"] ?? 1000),
+      minimumQuickLoginWaitSeconds: Number(realm["minimumQuickLoginWaitSeconds"] ?? 60),
+      maxDeltaTimeSeconds: Number(realm["maxDeltaTimeSeconds"] ?? 60),
+      failureResetTimeSeconds: Number(realm["failureResetTimeSeconds"] ?? 43200),
+      permanentLockout: Boolean(realm["permanentLockout"] ?? false),
+    };
+  }
+
+  async setLockoutPolicy(policy: LockoutPolicy): Promise<void> {
+    const token = await this.getAdminToken();
+    const res = await fetch(this.bruteForceUrl(), {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    await this.assertAdminOk(res, `getLockoutPolicy(realm ${this.config.realm})`);
+    const realm = (await res.json()) as Record<string, unknown>;
+    realm["bruteForceProtected"] = policy.enabled;
+    realm["maxFailureWaitSeconds"] = policy.maxFailureWaitSeconds;
+    realm["failureFactor"] = policy.failureFactor;
+    realm["waitIncrementSeconds"] = policy.waitIncrementSeconds;
+    realm["quickLoginCheckMilliSeconds"] = policy.quickLoginCheckMilliSeconds;
+    realm["minimumQuickLoginWaitSeconds"] = policy.minimumQuickLoginWaitSeconds;
+    realm["maxDeltaTimeSeconds"] = policy.maxDeltaTimeSeconds;
+    realm["failureResetTimeSeconds"] = policy.failureResetTimeSeconds;
+    realm["permanentLockout"] = policy.permanentLockout;
+    const putRes = await fetch(this.bruteForceUrl(), {
+      method: "PUT",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify(realm),
+    });
+    await this.assertAdminOk(putRes, `setLockoutPolicy(realm ${this.config.realm})`);
   }
 
   async getSessionPolicy(): Promise<SessionPolicy> {

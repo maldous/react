@@ -10,6 +10,7 @@ import {
   authProvidersFixture,
   idpsFixture,
   mfaFixture,
+  lockoutFixture,
   sessionPolicyFixture,
   authReadinessFixture,
   externalIdentitiesFixture,
@@ -627,6 +628,9 @@ export function adminEmailSenderTestHandler(
 export function adminMfaHandler(response = mfaFixture) {
   return http.get("/api/auth/settings/mfa", () => HttpResponse.json(response));
 }
+export function adminLockoutHandler(response = lockoutFixture) {
+  return http.get("/api/auth/settings/lockout", () => HttpResponse.json(response));
+}
 export function adminSessionPolicyHandler(response = sessionPolicyFixture) {
   return http.get("/api/auth/settings/session", () => HttpResponse.json(response));
 }
@@ -678,6 +682,7 @@ export function adminWriteOkHandlers() {
     http.patch("/api/auth/settings/providers", () => HttpResponse.json(authProvidersFixture)),
     http.patch("/api/auth/settings/session", () => new HttpResponse(null, { status: 204 })),
     http.patch("/api/auth/settings/mfa", () => new HttpResponse(null, { status: 204 })),
+    http.patch("/api/auth/settings/lockout", () => new HttpResponse(null, { status: 204 })),
     http.post("/api/auth/settings/idps", () => new HttpResponse(null, { status: 201 })),
     http.patch("/api/auth/settings/idps/:alias", () => new HttpResponse(null, { status: 204 })),
     http.delete("/api/auth/settings/idps/:alias", () => new HttpResponse(null, { status: 204 })),

@@ -94,6 +94,7 @@ import {
 import {
   mutateAuthSetting,
   buildMfaAuditMetadata,
+  buildLockoutAuditMetadata,
   buildSessionAuditMetadata,
   buildSysadminBrokeringAuditMetadata,
   type AuthSettingsMutationResult,
@@ -833,6 +834,18 @@ const MfaBodySchema = z.object({
   required: z.enum(["none", "optional", "required"]),
   type: z.enum(["totp", "webauthn"]).default("totp"),
   gracePeriodSeconds: z.number().int().min(0).optional(),
+});
+
+const LockoutBodySchema = z.object({
+  enabled: z.boolean(),
+  maxFailureWaitSeconds: z.number().int().min(1),
+  failureFactor: z.number().int().min(1),
+  waitIncrementSeconds: z.number().int().min(1),
+  quickLoginCheckMilliSeconds: z.number().int().min(1),
+  minimumQuickLoginWaitSeconds: z.number().int().min(1),
+  maxDeltaTimeSeconds: z.number().int().min(1),
+  failureResetTimeSeconds: z.number().int().min(1),
+  permanentLockout: z.boolean(),
 });
 
 const SessionBodySchema = z.object({
@@ -1630,6 +1643,75 @@ export const routes: Route[] = [
               adminClientId: cred.clientId,
               adminClientSecret: cred.clientSecret,
             }).setMfaPolicy(body),
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          credentialStore: new PostgresTenantCredentialStore(getApplicationPool()),
+        }
+      );
+      if (sendAuthSettingsFailure(res, result)) return;
+      res.json(204, null);
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/auth/settings/lockout",
+    operationName: "auth.settings.lockout.get",
+    requiresAuth: true,
+    requiredPermission: "tenant.auth.settings.read",
+    resource: "admin:auth",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const cred = await new PostgresTenantCredentialStore(
+        getApplicationPool()
+      ).getAuthSettingsCredential(tenantCtx.organisationId);
+      if (!cred) {
+        res.json(503, { code: "NO_CREDENTIAL", message: serverT("api.error.notImplemented") });
+        return;
+      }
+      const adapter = new KeycloakRealmAdminAdapter({
+        url: getKeycloakConfigForRealm(tenantCtx.realmName).url,
+        realm: tenantCtx.realmName,
+        adminClientId: cred.clientId,
+        adminClientSecret: cred.clientSecret,
+      });
+      res.json(200, await adapter.getLockoutPolicy());
+    },
+  },
+  {
+    method: "PATCH",
+    path: "/api/auth/settings/lockout",
+    operationName: "auth.settings.lockout.set",
+    requiresAuth: true,
+    requiredPermission: "tenant.auth.settings.write",
+    resource: "admin:auth",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      const result = await mutateAuthSetting(
+        {
+          rawBody: req.body,
+          tenantCtx,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          auditAction: AuditAction.AuthSettingsLockoutChanged,
+          buildAuditMetadata: buildLockoutAuditMetadata,
+          schema: LockoutBodySchema,
+          mutate: (body, cred) =>
+            new KeycloakRealmAdminAdapter({
+              url: getKeycloakConfigForRealm(tenantCtx!.realmName).url,
+              realm: tenantCtx!.realmName,
+              adminClientId: cred.clientId,
+              adminClientSecret: cred.clientSecret,
+            }).setLockoutPolicy(body),
           sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
         },
         {

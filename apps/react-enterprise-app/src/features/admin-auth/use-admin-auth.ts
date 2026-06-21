@@ -3,6 +3,7 @@ import type {
   UpdateTenantAuthProvidersRequest,
   SessionPolicyDto,
   MfaPolicyDto,
+  LockoutPolicyDto,
   CreateIdpRequest,
   UpdateIdpRequest,
   OidcDiscoverRequest,
@@ -17,6 +18,8 @@ import {
   deleteIdp,
   getMfaPolicy,
   setMfaPolicy,
+  getLockoutPolicy,
+  setLockoutPolicy,
   getSessionPolicy,
   setSessionPolicy,
   getAuthReadiness,
@@ -30,6 +33,7 @@ import {
 export const authProvidersQueryKey = ["admin", "auth", "providers"] as const;
 export const authIdpsQueryKey = ["admin", "auth", "idps"] as const;
 export const authMfaQueryKey = ["admin", "auth", "mfa"] as const;
+export const authLockoutQueryKey = ["admin", "auth", "lockout"] as const;
 export const authSessionQueryKey = ["admin", "auth", "session"] as const;
 export const authReadinessQueryKey = ["admin", "auth", "readiness"] as const;
 
@@ -144,6 +148,27 @@ export function useSetMfaPolicy() {
     mutationFn: (input: MfaPolicyDto) => setMfaPolicy(input),
     onSuccess: (_void, input) => {
       queryClient.setQueryData(authMfaQueryKey, input);
+      void queryClient.invalidateQueries({ queryKey: authReadinessQueryKey });
+      void queryClient.invalidateQueries({ queryKey: ["admin", "audit"] });
+    },
+  });
+}
+
+export function useLockoutPolicy(enabled = true) {
+  return useQuery({
+    queryKey: authLockoutQueryKey,
+    queryFn: getLockoutPolicy,
+    retry: false,
+    enabled,
+  });
+}
+
+export function useSetLockoutPolicy() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (input: LockoutPolicyDto) => setLockoutPolicy(input),
+    onSuccess: (_void, input) => {
+      queryClient.setQueryData(authLockoutQueryKey, input);
       void queryClient.invalidateQueries({ queryKey: authReadinessQueryKey });
       void queryClient.invalidateQueries({ queryKey: ["admin", "audit"] });
     },

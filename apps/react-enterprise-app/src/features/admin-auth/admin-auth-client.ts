@@ -5,6 +5,7 @@ import type {
   CreateIdpRequest,
   UpdateIdpRequest,
   MfaPolicyDto,
+  LockoutPolicyDto,
   SessionPolicyDto,
   AuthSettingsReadiness,
   OidcDiscoverRequest,
@@ -21,6 +22,7 @@ export type {
   CreateIdpRequest,
   UpdateIdpRequest,
   MfaPolicyDto,
+  LockoutPolicyDto,
   SessionPolicyDto,
   AuthSettingsReadiness,
   OidcDiscoverRequest,
@@ -62,6 +64,14 @@ export function getMfaPolicy(): Promise<MfaPolicyDto> {
 
 export function setMfaPolicy(input: MfaPolicyDto): Promise<void> {
   return adminSend<void>("PATCH", "/api/auth/settings/mfa", input);
+}
+
+export function getLockoutPolicy(): Promise<LockoutPolicyDto> {
+  return adminGet<LockoutPolicyDto>("/api/auth/settings/lockout");
+}
+
+export function setLockoutPolicy(input: LockoutPolicyDto): Promise<void> {
+  return adminSend<void>("PATCH", "/api/auth/settings/lockout", input);
 }
 
 export function getSessionPolicy(): Promise<SessionPolicyDto> {

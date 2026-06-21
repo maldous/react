@@ -790,6 +790,38 @@ describe("KeycloakRealmAdminAdapter — setMfaPolicy / setSessionPolicy (write h
       /setSessionPolicy\(realm tenant-abc\): Keycloak admin request failed: 500/
     );
   });
+
+  it("getLockoutPolicy reads brute-force settings from the realm", async () => {
+    restore = mockFetch(
+      adminApiFetch(async (_input, init) =>
+        (init?.method ?? "GET") === "GET"
+          ? jsonResponse({
+              bruteForceProtected: true,
+              maxFailureWaitSeconds: 900,
+              failureFactor: 12,
+              waitIncrementSeconds: 60,
+              quickLoginCheckMilliSeconds: 1000,
+              minimumQuickLoginWaitSeconds: 60,
+              maxDeltaTimeSeconds: 60,
+              failureResetTimeSeconds: 43200,
+              permanentLockout: false,
+            })
+          : new Response(null, { status: 204 })
+      )
+    );
+    const adapter = new KeycloakRealmAdminAdapter(ADMIN_CONFIG);
+    await assert.deepEqual(await adapter.getLockoutPolicy(), {
+      enabled: true,
+      maxFailureWaitSeconds: 900,
+      failureFactor: 12,
+      waitIncrementSeconds: 60,
+      quickLoginCheckMilliSeconds: 1000,
+      minimumQuickLoginWaitSeconds: 60,
+      maxDeltaTimeSeconds: 60,
+      failureResetTimeSeconds: 43200,
+      permanentLockout: false,
+    });
+  });
 });
 
 // Branch the admin API by URL/method: client lookup, policy search, policy write.

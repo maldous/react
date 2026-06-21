@@ -4,6 +4,7 @@ import type {
   TenantAuthProvidersResponse,
   IdpSummary,
   MfaPolicyDto,
+  LockoutPolicyDto,
   SessionPolicyDto,
   AuthSettingsReadiness,
   ExternalIdentityListResponse,
@@ -204,6 +205,18 @@ export const auditFixture: AuditListResponse = {
 };
 
 export const mfaFixture: MfaPolicyDto = { required: "optional", type: "totp" };
+
+export const lockoutFixture: LockoutPolicyDto = {
+  enabled: true,
+  maxFailureWaitSeconds: 900,
+  failureFactor: 30,
+  waitIncrementSeconds: 60,
+  quickLoginCheckMilliSeconds: 1000,
+  minimumQuickLoginWaitSeconds: 60,
+  maxDeltaTimeSeconds: 60,
+  failureResetTimeSeconds: 43200,
+  permanentLockout: false,
+};
 
 export const sessionPolicyFixture: SessionPolicyDto = {
   accessTokenLifespanSeconds: 300,

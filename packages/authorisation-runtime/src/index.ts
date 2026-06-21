@@ -90,6 +90,18 @@ export interface MfaPolicy {
   gracePeriodSeconds?: number;
 }
 
+export interface LockoutPolicy {
+  enabled: boolean;
+  maxFailureWaitSeconds: number;
+  failureFactor: number;
+  waitIncrementSeconds: number;
+  quickLoginCheckMilliSeconds: number;
+  minimumQuickLoginWaitSeconds: number;
+  maxDeltaTimeSeconds: number;
+  failureResetTimeSeconds: number;
+  permanentLockout: boolean;
+}
+
 export interface SessionPolicy {
   accessTokenLifespanSeconds: number;
   ssoSessionIdleTimeoutSeconds: number;
@@ -227,6 +239,10 @@ export interface RealmAdminPort {
   // MFA policy
   getMfaPolicy(): Promise<MfaPolicy>;
   setMfaPolicy(policy: MfaPolicy): Promise<void>;
+
+  // Lockout / recovery policy
+  getLockoutPolicy(): Promise<LockoutPolicy>;
+  setLockoutPolicy(policy: LockoutPolicy): Promise<void>;
 
   // Session policy
   getSessionPolicy(): Promise<SessionPolicy>;

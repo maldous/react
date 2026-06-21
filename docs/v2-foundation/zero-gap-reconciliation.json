@@ -1,6 +1,6 @@
 {
   "pass": "two-reverse-reconciliation (semantic-closure pass)",
-  "verdict": "reconciliation in progress — V1C-04 (delegated administration), V1C-05 (support approval), V1C-19 (compliance reports), and V1C-25 (i18n validation) delivered-and-proven and closed. 16 capability completions + 10 deprecated packages remain before the cut.",
+  "verdict": "reconciliation in progress — V1C-04 (delegated administration), V1C-05 (support approval), V1C-07 (MFA/session/lockout), V1C-19 (compliance reports), and V1C-25 (i18n validation) delivered-and-proven and closed. 15 capability completions + 10 deprecated packages remain before the cut.",
   "vocabulary": {
     "fileDispositions": [
       "reuse-unchanged",
@@ -61,8 +61,8 @@
   "capabilities": {
     "total": 75,
     "buckets": {
-      "delivered-and-proven": 54,
-      "requires-v1-completion": 16,
+      "delivered-and-proven": 55,
+      "requires-v1-completion": 15,
       "not-applicable-final": 4,
       "superseded-by-proven-canonical": 1
     },
@@ -202,11 +202,11 @@
   },
   "cutReadiness": {
     "consistencyFindings": 0,
-    "completionBlockerCount": 16,
+    "completionBlockerCount": 15,
     "unexaminedAuditSurfaces": 0,
     "cutReady": false,
     "terminology": "consistencyFindings = artefacts vs live-repo self-consistency (must be 0). completionBlockers = R9 outstanding V1 work. cutReady = both zero.",
-    "composition": "16 requires-v1-completion capabilities + 0 deprecated packages = 16.",
+    "composition": "15 requires-v1-completion capabilities + 0 deprecated packages = 15.",
     "configSprawl": "V1C-CONF-06 progress metric (NOT one of the 36; V1C-CONF-06 is the single config blocker until closed): v1-config-consumption.directAccessOutsideCompositionKeyCount = product-runtime direct env reads still to migrate into typed projections (the remaining target is the platform-api server runtime). approvedExceptionKeyCount = reads confined to approved NON-product boundaries (operator-script scripts/**, dev-ci-tooling tools/**, web-build vite.config.* — each a composition root / CI tool with its own contextual defaults). The exception list is enforced in the closure commit.",
     "liveTruth": "npm run v2:readiness --json"
   }
