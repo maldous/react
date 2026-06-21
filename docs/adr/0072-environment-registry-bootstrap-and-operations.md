@@ -29,6 +29,28 @@ sourced them, `core.mk` grepped them, and `loadLocalEnv` read them. Secrets live
 those files in plaintext on developer machines. There was no first-class, queryable
 model of "what environments exist and what is safe to do in each".
 
+## Project invariants (re-asserted by ADR-ACT-0305)
+
+For the avoidance of doubt, the three hard rules this ADR establishes are kept
+distinct from the seven-point decision list below so they remain grep-able for
+onboarding, review tooling, and audit:
+
+1. **No `.env` file anywhere in the tree.** `.env`, `.env.<stage>`, and any
+   inherited variant are gitignored (`.gitignore`) and never committed. The
+   committed source of truth is `config/environments/*.json` (+ shared
+   `common.json` and `shared.json` for Sonar/Sentry).
+2. **No `.env.example` template file.** New onboarding paths never begin with
+   `cp .env.example .env`. The rules are the manifests, not a template.
+3. **Runtime secret material lives in OpenBao (ADR-0069).** The generated
+   `.env/<stage>.env` is a runtime artifact only — secret values are seeded from
+   OpenBao via `make env-seed-secrets ENV=<stage>` or derived as
+   local-bootstrap material (ADR-0072 §2); they are NEVER hand-typed and NEVER
+   committed.
+
+These three rules are belt-and-braces with the manifest validator's
+"no secret-looking value in a manifest" check (`scripts/env/validate-manifests.mjs`)
+and with `scripts/env/bootstrap.mjs` seed-secrets + seed-admin OpenBao flow.
+
 ## Decision (delivered)
 
 1. **Manifests are the source of truth.** Tracked, non-secret manifests

@@ -21,15 +21,22 @@ coverage/
 # Generated operational reports
 reports/**
 
-# Local + generated environment files (ADR-0072). The tracked source of truth is
-# config/environments/*.json (per-stage manifests + common.json + shared.json for
-# Sonar/Sentry); there is NO hand-maintained .env, .env.*, .env.example, .env.sonar,
-# or .env.sentry. Runtime env artifacts are generated at .env/<target>.env (+
-# .env/secrets/<target>.env) by `make env-generate-runtime` — gitignored,
-# reproducible, secret-bearing, NEVER committed.
-.env
+# Local + generated environment files (ADR-0072 / ADR-0069 — re-asserted by
+# ADR-ACT-0305). OpenBao (ADR-0069, openbao/openbao:2.2.0) is the central runtime
+# secret store; runtime env artifacts are generated at .env/<target>.env and
+# .env/secrets/<target>.env by `make env-generate-runtime` once a stage is
+# bootstrapped. The tracked source of truth is config/environments/*.json
+# (per-stage manifests + common.json + shared.json for Sonar/Sentry). There is
+# NO hand-maintained env file of any kind — .env, .env.<stage>, .env.example,
+# .env.sonar, .env.sentry. Everything below is gitignored, reproducible,
+# secret-bearing, and NEVER committed (CLAUDE.md constraint #8).
+#
+# Explicit guards over .env.* so a hand-added slip cannot land:
+.env                          # the env-as-file root/subdir case
+.env.example                   # onboarding template — generated, not committed
+/.env/                        # runtime env artifact directory (anchor at root)
 .env.*
-/.env/
+
 
 # OS/editor noise
 .DS_Store
