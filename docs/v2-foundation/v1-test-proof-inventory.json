@@ -3644,11 +3644,29 @@
     "failureEvidence": "node:test assertion failure output (spec reporter)"
   },
   {
-    "id": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
-    "path": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
+    "id": "apps/platform-api/tests/unit/legal-hold.test.ts",
+    "path": "apps/platform-api/tests/unit/legal-hold.test.ts",
     "kind": "unit",
     "behaviourProtected": true,
-    "fixtureEnvDependency": "none (pure/in-process; inline-fake pg pool)",
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/retention.test.ts",
+    "path": "apps/platform-api/tests/unit/retention.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "tools/v2-readiness/tests/r21-v1c17-observability.test.mjs",
+    "path": "tools/v2-readiness/tests/r21-v1c17-observability.test.mjs",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
     "stageCoverage": "test (make check)",
     "failureEvidence": "node:test assertion failure output (spec reporter)"
   }

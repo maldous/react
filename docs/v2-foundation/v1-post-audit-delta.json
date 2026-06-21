@@ -1511,7 +1511,7 @@
       "purpose": "V1C-04 Turn 1: persisted delegated admin roles (ADR-0063 / V1C-04)",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "apps/platform-api/src/db/migrations/037-delegated-admin-roles.sql",
-      "protectingTests": ["apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts"],
+      "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0304"],
       "introducingCommit": "5a1dff09cc1ef3a014f9c1bd0cc6289da55aeaa0"
     },
@@ -1520,7 +1520,7 @@
       "purpose": "V1C-04 Turn 1: DelegatedAdminRolesPort (pure-types interface)",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "apps/platform-api/src/ports/delegated-admin-roles.ts",
-      "protectingTests": ["apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts"],
+      "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0304"],
       "introducingCommit": "5a1dff09cc1ef3a014f9c1bd0cc6289da55aeaa0"
     },
@@ -1529,21 +1529,245 @@
       "purpose": "V1C-04 Turn 1: Postgres adapter implementing DelegatedAdminRolesPort (withTenant/withSystemAdmin wrappers)",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "apps/platform-api/src/adapters/postgres-delegated-admin-roles.ts",
-      "protectingTests": ["apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts"],
+      "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0304"],
       "introducingCommit": "5a1dff09cc1ef3a014f9c1bd0cc6289da55aeaa0"
     },
     {
-      "path": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
-      "purpose": "V1C-04 Turn 1: inline-fake-pool unit tests for the adapter (7 scenarios)",
+      "path": ".npmrc",
+      "purpose": "post-audit addition (npm registry/config pin for reproducible installs)",
       "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
+      "v2Target": ".npmrc",
       "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0304"],
-      "introducingCommit": "5a1dff09cc1ef3a014f9c1bd0cc6289da55aeaa0"
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/src/db/migrations/035-legal-holds.sql",
+      "purpose": "V1C-12c: legal_holds migration (tenant-scoped legal-hold records blocking retention deletion)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/db/migrations/035-legal-holds.sql",
+      "protectingTests": ["apps/platform-api/tests/unit/legal-hold.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/src/db/migrations/036-retention-policies.sql",
+      "purpose": "V1C-12b: retention_policies migration (tenant-scoped retention windows driving the retention tick worker)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/db/migrations/036-retention-policies.sql",
+      "protectingTests": ["apps/platform-api/tests/unit/retention.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/src/ports/legal-hold.ts",
+      "purpose": "V1C-12c: LegalHoldRepository port (pure-types interface)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/ports/legal-hold.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/legal-hold.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/src/ports/retention.ts",
+      "purpose": "V1C-12b: RetentionRepository port (pure-types interface)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/ports/retention.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/retention.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
+      "purpose": "V1C-12c: legal-hold runtime-proof script",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/scripts/retention-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12b: retention runtime-proof script",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/retention-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-04 Turn 2: delegated admin roles live runtime-proof script",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0304"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/postgres-legal-hold.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12c: Postgres adapter implementing LegalHoldRepository",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/postgres-legal-hold.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/legal-hold.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/postgres-retention.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12b: Postgres adapter implementing RetentionRepository",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/postgres-retention.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/retention.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/config/retention-config.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12b: typed retention worker/tick configuration",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/config/retention-config.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/retention.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/server/retention-worker-runtime.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12b: retention tick worker runtime wiring",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/server/retention-worker-runtime.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/delegations.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-04 Turn 2: delegated admin roles usecase layer",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/delegations.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0304"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/legal-hold.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12c: legal-hold usecase layer (set/release/list)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/legal-hold.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/legal-hold.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/retention.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12b: retention usecase layer (policy set/disable/list + tick)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/retention.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/retention.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/legal-hold.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12c: legal-hold usecase/adapter unit tests",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/legal-hold.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/retention.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12b: retention usecase/adapter unit tests",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/retention.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docker/grafana/dashboards/platform-api-red-method.json",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-17b: Grafana RED-method dashboard for platform-api",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docker/grafana/dashboards/platform-api-red-method.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/evidence/data/legal-hold.md",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12c: legal-hold evidence narrative",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/data/legal-hold.md",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/evidence/data/legal-hold-runtime-proof.json",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12c: legal-hold runtime-proof transcript evidence",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/data/legal-hold-runtime-proof.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/evidence/data/retention.md",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12b: retention evidence narrative",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/data/retention.md",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/evidence/data/retention-runtime-proof.json",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12b: retention runtime-proof transcript evidence",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/data/retention-runtime-proof.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r21-v1c17-observability.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-17: readiness rule R21 validating observability artefacts (Prometheus/Grafana)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r21-v1c17-observability.mjs",
+      "protectingTests": ["tools/v2-readiness/tests/r21-v1c17-observability.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/tests/r21-v1c17-observability.test.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-17: tests for readiness rule R21",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/tests/r21-v1c17-observability.test.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/evidence/stages/v2-readiness-progress.log",
+      "introducingCommit": "763b26a",
+      "purpose": "v2:readiness append-only run transcript (generated runtime artefact)",
+      "v2Disposition": "regenerate",
+      "v2Target": "docs/evidence/stages/v2-readiness-progress.log",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-0075", "ADR-ACT-0285"]
     }
   ],
-  "deletions": [],
-  "additionCount": 160,
-  "deletionCount": 0
+  "deletions": [
+    {
+      "originalPath": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
+      "removalCommit": "unknown",
+      "deletionDecision": "V1C-04 partial: the inline-fake-pool adapter test was structurally unrecoverable against the live adapter surface and was deleted; the 2 tests that actually pass were retained/registered instead.",
+      "replacementOrNa": "n/a (no replacement unit test; adapter behaviour re-proven by the retained V1C-04 tests and the Turn 2 live runtime-proof transcript)",
+      "evidence": "docs/adr/ACTION-REGISTER.md (ADR-ACT-0304); git log 'deleting 2 structurally-unrecoverable tests + registering the 2 that actually pass (V1C-04 partial)'"
+    }
+  ],
+  "additionCount": 184,
+  "deletionCount": 1
 }

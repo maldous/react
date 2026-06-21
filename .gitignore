@@ -31,10 +31,15 @@ reports/**
 # .env.sonar, .env.sentry. Everything below is gitignored, reproducible,
 # secret-bearing, and NEVER committed (CLAUDE.md constraint #8).
 #
-# Explicit guards over .env.* so a hand-added slip cannot land:
-.env                          # the env-as-file root/subdir case
-.env.example                   # onboarding template — generated, not committed
-/.env/                        # runtime env artifact directory (anchor at root)
+# Explicit guards over .env.* so a hand-added slip cannot land.
+# NOTE: .gitignore has no inline comments — a trailing "# ..." becomes part of
+# the pattern, so every guard below must sit on its own line.
+# the env-as-file root/subdir case:
+.env
+# onboarding template — generated, not committed:
+.env.example
+# runtime env artifact directory (anchor at root):
+/.env/
 .env.*
 
 

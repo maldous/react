@@ -213,6 +213,16 @@
         "rls": "n/a"
       },
       {
+        "file": "035-legal-holds.sql",
+        "intent": "V1C-12c: public.legal_holds (tenant-scoped legal-hold records preventing retention deletion of held resources; set_by/released_by actors; reason; set_at/released_at lifecycle; active = released_at IS NULL). Held-row invariant: an active legal hold on a resource blocks retention candidate deletion (enforced by the retention LegalHoldGuard).",
+        "rls": "canonical RLS predicate (migration 012) - tenant isolation + rls_bypass"
+      },
+      {
+        "file": "036-retention-policies.sql",
+        "intent": "V1C-12b: public.retention_policies (tenant-scoped retention windows per resource class; enabled flag; window duration; soft-disable). Drives the retention tick worker which deletes/anonymises expired candidates UNLESS an active legal_holds row protects the resource. Partial uniqueness migrated to a unique index (V1C-12b fix).",
+        "rls": "canonical RLS predicate (migration 012) - tenant isolation + rls_bypass"
+      },
+      {
         "file": "037-delegated-admin-roles.sql",
         "intent": "V1C-04: public.delegated_admin_roles (tenant-scoped delegated admin grants; granter+grantee+scope+(optional TTL); soft-delete via revoked_at+revoked_by; partial UNIQUE (grantee, scope) WHERE revoked_at IS NULL; metadata JSONB). Stop condition: held row invariant NOT relevant (this table tracks LID delegations, not legal hold).",
         "rls": "canonical RLS predicate (migration 012) \u2014 tenant isolation + rls_bypass"
