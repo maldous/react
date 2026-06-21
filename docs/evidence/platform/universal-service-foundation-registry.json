@@ -268,7 +268,7 @@
       "name": "ABAC / Policy Decision Point",
       "domain": "identity-access",
       "purpose": "Attribute-based, runtime-configurable authorization decisions.",
-      "status": "partial",
+      "status": "delivered",
       "composeSupport": "keycloak Authorization Services (UMA 2.0 PEP) \u2014 authorisation-runtime is real",
       "decision": "build",
       "localFreeCandidate": "Keycloak UMA (current); OPA/Cedar adapter as an optional external PDP",
@@ -588,16 +588,16 @@
       "auditEvents": "config audit",
       "readinessModel": "invariant-ready",
       "bffContract": "GET /api/theme",
-      "adminUi": "/admin/config (branding partial)",
+      "adminUi": "/admin/config",
       "selfServiceUi": "partial",
       "proof": "local-caddy-routing theme proof",
-      "productionBlockers": "branding capability marked partial in registry",
+      "productionBlockers": "rich branding remains partial",
       "adr": "ADR-0029",
       "actionRegister": "ADR-ACT-0237",
       "priority": "P2",
       "size": "S",
       "risk": "Low",
-      "notes": "Theme delivered; rich branding partial."
+      "notes": "Theme delivered; rich branding remains partial."
     },
     {
       "capability": "custom-domains-dns-tls",
@@ -2535,14 +2535,14 @@
       {
         "capability": "branding-theme",
         "phase": "delivered",
-        "track": "delivered-partial",
+        "track": "delivered",
         "dependsOn": [
           "tenant-config-registry"
         ],
         "parallelWith": [],
         "mustPrecedeUi": false,
         "mustPrecedeCompose": false,
-        "riskIfDelayed": "Theme delivered; rich branding partial."
+        "riskIfDelayed": "Theme delivered; rich branding remains partial."
       },
       {
         "capability": "custom-domains-dns-tls",

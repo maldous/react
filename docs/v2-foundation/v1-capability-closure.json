@@ -315,8 +315,8 @@
   {
     "capability": "Branding + theming",
     "category": "configuration",
-    "status": "requires-v1-completion",
-    "route": "/admin/config (branding partial)",
+    "status": "delivered-and-proven",
+    "route": "/admin/config",
     "permission": "tenant.config.read",
     "contract": "GET /api/theme",
     "port": "ConfigStorePort",
@@ -324,12 +324,12 @@
     "auditAction": "config audit",
     "readinessCheck": "invariant-ready",
     "evidence": "ADR-0029",
-    "proof": "local-caddy-routing theme proof",
+    "proof": "theme + platform-config tests",
     "openAction": null,
-    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
+    "v2Target": "reuse-as-is: theme contract is proven; richer branding remains a V2 extension, not a cut blocker",
     "completionAction": "V1C-08",
     "acceptablePartialRoute": true,
-    "acceptablePartialRouteReason": "The theme/config seam is delivered and proven; the richer branding surface is a V2 extension, not a branch-cut blocker."
+    "acceptablePartialRouteReason": "The /api/theme contract is proven and the richer branding surface stays a V2 extension."
   },
   {
     "capability": "Custom domains, DNS ownership, TLS, canonical",

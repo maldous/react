@@ -83,7 +83,7 @@ Independent of the critical path (subject only to the service catalog being in p
 
 | Capability | Phase | Track | Depends on | Blocks (derived) | Parallel with | Pre-UI | Pre-compose | Risk if delayed |
 | --- | --- | --- | --- | --- | --- | :-: | :-: | --- |
-| `branding-theme` | delivered | delivered-partial | `tenant-config-registry` | — | — | — | — | Theme delivered; rich branding partial. |
+| `branding-theme` | delivered | delivered | `tenant-config-registry` | — | — | — | — | Theme delivered; rich branding remains partial. |
 | `claim-group-mapping` | delivered | delivered-partial | `idp-brokering` | — | — | — | — | Machinery present; real-IdP mapping proof is blocked (ADR-ACT-0220). |
 | `code-quality-secret-dep-scan` | delivered | delivered-partial | — | — | — | — | — | Sonar/gitleaks/semgrep present; dependency scanning not yet a hard gate. |
 | `custom-domains-dns-tls` | delivered | delivered-partial | `tenant-identity` | — | — | — | — | Machinery live; public DNS verification + canonical cutover unproven locally. |

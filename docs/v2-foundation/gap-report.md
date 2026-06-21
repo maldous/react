@@ -43,7 +43,7 @@ UI semantic definition, stop condition, V2 assets). None is hidden inside a deli
 | V1C-05 | Support-mode / break-glass (approval workflow proven)                                   |
 | V1C-06 | Claim mapping — ✅ CLOSED (proof:ui-semantic-claim-mapping; live IdP external/ADR-0220) |
 | V1C-07 | MFA + session policy + lockout (lockout/recovery surface; MFA E2E)                      | ✅ CLOSED (auth lockout/recovery surface wired through Keycloak realm brute-force settings) |
-| V1C-08 | Branding + theming (registry marks partial)                                             |
+| V1C-08 | Branding + theming (✅ CLOSED; theme contract proven)                                   |
 | V1C-09 | Custom domains / DNS / TLS / canonical (cutover unproven)                               |
 | V1C-10 | Product catalog, plans, prices (no billing engine)                                      |
 | V1C-11 | Subscriptions, invoices, payments, dunning (no engine; payment live-proof external)     |
