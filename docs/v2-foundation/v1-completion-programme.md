@@ -111,9 +111,9 @@ E2E. **Stop:** lockout/recovery exposed; MFA-required E2E green.
 
 #### Configuration / domains
 
-**V1C-08 — Branding + theming completion.** Source: ADR-0029, ADR-ACT-0237. Complete the partial
-branding capability flagged in the readiness registry; theme editor UI semantics per policy. **Stop:**
-branding registry no longer partial; proof green.
+**V1C-08 — Branding + theming completion.** Source: ADR-0029, ADR-ACT-0237. Branding theme
+contract is now delivered and proven; the richer branding surface remains a V2 extension. **Stop:**
+theme contract and platform-config proof stay green.
 
 **V1C-09 — Custom domains: DNS ownership, TLS, activation (de-duplicated).** Source: ADR-0048/0033,
 ADR-ACT-0232. **Scope partitioned: this action owns DNS-ownership verification, TLS issuance, and
@@ -391,9 +391,9 @@ decisions** (no generic blocker retained); the `config-runtime` package fate (ke
 - **V1C-CONF-08 — reload/restart semantics:** declare per-key restart-only vs reloadable + the reload
   mechanism. Stop: each key classified; reload behaviour proven.
 
-**Package outcome:** once V1C-CONF-01..08 land, keep `config-runtime` as the canonical V2
-`runtime/config` (deprecated status removed + proof) OR remove it; `v2-target-tree.txt` `runtime/config`
-reflects the outcome.
+**Package outcome:** `V1C-CONF-01..08` have landed; `config-runtime` is the canonical V2
+`runtime/config` (deprecated status removed + proof). `v2-target-tree.txt` `runtime/config`
+reflects that outcome.
 
 ### Part C — Deprecated package removal (PKG-01..10)
 

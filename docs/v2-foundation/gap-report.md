@@ -65,7 +65,7 @@ UI semantic definition, stop condition, V2 assets). None is hidden inside a deli
 Plus **8 config-runtime bounded decisions** (`V1C-CONF-01..08`, decomposed from the former single
 `V1C-PKG-CONFIG` by the §2 env/config audit — typed loading, schema validation, immutable projections,
 secret references, app-specific config, direct-env-access restriction, test overrides, reload/restart).
-The `config-runtime` package fate (keep-canonical vs remove) is the outcome.
+The `config-runtime` package fate is settled: keep-canonical as `runtime/config`.
 
 ### B. Execution-only actions remaining (zero discovery — mechanical)
 

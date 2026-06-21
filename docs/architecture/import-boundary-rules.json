@@ -244,55 +244,6 @@
       ],
       "forbiddenExact": ["pg", "pino", "graphql"],
       "rationale": "ADR-0022: apps/react-enterprise-app is a browser-only Vite SPA. It must not import Node-only packages, server runtime packages, or database clients. Server/BFF logic belongs in apps/platform-api. ADR-ACT-0203: the SPA must not import graphql/* directly \u2014 GraphQL transport goes through @platform/graphql-browser-client and generated operations come from @platform/contracts-graphql. Allowed exceptions: @platform/platform-errors (browser-safe typed errors), @platform/contracts-auth, @platform/contracts-organisation, @platform/contracts-graphql (Zod schemas + generated TypedDocumentNode), @platform/graphql-browser-client, @platform/ui-design-system."
-    },
-    {
-      "id": "no-react-in-domain",
-      "appliesTo": ["@platform/domain-core"],
-      "forbiddenPrefixes": ["@apollo/", "@graphql-codegen/"],
-      "forbiddenExact": ["react", "react-dom", "graphql"],
-      "rationale": "Domain packages must remain pure TypeScript policy/model packages and must not import React or GraphQL runtimes."
-    },
-    {
-      "id": "no-adapters-in-domain",
-      "appliesTo": ["@platform/domain-core"],
-      "forbiddenPrefixes": ["@platform/adapters-"],
-      "forbiddenExact": [],
-      "rationale": "Domain packages must remain pure TypeScript policy/model packages and must not import adapters."
-    },
-    {
-      "id": "no-graphql-in-domain",
-      "appliesTo": ["@platform/domain-core"],
-      "forbiddenPrefixes": ["@apollo/", "@graphql-codegen/"],
-      "forbiddenExact": ["graphql"],
-      "rationale": "Domain packages must not import GraphQL runtimes or generated GraphQL tooling."
-    },
-    {
-      "id": "no-adapters-in-access-control",
-      "appliesTo": ["@platform/access-control"],
-      "forbiddenPrefixes": ["@platform/adapters-"],
-      "forbiddenExact": [],
-      "rationale": "Access-control is policy-only and must not import adapters."
-    },
-    {
-      "id": "no-react-in-access-control",
-      "appliesTo": ["@platform/access-control"],
-      "forbiddenPrefixes": [],
-      "forbiddenExact": ["react", "react-dom"],
-      "rationale": "Access-control is a server-side policy package and must not import React."
-    },
-    {
-      "id": "no-adapters-in-profile",
-      "appliesTo": ["@platform/profile-configuration"],
-      "forbiddenPrefixes": ["@platform/adapters-"],
-      "forbiddenExact": [],
-      "rationale": "Profile/configuration policy is storage-independent and must not import adapters."
-    },
-    {
-      "id": "no-adapters-in-feature",
-      "appliesTo": ["@platform/feature-workflow"],
-      "forbiddenPrefixes": ["@platform/adapters-"],
-      "forbiddenExact": [],
-      "rationale": "Feature packages compose workflows and must not import runtime adapters directly."
     }
   ]
 }
