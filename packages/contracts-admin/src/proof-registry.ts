@@ -33,6 +33,7 @@ export const PROOF_LADDER = [
   "proof:billing-provider",
   "proof:billing-readiness-route",
   "proof:billing-control-route",
+  "proof:billing-catalog",
   "proof:compliance-report-route",
   "proof:http-engine-providers",
   "proof:lago-billing-provider",
@@ -45,6 +46,8 @@ export const PROOF_LADDER = [
   "proof:workflow-readiness-route",
   "proof:provider-binding-report-route",
   "proof:support-approval",
+  "proof:workflow-engine",
+  "proof:approval-workflow",
   "proof:observability-control-route",
   "proof:observability-readiness-route",
   "proof:observability-provider-closure",
@@ -55,6 +58,9 @@ export const PROOF_LADDER = [
   "proof:alert-incident-closure",
   "proof:object-scan-closure",
   "proof:pitr-restore-drill",
+  "proof:data-residency",
+  "proof:data-governance",
+  "proof:data-portability",
   "proof:security-control-route",
   "proof:composed-provider-runtime-closure",
   "proof:entitlements",
@@ -106,6 +112,7 @@ export const PROOF_LADDER = [
   "proof:ui-semantic-groups",
   "proof:ui-semantic-sub-organisations",
   "proof:ui-semantic-claim-mapping",
+  "proof:tenant-storage-objects",
 ] as const;
 
 export type ProofLadderEntry = (typeof PROOF_LADDER)[number];
