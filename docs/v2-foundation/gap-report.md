@@ -17,7 +17,7 @@ with **honest semantic closure**.
 > flat list — no invented hierarchy), and **Claim mapping** (`proof:ui-semantic-claim-mapping`, with
 > the external real-IdP proof limitation kept explicit and separate per ADR-ACT-0220). Each was closed
 > only on a **passing headless journey**, not a schema entry. **Completion-blocker total: 31**
-> (14 capability completions + 0 package removals). V1C-18 remains reopened pending fresh proof;
+> (14 capability completions + 0 package removals). V1C-18 is now closed by fresh security proofs;
 > V1C-17 is now closed by live runtime proofs (`proof:metrics-prometheus`, `proof:dashboards`) against
 > the env-specific Prometheus scrape target. The cut remains BLOCKED.
 
