@@ -1,44 +1,8 @@
 # Packages Codemap
 
-**Last Updated:** 2026-06-18
+**Last Updated:** 2026-06-21
 
-51 packages organized by role: domain, contracts, adapters, runtimes, features, tooling, and apps.
-
-## Domain & Policy (3)
-
-| Name                            | Lifecycle    | Context               | @platform Deps |
-| ------------------------------- | ------------ | --------------------- | -------------- |
-| @platform/domain-core           | deprecated   | domain-core           | —              |
-| @platform/domain-identity       | experimental | domain-core           | —              |
-| @platform/profile-configuration | deprecated   | profile-configuration | —              |
-
-## Contracts (6)
-
-| Name                             | Lifecycle    | Context                      | @platform Deps |
-| -------------------------------- | ------------ | ---------------------------- | -------------- |
-| @platform/contracts-auth         | experimental | auth-gateway                 | —              |
-| @platform/contracts-analytics    | active       | analytics-contracts          | —              |
-| @platform/contracts-graphql      | active       | graphql-contracts            | —              |
-| @platform/contracts-ingestion    | active       | external-ingestion-contracts | —              |
-| @platform/contracts-organisation | experimental | profile-configuration        | —              |
-| @platform/contracts-admin        | experimental | tenant-administration        | —              |
-
-## Policy/Control (2)
-
-| Name                            | Lifecycle  | Context        | @platform Deps |
-| ------------------------------- | ---------- | -------------- | -------------- |
-| @platform/access-control        | deprecated | access-control | —              |
-| @platform/authorisation-runtime | active     | authorisation  | —              |
-
-## Observability & Errors (5)
-
-| Name                               | Lifecycle    | Context            | @platform Deps           |
-| ---------------------------------- | ------------ | ------------------ | ------------------------ |
-| @platform/platform-errors          | experimental | api-server         | —                        |
-| @platform/platform-runtime-context | experimental | observability-core | —                        |
-| @platform/platform-logging         | experimental | observability-core | platform-runtime-context |
-| @platform/platform-observability   | experimental | observability-core | platform-runtime-context |
-| @platform/observability            | active       | observability-core | —                        |
+41 packages organized by role: domain, contracts, adapters, runtimes, experience, tooling, and delivery.
 
 ## Adapters (11)
 
@@ -49,60 +13,76 @@
 | @platform/adapters-graphql        | active    | graphql-runtime            | —              |
 | @platform/adapters-ingestion      | active    | external-ingestion-runtime | —              |
 | @platform/adapters-keycloak       | active    | auth-keycloak              | —              |
+| @platform/adapters-loki           | active    | loki-runtime               | —              |
 | @platform/adapters-object-storage | active    | object-storage             | —              |
 | @platform/adapters-opentelemetry  | active    | telemetry                  | —              |
 | @platform/adapters-postgres       | active    | postgres-runtime           | —              |
 | @platform/adapters-redis          | active    | cache-queue-redis          | —              |
 | @platform/adapters-sentry         | active    | error-monitoring           | —              |
-| @platform/adapters-loki           | active    | loki-runtime               | —              |
 
-## Runtimes (13)
+## Core & Runtimes (13)
 
-| Name                             | Lifecycle  | Context              | @platform Deps |
-| -------------------------------- | ---------- | -------------------- | -------------- |
-| @platform/api-runtime            | active     | api-server           | —              |
-| @platform/graphql-api-runtime    | active     | graphql-server       | —              |
-| @platform/worker-runtime         | deprecated | worker-server        | —              |
-| @platform/session-runtime        | active     | session-service      | —              |
-| @platform/security-auth          | deprecated | auth-gateway         | —              |
-| @platform/audit-events           | active     | audit-service        | —              |
-| @platform/config-runtime         | active     | config-service       | —              |
-| @platform/email-runtime          | active     | email-service        | —              |
-| @platform/notification-runtime   | deprecated | notification-service | —              |
-| @platform/queue-runtime          | deprecated | queue-service        | —              |
-| @platform/search-runtime         | deprecated | search-service       | —              |
-| @platform/storage-runtime        | active     | storage-service      | —              |
-| @platform/graphql-browser-client | active     | graphql-client       | —              |
+| Name                               | Lifecycle    | Context            | @platform Deps |
+| ---------------------------------- | ------------ | ------------------ | -------------- |
+| @platform/api-runtime              | active       | api-server         | —              |
+| @platform/audit-events             | active       | audit-service      | —              |
+| @platform/authorisation-runtime    | active       | authorisation      | —              |
+| @platform/config-runtime           | active       | config-service     | —              |
+| @platform/domain-identity          | experimental | domain-core        | —              |
+| @platform/email-runtime            | active       | email-service      | —              |
+| @platform/graphql-api-runtime      | active       | graphql-server     | —              |
+| @platform/graphql-browser-client   | active       | graphql-client     | —              |
+| @platform/i18n-runtime             | experimental | app-shell          | —              |
+| @platform/platform-errors          | experimental | api-server         | —              |
+| @platform/platform-runtime-context | experimental | observability-core | —              |
+| @platform/session-runtime          | active       | session-service    | —              |
+| @platform/storage-runtime          | active       | storage-service    | —              |
 
-## UI & Features (2)
+## Contracts (6)
 
-| Name                       | Lifecycle  | Context       | @platform Deps |
-| -------------------------- | ---------- | ------------- | -------------- |
-| @platform/ui-design-system | active     | design-system | —              |
-| @platform/feature-workflow | deprecated | workflow      | —              |
+| Name                             | Lifecycle    | Context                      | @platform Deps |
+| -------------------------------- | ------------ | ---------------------------- | -------------- |
+| @platform/contracts-admin        | experimental | tenant-administration        | —              |
+| @platform/contracts-analytics    | active       | analytics-contracts          | —              |
+| @platform/contracts-auth         | experimental | auth-gateway                 | —              |
+| @platform/contracts-graphql      | active       | graphql-contracts            | —              |
+| @platform/contracts-ingestion    | active       | external-ingestion-contracts | —              |
+| @platform/contracts-organisation | experimental | profile-configuration        | —              |
 
-## i18n (1)
+## Platform Services (2)
 
-| Name                   | Lifecycle    | Context   | @platform Deps |
-| ---------------------- | ------------ | --------- | -------------- |
-| @platform/i18n-runtime | experimental | app-shell | —              |
+| Name                             | Lifecycle    | Context            | @platform Deps           |
+| -------------------------------- | ------------ | ------------------ | ------------------------ |
+| @platform/platform-logging       | experimental | observability-core | platform-runtime-context |
+| @platform/platform-observability | experimental | observability-core | platform-runtime-context |
 
-## Infrastructure & Tooling (8)
+## Experience (1)
+
+| Name                       | Lifecycle | Context       | @platform Deps |
+| -------------------------- | --------- | ------------- | -------------- |
+| @platform/ui-design-system | active    | design-system | —              |
+
+## Delivery (4)
+
+| Name                       | Lifecycle | Context          | @platform Deps |
+| -------------------------- | --------- | ---------------- | -------------- |
+| @platform/dev-services     | active    | dev-local        | —              |
+| @platform/infra-aws        | active    | aws-infra        | —              |
+| @platform/infra-cloudflare | active    | cloudflare-infra | —              |
+| @platform/test-support     | active    | test-support     | —              |
+
+## Tooling (4)
 
 | Name                        | Lifecycle | Context            | @platform Deps |
 | --------------------------- | --------- | ------------------ | -------------- |
-| @platform/infra-aws         | active    | aws-infra          | —              |
-| @platform/infra-cloudflare  | active    | cloudflare-infra   | —              |
 | @platform/tooling-ci        | active    | ci-pipeline        | —              |
 | @platform/tooling-codegen   | active    | codegen            | —              |
 | @platform/tooling-docker    | active    | container-build    | —              |
 | @platform/tooling-terraform | active    | terraform-workflow | —              |
-| @platform/dev-services      | active    | dev-local          | —              |
-| @platform/test-support      | active    | test-support       | —              |
 
-## Total: 51 packages
+## Total: 41 packages
 
-**Lifecycle Distribution**: 33 active, 9 experimental, 9 deprecated (ADR-ACT-0289 — superseded scaffolding deprecated, pending removal review 2026-12-18)
+**Lifecycle Distribution**: 32 active, 9 experimental
 
 **Dependency Density**: Most packages have zero @platform/\* dependencies (leaf nodes per ADR-0020). Only platform-logging and platform-observability import platform-runtime-context.
 

@@ -13,6 +13,15 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
+      "path": "apps/platform-api/scripts/workflow-provider-live-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/workflow-provider-live-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
       "path": "apps/platform-api/src/config/app-config.ts",
       "introducingCommit": "458785fbbcc1deb861347a5574b5d31e2ae20ae7",
       "purpose": "post-audit addition",
@@ -78,7 +87,7 @@
     {
       "path": "docs/v2-foundation/authentication-authorisation-matrix.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/authentication-authorisation-matrix.json",
       "protectingTests": ["npm v2:readiness"],
@@ -87,7 +96,7 @@
     {
       "path": "docs/v2-foundation/data-and-migration-plan.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/data-and-migration-plan.json",
       "protectingTests": ["npm v2:readiness"],
@@ -96,7 +105,7 @@
     {
       "path": "docs/v2-foundation/environment-and-config-catalog.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/environment-and-config-catalog.json",
       "protectingTests": ["npm v2:readiness"],
@@ -105,7 +114,7 @@
     {
       "path": "docs/v2-foundation/gap-report.md",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/gap-report.md",
       "protectingTests": ["npm v2:readiness"],
@@ -114,7 +123,7 @@
     {
       "path": "docs/v2-foundation/service-and-clickthrough-matrix.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/service-and-clickthrough-matrix.json",
       "protectingTests": ["npm v2:readiness"],
@@ -123,7 +132,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-00.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-00.json",
       "protectingTests": ["npm v2:readiness"],
@@ -132,7 +141,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-01.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-01.json",
       "protectingTests": ["npm v2:readiness"],
@@ -141,7 +150,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-02.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-02.json",
       "protectingTests": ["npm v2:readiness"],
@@ -150,7 +159,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-03.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-03.json",
       "protectingTests": ["npm v2:readiness"],
@@ -159,7 +168,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-04.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-04.json",
       "protectingTests": ["npm v2:readiness"],
@@ -168,7 +177,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-05.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-05.json",
       "protectingTests": ["npm v2:readiness"],
@@ -177,7 +186,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-06.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-06.json",
       "protectingTests": ["npm v2:readiness"],
@@ -186,7 +195,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-07.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-07.json",
       "protectingTests": ["npm v2:readiness"],
@@ -195,7 +204,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-08.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-08.json",
       "protectingTests": ["npm v2:readiness"],
@@ -204,7 +213,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-09.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-09.json",
       "protectingTests": ["npm v2:readiness"],
@@ -213,7 +222,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-10.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-10.json",
       "protectingTests": ["npm v2:readiness"],
@@ -222,7 +231,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-11.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-11.json",
       "protectingTests": ["npm v2:readiness"],
@@ -231,7 +240,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-12.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-12.json",
       "protectingTests": ["npm v2:readiness"],
@@ -240,7 +249,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-13.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-13.json",
       "protectingTests": ["npm v2:readiness"],
@@ -249,7 +258,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-14.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-14.json",
       "protectingTests": ["npm v2:readiness"],
@@ -258,7 +267,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-15.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-15.json",
       "protectingTests": ["npm v2:readiness"],
@@ -267,7 +276,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-16.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-16.json",
       "protectingTests": ["npm v2:readiness"],
@@ -276,7 +285,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-17.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-17.json",
       "protectingTests": ["npm v2:readiness"],
@@ -285,7 +294,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-18.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-18.json",
       "protectingTests": ["npm v2:readiness"],
@@ -294,7 +303,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-19.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-19.json",
       "protectingTests": ["npm v2:readiness"],
@@ -303,7 +312,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-20.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-20.json",
       "protectingTests": ["npm v2:readiness"],
@@ -312,7 +321,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-21.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-21.json",
       "protectingTests": ["npm v2:readiness"],
@@ -321,7 +330,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-22.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-22.json",
       "protectingTests": ["npm v2:readiness"],
@@ -330,7 +339,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-23.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-23.json",
       "protectingTests": ["npm v2:readiness"],
@@ -339,7 +348,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-24.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-24.json",
       "protectingTests": ["npm v2:readiness"],
@@ -348,7 +357,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-25.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-25.json",
       "protectingTests": ["npm v2:readiness"],
@@ -357,7 +366,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-26.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-26.json",
       "protectingTests": ["npm v2:readiness"],
@@ -366,7 +375,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-27.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-27.json",
       "protectingTests": ["npm v2:readiness"],
@@ -375,7 +384,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-28.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-28.json",
       "protectingTests": ["npm v2:readiness"],
@@ -384,7 +393,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-29.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-29.json",
       "protectingTests": ["npm v2:readiness"],
@@ -393,7 +402,7 @@
     {
       "path": "docs/v2-foundation/shards/inventory-30.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/shards/inventory-30.json",
       "protectingTests": ["npm v2:readiness"],
@@ -402,7 +411,7 @@
     {
       "path": "docs/v2-foundation/ui-capability-model.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/ui-capability-model.json",
       "protectingTests": ["npm v2:readiness"],
@@ -411,7 +420,7 @@
     {
       "path": "docs/v2-foundation/ui-component-contracts.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/ui-component-contracts.json",
       "protectingTests": ["npm v2:readiness"],
@@ -420,7 +429,7 @@
     {
       "path": "docs/v2-foundation/ui-definition.schema.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/ui-definition.schema.json",
       "protectingTests": ["npm v2:readiness"],
@@ -429,7 +438,7 @@
     {
       "path": "docs/v2-foundation/v1-capability-closure.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v1-capability-closure.json",
       "protectingTests": ["npm v2:readiness"],
@@ -438,7 +447,7 @@
     {
       "path": "docs/v2-foundation/v1-command-catalog.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v1-command-catalog.json",
       "protectingTests": ["npm v2:readiness"],
@@ -447,7 +456,7 @@
     {
       "path": "docs/v2-foundation/v1-completion-actions.json",
       "introducingCommit": "0201ff30fb20a97880f9ff00c1c5231ca42e5365",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v1-completion-actions.json",
       "protectingTests": ["npm v2:readiness"],
@@ -456,7 +465,7 @@
     {
       "path": "docs/v2-foundation/v1-completion-programme.md",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v1-completion-programme.md",
       "protectingTests": ["npm v2:readiness"],
@@ -465,7 +474,7 @@
     {
       "path": "docs/v2-foundation/v1-config-consumption.json",
       "introducingCommit": "2c3b9ae67055a0bd0bf36962afdc279036cba2af",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v1-config-consumption.json",
       "protectingTests": ["npm v2:readiness"],
@@ -474,7 +483,7 @@
     {
       "path": "docs/v2-foundation/v1-config-contract-catalogue.json",
       "introducingCommit": "458785fbbcc1deb861347a5574b5d31e2ae20ae7",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v1-config-contract-catalogue.json",
       "protectingTests": ["npm v2:readiness"],
@@ -483,7 +492,7 @@
     {
       "path": "docs/v2-foundation/v1-executable-assets.json",
       "introducingCommit": "2c3b9ae67055a0bd0bf36962afdc279036cba2af",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v1-executable-assets.json",
       "protectingTests": ["npm v2:readiness"],
@@ -492,7 +501,7 @@
     {
       "path": "docs/v2-foundation/v1-file-inventory.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v1-file-inventory.json",
       "protectingTests": ["npm v2:readiness"],
@@ -501,7 +510,7 @@
     {
       "path": "docs/v2-foundation/v1-knowledge-ledger.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v1-knowledge-ledger.json",
       "protectingTests": ["npm v2:readiness"],
@@ -510,7 +519,7 @@
     {
       "path": "docs/v2-foundation/v1-post-audit-delta.json",
       "introducingCommit": "0201ff30fb20a97880f9ff00c1c5231ca42e5365",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v1-post-audit-delta.json",
       "protectingTests": ["npm v2:readiness"],
@@ -519,7 +528,7 @@
     {
       "path": "docs/v2-foundation/v1-test-proof-inventory.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v1-test-proof-inventory.json",
       "protectingTests": ["npm v2:readiness"],
@@ -528,7 +537,7 @@
     {
       "path": "docs/v2-foundation/v1-to-v2-path-map.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v1-to-v2-path-map.json",
       "protectingTests": ["npm v2:readiness"],
@@ -537,7 +546,7 @@
     {
       "path": "docs/v2-foundation/v2-branch-cut-runbook.md",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v2-branch-cut-runbook.md",
       "protectingTests": ["npm v2:readiness"],
@@ -546,7 +555,7 @@
     {
       "path": "docs/v2-foundation/v2-command-map.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v2-command-map.json",
       "protectingTests": ["npm v2:readiness"],
@@ -555,7 +564,7 @@
     {
       "path": "docs/v2-foundation/v2-decision-catalog.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v2-decision-catalog.json",
       "protectingTests": ["npm v2:readiness"],
@@ -564,7 +573,7 @@
     {
       "path": "docs/v2-foundation/v2-decision-lineage.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v2-decision-lineage.json",
       "protectingTests": ["npm v2:readiness"],
@@ -573,7 +582,7 @@
     {
       "path": "docs/v2-foundation/v2-directory-contracts.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v2-directory-contracts.json",
       "protectingTests": ["npm v2:readiness"],
@@ -582,7 +591,7 @@
     {
       "path": "docs/v2-foundation/v2-readiness-validator-spec.md",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v2-readiness-validator-spec.md",
       "protectingTests": ["npm v2:readiness"],
@@ -591,7 +600,7 @@
     {
       "path": "docs/v2-foundation/v2-target-tree.txt",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v2-target-tree.txt",
       "protectingTests": ["npm v2:readiness"],
@@ -600,7 +609,7 @@
     {
       "path": "docs/v2-foundation/v2-test-proof-map.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/v2-test-proof-map.json",
       "protectingTests": ["npm v2:readiness"],
@@ -609,7 +618,7 @@
     {
       "path": "docs/v2-foundation/zero-gap-reconciliation.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
-      "purpose": "V1\u2192V2 planning/closure artefact",
+      "purpose": "V1→V2 planning/closure artefact",
       "v2Disposition": "archive-evidence",
       "v2Target": "docs/v2-foundation/zero-gap-reconciliation.json",
       "protectingTests": ["npm v2:readiness"],
@@ -1865,6 +1874,429 @@
       "v2Target": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/billing-provider-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/billing-provider-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/object-scan-closure-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/object-scan-closure-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/workflow-closure-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/workflow-closure-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/http-engine-provider.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/http-engine-provider.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/in-memory-automation-runner.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/in-memory-automation-runner.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/in-memory-billing-provider.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/in-memory-billing-provider.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/in-memory-workflow-orchestrator.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/in-memory-workflow-orchestrator.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/lago-billing-provider.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/lago-billing-provider.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/temporal-workflow-provider.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/temporal-workflow-provider.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/windmill-automation-provider.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/windmill-automation-provider.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/ports/automation-runner.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/ports/automation-runner.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/ports/workflow-orchestrator.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/ports/workflow-orchestrator.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/server/resource-policies.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/server/resource-policies.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/backup-control.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/backup-control.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/billing-control.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/billing-control.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/billing-readiness.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/billing-readiness.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/compliance-report.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/compliance-report.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/observability-control.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/observability-control.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/provider-binding-report.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/provider-binding-report.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/security-control.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/security-control.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/workflow-control.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/workflow-control.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/workflow-readiness.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/workflow-readiness.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docker/temporal/dynamicconfig/development.yaml",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docker/temporal/dynamicconfig/development.yaml",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
     }
   ],
   "deletions": [

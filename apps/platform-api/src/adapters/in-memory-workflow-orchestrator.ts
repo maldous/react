@@ -8,6 +8,7 @@ interface WorkflowRecord {
   tenantId: string;
   status: WorkflowStatus["status"];
   detail: string;
+  payload: Record<string, unknown>;
 }
 
 export class InMemoryWorkflowOrchestrator implements WorkflowOrchestratorPort {
@@ -18,6 +19,7 @@ export class InMemoryWorkflowOrchestrator implements WorkflowOrchestratorPort {
       tenantId: input.tenantId,
       status: "running",
       detail: `started:${input.workflowKey}`,
+      payload: { ...input.payload, workflowKey: input.workflowKey },
     });
     return { workflowId: input.workflowId };
   }
@@ -29,11 +31,26 @@ export class InMemoryWorkflowOrchestrator implements WorkflowOrchestratorPort {
   ): Promise<void> {
     const record = this.workflows.get(workflowId);
     if (!record) throw new Error("workflow_not_found");
-    if (signalName === "approval.granted") {
+    if (signalName === "approval.requested") {
       record.status = "waiting";
+      record.detail = payload["requestedBy"]
+        ? `approval_requested:${String(payload["requestedBy"])}`
+        : "approval_requested";
+      record.payload = { ...record.payload, approvalRequested: payload };
+      return;
+    }
+    if (signalName === "approval.granted") {
+      record.status = "completed";
       record.detail = payload["approvedBy"]
         ? `approved:${String(payload["approvedBy"])}`
         : "approved";
+      record.payload = { ...record.payload, approvalGranted: payload };
+      return;
+    }
+    if (signalName === "approval.denied") {
+      record.status = "failed";
+      record.detail = payload["deniedBy"] ? `denied:${String(payload["deniedBy"])}` : "denied";
+      record.payload = { ...record.payload, approvalDenied: payload };
     }
   }
 

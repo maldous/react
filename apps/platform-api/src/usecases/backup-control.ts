@@ -12,9 +12,10 @@ export interface BackupControlReport {
 }
 
 export async function getBackupControlReport(): Promise<BackupControlReport> {
-  const repository = process.env["PGBACKREST_REPO1_S3_BUCKET"] ?? null;
+  const providerConfig = loadProviderReadinessConfig();
+  const repository = providerConfig.pgbackrestRepo1S3Bucket ?? null;
   const walArchiving = true;
-  const retention = process.env["PGBACKREST_RETENTION"] ?? "30d";
+  const retention = providerConfig.pgbackrestRetention ?? "30d";
   const configured = !!repository;
   return {
     provider: "pgbackrest",
@@ -31,3 +32,4 @@ export async function getBackupControlReport(): Promise<BackupControlReport> {
       : "pgBackRest repository is not yet configured.",
   };
 }
+import { loadProviderReadinessConfig } from "../config/provider-readiness-config.ts";

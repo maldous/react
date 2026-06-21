@@ -100,7 +100,9 @@ async function main(): Promise<void> {
   });
 
   const port = await listen(server);
-  const lago = new LagoBillingProviderAdapter(`http://127.0.0.1:${port}`);
+  const lago = new LagoBillingProviderAdapter(`http://127.0.0.1:${port}`, fetch, {
+    preferSdk: false,
+  });
   const readiness = await lago.readiness();
   const account = await lago.ensureAccount({
     organisationId: "org-1",

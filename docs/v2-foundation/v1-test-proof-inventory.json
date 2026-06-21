@@ -216,6 +216,33 @@
     "failureEvidence": "node:test assertion failure output (spec reporter)"
   },
   {
+    "id": "apps/platform-api/tests/unit/lago-billing-provider.test.ts",
+    "path": "apps/platform-api/tests/unit/lago-billing-provider.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/temporal-workflow-provider.test.ts",
+    "path": "apps/platform-api/tests/unit/temporal-workflow-provider.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/windmill-automation-provider.test.ts",
+    "path": "apps/platform-api/tests/unit/windmill-automation-provider.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
     "id": "apps/platform-api/tests/unit/entitlements.test.ts",
     "path": "apps/platform-api/tests/unit/entitlements.test.ts",
     "kind": "unit",
@@ -3527,6 +3554,69 @@
     "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
   },
   {
+    "id": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose-backed Lago stub via local HTTP proof loader",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose-backed Temporal stub via local HTTP proof loader",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose-backed Windmill stub via local HTTP proof loader",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "apps/platform-api/scripts/workflow-provider-live-proof.ts",
+    "path": "apps/platform-api/scripts/workflow-provider-live-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live Temporal/Windmill compose endpoints when configured; otherwise skips honestly",
+    "stageCoverage": "test (live-proof stage)",
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+  },
+  {
+    "id": "package.json#proof:temporal-workflow-provider",
+    "path": "package.json#proof:temporal-workflow-provider",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:temporal-workflow-provider)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:windmill-automation-provider",
+    "path": "package.json#proof:windmill-automation-provider",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:windmill-automation-provider)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/in-memory-workflow-orchestrator.test.ts",
+    "path": "apps/platform-api/tests/unit/in-memory-workflow-orchestrator.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
     "id": "apps/platform-api/tests/unit/prometheus-metrics.test.ts",
     "path": "apps/platform-api/tests/unit/prometheus-metrics.test.ts",
     "kind": "unit",
@@ -3605,6 +3695,240 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local-only inline-fake-pool proof)",
     "stageCoverage": "proof script (npm run proof:delegated-admin)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:compliance-report-route",
+    "path": "package.json#proof:compliance-report-route",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:compliance-report-route)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:billing-readiness-route",
+    "path": "package.json#proof:billing-readiness-route",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:billing-readiness-route)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:billing-control-route",
+    "path": "package.json#proof:billing-control-route",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:billing-control-route)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:billing-provider",
+    "path": "package.json#proof:billing-provider",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:billing-provider)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:lago-billing-provider",
+    "path": "package.json#proof:lago-billing-provider",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:lago-billing-provider)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:observability-control-route",
+    "path": "package.json#proof:observability-control-route",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:observability-control-route)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:observability-readiness-route",
+    "path": "package.json#proof:observability-readiness-route",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:observability-readiness-route)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:observability-provider-closure",
+    "path": "package.json#proof:observability-provider-closure",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:observability-provider-closure)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:observability-metrics-traces-closure",
+    "path": "package.json#proof:observability-metrics-traces-closure",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:observability-metrics-traces-closure)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:provider-observability-closure",
+    "path": "package.json#proof:provider-observability-closure",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:provider-observability-closure)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:provider-observability-contract",
+    "path": "package.json#proof:provider-observability-contract",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:provider-observability-contract)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:full-observability-contract",
+    "path": "package.json#proof:full-observability-contract",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:full-observability-contract)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:alert-incident-closure",
+    "path": "package.json#proof:alert-incident-closure",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:alert-incident-closure)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:backup-control-route",
+    "path": "package.json#proof:backup-control-route",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:backup-control-route)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:pitr-restore-drill",
+    "path": "package.json#proof:pitr-restore-drill",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:pitr-restore-drill)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:object-scan-closure",
+    "path": "package.json#proof:object-scan-closure",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:object-scan-closure)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:security-control-route",
+    "path": "package.json#proof:security-control-route",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:security-control-route)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:provider-binding-report-route",
+    "path": "package.json#proof:provider-binding-report-route",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:provider-binding-report-route)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:workflow-readiness-route",
+    "path": "package.json#proof:workflow-readiness-route",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:workflow-readiness-route)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:workflow-control-route",
+    "path": "package.json#proof:workflow-control-route",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:workflow-control-route)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:workflow-closure",
+    "path": "package.json#proof:workflow-closure",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "hermetic-domain proof script (npm run proof:workflow-closure)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:support-approval",
+    "path": "package.json#proof:support-approval",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "hermetic-domain proof script (npm run proof:support-approval)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:workflow-adapters",
+    "path": "package.json#proof:workflow-adapters",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:workflow-adapters)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:workflow-provider-live",
+    "path": "package.json#proof:workflow-provider-live",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "live-composed-provider proof script (npm run proof:workflow-provider-live)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:http-engine-providers",
+    "path": "package.json#proof:http-engine-providers",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:http-engine-providers)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:composed-provider-runtime-closure",
+    "path": "package.json#proof:composed-provider-runtime-closure",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:composed-provider-runtime-closure)",
     "failureEvidence": "proof script assertion output"
   }
 ]

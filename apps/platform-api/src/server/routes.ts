@@ -70,6 +70,7 @@ import {
 import { loadNotificationConfig } from "../config/notification-config.ts";
 import { loadStageConfig } from "../config/stage-config.ts";
 import { loadObservabilityProbeConfig } from "../config/observability-probe-config.ts";
+import { loadProviderReadinessConfig } from "../config/provider-readiness-config.ts";
 import { loadPlatformApiConfig } from "../config/app-config.ts";
 import { createLogger } from "@platform/platform-logging";
 import { S3ObjectStorageAdapter } from "@platform/adapters-object-storage";
@@ -85,7 +86,11 @@ import {
   getTenantResourceConfig,
   CreateTenantRequestSchema,
 } from "./provisioning.ts";
-import { enterSupportMode } from "../usecases/support.ts";
+import {
+  enterSupportMode,
+  requestSupportApproval,
+  approveSupportApproval,
+} from "../usecases/support.ts";
 import {
   mutateAuthSetting,
   buildMfaAuditMetadata,
@@ -102,6 +107,9 @@ import {
   type AuthReadinessStatus,
 } from "../usecases/auth-settings-readiness.ts";
 import { buildTenantReadiness } from "../usecases/capability-registry.ts";
+import { TemporalWorkflowProviderAdapter } from "../adapters/temporal-workflow-provider.ts";
+import { WindmillAutomationProviderAdapter } from "../adapters/windmill-automation-provider.ts";
+import { InMemoryWorkflowOrchestrator } from "../adapters/in-memory-workflow-orchestrator.ts";
 import {
   toIdpSummary,
   buildCreateRepresentation,
@@ -401,6 +409,34 @@ function buildObservabilityInfra(timeoutMs = 1500): ObservabilityInfraProbes {
 }
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+function temporalProvider(): TemporalWorkflowProviderAdapter | null {
+  const providerConfig = loadProviderReadinessConfig();
+  const temporalUrl =
+    providerConfig.temporalAddress?.trim() ?? providerConfig.temporalHttpUrl?.trim();
+  return temporalUrl ? new TemporalWorkflowProviderAdapter(temporalUrl, { preferSdk: true }) : null;
+}
+
+function windmillProvider(): WindmillAutomationProviderAdapter | null {
+  const providerConfig = loadProviderReadinessConfig();
+  const windmillUrl = providerConfig.windmillUrl?.trim();
+  if (!windmillUrl) return null;
+  return new WindmillAutomationProviderAdapter(windmillUrl, fetch, {
+    token: providerConfig.windmillToken?.trim() || undefined,
+    preferSdk: true,
+  });
+}
+
+let supportWorkflowOrchestrator:
+  | TemporalWorkflowProviderAdapter
+  | InMemoryWorkflowOrchestrator
+  | null = null;
+
+function workflowOrchestrator(): TemporalWorkflowProviderAdapter | InMemoryWorkflowOrchestrator {
+  if (supportWorkflowOrchestrator) return supportWorkflowOrchestrator;
+  supportWorkflowOrchestrator = temporalProvider() ?? new InMemoryWorkflowOrchestrator();
+  return supportWorkflowOrchestrator;
+}
 
 /** Extract the `:id` segment after `/api/org/webhooks/` from the request path (ADR-0051). */
 function webhookIdFromPath(rawUrl: string | undefined): string | null {
@@ -2115,6 +2151,109 @@ export const routes: Route[] = [
           throw err;
         }
       }
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/support-session/approval-request",
+    operationName: "admin.support-session.approval-request",
+    requiresAuth: true,
+    requiredPermission: "platform.admin.access",
+    resource: "platform:support",
+    umaScope: "enter" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const Schema = z.object({
+        targetOrganisationId: z.uuid("targetOrganisationId must be a valid UUID"),
+        supportAccessReason: z.string().min(1, "supportAccessReason must not be empty").max(500),
+        workflowId: z.string().min(1, "workflowId must not be empty").max(200),
+      });
+      const parsed = Schema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid request body",
+        });
+        return;
+      }
+      const actor = req.actor!;
+      const auditPort = createPostgresAuditEventPort(getApplicationPool());
+      const workflowDeps = {
+        workflows: workflowOrchestrator(),
+      } as const;
+      const result = await requestSupportApproval(
+        {
+          actorUserId: actor.userId,
+          actorRoles: actor.roles,
+          actorDisplayName: actor.displayName,
+          targetOrganisationId: parsed.data.targetOrganisationId,
+          targetTenantId: parsed.data.targetOrganisationId,
+          supportAccessReason: parsed.data.supportAccessReason,
+          workflowId: parsed.data.workflowId,
+          sourceHost:
+            (req.raw.headers["x-forwarded-host"] as string | undefined) ?? req.raw.headers["host"],
+          ipAddress:
+            (req.raw.headers["x-forwarded-for"] as string | undefined)?.split(",")[0]?.trim() ??
+            req.raw.socket?.remoteAddress,
+        },
+        { sessions: getSessionStore(), audit: auditPort, ...workflowDeps }
+      );
+      res.json(201, { workflowId: result.workflowId });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/support-session/approval-grant",
+    operationName: "admin.support-session.approval-grant",
+    requiresAuth: true,
+    requiredPermission: "platform.admin.access",
+    resource: "platform:support",
+    umaScope: "enter" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const Schema = z.object({
+        targetOrganisationId: z.uuid("targetOrganisationId must be a valid UUID"),
+        supportAccessReason: z.string().min(1, "supportAccessReason must not be empty").max(500),
+        workflowId: z.string().min(1, "workflowId must not be empty").max(200),
+        approvedBy: z.string().min(1, "approvedBy must not be empty").max(200),
+      });
+      const parsed = Schema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid request body",
+        });
+        return;
+      }
+      const actor = req.actor!;
+      const auditPort = createPostgresAuditEventPort(getApplicationPool());
+      const workflowDeps = {
+        workflows: workflowOrchestrator(),
+      } as const;
+      const result = await approveSupportApproval(
+        {
+          actorUserId: actor.userId,
+          actorRoles: actor.roles,
+          actorDisplayName: actor.displayName,
+          targetOrganisationId: parsed.data.targetOrganisationId,
+          targetTenantId: parsed.data.targetOrganisationId,
+          supportAccessReason: parsed.data.supportAccessReason,
+          workflowId: parsed.data.workflowId,
+          approvedBy: parsed.data.approvedBy,
+          sourceHost:
+            (req.raw.headers["x-forwarded-host"] as string | undefined) ?? req.raw.headers["host"],
+          ipAddress:
+            (req.raw.headers["x-forwarded-for"] as string | undefined)?.split(",")[0]?.trim() ??
+            req.raw.socket?.remoteAddress,
+        },
+        { sessions: getSessionStore(), audit: auditPort, ...workflowDeps }
+      );
+      res.json(201, {
+        supportSessionId: result.supportSessionId,
+        targetOrganisationId: result.targetOrganisationId,
+        supportAccessReason: result.supportAccessReason,
+        expiresInSeconds: 3600,
+      });
     },
   },
   // ---------------------------------------------------------------------------
@@ -6903,6 +7042,127 @@ export const routes: Route[] = [
       const composed = await getComposedProviderReadiness();
       const report = await getWorkflowReadiness();
       res.json(200, { report, composed });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/workflows/start",
+    operationName: "admin.workflows.start",
+    requiresAuth: true,
+    requiredPermission: "platform.workflow.write",
+    resource: "admin:workflows",
+    umaScope: "create" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const body = req.body as
+        | {
+            workflowKey?: string;
+            tenantId?: string;
+            workflowId?: string;
+            payload?: Record<string, unknown>;
+          }
+        | undefined;
+      if (!body?.workflowKey || !body?.tenantId || !body?.workflowId) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: "workflowKey, tenantId, and workflowId are required",
+        });
+        return;
+      }
+      const temporal = temporalProvider();
+      if (!temporal) {
+        res.json(503, { code: "NOT_CONFIGURED", message: "Temporal is not configured" });
+        return;
+      }
+      const input = {
+        workflowKey: body.workflowKey,
+        tenantId: body.tenantId,
+        workflowId: body.workflowId,
+        payload: body.payload ?? {},
+      };
+      res.json(200, await temporal.startWorkflow(input));
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/workflows/:workflowId/signal",
+    operationName: "admin.workflows.signal",
+    requiresAuth: true,
+    requiredPermission: "platform.workflow.write",
+    resource: "admin:workflows",
+    umaScope: "create" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const workflowId = req.params["workflowId"] ?? "";
+      const body = req.body as
+        | { signalName?: string; payload?: Record<string, unknown> }
+        | undefined;
+      if (!workflowId || !body?.signalName) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: "workflowId and signalName are required",
+        });
+        return;
+      }
+      const temporal = temporalProvider();
+      if (!temporal) {
+        res.json(503, { code: "NOT_CONFIGURED", message: "Temporal is not configured" });
+        return;
+      }
+      await temporal.signalWorkflow(workflowId, body.signalName, body.payload ?? {});
+      res.json(200, { ok: true });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/workflows/:workflowId/cancel",
+    operationName: "admin.workflows.cancel",
+    requiresAuth: true,
+    requiredPermission: "platform.workflow.write",
+    resource: "admin:workflows",
+    umaScope: "create" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const workflowId = req.params["workflowId"] ?? "";
+      if (!workflowId) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "workflowId is required" });
+        return;
+      }
+      const temporal = temporalProvider();
+      if (!temporal) {
+        res.json(503, { code: "NOT_CONFIGURED", message: "Temporal is not configured" });
+        return;
+      }
+      await temporal.cancelWorkflow(workflowId);
+      res.json(200, { ok: true });
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/workflows/:workflowId",
+    operationName: "admin.workflows.status",
+    requiresAuth: true,
+    requiredPermission: "platform.workflow.read",
+    resource: "admin:workflows",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const workflowId = req.params["workflowId"] ?? "";
+      if (!workflowId) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "workflowId is required" });
+        return;
+      }
+      const temporal = temporalProvider();
+      if (!temporal) {
+        res.json(503, { code: "NOT_CONFIGURED", message: "Temporal is not configured" });
+        return;
+      }
+      const temporalStatus = await temporal.getWorkflowStatus(workflowId);
+      const windmill = windmillProvider();
+      const windmillStatus = windmill
+        ? await windmill.getRunStatus(workflowId).catch(() => null)
+        : null;
+      res.json(200, { temporal: temporalStatus, windmill: windmillStatus });
     },
   },
   {

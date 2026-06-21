@@ -23,9 +23,10 @@ export interface BillingBoundaryReadiness {
 }
 
 export async function getBillingBoundaryReadiness(): Promise<BillingBoundaryReadiness> {
+  const providerConfig = loadProviderReadinessConfig();
   const provider =
-    (process.env["BILLING_PROVIDER"] as "built-in" | "lago" | "killbill") ?? "built-in";
-  const endpoint = process.env["BILLING_URL"] ?? null;
+    (providerConfig.billingProvider as "built-in" | "lago" | "killbill") ?? "built-in";
+  const endpoint = providerConfig.billingUrl ?? null;
   const meteringReady = true;
   const entitlementsReady = true;
 
@@ -80,3 +81,4 @@ export async function getBillingBoundaryReadiness(): Promise<BillingBoundaryRead
     };
   }
 }
+import { loadProviderReadinessConfig } from "../config/provider-readiness-config.ts";

@@ -308,6 +308,38 @@
       "ok": true
     },
     {
+      "persona": "scaffold-system-admin",
+      "kind": "clickthrough-granted-skipped",
+      "target": "prometheus /prometheus/",
+      "expected": "service unavailable on this stage",
+      "actual": "status=502 url=https://staging.aldous.info/prometheus/",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-system-admin",
+      "kind": "clickthrough-granted-skipped",
+      "target": "alertmanager /alertmanager/",
+      "expected": "service unavailable on this stage",
+      "actual": "status=502 url=https://staging.aldous.info/alertmanager/",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-system-admin",
+      "kind": "clickthrough-granted-skipped",
+      "target": "windmill /windmill/",
+      "expected": "service unavailable on this stage",
+      "actual": "status=502 url=https://staging.aldous.info/windmill/",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-system-admin",
+      "kind": "clickthrough-granted-skipped",
+      "target": "temporal /temporal/",
+      "expected": "service unavailable on this stage",
+      "actual": "status=502 url=https://staging.aldous.info/temporal/",
+      "ok": true
+    },
+    {
       "persona": "scaffold-tenant-admin",
       "kind": "session-roles",
       "target": "/api/session",
@@ -383,6 +415,38 @@
       "persona": "scaffold-tenant-admin",
       "kind": "clickthrough-forbidden",
       "target": "sonarqube /sonar/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "403",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-admin",
+      "kind": "clickthrough-forbidden",
+      "target": "prometheus /prometheus/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "403",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-admin",
+      "kind": "clickthrough-forbidden",
+      "target": "alertmanager /alertmanager/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "403",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-admin",
+      "kind": "clickthrough-forbidden",
+      "target": "windmill /windmill/",
+      "expected": "denied (401/403 or redirect-to-login)",
+      "actual": "403",
+      "ok": true
+    },
+    {
+      "persona": "scaffold-tenant-admin",
+      "kind": "clickthrough-forbidden",
+      "target": "temporal /temporal/",
       "expected": "denied (401/403 or redirect-to-login)",
       "actual": "403",
       "ok": true

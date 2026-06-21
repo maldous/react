@@ -70,6 +70,27 @@
     "retireReason": null
   },
   {
+    "v1Name": "make compose-up-workflow-provider",
+    "v2Name": "make compose-up-workflow-provider",
+    "v2Location": "V2 Makefile (make/*.mk)",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "make compose-up-pitr-provider",
+    "v2Name": "make compose-up-pitr-provider",
+    "v2Location": "V2 Makefile (make/*.mk)",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "make compose-up-antivirus-provider",
+    "v2Name": "make compose-up-antivirus-provider",
+    "v2Location": "V2 Makefile (make/*.mk)",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
     "v1Name": "make compose-up-observability",
     "v2Name": "make compose-up-observability",
     "v2Location": "V2 Makefile (make/*.mk)",
@@ -1764,6 +1785,34 @@
     "retireReason": null
   },
   {
+    "v1Name": "npm proof:workflow-provider-live",
+    "v2Name": "npm proof:workflow-provider-live",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:temporal-workflow-provider",
+    "v2Name": "npm proof:temporal-workflow-provider",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:windmill-automation-provider",
+    "v2Name": "npm proof:windmill-automation-provider",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:lago-billing-provider",
+    "v2Name": "npm proof:lago-billing-provider",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
     "v1Name": "npm proof:history",
     "v2Name": "npm proof:history",
     "v2Location": "V2 package.json scripts",
@@ -2221,6 +2270,174 @@
   {
     "v1Name": "npm proof:delegated-admin",
     "v2Name": "npm proof:delegated-admin",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:compliance-report-route",
+    "v2Name": "npm proof:compliance-report-route",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:billing-readiness-route",
+    "v2Name": "npm proof:billing-readiness-route",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:billing-control-route",
+    "v2Name": "npm proof:billing-control-route",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:billing-provider",
+    "v2Name": "npm proof:billing-provider",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:observability-control-route",
+    "v2Name": "npm proof:observability-control-route",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:observability-readiness-route",
+    "v2Name": "npm proof:observability-readiness-route",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:observability-provider-closure",
+    "v2Name": "npm proof:observability-provider-closure",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:observability-metrics-traces-closure",
+    "v2Name": "npm proof:observability-metrics-traces-closure",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:provider-observability-closure",
+    "v2Name": "npm proof:provider-observability-closure",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:provider-observability-contract",
+    "v2Name": "npm proof:provider-observability-contract",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:full-observability-contract",
+    "v2Name": "npm proof:full-observability-contract",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:alert-incident-closure",
+    "v2Name": "npm proof:alert-incident-closure",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:backup-control-route",
+    "v2Name": "npm proof:backup-control-route",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:pitr-restore-drill",
+    "v2Name": "npm proof:pitr-restore-drill",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:object-scan-closure",
+    "v2Name": "npm proof:object-scan-closure",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:security-control-route",
+    "v2Name": "npm proof:security-control-route",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:provider-binding-report-route",
+    "v2Name": "npm proof:provider-binding-report-route",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:workflow-readiness-route",
+    "v2Name": "npm proof:workflow-readiness-route",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:workflow-control-route",
+    "v2Name": "npm proof:workflow-control-route",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:workflow-closure",
+    "v2Name": "npm proof:workflow-closure",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:support-approval",
+    "v2Name": "npm proof:support-approval",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:workflow-adapters",
+    "v2Name": "npm proof:workflow-adapters",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:http-engine-providers",
+    "v2Name": "npm proof:http-engine-providers",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:composed-provider-runtime-closure",
+    "v2Name": "npm proof:composed-provider-runtime-closure",
     "v2Location": "V2 package.json scripts",
     "disposition": "carry",
     "retireReason": null

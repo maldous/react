@@ -25,7 +25,9 @@ async function main(): Promise<void> {
   });
 
   const port = await listen(server);
-  const windmill = new WindmillAutomationProviderAdapter(`http://127.0.0.1:${port}`);
+  const windmill = new WindmillAutomationProviderAdapter(`http://127.0.0.1:${port}`, fetch, {
+    preferSdk: false,
+  });
   const scriptRun = await windmill.runScript({
     scriptKey: "tenant.export",
     tenantId: "org-1",

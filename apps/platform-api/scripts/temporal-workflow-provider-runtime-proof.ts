@@ -24,7 +24,9 @@ async function main(): Promise<void> {
   });
 
   const port = await listen(server);
-  const temporal = new TemporalWorkflowProviderAdapter(`http://127.0.0.1:${port}`);
+  const temporal = new TemporalWorkflowProviderAdapter(`http://127.0.0.1:${port}`, {
+    preferSdk: false,
+  });
   const started = await temporal.startWorkflow({
     workflowKey: "tenant.delete",
     tenantId: "org-1",

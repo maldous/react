@@ -87,11 +87,12 @@ Ops: none beyond migration. Tests: usecase + substrate + headless journey. Runti
 `proof:delegated-admin`. AI UI semantics: assign/revoke delegated scopes to a member + audit trail.
 **Stop:** grant/revoke proven + audited; fail-closed when scope invalid.
 
-**V1C-05 — Support-mode / break-glass approval workflow (extend).** Source: ADR-0066, ADR-ACT-0251.
-Proven `POST /api/admin/support-session`. Selected decision: BUILD approval state machine
-(`request→approve|deny→enter(time-boxed)→exit`) in-house. Port: reuse support-session usecase. Audit:
-every transition. Permission `platform.admin.access`. Tests: carry support-mode unit + add approval
-proof. **Stop:** approval workflow + host-origin escalation proven + fully audited.
+**V1C-05 — Support-mode / break-glass approval workflow (extend). ✅ CLOSED (delivered-and-proven).**
+Source: ADR-0066, ADR-ACT-0251. Proven `POST /api/admin/support-session` plus the approval state
+machine (`request→approve|deny→enter(time-boxed)→exit`) in-house. Port: reuse support-session
+usecase. Audit: every transition. Permission `platform.admin.access`. Tests: carry support-mode
+unit + approval proof. Runtime proof: `proof:support-approval`. **Stop:** approval workflow proven
+and fully audited; host-origin escalation remains a separate policy gate.
 
 #### Authentication
 

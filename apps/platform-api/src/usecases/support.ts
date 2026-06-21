@@ -1,5 +1,6 @@
 import { createAuditEvent, AuditAction, type AuditEventPort } from "@platform/audit-events";
 import type { SessionStore } from "@platform/session-runtime";
+import type { WorkflowOrchestratorPort } from "../ports/workflow-orchestrator.ts";
 
 // ---------------------------------------------------------------------------
 // enterSupportMode — explicit audited system-admin support session (ADR-ACT-0187)
@@ -29,6 +30,14 @@ export interface EnterSupportModeInput {
 export interface EnterSupportModeDeps {
   sessions: SessionStore;
   audit: AuditEventPort;
+}
+
+export interface SupportApprovalDeps extends EnterSupportModeDeps {
+  workflows: WorkflowOrchestratorPort;
+}
+
+export interface RequestSupportApprovalInput extends EnterSupportModeInput {
+  workflowId: string;
 }
 
 export interface SupportSessionResult {
@@ -100,4 +109,62 @@ export async function enterSupportMode(
     targetOrganisationId: input.targetOrganisationId,
     supportAccessReason: reason,
   };
+}
+
+export async function requestSupportApproval(
+  input: RequestSupportApprovalInput,
+  deps: SupportApprovalDeps
+): Promise<{ workflowId: string }> {
+  const reason = input.supportAccessReason.trim();
+  if (!reason)
+    throw new Error("support_mode.reason_required: supportAccessReason must not be empty");
+  if (!input.targetOrganisationId.trim()) {
+    throw new Error("support_mode.invalid_target: targetOrganisationId must not be empty");
+  }
+
+  await deps.audit.emit(
+    createAuditEvent({
+      actorId: input.actorUserId,
+      actorRoles: input.actorRoles,
+      tenantId: "platform",
+      action: AuditAction.SupportSessionCreated,
+      resource: "support_session",
+      resourceId: input.targetOrganisationId,
+      metadata: {
+        targetOrganisationId: input.targetOrganisationId,
+        supportAccessReason: reason,
+        supportWorkflowId: input.workflowId,
+        approvalState: "requested",
+      },
+      sourceHost: input.sourceHost,
+      ipAddress: input.ipAddress,
+    })
+  );
+
+  await deps.workflows.startWorkflow({
+    workflowKey: "support.approval",
+    tenantId: input.targetOrganisationId,
+    workflowId: input.workflowId,
+    payload: {
+      targetOrganisationId: input.targetOrganisationId,
+      supportAccessReason: reason,
+      requestedBy: input.actorUserId,
+    },
+  });
+
+  await deps.workflows.signalWorkflow(input.workflowId, "approval.requested", {
+    requestedBy: input.actorUserId,
+  });
+
+  return { workflowId: input.workflowId };
+}
+
+export async function approveSupportApproval(
+  input: RequestSupportApprovalInput & { approvedBy: string; actorRoles: string[] },
+  deps: SupportApprovalDeps
+): Promise<SupportSessionResult> {
+  await deps.workflows.signalWorkflow(input.workflowId, "approval.granted", {
+    approvedBy: input.approvedBy,
+  });
+  return enterSupportMode(input, deps);
 }

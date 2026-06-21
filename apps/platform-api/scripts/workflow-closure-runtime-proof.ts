@@ -8,6 +8,8 @@
  * - tenant A cannot inspect or signal tenant B
  * - audit records the lifecycle edges
  *
+ * Proof tier: hermetic-domain.
+ *
  * This is a deterministic local proof over the platform boundary, not a live
  * Temporal/Windmill integration test.
  */
@@ -34,7 +36,10 @@ class InMemoryAudit implements AuditEventPort {
 }
 
 class InMemoryWorkflow implements WorkflowOrchestratorPort {
-  private workflows = new Map<string, { tenantId: string; approved: boolean; done: boolean }>();
+  private workflows = new Map<
+    string,
+    { tenantId: string; approved: boolean; done: boolean; cancelled: boolean }
+  >();
   async startWorkflow(input: {
     workflowKey: string;
     tenantId: string;
@@ -44,25 +49,42 @@ class InMemoryWorkflow implements WorkflowOrchestratorPort {
       tenantId: input.tenantId,
       approved: false,
       done: false,
+      cancelled: false,
     });
     return { workflowId: input.workflowId };
   }
-  async signalWorkflow(workflowId: string, signalName: string): Promise<void> {
+  async signalWorkflow(
+    workflowId: string,
+    signalName: string,
+    payload: Record<string, unknown> = {}
+  ): Promise<void> {
     const w = this.workflows.get(workflowId);
     if (!w) throw new Error("not found");
-    if (signalName === "approval.granted") w.approved = true;
+    if (signalName === "approval.granted") {
+      w.approved = true;
+      if (payload["terminal"] === true) w.done = true;
+    }
   }
   async cancelWorkflow(workflowId: string): Promise<void> {
     const w = this.workflows.get(workflowId);
-    if (w) w.done = true;
+    if (w) {
+      w.cancelled = true;
+      w.done = true;
+    }
   }
   async getWorkflowStatus(workflowId: string) {
     const w = this.workflows.get(workflowId);
     if (!w) throw new Error("not found");
     return {
       workflowId,
-      status: w.done ? "completed" : w.approved ? "waiting" : "waiting",
-      detail: w.approved ? "approved" : "awaiting approval",
+      status: w.done
+        ? w.cancelled
+          ? "cancelled"
+          : "completed"
+        : w.approved
+          ? "waiting"
+          : "waiting",
+      detail: w.cancelled ? "cancelled" : w.approved ? "approved" : "awaiting approval",
     } as const;
   }
   canAccess(workflowId: string, tenantId: string): boolean {
@@ -72,8 +94,12 @@ class InMemoryWorkflow implements WorkflowOrchestratorPort {
 
 class InMemoryAutomation implements AutomationRunnerPort {
   public runs = new Map<string, number>();
+  private readonly completed = new Set<string>();
   async runScript(input: { scriptKey: string; tenantId: string; runId: string }) {
-    this.runs.set(input.runId, (this.runs.get(input.runId) ?? 0) + 1);
+    if (!this.completed.has(input.runId)) {
+      this.completed.add(input.runId);
+      this.runs.set(input.runId, (this.runs.get(input.runId) ?? 0) + 1);
+    }
     return { runId: input.runId };
   }
   async runFlow(input: { scriptKey: string; tenantId: string; runId: string }) {
@@ -117,8 +143,12 @@ async function main(): Promise<void> {
     runId,
     payload: {},
   });
-  assert.equal(windmill.runs.get(runId), 2);
+  assert.equal(windmill.runs.get(runId), 1);
   await audit.emit({ action: "workflow.external_run", tenantId: "tenant-a", resourceId: runId });
+  await temporal.signalWorkflow(workflowId, "approval.granted", {
+    approvedBy: "operator-1",
+    terminal: true,
+  });
   await audit.emit({ action: "workflow.completed", tenantId: "tenant-a", resourceId: workflowId });
 
   const actions = audit.records.map((r) => r.action);
@@ -133,6 +163,7 @@ async function main(): Promise<void> {
     JSON.stringify(
       {
         capability: "V2 workflow closure",
+        proofTier: "hermetic-domain",
         result: "PASSED",
         workflowId,
         runId,

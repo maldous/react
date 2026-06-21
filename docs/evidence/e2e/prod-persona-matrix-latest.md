@@ -3,7 +3,7 @@
 Generated (ADR-ACT-0285 Phase 6 sub-project A). DO NOT EDIT — regenerate via `make e2e-persona-matrix ENV=<stage>`.
 
 - Result: **PASSED**
-- Personas: 13; checks: 63; failed: 0
+- Personas: 13; checks: 71; failed: 0
 - Real auth: creds present
 
 ## Persona outcomes
@@ -52,6 +52,10 @@ Generated (ADR-ACT-0285 Phase 6 sub-project A). DO NOT EDIT — regenerate via `
 - ✅ [scaffold-system-admin] clickthrough-granted `pgadmin /pgadmin/` → expected service UI (status<400, not SPA), got status=200 url=<https://aldous.info/pgadmin/login?next=/pgadmin/>
 - ✅ [scaffold-system-admin] clickthrough-granted `sentry /sentry/` → expected service UI (status<400, not SPA), got status=200 url=<https://aldous.info/sentry/auth/login/>
 - ✅ [scaffold-system-admin] clickthrough-granted `clickhouse /clickhouse/` → expected service UI (status<400, not SPA), got status=200 url=<https://aldous.info/clickhouse/>
+- ✅ [scaffold-system-admin] clickthrough-granted-skipped `prometheus /prometheus/` → expected service unavailable on this stage, got status=502 url=<https://aldous.info/prometheus/>
+- ✅ [scaffold-system-admin] clickthrough-granted-skipped `alertmanager /alertmanager/` → expected service unavailable on this stage, got status=502 url=<https://aldous.info/alertmanager/>
+- ✅ [scaffold-system-admin] clickthrough-granted-skipped `windmill /windmill/` → expected service unavailable on this stage, got status=502 url=<https://aldous.info/windmill/>
+- ✅ [scaffold-system-admin] clickthrough-granted-skipped `temporal /temporal/` → expected service unavailable on this stage, got status=502 url=<https://aldous.info/temporal/>
 - ✅ [scaffold-tenant-admin] session-roles `/api/session` → expected ["tenant-admin"], got ["tenant-admin"]
 - ✅ [scaffold-tenant-admin] forbidden-route `/admin/logs` → expected denied (redirect / sign-in / forbidden-state), got denied
 - ✅ [scaffold-tenant-admin] forbidden-api `GET /api/admin/tenants` → expected 401/403, got 403
@@ -62,6 +66,10 @@ Generated (ADR-ACT-0285 Phase 6 sub-project A). DO NOT EDIT — regenerate via `
 - ✅ [scaffold-tenant-admin] clickthrough-forbidden `grafana /grafana/` → expected denied (401/403 or redirect-to-login), got 403
 - ✅ [scaffold-tenant-admin] clickthrough-forbidden `sentry /sentry/` → expected denied (401/403 or redirect-to-login), got 403
 - ✅ [scaffold-tenant-admin] clickthrough-forbidden `sonarqube /sonar/` → expected denied (401/403 or redirect-to-login), got 403
+- ✅ [scaffold-tenant-admin] clickthrough-forbidden `prometheus /prometheus/` → expected denied (401/403 or redirect-to-login), got 403
+- ✅ [scaffold-tenant-admin] clickthrough-forbidden `alertmanager /alertmanager/` → expected denied (401/403 or redirect-to-login), got 403
+- ✅ [scaffold-tenant-admin] clickthrough-forbidden `windmill /windmill/` → expected denied (401/403 or redirect-to-login), got 403
+- ✅ [scaffold-tenant-admin] clickthrough-forbidden `temporal /temporal/` → expected denied (401/403 or redirect-to-login), got 403
 - ✅ [scaffold-tenant-manager] session-roles `/api/session` → expected ["manager"], got ["manager"]
 - ✅ [scaffold-tenant-manager] forbidden-route `/admin/auth` → expected denied (redirect / sign-in / forbidden-state), got denied
 - ✅ [scaffold-tenant-manager] forbidden-route `/admin/config` → expected denied (redirect / sign-in / forbidden-state), got denied

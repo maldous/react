@@ -35,6 +35,18 @@ Ratified observability, structured logging, runtime context, error primitives, a
 | Browser logger | Platform abstraction over `console` | Pino is Node-only; browser uses safe wrapper |
 | Platform package | `packages/platform-logging` | Centralises config, redaction, child loggers |
 
+### External SDK boundary
+
+| Provider | Integration shape | Rationale |
+| --- | --- | --- |
+| Sentry | Official Node SDK | Error capture is SDK-backed and coexists with the platform OTel stack |
+| Temporal | Official TypeScript SDK | Durable workflow orchestration requires the native client/worker SDK |
+| Windmill | Official JavaScript client | Script/flow execution is SDK-backed when available |
+| Lago | Official JavaScript client | Billing provider uses the generated API client rather than ad hoc HTTP |
+| Postgres | `pg` client | Node standard client for database access |
+| Grafana | HTTP/API + provisioning code | No practical runtime SDK for the dashboard/query API in current use |
+| Loki | HTTP query API | No practical runtime SDK for structured log search in current use |
+
 ### Runtime context
 
 | Component | Choice | Rationale |

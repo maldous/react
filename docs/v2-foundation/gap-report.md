@@ -11,13 +11,13 @@ with **honest semantic closure**.
 
 `ZERO UNRESOLVED GAPS` may only be claimed when `npm run v2:readiness` exits `0`. It does not today.
 
-> **Pass Four update — UI semantic closure (V1C-01/02/06).** Three UI semantic gaps are now
+> **Pass Four update — UI semantic closure (V1C-01/02/05/06).** Four UI semantic gaps are now
 > `delivered-and-proven` via the Semantic Reference Harness (`tools/ui-reference-harness`): **Tenant
 > groups** (`proof:ui-semantic-groups`), **Sub-organisations** (`proof:ui-semantic-sub-organisations`,
 > flat list — no invented hierarchy), and **Claim mapping** (`proof:ui-semantic-claim-mapping`, with
 > the external real-IdP proof limitation kept explicit and separate per ADR-ACT-0220). Each was closed
-> only on a **passing headless journey**, not a schema entry. **Completion-blocker total: 32**
-> (22 capability completions + 10 package removals). V1C-17 and V1C-18 were prematurely closed
+> only on a **passing headless journey**, not a schema entry. **Completion-blocker total: 31**
+> (21 capability completions + 10 package removals). V1C-17 and V1C-18 were prematurely closed
 > and have been reopened — Prometheus has no application instrumentation, Grafana dashboard format is
 > invalid, security scripts (sbom:verify, sbom:policy, codeql:validate) are broken. The cut remains
 > BLOCKED.
@@ -31,7 +31,7 @@ The closure programme is split into the three honest categories the validator di
 
 ### A. Semantic gaps remaining (need design/build/extension — NOT mechanical)
 
-22 capabilities are `requires-v1-completion` (V1C-01/02/06 closed in the UI semantic slice — see Pass Four). Each has a concrete action in
+20 capabilities are `requires-v1-completion` (V1C-01/02/05/06 and V1C-25 closed in the validation slice — see Pass Four). Each has a concrete action in
 `v1-completion-programme.md` (source ADR, exact work, code paths, contracts/routes, tests/proofs,
 UI semantic definition, stop condition, V2 assets). None is hidden inside a delivered count.
 
@@ -41,7 +41,7 @@ UI semantic definition, stop condition, V2 assets). None is hidden inside a deli
 | V1C-02 | Sub-organisations — ✅ CLOSED (proof:ui-semantic-sub-organisations)                     |
 | V1C-03 | ABAC / Policy Decision Point (entitlement step only; quota Phase 2)                     |
 | V1C-04 | Delegated administration roles (net-new; needs ADR)                                     |
-| V1C-05 | Support-mode / break-glass (no approval workflow)                                       |
+| V1C-05 | Support-mode / break-glass (approval workflow proven)                                   |
 | V1C-06 | Claim mapping — ✅ CLOSED (proof:ui-semantic-claim-mapping; live IdP external/ADR-0220) |
 | V1C-07 | MFA + session policy + lockout (lockout/recovery surface; MFA E2E)                      |
 | V1C-08 | Branding + theming (registry marks partial)                                             |
@@ -86,7 +86,7 @@ These carry a resolved disposition; only execution remains (see `v1-completion-p
 
 ### C. Branch-cut blockers (the gate fails closed while any remain)
 
-1. **22 capability completions** (§A) — the runbook §0 invariant requires every capability resolved.
+1. **20 capability completions** (§A) — the runbook §0 invariant requires every capability resolved.
 2. **10 deprecated zero-consumer package removals** — `domain-core, access-control, feature-workflow,
 profile-configuration, security-auth, queue-runtime, search-runtime, notification-runtime,
 worker-runtime, observability`. All now `delete-after-proof` in the path-map (was inconsistently
@@ -95,7 +95,7 @@ worker-runtime, observability`. All now `delete-after-proof` in the path-map (wa
    **Not executed in this change** (per instruction).
 3. **8 config-runtime bounded decisions** — `V1C-CONF-01..08` (decomposed from `V1C-PKG-CONFIG`).
 
-**Completion-blocker total: 32** = 22 capability completions + 10 package removals (V1C-CONF-06 config decisions closed; V1C-01/02/06 UI semantics closed)
+**Completion-blocker total: 30** = 18 capability completions + 10 package removals + 2 reopened V1C-17/V1C-18 capability completions (V1C-CONF-06 config decisions closed; V1C-01/02/05/06 and V1C-25 validation semantics closed)
 (live truth: `npm run v2:readiness --json` `.completionBlockerCount`).
 
 ## What pass two got wrong (now fixed)
@@ -103,7 +103,7 @@ worker-runtime, observability`. All now `delete-after-proof` in the path-map (wa
 - **Count bucket aliasing**: pass two collapsed `refactor-behind-contract` (104) +
   `replace-retain-contract` (51, was 52) into a fake `reuse 1239` bucket. Buckets now match the
   path-map vocabulary exactly.
-- **False `delivered-and-proven`**: 24 capabilities reclassified to `requires-v1-completion`,
+- **False `delivered-and-proven`**: 23 capabilities reclassified to `requires-v1-completion`,
   1 to `superseded-by-proven-canonical` (alerting/incidents → built-in canonical), and the
   contradictory `not-applicable-final`+`must close` on Serverless cleared.
 - **Deprecated packages kept as V2 homes**: removed from the target tree, dispositioned
@@ -115,8 +115,8 @@ worker-runtime, observability`. All now `delete-after-proof` in the path-map (wa
 
 | Class                                      | Count | Blocks cut?         |
 | ------------------------------------------ | ----- | ------------------- |
-| delivered-and-proven                       | 50    | no                  |
-| requires-v1-completion                     | 20    | **yes**             |
+| delivered-and-proven                       | 52    | no                  |
+| requires-v1-completion                     | 18    | **yes**             |
 | superseded-by-proven-canonical             | 1     | no                  |
 | not-applicable-final                       | 4     | no                  |
 | config-runtime decisions (V1C-CONF-01..08) | 8     | **yes**             |

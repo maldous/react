@@ -21,10 +21,15 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { canAccessTenantFqdn } from "../../src/server/pipeline.ts";
-import { enterSupportMode } from "../../src/usecases/support.ts";
+import {
+  enterSupportMode,
+  requestSupportApproval,
+  approveSupportApproval,
+} from "../../src/usecases/support.ts";
 import type { SessionActor } from "@platform/contracts-auth";
 import type { AuditEventPort, AuditEvent } from "@platform/audit-events";
 import type { SessionStore, SessionRecord, CreateSessionCommand } from "@platform/session-runtime";
+import { InMemoryWorkflowOrchestrator } from "../../src/adapters/in-memory-workflow-orchestrator.ts";
 
 // ---------------------------------------------------------------------------
 // Fixtures
@@ -308,5 +313,46 @@ describe("enterSupportMode usecase", () => {
         ),
       /invalid_target/
     );
+  });
+
+  it("supports a two-step approval workflow", async () => {
+    const audit = makeAuditPort();
+    const sessions = makeSessionStore();
+    const workflows = new InMemoryWorkflowOrchestrator();
+    const workflowId = "wf-support-approval-1";
+
+    const requested = await requestSupportApproval(
+      {
+        actorUserId: "user-sysadmin",
+        actorRoles: ["system-admin"],
+        actorDisplayName: "Sys Admin",
+        targetOrganisationId: TARGET_ORG,
+        targetTenantId: TARGET_ORG,
+        supportAccessReason: "investigating issue",
+        workflowId,
+      },
+      { sessions, audit, workflows }
+    );
+
+    assert.equal(requested.workflowId, workflowId);
+    assert.equal((await workflows.getWorkflowStatus(workflowId)).status, "waiting");
+
+    const approved = await approveSupportApproval(
+      {
+        actorUserId: "user-sysadmin",
+        actorRoles: ["system-admin"],
+        actorDisplayName: "Sys Admin",
+        targetOrganisationId: TARGET_ORG,
+        targetTenantId: TARGET_ORG,
+        supportAccessReason: "investigating issue",
+        workflowId,
+        approvedBy: "user-approver",
+      },
+      { sessions, audit, workflows }
+    );
+
+    assert.ok(approved.supportSessionId.length > 0);
+    assert.equal((await workflows.getWorkflowStatus(workflowId)).status, "completed");
+    assert.equal(sessions.created.length, 1);
   });
 });

@@ -192,6 +192,30 @@
     "retirementJustification": null
   },
   {
+    "v1Path": "apps/platform-api/tests/unit/lago-billing-provider.test.ts",
+    "v2Path": "apps/platform-api/tests/unit/lago-billing-provider.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/temporal-workflow-provider.test.ts",
+    "v2Path": "apps/platform-api/tests/unit/temporal-workflow-provider.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/windmill-automation-provider.test.ts",
+    "v2Path": "apps/platform-api/tests/unit/windmill-automation-provider.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
     "v1Path": "apps/platform-api/tests/unit/entitlements.test.ts",
     "v2Path": "apps/platform-api/tests/unit/entitlements.test.ts",
     "migrationType": "carry",
@@ -3189,6 +3213,286 @@
     "migrationType": "carry",
     "selectorsOrImportsChange": false,
     "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:compliance-report-route",
+    "v2Path": "package.json#proof:compliance-report-route",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:billing-readiness-route",
+    "v2Path": "package.json#proof:billing-readiness-route",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:billing-control-route",
+    "v2Path": "package.json#proof:billing-control-route",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:billing-provider",
+    "v2Path": "package.json#proof:billing-provider",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:lago-billing-provider",
+    "v2Path": "package.json#proof:lago-billing-provider",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:observability-control-route",
+    "v2Path": "package.json#proof:observability-control-route",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:observability-readiness-route",
+    "v2Path": "package.json#proof:observability-readiness-route",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:observability-provider-closure",
+    "v2Path": "package.json#proof:observability-provider-closure",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:observability-metrics-traces-closure",
+    "v2Path": "package.json#proof:observability-metrics-traces-closure",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:provider-observability-closure",
+    "v2Path": "package.json#proof:provider-observability-closure",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:provider-observability-contract",
+    "v2Path": "package.json#proof:provider-observability-contract",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:full-observability-contract",
+    "v2Path": "package.json#proof:full-observability-contract",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:alert-incident-closure",
+    "v2Path": "package.json#proof:alert-incident-closure",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:backup-control-route",
+    "v2Path": "package.json#proof:backup-control-route",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:pitr-restore-drill",
+    "v2Path": "package.json#proof:pitr-restore-drill",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:object-scan-closure",
+    "v2Path": "package.json#proof:object-scan-closure",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:security-control-route",
+    "v2Path": "package.json#proof:security-control-route",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:provider-binding-report-route",
+    "v2Path": "package.json#proof:provider-binding-report-route",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:workflow-readiness-route",
+    "v2Path": "package.json#proof:workflow-readiness-route",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:workflow-control-route",
+    "v2Path": "package.json#proof:workflow-control-route",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:workflow-closure",
+    "v2Path": "package.json#proof:workflow-closure",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:support-approval",
+    "v2Path": "package.json#proof:support-approval",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:workflow-adapters",
+    "v2Path": "package.json#proof:workflow-adapters",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:workflow-provider-live",
+    "v2Path": "package.json#proof:workflow-provider-live",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+    "v2Path": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+    "v2Path": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+    "v2Path": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/workflow-provider-live-proof.ts",
+    "v2Path": "apps/platform-api/scripts/workflow-provider-live-proof.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+    "v2Path": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+    "v2Path": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:http-engine-providers",
+    "v2Path": "package.json#proof:http-engine-providers",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:composed-provider-runtime-closure",
+    "v2Path": "package.json#proof:composed-provider-runtime-closure",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:temporal-workflow-provider",
+    "v2Path": "package.json#proof:temporal-workflow-provider",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:windmill-automation-provider",
+    "v2Path": "package.json#proof:windmill-automation-provider",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/in-memory-workflow-orchestrator.test.ts",
+    "v2Path": "apps/platform-api/tests/unit/in-memory-workflow-orchestrator.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
     "retirementJustification": null
   }
 ]

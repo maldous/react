@@ -1,6 +1,6 @@
 {
   "pass": "two-reverse-reconciliation (semantic-closure pass)",
-  "verdict": "reconciliation in progress \u2014 V1C-04 (delegated administration) delivered-and-proven and closed. 16 capability completions + 10 deprecated packages remain before the cut.",
+  "verdict": "reconciliation in progress — V1C-04 (delegated administration), V1C-05 (support approval), V1C-19 (compliance reports), and V1C-25 (i18n validation) delivered-and-proven and closed. 16 capability completions + 10 deprecated packages remain before the cut.",
   "vocabulary": {
     "fileDispositions": [
       "reuse-unchanged",
@@ -40,29 +40,29 @@
     "bijective": true
   },
   "commands": {
-    "total": 318,
+    "total": 349,
     "buckets": {
-      "carry": 275,
+      "carry": 306,
       "merge": 42,
       "retire": 1
     },
-    "sum": 318
+    "sum": 349
   },
   "tests": {
-    "total": 399,
+    "total": 437,
     "buckets": {
-      "carry": 260,
+      "carry": 298,
       "promote-to-conformance": 76,
       "retire": 2,
       "retarget": 61
     },
-    "sum": 399
+    "sum": 437
   },
   "capabilities": {
     "total": 75,
     "buckets": {
-      "delivered-and-proven": 54,
-      "requires-v1-completion": 16,
+      "delivered-and-proven": 53,
+      "requires-v1-completion": 17,
       "not-applicable-final": 4,
       "superseded-by-proven-canonical": 1
     },
@@ -73,98 +73,98 @@
     "accepted": 74
   },
   "semanticGapsRemaining": {
-    "count": 16,
+    "count": 17,
     "note": "Capabilities not delivered-and-proven that need design/build/extension before the cut. NOT hidden inside any delivered count. (Reflects the current closure file.)",
     "capabilities": [
       {
         "capability": "MFA + session policy + lockout",
         "action": "V1C-07",
-        "openAction": "ADR-ACT-0158 \u2014 V1 status 'partial'; blocker: account lockout/recovery surface not exposed; MFA-required login E2E deferred [must close before V2 cut]"
+        "openAction": "ADR-ACT-0158 — V1 status 'partial'; blocker: account lockout/recovery surface not exposed; MFA-required login E2E deferred [must close before V2 cut]"
       },
       {
         "capability": "Branding + theming",
         "action": "V1C-08",
-        "openAction": "ADR-ACT-0237 \u2014 V1 status 'partial'; blocker: branding capability marked partial in registry [must close before V2 cut]"
+        "openAction": "ADR-ACT-0237 — V1 status 'partial'; blocker: branding capability marked partial in registry [must close before V2 cut]"
       },
       {
         "capability": "Custom domains, DNS ownership, TLS, canonical",
         "action": "V1C-09",
-        "openAction": "ADR-ACT-0232 \u2014 V1 status 'partial'; blocker: public DNS verification blocked locally; canonical redirect cutover not proven [must close before V2 cut]"
+        "openAction": "ADR-ACT-0232 — V1 status 'partial'; blocker: public DNS verification blocked locally; canonical redirect cutover not proven [must close before V2 cut]"
       },
       {
         "capability": "Product catalog, plans, prices",
         "action": "V1C-10",
-        "openAction": "ADR-ACT-0241 \u2014 V1 status 'missing'; blocker: no billing engine composed or adapted [must close before V2 cut]"
+        "openAction": "ADR-ACT-0241 — V1 status 'missing'; blocker: no billing engine composed or adapted [must close before V2 cut]"
       },
       {
         "capability": "Subscriptions, invoices, payment methods, dunning",
         "action": "V1C-11",
-        "openAction": "ADR-ACT-0241 \u2014 V1 status 'missing'; blocker: payment provider is paid/external; no local payment proof possible [must close before V2 cut]"
+        "openAction": "ADR-ACT-0241 — V1 status 'missing'; blocker: payment provider is paid/external; no local payment proof possible [must close before V2 cut]"
       },
       {
         "capability": "PITR, retention, legal hold, data residency",
         "action": "V1C-12",
-        "openAction": "ADR-ACT-0248 \u2014 V1 status 'missing'; blocker: no PITR, retention, legal hold, or residency machinery [must close before V2 cut]"
+        "openAction": "ADR-ACT-0248 — V1 status 'missing'; blocker: no PITR, retention, legal hold, or residency machinery [must close before V2 cut]"
       },
       {
         "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
         "action": "V1C-13",
-        "openAction": "ADR-ACT-0247 \u2014 V1 status 'missing'; blocker: no catalog, lineage, classification, PII discovery, or DSR workflow [must close before V2 cut]"
+        "openAction": "ADR-ACT-0247 — V1 status 'missing'; blocker: no catalog, lineage, classification, PII discovery, or DSR workflow [must close before V2 cut]"
       },
       {
         "capability": "Tenant data import / export",
         "action": "V1C-14",
-        "openAction": "ADR-ACT-0247 \u2014 V1 status 'missing'; blocker: absent; pairs with tenant deletion/portability [must close before V2 cut]"
+        "openAction": "ADR-ACT-0247 — V1 status 'missing'; blocker: absent; pairs with tenant deletion/portability [must close before V2 cut]"
       },
       {
         "capability": "Object storage + tenant prefixes + signed URLs",
         "action": "V1C-15",
-        "openAction": "ADR-ACT-0223 \u2014 V1 status 'partial'; blocker: no file CRUD API/UI, no quotas, lifecycle, AV scan, or legal hold [must close before V2 cut]"
+        "openAction": "ADR-ACT-0223 — V1 status 'partial'; blocker: no file CRUD API/UI, no quotas, lifecycle, AV scan, or legal hold [must close before V2 cut]"
       },
       {
         "capability": "Workflow engine, scheduled jobs, approvals",
         "action": "V1C-16",
-        "openAction": "ADR-ACT-0262 \u2014 V1 status 'partial'; blocker: no engine, scheduler, approval workflow, or visibility [must close before V2 cut]"
+        "openAction": "ADR-ACT-0262 — V1 status 'partial'; blocker: no engine, scheduler, approval workflow, or visibility [must close before V2 cut]"
       },
       {
         "capability": "Compliance reports, access reviews, evidence packs",
         "action": "V1C-19",
-        "openAction": "ADR-ACT-0247 \u2014 V1 status 'partial'; blocker: no compliance report generation, access-review or role-review workflow [must close before V2 cut]"
+        "openAction": "ADR-ACT-0247 — V1 status 'partial'; blocker: no compliance report generation, access-review or role-review workflow [must close before V2 cut]"
       },
       {
         "capability": "API docs, developer portal, SDKs, rate limits",
         "action": "V1C-20",
-        "openAction": "ADR-ACT-0257 \u2014 schema-level OpenAPI drift is DELIVERED (ADR-ACT-0287) and rate limiting is delivered. Remaining: external developer portal + SDK generation + sandbox/test mode + runtime semantic-contract conformance (if retained). [V1 completion]"
+        "openAction": "ADR-ACT-0257 — schema-level OpenAPI drift is DELIVERED (ADR-ACT-0287) and rate limiting is delivered. Remaining: external developer portal + SDK generation + sandbox/test mode + runtime semantic-contract conformance (if retained). [V1 completion]"
       },
       {
         "capability": "Tenant lifecycle: provision, suspend, delete, export",
         "action": "V1C-21",
-        "openAction": "ADR-ACT-0251 \u2014 V1 status 'partial'; blocker: no suspend, delete, or export; deletion must coordinate data + storage + realm + DSR [must close before V2 cut]"
+        "openAction": "ADR-ACT-0251 — V1 status 'partial'; blocker: no suspend, delete, or export; deletion must coordinate data + storage + realm + DSR [must close before V2 cut]"
       },
       {
         "capability": "Support tickets, customer health, announcements",
         "action": "V1C-22",
-        "openAction": "ADR-ACT-0251 \u2014 V1 status 'missing'; blocker: no ticketing, health, comms, or announcements [must close before V2 cut]"
+        "openAction": "ADR-ACT-0251 — V1 status 'missing'; blocker: no ticketing, health, comms, or announcements [must close before V2 cut]"
       },
       {
         "capability": "Metrics + traces",
         "action": "V1C-17",
-        "openAction": "ADR-ACT-0261 \u2014 Prometheus compose config present but no application instrumentation; Grafana dashboards invalid format; no proof:metrics-prometheus or proof:dashboards commands; security scripts broken (syntax errors in sbom:verify/sbom:policy/codeql:validate) [must close before V2 cut]"
+        "openAction": "ADR-ACT-0261 — Prometheus compose config present but no application instrumentation; Grafana dashboards invalid format; no proof:metrics-prometheus or proof:dashboards commands; security scripts broken (syntax errors in sbom:verify/sbom:policy/codeql:validate) [must close before V2 cut]"
       },
       {
         "capability": "Code quality + secret + dependency scanning",
         "action": "V1C-18",
-        "openAction": "ADR-ACT-0247 \u2014 SBOM verification/policy scripts are broken (bash syntax errors); CodeQL workflow not validated by a working local command; no authoritative security evidence bundle [must close before V2 cut]"
+        "openAction": "ADR-ACT-0247 — SBOM verification/policy scripts are broken (bash syntax errors); CodeQL workflow not validated by a working local command; no authoritative security evidence bundle [must close before V2 cut]"
       },
       {
         "capability": "Service catalog + provider integration model",
         "action": "V1C-23",
-        "openAction": "ADR-ACT-0239 \u2014 V1 status 'partial'; blocker: catalog v2 seam + provider registry + no-mock-in-production invariant delivered (static seed); full generalisation of platform-services/service-clickthrough int\u2026 [must close before V2 cut]"
+        "openAction": "ADR-ACT-0239 — V1 status 'partial'; blocker: catalog v2 seam + provider registry + no-mock-in-production invariant delivered (static seed); full generalisation of platform-services/service-clickthrough int… [must close before V2 cut]"
       },
       {
         "capability": "Tenant canonical domain set/unset",
         "action": "V1C-24",
-        "openAction": "ADR-ACT-0232 \u2014 public canonical cutover + redirects not proven (local routing only) [must close before V2 cut]"
+        "openAction": "ADR-ACT-0232 — public canonical cutover + redirects not proven (local routing only) [must close before V2 cut]"
       }
     ],
     "openDecisions": []
@@ -188,8 +188,8 @@
     "testPromotions": 76
   },
   "branchCutBlockers": {
-    "note": "Must all close before \u00a71 of v2-branch-cut-runbook.md; the validator (tools/v2-readiness) fails closed while any remain.",
-    "capabilityCompletions": 18,
+    "note": "Must all close before §1 of v2-branch-cut-runbook.md; the validator (tools/v2-readiness) fails closed while any remain.",
+    "capabilityCompletions": 17,
     "deprecatedPackageRemovals": 0,
     "openPackageDecisions": 1
   },
@@ -202,12 +202,12 @@
   },
   "cutReadiness": {
     "consistencyFindings": 0,
-    "completionBlockerCount": 16,
+    "completionBlockerCount": 17,
     "unexaminedAuditSurfaces": 0,
     "cutReady": false,
     "terminology": "consistencyFindings = artefacts vs live-repo self-consistency (must be 0). completionBlockers = R9 outstanding V1 work. cutReady = both zero.",
-    "composition": "16 requires-v1-completion capabilities + 0 deprecated packages = 16.",
-    "configSprawl": "V1C-CONF-06 progress metric (NOT one of the 36; V1C-CONF-06 is the single config blocker until closed): v1-config-consumption.directAccessOutsideCompositionKeyCount = product-runtime direct env reads still to migrate into typed projections (the remaining target is the platform-api server runtime). approvedExceptionKeyCount = reads confined to approved NON-product boundaries (operator-script scripts/**, dev-ci-tooling tools/**, web-build vite.config.* \u2014 each a composition root / CI tool with its own contextual defaults). The exception list is enforced in the closure commit.",
+    "composition": "17 requires-v1-completion capabilities + 0 deprecated packages = 17.",
+    "configSprawl": "V1C-CONF-06 progress metric (NOT one of the 36; V1C-CONF-06 is the single config blocker until closed): v1-config-consumption.directAccessOutsideCompositionKeyCount = product-runtime direct env reads still to migrate into typed projections (the remaining target is the platform-api server runtime). approvedExceptionKeyCount = reads confined to approved NON-product boundaries (operator-script scripts/**, dev-ci-tooling tools/**, web-build vite.config.* — each a composition root / CI tool with its own contextual defaults). The exception list is enforced in the closure commit.",
     "liveTruth": "npm run v2:readiness --json"
   }
 }

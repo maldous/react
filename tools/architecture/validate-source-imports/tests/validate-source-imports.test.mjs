@@ -176,12 +176,12 @@ test("validate-source-imports passes valid fixtures and flags invalid ones", asy
     {
       name: "package-subpath-not-exported",
       dir: "invalid/package-subpath-not-exported-invalid",
-      rule: "no-unexported-subpath-import",
+      rule: "no-deep-import",
     },
     {
       name: "package-deep-src-import",
       dir: "invalid/package-deep-src-import-invalid",
-      rule: "no-unexported-subpath-import",
+      rule: "no-deep-import",
     },
     {
       name: "resolved-alias-cross-boundary",
