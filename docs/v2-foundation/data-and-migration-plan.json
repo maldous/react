@@ -226,6 +226,11 @@
         "file": "037-delegated-admin-roles.sql",
         "intent": "V1C-04: public.delegated_admin_roles (tenant-scoped delegated admin grants; granter+grantee+scope+(optional TTL); soft-delete via revoked_at+revoked_by; partial UNIQUE (grantee, scope) WHERE revoked_at IS NULL; metadata JSONB). Stop condition: held row invariant NOT relevant (this table tracks LID delegations, not legal hold).",
         "rls": "canonical RLS predicate (migration 012) \u2014 tenant isolation + rls_bypass"
+      },
+      {
+        "file": "038-support-announcements.sql",
+        "intent": "V1C-22 slice: public.support_announcements (tenant-scoped announcement log for support/admin comms; subject + message + created_by + created_at; tenant isolation; delivery fans out through the existing notification substrate)",
+        "rls": "tenant isolation"
       }
     ],
     "rls": {
@@ -248,6 +253,7 @@
         "user_profiles",
         "notification_preferences",
         "notification log",
+        "support_announcements",
         "metric_signals",
         "metric_samples",
         "alert_rules",

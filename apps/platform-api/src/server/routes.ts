@@ -4025,9 +4025,7 @@ export const routes: Route[] = [
         canonical: result.record.canonical,
         canonicalAt: result.record.canonicalAt?.toISOString() ?? null,
         redirectPolicy: result.record.redirectPolicy,
-        // Canonical is a MARKER: no redirect implementation exists, so this is
-        // constant false until one is explicitly proven (ADR-ACT-0236).
-        redirectActive: false,
+        redirectActive: result.record.redirectPolicy !== "no_redirect",
       });
     },
   },
@@ -4068,7 +4066,7 @@ export const routes: Route[] = [
         canonical: result.record.canonical,
         canonicalAt: null,
         redirectPolicy: result.record.redirectPolicy,
-        redirectActive: false,
+        redirectActive: result.record.redirectPolicy !== "no_redirect",
       });
     },
   },
@@ -6009,6 +6007,103 @@ export const routes: Route[] = [
       res.json(200, result);
     },
   },
+  {
+    method: "POST",
+    path: "/api/admin/tenants/:tenantId/announcements",
+    operationName: "admin.announcements.create",
+    requiresAuth: true,
+    requiredPermission: "platform.notifications.write",
+    resource: "admin:notifications",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      if (!UUID_RE.test(tenantId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const parsed = z
+        .object({
+          subject: z.string().min(1).max(200),
+          message: z.string().min(1).max(2000),
+        })
+        .strict()
+        .safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid announcement",
+        });
+        return;
+      }
+      const { createSupportAnnouncement } = await import("../usecases/support-announcements.ts");
+      const pool = getApplicationPool();
+      const { listOrgMembers } = await import("../usecases/members.ts");
+      const { dispatchNotification } = await import("../usecases/notifications.ts");
+      const notifDeps = await buildNotificationsDeps();
+      const announcement = await createSupportAnnouncement(
+        {
+          organisationId: tenantId,
+          subject: parsed.data.subject,
+          message: parsed.data.message,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        { pool, audit: createPostgresAuditEventPort(pool) }
+      );
+      const members = (await listOrgMembers(tenantId, pool)).members;
+      let delivered = 0;
+      let suppressed = 0;
+      for (const member of members) {
+        const results = await dispatchNotification(
+          {
+            organisationId: tenantId,
+            userId: member.userId,
+            category: "system",
+            subject: parsed.data.subject,
+            payload: { message: parsed.data.message, announcement: true },
+          },
+          notifDeps,
+          { operator: true }
+        );
+        for (const r of results) {
+          if (r.status === "sent") delivered += 1;
+          if (r.status === "suppressed") suppressed += 1;
+        }
+      }
+      res.json(201, {
+        id: announcement.id,
+        tenantId,
+        subject: parsed.data.subject,
+        delivered,
+        suppressed,
+      });
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/tenants/:tenantId/announcements",
+    operationName: "admin.announcements.list",
+    requiresAuth: true,
+    requiredPermission: "platform.notifications.read",
+    resource: "admin:notifications",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      if (!UUID_RE.test(tenantId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const { listSupportAnnouncements } = await import("../usecases/support-announcements.ts");
+      const pool = getApplicationPool();
+      const items = await listSupportAnnouncements(tenantId, {
+        pool,
+        audit: createPostgresAuditEventPort(pool),
+      });
+      res.json(200, { items });
+    },
+  },
   // ---------------------------------------------------------------------------
   // Observability — metric signals + alert rules + incidents (Phase 7, ADR-0062 /
   // ADR-ACT-0261). Operator-only. Signal registration + sample recording are
@@ -6783,6 +6878,41 @@ export const routes: Route[] = [
     },
   },
 
+  {
+    method: "GET",
+    path: "/api/admin/tenants/:tenantId/export",
+    operationName: "admin.tenants.export",
+    requiresAuth: true,
+    requiredPermission: "platform.audit.read_all",
+    resource: "admin:history",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      if (!UUID_RE.test(tenantId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const pool = getApplicationPool();
+      const [{ getHistory }, { listOrgMembers }, { listTenantDomains }] = await Promise.all([
+        import("../usecases/history.ts"),
+        import("../usecases/members.ts"),
+        import("../usecases/tenant-domains.ts"),
+      ]);
+      const [history, members, domains] = await Promise.all([
+        getHistory(tenantId, { limit: 200, offset: 0 }, await buildHistoryDeps()),
+        listOrgMembers(tenantId, pool),
+        listTenantDomains(tenantId, pool),
+      ]);
+      res.json(200, {
+        tenantId,
+        exportedAt: new Date().toISOString(),
+        history,
+        members,
+        domains,
+      });
+    },
+  },
   // -------------------------------------------------------------------
   // V1C-12c Legal Hold operator routes (ADR-0064 / V1C-12c, decisionRef V1C-12c).
   // Sole platform owner of legal hold; sole consumer seam for retention (V1C-12b)

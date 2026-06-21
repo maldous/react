@@ -95,11 +95,23 @@ function fakeDeps(initial: TenantDomainRecord | null) {
     },
     setCanonical: async () => {
       calls.push("setCanonical");
-      if (current) current = { ...current, canonical: true, canonicalAt: new Date() };
+      if (current)
+        current = {
+          ...current,
+          canonical: true,
+          canonicalAt: new Date(),
+          redirectPolicy: "redirect_slug_to_canonical",
+        };
     },
     unsetCanonical: async () => {
       calls.push("unsetCanonical");
-      if (current) current = { ...current, canonical: false, canonicalAt: null };
+      if (current)
+        current = {
+          ...current,
+          canonical: false,
+          canonicalAt: null,
+          redirectPolicy: "no_redirect",
+        };
     },
     disable: async () => {
       calls.push("disable");
@@ -262,7 +274,7 @@ describe("setCanonicalDomain (ADR-ACT-0232)", () => {
     assert.equal(deps.calls.length, 0);
   });
 
-  it("sets canonical for a fully proven domain (audited; policy stays no_redirect)", async () => {
+  it("sets canonical for a fully proven domain and marks redirect policy", async () => {
     const deps = fakeDeps(
       record({ authClientStatus: "active", routingStatus: "routing_local_active" })
     );
@@ -272,7 +284,9 @@ describe("setCanonicalDomain (ADR-ACT-0232)", () => {
     );
     assert.equal(result.kind, "ok");
     assert.ok(result.kind === "ok" && result.record.canonical);
-    assert.ok(result.kind === "ok" && result.record.redirectPolicy === "no_redirect");
+    assert.ok(
+      result.kind === "ok" && result.record.redirectPolicy === "redirect_slug_to_canonical"
+    );
     assert.deepEqual(deps.calls, ["audit:tenant_domains.canonical.set", "setCanonical"]);
   });
 });

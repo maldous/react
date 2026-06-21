@@ -182,13 +182,17 @@ export class PostgresTenantDomainRegistry implements TenantDomainRegistryPort {
       await client.query("BEGIN");
       await client.query(
         `UPDATE public.tenant_domains
-            SET canonical = false, canonical_at = NULL
+            SET canonical = false,
+                canonical_at = NULL,
+                redirect_policy = 'no_redirect'
           WHERE organisation_id = $1 AND canonical AND disabled_at IS NULL`,
         [organisationId]
       );
       await client.query(
         `UPDATE public.tenant_domains
-            SET canonical = true, canonical_at = now()
+            SET canonical = true,
+                canonical_at = now(),
+                redirect_policy = 'redirect_slug_to_canonical'
           WHERE organisation_id = $1 AND domain = $2 AND disabled_at IS NULL`,
         [organisationId, domain.toLowerCase()]
       );
@@ -204,7 +208,9 @@ export class PostgresTenantDomainRegistry implements TenantDomainRegistryPort {
   async unsetCanonical(organisationId: string, domain: string): Promise<void> {
     await this.pool.query(
       `UPDATE public.tenant_domains
-          SET canonical = false, canonical_at = NULL
+          SET canonical = false,
+              canonical_at = NULL,
+              redirect_policy = 'no_redirect'
         WHERE organisation_id = $1 AND domain = $2 AND disabled_at IS NULL`,
       [organisationId, domain.toLowerCase()]
     );

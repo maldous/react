@@ -12,6 +12,7 @@ import {
   type PipelineRequest,
   type RouterTestDeps,
 } from "../../src/server/pipeline.ts";
+import { routes } from "../../src/server/routes.ts";
 import type { SessionRecord } from "@platform/session-runtime";
 
 // Helper: create a test server with given routes, return {server, url}.
@@ -289,6 +290,34 @@ describe("api pipeline: handler error is handled safely", () => {
     assert.equal(body.code, "UNEXPECTED_ERROR");
     // internalDetails must not appear in safe response
     assert.ok(!JSON.stringify(body).includes("do-not-leak"), "internalDetails must not be leaked");
+  });
+});
+
+describe("api route table: admin tenant export", () => {
+  it("exposes the tenant export route", () => {
+    const route = routes.find((r) => r.path === "/api/admin/tenants/:tenantId/export");
+    assert.ok(route, "expected tenant export route to be registered");
+    assert.equal(route?.method, "GET");
+    assert.equal(route?.operationName, "admin.tenants.export");
+  });
+});
+
+describe("api route table: admin tenant announcements", () => {
+  it("exposes the tenant announcements route", () => {
+    const route = routes.find((r) => r.path === "/api/admin/tenants/:tenantId/announcements");
+    assert.ok(route, "expected tenant announcements route to be registered");
+    assert.equal(route?.method, "POST");
+    assert.equal(route?.operationName, "admin.announcements.create");
+  });
+});
+
+describe("api route table: admin tenant announcement list", () => {
+  it("exposes the tenant announcement list route", () => {
+    const route = routes.find(
+      (r) => r.path === "/api/admin/tenants/:tenantId/announcements" && r.method === "GET"
+    );
+    assert.ok(route, "expected tenant announcement list route to be registered");
+    assert.equal(route?.operationName, "admin.announcements.list");
   });
 });
 

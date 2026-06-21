@@ -272,12 +272,12 @@ Each domain has two generated tables: a **decision view** (status, build/compose
 | Capability | Status | Purpose | Compose / provider | Decision | Local free candidate | Environment model | Shared/per-env | Priority | Size | Risk |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `tenant-lifecycle-suspend-delete-export` | partial | Full lifecycle management of a tenant including suspension and deletion. | provisioning delivered; no suspend/delete/export | build | built-in (composed) | per-environment | per-env | P1 | L | High |
-| `support-tickets-health-comms` | missing | Support desk, tenant health signals, incident communication, announcements. | none | build | built-in support first; Chatwoot later if a full omnichannel desk is required | shared-cross-environment | shared (support desk) with tenant tagging + access control | P2 | L | Medium |
+| `support-tickets-health-comms` | partial | Support desk, tenant health signals, incident communication, announcements. | announcements slice delivered over notification substrate; no ticketing or health desk yet | build | built-in support first; Chatwoot later if a full omnichannel desk is required | shared-cross-environment | shared (support desk) with tenant tagging + access control | P2 | L | Medium |
 
 | Capability | Tenant isolation | Data isolation | Permission | Audit events | Readiness model | BFF contract | Admin UI | Self-service UI | Proof | Production blockers | ADR | ADR-ACT | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `tenant-lifecycle-suspend-delete-export` | operates on one tenant | delete must purge schema + storage + realm | platform.tenants.* | lifecycle transitions audited | n/a | POST /api/admin/tenants (create only) | partial (provision) | n/a | tenant provisioning tests | no suspend, delete, or export; deletion must coordinate data + storage + realm + DSR | ADR-0066, ADR-0063 | ADR-ACT-0251 | Deletion/offboarding couples with data governance + import-export. |
-| `support-tickets-health-comms` | tickets tagged + access-scoped by tenant | support tool DB; tenant tag mandatory | platform.support.* | support actions audited | to define | missing | missing | missing | not-yet-proven | no ticketing, health, comms, or announcements | ADR-0066 | ADR-ACT-0251 | If shared, tenant tagging + retention + access control are mandatory. |
+| `support-tickets-health-comms` | tickets tagged + access-scoped by tenant | support tool DB; tenant tag mandatory | platform.support.* | support actions audited | to define | announcements only | announcements only | missing | not-yet-proven | no ticketing or customer health desk yet | ADR-0066 | ADR-ACT-0251 | Announcements are now a small built-in slice over the notification substrate; ticketing and customer health remain missing. |
 
 ### Foundation (cross-cutting governance)
 

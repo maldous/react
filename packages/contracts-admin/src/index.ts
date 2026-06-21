@@ -1983,6 +1983,39 @@ export const TestNotificationResponseSchema = z.object({
 });
 export type TestNotificationResponse = z.infer<typeof TestNotificationResponseSchema>;
 
+/** `POST /api/admin/tenants/:tenantId/announcements` — operator announcement create. */
+export const CreateAnnouncementRequestSchema = z
+  .object({
+    subject: z.string().min(1).max(200),
+    message: z.string().min(1).max(2000),
+  })
+  .strict();
+export type CreateAnnouncementRequest = z.infer<typeof CreateAnnouncementRequestSchema>;
+
+export const AnnouncementSummarySchema = z.object({
+  id: z.string(),
+  tenantId: z.string(),
+  subject: z.string(),
+  delivered: z.number().int().nonnegative(),
+  suppressed: z.number().int().nonnegative(),
+});
+export type AnnouncementSummary = z.infer<typeof AnnouncementSummarySchema>;
+
+/** `GET /api/admin/tenants/:tenantId/announcements` — operator announcement list. */
+export const AnnouncementRecordSchema = z.object({
+  id: z.string(),
+  subject: z.string(),
+  message: z.string(),
+  createdBy: z.string(),
+  createdAt: z.string(),
+});
+export type AnnouncementRecord = z.infer<typeof AnnouncementRecordSchema>;
+
+export const AnnouncementListResponseSchema = z.object({
+  items: z.array(AnnouncementRecordSchema),
+});
+export type AnnouncementListResponse = z.infer<typeof AnnouncementListResponseSchema>;
+
 // ---------------------------------------------------------------------------
 // Observability — metric signals + alert rules + incidents (Phase 7, ADR-0062 /
 // ADR-ACT-0261). Built-in foundation: a signal registry, threshold alert rules
