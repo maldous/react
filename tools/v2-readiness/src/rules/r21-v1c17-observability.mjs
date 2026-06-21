@@ -14,6 +14,14 @@ import { finding } from "../vocab.mjs";
 //   - The metrics-prometheus-runtime-proof + dashboards-runtime-proof scripts exist on disk
 //     so the partial slice can be exercised against a live compose stack when the operator
 //     brings one up.
+//
+// PARTIAL THRESHOLD marker:
+//   The numeric floors above (≥3 dashboards, ≥1 of each datasource uid, both proof scripts
+//   present) are the PARTIAL floors for V1C-17 status='in-progress'. They are NOT the
+//   full-closure floors; a future flip to 'delivered-and-proven' requires green runs of
+//   `npm run proof:metrics-prometheus` + `npm run proof:dashboards` AND the 4+ additional
+//   dashboards enumerated in v1-completion-actions.json V1C-17.providerRequiredFollowup.
+//   Do not tighten the floors in this rule without reconciling the ledger ledger text.
 export default function r21V1c17Observability(ctx) {
   const out = [];
   const obs = ctx.observabilityV1C17;

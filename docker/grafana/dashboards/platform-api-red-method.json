@@ -189,15 +189,7 @@
             "query": "{ service.name = \"platform-api\" }",
             "queryType": "traceql"
           }
-        ],
-        "options": {
-          "tracesToLogs": {
-            "datasourceUid": "platform-loki",
-            "tags": ["service.name"],
-            "filterByTraceID": true,
-            "mapTagNameUsed": "service.name"
-          }
-        }
+        ]
       }
     ]
   }
