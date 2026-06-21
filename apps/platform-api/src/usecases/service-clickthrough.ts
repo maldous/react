@@ -146,6 +146,40 @@ export const CLICKTHROUGH_SERVICES: readonly ClickthroughService[] = [
     tenantPath: null,
   },
   {
+    id: "prometheus",
+    resource: "admin:prometheus",
+    classification: "global_only",
+    isolationInvariant: "Metrics are shared infrastructure; no tenant-private console exists.",
+    apexPath: "/prometheus/*",
+    tenantPath: null,
+  },
+  {
+    id: "alertmanager",
+    resource: "admin:alertmanager",
+    classification: "global_only",
+    isolationInvariant: "Alert routing is platform-owned and shared across tenants.",
+    apexPath: "/alertmanager/*",
+    tenantPath: null,
+  },
+  {
+    id: "windmill",
+    resource: "admin:windmill",
+    classification: "global_only",
+    isolationInvariant:
+      "Operator automation is system-admin only; workflows remain platform-owned.",
+    apexPath: "/windmill/*",
+    tenantPath: null,
+  },
+  {
+    id: "temporal",
+    resource: "admin:temporal",
+    classification: "global_only",
+    isolationInvariant:
+      "Durable workflow orchestration is shared infrastructure, not tenant-scoped UI.",
+    apexPath: "/temporal/*",
+    tenantPath: null,
+  },
+  {
     id: "tilt",
     resource: "admin:tilt",
     classification: "global_only",

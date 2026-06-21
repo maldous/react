@@ -38,19 +38,19 @@ os.environ['COMPOSE_PROJECT_FILTER'] = 'react-dev'
 # react-dev containers started by the local_resource entries (make compose-up-* ENV=dev).
 # Both would try to bind the same ports → Tilt's docker_compose startup fails.
 #
-# profiles=['external-mocks', 'identity', 'observability'] activates the dev
-# profile-gated services (WireMock, Keycloak, Grafana/Loki/Alloy) so Tilt owns
-# their lifecycle via dc_resource. Sentry and SonarQube are NOT included — they
-# live in the shared react-shared (Sentry) / react-sonar (SonarQube) projects,
-# shared across all envs, started via local_resource entries below
-# (make sentry-up / sonar-up).
+# profiles=['external-mocks', 'identity', 'observability', 'workflow-provider',
+# 'observability-provider', 'pitr-provider', 'antivirus-provider'] activates the
+# dev profile-gated services so Tilt owns their lifecycle via dc_resource.
+# Sentry and SonarQube are NOT included — they live in the shared react-shared
+# (Sentry) / react-sonar (SonarQube) projects, shared across all envs, started
+# via local_resource entries below (make sentry-up / sonar-up).
 # mock-oidc IS included here (identity-mocks profile): it is now a PER-ENV service
 # in the react-dev project (ADR-ACT-0157), so Tilt owns its lifecycle as a
 # dc_resource below. It must NOT be a local_resource `docker compose up` shell-out —
 # that double-manages a react-dev container with Tilt and recreates siblings like
 # Keycloak mid-provision (see the WireMock note further down). Keycloak reaches it
 # in-network at http://mock-oidc:8080.
-docker_compose('./compose.yaml', project_name='react-dev', profiles=['external-mocks', 'identity', 'identity-mocks', 'observability'])
+docker_compose('./compose.yaml', project_name='react-dev', profiles=['external-mocks', 'identity', 'identity-mocks', 'observability', 'workflow-provider', 'observability-provider', 'pitr-provider', 'antivirus-provider'])
 
 dc_resource('postgres',       labels=['infra'])
 dc_resource('redis',          labels=['infra'])
@@ -142,6 +142,46 @@ dc_resource('grafana', labels=['observability'],
 )
 dc_resource('alloy', labels=['observability'],
   resource_deps=['loki'],
+)
+dc_resource('prometheus', labels=['observability-provider'],
+  links=[link('http://localhost:9090', 'Prometheus')],
+  resource_deps=['otel-collector'],
+)
+dc_resource('tempo', labels=['observability-provider'],
+  links=[link('http://localhost:3201', 'Tempo')],
+  resource_deps=['otel-collector'],
+)
+dc_resource('alertmanager', labels=['observability-provider'],
+  links=[link('http://localhost:9093', 'Alertmanager')],
+  resource_deps=['prometheus'],
+)
+
+dc_resource('windmill-postgres', labels=['workflow-provider'])
+dc_resource('windmill-redis', labels=['workflow-provider'])
+dc_resource('windmill', labels=['workflow-provider'],
+  links=[link('http://localhost:8000', 'Windmill')],
+  resource_deps=['windmill-postgres', 'windmill-redis'],
+)
+dc_resource('windmill-worker', labels=['workflow-provider'],
+  resource_deps=['windmill'],
+)
+dc_resource('temporal-postgres', labels=['workflow-provider'])
+dc_resource('temporal', labels=['workflow-provider'],
+  links=[link('http://localhost:7233', 'Temporal')],
+  resource_deps=['temporal-postgres'],
+)
+dc_resource('temporal-ui', labels=['workflow-provider'],
+  links=[link('http://localhost:8088', 'Temporal UI')],
+  resource_deps=['temporal'],
+)
+
+dc_resource('pgbackrest', labels=['backup-provider'],
+  resource_deps=['postgres', 'minio'],
+)
+
+dc_resource('clamav', labels=['security-provider'],
+  links=[link('http://localhost:3310', 'ClamAV')],
+  resource_deps=['minio'],
 )
 
 

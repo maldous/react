@@ -36,6 +36,10 @@ export type Permission =
   // NOT_EXPOSED through forward-auth — a permission for it was misleading.
   | "platform.clickthrough.clickhouse"
   | "platform.clickthrough.grafana"
+  | "platform.clickthrough.prometheus"
+  | "platform.clickthrough.alertmanager"
+  | "platform.clickthrough.windmill"
+  | "platform.clickthrough.temporal"
   | "platform.audit.read_all"
   | "platform.logs.read"
   // V1C-12c Legal Hold (ADR-0064 / V1C-12c): operator-only read + write of the

@@ -89,6 +89,20 @@ describe("clickthroughUrlFor (ADR-ACT-0233)", () => {
       ["clickhouse"]
     );
   });
+
+  it("adds the new composed operator UIs as apex-routed global-only services", () => {
+    assert.deepEqual(
+      CLICKTHROUGH_SERVICES.filter((s) =>
+        ["prometheus", "alertmanager", "windmill", "temporal"].includes(s.id)
+      ).map((s) => [s.id, s.classification, s.apexPath, s.tenantPath]),
+      [
+        ["prometheus", "global_only", "/prometheus/*", null],
+        ["alertmanager", "global_only", "/alertmanager/*", null],
+        ["windmill", "global_only", "/windmill/*", null],
+        ["temporal", "global_only", "/temporal/*", null],
+      ]
+    );
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -201,6 +215,26 @@ describe("decideServiceAccess (ADR-ACT-0233)", () => {
     }
   });
 
+  it("new composed operator UIs are GLOBAL_ONLY", () => {
+    for (const resource of [
+      "admin:prometheus",
+      "admin:alertmanager",
+      "admin:windmill",
+      "admin:temporal",
+    ]) {
+      assert.ok(!TENANT_ADMIN_RESOURCES.has(resource), `${resource} must not be tenant-safe`);
+      assert.equal(
+        decideServiceAccess({
+          roles: ["tenant-admin"],
+          resource,
+          requestedSlug: "acme",
+          ownSlug: "acme",
+        }).reason,
+        "global_only_service"
+      );
+    }
+  });
+
   it("non-admin roles are denied everything", () => {
     for (const role of ["manager", "member", "viewer"]) {
       assert.ok(
@@ -296,6 +330,18 @@ describe("Caddyfile ↔ clickthrough policy reconciliation (ADR-ACT-0233)", () =
       }
     }
   });
+
+  it("routes the composed operator UIs through the apex block", () => {
+    for (const resource of [
+      "admin:prometheus",
+      "admin:alertmanager",
+      "admin:windmill",
+      "admin:temporal",
+    ]) {
+      assert.ok(apexBlock!.resources.has(resource), `${resource} must be routed on apex`);
+      assert.ok(!tenantBlock!.resources.has(resource), `${resource} must not be routed on tenant`);
+    }
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -328,5 +374,14 @@ describe("clickthrough permission vocabulary ↔ policy (ADR-ACT-0233)", () => {
       !sysPerms.includes("platform.clickthrough.wiremock"),
       "wiremock permission must not exist (NOT_EXPOSED)"
     );
+  });
+
+  it("system-admin permissions include the new composed operator UIs", () => {
+    const sysPerms = new Set(
+      resolvePermissions("system-admin").filter((p) => p.startsWith("platform.clickthrough."))
+    );
+    for (const id of ["prometheus", "alertmanager", "windmill", "temporal"]) {
+      assert.ok(sysPerms.has(`platform.clickthrough.${id}`), `missing ${id}`);
+    }
   });
 });
