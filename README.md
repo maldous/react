@@ -148,6 +148,7 @@ proof:auth-settings
 proof:backup-control-route
 proof:backup-local
 proof:billing-control-route
+proof:billing-catalog
 proof:billing-provider
 proof:billing-readiness-route
 proof:clickthrough
@@ -157,6 +158,9 @@ proof:composed-provider-runtime-closure
 proof:dashboards
 proof:delegated-admin
 proof:domain-identity-matrix
+proof:data-governance
+proof:data-portability
+proof:data-residency
 proof:email-sender
 proof:entitlement-policy-chain
 proof:entitlements
@@ -220,6 +224,7 @@ proof:tenant-domains
 proof:tenant-domains-routing
 proof:tenant-observability
 proof:tenant-storage
+proof:tenant-storage-objects
 proof:typed-secret-resolution
 proof:ui-semantic-claim-mapping
 proof:ui-semantic-groups
@@ -231,6 +236,8 @@ proof:windmill-automation-provider
 proof:workflow-adapters
 proof:workflow-closure
 proof:workflow-control-route
+proof:workflow-engine
+proof:approval-workflow
 proof:workflow-provider-live
 proof:workflow-readiness-route
 ```
