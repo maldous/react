@@ -137,8 +137,8 @@ Each domain has two generated tables: a **decision view** (status, build/compose
 
 | Capability | Status | Purpose | Compose / provider | Decision | Local free candidate | Environment model | Shared/per-env | Priority | Size | Risk |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `product-catalog-plans-prices` | missing | Define sellable products, plans, and pricing. | none | compose | Lago (OSS) or Kill Bill; OpenMeter for usage | per-environment | per-env | P1 | XL | High |
-| `subscriptions-invoices-payments` | missing | Lifecycle of paid subscriptions including invoicing and dunning. | none | compose | Lago/Kill Bill (OSS); payment gateway is prod-external adapter | per-environment | per-env | P2 | XL | High |
+| `product-catalog-plans-prices` | missing | Define sellable products, plans, and pricing. | none | compose | Lago (OSS), Kill Bill fallback; OpenMeter for usage remains separate | per-environment | per-env | P1 | XL | High |
+| `subscriptions-invoices-payments` | missing | Lifecycle of paid subscriptions including invoicing and dunning. | none | compose | Lago (OSS), Kill Bill fallback; payment gateway is prod-external adapter | per-environment | per-env | P2 | XL | High |
 | `metering-usage-meters` | locally proven | Ingest usage events and aggregate into meters. | built-in Postgres meter_events (migration 024); ClickHouse available for the later provider | build | built-in Postgres meter store; OpenMeter/ClickHouse provider behind MeteringRepository is Phase 2.5 | per-environment | per-env | P1 | L | High |
 | `quota-enforcement` | locally proven | Enforce per-tenant limits derived from plan/entitlement. | built-in tenant_quotas (migration 024) + meter aggregation; no Redis required for the proof | build | built-in quota check using entitlements + windowed meter aggregation | per-environment | per-env | P1 | M | Medium |
 
@@ -156,7 +156,7 @@ Each domain has two generated tables: a **decision view** (status, build/compose
 | `relational-storage` | locally proven | Transactional data with schema lifecycle and tenant isolation. | postgres (per-env), db-migrate | build | Postgres (composed) | per-environment | per-env | P0 | M | Low |
 | `backup-restore` | locally proven | Recoverable backups of tenant data. | postgres-backup.sh / postgres-restore.sh | build | pg_dump + MinIO sink (composed) | per-environment | per-env | P1 | M | High |
 | `pitr-retention-legalhold-residency` | missing | Point-in-time recovery, retention enforcement, legal hold, residency controls. | none (Sentry has its own 90d cleanup only) | build | Postgres WAL archiving + pgBackRest (OSS) | per-environment | per-env | P2 | L | High |
-| `data-governance-catalog-lineage-pii-dsr` | missing | Catalog, classify, trace, and satisfy data-subject requests. | none | compose | OpenMetadata or DataHub (OSS) | shared-cross-environment | shared (engineering metadata, not tenant runtime data) — requires partitioning proof | P2 | XL | High |
+| `data-governance-catalog-lineage-pii-dsr` | missing | Catalog, classify, trace, and satisfy data-subject requests. | none | build | built-in registry first; OpenMetadata/DataHub deferred to later scale | shared-cross-environment | shared (engineering metadata, not tenant runtime data) — requires partitioning proof | P2 | XL | High |
 | `import-export` | missing | Bulk import and export of tenant data. | none | build | built-in jobs writing to MinIO | per-environment | per-env | P2 | M | Medium |
 | `history-read-model` | locally proven | A read-only UNION projection over existing audited/event/notification/incident/meter sources — tenant + operator history without a new store. | postgres (read-only UNION over audit_events/platform_events/notification_log/incidents/meter_events) | build | built-in read-only projection behind HistoryRepositoryPort (no new store) | per-environment | per-env | P2 | M | Low |
 
@@ -194,7 +194,7 @@ Each domain has two generated tables: a **decision view** (status, build/compose
 | Capability | Status | Purpose | Compose / provider | Decision | Local free candidate | Environment model | Shared/per-env | Priority | Size | Risk |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `event-bus-queues-dlq` | locally proven | Internal eventing, durable job queues, dead-letter + redrive. | postgres outbox (platform_events + event_dead_letters, RLS) | build | Postgres outbox (built-in); Redis Streams/NATS are Phase-5.5 behind the port | per-environment | per-env (Sentry Kafka is Sentry-only, not the platform bus) | P1 | L | Medium |
-| `workflow-engine-scheduled-jobs` | partial | Durable orchestration of long-running and scheduled work with visibility. | single webhook worker only; no general scheduler/engine | compose | Temporal (heavy) or Windmill (light) — both OSS local | per-environment | per-env | P1 | XL | High |
+| `workflow-engine-scheduled-jobs` | partial | Durable orchestration of long-running and scheduled work with visibility. | single webhook worker only; no general scheduler/engine | compose | Windmill (light, preferred); Temporal only as fallback | per-environment | per-env | P1 | XL | High |
 | `scheduled-jobs-builtin` | locally proven | Operator-managed scheduled jobs that enqueue events onto the durable outbox, idempotent per due window. | postgres (scheduled_jobs, RLS) + Phase-5 outbox | build | built-in scheduler on the Postgres event bus (no external scheduler) | per-environment | per-env | P1 | M | Medium |
 | `notifications` | locally proven | Deliver notifications across email/in-app/push/SMS with per-user preferences. | postgres (notification_preferences + notification_log, RLS); local transports | build | built-in preference-gated dispatch + log (local channels); Novu/Brevo are Phase-6.5 | per-environment | per-env | P1 | L | Medium |
 
@@ -272,7 +272,7 @@ Each domain has two generated tables: a **decision view** (status, build/compose
 | Capability | Status | Purpose | Compose / provider | Decision | Local free candidate | Environment model | Shared/per-env | Priority | Size | Risk |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `tenant-lifecycle-suspend-delete-export` | partial | Full lifecycle management of a tenant including suspension and deletion. | provisioning delivered; no suspend/delete/export | build | built-in (composed) | per-environment | per-env | P1 | L | High |
-| `support-tickets-health-comms` | missing | Support desk, tenant health signals, incident communication, announcements. | none | compose | Zammad or Chatwoot (OSS) for tickets; built-in announcements | shared-cross-environment | shared (support desk) with tenant tagging + access control | P2 | L | Medium |
+| `support-tickets-health-comms` | missing | Support desk, tenant health signals, incident communication, announcements. | none | build | built-in support first; Chatwoot later if a full omnichannel desk is required | shared-cross-environment | shared (support desk) with tenant tagging + access control | P2 | L | Medium |
 
 | Capability | Tenant isolation | Data isolation | Permission | Audit events | Readiness model | BFF contract | Admin UI | Self-service UI | Proof | Production blockers | ADR | ADR-ACT | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |

@@ -663,7 +663,7 @@
       "status": "missing",
       "composeSupport": "none",
       "decision": "compose",
-      "localFreeCandidate": "Lago (OSS) or Kill Bill; OpenMeter for usage",
+      "localFreeCandidate": "Lago (OSS), Kill Bill fallback; OpenMeter stays separate for usage-only providerisation",
       "environmentModel": "per-environment",
       "sharedPerEnv": "per-env",
       "tenantIsolation": "catalog global; subscription per-tenant",
@@ -681,7 +681,7 @@
       "priority": "P1",
       "size": "XL",
       "risk": "High",
-      "notes": "Discovery first: Lago vs OpenMeter vs Kill Bill vs custom ledger."
+      "notes": "Lago is the preferred compose-first path; Kill Bill is the fallback if Lago is formally rejected."
     },
     {
       "capability": "subscriptions-invoices-payments",
@@ -691,7 +691,7 @@
       "status": "missing",
       "composeSupport": "none",
       "decision": "compose",
-      "localFreeCandidate": "Lago/Kill Bill (OSS); payment gateway is prod-external adapter",
+      "localFreeCandidate": "Lago (OSS), Kill Bill fallback; payment gateway is prod-external adapter",
       "environmentModel": "per-environment",
       "sharedPerEnv": "per-env",
       "tenantIsolation": "subscription per-tenant",
@@ -1017,7 +1017,7 @@
       "priority": "P1",
       "size": "XL",
       "risk": "High",
-      "notes": "Scheduled jobs delivered + live-proven as scheduled-jobs-builtin (Phase 5.5, on the Phase-5 outbox). The workflow engine (Windmill/Temporal) + cron expressions + a running scheduler daemon remain deferred."
+      "notes": "Scheduled jobs delivered + live-proven as scheduled-jobs-builtin (Phase 5.5, on the Phase-5 outbox). The workflow engine (Windmill preferred; Temporal fallback) + cron expressions + a running scheduler daemon remain deferred."
     },
     {
       "capability": "scheduled-jobs-builtin",
@@ -1353,7 +1353,7 @@
       "priority": "P2",
       "size": "L",
       "risk": "Medium",
-      "notes": "Audit trail is the raw material; reviews/reports are missing."
+      "notes": "Audit trail is the raw material; reviews/reports are missing. Built-in first; external metadata suites are later-scale candidates only."
     },
     {
       "capability": "tenant-isolation-proof",

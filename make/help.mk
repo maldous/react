@@ -36,6 +36,9 @@ help:
 	  compose-up-observability  '+ Loki + Tempo + Grafana + Alloy (observability profile)' \
 	  compose-up-cloud          '+ LocalStack / AWS mocks (cloud-mocks profile)' \
 	  compose-up-external-mocks '+ WireMock (external-mocks profile)' \
+	  compose-up-workflow-provider '+ Windmill + worker + postgres + redis (workflow-provider profile)' \
+	  compose-up-pitr-provider  '+ pgBackRest PITR provider (pitr-provider profile)' \
+	  compose-up-antivirus-provider '+ ClamAV malware scanning (antivirus-provider profile)' \
 	  compose-up-web            '+ Caddy SPA + containerised platform-api' \
 	  compose-down              'Stop all services for ENV' \
 	  compose-down-reset        'Stop + reset app data (preserves Keycloak volume)' \

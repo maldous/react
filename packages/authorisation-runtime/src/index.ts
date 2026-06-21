@@ -105,6 +105,94 @@ export interface ResourcePolicy {
   enabled: boolean;
 }
 
+export interface PolicyEvaluationContext {
+  actorId: string;
+  actorRoles: string[];
+  actorGroups?: string[];
+  now?: Date;
+}
+
+export type PolicyEvaluationResult =
+  | { granted: true; matchedPolicy?: string }
+  | { granted: false; reason: "no_matching_policy" | "disabled_policy" | "invalid_policy" };
+
+function stringList(config: Record<string, unknown>, key: string): string[] {
+  const value = config[key];
+  if (!Array.isArray(value)) return [];
+  return value.filter((v): v is string => typeof v === "string" && v.length > 0);
+}
+
+function matchesTimeWindow(config: Record<string, unknown>, now: Date): boolean {
+  const from = typeof config["from"] === "string" ? config["from"] : null;
+  const to = typeof config["to"] === "string" ? config["to"] : null;
+  const time = now.toISOString().slice(11, 16);
+  if (from && time < from.slice(0, 5)) return false;
+  if (to && time > to.slice(0, 5)) return false;
+  return true;
+}
+
+function matchesRegex(config: Record<string, unknown>, actor: PolicyEvaluationContext): boolean {
+  const pattern = typeof config["pattern"] === "string" ? config["pattern"] : "";
+  const subject = typeof config["subject"] === "string" ? config["subject"] : actor.actorId;
+  if (!pattern) return false;
+  try {
+    return new RegExp(pattern).test(subject);
+  } catch {
+    return false;
+  }
+}
+
+export function evaluateResourcePolicies(
+  policies: ResourcePolicy[],
+  actor: PolicyEvaluationContext
+): PolicyEvaluationResult {
+  for (const policy of policies) {
+    if (!policy.enabled) return { granted: false, reason: "disabled_policy" };
+    if (!policy.name || typeof policy.name !== "string")
+      return { granted: false, reason: "invalid_policy" };
+
+    const roles = stringList(policy.config, "roles");
+    const users = stringList(policy.config, "users");
+    const groups = stringList(policy.config, "groups");
+    const now = actor.now ?? new Date();
+
+    switch (policy.type) {
+      case "role":
+        if (roles.length > 0 && roles.some((r) => actor.actorRoles.includes(r))) {
+          return { granted: true, matchedPolicy: policy.name };
+        }
+        break;
+      case "user":
+        if (users.includes(actor.actorId)) return { granted: true, matchedPolicy: policy.name };
+        break;
+      case "group":
+        if (groups.length > 0 && (actor.actorGroups ?? []).some((g) => groups.includes(g))) {
+          return { granted: true, matchedPolicy: policy.name };
+        }
+        break;
+      case "time":
+        if (matchesTimeWindow(policy.config, now))
+          return { granted: true, matchedPolicy: policy.name };
+        break;
+      case "regex":
+        if (matchesRegex(policy.config, actor))
+          return { granted: true, matchedPolicy: policy.name };
+        break;
+      case "aggregated":
+        if (matchesTimeWindow(policy.config, now)) {
+          const nestedRoles = stringList(policy.config, "roles");
+          if (nestedRoles.length === 0 || nestedRoles.some((r) => actor.actorRoles.includes(r))) {
+            return { granted: true, matchedPolicy: policy.name };
+          }
+        }
+        break;
+      default:
+        return { granted: false, reason: "invalid_policy" };
+    }
+  }
+  return { granted: false, reason: "no_matching_policy" };
+}
+
 export interface SysadminBrokeringConfig {
   enabled: boolean;
   requireMfa: boolean;

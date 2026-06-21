@@ -1,4 +1,5 @@
 import { type SessionActor } from "@platform/contracts-auth";
+import { evaluateResourcePolicies, type ResourcePolicy } from "@platform/authorisation-runtime";
 import { getAuthorisationPort, resolveAccessToken, getSessionStore } from "./dependencies.ts";
 import type { TenantContext } from "./tenant-resolver.ts";
 
@@ -43,6 +44,7 @@ export interface AuthzDeps {
   authorisationPort?: typeof getAuthorisationPort;
   resolveToken?: typeof resolveAccessToken;
   sessionStore?: ReturnType<typeof getSessionStore>;
+  resourcePolicies?: ResourcePolicy[];
 }
 
 export async function authorizeResourceAccess(params: {
@@ -56,6 +58,7 @@ export async function authorizeResourceAccess(params: {
   const resolveToken = deps?.resolveToken ?? resolveAccessToken;
   const authorisationPort = deps?.authorisationPort ?? getAuthorisationPort;
   const sessionStore = deps?.sessionStore ?? getSessionStore();
+  const resourcePolicies = deps?.resourcePolicies ?? [];
   const permission = `${guard.resource}#${guard.umaScope}`;
 
   let umaGranted = false;
@@ -85,6 +88,14 @@ export async function authorizeResourceAccess(params: {
     } else {
       return { ok: false, status: 403, code: "permissionRequired", permission };
     }
+  }
+
+  const policyDecision = evaluateResourcePolicies(resourcePolicies, {
+    actorId: actor.userId,
+    actorRoles: actor.roles,
+  });
+  if (policyDecision.granted) {
+    return { ok: true };
   }
 
   // Static permission check — backward compat and UMA degraded fallback.

@@ -134,12 +134,14 @@ redirect cutover proven locally.
 ADR-ACT-0223. Selected decision: BUILD file CRUD over the proven `StoragePort`/`MinioStorageAdapter`
 (readiness already live). Add `/api/org/storage/objects*` CRUD + quota routes. **Antivirus (final):
 ClamAV** (`clamd`) behind an `AntivirusPort` (`ClamAvAdapter` prod / `StubAvAdapter` local), driven by
-an object-storage event. **Scan lifecycle state machine:** `uploaded → quarantined → scanning →
-clean | rejected` — objects are quarantined (not downloadable) until `clean`; `rejected` objects are
-withheld + audited. **Legal-hold ownership: assigned to the central data-lifecycle capability
-(V1C-12c), NOT storage** — storage only honours the hold flag set by V1C-12c (single owner, no
-duplication). Tests: carry `proof:tenant-storage` + add file-CRUD/quota/AV-lifecycle proofs. **Stop:**
-file CRUD + quotas + the AV lifecycle (`uploaded→…→clean|rejected`) delivered + proven on live MinIO.
+an object-storage event. **Compose footprint:** MinIO (existing per-env object store) + ClamAV daemon
+per environment + a small scan worker. **Scan lifecycle state machine:** `uploaded → quarantined →
+scanning → clean | rejected` — objects are quarantined (not downloadable) until `clean`; `rejected`
+objects are withheld + audited. **Legal-hold ownership: assigned to the central data-lifecycle
+capability (V1C-12c), NOT storage** — storage only honours the hold flag set by V1C-12c (single
+owner, no duplication). Tests: carry `proof:tenant-storage` + add file-CRUD/quota/AV-lifecycle
+proofs. **Stop:** file CRUD + quotas + the AV lifecycle (`uploaded→…→clean|rejected`) delivered +
+proven on live MinIO.
 
 #### Entitlements & billing (decomposed; decisionRef V1C-10 / V1C-11)
 
@@ -354,10 +356,11 @@ environmentScope, mockability}`; a `ServiceBinding{service, provider, env}` reso
 - **Stop:** catalogue + bindings + readiness aggregation delivered; a mock provider is rejected in
   production; proven.
 
-**V1C-25 — i18n React provider/hook + message migration (hard gate).** Source: ADR-0026. Finish
-`packages/i18n-runtime/src/react.ts` (bootstrap placeholder) + the API/auth/validation message
-migration; promote `validate-i18n` to a hard gate. **Stop:** provider/hook + migration complete; i18n
-is a hard gate.
+**V1C-25 — i18n React provider/hook + message migration (hard gate). ✅ CLOSED (delivered-and-proven).**
+Closed by the provider/hook implementation in `packages/i18n-runtime/src/react.ts`, the typed
+message catalogue in `packages/i18n-runtime/src/index.ts`, and the `validate-i18n` hard gate. Source:
+ADR-0026. The React integration tests cover provider behaviour, hooks outside provider, ICU
+interpolation, and locale fallback.
 
 ### Part B — config-runtime, decomposed (V1C-CONF-01..08)
 

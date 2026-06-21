@@ -132,7 +132,7 @@ All 14 ADRs share a sound template (Status/Context/Decision/Consequences/Validat
 
 ## Phase 5 — Event bus + workflow engine
 
-**Objective.** Generalise the proven webhook substrate into an **internal event bus + durable queues** (Redis Streams); scale the **background worker runtime**; compose a **workflow engine** (Windmill default).
+**Objective.** Generalise the proven webhook substrate into an **internal event bus + durable queues** (Redis Streams); scale the **background worker runtime**; compose a **workflow engine** (Windmill default, Temporal fallback only if Windmill is rejected).
 
 **Why now.** Webhooks (delivered) seed the bus; workflow needs the bus + workers. Required truth: `workflow → event-bus`.
 
@@ -140,7 +140,7 @@ All 14 ADRs share a sound template (Status/Context/Decision/Consequences/Validat
 
 **Files likely touched.** `packages/queue-runtime`, `worker-runtime` (real adapters), new eventing usecase, Windmill integration, `server/routes.ts`.
 
-**New ADR-ACT rows.** ADR-0059 split + delivery (ADR-ACT-0243). **New packages.** Redis-Streams `QueuePort` adapter, real `WorkerPort`. **New compose services.** Windmill (AGPL — recorded decision). **New ports/adapters.** `QueuePort`, `WorkerPort`, `WorkflowPort`. **New BFF contracts.** internal-bus (no public route initially); `/api/org/workflows` (read). **New UI.** `/admin/workflows` (visibility).
+**New ADR-ACT rows.** ADR-0059 split + delivery (ADR-ACT-0243). **New packages.** Redis-Streams `QueuePort` adapter, real `WorkerPort`. **New compose services.** Windmill (AGPL — recorded decision; preferred default provider). **New ports/adapters.** `QueuePort`, `WorkerPort`, `WorkflowPort`. **New BFF contracts.** internal-bus (no public route initially); `/api/org/workflows` (read). **New UI.** `/admin/workflows` (visibility).
 
 **Proof scripts.** `proof:event-bus`, `proof:workflow` (tenant-namespace isolation, idempotency, DLQ/redrive). **Acceptance criteria.** Tenant-tagged events isolated; DLQ + redrive proven (extend webhook pattern); workflow namespaces per tenant; Windmill runs locally free.
 
@@ -212,7 +212,7 @@ All 14 ADRs share a sound template (Status/Context/Decision/Consequences/Validat
 
 ## Phase 9 — Billing / invoicing / payment provider adapter
 
-**Objective.** Compose **Lago** (or Kill Bill) for plans/prices/subscriptions/invoices/dunning; isolate **payment capture** behind a production-external adapter with a local mock.
+**Objective.** Compose **Lago** for plans/prices/subscriptions/invoices/dunning; isolate **payment capture** behind a production-external adapter with a local mock. Kill Bill remains the fallback if Lago is formally rejected.
 
 **Why now.** Needs catalog + entitlements + metering + quotas + workflow (dunning). Required truths: `product-catalog → entitlements + metering`; subscriptions → catalog + quota + workflow.
 
@@ -220,7 +220,7 @@ All 14 ADRs share a sound template (Status/Context/Decision/Consequences/Validat
 
 **Files likely touched.** billing usecases, Lago integration, payment-provider port + mock, `server/routes.ts`, billing portal UI.
 
-**New ADR-ACT rows.** ADR-0057 split + delivery (ADR-ACT-0241). **New packages.** `@platform/billing`, `PaymentProviderPort`. **New compose services.** Lago (AGPL — recorded) / Kill Bill. **New BFF contracts.** `/api/org/billing/*`. **New UI.** `/admin/billing`, self-service billing portal.
+**New ADR-ACT rows.** ADR-0057 split + delivery (ADR-ACT-0241). **New packages.** `@platform/billing`, `PaymentProviderPort`. **New compose services.** Lago (AGPL — recorded) / Kill Bill fallback. **New BFF contracts.** `/api/org/billing/*`. **New UI.** `/admin/billing`, self-service billing portal.
 
 **Proof scripts.** `proof:billing` (subscription lifecycle on local engine), mock-payment proof. **Acceptance criteria.** Plan→subscription→invoice proven locally free; payment capture isolated behind the port; **documented gap: real payment capture is not locally provable end-to-end** (the single sanctioned paid dependency).
 
@@ -230,7 +230,7 @@ All 14 ADRs share a sound template (Status/Context/Decision/Consequences/Validat
 
 ## Phase 10 — Production-ready product UI surfaces
 
-**Objective.** Build the product UI for capabilities whose substrate now exists: the **object-storage product** (file browser, quotas, lifecycle, AV scan, legal hold), the **support desk** (built-in notes → Chatwoot later), rich branding, and the consolidated self-service surfaces.
+**Objective.** Build the product UI for capabilities whose substrate now exists: the **object-storage product** (file browser, quotas, lifecycle, ClamAV-backed AV scan, legal hold), the **support desk** (built-in notes → Chatwoot later), rich branding, and the consolidated self-service surfaces.
 
 **Why now.** Each UI here was gated (`mustPrecedeUi`) on a substrate delivered in Phases 1–9 (e.g. object-storage product needs quotas from Phase 2).
 

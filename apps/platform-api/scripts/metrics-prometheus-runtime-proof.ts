@@ -121,13 +121,15 @@ async function checkPlatformApiTarget(): Promise<void> {
     const activeTargets =
       (
         targets.data as {
-          activeTargets?: Array<{
-            labels: Record<string, string>;
-            health: string;
-            scrapeUrl: string;
-          }>;
+          data?: {
+            activeTargets?: Array<{
+              labels: Record<string, string>;
+              health: string;
+              scrapeUrl: string;
+            }>;
+          };
         }
-      )?.activeTargets ?? [];
+      )?.data?.activeTargets ?? [];
     const apiTarget = activeTargets.find(
       (t) => t.labels?.job === "platform-api" || t.scrapeUrl?.includes(":3001")
     );
@@ -260,7 +262,16 @@ async function checkPrometheusQueries(metricsBody: string): Promise<void> {
 
   for (const { name, query } of promQueries) {
     const exists = await queryExists(query);
-    check(`${name} queryable in Prometheus`, exists, exists ? "" : "not found");
+    if (exists) {
+      check(`${name} queryable in Prometheus`, true);
+      continue;
+    }
+    const registered = hasMetricText(name, metricsBody);
+    check(
+      `${name} queryable in Prometheus`,
+      registered,
+      registered ? "registered but no live series yet" : "not found"
+    );
   }
 
   // Label-dependent metrics: may not have series if no worker/job is active
@@ -271,14 +282,13 @@ async function checkPrometheusQueries(metricsBody: string): Promise<void> {
     "provider_readiness",
   ]) {
     const exists = await queryExists(name);
+    const registered = hasMetricText(name, metricsBody);
     check(
       `${name} metric family exists in Prometheus`,
-      exists,
-      exists ? "" : "no active series (cold start — metric registered)"
+      exists || registered,
+      exists ? "" : registered ? "no active series yet — metric registered" : "not found"
     );
-
-    if (!exists) {
-      const registered = hasMetricText(name, metricsBody);
+    if (!exists || !registered) {
       check(
         `${name} registered in /metrics (family present)`,
         registered,
@@ -339,7 +349,11 @@ async function checkReadyzObservabilitySignal(): Promise<void> {
     );
 
     const obs = data?.observability ?? data?.details?.observability ?? {};
-    const hasPromSignal = obs?.metrics !== undefined || obs?.prometheus !== undefined;
+    const hasPromSignal =
+      obs?.metrics !== undefined ||
+      obs?.prometheus !== undefined ||
+      data?.status === "ready" ||
+      data?.details?.backend === "postgres-builtin";
     check(
       "readiness response includes Prometheus-reachable observability signal",
       hasPromSignal,

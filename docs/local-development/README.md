@@ -32,13 +32,16 @@ tilt up
 
 [Compose services ?](compose-services.md)
 
-| Profile        | Command                          | Services                                          |
-| -------------- | -------------------------------- | ------------------------------------------------- |
-| default        | `docker compose up -d`           | postgres, redis, clickhouse, minio, mailpit, otel |
-| web            | `make compose-up-web`            | platform-api + React SPA on :80                   |
-| identity       | `make compose-up-identity`       | Keycloak                                          |
-| external-mocks | `make compose-up-external-mocks` | WireMock                                          |
-| external-sonar | `make sonar-up`                  | SonarQube (shared instance)                       |
+| Profile            | Command                              | Services                                          |
+| ------------------ | ------------------------------------ | ------------------------------------------------- |
+| default            | `docker compose up -d`               | postgres, redis, clickhouse, minio, mailpit, otel |
+| web                | `make compose-up-web`                | platform-api + React SPA on :80                   |
+| identity           | `make compose-up-identity`           | Keycloak                                          |
+| external-mocks     | `make compose-up-external-mocks`     | WireMock                                          |
+| workflow-provider  | `make compose-up-workflow-provider`  | Windmill + worker + backing DB/Redis + Temporal   |
+| pitr-provider      | `make compose-up-pitr-provider`      | pgBackRest PITR provider                          |
+| antivirus-provider | `make compose-up-antivirus-provider` | ClamAV malware scanning                           |
+| external-sonar     | `make sonar-up`                      | SonarQube (shared instance)                       |
 
 ## Tilt feedback loop
 

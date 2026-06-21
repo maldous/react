@@ -568,6 +568,8 @@ services:
   prometheus:
     image: prom/prometheus:v2.54.1
     profiles: [observability-provider]
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
@@ -614,6 +616,209 @@ services:
       timeout: 5s
       retries: 10
       start_period: 10s
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # WORKFLOW-PROVIDER PROFILE — `make compose-up-workflow-provider`
+  #
+  # Windmill is the default lightweight workflow engine candidate behind the
+  # WorkflowPort. It is per-environment and tenant-scoped by policy; the
+  # platform-api still owns auth, audit, and tenant identity.
+  # ---------------------------------------------------------------------------
+
+  windmill-postgres:
+    image: postgres:16.6-alpine
+    profiles: [workflow-provider]
+    environment:
+      POSTGRES_USER: ${WINDMILL_DB_USER:-windmill}
+      POSTGRES_PASSWORD: ${WINDMILL_DB_PASSWORD:-windmillpassword}
+      POSTGRES_DB: ${WINDMILL_DB_NAME:-windmill}
+    volumes:
+      - windmill-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${WINDMILL_DB_USER:-windmill} -d ${WINDMILL_DB_NAME:-windmill}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    restart: unless-stopped
+
+  windmill-redis:
+    image: redis:7.4.2-alpine
+    profiles: [workflow-provider]
+    command: redis-server --appendonly yes
+    volumes:
+      - windmill-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  windmill:
+    image: ghcr.io/windmill-labs/windmill:1.734
+    profiles: [workflow-provider]
+    depends_on:
+      windmill-postgres:
+        condition: service_healthy
+      windmill-redis:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${WINDMILL_DB_USER:-windmill}:${WINDMILL_DB_PASSWORD:-windmillpassword}@windmill-postgres:5432/${WINDMILL_DB_NAME:-windmill}
+      REDIS_URL: redis://windmill-redis:6379
+      WINDMILL_BASE_URL: ${WINDMILL_BASE_URL:-http://localhost:8000}
+      WINDMILL_CLIENT_SECRET: ${WINDMILL_CLIENT_SECRET:-}
+      OTEL_SERVICE_NAME: windmill
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-http://otel-collector:4318}
+      OTEL_SDK_DISABLED: ${OTEL_SDK_DISABLED:-false}
+      # Default to a single-node local runner. Tenant isolation is enforced by the
+      # platform-api WorkflowPort adapter and workflow namespace identifiers.
+      WINDMILL_MODE: ${WINDMILL_MODE:-server}
+    ports:
+      - "${WINDMILL_PORT:-8000}:8000"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8000/api/version >/dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    restart: unless-stopped
+
+  windmill-worker:
+    image: ghcr.io/windmill-labs/windmill:1.734
+    profiles: [workflow-provider]
+    depends_on:
+      windmill-postgres:
+        condition: service_healthy
+      windmill-redis:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${WINDMILL_DB_USER:-windmill}:${WINDMILL_DB_PASSWORD:-windmillpassword}@windmill-postgres:5432/${WINDMILL_DB_NAME:-windmill}
+      REDIS_URL: redis://windmill-redis:6379
+      WINDMILL_MODE: ${WINDMILL_MODE:-worker}
+    command: ["worker"]
+    restart: unless-stopped
+
+  temporal-postgres:
+    image: postgres:16.6-alpine
+    profiles: [workflow-provider]
+    environment:
+      POSTGRES_USER: ${TEMPORAL_DB_USER:-temporal}
+      POSTGRES_PASSWORD: ${TEMPORAL_DB_PASSWORD:-temporalpassword}
+      POSTGRES_DB: ${TEMPORAL_DB_NAME:-temporal}
+    volumes:
+      - temporal-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${TEMPORAL_DB_USER:-temporal} -d ${TEMPORAL_DB_NAME:-temporal}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    restart: unless-stopped
+
+  temporal:
+    image: temporalio/auto-setup:1.25.1
+    profiles: [workflow-provider]
+    depends_on:
+      temporal-postgres:
+        condition: service_healthy
+    environment:
+      DB: postgresql
+      POSTGRES_SEEDS: temporal-postgres
+      POSTGRES_USER: ${TEMPORAL_DB_USER:-temporal}
+      POSTGRES_PWD: ${TEMPORAL_DB_PASSWORD:-temporalpassword}
+      POSTGRES_DB: ${TEMPORAL_DB_NAME:-temporal}
+      VISIBILITY_DB: ${TEMPORAL_VISIBILITY_DB_NAME:-temporal_visibility}
+      ENABLE_ES: "false"
+      DYNAMIC_CONFIG_FILE_PATH: /etc/temporal/config/dynamicconfig/development.yaml
+      OTEL_SERVICE_NAME: temporal
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-http://otel-collector:4318}
+      OTEL_SDK_DISABLED: ${OTEL_SDK_DISABLED:-false}
+    ports:
+      - "${TEMPORAL_PORT:-7233}:7233"
+    volumes:
+      - ./docker/temporal/dynamicconfig:/etc/temporal/config/dynamicconfig:ro
+    restart: unless-stopped
+
+  temporal-ui:
+    image: temporalio/ui:2.35.0
+    profiles: [workflow-provider]
+    depends_on:
+      temporal:
+        condition: service_started
+    environment:
+      TEMPORAL_ADDRESS: temporal:7233
+      TEMPORAL_UI_PORT: 8080
+      TEMPORAL_DEFAULT_NAMESPACE: default
+    ports:
+      - "${TEMPORAL_UI_PORT:-8088}:8080"
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # PITR-PROVIDER PROFILE — `make compose-up-pitr-provider`
+  #
+  # pgBackRest is the PITR/backup candidate behind the Postgres backup port.
+  # It stays environment-scoped and writes into the existing MinIO/S3 boundary.
+  # ---------------------------------------------------------------------------
+
+  pgbackrest:
+    image: woblerr/docker-pgbackrest:alpine
+    profiles: [pitr-provider]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    environment:
+      PGBACKREST_DB_HOST: postgres
+      PGBACKREST_DB_PORT: "5432"
+      PGBACKREST_DB_USER: ${POSTGRES_USER:-platform}
+      PGBACKREST_DB_PASSWORD: ${POSTGRES_PASSWORD:-platformpassword}
+      PGBACKREST_REPO1_TYPE: s3
+      PGBACKREST_REPO1_S3_BUCKET: ${PGBACKREST_REPO1_S3_BUCKET:-platform-pitr}
+      PGBACKREST_REPO1_S3_ENDPOINT: http://minio:9000
+      PGBACKREST_REPO1_S3_REGION: ${AWS_REGION:-us-east-1}
+      PGBACKREST_REPO1_S3_KEY: ${MINIO_ROOT_USER:-minioadmin}
+      PGBACKREST_REPO1_S3_KEY_SECRET: ${MINIO_ROOT_PASSWORD:-miniopassword}
+      PGBACKREST_STANZA: ${PGBACKREST_STANZA:-platform}
+      OTEL_SERVICE_NAME: pgbackrest
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-http://otel-collector:4318}
+    volumes:
+      - pgbackrest-data:/var/lib/pgbackrest
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # ANTIVIRUS-PROVIDER PROFILE — `make compose-up-antivirus-provider`
+  #
+  # ClamAV daemon (`clamd`) is the malware-scanning provider behind AntivirusPort.
+  # The platform stores the scan state; this container just answers scan requests.
+  # ---------------------------------------------------------------------------
+
+  clamav:
+    image: clamav/clamav:stable
+    profiles: [antivirus-provider]
+    ports:
+      - "${CLAMAV_PORT:-3310}:3310"
+    environment:
+      OTEL_SERVICE_NAME: clamav
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-http://otel-collector:4318}
+    volumes:
+      - clamav-data:/var/lib/clamav
+    healthcheck:
+      test: ["CMD-SHELL", "echo PING | nc -w 2 localhost 3310 | grep -q PONG"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
     restart: unless-stopped
 
   # ---------------------------------------------------------------------------
@@ -1477,3 +1682,8 @@ volumes:
   loki-data:
   grafana-data:
   prometheus-data:
+  windmill-postgres-data:
+  windmill-redis-data:
+  temporal-postgres-data:
+  pgbackrest-data:
+  clamav-data:

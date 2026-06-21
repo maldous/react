@@ -38,6 +38,17 @@ const deps = (decision: AccessDecision, token: string | null = "raw-token") => (
   sessionStore: {} as never,
 });
 
+const policyDeps = {
+  resourcePolicies: [
+    {
+      name: "allow-viewers",
+      type: "role",
+      config: { roles: ["viewer"] },
+      enabled: true,
+    },
+  ],
+};
+
 describe("authorizeResourceAccess — static fallback (no token)", () => {
   it("allows when the actor holds the required permission", async () => {
     const out = await authorizeResourceAccess({
@@ -155,5 +166,16 @@ describe("authorizeResourceAccess — UMA path (token present)", () => {
     });
     assert.equal(out.ok, false);
     assert.equal(out.ok === false && out.code, "authenticationRequired");
+  });
+
+  it("allows when an injected resource policy matches even without static permission", async () => {
+    const out = await authorizeResourceAccess({
+      actor: actor({ roles: ["viewer"], permissions: [] }),
+      sessionId: null,
+      fqdnTenant: null,
+      guard: GUARD,
+      deps: policyDeps,
+    });
+    assert.deepEqual(out, { ok: true });
   });
 });

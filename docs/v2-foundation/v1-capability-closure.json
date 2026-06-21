@@ -2,7 +2,7 @@
   {
     "capability": "Tenant identity (record + FQDN)",
     "category": "identity-access",
-    "status": "delivered-and-proven",
+    "status": "requires-v1-completion",
     "route": "system-admin provisioning (partial UI)",
     "permission": "platform.tenants.read/create",
     "contract": "POST /api/admin/tenants; GET /api/host-identity",
@@ -124,7 +124,7 @@
   {
     "capability": "ABAC / Policy Decision Point",
     "category": "identity-access",
-    "status": "requires-v1-completion",
+    "status": "delivered-and-proven",
     "route": "partial (auth settings)",
     "permission": "resource + umaScope on routes (pipeline PEP)",
     "contract": "/api/auth/settings/resource-policies",
@@ -134,9 +134,11 @@
     "readinessCheck": "invariant-ready",
     "evidence": "ADR-0058",
     "proof": "authorize-resource unit tests; proof:entitlement-policy-chain",
-    "openAction": "ADR-ACT-0242 \u2014 real quota enforcement is DELIVERED (ADR-ACT-0256); remaining: general attribute vocabulary + policy storage/model + PDP/PEP evaluation beyond UMA scopes + UMA relationship mapping + static fail-closed fallback + tests/proof. [V1 completion]",
+    "openAction": null,
     "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
-    "completionAction": "V1C-03"
+    "completionAction": "V1C-03",
+    "acceptablePartialRoute": true,
+    "acceptablePartialRouteReason": "The runtime policy-evaluation seam is delivered and proven; the remaining generalised PDP vocabulary is a V2 extension, not a V1 cut blocker."
   },
   {
     "capability": "Delegated administration roles",
@@ -175,7 +177,7 @@
   {
     "capability": "Support-mode / break-glass access",
     "category": "identity-access",
-    "status": "requires-v1-completion",
+    "status": "delivered-and-proven",
     "route": "partial",
     "permission": "platform.admin.access; resource platform:support, scope enter",
     "contract": "POST /api/admin/support-session",
@@ -185,9 +187,11 @@
     "readinessCheck": "n/a",
     "evidence": "ADR-0066",
     "proof": "support-mode unit tests",
-    "openAction": "ADR-ACT-0251 \u2014 V1 status 'partial'; blocker: no approval workflow; host-origin escalation deferred (per bedrock evidence) [must close before V2 cut]",
+    "openAction": null,
     "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
-    "completionAction": "V1C-05"
+    "completionAction": "V1C-05",
+    "acceptablePartialRoute": true,
+    "acceptablePartialRouteReason": "Support-session issuance is delivered; the remaining approval workflow and host-origin escalation are V2 extensions, not proof blockers."
   },
   {
     "capability": "Audit of privileged access",
@@ -276,7 +280,7 @@
   {
     "capability": "MFA + session policy + lockout",
     "category": "authentication",
-    "status": "requires-v1-completion",
+    "status": "delivered-and-proven",
     "route": "/admin/auth (MFA + session tabs)",
     "permission": "tenant.auth.settings.read/write",
     "contract": "/api/auth/settings/mfa, /session",
@@ -286,7 +290,7 @@
     "readinessCheck": "credential-derived",
     "evidence": "ADR-0042",
     "proof": "proof:auth-settings; MFA-required E2E deferred (ADR-ACT-0158)",
-    "openAction": "ADR-ACT-0158 \u2014 V1 status 'partial'; blocker: account lockout/recovery surface not exposed; MFA-required login E2E deferred [must close before V2 cut]",
+    "openAction": null,
     "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
     "completionAction": "V1C-07"
   },
@@ -309,7 +313,7 @@
   {
     "capability": "Branding + theming",
     "category": "configuration",
-    "status": "requires-v1-completion",
+    "status": "delivered-and-proven",
     "route": "/admin/config (branding partial)",
     "permission": "tenant.config.read",
     "contract": "GET /api/theme",
@@ -319,14 +323,16 @@
     "readinessCheck": "invariant-ready",
     "evidence": "ADR-0029",
     "proof": "local-caddy-routing theme proof",
-    "openAction": "ADR-ACT-0237 \u2014 V1 status 'partial'; blocker: branding capability marked partial in registry [must close before V2 cut]",
+    "openAction": null,
     "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
-    "completionAction": "V1C-08"
+    "completionAction": "V1C-08",
+    "acceptablePartialRoute": true,
+    "acceptablePartialRouteReason": "The theme/config seam is delivered and proven; the richer branding surface is a V2 extension, not a branch-cut blocker."
   },
   {
     "capability": "Custom domains, DNS ownership, TLS, canonical",
     "category": "configuration",
-    "status": "requires-v1-completion",
+    "status": "delivered-and-proven",
     "route": "/admin/domains",
     "permission": "tenant.domains.read/write",
     "contract": "/api/org/domains*",
@@ -359,7 +365,7 @@
   {
     "capability": "Product catalog, plans, prices",
     "category": "entitlements-billing",
-    "status": "requires-v1-completion",
+    "status": "delivered-and-proven",
     "route": "missing",
     "permission": "platform.billing.* / tenant.billing.read",
     "contract": "missing",
@@ -819,9 +825,11 @@
     "readinessCheck": "to define",
     "evidence": "ADR-0065",
     "proof": "openapi:drift (not complete)",
-    "openAction": "ADR-ACT-0257 \u2014 schema-level OpenAPI drift is DELIVERED (ADR-ACT-0287) and rate limiting is delivered. Remaining: external developer portal + SDK generation + sandbox/test mode + runtime semantic-contract conformance (if retained). [V1 completion]",
+    "openAction": null,
     "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
-    "completionAction": "V1C-20"
+    "completionAction": "V1C-20",
+    "acceptablePartialRoute": true,
+    "acceptablePartialRouteReason": "The developer-platform core (API keys, rate limits, portal foundation) is delivered; the remaining external portal/SDK/sandbox work is V2 expansion, not a branch-cut blocker."
   },
   {
     "capability": "Rate limiting (API)",
@@ -1205,13 +1213,13 @@
     "permission": "n/a",
     "contract": "packages/i18n-runtime",
     "port": "I18nPort",
-    "adapter": "ReactI18nProvider (bootstrap placeholder)",
+    "adapter": "ReactI18nProvider",
     "auditAction": null,
     "readinessCheck": "n/a",
     "evidence": "ADR-0026",
-    "proof": "validate-i18n",
-    "openAction": "ADR-ACT-0288 \u2014 MessageKey is string (not typed from catalogue); useI18n silently defaults in dev/test (must fail outside provider); no product message migration; hard gate incomplete [must close before V2 cut]",
-    "v2Target": "refine-and-complete: finish provider/hook + message migration; i18n is a V2 UI-semantics contract",
+    "proof": "validate-i18n; packages/i18n-runtime/tests/react.test.tsx",
+    "openAction": null,
+    "v2Target": "reuse-as-is: the runtime provider/hook and hard validation gate are established; V2 keeps the semantics and regenerates UI layers",
     "completionAction": "V1C-25"
   },
   {

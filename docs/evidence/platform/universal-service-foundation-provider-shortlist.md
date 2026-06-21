@@ -35,8 +35,8 @@ Columns: **License** · **Compose complexity** (containers/config) · **Runtime 
 
 | Candidate | License | Compose | Runtime | Tenant isolation fit | Prod adapter | Security surface | Recommended | Why / why not |
 | --- | --- | --- | --- | --- | --- | --- | :-: | --- |
-| **Windmill** | **AGPL-3.0** ⚠️ | Moderate (app + worker + Postgres) | Moderate | Good — workspace/namespace per tenant | Windmill Cloud / self-host | Medium (executes code) | **Yes (default), license decision required** | Lightest durable-workflow path, reuses Postgres; **AGPL-3.0** — acceptable as internal ops tooling (cf. Grafana/Loki) but record the decision. |
-| Temporal | MIT | Heavy (server + matching/history/frontend + DB + UI) | High | Good — namespace per tenant | Temporal Cloud / self-host | Medium | Maybe (if durability demands) | MIT and best-in-class for long-running durable guarantees, but heavy to operate; choose only if Windmill's model proves insufficient. |
+| **Windmill** | **AGPL-3.0** ⚠️ | Moderate (app + worker + Postgres) | Moderate | Good — workspace/namespace per tenant | Windmill Cloud / self-host | Medium (executes code) | **Yes (preferred default), license decision required** | Lightest durable-workflow path, reuses Postgres; **AGPL-3.0** — acceptable as internal ops tooling (cf. Grafana/Loki) but record the decision. |
+| Temporal | MIT | Heavy (server + matching/history/frontend + DB + UI) | High | Good — namespace per tenant | Temporal Cloud / self-host | Medium | Maybe (fallback) | MIT and best-in-class for long-running durable guarantees, but heavy to operate; use only if Windmill's model proves insufficient. |
 | Camunda 8 / Zeebe | **Camunda source-available** ⚠️ (Zeebe not OSI; Camunda 7 is Apache-2.0) | Heavy | High | Per-tenant via process scoping | Camunda SaaS | Medium | No | BPMN-heavy; licensing of Camunda 8/Zeebe is source-available, not OSI-open — fails the free-local-first test cleanly. |
 
 ---
@@ -46,8 +46,8 @@ Columns: **License** · **Compose complexity** (containers/config) · **Runtime 
 | Candidate | License | Compose | Runtime | Tenant isolation fit | Prod adapter | Security surface | Recommended | Why / why not |
 | --- | --- | --- | --- | --- | --- | --- | :-: | --- |
 | **OpenMeter** (metering) | Apache-2.0 | Moderate (reuses **existing ClickHouse**) | Low–moderate | Good — tenant-tagged meter events; CH partition by tenant | OpenMeter Cloud / self-host | Low–medium | **Yes (metering)** | Apache-2.0 and reuses the per-environment ClickHouse already composed — strongest local-first fit for metering. |
-| Lago (billing) | **AGPL-3.0** ⚠️ | Moderate (api + worker + Postgres + Redis) | Moderate | Per-tenant subscriptions | Lago Cloud / self-host | Medium (financial data) | **Yes (billing), license decision required** | Most complete OSS billing engine; **AGPL-3.0** — flag for review; financial data raises the security surface. |
-| Kill Bill (billing) | Apache-2.0 | Heavy (JVM + plugins + DB) | High | Per-tenant accounts | Self-host | Medium | Maybe | Apache-2.0 (no copyleft concern) and very mature, but JVM-heavy; pick over Lago if AGPL is unacceptable. |
+| Lago (billing) | **AGPL-3.0** ⚠️ | Moderate (api + worker + Postgres + Redis) | Moderate | Per-tenant subscriptions | Lago Cloud / self-host | Medium (financial data) | **Yes (preferred billing engine), license decision required** | Most complete OSS billing engine; **AGPL-3.0** — flag for review; financial data raises the security surface. |
+| Kill Bill (billing) | Apache-2.0 | Heavy (JVM + plugins + DB) | High | Per-tenant accounts | Self-host | Medium | Maybe (fallback) | Apache-2.0 (no copyleft concern) and very mature, but JVM-heavy; use only if AGPL is unacceptable. |
 | Custom ledger | n/a (build) | n/a | n/a | Native RLS | n/a | Medium | Fallback | Only if both engines are rejected; high build cost, re-implements a solved problem. |
 
 > **Payment capture** stays a **production-external adapter** (Stripe/Adyen/etc.) behind a payment-provider port. It is the single sanctioned paid dependency and is **never required for local proof** — local proof uses a mock gateway.
@@ -113,7 +113,7 @@ Columns: **License** · **Compose complexity** (containers/config) · **Runtime 
 | Candidate | License | Compose | Runtime | Tenant isolation fit | Prod adapter | Security surface | Recommended | Why / why not |
 | --- | --- | --- | --- | --- | --- | --- | :-: | --- |
 | **Built-in data registry first** | n/a (build) | None new | Low | Metadata + per-tenant DSR | n/a | Medium | **Yes (start here)** | DSR/export/retention are **build** on the workflow + storage substrate; a heavyweight catalog is not needed for the first compliance slice. |
-| OpenMetadata | Apache-2.0 | Heavy (app + MySQL/Postgres + Elasticsearch + Airflow) | High | Metadata-only, env/tenant tagged | Self-host | Medium | Maybe (later) | Apache-2.0; catalog/lineage if/when metadata volume justifies it; **shared-cross-environment metadata only** per ADR-0056. |
+| OpenMetadata | Apache-2.0 | Heavy (app + MySQL/Postgres + Elasticsearch + Airflow) | High | Metadata-only, env/tenant tagged | Self-host | Medium | Maybe (later) | Apache-2.0; catalog/lineage if/when metadata volume justifies it; built-in registry is the first slice. |
 | DataHub | Apache-2.0 | Heavy (GMS + Kafka + Elasticsearch + DB) | High | Metadata-only | Self-host / Acryl | Medium | Maybe (later) | Apache-2.0; heaviest footprint (Kafka + ES); only at real scale. |
 
 ---

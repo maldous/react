@@ -10,9 +10,10 @@
 // with outcome='skipped_legal_hold' (audit-before-change) and never deleted.
 // ---------------------------------------------------------------------------
 
-import { ValidationError } from "@platform/platform-errors";
+import { ValidationError, ForbiddenError } from "@platform/platform-errors";
 import { AuditAction, createAuditEvent, type AuditEventPort } from "@platform/audit-events";
 import type { LegalHoldRepository } from "../ports/legal-hold.ts";
+import { LegalHoldGuard } from "./legal-hold.ts";
 import type {
   RetentionFilter,
   RetentionPolicyRecord,
@@ -231,12 +232,17 @@ export async function runRetentionTick(
     }
     for (const candidate of candidates) {
       result.candidatesFound++;
-      const held = await deps.guard.repository.isActive(
-        input.organisationId,
-        candidate.resourceTable,
-        candidate.rowId
-      );
-      if (held) {
+      try {
+        await new LegalHoldGuard(deps.guard).assertCanDelete(
+          input.organisationId,
+          candidate.resourceTable,
+          candidate.rowId
+        );
+      } catch (err) {
+        if (!(err instanceof ForbiddenError)) {
+          result.errors++;
+          continue;
+        }
         await deps.repository.recordOutcome({
           organisationId: input.organisationId,
           policyId: policy.id,

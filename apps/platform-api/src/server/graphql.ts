@@ -29,6 +29,7 @@ import {
 } from "./authorize-resource.ts";
 import type { PipelineHandler } from "./pipeline.ts";
 import { serverT } from "./i18n.ts";
+import { loadTenantResourcePolicies } from "./resource-policies.ts";
 
 const gqlLog = createLogger({ name: "graphql", service: "platform-api", boundedContext: "bff" });
 
@@ -242,11 +243,18 @@ export const handleGraphql: PipelineHandler = async (req, res) => {
   const fqdnTenant = getFixtureSession()
     ? null
     : await resolveTenantFromRequest(req.raw, getApplicationPool()).catch(() => null);
+  const resourcePolicies = await loadTenantResourcePolicies(fqdnTenant);
 
   for (const field of fields) {
     const guard = FIELD_GUARDS[field];
     if (!guard) continue;
-    const outcome = await authorizeResourceAccess({ actor, sessionId, fqdnTenant, guard });
+    const outcome = await authorizeResourceAccess({
+      actor,
+      sessionId,
+      fqdnTenant,
+      guard,
+      deps: { resourcePolicies },
+    });
     if (!outcome.ok) {
       const { status, body: errBody } = denyResponse(outcome);
       res.json(status, errBody);

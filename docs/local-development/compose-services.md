@@ -17,34 +17,41 @@ docker compose logs -f
 
 ## Profiles
 
-| Profile        | Command                                      | Services                                                                                    |
-| -------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| (default)      | `docker compose up -d`                       | postgres, redis, clickhouse, minio, mailpit, otel-collector                                 |
-| web            | `docker compose --profile web up -d --build` | platform-api container + react-app (Caddy) on :80                                           |
-| external-sonar | `make sonar-up`                              | sonarqube + sonar-postgres (shared instance)                                                |
-| identity       | `npm run compose:identity`                   | keycloak + keycloak-postgres                                                                |
-| cloud-mocks    | `npm run compose:cloud`                      | localstack                                                                                  |
-| external-mocks | `npm run compose:external-mocks`             | wiremock                                                                                    |
-| sentry         | `make sentry-up`                             | sentry-web + sentry-worker + sentry-cron + sentry-postgres + sentry-redis (shared instance) |
+| Profile            | Command                                      | Services                                                                                                     |
+| ------------------ | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| (default)          | `docker compose up -d`                       | postgres, redis, clickhouse, minio, mailpit, otel-collector                                                  |
+| web                | `docker compose --profile web up -d --build` | platform-api container + react-app (Caddy) on :80                                                            |
+| external-sonar     | `make sonar-up`                              | sonarqube + sonar-postgres (shared instance)                                                                 |
+| identity           | `npm run compose:identity`                   | keycloak + keycloak-postgres                                                                                 |
+| cloud-mocks        | `npm run compose:cloud`                      | localstack                                                                                                   |
+| external-mocks     | `npm run compose:external-mocks`             | wiremock                                                                                                     |
+| workflow-provider  | `make compose-up-workflow-provider`          | windmill + windmill-worker + windmill-postgres + windmill-redis + temporal + temporal-ui + temporal-postgres |
+| pitr-provider      | `make compose-up-pitr-provider`              | pgbackrest                                                                                                   |
+| antivirus-provider | `make compose-up-antivirus-provider`         | clamav                                                                                                       |
+| sentry             | `make sentry-up`                             | sentry-web + sentry-worker + sentry-cron + sentry-postgres + sentry-redis (shared instance)                  |
 
 > **web profile note:** `SESSION_COOKIE_SECURE` must be `false` (the dev/test manifest default) when serving over `http://localhost:80`. It is `true` for staging/prod (HTTPS) per `config/environments/<stage>.json`.
 > Stop any system Caddy process before starting the web profile to free port 80.
 
 ## Services and ports
 
-| Service        | Profile        | Host port(s)                                 | Package/adapter                                          |
-| -------------- | -------------- | -------------------------------------------- | -------------------------------------------------------- |
-| postgres       | default        | 5433                                         | `@platform/adapters-postgres`                            |
-| redis          | default        | 6379                                         | `@platform/adapters-redis`                               |
-| clickhouse     | default        | 8124 (HTTP), 9002 (native)                   | `@platform/adapters-clickhouse`                          |
-| minio          | default        | 9000 (API), 9001 (console)                   | `@platform/adapters-object-storage`                      |
-| mailpit        | default        | 1025 (SMTP), 8025 (UI)                       | `@platform/adapters-brevo` (SMTP transport)              |
-| otel-collector | default        | 4317 (gRPC), 4318 (HTTP), 13133 (health API) | `@platform/adapters-opentelemetry`                       |
-| sonarqube      | external-sonar | 9064                                         | code quality analysis (shared instance)                  |
-| keycloak       | identity       | 8080                                         | `@platform/adapters-keycloak`                            |
-| localstack     | cloud-mocks    | 4566                                         | `@platform/adapters-object-storage` (S3), queue testing  |
-| sentry-web     | sentry         | 9010                                         | `@platform/adapters-sentry`                              |
-| wiremock       | external-mocks | 8089                                         | external HTTP API simulation / adapter contract fixtures |
+| Service        | Profile            | Host port(s)                                 | Package/adapter                                            |
+| -------------- | ------------------ | -------------------------------------------- | ---------------------------------------------------------- |
+| postgres       | default            | 5433                                         | `@platform/adapters-postgres`                              |
+| redis          | default            | 6379                                         | `@platform/adapters-redis`                                 |
+| clickhouse     | default            | 8124 (HTTP), 9002 (native)                   | `@platform/adapters-clickhouse`                            |
+| minio          | default            | 9000 (API), 9001 (console)                   | `@platform/adapters-object-storage`                        |
+| mailpit        | default            | 1025 (SMTP), 8025 (UI)                       | `@platform/adapters-brevo` (SMTP transport)                |
+| otel-collector | default            | 4317 (gRPC), 4318 (HTTP), 13133 (health API) | `@platform/adapters-opentelemetry`                         |
+| sonarqube      | external-sonar     | 9064                                         | code quality analysis (shared instance)                    |
+| keycloak       | identity           | 8080                                         | `@platform/adapters-keycloak`                              |
+| localstack     | cloud-mocks        | 4566                                         | `@platform/adapters-object-storage` (S3), queue testing    |
+| sentry-web     | sentry             | 9010                                         | `@platform/adapters-sentry`                                |
+| wiremock       | external-mocks     | 8089                                         | external HTTP API simulation / adapter contract fixtures   |
+| windmill       | workflow-provider  | 8000                                         | `@platform/adapters-workflow` (compose provider readiness) |
+| temporal       | workflow-provider  | 7233 / 8088                                  | workflow durability fallback / composed-provider readiness |
+| pgbackrest     | pitr-provider      | n/a                                          | PITR/backup provider                                       |
+| clamav         | antivirus-provider | 3310                                         | malware scanning provider                                  |
 
 ## Web UIs
 

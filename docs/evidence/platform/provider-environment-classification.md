@@ -31,8 +31,8 @@ Allowed-environment legend: ✓ allowed · ✗ not allowed · — n/a.
 | Keycloak | identity | platform-login, idp-brokering | per-environment | ✓ | ✓ | ✓ | ✓ | yes (identities) | no | auth-credential readiness | per-env realm/volume | realm-per-env; no cross-env share | real-IdP login proof blocked |
 | Loki / Grafana / Alloy | observability | logs, metrics-traces | per-environment | ✓ | ✓ | ✓ | ✓ | yes (tenant logs) | no | loki probe; `proof:tenant-observability` | per-env; prod needs S3 backend | label-based tenant/env scoping | Loki filesystem storage in prod |
 | Meilisearch | search-provider | search-indexing | per-environment | ✓ | ✓ | ✓ | ✓ | yes (documents) | no | `proof:composed-provider-readiness` (live /health) | per-env indexes; resettable in dev/test | index-per-tenant (preferred) or hard tenant filter | **provider available / readiness-proven** (ADR-0071); NOT the active search backend — built-in Postgres FTS (ADR-0060) is default; index-per-tenant integration deferred |
-| Temporal | workflow-provider | workflow-engine-scheduled-jobs | per-environment | ✓ | ✓ | ✓ | ✓ | yes (workflow state) | no | probe-ready (TEMPORAL_HTTP_URL); `not_configured` until wired | per-env namespaces; engine DB per-env | namespace-per-env; no cross-env workflow state | **provider candidate / not configured** — probe-ready; not composed (needs own DB); workflow engine deferred (ADR-0059) |
-| Windmill | workflow-provider | workflow-engine-scheduled-jobs | per-environment | ✓ | ✓ | ✓ | ✓ | yes (script/job state) | no | probe-ready (WINDMILL_URL); `not_configured` until wired | per-env workspaces | workspace-per-env | **provider candidate / not configured** — probe-ready; not composed (needs own DB); scheduled jobs (ADR-0059) stay built-in default |
+| Temporal | workflow-provider | workflow-engine-scheduled-jobs | per-environment | ✓ | ✓ | ✓ | ✓ | yes (workflow state) | no | probe-ready (TEMPORAL_HTTP_URL); `not_configured` until wired | per-env namespaces; engine DB per-env | namespace-per-env; no cross-env workflow state | **provider candidate / not configured** — probe-ready; not composed; workflow engine deferred (ADR-0059) |
+| Windmill | workflow-provider | workflow-engine-scheduled-jobs | per-environment | ✓ | ✓ | ✓ | ✓ | yes (script/job state) | no | probe-ready (WINDMILL_URL); live when `make compose-up-workflow-provider` is used | per-env workspaces | workspace-per-env | **provider available / compose-backed** — compose profile now delivers Windmill + worker + backing DB/Redis; backend integration remains deferred (ADR-0059) |
 | Prometheus | observability-provider | metrics-traces | per-environment | ✓ | ✓ | ✓ | ✓ | yes (runtime metrics) | no (unless checklist) | `proof:composed-provider-readiness` (live /-/ready) | per-env TSDB | env labels mandatory; tenant labels where tenant data exists | **provider available / readiness-proven** (ADR-0071); NOT the active metric store — built-in observability (ADR-0062) is default; OTEL-collector backend integration deferred |
 | Tempo | observability-provider | metrics-traces (traces) | per-environment | ✓ | ✓ | ✓ | ✓ | yes (traces) | no (unless checklist) | `proof:composed-provider-readiness` (live /ready) | per-env trace store | env/tenant labels; no secrets in spans | **provider available / readiness-proven** (ADR-0071); NOT the active trace store — local filesystem dev config; trace ingest/query integration deferred |
 | Alertmanager | observability-provider | alerting-incident-oncall | per-environment | ✓ | ✓ | ✓ | ✓ | no (routing config) | shared only w/ checklist | `proof:composed-provider-readiness` (live /-/ready) | per-env config | env-scoped routing; must not page across environments | **provider available / readiness-proven** (ADR-0071); NOT wired for routing — alert routes/on-call deferred |
@@ -49,8 +49,8 @@ Allowed-environment legend: ✓ allowed · ✗ not allowed · — n/a.
 These are documented as `provider candidate / not integrated / not production-ready`
 — they have a classification and a delivery requirement, but no adapter, no
 readiness proof against a live backend, and therefore **no delivered status**:
-Temporal, Windmill (probe-ready; not composed — each needs its own DB; the workflow
-engine remains the ADR-0059 deferred decision).
+Temporal (probe-ready; not composed; the workflow engine remains the ADR-0059 deferred decision).
+Windmill (compose-backed; workflow engine remains ADR-0059 deferred for backend integration).
 
 Promoted in the composed-provider pass (ADR-0071) to **provider available /
 readiness-proven** — a live, port-backed readiness probe behind `ProviderReadinessProbe`,
@@ -78,5 +78,6 @@ status change — never from compose availability alone.
   generic `HttpProviderReadinessProbe` behind `ProviderReadinessProbe`, feeding the
   provider-config adapter-confirmed lifecycle. Meilisearch / Prometheus / Tempo /
   Alertmanager are composed + live readiness-proven (`proof:composed-provider-readiness`);
-  the built-in substrates remain the active backends. See
+  Windmill is now compose-backed via `make compose-up-workflow-provider`; the built-in
+  substrates remain the active backends. See
   [`composed-provider-readiness.md`](./composed-provider-readiness.md).

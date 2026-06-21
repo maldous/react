@@ -1,6 +1,7 @@
 .PHONY: compose-up compose-up-default compose-up-identity \
         compose-up-cloud compose-up-external-mocks compose-up-identity-mocks \
         compose-up-secrets compose-up-search-provider compose-up-observability-provider \
+        compose-up-workflow-provider compose-up-pitr-provider compose-up-antivirus-provider \
         compose-up-web compose-up-observability \
         compose-down compose-down-web compose-down-volumes compose-down-reset \
         compose-ps compose-logs \
@@ -56,6 +57,24 @@ compose-up-observability-provider:
 	$(call STEP,compose: starting Prometheus + Tempo + Alertmanager ($(ENV)))
 	bash scripts/compose/up.sh $(ENV) observability-provider
 	$(call OK,Observability providers ready for $(ENV) — run `npm run proof:composed-provider-readiness`)
+
+## compose-up-workflow-provider — Start Windmill + worker + backing DB/Redis
+compose-up-workflow-provider:
+	$(call STEP,compose: starting Windmill ($(ENV)))
+	bash scripts/compose/up.sh $(ENV) workflow-provider
+	$(call OK,Workflow provider ready for $(ENV) — run `npm run proof:composed-provider-readiness`)
+
+## compose-up-pitr-provider — Start pgBackRest PITR provider
+compose-up-pitr-provider:
+	$(call STEP,compose: starting pgBackRest ($(ENV)))
+	bash scripts/compose/up.sh $(ENV) pitr-provider
+	$(call OK,pgBackRest ready for $(ENV))
+
+## compose-up-antivirus-provider — Start ClamAV malware-scanning provider
+compose-up-antivirus-provider:
+	$(call STEP,compose: starting ClamAV ($(ENV)))
+	bash scripts/compose/up.sh $(ENV) antivirus-provider
+	$(call OK,ClamAV ready for $(ENV))
 
 ## compose-up-cloud — Start LocalStack (cloud-mocks profile)
 compose-up-cloud:

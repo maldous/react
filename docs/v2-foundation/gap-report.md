@@ -17,10 +17,10 @@ with **honest semantic closure**.
 > flat list — no invented hierarchy), and **Claim mapping** (`proof:ui-semantic-claim-mapping`, with
 > the external real-IdP proof limitation kept explicit and separate per ADR-ACT-0220). Each was closed
 > only on a **passing headless journey**, not a schema entry. **Completion-blocker total: 32**
-> (22 capability completions + 10 package removals). V1C-17, V1C-18, V1C-25 were prematurely closed
+> (22 capability completions + 10 package removals). V1C-17 and V1C-18 were prematurely closed
 > and have been reopened — Prometheus has no application instrumentation, Grafana dashboard format is
-> invalid, security scripts (sbom:verify, sbom:policy, codeql:validate) are broken, and i18n has gaps
-> (typed keys, provider behaviour, product message migration). The cut remains BLOCKED.
+> invalid, security scripts (sbom:verify, sbom:policy, codeql:validate) are broken. The cut remains
+> BLOCKED.
 
 Audited V1 commit: `918cd148569f6473eeaa58284933abdc0fe5bafe` (the commit the artefacts were built
 against). The freeze/cut commit is pinned separately at cut time (`{{PINNED_V1_COMMIT}}`, runbook §1).
@@ -103,7 +103,7 @@ worker-runtime, observability`. All now `delete-after-proof` in the path-map (wa
 - **Count bucket aliasing**: pass two collapsed `refactor-behind-contract` (104) +
   `replace-retain-contract` (51, was 52) into a fake `reuse 1239` bucket. Buckets now match the
   path-map vocabulary exactly.
-- **False `delivered-and-proven`**: 25 capabilities reclassified to `requires-v1-completion`,
+- **False `delivered-and-proven`**: 24 capabilities reclassified to `requires-v1-completion`,
   1 to `superseded-by-proven-canonical` (alerting/incidents → built-in canonical), and the
   contradictory `not-applicable-final`+`must close` on Serverless cleared.
 - **Deprecated packages kept as V2 homes**: removed from the target tree, dispositioned
@@ -115,8 +115,8 @@ worker-runtime, observability`. All now `delete-after-proof` in the path-map (wa
 
 | Class                                      | Count | Blocks cut?         |
 | ------------------------------------------ | ----- | ------------------- |
-| delivered-and-proven                       | 45    | no                  |
-| requires-v1-completion                     | 22    | **yes**             |
+| delivered-and-proven                       | 50    | no                  |
+| requires-v1-completion                     | 20    | **yes**             |
 | superseded-by-proven-canonical             | 1     | no                  |
 | not-applicable-final                       | 4     | no                  |
 | config-runtime decisions (V1C-CONF-01..08) | 8     | **yes**             |

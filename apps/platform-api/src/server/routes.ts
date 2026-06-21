@@ -5977,6 +5977,21 @@ export const routes: Route[] = [
   },
   {
     method: "GET",
+    path: "/api/admin/observability",
+    operationName: "admin.observability.get",
+    requiresAuth: true,
+    requiredPermission: "platform.observability.read",
+    resource: "admin:observability",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (_req, res) => {
+      const { getObservabilityControlReport } =
+        await import("../usecases/observability-control.ts");
+      res.json(200, await getObservabilityControlReport());
+    },
+  },
+  {
+    method: "GET",
     path: "/api/admin/observability/readiness",
     operationName: "admin.observability.readiness",
     requiresAuth: true,
@@ -5987,6 +6002,34 @@ export const routes: Route[] = [
     handler: async (_req, res) => {
       const { getObservabilityReadiness } = await import("../usecases/observability.ts");
       res.json(200, await getObservabilityReadiness(await buildObservabilityDeps()));
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/backup",
+    operationName: "admin.backup.get",
+    requiresAuth: true,
+    requiredPermission: "platform.data.read",
+    resource: "admin:backup",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (_req, res) => {
+      const { getBackupControlReport } = await import("../usecases/backup-control.ts");
+      res.json(200, await getBackupControlReport());
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/security",
+    operationName: "admin.security.get",
+    requiresAuth: true,
+    requiredPermission: "platform.data.read",
+    resource: "admin:security",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (_req, res) => {
+      const { getSecurityControlReport } = await import("../usecases/security-control.ts");
+      res.json(200, await getSecurityControlReport());
     },
   },
   // ---------------------------------------------------------------------------
@@ -6416,6 +6459,28 @@ export const routes: Route[] = [
       res.json(200, await getComposedProviderReadiness());
     },
   },
+  {
+    method: "GET",
+    path: "/api/admin/provider-bindings",
+    operationName: "admin.providerBindings.get",
+    requiresAuth: true,
+    requiredPermission: "platform.providers.read",
+    resource: "admin:provider_configs",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const { buildProviderBindingReport } = await import("../usecases/provider-binding-report.ts");
+      const environment =
+        new URL(req.raw.url ?? "", "http://localhost").searchParams.get("environment") ??
+        "development";
+      const env = environment as "development" | "test" | "staging" | "production";
+      const report = await buildProviderBindingReport({
+        environment: env,
+        providerConfigs: await buildProviderConfigDeps(),
+      });
+      res.json(200, report);
+    },
+  },
   // ---------------------------------------------------------------------------
   // Click-through services (ADR-ACT-0233 / ADR-0072). Operator's view of the composed
   // Compose GUI services: click-through URL, access gating (same decision as the
@@ -6747,6 +6812,97 @@ export const routes: Route[] = [
         },
       });
       res.json(200, { policies });
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/data/compliance-report",
+    operationName: "admin.data.complianceReport.get",
+    requiresAuth: true,
+    requiredPermission: "platform.data.read",
+    resource: "admin:data",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const { generateComplianceReport } = await import("../usecases/compliance-report.ts");
+      const { PostgresLegalHoldRepository } = await import("../adapters/postgres-legal-hold.ts");
+      const { PostgresRetentionRepository } = await import("../adapters/postgres-retention.ts");
+      const { PostgresObservabilityRepository } =
+        await import("../adapters/postgres-observability-repository.ts");
+      const { getTenantStorageReadiness } = await import("../usecases/tenant-storage.ts");
+      const url = new URL(req.raw.url ?? "", "http://localhost");
+      const org = url.searchParams.get("organisationId") ?? "";
+      if (!UUID_RE.test(org)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "organisationId must be a UUID" });
+        return;
+      }
+      const report = await generateComplianceReport(org, {
+        metrics: new PostgresObservabilityRepository(getApplicationPool()),
+        incidents: new PostgresObservabilityRepository(getApplicationPool()),
+        legalHolds: new PostgresLegalHoldRepository(getApplicationPool()),
+        retention: new PostgresRetentionRepository(getApplicationPool()),
+        storage: await getTenantStorageReadiness(buildStorageReadinessDeps(org)),
+      });
+      res.json(200, report);
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/billing/readiness",
+    operationName: "admin.billing.readiness",
+    requiresAuth: true,
+    requiredPermission: "platform.data.read",
+    resource: "admin:billing",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (_req, res) => {
+      const { getBillingBoundaryReadiness } = await import("../usecases/billing-readiness.ts");
+      res.json(200, await getBillingBoundaryReadiness());
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/billing",
+    operationName: "admin.billing.get",
+    requiresAuth: true,
+    requiredPermission: "platform.data.read",
+    resource: "admin:billing",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (_req, res) => {
+      const { getBillingControlReport } = await import("../usecases/billing-control.ts");
+      res.json(200, await getBillingControlReport());
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/workflows/readiness",
+    operationName: "admin.workflows.readiness",
+    requiresAuth: true,
+    requiredPermission: "platform.data.read",
+    resource: "admin:workflows",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (_req, res) => {
+      const { getWorkflowReadiness } = await import("../usecases/workflow-readiness.ts");
+      res.json(200, await getWorkflowReadiness());
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/workflows",
+    operationName: "admin.workflows.get",
+    requiresAuth: true,
+    requiredPermission: "platform.data.read",
+    resource: "admin:workflows",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (_req, res) => {
+      const { getWorkflowReadiness } = await import("../usecases/workflow-readiness.ts");
+      const { getComposedProviderReadiness } = await import("../usecases/composed-providers.ts");
+      const composed = await getComposedProviderReadiness();
+      const report = await getWorkflowReadiness();
+      res.json(200, { report, composed });
     },
   },
   {

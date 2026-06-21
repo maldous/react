@@ -4,6 +4,7 @@ import {
   createDenyAllAuthorisationPort,
   createAllowAllAuthorisationPort,
   DEFAULT_THEME,
+  evaluateResourcePolicies,
 } from "../src/index.ts";
 
 describe("createDenyAllAuthorisationPort", () => {
@@ -28,5 +29,37 @@ describe("DEFAULT_THEME", () => {
   it("has required fields", () => {
     assert.ok(typeof DEFAULT_THEME.displayName === "string");
     assert.ok(typeof DEFAULT_THEME.primaryColour === "string");
+  });
+});
+
+describe("evaluateResourcePolicies", () => {
+  it("grants on matching role policy", () => {
+    const result = evaluateResourcePolicies(
+      [
+        {
+          name: "allow-admins",
+          type: "role",
+          config: { roles: ["system_admin"] },
+          enabled: true,
+        },
+      ],
+      { actorId: "u1", actorRoles: ["system_admin"] }
+    );
+    assert.deepEqual(result, { granted: true, matchedPolicy: "allow-admins" });
+  });
+
+  it("returns no_matching_policy when nothing matches", () => {
+    const result = evaluateResourcePolicies(
+      [
+        {
+          name: "allow-admins",
+          type: "role",
+          config: { roles: ["system_admin"] },
+          enabled: true,
+        },
+      ],
+      { actorId: "u1", actorRoles: ["viewer"] }
+    );
+    assert.deepEqual(result, { granted: false, reason: "no_matching_policy" });
   });
 });

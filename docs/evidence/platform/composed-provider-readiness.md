@@ -17,8 +17,9 @@ provider-config adapter-confirmed lifecycle (ADR-0070):
   `platform.providers.read`) — probes every composed provider live and maps each to a
   lifecycle via `deriveReadinessLifecycle` (ready ⇔ adapter says ready).
 - **Compose profiles** — `search-provider` (Meilisearch), `observability-provider`
-  (Prometheus + Tempo + Alertmanager). `make compose-up-search-provider` /
-  `make compose-up-observability-provider`.
+  (Prometheus + Tempo + Alertmanager), `workflow-provider` (Windmill + worker +
+  backing Postgres/Redis). `make compose-up-search-provider` /
+  `make compose-up-observability-provider` / `make compose-up-workflow-provider`.
 
 ## Providers
 
@@ -28,15 +29,16 @@ provider-config adapter-confirmed lifecycle (ADR-0070):
 | Prometheus | metrics-traces | observability-provider | **readiness-proven** (live /-/ready) |
 | Tempo | metrics-traces (traces) | observability-provider | **readiness-proven** (live /ready, local fs config) |
 | Alertmanager | alerting-incident-oncall | observability-provider | **readiness-proven** (live /-/ready) |
-| Windmill | workflow-engine | — | candidate / `not_configured` (probe-ready; not composed) |
+| Windmill | workflow-engine | workflow-provider | **compose-backed** (live when profile is up) |
 | Temporal | workflow-engine | — | candidate / `not_configured` (probe-ready; not composed) |
 
 ## Proof (live)
 
 `proof:composed-provider-readiness` — 9/9 PASS. Live readiness-proven this run:
-Meilisearch, Prometheus, Alertmanager (Tempo also up). Windmill/Temporal honestly
-`not_configured` (no endpoint). Asserts: ready iff reachable; lifecycle adapter-confirmed
-(ready⇒ready, degraded⇒degraded, not_configured⇒candidate); **no secret in any payload**.
+Meilisearch, Prometheus, Alertmanager (Tempo also up). Windmill is compose-backed
+when its profile is started; Temporal remains `not_configured` unless wired. Asserts:
+ready iff reachable; lifecycle adapter-confirmed (ready⇒ready, degraded⇒degraded,
+not_configured⇒candidate); **no secret in any payload**.
 
 ```text
 proof:composed-provider-readiness — 9/9 PASS (meilisearch + prometheus + alertmanager live)
@@ -52,9 +54,11 @@ reports `degraded`/`not_configured` and never upgrades a status.
   (index-per-tenant + reindex producers behind ADR-0060 ports); Prometheus/Tempo as the
   metric/trace store behind the OTEL collector; Alertmanager routing. The built-in
   substrates (ADR-0060 search, ADR-0062 observability) remain the active defaults.
-- **Windmill / Temporal compose + workflow runs** — probe-ready (set `WINDMILL_URL` /
-  `TEMPORAL_HTTP_URL`) but not composed (each needs its own DB/topology); the workflow
-  engine remains the ADR-0059 deferred decision; scheduled jobs stay the built-in default.
+- **Windmill compose + workflow runs** — now compose-backed via
+  `make compose-up-workflow-provider`; the workflow engine backend-integration decision
+  remains deferred and scheduled jobs stay the built-in default.
+- **Temporal** — probe-ready (set `TEMPORAL_HTTP_URL`) but not composed (each needs its
+  own DB/topology); the workflow engine remains the ADR-0059 deferred decision.
 - Local provider profiles are **dev configs** (Tempo local filesystem, Meilisearch dev
   master key) — not production topologies.
 
@@ -63,4 +67,5 @@ reports `degraded`/`not_configured` and never upgrades a status.
 ADR-0071 · ADR-ACT-0271 · registry capability `composed-provider-readiness` (locally
 proven) · feeds the provider-config plane (ADR-0070) · credentials via the secret store
 (ADR-0069). Classification matrix: the four light providers → `provider available /
-readiness-proven`; Windmill/Temporal → `provider candidate / not configured`.
+readiness-proven`; Windmill → `provider available / compose-backed`; Temporal →
+`provider candidate / not configured`.
