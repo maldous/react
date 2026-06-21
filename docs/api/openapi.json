@@ -11371,6 +11371,135 @@
           }
         }
       }
+    },
+    "/api/admin/data/retention-policies": {
+      "get": {
+        "summary": "List retention policies (operator)",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "operationId": "admin.data.retentionPolicy.list",
+        "parameters": [
+          {
+            "name": "organisationId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of retention policies",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetentionPolicyList"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
+      "post": {
+        "summary": "Set a retention policy (operator)",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "operationId": "admin.data.retentionPolicy.set",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetRetentionPolicyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Retention policy active",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetentionPolicy"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Disable a retention policy (operator)",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "operationId": "admin.data.retentionPolicy.disable",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DisableRetentionPolicyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Retention policy disabled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetentionPolicy"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -11638,11 +11767,183 @@
             "maxLength": 256
           }
         }
+      },
+      "RetentionPolicy": {
+        "type": "object",
+        "required": [
+          "id",
+          "organisationId",
+          "resourceTable",
+          "ttlSeconds",
+          "filter",
+          "enabled",
+          "setBy",
+          "setAt",
+          "updatedBy",
+          "updatedAt",
+          "metadata"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "organisationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "resourceTable": {
+            "type": "string",
+            "enum": ["audit_events", "tenant_invitations"]
+          },
+          "ttlSeconds": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 31536000,
+            "description": "Hard cap 1 year (365 * 24 * 60 * 60). Enforced at use-case + BFF schema."
+          },
+          "filter": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": ["kind"],
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": ["all"]
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": ["kind", "statuses"],
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": ["by_status"]
+                  },
+                  "statuses": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 64
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "setBy": {
+            "type": "string"
+          },
+          "setAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": ["string", "null"]
+          },
+          "updatedAt": {
+            "type": ["string", "null"],
+            "format": "date-time"
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "RetentionPolicyList": {
+        "type": "object",
+        "required": ["policies"],
+        "properties": {
+          "policies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RetentionPolicy"
+            }
+          }
+        }
+      },
+      "SetRetentionPolicyRequest": {
+        "type": "object",
+        "required": ["organisationId", "resourceTable", "ttlSeconds", "filter"],
+        "properties": {
+          "organisationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "resourceTable": {
+            "type": "string",
+            "enum": ["audit_events", "tenant_invitations"]
+          },
+          "ttlSeconds": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 31536000
+          },
+          "filter": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": ["kind"],
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": ["all"]
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": ["kind", "statuses"],
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": ["by_status"]
+                  },
+                  "statuses": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 64
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      },
+      "DisableRetentionPolicyRequest": {
+        "type": "object",
+        "required": ["organisationId", "resourceTable"],
+        "properties": {
+          "organisationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "resourceTable": {
+            "type": "string",
+            "enum": ["audit_events", "tenant_invitations"]
+          }
+        }
       }
     },
     "responses": {
-      "Unauthorized": {
-        "description": "Not authenticated",
+      "BadRequest": {
+        "description": "Bad Request",
         "content": {
           "application/json": {
             "schema": {
@@ -11663,6 +11964,16 @@
       },
       "NotFound": {
         "description": "Resource not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Not authenticated",
         "content": {
           "application/json": {
             "schema": {
