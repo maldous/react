@@ -207,11 +207,19 @@ export class PostgresRetentionRepository implements RetentionRepository {
       } else if (policy.filter.kind !== "all") {
         return [];
       }
+      const cap = Math.min(Math.max(limit, 1), 1000);
       const r = await client.query<{ id: string; created_at: string }>(
+        // FOR UPDATE SKIP LOCKED lets consecutive BFF instances partition the
+        // candidate pool safely; the row is "claimed" by the holder reader's
+        // transaction. The transaction here is short-lived (the held lock is
+        // released as soon as this client query returns) so duplicate processing
+        // within a single tick is harmless — but the SKIP LOCKED guard prevents
+        // two ticks from racing against the same source row.
         `SELECT id, created_at FROM public.${policy.resourceTable}
          WHERE ${where}
          ORDER BY created_at
-         LIMIT ${Math.min(Math.max(limit, 1), 1000)}`,
+         LIMIT ${cap}
+         FOR UPDATE SKIP LOCKED`,
         params
       );
       return r.rows.map((row) => {
@@ -227,6 +235,18 @@ export class PostgresRetentionRepository implements RetentionRepository {
         };
       });
     });
+  }
+
+  async listEnabledTenants(): Promise<string[]> {
+    const r = await withSystemAdmin(this.pool as never, async (client) => {
+      const result = await client.query<{ organisation_id: string }>(
+        `SELECT DISTINCT organisation_id FROM public.retention_policies
+         WHERE enabled = TRUE
+         ORDER BY organisation_id`
+      );
+      return result.rows;
+    });
+    return r.map((row) => row.organisation_id);
   }
 
   async recordOutcome(input: {

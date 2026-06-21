@@ -11,6 +11,7 @@ import { assertEncryptionKeyConfigured } from "./token-crypto.ts";
 import { validateProviderModeAtStartup } from "./auth-providers.ts";
 import { createSentryAdapter } from "./observability.ts";
 import { startWebhookDeliveryWorker } from "./webhook-worker-runtime.ts";
+import { startRetentionTickWorker } from "./retention-worker-runtime.ts";
 import { loadObservabilityConfig } from "../config/observability-config.ts";
 import { loadPlatformApiConfig } from "../config/app-config.ts";
 
@@ -78,6 +79,15 @@ async function start(): Promise<void> {
   // WEBHOOK_WORKER_DISABLED=true.
   const stopWebhookWorker = startWebhookDeliveryWorker();
 
+  // Background retention tick worker (ADR-0064 / V1C-12b, decisionRef V1C-12b):
+  // runs the per-tenant retention tick (audit-before-delete) on a 15-minute
+  // cadence. The tick consumes the legal-hold invariant (V1C-12c): held rows
+  // are PRESERVED (sole-owner invariant) and recorded as `skipped_legal_hold`.
+  // Disable with V1C12B_RETENTION_TICK_DISABLED=true. Concurrency across
+  // multiple BFF instances is enforced by `FOR UPDATE SKIP LOCKED` on the
+  // candidate SELECT (defence-in-depth alongside the in-process `running` flag).
+  const stopRetentionWorker = startRetentionTickWorker();
+
   // Graceful shutdown
   for (const sig of ["SIGTERM", "SIGINT"] as const) {
     process.on(sig, () => {
@@ -89,6 +99,8 @@ async function start(): Promise<void> {
       // before process.exit(1) — an acceptable outcome for a shutdown path.
       server.close(() => {
         void (async () => {
+          stopRetentionWorker();
+          stopWebhookWorker();
           await disconnectRedis();
           process.exit(0);
         })();

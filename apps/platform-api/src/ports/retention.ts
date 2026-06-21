@@ -82,8 +82,16 @@ export interface RetentionRepository {
     organisationId: string,
     resourceTable: string
   ): Promise<RetentionPolicyRecord | null>;
-  /** Returns the candidate rows for a policy whose age >= ttl. Operator-only. */
+  /** Returns the candidate rows for a policy whose age >= ttl. Operator-only.
+   *  The SELECT uses FOR UPDATE SKIP LOCKED so concurrent tick workers (e.g. two
+   *  BFF instances behind a load balancer) safely partition the candidate pool
+   *  without double-processing. Within a single BFF, the in-process runtime also
+   *  uses a `running` flag to avoid overlap. */
   selectCandidates(policy: RetentionPolicyRecord, limit: number): Promise<CandidateRow[]>;
+  /** Operator-only (rls_bypass) cross-tenant enumeration for the tick loop.
+   *  Returns the distinct organisationId of every enabled retention policy so the
+   *  in-process tick worker knows which tenants to process this round. */
+  listEnabledTenants(): Promise<string[]>;
   /** Records an outcome on (policy, table, rowId) — idempotent across tick re-runs. */
   recordOutcome(input: {
     organisationId: string;

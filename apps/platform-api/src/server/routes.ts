@@ -778,6 +778,28 @@ const ReleaseLegalHoldBodySchema = z.object({
   rowId: z.string().min(1).max(256),
 });
 
+const SetRetentionPolicyBodySchema = z.object({
+  organisationId: z.uuid("organisationId must be a valid UUID"),
+  resourceTable: z.enum(["audit_events", "tenant_invitations"]),
+  ttlSeconds: z
+    .number()
+    .int()
+    .positive()
+    .max(365 * 24 * 60 * 60),
+  filter: z.discriminatedUnion("kind", [
+    z.object({ kind: z.literal("all") }),
+    z.object({
+      kind: z.literal("by_status"),
+      statuses: z.array(z.string().min(1).max(64)).min(1),
+    }),
+  ]),
+});
+
+const DisableRetentionPolicyBodySchema = z.object({
+  organisationId: z.uuid("organisationId must be a valid UUID"),
+  resourceTable: z.enum(["audit_events", "tenant_invitations"]),
+});
+
 export const routes: Route[] = [
   {
     method: "GET",
@@ -6412,6 +6434,201 @@ export const routes: Route[] = [
         audit: createPostgresAuditEventPort(getApplicationPool()),
       });
       res.json(200, { holds: list });
+    },
+  },
+  // -------------------------------------------------------------------
+  // V1C-12b Retention operator routes (ADR-0064 / V1C-12b, decisionRef V1C-12b).
+  // Sole platform owner of retention policy lifecycle. CONSUMES the legal-hold
+  // flag (V1C-12c) — the tick is the central seam where held rows are preserved
+  // (decisionRef V1C-12b invariant). Audit-before-change on set/disable. The
+  // tick itself is owned by a scheduled internal worker, NOT a BFF route (it
+  // has no human actor; a BFF tick would put caller-token attribution onto a
+  // job whose actor is the scheduler).
+  // -------------------------------------------------------------------
+  {
+    method: "POST",
+    path: "/api/admin/data/retention-policies",
+    operationName: "admin.data.retentionPolicy.set",
+    requiresAuth: true,
+    requiredPermission: "platform.data.write",
+    resource: "admin:data",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const { setRetentionPolicy } = await import("../usecases/retention.ts");
+      const { PostgresRetentionRepository } = await import("../adapters/postgres-retention.ts");
+      const parsed = SetRetentionPolicyBodySchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid request body",
+        });
+        return;
+      }
+      const r = await setRetentionPolicy(
+        {
+          organisationId: parsed.data.organisationId,
+          resourceTable: parsed.data.resourceTable,
+          ttlSeconds: parsed.data.ttlSeconds,
+          filter: parsed.data.filter,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        {
+          repository: new PostgresRetentionRepository(getApplicationPool()),
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          guard: {
+            repository: new (
+              await import("../adapters/postgres-legal-hold.ts")
+            ).PostgresLegalHoldRepository(getApplicationPool()),
+          },
+        }
+      );
+      if (r.kind === "invalid") {
+        res.json(400, { code: "VALIDATION_ERROR", message: r.message });
+        return;
+      }
+      res.json(201, r.policy);
+    },
+  },
+  {
+    method: "DELETE",
+    path: "/api/admin/data/retention-policies",
+    operationName: "admin.data.retentionPolicy.disable",
+    requiresAuth: true,
+    requiredPermission: "platform.data.write",
+    resource: "admin:data",
+    umaScope: "delete" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const { disableRetentionPolicy } = await import("../usecases/retention.ts");
+      const { PostgresRetentionRepository } = await import("../adapters/postgres-retention.ts");
+      const parsed = DisableRetentionPolicyBodySchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid request body",
+        });
+        return;
+      }
+      const r = await disableRetentionPolicy(
+        {
+          organisationId: parsed.data.organisationId,
+          resourceTable: parsed.data.resourceTable,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        {
+          repository: new PostgresRetentionRepository(getApplicationPool()),
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          guard: {
+            repository: new (
+              await import("../adapters/postgres-legal-hold.ts")
+            ).PostgresLegalHoldRepository(getApplicationPool()),
+          },
+        }
+      );
+      if (r.kind === "not_found") {
+        res.json(404, { code: "NOT_FOUND", message: "Retention policy not found" });
+        return;
+      }
+      res.json(200, r.policy);
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/data/retention-policies",
+    operationName: "admin.data.retentionPolicy.list",
+    requiresAuth: true,
+    requiredPermission: "platform.data.read",
+    resource: "admin:data",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const { listRetentionPoliciesAsOperator } = await import("../usecases/retention.ts");
+      const { PostgresRetentionRepository } = await import("../adapters/postgres-retention.ts");
+      const url = new URL(req.raw.url ?? "", "http://localhost");
+      const org = url.searchParams.get("organisationId") ?? "";
+      if (!UUID_RE.test(org)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "organisationId must be a UUID" });
+        return;
+      }
+      const policies = await listRetentionPoliciesAsOperator(org, {
+        repository: new PostgresRetentionRepository(getApplicationPool()),
+        audit: createPostgresAuditEventPort(getApplicationPool()),
+        guard: {
+          repository: new (
+            await import("../adapters/postgres-legal-hold.ts")
+          ).PostgresLegalHoldRepository(getApplicationPool()),
+        },
+      });
+      res.json(200, { policies });
+    },
+  },
+  {
+    // -------------------------------------------------------------------
+    // Manual retention tick (system-admin, ADR-0064 / V1C-12b).
+    // Operator-only trigger for ops + smoke tests. The cadence-driven tick
+    // runs from the in-process worker (`server/retention-worker-runtime.ts`),
+    // which is started by `server/http.ts` on boot. This route is the
+    // break-glass / proof surface: same audit trail, idempotent re-runs
+    // (recordOutcome uses ON CONFLICT).
+    // -------------------------------------------------------------------
+    method: "POST",
+    path: "/api/admin/data/retention-policies/tick",
+    operationName: "admin.data.retentionPolicy.tick",
+    requiresAuth: true,
+    requiredPermission: "platform.admin.access",
+    resource: "admin:data",
+    umaScope: "create" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const { runRetentionTick } = await import("../usecases/retention.ts");
+      const { PostgresRetentionRepository } = await import("../adapters/postgres-retention.ts");
+      const { PostgresLegalHoldRepository } = await import("../adapters/postgres-legal-hold.ts");
+      const url = new URL(req.raw.url ?? "", "http://localhost");
+      const org = url.searchParams.get("organisationId");
+      const candidateLimitRaw = url.searchParams.get("candidateLimit");
+      const candidateLimit = Math.min(Math.max(Number(candidateLimitRaw) || 200, 1), 1000);
+      if (!org || !UUID_RE.test(org)) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: "organisationId query param must be a UUID",
+        });
+        return;
+      }
+      // The actor is the human caller (req.actor) — NOT the scheduler. This
+      // route is a manual break-glass trigger; audit must show the human who
+      // initiated it, not the background scheduler actor. The worker-side
+      // tick uses V1C12B_SCHEDULER_ACTOR, exported from the runtime for
+      // traceability.
+      const result = await runRetentionTick(
+        {
+          organisationId: org,
+          candidateLimit,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost:
+              (req.raw.headers["x-forwarded-host"] as string | undefined) ??
+              "platform-retention-tick-route",
+          },
+        },
+        {
+          repository: new PostgresRetentionRepository(getApplicationPool()),
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          guard: {
+            repository: new PostgresLegalHoldRepository(getApplicationPool()),
+          },
+        }
+      );
+      res.json(200, result);
     },
   },
 ];
