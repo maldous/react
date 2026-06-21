@@ -94,7 +94,7 @@ worker-runtime, observability`. All now `delete-after-proof` in the path-map (wa
    **Not executed in this change** (per instruction).
 3. **8 config-runtime bounded decisions** — `V1C-CONF-01..08` (decomposed from `V1C-PKG-CONFIG`).
 
-**Completion-blocker total: 13** = 13 capability completions + 0 package removals (V1C-CONF-06 config decisions closed; V1C-01/02/05/06/07/08/17 validation semantics closed)
+**Completion-blocker total: 12** = 12 capability completions + 0 package removals (V1C-CONF-06 config decisions closed; V1C-01/02/05/06/07/08/17 validation semantics closed)
 (live truth: `npm run v2:readiness --json` `.completionBlockerCount`).
 
 ## What pass two got wrong (now fixed)

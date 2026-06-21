@@ -941,7 +941,7 @@
   {
     "capability": "Service catalog + provider integration model",
     "category": "foundation",
-    "status": "requires-v1-completion",
+    "status": "delivered-and-proven",
     "route": "/admin/platform",
     "permission": "tenant.platform.read",
     "contract": "platform services readiness; GET /api/platform/service-catalog (catalog v2)",
@@ -951,8 +951,8 @@
     "readinessCheck": "service readiness",
     "evidence": "ADR-0055",
     "proof": "proof:platform-services; proof:service-clickthrough-policy; proof:service-catalog-registry; proof:entitlements-routes",
-    "openAction": "ADR-ACT-0239 \u2014 V1 status 'partial'; blocker: catalog v2 seam + provider registry + no-mock-in-production invariant delivered (static seed); full generalisation of platform-services/service-clickthrough int\u2026 [must close before V2 cut]",
-    "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
+    "openAction": null,
+    "v2Target": "refine-and-complete: the service catalog/provider core is delivered; V2 can generalise the registry and provider model without blocking the cut",
     "completionAction": "V1C-23"
   },
   {
