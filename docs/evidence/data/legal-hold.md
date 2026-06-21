@@ -18,33 +18,33 @@ guard never throws for a rows whose active hold does not exist).
 
 ## Scope delivered
 
-| Surface                     | Status     | Source                                       |
-| --------------------------- | ---------- | -------------------------------------------- |
-| `legal_holds` table + RLS   | delivered  | `apps/platform-api/src/db/migrations/035-legal-holds.sql` |
-| `LegalHoldRepository` port  | delivered  | `apps/platform-api/src/ports/legal-hold.ts`  |
-| `PostgresLegalHoldRepository` adapter | delivered | `apps/platform-api/src/adapters/postgres-legal-hold.ts` |
-| Use case + Guard            | delivered  | `apps/platform-api/src/usecases/legal-hold.ts` |
-| Audit events                | delivered  | `LegalHoldSet` / `LegalHoldReleased` (packages/audit-events) |
-| Unit tests                  | delivered  | `apps/platform-api/tests/unit/legal-hold.test.ts` |
-| Runtime proof (hermetic)    | delivered  | `apps/platform-api/scripts/legal-hold-runtime-proof.ts` |
-| Routes + OpenAPI            | **pending** | Out of scope for this slice — follow-up wiring |
-| Permission `platform.data.*`| **pending** | Out of scope for this slice — register when routes wire |
-| Live Postgres substrate     | **pending** | Add a substrate test under `tests/substrate/` when adjacent test suites are bootstrapped |
+| Surface                               | Status      | Source                                                                                   |
+| ------------------------------------- | ----------- | ---------------------------------------------------------------------------------------- |
+| `legal_holds` table + RLS             | delivered   | `apps/platform-api/src/db/migrations/035-legal-holds.sql`                                |
+| `LegalHoldRepository` port            | delivered   | `apps/platform-api/src/ports/legal-hold.ts`                                              |
+| `PostgresLegalHoldRepository` adapter | delivered   | `apps/platform-api/src/adapters/postgres-legal-hold.ts`                                  |
+| Use case + Guard                      | delivered   | `apps/platform-api/src/usecases/legal-hold.ts`                                           |
+| Audit events                          | delivered   | `LegalHoldSet` / `LegalHoldReleased` (packages/audit-events)                             |
+| Unit tests                            | delivered   | `apps/platform-api/tests/unit/legal-hold.test.ts`                                        |
+| Runtime proof (hermetic)              | delivered   | `apps/platform-api/scripts/legal-hold-runtime-proof.ts`                                  |
+| Routes + OpenAPI                      | **pending** | Out of scope for this slice — follow-up wiring                                           |
+| Permission `platform.data.*`          | **pending** | Out of scope for this slice — register when routes wire                                  |
+| Live Postgres substrate               | **pending** | Add a substrate test under `tests/substrate/` when adjacent test suites are bootstrapped |
 
 ## Stop condition mapping
 
 > "held records survive retention AND withstand storage lifecycle deletion;
->  proven."
+> proven."
 
 Mapped to evidence in this PR:
 
-| Sub-condition                                  | Evidence                                                                                   |
-| ---------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Active hold emitted **before** write           | `usecases/legal-hold.test.ts` → "audit-before-change: a failing audit port means the DB write never runs" |
+| Sub-condition                                  | Evidence                                                                                                                                                            |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Active hold emitted **before** write           | `usecases/legal-hold.test.ts` → "audit-before-change: a failing audit port means the DB write never runs"                                                           |
 | Single owner across platform                   | `HOLDABLE_TABLES` constant in `usecases/legal-hold.ts` is the **only** surface that exposes set/release — retention and storage layers will import `LegalHoldGuard` |
-| Survives deletion attempts                     | `usecases/legal-hold.test.ts` → "LegalHoldGuard: assertCanDelete throws for active hold, no-op for released" |
-| Idempotent set / release                       | `usecases/legal-hold.test.ts` → "set: idempotent" + "release: idempotent" + "release: missing target returns not_found" |
-| Authenticated audit trail                      | Two `AuditAction.LegalHoldSet` / `LegalHoldReleased` events emitted on operator transitions (asserted in unit tests) |
+| Survives deletion attempts                     | `usecases/legal-hold.test.ts` → "LegalHoldGuard: assertCanDelete throws for active hold, no-op for released"                                                        |
+| Idempotent set / release                       | `usecases/legal-hold.test.ts` → "set: idempotent" + "release: idempotent" + "release: missing target returns not_found"                                             |
+| Authenticated audit trail                      | Two `AuditAction.LegalHoldSet` / `LegalHoldReleased` events emitted on operator transitions (asserted in unit tests)                                                |
 
 ## Commands
 

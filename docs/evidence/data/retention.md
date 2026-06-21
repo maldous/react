@@ -30,20 +30,20 @@ by `LegalHoldGuard.assertCanDelete`; held rows are recorded as
 
 ## Scope delivered (this slice)
 
-| Surface                                  | Status   | Source                                                                  |
-| ---------------------------------------- | -------- | ----------------------------------------------------------------------- |
-| `retention_policies` table + RLS         | delivered | `apps/platform-api/src/db/migrations/036-retention-policies.sql` |
-| `retention_candidates` table + RLS      | delivered | same migration                                                   |
-| `RetentionRepository` port               | delivered | `apps/platform-api/src/ports/retention.ts`                  |
-| `PostgresRetentionRepository` adapter   | delivered | `apps/platform-api/src/adapters/postgres-retention.ts`         |
-| Use case (set / disable / tick)         | delivered | `apps/platform-api/src/usecases/retention.ts`                  |
-| `RetentionFilterError` (typed)          | delivered | same usecase file                                                |
-| Audit events                             | delivered | `RetentionPolicySet` / `RetentionPolicyRemoved` / `RetentionApplied` / `RetentionSkippedLegalHold` / `RetentionTickCompleted` (packages/audit-events) |
-| Unit tests                               | delivered | `apps/platform-api/tests/unit/retention.test.ts` (node:test) |
-| Runtime proof                            | delivered | `apps/platform-api/scripts/retention-runtime-proof.ts`        |
-| Routes (`/api/admin/data/retention*`)    | **pending** | Out of this slice; next turn: `routes.ts` + zod + OpenAPI |
-| OpenAPI                                  | **pending** | Same as above                                              |
-| Live-Postgres substrate test             | **pending** | Same as above; cost-deferred                            |
+| Surface                                  | Status      | Source                                                                                                                                                |
+| ---------------------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `retention_policies` table + RLS         | delivered   | `apps/platform-api/src/db/migrations/036-retention-policies.sql`                                                                                      |
+| `retention_candidates` table + RLS       | delivered   | same migration                                                                                                                                        |
+| `RetentionRepository` port               | delivered   | `apps/platform-api/src/ports/retention.ts`                                                                                                            |
+| `PostgresRetentionRepository` adapter    | delivered   | `apps/platform-api/src/adapters/postgres-retention.ts`                                                                                                |
+| Use case (set / disable / tick)          | delivered   | `apps/platform-api/src/usecases/retention.ts`                                                                                                         |
+| `RetentionFilterError` (typed)           | delivered   | same usecase file                                                                                                                                     |
+| Audit events                             | delivered   | `RetentionPolicySet` / `RetentionPolicyRemoved` / `RetentionApplied` / `RetentionSkippedLegalHold` / `RetentionTickCompleted` (packages/audit-events) |
+| Unit tests                               | delivered   | `apps/platform-api/tests/unit/retention.test.ts` (node:test)                                                                                          |
+| Runtime proof                            | delivered   | `apps/platform-api/scripts/retention-runtime-proof.ts`                                                                                                |
+| Routes (`/api/admin/data/retention*`)    | **pending** | Out of this slice; next turn: `routes.ts` + zod + OpenAPI                                                                                             |
+| OpenAPI                                  | **pending** | Same as above                                                                                                                                         |
+| Live-Postgres substrate test             | **pending** | Same as above; cost-deferred                                                                                                                          |
 
 ## Stop condition mapping
 
@@ -51,22 +51,22 @@ by `LegalHoldGuard.assertCanDelete`; held rows are recorded as
 
 Mapped to evidence in this PR:
 
-| Sub-condition                                          | Evidence                                                                                  |
-| ------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
-| Policy set is audited BEFORE the write                 | `tests/unit/retention.test.ts` → "audit-before-change: a failing audit port means the DB write never runs" |
+| Sub-condition                                          | Evidence                                                                                                                                                           |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Policy set is audited BEFORE the write                 | `tests/unit/retention.test.ts` → "audit-before-change: a failing audit port means the DB write never runs"                                                         |
 | Tick emits audit per candidate                         | `tests/unit/retention.test.ts` → "deletes un-held rows + records outcome + emits per-row audit events" — 2 RetentionApplied + 2 RetentionSkippedLegalHold per tick |
-| Held rows are PRESERVED (V1C-12c consumer)             | `tests/unit/retention.test.ts` → "skips_legal_hold: held rows are PRESERVED"; proof script confirms 1 deleted + 1 skipped per tick |
-| Tick summary audit                                     | `tests/unit/retention.test.ts` → 1 RetentionTickCompleted per tick (single per-tick summary line) |
-| Filter whitelist enforced                              | `tests/unit/retention.test.ts` → "filter validation" — 5 assertions incl. unknown-kind rejection |
-| Idempotent re-tick                                     | proof: tick 2 produces the same outcomes as tick 1 (held stays held, deleted stays deleted) |
+| Held rows are PRESERVED (V1C-12c consumer)             | `tests/unit/retention.test.ts` → "skips_legal_hold: held rows are PRESERVED"; proof script confirms 1 deleted + 1 skipped per tick                                 |
+| Tick summary audit                                     | `tests/unit/retention.test.ts` → 1 RetentionTickCompleted per tick (single per-tick summary line)                                                                  |
+| Filter whitelist enforced                              | `tests/unit/retention.test.ts` → "filter validation" — 5 assertions incl. unknown-kind rejection                                                                   |
+| Idempotent re-tick                                     | proof: tick 2 produces the same outcomes as tick 1 (held stays held, deleted stays deleted)                                                                        |
 
 ## Commands
 
-```
+```text
 cd apps/platform-api && npm run test:unit -- --grep "retention"
 make proof TARGET=proof:retention           # if/when proof:retention is wired in CI
 cd apps/platform-api && npx tsx scripts/retention-runtime-proof.ts
-```
+```text
 
 ## Expected result
 
@@ -92,4 +92,4 @@ await runRetentionTick(
 // tick to know which object-storage rows to actually delete (the tick records
 // intent; the storage layer performs the byte-level removal — never bypassing
 // LegalHoldGuard for held rows).
-```
+```text
