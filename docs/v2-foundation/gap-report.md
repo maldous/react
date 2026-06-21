@@ -17,7 +17,7 @@ with **honest semantic closure**.
 > flat list — no invented hierarchy), and **Claim mapping** (`proof:ui-semantic-claim-mapping`, with
 > the external real-IdP proof limitation kept explicit and separate per ADR-ACT-0220). Each was closed
 > only on a **passing headless journey**, not a schema entry. **Completion-blocker total: 31**
-> (14 capability completions + 0 package removals). V1C-18 is now closed by fresh security proofs;
+> (13 capability completions + 0 package removals). V1C-18 is now closed by fresh security proofs;
 > V1C-17 is now closed by live runtime proofs (`proof:metrics-prometheus`, `proof:dashboards`) against
 > the env-specific Prometheus scrape target. The cut remains BLOCKED.
 
@@ -94,7 +94,7 @@ worker-runtime, observability`. All now `delete-after-proof` in the path-map (wa
    **Not executed in this change** (per instruction).
 3. **8 config-runtime bounded decisions** — `V1C-CONF-01..08` (decomposed from `V1C-PKG-CONFIG`).
 
-**Completion-blocker total: 14** = 14 capability completions + 0 package removals (V1C-CONF-06 config decisions closed; V1C-01/02/05/06/07/08/17 validation semantics closed)
+**Completion-blocker total: 13** = 13 capability completions + 0 package removals (V1C-CONF-06 config decisions closed; V1C-01/02/05/06/07/08/17 validation semantics closed)
 (live truth: `npm run v2:readiness --json` `.completionBlockerCount`).
 
 ## What pass two got wrong (now fixed)
