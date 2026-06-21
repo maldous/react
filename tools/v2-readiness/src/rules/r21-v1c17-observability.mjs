@@ -21,7 +21,7 @@ import { finding } from "../vocab.mjs";
 //   full-closure floors; a future flip to 'delivered-and-proven' requires green runs of
 //   `npm run proof:metrics-prometheus` + `npm run proof:dashboards` AND the 4+ additional
 //   dashboards enumerated in v1-completion-actions.json V1C-17.providerRequiredFollowup.
-//   Do not tighten the floors in this rule without reconciling the ledger ledger text.
+//   Do not tighten the floors in this rule without reconciling the ledger text.
 export default function r21V1c17Observability(ctx) {
   const out = [];
   const obs = ctx.observabilityV1C17;
