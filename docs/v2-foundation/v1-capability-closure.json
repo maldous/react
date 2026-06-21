@@ -685,20 +685,21 @@
   {
     "capability": "Metrics + traces",
     "category": "observability-ops",
-    "status": "requires-v1-completion",
+    "status": "delivered-and-proven",
     "route": "/admin/observability (signal status only)",
     "permission": "operator",
-    "contract": "observability readiness route",
+    "contract": "/api/admin/observability/metrics; /api/admin/observability/readiness",
     "port": "ObservabilityPort",
     "adapter": "LokiAdapter / OtelCollector",
     "auditAction": null,
     "readinessCheck": "observability readiness signals (metrics/traces status)",
     "evidence": "ADR-0062, ADR-0020",
-    "proof": "not-yet-proven",
-    "proofTier": "adapter-contract",
-    "openAction": "ADR-ACT-0261 \u2014 Prometheus compose config present but no application instrumentation; Grafana dashboards invalid format; no proof:metrics-prometheus or proof:dashboards commands exist [must close before V2 cut]",
+    "proof": "proof:metrics-prometheus; proof:dashboards",
+    "proofTier": "live-composed-provider",
+    "openAction": null,
     "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
-    "completionAction": "V1C-17"
+    "completionAction": "V1C-17",
+    "closedBy": "live runtime proofs + compose env-specific scrape target"
   },
   {
     "capability": "Alerting, incident management, on-call, status page",
