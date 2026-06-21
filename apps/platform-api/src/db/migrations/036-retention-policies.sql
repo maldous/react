@@ -37,9 +37,18 @@ CREATE TABLE IF NOT EXISTS public.retention_policies (
   set_at          TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_by      TEXT,
   updated_at      TIMESTAMPTZ,
-  metadata        JSONB       NOT NULL DEFAULT '{}'::jsonb,
-  UNIQUE (organisation_id, resource_table, enabled) WHERE enabled = TRUE
+  metadata        JSONB       NOT NULL DEFAULT '{}'::jsonb
 );
+
+-- Partial uniqueness invariant: only ONE enabled policy per (organisation_id,
+-- resource_table). PostgreSQL Does NOT allow a WHERE clause on table-level
+-- UNIQUE constraints, so we project the invariant onto a CREATE UNIQUE INDEX
+-- ... WHERE statement (V1C-12b / ADR-0064; required by upsertPolicy in
+-- adapters/postgres-retention.ts which soft-disables the prior enabled row
+-- before inserting the replacement — historical audit trail preserved).
+CREATE UNIQUE INDEX IF NOT EXISTS retention_policies_unique_enabled_idx
+  ON public.retention_policies (organisation_id, resource_table)
+  WHERE enabled = TRUE;
 
 CREATE INDEX IF NOT EXISTS retention_policies_org_idx
   ON public.retention_policies (organisation_id);
