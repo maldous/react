@@ -5720,5 +5720,23 @@
     "hidesErrors": false,
     "dead": false,
     "docDriftsFromBehaviour": false
+  },
+  {
+    "name": "npm proof:delegated-admin",
+    "kind": "npm",
+    "purpose": "Runtime proof harness for delegated-admin-roles (V1C-04; local-only inline-fake-pool, 17 checks).",
+    "inputs": ["none (local-only)"],
+    "outputs": ["proof evidence (stdout/registry)"],
+    "prerequisites": ["platform-api loader"],
+    "sideEffects": ["none (in-process fakes)"],
+    "envScope": "all",
+    "failureSemantics": "exit-nonzero on proof failure",
+    "idempotent": true,
+    "safetyControls": [],
+    "testCoverage": "proof-registry.test.ts",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
   }
 ]

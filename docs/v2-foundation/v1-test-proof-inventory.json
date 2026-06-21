@@ -3669,5 +3669,32 @@
     "fixtureEnvDependency": "none (pure/in-process)",
     "stageCoverage": "test (make check)",
     "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/delegations.test.ts",
+    "path": "apps/platform-api/tests/unit/delegations.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
+    "path": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "package.json#proof:delegated-admin",
+    "path": "package.json#proof:delegated-admin",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local-only inline-fake-pool proof)",
+    "stageCoverage": "proof script (npm run proof:delegated-admin)",
+    "failureEvidence": "proof script assertion output"
   }
 ]

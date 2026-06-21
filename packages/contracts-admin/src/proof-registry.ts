@@ -34,6 +34,7 @@ export const PROOF_LADDER = [
   "proof:service-catalog-registry",
   "proof:entitlements-postgres",
   "proof:entitlements-routes",
+  "proof:delegated-admin",
   "proof:metering",
   "proof:quota-enforcement",
   "proof:metering-quota-routes",

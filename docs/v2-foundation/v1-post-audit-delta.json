@@ -1757,17 +1757,27 @@
       "v2Target": "docs/evidence/stages/v2-readiness-progress.log",
       "protectingTests": [],
       "decisionRefs": ["ADR-0075", "ADR-ACT-0285"]
-    }
-  ],
-  "deletions": [
+    },
     {
-      "originalPath": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
-      "removalCommit": "unknown",
-      "deletionDecision": "V1C-04 partial: the inline-fake-pool adapter test was structurally unrecoverable against the live adapter surface and was deleted; the 2 tests that actually pass were retained/registered instead.",
-      "replacementOrNa": "n/a (no replacement unit test; adapter behaviour re-proven by the retained V1C-04 tests and the Turn 2 live runtime-proof transcript)",
-      "evidence": "docs/adr/ACTION-REGISTER.md (ADR-ACT-0304); git log 'deleting 2 structurally-unrecoverable tests + registering the 2 that actually pass (V1C-04 partial)'"
+      "path": "apps/platform-api/tests/unit/delegations.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-04 usecase unit tests (node:test): auth + audit-before-mutation ordering, fail-closed",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/delegations.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0304"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-04 substrate unit tests (node:test): adapter wrapper/capture-index + active-predicate fidelity",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0304"]
     }
   ],
-  "additionCount": 184,
-  "deletionCount": 1
+  "deletions": [],
+  "additionCount": 186,
+  "deletionCount": 0
 }
