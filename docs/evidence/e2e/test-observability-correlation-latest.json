@@ -1,6 +1,6 @@
 {
   "stage": "test",
-  "testRunId": "run-test-1781950362-df608436",
+  "testRunId": "run-test-1781998414-faaf8426",
   "result": "FULL",
   "loki": {
     "status": "reachable",
@@ -32,7 +32,7 @@
       "observed": true,
       "lines": 1,
       "traceIds": [
-        "dd452d8e9c4a283fa8cf17d3caa8d5fc"
+        "caee9ebfeffb2617b940eb38271190e3"
       ],
       "result": "OK"
     },
@@ -66,10 +66,10 @@
       "observed": true,
       "lines": 4,
       "traceIds": [
-        "e2d60c7c83ac2c4b3ddc60b9f6aaea19",
-        "8d2fb5890c7ff0102658c14e68db7af8",
-        "6b892bd88011a108ce6e6c4b9c0a97a4",
-        "0a724c075053fa432e3438e84396427b"
+        "599c01b53f8568b38cd591d51272c942",
+        "800d02f1d75038e08048d9aef214294a",
+        "99236eaec7953b1b8fe719a22a988aa5",
+        "0af6d8d7920dd7afbd946e4ab4873b38"
       ],
       "result": "OK"
     },
@@ -79,7 +79,7 @@
       "observed": true,
       "lines": 1,
       "traceIds": [
-        "a776ac68d9cf682926ef0fc817faf04c"
+        "316903b90fff9c6fa6ffbbf5252a0ebf"
       ],
       "result": "OK"
     },
@@ -89,10 +89,10 @@
       "observed": true,
       "lines": 4,
       "traceIds": [
-        "765b1d2a3ed3e10ee3a6e55654824f13",
-        "f1679207a073f5b5b69c99cf55c2ac86",
-        "61768416c2eb1ab779d9f3b4025d7772",
-        "83f236252531a6308a45be59fb5212a8"
+        "45e9f0dc248f4364c614234ec3403443",
+        "f5558d1e18aca93e760c8d379ef94be0",
+        "6d98d16ddbbaa53a1149914e78315f65",
+        "d59da0b9b6a7d6ad1f1914f8e1b9aa90"
       ],
       "result": "OK"
     },
@@ -102,8 +102,8 @@
       "observed": true,
       "lines": 2,
       "traceIds": [
-        "f0145120aee82ecec6d34130bec963ad",
-        "5f275a9552de18d218fbbe2a99f513a7"
+        "9f0659d5f2ea7232f30c4b3dd89dafb2",
+        "ec8db2ecdec8c077638b68a34cb973e3"
       ],
       "result": "OK"
     },
@@ -113,10 +113,10 @@
       "observed": true,
       "lines": 4,
       "traceIds": [
-        "d0ee21fec6529261f6cdadc086521845",
-        "e6b167bc7838d0fbcb8f2aaa8d0a3d91",
-        "a8128f6d4f9abe452d3bc3957be5d832",
-        "80ada2382efb2010d336b0fa846d94f3"
+        "5c063ff37c9eeaa2921ff165014d51df",
+        "8aed8cba6f1b8ae1d54792617ce1c58d",
+        "c74ec51a283a1b1074614d364e43375b",
+        "ad9c4541139f4dbb8d456e665b4415ed"
       ],
       "result": "OK"
     },
@@ -126,8 +126,8 @@
       "observed": true,
       "lines": 2,
       "traceIds": [
-        "f96291713a657431368331eb6c5650c1",
-        "9649a959c87285c59192099fe9ca9360"
+        "f5fc5f1e77bd47a23c21997c924a65b3",
+        "4fd7bc63930608da659b9372279b2ba2"
       ],
       "result": "OK"
     }
@@ -136,9 +136,9 @@
     {
       "scenarioId": "pipeline-health-probe",
       "result": "PASSED",
-      "chosenTraceId": "dd452d8e9c4a283fa8cf17d3caa8d5fc",
+      "chosenTraceId": "caee9ebfeffb2617b940eb38271190e3",
       "candidateTraceIds": [
-        "dd452d8e9c4a283fa8cf17d3caa8d5fc"
+        "caee9ebfeffb2617b940eb38271190e3"
       ],
       "found": true,
       "services": [
@@ -153,9 +153,9 @@
     {
       "scenarioId": "browser-bff-trace",
       "result": "PASSED",
-      "chosenTraceId": "a776ac68d9cf682926ef0fc817faf04c",
+      "chosenTraceId": "316903b90fff9c6fa6ffbbf5252a0ebf",
       "candidateTraceIds": [
-        "a776ac68d9cf682926ef0fc817faf04c"
+        "316903b90fff9c6fa6ffbbf5252a0ebf"
       ],
       "found": true,
       "services": [
@@ -171,8 +171,8 @@
   ],
   "notes": [
     "Correlated 18 line(s); all 7 required scenario(s) observed.",
-    "Trace dd452d8e9c4a283fa8cf17d3caa8d5fc for 'pipeline-health-probe' matched in Tempo: services [platform-api].",
-    "Trace a776ac68d9cf682926ef0fc817faf04c for 'browser-bff-trace' matched in Tempo: services [platform-api, react-enterprise-app]."
+    "Trace caee9ebfeffb2617b940eb38271190e3 for 'pipeline-health-probe' matched in Tempo: services [platform-api].",
+    "Trace 316903b90fff9c6fa6ffbbf5252a0ebf for 'browser-bff-trace' matched in Tempo: services [platform-api, react-enterprise-app]."
   ],
   "probe": {
     "scenario": "pipeline-health-probe",

@@ -80,7 +80,7 @@ export type ListDelegationsResult =
 export function makeDelegationsUseCases(deps: DelegationsDeps) {
   const { port, audit, logger } = deps;
 
-  const isCallerAuthorizedForTenant = (ctx: AuthContext, organisationId: string): boolean =>
+  const isCallerAuthorizedForTenant = (ctx: AuthContext, _organisationId: string): boolean =>
     ctx.systemAdmin ||
     (ctx.tenantAdmin &&
       // The BFF only sets tenantAdmin=true when the caller is an admin of the
