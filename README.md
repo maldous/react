@@ -146,6 +146,13 @@ Each proven capability is backed by a repeatable, runnable proof — a single so
 - **Tenant services** — `proof:email-sender`, `proof:tenant-storage`, `proof:tenant-observability`
 - **Events and webhooks** — `proof:webhooks`, `proof:webhook-worker`, `proof:webhook-redrive`
 - **Operations** — `proof:platform-services`, `proof:service-clickthrough-policy`, `proof:backup-local`
+- **Backup and PITR composition** — `proof:backup-control-route`, `proof:pitr-restore-drill`
+- **Billing composition** — `proof:billing-provider`, `proof:lago-billing-provider`, `proof:billing-readiness-route`, `proof:billing-control-route`
+- **Workflow composition** — `proof:http-engine-providers`, `proof:temporal-workflow-provider`, `proof:windmill-automation-provider`, `proof:workflow-adapters`, `proof:workflow-closure`, `proof:workflow-control-route`, `proof:workflow-readiness-route`
+- **Provider binding and observability composition** — `proof:provider-binding-report-route`, `proof:observability-control-route`, `proof:observability-readiness-route`, `proof:observability-provider-closure`, `proof:observability-metrics-traces-closure`, `proof:provider-observability-closure`, `proof:provider-observability-contract`, `proof:full-observability-contract`, `proof:alert-incident-closure`
+- **Security and object scanning** — `proof:security-control-route`, `proof:object-scan-closure`
+- **Composed provider runtime** — `proof:composed-provider-runtime-closure`
+- **Compliance reporting** — `proof:compliance-report-route`
 - **Entitlements and service catalog (Phase 1)** — `proof:entitlements`, `proof:entitlement-policy-chain`, `proof:service-catalog-registry`, `proof:entitlements-postgres`, `proof:entitlements-routes`
 - **Metering and quota enforcement (Phase 2)** — `proof:metering`, `proof:quota-enforcement`, `proof:metering-quota-routes`
 - **Developer platform — API keys + rate limits (Phase 3)** — `proof:api-keys`, `proof:rate-limits`, `proof:api-key-routes`
