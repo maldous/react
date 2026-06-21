@@ -264,5 +264,4 @@ const outPath = path.resolve(
 await fs.mkdir(path.dirname(outPath), { recursive: true });
 await fs.writeFile(outPath, JSON.stringify(out, null, 2) + "");
 
-// eslint-disable-next-line no-console
 console.log(JSON.stringify(out));
