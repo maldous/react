@@ -21,6 +21,7 @@ import r17 from "./rules/r17-migrations.mjs";
 import r18 from "./rules/r18-environment-config.mjs";
 import r19 from "./rules/r19-executable-assets.mjs";
 import r20 from "./rules/r20-harness-semantics.mjs";
+import r21 from "./rules/r21-v1c17-observability.mjs";
 
 export const RULES = [
   r1,
@@ -43,6 +44,7 @@ export const RULES = [
   r18,
   r19,
   r20,
+  r21,
 ];
 
 export function runRules(ctx) {

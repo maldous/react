@@ -32,6 +32,52 @@ function loadCompose(repoRoot) {
   return { services, profiles, volumes: Object.keys(doc.volumes || {}), ok: true };
 }
 
+// On-disk Grafana dashboards + datasource-uid reference counts + V1C-17 proof scripts presence.
+// Pure shape returned to the rule (no fs escape hatches inside rules). ADR-0062 + V1C-17b.
+function loadV1c17Observability(repoRoot) {
+  const dir = path.join(repoRoot, "docker/grafana/dashboards");
+  let files = 0;
+  let promRefs = 0;
+  let lokiRefs = 0;
+  let tempoRefs = 0;
+  if (fs.existsSync(dir)) {
+    for (const f of fs.readdirSync(dir)) {
+      if (!f.endsWith(".json")) continue;
+      files++;
+      try {
+        const doc = JSON.parse(fs.readFileSync(path.join(dir, f), "utf8"));
+        const blob = JSON.stringify(doc);
+        // Escape-free literal scan: the three provisioning uids are unique strings.
+        if (
+          blob.includes('"uid":"platform-prometheus"') ||
+          blob.includes('"uid": "platform-prometheus"')
+        )
+          promRefs++;
+        if (blob.includes('"uid":"platform-loki"') || blob.includes('"uid": "platform-loki"'))
+          lokiRefs++;
+        if (blob.includes('"uid":"platform-tempo"') || blob.includes('"uid": "platform-tempo"'))
+          tempoRefs++;
+      } catch {
+        // unparseable dashboard JSON — the rule will flag missing-references anyway
+      }
+    }
+  }
+  return {
+    files,
+    promRefs,
+    lokiRefs,
+    tempoRefs,
+    proofScripts: {
+      metricsPrometheusExists: fs.existsSync(
+        path.join(repoRoot, "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts")
+      ),
+      dashboardsExists: fs.existsSync(
+        path.join(repoRoot, "apps/platform-api/scripts/dashboards-runtime-proof.ts")
+      ),
+    },
+  };
+}
+
 // On-disk SQL migrations (sequence + filename + checksum).
 function loadMigrations(repoRoot) {
   const dir = path.join(repoRoot, "apps/platform-api/src/db/migrations");
@@ -229,6 +275,7 @@ export function loadContext({ repoRoot = process.cwd(), strict = false, pinned }
     compose: loadCompose(repoRoot),
     caddyfile: readText(path.join(repoRoot, "docker/caddy/Caddyfile")),
     migrations: loadMigrations(repoRoot),
+    observabilityV1C17: loadV1c17Observability(repoRoot),
     makeTargets: loadMakeTargets(repoRoot),
     adrIds: loadAdrIds(repoRoot),
     actionMentions: loadActionMentions(repoRoot),

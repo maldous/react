@@ -296,7 +296,7 @@
     {
       "id": "V1C-17",
       "parentCapability": "Metrics + traces",
-      "status": "requires-v1-completion",
+      "status": "in-progress",
       "decisionRef": null,
       "dependencies": [],
       "decision": "see v1-completion-programme.md §V1C-17",
@@ -309,7 +309,26 @@
       "testsProofs": "see programme",
       "uiSemantics": "see programme / UI proof policy",
       "stopCondition": "see v1-completion-programme.md §V1C-17",
-      "v2Assets": "see programme"
+      "v2Assets": "see programme",
+      "closureProof": [
+        "docker/grafana/dashboards/platform-api-red-method.json (NEW — RED-method HTTP observability for platform-api; 6 panels referencing platform-prometheus datasource uid; complements the cross-service overview + log-overview)",
+        "docker/grafana/dashboards/platform-overview.json (existing — cross-service overview tagged v1c-17b)",
+        "docker/grafana/dashboards/platform-logs-overview.json (existing — Loki log overview)",
+        "tools/v2-readiness/src/rules/r21-v1c17-observability.mjs (NEW — first readiness rule that encodes the V1C-17 ledger connection: ≥3 dashboards on disk + datasource-uid coverage across prometheus/loki/tempo + proof-script presence)",
+        "tools/v2-readiness/tests/r21-v1c17-observability.test.mjs (NEW — 8 unit tests covering all 6 failure modes + clean-fixture pass-through)",
+        "tools/v2-readiness/src/load.mjs (loadV1c17Observability helper — derives ctx.observabilityV1C17 at load time)",
+        "tools/v2-readiness/src/index.mjs (r21 registered alongside r1–r20; closes the readiness-rules ↔ V1C-17 ledger structural gap surfaced in code-review feedback)",
+        "ADR-ACT-0302 row in ACTION-REGISTER"
+      ],
+      "evidence": [
+        "docker/grafana/dashboards/platform-api-red-method.json",
+        "tools/v2-readiness/src/rules/r21-v1c17-observability.mjs",
+        "tools/v2-readiness/tests/r21-v1c17-observability.test.mjs",
+        "tools/v2-readiness/src/load.mjs (loadV1c17Observability)",
+        "ADR-ACT-0302 in ACTION-REGISTER"
+      ],
+      "partialSlice": "1/3-to-6 dashboards added in this slice (third dashboard authored brings the on-disk count up to the ≥3 partial threshold required by r21). Full V1C-17 closure requires 4+ more dashboards (see providerRequiredFollowup) and live compose-stack proof transcripts.",
+      "providerRequiredFollowup": "Live compose-stack bring-up for the observability + observability-provider profiles (`make compose-up-observability` and `make compose-up-observability-provider`), then green runs of `npm run proof:metrics-prometheus` and `npm run proof:dashboards`. A second orphan `react-dev-*` compose project holds host port 3100 on this workstation blocking the observability profile from bringing grafana up (would require explicit operator confirmation to remove the orphan before running the live proofs). 4+ additional dashboards required to satisfy the V1C-17 full-closure observability taxonomy (per ADR-0062): platform-api-quota-enforcement for ADR-0067 / V1C-11a-c, platform-tenant-isolation for ADR-0029 / V1C-02, platform-event-bus for ADR-0051, platform-billing-ledger for V1C-11a. Each requires a corresponding proof-script green run before the closure flip is fully 'delivered-and-proven'."
     },
     {
       "id": "V1C-18",

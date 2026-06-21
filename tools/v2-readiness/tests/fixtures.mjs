@@ -101,6 +101,13 @@ export function cleanCtx() {
     },
     caddyfile: "",
     migrations: [{ file: "001-x.sql", checksum: "abc0000000000000" }],
+    observabilityV1C17: {
+      files: 3,
+      promRefs: 1,
+      lokiRefs: 1,
+      tempoRefs: 1,
+      proofScripts: { metricsPrometheusExists: true, dashboardsExists: true },
+    },
     configConsumption: {
       keys: [
         {

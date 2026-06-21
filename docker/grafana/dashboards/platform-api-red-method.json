@@ -1,0 +1,204 @@
+{
+  "dashboard": {
+    "uid": "platform-api-red-method",
+    "title": "Platform API RED method",
+    "tags": ["platform", "platform-api", "red", "v1c-17b"],
+    "timezone": "browser",
+    "schemaVersion": 39,
+    "version": 1,
+    "refresh": "30s",
+    "description": "RED-method observability dashboard for platform-api (Rate / Errors / Duration, p50/p95/p99). Operational signal that complements platform-overview (cross-service overview) and platform-logs-overview (logs pivot). Drives V1C-17a (app metrics queryable in Prometheus) and V1C-17b (dashboards render metrics/traces).",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Requests (rate per route)",
+        "type": "timeseries",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "platform-prometheus"
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 0
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "platform-prometheus"
+            },
+            "expr": "sum by (route, method) (rate(http_requests_total{service=\"platform-api\"}[5m]))",
+            "legendFormat": "{{method}} {{route}}"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Errors 5xx (rate)",
+        "type": "timeseries",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "platform-prometheus"
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 0
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "platform-prometheus"
+            },
+            "expr": "sum by (route) (rate(http_requests_total{service=\"platform-api\", status_class=\"5xx\"}[5m]))",
+            "legendFormat": "5xx {{route}}"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Duration p50",
+        "type": "timeseries",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "platform-prometheus"
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 8
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "platform-prometheus"
+            },
+            "expr": "histogram_quantile(0.50, sum by (route, le) (rate(http_request_duration_seconds_bucket{service=\"platform-api\"}[5m])))",
+            "legendFormat": "p50 {{route}}"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Duration p95",
+        "type": "timeseries",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "platform-prometheus"
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 8
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "platform-prometheus"
+            },
+            "expr": "histogram_quantile(0.95, sum by (route, le) (rate(http_request_duration_seconds_bucket{service=\"platform-api\"}[5m])))",
+            "legendFormat": "p95 {{route}}"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Duration p99",
+        "type": "timeseries",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "platform-prometheus"
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 16
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "platform-prometheus"
+            },
+            "expr": "histogram_quantile(0.99, sum by (route, le) (rate(http_request_duration_seconds_bucket{service=\"platform-api\"}[5m])))",
+            "legendFormat": "p99 {{route}}"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Saturation: in-flight requests",
+        "type": "timeseries",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "platform-prometheus"
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 16
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "datasource": {
+              "type": "prometheus",
+              "uid": "platform-prometheus"
+            },
+            "expr": "sum(http_requests_in_flight{service=\"platform-api\"})",
+            "legendFormat": "in-flight"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Trace waterfall (Tempo) \u2014 click a request to see its trace",
+        "type": "traces",
+        "datasource": {
+          "type": "tempo",
+          "uid": "platform-tempo"
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 24
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "datasource": {
+              "type": "tempo",
+              "uid": "platform-tempo"
+            },
+            "query": "{ service.name = \"platform-api\" }",
+            "queryType": "traceql"
+          }
+        ],
+        "options": {
+          "tracesToLogs": {
+            "datasourceUid": "platform-loki",
+            "tags": ["service.name"],
+            "filterByTraceID": true,
+            "mapTagNameUsed": "service.name"
+          }
+        }
+      }
+    ]
+  }
+}
