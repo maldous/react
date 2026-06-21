@@ -568,12 +568,17 @@ services:
   prometheus:
     image: prom/prometheus:v2.54.1
     profiles: [observability-provider]
+    entrypoint:
+      - /bin/sh
+      - -ec
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    environment:
+      PLATFORM_API_PORT: ${PLATFORM_API_PORT:-3001}
     command:
-      - "--config.file=/etc/prometheus/prometheus.yml"
-      - "--storage.tsdb.path=/prometheus"
-      - "--web.enable-lifecycle"
+      - |
+        sed "s/__PLATFORM_API_PORT__/${PLATFORM_API_PORT:-3001}/g" /etc/prometheus/prometheus.yml > /tmp/prometheus.yml
+        exec /bin/prometheus --config.file=/tmp/prometheus.yml --storage.tsdb.path=/prometheus --web.enable-lifecycle
     ports:
       - "${PROMETHEUS_PORT:-9090}:9090"
     volumes:

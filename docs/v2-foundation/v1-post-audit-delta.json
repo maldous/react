@@ -22,11 +22,29 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
+      "path": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
       "path": "apps/platform-api/src/config/app-config.ts",
       "introducingCommit": "458785fbbcc1deb861347a5574b5d31e2ae20ae7",
       "purpose": "post-audit addition",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "apps/platform-api/src/config/app-config.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/config/provider-readiness-config.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/config/provider-readiness-config.ts",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"]
     },
@@ -45,6 +63,15 @@
       "purpose": "post-audit addition",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "apps/platform-api/tests/unit/app-config.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/in-memory-workflow-orchestrator.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/in-memory-workflow-orchestrator.test.ts",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"]
     },
@@ -72,6 +99,33 @@
       "purpose": "post-audit addition",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "apps/react-enterprise-app/src/config/web-config.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/lago-billing-provider.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/lago-billing-provider.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/temporal-workflow-provider.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/temporal-workflow-provider.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/windmill-automation-provider.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/windmill-automation-provider.test.ts",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"]
     },
