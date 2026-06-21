@@ -45,6 +45,7 @@ import {
 import { isSlugReserved } from "@platform/domain-identity";
 import { getApplicationPool, getProvisioningConfig } from "./dependencies.ts";
 import { PostgresTenantCredentialStore } from "../adapters/postgres-tenant-credential-store.ts";
+import { assertTenantResidencyPlacement } from "../usecases/data-residency.ts";
 
 const log = createLogger({ name: "provisioning" });
 
@@ -507,6 +508,27 @@ async function provisionStorage(
     log.info({ organisationId }, "provisioning.storage.skipped");
     return;
   }
+  await assertTenantResidencyPlacement(
+    {
+      organisationId,
+      targetRegion: config.region ?? platformCfg.s3DefaultRegion,
+      actorId: organisationId,
+    },
+    {
+      repository: {
+        async getResidencyTag(orgId: string): Promise<string | null> {
+          const { rows } = await getApplicationPool().query<{ residency_tag: string | null }>(
+            "SELECT residency_tag FROM public.organisations WHERE id = $1 LIMIT 1",
+            [orgId]
+          );
+          return rows[0]?.residency_tag ?? null;
+        },
+        async setResidencyTag(): Promise<void> {
+          throw new Error("not used");
+        },
+      },
+    }
+  );
 
   const adapter = new S3ProvisioningAdapter({
     bucket: config.bucket ?? platformCfg.s3DefaultBucket,

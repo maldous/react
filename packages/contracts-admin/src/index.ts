@@ -211,6 +211,72 @@ export const ToggleFeatureRequestSchema = z.object({ enabled: z.boolean() }).str
 export type ToggleFeatureRequest = z.infer<typeof ToggleFeatureRequestSchema>;
 
 // ---------------------------------------------------------------------------
+// Billing catalogue — GET/POST /api/admin|org/billing/catalog*
+// ---------------------------------------------------------------------------
+
+export const BillingProductSchema = z.object({
+  productId: z.string(),
+  name: z.string(),
+  description: z.string().nullable(),
+  isActive: z.boolean(),
+  createdAt: z.string().nullable(),
+});
+export type BillingProduct = z.infer<typeof BillingProductSchema>;
+
+export const BillingPlanSchema = z.object({
+  planId: z.string(),
+  productId: z.string(),
+  name: z.string(),
+  currency: z.string(),
+  billingPeriod: z.enum(["monthly", "annual", "one_time"]),
+  isActive: z.boolean(),
+  createdAt: z.string().nullable(),
+});
+export type BillingPlan = z.infer<typeof BillingPlanSchema>;
+
+export const BillingPriceSchema = z.object({
+  priceId: z.string(),
+  planId: z.string(),
+  version: z.number().int().nonnegative(),
+  priceType: z.enum(["flat", "per_unit", "tiered"]),
+  unitAmount: z.number().int().nonnegative(),
+  currency: z.string(),
+  billingPeriod: z.enum(["monthly", "annual", "one_time"]),
+  isActive: z.boolean(),
+  createdAt: z.string().nullable(),
+});
+export type BillingPrice = z.infer<typeof BillingPriceSchema>;
+
+export const CreateBillingProductRequestSchema = z
+  .object({
+    name: z.string().min(1),
+    description: z.string().nullable().optional(),
+  })
+  .strict();
+export type CreateBillingProductRequest = z.infer<typeof CreateBillingProductRequestSchema>;
+
+export const CreateBillingPlanRequestSchema = z
+  .object({
+    productId: z.string(),
+    name: z.string().min(1),
+    currency: z.string().min(3).max(3),
+    billingPeriod: z.enum(["monthly", "annual", "one_time"]),
+  })
+  .strict();
+export type CreateBillingPlanRequest = z.infer<typeof CreateBillingPlanRequestSchema>;
+
+export const CreateBillingPriceRequestSchema = z
+  .object({
+    planId: z.string(),
+    priceType: z.enum(["flat", "per_unit", "tiered"]),
+    unitAmount: z.number().int().nonnegative(),
+    currency: z.string().min(3).max(3),
+    billingPeriod: z.enum(["monthly", "annual", "one_time"]),
+  })
+  .strict();
+export type CreateBillingPriceRequest = z.infer<typeof CreateBillingPriceRequestSchema>;
+
+// ---------------------------------------------------------------------------
 // Auth settings (read shapes the admin UI consumes)
 // ---------------------------------------------------------------------------
 

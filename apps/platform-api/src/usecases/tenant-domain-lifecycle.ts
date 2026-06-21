@@ -16,8 +16,8 @@
  *   - routing_local_active is set ONLY when the live local probe proved the
  *     expected tenant context; the probe never claims public routing
  *   - canonical requires verified + auth-client-active + proven routing, and
- *     NEVER changes redirect behaviour (redirect_policy stays no_redirect
- *     until a redirect implementation is explicitly proven)
+ *     flips redirect_policy to redirect_slug_to_canonical as the local
+ *     cutover proof once canonical is set
  */
 
 import { createAuditEvent, type AuditEventPort } from "@platform/audit-events";

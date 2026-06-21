@@ -311,6 +311,30 @@ describe("api route table: admin tenant announcements", () => {
   });
 });
 
+describe("api route table: billing catalog", () => {
+  it("exposes the billing catalog routes", () => {
+    assert.ok(
+      routes.find((r) => r.path === "/api/admin/billing/catalog/products" && r.method === "GET")
+    );
+    assert.ok(
+      routes.find((r) => r.path === "/api/admin/billing/catalog/products" && r.method === "POST")
+    );
+    assert.ok(
+      routes.find((r) => r.path === "/api/admin/billing/catalog/plans" && r.method === "GET")
+    );
+    assert.ok(
+      routes.find((r) => r.path === "/api/admin/billing/catalog/plans" && r.method === "POST")
+    );
+    assert.ok(
+      routes.find((r) => r.path === "/api/admin/billing/catalog/prices" && r.method === "GET")
+    );
+    assert.ok(
+      routes.find((r) => r.path === "/api/admin/billing/catalog/prices" && r.method === "POST")
+    );
+    assert.ok(routes.find((r) => r.path === "/api/org/billing/catalog" && r.method === "GET"));
+  });
+});
+
 describe("api route table: admin tenant announcement list", () => {
   it("exposes the tenant announcement list route", () => {
     const route = routes.find(

@@ -2,9 +2,13 @@
 
 Generated for git evidence (ADR-0075 / ADR-ACT-0285). DO NOT EDIT — regenerate via `npm run e2e:coverage:validate`.
 
-- Result: **PASSED**
-- Failures (block make all): 0
-- Reported gaps (honest, non-blocking this phase): 54
+- Result: **FAILED**
+- Failures (block make all): 1
+- Reported gaps (honest, non-blocking this phase): 53
+
+## Failures
+
+- ❌ delivered/locally-proven capability 'abac-pdp' (delivered) has NO E2E suite and NO exemption
 
 ## Reported gaps (tracked, not yet blocking)
 
@@ -36,7 +40,6 @@ Generated for git evidence (ADR-0075 / ADR-ACT-0285). DO NOT EDIT — regenerate
 - ⚠️ capability 'history-read-model' (locally proven) exempt: Admin history journey E2E lands in ADR-ACT-0285 Phase 6 (feature-suite); covered by runtime-proof today.
 - ⚠️ capability 'groups' status=api-only — not required to have E2E (honest report)
 - ⚠️ capability 'sub-organisations' status=api-only — not required to have E2E (honest report)
-- ⚠️ capability 'abac-pdp' status=partial — not required to have E2E (honest report)
 - ⚠️ capability 'delegated-admin-roles' status=deferred — not required to have E2E (honest report)
 - ⚠️ capability 'support-mode-breakglass' status=partial — not required to have E2E (honest report)
 - ⚠️ capability 'claim-group-mapping' status=partial — not required to have E2E (honest report)
@@ -44,8 +47,8 @@ Generated for git evidence (ADR-0075 / ADR-ACT-0285). DO NOT EDIT — regenerate
 - ⚠️ capability 'mfa-session-policy' status=partial — not required to have E2E (honest report)
 - ⚠️ capability 'branding-theme' status=partial — not required to have E2E (honest report)
 - ⚠️ capability 'custom-domains-dns-tls' status=partial — not required to have E2E (honest report)
-- ⚠️ capability 'product-catalog-plans-prices' status=missing — not required to have E2E (honest report)
-- ⚠️ capability 'subscriptions-invoices-payments' status=missing — not required to have E2E (honest report)
+- ⚠️ capability 'product-catalog-plans-prices' status=partial — not required to have E2E (honest report)
+- ⚠️ capability 'subscriptions-invoices-payments' status=partial — not required to have E2E (honest report)
 - ⚠️ capability 'pitr-retention-legalhold-residency' status=missing — not required to have E2E (honest report)
 - ⚠️ capability 'data-governance-catalog-lineage-pii-dsr' status=missing — not required to have E2E (honest report)
 - ⚠️ capability 'import-export' status=missing — not required to have E2E (honest report)
@@ -61,13 +64,13 @@ Generated for git evidence (ADR-0075 / ADR-ACT-0285). DO NOT EDIT — regenerate
 - ⚠️ capability 'tenant-lifecycle-suspend-delete-export' status=partial — not required to have E2E (honest report)
 - ⚠️ capability 'support-tickets-health-comms' status=missing — not required to have E2E (honest report)
 - ⚠️ capability 'service-catalog-provider-model' status=partial — not required to have E2E (honest report)
-- ⚠️ proof scripts present: 95 (capability-evidence mapping audited in ADR-ACT-0285 Phase 5)
+- ⚠️ proof scripts present: 100 (capability-evidence mapping audited in ADR-ACT-0285 Phase 5)
 
 ## Summary
 
 - testFiles: 24
 - suites: 24
-- delivered+locallyProven capabilities: 33
+- delivered+locallyProven capabilities: 34
 - coveredCapabilities: 7
 - exemptCapabilities: 26
 - adminNavRoutes: 22

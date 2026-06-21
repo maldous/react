@@ -99,6 +99,33 @@
     "failureEvidence": "node:test assertion failure output (spec reporter)"
   },
   {
+    "id": "apps/platform-api/tests/unit/support-announcements.test.ts",
+    "path": "apps/platform-api/tests/unit/support-announcements.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/support-tickets.test.ts",
+    "path": "apps/platform-api/tests/unit/support-tickets.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
+    "path": "apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (make check)",
+    "failureEvidence": "node:test assertion failure output (spec reporter)"
+  },
+  {
     "id": "apps/platform-api/tests/unit/api-keys.test.ts",
     "path": "apps/platform-api/tests/unit/api-keys.test.ts",
     "kind": "unit",
@@ -3725,6 +3752,42 @@
     "failureEvidence": "proof script assertion output"
   },
   {
+    "id": "package.json#proof:billing-catalog",
+    "path": "package.json#proof:billing-catalog",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:billing-catalog)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:data-governance",
+    "path": "package.json#proof:data-governance",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:data-governance)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:data-portability",
+    "path": "package.json#proof:data-portability",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:data-portability)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:tenant-storage-objects",
+    "path": "package.json#proof:tenant-storage-objects",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:tenant-storage-objects)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
     "id": "package.json#proof:billing-provider",
     "path": "package.json#proof:billing-provider",
     "kind": "proof",
@@ -3887,6 +3950,24 @@
     "failureEvidence": "proof script assertion output"
   },
   {
+    "id": "package.json#proof:workflow-engine",
+    "path": "package.json#proof:workflow-engine",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "hermetic-domain proof script (npm run proof:workflow-engine)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:approval-workflow",
+    "path": "package.json#proof:approval-workflow",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "hermetic-domain proof script (npm run proof:approval-workflow)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
     "id": "package.json#proof:support-approval",
     "path": "package.json#proof:support-approval",
     "kind": "proof",
@@ -3930,5 +4011,23 @@
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:composed-provider-runtime-closure)",
     "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "package.json#proof:data-residency",
+    "path": "package.json#proof:data-residency",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (local proof script)",
+    "stageCoverage": "proof script (npm run proof:data-residency)",
+    "failureEvidence": "proof script assertion output"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/data-residency.test.ts",
+    "path": "apps/platform-api/tests/unit/data-residency.test.ts",
+    "kind": "test",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "node:test unit harness",
+    "stageCoverage": "unit test",
+    "failureEvidence": "assertion output"
   }
 ]

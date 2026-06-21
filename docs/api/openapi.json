@@ -3,7 +3,7 @@
   "info": {
     "title": "Enterprise Platform REST API",
     "version": "0.1.0",
-    "description": "REST supplementary routes for the enterprise React platform BFF. GraphQL is the primary client boundary per ADR-0013; these routes cover health probes, auth, session management, FQDN-based tenant routing, per-tenant branding, auth settings self-service, and tenant provisioning. ADRs 0028\u20130031 govern the multi-tenant architecture."
+    "description": "REST supplementary routes for the enterprise React platform BFF. GraphQL is the primary client boundary per ADR-0013; these routes cover health probes, auth, session management, FQDN-based tenant routing, per-tenant branding, auth settings self-service, and tenant provisioning. ADRs 0028–0031 govern the multi-tenant architecture."
   },
   "servers": [
     {
@@ -479,10 +479,10 @@
     },
     "/internal/auth/forward": {
       "get": {
-        "summary": "Caddy forward_auth gate \u2014 internal only",
+        "summary": "Caddy forward_auth gate — internal only",
         "operationId": "forwardAuth",
         "tags": ["Internal"],
-        "description": "Called by Caddy before proxying admin/tool UIs. NOT externally reachable \u2014 blocked in Caddyfile public blocks. Requires X-Internal-Secret header. Returns 200 (allow), 401 (no session), 403 (forbidden), or 503 (misconfigured). ADR-0029, ADR-0030, ADR-0031.",
+        "description": "Called by Caddy before proxying admin/tool UIs. NOT externally reachable — blocked in Caddyfile public blocks. Requires X-Internal-Secret header. Returns 200 (allow), 401 (no session), 403 (forbidden), or 503 (misconfigured). ADR-0029, ADR-0030, ADR-0031.",
         "parameters": [
           {
             "name": "resource",
@@ -613,7 +613,7 @@
         "summary": "Per-tenant branding configuration",
         "operationId": "getTheme",
         "tags": ["Tenant"],
-        "description": "Returns theme config (logo, colours, displayName) resolved from the tenant schema via Host header. Falls back to platform defaults if tenant not found or schema not seeded. ADR-0029 \u00a74.",
+        "description": "Returns theme config (logo, colours, displayName) resolved from the tenant schema via Host header. Falls back to platform defaults if tenant not found or schema not seeded. ADR-0029 §4.",
         "responses": {
           "200": {
             "description": "Theme config",
@@ -647,7 +647,7 @@
         "summary": "List tenant identity providers",
         "operationId": "listIdps",
         "tags": ["Auth Settings"],
-        "description": "Returns configured IdPs for the tenant realm derived from the Host header. Requires admin.access permission. ADR-0030 \u00a71b.",
+        "description": "Returns configured IdPs for the tenant realm derived from the Host header. Requires admin.access permission. ADR-0030 §1b.",
         "security": [
           {
             "sessionCookie": []
@@ -731,7 +731,7 @@
         "summary": "Create or update identity provider",
         "operationId": "upsertIdp",
         "tags": ["Auth Settings"],
-        "description": "Creates or updates an IdP in the tenant Keycloak realm. Realm derived from Host header \u2014 never from body. ADR-0030 \u00a71b.",
+        "description": "Creates or updates an IdP in the tenant Keycloak realm. Realm derived from Host header — never from body. ADR-0030 §1b.",
         "security": [
           {
             "sessionCookie": []
@@ -1342,7 +1342,7 @@
         "summary": "Provision a sub-tenant (not yet implemented)",
         "operationId": "createSubTenant",
         "tags": ["Admin"],
-        "description": "Hierarchical tenant provisioning \u2014 tracked in ADR-ACT-0143. Returns 501 until implemented.",
+        "description": "Hierarchical tenant provisioning — tracked in ADR-ACT-0143. Returns 501 until implemented.",
         "security": [
           {
             "sessionCookie": []
@@ -1972,7 +1972,7 @@
             }
           },
           "409": {
-            "description": "DOMAIN_ALREADY_CLAIMED \u2014 the domain is enabled for another organisation; no token is issued (ADR-ACT-0236)",
+            "description": "DOMAIN_ALREADY_CLAIMED — the domain is enabled for another organisation; no token is issued (ADR-ACT-0236)",
             "content": {
               "application/json": {
                 "schema": {
@@ -2044,7 +2044,7 @@
             }
           },
           "409": {
-            "description": "DOMAIN_ALREADY_CLAIMED \u2014 the domain is enabled for another organisation; verification is refused before any DNS lookup (ADR-ACT-0236)",
+            "description": "DOMAIN_ALREADY_CLAIMED — the domain is enabled for another organisation; verification is refused before any DNS lookup (ADR-ACT-0236)",
             "content": {
               "application/json": {
                 "schema": {
@@ -5347,7 +5347,7 @@
             }
           },
           "409": {
-            "description": "DOMAIN_ALREADY_CLAIMED \u2014 the domain is enabled for another organisation; no token is issued (ADR-ACT-0236)",
+            "description": "DOMAIN_ALREADY_CLAIMED — the domain is enabled for another organisation; no token is issued (ADR-ACT-0236)",
             "content": {
               "application/json": {
                 "schema": {
@@ -5470,7 +5470,7 @@
             }
           },
           "409": {
-            "description": "DOMAIN_ALREADY_CLAIMED \u2014 the domain is enabled for another organisation; verification is refused before any DNS lookup (ADR-ACT-0236)",
+            "description": "DOMAIN_ALREADY_CLAIMED — the domain is enabled for another organisation; verification is refused before any DNS lookup (ADR-ACT-0236)",
             "content": {
               "application/json": {
                 "schema": {
@@ -6341,7 +6341,7 @@
         },
         "responses": {
           "201": {
-            "description": "Created \u2014 secret shown once",
+            "description": "Created — secret shown once",
             "content": {
               "application/json": {
                 "schema": {
@@ -7348,7 +7348,7 @@
       "get": {
         "summary": "Get the calling user's own profile",
         "operationId": "getMyProfile",
-        "description": "End-user self-service. The user_id is the session subject \u2014 own profile only. ADR-0068 / ADR-ACT-0260.",
+        "description": "End-user self-service. The user_id is the session subject — own profile only. ADR-0068 / ADR-ACT-0260.",
         "tags": ["Organisation"],
         "security": [
           {
@@ -8766,7 +8766,7 @@
       "patch": {
         "summary": "Transition an incident (system operator)",
         "operationId": "updateIncident",
-        "description": "Operator-only, audited lifecycle transition (open \u2192 acknowledged \u2192 resolved). ADR-0062 / ADR-ACT-0261.",
+        "description": "Operator-only, audited lifecycle transition (open → acknowledged → resolved). ADR-0062 / ADR-ACT-0261.",
         "tags": ["Admin"],
         "security": [
           {
@@ -11201,7 +11201,7 @@
       "get": {
         "summary": "Get per-subscription webhook delivery metrics",
         "operationId": "getOrgWebhookMetrics",
-        "description": "Returns delivery health counts (total/delivered/failed/dead/pending) + last status/timestamps. Safe metadata only \u2014 never payload, headers, or the signing secret. ADR-ACT-0226.",
+        "description": "Returns delivery health counts (total/delivered/failed/dead/pending) + last status/timestamps. Safe metadata only — never payload, headers, or the signing secret. ADR-ACT-0226.",
         "tags": ["Organisation"],
         "security": [
           {
@@ -11403,9 +11403,9 @@
     },
     "/api/org/platform/services/readiness": {
       "get": {
-        "summary": "Platform operations \u2014 local service readiness + workers",
+        "summary": "Platform operations — local service readiness + workers",
         "operationId": "getOrgPlatformServicesReadiness",
-        "description": "Read-only operator cockpit data: bounded service-specific health checks over a safe local-service allowlist (non-2xx or malformed structured bodies classify as degraded, no response as unreachable) + background-worker heartbeats + environment/version + viewerMode. Never returns secrets, DSNs, or raw env \u2014 only known-safe console URLs, classified per the ADR-ACT-0233 clickthrough policy under explicit host authority (ADR-ACT-0236): a tenant-resolved FQDN yields the tenant_operator view (routed tenant-safe links only, for every viewer); a system-admin on the apex host gets the system_operator view (direct-local labelled global links); a system-admin on any other host is refused 403 INVALID_OPERATIONS_ORIGIN. ADR-ACT-0228 / ADR-ACT-0235 / ADR-ACT-0236.",
+        "description": "Read-only operator cockpit data: bounded service-specific health checks over a safe local-service allowlist (non-2xx or malformed structured bodies classify as degraded, no response as unreachable) + background-worker heartbeats + environment/version + viewerMode. Never returns secrets, DSNs, or raw env — only known-safe console URLs, classified per the ADR-ACT-0233 clickthrough policy under explicit host authority (ADR-ACT-0236): a tenant-resolved FQDN yields the tenant_operator view (routed tenant-safe links only, for every viewer); a system-admin on the apex host gets the system_operator view (direct-local labelled global links); a system-admin on any other host is refused 403 INVALID_OPERATIONS_ORIGIN. ADR-ACT-0228 / ADR-ACT-0235 / ADR-ACT-0236.",
         "tags": ["Organisation"],
         "security": [
           {
@@ -11571,7 +11571,7 @@
       "get": {
         "summary": "Tenant control-plane readiness + capability map",
         "operationId": "getTenantReadiness",
-        "description": "Returns the enterprise control-plane capability inventory (implementation status) with each capability's per-tenant readiness + the aggregated overall status. Tenant-scoped (FQDN/session). Readiness is live-checked or invariant \u2014 never faked. ADR-0045.",
+        "description": "Returns the enterprise control-plane capability inventory (implementation status) with each capability's per-tenant readiness + the aggregated overall status. Tenant-scoped (FQDN/session). Readiness is live-checked or invariant — never faked. ADR-0045.",
         "tags": ["Organisation"],
         "security": [
           {
@@ -11963,7 +11963,7 @@
       "post": {
         "summary": "Mark a custom domain canonical for the tenant",
         "operationId": "setOrgDomainCanonical",
-        "description": "Marks a CANONICAL MARKER (primary display domain) \u2014 it never executes a redirect and never implies public cutover; the response carries redirectPolicy=no_redirect and redirectActive=false until a redirect implementation is explicitly proven (ADR-ACT-0236). Guards: verified ownership + active auth client + proven routing. At most one canonical domain per tenant. tenant.domains.write. ADR-ACT-0232.",
+        "description": "Marks a CANONICAL MARKER (primary display domain) — it never executes a redirect and never implies public cutover; the response carries redirectPolicy=no_redirect and redirectActive=false until a redirect implementation is explicitly proven (ADR-ACT-0236). Guards: verified ownership + active auth client + proven routing. At most one canonical domain per tenant. tenant.domains.write. ADR-ACT-0232.",
         "tags": ["Organisation"],
         "security": [
           {
@@ -12506,6 +12506,1194 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/api/auth/settings/lockout": {
+      "get": {
+        "summary": "GET /api/auth/settings/lockout",
+        "operationId": "getapiAuthSettingsLockout",
+        "tags": ["Public"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "PATCH /api/auth/settings/lockout",
+        "operationId": "patchapiAuthSettingsLockout",
+        "tags": ["Public"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/org/storage/objects": {
+      "get": {
+        "summary": "GET /api/org/storage/objects",
+        "operationId": "getapiOrgStorageObjects",
+        "tags": ["Organisation"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /api/org/storage/objects",
+        "operationId": "postapiOrgStorageObjects",
+        "tags": ["Organisation"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/tenants/:tenantId/announcements": {
+      "post": {
+        "summary": "POST /api/admin/tenants/:tenantId/announcements",
+        "operationId": "postapiAdminTenantsTenantIdAnnouncements",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "GET /api/admin/tenants/:tenantId/announcements",
+        "operationId": "getapiAdminTenantsTenantIdAnnouncements",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/support/tickets": {
+      "post": {
+        "summary": "POST /api/admin/support/tickets",
+        "operationId": "postapiAdminSupportTickets",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "GET /api/admin/support/tickets",
+        "operationId": "getapiAdminSupportTickets",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/support/health": {
+      "get": {
+        "summary": "GET /api/admin/support/health",
+        "operationId": "getapiAdminSupportHealth",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/tenants/:tenantId/export": {
+      "get": {
+        "summary": "GET /api/admin/tenants/:tenantId/export",
+        "operationId": "getapiAdminTenantsTenantIdExport",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/tenants/:tenantId/import": {
+      "post": {
+        "summary": "POST /api/admin/tenants/:tenantId/import",
+        "operationId": "postapiAdminTenantsTenantIdImport",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/tenants/:tenantId/suspend": {
+      "post": {
+        "summary": "POST /api/admin/tenants/:tenantId/suspend",
+        "operationId": "postapiAdminTenantsTenantIdSuspend",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/tenants/:tenantId/delete": {
+      "post": {
+        "summary": "POST /api/admin/tenants/:tenantId/delete",
+        "operationId": "postapiAdminTenantsTenantIdDelete",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/data/residency": {
+      "post": {
+        "summary": "POST /api/admin/data/residency",
+        "operationId": "postapiAdminDataResidency",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/billing/catalog/products": {
+      "get": {
+        "summary": "GET /api/admin/billing/catalog/products",
+        "operationId": "getapiAdminBillingCatalogProducts",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /api/admin/billing/catalog/products",
+        "operationId": "postapiAdminBillingCatalogProducts",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/org/billing/catalog": {
+      "get": {
+        "summary": "GET /api/org/billing/catalog",
+        "operationId": "getapiOrgBillingCatalog",
+        "tags": ["Organisation"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/billing/catalog/plans": {
+      "get": {
+        "summary": "GET /api/admin/billing/catalog/plans",
+        "operationId": "getapiAdminBillingCatalogPlans",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /api/admin/billing/catalog/plans",
+        "operationId": "postapiAdminBillingCatalogPlans",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/billing/catalog/prices": {
+      "get": {
+        "summary": "GET /api/admin/billing/catalog/prices",
+        "operationId": "getapiAdminBillingCatalogPrices",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /api/admin/billing/catalog/prices",
+        "operationId": "postapiAdminBillingCatalogPrices",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/governance/catalog": {
+      "get": {
+        "summary": "GET /api/admin/governance/catalog",
+        "operationId": "getapiAdminGovernanceCatalog",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /api/admin/governance/catalog",
+        "operationId": "postapiAdminGovernanceCatalog",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/governance/catalog/classify": {
+      "post": {
+        "summary": "POST /api/admin/governance/catalog/classify",
+        "operationId": "postapiAdminGovernanceCatalogClassify",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/governance/dsr": {
+      "get": {
+        "summary": "GET /api/admin/governance/dsr",
+        "operationId": "getapiAdminGovernanceDsr",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /api/admin/governance/dsr",
+        "operationId": "postapiAdminGovernanceDsr",
+        "tags": ["Admin"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
           }
         }
       }

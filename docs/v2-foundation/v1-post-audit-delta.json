@@ -112,6 +112,42 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
+      "path": "apps/platform-api/src/db/migrations/040-tenant-residency.sql",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/db/migrations/040-tenant-residency.sql",
+      "protectingTests": ["npm run proof:data-residency"],
+      "decisionRefs": ["ADR-ACT-0248", "ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/data-residency.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/data-residency.test.ts",
+      "protectingTests": ["npm run proof:data-residency"],
+      "decisionRefs": ["ADR-ACT-0248", "ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/data-residency.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/data-residency.ts",
+      "protectingTests": ["npm run proof:data-residency"],
+      "decisionRefs": ["ADR-ACT-0248", "ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/data-residency-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/data-residency-runtime-proof.ts",
+      "protectingTests": ["npm run proof:data-residency"],
+      "decisionRefs": ["ADR-ACT-0248", "ADR-ACT-0292"]
+    },
+    {
       "path": "apps/platform-api/tests/unit/temporal-workflow-provider.test.ts",
       "introducingCommit": "unknown",
       "purpose": "post-audit addition",
@@ -128,6 +164,33 @@
       "v2Target": "apps/platform-api/tests/unit/windmill-automation-provider.test.ts",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/db/migrations/038-support-announcements.sql",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/db/migrations/038-support-announcements.sql",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0251", "ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/support-announcements.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/support-announcements.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0251", "ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/support-announcements.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "carry",
+      "v2Target": "apps/platform-api/tests/unit/support-announcements.test.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/support-announcements.test.ts"],
+      "decisionRefs": ["ADR-ACT-0251", "ADR-ACT-0292"]
     },
     {
       "path": "docs/adr/0076-typed-composition-root-configuration-foundation.md",
@@ -1953,8 +2016,17 @@
       "purpose": "post-audit addition",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
-      "protectingTests": [],
+      "protectingTests": ["npm run proof:billing-control-route"],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
+      "protectingTests": ["npm run proof:billing-catalog"],
+      "decisionRefs": ["ADR-ACT-0241", "ADR-ACT-0292"]
     },
     {
       "path": "apps/platform-api/scripts/billing-provider-runtime-proof.ts",
@@ -1962,7 +2034,7 @@
       "purpose": "post-audit addition",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "apps/platform-api/scripts/billing-provider-runtime-proof.ts",
-      "protectingTests": [],
+      "protectingTests": ["npm run proof:billing-provider"],
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {

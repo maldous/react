@@ -88,6 +88,30 @@
     "retirementJustification": null
   },
   {
+    "v1Path": "apps/platform-api/tests/unit/support-announcements.test.ts",
+    "v2Path": "apps/platform-api/tests/unit/support-announcements.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/support-tickets.test.ts",
+    "v2Path": "apps/platform-api/tests/unit/support-tickets.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
+    "v2Path": "apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
     "v1Path": "apps/platform-api/tests/unit/api-keys.test.ts",
     "v2Path": "apps/platform-api/tests/unit/api-keys.test.ts",
     "migrationType": "carry",
@@ -3240,6 +3264,38 @@
     "retirementJustification": null
   },
   {
+    "v1Path": "package.json#proof:billing-catalog",
+    "v2Path": "package.json#proof:billing-catalog",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:data-governance",
+    "v2Path": "package.json#proof:data-governance",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:data-portability",
+    "v2Path": "package.json#proof:data-portability",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:tenant-storage-objects",
+    "v2Path": "package.json#proof:tenant-storage-objects",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
     "v1Path": "package.json#proof:billing-provider",
     "v2Path": "package.json#proof:billing-provider",
     "migrationType": "carry",
@@ -3384,6 +3440,22 @@
     "retirementJustification": null
   },
   {
+    "v1Path": "package.json#proof:workflow-engine",
+    "v2Path": "package.json#proof:workflow-engine",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:approval-workflow",
+    "v2Path": "package.json#proof:approval-workflow",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
     "v1Path": "package.json#proof:support-approval",
     "v2Path": "package.json#proof:support-approval",
     "migrationType": "carry",
@@ -3490,6 +3562,22 @@
   {
     "v1Path": "apps/platform-api/tests/unit/in-memory-workflow-orchestrator.test.ts",
     "v2Path": "apps/platform-api/tests/unit/in-memory-workflow-orchestrator.test.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:data-residency",
+    "v2Path": "package.json#proof:data-residency",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/tests/unit/data-residency.test.ts",
+    "v2Path": "apps/platform-api/tests/unit/data-residency.test.ts",
     "migrationType": "carry",
     "selectorsOrImportsChange": false,
     "becomesReusableContract": false,

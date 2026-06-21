@@ -155,7 +155,10 @@ import {
   unsetCanonicalDomain,
   type AuthClientDomainPort,
 } from "../usecases/tenant-domain-lifecycle.ts";
+import { suspendTenant, deleteTenant } from "../usecases/tenant-lifecycle.ts";
 import { z } from "zod";
+import { PostgresDataGovernanceAdapter } from "../adapters/postgres-data-governance.ts";
+import { PostgresStorageObjectRepository } from "../adapters/postgres-storage-object-repository.ts";
 
 // ---------------------------------------------------------------------------
 // AuthClientDomainPort over the existing vanity-domain Keycloak plumbing
@@ -898,6 +901,11 @@ const SetRetentionPolicyBodySchema = z.object({
 const DisableRetentionPolicyBodySchema = z.object({
   organisationId: z.uuid("organisationId must be a valid UUID"),
   resourceTable: z.enum(["audit_events", "tenant_invitations"]),
+});
+
+const SetResidencyBodySchema = z.object({
+  organisationId: z.uuid("organisationId must be a valid UUID"),
+  residencyTag: z.string().min(2).max(64),
 });
 
 // V1C-04 delegated-admin grant body (ADR-0063). organisationId comes from the
@@ -4143,6 +4151,57 @@ export const routes: Route[] = [
       res.json(200, result);
     },
   },
+  {
+    method: "GET",
+    path: "/api/org/storage/objects",
+    operationName: "org.storage.objects.list",
+    requiresAuth: true,
+    requiredPermission: "tenant.storage.read",
+    resource: "admin:storage",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) return res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+      const repo = new PostgresStorageObjectRepository(getApplicationPool());
+      res.json(200, await repo.listForTenant(tenantCtx.organisationId));
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/org/storage/objects",
+    operationName: "org.storage.objects.create",
+    requiresAuth: true,
+    requiredPermission: "tenant.storage.write",
+    resource: "admin:storage",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) return res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+      const body = z
+        .object({
+          objectKey: z.string().min(1),
+          contentType: z.string().min(1),
+          body: z.string().min(1),
+        })
+        .safeParse(req.body);
+      if (!body.success)
+        return res.json(400, { code: "VALIDATION_ERROR", message: body.error.message });
+      const { createStorageObject } = await import("../usecases/storage-objects.ts");
+      const repo = new PostgresStorageObjectRepository(getApplicationPool());
+      const storageDeps = buildStorageReadinessDeps(tenantCtx.organisationId);
+      if (!storageDeps.makeProbe) {
+        res.json(503, { code: "STORAGE_NOT_CONFIGURED", message: "Storage not configured" });
+        return;
+      }
+      const obj = await createStorageObject(
+        { organisationId: tenantCtx.organisationId, actorId: req.actor!.userId, ...body.data },
+        { repository: repo, storage: storageDeps.makeProbe().port, quotas: null as never }
+      );
+      res.json(201, obj);
+    },
+  },
   // ---------------------------------------------------------------------------
   // Tenant observability readiness (ADR-0050 / ADR-ACT-0219).
   // Read-only: a bounded, tenant-scoped Loki log query is the live check, plus a
@@ -6104,6 +6163,84 @@ export const routes: Route[] = [
       res.json(200, { items });
     },
   },
+  {
+    method: "POST",
+    path: "/api/admin/support/tickets",
+    operationName: "admin.support.tickets.create",
+    requiresAuth: true,
+    requiredPermission: "platform.support.write",
+    resource: "admin:support",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const parsed = z
+        .object({
+          organisationId: z.uuid(),
+          subject: z.string().min(1).max(200),
+          body: z.string().min(1).max(2000),
+        })
+        .strict()
+        .safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid request body",
+        });
+        return;
+      }
+      const pool = getApplicationPool();
+      const { createSupportTicket } = await import("../usecases/support-tickets.ts");
+      res.json(
+        201,
+        await createSupportTicket(
+          { ...parsed.data, actorId: req.actor!.userId, actorRoles: req.actor!.roles },
+          { pool, audit: createPostgresAuditEventPort(pool) }
+        )
+      );
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/support/tickets",
+    operationName: "admin.support.tickets.list",
+    requiresAuth: true,
+    requiredPermission: "platform.support.read",
+    resource: "admin:support",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const organisationId =
+        new URL(req.raw.url ?? "", "http://localhost").searchParams.get("organisationId") ?? "";
+      if (!UUID_RE.test(organisationId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const { listSupportTickets } = await import("../usecases/support-tickets.ts");
+      res.json(200, {
+        items: await listSupportTickets(organisationId, { pool: getApplicationPool() }),
+      });
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/support/health",
+    operationName: "admin.support.health",
+    requiresAuth: true,
+    requiredPermission: "platform.support.read",
+    resource: "admin:support",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const organisationId =
+        new URL(req.raw.url ?? "", "http://localhost").searchParams.get("organisationId") ?? "";
+      if (!UUID_RE.test(organisationId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const { getCustomerHealth } = await import("../usecases/support-tickets.ts");
+      res.json(200, await getCustomerHealth(organisationId, { pool: getApplicationPool() }));
+    },
+  },
   // ---------------------------------------------------------------------------
   // Observability — metric signals + alert rules + incidents (Phase 7, ADR-0062 /
   // ADR-ACT-0261). Operator-only. Signal registration + sample recording are
@@ -6913,6 +7050,89 @@ export const routes: Route[] = [
       });
     },
   },
+  {
+    method: "POST",
+    path: "/api/admin/tenants/:tenantId/import",
+    operationName: "admin.tenants.import",
+    requiresAuth: true,
+    requiredPermission: "platform.audit.read_all",
+    resource: "admin:history",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      if (!UUID_RE.test(tenantId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const body = z.object({ archive: z.string().min(1) }).safeParse(req.body);
+      if (!body.success) {
+        res.json(400, { code: "VALIDATION_ERROR", message: body.error.message });
+        return;
+      }
+      const { verifyPortableTenantArchive } = await import("../usecases/data-portability.ts");
+      const archive = Buffer.from(body.data.archive, "base64");
+      const manifest = verifyPortableTenantArchive(archive);
+      res.json(200, {
+        tenantId,
+        imported: true,
+        schemaVersion: manifest.schemaVersion,
+        entries: manifest.entries.length,
+      });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/tenants/:tenantId/suspend",
+    operationName: "admin.tenants.suspend",
+    requiresAuth: true,
+    requiredPermission: "platform.tenants.delete",
+    resource: "admin:tenants",
+    umaScope: "delete" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      if (!UUID_RE.test(tenantId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const pool = getApplicationPool();
+      res.json(
+        200,
+        await suspendTenant(
+          tenantId,
+          { actorId: req.actor!.userId, actorRoles: req.actor!.roles },
+          { pool, audit: createPostgresAuditEventPort(pool) }
+        )
+      );
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/tenants/:tenantId/delete",
+    operationName: "admin.tenants.delete",
+    requiresAuth: true,
+    requiredPermission: "platform.tenants.delete",
+    resource: "admin:tenants",
+    umaScope: "delete" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantId = req.params["tenantId"] ?? "";
+      if (!UUID_RE.test(tenantId)) {
+        res.json(400, { code: "VALIDATION_ERROR", message: "Invalid tenant id" });
+        return;
+      }
+      const pool = getApplicationPool();
+      res.json(
+        200,
+        await deleteTenant(
+          tenantId,
+          { actorId: req.actor!.userId, actorRoles: req.actor!.roles },
+          { pool, audit: createPostgresAuditEventPort(pool) }
+        )
+      );
+    },
+  },
   // -------------------------------------------------------------------
   // V1C-12c Legal Hold operator routes (ADR-0064 / V1C-12c, decisionRef V1C-12c).
   // Sole platform owner of legal hold; sole consumer seam for retention (V1C-12b)
@@ -7198,6 +7418,61 @@ export const routes: Route[] = [
     },
   },
   {
+    method: "POST",
+    path: "/api/admin/data/residency",
+    operationName: "admin.data.residency.set",
+    requiresAuth: true,
+    requiredPermission: "platform.data.write",
+    resource: "admin:data",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const { setTenantResidency } = await import("../usecases/data-residency.ts");
+      const parsed = SetResidencyBodySchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.json(400, {
+          code: "VALIDATION_ERROR",
+          message: parsed.error.issues[0]?.message ?? "Invalid request body",
+        });
+        return;
+      }
+      const r = await setTenantResidency(
+        {
+          organisationId: parsed.data.organisationId,
+          residencyTag: parsed.data.residencyTag,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        {
+          repository: {
+            async getResidencyTag(orgId: string): Promise<string | null> {
+              const { rows } = await getApplicationPool().query<{ residency_tag: string | null }>(
+                "SELECT residency_tag FROM public.organisations WHERE id = $1 LIMIT 1",
+                [orgId]
+              );
+              return rows[0]?.residency_tag ?? null;
+            },
+            async setResidencyTag(orgId: string, residencyTag: string): Promise<void> {
+              await getApplicationPool().query(
+                "UPDATE public.organisations SET residency_tag = $2, updated_at = now() WHERE id = $1",
+                [orgId, residencyTag]
+              );
+            },
+          },
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+        }
+      );
+      if (r.kind === "invalid") {
+        res.json(400, { code: "VALIDATION_ERROR", message: r.message });
+        return;
+      }
+      res.json(200, { organisationId: parsed.data.organisationId, residencyTag: r.residencyTag });
+    },
+  },
+  {
     method: "GET",
     path: "/api/admin/billing/readiness",
     operationName: "admin.billing.readiness",
@@ -7223,6 +7498,274 @@ export const routes: Route[] = [
     handler: async (_req, res) => {
       const { getBillingControlReport } = await import("../usecases/billing-control.ts");
       res.json(200, await getBillingControlReport());
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/billing/catalog/products",
+    operationName: "admin.billing.catalog.products.list",
+    requiresAuth: true,
+    requiredPermission: "platform.billing.*",
+    resource: "admin:billing",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (_req, res) => {
+      const { listBillingCatalogProducts } = await import("../usecases/billing-catalog.ts");
+      const { PostgresBillingCatalogAdapter } =
+        await import("../adapters/postgres-billing-catalog.ts");
+      res.json(200, {
+        products: await listBillingCatalogProducts({
+          catalog: new PostgresBillingCatalogAdapter(getApplicationPool()),
+        }),
+      });
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/org/billing/catalog",
+    operationName: "org.billing.catalog.get",
+    requiresAuth: true,
+    requiredPermission: "tenant.billing.read",
+    resource: "tenant:billing",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (_req, res) => {
+      const { listBillingCatalogProducts, listBillingCatalogPlans, listBillingCatalogPrices } =
+        await import("../usecases/billing-catalog.ts");
+      const { PostgresBillingCatalogAdapter } =
+        await import("../adapters/postgres-billing-catalog.ts");
+      const catalog = new PostgresBillingCatalogAdapter(getApplicationPool());
+      res.json(200, {
+        products: await listBillingCatalogProducts({ catalog }),
+        plans: await listBillingCatalogPlans({ catalog }),
+        prices: await listBillingCatalogPrices({ catalog }),
+      });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/billing/catalog/products",
+    operationName: "admin.billing.catalog.products.create",
+    requiresAuth: true,
+    requiredPermission: "platform.billing.*",
+    resource: "admin:billing",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const { CreateBillingProductRequestSchema } = await import("@platform/contracts-admin");
+      const { createBillingCatalogProduct } = await import("../usecases/billing-catalog.ts");
+      const { PostgresBillingCatalogAdapter } =
+        await import("../adapters/postgres-billing-catalog.ts");
+      const body = CreateBillingProductRequestSchema.safeParse(req.body);
+      if (!body.success)
+        return res.json(400, { code: "VALIDATION_ERROR", message: body.error.message });
+      const product = await createBillingCatalogProduct(
+        { ...body.data, actorId: req.actor!.userId },
+        { catalog: new PostgresBillingCatalogAdapter(getApplicationPool()) }
+      );
+      res.json(201, { product });
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/billing/catalog/plans",
+    operationName: "admin.billing.catalog.plans.list",
+    requiresAuth: true,
+    requiredPermission: "platform.billing.*",
+    resource: "admin:billing",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const { listBillingCatalogPlans } = await import("../usecases/billing-catalog.ts");
+      const { PostgresBillingCatalogAdapter } =
+        await import("../adapters/postgres-billing-catalog.ts");
+      const url = new URL(req.raw.url ?? "", "http://localhost");
+      const productId = url.searchParams.get("productId") ?? undefined;
+      res.json(200, {
+        plans: await listBillingCatalogPlans(
+          { catalog: new PostgresBillingCatalogAdapter(getApplicationPool()) },
+          productId
+        ),
+      });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/billing/catalog/plans",
+    operationName: "admin.billing.catalog.plans.create",
+    requiresAuth: true,
+    requiredPermission: "platform.billing.*",
+    resource: "admin:billing",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const { CreateBillingPlanRequestSchema } = await import("@platform/contracts-admin");
+      const { createBillingCatalogPlan } = await import("../usecases/billing-catalog.ts");
+      const { PostgresBillingCatalogAdapter } =
+        await import("../adapters/postgres-billing-catalog.ts");
+      const body = CreateBillingPlanRequestSchema.safeParse(req.body);
+      if (!body.success)
+        return res.json(400, { code: "VALIDATION_ERROR", message: body.error.message });
+      const plan = await createBillingCatalogPlan(
+        { ...body.data, actorId: req.actor!.userId },
+        { catalog: new PostgresBillingCatalogAdapter(getApplicationPool()) }
+      );
+      res.json(201, { plan });
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/billing/catalog/prices",
+    operationName: "admin.billing.catalog.prices.list",
+    requiresAuth: true,
+    requiredPermission: "platform.billing.*",
+    resource: "admin:billing",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const { listBillingCatalogPrices } = await import("../usecases/billing-catalog.ts");
+      const { PostgresBillingCatalogAdapter } =
+        await import("../adapters/postgres-billing-catalog.ts");
+      const url = new URL(req.raw.url ?? "", "http://localhost");
+      const planId = url.searchParams.get("planId") ?? undefined;
+      res.json(200, {
+        prices: await listBillingCatalogPrices(
+          { catalog: new PostgresBillingCatalogAdapter(getApplicationPool()) },
+          planId
+        ),
+      });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/billing/catalog/prices",
+    operationName: "admin.billing.catalog.prices.create",
+    requiresAuth: true,
+    requiredPermission: "platform.billing.*",
+    resource: "admin:billing",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const { CreateBillingPriceRequestSchema } = await import("@platform/contracts-admin");
+      const { createBillingCatalogPrice } = await import("../usecases/billing-catalog.ts");
+      const { PostgresBillingCatalogAdapter } =
+        await import("../adapters/postgres-billing-catalog.ts");
+      const body = CreateBillingPriceRequestSchema.safeParse(req.body);
+      if (!body.success)
+        return res.json(400, { code: "VALIDATION_ERROR", message: body.error.message });
+      const price = await createBillingCatalogPrice(
+        { ...body.data, actorId: req.actor!.userId },
+        { catalog: new PostgresBillingCatalogAdapter(getApplicationPool()) }
+      );
+      res.json(201, { price });
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/governance/catalog",
+    operationName: "admin.governance.catalog.list",
+    requiresAuth: true,
+    requiredPermission: "platform.governance.*",
+    resource: "admin:governance",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (_req, res) => {
+      const port = new PostgresDataGovernanceAdapter(getApplicationPool());
+      res.json(200, {
+        datasets: await port.listDatasets(),
+        classifications: await port.listClassifications(),
+      });
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/governance/catalog",
+    operationName: "admin.governance.catalog.create",
+    requiresAuth: true,
+    requiredPermission: "platform.governance.*",
+    resource: "admin:governance",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const body = z
+        .object({
+          owner: z.string().min(1),
+          classification: z.enum(["none", "pii", "sensitive"]),
+          lineageEdges: z.array(z.string()).optional(),
+        })
+        .safeParse(req.body);
+      if (!body.success)
+        return res.json(400, { code: "VALIDATION_ERROR", message: body.error.message });
+      const port = new PostgresDataGovernanceAdapter(getApplicationPool());
+      res.json(201, await port.createDataset({ ...body.data, actorId: req.actor!.userId }));
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/governance/catalog/classify",
+    operationName: "admin.governance.catalog.classify",
+    requiresAuth: true,
+    requiredPermission: "platform.governance.*",
+    resource: "admin:governance",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const body = z
+        .object({
+          datasetId: z.uuid(),
+          columnName: z.string().min(1),
+          sampleValue: z.string().min(1),
+        })
+        .safeParse(req.body);
+      if (!body.success)
+        return res.json(400, { code: "VALIDATION_ERROR", message: body.error.message });
+      const port = new PostgresDataGovernanceAdapter(getApplicationPool());
+      res.json(201, await port.classifyColumn({ ...body.data, actorId: req.actor!.userId }));
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/admin/governance/dsr",
+    operationName: "admin.governance.dsr.list",
+    requiresAuth: true,
+    requiredPermission: "platform.governance.*",
+    resource: "admin:governance",
+    umaScope: "read" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool()).catch(
+        () => null
+      );
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const port = new PostgresDataGovernanceAdapter(getApplicationPool());
+      res.json(200, await port.listDsrs(tenantCtx.organisationId));
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/governance/dsr",
+    operationName: "admin.governance.dsr.create",
+    requiresAuth: true,
+    requiredPermission: "platform.governance.*",
+    resource: "admin:governance",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const body = z
+        .object({
+          organisationId: z.uuid(),
+          subjectId: z.string().min(1),
+          type: z.enum(["access", "erasure", "portability"]),
+          reason: z.string().min(8),
+        })
+        .safeParse(req.body);
+      if (!body.success)
+        return res.json(400, { code: "VALIDATION_ERROR", message: body.error.message });
+      const port = new PostgresDataGovernanceAdapter(getApplicationPool());
+      res.json(201, await port.createDsr({ ...body.data, actorId: req.actor!.userId }));
     },
   },
   {

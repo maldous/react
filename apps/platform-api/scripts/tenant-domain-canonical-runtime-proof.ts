@@ -4,8 +4,8 @@
  * Proves the canonical state machine against the LIVE local Postgres:
  *   1. canonical is REFUSED until ownership is verified, the auth client is
  *      active, and routing is proven (guards, in order)
- *   2. canonical succeeds for a fully proven domain; redirect policy stays
- *      no_redirect (no redirect behaviour exists — none is claimed)
+ *   2. canonical succeeds for a fully proven domain; redirect policy flips to
+ *      redirect_slug_to_canonical to prove the local cutover path
  *   3. setting canonical on a second domain atomically replaces the first
  *      (≤1 canonical per tenant, enforced by the partial unique index too)
  *   4. unset clears the flag
@@ -91,7 +91,7 @@ async function main(): Promise<void> {
     r = await setCanonicalDomain({ organisationId: orgId, domain: d1, ...actor }, deps);
     check("canonical refused while routing unproven", r.kind === "routing_not_proven", r.kind);
 
-    // 2. Fully proven (LOCAL routing) → canonical ok; policy stays no_redirect.
+    // 2. Fully proven (LOCAL routing) → canonical ok; policy flips to redirect.
     await registry.markRoutingLocalActive(orgId, d1);
     r = await setCanonicalDomain({ organisationId: orgId, domain: d1, ...actor }, deps);
     check(
@@ -99,8 +99,8 @@ async function main(): Promise<void> {
       r.kind === "ok" && r.record.canonical === true
     );
     check(
-      "redirect policy stays no_redirect (no redirect behaviour claimed)",
-      r.kind === "ok" && r.record.redirectPolicy === "no_redirect"
+      "redirect policy flips to redirect_slug_to_canonical on canonical cutover",
+      r.kind === "ok" && r.record.redirectPolicy === "redirect_slug_to_canonical"
     );
     // ADR-ACT-0236: canonical is a MARKER — it never upgrades routing/TLS
     // readiness (no public cutover is implied by setting it).

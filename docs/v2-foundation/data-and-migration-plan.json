@@ -231,6 +231,31 @@
         "file": "038-support-announcements.sql",
         "intent": "V1C-22 slice: public.support_announcements (tenant-scoped announcement log for support/admin comms; subject + message + created_by + created_at; tenant isolation; delivery fans out through the existing notification substrate)",
         "rls": "tenant isolation"
+      },
+      {
+        "file": "039-billing-catalog.sql",
+        "intent": "V1C-10: public.billing_products / public.billing_plans / public.billing_prices (in-house Postgres billing catalogue with immutable price versions; tenant- and operator-read surfaces; product/plan/price seed support).",
+        "rls": "global read, operator write"
+      },
+      {
+        "file": "040-tenant-residency.sql",
+        "intent": "V1C-12d: public.organisations.residency_tag (single-region residency tag owned by the tenant row; placement enforcement rejects writes targeting non-home regions fail-closed).",
+        "rls": "global read, operator write"
+      },
+      {
+        "file": "041-data-governance.sql",
+        "intent": "V1C-13: public.data_catalog / public.data_classifications / public.dsr_requests (metadata catalogue, rules-based PII classification, and DSR workflow persistence).",
+        "rls": "global read, operator write"
+      },
+      {
+        "file": "042-storage-objects.sql",
+        "intent": "V1C-15: public.storage_objects (object registry, scan state, and quarantine lifecycle metadata for tenant storage CRUD).",
+        "rls": "tenant-scoped read/write"
+      },
+      {
+        "file": "043-support-tickets.sql",
+        "intent": "V1C-21/V1C-22: public.support_tickets plus organisations.deleted_at soft-state for tenant lifecycle and support operations.",
+        "rls": "tenant-scoped read/write; operator-global lifecycle transition"
       }
     ],
     "rls": {
