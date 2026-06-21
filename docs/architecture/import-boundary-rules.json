@@ -256,13 +256,6 @@
       "rationale": "notification-runtime is a leaf interface node with zero @platform/* dependencies."
     },
     {
-      "id": "no-platform-deps-in-search-runtime",
-      "appliesTo": ["@platform/search-runtime"],
-      "forbiddenPrefixes": ["@platform/"],
-      "forbiddenExact": [],
-      "rationale": "search-runtime is a leaf interface node with zero @platform/* dependencies."
-    },
-    {
       "id": "no-raw-observability-in-domain",
       "appliesTo": [
         "@platform/domain-core",
@@ -490,7 +483,7 @@
         "@graphql-codegen/"
       ],
       "forbiddenExact": ["pg", "pino", "graphql"],
-      "rationale": "ADR-0022: apps/react-enterprise-app is a browser-only Vite SPA. It must not import Node-only packages, server runtime packages, or database clients. Server/BFF logic belongs in apps/platform-api. ADR-ACT-0203: the SPA must not import graphql/* directly — GraphQL transport goes through @platform/graphql-browser-client and generated operations come from @platform/contracts-graphql. Allowed exceptions: @platform/platform-errors (browser-safe typed errors), @platform/contracts-auth, @platform/contracts-organisation, @platform/contracts-graphql (Zod schemas + generated TypedDocumentNode), @platform/graphql-browser-client, @platform/ui-design-system."
+      "rationale": "ADR-0022: apps/react-enterprise-app is a browser-only Vite SPA. It must not import Node-only packages, server runtime packages, or database clients. Server/BFF logic belongs in apps/platform-api. ADR-ACT-0203: the SPA must not import graphql/* directly \u2014 GraphQL transport goes through @platform/graphql-browser-client and generated operations come from @platform/contracts-graphql. Allowed exceptions: @platform/platform-errors (browser-safe typed errors), @platform/contracts-auth, @platform/contracts-organisation, @platform/contracts-graphql (Zod schemas + generated TypedDocumentNode), @platform/graphql-browser-client, @platform/ui-design-system."
     }
   ]
 }

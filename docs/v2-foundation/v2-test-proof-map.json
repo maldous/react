@@ -864,14 +864,6 @@
     "retirementJustification": "Package removed before V2 cut (delete-after-proof; zero-consumer superseded scaffold per ADR-0006/ADR-ACT-0289); the scaffold's smoke test is retired with it. No behaviour is lost \u2014 the capability is delivered by the replacement noted in v1-to-v2-path-map.json."
   },
   {
-    "v1Path": "packages/search-runtime/tests/search-runtime.test.ts",
-    "v2Path": null,
-    "migrationType": "retire",
-    "selectorsOrImportsChange": false,
-    "becomesReusableContract": false,
-    "retirementJustification": "Package removed before V2 cut (delete-after-proof; zero-consumer superseded scaffold per ADR-0006/ADR-ACT-0289); the scaffold's smoke test is retired with it. No behaviour is lost \u2014 the capability is delivered by the replacement noted in v1-to-v2-path-map.json."
-  },
-  {
     "v1Path": "packages/security-auth/tests/security-auth.test.ts",
     "v2Path": null,
     "migrationType": "retire",

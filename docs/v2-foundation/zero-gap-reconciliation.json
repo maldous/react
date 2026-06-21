@@ -49,14 +49,14 @@
     "sum": 318
   },
   "tests": {
-    "total": 409,
+    "total": 408,
     "buckets": {
       "carry": 260,
       "promote-to-conformance": 76,
-      "retire": 12,
+      "retire": 11,
       "retarget": 61
     },
-    "sum": 409
+    "sum": 408
   },
   "capabilities": {
     "total": 75,
@@ -195,7 +195,6 @@
         "profile-configuration",
         "security-auth",
         "queue-runtime",
-        "search-runtime",
         "notification-runtime",
         "worker-runtime",
         "observability"
@@ -216,7 +215,7 @@
   "branchCutBlockers": {
     "note": "Must all close before \u00a71 of v2-branch-cut-runbook.md; the validator (tools/v2-readiness) fails closed while any remain.",
     "capabilityCompletions": 21,
-    "deprecatedPackageRemovals": 10,
+    "deprecatedPackageRemovals": 9,
     "openPackageDecisions": 1
   },
   "invariants": {
@@ -228,11 +227,11 @@
   },
   "cutReadiness": {
     "consistencyFindings": 0,
-    "completionBlockerCount": 31,
+    "completionBlockerCount": 30,
     "unexaminedAuditSurfaces": 0,
     "cutReady": false,
     "terminology": "consistencyFindings = artefacts vs live-repo self-consistency (must be 0). completionBlockers = R9 outstanding V1 work. cutReady = both zero.",
-    "composition": "21 requires-v1-completion capabilities + 10 deprecated packages = 31.",
+    "composition": "21 requires-v1-completion capabilities + 9 deprecated packages = 30.",
     "configSprawl": "V1C-CONF-06 progress metric (NOT one of the 36; V1C-CONF-06 is the single config blocker until closed): v1-config-consumption.directAccessOutsideCompositionKeyCount = product-runtime direct env reads still to migrate into typed projections (the remaining target is the platform-api server runtime). approvedExceptionKeyCount = reads confined to approved NON-product boundaries (operator-script scripts/**, dev-ci-tooling tools/**, web-build vite.config.* \u2014 each a composition root / CI tool with its own contextual defaults). The exception list is enforced in the closure commit.",
     "liveTruth": "npm run v2:readiness --json"
   }

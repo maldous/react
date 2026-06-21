@@ -1777,7 +1777,50 @@
       "decisionRefs": ["ADR-ACT-0304"]
     }
   ],
-  "deletions": [],
+  "deletions": [
+    {
+      "originalPath": "packages/search-runtime/package.json",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated leaf package search-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); part of the V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (V2 search seam supersedes; zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/search-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/search-runtime/README.md",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated leaf package search-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); part of the V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (V2 search seam supersedes; zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/search-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/search-runtime/src/index.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated leaf package search-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); part of the V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (V2 search seam supersedes; zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/search-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/search-runtime/tests/.gitkeep",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated leaf package search-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); part of the V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (V2 search seam supersedes; zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/search-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/search-runtime/tests/search-runtime.test.ts",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated leaf package search-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); part of the V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (V2 search seam supersedes; zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/search-runtime/removal-evidence.json"
+    },
+    {
+      "originalPath": "packages/search-runtime/tsconfig.json",
+      "removalCommit": "pending",
+      "deletionDecision": "Deprecated leaf package search-runtime removed (ADR-0006/ADR-ACT-0289 zero-consumer proof); part of the V1 deprecated-package removal campaign.",
+      "replacementOrNa": "n/a (V2 search seam supersedes; zero product consumers at removal)",
+      "evidence": "docs/evidence/lifecycle/removal/search-runtime/removal-evidence.json"
+    }
+  ],
   "additionCount": 186,
-  "deletionCount": 0
+  "deletionCount": 6
 }

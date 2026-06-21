@@ -57,7 +57,6 @@ const PLATFORM_MAP = {
   "@platform/email-runtime": resolvePath(repoRoot, "packages/email-runtime/src/index.ts"),
   "@platform/storage-runtime": resolvePath(repoRoot, "packages/storage-runtime/src/index.ts"),
   "@platform/queue-runtime": resolvePath(repoRoot, "packages/queue-runtime/src/index.ts"),
-  "@platform/search-runtime": resolvePath(repoRoot, "packages/search-runtime/src/index.ts"),
   "@platform/worker-runtime": resolvePath(repoRoot, "packages/worker-runtime/src/index.ts"),
   "@platform/notification-runtime": resolvePath(
     repoRoot,
