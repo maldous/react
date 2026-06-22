@@ -4993,6 +4993,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.suborgs.create",
     resource: "organisation:sub-organisations",
     umaScope: "create" as const,
+    auditEvent: AuditAction.SubOrganisationCreated,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -5039,6 +5040,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.suborgs.update",
     resource: "organisation:sub-organisations",
     umaScope: "update" as const,
+    auditEvent: AuditAction.SubOrganisationUpdated,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -5084,6 +5086,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.suborgs.delete",
     resource: "organisation:sub-organisations",
     umaScope: "delete" as const,
+    auditEvent: AuditAction.SubOrganisationDeactivated,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());

@@ -2323,33 +2323,6 @@
     },
     {
       "kind": "semantic-runtime-diff",
-      "subject": "POST /api/org/sub-organisations",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "DELETE /api/org/sub-organisations/:subOrgId",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "PATCH /api/org/sub-organisations/:subOrgId",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
       "subject": "PATCH /api/organisation/profile",
       "message": "runtime audit requirement has no audit event mapping",
       "evidence": {
