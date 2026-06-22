@@ -5,17 +5,8 @@
  * relational readiness evidence for unavailable and misconfigured database
  * states.
  */
-import { strict as assert } from "node:assert";
-import { existsSync } from "node:fs";
+import { assertPostgresMigrationStorageAssurance } from "../src/adapters/postgres-migration-storage-provider.ts";
 
-for (const file of [
-  "docs/v2-foundation/data-and-migration-plan.json",
-  "apps/platform-api/tests/unit/migrations.test.ts",
-  "apps/platform-api/scripts/backup-local-runtime-proof.ts",
-]) {
-  assert.equal(existsSync(file), true, `${file} must exist`);
-}
+const result = await assertPostgresMigrationStorageAssurance();
 
-console.log(
-  JSON.stringify({ provider: "postgres-migration-storage-provider", result: "PASSED" }, null, 2)
-);
+console.log(JSON.stringify(result, null, 2));
