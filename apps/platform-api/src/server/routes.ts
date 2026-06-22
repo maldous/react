@@ -2313,6 +2313,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.admin.access",
     resource: "platform:support",
     umaScope: "enter" as const,
+    auditEvent: AuditAction.SupportSessionCreated,
     scope: "global" as const,
     handler: async (req, res) => {
       const SupportSessionRequestSchema = z.object({
@@ -2384,6 +2385,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.admin.access",
     resource: "platform:support",
     umaScope: "enter" as const,
+    auditEvent: AuditAction.SupportSessionCreated,
     scope: "global" as const,
     handler: async (req, res) => {
       const Schema = z.object({
@@ -2432,6 +2434,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.admin.access",
     resource: "platform:support",
     umaScope: "enter" as const,
+    auditEvent: AuditAction.SupportSessionCreated,
     scope: "global" as const,
     handler: async (req, res) => {
       const Schema = z.object({
@@ -6247,6 +6250,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.notifications.write",
     resource: "admin:notifications",
     umaScope: "write" as const,
+    auditEvent: AuditAction.NotificationTested,
     scope: "global" as const,
     handler: async (req, res) => {
       const tenantId = req.params["tenantId"] ?? "";
@@ -6385,6 +6389,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.support.write",
     resource: "admin:support",
     umaScope: "write" as const,
+    auditEvent: AuditAction.NotificationTested,
     scope: "global" as const,
     handler: async (req, res) => {
       const parsed = z

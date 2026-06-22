@@ -109,6 +109,8 @@ export interface Route {
    */
   resource?: string;
   umaScope?: string;
+  /** Canonical audit event emitted by a mutating route's handler/usecase. */
+  auditEvent?: string;
   /**
    * FQDN scope enforcement — ADR-0029.
    * "global": route must be called from the global/apex host (no tenant FQDN).

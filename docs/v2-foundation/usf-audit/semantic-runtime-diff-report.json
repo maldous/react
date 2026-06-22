@@ -2305,42 +2305,6 @@
     },
     {
       "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/support-session",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/support-session/approval-grant",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/support-session/approval-request",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/support/tickets",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
       "subject": "POST /api/admin/tenants",
       "message": "runtime audit requirement has no audit event mapping",
       "evidence": {
@@ -2423,15 +2387,6 @@
     {
       "kind": "semantic-runtime-diff",
       "subject": "POST /api/admin/tenants/:tenantId/meter-events",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/tenants/:tenantId/notifications/test",
       "message": "runtime audit requirement has no audit event mapping",
       "evidence": {
         "source": "runtime-audit-inventory.json"
