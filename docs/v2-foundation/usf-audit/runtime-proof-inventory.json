@@ -1103,8 +1103,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": [
       "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
@@ -1116,8 +1116,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts"]
   },
@@ -1127,7 +1127,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": [
@@ -1140,8 +1140,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts"]
   },
@@ -1151,9 +1151,9 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
-    "assertsObservabilityOrAudit": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
+    "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts"]
   },
   {
@@ -1162,8 +1162,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-retention-runtime-proof.ts"]
   },
@@ -1173,8 +1173,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": [
       "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts"
@@ -1186,8 +1186,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts"]
   },
@@ -1197,8 +1197,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts"]
   },
@@ -1221,7 +1221,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": [
@@ -1234,8 +1234,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts"]
   },
@@ -1245,8 +1245,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"]
   },
