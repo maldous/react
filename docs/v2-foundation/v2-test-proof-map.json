@@ -3670,5 +3670,13 @@
     "selectorsOrImportsChange": false,
     "becomesReusableContract": true,
     "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
+    "v2Path": "apps/platform-api/conformance/redis-rate-limit-repository.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
   }
 ]

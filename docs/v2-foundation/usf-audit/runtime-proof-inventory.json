@@ -905,6 +905,17 @@
     "sourceFileRefs": ["apps/platform-api/scripts/rate-limits-runtime-proof.ts"]
   },
   {
+    "proofId": "proof:apps-platform-api-scripts-redis-rate-limit-repository-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
+    "level": 4,
+    "classification": "live substrate behaviour",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": false,
+    "assertsFailureMode": false,
+    "assertsObservabilityOrAudit": false,
+    "sourceFileRefs": ["apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts"]
+  },
+  {
     "proofId": "proof:apps-platform-api-scripts-retention-runtime-proof-ts",
     "file": "apps/platform-api/scripts/retention-runtime-proof.ts",
     "level": 4,

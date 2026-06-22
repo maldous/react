@@ -10430,5 +10430,26 @@
     "sourceCommand": "tsx apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "platform-api loader; delegates to existing live Redis rate-limit proof",
+    "stageCoverage": "test (provider-ID live-proof entrypoint)",
+    "failureEvidence": "delegated proof script exits non-zero; emits proof stdout from the underlying live proof",
+    "proofLevel": 4,
+    "proofLevelRationale": "provider-ID entrypoint delegates to rate-limits-redis-runtime-proof.ts; live Redis plus Postgres proof validates Redis counting, tenant-isolated keys, TTL fixed-window reset, ready/degraded readiness, no secret-bearing keys, and Postgres fallback when Redis is down",
+    "capabilitiesProven": ["API docs, developer portal, SDKs, rate limits"],
+    "semanticFacetsProven": ["providerReliability", "stateModel", "readinessModel", "proof"],
+    "environment": "test",
+    "providerClass": "compose-local",
+    "liveSubstrateUsed": true,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
   }
 ]

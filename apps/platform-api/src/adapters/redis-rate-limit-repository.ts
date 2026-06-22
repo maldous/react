@@ -29,6 +29,28 @@ import type {
   UpsertRateLimitInput,
 } from "../ports/rate-limit-repository.ts";
 
+export const redisRateLimitRepositoryReliabilityEvidence = {
+  provider: "redis-rate-limit-repository",
+  configSource:
+    "Redis client and fallback delegate are constructed from process.env-backed runtime dependencies before repository creation",
+  secretSource:
+    "Redis credentials stay inside the injected client; keys and values contain no secret material",
+  timeout: "eval/get/ping operations are bounded by commandTimeoutMs through withTimeout",
+  retry:
+    "no retry inside the adapter: failed Redis counter operations fall back once to the durable delegate rather than replaying writes",
+  degradedMode:
+    "Redis errors degrade to durable Postgres counting when fallbackToDelegate is enabled",
+  failClosed:
+    "when fallbackToDelegate=false Redis failures throw; the adapter never returns an allowed count from an unknown state",
+  fallbackRationale:
+    "Postgres fallback preserves rate-limit enforcement when the hot Redis counter provider is unavailable",
+  healthCheck: "readiness performs a bounded Redis PING and reports degraded on failure",
+  operatorRecovery:
+    "operators recover by repairing Redis connectivity, checking readiness, and relying on the durable Postgres counter fallback during outage",
+  unavailableProof: "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
+  misconfiguredProof: "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
+} as const;
+
 export interface RateLimitProviderReadiness {
   provider: "redis";
   status: "ready" | "degraded";
@@ -40,6 +62,8 @@ export interface RedisRateLimitOptions {
   keyPrefix?: string;
   /** Fall back to the durable delegate's counter when Redis errors. Default true. */
   fallbackToDelegate?: boolean;
+  /** Redis command timeout in milliseconds. Default 1000. */
+  commandTimeoutMs?: number;
   /** Structured warn sink (no secrets). Defaults to a no-op. */
   warn?: (message: string, meta: Record<string, unknown>) => void;
 }
@@ -54,11 +78,22 @@ end
 return c
 `;
 
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number, operation: string): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new Error(`redis_${operation}_timeout`)), timeoutMs);
+  });
+  return Promise.race([promise, timeout]).finally(() => {
+    if (timer) clearTimeout(timer);
+  });
+}
+
 export class RedisRateLimitRepository implements RateLimitRepository {
   private readonly client: RedisClientType;
   private readonly delegate: RateLimitRepository;
   private readonly keyPrefix: string;
   private readonly fallbackToDelegate: boolean;
+  private readonly commandTimeoutMs: number;
   private readonly warn: (message: string, meta: Record<string, unknown>) => void;
 
   /**
@@ -74,6 +109,7 @@ export class RedisRateLimitRepository implements RateLimitRepository {
     this.delegate = delegate;
     this.keyPrefix = options.keyPrefix ?? "rl:";
     this.fallbackToDelegate = options.fallbackToDelegate ?? true;
+    this.commandTimeoutMs = options.commandTimeoutMs ?? 1000;
     this.warn = options.warn ?? (() => {});
   }
 
@@ -112,12 +148,16 @@ export class RedisRateLimitRepository implements RateLimitRepository {
     const windowStart = this.windowStart(windowSeconds);
     const key = this.counterKey(organisationId, policyKey, windowStart);
     try {
-      const result = await this.client.eval(INCREMENT_SCRIPT, {
-        keys: [key],
-        // EXPIRE the bucket one second past the window so a count never outlives
-        // its window even with clock jitter at the boundary.
-        arguments: [String(windowSeconds + 1)],
-      });
+      const result = await withTimeout(
+        this.client.eval(INCREMENT_SCRIPT, {
+          keys: [key],
+          // EXPIRE the bucket one second past the window so a count never outlives
+          // its window even with clock jitter at the boundary.
+          arguments: [String(windowSeconds + 1)],
+        }),
+        this.commandTimeoutMs,
+        "eval"
+      );
       return Number(result);
     } catch (error) {
       if (!this.fallbackToDelegate) throw error;
@@ -139,7 +179,7 @@ export class RedisRateLimitRepository implements RateLimitRepository {
     const windowStart = this.windowStart(windowSeconds);
     const key = this.counterKey(organisationId, policyKey, windowStart);
     try {
-      const raw = await this.client.get(key);
+      const raw = await withTimeout(this.client.get(key), this.commandTimeoutMs, "get");
       return raw == null ? 0 : Number(raw);
     } catch (error) {
       if (!this.fallbackToDelegate) throw error;
@@ -160,7 +200,7 @@ export class RedisRateLimitRepository implements RateLimitRepository {
    */
   async readiness(): Promise<RateLimitProviderReadiness> {
     try {
-      const pong = await this.client.ping();
+      const pong = await withTimeout(this.client.ping(), this.commandTimeoutMs, "ping");
       if (typeof pong === "string" && pong.toUpperCase() === "PONG") {
         return { provider: "redis", status: "ready", detail: "redis reachable (PONG)" };
       }
