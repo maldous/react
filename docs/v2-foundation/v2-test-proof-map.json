@@ -3172,7 +3172,7 @@
     "v2Path": "apps/platform-api/tests/unit/prometheus-metrics.test.ts",
     "migrationType": "carry",
     "selectorsOrImportsChange": false,
-    "becomesReusableContract": false,
+    "becomesReusableContract": true,
     "retirementJustification": null
   },
   {
@@ -3970,6 +3970,14 @@
   {
     "v1Path": "apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts",
     "v2Path": "apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
+    "v2Path": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
     "migrationType": "carry",
     "selectorsOrImportsChange": false,
     "becomesReusableContract": true,

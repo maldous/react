@@ -21,6 +21,84 @@
  */
 import { Counter, Gauge, Histogram, Registry, collectDefaultMetrics } from "prom-client";
 
+export type PrometheusMetricsProviderConfig = {
+  readonly scrapeEnabled: boolean;
+  readonly operationTimeoutMs: number;
+  readonly retryAttempts: number;
+  readonly retryBackoffMs: number;
+  readonly configSource: string;
+  readonly secretSource: string;
+  readonly fallbackRationale: string;
+};
+
+function parsePositiveInteger(value: string | undefined, fallback: number): number {
+  if (!value) return fallback;
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+}
+
+export function loadPrometheusMetricsProviderConfig(
+  env: NodeJS.ProcessEnv = process.env
+): PrometheusMetricsProviderConfig {
+  return {
+    scrapeEnabled: env["PROMETHEUS_METRICS_DISABLED"] !== "1",
+    operationTimeoutMs: parsePositiveInteger(env["PROMETHEUS_METRICS_TIMEOUT_MS"], 5000),
+    retryAttempts: parsePositiveInteger(env["PROMETHEUS_METRICS_RETRY_ATTEMPTS"], 2),
+    retryBackoffMs: parsePositiveInteger(env["PROMETHEUS_METRICS_RETRY_BACKOFF_MS"], 50),
+    configSource:
+      "process.env PROMETHEUS_METRICS_DISABLED|PROMETHEUS_METRICS_TIMEOUT_MS|PROMETHEUS_METRICS_RETRY_ATTEMPTS|PROMETHEUS_METRICS_RETRY_BACKOFF_MS",
+    secretSource: "no secret, credential, token, or apiKey is required for local /metrics scraping",
+    fallbackRationale:
+      "no fallback registry is used; disabled or unavailable metrics fail closed for scrape exposure",
+  };
+}
+
+function assertPrometheusMetricsAvailable(config: PrometheusMetricsProviderConfig): void {
+  if (!config.scrapeEnabled) {
+    throw new Error("prometheus-metrics unavailable: metrics scrape disabled; fail closed");
+  }
+}
+
+async function withMetricsReliability<T>(
+  operation: () => Promise<T>,
+  config: PrometheusMetricsProviderConfig
+): Promise<T> {
+  assertPrometheusMetricsAvailable(config);
+  const attempts = Math.max(1, config.retryAttempts);
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    const startedAt = Date.now();
+    try {
+      const value = await Promise.race([
+        operation(),
+        new Promise<never>((_, reject) =>
+          setTimeout(
+            () =>
+              reject(
+                new Error(
+                  `prometheus-metrics timeout after ${config.operationTimeoutMs}ms; fail closed`
+                )
+              ),
+            config.operationTimeoutMs
+          )
+        ),
+      ]);
+      if (Date.now() - startedAt > config.operationTimeoutMs) {
+        throw new Error(
+          `prometheus-metrics timeout after ${config.operationTimeoutMs}ms; fail closed`
+        );
+      }
+      return value;
+    } catch (err) {
+      lastError = err;
+      if (attempt < attempts && config.retryBackoffMs > 0) {
+        await new Promise((resolve) => setTimeout(resolve, config.retryBackoffMs));
+      }
+    }
+  }
+  throw new Error(`prometheus-metrics unavailable after retry attempts; fail closed: ${lastError}`);
+}
+
 // ── Registry ────────────────────────────────────────────────────────────────
 
 const registry = new Registry();
@@ -118,13 +196,17 @@ export const providerReadiness = new Gauge({
  * Called by the /metrics endpoint.
  */
 export async function getMetrics(): Promise<string> {
-  return registry.metrics();
+  return withMetricsReliability(
+    () => registry.metrics(),
+    loadPrometheusMetricsProviderConfig(process.env)
+  );
 }
 
 /**
  * Return the content-type for the Prometheus text format.
  */
 export function metricsContentType(): string {
+  assertPrometheusMetricsAvailable(loadPrometheusMetricsProviderConfig(process.env));
   return registry.contentType;
 }
 
@@ -132,5 +214,34 @@ export function metricsContentType(): string {
  * Return all registered metric objects (for proof scripts).
  */
 export async function getMetricList(): Promise<unknown[]> {
-  return registry.getMetricsAsArray();
+  return withMetricsReliability(
+    async () => registry.getMetricsAsArray(),
+    loadPrometheusMetricsProviderConfig(process.env)
+  );
+}
+
+export async function prometheusMetricsHealthCheck(
+  env: NodeJS.ProcessEnv = process.env
+): Promise<{ ok: true; metricFamilies: number } | { ok: false; reason: string }> {
+  const config = loadPrometheusMetricsProviderConfig(env);
+  try {
+    assertPrometheusMetricsAvailable(config);
+    const metricFamilies = await withMetricsReliability(
+      async () => registry.getMetricsAsArray().length,
+      config
+    );
+    return metricFamilies > 0
+      ? { ok: true, metricFamilies }
+      : { ok: false, reason: "prometheus-metrics misconfigured: no metric families registered" };
+  } catch (err) {
+    return { ok: false, reason: `prometheus-metrics unavailable: ${String(err)}` };
+  }
+}
+
+export function prometheusMetricsRecoveryAction(): string {
+  return [
+    "operator recovery: unset PROMETHEUS_METRICS_DISABLED or set it to 0",
+    "verify PROMETHEUS_METRICS_TIMEOUT_MS, PROMETHEUS_METRICS_RETRY_ATTEMPTS, and PROMETHEUS_METRICS_RETRY_BACKOFF_MS are positive integers",
+    "repair Prometheus scrape configuration for the platform-api /metrics target, then retry the live proof",
+  ].join("; ");
 }

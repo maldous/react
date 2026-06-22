@@ -1139,6 +1139,17 @@
     "sourceFileRefs": ["apps/platform-api/scripts/profile-self-service-runtime-proof.ts"]
   },
   {
+    "proofId": "proof:apps-platform-api-scripts-prometheus-metrics-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
+    "level": 4,
+    "classification": "live substrate behaviour",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": false,
+    "assertsFailureMode": true,
+    "assertsObservabilityOrAudit": true,
+    "sourceFileRefs": ["apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts"]
+  },
+  {
     "proofId": "proof:apps-platform-api-scripts-provider-binding-report-route-runtime-proof-ts",
     "file": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
     "level": 2,

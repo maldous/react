@@ -4307,6 +4307,18 @@
         "apps/platform-api/tests/unit/tenant-secret-crypto.test.ts"
       ],
       "decisionRefs": ["ADR-0047", "ADR-0069"]
+    },
+    {
+      "path": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
+      "protectingTests": [
+        "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
+        "apps/platform-api/tests/unit/prometheus-metrics.test.ts"
+      ],
+      "decisionRefs": ["ADR-0062", "ADR-0020"]
     }
   ],
   "deletions": [
@@ -4689,6 +4701,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 456,
+  "additionCount": 457,
   "deletionCount": 54
 }

@@ -18,6 +18,55 @@ const mod = await import("../../src/adapters/prometheus-metrics.ts");
 type MetricLike = { name?: string; labelNames?: string[] };
 
 describe("prometheus-metrics adapter", () => {
+  it("loads provider reliability config from explicit environment sources", () => {
+    const config = mod.loadPrometheusMetricsProviderConfig({
+      PROMETHEUS_METRICS_TIMEOUT_MS: "1234",
+      PROMETHEUS_METRICS_RETRY_ATTEMPTS: "3",
+      PROMETHEUS_METRICS_RETRY_BACKOFF_MS: "7",
+    });
+
+    assert.equal(config.scrapeEnabled, true);
+    assert.equal(config.operationTimeoutMs, 1234);
+    assert.equal(config.retryAttempts, 3);
+    assert.equal(config.retryBackoffMs, 7);
+    assert.match(config.configSource, /process\.env/);
+    assert.match(config.secretSource, /no secret/i);
+    assert.match(config.fallbackRationale, /no fallback|fail closed/i);
+  });
+
+  it("health check reports registered metrics when provider is enabled", async () => {
+    const health = await mod.prometheusMetricsHealthCheck({});
+    assert.equal(health.ok, true);
+    assert.ok(health.ok && health.metricFamilies > 0, "registered metric family count is required");
+  });
+
+  it("fails closed when metrics scrape is disabled", async () => {
+    const previous = process.env["PROMETHEUS_METRICS_DISABLED"];
+    process.env["PROMETHEUS_METRICS_DISABLED"] = "1";
+    try {
+      assert.throws(() => mod.metricsContentType(), /fail closed/i);
+      await assert.rejects(() => mod.getMetrics(), /fail closed/i);
+    } finally {
+      if (previous === undefined) {
+        delete process.env["PROMETHEUS_METRICS_DISABLED"];
+      } else {
+        process.env["PROMETHEUS_METRICS_DISABLED"] = previous;
+      }
+    }
+
+    const health = await mod.prometheusMetricsHealthCheck({ PROMETHEUS_METRICS_DISABLED: "1" });
+    assert.equal(health.ok, false);
+    assert.match(health.ok ? "" : health.reason, /unavailable|fail closed/i);
+  });
+
+  it("describes operator recovery for unavailable or misconfigured metrics", () => {
+    const action = mod.prometheusMetricsRecoveryAction();
+    assert.match(action, /operator recovery/i);
+    assert.match(action, /PROMETHEUS_METRICS_DISABLED/);
+    assert.match(action, /retry/i);
+    assert.match(action, /repair/i);
+  });
+
   it("exports http_requests_total counter", () => {
     assert.ok(mod.httpRequestsTotal, "httpRequestsTotal must be exported");
     const m = mod.httpRequestsTotal as MetricLike;
