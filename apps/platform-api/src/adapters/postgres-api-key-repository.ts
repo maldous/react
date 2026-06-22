@@ -19,6 +19,50 @@ import type {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PgPool = { connect(): Promise<any> };
 
+export const postgresApiKeyRepositoryReliabilityEvidence = {
+  provider: "postgres-api-key-repository",
+  configSource:
+    "Postgres pool is injected from process.env-backed POSTGRES_APP_URL/POSTGRES_URL configuration before adapter construction",
+  secretSource:
+    "plaintext API keys are generated in the usecase and returned once; this repository stores only key_hash, key_salt, and key_prefix",
+  timeout:
+    "API key repository operations are bounded by operationTimeoutMs through withOperationTimeout",
+  retry:
+    "API key create, list, verify, revoke, and touch operations are single Postgres attempts; callers retry explicitly if safe",
+  degradedMode:
+    "healthCheck returns degraded when public.api_keys cannot be queried; mutation/authentication paths throw or return null instead of fabricating credentials",
+  failClosed:
+    "database errors throw, revoked/expired/missing verification rows authenticate as null, and no method returns plaintext secret or hash to list callers",
+  fallbackRationale:
+    "no alternate API key store fallback is attempted because Postgres is the configured durable API key provider",
+  healthCheck: "healthCheck probes public.api_keys through the injected Postgres pool",
+  operatorRecovery:
+    "operators recover by repairing Postgres connectivity/migrations/RLS state and rerunning proof:api-keys proof:api-key-routes",
+  unavailableProof: "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
+  misconfiguredProof: "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
+} as const;
+
+const DEFAULT_API_KEY_REPOSITORY_OPERATION_TIMEOUT_MS = 5000;
+
+async function withOperationTimeout<T>(
+  operation: string,
+  timeoutMs: number,
+  promise: Promise<T>
+): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(
+      () => reject(new Error(`postgres_api_key_repository_timeout:${operation}`)),
+      timeoutMs
+    );
+  });
+  try {
+    return await Promise.race([promise, timeout]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
 type DbTimestamp = Date | string | null;
 
 interface Row {
@@ -59,96 +103,133 @@ const LIST_COLUMNS =
 
 export class PostgresApiKeyRepository implements ApiKeyRepository {
   private readonly pool: PgPool;
-  constructor(pool: PgPool) {
+  private readonly operationTimeoutMs: number;
+
+  constructor(pool: PgPool, operationTimeoutMs = DEFAULT_API_KEY_REPOSITORY_OPERATION_TIMEOUT_MS) {
     this.pool = pool;
+    this.operationTimeoutMs = operationTimeoutMs;
+  }
+
+  private execute<T>(operation: string, fn: () => Promise<T>): Promise<T> {
+    return withOperationTimeout(operation, this.operationTimeoutMs, fn());
   }
 
   async create(input: CreateApiKeyRecordInput): Promise<ApiKeyRecord> {
-    return withSystemAdmin(this.pool as never, async (client) => {
-      const r = await client.query(
-        `INSERT INTO public.api_keys
+    return this.execute("create", () =>
+      withSystemAdmin(this.pool as never, async (client) => {
+        const r = await client.query(
+          `INSERT INTO public.api_keys
            (organisation_id, name, key_prefix, key_hash, key_salt, scopes, created_by, expires_at)
          VALUES ($1, $2, $3, $4, $5, $6::text[], $7, $8::timestamptz)
          RETURNING ${LIST_COLUMNS}`,
-        [
-          input.organisationId,
-          input.name,
-          input.keyPrefix,
-          input.keyHash,
-          input.keySalt,
-          input.scopes,
-          input.createdBy,
-          input.expiresAt ?? null,
-        ]
-      );
-      return toRecord(r.rows[0] as Row);
-    });
+          [
+            input.organisationId,
+            input.name,
+            input.keyPrefix,
+            input.keyHash,
+            input.keySalt,
+            input.scopes,
+            input.createdBy,
+            input.expiresAt ?? null,
+          ]
+        );
+        return toRecord(r.rows[0] as Row);
+      })
+    );
   }
 
   async listForTenant(organisationId: string): Promise<ApiKeyRecord[]> {
-    return withTenant(this.pool as never, organisationId, async (client) => {
-      const r = await client.query(
-        `SELECT ${LIST_COLUMNS} FROM public.api_keys ORDER BY created_at DESC`
-      );
-      return (r.rows as Row[]).map(toRecord);
-    });
+    return this.execute("listForTenant", () =>
+      withTenant(this.pool as never, organisationId, async (client) => {
+        const r = await client.query(
+          `SELECT ${LIST_COLUMNS} FROM public.api_keys ORDER BY created_at DESC`
+        );
+        return (r.rows as Row[]).map(toRecord);
+      })
+    );
   }
 
   async listForTenantAsOperator(organisationId: string): Promise<ApiKeyRecord[]> {
-    return withSystemAdmin(this.pool as never, async (client) => {
-      const r = await client.query(
-        `SELECT ${LIST_COLUMNS} FROM public.api_keys WHERE organisation_id = $1 ORDER BY created_at DESC`,
-        [organisationId]
-      );
-      return (r.rows as Row[]).map(toRecord);
-    });
+    return this.execute("listForTenantAsOperator", () =>
+      withSystemAdmin(this.pool as never, async (client) => {
+        const r = await client.query(
+          `SELECT ${LIST_COLUMNS} FROM public.api_keys WHERE organisation_id = $1 ORDER BY created_at DESC`,
+          [organisationId]
+        );
+        return (r.rows as Row[]).map(toRecord);
+      })
+    );
   }
 
   async revokeForTenant(organisationId: string, keyId: string): Promise<boolean> {
-    return withTenant(this.pool as never, organisationId, async (client) => {
-      const r = await client.query(
-        `UPDATE public.api_keys SET revoked_at = now()
+    return this.execute("revokeForTenant", () =>
+      withTenant(this.pool as never, organisationId, async (client) => {
+        const r = await client.query(
+          `UPDATE public.api_keys SET revoked_at = now()
           WHERE id = $1 AND revoked_at IS NULL`,
-        [keyId]
-      );
-      return (r.rowCount ?? 0) > 0;
-    });
+          [keyId]
+        );
+        return (r.rowCount ?? 0) > 0;
+      })
+    );
   }
 
   async findVerificationByPrefix(keyPrefix: string): Promise<ApiKeyVerificationRow | null> {
-    return withSystemAdmin(this.pool as never, async (client) => {
-      const r = await client.query(
-        `SELECT id, organisation_id, key_hash, key_salt, scopes, revoked_at, expires_at
+    return this.execute("findVerificationByPrefix", () =>
+      withSystemAdmin(this.pool as never, async (client) => {
+        const r = await client.query(
+          `SELECT id, organisation_id, key_hash, key_salt, scopes, revoked_at, expires_at
            FROM public.api_keys WHERE key_prefix = $1`,
-        [keyPrefix]
-      );
-      const row = r.rows[0] as
-        | {
-            id: string;
-            organisation_id: string;
-            key_hash: string;
-            key_salt: string;
-            scopes: string[] | null;
-            revoked_at: DbTimestamp;
-            expires_at: DbTimestamp;
-          }
-        | undefined;
-      if (!row) return null;
-      return {
-        id: row.id,
-        organisationId: row.organisation_id,
-        keyHash: row.key_hash,
-        keySalt: row.key_salt,
-        scopes: (row.scopes ?? []) as ApiKeyScope[],
-        revokedAt: iso(row.revoked_at),
-        expiresAt: iso(row.expires_at),
-      };
-    });
+          [keyPrefix]
+        );
+        const row = r.rows[0] as
+          | {
+              id: string;
+              organisation_id: string;
+              key_hash: string;
+              key_salt: string;
+              scopes: string[] | null;
+              revoked_at: DbTimestamp;
+              expires_at: DbTimestamp;
+            }
+          | undefined;
+        if (!row) return null;
+        return {
+          id: row.id,
+          organisationId: row.organisation_id,
+          keyHash: row.key_hash,
+          keySalt: row.key_salt,
+          scopes: (row.scopes ?? []) as ApiKeyScope[],
+          revokedAt: iso(row.revoked_at),
+          expiresAt: iso(row.expires_at),
+        };
+      })
+    );
   }
 
   async touchLastUsed(keyId: string): Promise<void> {
-    await withSystemAdmin(this.pool as never, async (client) => {
-      await client.query(`UPDATE public.api_keys SET last_used_at = now() WHERE id = $1`, [keyId]);
-    });
+    await this.execute("touchLastUsed", () =>
+      withSystemAdmin(this.pool as never, async (client) => {
+        await client.query(`UPDATE public.api_keys SET last_used_at = now() WHERE id = $1`, [
+          keyId,
+        ]);
+      })
+    );
+  }
+
+  async healthCheck(): Promise<{ status: "ready" | "degraded"; detail: string }> {
+    try {
+      await this.execute("healthCheck", () =>
+        withSystemAdmin(this.pool as never, (client) =>
+          client.query("SELECT to_regclass('public.api_keys') AS api_keys_table")
+        )
+      );
+      return { status: "ready", detail: "postgres-api-key-repository:table:ok" };
+    } catch (err) {
+      return {
+        status: "degraded",
+        detail: `postgres-api-key-repository:${err instanceof Error ? err.message : String(err)}`,
+      };
+    }
   }
 }

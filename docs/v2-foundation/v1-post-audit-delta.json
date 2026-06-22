@@ -3990,6 +3990,15 @@
       "v2Target": "apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts",
       "protectingTests": ["apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts"],
       "decisionRefs": ["ADR-0044", "ADR-ACT-0212"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/api-keys-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
+      "protectingTests": ["apps/platform-api/scripts/api-keys-runtime-proof.ts"],
+      "decisionRefs": ["ADR-0065", "ADR-ACT-0257"]
     }
   ],
   "deletions": [
