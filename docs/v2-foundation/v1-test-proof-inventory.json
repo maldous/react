@@ -1671,7 +1671,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live route-handler proof validates /api/me/profile and /api/me/notification-preferences access-control metadata, own-profile update/read, invalid profile rejection, preference update/read, notification readiness, test send, durable dispatch logging, and secret-free responses"
   },
   {
     "id": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
@@ -1680,7 +1682,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates notification preference defaults, write/read round-trip, enabled/disabled flags, no secret-bearing columns, and tenant RLS isolation"
   },
   {
     "id": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
@@ -1689,7 +1693,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live route-handler proof validates tenant and operator API-key route metadata, tenant-context rejection, create/list/revoke behaviour, secret redaction, developer summary, and rate-limit operator route execution"
   },
   {
     "id": "apps/platform-api/scripts/api-keys-runtime-proof.ts",
@@ -1698,7 +1704,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates secret reveal-once, hash-only storage, entitlement deny-by-default, valid/revoked authentication, tenant RLS isolation, and operator rls_bypass read semantics"
   },
   {
     "id": "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
@@ -1707,7 +1715,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres resolver proof validates host classification matrix, null tenant outcomes for apex/reserved/unknown/malformed hosts, seeded slug resolution, and X-Forwarded-Host precedence"
   },
   {
     "id": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
@@ -1716,7 +1726,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates profile defaults, empty display-name rejection, own-profile update/read, independent second-user state, no secret-bearing columns, and tenant RLS isolation"
   },
   {
     "id": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
@@ -1725,7 +1737,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates read-only history projection across audit, notification, meter, and incident sources, tenant isolation, secret/metadata exclusion, pagination, and no mutation of source rows"
   },
   {
     "id": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
@@ -1770,7 +1784,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 3,
+    "proofLevelRationale": "local runtime proof validates policy-chain ordering: missing permission denies before entitlement, missing entitlement denies next, granted+permitted reaches quota, quota remains explicit non-enforcing hook, and revoked re-denies"
   },
   {
     "id": "apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
@@ -1779,7 +1795,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates migration/table presence, forced RLS, tenant isolation, operator rls_bypass reads, grant/revoke persistence, audit-before-change rollback, and no secret fields"
   },
   {
     "id": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
@@ -1788,7 +1806,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live route-handler proof validates tenant/operator route metadata, no-tenant rejection, invalid tenant/key rejection, operator grant/revoke/read behaviour, and secret-free service-catalog output"
   },
   {
     "id": "apps/platform-api/scripts/entitlements-runtime-proof.ts",
@@ -1797,7 +1817,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 3,
+    "proofLevelRationale": "local runtime proof validates deny-by-default, grant/revoke state transitions, audit-before-change, tenant scoping, unknown-key rejection, and secret-free audit metadata"
   },
   {
     "id": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
@@ -1860,7 +1882,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates read-only history projection across audit, notification, meter, and incident sources, tenant isolation, secret/metadata exclusion, pagination, and no mutation of source rows"
   },
   {
     "id": "apps/platform-api/scripts/idp-runtime-proof.ts",
@@ -2031,7 +2055,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Redis plus Postgres proof validates Redis counting, tenant-isolated keys, TTL fixed-window reset, ready/degraded readiness, no secret-bearing keys, and Postgres fallback when Redis is down"
   },
   {
     "id": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
@@ -2040,7 +2066,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates audited policy mutation, entitlement-before-counting, allow/deny window transitions, tenant RLS isolation, non-secret schema, and live used-count listing"
   },
   {
     "id": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
@@ -2130,7 +2158,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres plus Redis handler proof validates real auth-login realm, Keycloak origin, and redirect_uri derivation for active custom, inactive custom, unknown custom, and slug hosts"
   },
   {
     "id": "apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
@@ -2139,7 +2169,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates tenant_domains-driven custom-domain resolution, verified-but-inactive/pending/disabled rejection, tenant isolation, and enabled-domain uniqueness guard"
   },
   {
     "id": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
@@ -2148,7 +2180,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates canonical guards, auth-client activation precondition, routing precondition, redirect policy transition, one-canonical invariant, unset, and deactivation cleanup"
   },
   {
     "id": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
@@ -2157,7 +2191,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates cross-tenant domain claim lifecycle, challenge issuance, DNS-token verification with injected resolver, 409 conflict semantics, takeover guard, disable-and-reclaim policy, and no token leakage"
   },
   {
     "id": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
@@ -2166,7 +2202,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live local Caddy plus Postgres proof validates tenant FQDN routing to the correct tenant context, custom-domain catch-all routing, unregistered host rejection, and honest TLS/public-routing deferral"
   },
   {
     "id": "apps/platform-api/scripts/tenant-domains-runtime-proof.ts",
@@ -2175,7 +2213,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates custom-domain challenge creation, DNS-token verification through an injected resolver, list projection, readiness aggregation, and cleanup without claiming public DNS/TLS"
   },
   {
     "id": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
@@ -2838,7 +2878,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:tenant-domains)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates custom-domain challenge creation, DNS-token verification through an injected resolver, list projection, readiness aggregation, and cleanup without claiming public DNS/TLS"
   },
   {
     "id": "package.json#proof:tenant-storage",
@@ -2883,7 +2925,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:tenant-domains-routing)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "live local Caddy plus Postgres proof validates tenant FQDN routing to the correct tenant context, custom-domain catch-all routing, unregistered host rejection, and honest TLS/public-routing deferral"
   },
   {
     "id": "package.json#proof:webhook-redrive",
@@ -3097,7 +3141,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:profile-self-service)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates profile defaults, empty display-name rejection, own-profile update/read, independent second-user state, no secret-bearing columns, and tenant RLS isolation"
   },
   {
     "id": "package.json#proof:notification-preferences",
@@ -3106,7 +3152,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:notification-preferences)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates notification preference defaults, write/read round-trip, enabled/disabled flags, no secret-bearing columns, and tenant RLS isolation"
   },
   {
     "id": "package.json#proof:notification-dispatch",
@@ -3115,7 +3163,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:notification-dispatch)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "live route-handler proof validates /api/me/profile and /api/me/notification-preferences access-control metadata, own-profile update/read, invalid profile rejection, preference update/read, notification readiness, test send, durable dispatch logging, and secret-free responses"
   },
   {
     "id": "package.json#proof:observability-signals",
@@ -3268,7 +3318,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:history)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates read-only history projection across audit, notification, meter, and incident sources, tenant isolation, secret/metadata exclusion, pagination, and no mutation of source rows"
   },
   {
     "id": "package.json#proof:notification-email-transport",
@@ -3313,7 +3365,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:domain-identity-matrix)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres resolver proof validates host classification matrix, null tenant outcomes for apex/reserved/unknown/malformed hosts, seeded slug resolution, and X-Forwarded-Host precedence"
   },
   {
     "id": "package.json#proof:tenant-custom-domain-resolution",
@@ -3322,7 +3376,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:tenant-custom-domain-resolution)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates tenant_domains-driven custom-domain resolution, verified-but-inactive/pending/disabled rejection, tenant isolation, and enabled-domain uniqueness guard"
   },
   {
     "id": "package.json#proof:tenant-domain-canonical",
@@ -3331,7 +3387,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:tenant-domain-canonical)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates canonical guards, auth-client activation precondition, routing precondition, redirect policy transition, one-canonical invariant, unset, and deactivation cleanup"
   },
   {
     "id": "package.json#proof:tenant-custom-domain-auth-origin",
@@ -3340,7 +3398,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:tenant-custom-domain-auth-origin)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres plus Redis handler proof validates real auth-login realm, Keycloak origin, and redirect_uri derivation for active custom, inactive custom, unknown custom, and slug hosts"
   },
   {
     "id": "package.json#proof:service-clickthrough-policy",
@@ -3358,7 +3418,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:tenant-domain-claim-lifecycle)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates cross-tenant domain claim lifecycle, challenge issuance, DNS-token verification with injected resolver, 409 conflict semantics, takeover guard, disable-and-reclaim policy, and no token leakage"
   },
   {
     "id": "tools/v2-readiness/tests/import-parity.test.mjs",
@@ -3504,7 +3566,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "self-contained (MSW in-browser; no live backend)",
     "stageCoverage": "ui:harness:e2e",
-    "failureEvidence": "playwright HTML report + trace on failure"
+    "failureEvidence": "playwright HTML report + trace on failure",
+    "proofLevel": 5,
+    "proofLevelRationale": "self-contained end-to-end semantic UI journey validates the machine-readable group definition, permission states, validation states, accessibility-facing controls, and generated V2 build contract without claiming live substrate coverage"
   },
   {
     "id": "package.json#proof:ui-semantic-groups",
@@ -3513,7 +3577,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "self-contained (MSW in-browser; no live backend)",
     "stageCoverage": "proof script (npm run proof:ui-semantic-groups)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 5,
+    "proofLevelRationale": "self-contained end-to-end semantic UI proof validates the group capability's machine-readable definition, permission states, validation states, accessibility-facing controls, and generated V2 build contract without claiming live substrate coverage"
   },
   {
     "id": "tools/ui-reference-harness/playwright/sub-organisations.spec.ts",
@@ -3522,7 +3588,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "self-contained (MSW in-browser; no live backend)",
     "stageCoverage": "ui:harness:e2e",
-    "failureEvidence": "playwright HTML report + trace on failure"
+    "failureEvidence": "playwright HTML report + trace on failure",
+    "proofLevel": 5,
+    "proofLevelRationale": "self-contained end-to-end semantic UI journey validates the machine-readable sub-organisation definition, flat list semantics, permission states, validation states, accessibility-facing controls, and generated V2 build contract without claiming live substrate coverage"
   },
   {
     "id": "package.json#proof:ui-semantic-sub-organisations",
@@ -3531,7 +3599,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "self-contained (MSW in-browser; no live backend)",
     "stageCoverage": "proof script (npm run proof:ui-semantic-sub-organisations)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 5,
+    "proofLevelRationale": "self-contained end-to-end semantic UI proof validates the sub-organisation capability's machine-readable definition, flat list semantics, permission states, validation states, accessibility-facing controls, and generated V2 build contract without claiming live substrate coverage"
   },
   {
     "id": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts",
@@ -3738,7 +3808,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local-only inline-fake-pool proof)",
     "stageCoverage": "proof script (npm run proof:delegated-admin)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "local runtime proof validates deny-by-default delegation grant, duplicate-active prevention, audit-before-mutation, tenant isolation, system-admin revoke semantics, not_found handling, and self-only grantee listing"
   },
   {
     "id": "package.json#proof:compliance-report-route",
@@ -3994,7 +4066,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "hermetic-domain proof script (npm run proof:support-approval)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "hermetic runtime proof validates support approval request state, workflow waiting/completed transitions, support session creation on approval, and ordered support_session.created audit lifecycle"
   },
   {
     "id": "package.json#proof:workflow-adapters",
