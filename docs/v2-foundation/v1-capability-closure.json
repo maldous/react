@@ -1169,7 +1169,45 @@
         "proof": "proof:ui-semantic-groups (headless journey); groups unit tests",
         "implementation": ["apps/platform-api/src/server/routes.ts:3142", "docs/api/openapi.json"]
       }
-    ]
+    ],
+    "dataGovernanceRuntimeProofs": {
+      "classification": {
+        "proof": "apps/platform-api/tests/unit/groups.test.ts; apps/platform-api/src/usecases/groups.ts",
+        "evidence": "groups proof validates Keycloak group id, name, path, reserved-name protection, conflict states, and tenant actor metadata"
+      },
+      "retention": {
+        "proof": "apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+        "evidence": "retention proof validates policy windows, audit-before-change behavior, and legal-hold guarded candidates for group audit records"
+      },
+      "backup": {
+        "proof": "apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts; apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
+        "evidence": "backup proof covers platform audit/config persistence while Keycloak realm-admin proof covers the external group provider adapter used for tenant realm state"
+      },
+      "restore": {
+        "proof": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts; apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts",
+        "evidence": "restore drill proves platform Postgres recovery for audit/config state and credential lifecycle proof restores tenant realm policy after live Keycloak mutation"
+      },
+      "export": {
+        "proof": "apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
+        "evidence": "data portability proof exercises grouped archive import progress and tenant lifecycle proof coordinates export before tenant realm deletion"
+      },
+      "legal hold": {
+        "proof": "apps/platform-api/scripts/legal-hold-runtime-proof.ts; apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+        "evidence": "legal-hold proof validates audit-before-change hold set/release and active-hold guards over audit_events records for group changes"
+      },
+      "DSR": {
+        "proof": "apps/platform-api/scripts/data-governance-runtime-proof.ts; apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
+        "evidence": "DSR fulfillment proof records portability-export evidence and tenant lifecycle proof coordinates DSR with realm suspend/delete operations"
+      },
+      "lineage": {
+        "proof": "apps/platform-api/tests/unit/groups.test.ts; apps/platform-api/scripts/history-runtime-proof.ts",
+        "evidence": "group tests record GroupCreated/GroupUpdated/GroupDeleted audit metadata and history proof projects tenant audit activity into a lineage/read model"
+      },
+      "tenant isolation": {
+        "proof": "apps/platform-api/src/server/routes.ts; apps/platform-api/tests/unit/groups.test.ts; apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
+        "evidence": "routes require scope tenant, resolve the tenant realm and credential, declare organisation:groups UMA scopes, and groups tests assert all route permissions/resources"
+      }
+    }
   },
   {
     "capability": "Sub-organisations",
