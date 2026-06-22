@@ -10700,5 +10700,32 @@
     "sourceCommand": "tsx apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "platform-api loader; delegates to existing live Postgres history runtime proof",
+    "stageCoverage": "test (provider-ID runtime-proof entrypoint)",
+    "failureEvidence": "delegated proof script exits non-zero or honestly reports live substrate failure when tenant-scoped history projection, unsafe payload exclusion, or source table behaviour is broken",
+    "proofLevel": 4,
+    "proofLevelRationale": "provider-ID entrypoint delegates to history-runtime-proof.ts; live proof validates tenant-scoped read-only projection across audit, event, notification, incident, and meter sources while excluding raw metadata/payload fields. Adapter reliability semantics fail closed on unavailable or misconfigured Postgres.",
+    "capabilitiesProven": ["History read-model (read-only projection)"],
+    "semanticFacetsProven": [
+      "providerReliability",
+      "securityModel",
+      "stateModel",
+      "dataGovernance",
+      "proof"
+    ],
+    "environment": "test",
+    "providerClass": "postgres",
+    "liveSubstrateUsed": true,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
   }
 ]

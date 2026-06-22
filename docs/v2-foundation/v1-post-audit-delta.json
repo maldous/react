@@ -4020,6 +4020,15 @@
         "apps/platform-api/tests/unit/billing-catalog.test.ts"
       ],
       "decisionRefs": ["ADR-ACT-0257"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/history-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
+      "protectingTests": ["apps/platform-api/scripts/history-runtime-proof.ts"],
+      "decisionRefs": ["ADR-0063", "ADR-ACT-0272"]
     }
   ],
   "deletions": [
@@ -4402,6 +4411,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 430,
+  "additionCount": 431,
   "deletionCount": 54
 }
