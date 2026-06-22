@@ -13,6 +13,7 @@
  */
 
 import pg from "pg";
+import assert from "node:assert/strict";
 import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 import type { AuditEventPort } from "@platform/audit-events";
 import { PostgresSearchRepository } from "../src/adapters/postgres-search-repository.ts";
@@ -27,6 +28,7 @@ let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 async function reachable(url: string): Promise<boolean> {
   const p = new pg.Pool({ connectionString: url, connectionTimeoutMillis: 2000, max: 1 });

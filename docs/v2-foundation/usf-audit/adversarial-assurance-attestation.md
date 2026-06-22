@@ -23,7 +23,7 @@ PASS is not allowed unless runtime/interface-level route, security, ownership, a
 | external-limited items          |     0 |
 | duplicate findings              |     0 |
 | obsolete-runtime-artifact items |     0 |
-| must-fix-in-v1 items            |   560 |
+| must-fix-in-v1 items            |   557 |
 
 ## Known Gaps Identified
 
@@ -191,89 +191,89 @@ PASS is not allowed unless runtime/interface-level route, security, ownership, a
 - USF-GAP-0162: apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts - proof does not assert failure mode
 - USF-GAP-0163: apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts - proof does not assert side effects
 - USF-GAP-0164: apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0165: apps/platform-api/scripts/search-isolation-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0166: apps/platform-api/scripts/search-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0167: apps/platform-api/scripts/secret-store-contract-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0168: apps/platform-api/scripts/secrets-openbao-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0169: apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0170: apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0171: apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts - proof only checks file/contract shape
-- USF-GAP-0172: apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0173: apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0174: apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0175: apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0176: apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0177: apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0178: apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0179: apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0180: apps/platform-api/scripts/tenant-domains-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0181: apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0182: apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0183: apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts - proof only checks file/contract shape
-- USF-GAP-0184: apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0185: apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0186: apps/platform-api/scripts/webhook-redrive-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0187: GET /api/admin/alerts - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0188: POST /api/admin/alerts - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0189: POST /api/admin/alerts/:alertId/evaluate - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0190: GET /api/admin/backup - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0191: GET /api/admin/billing - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0192: GET /api/admin/billing/catalog/plans - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0193: POST /api/admin/billing/catalog/plans - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0194: GET /api/admin/billing/catalog/prices - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0195: POST /api/admin/billing/catalog/prices - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0196: GET /api/admin/billing/catalog/products - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0197: POST /api/admin/billing/catalog/products - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0198: GET /api/admin/billing/readiness - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0199: GET /api/admin/clickthrough - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0200: GET /api/admin/data/compliance-report - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0201: DELETE /api/admin/data/legal-holds - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0202: GET /api/admin/data/legal-holds - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0203: POST /api/admin/data/legal-holds - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0204: POST /api/admin/data/residency - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0205: DELETE /api/admin/data/retention-policies - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0206: GET /api/admin/data/retention-policies - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0207: POST /api/admin/data/retention-policies - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0208: GET /api/admin/events - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0209: POST /api/admin/events/:eventId/redrive - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0210: GET /api/admin/events/dead-letter - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0211: GET /api/admin/governance/catalog - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0212: POST /api/admin/governance/catalog - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0213: POST /api/admin/governance/catalog/classify - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0214: GET /api/admin/governance/dsr - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0215: POST /api/admin/governance/dsr - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0216: POST /api/admin/governance/dsr/:dsrId/fulfill - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0217: GET /api/admin/incidents - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0218: PATCH /api/admin/incidents/:incidentId - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0219: GET /api/admin/logs/search - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0220: GET /api/admin/notifications/readiness - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0221: GET /api/admin/observability - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0222: GET /api/admin/observability/readiness - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0223: GET /api/admin/observability/signals - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0224: GET /api/admin/provider-bindings - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0225: GET /api/admin/provider-configs - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0226: POST /api/admin/provider-configs - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0227: POST /api/admin/provider-configs/:id/delete - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0228: POST /api/admin/provider-configs/:id/lifecycle - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0229: GET /api/admin/providers/readiness - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0230: GET /api/admin/scheduled-jobs - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0231: POST /api/admin/scheduled-jobs - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0232: PATCH /api/admin/scheduled-jobs/:jobId - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0233: POST /api/admin/scheduled-jobs/:jobId/run - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0234: GET /api/admin/search/readiness - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0235: POST /api/admin/search/reindex - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0236: GET /api/admin/secrets - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0237: POST /api/admin/secrets - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0238: POST /api/admin/secrets/delete - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0239: GET /api/admin/secrets/readiness - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0240: POST /api/admin/secrets/revoke - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0241: GET /api/admin/security - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0242: POST /api/admin/sub-tenants - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0243: POST /api/admin/support-session - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0244: POST /api/admin/support-session/approval-grant - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0245: POST /api/admin/support-session/approval-request - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0246: GET /api/admin/support/health - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0247: GET /api/admin/support/tickets - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0248: POST /api/admin/support/tickets - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0249: GET /api/admin/tenants - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0250: POST /api/admin/tenants - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0165: apps/platform-api/scripts/secret-store-contract-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0166: apps/platform-api/scripts/secrets-openbao-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0167: apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0168: apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0169: apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts - proof only checks file/contract shape
+- USF-GAP-0170: apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0171: apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0172: apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0173: apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0174: apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0175: apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0176: apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0177: apps/platform-api/scripts/tenant-domains-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0178: apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0179: apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0180: apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts - proof only checks file/contract shape
+- USF-GAP-0181: apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0182: apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0183: apps/platform-api/scripts/webhook-redrive-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0184: GET /api/admin/alerts - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0185: POST /api/admin/alerts - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0186: POST /api/admin/alerts/:alertId/evaluate - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0187: GET /api/admin/backup - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0188: GET /api/admin/billing - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0189: GET /api/admin/billing/catalog/plans - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0190: POST /api/admin/billing/catalog/plans - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0191: GET /api/admin/billing/catalog/prices - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0192: POST /api/admin/billing/catalog/prices - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0193: GET /api/admin/billing/catalog/products - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0194: POST /api/admin/billing/catalog/products - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0195: GET /api/admin/billing/readiness - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0196: GET /api/admin/clickthrough - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0197: GET /api/admin/data/compliance-report - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0198: DELETE /api/admin/data/legal-holds - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0199: GET /api/admin/data/legal-holds - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0200: POST /api/admin/data/legal-holds - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0201: POST /api/admin/data/residency - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0202: DELETE /api/admin/data/retention-policies - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0203: GET /api/admin/data/retention-policies - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0204: POST /api/admin/data/retention-policies - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0205: GET /api/admin/events - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0206: POST /api/admin/events/:eventId/redrive - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0207: GET /api/admin/events/dead-letter - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0208: GET /api/admin/governance/catalog - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0209: POST /api/admin/governance/catalog - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0210: POST /api/admin/governance/catalog/classify - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0211: GET /api/admin/governance/dsr - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0212: POST /api/admin/governance/dsr - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0213: POST /api/admin/governance/dsr/:dsrId/fulfill - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0214: GET /api/admin/incidents - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0215: PATCH /api/admin/incidents/:incidentId - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0216: GET /api/admin/logs/search - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0217: GET /api/admin/notifications/readiness - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0218: GET /api/admin/observability - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0219: GET /api/admin/observability/readiness - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0220: GET /api/admin/observability/signals - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0221: GET /api/admin/provider-bindings - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0222: GET /api/admin/provider-configs - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0223: POST /api/admin/provider-configs - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0224: POST /api/admin/provider-configs/:id/delete - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0225: POST /api/admin/provider-configs/:id/lifecycle - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0226: GET /api/admin/providers/readiness - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0227: GET /api/admin/scheduled-jobs - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0228: POST /api/admin/scheduled-jobs - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0229: PATCH /api/admin/scheduled-jobs/:jobId - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0230: POST /api/admin/scheduled-jobs/:jobId/run - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0231: GET /api/admin/search/readiness - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0232: POST /api/admin/search/reindex - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0233: GET /api/admin/secrets - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0234: POST /api/admin/secrets - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0235: POST /api/admin/secrets/delete - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0236: GET /api/admin/secrets/readiness - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0237: POST /api/admin/secrets/revoke - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0238: GET /api/admin/security - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0239: POST /api/admin/sub-tenants - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0240: POST /api/admin/support-session - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0241: POST /api/admin/support-session/approval-grant - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0242: POST /api/admin/support-session/approval-request - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0243: GET /api/admin/support/health - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0244: GET /api/admin/support/tickets - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0245: POST /api/admin/support/tickets - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0246: GET /api/admin/tenants - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0247: POST /api/admin/tenants - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0248: GET /api/admin/tenants/:tenantId/announcements - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0249: POST /api/admin/tenants/:tenantId/announcements - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0250: GET /api/admin/tenants/:tenantId/api-keys - route without route-specific alert condition/owner/runbook proof

@@ -22,6 +22,7 @@
  */
 
 import crypto from "node:crypto";
+import assert from "node:assert/strict";
 import pg from "pg";
 import type { AuditEventPort, AuditEvent } from "@platform/audit-events";
 import { PostgresTenantDomainRegistry } from "../src/adapters/postgres-tenant-domain-registry.ts";
@@ -40,6 +41,7 @@ let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 
 async function main(): Promise<void> {
