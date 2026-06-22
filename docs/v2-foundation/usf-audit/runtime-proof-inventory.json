@@ -848,6 +848,17 @@
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts"]
   },
   {
+    "proofId": "proof:apps-platform-api-scripts-postgres-webhook-store-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
+    "level": 4,
+    "classification": "live substrate behaviour",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": false,
+    "assertsFailureMode": false,
+    "assertsObservabilityOrAudit": true,
+    "sourceFileRefs": ["apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"]
+  },
+  {
     "proofId": "proof:apps-platform-api-scripts-profile-self-service-runtime-proof-ts",
     "file": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
     "level": 4,

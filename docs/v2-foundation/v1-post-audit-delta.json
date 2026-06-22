@@ -3972,6 +3972,15 @@
       "decisionRefs": ["ADR-0059", "ADR-ACT-0259"],
       "introducingCommit": "unknown",
       "v2Disposition": "reuse-unchanged"
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/webhooks-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
+      "protectingTests": ["apps/platform-api/scripts/webhooks-runtime-proof.ts"],
+      "decisionRefs": ["ADR-0051", "ADR-0052", "ADR-ACT-0226"]
     }
   ],
   "deletions": [
