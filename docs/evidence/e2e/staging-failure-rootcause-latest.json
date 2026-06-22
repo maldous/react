@@ -1,12 +1,12 @@
 {
   "stage": "staging",
-  "testRunId": "run-staging-1782085737-8ba609e6",
+  "testRunId": "run-staging-1782092499-3a88ee01",
   "result": "PASSED",
   "checks": [
     {
       "name": "unauthenticated-admin-denied",
       "httpStatus": 401,
-      "requestId": "0b977984-e3eb-43e6-abe1-56263b5f942b",
+      "requestId": "0456909f-5a71-49ec-92ef-d5de39707911",
       "expected": "401/403"
     },
     {
@@ -14,15 +14,15 @@
       "lokiLines": 21,
       "sample": {
         "reason": "static_permission_denied",
-        "requestId": "7c7044b6-1b16-4133-aa28-29a82e7bb693",
-        "traceId": "528e5905372aa2ecce1cb157fd0a2008",
+        "requestId": "1aa02d43-0cf8-444e-a132-1beda5a8a849",
+        "traceId": "4f822edca5260007902f8cf51dbf9251",
         "status": 403
       }
     }
   ],
   "lines": [
-    "Triggered unauthenticated /api/admin/tenants → HTTP 401 (x-request-id=0b977984-e3eb-43e6-abe1-56263b5f942b)",
-    "Root-cause proven: 21 http.request.rejected line(s) in Loki carry a stable reason + requestId (sample reason=static_permission_denied, traceId=528e5905372aa2ecce1cb157fd0a2008)."
+    "Triggered unauthenticated /api/admin/tenants → HTTP 401 (x-request-id=0456909f-5a71-49ec-92ef-d5de39707911)",
+    "Root-cause proven: 21 http.request.rejected line(s) in Loki carry a stable reason + requestId (sample reason=static_permission_denied, traceId=4f822edca5260007902f8cf51dbf9251)."
   ],
   "generatedFor": "ADR-ACT-0285 Phase 5"
 }

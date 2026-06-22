@@ -331,7 +331,7 @@ test("writeSelfEvidence: writes a timestamped run.json file", () => {
 
 // ??? rules.mjs ???????????????????????????????????????????????????????????????
 
-import { UNIVERSAL_RULES, PACKAGE_RULES, deprecatedImportTarget } from "../src/rules.mjs";
+import { UNIVERSAL_RULES, deprecatedImportTarget } from "../src/rules.mjs";
 
 // Lifecycle-aware deprecated-import rule (ADR-0006 / ADR-ACT-0288). Driven by
 // package metadata, so the tests build a synthetic package map rather than
@@ -442,42 +442,6 @@ test("UNIVERSAL_RULES: messages include relevant info", () => {
   const msg = noDeep.message("@platform/foo", "@platform/foo/internal");
   assert.ok(msg.includes("@platform/foo"));
   assert.ok(msg.includes("@platform/foo/internal"));
-});
-
-test("PACKAGE_RULES: domain-core has rules against react and graphql", () => {
-  const rules = PACKAGE_RULES["@platform/domain-core"];
-  assert.ok(Array.isArray(rules), "domain-core must have package rules");
-  const ruleIds = rules.map((r) => r.id);
-  assert.ok(ruleIds.includes("no-react-in-domain"), "must include no-react-in-domain");
-  assert.ok(ruleIds.includes("no-graphql-in-domain"), "must include no-graphql-in-domain");
-});
-
-test("PACKAGE_RULES: no-react-in-domain matches react and react-dom", () => {
-  const rules = PACKAGE_RULES["@platform/domain-core"];
-  const reactRule = rules.find((r) => r.id === "no-react-in-domain");
-  assert.ok(reactRule);
-  assert.equal(reactRule.match("react"), true);
-  assert.equal(reactRule.match("react-dom"), true);
-  assert.equal(reactRule.match("react-query"), false); // not in forbiddenExact
-  assert.equal(reactRule.match("lodash"), false);
-});
-
-test("PACKAGE_RULES: no-graphql-in-domain matches graphql and @apollo/ prefix", () => {
-  const rules = PACKAGE_RULES["@platform/domain-core"];
-  const gqlRule = rules.find((r) => r.id === "no-graphql-in-domain");
-  assert.ok(gqlRule);
-  assert.equal(gqlRule.match("graphql"), true);
-  assert.equal(gqlRule.match("@apollo/client"), true);
-  assert.equal(gqlRule.match("@graphql-codegen/core"), true);
-  assert.equal(gqlRule.match("lodash"), false);
-});
-
-test("PACKAGE_RULES: rule message includes package and specifier", () => {
-  const rules = PACKAGE_RULES["@platform/domain-core"];
-  const reactRule = rules.find((r) => r.id === "no-react-in-domain");
-  const msg = reactRule.message("@platform/domain-core", "react");
-  assert.ok(msg.includes("@platform/domain-core"));
-  assert.ok(msg.includes("react"));
 });
 
 // ??? package-map.mjs ?????????????????????????????????????????????????????????

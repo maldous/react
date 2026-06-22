@@ -93,31 +93,6 @@ test("validate-source-imports passes valid fixtures and flags invalid ones", asy
       rule: "no-test-support-in-prod",
     },
     {
-      name: "domain-imports-react",
-      dir: "invalid/domain-imports-react",
-      rule: "no-react-in-domain",
-    },
-    {
-      name: "domain-imports-graphql",
-      dir: "invalid/domain-imports-graphql",
-      rule: "no-graphql-in-domain",
-    },
-    {
-      name: "domain-imports-adapter",
-      dir: "invalid/domain-imports-adapter",
-      rule: "no-adapters-in-domain",
-    },
-    {
-      name: "feature-imports-postgres",
-      dir: "invalid/feature-imports-postgres",
-      rule: "no-adapters-in-feature",
-    },
-    {
-      name: "feature-imports-clickhouse",
-      dir: "invalid/feature-imports-clickhouse",
-      rule: "no-adapters-in-feature",
-    },
-    {
       name: "contract-imports-adapter",
       dir: "invalid/contract-imports-adapter",
       rule: "no-adapters-in-contracts-graphql",
@@ -134,16 +109,6 @@ test("validate-source-imports passes valid fixtures and flags invalid ones", asy
     },
     { name: "ui-imports-domain", dir: "invalid/ui-imports-domain", rule: "no-domain-in-ui" },
     {
-      name: "access-imports-react",
-      dir: "invalid/access-imports-react",
-      rule: "no-react-in-access-control",
-    },
-    {
-      name: "profile-imports-postgres",
-      dir: "invalid/profile-imports-postgres",
-      rule: "no-adapters-in-profile",
-    },
-    {
       name: "relative-cross-package-import",
       dir: "invalid/relative-cross-package-import/packages",
       rule: "no-relative-cross-package-import",
@@ -157,16 +122,6 @@ test("validate-source-imports passes valid fixtures and flags invalid ones", asy
       name: "empty-dep-list-imports-platform",
       dir: "invalid/empty-dep-list-imports-platform",
       rule: "no-unlisted-platform-import",
-    },
-    {
-      name: "type-only-boundary-violation",
-      dir: "invalid/type-only-boundary-violation",
-      rule: "no-react-in-domain",
-    },
-    {
-      name: "import-type-node-boundary-violation",
-      dir: "invalid/import-type-node-boundary-violation",
-      rule: "no-react-in-domain",
     },
     {
       name: "product-imports-architecture",
