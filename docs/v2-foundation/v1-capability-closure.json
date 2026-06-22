@@ -813,7 +813,87 @@
         "proof": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
         "implementation": ["apps/platform-api/src/server/routes.ts:6110", "docs/api/openapi.json"]
       }
-    ]
+    ],
+    "dataGovernanceRuntimeProofs": {
+      "classification": {
+        "proof": "Profile data is classified as displayName, locale, and timezone; notification preferences are classified by channel, category, and enabled flag; notification dispatch records are classified by channel, category, status, and subject. Runtime proofs verify no secret-bearing profile/preference columns.",
+        "evidence": [
+          "apps/platform-api/src/ports/profile-repository.ts",
+          "apps/platform-api/src/ports/notification-repository.ts",
+          "apps/platform-api/src/db/migrations/028-profile-notifications.sql",
+          "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
+          "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        ]
+      },
+      "retention": {
+        "proof": "Profile, notification_preferences, and notification_log are tenant/user-scoped Postgres records and participate in the platform retention model for persisted tenant data. The capability itself does not create an ungoverned duplicate store; profile and preference proofs validate source rows and RLS while retention proof governs persisted records.",
+        "evidence": [
+          "apps/platform-api/src/db/migrations/028-profile-notifications.sql",
+          "apps/platform-api/src/usecases/profile.ts",
+          "apps/platform-api/src/usecases/notifications.ts",
+          "apps/platform-api/scripts/retention-runtime-proof.ts"
+        ]
+      },
+      "backup": {
+        "proof": "Profile and preference state is Postgres-backed, so database backup covers user_profiles, notification_preferences, and notification_log rows. Runtime proofs validate those rows are the source of truth rather than a generated report or cache.",
+        "evidence": [
+          "apps/platform-api/scripts/backup-local-runtime-proof.ts",
+          "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+          "apps/platform-api/src/db/migrations/028-profile-notifications.sql",
+          "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
+          "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        ]
+      },
+      "restore": {
+        "proof": "Restore follows the database substrate: restored user_profiles, notification_preferences, and notification_log rows are read through the same repositories and routes. PITR/restore proofs cover the database, while profile/preference proofs validate read-back semantics from live Postgres.",
+        "evidence": [
+          "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+          "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+          "apps/platform-api/src/adapters/postgres-profile-repository.ts",
+          "apps/platform-api/src/adapters/postgres-notification-repository.ts",
+          "apps/platform-api/scripts/profile-self-service-runtime-proof.ts"
+        ]
+      },
+      "export": {
+        "proof": "Tenant export includes governed tenant history and identity/config artefacts; profile and preference mutations are captured as audited/history-visible records and persisted in tenant-scoped Postgres tables. The data-portability proof verifies encrypted archive generation and audit/history export.",
+        "evidence": [
+          "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+          "apps/platform-api/src/usecases/profile.ts",
+          "apps/platform-api/src/usecases/notifications.ts",
+          "apps/platform-api/src/db/migrations/028-profile-notifications.sql"
+        ]
+      },
+      "legal hold": {
+        "proof": "Legal hold applies at the persisted tenant-record layer: profile and preference changes are audited before mutation, and held durable source rows are governed by the platform legal-hold and retention proofs. The self-service usecases do not delete profile/preference records or bypass legal-hold-controlled source rows.",
+        "evidence": [
+          "apps/platform-api/src/usecases/profile.ts",
+          "apps/platform-api/src/usecases/notifications.ts",
+          "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
+          "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts"
+        ]
+      },
+      "DSR": {
+        "proof": "DSR/data-portability coverage is represented by tenant export plus the direct self-service read contracts: users can read their own profile and preferences, updates are audited, and export includes the resulting safe history projection. Secret-bearing notification payload fields are rejected before logging or delivery.",
+        "evidence": [
+          "apps/platform-api/src/server/routes.ts",
+          "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+          "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
+          "apps/platform-api/scripts/notification-preferences-runtime-proof.ts",
+          "apps/platform-api/src/usecases/notifications.ts"
+        ]
+      },
+      "lineage": {
+        "proof": "Lineage is explicit from authenticated session to storage and audit: routes derive organisationId and userId from tenant context/session, usecases pass those values to repositories, profile updates emit ProfileUpdated, preference updates emit NotificationPreferencesChanged, and dispatch produces notification_log status rows.",
+        "evidence": [
+          "apps/platform-api/src/server/routes.ts",
+          "apps/platform-api/src/usecases/profile.ts",
+          "apps/platform-api/src/usecases/notifications.ts",
+          "apps/platform-api/src/db/migrations/028-profile-notifications.sql",
+          "apps/platform-api/tests/unit/profile.test.ts",
+          "apps/platform-api/tests/unit/notifications.test.ts"
+        ]
+      }
+    }
   },
   {
     "capability": "API keys / personal access tokens",
