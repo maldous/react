@@ -23,11 +23,7 @@ quality
 | Domain       | Bounded context              | Purpose                                                                                                       | Initial package                   |
 | ------------ | ---------------------------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------- |
 | experience   | app-shell                    | Generic browser application shell, routing, runtime composition                                               | @platform/react-enterprise-app    |
-| experience   | workflow                     | Generic enterprise workflow and feature composition                                                           | @platform/feature-workflow        |
 | experience   | design-system                | Reusable presentational React components                                                                      | @platform/ui-design-system        |
-| core         | domain-core                  | Generic pure TypeScript domain-core policy, validation, and state-transition primitives                       | @platform/domain-core             |
-| core         | profile-configuration        | User profile, preferences, settings, entitlements, and runtime configuration models                           | @platform/profile-configuration   |
-| core         | access-control               | Generic admin, staff, user, service, and support role and permission policy                                   | @platform/access-control          |
 | core         | graphql-contracts            | GraphQL operations, fragments, and generated TypedDocumentNode contract artifacts                             | @platform/contracts-graphql       |
 | integration  | external-ingestion-contracts | External data payload, normalization, and ingestion event contracts                                           | @platform/contracts-ingestion     |
 | integration  | external-ingestion-runtime   | External data ingestion runtime adapters and normalization flow                                               | @platform/adapters-ingestion      |

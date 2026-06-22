@@ -13,11 +13,7 @@ Names are generic. They describe architectural responsibility rather than produc
 | Path                             | Package name                      | Lifecycle class | Domain       | Bounded context              |
 | -------------------------------- | --------------------------------- | --------------- | ------------ | ---------------------------- |
 | apps/react-enterprise-app        | @platform/react-enterprise-app    | active.feature  | experience   | app-shell                    |
-| packages/feature-workflow        | @platform/feature-workflow        | active.feature  | experience   | workflow                     |
 | packages/ui-design-system        | @platform/ui-design-system        | active.platform | experience   | design-system                |
-| packages/domain-core             | @platform/domain-core             | stable.platform | core         | domain-core                  |
-| packages/profile-configuration   | @platform/profile-configuration   | stable.platform | core         | profile-configuration        |
-| packages/access-control          | @platform/access-control          | stable.platform | core         | access-control               |
 | packages/contracts-graphql       | @platform/contracts-graphql       | active.contract | core         | graphql-contracts            |
 | packages/contracts-ingestion     | @platform/contracts-ingestion     | active.contract | integration  | external-ingestion-contracts |
 | packages/adapters-ingestion      | @platform/adapters-ingestion      | active.adapter  | integration  | external-ingestion-runtime   |

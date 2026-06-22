@@ -3,7 +3,7 @@
 Generated (ADR-ACT-0285 Phase 3 + closure). DO NOT EDIT — regenerate via the e2e-observability-correlation make target.
 
 - Result: **FULL**
-- testRunId: `run-test-1782050199-b841adbc`
+- testRunId: `run-test-1782085411-948cb0c0`
 - Loki: reachable
 - Tempo: reachable (required)
 - Total log lines: 18
@@ -34,5 +34,5 @@ Generated (ADR-ACT-0285 Phase 3 + closure). DO NOT EDIT — regenerate via the e
 ## Notes
 
 - Correlated 18 line(s); all 7 required scenario(s) observed.
-- Trace 2f99674d993ee67c5e5107d143918509 for 'pipeline-health-probe' matched in Tempo: services [platform-api].
-- Trace 30588f2747d5f0bf5dd0af25faa2c548 for 'browser-bff-trace' matched in Tempo: services [platform-api, react-enterprise-app].
+- Trace a8c8e0a8499bae912d0bdd985205b66d for 'pipeline-health-probe' matched in Tempo: services [platform-api].
+- Trace dae44fa0b35deec6081751e6c9725fee for 'browser-bff-trace' matched in Tempo: services [platform-api, react-enterprise-app].

@@ -7,8 +7,7 @@
     "low-vision-high-contrast"
   ],
   "routesTested": [
-    "/",
-    "/login"
+    "/"
   ],
   "results": [
     {
@@ -19,13 +18,6 @@
       "violations": []
     },
     {
-      "route": "/login",
-      "profile": "default",
-      "hasMain": true,
-      "hasHeading": true,
-      "violations": []
-    },
-    {
       "route": "/",
       "profile": "reduced-motion",
       "hasMain": true,
@@ -33,21 +25,7 @@
       "violations": []
     },
     {
-      "route": "/login",
-      "profile": "reduced-motion",
-      "hasMain": true,
-      "hasHeading": true,
-      "violations": []
-    },
-    {
       "route": "/",
-      "profile": "low-vision-high-contrast",
-      "hasMain": true,
-      "hasHeading": true,
-      "violations": []
-    },
-    {
-      "route": "/login",
       "profile": "low-vision-high-contrast",
       "hasMain": true,
       "hasHeading": true,

@@ -61,11 +61,12 @@ export class PostgresDataGovernanceAdapter implements DataGovernancePort {
     };
   }
   async classifyColumn(input: ClassifyColumnInput): Promise<DataClassificationRecord> {
-    const classification = /(?:email|phone|ssn|card)/i.test(input.sampleValue)
-      ? "sensitive"
-      : /@/.test(input.sampleValue)
-        ? "pii"
-        : "none";
+    let classification: DatasetClassification = "none";
+    if (/(?:email|phone|ssn|card)/i.test(input.sampleValue)) {
+      classification = "sensitive";
+    } else if (/@/.test(input.sampleValue)) {
+      classification = "pii";
+    }
     const { rows } = await this.pool.query(
       `INSERT INTO public.data_classifications (dataset_id, column_name, classification, rule, created_by) VALUES ($1,$2,$3,$4,$5) RETURNING classification_id, dataset_id, column_name, classification, rule, created_at`,
       [input.datasetId, input.columnName, classification, "rules-based", input.actorId]

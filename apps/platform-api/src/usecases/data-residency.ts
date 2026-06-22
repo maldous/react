@@ -1,11 +1,9 @@
 import { ValidationError, ForbiddenError } from "@platform/platform-errors";
 import { AuditAction, createAuditEvent, type AuditEventPort } from "@platform/audit-events";
 
-export type ResidencyTag = string;
-
 export interface DataResidencyRepository {
-  getResidencyTag(organisationId: string): Promise<ResidencyTag | null>;
-  setResidencyTag(organisationId: string, residencyTag: ResidencyTag): Promise<void>;
+  getResidencyTag(organisationId: string): Promise<string | null>;
+  setResidencyTag(organisationId: string, residencyTag: string): Promise<void>;
 }
 
 export interface DataResidencyDeps {
@@ -21,7 +19,7 @@ export interface DataResidencyActor {
 
 const TAG_RE = /^[a-z]{2}(?:-[a-z0-9]+)*$/i;
 
-export function validateResidencyTag(tag: string): ResidencyTag {
+export function validateResidencyTag(tag: string): string {
   const trimmed = tag.trim();
   if (!TAG_RE.test(trimmed)) {
     throw new ValidationError("api.error.invalidInput", {
@@ -34,8 +32,8 @@ export function validateResidencyTag(tag: string): ResidencyTag {
 export async function setTenantResidency(
   input: { organisationId: string; residencyTag: string; actor: DataResidencyActor },
   deps: DataResidencyDeps
-): Promise<{ kind: "ok"; residencyTag: ResidencyTag } | { kind: "invalid"; message: string }> {
-  let tag: ResidencyTag;
+): Promise<{ kind: "ok"; residencyTag: string } | { kind: "invalid"; message: string }> {
+  let tag: string;
   try {
     tag = validateResidencyTag(input.residencyTag);
   } catch {

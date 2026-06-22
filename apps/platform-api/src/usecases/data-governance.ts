@@ -6,13 +6,12 @@ import type {
   DatasetClassification,
 } from "../ports/data-governance.ts";
 export const classifyByRules = (sample: string): DatasetClassification =>
-  /card|cc|credit/i.test(sample)
-    ? "sensitive"
-    : /@/.test(sample)
-      ? "pii"
-      : /phone|ssn/i.test(sample)
-        ? "sensitive"
-        : "none";
+  (() => {
+    if (/card|cc|credit/i.test(sample)) return "sensitive";
+    if (/@/.test(sample)) return "pii";
+    if (/phone|ssn/i.test(sample)) return "sensitive";
+    return "none";
+  })();
 export const createDataset = (input: CreateDatasetEntryInput, deps: { port: DataGovernancePort }) =>
   deps.port.createDataset(input);
 export const classifyColumn = (input: ClassifyColumnInput, deps: { port: DataGovernancePort }) =>

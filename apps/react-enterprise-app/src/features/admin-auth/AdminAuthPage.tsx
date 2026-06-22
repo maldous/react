@@ -412,9 +412,19 @@ const LOCKOUT_NUMERIC_FIELDS = [
     name: "failureResetTimeSeconds",
     labelKey: "feature.admin.auth.lockout.failureResetTimeSeconds",
   },
-] as const;
-
-type LockoutNumericField = (typeof LOCKOUT_NUMERIC_FIELDS)[number];
+] as const satisfies ReadonlyArray<{
+  name: keyof Pick<
+    LockoutPolicyDto,
+    | "maxFailureWaitSeconds"
+    | "failureFactor"
+    | "waitIncrementSeconds"
+    | "quickLoginCheckMilliSeconds"
+    | "minimumQuickLoginWaitSeconds"
+    | "maxDeltaTimeSeconds"
+    | "failureResetTimeSeconds"
+  >;
+  labelKey: string;
+}>;
 
 function LockoutTab() {
   const t = useTranslation();
@@ -480,11 +490,7 @@ function LockoutPolicyView({ editable }: Readonly<{ editable: boolean }>) {
             }
           />
           {LOCKOUT_NUMERIC_FIELDS.map((f) => (
-            <Detail
-              key={f.name}
-              label={t(f.labelKey)}
-              value={String(data[f.name as LockoutNumericField["name"]] ?? "")}
-            />
+            <Detail key={f.name} label={t(f.labelKey)} value={String(data[f.name] ?? "")} />
           ))}
         </div>
       </CardBody>

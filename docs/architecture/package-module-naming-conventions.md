@@ -66,8 +66,7 @@ packages/feature-<capability>
 Initial generic package:
 
 ```text
-packages/feature-workflow
-@platform/feature-workflow
+
 ```
 
 Rules:
@@ -110,8 +109,7 @@ packages/domain-<capability>
 Initial generic package:
 
 ```text
-packages/domain-core
-@platform/domain-core
+
 ```
 
 Rules:
@@ -125,11 +123,7 @@ domain packages should describe policy/model ownership, not persistence technolo
 ## Profile and access package naming
 
 ```text
-packages/profile-configuration
-@platform/profile-configuration
 
-packages/access-control
-@platform/access-control
 ```
 
 Rules:
@@ -329,9 +323,6 @@ The current skeleton conforms to these naming conventions:
 apps/react-enterprise-app
 packages/feature-workflow
 packages/ui-design-system
-packages/domain-core
-packages/profile-configuration
-packages/access-control
 packages/contracts-graphql
 packages/contracts-ingestion
 packages/adapters-ingestion

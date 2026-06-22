@@ -5,10 +5,8 @@ import { createSupportTicket, getCustomerHealth } from "../../src/usecases/suppo
 type DbRow = Record<string, unknown>;
 
 test("support tickets and customer health", async () => {
-  const queries: string[] = [];
   const pool = {
     query: async (text: string) => {
-      queries.push(text);
       if (String(text).includes("RETURNING id")) return { rows: [{ id: "ticket-1" }] };
       if (String(text).includes("COUNT(*)")) return { rows: [{ count: 2 }] };
       if (String(text).includes("SUM(quantity)")) return { rows: [{ count: 1500 }] };

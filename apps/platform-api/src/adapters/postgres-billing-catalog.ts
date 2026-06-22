@@ -58,19 +58,19 @@ export class PostgresBillingCatalogAdapter implements BillingCatalogPort {
   }
 
   async listPlans(productId?: string): Promise<BillingPlan[]> {
-    const params: unknown[] = [];
-    let where = "";
-    if (productId) {
-      params.push(productId);
-      where = "WHERE product_id = $1";
-    }
-    const { rows } = await this.pool.query<PlanRow>(
-      `SELECT plan_id, product_id, name, currency, billing_period, is_active, created_at
-         FROM public.billing_plans
-         ${where}
-        ORDER BY created_at DESC, name ASC`,
-      params
-    );
+    const { rows } = productId
+      ? await this.pool.query<PlanRow>(
+          `SELECT plan_id, product_id, name, currency, billing_period, is_active, created_at
+             FROM public.billing_plans
+            WHERE product_id = $1
+            ORDER BY created_at DESC, name ASC`,
+          [productId]
+        )
+      : await this.pool.query<PlanRow>(
+          `SELECT plan_id, product_id, name, currency, billing_period, is_active, created_at
+             FROM public.billing_plans
+            ORDER BY created_at DESC, name ASC`
+        );
     return rows.map((r) => ({
       planId: r.plan_id,
       productId: r.product_id,
@@ -83,19 +83,19 @@ export class PostgresBillingCatalogAdapter implements BillingCatalogPort {
   }
 
   async listPrices(planId?: string): Promise<BillingPrice[]> {
-    const params: unknown[] = [];
-    let where = "";
-    if (planId) {
-      params.push(planId);
-      where = "WHERE plan_id = $1";
-    }
-    const { rows } = await this.pool.query<PriceRow>(
-      `SELECT price_id, plan_id, version, price_type, unit_amount, currency, billing_period, is_active, created_at
-         FROM public.billing_prices
-         ${where}
-        ORDER BY created_at DESC, version DESC`,
-      params
-    );
+    const { rows } = planId
+      ? await this.pool.query<PriceRow>(
+          `SELECT price_id, plan_id, version, price_type, unit_amount, currency, billing_period, is_active, created_at
+             FROM public.billing_prices
+            WHERE plan_id = $1
+            ORDER BY created_at DESC, version DESC`,
+          [planId]
+        )
+      : await this.pool.query<PriceRow>(
+          `SELECT price_id, plan_id, version, price_type, unit_amount, currency, billing_period, is_active, created_at
+             FROM public.billing_prices
+            ORDER BY created_at DESC, version DESC`
+        );
     return rows.map((r) => ({
       priceId: r.price_id,
       planId: r.plan_id,

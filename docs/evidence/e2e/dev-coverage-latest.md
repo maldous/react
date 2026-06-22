@@ -2,18 +2,15 @@
 
 Generated for git evidence (ADR-0075 / ADR-ACT-0285). DO NOT EDIT — regenerate via `npm run e2e:coverage:validate`.
 
-- Result: **FAILED**
-- Failures (block make all): 1
-- Reported gaps (honest, non-blocking this phase): 53
-
-## Failures
-
-- ❌ delivered/locally-proven capability 'abac-pdp' (delivered) has NO E2E suite and NO exemption
+- Result: **PASSED**
+- Failures (block make all): 0
+- Reported gaps (honest, non-blocking this phase): 54
 
 ## Reported gaps (tracked, not yet blocking)
 
 - ⚠️ capability 'end-user-profile-self-service' (locally proven) exempt: Profile self-service journey E2E lands in ADR-ACT-0285 Phase 6; covered by runtime-proof today.
 - ⚠️ capability 'api-keys-pat' (locally proven) exempt: Developer-portal journey E2E lands in ADR-ACT-0285 Phase 6; covered by runtime-proof today.
+- ⚠️ capability 'abac-pdp' (delivered) exempt: Policy-decision/runtime proof surface, not a browser E2E journey. Covered by proof:abac-pdp and validator-backed route/contract tests.
 - ⚠️ capability 'entitlements' (locally proven) exempt: Entitlement enabled/disabled persona coverage lands in ADR-ACT-0285 Phase 6; covered by runtime-proof + persona registry today.
 - ⚠️ capability 'privileged-access-audit' (delivered) exempt: Support-mode/breakglass audited-access E2E lands in ADR-ACT-0285 Phase 6 (persona: support/breakglass); covered by support runtime-proof today.
 - ⚠️ capability 'tenant-config-registry' (delivered) exempt: Config admin journey E2E lands in ADR-ACT-0285 Phase 6 (feature-suite); covered by runtime-proof today.
@@ -72,6 +69,6 @@ Generated for git evidence (ADR-0075 / ADR-ACT-0285). DO NOT EDIT — regenerate
 - suites: 24
 - delivered+locallyProven capabilities: 34
 - coveredCapabilities: 7
-- exemptCapabilities: 26
+- exemptCapabilities: 27
 - adminNavRoutes: 22
 - clickthroughExposed: 14

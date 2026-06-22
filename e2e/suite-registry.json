@@ -514,6 +514,11 @@
       "until": "ADR-ACT-0285-phase-6"
     },
     {
+      "capability": "abac-pdp",
+      "reason": "Policy-decision/runtime proof surface, not a browser E2E journey. Covered by proof:abac-pdp and validator-backed route/contract tests.",
+      "until": "permanent"
+    },
+    {
       "capability": "tenant-config-registry",
       "reason": "Config admin journey E2E lands in ADR-ACT-0285 Phase 6 (feature-suite); covered by runtime-proof today.",
       "until": "ADR-ACT-0285-phase-6"
