@@ -687,7 +687,45 @@
         "proof": "members unit + substrate tests",
         "implementation": ["apps/platform-api/src/server/routes.ts:3525", "docs/api/openapi.json"]
       }
-    ]
+    ],
+    "dataGovernanceRuntimeProofs": {
+      "classification": {
+        "proof": "apps/platform-api/tests/unit/members.test.ts; apps/platform-api/src/usecases/members.ts",
+        "evidence": "membership stores tenant role, status, username, invitation state, actor, and organisation identifiers as explicit classified identity attributes"
+      },
+      "retention": {
+        "proof": "apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+        "evidence": "retention proof validates policy windows, audit-before-change behavior, and legal-hold guarded candidates for identity/audit records"
+      },
+      "backup": {
+        "proof": "apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+        "evidence": "backup proof exercises configured pg_dump path, protected-environment refusal, dump integrity, and unavailable database failure for platform identity storage"
+      },
+      "restore": {
+        "proof": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts; apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+        "evidence": "restore drill restores a platform Postgres backup into a throwaway database and verifies recovered marker state without touching live data"
+      },
+      "export": {
+        "proof": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+        "evidence": "portable tenant export includes identity/members.json with members and pendingInvitations plus audit/history entries for member activity"
+      },
+      "legal hold": {
+        "proof": "apps/platform-api/scripts/legal-hold-runtime-proof.ts; apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+        "evidence": "legal-hold proof validates audit-before-change hold set/release and active-hold guards over audit_events identity activity records"
+      },
+      "DSR": {
+        "proof": "apps/platform-api/scripts/data-governance-runtime-proof.ts; apps/platform-api/scripts/data-portability-runtime-proof.ts",
+        "evidence": "DSR fulfillment proof records portability-export evidence and data portability proof exports identity membership payloads"
+      },
+      "lineage": {
+        "proof": "apps/platform-api/scripts/history-runtime-proof.ts; apps/platform-api/scripts/data-portability-runtime-proof.ts",
+        "evidence": "history proof projects member audit activity into a tenant-scoped read model and portability proof carries member audit history entries"
+      },
+      "tenant isolation": {
+        "proof": "apps/platform-api/tests/unit/members.test.ts; apps/platform-api/scripts/history-runtime-proof.ts",
+        "evidence": "members proof asserts organisation_id filters for pending invitations and history proof proves tenant A excludes tenant B rows"
+      }
+    }
   },
   {
     "capability": "End-user profile + preferences self-service",
