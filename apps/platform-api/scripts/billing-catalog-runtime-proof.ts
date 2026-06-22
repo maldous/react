@@ -9,10 +9,9 @@ async function main(): Promise<void> {
     "/api/org/billing/catalog",
   ];
   for (const path of required) {
-    assert.ok(
-      routes.some((r) => r.path === path),
-      `billing catalog route is registered: ${path}`
-    );
+    const route = routes.find((r) => r.path === path);
+    assert.ok(route, `billing catalog route is registered: ${path}`);
+    assert.equal(route.path, path, `billing catalog route lookup returns exact path: ${path}`);
   }
   console.log(
     JSON.stringify(

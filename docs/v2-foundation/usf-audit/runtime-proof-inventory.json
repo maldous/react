@@ -27,7 +27,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/alerting-runtime-proof.ts"]
@@ -73,7 +73,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/auth-settings-runtime-proof.ts"]
@@ -128,7 +128,7 @@
       "route:post-api-admin-billing-catalog-products",
       "route:get-api-org-billing-catalog"
     ],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/billing-catalog-runtime-proof.ts"]

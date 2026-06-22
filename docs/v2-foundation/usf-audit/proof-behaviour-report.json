@@ -4,40 +4,6 @@
   "gaps": [
     {
       "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/alerting-runtime-proof.ts",
-      "message": "proof does not assert side effects",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-alerting-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/alerting-runtime-proof.ts",
-        "level": 4,
-        "classification": "live substrate behaviour",
-        "routeRefs": ["route:get"],
-        "assertsSideEffects": false,
-        "assertsFailureMode": true,
-        "assertsObservabilityOrAudit": true,
-        "sourceFileRefs": ["apps/platform-api/scripts/alerting-runtime-proof.ts"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
-      "message": "proof does not assert side effects",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
-        "level": 4,
-        "classification": "live substrate behaviour",
-        "routeRefs": ["route:get"],
-        "assertsSideEffects": false,
-        "assertsFailureMode": true,
-        "assertsObservabilityOrAudit": true,
-        "sourceFileRefs": ["apps/platform-api/scripts/auth-settings-runtime-proof.ts"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
       "message": "proof does not assert side effects",
       "evidence": {
@@ -84,34 +50,6 @@
         "assertsFailureMode": true,
         "assertsObservabilityOrAudit": false,
         "sourceFileRefs": ["apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
-      "message": "proof does not assert side effects",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-billing-catalog-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
-        "level": 2,
-        "classification": "isolated unit behaviour",
-        "routeRefs": [
-          "route:get",
-          "route:get-admin",
-          "route:get-api-admin-billing",
-          "route:get-api-admin-billing-catalog-plans",
-          "route:post-api-admin-billing-catalog-plans",
-          "route:get-api-admin-billing-catalog-prices",
-          "route:post-api-admin-billing-catalog-prices",
-          "route:get-api-admin-billing-catalog-products",
-          "route:post-api-admin-billing-catalog-products",
-          "route:get-api-org-billing-catalog"
-        ],
-        "assertsSideEffects": false,
-        "assertsFailureMode": true,
-        "assertsObservabilityOrAudit": true,
-        "sourceFileRefs": ["apps/platform-api/scripts/billing-catalog-runtime-proof.ts"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -2693,7 +2631,7 @@
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
+      "assertsSideEffects": true,
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/alerting-runtime-proof.ts"]
@@ -2739,7 +2677,7 @@
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
+      "assertsSideEffects": true,
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/auth-settings-runtime-proof.ts"]
@@ -2794,7 +2732,7 @@
         "route:post-api-admin-billing-catalog-products",
         "route:get-api-org-billing-catalog"
       ],
-      "assertsSideEffects": false,
+      "assertsSideEffects": true,
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/billing-catalog-runtime-proof.ts"]
