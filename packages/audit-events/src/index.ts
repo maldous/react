@@ -94,6 +94,9 @@ export const AuditAction = {
   DataGovernanceColumnClassified: "data_governance.column.classified",
   DataGovernanceDsrCreated: "data_governance.dsr.created",
   DataGovernanceDsrFulfilled: "data_governance.dsr.fulfilled",
+  WorkflowStarted: "workflow.started",
+  WorkflowSignaled: "workflow.signaled",
+  WorkflowCancelled: "workflow.cancelled",
 } as const;
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction];

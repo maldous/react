@@ -216,6 +216,42 @@ function domainVerifyStatus(kind: string): string {
   return "pending_dns";
 }
 
+async function auditAdminWorkflowMutation(input: {
+  actor: { userId: string; tenantId: string; roles: string[] };
+  action: AuditAction;
+  workflowId: string;
+  workflowKey?: string;
+  tenantId?: string;
+  signalName?: string;
+  requestId: string;
+  sourceHost?: string;
+}): Promise<void> {
+  await createPostgresAuditEventPort(getApplicationPool()).emit(
+    createAuditEvent({
+      actorId: input.actor.userId,
+      actorRoles: input.actor.roles,
+      tenantId: input.tenantId ?? input.actor.tenantId,
+      action: input.action,
+      resource: "workflow",
+      resourceId: input.workflowId,
+      metadata: {
+        workflowKey: input.workflowKey,
+        workflowId: input.workflowId,
+        signalName: input.signalName,
+        before: "provider-authoritative",
+        after:
+          input.action === AuditAction.WorkflowStarted
+            ? "running"
+            : input.action === AuditAction.WorkflowCancelled
+              ? "cancelled"
+              : "provider-authoritative",
+      },
+      correlationId: input.requestId,
+      sourceHost: input.sourceHost,
+    })
+  );
+}
+
 // ---------------------------------------------------------------------------
 // Shared mapping of an Auth Settings mutation result to an HTTP response
 // (ADR-0041). Returns true when it sent a failure response; false on "ok" so the
@@ -8296,6 +8332,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.workflow.write",
     resource: "admin:workflows",
     umaScope: "create" as const,
+    auditEvent: AuditAction.WorkflowStarted,
     scope: "global" as const,
     handler: async (req, res) => {
       const body = req.body as
@@ -8324,6 +8361,15 @@ export const routes: Route[] = [
         workflowId: body.workflowId,
         payload: body.payload ?? {},
       };
+      await auditAdminWorkflowMutation({
+        actor: req.actor!,
+        action: AuditAction.WorkflowStarted,
+        workflowId: input.workflowId,
+        workflowKey: input.workflowKey,
+        tenantId: input.tenantId,
+        requestId: req.requestId,
+        sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+      });
       res.json(200, await temporal.startWorkflow(input));
     },
   },
@@ -8335,6 +8381,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.workflow.write",
     resource: "admin:workflows",
     umaScope: "create" as const,
+    auditEvent: AuditAction.WorkflowSignaled,
     scope: "global" as const,
     handler: async (req, res) => {
       const workflowId = req.params["workflowId"] ?? "";
@@ -8353,6 +8400,14 @@ export const routes: Route[] = [
         res.json(503, { code: "NOT_CONFIGURED", message: "Temporal is not configured" });
         return;
       }
+      await auditAdminWorkflowMutation({
+        actor: req.actor!,
+        action: AuditAction.WorkflowSignaled,
+        workflowId,
+        signalName: body.signalName,
+        requestId: req.requestId,
+        sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+      });
       await temporal.signalWorkflow(workflowId, body.signalName, body.payload ?? {});
       res.json(200, { ok: true });
     },
@@ -8365,6 +8420,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.workflow.write",
     resource: "admin:workflows",
     umaScope: "create" as const,
+    auditEvent: AuditAction.WorkflowCancelled,
     scope: "global" as const,
     handler: async (req, res) => {
       const workflowId = req.params["workflowId"] ?? "";
@@ -8377,6 +8433,13 @@ export const routes: Route[] = [
         res.json(503, { code: "NOT_CONFIGURED", message: "Temporal is not configured" });
         return;
       }
+      await auditAdminWorkflowMutation({
+        actor: req.actor!,
+        action: AuditAction.WorkflowCancelled,
+        workflowId,
+        requestId: req.requestId,
+        sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+      });
       await temporal.cancelWorkflow(workflowId);
       res.json(200, { ok: true });
     },
