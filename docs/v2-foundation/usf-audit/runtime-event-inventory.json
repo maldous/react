@@ -64,8 +64,8 @@
     "privacyClassification": "fixture",
     "auditRelationship": "none for product audit; fixture redrive evidence remains proof-only",
     "proofRef": "proof:event-worker",
-    "proofExercisesPublishConsume": false,
-    "proofSourceFileRefs": [],
+    "proofExercisesPublishConsume": true,
+    "proofSourceFileRefs": ["apps/platform-api/scripts/event-worker-runtime-proof.ts"],
     "sourceFileRefs": ["apps/platform-api/tests/unit/events.test.ts"]
   },
   {
@@ -128,8 +128,8 @@
     "privacyClassification": "tenant-operational",
     "auditRelationship": "report.run is linked to producer mutation audit and redrive/delivery audit evidence.",
     "proofRef": "proof:scheduled-jobs; proof:scheduled-job-routes",
-    "proofExercisesPublishConsume": false,
-    "proofSourceFileRefs": [],
+    "proofExercisesPublishConsume": true,
+    "proofSourceFileRefs": ["apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts"],
     "sourceFileRefs": [
       "apps/platform-api/src/usecases/scheduled-jobs.ts",
       "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
@@ -182,6 +182,7 @@
       "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
       "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
       "apps/platform-api/scripts/retention-runtime-proof.ts",
+      "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
       "apps/platform-api/scripts/search-isolation-runtime-proof.ts",
       "apps/platform-api/scripts/search-runtime-proof.ts",
       "apps/platform-api/scripts/secret-store-contract-runtime-proof.ts",
@@ -300,6 +301,7 @@
       "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
       "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
       "apps/platform-api/scripts/retention-runtime-proof.ts",
+      "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
       "apps/platform-api/scripts/search-isolation-runtime-proof.ts",
       "apps/platform-api/scripts/search-runtime-proof.ts",
       "apps/platform-api/scripts/secret-store-contract-runtime-proof.ts",

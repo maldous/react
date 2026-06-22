@@ -18,8 +18,11 @@
 import http from "node:http";
 import pg from "pg";
 import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
+import { PostgresEventBus, PostgresWorkerRegistry } from "../src/adapters/postgres-event-bus.ts";
+import type { ClaimedEvent } from "../src/ports/event-bus.ts";
 import { routes } from "../src/server/routes.ts";
 import type { PipelineRequest, PipelineResponse, Route } from "../src/server/pipeline.ts";
+import { processNext } from "../src/usecases/events.ts";
 
 loadLocalEnv();
 const SU_URL = requireEnv("POSTGRES_URL");
@@ -98,6 +101,8 @@ async function main(): Promise<void> {
   );
 
   const su = new pg.Pool({ connectionString: SU_URL });
+  const app = new pg.Pool({ connectionString: APP_URL });
+  const workerId = "proof-sjr-worker-" + Date.now().toString(36);
   let orgA: string | null = null;
   try {
     orgA = (
@@ -136,6 +141,24 @@ async function main(): Promise<void> {
       "run-now enqueues via the real handler (200)",
       run.status === 200 && runBody.enqueued === true
     );
+    const consumedReportRuns: string[] = [];
+    const consumed = await processNext(
+      {
+        "report.run": async (event: ClaimedEvent) => {
+          consumedReportRuns.push(event.id);
+        },
+      },
+      {
+        bus: new PostgresEventBus(app),
+        workers: new PostgresWorkerRegistry(app),
+        audit: { emit: async () => {}, query: async () => [] },
+      },
+      { workerId, workerKind: "scheduled-job-route-proof", batch: 10 }
+    );
+    check(
+      "report.run event published by run-now is consumed by the worker",
+      consumed.processed === 1 && consumedReportRuns.length === 1
+    );
     check(
       "run-now rejects an invalid job id",
       (await invoke(runR, { params: { jobId: "nope" } })).status === 400
@@ -156,6 +179,10 @@ async function main(): Promise<void> {
   } finally {
     if (orgA)
       await su.query("DELETE FROM public.organisations WHERE id=$1", [orgA]).catch(() => {});
+    await su
+      .query("DELETE FROM public.worker_heartbeats WHERE worker_id=$1", [workerId])
+      .catch(() => {});
+    await app.end().catch(() => {});
     await su.end().catch(() => {});
   }
   console.log(

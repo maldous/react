@@ -109,6 +109,21 @@ async function main(): Promise<void> {
     const dlq = await getDeadLetters(orgA, deps);
     check("the failed event is in the dead-letter queue", dlq.deadLetters.length === 1);
 
+    // Unknown event types are not silently dropped: publish no.handler, consume it
+    // with an empty handler registry, and prove it reaches DLQ at max_attempts.
+    await publishEvent(
+      { organisationId: orgA, eventType: "no.handler", idempotencyKey: "k3", maxAttempts: 1 },
+      deps
+    );
+    const missingHandler = await processNext({}, deps, { batch: 10 });
+    const dlqAfterMissingHandler = await getDeadLetters(orgA, deps);
+    check(
+      "no.handler publish is consumed by the worker and dead-lettered when no handler exists",
+      missingHandler.claimed === 1 &&
+        missingHandler.deadLettered === 1 &&
+        dlqAfterMissingHandler.deadLetters.some((e) => e.eventType === "no.handler")
+    );
+
     // heartbeat visible
     const workers = await listWorkers(deps);
     check(
