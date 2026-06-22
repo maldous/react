@@ -17,10 +17,10 @@
         "apps/platform-api/src/server/tenant-resolver.ts",
         "apps/platform-api/src/server/pipeline.ts",
         "packages/domain-identity/tests/domain-identity.test.ts",
-        "apps/platform-api/src/adapters/PostgresIdentityAdapter.ts"
+        "apps/platform-api/src/adapters/postgres-identity-repository.ts"
       ],
       "dev": {
-        "provider": "local IdentityRepositoryPort provider for Tenant identity (record + FQDN)",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -49,7 +49,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic IdentityRepositoryPort proof provider",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -78,7 +78,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape PostgresIdentityAdapter provider with sandbox externals",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -108,7 +108,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production PostgresIdentityAdapter provider",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -155,10 +155,10 @@
         "packages/domain-identity/src/index.ts",
         "apps/platform-api/src/server/routes.ts",
         "packages/domain-identity/tests/domain-identity.test.ts",
-        "apps/platform-api/src/adapters/PostgresIdentityAdapter.ts"
+        "apps/platform-api/src/adapters/postgres-identity-repository.ts"
       ],
       "dev": {
-        "provider": "local IdentityRepositoryPort provider for User identity + tenant membership",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -190,7 +190,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic IdentityRepositoryPort proof provider",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -222,7 +222,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape PostgresIdentityAdapter provider with sandbox externals",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -255,7 +255,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production PostgresIdentityAdapter provider",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -581,10 +581,10 @@
         "apps/platform-api/src/usecases/groups.ts",
         "apps/platform-api/tests/unit/groups.test.ts",
         "apps/platform-api/src/server/routes.ts",
-        "apps/platform-api/src/adapters/PostgresIdentityAdapter.ts"
+        "apps/platform-api/src/adapters/postgres-identity-repository.ts"
       ],
       "dev": {
-        "provider": "local IdentityRepositoryPort provider for Tenant groups",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -613,7 +613,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic IdentityRepositoryPort proof provider",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -642,7 +642,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape PostgresIdentityAdapter provider with sandbox externals",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -672,7 +672,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production PostgresIdentityAdapter provider",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -714,10 +714,10 @@
         "apps/platform-api/src/usecases/sub-organisations.ts",
         "apps/platform-api/src/server/routes.ts",
         "apps/platform-api/tests/unit/sub-organisations.test.ts",
-        "apps/platform-api/src/adapters/PostgresIdentityAdapter.ts"
+        "apps/platform-api/src/adapters/postgres-identity-repository.ts"
       ],
       "dev": {
-        "provider": "local IdentityRepositoryPort provider for Sub-organisations",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -746,7 +746,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic IdentityRepositoryPort proof provider",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -775,7 +775,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape PostgresIdentityAdapter provider with sandbox externals",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -805,7 +805,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production PostgresIdentityAdapter provider",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -851,10 +851,10 @@
         "packages/domain-identity/tests/domain-identity.test.ts",
         "apps/platform-api/tests/unit/members.test.ts",
         "apps/platform-api/tests/substrate/api-pipeline.test.ts",
-        "apps/platform-api/src/adapters/PostgresIdentityAdapter.ts"
+        "apps/platform-api/src/adapters/postgres-identity-repository.ts"
       ],
       "dev": {
-        "provider": "local IdentityRepositoryPort provider for RBAC (roles + permissions)",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -886,7 +886,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic IdentityRepositoryPort proof provider",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -918,7 +918,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape PostgresIdentityAdapter provider with sandbox externals",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -951,7 +951,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production PostgresIdentityAdapter provider",
+        "provider": "postgres-identity-repository",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -1691,10 +1691,10 @@
         "apps/platform-api/src/usecases/auth.ts",
         "apps/platform-api/src/server/routes.ts",
         "apps/platform-api/tests/substrate/auth-routes.test.ts",
-        "apps/platform-api/src/adapters/KeycloakAdminAdapter.ts"
+        "apps/platform-api/src/adapters/keycloak-realm-admin-adapter.ts"
       ],
       "dev": {
-        "provider": "local AuthSettingsPort / IdentityProviderPort provider for Platform login + session",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "operational-telemetry",
         "tenantDataAllowed": true,
@@ -1723,7 +1723,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic AuthSettingsPort / IdentityProviderPort proof provider",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "operational-telemetry",
         "tenantDataAllowed": true,
@@ -1752,7 +1752,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape KeycloakAdminAdapter provider with sandbox externals",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "operational-telemetry",
         "tenantDataAllowed": true,
@@ -1782,7 +1782,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production KeycloakAdminAdapter provider",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "live-external",
         "dataClass": "operational-telemetry",
         "tenantDataAllowed": true,
@@ -1825,10 +1825,10 @@
       "category": "authentication",
       "sourceFileRefs": [
         "docs/api/openapi.json",
-        "apps/platform-api/src/adapters/KeycloakAdminAdapter.ts"
+        "apps/platform-api/src/adapters/keycloak-realm-admin-adapter.ts"
       ],
       "dev": {
-        "provider": "local AuthSettingsPort / IdentityProviderPort provider for IdP brokering + OIDC provider management",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -1857,7 +1857,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic AuthSettingsPort / IdentityProviderPort proof provider",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -1886,7 +1886,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape KeycloakAdminAdapter provider with sandbox externals",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -1918,7 +1918,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production KeycloakAdminAdapter provider",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "live-external",
         "dataClass": "configuration",
         "tenantDataAllowed": false,
@@ -1962,10 +1962,10 @@
       "sourceFileRefs": [
         "tools/ui-reference-harness/playwright/claim-mapping.spec.ts",
         "apps/platform-api/tests/unit/oidc-mapping.test.ts",
-        "apps/platform-api/src/adapters/KeycloakAdminAdapter.ts"
+        "apps/platform-api/src/adapters/keycloak-realm-admin-adapter.ts"
       ],
       "dev": {
-        "provider": "local AuthSettingsPort / IdentityProviderPort provider for Claim mapping + group/role mapping",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -1994,7 +1994,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic AuthSettingsPort / IdentityProviderPort proof provider",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -2023,7 +2023,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape KeycloakAdminAdapter provider with sandbox externals",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -2053,7 +2053,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production KeycloakAdminAdapter provider",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "live-external",
         "dataClass": "configuration",
         "tenantDataAllowed": false,
@@ -2094,9 +2094,9 @@
     {
       "capability": "MFA + session policy + lockout",
       "category": "authentication",
-      "sourceFileRefs": ["apps/platform-api/src/adapters/KeycloakAdminAdapter.ts"],
+      "sourceFileRefs": ["apps/platform-api/src/adapters/keycloak-realm-admin-adapter.ts"],
       "dev": {
-        "provider": "local AuthSettingsPort / IdentityProviderPort provider for MFA + session policy + lockout",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -2125,7 +2125,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic AuthSettingsPort / IdentityProviderPort proof provider",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -2154,7 +2154,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape KeycloakAdminAdapter provider with sandbox externals",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -2184,7 +2184,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production KeycloakAdminAdapter provider",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "live-external",
         "dataClass": "configuration",
         "tenantDataAllowed": false,
@@ -2493,10 +2493,10 @@
         "apps/platform-api/src/usecases/tenant-domain-lifecycle.ts",
         "docs/api/openapi.json",
         "apps/platform-api/src/usecases/vanity-domain-challenge.ts",
-        "apps/platform-api/src/adapters/KeycloakAuthClientAdapter / DnsChallengeAdapter.ts"
+        "apps/platform-api/src/adapters/postgres-tenant-domain-registry.ts"
       ],
       "dev": {
-        "provider": "local TenantDomainPort provider for Custom domains, DNS ownership, TLS, canonical",
+        "provider": "postgres-tenant-domain-registry",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -2532,7 +2532,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic TenantDomainPort proof provider",
+        "provider": "postgres-tenant-domain-registry",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -2568,7 +2568,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape KeycloakAuthClientAdapter / DnsChallengeAdapter provider with sandbox externals",
+        "provider": "postgres-tenant-domain-registry",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -2605,7 +2605,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production KeycloakAuthClientAdapter / DnsChallengeAdapter provider",
+        "provider": "postgres-tenant-domain-registry",
         "providerClass": "live-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -3458,10 +3458,10 @@
         "scripts/backup",
         "scripts/backup/postgres-backup.sh",
         "scripts/backup/postgres-restore.sh",
-        "apps/platform-api/src/adapters/pg_dump/pg_restore scripts.ts"
+        "apps/platform-api/src/adapters/backup-restore-scripts.ts"
       ],
       "dev": {
-        "provider": "local n/a (ops scripts) provider for Backup + restore",
+        "provider": "backup-restore-scripts",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -3490,7 +3490,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic n/a (ops scripts) proof provider",
+        "provider": "backup-restore-scripts",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -3519,7 +3519,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape pg_dump/pg_restore scripts provider with sandbox externals",
+        "provider": "backup-restore-scripts",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -3549,7 +3549,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production pg_dump/pg_restore scripts provider",
+        "provider": "backup-restore-scripts",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": false,
@@ -3587,11 +3587,9 @@
     {
       "capability": "PITR, retention, legal hold, data residency",
       "category": "data-platform",
-      "sourceFileRefs": [
-        "apps/platform-api/src/adapters/PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column.ts"
-      ],
+      "sourceFileRefs": ["apps/platform-api/src/adapters/postgres-retention.ts"],
       "dev": {
-        "provider": "local RetentionPort / LegalHoldPort / residency-tag boundary provider for PITR, retention, legal hold, data residency",
+        "provider": "postgres-retention",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -3627,7 +3625,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic RetentionPort / LegalHoldPort / residency-tag boundary proof provider",
+        "provider": "postgres-retention",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -3663,7 +3661,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column provider with sandbox externals",
+        "provider": "postgres-retention",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -3700,7 +3698,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column provider",
+        "provider": "postgres-retention",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -4158,10 +4156,11 @@
       "category": "storage",
       "sourceFileRefs": [
         "apps/platform-api/tests/unit/storage-objects.test.ts",
-        "apps/platform-api/src/adapters/postgres-storage-object-repository.ts"
+        "apps/platform-api/src/adapters/postgres-storage-object-repository.ts",
+        "apps/platform-api/src/adapters/s3-object-storage-adapter.ts"
       ],
       "dev": {
-        "provider": "postgres-storage-object-repository",
+        "provider": "s3-object-storage-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -4192,7 +4191,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "postgres-storage-object-repository",
+        "provider": "s3-object-storage-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -4223,7 +4222,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "postgres-storage-object-repository",
+        "provider": "s3-object-storage-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -4255,7 +4254,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "postgres-storage-object-repository",
+        "provider": "s3-object-storage-adapter",
         "providerClass": "live-external",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -6501,10 +6500,10 @@
         "apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
         "apps/platform-api/src/usecases/tenant-lifecycle.ts",
         "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
-        "apps/platform-api/src/adapters/Postgres lifecycle coordinator + portable export.ts"
+        "apps/platform-api/src/adapters/tenant-lifecycle-coordinator.ts"
       ],
       "dev": {
-        "provider": "local TenantLifecycleCoordinator provider for Tenant lifecycle: provision, suspend, delete, export",
+        "provider": "tenant-lifecycle-coordinator",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -6535,7 +6534,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic TenantLifecycleCoordinator proof provider",
+        "provider": "tenant-lifecycle-coordinator",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -6566,7 +6565,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape Postgres lifecycle coordinator + portable export provider with sandbox externals",
+        "provider": "tenant-lifecycle-coordinator",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -6598,7 +6597,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production Postgres lifecycle coordinator + portable export provider",
+        "provider": "tenant-lifecycle-coordinator",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -7745,10 +7744,10 @@
       "category": "authentication",
       "sourceFileRefs": [
         "apps/platform-api/tests/unit/oidc-discovery.test.ts",
-        "apps/platform-api/src/adapters/KeycloakAdminAdapter.ts"
+        "apps/platform-api/src/adapters/keycloak-realm-admin-adapter.ts"
       ],
       "dev": {
-        "provider": "local AuthSettingsPort provider for OIDC discovery / issuer / JWKS validation",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -7777,7 +7776,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic AuthSettingsPort proof provider",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -7808,7 +7807,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape KeycloakAdminAdapter provider with sandbox externals",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -7840,7 +7839,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production KeycloakAdminAdapter provider",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "live-external",
         "dataClass": "configuration",
         "tenantDataAllowed": false,
@@ -7881,9 +7880,9 @@
     {
       "capability": "OIDC test connection + callback display",
       "category": "authentication",
-      "sourceFileRefs": ["apps/platform-api/src/adapters/KeycloakAdminAdapter.ts"],
+      "sourceFileRefs": ["apps/platform-api/src/adapters/keycloak-realm-admin-adapter.ts"],
       "dev": {
-        "provider": "local AuthSettingsPort provider for OIDC test connection + callback display",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -7912,7 +7911,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic AuthSettingsPort proof provider",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -7941,7 +7940,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape KeycloakAdminAdapter provider with sandbox externals",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -7973,7 +7972,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production KeycloakAdminAdapter provider",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "live-external",
         "dataClass": "configuration",
         "tenantDataAllowed": false,
@@ -9262,10 +9261,10 @@
       "sourceFileRefs": [
         "packages/i18n-runtime",
         "packages/i18n-runtime/locales/en-GB.json",
-        "apps/platform-api/src/adapters/ReactI18nProvider.ts"
+        "apps/platform-api/src/adapters/react-i18n-provider.ts"
       ],
       "dev": {
-        "provider": "local I18nPort provider for i18n runtime + validation",
+        "provider": "react-i18n-provider",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -9294,7 +9293,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic I18nPort proof provider",
+        "provider": "react-i18n-provider",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -9323,7 +9322,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape ReactI18nProvider provider with sandbox externals",
+        "provider": "react-i18n-provider",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -9353,7 +9352,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production ReactI18nProvider provider",
+        "provider": "react-i18n-provider",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": false,

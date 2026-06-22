@@ -492,11 +492,11 @@
     {
       "path": "apps/platform-api/src/adapters/postgres-retention.ts",
       "introducingCommit": "unknown",
-      "purpose": "V1C-12b: Postgres adapter implementing RetentionRepository",
+      "purpose": "post-audit provider reliability evidence adapter entry for postgres-retention",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "apps/platform-api/src/adapters/postgres-retention.ts",
-      "protectingTests": ["apps/platform-api/tests/unit/retention.test.ts"],
-      "decisionRefs": ["ADR-ACT-0292"]
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
     },
     {
       "path": "apps/platform-api/src/adapters/postgres-storage-object-repository.ts",
@@ -4373,6 +4373,69 @@
         "apps/platform-api/tests/unit/in-memory-billing-provider.test.ts"
       ],
       "decisionRefs": ["ADR-0057", "ADR-ACT-0270"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/postgres-identity-repository.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider reliability evidence adapter entry for postgres-identity-repository",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/postgres-identity-repository.ts",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/keycloak-realm-admin-adapter.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider reliability evidence adapter entry for keycloak-realm-admin-adapter",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/keycloak-realm-admin-adapter.ts",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/postgres-tenant-domain-registry.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider reliability evidence adapter entry for postgres-tenant-domain-registry",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/postgres-tenant-domain-registry.ts",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/backup-restore-scripts.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider reliability evidence adapter entry for backup-restore-scripts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/backup-restore-scripts.ts",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/tenant-lifecycle-coordinator.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider reliability evidence adapter entry for tenant-lifecycle-coordinator",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/tenant-lifecycle-coordinator.ts",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/react-i18n-provider.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider reliability evidence adapter entry for react-i18n-provider",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/react-i18n-provider.ts",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/s3-object-storage-adapter.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider reliability evidence adapter entry for s3-object-storage-adapter",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/s3-object-storage-adapter.ts",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
     }
   ],
   "deletions": [
@@ -4755,6 +4818,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 462,
+  "additionCount": 469,
   "deletionCount": 54
 }

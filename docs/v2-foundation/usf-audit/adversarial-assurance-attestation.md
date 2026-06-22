@@ -15,15 +15,15 @@ PASS is not allowed unless runtime/interface-level route, security, ownership, a
 | capabilities without ownership  |     0 |
 | semantic orphans                |     7 |
 | runtime orphans                 |     7 |
-| provider reliability gaps       |   792 |
+| provider reliability gaps       |   348 |
 | workflow proof gaps             |    89 |
-| storage proof gaps              |   111 |
+| storage proof gaps              |   119 |
 | event runtime gaps              |     2 |
 | false-positive items            |     0 |
 | external-limited items          |     0 |
 | duplicate findings              |     0 |
 | obsolete-runtime-artifact items |     0 |
-| must-fix-in-v1 items            |  2163 |
+| must-fix-in-v1 items            |  1726 |
 
 ## Known Gaps Identified
 
@@ -157,123 +157,123 @@ PASS is not allowed unless runtime/interface-level route, security, ownership, a
 - USF-GAP-0128: postgres-email-sender-store - runtime provider has no semantic/provider matrix link
 - USF-GAP-0129: postgres-legal-hold - runtime provider has no semantic/provider matrix link
 - USF-GAP-0130: postgres-rate-limit-repository - runtime provider has no semantic/provider matrix link
-- USF-GAP-0131: postgres-retention - runtime provider has no semantic/provider matrix link
-- USF-GAP-0132: postgres-tenant-credential-store - runtime provider has no semantic/provider matrix link
-- USF-GAP-0133: smtp-email-adapter - runtime provider has no semantic/provider matrix link
-- USF-GAP-0134: tenant-secret-crypto - runtime provider has no semantic/provider matrix link
-- USF-GAP-0135: clamav-antivirus - runtime storage operation has no semantic storage link
-- USF-GAP-0136: postgres-legal-hold - runtime storage operation has no semantic storage link
-- USF-GAP-0137: adapters-object-storage.test - runtime storage operation has no semantic storage link
-- USF-GAP-0138: storage-runtime.test - runtime storage operation has no semantic storage link
-- USF-GAP-0139: workflow-control - runtime workflow has no semantic workflow/state-machine link
-- USF-GAP-0140: workflow-readiness - runtime workflow has no semantic workflow/state-machine link
-- USF-GAP-0141: in-memory-automation-runner - runtime workflow has no semantic workflow/state-machine link
-- USF-GAP-0142: in-memory-workflow-orchestrator - runtime workflow has no semantic workflow/state-machine link
-- USF-GAP-0143: POST /api/admin/alerts - runtime audit requirement has no audit event mapping
-- USF-GAP-0144: POST /api/admin/alerts/:alertId/evaluate - runtime audit requirement has no audit event mapping
-- USF-GAP-0145: POST /api/admin/billing/catalog/plans - runtime audit requirement has no audit event mapping
-- USF-GAP-0146: POST /api/admin/billing/catalog/prices - runtime audit requirement has no audit event mapping
-- USF-GAP-0147: POST /api/admin/billing/catalog/products - runtime audit requirement has no audit event mapping
-- USF-GAP-0148: DELETE /api/admin/data/legal-holds - runtime audit requirement has no audit event mapping
-- USF-GAP-0149: POST /api/admin/data/legal-holds - runtime audit requirement has no audit event mapping
-- USF-GAP-0150: POST /api/admin/data/residency - runtime audit requirement has no audit event mapping
-- USF-GAP-0151: DELETE /api/admin/data/retention-policies - runtime audit requirement has no audit event mapping
-- USF-GAP-0152: POST /api/admin/data/retention-policies - runtime audit requirement has no audit event mapping
-- USF-GAP-0153: POST /api/admin/events/:eventId/redrive - runtime audit requirement has no audit event mapping
-- USF-GAP-0154: POST /api/admin/governance/catalog - runtime audit requirement has no audit event mapping
-- USF-GAP-0155: POST /api/admin/governance/catalog/classify - runtime audit requirement has no audit event mapping
-- USF-GAP-0156: POST /api/admin/governance/dsr - runtime audit requirement has no audit event mapping
-- USF-GAP-0157: POST /api/admin/governance/dsr/:dsrId/fulfill - runtime audit requirement has no audit event mapping
-- USF-GAP-0158: PATCH /api/admin/incidents/:incidentId - runtime audit requirement has no audit event mapping
-- USF-GAP-0159: POST /api/admin/provider-configs - runtime audit requirement has no audit event mapping
-- USF-GAP-0160: POST /api/admin/provider-configs/:id/delete - runtime audit requirement has no audit event mapping
-- USF-GAP-0161: POST /api/admin/provider-configs/:id/lifecycle - runtime audit requirement has no audit event mapping
-- USF-GAP-0162: POST /api/admin/scheduled-jobs - runtime audit requirement has no audit event mapping
-- USF-GAP-0163: PATCH /api/admin/scheduled-jobs/:jobId - runtime audit requirement has no audit event mapping
-- USF-GAP-0164: POST /api/admin/scheduled-jobs/:jobId/run - runtime audit requirement has no audit event mapping
-- USF-GAP-0165: POST /api/admin/search/reindex - runtime audit requirement has no audit event mapping
-- USF-GAP-0166: POST /api/admin/secrets - runtime audit requirement has no audit event mapping
-- USF-GAP-0167: POST /api/admin/secrets/delete - runtime audit requirement has no audit event mapping
-- USF-GAP-0168: POST /api/admin/secrets/revoke - runtime audit requirement has no audit event mapping
-- USF-GAP-0169: POST /api/admin/sub-tenants - runtime audit requirement has no audit event mapping
-- USF-GAP-0170: POST /api/admin/support-session - runtime audit requirement has no audit event mapping
-- USF-GAP-0171: POST /api/admin/support-session/approval-grant - runtime audit requirement has no audit event mapping
-- USF-GAP-0172: POST /api/admin/support-session/approval-request - runtime audit requirement has no audit event mapping
-- USF-GAP-0173: POST /api/admin/support/tickets - runtime audit requirement has no audit event mapping
-- USF-GAP-0174: POST /api/admin/tenants - runtime audit requirement has no audit event mapping
-- USF-GAP-0175: POST /api/admin/tenants/:tenantId/announcements - runtime audit requirement has no audit event mapping
-- USF-GAP-0176: POST /api/admin/tenants/:tenantId/auth-settings-credential/repair - runtime audit requirement has no audit event mapping
-- USF-GAP-0177: POST /api/admin/tenants/:tenantId/auth-settings-credential/rotate - runtime audit requirement has no audit event mapping
-- USF-GAP-0178: POST /api/admin/tenants/:tenantId/delegations - runtime audit requirement has no audit event mapping
-- USF-GAP-0179: DELETE /api/admin/tenants/:tenantId/delegations/:delegationId - runtime audit requirement has no audit event mapping
-- USF-GAP-0180: POST /api/admin/tenants/:tenantId/delete - runtime audit requirement has no audit event mapping
-- USF-GAP-0181: PATCH /api/admin/tenants/:tenantId/entitlements - runtime audit requirement has no audit event mapping
-- USF-GAP-0182: POST /api/admin/tenants/:tenantId/import - runtime audit requirement has no audit event mapping
-- USF-GAP-0183: POST /api/admin/tenants/:tenantId/meter-events - runtime audit requirement has no audit event mapping
-- USF-GAP-0184: POST /api/admin/tenants/:tenantId/notifications/test - runtime audit requirement has no audit event mapping
-- USF-GAP-0185: PATCH /api/admin/tenants/:tenantId/quotas - runtime audit requirement has no audit event mapping
-- USF-GAP-0186: PATCH /api/admin/tenants/:tenantId/rate-limits - runtime audit requirement has no audit event mapping
-- USF-GAP-0187: POST /api/admin/tenants/:tenantId/suspend - runtime audit requirement has no audit event mapping
-- USF-GAP-0188: POST /api/admin/tenants/auth-settings-credential - runtime audit requirement has no audit event mapping
-- USF-GAP-0189: POST /api/admin/workflows/:workflowId/cancel - runtime audit requirement has no audit event mapping
-- USF-GAP-0190: POST /api/admin/workflows/:workflowId/signal - runtime audit requirement has no audit event mapping
-- USF-GAP-0191: POST /api/admin/workflows/start - runtime audit requirement has no audit event mapping
-- USF-GAP-0192: POST /api/auth/settings/domains - runtime audit requirement has no audit event mapping
-- USF-GAP-0193: DELETE /api/auth/settings/domains/:domain - runtime audit requirement has no audit event mapping
-- USF-GAP-0194: POST /api/auth/settings/domains/challenges - runtime audit requirement has no audit event mapping
-- USF-GAP-0195: POST /api/auth/settings/domains/verify - runtime audit requirement has no audit event mapping
-- USF-GAP-0196: PATCH /api/auth/settings/idps/:alias/mapping - runtime audit requirement has no audit event mapping
-- USF-GAP-0197: POST /api/auth/settings/idps/:alias/test-connection - runtime audit requirement has no audit event mapping
-- USF-GAP-0198: POST /api/auth/settings/idps/oidc/discover - runtime audit requirement has no audit event mapping
-- USF-GAP-0199: PATCH /api/auth/settings/providers - runtime audit requirement has no audit event mapping
-- USF-GAP-0200: PATCH /api/auth/settings/resource-policies - runtime audit requirement has no audit event mapping
-- USF-GAP-0201: POST /api/graphql - runtime audit requirement has no audit event mapping
-- USF-GAP-0202: PATCH /api/me/notification-preferences - runtime audit requirement has no audit event mapping
-- USF-GAP-0203: PATCH /api/me/profile - runtime audit requirement has no audit event mapping
-- USF-GAP-0204: POST /api/org/api-keys - runtime audit requirement has no audit event mapping
-- USF-GAP-0205: DELETE /api/org/api-keys/:keyId - runtime audit requirement has no audit event mapping
-- USF-GAP-0206: DELETE /api/org/config/:key - runtime audit requirement has no audit event mapping
-- USF-GAP-0207: PATCH /api/org/config/:key - runtime audit requirement has no audit event mapping
-- USF-GAP-0208: POST /api/org/domains - runtime audit requirement has no audit event mapping
-- USF-GAP-0209: DELETE /api/org/domains/:domain - runtime audit requirement has no audit event mapping
-- USF-GAP-0210: POST /api/org/domains/:domain/activate - runtime audit requirement has no audit event mapping
-- USF-GAP-0211: DELETE /api/org/domains/:domain/canonical - runtime audit requirement has no audit event mapping
-- USF-GAP-0212: POST /api/org/domains/:domain/canonical - runtime audit requirement has no audit event mapping
-- USF-GAP-0213: POST /api/org/domains/:domain/deactivate - runtime audit requirement has no audit event mapping
-- USF-GAP-0214: POST /api/org/domains/:domain/probe-routing-local - runtime audit requirement has no audit event mapping
-- USF-GAP-0215: POST /api/org/domains/:domain/verify - runtime audit requirement has no audit event mapping
-- USF-GAP-0216: PATCH /api/org/email-sender - runtime audit requirement has no audit event mapping
-- USF-GAP-0217: POST /api/org/email-sender/test - runtime audit requirement has no audit event mapping
-- USF-GAP-0218: PATCH /api/org/features/:featureKey - runtime audit requirement has no audit event mapping
-- USF-GAP-0219: POST /api/org/groups - runtime audit requirement has no audit event mapping
-- USF-GAP-0220: DELETE /api/org/groups/:groupId - runtime audit requirement has no audit event mapping
-- USF-GAP-0221: PATCH /api/org/groups/:groupId - runtime audit requirement has no audit event mapping
-- USF-GAP-0222: DELETE /api/org/members/:userId - runtime audit requirement has no audit event mapping
-- USF-GAP-0223: PATCH /api/org/members/:userId - runtime audit requirement has no audit event mapping
-- USF-GAP-0224: PATCH /api/org/members/:userId/status - runtime audit requirement has no audit event mapping
-- USF-GAP-0225: PATCH /api/org/members/:userId/username - runtime audit requirement has no audit event mapping
-- USF-GAP-0226: POST /api/org/members/invite - runtime audit requirement has no audit event mapping
-- USF-GAP-0227: POST /api/org/members/resend-invite - runtime audit requirement has no audit event mapping
-- USF-GAP-0228: POST /api/org/search - runtime audit requirement has no audit event mapping
-- USF-GAP-0229: POST /api/org/storage/objects - runtime audit requirement has no audit event mapping
-- USF-GAP-0230: DELETE /api/org/storage/objects/:objectKey - runtime audit requirement has no audit event mapping
-- USF-GAP-0231: POST /api/org/storage/objects/:objectKey/scan - runtime audit requirement has no audit event mapping
-- USF-GAP-0232: POST /api/org/sub-organisations - runtime audit requirement has no audit event mapping
-- USF-GAP-0233: DELETE /api/org/sub-organisations/:subOrgId - runtime audit requirement has no audit event mapping
-- USF-GAP-0234: PATCH /api/org/sub-organisations/:subOrgId - runtime audit requirement has no audit event mapping
-- USF-GAP-0235: POST /api/org/webhooks - runtime audit requirement has no audit event mapping
-- USF-GAP-0236: DELETE /api/org/webhooks/:id - runtime audit requirement has no audit event mapping
-- USF-GAP-0237: PATCH /api/org/webhooks/:id - runtime audit requirement has no audit event mapping
-- USF-GAP-0238: POST /api/org/webhooks/:id/deliveries/:deliveryId/redrive - runtime audit requirement has no audit event mapping
-- USF-GAP-0239: POST /api/org/webhooks/:id/redrive-dead - runtime audit requirement has no audit event mapping
-- USF-GAP-0240: POST /api/org/webhooks/:id/rotate-secret - runtime audit requirement has no audit event mapping
-- USF-GAP-0241: POST /api/org/webhooks/:id/test - runtime audit requirement has no audit event mapping
-- USF-GAP-0242: PATCH /api/organisation/profile - runtime audit requirement has no audit event mapping
-- USF-GAP-0243: POST /auth/logout - runtime audit requirement has no audit event mapping
-- USF-GAP-0244: GET / - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0245: GET /admin - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0246: GET /admin/account - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0247: GET /admin/auth - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0248: GET /admin/clickthrough - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0249: GET /admin/config - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0250: GET /admin/developer - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0131: postgres-tenant-credential-store - runtime provider has no semantic/provider matrix link
+- USF-GAP-0132: smtp-email-adapter - runtime provider has no semantic/provider matrix link
+- USF-GAP-0133: tenant-secret-crypto - runtime provider has no semantic/provider matrix link
+- USF-GAP-0134: clamav-antivirus - runtime storage operation has no semantic storage link
+- USF-GAP-0135: postgres-legal-hold - runtime storage operation has no semantic storage link
+- USF-GAP-0136: adapters-object-storage.test - runtime storage operation has no semantic storage link
+- USF-GAP-0137: storage-runtime.test - runtime storage operation has no semantic storage link
+- USF-GAP-0138: workflow-control - runtime workflow has no semantic workflow/state-machine link
+- USF-GAP-0139: workflow-readiness - runtime workflow has no semantic workflow/state-machine link
+- USF-GAP-0140: in-memory-automation-runner - runtime workflow has no semantic workflow/state-machine link
+- USF-GAP-0141: in-memory-workflow-orchestrator - runtime workflow has no semantic workflow/state-machine link
+- USF-GAP-0142: POST /api/admin/alerts - runtime audit requirement has no audit event mapping
+- USF-GAP-0143: POST /api/admin/alerts/:alertId/evaluate - runtime audit requirement has no audit event mapping
+- USF-GAP-0144: POST /api/admin/billing/catalog/plans - runtime audit requirement has no audit event mapping
+- USF-GAP-0145: POST /api/admin/billing/catalog/prices - runtime audit requirement has no audit event mapping
+- USF-GAP-0146: POST /api/admin/billing/catalog/products - runtime audit requirement has no audit event mapping
+- USF-GAP-0147: DELETE /api/admin/data/legal-holds - runtime audit requirement has no audit event mapping
+- USF-GAP-0148: POST /api/admin/data/legal-holds - runtime audit requirement has no audit event mapping
+- USF-GAP-0149: POST /api/admin/data/residency - runtime audit requirement has no audit event mapping
+- USF-GAP-0150: DELETE /api/admin/data/retention-policies - runtime audit requirement has no audit event mapping
+- USF-GAP-0151: POST /api/admin/data/retention-policies - runtime audit requirement has no audit event mapping
+- USF-GAP-0152: POST /api/admin/events/:eventId/redrive - runtime audit requirement has no audit event mapping
+- USF-GAP-0153: POST /api/admin/governance/catalog - runtime audit requirement has no audit event mapping
+- USF-GAP-0154: POST /api/admin/governance/catalog/classify - runtime audit requirement has no audit event mapping
+- USF-GAP-0155: POST /api/admin/governance/dsr - runtime audit requirement has no audit event mapping
+- USF-GAP-0156: POST /api/admin/governance/dsr/:dsrId/fulfill - runtime audit requirement has no audit event mapping
+- USF-GAP-0157: PATCH /api/admin/incidents/:incidentId - runtime audit requirement has no audit event mapping
+- USF-GAP-0158: POST /api/admin/provider-configs - runtime audit requirement has no audit event mapping
+- USF-GAP-0159: POST /api/admin/provider-configs/:id/delete - runtime audit requirement has no audit event mapping
+- USF-GAP-0160: POST /api/admin/provider-configs/:id/lifecycle - runtime audit requirement has no audit event mapping
+- USF-GAP-0161: POST /api/admin/scheduled-jobs - runtime audit requirement has no audit event mapping
+- USF-GAP-0162: PATCH /api/admin/scheduled-jobs/:jobId - runtime audit requirement has no audit event mapping
+- USF-GAP-0163: POST /api/admin/scheduled-jobs/:jobId/run - runtime audit requirement has no audit event mapping
+- USF-GAP-0164: POST /api/admin/search/reindex - runtime audit requirement has no audit event mapping
+- USF-GAP-0165: POST /api/admin/secrets - runtime audit requirement has no audit event mapping
+- USF-GAP-0166: POST /api/admin/secrets/delete - runtime audit requirement has no audit event mapping
+- USF-GAP-0167: POST /api/admin/secrets/revoke - runtime audit requirement has no audit event mapping
+- USF-GAP-0168: POST /api/admin/sub-tenants - runtime audit requirement has no audit event mapping
+- USF-GAP-0169: POST /api/admin/support-session - runtime audit requirement has no audit event mapping
+- USF-GAP-0170: POST /api/admin/support-session/approval-grant - runtime audit requirement has no audit event mapping
+- USF-GAP-0171: POST /api/admin/support-session/approval-request - runtime audit requirement has no audit event mapping
+- USF-GAP-0172: POST /api/admin/support/tickets - runtime audit requirement has no audit event mapping
+- USF-GAP-0173: POST /api/admin/tenants - runtime audit requirement has no audit event mapping
+- USF-GAP-0174: POST /api/admin/tenants/:tenantId/announcements - runtime audit requirement has no audit event mapping
+- USF-GAP-0175: POST /api/admin/tenants/:tenantId/auth-settings-credential/repair - runtime audit requirement has no audit event mapping
+- USF-GAP-0176: POST /api/admin/tenants/:tenantId/auth-settings-credential/rotate - runtime audit requirement has no audit event mapping
+- USF-GAP-0177: POST /api/admin/tenants/:tenantId/delegations - runtime audit requirement has no audit event mapping
+- USF-GAP-0178: DELETE /api/admin/tenants/:tenantId/delegations/:delegationId - runtime audit requirement has no audit event mapping
+- USF-GAP-0179: POST /api/admin/tenants/:tenantId/delete - runtime audit requirement has no audit event mapping
+- USF-GAP-0180: PATCH /api/admin/tenants/:tenantId/entitlements - runtime audit requirement has no audit event mapping
+- USF-GAP-0181: POST /api/admin/tenants/:tenantId/import - runtime audit requirement has no audit event mapping
+- USF-GAP-0182: POST /api/admin/tenants/:tenantId/meter-events - runtime audit requirement has no audit event mapping
+- USF-GAP-0183: POST /api/admin/tenants/:tenantId/notifications/test - runtime audit requirement has no audit event mapping
+- USF-GAP-0184: PATCH /api/admin/tenants/:tenantId/quotas - runtime audit requirement has no audit event mapping
+- USF-GAP-0185: PATCH /api/admin/tenants/:tenantId/rate-limits - runtime audit requirement has no audit event mapping
+- USF-GAP-0186: POST /api/admin/tenants/:tenantId/suspend - runtime audit requirement has no audit event mapping
+- USF-GAP-0187: POST /api/admin/tenants/auth-settings-credential - runtime audit requirement has no audit event mapping
+- USF-GAP-0188: POST /api/admin/workflows/:workflowId/cancel - runtime audit requirement has no audit event mapping
+- USF-GAP-0189: POST /api/admin/workflows/:workflowId/signal - runtime audit requirement has no audit event mapping
+- USF-GAP-0190: POST /api/admin/workflows/start - runtime audit requirement has no audit event mapping
+- USF-GAP-0191: POST /api/auth/settings/domains - runtime audit requirement has no audit event mapping
+- USF-GAP-0192: DELETE /api/auth/settings/domains/:domain - runtime audit requirement has no audit event mapping
+- USF-GAP-0193: POST /api/auth/settings/domains/challenges - runtime audit requirement has no audit event mapping
+- USF-GAP-0194: POST /api/auth/settings/domains/verify - runtime audit requirement has no audit event mapping
+- USF-GAP-0195: PATCH /api/auth/settings/idps/:alias/mapping - runtime audit requirement has no audit event mapping
+- USF-GAP-0196: POST /api/auth/settings/idps/:alias/test-connection - runtime audit requirement has no audit event mapping
+- USF-GAP-0197: POST /api/auth/settings/idps/oidc/discover - runtime audit requirement has no audit event mapping
+- USF-GAP-0198: PATCH /api/auth/settings/providers - runtime audit requirement has no audit event mapping
+- USF-GAP-0199: PATCH /api/auth/settings/resource-policies - runtime audit requirement has no audit event mapping
+- USF-GAP-0200: POST /api/graphql - runtime audit requirement has no audit event mapping
+- USF-GAP-0201: PATCH /api/me/notification-preferences - runtime audit requirement has no audit event mapping
+- USF-GAP-0202: PATCH /api/me/profile - runtime audit requirement has no audit event mapping
+- USF-GAP-0203: POST /api/org/api-keys - runtime audit requirement has no audit event mapping
+- USF-GAP-0204: DELETE /api/org/api-keys/:keyId - runtime audit requirement has no audit event mapping
+- USF-GAP-0205: DELETE /api/org/config/:key - runtime audit requirement has no audit event mapping
+- USF-GAP-0206: PATCH /api/org/config/:key - runtime audit requirement has no audit event mapping
+- USF-GAP-0207: POST /api/org/domains - runtime audit requirement has no audit event mapping
+- USF-GAP-0208: DELETE /api/org/domains/:domain - runtime audit requirement has no audit event mapping
+- USF-GAP-0209: POST /api/org/domains/:domain/activate - runtime audit requirement has no audit event mapping
+- USF-GAP-0210: DELETE /api/org/domains/:domain/canonical - runtime audit requirement has no audit event mapping
+- USF-GAP-0211: POST /api/org/domains/:domain/canonical - runtime audit requirement has no audit event mapping
+- USF-GAP-0212: POST /api/org/domains/:domain/deactivate - runtime audit requirement has no audit event mapping
+- USF-GAP-0213: POST /api/org/domains/:domain/probe-routing-local - runtime audit requirement has no audit event mapping
+- USF-GAP-0214: POST /api/org/domains/:domain/verify - runtime audit requirement has no audit event mapping
+- USF-GAP-0215: PATCH /api/org/email-sender - runtime audit requirement has no audit event mapping
+- USF-GAP-0216: POST /api/org/email-sender/test - runtime audit requirement has no audit event mapping
+- USF-GAP-0217: PATCH /api/org/features/:featureKey - runtime audit requirement has no audit event mapping
+- USF-GAP-0218: POST /api/org/groups - runtime audit requirement has no audit event mapping
+- USF-GAP-0219: DELETE /api/org/groups/:groupId - runtime audit requirement has no audit event mapping
+- USF-GAP-0220: PATCH /api/org/groups/:groupId - runtime audit requirement has no audit event mapping
+- USF-GAP-0221: DELETE /api/org/members/:userId - runtime audit requirement has no audit event mapping
+- USF-GAP-0222: PATCH /api/org/members/:userId - runtime audit requirement has no audit event mapping
+- USF-GAP-0223: PATCH /api/org/members/:userId/status - runtime audit requirement has no audit event mapping
+- USF-GAP-0224: PATCH /api/org/members/:userId/username - runtime audit requirement has no audit event mapping
+- USF-GAP-0225: POST /api/org/members/invite - runtime audit requirement has no audit event mapping
+- USF-GAP-0226: POST /api/org/members/resend-invite - runtime audit requirement has no audit event mapping
+- USF-GAP-0227: POST /api/org/search - runtime audit requirement has no audit event mapping
+- USF-GAP-0228: POST /api/org/storage/objects - runtime audit requirement has no audit event mapping
+- USF-GAP-0229: DELETE /api/org/storage/objects/:objectKey - runtime audit requirement has no audit event mapping
+- USF-GAP-0230: POST /api/org/storage/objects/:objectKey/scan - runtime audit requirement has no audit event mapping
+- USF-GAP-0231: POST /api/org/sub-organisations - runtime audit requirement has no audit event mapping
+- USF-GAP-0232: DELETE /api/org/sub-organisations/:subOrgId - runtime audit requirement has no audit event mapping
+- USF-GAP-0233: PATCH /api/org/sub-organisations/:subOrgId - runtime audit requirement has no audit event mapping
+- USF-GAP-0234: POST /api/org/webhooks - runtime audit requirement has no audit event mapping
+- USF-GAP-0235: DELETE /api/org/webhooks/:id - runtime audit requirement has no audit event mapping
+- USF-GAP-0236: PATCH /api/org/webhooks/:id - runtime audit requirement has no audit event mapping
+- USF-GAP-0237: POST /api/org/webhooks/:id/deliveries/:deliveryId/redrive - runtime audit requirement has no audit event mapping
+- USF-GAP-0238: POST /api/org/webhooks/:id/redrive-dead - runtime audit requirement has no audit event mapping
+- USF-GAP-0239: POST /api/org/webhooks/:id/rotate-secret - runtime audit requirement has no audit event mapping
+- USF-GAP-0240: POST /api/org/webhooks/:id/test - runtime audit requirement has no audit event mapping
+- USF-GAP-0241: PATCH /api/organisation/profile - runtime audit requirement has no audit event mapping
+- USF-GAP-0242: POST /auth/logout - runtime audit requirement has no audit event mapping
+- USF-GAP-0243: GET / - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0244: GET /admin - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0245: GET /admin/account - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0246: GET /admin/auth - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0247: GET /admin/clickthrough - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0248: GET /admin/config - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0249: GET /admin/developer - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0250: GET /admin/domains - runtime observability surface lacks trace/log/metric mapping
