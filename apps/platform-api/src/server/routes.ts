@@ -5995,6 +5995,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.search.write",
     resource: "admin:search",
     umaScope: "write" as const,
+    auditEvent: AuditAction.SearchReindexed,
     scope: "global" as const,
     handler: async (req, res) => {
       const parsed = ReindexRequestSchema.safeParse(req.body);
@@ -6954,6 +6955,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.secrets.write",
     resource: "admin:secrets",
     umaScope: "write" as const,
+    auditEvent: AuditAction.SecretRefCreated,
     scope: "global" as const,
     handler: async (req, res) => {
       const parsed = PutSecretRequestSchema.safeParse(req.body);
@@ -6989,6 +6991,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.secrets.write",
     resource: "admin:secrets",
     umaScope: "write" as const,
+    auditEvent: AuditAction.SecretRefRevoked,
     scope: "global" as const,
     handler: async (req, res) => {
       const parsed = SecretRefActionRequestSchema.safeParse(req.body);
@@ -7024,6 +7027,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.secrets.write",
     resource: "admin:secrets",
     umaScope: "write" as const,
+    auditEvent: AuditAction.SecretRefDeleted,
     scope: "global" as const,
     handler: async (req, res) => {
       const parsed = SecretRefActionRequestSchema.safeParse(req.body);

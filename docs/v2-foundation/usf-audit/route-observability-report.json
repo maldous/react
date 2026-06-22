@@ -1502,7 +1502,7 @@
       "subject": "POST /api/admin/billing/catalog/plans",
       "message": "mutation route without route-local audit evidence",
       "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:7946",
+        "routeObject": "apps/platform-api/src/server/routes.ts:7950",
         "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
         "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
         "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -1515,7 +1515,7 @@
       "subject": "POST /api/admin/billing/catalog/prices",
       "message": "mutation route without route-local audit evidence",
       "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:7993",
+        "routeObject": "apps/platform-api/src/server/routes.ts:7997",
         "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
         "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
         "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -1528,7 +1528,7 @@
       "subject": "POST /api/admin/billing/catalog/products",
       "message": "mutation route without route-local audit evidence",
       "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:7899",
+        "routeObject": "apps/platform-api/src/server/routes.ts:7903",
         "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
         "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
         "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -1541,7 +1541,7 @@
       "subject": "POST /api/admin/governance/catalog",
       "message": "mutation route without route-local audit evidence",
       "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:8034",
+        "routeObject": "apps/platform-api/src/server/routes.ts:8038",
         "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
         "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
         "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -1554,7 +1554,7 @@
       "subject": "POST /api/admin/governance/catalog/classify",
       "message": "mutation route without route-local audit evidence",
       "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:8058",
+        "routeObject": "apps/platform-api/src/server/routes.ts:8062",
         "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
         "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
         "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -1567,7 +1567,7 @@
       "subject": "POST /api/admin/governance/dsr",
       "message": "mutation route without route-local audit evidence",
       "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:8103",
+        "routeObject": "apps/platform-api/src/server/routes.ts:8107",
         "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
         "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
         "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -1580,59 +1580,7 @@
       "subject": "POST /api/admin/governance/dsr/:dsrId/fulfill",
       "message": "mutation route without route-local audit evidence",
       "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:8127",
-        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-audit",
-      "subject": "POST /api/admin/search/reindex",
-      "message": "mutation route without route-local audit evidence",
-      "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:5990",
-        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-audit",
-      "subject": "POST /api/admin/secrets",
-      "message": "mutation route without route-local audit evidence",
-      "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:6949",
-        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-audit",
-      "subject": "POST /api/admin/secrets/delete",
-      "message": "mutation route without route-local audit evidence",
-      "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:7019",
-        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-audit",
-      "subject": "POST /api/admin/secrets/revoke",
-      "message": "mutation route without route-local audit evidence",
-      "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:6984",
+        "routeObject": "apps/platform-api/src/server/routes.ts:8131",
         "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
         "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
         "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -1658,7 +1606,7 @@
       "subject": "POST /api/admin/tenants/:tenantId/announcements",
       "message": "mutation route without route-local audit evidence",
       "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:6333",
+        "routeObject": "apps/platform-api/src/server/routes.ts:6334",
         "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
         "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
         "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -1671,7 +1619,7 @@
       "subject": "POST /api/admin/tenants/:tenantId/delete",
       "message": "mutation route without route-local audit evidence",
       "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:7455",
+        "routeObject": "apps/platform-api/src/server/routes.ts:7459",
         "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
         "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
         "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -1684,7 +1632,7 @@
       "subject": "POST /api/admin/tenants/:tenantId/import",
       "message": "mutation route without route-local audit evidence",
       "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:7358",
+        "routeObject": "apps/platform-api/src/server/routes.ts:7362",
         "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
         "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
         "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -1710,7 +1658,7 @@
       "subject": "POST /api/admin/tenants/:tenantId/suspend",
       "message": "mutation route without route-local audit evidence",
       "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:7425",
+        "routeObject": "apps/platform-api/src/server/routes.ts:7429",
         "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
         "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
         "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -1723,7 +1671,7 @@
       "subject": "POST /api/admin/workflows/:workflowId/cancel",
       "message": "mutation route without route-local audit evidence",
       "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:8255",
+        "routeObject": "apps/platform-api/src/server/routes.ts:8259",
         "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
         "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
         "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -1736,7 +1684,7 @@
       "subject": "POST /api/admin/workflows/:workflowId/signal",
       "message": "mutation route without route-local audit evidence",
       "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:8225",
+        "routeObject": "apps/platform-api/src/server/routes.ts:8229",
         "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
         "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
         "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -1749,7 +1697,7 @@
       "subject": "POST /api/admin/workflows/start",
       "message": "mutation route without route-local audit evidence",
       "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:8186",
+        "routeObject": "apps/platform-api/src/server/routes.ts:8190",
         "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
         "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
         "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",

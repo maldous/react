@@ -2125,42 +2125,6 @@
     },
     {
       "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/search/reindex",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/secrets",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/secrets/delete",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/secrets/revoke",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
       "subject": "POST /api/admin/sub-tenants",
       "message": "runtime audit requirement has no audit event mapping",
       "evidence": {
