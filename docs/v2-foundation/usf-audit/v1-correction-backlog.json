@@ -1412,42 +1412,6 @@
   {
     "id": "USF-GAP-0072",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
-    "message": "proof only checks file/contract shape",
-    "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-backup-restore-scripts-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
-      "level": 0,
-      "classification": "route/file existence only",
-      "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
-      "assertsFailureMode": true,
-      "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts"]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0073",
-    "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
-    "message": "proof does not assert side effects",
-    "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-backup-restore-scripts-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
-      "level": 0,
-      "classification": "route/file existence only",
-      "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
-      "assertsFailureMode": true,
-      "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts"]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0074",
-    "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
     "message": "proof does not assert side effects",
     "evidence": {
@@ -1464,7 +1428,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0075",
+    "id": "USF-GAP-0073",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
     "message": "proof does not assert failure mode",
@@ -1482,7 +1446,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0076",
+    "id": "USF-GAP-0074",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
     "message": "proof only checks file/contract shape",
@@ -1500,7 +1464,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0077",
+    "id": "USF-GAP-0075",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -1518,7 +1482,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0078",
+    "id": "USF-GAP-0076",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -1536,7 +1500,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0079",
+    "id": "USF-GAP-0077",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -1554,7 +1518,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0080",
+    "id": "USF-GAP-0078",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
     "message": "proof does not assert failure mode",
@@ -1572,7 +1536,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0081",
+    "id": "USF-GAP-0079",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -1590,7 +1554,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0082",
+    "id": "USF-GAP-0080",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -1608,7 +1572,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0083",
+    "id": "USF-GAP-0081",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
     "message": "proof does not assert failure mode",
@@ -1626,7 +1590,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0084",
+    "id": "USF-GAP-0082",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
     "message": "proof only checks file/contract shape",
@@ -1644,7 +1608,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0085",
+    "id": "USF-GAP-0083",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -1662,7 +1626,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0086",
+    "id": "USF-GAP-0084",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
     "message": "proof does not assert failure mode",
@@ -1680,7 +1644,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0087",
+    "id": "USF-GAP-0085",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -1698,7 +1662,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0088",
+    "id": "USF-GAP-0086",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
     "message": "proof only checks file/contract shape",
@@ -1716,7 +1680,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0089",
+    "id": "USF-GAP-0087",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -1734,7 +1698,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0090",
+    "id": "USF-GAP-0088",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -1754,7 +1718,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0091",
+    "id": "USF-GAP-0089",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
     "message": "proof only checks file/contract shape",
@@ -1772,7 +1736,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0092",
+    "id": "USF-GAP-0090",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -1790,10 +1754,46 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0093",
+    "id": "USF-GAP-0091",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
     "message": "proof only checks file/contract shape",
+    "evidence": {
+      "proofId": "proof:apps-platform-api-scripts-notification-transports-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
+      "level": 0,
+      "classification": "route/file existence only",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/notification-transports-runtime-proof.ts"]
+    },
+    "classification": "must-fix-in-v1"
+  },
+  {
+    "id": "USF-GAP-0092",
+    "kind": "proof-behaviour",
+    "subject": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
+    "message": "proof does not assert side effects",
+    "evidence": {
+      "proofId": "proof:apps-platform-api-scripts-notification-transports-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
+      "level": 0,
+      "classification": "route/file existence only",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/notification-transports-runtime-proof.ts"]
+    },
+    "classification": "must-fix-in-v1"
+  },
+  {
+    "id": "USF-GAP-0093",
+    "kind": "proof-behaviour",
+    "subject": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
+    "message": "proof does not assert failure mode",
     "evidence": {
       "proofId": "proof:apps-platform-api-scripts-notification-transports-runtime-proof-ts",
       "file": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
@@ -1810,297 +1810,261 @@
   {
     "id": "USF-GAP-0094",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
     "message": "proof does not assert side effects",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-notification-transports-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
-      "level": 0,
-      "classification": "route/file existence only",
+      "proofId": "proof:apps-platform-api-scripts-openapi-drift-validator-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/notification-transports-runtime-proof.ts"]
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0095",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-notification-transports-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
-      "level": 0,
-      "classification": "route/file existence only",
+      "proofId": "proof:apps-platform-api-scripts-openapi-drift-validator-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/notification-transports-runtime-proof.ts"]
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0096",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
     "message": "proof does not assert side effects",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-openapi-drift-validator-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-playwright-adapter-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
       "level": 2,
       "classification": "isolated unit behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": ["apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts"]
+      "sourceFileRefs": ["apps/platform-api/scripts/playwright-adapter-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0097",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-openapi-drift-validator-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-playwright-adapter-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
       "level": 2,
       "classification": "isolated unit behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": ["apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts"]
+      "sourceFileRefs": ["apps/platform-api/scripts/playwright-adapter-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0098",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
     "message": "proof does not assert side effects",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-playwright-adapter-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-playwright-axe-adapter-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
       "level": 2,
       "classification": "isolated unit behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": ["apps/platform-api/scripts/playwright-adapter-runtime-proof.ts"]
+      "sourceFileRefs": ["apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0099",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-playwright-adapter-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-playwright-axe-adapter-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
       "level": 2,
       "classification": "isolated unit behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": ["apps/platform-api/scripts/playwright-adapter-runtime-proof.ts"]
+      "sourceFileRefs": ["apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0100",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
     "message": "proof does not assert side effects",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-playwright-axe-adapter-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
-      "level": 2,
-      "classification": "isolated unit behaviour",
+      "proofId": "proof:apps-platform-api-scripts-postgres-api-key-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": ["apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts"]
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0101",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-playwright-axe-adapter-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
-      "level": 2,
-      "classification": "isolated unit behaviour",
+      "proofId": "proof:apps-platform-api-scripts-postgres-api-key-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": ["apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts"]
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0102",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
     "message": "proof does not assert side effects",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-api-key-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-billing-catalog-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts"]
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0103",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-api-key-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-billing-catalog-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts"]
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0104",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
     "message": "proof does not assert side effects",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-billing-catalog-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-data-governance-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts"]
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0105",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-billing-catalog-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-data-governance-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts"]
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0106",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
     "message": "proof does not assert side effects",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-data-governance-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-delegated-admin-roles-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts"]
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts"
+      ]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0107",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-data-governance-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-delegated-admin-roles-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts"]
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts"
+      ]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0108",
-    "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
-    "message": "proof does not assert side effects",
-    "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-delegated-admin-roles-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
-      "level": 4,
-      "classification": "live substrate behaviour",
-      "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
-      "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": [
-        "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts"
-      ]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0109",
-    "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
-    "message": "proof does not assert failure mode",
-    "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-delegated-admin-roles-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
-      "level": 4,
-      "classification": "live substrate behaviour",
-      "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
-      "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": [
-        "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts"
-      ]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0110",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -2118,7 +2082,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0111",
+    "id": "USF-GAP-0109",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -2133,6 +2097,46 @@
       "assertsObservabilityOrAudit": false,
       "sourceFileRefs": [
         "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts"
+      ]
+    },
+    "classification": "must-fix-in-v1"
+  },
+  {
+    "id": "USF-GAP-0110",
+    "kind": "proof-behaviour",
+    "subject": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
+    "message": "proof does not assert failure mode",
+    "evidence": {
+      "proofId": "proof:apps-platform-api-scripts-postgres-entitlement-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts"
+      ]
+    },
+    "classification": "must-fix-in-v1"
+  },
+  {
+    "id": "USF-GAP-0111",
+    "kind": "proof-behaviour",
+    "subject": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
+    "message": "proof does not assert side effects",
+    "evidence": {
+      "proofId": "proof:apps-platform-api-scripts-postgres-environment-registry-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts"
       ]
     },
     "classification": "must-fix-in-v1"
@@ -2140,19 +2144,19 @@
   {
     "id": "USF-GAP-0112",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-entitlement-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-environment-registry-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": false,
+      "assertsObservabilityOrAudit": true,
       "sourceFileRefs": [
-        "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts"
+        "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts"
       ]
     },
     "classification": "must-fix-in-v1"
@@ -2160,117 +2164,77 @@
   {
     "id": "USF-GAP-0113",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
     "message": "proof does not assert side effects",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-environment-registry-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-event-bus-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": [
-        "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts"
-      ]
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0114",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-environment-registry-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-event-bus-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": [
-        "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts"
-      ]
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0115",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
     "message": "proof does not assert side effects",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-event-bus-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-history-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts"]
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0116",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-event-bus-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-history-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts"]
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0117",
-    "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
-    "message": "proof does not assert side effects",
-    "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-history-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
-      "level": 4,
-      "classification": "live substrate behaviour",
-      "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
-      "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts"]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0118",
-    "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
-    "message": "proof does not assert failure mode",
-    "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-history-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
-      "level": 4,
-      "classification": "live substrate behaviour",
-      "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
-      "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts"]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0119",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -2288,7 +2252,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0120",
+    "id": "USF-GAP-0118",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -2302,65 +2266,65 @@
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts"]
+    },
+    "classification": "must-fix-in-v1"
+  },
+  {
+    "id": "USF-GAP-0119",
+    "kind": "proof-behaviour",
+    "subject": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+    "message": "proof does not assert failure mode",
+    "evidence": {
+      "proofId": "proof:apps-platform-api-scripts-postgres-legal-hold-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts"]
+    },
+    "classification": "must-fix-in-v1"
+  },
+  {
+    "id": "USF-GAP-0120",
+    "kind": "proof-behaviour",
+    "subject": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
+    "message": "proof does not assert side effects",
+    "evidence": {
+      "proofId": "proof:apps-platform-api-scripts-postgres-metering-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0121",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-legal-hold-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-metering-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts"]
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0122",
-    "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
-    "message": "proof does not assert side effects",
-    "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-metering-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
-      "level": 4,
-      "classification": "live substrate behaviour",
-      "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
-      "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts"]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0123",
-    "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
-    "message": "proof does not assert failure mode",
-    "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-metering-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
-      "level": 4,
-      "classification": "live substrate behaviour",
-      "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
-      "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts"]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0124",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -2375,6 +2339,46 @@
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": [
         "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
+      ]
+    },
+    "classification": "must-fix-in-v1"
+  },
+  {
+    "id": "USF-GAP-0123",
+    "kind": "proof-behaviour",
+    "subject": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
+    "message": "proof does not assert failure mode",
+    "evidence": {
+      "proofId": "proof:apps-platform-api-scripts-postgres-migration-storage-provider-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
+      ]
+    },
+    "classification": "must-fix-in-v1"
+  },
+  {
+    "id": "USF-GAP-0124",
+    "kind": "proof-behaviour",
+    "subject": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
+    "message": "proof does not assert side effects",
+    "evidence": {
+      "proofId": "proof:apps-platform-api-scripts-postgres-notification-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts"
       ]
     },
     "classification": "must-fix-in-v1"
@@ -2382,11 +2386,11 @@
   {
     "id": "USF-GAP-0125",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-migration-storage-provider-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-notification-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
@@ -2394,7 +2398,7 @@
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": [
-        "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
+        "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts"
       ]
     },
     "classification": "must-fix-in-v1"
@@ -2402,19 +2406,19 @@
   {
     "id": "USF-GAP-0126",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
     "message": "proof does not assert side effects",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-notification-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-observability-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": true,
+      "assertsObservabilityOrAudit": false,
       "sourceFileRefs": [
-        "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts"
+        "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts"
       ]
     },
     "classification": "must-fix-in-v1"
@@ -2422,19 +2426,19 @@
   {
     "id": "USF-GAP-0127",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-notification-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-observability-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": true,
+      "assertsObservabilityOrAudit": false,
       "sourceFileRefs": [
-        "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts"
+        "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts"
       ]
     },
     "classification": "must-fix-in-v1"
@@ -2442,11 +2446,11 @@
   {
     "id": "USF-GAP-0128",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
     "message": "proof does not assert side effects",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-observability-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-portable-tenant-import-applier-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
@@ -2454,7 +2458,7 @@
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": false,
       "sourceFileRefs": [
-        "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts"
+        "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
       ]
     },
     "classification": "must-fix-in-v1"
@@ -2462,11 +2466,11 @@
   {
     "id": "USF-GAP-0129",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-observability-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-portable-tenant-import-applier-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
@@ -2474,7 +2478,7 @@
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": false,
       "sourceFileRefs": [
-        "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts"
+        "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
       ]
     },
     "classification": "must-fix-in-v1"
@@ -2482,81 +2486,41 @@
   {
     "id": "USF-GAP-0130",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
     "message": "proof does not assert side effects",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-portable-tenant-import-applier-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-profile-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": [
-        "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
-      ]
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0131",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-portable-tenant-import-applier-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-profile-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": [
-        "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
-      ]
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0132",
-    "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
-    "message": "proof does not assert side effects",
-    "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-profile-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
-      "level": 4,
-      "classification": "live substrate behaviour",
-      "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
-      "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts"]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0133",
-    "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
-    "message": "proof does not assert failure mode",
-    "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-profile-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
-      "level": 4,
-      "classification": "live substrate behaviour",
-      "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
-      "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts"]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0134",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -2576,7 +2540,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0135",
+    "id": "USF-GAP-0133",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -2590,217 +2554,217 @@
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": false,
       "sourceFileRefs": ["apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts"]
+    },
+    "classification": "must-fix-in-v1"
+  },
+  {
+    "id": "USF-GAP-0134",
+    "kind": "proof-behaviour",
+    "subject": "apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
+    "message": "proof does not assert failure mode",
+    "evidence": {
+      "proofId": "proof:apps-platform-api-scripts-postgres-quota-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts"]
+    },
+    "classification": "must-fix-in-v1"
+  },
+  {
+    "id": "USF-GAP-0135",
+    "kind": "proof-behaviour",
+    "subject": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
+    "message": "proof does not assert side effects",
+    "evidence": {
+      "proofId": "proof:apps-platform-api-scripts-postgres-rate-limit-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts"
+      ]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0136",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-quota-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-rate-limit-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts"]
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts"
+      ]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0137",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
     "message": "proof does not assert side effects",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-rate-limit-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-retention-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": [
-        "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts"
-      ]
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-retention-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0138",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-rate-limit-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-retention-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": [
-        "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts"
-      ]
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-retention-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0139",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
     "message": "proof does not assert side effects",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-retention-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-scheduled-job-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-retention-runtime-proof.ts"]
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts"
+      ]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0140",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-retention-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-scheduled-job-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-retention-runtime-proof.ts"]
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts"
+      ]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0141",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
     "message": "proof does not assert side effects",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-scheduled-job-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-search-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": [
-        "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts"
-      ]
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0142",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-scheduled-job-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-search-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": [
-        "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts"
-      ]
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0143",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
     "message": "proof does not assert side effects",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-search-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-secret-store-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts"]
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0144",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-search-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-secret-store-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts"]
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0145",
-    "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
-    "message": "proof does not assert side effects",
-    "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-secret-store-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
-      "level": 4,
-      "classification": "live substrate behaviour",
-      "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
-      "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts"]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0146",
-    "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
-    "message": "proof does not assert failure mode",
-    "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-secret-store-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
-      "level": 4,
-      "classification": "live substrate behaviour",
-      "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
-      "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts"]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0147",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -2820,7 +2784,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0148",
+    "id": "USF-GAP-0146",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -2840,7 +2804,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0149",
+    "id": "USF-GAP-0147",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -2856,67 +2820,67 @@
       "sourceFileRefs": [
         "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts"
       ]
+    },
+    "classification": "must-fix-in-v1"
+  },
+  {
+    "id": "USF-GAP-0148",
+    "kind": "proof-behaviour",
+    "subject": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
+    "message": "proof does not assert failure mode",
+    "evidence": {
+      "proofId": "proof:apps-platform-api-scripts-postgres-tenant-domain-registry-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts"
+      ]
+    },
+    "classification": "must-fix-in-v1"
+  },
+  {
+    "id": "USF-GAP-0149",
+    "kind": "proof-behaviour",
+    "subject": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
+    "message": "proof does not assert side effects",
+    "evidence": {
+      "proofId": "proof:apps-platform-api-scripts-postgres-webhook-store-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0150",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-tenant-domain-registry-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-postgres-webhook-store-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": [
-        "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts"
-      ]
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0151",
-    "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
-    "message": "proof does not assert side effects",
-    "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-webhook-store-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
-      "level": 4,
-      "classification": "live substrate behaviour",
-      "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
-      "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0152",
-    "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
-    "message": "proof does not assert failure mode",
-    "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-postgres-webhook-store-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
-      "level": 4,
-      "classification": "live substrate behaviour",
-      "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
-      "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": true,
-      "sourceFileRefs": ["apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0153",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -2934,7 +2898,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0154",
+    "id": "USF-GAP-0152",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -2954,7 +2918,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0155",
+    "id": "USF-GAP-0153",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -2972,7 +2936,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0156",
+    "id": "USF-GAP-0154",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -2986,65 +2950,65 @@
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": false,
       "sourceFileRefs": ["apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts"]
+    },
+    "classification": "must-fix-in-v1"
+  },
+  {
+    "id": "USF-GAP-0155",
+    "kind": "proof-behaviour",
+    "subject": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
+    "message": "proof does not assert failure mode",
+    "evidence": {
+      "proofId": "proof:apps-platform-api-scripts-redis-rate-limit-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts"]
+    },
+    "classification": "must-fix-in-v1"
+  },
+  {
+    "id": "USF-GAP-0156",
+    "kind": "proof-behaviour",
+    "subject": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
+    "message": "proof does not assert side effects",
+    "evidence": {
+      "proofId": "proof:apps-platform-api-scripts-s3-object-storage-adapter-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0157",
     "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
+    "subject": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
     "message": "proof does not assert failure mode",
     "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-redis-rate-limit-repository-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
+      "proofId": "proof:apps-platform-api-scripts-s3-object-storage-adapter-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts"]
+      "sourceFileRefs": ["apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts"]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0158",
-    "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
-    "message": "proof does not assert side effects",
-    "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-s3-object-storage-adapter-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
-      "level": 4,
-      "classification": "live substrate behaviour",
-      "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
-      "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts"]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0159",
-    "kind": "proof-behaviour",
-    "subject": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
-    "message": "proof does not assert failure mode",
-    "evidence": {
-      "proofId": "proof:apps-platform-api-scripts-s3-object-storage-adapter-runtime-proof-ts",
-      "file": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
-      "level": 4,
-      "classification": "live substrate behaviour",
-      "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
-      "assertsFailureMode": false,
-      "assertsObservabilityOrAudit": false,
-      "sourceFileRefs": ["apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts"]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0160",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
     "message": "proof only checks file/contract shape",
@@ -3062,7 +3026,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0161",
+    "id": "USF-GAP-0159",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -3080,7 +3044,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0162",
+    "id": "USF-GAP-0160",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -3098,7 +3062,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0163",
+    "id": "USF-GAP-0161",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts",
     "message": "proof does not assert failure mode",
@@ -3116,7 +3080,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0164",
+    "id": "USF-GAP-0162",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -3134,7 +3098,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0165",
+    "id": "USF-GAP-0163",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -3152,7 +3116,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0166",
+    "id": "USF-GAP-0164",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts",
     "message": "proof only checks file/contract shape",
@@ -3170,7 +3134,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0167",
+    "id": "USF-GAP-0165",
     "kind": "proof-behaviour",
     "subject": "apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts",
     "message": "proof does not assert side effects",
@@ -3188,7 +3152,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0168",
+    "id": "USF-GAP-0166",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/alerts",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3228,7 +3192,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0169",
+    "id": "USF-GAP-0167",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/alerts",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3268,7 +3232,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0170",
+    "id": "USF-GAP-0168",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/alerts/:alertId/evaluate",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3308,7 +3272,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0171",
+    "id": "USF-GAP-0169",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/backup",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3348,7 +3312,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0172",
+    "id": "USF-GAP-0170",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/billing",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3388,7 +3352,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0173",
+    "id": "USF-GAP-0171",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/billing/catalog/plans",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3428,7 +3392,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0174",
+    "id": "USF-GAP-0172",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/billing/catalog/plans",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3468,7 +3432,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0175",
+    "id": "USF-GAP-0173",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/billing/catalog/prices",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3508,7 +3472,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0176",
+    "id": "USF-GAP-0174",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/billing/catalog/prices",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3548,7 +3512,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0177",
+    "id": "USF-GAP-0175",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/billing/catalog/products",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3588,7 +3552,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0178",
+    "id": "USF-GAP-0176",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/billing/catalog/products",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3628,7 +3592,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0179",
+    "id": "USF-GAP-0177",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/billing/readiness",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3668,7 +3632,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0180",
+    "id": "USF-GAP-0178",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/clickthrough",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3708,7 +3672,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0181",
+    "id": "USF-GAP-0179",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/data/compliance-report",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3748,7 +3712,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0182",
+    "id": "USF-GAP-0180",
     "kind": "metrics-alerts",
     "subject": "DELETE /api/admin/data/legal-holds",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3788,7 +3752,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0183",
+    "id": "USF-GAP-0181",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/data/legal-holds",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3828,7 +3792,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0184",
+    "id": "USF-GAP-0182",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/data/legal-holds",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3868,7 +3832,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0185",
+    "id": "USF-GAP-0183",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/data/residency",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3908,7 +3872,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0186",
+    "id": "USF-GAP-0184",
     "kind": "metrics-alerts",
     "subject": "DELETE /api/admin/data/retention-policies",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3948,7 +3912,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0187",
+    "id": "USF-GAP-0185",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/data/retention-policies",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -3988,7 +3952,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0188",
+    "id": "USF-GAP-0186",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/data/retention-policies",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4028,7 +3992,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0189",
+    "id": "USF-GAP-0187",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/events",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4068,7 +4032,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0190",
+    "id": "USF-GAP-0188",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/events/:eventId/redrive",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4108,7 +4072,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0191",
+    "id": "USF-GAP-0189",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/events/dead-letter",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4148,7 +4112,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0192",
+    "id": "USF-GAP-0190",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/governance/catalog",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4188,7 +4152,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0193",
+    "id": "USF-GAP-0191",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/governance/catalog",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4228,7 +4192,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0194",
+    "id": "USF-GAP-0192",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/governance/catalog/classify",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4268,7 +4232,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0195",
+    "id": "USF-GAP-0193",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/governance/dsr",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4308,7 +4272,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0196",
+    "id": "USF-GAP-0194",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/governance/dsr",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4348,7 +4312,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0197",
+    "id": "USF-GAP-0195",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/governance/dsr/:dsrId/fulfill",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4388,7 +4352,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0198",
+    "id": "USF-GAP-0196",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/incidents",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4428,7 +4392,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0199",
+    "id": "USF-GAP-0197",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/admin/incidents/:incidentId",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4468,7 +4432,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0200",
+    "id": "USF-GAP-0198",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/logs/search",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4508,7 +4472,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0201",
+    "id": "USF-GAP-0199",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/notifications/readiness",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4548,7 +4512,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0202",
+    "id": "USF-GAP-0200",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/observability",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4588,7 +4552,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0203",
+    "id": "USF-GAP-0201",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/observability/readiness",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4628,7 +4592,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0204",
+    "id": "USF-GAP-0202",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/observability/signals",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4668,7 +4632,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0205",
+    "id": "USF-GAP-0203",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/provider-bindings",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4708,7 +4672,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0206",
+    "id": "USF-GAP-0204",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/provider-configs",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4748,7 +4712,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0207",
+    "id": "USF-GAP-0205",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/provider-configs",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4788,7 +4752,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0208",
+    "id": "USF-GAP-0206",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/provider-configs/:id/delete",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4828,7 +4792,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0209",
+    "id": "USF-GAP-0207",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/provider-configs/:id/lifecycle",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4868,7 +4832,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0210",
+    "id": "USF-GAP-0208",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/providers/readiness",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4908,7 +4872,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0211",
+    "id": "USF-GAP-0209",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/scheduled-jobs",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4948,7 +4912,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0212",
+    "id": "USF-GAP-0210",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/scheduled-jobs",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -4988,7 +4952,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0213",
+    "id": "USF-GAP-0211",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/admin/scheduled-jobs/:jobId",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5028,7 +4992,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0214",
+    "id": "USF-GAP-0212",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/scheduled-jobs/:jobId/run",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5068,7 +5032,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0215",
+    "id": "USF-GAP-0213",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/search/readiness",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5108,7 +5072,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0216",
+    "id": "USF-GAP-0214",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/search/reindex",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5148,7 +5112,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0217",
+    "id": "USF-GAP-0215",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/secrets",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5188,7 +5152,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0218",
+    "id": "USF-GAP-0216",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/secrets",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5228,7 +5192,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0219",
+    "id": "USF-GAP-0217",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/secrets/delete",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5268,7 +5232,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0220",
+    "id": "USF-GAP-0218",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/secrets/readiness",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5308,7 +5272,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0221",
+    "id": "USF-GAP-0219",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/secrets/revoke",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5348,7 +5312,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0222",
+    "id": "USF-GAP-0220",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/security",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5388,7 +5352,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0223",
+    "id": "USF-GAP-0221",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/sub-tenants",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5428,7 +5392,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0224",
+    "id": "USF-GAP-0222",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/support-session",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5468,7 +5432,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0225",
+    "id": "USF-GAP-0223",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/support-session/approval-grant",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5508,7 +5472,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0226",
+    "id": "USF-GAP-0224",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/support-session/approval-request",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5548,7 +5512,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0227",
+    "id": "USF-GAP-0225",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/support/health",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5588,7 +5552,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0228",
+    "id": "USF-GAP-0226",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/support/tickets",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5628,7 +5592,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0229",
+    "id": "USF-GAP-0227",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/support/tickets",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5668,7 +5632,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0230",
+    "id": "USF-GAP-0228",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/tenants",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5708,7 +5672,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0231",
+    "id": "USF-GAP-0229",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/tenants",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5748,7 +5712,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0232",
+    "id": "USF-GAP-0230",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/tenants/:tenantId/announcements",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5788,7 +5752,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0233",
+    "id": "USF-GAP-0231",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/tenants/:tenantId/announcements",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5828,7 +5792,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0234",
+    "id": "USF-GAP-0232",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/tenants/:tenantId/api-keys",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5868,7 +5832,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0235",
+    "id": "USF-GAP-0233",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/tenants/:tenantId/auth-settings-credential/readiness",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5908,7 +5872,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0236",
+    "id": "USF-GAP-0234",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/tenants/:tenantId/auth-settings-credential/repair",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5948,7 +5912,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0237",
+    "id": "USF-GAP-0235",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/tenants/:tenantId/auth-settings-credential/rotate",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -5988,7 +5952,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0238",
+    "id": "USF-GAP-0236",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/tenants/:tenantId/delegations",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6028,7 +5992,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0239",
+    "id": "USF-GAP-0237",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/tenants/:tenantId/delegations",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6068,7 +6032,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0240",
+    "id": "USF-GAP-0238",
     "kind": "metrics-alerts",
     "subject": "DELETE /api/admin/tenants/:tenantId/delegations/:delegationId",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6108,7 +6072,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0241",
+    "id": "USF-GAP-0239",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/tenants/:tenantId/delete",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6148,7 +6112,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0242",
+    "id": "USF-GAP-0240",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/tenants/:tenantId/entitlements",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6188,7 +6152,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0243",
+    "id": "USF-GAP-0241",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/admin/tenants/:tenantId/entitlements",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6228,7 +6192,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0244",
+    "id": "USF-GAP-0242",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/tenants/:tenantId/export",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6268,7 +6232,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0245",
+    "id": "USF-GAP-0243",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/tenants/:tenantId/history",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6308,7 +6272,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0246",
+    "id": "USF-GAP-0244",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/tenants/:tenantId/import",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6348,7 +6312,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0247",
+    "id": "USF-GAP-0245",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/tenants/:tenantId/meter-events",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6388,7 +6352,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0248",
+    "id": "USF-GAP-0246",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/tenants/:tenantId/notifications/test",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6428,7 +6392,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0249",
+    "id": "USF-GAP-0247",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/tenants/:tenantId/quotas",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6468,7 +6432,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0250",
+    "id": "USF-GAP-0248",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/admin/tenants/:tenantId/quotas",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6508,7 +6472,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0251",
+    "id": "USF-GAP-0249",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/tenants/:tenantId/rate-limits",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6548,7 +6512,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0252",
+    "id": "USF-GAP-0250",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/admin/tenants/:tenantId/rate-limits",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6588,7 +6552,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0253",
+    "id": "USF-GAP-0251",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/tenants/:tenantId/suspend",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6628,7 +6592,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0254",
+    "id": "USF-GAP-0252",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/tenants/:tenantId/usage",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6668,7 +6632,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0255",
+    "id": "USF-GAP-0253",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/tenants/auth-settings-credential",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6708,7 +6672,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0256",
+    "id": "USF-GAP-0254",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/tenants/resources",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6748,7 +6712,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0257",
+    "id": "USF-GAP-0255",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/workers",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6788,7 +6752,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0258",
+    "id": "USF-GAP-0256",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/workflows",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6828,7 +6792,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0259",
+    "id": "USF-GAP-0257",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/workflows/:workflowId",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6868,7 +6832,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0260",
+    "id": "USF-GAP-0258",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/workflows/:workflowId/cancel",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6908,7 +6872,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0261",
+    "id": "USF-GAP-0259",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/workflows/:workflowId/signal",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6948,7 +6912,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0262",
+    "id": "USF-GAP-0260",
     "kind": "metrics-alerts",
     "subject": "GET /api/admin/workflows/readiness",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -6988,7 +6952,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0263",
+    "id": "USF-GAP-0261",
     "kind": "metrics-alerts",
     "subject": "POST /api/admin/workflows/start",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7028,7 +6992,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0264",
+    "id": "USF-GAP-0262",
     "kind": "metrics-alerts",
     "subject": "GET /api/auth/providers",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7068,7 +7032,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0265",
+    "id": "USF-GAP-0263",
     "kind": "metrics-alerts",
     "subject": "POST /api/auth/settings/domains",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7108,7 +7072,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0266",
+    "id": "USF-GAP-0264",
     "kind": "metrics-alerts",
     "subject": "DELETE /api/auth/settings/domains/:domain",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7148,7 +7112,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0267",
+    "id": "USF-GAP-0265",
     "kind": "metrics-alerts",
     "subject": "POST /api/auth/settings/domains/challenges",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7188,7 +7152,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0268",
+    "id": "USF-GAP-0266",
     "kind": "metrics-alerts",
     "subject": "POST /api/auth/settings/domains/verify",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7228,7 +7192,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0269",
+    "id": "USF-GAP-0267",
     "kind": "metrics-alerts",
     "subject": "GET /api/auth/settings/idps",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7268,7 +7232,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0270",
+    "id": "USF-GAP-0268",
     "kind": "metrics-alerts",
     "subject": "POST /api/auth/settings/idps",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7308,7 +7272,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0271",
+    "id": "USF-GAP-0269",
     "kind": "metrics-alerts",
     "subject": "DELETE /api/auth/settings/idps/:alias",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7348,7 +7312,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0272",
+    "id": "USF-GAP-0270",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/auth/settings/idps/:alias",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7388,7 +7352,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0273",
+    "id": "USF-GAP-0271",
     "kind": "metrics-alerts",
     "subject": "GET /api/auth/settings/idps/:alias/callback-url",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7428,7 +7392,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0274",
+    "id": "USF-GAP-0272",
     "kind": "metrics-alerts",
     "subject": "GET /api/auth/settings/idps/:alias/mapping",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7468,7 +7432,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0275",
+    "id": "USF-GAP-0273",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/auth/settings/idps/:alias/mapping",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7508,7 +7472,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0276",
+    "id": "USF-GAP-0274",
     "kind": "metrics-alerts",
     "subject": "POST /api/auth/settings/idps/:alias/test-connection",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7548,7 +7512,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0277",
+    "id": "USF-GAP-0275",
     "kind": "metrics-alerts",
     "subject": "POST /api/auth/settings/idps/oidc/discover",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7588,7 +7552,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0278",
+    "id": "USF-GAP-0276",
     "kind": "metrics-alerts",
     "subject": "GET /api/auth/settings/lockout",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7628,7 +7592,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0279",
+    "id": "USF-GAP-0277",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/auth/settings/lockout",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7668,7 +7632,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0280",
+    "id": "USF-GAP-0278",
     "kind": "metrics-alerts",
     "subject": "GET /api/auth/settings/mfa",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7708,7 +7672,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0281",
+    "id": "USF-GAP-0279",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/auth/settings/mfa",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7748,7 +7712,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0282",
+    "id": "USF-GAP-0280",
     "kind": "metrics-alerts",
     "subject": "GET /api/auth/settings/providers",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7788,7 +7752,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0283",
+    "id": "USF-GAP-0281",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/auth/settings/providers",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7828,7 +7792,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0284",
+    "id": "USF-GAP-0282",
     "kind": "metrics-alerts",
     "subject": "GET /api/auth/settings/readiness",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7868,7 +7832,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0285",
+    "id": "USF-GAP-0283",
     "kind": "metrics-alerts",
     "subject": "GET /api/auth/settings/resource-policies",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7908,7 +7872,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0286",
+    "id": "USF-GAP-0284",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/auth/settings/resource-policies",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7948,7 +7912,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0287",
+    "id": "USF-GAP-0285",
     "kind": "metrics-alerts",
     "subject": "GET /api/auth/settings/session",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -7988,7 +7952,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0288",
+    "id": "USF-GAP-0286",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/auth/settings/session",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8028,7 +7992,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0289",
+    "id": "USF-GAP-0287",
     "kind": "metrics-alerts",
     "subject": "GET /api/auth/settings/sysadmin-brokering",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8068,7 +8032,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0290",
+    "id": "USF-GAP-0288",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/auth/settings/sysadmin-brokering",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8108,7 +8072,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0291",
+    "id": "USF-GAP-0289",
     "kind": "metrics-alerts",
     "subject": "POST /api/graphql",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8148,7 +8112,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0292",
+    "id": "USF-GAP-0290",
     "kind": "metrics-alerts",
     "subject": "GET /api/host-identity",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8188,7 +8152,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0293",
+    "id": "USF-GAP-0291",
     "kind": "metrics-alerts",
     "subject": "GET /api/me/notification-preferences",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8228,7 +8192,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0294",
+    "id": "USF-GAP-0292",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/me/notification-preferences",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8268,7 +8232,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0295",
+    "id": "USF-GAP-0293",
     "kind": "metrics-alerts",
     "subject": "GET /api/me/profile",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8308,7 +8272,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0296",
+    "id": "USF-GAP-0294",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/me/profile",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8348,7 +8312,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0297",
+    "id": "USF-GAP-0295",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/api-keys",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8388,7 +8352,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0298",
+    "id": "USF-GAP-0296",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/api-keys",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8428,7 +8392,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0299",
+    "id": "USF-GAP-0297",
     "kind": "metrics-alerts",
     "subject": "DELETE /api/org/api-keys/:keyId",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8468,7 +8432,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0300",
+    "id": "USF-GAP-0298",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/audit",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8508,7 +8472,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0301",
+    "id": "USF-GAP-0299",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/billing/catalog",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8548,7 +8512,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0302",
+    "id": "USF-GAP-0300",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/config",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8588,7 +8552,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0303",
+    "id": "USF-GAP-0301",
     "kind": "metrics-alerts",
     "subject": "DELETE /api/org/config/:key",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8628,7 +8592,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0304",
+    "id": "USF-GAP-0302",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/org/config/:key",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8668,7 +8632,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0305",
+    "id": "USF-GAP-0303",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/developer",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8708,7 +8672,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0306",
+    "id": "USF-GAP-0304",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/domains",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8748,7 +8712,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0307",
+    "id": "USF-GAP-0305",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/domains",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8788,7 +8752,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0308",
+    "id": "USF-GAP-0306",
     "kind": "metrics-alerts",
     "subject": "DELETE /api/org/domains/:domain",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8828,7 +8792,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0309",
+    "id": "USF-GAP-0307",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/domains/:domain/activate",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8868,7 +8832,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0310",
+    "id": "USF-GAP-0308",
     "kind": "metrics-alerts",
     "subject": "DELETE /api/org/domains/:domain/canonical",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8908,7 +8872,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0311",
+    "id": "USF-GAP-0309",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/domains/:domain/canonical",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8948,7 +8912,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0312",
+    "id": "USF-GAP-0310",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/domains/:domain/deactivate",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -8988,7 +8952,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0313",
+    "id": "USF-GAP-0311",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/domains/:domain/probe-routing-local",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9028,7 +8992,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0314",
+    "id": "USF-GAP-0312",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/domains/:domain/verify",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9068,7 +9032,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0315",
+    "id": "USF-GAP-0313",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/domains/readiness",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9108,7 +9072,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0316",
+    "id": "USF-GAP-0314",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/email-sender",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9148,7 +9112,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0317",
+    "id": "USF-GAP-0315",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/org/email-sender",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9188,7 +9152,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0318",
+    "id": "USF-GAP-0316",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/email-sender/readiness",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9228,7 +9192,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0319",
+    "id": "USF-GAP-0317",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/email-sender/test",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9268,7 +9232,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0320",
+    "id": "USF-GAP-0318",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/entitlements",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9308,7 +9272,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0321",
+    "id": "USF-GAP-0319",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/features",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9348,7 +9312,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0322",
+    "id": "USF-GAP-0320",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/org/features/:featureKey",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9388,7 +9352,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0323",
+    "id": "USF-GAP-0321",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/groups",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9428,7 +9392,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0324",
+    "id": "USF-GAP-0322",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/groups",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9468,7 +9432,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0325",
+    "id": "USF-GAP-0323",
     "kind": "metrics-alerts",
     "subject": "DELETE /api/org/groups/:groupId",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9508,7 +9472,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0326",
+    "id": "USF-GAP-0324",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/org/groups/:groupId",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9548,7 +9512,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0327",
+    "id": "USF-GAP-0325",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/history",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9588,7 +9552,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0328",
+    "id": "USF-GAP-0326",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/members",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9628,7 +9592,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0329",
+    "id": "USF-GAP-0327",
     "kind": "metrics-alerts",
     "subject": "DELETE /api/org/members/:userId",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9668,7 +9632,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0330",
+    "id": "USF-GAP-0328",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/org/members/:userId",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9708,7 +9672,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0331",
+    "id": "USF-GAP-0329",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/members/:userId/external-identities",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9748,7 +9712,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0332",
+    "id": "USF-GAP-0330",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/org/members/:userId/status",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9788,7 +9752,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0333",
+    "id": "USF-GAP-0331",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/org/members/:userId/username",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9828,7 +9792,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0334",
+    "id": "USF-GAP-0332",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/members/invite",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9868,7 +9832,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0335",
+    "id": "USF-GAP-0333",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/members/resend-invite",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9908,7 +9872,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0336",
+    "id": "USF-GAP-0334",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/observability/readiness",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9948,7 +9912,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0337",
+    "id": "USF-GAP-0335",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/platform/services/readiness",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -9988,7 +9952,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0338",
+    "id": "USF-GAP-0336",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/quotas",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10028,7 +9992,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0339",
+    "id": "USF-GAP-0337",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/rate-limits",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10068,7 +10032,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0340",
+    "id": "USF-GAP-0338",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/readiness",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10108,7 +10072,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0341",
+    "id": "USF-GAP-0339",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/search",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10148,7 +10112,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0342",
+    "id": "USF-GAP-0340",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/storage/objects",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10188,7 +10152,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0343",
+    "id": "USF-GAP-0341",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/storage/objects",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10228,7 +10192,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0344",
+    "id": "USF-GAP-0342",
     "kind": "metrics-alerts",
     "subject": "DELETE /api/org/storage/objects/:objectKey",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10268,7 +10232,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0345",
+    "id": "USF-GAP-0343",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/storage/objects/:objectKey",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10308,7 +10272,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0346",
+    "id": "USF-GAP-0344",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/storage/objects/:objectKey/scan",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10348,7 +10312,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0347",
+    "id": "USF-GAP-0345",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/storage/probe",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10388,7 +10352,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0348",
+    "id": "USF-GAP-0346",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/storage/readiness",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10428,7 +10392,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0349",
+    "id": "USF-GAP-0347",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/sub-organisations",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10468,7 +10432,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0350",
+    "id": "USF-GAP-0348",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/sub-organisations",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10508,7 +10472,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0351",
+    "id": "USF-GAP-0349",
     "kind": "metrics-alerts",
     "subject": "DELETE /api/org/sub-organisations/:subOrgId",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10548,7 +10512,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0352",
+    "id": "USF-GAP-0350",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/org/sub-organisations/:subOrgId",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10588,7 +10552,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0353",
+    "id": "USF-GAP-0351",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/usage",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10628,7 +10592,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0354",
+    "id": "USF-GAP-0352",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/webhooks",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10668,7 +10632,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0355",
+    "id": "USF-GAP-0353",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/webhooks",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10708,7 +10672,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0356",
+    "id": "USF-GAP-0354",
     "kind": "metrics-alerts",
     "subject": "DELETE /api/org/webhooks/:id",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10748,7 +10712,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0357",
+    "id": "USF-GAP-0355",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/org/webhooks/:id",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10788,7 +10752,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0358",
+    "id": "USF-GAP-0356",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/webhooks/:id/deliveries",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10828,7 +10792,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0359",
+    "id": "USF-GAP-0357",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/webhooks/:id/deliveries/:deliveryId/redrive",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10868,7 +10832,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0360",
+    "id": "USF-GAP-0358",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/webhooks/:id/metrics",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10908,7 +10872,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0361",
+    "id": "USF-GAP-0359",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/webhooks/:id/redrive-dead",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10948,7 +10912,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0362",
+    "id": "USF-GAP-0360",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/webhooks/:id/rotate-secret",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -10988,7 +10952,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0363",
+    "id": "USF-GAP-0361",
     "kind": "metrics-alerts",
     "subject": "POST /api/org/webhooks/:id/test",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -11028,7 +10992,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0364",
+    "id": "USF-GAP-0362",
     "kind": "metrics-alerts",
     "subject": "GET /api/org/webhooks/readiness",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -11068,7 +11032,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0365",
+    "id": "USF-GAP-0363",
     "kind": "metrics-alerts",
     "subject": "GET /api/organisation/profile",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -11108,7 +11072,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0366",
+    "id": "USF-GAP-0364",
     "kind": "metrics-alerts",
     "subject": "PATCH /api/organisation/profile",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -11148,7 +11112,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0367",
+    "id": "USF-GAP-0365",
     "kind": "metrics-alerts",
     "subject": "GET /api/platform/service-catalog",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -11188,7 +11152,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0368",
+    "id": "USF-GAP-0366",
     "kind": "metrics-alerts",
     "subject": "GET /api/session",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -11228,7 +11192,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0369",
+    "id": "USF-GAP-0367",
     "kind": "metrics-alerts",
     "subject": "GET /api/theme",
     "message": "route without route-specific alert condition/owner/runbook proof",
@@ -11268,7 +11232,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0370",
+    "id": "USF-GAP-0368",
     "kind": "metrics-alerts",
     "subject": "GET /internal/auth/forward",
     "message": "route without route-specific alert condition/owner/runbook proof",
