@@ -18,6 +18,7 @@
  */
 
 import { execFileSync } from "node:child_process";
+import assert from "node:assert/strict";
 import { gunzipSync } from "node:zlib";
 import { readFileSync, rmSync, statSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -29,6 +30,7 @@ let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 
 async function main(): Promise<void> {
@@ -46,6 +48,11 @@ async function main(): Promise<void> {
     );
     orgId = ins.rows[0]!.id;
     check("seeded temp org with unique marker", !!orgId);
+    const selected = await pool.query<{ id: string }>(
+      "SELECT id FROM public.organisations WHERE slug = $1",
+      [marker]
+    );
+    assert.equal(selected.rows[0]?.id, orgId, "seeded temp org is readable before backup");
 
     // Guard tests must not inherit ambient overrides that would defeat them.
     const cleanEnv = { ...process.env };
@@ -105,7 +112,10 @@ async function main(): Promise<void> {
     const backupSrc = readFileSync("scripts/backup/postgres-backup.sh", "utf8");
     check("backup script sets umask 077 (static)", backupSrc.includes("umask 077"));
   } catch (err) {
-    check("backup lifecycle", false, err instanceof Error ? err.message : String(err));
+    failures++;
+    console.log(
+      "FAIL  backup lifecycle" + ` — ${err instanceof Error ? err.message : String(err)}`
+    );
   } finally {
     if (orgId)
       await pool.query(`DELETE FROM public.organisations WHERE id = $1`, [orgId]).catch(() => {});

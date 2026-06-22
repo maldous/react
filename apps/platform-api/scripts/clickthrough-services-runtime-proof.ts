@@ -16,11 +16,13 @@
 
 import { listClickthroughServices } from "../src/usecases/clickthrough-services.ts";
 import { CLICKTHROUGH_SERVICES } from "../src/usecases/service-clickthrough.ts";
+import assert from "node:assert/strict";
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 
 const SECRET = /password|secret|token|pepper|private[_-]?key|[0-9a-f]{32,}/i;

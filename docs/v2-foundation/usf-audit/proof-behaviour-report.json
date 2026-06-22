@@ -4,23 +4,6 @@
   "gaps": [
     {
       "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
-      "message": "proof does not assert side effects",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-backup-local-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
-        "level": 4,
-        "classification": "live substrate behaviour",
-        "routeRefs": ["route:get"],
-        "assertsSideEffects": false,
-        "assertsFailureMode": true,
-        "assertsObservabilityOrAudit": true,
-        "sourceFileRefs": ["apps/platform-api/scripts/backup-local-runtime-proof.ts"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
       "message": "proof only checks file/contract shape",
       "evidence": {
@@ -135,23 +118,6 @@
         "assertsFailureMode": true,
         "assertsObservabilityOrAudit": false,
         "sourceFileRefs": ["apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
-      "message": "proof does not assert side effects",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-clickthrough-services-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
-        "level": 4,
-        "classification": "live substrate behaviour",
-        "routeRefs": ["route:get"],
-        "assertsSideEffects": false,
-        "assertsFailureMode": true,
-        "assertsObservabilityOrAudit": true,
-        "sourceFileRefs": ["apps/platform-api/scripts/clickthrough-services-runtime-proof.ts"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -2699,7 +2665,7 @@
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
+      "assertsSideEffects": true,
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/backup-local-runtime-proof.ts"]
@@ -2821,7 +2787,7 @@
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
+      "assertsSideEffects": true,
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/clickthrough-services-runtime-proof.ts"]
