@@ -3646,5 +3646,29 @@
     "selectorsOrImportsChange": false,
     "becomesReusableContract": false,
     "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
+    "v2Path": "apps/platform-api/conformance/openbao-secret-store.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
+    "v2Path": "apps/platform-api/conformance/postgres-secret-store.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
+    "v2Path": "apps/platform-api/conformance/http-webhook-dispatcher.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
   }
 ]
