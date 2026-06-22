@@ -445,10 +445,10 @@
         "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
         "docs/api/openapi.json",
         "apps/platform-api/scripts/api-keys-runtime-proof.ts",
-        "apps/platform-api/src/adapters/n/a.ts"
+        "apps/platform-api/src/adapters/postgres-api-key-repository.ts"
       ],
       "dev": {
-        "provider": "local n/a provider for API keys / personal access tokens",
+        "provider": "postgres-api-key-repository",
         "providerClass": "compose-local",
         "dataClass": "secret",
         "tenantDataAllowed": false,
@@ -477,7 +477,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic n/a proof provider",
+        "provider": "postgres-api-key-repository",
         "providerClass": "compose-local",
         "dataClass": "secret",
         "tenantDataAllowed": true,
@@ -506,7 +506,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape n/a provider with sandbox externals",
+        "provider": "postgres-api-key-repository",
         "providerClass": "compose-local",
         "dataClass": "secret",
         "tenantDataAllowed": true,
@@ -536,7 +536,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production n/a provider",
+        "provider": "postgres-api-key-repository",
         "providerClass": "compose-local",
         "dataClass": "secret",
         "tenantDataAllowed": true,
@@ -996,10 +996,10 @@
         "apps/platform-api/src/server/authorize-resource.ts",
         "apps/platform-api/tests/unit/resource-policies.test.ts",
         "apps/platform-api/tests/unit/authorize-resource.test.ts",
-        "apps/platform-api/src/adapters/n/a.ts"
+        "apps/platform-api/src/adapters/keycloak-realm-admin-adapter.ts"
       ],
       "dev": {
-        "provider": "local n/a provider for ABAC / Policy Decision Point",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -1028,7 +1028,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic n/a proof provider",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -1057,7 +1057,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape n/a provider with sandbox externals",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "sandbox-external",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -1087,7 +1087,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production n/a provider",
+        "provider": "keycloak-realm-admin-adapter",
         "providerClass": "live-external",
         "dataClass": "configuration",
         "tenantDataAllowed": false,
@@ -1420,10 +1420,10 @@
         "apps/platform-api/src/usecases/support.ts",
         "apps/platform-api/scripts/support-approval-runtime-proof.ts",
         "apps/platform-api/tests/unit/support-mode.test.ts",
-        "apps/platform-api/src/adapters/n/a.ts"
+        "apps/platform-api/src/adapters/in-memory-workflow-orchestrator.ts"
       ],
       "dev": {
-        "provider": "local n/a provider for Support-mode / break-glass access",
+        "provider": "in-memory-workflow-orchestrator",
         "providerClass": "compose-local",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -1452,7 +1452,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic n/a proof provider",
+        "provider": "in-memory-workflow-orchestrator",
         "providerClass": "compose-local",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -1481,7 +1481,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape n/a provider with sandbox externals",
+        "provider": "in-memory-workflow-orchestrator",
         "providerClass": "compose-local",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -1511,7 +1511,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production n/a provider",
+        "provider": "in-memory-workflow-orchestrator",
         "providerClass": "compose-local",
         "dataClass": "configuration",
         "tenantDataAllowed": false,
@@ -3322,10 +3322,10 @@
       "sourceFileRefs": [
         "docs/v2-foundation/data-and-migration-plan.json",
         "apps/platform-api/tests/unit/migrations.test.ts",
-        "apps/platform-api/src/adapters/MinioStorageAdapter.ts"
+        "apps/platform-api/src/adapters/postgres-migration-storage-provider.ts"
       ],
       "dev": {
-        "provider": "local StoragePort provider for Relational storage + migrations + RLS",
+        "provider": "postgres-migration-storage-provider",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -3354,7 +3354,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic StoragePort proof provider",
+        "provider": "postgres-migration-storage-provider",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -3383,7 +3383,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape MinioStorageAdapter provider with sandbox externals",
+        "provider": "postgres-migration-storage-provider",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -3413,7 +3413,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production MinioStorageAdapter provider",
+        "provider": "postgres-migration-storage-provider",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -5818,9 +5818,9 @@
     {
       "capability": "Compliance reports, access reviews, evidence packs",
       "category": "security-governance",
-      "sourceFileRefs": ["apps/platform-api/src/adapters/n/a.ts"],
+      "sourceFileRefs": ["apps/platform-api/src/adapters/static-assurance-provider.ts"],
       "dev": {
-        "provider": "local n/a provider for Compliance reports, access reviews, evidence packs",
+        "provider": "static-assurance-provider",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -5851,7 +5851,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic n/a proof provider",
+        "provider": "static-assurance-provider",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -5882,7 +5882,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape n/a provider with sandbox externals",
+        "provider": "static-assurance-provider",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -5914,7 +5914,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production n/a provider",
+        "provider": "static-assurance-provider",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": false,
@@ -5955,9 +5955,9 @@
     {
       "capability": "Tenant isolation proof",
       "category": "security-governance",
-      "sourceFileRefs": ["apps/platform-api/src/adapters/n/a.ts"],
+      "sourceFileRefs": ["apps/platform-api/src/adapters/postgres-migration-storage-provider.ts"],
       "dev": {
-        "provider": "local n/a provider for Tenant isolation proof",
+        "provider": "postgres-migration-storage-provider",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -5986,7 +5986,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic n/a proof provider",
+        "provider": "postgres-migration-storage-provider",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -6015,7 +6015,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape n/a provider with sandbox externals",
+        "provider": "postgres-migration-storage-provider",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -6045,7 +6045,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production n/a provider",
+        "provider": "postgres-migration-storage-provider",
         "providerClass": "compose-local",
         "dataClass": "tenant-data",
         "tenantDataAllowed": true,
@@ -6782,10 +6782,10 @@
         "docs/v2-foundation",
         "tools/v2-readiness",
         "docs/evidence/stages",
-        "apps/platform-api/src/adapters/n/a.ts"
+        "apps/platform-api/src/adapters/static-assurance-provider.ts"
       ],
       "dev": {
-        "provider": "local n/a provider for Universal Service Foundation scope + principles",
+        "provider": "static-assurance-provider",
         "providerClass": "compose-local",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -6816,7 +6816,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic n/a proof provider",
+        "provider": "static-assurance-provider",
         "providerClass": "compose-local",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -6847,7 +6847,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape n/a provider with sandbox externals",
+        "provider": "static-assurance-provider",
         "providerClass": "compose-local",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -6879,7 +6879,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production n/a provider",
+        "provider": "static-assurance-provider",
         "providerClass": "compose-local",
         "dataClass": "configuration",
         "tenantDataAllowed": false,
@@ -6922,10 +6922,10 @@
       "category": "foundation",
       "sourceFileRefs": [
         "docs/architecture/build-versus-compose-decision-framework.md",
-        "apps/platform-api/src/adapters/n/a.ts"
+        "apps/platform-api/src/adapters/static-assurance-provider.ts"
       ],
       "dev": {
-        "provider": "local n/a provider for Build-versus-compose decision framework",
+        "provider": "static-assurance-provider",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -6954,7 +6954,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic n/a proof provider",
+        "provider": "static-assurance-provider",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -6983,7 +6983,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape n/a provider with sandbox externals",
+        "provider": "static-assurance-provider",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -7015,7 +7015,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production n/a provider",
+        "provider": "static-assurance-provider",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": false,
@@ -7208,9 +7208,9 @@
     {
       "capability": "Environment-specific vs shared service model",
       "category": "foundation",
-      "sourceFileRefs": ["apps/platform-api/src/adapters/n/a.ts"],
+      "sourceFileRefs": ["apps/platform-api/src/adapters/static-assurance-provider.ts"],
       "dev": {
-        "provider": "local n/a provider for Environment-specific vs shared service model",
+        "provider": "static-assurance-provider",
         "providerClass": "compose-local",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -7241,7 +7241,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic n/a proof provider",
+        "provider": "static-assurance-provider",
         "providerClass": "compose-local",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -7272,7 +7272,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape n/a provider with sandbox externals",
+        "provider": "static-assurance-provider",
         "providerClass": "compose-local",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -7304,7 +7304,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production n/a provider",
+        "provider": "static-assurance-provider",
         "providerClass": "compose-local",
         "dataClass": "configuration",
         "tenantDataAllowed": false,
@@ -8975,10 +8975,10 @@
         "docs/evidence/stages",
         "scripts/evidence/tests/verify-ladder.test.mjs",
         "scripts/tests/tests/aggregate-confidence.test.mjs",
-        "apps/platform-api/src/adapters/PlaywrightAdapter.ts"
+        "apps/platform-api/src/adapters/playwright-adapter.ts"
       ],
       "dev": {
-        "provider": "local n/a provider for E2E confidence ladder (stage-aware)",
+        "provider": "playwright-adapter",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -9010,7 +9010,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic n/a proof provider",
+        "provider": "playwright-adapter",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -9042,7 +9042,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape PlaywrightAdapter provider with sandbox externals",
+        "provider": "playwright-adapter",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -9075,7 +9075,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production PlaywrightAdapter provider",
+        "provider": "playwright-adapter",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": false,
@@ -9120,10 +9120,10 @@
         "docs/api/openapi.json",
         "apps/platform-api/src/server/routes.ts",
         "tools/architecture/validate-openapi-drift/tests/validate-openapi-drift.test.mjs",
-        "apps/platform-api/src/adapters/validate-openapi-drift.ts"
+        "apps/platform-api/src/adapters/openapi-drift-validator.ts"
       ],
       "dev": {
-        "provider": "local n/a provider for OpenAPI drift hard gate",
+        "provider": "openapi-drift-validator",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -9154,7 +9154,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic n/a proof provider",
+        "provider": "openapi-drift-validator",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -9185,7 +9185,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape validate-openapi-drift provider with sandbox externals",
+        "provider": "openapi-drift-validator",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -9217,7 +9217,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production validate-openapi-drift provider",
+        "provider": "openapi-drift-validator",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": false,
@@ -9395,10 +9395,10 @@
       "category": "foundation",
       "sourceFileRefs": [
         "docs/evidence/e2e",
-        "apps/platform-api/src/adapters/PlaywrightAxeAdapter.ts"
+        "apps/platform-api/src/adapters/playwright-axe-adapter.ts"
       ],
       "dev": {
-        "provider": "local n/a provider for Accessibility (a11y) gate",
+        "provider": "playwright-axe-adapter",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -9427,7 +9427,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic n/a proof provider",
+        "provider": "playwright-axe-adapter",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -9456,7 +9456,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape PlaywrightAxeAdapter provider with sandbox externals",
+        "provider": "playwright-axe-adapter",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": true,
@@ -9486,7 +9486,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production PlaywrightAxeAdapter provider",
+        "provider": "playwright-axe-adapter",
         "providerClass": "hermetic",
         "dataClass": "configuration",
         "tenantDataAllowed": false,
@@ -9531,10 +9531,10 @@
         "docs/evidence/e2e",
         "tools/e2e/observability-correlation",
         "docs/evidence/platform/browser-diagnostics-faro.md",
-        "apps/platform-api/src/adapters/Grafana Faro web SDK + OTEL TracingInstrumentation; Alloy faro.receiver -> otel-collector -> Tempo/Loki.ts"
+        "apps/platform-api/src/adapters/browser-telemetry-provider.ts"
       ],
       "dev": {
-        "provider": "local n/a (client-side OTEL WebTracerProvider + Faro) provider for Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+        "provider": "browser-telemetry-provider",
         "providerClass": "sandbox-external",
         "dataClass": "operational-telemetry",
         "tenantDataAllowed": true,
@@ -9565,7 +9565,7 @@
         "paidLiveOnlyProvider": false
       },
       "test": {
-        "provider": "deterministic n/a (client-side OTEL WebTracerProvider + Faro) proof provider",
+        "provider": "browser-telemetry-provider",
         "providerClass": "sandbox-external",
         "dataClass": "operational-telemetry",
         "tenantDataAllowed": true,
@@ -9596,7 +9596,7 @@
         "paidLiveOnlyProvider": false
       },
       "staging": {
-        "provider": "prod-shape Grafana Faro web SDK + OTEL TracingInstrumentation; Alloy faro.receiver -> otel-collector -> Tempo/Loki provider with sandbox externals",
+        "provider": "browser-telemetry-provider",
         "providerClass": "sandbox-external",
         "dataClass": "operational-telemetry",
         "tenantDataAllowed": true,
@@ -9628,7 +9628,7 @@
         "prodLikeProof": true
       },
       "prod": {
-        "provider": "production Grafana Faro web SDK + OTEL TracingInstrumentation; Alloy faro.receiver -> otel-collector -> Tempo/Loki provider",
+        "provider": "browser-telemetry-provider",
         "providerClass": "live-external",
         "dataClass": "operational-telemetry",
         "tenantDataAllowed": false,

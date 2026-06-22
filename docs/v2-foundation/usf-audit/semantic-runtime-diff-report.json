@@ -1945,24 +1945,6 @@
     },
     {
       "kind": "semantic-runtime-diff",
-      "subject": "in-memory-workflow-orchestrator",
-      "message": "runtime provider has no semantic/provider matrix link",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "postgres-api-key-repository",
-      "message": "runtime provider has no semantic/provider matrix link",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
       "subject": "postgres-email-sender-store",
       "message": "runtime provider has no semantic/provider matrix link",
       "evidence": {
@@ -2072,15 +2054,6 @@
     {
       "kind": "semantic-runtime-diff",
       "subject": "in-memory-automation-runner",
-      "message": "runtime workflow has no semantic workflow/state-machine link",
-      "evidence": {
-        "source": "runtime-workflow-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "in-memory-workflow-orchestrator",
       "message": "runtime workflow has no semantic workflow/state-machine link",
       "evidence": {
         "source": "runtime-workflow-inventory.json"

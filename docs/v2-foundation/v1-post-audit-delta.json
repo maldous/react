@@ -4436,6 +4436,168 @@
       "v2Target": "apps/platform-api/src/adapters/s3-object-storage-adapter.ts",
       "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
       "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint for backup-restore-scripts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+      "protectingTests": ["apps/platform-api/scripts/backup-local-runtime-proof.ts"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint for keycloak-realm-admin-adapter",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
+      "protectingTests": ["apps/platform-api/scripts/auth-settings-runtime-proof.ts"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint for postgres-identity-repository",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts",
+      "protectingTests": ["apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint for react-i18n-provider",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts",
+      "protectingTests": ["apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint for s3-object-storage-adapter",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
+      "protectingTests": ["apps/platform-api/scripts/tenant-storage-runtime-proof.ts"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint for tenant-lifecycle-coordinator",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts",
+      "protectingTests": ["apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider reliability evidence/proof entrypoint",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider reliability evidence/proof entrypoint",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider reliability evidence/proof entrypoint",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider reliability evidence/proof entrypoint",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider reliability evidence/proof entrypoint",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider reliability evidence/proof entrypoint",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/static-assurance-provider.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider reliability evidence/proof entrypoint",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/static-assurance-provider.ts",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/playwright-adapter.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider reliability evidence/proof entrypoint",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/playwright-adapter.ts",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/playwright-axe-adapter.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider reliability evidence/proof entrypoint",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/playwright-axe-adapter.ts",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/openapi-drift-validator.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider reliability evidence/proof entrypoint",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/openapi-drift-validator.ts",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/browser-telemetry-provider.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider reliability evidence/proof entrypoint",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/browser-telemetry-provider.ts",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/postgres-migration-storage-provider.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider reliability evidence/proof entrypoint",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/postgres-migration-storage-provider.ts",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-0020", "ADR-ACT-0284"]
     }
   ],
   "deletions": [
@@ -4818,6 +4980,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 469,
+  "additionCount": 487,
   "deletionCount": 54
 }

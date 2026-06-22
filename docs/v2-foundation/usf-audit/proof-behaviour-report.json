@@ -55,6 +55,40 @@
     },
     {
       "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+      "message": "proof only checks file/contract shape",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-backup-restore-scripts-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+        "level": 0,
+        "classification": "route/file existence only",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": ["apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-backup-restore-scripts-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+        "level": 0,
+        "classification": "route/file existence only",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": ["apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
       "message": "proof does not assert side effects",
       "evidence": {
@@ -78,6 +112,40 @@
         "assertsFailureMode": true,
         "assertsObservabilityOrAudit": true,
         "sourceFileRefs": ["apps/platform-api/scripts/billing-catalog-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-browser-telemetry-provider-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
+      "message": "proof does not assert failure mode",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-browser-telemetry-provider-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -569,6 +637,44 @@
     },
     {
       "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
+      "message": "proof only checks file/contract shape",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-keycloak-realm-admin-adapter-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
+        "level": 0,
+        "classification": "route/file existence only",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": [
+          "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"
+        ]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-keycloak-realm-admin-adapter-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
+        "level": 0,
+        "classification": "route/file existence only",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": [
+          "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"
+        ]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/metering-runtime-proof.ts",
       "message": "proof does not assert side effects",
       "evidence": {
@@ -768,6 +874,40 @@
     },
     {
       "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-openapi-drift-validator-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
+        "level": 2,
+        "classification": "isolated unit behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
+      "message": "proof does not assert failure mode",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-openapi-drift-validator-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
+        "level": 2,
+        "classification": "isolated unit behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
       "message": "proof only checks file/contract shape",
       "evidence": {
@@ -831,6 +971,74 @@
         "assertsFailureMode": true,
         "assertsObservabilityOrAudit": true,
         "sourceFileRefs": ["apps/platform-api/scripts/platform-services-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-playwright-adapter-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
+        "level": 2,
+        "classification": "isolated unit behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/playwright-adapter-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
+      "message": "proof does not assert failure mode",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-playwright-adapter-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
+        "level": 2,
+        "classification": "isolated unit behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/playwright-adapter-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-playwright-axe-adapter-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
+        "level": 2,
+        "classification": "isolated unit behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
+      "message": "proof does not assert failure mode",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-playwright-axe-adapter-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
+        "level": 2,
+        "classification": "isolated unit behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -1137,6 +1345,25 @@
     },
     {
       "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-postgres-identity-repository-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": [
+          "apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts"
+        ]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
       "message": "proof does not assert side effects",
       "evidence": {
@@ -1203,6 +1430,25 @@
         "assertsObservabilityOrAudit": false,
         "sourceFileRefs": [
           "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts"
+        ]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
+      "message": "proof does not assert failure mode",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-postgres-migration-storage-provider-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": true,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": [
+          "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
         ]
       },
       "classification": "must-fix-in-v1"
@@ -1855,6 +2101,23 @@
     },
     {
       "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-react-i18n-provider-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts",
+        "level": 2,
+        "classification": "isolated unit behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
       "message": "proof does not assert side effects",
       "evidence": {
@@ -1884,6 +2147,40 @@
         "assertsFailureMode": false,
         "assertsObservabilityOrAudit": false,
         "sourceFileRefs": ["apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-s3-object-storage-adapter-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": ["apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
+      "message": "proof does not assert failure mode",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-s3-object-storage-adapter-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": ["apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -2042,6 +2339,40 @@
     },
     {
       "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-static-assurance-provider-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts",
+        "level": 2,
+        "classification": "isolated unit behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts",
+      "message": "proof does not assert failure mode",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-static-assurance-provider-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts",
+        "level": 2,
+        "classification": "isolated unit behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
       "message": "proof does not assert side effects",
       "evidence": {
@@ -2155,6 +2486,25 @@
         "assertsFailureMode": true,
         "assertsObservabilityOrAudit": true,
         "sourceFileRefs": ["apps/platform-api/scripts/tenant-domains-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-tenant-lifecycle-coordinator-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts",
+        "level": 3,
+        "classification": "state transition behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": [
+          "apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts"
+        ]
       },
       "classification": "must-fix-in-v1"
     },
@@ -2415,6 +2765,17 @@
       "sourceFileRefs": ["apps/platform-api/scripts/backup-local-runtime-proof.ts"]
     },
     {
+      "proofId": "proof:apps-platform-api-scripts-backup-restore-scripts-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+      "level": 0,
+      "classification": "route/file existence only",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts"]
+    },
+    {
       "proofId": "proof:apps-platform-api-scripts-billing-catalog-runtime-proof-ts",
       "file": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
       "level": 2,
@@ -2480,6 +2841,17 @@
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-browser-telemetry-provider-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts"]
     },
     {
       "proofId": "proof:apps-platform-api-scripts-caddy-local-routing-probe-runtime-proof-ts",
@@ -2891,6 +3263,17 @@
       "sourceFileRefs": ["apps/platform-api/scripts/incident-foundation-runtime-proof.ts"]
     },
     {
+      "proofId": "proof:apps-platform-api-scripts-keycloak-realm-admin-adapter-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
+      "level": 0,
+      "classification": "route/file existence only",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"]
+    },
+    {
       "proofId": "proof:apps-platform-api-scripts-lago-billing-provider-runtime-proof-ts",
       "file": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
       "level": 2,
@@ -3146,6 +3529,17 @@
       "sourceFileRefs": ["apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts"]
     },
     {
+      "proofId": "proof:apps-platform-api-scripts-openapi-drift-validator-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts"]
+    },
+    {
       "proofId": "proof:apps-platform-api-scripts-openbao-secret-store-runtime-proof-ts",
       "file": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
       "level": 0,
@@ -3177,6 +3571,28 @@
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/platform-services-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-playwright-adapter-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/playwright-adapter-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-playwright-axe-adapter-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts"]
     },
     {
       "proofId": "proof:apps-platform-api-scripts-postgres-api-key-repository-runtime-proof-ts",
@@ -3284,6 +3700,17 @@
       "sourceFileRefs": ["apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts"]
     },
     {
+      "proofId": "proof:apps-platform-api-scripts-postgres-identity-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts"]
+    },
+    {
       "proofId": "proof:apps-platform-api-scripts-postgres-legal-hold-runtime-proof-ts",
       "file": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
       "level": 4,
@@ -3304,6 +3731,19 @@
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": false,
       "sourceFileRefs": ["apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-migration-storage-provider-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
+      ]
     },
     {
       "proofId": "proof:apps-platform-api-scripts-postgres-notification-repository-runtime-proof-ts",
@@ -3627,6 +4067,17 @@
       "sourceFileRefs": ["apps/platform-api/scripts/rate-limits-runtime-proof.ts"]
     },
     {
+      "proofId": "proof:apps-platform-api-scripts-react-i18n-provider-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts"]
+    },
+    {
       "proofId": "proof:apps-platform-api-scripts-redis-rate-limit-repository-runtime-proof-ts",
       "file": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
       "level": 4,
@@ -3647,6 +4098,17 @@
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/retention-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-s3-object-storage-adapter-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts"]
     },
     {
       "proofId": "proof:apps-platform-api-scripts-scheduled-job-routes-runtime-proof-ts",
@@ -3785,6 +4247,17 @@
       "sourceFileRefs": ["apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts"]
     },
     {
+      "proofId": "proof:apps-platform-api-scripts-static-assurance-provider-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts"]
+    },
+    {
       "proofId": "proof:apps-platform-api-scripts-support-approval-runtime-proof-ts",
       "file": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
       "level": 3,
@@ -3885,6 +4358,17 @@
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/tenant-domains-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-lifecycle-coordinator-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts",
+      "level": 3,
+      "classification": "state transition behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts"]
     },
     {
       "proofId": "proof:apps-platform-api-scripts-tenant-lifecycle-runtime-proof-ts",
