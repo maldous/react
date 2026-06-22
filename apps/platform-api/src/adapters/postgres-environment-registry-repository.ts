@@ -19,6 +19,20 @@ import type {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PgPool = { connect(): Promise<any> };
+type PgClient = {
+  query<T = unknown>(
+    sql: string,
+    values?: unknown[]
+  ): Promise<{ rows: T[]; rowCount?: number | null }>;
+};
+
+export interface PostgresEnvironmentRegistryProviderConfig {
+  statementTimeoutMs: number;
+  retryAttempts: number;
+  retryBackoffMs: number;
+  configSource: "POSTGRES_APP_URL";
+  secretSource: "POSTGRES_APP_URL";
+}
 
 type DbTimestamp = Date | string | null;
 
@@ -87,38 +101,64 @@ function toRecord(r: Row): EnvironmentRecord {
 const COLUMNS =
   "environment_id, name, stage, executor, compose_project, base_url, api_url, domain, allowed_profiles, mock_policy, destructive_allowed, data_preservation, secret_store_provider, provider_config_status, bootstrap_status, metadata, last_bootstrapped_at, last_reconciled_at, created_at, updated_at";
 
+export function loadPostgresEnvironmentRegistryProviderConfig(
+  env: NodeJS.ProcessEnv = process.env
+): PostgresEnvironmentRegistryProviderConfig {
+  return {
+    statementTimeoutMs: Number(env["ENVIRONMENT_REGISTRY_QUERY_TIMEOUT_MS"] ?? "5000"),
+    retryAttempts: Number(env["ENVIRONMENT_REGISTRY_RETRY_ATTEMPTS"] ?? "1"),
+    retryBackoffMs: Number(env["ENVIRONMENT_REGISTRY_RETRY_BACKOFF_MS"] ?? "100"),
+    configSource: "POSTGRES_APP_URL",
+    secretSource: "POSTGRES_APP_URL",
+  };
+}
+
 export class PostgresEnvironmentRegistryRepository implements EnvironmentRegistryRepository {
   private readonly pool: PgPool;
-  constructor(pool: PgPool) {
+  private readonly providerConfig: PostgresEnvironmentRegistryProviderConfig;
+
+  constructor(pool: PgPool, config: Partial<PostgresEnvironmentRegistryProviderConfig> = {}) {
     this.pool = pool;
+    this.providerConfig = {
+      ...loadPostgresEnvironmentRegistryProviderConfig(),
+      ...config,
+    };
   }
 
   async list(): Promise<EnvironmentRecord[]> {
-    return withSystemAdmin(this.pool as never, async (client) => {
-      const r = await client.query<Row>(
-        `SELECT ${COLUMNS} FROM public.environment_registry
+    return this.withRetry(() =>
+      withSystemAdmin(this.pool as never, async (client: PgClient) => {
+        await this.applyQueryTimeout(client);
+        const r = await client.query<Row>(
+          `SELECT ${COLUMNS} FROM public.environment_registry
          ORDER BY CASE stage WHEN 'development' THEN 0 WHEN 'test' THEN 1 WHEN 'staging' THEN 2 ELSE 3 END`
-      );
-      return r.rows.map(toRecord);
-    });
+        );
+        return r.rows.map(toRecord);
+      })
+    );
   }
 
   async get(environmentId: string): Promise<EnvironmentRecord | null> {
-    return withSystemAdmin(this.pool as never, async (client) => {
-      const r = await client.query<Row>(
-        `SELECT ${COLUMNS} FROM public.environment_registry WHERE environment_id = $1`,
-        [environmentId]
-      );
-      return r.rows[0] ? toRecord(r.rows[0]) : null;
-    });
+    return this.withRetry(() =>
+      withSystemAdmin(this.pool as never, async (client: PgClient) => {
+        await this.applyQueryTimeout(client);
+        const r = await client.query<Row>(
+          `SELECT ${COLUMNS} FROM public.environment_registry WHERE environment_id = $1`,
+          [environmentId]
+        );
+        return r.rows[0] ? toRecord(r.rows[0]) : null;
+      })
+    );
   }
 
   async upsert(input: UpsertEnvironmentInput): Promise<EnvironmentRecord> {
     // allowedMocks rides in metadata so the typed column set stays non-secret + stable.
     const metadata = { ...(input.metadata ?? {}), allowedMocks: input.allowedMocks ?? [] };
-    return withSystemAdmin(this.pool as never, async (client) => {
-      const r = await client.query<Row>(
-        `INSERT INTO public.environment_registry
+    return this.withRetry(() =>
+      withSystemAdmin(this.pool as never, async (client: PgClient) => {
+        await this.applyQueryTimeout(client);
+        const r = await client.query<Row>(
+          `INSERT INTO public.environment_registry
            (environment_id, name, stage, executor, compose_project, base_url, api_url, domain,
             allowed_profiles, mock_policy, destructive_allowed, data_preservation,
             secret_store_provider, metadata)
@@ -139,73 +179,133 @@ export class PostgresEnvironmentRegistryRepository implements EnvironmentRegistr
            metadata = EXCLUDED.metadata,
            updated_at = now()
          RETURNING ${COLUMNS}`,
-        [
-          input.environmentId,
-          input.name,
-          input.stage,
-          input.executor,
-          input.composeProject,
-          input.baseUrl,
-          input.apiUrl,
-          input.domain,
-          JSON.stringify(input.allowedProfiles ?? []),
-          input.mockPolicy,
-          input.destructiveAllowed,
-          input.dataPreservation,
-          input.secretStoreProvider,
-          JSON.stringify(metadata),
-        ]
-      );
-      return toRecord(r.rows[0]!);
-    });
+          [
+            input.environmentId,
+            input.name,
+            input.stage,
+            input.executor,
+            input.composeProject,
+            input.baseUrl,
+            input.apiUrl,
+            input.domain,
+            JSON.stringify(input.allowedProfiles ?? []),
+            input.mockPolicy,
+            input.destructiveAllowed,
+            input.dataPreservation,
+            input.secretStoreProvider,
+            JSON.stringify(metadata),
+          ]
+        );
+        return toRecord(r.rows[0]!);
+      })
+    );
   }
 
   async setProviderConfigStatus(
     environmentId: string,
     status: ProviderConfigStatus
   ): Promise<boolean> {
-    return withSystemAdmin(this.pool as never, async (client) => {
-      const r = await client.query(
-        `UPDATE public.environment_registry
+    return this.withRetry(() =>
+      withSystemAdmin(this.pool as never, async (client: PgClient) => {
+        await this.applyQueryTimeout(client);
+        const r = await client.query(
+          `UPDATE public.environment_registry
          SET provider_config_status = $2, updated_at = now() WHERE environment_id = $1`,
-        [environmentId, status]
-      );
-      return (r.rowCount ?? 0) > 0;
-    });
+          [environmentId, status]
+        );
+        return (r.rowCount ?? 0) > 0;
+      })
+    );
   }
 
   async setBootstrapStatus(environmentId: string, status: BootstrapStatus): Promise<boolean> {
-    return withSystemAdmin(this.pool as never, async (client) => {
-      const r = await client.query(
-        `UPDATE public.environment_registry
+    return this.withRetry(() =>
+      withSystemAdmin(this.pool as never, async (client: PgClient) => {
+        await this.applyQueryTimeout(client);
+        const r = await client.query(
+          `UPDATE public.environment_registry
          SET bootstrap_status = $2,
              last_bootstrapped_at = CASE WHEN $2 = 'bootstrapped' THEN now() ELSE last_bootstrapped_at END,
              updated_at = now()
          WHERE environment_id = $1`,
-        [environmentId, status]
-      );
-      return (r.rowCount ?? 0) > 0;
-    });
+          [environmentId, status]
+        );
+        return (r.rowCount ?? 0) > 0;
+      })
+    );
   }
 
   async markReconciled(environmentId: string): Promise<boolean> {
-    return withSystemAdmin(this.pool as never, async (client) => {
-      const r = await client.query(
-        `UPDATE public.environment_registry
+    return this.withRetry(() =>
+      withSystemAdmin(this.pool as never, async (client: PgClient) => {
+        await this.applyQueryTimeout(client);
+        const r = await client.query(
+          `UPDATE public.environment_registry
          SET last_reconciled_at = now(), updated_at = now() WHERE environment_id = $1`,
-        [environmentId]
-      );
-      return (r.rowCount ?? 0) > 0;
-    });
+          [environmentId]
+        );
+        return (r.rowCount ?? 0) > 0;
+      })
+    );
   }
 
   async delete(environmentId: string): Promise<boolean> {
-    return withSystemAdmin(this.pool as never, async (client) => {
-      const r = await client.query(
-        "DELETE FROM public.environment_registry WHERE environment_id = $1",
-        [environmentId]
-      );
-      return (r.rowCount ?? 0) > 0;
-    });
+    return this.withRetry(() =>
+      withSystemAdmin(this.pool as never, async (client: PgClient) => {
+        await this.applyQueryTimeout(client);
+        const r = await client.query(
+          "DELETE FROM public.environment_registry WHERE environment_id = $1",
+          [environmentId]
+        );
+        return (r.rowCount ?? 0) > 0;
+      })
+    );
+  }
+
+  async healthCheck(): Promise<{
+    status: "ready";
+    provider: "postgres-environment-registry-repository";
+  }> {
+    await this.withRetry(() =>
+      withSystemAdmin(this.pool as never, async (client: PgClient) => {
+        await this.applyQueryTimeout(client);
+        await client.query(
+          `SELECT 1
+             FROM information_schema.tables
+            WHERE table_schema = 'public'
+              AND table_name = 'environment_registry'
+            LIMIT 1`
+        );
+      })
+    );
+    return { status: "ready", provider: "postgres-environment-registry-repository" };
+  }
+
+  recoveryAction(): string {
+    return "operator recovery: verify POSTGRES_APP_URL secret/config, run migration 033-environment-registry.sql, inspect environment_registry constraints/grants and rls_bypass role membership, then retry environment registry sync or status transition";
+  }
+
+  private async withRetry<T>(operation: () => Promise<T>): Promise<T> {
+    let lastError: unknown;
+    for (let attempt = 0; attempt <= this.providerConfig.retryAttempts; attempt += 1) {
+      try {
+        return await operation();
+      } catch (err) {
+        lastError = err;
+        if (attempt >= this.providerConfig.retryAttempts) break;
+        await new Promise((resolve) =>
+          setTimeout(resolve, this.providerConfig.retryBackoffMs * (attempt + 1))
+        );
+      }
+    }
+    throw new Error(
+      `postgres-environment-registry-repository unavailable; no fallback is allowed for environment safety and bootstrap state, fail-closed after retry attempts: ${
+        lastError instanceof Error ? lastError.message : String(lastError)
+      }`
+    );
+  }
+
+  private async applyQueryTimeout(client: PgClient): Promise<void> {
+    await client.query(`SET LOCAL statement_timeout = ${this.providerConfig.statementTimeoutMs}`);
   }
 }

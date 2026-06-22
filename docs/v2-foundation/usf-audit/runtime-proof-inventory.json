@@ -881,6 +881,19 @@
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts"]
   },
   {
+    "proofId": "proof:apps-platform-api-scripts-postgres-environment-registry-repository-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
+    "level": 4,
+    "classification": "live substrate behaviour",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": false,
+    "assertsFailureMode": false,
+    "assertsObservabilityOrAudit": true,
+    "sourceFileRefs": [
+      "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts"
+    ]
+  },
+  {
     "proofId": "proof:apps-platform-api-scripts-postgres-event-bus-runtime-proof-ts",
     "file": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
     "level": 4,
@@ -947,6 +960,19 @@
     "assertsFailureMode": false,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts"]
+  },
+  {
+    "proofId": "proof:apps-platform-api-scripts-postgres-provider-config-repository-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts",
+    "level": 4,
+    "classification": "live substrate behaviour",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": false,
+    "assertsFailureMode": true,
+    "assertsObservabilityOrAudit": true,
+    "sourceFileRefs": [
+      "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
+    ]
   },
   {
     "proofId": "proof:apps-platform-api-scripts-postgres-quota-repository-runtime-proof-ts",

@@ -11048,5 +11048,83 @@
     "sourceCommand": "tsx apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected postgres-rate-limit-repository contract is broken"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/operator-config-repositories.test.ts",
+    "path": "apps/platform-api/tests/unit/operator-config-repositories.test.ts",
+    "kind": "unit-test",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "fake pg substrate for operator config repository timeout/retry/fail-closed sequencing",
+    "stageCoverage": "test (unit)",
+    "failureEvidence": "unit test exits non-zero when environment registry or provider config repository health, statement timeout, retry, rollback, no-fallback fail-closed behavior, or recovery guidance breaks",
+    "proofLevel": 3,
+    "proofLevelRationale": "unit-level provider reliability proof for operator-global Postgres repositories; live substrate behavior is covered by provider-ID runtime proof wrappers",
+    "capabilitiesProven": [
+      "Environment registry and readiness gates",
+      "Provider configuration and lifecycle readiness"
+    ],
+    "semanticFacetsProven": ["providerReliability", "environmentSemantics", "proof"],
+    "environment": "test",
+    "providerClass": "postgres",
+    "liveSubstrateUsed": false,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "node --loader apps/platform-api/loader.mjs --test --import apps/platform-api/tests/lib/preload-unit-env.mjs apps/platform-api/tests/unit/operator-config-repositories.test.ts",
+    "scriptPath": "apps/platform-api/tests/unit/operator-config-repositories.test.ts",
+    "expectedFailureMode": "test exits non-zero when the protected operator config repository provider reliability contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: local Compose Postgres plus fake pg substrate unit test for Postgres timeout/retry/fail-closed sequencing",
+    "stageCoverage": "test (provider-ID runtime-proof entrypoint)",
+    "failureEvidence": "proof script or unit test exits non-zero when live environment registry sync, no-mock enforcement, permission checks, audit, secret-free rows, bootstrap state, Postgres timeout, retry, health, or fail-closed behavior breaks",
+    "proofLevel": 4,
+    "proofLevelRationale": "provider-ID wrapper delegates to environment-registry-runtime-proof.ts; live Postgres proof validates manifest sync, no-mock enforcement, permission checks, audit, secret-free rows, and bootstrap state while apps/platform-api/tests/unit/operator-config-repositories.test.ts exercises provider health, statement timeout, retry, rollback, no-fallback fail-closed behavior, and recovery guidance",
+    "capabilitiesProven": ["Environment registry and readiness gates"],
+    "semanticFacetsProven": [
+      "providerReliability",
+      "environmentSemantics",
+      "securityBoundary",
+      "stateModel",
+      "proof"
+    ],
+    "environment": "test",
+    "providerClass": "postgres",
+    "liveSubstrateUsed": true,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected postgres-environment-registry-repository contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: local Compose Postgres plus fake pg substrate unit test for Postgres timeout/retry/fail-closed sequencing",
+    "stageCoverage": "test (provider-ID runtime-proof entrypoint)",
+    "failureEvidence": "proof script or unit test exits non-zero when live provider config put/list/delete, opaque credential refs, secret-policy rejection, production forbiddance, lifecycle degradation, audit, Postgres timeout, retry, health, or fail-closed behavior breaks",
+    "proofLevel": 4,
+    "proofLevelRationale": "provider-ID wrapper delegates to provider-config-runtime-proof.ts; live Postgres proof validates provider config put/list/delete, no plaintext secret fields, opaque credentialRef requirement, secret-bearing config rejection, production-forbidden provider rejection, missing-credential degradation, and secret-free audit while apps/platform-api/tests/unit/operator-config-repositories.test.ts exercises provider health, statement timeout, retry, rollback, no-fallback fail-closed behavior, and recovery guidance",
+    "capabilitiesProven": ["Provider configuration and lifecycle readiness"],
+    "semanticFacetsProven": [
+      "providerReliability",
+      "environmentSemantics",
+      "securityBoundary",
+      "stateModel",
+      "proof"
+    ],
+    "environment": "test",
+    "providerClass": "postgres",
+    "liveSubstrateUsed": true,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected postgres-provider-config-repository contract is broken"
   }
 ]
