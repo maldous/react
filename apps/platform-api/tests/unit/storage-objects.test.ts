@@ -6,6 +6,7 @@ import { ForbiddenError } from "@platform/platform-errors";
 import {
   createStorageObject,
   deleteStorageObject,
+  getStorageObjectMetric,
   getStorageObject,
   getStorageObjectDownloadUrl,
   scanStorageObject,
@@ -182,6 +183,8 @@ describe("storage objects", () => {
 
   it("quarantines upload, blocks download until clean, then returns a signed URL", async () => {
     const ctx = deps();
+    const beforeCreate = getStorageObjectMetric("create", "success");
+    const beforeDownloadError = getStorageObjectMetric("download", "error");
     const created = await createStorageObject(
       {
         organisationId: ORG,
@@ -193,10 +196,12 @@ describe("storage objects", () => {
       ctx.deps
     );
     assert.equal(created.scanState, "quarantined");
+    assert.equal(getStorageObjectMetric("create", "success"), beforeCreate + 1);
     await assert.rejects(
       () => getStorageObject(ORG, `${ORG}/file.txt`, ctx.deps),
       /api.error.objectNotClean/
     );
+    assert.equal(getStorageObjectMetric("download", "error"), beforeDownloadError + 1);
 
     const scanned = await scanStorageObject(ORG, `${ORG}/file.txt`, "scanner", ctx.deps);
     assert.equal(scanned?.scanState, "clean");
