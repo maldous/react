@@ -3934,6 +3934,17 @@
       "v2Target": "apps/platform-api/conformance/postgres-legal-hold.conformance.ts",
       "protectingTests": ["apps/platform-api/scripts/legal-hold-runtime-proof.ts"],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/conformance/postgres-tenant-domain-registry.conformance.ts",
+      "protectingTests": [
+        "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
     }
   ],
   "deletions": [

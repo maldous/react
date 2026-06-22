@@ -3694,5 +3694,13 @@
     "selectorsOrImportsChange": false,
     "becomesReusableContract": true,
     "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
+    "v2Path": "apps/platform-api/conformance/postgres-tenant-domain-registry.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
   }
 ]
