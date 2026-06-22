@@ -6315,6 +6315,7 @@ export const routes: Route[] = [
       const notifDeps = await buildNotificationsDeps();
       const announcement = await createSupportAnnouncement(
         {
+          idempotencyKey: req.requestId,
           organisationId: tenantId,
           subject: parsed.data.subject,
           message: parsed.data.message,
@@ -6406,7 +6407,12 @@ export const routes: Route[] = [
       res.json(
         201,
         await createSupportTicket(
-          { ...parsed.data, actorId: req.actor!.userId, actorRoles: req.actor!.roles },
+          {
+            ...parsed.data,
+            idempotencyKey: req.requestId,
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+          },
           { pool, audit: createPostgresAuditEventPort(pool) }
         )
       );

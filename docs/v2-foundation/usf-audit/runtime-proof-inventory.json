@@ -1576,6 +1576,17 @@
     "sourceFileRefs": ["apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts"]
   },
   {
+    "proofId": "proof:apps-platform-api-scripts-support-announcements-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/support-announcements-runtime-proof.ts",
+    "level": 3,
+    "classification": "state transition behaviour",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
+    "assertsObservabilityOrAudit": true,
+    "sourceFileRefs": ["apps/platform-api/scripts/support-announcements-runtime-proof.ts"]
+  },
+  {
     "proofId": "proof:apps-platform-api-scripts-support-approval-runtime-proof-ts",
     "file": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
     "level": 3,
@@ -1585,6 +1596,17 @@
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/support-approval-runtime-proof.ts"]
+  },
+  {
+    "proofId": "proof:apps-platform-api-scripts-support-tickets-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/support-tickets-runtime-proof.ts",
+    "level": 3,
+    "classification": "state transition behaviour",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
+    "assertsObservabilityOrAudit": true,
+    "sourceFileRefs": ["apps/platform-api/scripts/support-tickets-runtime-proof.ts"]
   },
   {
     "proofId": "proof:apps-platform-api-scripts-temporal-workflow-provider-runtime-proof-ts",
