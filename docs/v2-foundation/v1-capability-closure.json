@@ -6440,7 +6440,78 @@
     "securityOwner": "team-security",
     "dataOwner": "team-data",
     "runtimeOwner": "not-applicable",
-    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"],
+    "dataGovernanceRuntimeProofs": {
+      "retention": {
+        "proof": "Host identity registry state is governed by the platform retention lifecycle: retention proof exercises retention candidates, audit-before-change, legal-hold skip/delete outcomes, and the Postgres retention entrypoint. Host resolution itself is read-only and retains no derived request context.",
+        "evidence": [
+          "apps/platform-api/scripts/retention-runtime-proof.ts",
+          "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+          "apps/platform-api/src/server/tenant-resolver.ts"
+        ]
+      },
+      "backup": {
+        "proof": "Host identity source state is persisted in Postgres-backed organisation and tenant_domains registry rows, so backup coverage follows the platform backup proof for database-backed tenant configuration and registry data.",
+        "evidence": [
+          "apps/platform-api/scripts/backup-local-runtime-proof.ts",
+          "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+          "apps/platform-api/src/db/migrations/021-tenant-domains-registry.sql"
+        ]
+      },
+      "restore": {
+        "proof": "Restore coverage is proven through the PITR restore drill and backup restore script proof; restored organisation and tenant_domains rows are the authoritative inputs used by resolveTenantFromRequest.",
+        "evidence": [
+          "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+          "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+          "apps/platform-api/src/server/tenant-resolver.ts"
+        ]
+      },
+      "export": {
+        "proof": "Tenant export includes tenant configuration/audit/history artefacts, including domain registry state needed to reconstruct host identity decisions; host identity resolution emits no separate exportable personal data outside those governed records.",
+        "evidence": [
+          "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+          "apps/platform-api/src/db/migrations/021-tenant-domains-registry.sql",
+          "apps/platform-api/src/server/tenant-resolver.ts"
+        ]
+      },
+      "legal hold": {
+        "proof": "Legal hold coverage is inherited from platform legal-hold enforcement over retained tenant/domain registry data; retention proof verifies held records are skipped rather than deleted while host identity remains a read-only derivation.",
+        "evidence": [
+          "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
+          "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+          "apps/platform-api/scripts/retention-runtime-proof.ts"
+        ]
+      },
+      "DSR": {
+        "proof": "DSR/export requests use the data portability proof to return tenant configuration, audit and history data that contains the governed records feeding host identity decisions; resolver-derived request context is not independently stored.",
+        "evidence": [
+          "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+          "apps/platform-api/scripts/history-runtime-proof.ts",
+          "apps/platform-api/src/server/tenant-resolver.ts"
+        ]
+      },
+      "lineage": {
+        "proof": "Lineage is explicit: Host/X-Forwarded-Host is classified by @platform/domain-identity, slug hosts resolve through organisations, active custom domains resolve through tenant_domains, and proofs exercise slug, custom-domain, forwarded-host, inactive, unknown, reserved and malformed cases.",
+        "evidence": [
+          "packages/domain-identity/src/index.ts",
+          "packages/domain-identity/tests/domain-identity.test.ts",
+          "apps/platform-api/src/server/tenant-resolver.ts",
+          "apps/platform-api/tests/unit/tenant-resolver.test.ts",
+          "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
+          "apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts"
+        ]
+      },
+      "tenant isolation": {
+        "proof": "Tenant isolation is enforced by resolving only active registry rows for the requested host: slug hosts map to their organisation, custom domains require verified active tenant_domains state, unknown/inactive/reserved/malformed hosts resolve null, and tests prove tenant A custom domains never yield tenant B.",
+        "evidence": [
+          "apps/platform-api/src/server/tenant-resolver.ts",
+          "apps/platform-api/tests/unit/tenant-resolver.test.ts",
+          "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
+          "apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
+          "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        ]
+      }
+    }
   },
   {
     "capability": "Tenant domain activation (auth-client)",
