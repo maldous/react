@@ -3831,14 +3831,22 @@
     },
     {
       "capability": "Real IdP login simulation",
-      "metricType": "unknown",
-      "metricName": "unknown",
-      "labels": "unknown",
-      "sloThreshold": "unknown",
-      "alertCondition": "unknown",
-      "alertOwner": "unknown",
-      "alertRouting": "unknown",
-      "runbook": "unknown",
+      "metricType": "semantic metric",
+      "metricName": [
+        "real-idp-login-simulation_readiness_state",
+        "real-idp-login-simulation_blocked_total",
+        "auth_oidc_enterprise_test_connection_failure_total"
+      ],
+      "labels": ["capability", "environment", "status"],
+      "sloThreshold": "promotion must not treat blocked real IdP login simulation as passed; auth-oidc-enterprise provider-boundary proof must pass when local OIDC surfaces are exercised",
+      "alertCondition": [
+        "Real IdP login simulation remains blocked because no external real IdP tenant is configured for repeatable proof",
+        "auth-oidc-enterprise proof fails for the local non-interactive OIDC provider boundary",
+        "A runtime route claims real IdP login simulation without proof evidence in docs/evidence/auth/oidc-login-mapping-proof.md"
+      ],
+      "alertOwner": "team-security",
+      "alertRouting": "team-security primary; team-platform for provider-boundary failures",
+      "runbook": "docs/v2-foundation/v2-branch-cut-runbook.md",
       "proofRef": "unknown"
     },
     {
@@ -4263,14 +4271,22 @@
     },
     {
       "capability": "Serverless / function runtime",
-      "metricType": "unknown",
-      "metricName": "unknown",
-      "labels": "unknown",
-      "sloThreshold": "unknown",
-      "alertCondition": "unknown",
-      "alertOwner": "unknown",
-      "alertRouting": "unknown",
-      "runbook": "unknown",
+      "metricType": "semantic metric",
+      "metricName": [
+        "serverless-function-runtime_disabled_state",
+        "serverless-function-runtime_exposure_total",
+        "platform-services_readiness_state"
+      ],
+      "labels": ["capability", "environment", "status"],
+      "sloThreshold": "serverless-function-runtime_exposure_total must remain zero for the cut",
+      "alertCondition": [
+        "Serverless/function runtime route, worker, or provider appears despite ADR-0055 not-applicable final scope",
+        "Platform services readiness exposes a serverless provider in non-dev environment",
+        "Promotion inventory finds function-level invocation surface without tenant isolation and audit proof"
+      ],
+      "alertOwner": "team-platform",
+      "alertRouting": "team-platform primary; team-security for sandbox or tenant-isolation exposure",
+      "runbook": "docs/v2-foundation/v2-branch-cut-runbook.md",
       "proofRef": "unknown"
     },
     {
@@ -4335,14 +4351,22 @@
     },
     {
       "capability": "Alerting, incident management, on-call, status page",
-      "metricType": "unknown",
-      "metricName": "unknown",
-      "labels": "unknown",
-      "sloThreshold": "unknown",
-      "alertCondition": "unknown",
-      "alertOwner": "unknown",
-      "alertRouting": "unknown",
-      "runbook": "unknown",
+      "metricType": "semantic metric",
+      "metricName": [
+        "alerting-incident-management-on-call-status-page_readiness_state",
+        "alert_rules_evaluation_total",
+        "incidents_open_total"
+      ],
+      "labels": ["capability", "environment", "status"],
+      "sloThreshold": "canonical alerting and incident proofs must pass; superseded on-call/status-page runtime exposure must remain zero",
+      "alertCondition": [
+        "Canonical built-in alerting or incident proof fails for alert rule evaluation or incident lifecycle",
+        "Superseded on-call/status-page scope is exposed as a runtime route without canonical capability linkage",
+        "Alert rule fired state does not create or link an incident with audit evidence"
+      ],
+      "alertOwner": "team-platform",
+      "alertRouting": "team-platform primary; team-security for audit or permission regressions",
+      "runbook": "docs/v2-foundation/v2-branch-cut-runbook.md",
       "proofRef": "unknown"
     },
     {
@@ -4507,14 +4531,22 @@
     },
     {
       "capability": "Mock providers (dev/test)",
-      "metricType": "unknown",
-      "metricName": "unknown",
-      "labels": "unknown",
-      "sloThreshold": "unknown",
-      "alertCondition": "unknown",
-      "alertOwner": "unknown",
-      "alertRouting": "unknown",
-      "runbook": "unknown",
+      "metricType": "semantic metric",
+      "metricName": [
+        "mock-providers-dev-test_readiness_state",
+        "mock-providers-dev-test_production_exposure_total",
+        "platform-services_mock_provider_count"
+      ],
+      "labels": ["capability", "environment", "status"],
+      "sloThreshold": "production exposure count must remain zero; dev/test fixture failures must not be reported as production readiness",
+      "alertCondition": [
+        "Mock provider is exposed in production or outside the allowed dev/test profile",
+        "Platform services readiness marks a mock provider healthy where policy forbids mocks",
+        "Mock OIDC, WireMock, or LocalStack fixture is used as substitute proof for a production provider"
+      ],
+      "alertOwner": "team-platform",
+      "alertRouting": "team-platform primary; team-security for production mock exposure",
+      "runbook": "docs/v2-foundation/v2-branch-cut-runbook.md",
       "proofRef": "unknown"
     },
     {
@@ -4739,14 +4771,22 @@
     },
     {
       "capability": "OIDC login simulation",
-      "metricType": "unknown",
-      "metricName": "unknown",
-      "labels": "unknown",
-      "sloThreshold": "unknown",
-      "alertCondition": "unknown",
-      "alertOwner": "unknown",
-      "alertRouting": "unknown",
-      "runbook": "unknown",
+      "metricType": "semantic metric",
+      "metricName": [
+        "oidc-login-simulation_readiness_state",
+        "oidc-login-simulation_blocked_total",
+        "auth_oidc_enterprise_test_connection_failure_total"
+      ],
+      "labels": ["capability", "environment", "status"],
+      "sloThreshold": "promotion must not upgrade oidc_login_simulation from deferred without a real login-exercise proof",
+      "alertCondition": [
+        "OIDC login simulation remains deferred because no honest non-interactive login proof exists",
+        "auth-oidc-enterprise proof fails for discovery, JWKS, callback, or test-connection boundary",
+        "Mock OIDC fixture is treated as claim/group login simulation proof contrary to ADR-ACT-0220 evidence"
+      ],
+      "alertOwner": "team-security",
+      "alertRouting": "team-security primary; team-platform for OIDC provider-boundary proof failures",
+      "runbook": "docs/v2-foundation/v2-branch-cut-runbook.md",
       "proofRef": "unknown"
     },
     {
@@ -12905,141 +12945,6 @@
         },
         "generatedContract": true,
         "operationId": "forwardAuth"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "metrics-alerts",
-      "subject": "Real IdP login simulation",
-      "message": "capability without metric definition",
-      "evidence": {
-        "source": "operational-semantics.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "metrics-alerts",
-      "subject": "Real IdP login simulation",
-      "message": "capability without alert condition",
-      "evidence": {
-        "source": "operational-semantics.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "metrics-alerts",
-      "subject": "Real IdP login simulation",
-      "message": "capability alert without runbook",
-      "evidence": {
-        "source": "operational-semantics.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "metrics-alerts",
-      "subject": "Serverless / function runtime",
-      "message": "capability without metric definition",
-      "evidence": {
-        "source": "operational-semantics.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "metrics-alerts",
-      "subject": "Serverless / function runtime",
-      "message": "capability without alert condition",
-      "evidence": {
-        "source": "operational-semantics.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "metrics-alerts",
-      "subject": "Serverless / function runtime",
-      "message": "capability alert without runbook",
-      "evidence": {
-        "source": "operational-semantics.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "metrics-alerts",
-      "subject": "Alerting, incident management, on-call, status page",
-      "message": "capability without metric definition",
-      "evidence": {
-        "source": "operational-semantics.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "metrics-alerts",
-      "subject": "Alerting, incident management, on-call, status page",
-      "message": "capability without alert condition",
-      "evidence": {
-        "source": "operational-semantics.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "metrics-alerts",
-      "subject": "Alerting, incident management, on-call, status page",
-      "message": "capability alert without runbook",
-      "evidence": {
-        "source": "operational-semantics.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "metrics-alerts",
-      "subject": "Mock providers (dev/test)",
-      "message": "capability without metric definition",
-      "evidence": {
-        "source": "operational-semantics.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "metrics-alerts",
-      "subject": "Mock providers (dev/test)",
-      "message": "capability without alert condition",
-      "evidence": {
-        "source": "operational-semantics.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "metrics-alerts",
-      "subject": "Mock providers (dev/test)",
-      "message": "capability alert without runbook",
-      "evidence": {
-        "source": "operational-semantics.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "metrics-alerts",
-      "subject": "OIDC login simulation",
-      "message": "capability without metric definition",
-      "evidence": {
-        "source": "operational-semantics.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "metrics-alerts",
-      "subject": "OIDC login simulation",
-      "message": "capability without alert condition",
-      "evidence": {
-        "source": "operational-semantics.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "metrics-alerts",
-      "subject": "OIDC login simulation",
-      "message": "capability alert without runbook",
-      "evidence": {
-        "source": "operational-semantics.json"
       },
       "classification": "must-fix-in-v1"
     }

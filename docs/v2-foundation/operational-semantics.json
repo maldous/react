@@ -4,7 +4,7 @@
   "mandatoryFoundationAsset": true,
   "coverage": {
     "source": "docs/v2-foundation/v1-capability-closure.json",
-    "deliveredCapabilities": 70,
+    "deliveredCapabilities": 75,
     "enforcedBy": "tools/v2-readiness/src/rules/r27-operational-semantics.mjs"
   },
   "capabilities": [
@@ -3416,6 +3416,262 @@
         "tools/e2e/observability-correlation",
         "docs/evidence/platform/browser-diagnostics-faro.md",
         "apps/platform-api/src/adapters/Grafana Faro web SDK + OTEL TracingInstrumentation; Alloy faro.receiver -> otel-collector -> Tempo/Loki.ts"
+      ]
+    },
+    {
+      "capability": "Real IdP login simulation",
+      "category": "authentication",
+      "providerBacked": true,
+      "databaseBacked": false,
+      "tenantData": false,
+      "deployBehaviour": "Real IdP login simulation is not deployed as a self-contained V1 runtime capability; ADR-0046 keeps the real external IdP login proof blocked while local OIDC provider management remains proven separately.",
+      "configBehaviour": "Real IdP login simulation requires an external real IdP tenant and credentials; missing external configuration leaves the capability blocked instead of substituting mock-oidc.",
+      "migrationBehaviour": "Real IdP login simulation owns no database migration; OIDC provider configuration migrations stay with IdP brokering and are covered by proof:auth-oidc-enterprise.",
+      "rollbackBehaviour": "Rollback is removal of any attempted real-IdP proof configuration and return to the documented blocked state; no tenant data is remapped.",
+      "backupRestoreRelationship": "Real IdP login simulation owns no tenant records; backup/restore scope is only the documented blocked evidence and IdP configuration handled by the IdP brokering capability.",
+      "partialFailureBehaviour": "External IdP absence keeps readiness blocked and promotion evidence incomplete; the platform must not report a successful real-IdP login simulation from mock fixtures.",
+      "degradedMode": "Degraded mode is explicit blocked/deferred readiness with no login-simulation pass claim; local OIDC discovery and test-connection proofs remain separate.",
+      "recoveryAction": "Provision a real external IdP tenant, run the ADR-0046 login proof, and keep proof:auth-oidc-enterprise passing for the underlying OIDC provider boundary.",
+      "observabilitySignals": [
+        "authentication.real-idp-login-simulation.blocked",
+        "authentication.real-idp-login-simulation.external-provider-missing",
+        "authentication.real-idp-login-simulation.mock-substitution-refused"
+      ],
+      "metrics": [
+        "real-idp-login-simulation_readiness_state",
+        "real-idp-login-simulation_blocked_total",
+        "auth_oidc_enterprise_test_connection_failure_total"
+      ],
+      "labels": ["capability", "environment", "status"],
+      "logs": [
+        "Real IdP login simulation blocked/deferred proof log from docs/evidence/auth/oidc-login-mapping-proof.md",
+        "auth-oidc-enterprise proof failure log for the underlying OIDC boundary"
+      ],
+      "traces": [
+        "auth-oidc-enterprise non-interactive provider boundary proof trace; no real login simulation trace exists until external IdP proof is provisioned"
+      ],
+      "sloThreshold": "promotion must not treat blocked real IdP login simulation as passed; auth-oidc-enterprise provider-boundary proof must pass when local OIDC surfaces are exercised",
+      "alertConditions": [
+        "Real IdP login simulation remains blocked because no external real IdP tenant is configured for repeatable proof",
+        "auth-oidc-enterprise proof fails for the local non-interactive OIDC provider boundary",
+        "A runtime route claims real IdP login simulation without proof evidence in docs/evidence/auth/oidc-login-mapping-proof.md"
+      ],
+      "alertOwner": "team-security",
+      "alertRouting": "team-security primary; team-platform for provider-boundary failures",
+      "runbookReference": "docs/v2-foundation/v2-branch-cut-runbook.md",
+      "incidentClass": "external-provider-proof-blocked",
+      "dataLossRisk": "no tenant data owned; risk is false assurance from substituting mock login for real IdP proof",
+      "securityRisk": "security-sensitive authentication proof; mock provider substitution would overstate production login assurance",
+      "tenantImpact": "No tenant runtime impact while blocked; tenant impact begins only if real external IdP login is enabled and proven.",
+      "operatorAction": "Inspect docs/evidence/auth/oidc-login-mapping-proof.md and proof:auth-oidc-enterprise output; do not promote a real-IdP login claim until the external proof exists.",
+      "proofReference": ["proof:auth-oidc-enterprise"],
+      "sourceFileRefs": [
+        "docs/evidence/auth/oidc-login-mapping-proof.md",
+        "docs/evidence/auth/oidc-enterprise-hardening.md"
+      ]
+    },
+    {
+      "capability": "Serverless / function runtime",
+      "category": "compute-runtime",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": false,
+      "deployBehaviour": "Serverless / function runtime is ADR-0055 not-applicable final scope for this cut; no function route, worker, or provider should be deployed from V1.",
+      "configBehaviour": "No serverless provider configuration is accepted for the cut; any OpenFaaS/Windmill-style runtime config would be a new product surface requiring separate tenant isolation and audit proof.",
+      "migrationBehaviour": "Serverless / function runtime has no V1 database migration because the runtime is absent; tenant lifecycle migrations remain covered by tenant lifecycle proofs.",
+      "rollbackBehaviour": "Rollback is removal of any accidental function runtime exposure and restoration of the not-applicable semantic state.",
+      "backupRestoreRelationship": "No function code or invocation state is stored by V1; backup/restore is not applicable until a runtime exists.",
+      "partialFailureBehaviour": "If an accidental runtime surface appears, promotion must fail closed because there is no invocation audit, sandbox, quota, or tenant isolation proof.",
+      "degradedMode": "Disabled/not-applicable is the only allowed mode; there is no degraded execution path for tenant-authored functions.",
+      "recoveryAction": "Remove the accidental runtime surface or implement the full function runtime semantics, storage, audit, quota, isolation, and proof set before promotion.",
+      "observabilitySignals": [
+        "compute-runtime.serverless-function-runtime.disabled",
+        "compute-runtime.serverless-function-runtime.exposure-detected",
+        "platform-services.serverless-provider.present"
+      ],
+      "metrics": [
+        "serverless-function-runtime_disabled_state",
+        "serverless-function-runtime_exposure_total",
+        "platform-services_readiness_state"
+      ],
+      "labels": ["capability", "environment", "status"],
+      "logs": [
+        "Platform services proof log showing no serverless runtime provider is exposed for the cut",
+        "Promotion inventory log if a function route, worker, or provider appears"
+      ],
+      "traces": [
+        "No invocation trace is valid while the runtime is absent; platform-services proof covers service exposure checks"
+      ],
+      "sloThreshold": "serverless-function-runtime_exposure_total must remain zero for the cut",
+      "alertConditions": [
+        "Serverless/function runtime route, worker, or provider appears despite ADR-0055 not-applicable final scope",
+        "Platform services readiness exposes a serverless provider in non-dev environment",
+        "Promotion inventory finds function-level invocation surface without tenant isolation and audit proof"
+      ],
+      "alertOwner": "team-platform",
+      "alertRouting": "team-platform primary; team-security for sandbox or tenant-isolation exposure",
+      "runbookReference": "docs/v2-foundation/v2-branch-cut-runbook.md",
+      "incidentClass": "forbidden-runtime-exposure",
+      "dataLossRisk": "no owned tenant data while absent; accidental runtime would introduce unproven code/data execution risk",
+      "securityRisk": "high security risk if exposed without sandboxing, tenant isolation, quota, audit, and provider proof",
+      "tenantImpact": "No tenant impact while absent; accidental exposure could allow unproven tenant-authored execution.",
+      "operatorAction": "Inspect platform service inventory and runtime route/worker inventories; remove accidental function runtime exposure or implement the full proof set.",
+      "proofReference": ["proof:platform-services"],
+      "sourceFileRefs": [
+        "docs/evidence/platform/universal-service-foundation-matrix.md",
+        "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+      ]
+    },
+    {
+      "capability": "Alerting, incident management, on-call, status page",
+      "category": "observability-ops",
+      "providerBacked": true,
+      "databaseBacked": true,
+      "tenantData": false,
+      "deployBehaviour": "The legacy alerting/on-call/status-page row is superseded by Observability — built-in alerting + incidents; only the canonical alert and incident routes are deployed for the cut.",
+      "configBehaviour": "Alert rule and incident configuration is managed through the canonical built-in observability capability; on-call rotation and status page configuration remain descoped.",
+      "migrationBehaviour": "Alert and incident database migrations are owned by the canonical built-in observability capability and must preserve alert_rules and incidents state.",
+      "rollbackBehaviour": "Rollback is forward-fix of the canonical alert/incident store or disabling the superseded UI surface; on-call/status-page scope cannot be silently reintroduced.",
+      "backupRestoreRelationship": "Alert rules and incidents are operational records under the observability store; backup/restore follows the canonical built-in observability repository proof.",
+      "partialFailureBehaviour": "Alert evaluation may return no_data/within/fired and incident update failures stay typed and audited; descoped on-call/status-page surfaces remain unavailable rather than degraded.",
+      "degradedMode": "If the observability provider is unavailable, readiness degrades and mutations fail closed through the canonical built-in alerting capability.",
+      "recoveryAction": "Repair the canonical observability store/provider and re-run proof:alerting and proof:incident-foundation; do not revive the superseded on-call/status-page implementation.",
+      "observabilitySignals": [
+        "observability-ops.alerting-incident-management.superseded",
+        "observability-ops.alert-rule.evaluation",
+        "observability-ops.incident.lifecycle"
+      ],
+      "metrics": [
+        "alerting-incident-management-on-call-status-page_readiness_state",
+        "alert_rules_evaluation_total",
+        "incidents_open_total"
+      ],
+      "labels": ["capability", "environment", "status"],
+      "logs": [
+        "Canonical alerting proof log for alert rule evaluation",
+        "Canonical incident proof log for open/acknowledge/resolve lifecycle"
+      ],
+      "traces": ["Canonical observability alert and incident route/usecase/provider spans"],
+      "sloThreshold": "canonical alerting and incident proofs must pass; superseded on-call/status-page runtime exposure must remain zero",
+      "alertConditions": [
+        "Canonical built-in alerting or incident proof fails for alert rule evaluation or incident lifecycle",
+        "Superseded on-call/status-page scope is exposed as a runtime route without canonical capability linkage",
+        "Alert rule fired state does not create or link an incident with audit evidence"
+      ],
+      "alertOwner": "team-platform",
+      "alertRouting": "team-platform primary; team-security for audit or permission regressions",
+      "runbookReference": "docs/v2-foundation/v2-branch-cut-runbook.md",
+      "incidentClass": "observability-control-plane",
+      "dataLossRisk": "operational alert/incident records could be lost if canonical observability persistence is restored incorrectly",
+      "securityRisk": "operator-only alert and incident mutations must retain permission and audit boundaries",
+      "tenantImpact": "Tenants may lose operator visibility into incidents if canonical alerting fails; descoped status-page scope has no cut impact.",
+      "operatorAction": "Use the canonical observability runbook path, inspect alert/incident proof output, repair store/provider state, and re-run proof:alerting plus proof:incident-foundation.",
+      "proofReference": ["proof:alerting", "proof:incident-foundation"],
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/alerting-runtime-proof.ts",
+        "apps/platform-api/scripts/incident-foundation-runtime-proof.ts"
+      ]
+    },
+    {
+      "capability": "Mock providers (dev/test)",
+      "category": "developer-platform",
+      "providerBacked": true,
+      "databaseBacked": false,
+      "tenantData": false,
+      "deployBehaviour": "Mock providers are dev/test-only fixtures; V1 production promotion must not deploy mock-oidc, WireMock, or LocalStack as production provider substitutes.",
+      "configBehaviour": "Mock provider configuration is allowed only in local/dev/test profiles and must remain forbidden for production provider readiness claims.",
+      "migrationBehaviour": "Mock providers own no platform database migration; any fixture data is outside tenant production storage.",
+      "rollbackBehaviour": "Rollback removes mock provider exposure from non-dev profiles and restores production provider configuration.",
+      "backupRestoreRelationship": "Mock providers own no tenant data; backup/restore is not applicable outside fixture state.",
+      "partialFailureBehaviour": "Mock provider failure may fail local tests, but production readiness must fail rather than substituting mock responses for unavailable real providers.",
+      "degradedMode": "Allowed degraded mode is dev/test fixture unavailable with tests failing honestly; production never degrades to mock provider substitution.",
+      "recoveryAction": "Fix dev/test fixture configuration or remove mock exposure; for production, restore the real provider and re-run provider readiness proofs.",
+      "observabilitySignals": [
+        "developer-platform.mock-providers.dev-test.readiness",
+        "developer-platform.mock-providers.production-exposure",
+        "developer-platform.mock-provider-substitution.refused"
+      ],
+      "metrics": [
+        "mock-providers-dev-test_readiness_state",
+        "mock-providers-dev-test_production_exposure_total",
+        "platform-services_mock_provider_count"
+      ],
+      "labels": ["capability", "environment", "status"],
+      "logs": [
+        "Platform services proof log for service profile exposure",
+        "Environment registry proof log for allowedMocks policy"
+      ],
+      "traces": ["Platform services readiness probe trace for dev/test service profile checks"],
+      "sloThreshold": "production exposure count must remain zero; dev/test fixture failures must not be reported as production readiness",
+      "alertConditions": [
+        "Mock provider is exposed in production or outside the allowed dev/test profile",
+        "Platform services readiness marks a mock provider healthy where policy forbids mocks",
+        "Mock OIDC, WireMock, or LocalStack fixture is used as substitute proof for a production provider"
+      ],
+      "alertOwner": "team-platform",
+      "alertRouting": "team-platform primary; team-security for production mock exposure",
+      "runbookReference": "docs/v2-foundation/v2-branch-cut-runbook.md",
+      "incidentClass": "environment-policy-violation",
+      "dataLossRisk": "no tenant data owned by mock providers; risk is false production assurance",
+      "securityRisk": "mock provider production exposure can bypass real provider security and compliance assumptions",
+      "tenantImpact": "No production tenant impact while mocks stay forbidden; accidental exposure could make tenant workflows depend on fixture behavior.",
+      "operatorAction": "Inspect platform service readiness, environment registry allowedMocks, and service profiles; remove production mock exposure and rerun proof:platform-services.",
+      "proofReference": ["proof:platform-services"],
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/platform-services-runtime-proof.ts",
+        "apps/platform-api/scripts/environment-registry-runtime-proof.ts"
+      ]
+    },
+    {
+      "capability": "OIDC login simulation",
+      "category": "authentication",
+      "providerBacked": true,
+      "databaseBacked": false,
+      "tenantData": false,
+      "deployBehaviour": "OIDC login simulation is not deployed as an honest non-interactive V1 proof; ADR-0046 keeps login simulation deferred while OIDC discovery, callback, and test-connection are proven.",
+      "configBehaviour": "OIDC login simulation requires an interactive/login-capable IdP proof configuration; mock-oidc fixture configuration cannot close claim/group login simulation.",
+      "migrationBehaviour": "OIDC login simulation owns no migration; IdP mapper configuration persistence remains with the OIDC provider management capability.",
+      "rollbackBehaviour": "Rollback removes any overstated login simulation claim and returns to deferred readiness without changing tenant IdP mapper data.",
+      "backupRestoreRelationship": "OIDC login simulation owns no tenant data; mapper and IdP configuration backup/restore is covered by IdP brokering semantics.",
+      "partialFailureBehaviour": "Missing login-exercise proof leaves readiness deferred; local discovery/test-connection failures are reported by proof:auth-oidc-enterprise.",
+      "degradedMode": "Deferred readiness is the only allowed degraded mode; no login simulation pass may be inferred from discovery, JWKS, callback, or test-connection alone.",
+      "recoveryAction": "Implement the explicit login-exercise proof described in docs/evidence/auth/oidc-login-mapping-proof.md and keep proof:auth-oidc-enterprise passing.",
+      "observabilitySignals": [
+        "authentication.oidc-login-simulation.deferred",
+        "authentication.oidc-login-simulation.mock-substitution-refused",
+        "authentication.oidc-provider-boundary.proof-failure"
+      ],
+      "metrics": [
+        "oidc-login-simulation_readiness_state",
+        "oidc-login-simulation_blocked_total",
+        "auth_oidc_enterprise_test_connection_failure_total"
+      ],
+      "labels": ["capability", "environment", "status"],
+      "logs": [
+        "OIDC login mapping proof log preserving deferred status",
+        "auth-oidc-enterprise proof log for discovery/callback/test-connection"
+      ],
+      "traces": [
+        "auth-oidc-enterprise provider-boundary proof trace; no login simulation trace is claimed while deferred"
+      ],
+      "sloThreshold": "promotion must not upgrade oidc_login_simulation from deferred without a real login-exercise proof",
+      "alertConditions": [
+        "OIDC login simulation remains deferred because no honest non-interactive login proof exists",
+        "auth-oidc-enterprise proof fails for discovery, JWKS, callback, or test-connection boundary",
+        "Mock OIDC fixture is treated as claim/group login simulation proof contrary to ADR-ACT-0220 evidence"
+      ],
+      "alertOwner": "team-security",
+      "alertRouting": "team-security primary; team-platform for OIDC provider-boundary proof failures",
+      "runbookReference": "docs/v2-foundation/v2-branch-cut-runbook.md",
+      "incidentClass": "authentication-proof-deferred",
+      "dataLossRisk": "no tenant data owned; risk is overstated assurance for claim/group login mapping",
+      "securityRisk": "security-sensitive authentication proof; discovery/test-connection must not be overstated as login simulation",
+      "tenantImpact": "No tenant runtime impact while deferred; tenants rely on proven OIDC provider management but not proven login simulation.",
+      "operatorAction": "Inspect docs/evidence/auth/oidc-login-mapping-proof.md, avoid mock substitution, and implement the login-exercise proof before changing readiness.",
+      "proofReference": ["proof:auth-oidc-enterprise"],
+      "sourceFileRefs": [
+        "docs/evidence/auth/oidc-login-mapping-proof.md",
+        "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts"
       ]
     }
   ],
