@@ -1,0 +1,117 @@
+{
+  "artefact": "audit-coverage-report",
+  "mutations": [
+    {
+      "capability": "Tenant identity (record + FQDN)",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Delegated administration roles",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Entitlement engine",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Support-mode / break-glass access",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Product catalog, plans, prices",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Usage metering + meter event ingestion",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Quota enforcement",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Runtime secrets management",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Tenant lifecycle: provision, suspend, delete, export",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Provider configuration plane",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    }
+  ],
+  "violations": [],
+  "pass": true
+}

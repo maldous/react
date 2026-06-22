@@ -37,6 +37,17 @@ import r34 from "../src/rules/r34-constraint-satisfaction.mjs";
 import r35 from "../src/rules/r35-semantic-closure.mjs";
 import r36 from "../src/rules/r36-regeneration-sufficiency.mjs";
 import r37 from "../src/rules/r37-semantic-entropy.mjs";
+import r40 from "../src/rules/r40-operational-assurance.mjs";
+import r41 from "../src/rules/r41-observability-assurance.mjs";
+import r42 from "../src/rules/r42-security-assurance.mjs";
+import r43 from "../src/rules/r43-audit-assurance.mjs";
+import r44 from "../src/rules/r44-event-assurance.mjs";
+import r45 from "../src/rules/r45-environment-assurance.mjs";
+import r46 from "../src/rules/r46-data-assurance.mjs";
+import r47 from "../src/rules/r47-dependency-assurance.mjs";
+import r48 from "../src/rules/r48-reliability-assurance.mjs";
+import r49 from "../src/rules/r49-capability-coverage.mjs";
+import r50 from "../src/rules/r50-runtime-alignment.mjs";
 
 const fires = (rule, ctx, ruleId) => {
   const f = rule(ctx);
@@ -659,4 +670,74 @@ test("R37 fires on duplicate event definitions", () => {
     ...a.foundation["event-semantics.json"].events[0],
   });
   fires(r37, a, "R37-semantic-entropy");
+});
+
+test("R40 fires when a capability has no recovery path", () => {
+  const a = clone(cleanCtx());
+  delete a.foundation["operational-semantics.json"].capabilities[0].recoveryAction;
+  fires(r40, a, "R40-operational-assurance");
+});
+
+test("R41 fires when a capability has no metrics", () => {
+  const a = clone(cleanCtx());
+  a.foundation["operational-semantics.json"].capabilities[0].metrics = [];
+  fires(r41, a, "R41-observability-assurance");
+});
+
+test("R42 fires when a capability has no secret policy", () => {
+  const a = clone(cleanCtx());
+  delete a.foundation["environment-capability-matrix.json"].capabilities[0].prod.secretPolicy;
+  fires(r42, a, "R42-security-assurance");
+});
+
+test("R43 fires when a mutating capability loses audit semantics", () => {
+  const a = clone(cleanCtx());
+  a.capabilities[0].contract = "POST /api/x";
+  delete a.capabilities[0].semanticCompleteness.auditModel;
+  fires(r43, a, "R43-audit-assurance");
+});
+
+test("R44 fires when an event has no DLQ policy", () => {
+  const a = clone(cleanCtx());
+  delete a.foundation["event-semantics.json"].events[0].dlqPolicy;
+  fires(r44, a, "R44-event-assurance");
+});
+
+test("R45 fires when an environment cell has no rollback gate", () => {
+  const a = clone(cleanCtx());
+  delete a.foundation["environment-capability-matrix.json"].capabilities[0].staging.rollbackGate;
+  fires(r45, a, "R45-environment-assurance");
+});
+
+test("R46 fires when tenant data has no lineage", () => {
+  const a = clone(cleanCtx());
+  a.foundation["operational-semantics.json"].capabilities[0].tenantData = true;
+  a.foundation["environment-capability-matrix.json"].capabilities[0].prod.tenantDataAllowed = true;
+  delete a.foundation["operational-semantics.json"].capabilities[0].sourceFileRefs;
+  fires(r46, a, "R46-data-assurance");
+});
+
+test("R47 fires when a capability has no provider", () => {
+  const a = clone(cleanCtx());
+  delete a.foundation["environment-capability-matrix.json"].capabilities[0].prod.provider;
+  fires(r47, a, "R47-dependency-assurance");
+});
+
+test("R48 fires when provider-backed capability has no degraded mode", () => {
+  const a = clone(cleanCtx());
+  a.foundation["operational-semantics.json"].capabilities[0].providerBacked = true;
+  delete a.foundation["operational-semantics.json"].capabilities[0].degradedMode;
+  fires(r48, a, "R48-reliability-assurance");
+});
+
+test("R49 fires when capability loses observability coverage", () => {
+  const a = clone(cleanCtx());
+  a.foundation["operational-semantics.json"].capabilities[0].traces = [];
+  fires(r49, a, "R49-capability-coverage");
+});
+
+test("R50 fires when runtime evidence alignment is absent", () => {
+  const a = clone(cleanCtx());
+  a.foundation["operational-semantics.json"].capabilities[0].logs = [];
+  fires(r50, a, "R50-runtime-alignment");
 });

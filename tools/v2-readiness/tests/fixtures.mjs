@@ -182,7 +182,18 @@ export function cleanCtx() {
           backupRestore: "pg_dump/pg_restore",
         },
       ],
-      "authentication-authorisation-matrix.json": [{ ok: 1 }],
+      "authentication-authorisation-matrix.json": {
+        records: [
+          {
+            id: "fixture-authz",
+            behaviour: [
+              "RBAC role policy is enforced.",
+              "ABAC policy decision point applies tenant policy.",
+              "UMA/PDP policy denies by default.",
+            ],
+          },
+        ],
+      },
       "environment-and-config-catalog.json": [
         {
           key: "database-urls",

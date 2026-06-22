@@ -2092,6 +2092,195 @@
       "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
     },
     {
+      "path": "docs/v2-foundation/universal-service-foundation-assurance.md",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/universal-service-foundation-assurance.md",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/audit-coverage-report.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/audit-coverage-report.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/audit-graph.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/audit-graph.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/capability-assurance-matrix.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/capability-assurance-matrix.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/capability-graph.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/capability-graph.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/data-assurance-report.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/data-assurance-report.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/dependency-assurance-report.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/dependency-assurance-report.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/dependency-graph.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/dependency-graph.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/environment-assurance-report.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/environment-assurance-report.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/environment-graph.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/environment-graph.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/event-assurance-report.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/event-assurance-report.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/event-graph.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/event-graph.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/observability-coverage-report.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/observability-coverage-report.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/observability-graph.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/observability-graph.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/operational-assurance-report.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/operational-assurance-report.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/operational-graph.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/operational-graph.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/proof-graph.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/proof-graph.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/reliability-assurance-report.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/reliability-assurance-report.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/runtime-alignment-report.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/runtime-alignment-report.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/security-assurance-report.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/security-assurance-report.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-graph/security-graph.json",
+      "purpose": "post-audit Universal Service Foundation assurance graph/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-graph/security-graph.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
       "path": "docs/v2-foundation/v1-capability-closure.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
       "purpose": "V1→V2 planning/closure artefact",
@@ -2627,6 +2816,15 @@
       "introducingCommit": "pending-formal-assurance-commit"
     },
     {
+      "path": "tools/v2-readiness/scripts/generate-usf-assurance.mjs",
+      "purpose": "post-audit Universal Service Foundation assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/scripts/generate-usf-assurance.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
       "path": "tools/v2-readiness/scripts/strengthen-semantic-artefacts.mjs",
       "introducingCommit": "pending",
       "purpose": "repeatable derivation script for V2 semantic artefact strengthening",
@@ -3057,6 +3255,96 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
+      "path": "tools/v2-readiness/src/rules/r40-operational-assurance.mjs",
+      "purpose": "post-audit Universal Service Foundation assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r40-operational-assurance.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r41-observability-assurance.mjs",
+      "purpose": "post-audit Universal Service Foundation assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r41-observability-assurance.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r42-security-assurance.mjs",
+      "purpose": "post-audit Universal Service Foundation assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r42-security-assurance.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r43-audit-assurance.mjs",
+      "purpose": "post-audit Universal Service Foundation assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r43-audit-assurance.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r44-event-assurance.mjs",
+      "purpose": "post-audit Universal Service Foundation assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r44-event-assurance.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r45-environment-assurance.mjs",
+      "purpose": "post-audit Universal Service Foundation assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r45-environment-assurance.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r46-data-assurance.mjs",
+      "purpose": "post-audit Universal Service Foundation assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r46-data-assurance.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r47-dependency-assurance.mjs",
+      "purpose": "post-audit Universal Service Foundation assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r47-dependency-assurance.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r48-reliability-assurance.mjs",
+      "purpose": "post-audit Universal Service Foundation assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r48-reliability-assurance.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r49-capability-coverage.mjs",
+      "purpose": "post-audit Universal Service Foundation assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r49-capability-coverage.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
+    },
+    {
       "path": "tools/v2-readiness/src/rules/r5-count-buckets.mjs",
       "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
       "purpose": "V2-readiness validator implementation",
@@ -3068,6 +3356,15 @@
         "tools/v2-readiness/tests/package-status.test.mjs"
       ],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r50-runtime-alignment.mjs",
+      "purpose": "post-audit Universal Service Foundation assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r50-runtime-alignment.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
     },
     {
       "path": "tools/v2-readiness/src/rules/r6-package-removal.mjs",
@@ -3120,6 +3417,15 @@
         "tools/v2-readiness/tests/package-status.test.mjs"
       ],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/usf-assurance.mjs",
+      "purpose": "post-audit Universal Service Foundation assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/usf-assurance.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-usf-assurance-commit"
     },
     {
       "path": "tools/v2-readiness/src/vocab.mjs",
@@ -3587,6 +3893,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 340,
+  "additionCount": 374,
   "deletionCount": 54
 }

@@ -1,0 +1,638 @@
+{
+  "artefact": "observability-coverage-report",
+  "capabilities": [
+    {
+      "capability": "Tenant identity (record + FQDN)",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "User identity + tenant membership",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "End-user profile + preferences self-service",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "API keys / personal access tokens",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Tenant groups",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Sub-organisations",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "RBAC (roles + permissions)",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "ABAC / Policy Decision Point",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Delegated administration roles",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Entitlement engine",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Support-mode / break-glass access",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Audit of privileged access",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Platform login + session",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "IdP brokering + OIDC provider management",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Claim mapping + group/role mapping",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "MFA + session policy + lockout",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Configuration registry + history",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Branding + theming",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Custom domains, DNS ownership, TLS, canonical",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Write-only secret settings",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Product catalog, plans, prices",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Subscriptions, invoices, payment methods, dunning",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Usage metering + meter event ingestion",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Quota enforcement",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Relational storage + migrations + RLS",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Backup + restore",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "PITR, retention, legal hold, data residency",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Tenant data import / export",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Search + indexing (product search)",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Object storage + tenant prefixes + signed URLs",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Event bus, durable queues, DLQ, redrive",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Workflow engine, scheduled jobs, approvals",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Scheduled jobs (built-in, on the event substrate)",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Notification delivery + preferences + channels",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Background workers / job runner",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Runtime secrets management",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Logs (aggregation + tenant-scoped search)",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Metrics + traces",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Observability — built-in alerting + incidents",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Internal service catalog + readiness",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Code quality + secret + dependency scanning",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Compliance reports, access reviews, evidence packs",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Tenant isolation proof",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Webhooks (developer-facing)",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "API docs, developer portal, SDKs, rate limits",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Rate limiting (API)",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Tenant lifecycle: provision, suspend, delete, export",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Support tickets, customer health, announcements",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Universal Service Foundation scope + principles",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Build-versus-compose decision framework",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Service catalog + provider integration model",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Environment-specific vs shared service model",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Provider configuration plane",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Composed provider readiness spine",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "History read-model (read-only projection)",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "OIDC discovery / issuer / JWKS validation",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "OIDC test connection + callback display",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Tenant host identity resolution",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Tenant domain activation (auth-client)",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Tenant canonical domain set/unset",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Tenant custom-domain auth callback",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Tenant service clickthrough policy",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Environment registry + bootstrap",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Provider environment classification",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "E2E confidence ladder (stage-aware)",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "OpenAPI drift hard gate",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "i18n runtime + validation",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Accessibility (a11y) gate",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    },
+    {
+      "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "routes": true,
+      "traces": true,
+      "logs": true,
+      "metrics": true,
+      "alerts": true,
+      "audit": true
+    }
+  ],
+  "eventViolations": [],
+  "violations": [],
+  "pass": true
+}

@@ -43,19 +43,31 @@ include make/help.mk
 # in each env file: http://staging.aldous.info and https://aldous.info). If the
 # domains are unreachable, make all fails — this is intentional. The confidence
 # ladder must confirm the entire stack, not just local containers.
-.PHONY: all all-promote _all-promote-internal
-## all — Full confidence ladder: clean-all → preflight → quality → env-validate-all → env-drift-check → _all-promote-internal → evidence → env-status
+.PHONY: all all-promote _all-promote-internal v2-foundation-assurance
+## all — Full confidence ladder: clean-all → preflight → quality → v2-foundation-assurance → env-validate-all → env-drift-check → _all-promote-internal → evidence → env-status
 ## clean-all tears down dev and test (ephemeral). Staging and prod are preserved or started.
 ## Uses _all-promote-internal (the stage runs) then `evidence` ONCE — never via all-promote,
 ## so the ladder runs and evidence is verified exactly once.
 all: clean-all \
      preflight \
      quality \
+     v2-foundation-assurance \
      env-validate-all \
      env-drift-check \
      _all-promote-internal \
      evidence \
      env-status
+
+## v2-foundation-assurance — Regenerate and verify V2 formal + USF semantic assurance
+v2-foundation-assurance:
+	$(call STEP,v2 foundation assurance)
+	npm run v2:formal-assurance
+	npm run v2:usf-assurance
+	npx prettier --write docs/v2-foundation/formal-model/*.json docs/v2-foundation/mathematical-assurance-attestation.md docs/v2-foundation/usf-graph/*.json docs/v2-foundation/universal-service-foundation-assurance.md
+	npm run v2:readiness -- --strict
+	npm run v2:readiness -- --json
+	npm test -- tools/v2-readiness
+	$(call OK,V2 foundation assurance complete)
 
 ## _all-promote-internal — run the stage ladder (no verification). Internal: the orchestrator
 ## sets LADDER_CONTINUE_ON_DEGRADED=1 — the EXPLICIT continuation mode — so a DEGRADED stage

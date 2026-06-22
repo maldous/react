@@ -1,0 +1,1053 @@
+{
+  "artefact": "dependency-graph",
+  "version": 1,
+  "nodes": [
+    {
+      "id": "capability:abac-policy-decision-point",
+      "kind": "capability",
+      "label": "ABAC / Policy Decision Point"
+    },
+    {
+      "id": "capability:accessibility-a11y-gate",
+      "kind": "capability",
+      "label": "Accessibility (a11y) gate"
+    },
+    {
+      "id": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "kind": "capability",
+      "label": "API docs, developer portal, SDKs, rate limits"
+    },
+    {
+      "id": "capability:api-keys-personal-access-tokens",
+      "kind": "capability",
+      "label": "API keys / personal access tokens"
+    },
+    {
+      "id": "capability:audit-of-privileged-access",
+      "kind": "capability",
+      "label": "Audit of privileged access"
+    },
+    {
+      "id": "capability:background-workers-job-runner",
+      "kind": "capability",
+      "label": "Background workers / job runner"
+    },
+    {
+      "id": "capability:backup-plus-restore",
+      "kind": "capability",
+      "label": "Backup + restore"
+    },
+    {
+      "id": "capability:branding-plus-theming",
+      "kind": "capability",
+      "label": "Branding + theming"
+    },
+    {
+      "id": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "kind": "capability",
+      "label": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)"
+    },
+    {
+      "id": "capability:build-versus-compose-decision-framework",
+      "kind": "capability",
+      "label": "Build-versus-compose decision framework"
+    },
+    {
+      "id": "capability:claim-mapping-plus-group-role-mapping",
+      "kind": "capability",
+      "label": "Claim mapping + group/role mapping"
+    },
+    {
+      "id": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "kind": "capability",
+      "label": "Code quality + secret + dependency scanning"
+    },
+    {
+      "id": "capability:compliance-reports-access-reviews-evidence-packs",
+      "kind": "capability",
+      "label": "Compliance reports, access reviews, evidence packs"
+    },
+    {
+      "id": "capability:composed-provider-readiness-spine",
+      "kind": "capability",
+      "label": "Composed provider readiness spine"
+    },
+    {
+      "id": "capability:configuration-registry-plus-history",
+      "kind": "capability",
+      "label": "Configuration registry + history"
+    },
+    {
+      "id": "capability:custom-domains-dns-ownership-tls-canonical",
+      "kind": "capability",
+      "label": "Custom domains, DNS ownership, TLS, canonical"
+    },
+    {
+      "id": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "kind": "capability",
+      "label": "Data governance: catalog, lineage, classification, PII, DSR/GDPR"
+    },
+    {
+      "id": "capability:delegated-administration-roles",
+      "kind": "capability",
+      "label": "Delegated administration roles"
+    },
+    {
+      "id": "capability:e2e-confidence-ladder-stage-aware",
+      "kind": "capability",
+      "label": "E2E confidence ladder (stage-aware)"
+    },
+    {
+      "id": "capability:end-user-profile-plus-preferences-self-service",
+      "kind": "capability",
+      "label": "End-user profile + preferences self-service"
+    },
+    {
+      "id": "capability:entitlement-engine",
+      "kind": "capability",
+      "label": "Entitlement engine"
+    },
+    {
+      "id": "capability:environment-registry-plus-bootstrap",
+      "kind": "capability",
+      "label": "Environment registry + bootstrap"
+    },
+    {
+      "id": "capability:environment-specific-vs-shared-service-model",
+      "kind": "capability",
+      "label": "Environment-specific vs shared service model"
+    },
+    {
+      "id": "capability:event-bus-durable-queues-dlq-redrive",
+      "kind": "capability",
+      "label": "Event bus, durable queues, DLQ, redrive"
+    },
+    {
+      "id": "capability:history-read-model-read-only-projection",
+      "kind": "capability",
+      "label": "History read-model (read-only projection)"
+    },
+    {
+      "id": "capability:i18n-runtime-plus-validation",
+      "kind": "capability",
+      "label": "i18n runtime + validation"
+    },
+    {
+      "id": "capability:idp-brokering-plus-oidc-provider-management",
+      "kind": "capability",
+      "label": "IdP brokering + OIDC provider management"
+    },
+    {
+      "id": "capability:internal-service-catalog-plus-readiness",
+      "kind": "capability",
+      "label": "Internal service catalog + readiness"
+    },
+    {
+      "id": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "kind": "capability",
+      "label": "Logs (aggregation + tenant-scoped search)"
+    },
+    {
+      "id": "capability:metrics-plus-traces",
+      "kind": "capability",
+      "label": "Metrics + traces"
+    },
+    {
+      "id": "capability:mfa-plus-session-policy-plus-lockout",
+      "kind": "capability",
+      "label": "MFA + session policy + lockout"
+    },
+    {
+      "id": "capability:notification-delivery-plus-preferences-plus-channels",
+      "kind": "capability",
+      "label": "Notification delivery + preferences + channels"
+    },
+    {
+      "id": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "kind": "capability",
+      "label": "Object storage + tenant prefixes + signed URLs"
+    },
+    {
+      "id": "capability:observability-built-in-alerting-plus-incidents",
+      "kind": "capability",
+      "label": "Observability — built-in alerting + incidents"
+    },
+    {
+      "id": "capability:oidc-discovery-issuer-jwks-validation",
+      "kind": "capability",
+      "label": "OIDC discovery / issuer / JWKS validation"
+    },
+    {
+      "id": "capability:oidc-test-connection-plus-callback-display",
+      "kind": "capability",
+      "label": "OIDC test connection + callback display"
+    },
+    {
+      "id": "capability:openapi-drift-hard-gate",
+      "kind": "capability",
+      "label": "OpenAPI drift hard gate"
+    },
+    {
+      "id": "capability:pitr-retention-legal-hold-data-residency",
+      "kind": "capability",
+      "label": "PITR, retention, legal hold, data residency"
+    },
+    {
+      "id": "capability:platform-login-plus-session",
+      "kind": "capability",
+      "label": "Platform login + session"
+    },
+    {
+      "id": "capability:product-catalog-plans-prices",
+      "kind": "capability",
+      "label": "Product catalog, plans, prices"
+    },
+    {
+      "id": "capability:provider-configuration-plane",
+      "kind": "capability",
+      "label": "Provider configuration plane"
+    },
+    {
+      "id": "capability:provider-environment-classification",
+      "kind": "capability",
+      "label": "Provider environment classification"
+    },
+    {
+      "id": "capability:quota-enforcement",
+      "kind": "capability",
+      "label": "Quota enforcement"
+    },
+    {
+      "id": "capability:rate-limiting-api",
+      "kind": "capability",
+      "label": "Rate limiting (API)"
+    },
+    {
+      "id": "capability:rbac-roles-plus-permissions",
+      "kind": "capability",
+      "label": "RBAC (roles + permissions)"
+    },
+    {
+      "id": "capability:relational-storage-plus-migrations-plus-rls",
+      "kind": "capability",
+      "label": "Relational storage + migrations + RLS"
+    },
+    {
+      "id": "capability:runtime-secrets-management",
+      "kind": "capability",
+      "label": "Runtime secrets management"
+    },
+    {
+      "id": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "kind": "capability",
+      "label": "Scheduled jobs (built-in, on the event substrate)"
+    },
+    {
+      "id": "capability:search-plus-indexing-product-search",
+      "kind": "capability",
+      "label": "Search + indexing (product search)"
+    },
+    {
+      "id": "capability:service-catalog-plus-provider-integration-model",
+      "kind": "capability",
+      "label": "Service catalog + provider integration model"
+    },
+    {
+      "id": "capability:sub-organisations",
+      "kind": "capability",
+      "label": "Sub-organisations"
+    },
+    {
+      "id": "capability:subscriptions-invoices-payment-methods-dunning",
+      "kind": "capability",
+      "label": "Subscriptions, invoices, payment methods, dunning"
+    },
+    {
+      "id": "capability:support-mode-break-glass-access",
+      "kind": "capability",
+      "label": "Support-mode / break-glass access"
+    },
+    {
+      "id": "capability:support-tickets-customer-health-announcements",
+      "kind": "capability",
+      "label": "Support tickets, customer health, announcements"
+    },
+    {
+      "id": "capability:tenant-canonical-domain-set-unset",
+      "kind": "capability",
+      "label": "Tenant canonical domain set/unset"
+    },
+    {
+      "id": "capability:tenant-custom-domain-auth-callback",
+      "kind": "capability",
+      "label": "Tenant custom-domain auth callback"
+    },
+    {
+      "id": "capability:tenant-data-import-export",
+      "kind": "capability",
+      "label": "Tenant data import / export"
+    },
+    {
+      "id": "capability:tenant-domain-activation-auth-client",
+      "kind": "capability",
+      "label": "Tenant domain activation (auth-client)"
+    },
+    {
+      "id": "capability:tenant-groups",
+      "kind": "capability",
+      "label": "Tenant groups"
+    },
+    {
+      "id": "capability:tenant-host-identity-resolution",
+      "kind": "capability",
+      "label": "Tenant host identity resolution"
+    },
+    {
+      "id": "capability:tenant-identity-record-plus-fqdn",
+      "kind": "capability",
+      "label": "Tenant identity (record + FQDN)"
+    },
+    {
+      "id": "capability:tenant-isolation-proof",
+      "kind": "capability",
+      "label": "Tenant isolation proof"
+    },
+    {
+      "id": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "kind": "capability",
+      "label": "Tenant lifecycle: provision, suspend, delete, export"
+    },
+    {
+      "id": "capability:tenant-service-clickthrough-policy",
+      "kind": "capability",
+      "label": "Tenant service clickthrough policy"
+    },
+    {
+      "id": "capability:universal-service-foundation-scope-plus-principles",
+      "kind": "capability",
+      "label": "Universal Service Foundation scope + principles"
+    },
+    {
+      "id": "capability:usage-metering-plus-meter-event-ingestion",
+      "kind": "capability",
+      "label": "Usage metering + meter event ingestion"
+    },
+    {
+      "id": "capability:user-identity-plus-tenant-membership",
+      "kind": "capability",
+      "label": "User identity + tenant membership"
+    },
+    {
+      "id": "capability:webhooks-developer-facing",
+      "kind": "capability",
+      "label": "Webhooks (developer-facing)"
+    },
+    {
+      "id": "capability:workflow-engine-scheduled-jobs-approvals",
+      "kind": "capability",
+      "label": "Workflow engine, scheduled jobs, approvals"
+    },
+    {
+      "id": "capability:write-only-secret-settings",
+      "kind": "capability",
+      "label": "Write-only secret settings"
+    },
+    {
+      "id": "interaction:audit-privileged-access",
+      "kind": "dependency",
+      "label": "audit-privileged-access"
+    },
+    {
+      "id": "interaction:billing-workflow",
+      "kind": "dependency",
+      "label": "billing-workflow"
+    },
+    {
+      "id": "interaction:catalog-provider-readiness",
+      "kind": "dependency",
+      "label": "catalog-provider-readiness"
+    },
+    {
+      "id": "interaction:entitlements-billing",
+      "kind": "dependency",
+      "label": "entitlements-billing"
+    },
+    {
+      "id": "interaction:events-workers-dlq",
+      "kind": "dependency",
+      "label": "events-workers-dlq"
+    },
+    {
+      "id": "interaction:governance-tenant-lifecycle",
+      "kind": "dependency",
+      "label": "governance-tenant-lifecycle"
+    },
+    {
+      "id": "interaction:storage-governance",
+      "kind": "dependency",
+      "label": "storage-governance"
+    },
+    {
+      "id": "interaction:tenant-identity-access",
+      "kind": "dependency",
+      "label": "tenant-identity-access"
+    },
+    {
+      "id": "interaction:webhooks-events",
+      "kind": "dependency",
+      "label": "webhooks-events"
+    },
+    {
+      "id": "interaction:workflow-notifications",
+      "kind": "dependency",
+      "label": "workflow-notifications"
+    },
+    {
+      "id": "provider:production-caddyfilereconciler-provider",
+      "kind": "provider",
+      "label": "production CaddyfileReconciler provider"
+    },
+    {
+      "id": "provider:production-emailtransportadapter-webhooktransportadapter-provider",
+      "kind": "provider",
+      "label": "production EmailTransportAdapter / WebhookTransportAdapter provider"
+    },
+    {
+      "id": "provider:production-encrypted-tar-gz-archive-builder-plus-postgres-portable-import-applier-provider",
+      "kind": "provider",
+      "label": "production encrypted tar.gz archive builder + Postgres portable import applier provider"
+    },
+    {
+      "id": "provider:production-grafana-faro-web-sdk-plus-otel-tracinginstrumentation-alloy-faro-receiver-otel-collector-tempo-loki-provider",
+      "kind": "provider",
+      "label": "production Grafana Faro web SDK + OTEL TracingInstrumentation; Alloy faro.receiver -> otel-collector -> Tempo/Loki provider"
+    },
+    {
+      "id": "provider:production-httphealthprobeadapter-provider",
+      "kind": "provider",
+      "label": "production HttpHealthProbeAdapter provider"
+    },
+    {
+      "id": "provider:production-keycloakadminadapter-provider",
+      "kind": "provider",
+      "label": "production KeycloakAdminAdapter provider"
+    },
+    {
+      "id": "provider:production-keycloakauthclientadapter-dnschallengeadapter-provider",
+      "kind": "provider",
+      "label": "production KeycloakAuthClientAdapter / DnsChallengeAdapter provider"
+    },
+    {
+      "id": "provider:production-keycloakauthclientadapter-provider",
+      "kind": "provider",
+      "label": "production KeycloakAuthClientAdapter provider"
+    },
+    {
+      "id": "provider:production-lagobillingprovideradapter-inmemorypaymentprovider-provider",
+      "kind": "provider",
+      "label": "production LagoBillingProviderAdapter / InMemoryPaymentProvider provider"
+    },
+    {
+      "id": "provider:production-lokiadapter-otelcollector-provider",
+      "kind": "provider",
+      "label": "production LokiAdapter / OtelCollector provider"
+    },
+    {
+      "id": "provider:production-manifestenvadapter-provider",
+      "kind": "provider",
+      "label": "production ManifestEnvAdapter provider"
+    },
+    {
+      "id": "provider:production-miniostorageadapter-provider",
+      "kind": "provider",
+      "label": "production MinioStorageAdapter provider"
+    },
+    {
+      "id": "provider:production-n-a-provider",
+      "kind": "provider",
+      "label": "production n/a provider"
+    },
+    {
+      "id": "provider:production-openbaosecretadapter-postgressecretadapter-provider",
+      "kind": "provider",
+      "label": "production OpenBaoSecretAdapter / PostgresSecretAdapter provider"
+    },
+    {
+      "id": "provider:production-pg-dump-pg-restore-scripts-provider",
+      "kind": "provider",
+      "label": "production pg_dump/pg_restore scripts provider"
+    },
+    {
+      "id": "provider:production-playwrightadapter-provider",
+      "kind": "provider",
+      "label": "production PlaywrightAdapter provider"
+    },
+    {
+      "id": "provider:production-playwrightaxeadapter-provider",
+      "kind": "provider",
+      "label": "production PlaywrightAxeAdapter provider"
+    },
+    {
+      "id": "provider:production-postgres-lifecycle-coordinator-plus-portable-export-provider",
+      "kind": "provider",
+      "label": "production Postgres lifecycle coordinator + portable export provider"
+    },
+    {
+      "id": "provider:production-postgres-support-tickets-plus-customer-health-read-model-provider",
+      "kind": "provider",
+      "label": "production Postgres support tickets + customer-health read-model provider"
+    },
+    {
+      "id": "provider:production-postgresauditadapter-provider",
+      "kind": "provider",
+      "label": "production PostgresAuditAdapter provider"
+    },
+    {
+      "id": "provider:production-postgresbillingcatalogadapter-provider",
+      "kind": "provider",
+      "label": "production PostgresBillingCatalogAdapter provider"
+    },
+    {
+      "id": "provider:production-postgresconfigadapter-provider",
+      "kind": "provider",
+      "label": "production PostgresConfigAdapter provider"
+    },
+    {
+      "id": "provider:production-postgresdatagovernanceadapter-provider",
+      "kind": "provider",
+      "label": "production PostgresDataGovernanceAdapter provider"
+    },
+    {
+      "id": "provider:production-postgresentitlementadapter-provider",
+      "kind": "provider",
+      "label": "production PostgresEntitlementAdapter provider"
+    },
+    {
+      "id": "provider:production-postgreseventbusadapter-provider",
+      "kind": "provider",
+      "label": "production PostgresEventBusAdapter provider"
+    },
+    {
+      "id": "provider:production-postgresftssearchadapter-provider",
+      "kind": "provider",
+      "label": "production PostgresFtsSearchAdapter provider"
+    },
+    {
+      "id": "provider:production-postgresidentityadapter-provider",
+      "kind": "provider",
+      "label": "production PostgresIdentityAdapter provider"
+    },
+    {
+      "id": "provider:production-postgresjobadapter-provider",
+      "kind": "provider",
+      "label": "production PostgresJobAdapter provider"
+    },
+    {
+      "id": "provider:production-postgresmeteradapter-provider",
+      "kind": "provider",
+      "label": "production PostgresMeterAdapter provider"
+    },
+    {
+      "id": "provider:production-postgresprofileadapter-provider",
+      "kind": "provider",
+      "label": "production PostgresProfileAdapter provider"
+    },
+    {
+      "id": "provider:production-postgresquotaadapter-provider",
+      "kind": "provider",
+      "label": "production PostgresQuotaAdapter provider"
+    },
+    {
+      "id": "provider:production-postgresretentionadapter-postgreslegalholdrepository-org-residency-column-provider",
+      "kind": "provider",
+      "label": "production PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column provider"
+    },
+    {
+      "id": "provider:production-postgreswebhookadapter-plus-deliveryworker-provider",
+      "kind": "provider",
+      "label": "production PostgresWebhookAdapter + DeliveryWorker provider"
+    },
+    {
+      "id": "provider:production-reacti18nprovider-provider",
+      "kind": "provider",
+      "label": "production ReactI18nProvider provider"
+    },
+    {
+      "id": "provider:production-redisratelimitadapter-postgresratelimitadapter-provider",
+      "kind": "provider",
+      "label": "production RedisRateLimitAdapter / PostgresRateLimitAdapter provider"
+    },
+    {
+      "id": "provider:production-s3objectstorageadapter-plus-postgresstorageobjectrepository-provider",
+      "kind": "provider",
+      "label": "production S3ObjectStorageAdapter + PostgresStorageObjectRepository provider"
+    },
+    {
+      "id": "provider:production-slugandcustomdomainresolver-provider",
+      "kind": "provider",
+      "label": "production SlugAndCustomDomainResolver provider"
+    },
+    {
+      "id": "provider:production-temporalworkflowprovideradapter-inmemoryworkfloworchestrator-provider",
+      "kind": "provider",
+      "label": "production TemporalWorkflowProviderAdapter / InMemoryWorkflowOrchestrator provider"
+    },
+    {
+      "id": "provider:production-validate-openapi-drift-provider",
+      "kind": "provider",
+      "label": "production validate-openapi-drift provider"
+    }
+  ],
+  "edges": [
+    {
+      "from": "capability:abac-policy-decision-point",
+      "to": "provider:production-n-a-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:accessibility-a11y-gate",
+      "to": "provider:production-playwrightaxeadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "to": "provider:production-redisratelimitadapter-postgresratelimitadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:api-keys-personal-access-tokens",
+      "to": "provider:production-n-a-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:audit-of-privileged-access",
+      "to": "provider:production-postgresauditadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:background-workers-job-runner",
+      "to": "provider:production-postgresjobadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:backup-plus-restore",
+      "to": "provider:production-pg-dump-pg-restore-scripts-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:branding-plus-theming",
+      "to": "provider:production-postgresconfigadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "provider:production-grafana-faro-web-sdk-plus-otel-tracinginstrumentation-alloy-faro-receiver-otel-collector-tempo-loki-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:build-versus-compose-decision-framework",
+      "to": "provider:production-n-a-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:claim-mapping-plus-group-role-mapping",
+      "to": "provider:production-keycloakadminadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "to": "provider:production-openbaosecretadapter-postgressecretadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:compliance-reports-access-reviews-evidence-packs",
+      "to": "provider:production-n-a-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:composed-provider-readiness-spine",
+      "to": "provider:production-httphealthprobeadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:configuration-registry-plus-history",
+      "to": "provider:production-postgresconfigadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:custom-domains-dns-ownership-tls-canonical",
+      "to": "provider:production-keycloakauthclientadapter-dnschallengeadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "provider:production-postgresdatagovernanceadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "provider:production-postgresidentityadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:e2e-confidence-ladder-stage-aware",
+      "to": "provider:production-playwrightadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:end-user-profile-plus-preferences-self-service",
+      "to": "provider:production-postgresprofileadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "interaction:entitlements-billing",
+      "type": "producer"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "provider:production-postgresentitlementadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:environment-registry-plus-bootstrap",
+      "to": "provider:production-manifestenvadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:environment-specific-vs-shared-service-model",
+      "to": "provider:production-n-a-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "interaction:events-workers-dlq",
+      "type": "producer"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "interaction:webhooks-events",
+      "type": "producer"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "provider:production-postgreseventbusadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:history-read-model-read-only-projection",
+      "to": "provider:production-postgresauditadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:i18n-runtime-plus-validation",
+      "to": "provider:production-reacti18nprovider-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:idp-brokering-plus-oidc-provider-management",
+      "to": "provider:production-keycloakadminadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "interaction:catalog-provider-readiness",
+      "type": "producer"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "provider:production-lokiadapter-otelcollector-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "to": "provider:production-postgresftssearchadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:metrics-plus-traces",
+      "to": "provider:production-lokiadapter-otelcollector-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:mfa-plus-session-policy-plus-lockout",
+      "to": "provider:production-keycloakadminadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:notification-delivery-plus-preferences-plus-channels",
+      "to": "provider:production-emailtransportadapter-webhooktransportadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "interaction:storage-governance",
+      "type": "producer"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "provider:production-s3objectstorageadapter-plus-postgresstorageobjectrepository-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:observability-built-in-alerting-plus-incidents",
+      "to": "provider:production-lokiadapter-otelcollector-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:oidc-discovery-issuer-jwks-validation",
+      "to": "provider:production-keycloakadminadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:oidc-test-connection-plus-callback-display",
+      "to": "provider:production-keycloakadminadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:openapi-drift-hard-gate",
+      "to": "provider:production-validate-openapi-drift-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:pitr-retention-legal-hold-data-residency",
+      "to": "provider:production-postgresretentionadapter-postgreslegalholdrepository-org-residency-column-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:platform-login-plus-session",
+      "to": "provider:production-keycloakadminadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "provider:production-postgresbillingcatalogadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "provider:production-httphealthprobeadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:provider-environment-classification",
+      "to": "provider:production-manifestenvadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "provider:production-postgresquotaadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:rate-limiting-api",
+      "to": "provider:production-redisratelimitadapter-postgresratelimitadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:rbac-roles-plus-permissions",
+      "to": "provider:production-postgresidentityadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:relational-storage-plus-migrations-plus-rls",
+      "to": "provider:production-miniostorageadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "provider:production-openbaosecretadapter-postgressecretadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "to": "provider:production-postgreseventbusadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:search-plus-indexing-product-search",
+      "to": "provider:production-postgresftssearchadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:service-catalog-plus-provider-integration-model",
+      "to": "provider:production-lokiadapter-otelcollector-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:sub-organisations",
+      "to": "provider:production-postgresidentityadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:subscriptions-invoices-payment-methods-dunning",
+      "to": "provider:production-lagobillingprovideradapter-inmemorypaymentprovider-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "interaction:audit-privileged-access",
+      "type": "producer"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "provider:production-n-a-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:support-tickets-customer-health-announcements",
+      "to": "provider:production-postgres-support-tickets-plus-customer-health-read-model-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:tenant-canonical-domain-set-unset",
+      "to": "provider:production-keycloakauthclientadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:tenant-custom-domain-auth-callback",
+      "to": "provider:production-keycloakauthclientadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:tenant-data-import-export",
+      "to": "provider:production-encrypted-tar-gz-archive-builder-plus-postgres-portable-import-applier-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:tenant-domain-activation-auth-client",
+      "to": "provider:production-keycloakauthclientadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:tenant-groups",
+      "to": "provider:production-postgresidentityadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:tenant-host-identity-resolution",
+      "to": "provider:production-slugandcustomdomainresolver-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "interaction:tenant-identity-access",
+      "type": "producer"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "provider:production-postgresidentityadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:tenant-isolation-proof",
+      "to": "provider:production-n-a-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "interaction:governance-tenant-lifecycle",
+      "type": "producer"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "provider:production-postgres-lifecycle-coordinator-plus-portable-export-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:tenant-service-clickthrough-policy",
+      "to": "provider:production-caddyfilereconciler-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:universal-service-foundation-scope-plus-principles",
+      "to": "provider:production-n-a-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "interaction:billing-workflow",
+      "type": "producer"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "provider:production-postgresmeteradapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:user-identity-plus-tenant-membership",
+      "to": "provider:production-postgresidentityadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:webhooks-developer-facing",
+      "to": "provider:production-postgreswebhookadapter-plus-deliveryworker-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "interaction:workflow-notifications",
+      "type": "producer"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "provider:production-temporalworkflowprovideradapter-inmemoryworkfloworchestrator-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "capability:write-only-secret-settings",
+      "to": "provider:production-openbaosecretadapter-postgressecretadapter-provider",
+      "type": "uses-provider"
+    },
+    {
+      "from": "interaction:audit-privileged-access",
+      "to": "capability:audit-of-privileged-access",
+      "type": "consumer"
+    },
+    {
+      "from": "interaction:billing-workflow",
+      "to": "capability:workflow-engine-scheduled-jobs-approvals",
+      "type": "consumer"
+    },
+    {
+      "from": "interaction:catalog-provider-readiness",
+      "to": "capability:composed-provider-readiness-spine",
+      "type": "consumer"
+    },
+    {
+      "from": "interaction:entitlements-billing",
+      "to": "capability:subscriptions-invoices-payment-methods-dunning",
+      "type": "consumer"
+    },
+    {
+      "from": "interaction:events-workers-dlq",
+      "to": "capability:background-workers-job-runner",
+      "type": "consumer"
+    },
+    {
+      "from": "interaction:governance-tenant-lifecycle",
+      "to": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "type": "consumer"
+    },
+    {
+      "from": "interaction:storage-governance",
+      "to": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "type": "consumer"
+    },
+    {
+      "from": "interaction:tenant-identity-access",
+      "to": "capability:user-identity-plus-tenant-membership",
+      "type": "consumer"
+    },
+    {
+      "from": "interaction:webhooks-events",
+      "to": "capability:webhooks-developer-facing",
+      "type": "consumer"
+    },
+    {
+      "from": "interaction:workflow-notifications",
+      "to": "capability:notification-delivery-plus-preferences-plus-channels",
+      "type": "consumer"
+    }
+  ]
+}

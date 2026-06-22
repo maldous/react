@@ -2299,6 +2299,33 @@
     "docDriftsFromBehaviour": false
   },
   {
+    "name": "make v2-foundation-assurance",
+    "kind": "make",
+    "purpose": "Regenerate and verify the full V2 foundation assurance surface: formal semantic assurance, Universal Service Foundation assurance, strict readiness, JSON readiness report, and V2 readiness tests.",
+    "inputs": [
+      "docs/v2-foundation/*.json",
+      "tools/v2-readiness/src/*.mjs",
+      "tools/v2-readiness/src/rules/*.mjs"
+    ],
+    "outputs": [
+      "docs/v2-foundation/formal-model/*.json",
+      "docs/v2-foundation/usf-graph/*.json",
+      "docs/v2-foundation/*assurance*.md"
+    ],
+    "prerequisites": ["npm install"],
+    "sideEffects": ["rewrites generated V2 foundation assurance artefacts"],
+    "envScope": "all",
+    "failureSemantics": "exit-nonzero-on-any-readiness-or-assurance-finding",
+    "idempotent": true,
+    "safetyControls": ["wired into make all before environment promotion"],
+    "testCoverage": "npm test -- tools/v2-readiness",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false,
+    "postAudit": "make all now runs full V2 foundational analysis and assurance"
+  },
+  {
     "name": "npm api:start",
     "kind": "npm",
     "purpose": "Start platform-api HTTP server.",
@@ -5756,6 +5783,28 @@
     "docDriftsFromBehaviour": false
   },
   {
+    "name": "npm v2:formal-assurance",
+    "kind": "npm",
+    "purpose": "Generate the formal V2 semantic assurance graph, proof reports, traceability matrix, and mathematical assurance attestation.",
+    "inputs": ["docs/v2-foundation/*.json", "tools/v2-readiness/src/formal-assurance.mjs"],
+    "outputs": [
+      "docs/v2-foundation/formal-model/*.json",
+      "docs/v2-foundation/mathematical-assurance-attestation.md"
+    ],
+    "prerequisites": [],
+    "sideEffects": ["rewrites generated formal assurance artefacts"],
+    "envScope": "all",
+    "failureSemantics": "exit-nonzero-on-invalid-foundation-state",
+    "idempotent": true,
+    "safetyControls": ["readiness rules R30-R37 consume the same source-derived model"],
+    "testCoverage": "tools/v2-readiness/tests/*.test.mjs",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false,
+    "postAudit": "formal assurance command added for mathematical V2 readiness proof"
+  },
+  {
     "name": "npm v2:readiness",
     "kind": "npm",
     "purpose": "Run the read-only V2-readiness validator (semantic closure + branch-cut blockers).",
@@ -5792,6 +5841,28 @@
     "dead": false,
     "docDriftsFromBehaviour": false,
     "postAudit": "ADR-ACT-0292 (added after audited commit; carried into V2)"
+  },
+  {
+    "name": "npm v2:usf-assurance",
+    "kind": "npm",
+    "purpose": "Generate Universal Service Foundation assurance graphs, reports, and attestation across operational, observability, security, audit, event, environment, data, dependency, reliability, coverage, and runtime alignment domains.",
+    "inputs": ["docs/v2-foundation/*.json", "tools/v2-readiness/src/usf-assurance.mjs"],
+    "outputs": [
+      "docs/v2-foundation/usf-graph/*.json",
+      "docs/v2-foundation/universal-service-foundation-assurance.md"
+    ],
+    "prerequisites": [],
+    "sideEffects": ["rewrites generated USF assurance artefacts"],
+    "envScope": "all",
+    "failureSemantics": "exit-nonzero-on-invalid-foundation-state",
+    "idempotent": true,
+    "safetyControls": ["readiness rules R40-R50 consume the same source-derived assurance model"],
+    "testCoverage": "tools/v2-readiness/tests/*.test.mjs",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false,
+    "postAudit": "USF assurance command added for operational assurance proof"
   },
   {
     "name": "npm validate:slices",
@@ -6458,27 +6529,5 @@
     "hidesErrors": false,
     "dead": false,
     "docDriftsFromBehaviour": false
-  },
-  {
-    "name": "npm v2:formal-assurance",
-    "kind": "npm",
-    "purpose": "Generate the formal V2 semantic assurance graph, proof reports, traceability matrix, and mathematical assurance attestation.",
-    "inputs": ["docs/v2-foundation/*.json", "tools/v2-readiness/src/formal-assurance.mjs"],
-    "outputs": [
-      "docs/v2-foundation/formal-model/*.json",
-      "docs/v2-foundation/mathematical-assurance-attestation.md"
-    ],
-    "prerequisites": [],
-    "sideEffects": ["rewrites generated formal assurance artefacts"],
-    "envScope": "all",
-    "failureSemantics": "exit-nonzero-on-invalid-foundation-state",
-    "idempotent": true,
-    "safetyControls": ["readiness rules R30-R37 consume the same source-derived model"],
-    "testCoverage": "tools/v2-readiness/tests/*.test.mjs",
-    "duplicateOf": null,
-    "hidesErrors": false,
-    "dead": false,
-    "docDriftsFromBehaviour": false,
-    "postAudit": "formal assurance command added for mathematical V2 readiness proof"
   }
 ]

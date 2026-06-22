@@ -1,0 +1,4558 @@
+{
+  "artefact": "security-graph",
+  "version": 1,
+  "nodes": [
+    {
+      "id": "capability:abac-policy-decision-point",
+      "kind": "capability",
+      "label": "ABAC / Policy Decision Point"
+    },
+    {
+      "id": "capability:accessibility-a11y-gate",
+      "kind": "capability",
+      "label": "Accessibility (a11y) gate"
+    },
+    {
+      "id": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "kind": "capability",
+      "label": "API docs, developer portal, SDKs, rate limits"
+    },
+    {
+      "id": "capability:api-keys-personal-access-tokens",
+      "kind": "capability",
+      "label": "API keys / personal access tokens"
+    },
+    {
+      "id": "capability:audit-of-privileged-access",
+      "kind": "capability",
+      "label": "Audit of privileged access"
+    },
+    {
+      "id": "capability:background-workers-job-runner",
+      "kind": "capability",
+      "label": "Background workers / job runner"
+    },
+    {
+      "id": "capability:backup-plus-restore",
+      "kind": "capability",
+      "label": "Backup + restore"
+    },
+    {
+      "id": "capability:branding-plus-theming",
+      "kind": "capability",
+      "label": "Branding + theming"
+    },
+    {
+      "id": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "kind": "capability",
+      "label": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)"
+    },
+    {
+      "id": "capability:build-versus-compose-decision-framework",
+      "kind": "capability",
+      "label": "Build-versus-compose decision framework"
+    },
+    {
+      "id": "capability:claim-mapping-plus-group-role-mapping",
+      "kind": "capability",
+      "label": "Claim mapping + group/role mapping"
+    },
+    {
+      "id": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "kind": "capability",
+      "label": "Code quality + secret + dependency scanning"
+    },
+    {
+      "id": "capability:compliance-reports-access-reviews-evidence-packs",
+      "kind": "capability",
+      "label": "Compliance reports, access reviews, evidence packs"
+    },
+    {
+      "id": "capability:composed-provider-readiness-spine",
+      "kind": "capability",
+      "label": "Composed provider readiness spine"
+    },
+    {
+      "id": "capability:configuration-registry-plus-history",
+      "kind": "capability",
+      "label": "Configuration registry + history"
+    },
+    {
+      "id": "capability:custom-domains-dns-ownership-tls-canonical",
+      "kind": "capability",
+      "label": "Custom domains, DNS ownership, TLS, canonical"
+    },
+    {
+      "id": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "kind": "capability",
+      "label": "Data governance: catalog, lineage, classification, PII, DSR/GDPR"
+    },
+    {
+      "id": "capability:delegated-administration-roles",
+      "kind": "capability",
+      "label": "Delegated administration roles"
+    },
+    {
+      "id": "capability:e2e-confidence-ladder-stage-aware",
+      "kind": "capability",
+      "label": "E2E confidence ladder (stage-aware)"
+    },
+    {
+      "id": "capability:end-user-profile-plus-preferences-self-service",
+      "kind": "capability",
+      "label": "End-user profile + preferences self-service"
+    },
+    {
+      "id": "capability:entitlement-engine",
+      "kind": "capability",
+      "label": "Entitlement engine"
+    },
+    {
+      "id": "capability:environment-registry-plus-bootstrap",
+      "kind": "capability",
+      "label": "Environment registry + bootstrap"
+    },
+    {
+      "id": "capability:environment-specific-vs-shared-service-model",
+      "kind": "capability",
+      "label": "Environment-specific vs shared service model"
+    },
+    {
+      "id": "capability:event-bus-durable-queues-dlq-redrive",
+      "kind": "capability",
+      "label": "Event bus, durable queues, DLQ, redrive"
+    },
+    {
+      "id": "capability:history-read-model-read-only-projection",
+      "kind": "capability",
+      "label": "History read-model (read-only projection)"
+    },
+    {
+      "id": "capability:i18n-runtime-plus-validation",
+      "kind": "capability",
+      "label": "i18n runtime + validation"
+    },
+    {
+      "id": "capability:idp-brokering-plus-oidc-provider-management",
+      "kind": "capability",
+      "label": "IdP brokering + OIDC provider management"
+    },
+    {
+      "id": "capability:internal-service-catalog-plus-readiness",
+      "kind": "capability",
+      "label": "Internal service catalog + readiness"
+    },
+    {
+      "id": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "kind": "capability",
+      "label": "Logs (aggregation + tenant-scoped search)"
+    },
+    {
+      "id": "capability:metrics-plus-traces",
+      "kind": "capability",
+      "label": "Metrics + traces"
+    },
+    {
+      "id": "capability:mfa-plus-session-policy-plus-lockout",
+      "kind": "capability",
+      "label": "MFA + session policy + lockout"
+    },
+    {
+      "id": "capability:notification-delivery-plus-preferences-plus-channels",
+      "kind": "capability",
+      "label": "Notification delivery + preferences + channels"
+    },
+    {
+      "id": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "kind": "capability",
+      "label": "Object storage + tenant prefixes + signed URLs"
+    },
+    {
+      "id": "capability:observability-built-in-alerting-plus-incidents",
+      "kind": "capability",
+      "label": "Observability — built-in alerting + incidents"
+    },
+    {
+      "id": "capability:oidc-discovery-issuer-jwks-validation",
+      "kind": "capability",
+      "label": "OIDC discovery / issuer / JWKS validation"
+    },
+    {
+      "id": "capability:oidc-test-connection-plus-callback-display",
+      "kind": "capability",
+      "label": "OIDC test connection + callback display"
+    },
+    {
+      "id": "capability:openapi-drift-hard-gate",
+      "kind": "capability",
+      "label": "OpenAPI drift hard gate"
+    },
+    {
+      "id": "capability:pitr-retention-legal-hold-data-residency",
+      "kind": "capability",
+      "label": "PITR, retention, legal hold, data residency"
+    },
+    {
+      "id": "capability:platform-login-plus-session",
+      "kind": "capability",
+      "label": "Platform login + session"
+    },
+    {
+      "id": "capability:product-catalog-plans-prices",
+      "kind": "capability",
+      "label": "Product catalog, plans, prices"
+    },
+    {
+      "id": "capability:provider-configuration-plane",
+      "kind": "capability",
+      "label": "Provider configuration plane"
+    },
+    {
+      "id": "capability:provider-environment-classification",
+      "kind": "capability",
+      "label": "Provider environment classification"
+    },
+    {
+      "id": "capability:quota-enforcement",
+      "kind": "capability",
+      "label": "Quota enforcement"
+    },
+    {
+      "id": "capability:rate-limiting-api",
+      "kind": "capability",
+      "label": "Rate limiting (API)"
+    },
+    {
+      "id": "capability:rbac-roles-plus-permissions",
+      "kind": "capability",
+      "label": "RBAC (roles + permissions)"
+    },
+    {
+      "id": "capability:relational-storage-plus-migrations-plus-rls",
+      "kind": "capability",
+      "label": "Relational storage + migrations + RLS"
+    },
+    {
+      "id": "capability:runtime-secrets-management",
+      "kind": "capability",
+      "label": "Runtime secrets management"
+    },
+    {
+      "id": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "kind": "capability",
+      "label": "Scheduled jobs (built-in, on the event substrate)"
+    },
+    {
+      "id": "capability:search-plus-indexing-product-search",
+      "kind": "capability",
+      "label": "Search + indexing (product search)"
+    },
+    {
+      "id": "capability:service-catalog-plus-provider-integration-model",
+      "kind": "capability",
+      "label": "Service catalog + provider integration model"
+    },
+    {
+      "id": "capability:sub-organisations",
+      "kind": "capability",
+      "label": "Sub-organisations"
+    },
+    {
+      "id": "capability:subscriptions-invoices-payment-methods-dunning",
+      "kind": "capability",
+      "label": "Subscriptions, invoices, payment methods, dunning"
+    },
+    {
+      "id": "capability:support-mode-break-glass-access",
+      "kind": "capability",
+      "label": "Support-mode / break-glass access"
+    },
+    {
+      "id": "capability:support-tickets-customer-health-announcements",
+      "kind": "capability",
+      "label": "Support tickets, customer health, announcements"
+    },
+    {
+      "id": "capability:tenant-canonical-domain-set-unset",
+      "kind": "capability",
+      "label": "Tenant canonical domain set/unset"
+    },
+    {
+      "id": "capability:tenant-custom-domain-auth-callback",
+      "kind": "capability",
+      "label": "Tenant custom-domain auth callback"
+    },
+    {
+      "id": "capability:tenant-data-import-export",
+      "kind": "capability",
+      "label": "Tenant data import / export"
+    },
+    {
+      "id": "capability:tenant-domain-activation-auth-client",
+      "kind": "capability",
+      "label": "Tenant domain activation (auth-client)"
+    },
+    {
+      "id": "capability:tenant-groups",
+      "kind": "capability",
+      "label": "Tenant groups"
+    },
+    {
+      "id": "capability:tenant-host-identity-resolution",
+      "kind": "capability",
+      "label": "Tenant host identity resolution"
+    },
+    {
+      "id": "capability:tenant-identity-record-plus-fqdn",
+      "kind": "capability",
+      "label": "Tenant identity (record + FQDN)"
+    },
+    {
+      "id": "capability:tenant-isolation-proof",
+      "kind": "capability",
+      "label": "Tenant isolation proof"
+    },
+    {
+      "id": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "kind": "capability",
+      "label": "Tenant lifecycle: provision, suspend, delete, export"
+    },
+    {
+      "id": "capability:tenant-service-clickthrough-policy",
+      "kind": "capability",
+      "label": "Tenant service clickthrough policy"
+    },
+    {
+      "id": "capability:universal-service-foundation-scope-plus-principles",
+      "kind": "capability",
+      "label": "Universal Service Foundation scope + principles"
+    },
+    {
+      "id": "capability:usage-metering-plus-meter-event-ingestion",
+      "kind": "capability",
+      "label": "Usage metering + meter event ingestion"
+    },
+    {
+      "id": "capability:user-identity-plus-tenant-membership",
+      "kind": "capability",
+      "label": "User identity + tenant membership"
+    },
+    {
+      "id": "capability:webhooks-developer-facing",
+      "kind": "capability",
+      "label": "Webhooks (developer-facing)"
+    },
+    {
+      "id": "capability:workflow-engine-scheduled-jobs-approvals",
+      "kind": "capability",
+      "label": "Workflow engine, scheduled jobs, approvals"
+    },
+    {
+      "id": "capability:write-only-secret-settings",
+      "kind": "capability",
+      "label": "Write-only secret settings"
+    },
+    {
+      "id": "security:abac-policy-decision-point:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:abac-policy-decision-point:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:abac-policy-decision-point:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:abac-policy-decision-point:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:abac-policy-decision-point:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:abac-policy-decision-point:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:accessibility-a11y-gate:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:accessibility-a11y-gate:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:accessibility-a11y-gate:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:accessibility-a11y-gate:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:accessibility-a11y-gate:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:accessibility-a11y-gate:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:api-docs-developer-portal-sdks-rate-limits:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:api-docs-developer-portal-sdks-rate-limits:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:api-docs-developer-portal-sdks-rate-limits:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:api-docs-developer-portal-sdks-rate-limits:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:api-docs-developer-portal-sdks-rate-limits:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:api-docs-developer-portal-sdks-rate-limits:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:api-keys-personal-access-tokens:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:api-keys-personal-access-tokens:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:api-keys-personal-access-tokens:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:api-keys-personal-access-tokens:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:api-keys-personal-access-tokens:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:api-keys-personal-access-tokens:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:audit-of-privileged-access:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:audit-of-privileged-access:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:audit-of-privileged-access:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:audit-of-privileged-access:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:audit-of-privileged-access:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:audit-of-privileged-access:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:background-workers-job-runner:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:background-workers-job-runner:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:background-workers-job-runner:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:background-workers-job-runner:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:background-workers-job-runner:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:background-workers-job-runner:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:backup-plus-restore:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:backup-plus-restore:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:backup-plus-restore:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:backup-plus-restore:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:backup-plus-restore:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:backup-plus-restore:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:branding-plus-theming:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:branding-plus-theming:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:branding-plus-theming:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:branding-plus-theming:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:branding-plus-theming:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:branding-plus-theming:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:build-versus-compose-decision-framework:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:build-versus-compose-decision-framework:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:build-versus-compose-decision-framework:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:build-versus-compose-decision-framework:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:build-versus-compose-decision-framework:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:build-versus-compose-decision-framework:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:claim-mapping-plus-group-role-mapping:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:claim-mapping-plus-group-role-mapping:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:claim-mapping-plus-group-role-mapping:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:claim-mapping-plus-group-role-mapping:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:claim-mapping-plus-group-role-mapping:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:claim-mapping-plus-group-role-mapping:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:code-quality-plus-secret-plus-dependency-scanning:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:code-quality-plus-secret-plus-dependency-scanning:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:code-quality-plus-secret-plus-dependency-scanning:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:code-quality-plus-secret-plus-dependency-scanning:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:code-quality-plus-secret-plus-dependency-scanning:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:code-quality-plus-secret-plus-dependency-scanning:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:compliance-reports-access-reviews-evidence-packs:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:compliance-reports-access-reviews-evidence-packs:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:compliance-reports-access-reviews-evidence-packs:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:compliance-reports-access-reviews-evidence-packs:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:compliance-reports-access-reviews-evidence-packs:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:compliance-reports-access-reviews-evidence-packs:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:composed-provider-readiness-spine:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:composed-provider-readiness-spine:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:composed-provider-readiness-spine:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:composed-provider-readiness-spine:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:composed-provider-readiness-spine:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:composed-provider-readiness-spine:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:configuration-registry-plus-history:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:configuration-registry-plus-history:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:configuration-registry-plus-history:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:configuration-registry-plus-history:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:configuration-registry-plus-history:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:configuration-registry-plus-history:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:custom-domains-dns-ownership-tls-canonical:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:custom-domains-dns-ownership-tls-canonical:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:custom-domains-dns-ownership-tls-canonical:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:custom-domains-dns-ownership-tls-canonical:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:custom-domains-dns-ownership-tls-canonical:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:custom-domains-dns-ownership-tls-canonical:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:data-governance-catalog-lineage-classification-pii-dsr-gdpr:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:data-governance-catalog-lineage-classification-pii-dsr-gdpr:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:data-governance-catalog-lineage-classification-pii-dsr-gdpr:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:data-governance-catalog-lineage-classification-pii-dsr-gdpr:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:data-governance-catalog-lineage-classification-pii-dsr-gdpr:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:data-governance-catalog-lineage-classification-pii-dsr-gdpr:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:delegated-administration-roles:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:delegated-administration-roles:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:delegated-administration-roles:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:delegated-administration-roles:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:delegated-administration-roles:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:delegated-administration-roles:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:e2e-confidence-ladder-stage-aware:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:e2e-confidence-ladder-stage-aware:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:e2e-confidence-ladder-stage-aware:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:e2e-confidence-ladder-stage-aware:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:e2e-confidence-ladder-stage-aware:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:e2e-confidence-ladder-stage-aware:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:end-user-profile-plus-preferences-self-service:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:end-user-profile-plus-preferences-self-service:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:end-user-profile-plus-preferences-self-service:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:end-user-profile-plus-preferences-self-service:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:end-user-profile-plus-preferences-self-service:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:end-user-profile-plus-preferences-self-service:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:entitlement-engine:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:entitlement-engine:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:entitlement-engine:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:entitlement-engine:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:entitlement-engine:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:entitlement-engine:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:environment-registry-plus-bootstrap:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:environment-registry-plus-bootstrap:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:environment-registry-plus-bootstrap:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:environment-registry-plus-bootstrap:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:environment-registry-plus-bootstrap:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:environment-registry-plus-bootstrap:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:environment-specific-vs-shared-service-model:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:environment-specific-vs-shared-service-model:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:environment-specific-vs-shared-service-model:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:environment-specific-vs-shared-service-model:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:environment-specific-vs-shared-service-model:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:environment-specific-vs-shared-service-model:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:event-bus-durable-queues-dlq-redrive:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:event-bus-durable-queues-dlq-redrive:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:event-bus-durable-queues-dlq-redrive:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:event-bus-durable-queues-dlq-redrive:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:event-bus-durable-queues-dlq-redrive:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:event-bus-durable-queues-dlq-redrive:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:history-read-model-read-only-projection:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:history-read-model-read-only-projection:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:history-read-model-read-only-projection:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:history-read-model-read-only-projection:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:history-read-model-read-only-projection:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:history-read-model-read-only-projection:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:i18n-runtime-plus-validation:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:i18n-runtime-plus-validation:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:i18n-runtime-plus-validation:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:i18n-runtime-plus-validation:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:i18n-runtime-plus-validation:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:i18n-runtime-plus-validation:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:idp-brokering-plus-oidc-provider-management:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:idp-brokering-plus-oidc-provider-management:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:idp-brokering-plus-oidc-provider-management:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:idp-brokering-plus-oidc-provider-management:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:idp-brokering-plus-oidc-provider-management:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:idp-brokering-plus-oidc-provider-management:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:internal-service-catalog-plus-readiness:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:internal-service-catalog-plus-readiness:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:internal-service-catalog-plus-readiness:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:internal-service-catalog-plus-readiness:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:internal-service-catalog-plus-readiness:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:internal-service-catalog-plus-readiness:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:logs-aggregation-plus-tenant-scoped-search:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:logs-aggregation-plus-tenant-scoped-search:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:logs-aggregation-plus-tenant-scoped-search:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:logs-aggregation-plus-tenant-scoped-search:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:logs-aggregation-plus-tenant-scoped-search:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:logs-aggregation-plus-tenant-scoped-search:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:metrics-plus-traces:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:metrics-plus-traces:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:metrics-plus-traces:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:metrics-plus-traces:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:metrics-plus-traces:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:metrics-plus-traces:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:mfa-plus-session-policy-plus-lockout:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:mfa-plus-session-policy-plus-lockout:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:mfa-plus-session-policy-plus-lockout:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:mfa-plus-session-policy-plus-lockout:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:mfa-plus-session-policy-plus-lockout:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:mfa-plus-session-policy-plus-lockout:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:notification-delivery-plus-preferences-plus-channels:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:notification-delivery-plus-preferences-plus-channels:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:notification-delivery-plus-preferences-plus-channels:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:notification-delivery-plus-preferences-plus-channels:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:notification-delivery-plus-preferences-plus-channels:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:notification-delivery-plus-preferences-plus-channels:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:object-storage-plus-tenant-prefixes-plus-signed-urls:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:object-storage-plus-tenant-prefixes-plus-signed-urls:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:object-storage-plus-tenant-prefixes-plus-signed-urls:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:object-storage-plus-tenant-prefixes-plus-signed-urls:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:object-storage-plus-tenant-prefixes-plus-signed-urls:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:object-storage-plus-tenant-prefixes-plus-signed-urls:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:observability-built-in-alerting-plus-incidents:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:observability-built-in-alerting-plus-incidents:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:observability-built-in-alerting-plus-incidents:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:observability-built-in-alerting-plus-incidents:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:observability-built-in-alerting-plus-incidents:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:observability-built-in-alerting-plus-incidents:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:oidc-discovery-issuer-jwks-validation:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:oidc-discovery-issuer-jwks-validation:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:oidc-discovery-issuer-jwks-validation:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:oidc-discovery-issuer-jwks-validation:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:oidc-discovery-issuer-jwks-validation:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:oidc-discovery-issuer-jwks-validation:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:oidc-test-connection-plus-callback-display:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:oidc-test-connection-plus-callback-display:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:oidc-test-connection-plus-callback-display:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:oidc-test-connection-plus-callback-display:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:oidc-test-connection-plus-callback-display:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:oidc-test-connection-plus-callback-display:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:openapi-drift-hard-gate:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:openapi-drift-hard-gate:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:openapi-drift-hard-gate:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:openapi-drift-hard-gate:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:openapi-drift-hard-gate:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:openapi-drift-hard-gate:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:pitr-retention-legal-hold-data-residency:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:pitr-retention-legal-hold-data-residency:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:pitr-retention-legal-hold-data-residency:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:pitr-retention-legal-hold-data-residency:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:pitr-retention-legal-hold-data-residency:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:pitr-retention-legal-hold-data-residency:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:platform-login-plus-session:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:platform-login-plus-session:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:platform-login-plus-session:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:platform-login-plus-session:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:platform-login-plus-session:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:platform-login-plus-session:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:product-catalog-plans-prices:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:product-catalog-plans-prices:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:product-catalog-plans-prices:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:product-catalog-plans-prices:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:product-catalog-plans-prices:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:product-catalog-plans-prices:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:provider-configuration-plane:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:provider-configuration-plane:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:provider-configuration-plane:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:provider-configuration-plane:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:provider-configuration-plane:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:provider-configuration-plane:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:provider-environment-classification:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:provider-environment-classification:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:provider-environment-classification:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:provider-environment-classification:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:provider-environment-classification:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:provider-environment-classification:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:quota-enforcement:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:quota-enforcement:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:quota-enforcement:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:quota-enforcement:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:quota-enforcement:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:quota-enforcement:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:rate-limiting-api:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:rate-limiting-api:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:rate-limiting-api:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:rate-limiting-api:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:rate-limiting-api:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:rate-limiting-api:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:rbac-roles-plus-permissions:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:rbac-roles-plus-permissions:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:rbac-roles-plus-permissions:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:rbac-roles-plus-permissions:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:rbac-roles-plus-permissions:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:rbac-roles-plus-permissions:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:relational-storage-plus-migrations-plus-rls:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:relational-storage-plus-migrations-plus-rls:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:relational-storage-plus-migrations-plus-rls:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:relational-storage-plus-migrations-plus-rls:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:relational-storage-plus-migrations-plus-rls:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:relational-storage-plus-migrations-plus-rls:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:runtime-secrets-management:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:runtime-secrets-management:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:runtime-secrets-management:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:runtime-secrets-management:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:runtime-secrets-management:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:runtime-secrets-management:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:scheduled-jobs-built-in-on-the-event-substrate:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:scheduled-jobs-built-in-on-the-event-substrate:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:scheduled-jobs-built-in-on-the-event-substrate:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:scheduled-jobs-built-in-on-the-event-substrate:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:scheduled-jobs-built-in-on-the-event-substrate:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:scheduled-jobs-built-in-on-the-event-substrate:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:search-plus-indexing-product-search:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:search-plus-indexing-product-search:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:search-plus-indexing-product-search:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:search-plus-indexing-product-search:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:search-plus-indexing-product-search:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:search-plus-indexing-product-search:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:service-catalog-plus-provider-integration-model:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:service-catalog-plus-provider-integration-model:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:service-catalog-plus-provider-integration-model:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:service-catalog-plus-provider-integration-model:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:service-catalog-plus-provider-integration-model:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:service-catalog-plus-provider-integration-model:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:sub-organisations:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:sub-organisations:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:sub-organisations:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:sub-organisations:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:sub-organisations:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:sub-organisations:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:subscriptions-invoices-payment-methods-dunning:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:subscriptions-invoices-payment-methods-dunning:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:subscriptions-invoices-payment-methods-dunning:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:subscriptions-invoices-payment-methods-dunning:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:subscriptions-invoices-payment-methods-dunning:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:subscriptions-invoices-payment-methods-dunning:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:support-mode-break-glass-access:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:support-mode-break-glass-access:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:support-mode-break-glass-access:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:support-mode-break-glass-access:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:support-mode-break-glass-access:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:support-mode-break-glass-access:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:support-tickets-customer-health-announcements:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:support-tickets-customer-health-announcements:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:support-tickets-customer-health-announcements:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:support-tickets-customer-health-announcements:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:support-tickets-customer-health-announcements:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:support-tickets-customer-health-announcements:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:tenant-canonical-domain-set-unset:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:tenant-canonical-domain-set-unset:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:tenant-canonical-domain-set-unset:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:tenant-canonical-domain-set-unset:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:tenant-canonical-domain-set-unset:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:tenant-canonical-domain-set-unset:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:tenant-custom-domain-auth-callback:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:tenant-custom-domain-auth-callback:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:tenant-custom-domain-auth-callback:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:tenant-custom-domain-auth-callback:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:tenant-custom-domain-auth-callback:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:tenant-custom-domain-auth-callback:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:tenant-data-import-export:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:tenant-data-import-export:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:tenant-data-import-export:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:tenant-data-import-export:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:tenant-data-import-export:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:tenant-data-import-export:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:tenant-domain-activation-auth-client:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:tenant-domain-activation-auth-client:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:tenant-domain-activation-auth-client:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:tenant-domain-activation-auth-client:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:tenant-domain-activation-auth-client:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:tenant-domain-activation-auth-client:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:tenant-groups:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:tenant-groups:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:tenant-groups:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:tenant-groups:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:tenant-groups:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:tenant-groups:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:tenant-host-identity-resolution:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:tenant-host-identity-resolution:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:tenant-host-identity-resolution:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:tenant-host-identity-resolution:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:tenant-host-identity-resolution:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:tenant-host-identity-resolution:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:tenant-identity-record-plus-fqdn:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:tenant-identity-record-plus-fqdn:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:tenant-identity-record-plus-fqdn:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:tenant-identity-record-plus-fqdn:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:tenant-identity-record-plus-fqdn:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:tenant-identity-record-plus-fqdn:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:tenant-isolation-proof:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:tenant-isolation-proof:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:tenant-isolation-proof:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:tenant-isolation-proof:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:tenant-isolation-proof:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:tenant-isolation-proof:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:tenant-lifecycle-provision-suspend-delete-export:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:tenant-lifecycle-provision-suspend-delete-export:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:tenant-lifecycle-provision-suspend-delete-export:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:tenant-lifecycle-provision-suspend-delete-export:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:tenant-lifecycle-provision-suspend-delete-export:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:tenant-lifecycle-provision-suspend-delete-export:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:tenant-service-clickthrough-policy:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:tenant-service-clickthrough-policy:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:tenant-service-clickthrough-policy:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:tenant-service-clickthrough-policy:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:tenant-service-clickthrough-policy:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:tenant-service-clickthrough-policy:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:universal-service-foundation-scope-plus-principles:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:universal-service-foundation-scope-plus-principles:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:universal-service-foundation-scope-plus-principles:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:universal-service-foundation-scope-plus-principles:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:universal-service-foundation-scope-plus-principles:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:universal-service-foundation-scope-plus-principles:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:usage-metering-plus-meter-event-ingestion:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:usage-metering-plus-meter-event-ingestion:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:usage-metering-plus-meter-event-ingestion:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:usage-metering-plus-meter-event-ingestion:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:usage-metering-plus-meter-event-ingestion:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:usage-metering-plus-meter-event-ingestion:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:user-identity-plus-tenant-membership:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:user-identity-plus-tenant-membership:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:user-identity-plus-tenant-membership:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:user-identity-plus-tenant-membership:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:user-identity-plus-tenant-membership:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:user-identity-plus-tenant-membership:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:webhooks-developer-facing:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:webhooks-developer-facing:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:webhooks-developer-facing:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:webhooks-developer-facing:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:webhooks-developer-facing:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:webhooks-developer-facing:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:workflow-engine-scheduled-jobs-approvals:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:workflow-engine-scheduled-jobs-approvals:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:workflow-engine-scheduled-jobs-approvals:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:workflow-engine-scheduled-jobs-approvals:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:workflow-engine-scheduled-jobs-approvals:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:workflow-engine-scheduled-jobs-approvals:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    },
+    {
+      "id": "security:write-only-secret-settings:audit",
+      "kind": "security",
+      "label": "audit"
+    },
+    {
+      "id": "security:write-only-secret-settings:dataclassification",
+      "kind": "security",
+      "label": "dataClassification"
+    },
+    {
+      "id": "security:write-only-secret-settings:permissions",
+      "kind": "security",
+      "label": "permissions"
+    },
+    {
+      "id": "security:write-only-secret-settings:policies",
+      "kind": "security",
+      "label": "policies"
+    },
+    {
+      "id": "security:write-only-secret-settings:secrets",
+      "kind": "security",
+      "label": "secrets"
+    },
+    {
+      "id": "security:write-only-secret-settings:securityrisk",
+      "kind": "security",
+      "label": "securityRisk"
+    }
+  ],
+  "edges": [
+    {
+      "from": "capability:abac-policy-decision-point",
+      "to": "security:abac-policy-decision-point:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:abac-policy-decision-point",
+      "to": "security:abac-policy-decision-point:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:abac-policy-decision-point",
+      "to": "security:abac-policy-decision-point:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:abac-policy-decision-point",
+      "to": "security:abac-policy-decision-point:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:abac-policy-decision-point",
+      "to": "security:abac-policy-decision-point:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:abac-policy-decision-point",
+      "to": "security:abac-policy-decision-point:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:accessibility-a11y-gate",
+      "to": "security:accessibility-a11y-gate:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:accessibility-a11y-gate",
+      "to": "security:accessibility-a11y-gate:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:accessibility-a11y-gate",
+      "to": "security:accessibility-a11y-gate:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:accessibility-a11y-gate",
+      "to": "security:accessibility-a11y-gate:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:accessibility-a11y-gate",
+      "to": "security:accessibility-a11y-gate:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:accessibility-a11y-gate",
+      "to": "security:accessibility-a11y-gate:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "to": "security:api-docs-developer-portal-sdks-rate-limits:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "to": "security:api-docs-developer-portal-sdks-rate-limits:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "to": "security:api-docs-developer-portal-sdks-rate-limits:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "to": "security:api-docs-developer-portal-sdks-rate-limits:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "to": "security:api-docs-developer-portal-sdks-rate-limits:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "to": "security:api-docs-developer-portal-sdks-rate-limits:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:api-keys-personal-access-tokens",
+      "to": "security:api-keys-personal-access-tokens:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:api-keys-personal-access-tokens",
+      "to": "security:api-keys-personal-access-tokens:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:api-keys-personal-access-tokens",
+      "to": "security:api-keys-personal-access-tokens:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:api-keys-personal-access-tokens",
+      "to": "security:api-keys-personal-access-tokens:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:api-keys-personal-access-tokens",
+      "to": "security:api-keys-personal-access-tokens:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:api-keys-personal-access-tokens",
+      "to": "security:api-keys-personal-access-tokens:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:audit-of-privileged-access",
+      "to": "security:audit-of-privileged-access:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:audit-of-privileged-access",
+      "to": "security:audit-of-privileged-access:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:audit-of-privileged-access",
+      "to": "security:audit-of-privileged-access:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:audit-of-privileged-access",
+      "to": "security:audit-of-privileged-access:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:audit-of-privileged-access",
+      "to": "security:audit-of-privileged-access:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:audit-of-privileged-access",
+      "to": "security:audit-of-privileged-access:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:background-workers-job-runner",
+      "to": "security:background-workers-job-runner:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:background-workers-job-runner",
+      "to": "security:background-workers-job-runner:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:background-workers-job-runner",
+      "to": "security:background-workers-job-runner:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:background-workers-job-runner",
+      "to": "security:background-workers-job-runner:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:background-workers-job-runner",
+      "to": "security:background-workers-job-runner:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:background-workers-job-runner",
+      "to": "security:background-workers-job-runner:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:backup-plus-restore",
+      "to": "security:backup-plus-restore:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:backup-plus-restore",
+      "to": "security:backup-plus-restore:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:backup-plus-restore",
+      "to": "security:backup-plus-restore:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:backup-plus-restore",
+      "to": "security:backup-plus-restore:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:backup-plus-restore",
+      "to": "security:backup-plus-restore:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:backup-plus-restore",
+      "to": "security:backup-plus-restore:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:branding-plus-theming",
+      "to": "security:branding-plus-theming:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:branding-plus-theming",
+      "to": "security:branding-plus-theming:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:branding-plus-theming",
+      "to": "security:branding-plus-theming:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:branding-plus-theming",
+      "to": "security:branding-plus-theming:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:branding-plus-theming",
+      "to": "security:branding-plus-theming:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:branding-plus-theming",
+      "to": "security:branding-plus-theming:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "security:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "security:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "security:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "security:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "security:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "security:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:build-versus-compose-decision-framework",
+      "to": "security:build-versus-compose-decision-framework:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:build-versus-compose-decision-framework",
+      "to": "security:build-versus-compose-decision-framework:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:build-versus-compose-decision-framework",
+      "to": "security:build-versus-compose-decision-framework:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:build-versus-compose-decision-framework",
+      "to": "security:build-versus-compose-decision-framework:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:build-versus-compose-decision-framework",
+      "to": "security:build-versus-compose-decision-framework:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:build-versus-compose-decision-framework",
+      "to": "security:build-versus-compose-decision-framework:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:claim-mapping-plus-group-role-mapping",
+      "to": "security:claim-mapping-plus-group-role-mapping:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:claim-mapping-plus-group-role-mapping",
+      "to": "security:claim-mapping-plus-group-role-mapping:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:claim-mapping-plus-group-role-mapping",
+      "to": "security:claim-mapping-plus-group-role-mapping:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:claim-mapping-plus-group-role-mapping",
+      "to": "security:claim-mapping-plus-group-role-mapping:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:claim-mapping-plus-group-role-mapping",
+      "to": "security:claim-mapping-plus-group-role-mapping:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:claim-mapping-plus-group-role-mapping",
+      "to": "security:claim-mapping-plus-group-role-mapping:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "to": "security:code-quality-plus-secret-plus-dependency-scanning:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "to": "security:code-quality-plus-secret-plus-dependency-scanning:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "to": "security:code-quality-plus-secret-plus-dependency-scanning:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "to": "security:code-quality-plus-secret-plus-dependency-scanning:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "to": "security:code-quality-plus-secret-plus-dependency-scanning:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "to": "security:code-quality-plus-secret-plus-dependency-scanning:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:compliance-reports-access-reviews-evidence-packs",
+      "to": "security:compliance-reports-access-reviews-evidence-packs:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:compliance-reports-access-reviews-evidence-packs",
+      "to": "security:compliance-reports-access-reviews-evidence-packs:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:compliance-reports-access-reviews-evidence-packs",
+      "to": "security:compliance-reports-access-reviews-evidence-packs:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:compliance-reports-access-reviews-evidence-packs",
+      "to": "security:compliance-reports-access-reviews-evidence-packs:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:compliance-reports-access-reviews-evidence-packs",
+      "to": "security:compliance-reports-access-reviews-evidence-packs:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:compliance-reports-access-reviews-evidence-packs",
+      "to": "security:compliance-reports-access-reviews-evidence-packs:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:composed-provider-readiness-spine",
+      "to": "security:composed-provider-readiness-spine:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:composed-provider-readiness-spine",
+      "to": "security:composed-provider-readiness-spine:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:composed-provider-readiness-spine",
+      "to": "security:composed-provider-readiness-spine:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:composed-provider-readiness-spine",
+      "to": "security:composed-provider-readiness-spine:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:composed-provider-readiness-spine",
+      "to": "security:composed-provider-readiness-spine:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:composed-provider-readiness-spine",
+      "to": "security:composed-provider-readiness-spine:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:configuration-registry-plus-history",
+      "to": "security:configuration-registry-plus-history:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:configuration-registry-plus-history",
+      "to": "security:configuration-registry-plus-history:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:configuration-registry-plus-history",
+      "to": "security:configuration-registry-plus-history:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:configuration-registry-plus-history",
+      "to": "security:configuration-registry-plus-history:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:configuration-registry-plus-history",
+      "to": "security:configuration-registry-plus-history:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:configuration-registry-plus-history",
+      "to": "security:configuration-registry-plus-history:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:custom-domains-dns-ownership-tls-canonical",
+      "to": "security:custom-domains-dns-ownership-tls-canonical:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:custom-domains-dns-ownership-tls-canonical",
+      "to": "security:custom-domains-dns-ownership-tls-canonical:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:custom-domains-dns-ownership-tls-canonical",
+      "to": "security:custom-domains-dns-ownership-tls-canonical:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:custom-domains-dns-ownership-tls-canonical",
+      "to": "security:custom-domains-dns-ownership-tls-canonical:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:custom-domains-dns-ownership-tls-canonical",
+      "to": "security:custom-domains-dns-ownership-tls-canonical:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:custom-domains-dns-ownership-tls-canonical",
+      "to": "security:custom-domains-dns-ownership-tls-canonical:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "security:data-governance-catalog-lineage-classification-pii-dsr-gdpr:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "security:data-governance-catalog-lineage-classification-pii-dsr-gdpr:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "security:data-governance-catalog-lineage-classification-pii-dsr-gdpr:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "security:data-governance-catalog-lineage-classification-pii-dsr-gdpr:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "security:data-governance-catalog-lineage-classification-pii-dsr-gdpr:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "security:data-governance-catalog-lineage-classification-pii-dsr-gdpr:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "security:delegated-administration-roles:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "security:delegated-administration-roles:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "security:delegated-administration-roles:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "security:delegated-administration-roles:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "security:delegated-administration-roles:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "security:delegated-administration-roles:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:e2e-confidence-ladder-stage-aware",
+      "to": "security:e2e-confidence-ladder-stage-aware:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:e2e-confidence-ladder-stage-aware",
+      "to": "security:e2e-confidence-ladder-stage-aware:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:e2e-confidence-ladder-stage-aware",
+      "to": "security:e2e-confidence-ladder-stage-aware:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:e2e-confidence-ladder-stage-aware",
+      "to": "security:e2e-confidence-ladder-stage-aware:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:e2e-confidence-ladder-stage-aware",
+      "to": "security:e2e-confidence-ladder-stage-aware:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:e2e-confidence-ladder-stage-aware",
+      "to": "security:e2e-confidence-ladder-stage-aware:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:end-user-profile-plus-preferences-self-service",
+      "to": "security:end-user-profile-plus-preferences-self-service:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:end-user-profile-plus-preferences-self-service",
+      "to": "security:end-user-profile-plus-preferences-self-service:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:end-user-profile-plus-preferences-self-service",
+      "to": "security:end-user-profile-plus-preferences-self-service:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:end-user-profile-plus-preferences-self-service",
+      "to": "security:end-user-profile-plus-preferences-self-service:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:end-user-profile-plus-preferences-self-service",
+      "to": "security:end-user-profile-plus-preferences-self-service:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:end-user-profile-plus-preferences-self-service",
+      "to": "security:end-user-profile-plus-preferences-self-service:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "security:entitlement-engine:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "security:entitlement-engine:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "security:entitlement-engine:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "security:entitlement-engine:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "security:entitlement-engine:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "security:entitlement-engine:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:environment-registry-plus-bootstrap",
+      "to": "security:environment-registry-plus-bootstrap:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:environment-registry-plus-bootstrap",
+      "to": "security:environment-registry-plus-bootstrap:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:environment-registry-plus-bootstrap",
+      "to": "security:environment-registry-plus-bootstrap:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:environment-registry-plus-bootstrap",
+      "to": "security:environment-registry-plus-bootstrap:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:environment-registry-plus-bootstrap",
+      "to": "security:environment-registry-plus-bootstrap:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:environment-registry-plus-bootstrap",
+      "to": "security:environment-registry-plus-bootstrap:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:environment-specific-vs-shared-service-model",
+      "to": "security:environment-specific-vs-shared-service-model:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:environment-specific-vs-shared-service-model",
+      "to": "security:environment-specific-vs-shared-service-model:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:environment-specific-vs-shared-service-model",
+      "to": "security:environment-specific-vs-shared-service-model:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:environment-specific-vs-shared-service-model",
+      "to": "security:environment-specific-vs-shared-service-model:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:environment-specific-vs-shared-service-model",
+      "to": "security:environment-specific-vs-shared-service-model:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:environment-specific-vs-shared-service-model",
+      "to": "security:environment-specific-vs-shared-service-model:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "security:event-bus-durable-queues-dlq-redrive:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "security:event-bus-durable-queues-dlq-redrive:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "security:event-bus-durable-queues-dlq-redrive:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "security:event-bus-durable-queues-dlq-redrive:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "security:event-bus-durable-queues-dlq-redrive:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "security:event-bus-durable-queues-dlq-redrive:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:history-read-model-read-only-projection",
+      "to": "security:history-read-model-read-only-projection:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:history-read-model-read-only-projection",
+      "to": "security:history-read-model-read-only-projection:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:history-read-model-read-only-projection",
+      "to": "security:history-read-model-read-only-projection:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:history-read-model-read-only-projection",
+      "to": "security:history-read-model-read-only-projection:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:history-read-model-read-only-projection",
+      "to": "security:history-read-model-read-only-projection:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:history-read-model-read-only-projection",
+      "to": "security:history-read-model-read-only-projection:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:i18n-runtime-plus-validation",
+      "to": "security:i18n-runtime-plus-validation:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:i18n-runtime-plus-validation",
+      "to": "security:i18n-runtime-plus-validation:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:i18n-runtime-plus-validation",
+      "to": "security:i18n-runtime-plus-validation:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:i18n-runtime-plus-validation",
+      "to": "security:i18n-runtime-plus-validation:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:i18n-runtime-plus-validation",
+      "to": "security:i18n-runtime-plus-validation:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:i18n-runtime-plus-validation",
+      "to": "security:i18n-runtime-plus-validation:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:idp-brokering-plus-oidc-provider-management",
+      "to": "security:idp-brokering-plus-oidc-provider-management:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:idp-brokering-plus-oidc-provider-management",
+      "to": "security:idp-brokering-plus-oidc-provider-management:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:idp-brokering-plus-oidc-provider-management",
+      "to": "security:idp-brokering-plus-oidc-provider-management:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:idp-brokering-plus-oidc-provider-management",
+      "to": "security:idp-brokering-plus-oidc-provider-management:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:idp-brokering-plus-oidc-provider-management",
+      "to": "security:idp-brokering-plus-oidc-provider-management:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:idp-brokering-plus-oidc-provider-management",
+      "to": "security:idp-brokering-plus-oidc-provider-management:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "security:internal-service-catalog-plus-readiness:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "security:internal-service-catalog-plus-readiness:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "security:internal-service-catalog-plus-readiness:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "security:internal-service-catalog-plus-readiness:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "security:internal-service-catalog-plus-readiness:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "security:internal-service-catalog-plus-readiness:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "to": "security:logs-aggregation-plus-tenant-scoped-search:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "to": "security:logs-aggregation-plus-tenant-scoped-search:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "to": "security:logs-aggregation-plus-tenant-scoped-search:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "to": "security:logs-aggregation-plus-tenant-scoped-search:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "to": "security:logs-aggregation-plus-tenant-scoped-search:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "to": "security:logs-aggregation-plus-tenant-scoped-search:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:metrics-plus-traces",
+      "to": "security:metrics-plus-traces:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:metrics-plus-traces",
+      "to": "security:metrics-plus-traces:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:metrics-plus-traces",
+      "to": "security:metrics-plus-traces:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:metrics-plus-traces",
+      "to": "security:metrics-plus-traces:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:metrics-plus-traces",
+      "to": "security:metrics-plus-traces:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:metrics-plus-traces",
+      "to": "security:metrics-plus-traces:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:mfa-plus-session-policy-plus-lockout",
+      "to": "security:mfa-plus-session-policy-plus-lockout:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:mfa-plus-session-policy-plus-lockout",
+      "to": "security:mfa-plus-session-policy-plus-lockout:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:mfa-plus-session-policy-plus-lockout",
+      "to": "security:mfa-plus-session-policy-plus-lockout:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:mfa-plus-session-policy-plus-lockout",
+      "to": "security:mfa-plus-session-policy-plus-lockout:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:mfa-plus-session-policy-plus-lockout",
+      "to": "security:mfa-plus-session-policy-plus-lockout:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:mfa-plus-session-policy-plus-lockout",
+      "to": "security:mfa-plus-session-policy-plus-lockout:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:notification-delivery-plus-preferences-plus-channels",
+      "to": "security:notification-delivery-plus-preferences-plus-channels:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:notification-delivery-plus-preferences-plus-channels",
+      "to": "security:notification-delivery-plus-preferences-plus-channels:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:notification-delivery-plus-preferences-plus-channels",
+      "to": "security:notification-delivery-plus-preferences-plus-channels:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:notification-delivery-plus-preferences-plus-channels",
+      "to": "security:notification-delivery-plus-preferences-plus-channels:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:notification-delivery-plus-preferences-plus-channels",
+      "to": "security:notification-delivery-plus-preferences-plus-channels:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:notification-delivery-plus-preferences-plus-channels",
+      "to": "security:notification-delivery-plus-preferences-plus-channels:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "security:object-storage-plus-tenant-prefixes-plus-signed-urls:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "security:object-storage-plus-tenant-prefixes-plus-signed-urls:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "security:object-storage-plus-tenant-prefixes-plus-signed-urls:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "security:object-storage-plus-tenant-prefixes-plus-signed-urls:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "security:object-storage-plus-tenant-prefixes-plus-signed-urls:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "security:object-storage-plus-tenant-prefixes-plus-signed-urls:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:observability-built-in-alerting-plus-incidents",
+      "to": "security:observability-built-in-alerting-plus-incidents:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:observability-built-in-alerting-plus-incidents",
+      "to": "security:observability-built-in-alerting-plus-incidents:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:observability-built-in-alerting-plus-incidents",
+      "to": "security:observability-built-in-alerting-plus-incidents:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:observability-built-in-alerting-plus-incidents",
+      "to": "security:observability-built-in-alerting-plus-incidents:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:observability-built-in-alerting-plus-incidents",
+      "to": "security:observability-built-in-alerting-plus-incidents:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:observability-built-in-alerting-plus-incidents",
+      "to": "security:observability-built-in-alerting-plus-incidents:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:oidc-discovery-issuer-jwks-validation",
+      "to": "security:oidc-discovery-issuer-jwks-validation:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:oidc-discovery-issuer-jwks-validation",
+      "to": "security:oidc-discovery-issuer-jwks-validation:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:oidc-discovery-issuer-jwks-validation",
+      "to": "security:oidc-discovery-issuer-jwks-validation:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:oidc-discovery-issuer-jwks-validation",
+      "to": "security:oidc-discovery-issuer-jwks-validation:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:oidc-discovery-issuer-jwks-validation",
+      "to": "security:oidc-discovery-issuer-jwks-validation:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:oidc-discovery-issuer-jwks-validation",
+      "to": "security:oidc-discovery-issuer-jwks-validation:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:oidc-test-connection-plus-callback-display",
+      "to": "security:oidc-test-connection-plus-callback-display:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:oidc-test-connection-plus-callback-display",
+      "to": "security:oidc-test-connection-plus-callback-display:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:oidc-test-connection-plus-callback-display",
+      "to": "security:oidc-test-connection-plus-callback-display:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:oidc-test-connection-plus-callback-display",
+      "to": "security:oidc-test-connection-plus-callback-display:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:oidc-test-connection-plus-callback-display",
+      "to": "security:oidc-test-connection-plus-callback-display:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:oidc-test-connection-plus-callback-display",
+      "to": "security:oidc-test-connection-plus-callback-display:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:openapi-drift-hard-gate",
+      "to": "security:openapi-drift-hard-gate:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:openapi-drift-hard-gate",
+      "to": "security:openapi-drift-hard-gate:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:openapi-drift-hard-gate",
+      "to": "security:openapi-drift-hard-gate:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:openapi-drift-hard-gate",
+      "to": "security:openapi-drift-hard-gate:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:openapi-drift-hard-gate",
+      "to": "security:openapi-drift-hard-gate:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:openapi-drift-hard-gate",
+      "to": "security:openapi-drift-hard-gate:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:pitr-retention-legal-hold-data-residency",
+      "to": "security:pitr-retention-legal-hold-data-residency:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:pitr-retention-legal-hold-data-residency",
+      "to": "security:pitr-retention-legal-hold-data-residency:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:pitr-retention-legal-hold-data-residency",
+      "to": "security:pitr-retention-legal-hold-data-residency:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:pitr-retention-legal-hold-data-residency",
+      "to": "security:pitr-retention-legal-hold-data-residency:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:pitr-retention-legal-hold-data-residency",
+      "to": "security:pitr-retention-legal-hold-data-residency:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:pitr-retention-legal-hold-data-residency",
+      "to": "security:pitr-retention-legal-hold-data-residency:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:platform-login-plus-session",
+      "to": "security:platform-login-plus-session:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:platform-login-plus-session",
+      "to": "security:platform-login-plus-session:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:platform-login-plus-session",
+      "to": "security:platform-login-plus-session:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:platform-login-plus-session",
+      "to": "security:platform-login-plus-session:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:platform-login-plus-session",
+      "to": "security:platform-login-plus-session:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:platform-login-plus-session",
+      "to": "security:platform-login-plus-session:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "security:product-catalog-plans-prices:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "security:product-catalog-plans-prices:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "security:product-catalog-plans-prices:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "security:product-catalog-plans-prices:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "security:product-catalog-plans-prices:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "security:product-catalog-plans-prices:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "security:provider-configuration-plane:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "security:provider-configuration-plane:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "security:provider-configuration-plane:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "security:provider-configuration-plane:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "security:provider-configuration-plane:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "security:provider-configuration-plane:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:provider-environment-classification",
+      "to": "security:provider-environment-classification:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:provider-environment-classification",
+      "to": "security:provider-environment-classification:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:provider-environment-classification",
+      "to": "security:provider-environment-classification:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:provider-environment-classification",
+      "to": "security:provider-environment-classification:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:provider-environment-classification",
+      "to": "security:provider-environment-classification:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:provider-environment-classification",
+      "to": "security:provider-environment-classification:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "security:quota-enforcement:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "security:quota-enforcement:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "security:quota-enforcement:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "security:quota-enforcement:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "security:quota-enforcement:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "security:quota-enforcement:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:rate-limiting-api",
+      "to": "security:rate-limiting-api:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:rate-limiting-api",
+      "to": "security:rate-limiting-api:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:rate-limiting-api",
+      "to": "security:rate-limiting-api:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:rate-limiting-api",
+      "to": "security:rate-limiting-api:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:rate-limiting-api",
+      "to": "security:rate-limiting-api:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:rate-limiting-api",
+      "to": "security:rate-limiting-api:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:rbac-roles-plus-permissions",
+      "to": "security:rbac-roles-plus-permissions:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:rbac-roles-plus-permissions",
+      "to": "security:rbac-roles-plus-permissions:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:rbac-roles-plus-permissions",
+      "to": "security:rbac-roles-plus-permissions:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:rbac-roles-plus-permissions",
+      "to": "security:rbac-roles-plus-permissions:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:rbac-roles-plus-permissions",
+      "to": "security:rbac-roles-plus-permissions:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:rbac-roles-plus-permissions",
+      "to": "security:rbac-roles-plus-permissions:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:relational-storage-plus-migrations-plus-rls",
+      "to": "security:relational-storage-plus-migrations-plus-rls:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:relational-storage-plus-migrations-plus-rls",
+      "to": "security:relational-storage-plus-migrations-plus-rls:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:relational-storage-plus-migrations-plus-rls",
+      "to": "security:relational-storage-plus-migrations-plus-rls:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:relational-storage-plus-migrations-plus-rls",
+      "to": "security:relational-storage-plus-migrations-plus-rls:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:relational-storage-plus-migrations-plus-rls",
+      "to": "security:relational-storage-plus-migrations-plus-rls:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:relational-storage-plus-migrations-plus-rls",
+      "to": "security:relational-storage-plus-migrations-plus-rls:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "security:runtime-secrets-management:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "security:runtime-secrets-management:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "security:runtime-secrets-management:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "security:runtime-secrets-management:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "security:runtime-secrets-management:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "security:runtime-secrets-management:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "to": "security:scheduled-jobs-built-in-on-the-event-substrate:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "to": "security:scheduled-jobs-built-in-on-the-event-substrate:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "to": "security:scheduled-jobs-built-in-on-the-event-substrate:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "to": "security:scheduled-jobs-built-in-on-the-event-substrate:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "to": "security:scheduled-jobs-built-in-on-the-event-substrate:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "to": "security:scheduled-jobs-built-in-on-the-event-substrate:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:search-plus-indexing-product-search",
+      "to": "security:search-plus-indexing-product-search:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:search-plus-indexing-product-search",
+      "to": "security:search-plus-indexing-product-search:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:search-plus-indexing-product-search",
+      "to": "security:search-plus-indexing-product-search:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:search-plus-indexing-product-search",
+      "to": "security:search-plus-indexing-product-search:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:search-plus-indexing-product-search",
+      "to": "security:search-plus-indexing-product-search:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:search-plus-indexing-product-search",
+      "to": "security:search-plus-indexing-product-search:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:service-catalog-plus-provider-integration-model",
+      "to": "security:service-catalog-plus-provider-integration-model:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:service-catalog-plus-provider-integration-model",
+      "to": "security:service-catalog-plus-provider-integration-model:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:service-catalog-plus-provider-integration-model",
+      "to": "security:service-catalog-plus-provider-integration-model:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:service-catalog-plus-provider-integration-model",
+      "to": "security:service-catalog-plus-provider-integration-model:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:service-catalog-plus-provider-integration-model",
+      "to": "security:service-catalog-plus-provider-integration-model:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:service-catalog-plus-provider-integration-model",
+      "to": "security:service-catalog-plus-provider-integration-model:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:sub-organisations",
+      "to": "security:sub-organisations:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:sub-organisations",
+      "to": "security:sub-organisations:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:sub-organisations",
+      "to": "security:sub-organisations:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:sub-organisations",
+      "to": "security:sub-organisations:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:sub-organisations",
+      "to": "security:sub-organisations:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:sub-organisations",
+      "to": "security:sub-organisations:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:subscriptions-invoices-payment-methods-dunning",
+      "to": "security:subscriptions-invoices-payment-methods-dunning:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:subscriptions-invoices-payment-methods-dunning",
+      "to": "security:subscriptions-invoices-payment-methods-dunning:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:subscriptions-invoices-payment-methods-dunning",
+      "to": "security:subscriptions-invoices-payment-methods-dunning:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:subscriptions-invoices-payment-methods-dunning",
+      "to": "security:subscriptions-invoices-payment-methods-dunning:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:subscriptions-invoices-payment-methods-dunning",
+      "to": "security:subscriptions-invoices-payment-methods-dunning:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:subscriptions-invoices-payment-methods-dunning",
+      "to": "security:subscriptions-invoices-payment-methods-dunning:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "security:support-mode-break-glass-access:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "security:support-mode-break-glass-access:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "security:support-mode-break-glass-access:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "security:support-mode-break-glass-access:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "security:support-mode-break-glass-access:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "security:support-mode-break-glass-access:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:support-tickets-customer-health-announcements",
+      "to": "security:support-tickets-customer-health-announcements:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:support-tickets-customer-health-announcements",
+      "to": "security:support-tickets-customer-health-announcements:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:support-tickets-customer-health-announcements",
+      "to": "security:support-tickets-customer-health-announcements:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:support-tickets-customer-health-announcements",
+      "to": "security:support-tickets-customer-health-announcements:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:support-tickets-customer-health-announcements",
+      "to": "security:support-tickets-customer-health-announcements:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:support-tickets-customer-health-announcements",
+      "to": "security:support-tickets-customer-health-announcements:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-canonical-domain-set-unset",
+      "to": "security:tenant-canonical-domain-set-unset:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-canonical-domain-set-unset",
+      "to": "security:tenant-canonical-domain-set-unset:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-canonical-domain-set-unset",
+      "to": "security:tenant-canonical-domain-set-unset:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-canonical-domain-set-unset",
+      "to": "security:tenant-canonical-domain-set-unset:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-canonical-domain-set-unset",
+      "to": "security:tenant-canonical-domain-set-unset:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-canonical-domain-set-unset",
+      "to": "security:tenant-canonical-domain-set-unset:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-custom-domain-auth-callback",
+      "to": "security:tenant-custom-domain-auth-callback:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-custom-domain-auth-callback",
+      "to": "security:tenant-custom-domain-auth-callback:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-custom-domain-auth-callback",
+      "to": "security:tenant-custom-domain-auth-callback:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-custom-domain-auth-callback",
+      "to": "security:tenant-custom-domain-auth-callback:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-custom-domain-auth-callback",
+      "to": "security:tenant-custom-domain-auth-callback:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-custom-domain-auth-callback",
+      "to": "security:tenant-custom-domain-auth-callback:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-data-import-export",
+      "to": "security:tenant-data-import-export:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-data-import-export",
+      "to": "security:tenant-data-import-export:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-data-import-export",
+      "to": "security:tenant-data-import-export:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-data-import-export",
+      "to": "security:tenant-data-import-export:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-data-import-export",
+      "to": "security:tenant-data-import-export:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-data-import-export",
+      "to": "security:tenant-data-import-export:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-domain-activation-auth-client",
+      "to": "security:tenant-domain-activation-auth-client:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-domain-activation-auth-client",
+      "to": "security:tenant-domain-activation-auth-client:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-domain-activation-auth-client",
+      "to": "security:tenant-domain-activation-auth-client:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-domain-activation-auth-client",
+      "to": "security:tenant-domain-activation-auth-client:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-domain-activation-auth-client",
+      "to": "security:tenant-domain-activation-auth-client:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-domain-activation-auth-client",
+      "to": "security:tenant-domain-activation-auth-client:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-groups",
+      "to": "security:tenant-groups:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-groups",
+      "to": "security:tenant-groups:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-groups",
+      "to": "security:tenant-groups:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-groups",
+      "to": "security:tenant-groups:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-groups",
+      "to": "security:tenant-groups:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-groups",
+      "to": "security:tenant-groups:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-host-identity-resolution",
+      "to": "security:tenant-host-identity-resolution:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-host-identity-resolution",
+      "to": "security:tenant-host-identity-resolution:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-host-identity-resolution",
+      "to": "security:tenant-host-identity-resolution:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-host-identity-resolution",
+      "to": "security:tenant-host-identity-resolution:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-host-identity-resolution",
+      "to": "security:tenant-host-identity-resolution:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-host-identity-resolution",
+      "to": "security:tenant-host-identity-resolution:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "security:tenant-identity-record-plus-fqdn:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "security:tenant-identity-record-plus-fqdn:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "security:tenant-identity-record-plus-fqdn:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "security:tenant-identity-record-plus-fqdn:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "security:tenant-identity-record-plus-fqdn:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "security:tenant-identity-record-plus-fqdn:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-isolation-proof",
+      "to": "security:tenant-isolation-proof:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-isolation-proof",
+      "to": "security:tenant-isolation-proof:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-isolation-proof",
+      "to": "security:tenant-isolation-proof:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-isolation-proof",
+      "to": "security:tenant-isolation-proof:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-isolation-proof",
+      "to": "security:tenant-isolation-proof:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-isolation-proof",
+      "to": "security:tenant-isolation-proof:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "security:tenant-lifecycle-provision-suspend-delete-export:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "security:tenant-lifecycle-provision-suspend-delete-export:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "security:tenant-lifecycle-provision-suspend-delete-export:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "security:tenant-lifecycle-provision-suspend-delete-export:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "security:tenant-lifecycle-provision-suspend-delete-export:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "security:tenant-lifecycle-provision-suspend-delete-export:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-service-clickthrough-policy",
+      "to": "security:tenant-service-clickthrough-policy:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-service-clickthrough-policy",
+      "to": "security:tenant-service-clickthrough-policy:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-service-clickthrough-policy",
+      "to": "security:tenant-service-clickthrough-policy:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-service-clickthrough-policy",
+      "to": "security:tenant-service-clickthrough-policy:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-service-clickthrough-policy",
+      "to": "security:tenant-service-clickthrough-policy:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:tenant-service-clickthrough-policy",
+      "to": "security:tenant-service-clickthrough-policy:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:universal-service-foundation-scope-plus-principles",
+      "to": "security:universal-service-foundation-scope-plus-principles:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:universal-service-foundation-scope-plus-principles",
+      "to": "security:universal-service-foundation-scope-plus-principles:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:universal-service-foundation-scope-plus-principles",
+      "to": "security:universal-service-foundation-scope-plus-principles:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:universal-service-foundation-scope-plus-principles",
+      "to": "security:universal-service-foundation-scope-plus-principles:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:universal-service-foundation-scope-plus-principles",
+      "to": "security:universal-service-foundation-scope-plus-principles:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:universal-service-foundation-scope-plus-principles",
+      "to": "security:universal-service-foundation-scope-plus-principles:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "security:usage-metering-plus-meter-event-ingestion:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "security:usage-metering-plus-meter-event-ingestion:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "security:usage-metering-plus-meter-event-ingestion:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "security:usage-metering-plus-meter-event-ingestion:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "security:usage-metering-plus-meter-event-ingestion:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "security:usage-metering-plus-meter-event-ingestion:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:user-identity-plus-tenant-membership",
+      "to": "security:user-identity-plus-tenant-membership:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:user-identity-plus-tenant-membership",
+      "to": "security:user-identity-plus-tenant-membership:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:user-identity-plus-tenant-membership",
+      "to": "security:user-identity-plus-tenant-membership:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:user-identity-plus-tenant-membership",
+      "to": "security:user-identity-plus-tenant-membership:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:user-identity-plus-tenant-membership",
+      "to": "security:user-identity-plus-tenant-membership:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:user-identity-plus-tenant-membership",
+      "to": "security:user-identity-plus-tenant-membership:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:webhooks-developer-facing",
+      "to": "security:webhooks-developer-facing:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:webhooks-developer-facing",
+      "to": "security:webhooks-developer-facing:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:webhooks-developer-facing",
+      "to": "security:webhooks-developer-facing:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:webhooks-developer-facing",
+      "to": "security:webhooks-developer-facing:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:webhooks-developer-facing",
+      "to": "security:webhooks-developer-facing:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:webhooks-developer-facing",
+      "to": "security:webhooks-developer-facing:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "security:workflow-engine-scheduled-jobs-approvals:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "security:workflow-engine-scheduled-jobs-approvals:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "security:workflow-engine-scheduled-jobs-approvals:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "security:workflow-engine-scheduled-jobs-approvals:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "security:workflow-engine-scheduled-jobs-approvals:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "security:workflow-engine-scheduled-jobs-approvals:securityrisk",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:write-only-secret-settings",
+      "to": "security:write-only-secret-settings:audit",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:write-only-secret-settings",
+      "to": "security:write-only-secret-settings:dataclassification",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:write-only-secret-settings",
+      "to": "security:write-only-secret-settings:permissions",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:write-only-secret-settings",
+      "to": "security:write-only-secret-settings:policies",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:write-only-secret-settings",
+      "to": "security:write-only-secret-settings:secrets",
+      "type": "has-security"
+    },
+    {
+      "from": "capability:write-only-secret-settings",
+      "to": "security:write-only-secret-settings:securityrisk",
+      "type": "has-security"
+    }
+  ]
+}

@@ -8,6 +8,7 @@ writes nothing. Spec: `docs/v2-foundation/v2-readiness-validator-spec.md`.
 npm run v2:readiness        # human report, exit 1 while blockers remain
 npm run v2:readiness:json   # machine report
 npm run v2:formal-assurance # regenerate formal graph/report artefacts + attestation
+npm run v2:usf-assurance    # regenerate Universal Service Foundation assurance graphs/reports
 node tools/v2-readiness/src/index.mjs --strict --repo . --pinned <freeze-sha>
 ```
 
@@ -103,8 +104,32 @@ decision. Until then it is RED, which is the honest cut-gate state (runbook §0)
   graph, interaction graph, event graph, environment matrix, and UI semantic model without invention.
 - **R37 semantic-entropy** — duplicate concepts, owners, event definitions, readiness definitions,
   state machines, and contradictory definitions are rejected.
+- **R40 operational-assurance** — every delivered capability defines deployment, configuration,
+  migration, rollback, backup/restore, degraded/recovery mode, operator action, incident class,
+  runbook, and safe failure semantics.
+- **R41 observability-assurance** — capability-to-route/trace/log/metric/alert coverage is present;
+  mutations have audit coverage and events have trace-correlation evidence.
+- **R42 security-assurance** — permissions, RBAC/ABAC/PDP policy, audit, secrets, data
+  classification, and security risk are governed for every capability.
+- **R43 audit-assurance** — every mutation traces to audit event semantics with before/after,
+  actor, resource, timestamp, and correlation coverage.
+- **R44 event-assurance** — every event has owner, producer, consumer, schema, version,
+  idempotency, retry, DLQ, retention, and privacy semantics.
+- **R45 environment-assurance** — every capability/environment cell declares provider,
+  mock/proof/promotion/rollback/tenant-data/network/secret policy and the expected
+  dev/test/staging/prod operating posture.
+- **R46 data-assurance** — tenant-data capabilities have owner, classification, retention, backup,
+  restore, export, legal hold, DSR, and lineage semantics.
+- **R47 dependency-assurance** — capability, provider, and operational dependencies are explicit,
+  owned, and risk-described.
+- **R48 reliability-assurance** — provider-backed capabilities define timeout/failure handling,
+  retry, circuit-breaker/degraded posture, fallback, and recovery.
+- **R49 capability-coverage** — each capability is covered across semantics, proofs, events,
+  environments, operations, security, audit, observability, and governance.
+- **R50 runtime-alignment** — semantic claims must align with proof and runtime evidence: logs,
+  metrics, traces, alerts, audit records, and proof execution.
 
-R1–R8 + R10–R37 are the consistency validation (must pass); R9 is the fail-closed cut gate.
+R1–R8 + R10–R50 are the consistency validation (must pass); R9 is the fail-closed cut gate.
 
 Tests: `node --test tools/v2-readiness/tests/*.test.mjs` (also run via the canonical `test:architecture`
 gate, ADR-ACT-0292).

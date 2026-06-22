@@ -1,0 +1,1128 @@
+{
+  "artefact": "audit-graph",
+  "version": 1,
+  "nodes": [
+    {
+      "id": "audit:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:actor",
+      "kind": "audit",
+      "label": "actor"
+    },
+    {
+      "id": "audit:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:auditafterchange",
+      "kind": "audit",
+      "label": "auditAfterChange"
+    },
+    {
+      "id": "audit:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:auditbeforechange",
+      "kind": "audit",
+      "label": "auditBeforeChange"
+    },
+    {
+      "id": "audit:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:auditevent",
+      "kind": "audit",
+      "label": "auditEvent"
+    },
+    {
+      "id": "audit:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:correlation",
+      "kind": "audit",
+      "label": "correlation"
+    },
+    {
+      "id": "audit:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:resource",
+      "kind": "audit",
+      "label": "resource"
+    },
+    {
+      "id": "audit:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:timestamp",
+      "kind": "audit",
+      "label": "timestamp"
+    },
+    {
+      "id": "audit:delegated-administration-roles:actor",
+      "kind": "audit",
+      "label": "actor"
+    },
+    {
+      "id": "audit:delegated-administration-roles:auditafterchange",
+      "kind": "audit",
+      "label": "auditAfterChange"
+    },
+    {
+      "id": "audit:delegated-administration-roles:auditbeforechange",
+      "kind": "audit",
+      "label": "auditBeforeChange"
+    },
+    {
+      "id": "audit:delegated-administration-roles:auditevent",
+      "kind": "audit",
+      "label": "auditEvent"
+    },
+    {
+      "id": "audit:delegated-administration-roles:correlation",
+      "kind": "audit",
+      "label": "correlation"
+    },
+    {
+      "id": "audit:delegated-administration-roles:resource",
+      "kind": "audit",
+      "label": "resource"
+    },
+    {
+      "id": "audit:delegated-administration-roles:timestamp",
+      "kind": "audit",
+      "label": "timestamp"
+    },
+    {
+      "id": "audit:entitlement-engine:actor",
+      "kind": "audit",
+      "label": "actor"
+    },
+    {
+      "id": "audit:entitlement-engine:auditafterchange",
+      "kind": "audit",
+      "label": "auditAfterChange"
+    },
+    {
+      "id": "audit:entitlement-engine:auditbeforechange",
+      "kind": "audit",
+      "label": "auditBeforeChange"
+    },
+    {
+      "id": "audit:entitlement-engine:auditevent",
+      "kind": "audit",
+      "label": "auditEvent"
+    },
+    {
+      "id": "audit:entitlement-engine:correlation",
+      "kind": "audit",
+      "label": "correlation"
+    },
+    {
+      "id": "audit:entitlement-engine:resource",
+      "kind": "audit",
+      "label": "resource"
+    },
+    {
+      "id": "audit:entitlement-engine:timestamp",
+      "kind": "audit",
+      "label": "timestamp"
+    },
+    {
+      "id": "audit:product-catalog-plans-prices:actor",
+      "kind": "audit",
+      "label": "actor"
+    },
+    {
+      "id": "audit:product-catalog-plans-prices:auditafterchange",
+      "kind": "audit",
+      "label": "auditAfterChange"
+    },
+    {
+      "id": "audit:product-catalog-plans-prices:auditbeforechange",
+      "kind": "audit",
+      "label": "auditBeforeChange"
+    },
+    {
+      "id": "audit:product-catalog-plans-prices:auditevent",
+      "kind": "audit",
+      "label": "auditEvent"
+    },
+    {
+      "id": "audit:product-catalog-plans-prices:correlation",
+      "kind": "audit",
+      "label": "correlation"
+    },
+    {
+      "id": "audit:product-catalog-plans-prices:resource",
+      "kind": "audit",
+      "label": "resource"
+    },
+    {
+      "id": "audit:product-catalog-plans-prices:timestamp",
+      "kind": "audit",
+      "label": "timestamp"
+    },
+    {
+      "id": "audit:provider-configuration-plane:actor",
+      "kind": "audit",
+      "label": "actor"
+    },
+    {
+      "id": "audit:provider-configuration-plane:auditafterchange",
+      "kind": "audit",
+      "label": "auditAfterChange"
+    },
+    {
+      "id": "audit:provider-configuration-plane:auditbeforechange",
+      "kind": "audit",
+      "label": "auditBeforeChange"
+    },
+    {
+      "id": "audit:provider-configuration-plane:auditevent",
+      "kind": "audit",
+      "label": "auditEvent"
+    },
+    {
+      "id": "audit:provider-configuration-plane:correlation",
+      "kind": "audit",
+      "label": "correlation"
+    },
+    {
+      "id": "audit:provider-configuration-plane:resource",
+      "kind": "audit",
+      "label": "resource"
+    },
+    {
+      "id": "audit:provider-configuration-plane:timestamp",
+      "kind": "audit",
+      "label": "timestamp"
+    },
+    {
+      "id": "audit:quota-enforcement:actor",
+      "kind": "audit",
+      "label": "actor"
+    },
+    {
+      "id": "audit:quota-enforcement:auditafterchange",
+      "kind": "audit",
+      "label": "auditAfterChange"
+    },
+    {
+      "id": "audit:quota-enforcement:auditbeforechange",
+      "kind": "audit",
+      "label": "auditBeforeChange"
+    },
+    {
+      "id": "audit:quota-enforcement:auditevent",
+      "kind": "audit",
+      "label": "auditEvent"
+    },
+    {
+      "id": "audit:quota-enforcement:correlation",
+      "kind": "audit",
+      "label": "correlation"
+    },
+    {
+      "id": "audit:quota-enforcement:resource",
+      "kind": "audit",
+      "label": "resource"
+    },
+    {
+      "id": "audit:quota-enforcement:timestamp",
+      "kind": "audit",
+      "label": "timestamp"
+    },
+    {
+      "id": "audit:runtime-secrets-management:actor",
+      "kind": "audit",
+      "label": "actor"
+    },
+    {
+      "id": "audit:runtime-secrets-management:auditafterchange",
+      "kind": "audit",
+      "label": "auditAfterChange"
+    },
+    {
+      "id": "audit:runtime-secrets-management:auditbeforechange",
+      "kind": "audit",
+      "label": "auditBeforeChange"
+    },
+    {
+      "id": "audit:runtime-secrets-management:auditevent",
+      "kind": "audit",
+      "label": "auditEvent"
+    },
+    {
+      "id": "audit:runtime-secrets-management:correlation",
+      "kind": "audit",
+      "label": "correlation"
+    },
+    {
+      "id": "audit:runtime-secrets-management:resource",
+      "kind": "audit",
+      "label": "resource"
+    },
+    {
+      "id": "audit:runtime-secrets-management:timestamp",
+      "kind": "audit",
+      "label": "timestamp"
+    },
+    {
+      "id": "audit:support-mode-break-glass-access:actor",
+      "kind": "audit",
+      "label": "actor"
+    },
+    {
+      "id": "audit:support-mode-break-glass-access:auditafterchange",
+      "kind": "audit",
+      "label": "auditAfterChange"
+    },
+    {
+      "id": "audit:support-mode-break-glass-access:auditbeforechange",
+      "kind": "audit",
+      "label": "auditBeforeChange"
+    },
+    {
+      "id": "audit:support-mode-break-glass-access:auditevent",
+      "kind": "audit",
+      "label": "auditEvent"
+    },
+    {
+      "id": "audit:support-mode-break-glass-access:correlation",
+      "kind": "audit",
+      "label": "correlation"
+    },
+    {
+      "id": "audit:support-mode-break-glass-access:resource",
+      "kind": "audit",
+      "label": "resource"
+    },
+    {
+      "id": "audit:support-mode-break-glass-access:timestamp",
+      "kind": "audit",
+      "label": "timestamp"
+    },
+    {
+      "id": "audit:tenant-identity-record-plus-fqdn:actor",
+      "kind": "audit",
+      "label": "actor"
+    },
+    {
+      "id": "audit:tenant-identity-record-plus-fqdn:auditafterchange",
+      "kind": "audit",
+      "label": "auditAfterChange"
+    },
+    {
+      "id": "audit:tenant-identity-record-plus-fqdn:auditbeforechange",
+      "kind": "audit",
+      "label": "auditBeforeChange"
+    },
+    {
+      "id": "audit:tenant-identity-record-plus-fqdn:auditevent",
+      "kind": "audit",
+      "label": "auditEvent"
+    },
+    {
+      "id": "audit:tenant-identity-record-plus-fqdn:correlation",
+      "kind": "audit",
+      "label": "correlation"
+    },
+    {
+      "id": "audit:tenant-identity-record-plus-fqdn:resource",
+      "kind": "audit",
+      "label": "resource"
+    },
+    {
+      "id": "audit:tenant-identity-record-plus-fqdn:timestamp",
+      "kind": "audit",
+      "label": "timestamp"
+    },
+    {
+      "id": "audit:tenant-lifecycle-provision-suspend-delete-export:actor",
+      "kind": "audit",
+      "label": "actor"
+    },
+    {
+      "id": "audit:tenant-lifecycle-provision-suspend-delete-export:auditafterchange",
+      "kind": "audit",
+      "label": "auditAfterChange"
+    },
+    {
+      "id": "audit:tenant-lifecycle-provision-suspend-delete-export:auditbeforechange",
+      "kind": "audit",
+      "label": "auditBeforeChange"
+    },
+    {
+      "id": "audit:tenant-lifecycle-provision-suspend-delete-export:auditevent",
+      "kind": "audit",
+      "label": "auditEvent"
+    },
+    {
+      "id": "audit:tenant-lifecycle-provision-suspend-delete-export:correlation",
+      "kind": "audit",
+      "label": "correlation"
+    },
+    {
+      "id": "audit:tenant-lifecycle-provision-suspend-delete-export:resource",
+      "kind": "audit",
+      "label": "resource"
+    },
+    {
+      "id": "audit:tenant-lifecycle-provision-suspend-delete-export:timestamp",
+      "kind": "audit",
+      "label": "timestamp"
+    },
+    {
+      "id": "audit:usage-metering-plus-meter-event-ingestion:actor",
+      "kind": "audit",
+      "label": "actor"
+    },
+    {
+      "id": "audit:usage-metering-plus-meter-event-ingestion:auditafterchange",
+      "kind": "audit",
+      "label": "auditAfterChange"
+    },
+    {
+      "id": "audit:usage-metering-plus-meter-event-ingestion:auditbeforechange",
+      "kind": "audit",
+      "label": "auditBeforeChange"
+    },
+    {
+      "id": "audit:usage-metering-plus-meter-event-ingestion:auditevent",
+      "kind": "audit",
+      "label": "auditEvent"
+    },
+    {
+      "id": "audit:usage-metering-plus-meter-event-ingestion:correlation",
+      "kind": "audit",
+      "label": "correlation"
+    },
+    {
+      "id": "audit:usage-metering-plus-meter-event-ingestion:resource",
+      "kind": "audit",
+      "label": "resource"
+    },
+    {
+      "id": "audit:usage-metering-plus-meter-event-ingestion:timestamp",
+      "kind": "audit",
+      "label": "timestamp"
+    },
+    {
+      "id": "capability:abac-policy-decision-point",
+      "kind": "capability",
+      "label": "ABAC / Policy Decision Point"
+    },
+    {
+      "id": "capability:accessibility-a11y-gate",
+      "kind": "capability",
+      "label": "Accessibility (a11y) gate"
+    },
+    {
+      "id": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "kind": "capability",
+      "label": "API docs, developer portal, SDKs, rate limits"
+    },
+    {
+      "id": "capability:api-keys-personal-access-tokens",
+      "kind": "capability",
+      "label": "API keys / personal access tokens"
+    },
+    {
+      "id": "capability:audit-of-privileged-access",
+      "kind": "capability",
+      "label": "Audit of privileged access"
+    },
+    {
+      "id": "capability:background-workers-job-runner",
+      "kind": "capability",
+      "label": "Background workers / job runner"
+    },
+    {
+      "id": "capability:backup-plus-restore",
+      "kind": "capability",
+      "label": "Backup + restore"
+    },
+    {
+      "id": "capability:branding-plus-theming",
+      "kind": "capability",
+      "label": "Branding + theming"
+    },
+    {
+      "id": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "kind": "capability",
+      "label": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)"
+    },
+    {
+      "id": "capability:build-versus-compose-decision-framework",
+      "kind": "capability",
+      "label": "Build-versus-compose decision framework"
+    },
+    {
+      "id": "capability:claim-mapping-plus-group-role-mapping",
+      "kind": "capability",
+      "label": "Claim mapping + group/role mapping"
+    },
+    {
+      "id": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "kind": "capability",
+      "label": "Code quality + secret + dependency scanning"
+    },
+    {
+      "id": "capability:compliance-reports-access-reviews-evidence-packs",
+      "kind": "capability",
+      "label": "Compliance reports, access reviews, evidence packs"
+    },
+    {
+      "id": "capability:composed-provider-readiness-spine",
+      "kind": "capability",
+      "label": "Composed provider readiness spine"
+    },
+    {
+      "id": "capability:configuration-registry-plus-history",
+      "kind": "capability",
+      "label": "Configuration registry + history"
+    },
+    {
+      "id": "capability:custom-domains-dns-ownership-tls-canonical",
+      "kind": "capability",
+      "label": "Custom domains, DNS ownership, TLS, canonical"
+    },
+    {
+      "id": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "kind": "capability",
+      "label": "Data governance: catalog, lineage, classification, PII, DSR/GDPR"
+    },
+    {
+      "id": "capability:delegated-administration-roles",
+      "kind": "capability",
+      "label": "Delegated administration roles"
+    },
+    {
+      "id": "capability:e2e-confidence-ladder-stage-aware",
+      "kind": "capability",
+      "label": "E2E confidence ladder (stage-aware)"
+    },
+    {
+      "id": "capability:end-user-profile-plus-preferences-self-service",
+      "kind": "capability",
+      "label": "End-user profile + preferences self-service"
+    },
+    {
+      "id": "capability:entitlement-engine",
+      "kind": "capability",
+      "label": "Entitlement engine"
+    },
+    {
+      "id": "capability:environment-registry-plus-bootstrap",
+      "kind": "capability",
+      "label": "Environment registry + bootstrap"
+    },
+    {
+      "id": "capability:environment-specific-vs-shared-service-model",
+      "kind": "capability",
+      "label": "Environment-specific vs shared service model"
+    },
+    {
+      "id": "capability:event-bus-durable-queues-dlq-redrive",
+      "kind": "capability",
+      "label": "Event bus, durable queues, DLQ, redrive"
+    },
+    {
+      "id": "capability:history-read-model-read-only-projection",
+      "kind": "capability",
+      "label": "History read-model (read-only projection)"
+    },
+    {
+      "id": "capability:i18n-runtime-plus-validation",
+      "kind": "capability",
+      "label": "i18n runtime + validation"
+    },
+    {
+      "id": "capability:idp-brokering-plus-oidc-provider-management",
+      "kind": "capability",
+      "label": "IdP brokering + OIDC provider management"
+    },
+    {
+      "id": "capability:internal-service-catalog-plus-readiness",
+      "kind": "capability",
+      "label": "Internal service catalog + readiness"
+    },
+    {
+      "id": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "kind": "capability",
+      "label": "Logs (aggregation + tenant-scoped search)"
+    },
+    {
+      "id": "capability:metrics-plus-traces",
+      "kind": "capability",
+      "label": "Metrics + traces"
+    },
+    {
+      "id": "capability:mfa-plus-session-policy-plus-lockout",
+      "kind": "capability",
+      "label": "MFA + session policy + lockout"
+    },
+    {
+      "id": "capability:notification-delivery-plus-preferences-plus-channels",
+      "kind": "capability",
+      "label": "Notification delivery + preferences + channels"
+    },
+    {
+      "id": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "kind": "capability",
+      "label": "Object storage + tenant prefixes + signed URLs"
+    },
+    {
+      "id": "capability:observability-built-in-alerting-plus-incidents",
+      "kind": "capability",
+      "label": "Observability — built-in alerting + incidents"
+    },
+    {
+      "id": "capability:oidc-discovery-issuer-jwks-validation",
+      "kind": "capability",
+      "label": "OIDC discovery / issuer / JWKS validation"
+    },
+    {
+      "id": "capability:oidc-test-connection-plus-callback-display",
+      "kind": "capability",
+      "label": "OIDC test connection + callback display"
+    },
+    {
+      "id": "capability:openapi-drift-hard-gate",
+      "kind": "capability",
+      "label": "OpenAPI drift hard gate"
+    },
+    {
+      "id": "capability:pitr-retention-legal-hold-data-residency",
+      "kind": "capability",
+      "label": "PITR, retention, legal hold, data residency"
+    },
+    {
+      "id": "capability:platform-login-plus-session",
+      "kind": "capability",
+      "label": "Platform login + session"
+    },
+    {
+      "id": "capability:product-catalog-plans-prices",
+      "kind": "capability",
+      "label": "Product catalog, plans, prices"
+    },
+    {
+      "id": "capability:provider-configuration-plane",
+      "kind": "capability",
+      "label": "Provider configuration plane"
+    },
+    {
+      "id": "capability:provider-environment-classification",
+      "kind": "capability",
+      "label": "Provider environment classification"
+    },
+    {
+      "id": "capability:quota-enforcement",
+      "kind": "capability",
+      "label": "Quota enforcement"
+    },
+    {
+      "id": "capability:rate-limiting-api",
+      "kind": "capability",
+      "label": "Rate limiting (API)"
+    },
+    {
+      "id": "capability:rbac-roles-plus-permissions",
+      "kind": "capability",
+      "label": "RBAC (roles + permissions)"
+    },
+    {
+      "id": "capability:relational-storage-plus-migrations-plus-rls",
+      "kind": "capability",
+      "label": "Relational storage + migrations + RLS"
+    },
+    {
+      "id": "capability:runtime-secrets-management",
+      "kind": "capability",
+      "label": "Runtime secrets management"
+    },
+    {
+      "id": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "kind": "capability",
+      "label": "Scheduled jobs (built-in, on the event substrate)"
+    },
+    {
+      "id": "capability:search-plus-indexing-product-search",
+      "kind": "capability",
+      "label": "Search + indexing (product search)"
+    },
+    {
+      "id": "capability:service-catalog-plus-provider-integration-model",
+      "kind": "capability",
+      "label": "Service catalog + provider integration model"
+    },
+    {
+      "id": "capability:sub-organisations",
+      "kind": "capability",
+      "label": "Sub-organisations"
+    },
+    {
+      "id": "capability:subscriptions-invoices-payment-methods-dunning",
+      "kind": "capability",
+      "label": "Subscriptions, invoices, payment methods, dunning"
+    },
+    {
+      "id": "capability:support-mode-break-glass-access",
+      "kind": "capability",
+      "label": "Support-mode / break-glass access"
+    },
+    {
+      "id": "capability:support-tickets-customer-health-announcements",
+      "kind": "capability",
+      "label": "Support tickets, customer health, announcements"
+    },
+    {
+      "id": "capability:tenant-canonical-domain-set-unset",
+      "kind": "capability",
+      "label": "Tenant canonical domain set/unset"
+    },
+    {
+      "id": "capability:tenant-custom-domain-auth-callback",
+      "kind": "capability",
+      "label": "Tenant custom-domain auth callback"
+    },
+    {
+      "id": "capability:tenant-data-import-export",
+      "kind": "capability",
+      "label": "Tenant data import / export"
+    },
+    {
+      "id": "capability:tenant-domain-activation-auth-client",
+      "kind": "capability",
+      "label": "Tenant domain activation (auth-client)"
+    },
+    {
+      "id": "capability:tenant-groups",
+      "kind": "capability",
+      "label": "Tenant groups"
+    },
+    {
+      "id": "capability:tenant-host-identity-resolution",
+      "kind": "capability",
+      "label": "Tenant host identity resolution"
+    },
+    {
+      "id": "capability:tenant-identity-record-plus-fqdn",
+      "kind": "capability",
+      "label": "Tenant identity (record + FQDN)"
+    },
+    {
+      "id": "capability:tenant-isolation-proof",
+      "kind": "capability",
+      "label": "Tenant isolation proof"
+    },
+    {
+      "id": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "kind": "capability",
+      "label": "Tenant lifecycle: provision, suspend, delete, export"
+    },
+    {
+      "id": "capability:tenant-service-clickthrough-policy",
+      "kind": "capability",
+      "label": "Tenant service clickthrough policy"
+    },
+    {
+      "id": "capability:universal-service-foundation-scope-plus-principles",
+      "kind": "capability",
+      "label": "Universal Service Foundation scope + principles"
+    },
+    {
+      "id": "capability:usage-metering-plus-meter-event-ingestion",
+      "kind": "capability",
+      "label": "Usage metering + meter event ingestion"
+    },
+    {
+      "id": "capability:user-identity-plus-tenant-membership",
+      "kind": "capability",
+      "label": "User identity + tenant membership"
+    },
+    {
+      "id": "capability:webhooks-developer-facing",
+      "kind": "capability",
+      "label": "Webhooks (developer-facing)"
+    },
+    {
+      "id": "capability:workflow-engine-scheduled-jobs-approvals",
+      "kind": "capability",
+      "label": "Workflow engine, scheduled jobs, approvals"
+    },
+    {
+      "id": "capability:write-only-secret-settings",
+      "kind": "capability",
+      "label": "Write-only secret settings"
+    }
+  ],
+  "edges": [
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "audit:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:actor",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "audit:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:auditafterchange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "audit:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:auditbeforechange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "audit:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:auditevent",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "audit:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:correlation",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "audit:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:resource",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "audit:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:timestamp",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "audit:delegated-administration-roles:actor",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "audit:delegated-administration-roles:auditafterchange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "audit:delegated-administration-roles:auditbeforechange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "audit:delegated-administration-roles:auditevent",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "audit:delegated-administration-roles:correlation",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "audit:delegated-administration-roles:resource",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "audit:delegated-administration-roles:timestamp",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "audit:entitlement-engine:actor",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "audit:entitlement-engine:auditafterchange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "audit:entitlement-engine:auditbeforechange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "audit:entitlement-engine:auditevent",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "audit:entitlement-engine:correlation",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "audit:entitlement-engine:resource",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "audit:entitlement-engine:timestamp",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "audit:product-catalog-plans-prices:actor",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "audit:product-catalog-plans-prices:auditafterchange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "audit:product-catalog-plans-prices:auditbeforechange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "audit:product-catalog-plans-prices:auditevent",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "audit:product-catalog-plans-prices:correlation",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "audit:product-catalog-plans-prices:resource",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "audit:product-catalog-plans-prices:timestamp",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "audit:provider-configuration-plane:actor",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "audit:provider-configuration-plane:auditafterchange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "audit:provider-configuration-plane:auditbeforechange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "audit:provider-configuration-plane:auditevent",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "audit:provider-configuration-plane:correlation",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "audit:provider-configuration-plane:resource",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "audit:provider-configuration-plane:timestamp",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "audit:quota-enforcement:actor",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "audit:quota-enforcement:auditafterchange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "audit:quota-enforcement:auditbeforechange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "audit:quota-enforcement:auditevent",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "audit:quota-enforcement:correlation",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "audit:quota-enforcement:resource",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "audit:quota-enforcement:timestamp",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "audit:runtime-secrets-management:actor",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "audit:runtime-secrets-management:auditafterchange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "audit:runtime-secrets-management:auditbeforechange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "audit:runtime-secrets-management:auditevent",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "audit:runtime-secrets-management:correlation",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "audit:runtime-secrets-management:resource",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "audit:runtime-secrets-management:timestamp",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "audit:support-mode-break-glass-access:actor",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "audit:support-mode-break-glass-access:auditafterchange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "audit:support-mode-break-glass-access:auditbeforechange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "audit:support-mode-break-glass-access:auditevent",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "audit:support-mode-break-glass-access:correlation",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "audit:support-mode-break-glass-access:resource",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "audit:support-mode-break-glass-access:timestamp",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "audit:tenant-identity-record-plus-fqdn:actor",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "audit:tenant-identity-record-plus-fqdn:auditafterchange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "audit:tenant-identity-record-plus-fqdn:auditbeforechange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "audit:tenant-identity-record-plus-fqdn:auditevent",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "audit:tenant-identity-record-plus-fqdn:correlation",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "audit:tenant-identity-record-plus-fqdn:resource",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "audit:tenant-identity-record-plus-fqdn:timestamp",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "audit:tenant-lifecycle-provision-suspend-delete-export:actor",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "audit:tenant-lifecycle-provision-suspend-delete-export:auditafterchange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "audit:tenant-lifecycle-provision-suspend-delete-export:auditbeforechange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "audit:tenant-lifecycle-provision-suspend-delete-export:auditevent",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "audit:tenant-lifecycle-provision-suspend-delete-export:correlation",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "audit:tenant-lifecycle-provision-suspend-delete-export:resource",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "audit:tenant-lifecycle-provision-suspend-delete-export:timestamp",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "audit:usage-metering-plus-meter-event-ingestion:actor",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "audit:usage-metering-plus-meter-event-ingestion:auditafterchange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "audit:usage-metering-plus-meter-event-ingestion:auditbeforechange",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "audit:usage-metering-plus-meter-event-ingestion:auditevent",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "audit:usage-metering-plus-meter-event-ingestion:correlation",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "audit:usage-metering-plus-meter-event-ingestion:resource",
+      "type": "has-audit"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "audit:usage-metering-plus-meter-event-ingestion:timestamp",
+      "type": "has-audit"
+    }
+  ]
+}

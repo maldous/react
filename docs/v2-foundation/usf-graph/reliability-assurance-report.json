@@ -1,0 +1,583 @@
+{
+  "artefact": "reliability-assurance-report",
+  "providerBackedCapabilities": [
+    {
+      "capability": "Tenant identity (record + FQDN)",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "User identity + tenant membership",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "End-user profile + preferences self-service",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "API keys / personal access tokens",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Tenant groups",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Sub-organisations",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "RBAC (roles + permissions)",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "ABAC / Policy Decision Point",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Delegated administration roles",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Entitlement engine",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Support-mode / break-glass access",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Audit of privileged access",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Platform login + session",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "IdP brokering + OIDC provider management",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Claim mapping + group/role mapping",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "MFA + session policy + lockout",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Configuration registry + history",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Branding + theming",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Custom domains, DNS ownership, TLS, canonical",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Write-only secret settings",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Product catalog, plans, prices",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Subscriptions, invoices, payment methods, dunning",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Usage metering + meter event ingestion",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Quota enforcement",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Relational storage + migrations + RLS",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Backup + restore",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "PITR, retention, legal hold, data residency",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Tenant data import / export",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Search + indexing (product search)",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Object storage + tenant prefixes + signed URLs",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Event bus, durable queues, DLQ, redrive",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Workflow engine, scheduled jobs, approvals",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Scheduled jobs (built-in, on the event substrate)",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Notification delivery + preferences + channels",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Background workers / job runner",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Runtime secrets management",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Logs (aggregation + tenant-scoped search)",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Metrics + traces",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Observability — built-in alerting + incidents",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Internal service catalog + readiness",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Code quality + secret + dependency scanning",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Compliance reports, access reviews, evidence packs",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Tenant isolation proof",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Webhooks (developer-facing)",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "API docs, developer portal, SDKs, rate limits",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Rate limiting (API)",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Tenant lifecycle: provision, suspend, delete, export",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Support tickets, customer health, announcements",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Universal Service Foundation scope + principles",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Service catalog + provider integration model",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Environment-specific vs shared service model",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Provider configuration plane",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "History read-model (read-only projection)",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "OIDC discovery / issuer / JWKS validation",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "OIDC test connection + callback display",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Tenant host identity resolution",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Tenant domain activation (auth-client)",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Tenant canonical domain set/unset",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Tenant custom-domain auth callback",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Tenant service clickthrough policy",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Environment registry + bootstrap",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Provider environment classification",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    },
+    {
+      "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "timeout": true,
+      "retry": true,
+      "circuitBreaker": true,
+      "degradedMode": true,
+      "fallback": true,
+      "recovery": true
+    }
+  ],
+  "violations": [],
+  "pass": true
+}

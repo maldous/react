@@ -1,0 +1,4558 @@
+{
+  "artefact": "observability-graph",
+  "version": 1,
+  "nodes": [
+    {
+      "id": "capability:abac-policy-decision-point",
+      "kind": "capability",
+      "label": "ABAC / Policy Decision Point"
+    },
+    {
+      "id": "capability:accessibility-a11y-gate",
+      "kind": "capability",
+      "label": "Accessibility (a11y) gate"
+    },
+    {
+      "id": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "kind": "capability",
+      "label": "API docs, developer portal, SDKs, rate limits"
+    },
+    {
+      "id": "capability:api-keys-personal-access-tokens",
+      "kind": "capability",
+      "label": "API keys / personal access tokens"
+    },
+    {
+      "id": "capability:audit-of-privileged-access",
+      "kind": "capability",
+      "label": "Audit of privileged access"
+    },
+    {
+      "id": "capability:background-workers-job-runner",
+      "kind": "capability",
+      "label": "Background workers / job runner"
+    },
+    {
+      "id": "capability:backup-plus-restore",
+      "kind": "capability",
+      "label": "Backup + restore"
+    },
+    {
+      "id": "capability:branding-plus-theming",
+      "kind": "capability",
+      "label": "Branding + theming"
+    },
+    {
+      "id": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "kind": "capability",
+      "label": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)"
+    },
+    {
+      "id": "capability:build-versus-compose-decision-framework",
+      "kind": "capability",
+      "label": "Build-versus-compose decision framework"
+    },
+    {
+      "id": "capability:claim-mapping-plus-group-role-mapping",
+      "kind": "capability",
+      "label": "Claim mapping + group/role mapping"
+    },
+    {
+      "id": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "kind": "capability",
+      "label": "Code quality + secret + dependency scanning"
+    },
+    {
+      "id": "capability:compliance-reports-access-reviews-evidence-packs",
+      "kind": "capability",
+      "label": "Compliance reports, access reviews, evidence packs"
+    },
+    {
+      "id": "capability:composed-provider-readiness-spine",
+      "kind": "capability",
+      "label": "Composed provider readiness spine"
+    },
+    {
+      "id": "capability:configuration-registry-plus-history",
+      "kind": "capability",
+      "label": "Configuration registry + history"
+    },
+    {
+      "id": "capability:custom-domains-dns-ownership-tls-canonical",
+      "kind": "capability",
+      "label": "Custom domains, DNS ownership, TLS, canonical"
+    },
+    {
+      "id": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "kind": "capability",
+      "label": "Data governance: catalog, lineage, classification, PII, DSR/GDPR"
+    },
+    {
+      "id": "capability:delegated-administration-roles",
+      "kind": "capability",
+      "label": "Delegated administration roles"
+    },
+    {
+      "id": "capability:e2e-confidence-ladder-stage-aware",
+      "kind": "capability",
+      "label": "E2E confidence ladder (stage-aware)"
+    },
+    {
+      "id": "capability:end-user-profile-plus-preferences-self-service",
+      "kind": "capability",
+      "label": "End-user profile + preferences self-service"
+    },
+    {
+      "id": "capability:entitlement-engine",
+      "kind": "capability",
+      "label": "Entitlement engine"
+    },
+    {
+      "id": "capability:environment-registry-plus-bootstrap",
+      "kind": "capability",
+      "label": "Environment registry + bootstrap"
+    },
+    {
+      "id": "capability:environment-specific-vs-shared-service-model",
+      "kind": "capability",
+      "label": "Environment-specific vs shared service model"
+    },
+    {
+      "id": "capability:event-bus-durable-queues-dlq-redrive",
+      "kind": "capability",
+      "label": "Event bus, durable queues, DLQ, redrive"
+    },
+    {
+      "id": "capability:history-read-model-read-only-projection",
+      "kind": "capability",
+      "label": "History read-model (read-only projection)"
+    },
+    {
+      "id": "capability:i18n-runtime-plus-validation",
+      "kind": "capability",
+      "label": "i18n runtime + validation"
+    },
+    {
+      "id": "capability:idp-brokering-plus-oidc-provider-management",
+      "kind": "capability",
+      "label": "IdP brokering + OIDC provider management"
+    },
+    {
+      "id": "capability:internal-service-catalog-plus-readiness",
+      "kind": "capability",
+      "label": "Internal service catalog + readiness"
+    },
+    {
+      "id": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "kind": "capability",
+      "label": "Logs (aggregation + tenant-scoped search)"
+    },
+    {
+      "id": "capability:metrics-plus-traces",
+      "kind": "capability",
+      "label": "Metrics + traces"
+    },
+    {
+      "id": "capability:mfa-plus-session-policy-plus-lockout",
+      "kind": "capability",
+      "label": "MFA + session policy + lockout"
+    },
+    {
+      "id": "capability:notification-delivery-plus-preferences-plus-channels",
+      "kind": "capability",
+      "label": "Notification delivery + preferences + channels"
+    },
+    {
+      "id": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "kind": "capability",
+      "label": "Object storage + tenant prefixes + signed URLs"
+    },
+    {
+      "id": "capability:observability-built-in-alerting-plus-incidents",
+      "kind": "capability",
+      "label": "Observability — built-in alerting + incidents"
+    },
+    {
+      "id": "capability:oidc-discovery-issuer-jwks-validation",
+      "kind": "capability",
+      "label": "OIDC discovery / issuer / JWKS validation"
+    },
+    {
+      "id": "capability:oidc-test-connection-plus-callback-display",
+      "kind": "capability",
+      "label": "OIDC test connection + callback display"
+    },
+    {
+      "id": "capability:openapi-drift-hard-gate",
+      "kind": "capability",
+      "label": "OpenAPI drift hard gate"
+    },
+    {
+      "id": "capability:pitr-retention-legal-hold-data-residency",
+      "kind": "capability",
+      "label": "PITR, retention, legal hold, data residency"
+    },
+    {
+      "id": "capability:platform-login-plus-session",
+      "kind": "capability",
+      "label": "Platform login + session"
+    },
+    {
+      "id": "capability:product-catalog-plans-prices",
+      "kind": "capability",
+      "label": "Product catalog, plans, prices"
+    },
+    {
+      "id": "capability:provider-configuration-plane",
+      "kind": "capability",
+      "label": "Provider configuration plane"
+    },
+    {
+      "id": "capability:provider-environment-classification",
+      "kind": "capability",
+      "label": "Provider environment classification"
+    },
+    {
+      "id": "capability:quota-enforcement",
+      "kind": "capability",
+      "label": "Quota enforcement"
+    },
+    {
+      "id": "capability:rate-limiting-api",
+      "kind": "capability",
+      "label": "Rate limiting (API)"
+    },
+    {
+      "id": "capability:rbac-roles-plus-permissions",
+      "kind": "capability",
+      "label": "RBAC (roles + permissions)"
+    },
+    {
+      "id": "capability:relational-storage-plus-migrations-plus-rls",
+      "kind": "capability",
+      "label": "Relational storage + migrations + RLS"
+    },
+    {
+      "id": "capability:runtime-secrets-management",
+      "kind": "capability",
+      "label": "Runtime secrets management"
+    },
+    {
+      "id": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "kind": "capability",
+      "label": "Scheduled jobs (built-in, on the event substrate)"
+    },
+    {
+      "id": "capability:search-plus-indexing-product-search",
+      "kind": "capability",
+      "label": "Search + indexing (product search)"
+    },
+    {
+      "id": "capability:service-catalog-plus-provider-integration-model",
+      "kind": "capability",
+      "label": "Service catalog + provider integration model"
+    },
+    {
+      "id": "capability:sub-organisations",
+      "kind": "capability",
+      "label": "Sub-organisations"
+    },
+    {
+      "id": "capability:subscriptions-invoices-payment-methods-dunning",
+      "kind": "capability",
+      "label": "Subscriptions, invoices, payment methods, dunning"
+    },
+    {
+      "id": "capability:support-mode-break-glass-access",
+      "kind": "capability",
+      "label": "Support-mode / break-glass access"
+    },
+    {
+      "id": "capability:support-tickets-customer-health-announcements",
+      "kind": "capability",
+      "label": "Support tickets, customer health, announcements"
+    },
+    {
+      "id": "capability:tenant-canonical-domain-set-unset",
+      "kind": "capability",
+      "label": "Tenant canonical domain set/unset"
+    },
+    {
+      "id": "capability:tenant-custom-domain-auth-callback",
+      "kind": "capability",
+      "label": "Tenant custom-domain auth callback"
+    },
+    {
+      "id": "capability:tenant-data-import-export",
+      "kind": "capability",
+      "label": "Tenant data import / export"
+    },
+    {
+      "id": "capability:tenant-domain-activation-auth-client",
+      "kind": "capability",
+      "label": "Tenant domain activation (auth-client)"
+    },
+    {
+      "id": "capability:tenant-groups",
+      "kind": "capability",
+      "label": "Tenant groups"
+    },
+    {
+      "id": "capability:tenant-host-identity-resolution",
+      "kind": "capability",
+      "label": "Tenant host identity resolution"
+    },
+    {
+      "id": "capability:tenant-identity-record-plus-fqdn",
+      "kind": "capability",
+      "label": "Tenant identity (record + FQDN)"
+    },
+    {
+      "id": "capability:tenant-isolation-proof",
+      "kind": "capability",
+      "label": "Tenant isolation proof"
+    },
+    {
+      "id": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "kind": "capability",
+      "label": "Tenant lifecycle: provision, suspend, delete, export"
+    },
+    {
+      "id": "capability:tenant-service-clickthrough-policy",
+      "kind": "capability",
+      "label": "Tenant service clickthrough policy"
+    },
+    {
+      "id": "capability:universal-service-foundation-scope-plus-principles",
+      "kind": "capability",
+      "label": "Universal Service Foundation scope + principles"
+    },
+    {
+      "id": "capability:usage-metering-plus-meter-event-ingestion",
+      "kind": "capability",
+      "label": "Usage metering + meter event ingestion"
+    },
+    {
+      "id": "capability:user-identity-plus-tenant-membership",
+      "kind": "capability",
+      "label": "User identity + tenant membership"
+    },
+    {
+      "id": "capability:webhooks-developer-facing",
+      "kind": "capability",
+      "label": "Webhooks (developer-facing)"
+    },
+    {
+      "id": "capability:workflow-engine-scheduled-jobs-approvals",
+      "kind": "capability",
+      "label": "Workflow engine, scheduled jobs, approvals"
+    },
+    {
+      "id": "capability:write-only-secret-settings",
+      "kind": "capability",
+      "label": "Write-only secret settings"
+    },
+    {
+      "id": "observability:abac-policy-decision-point:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:abac-policy-decision-point:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:abac-policy-decision-point:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:abac-policy-decision-point:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:abac-policy-decision-point:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:abac-policy-decision-point:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:accessibility-a11y-gate:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:accessibility-a11y-gate:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:accessibility-a11y-gate:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:accessibility-a11y-gate:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:accessibility-a11y-gate:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:accessibility-a11y-gate:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:api-docs-developer-portal-sdks-rate-limits:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:api-docs-developer-portal-sdks-rate-limits:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:api-docs-developer-portal-sdks-rate-limits:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:api-docs-developer-portal-sdks-rate-limits:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:api-docs-developer-portal-sdks-rate-limits:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:api-docs-developer-portal-sdks-rate-limits:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:api-keys-personal-access-tokens:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:api-keys-personal-access-tokens:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:api-keys-personal-access-tokens:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:api-keys-personal-access-tokens:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:api-keys-personal-access-tokens:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:api-keys-personal-access-tokens:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:audit-of-privileged-access:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:audit-of-privileged-access:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:audit-of-privileged-access:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:audit-of-privileged-access:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:audit-of-privileged-access:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:audit-of-privileged-access:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:background-workers-job-runner:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:background-workers-job-runner:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:background-workers-job-runner:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:background-workers-job-runner:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:background-workers-job-runner:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:background-workers-job-runner:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:backup-plus-restore:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:backup-plus-restore:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:backup-plus-restore:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:backup-plus-restore:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:backup-plus-restore:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:backup-plus-restore:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:branding-plus-theming:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:branding-plus-theming:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:branding-plus-theming:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:branding-plus-theming:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:branding-plus-theming:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:branding-plus-theming:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:build-versus-compose-decision-framework:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:build-versus-compose-decision-framework:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:build-versus-compose-decision-framework:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:build-versus-compose-decision-framework:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:build-versus-compose-decision-framework:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:build-versus-compose-decision-framework:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:claim-mapping-plus-group-role-mapping:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:claim-mapping-plus-group-role-mapping:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:claim-mapping-plus-group-role-mapping:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:claim-mapping-plus-group-role-mapping:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:claim-mapping-plus-group-role-mapping:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:claim-mapping-plus-group-role-mapping:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:code-quality-plus-secret-plus-dependency-scanning:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:code-quality-plus-secret-plus-dependency-scanning:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:code-quality-plus-secret-plus-dependency-scanning:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:code-quality-plus-secret-plus-dependency-scanning:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:code-quality-plus-secret-plus-dependency-scanning:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:code-quality-plus-secret-plus-dependency-scanning:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:compliance-reports-access-reviews-evidence-packs:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:compliance-reports-access-reviews-evidence-packs:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:compliance-reports-access-reviews-evidence-packs:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:compliance-reports-access-reviews-evidence-packs:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:compliance-reports-access-reviews-evidence-packs:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:compliance-reports-access-reviews-evidence-packs:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:composed-provider-readiness-spine:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:composed-provider-readiness-spine:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:composed-provider-readiness-spine:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:composed-provider-readiness-spine:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:composed-provider-readiness-spine:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:composed-provider-readiness-spine:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:configuration-registry-plus-history:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:configuration-registry-plus-history:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:configuration-registry-plus-history:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:configuration-registry-plus-history:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:configuration-registry-plus-history:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:configuration-registry-plus-history:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:custom-domains-dns-ownership-tls-canonical:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:custom-domains-dns-ownership-tls-canonical:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:custom-domains-dns-ownership-tls-canonical:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:custom-domains-dns-ownership-tls-canonical:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:custom-domains-dns-ownership-tls-canonical:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:custom-domains-dns-ownership-tls-canonical:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:data-governance-catalog-lineage-classification-pii-dsr-gdpr:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:data-governance-catalog-lineage-classification-pii-dsr-gdpr:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:data-governance-catalog-lineage-classification-pii-dsr-gdpr:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:data-governance-catalog-lineage-classification-pii-dsr-gdpr:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:data-governance-catalog-lineage-classification-pii-dsr-gdpr:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:data-governance-catalog-lineage-classification-pii-dsr-gdpr:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:delegated-administration-roles:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:delegated-administration-roles:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:delegated-administration-roles:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:delegated-administration-roles:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:delegated-administration-roles:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:delegated-administration-roles:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:e2e-confidence-ladder-stage-aware:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:e2e-confidence-ladder-stage-aware:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:e2e-confidence-ladder-stage-aware:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:e2e-confidence-ladder-stage-aware:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:e2e-confidence-ladder-stage-aware:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:e2e-confidence-ladder-stage-aware:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:end-user-profile-plus-preferences-self-service:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:end-user-profile-plus-preferences-self-service:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:end-user-profile-plus-preferences-self-service:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:end-user-profile-plus-preferences-self-service:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:end-user-profile-plus-preferences-self-service:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:end-user-profile-plus-preferences-self-service:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:entitlement-engine:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:entitlement-engine:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:entitlement-engine:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:entitlement-engine:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:entitlement-engine:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:entitlement-engine:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:environment-registry-plus-bootstrap:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:environment-registry-plus-bootstrap:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:environment-registry-plus-bootstrap:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:environment-registry-plus-bootstrap:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:environment-registry-plus-bootstrap:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:environment-registry-plus-bootstrap:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:environment-specific-vs-shared-service-model:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:environment-specific-vs-shared-service-model:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:environment-specific-vs-shared-service-model:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:environment-specific-vs-shared-service-model:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:environment-specific-vs-shared-service-model:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:environment-specific-vs-shared-service-model:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:event-bus-durable-queues-dlq-redrive:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:event-bus-durable-queues-dlq-redrive:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:event-bus-durable-queues-dlq-redrive:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:event-bus-durable-queues-dlq-redrive:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:event-bus-durable-queues-dlq-redrive:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:event-bus-durable-queues-dlq-redrive:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:history-read-model-read-only-projection:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:history-read-model-read-only-projection:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:history-read-model-read-only-projection:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:history-read-model-read-only-projection:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:history-read-model-read-only-projection:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:history-read-model-read-only-projection:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:i18n-runtime-plus-validation:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:i18n-runtime-plus-validation:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:i18n-runtime-plus-validation:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:i18n-runtime-plus-validation:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:i18n-runtime-plus-validation:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:i18n-runtime-plus-validation:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:idp-brokering-plus-oidc-provider-management:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:idp-brokering-plus-oidc-provider-management:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:idp-brokering-plus-oidc-provider-management:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:idp-brokering-plus-oidc-provider-management:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:idp-brokering-plus-oidc-provider-management:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:idp-brokering-plus-oidc-provider-management:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:internal-service-catalog-plus-readiness:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:internal-service-catalog-plus-readiness:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:internal-service-catalog-plus-readiness:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:internal-service-catalog-plus-readiness:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:internal-service-catalog-plus-readiness:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:internal-service-catalog-plus-readiness:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:logs-aggregation-plus-tenant-scoped-search:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:logs-aggregation-plus-tenant-scoped-search:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:logs-aggregation-plus-tenant-scoped-search:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:logs-aggregation-plus-tenant-scoped-search:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:logs-aggregation-plus-tenant-scoped-search:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:logs-aggregation-plus-tenant-scoped-search:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:metrics-plus-traces:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:metrics-plus-traces:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:metrics-plus-traces:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:metrics-plus-traces:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:metrics-plus-traces:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:metrics-plus-traces:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:mfa-plus-session-policy-plus-lockout:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:mfa-plus-session-policy-plus-lockout:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:mfa-plus-session-policy-plus-lockout:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:mfa-plus-session-policy-plus-lockout:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:mfa-plus-session-policy-plus-lockout:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:mfa-plus-session-policy-plus-lockout:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:notification-delivery-plus-preferences-plus-channels:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:notification-delivery-plus-preferences-plus-channels:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:notification-delivery-plus-preferences-plus-channels:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:notification-delivery-plus-preferences-plus-channels:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:notification-delivery-plus-preferences-plus-channels:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:notification-delivery-plus-preferences-plus-channels:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:object-storage-plus-tenant-prefixes-plus-signed-urls:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:object-storage-plus-tenant-prefixes-plus-signed-urls:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:object-storage-plus-tenant-prefixes-plus-signed-urls:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:object-storage-plus-tenant-prefixes-plus-signed-urls:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:object-storage-plus-tenant-prefixes-plus-signed-urls:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:object-storage-plus-tenant-prefixes-plus-signed-urls:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:observability-built-in-alerting-plus-incidents:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:observability-built-in-alerting-plus-incidents:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:observability-built-in-alerting-plus-incidents:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:observability-built-in-alerting-plus-incidents:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:observability-built-in-alerting-plus-incidents:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:observability-built-in-alerting-plus-incidents:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:oidc-discovery-issuer-jwks-validation:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:oidc-discovery-issuer-jwks-validation:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:oidc-discovery-issuer-jwks-validation:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:oidc-discovery-issuer-jwks-validation:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:oidc-discovery-issuer-jwks-validation:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:oidc-discovery-issuer-jwks-validation:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:oidc-test-connection-plus-callback-display:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:oidc-test-connection-plus-callback-display:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:oidc-test-connection-plus-callback-display:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:oidc-test-connection-plus-callback-display:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:oidc-test-connection-plus-callback-display:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:oidc-test-connection-plus-callback-display:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:openapi-drift-hard-gate:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:openapi-drift-hard-gate:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:openapi-drift-hard-gate:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:openapi-drift-hard-gate:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:openapi-drift-hard-gate:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:openapi-drift-hard-gate:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:pitr-retention-legal-hold-data-residency:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:pitr-retention-legal-hold-data-residency:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:pitr-retention-legal-hold-data-residency:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:pitr-retention-legal-hold-data-residency:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:pitr-retention-legal-hold-data-residency:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:pitr-retention-legal-hold-data-residency:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:platform-login-plus-session:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:platform-login-plus-session:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:platform-login-plus-session:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:platform-login-plus-session:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:platform-login-plus-session:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:platform-login-plus-session:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:product-catalog-plans-prices:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:product-catalog-plans-prices:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:product-catalog-plans-prices:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:product-catalog-plans-prices:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:product-catalog-plans-prices:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:product-catalog-plans-prices:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:provider-configuration-plane:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:provider-configuration-plane:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:provider-configuration-plane:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:provider-configuration-plane:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:provider-configuration-plane:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:provider-configuration-plane:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:provider-environment-classification:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:provider-environment-classification:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:provider-environment-classification:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:provider-environment-classification:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:provider-environment-classification:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:provider-environment-classification:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:quota-enforcement:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:quota-enforcement:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:quota-enforcement:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:quota-enforcement:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:quota-enforcement:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:quota-enforcement:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:rate-limiting-api:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:rate-limiting-api:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:rate-limiting-api:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:rate-limiting-api:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:rate-limiting-api:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:rate-limiting-api:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:rbac-roles-plus-permissions:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:rbac-roles-plus-permissions:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:rbac-roles-plus-permissions:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:rbac-roles-plus-permissions:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:rbac-roles-plus-permissions:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:rbac-roles-plus-permissions:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:relational-storage-plus-migrations-plus-rls:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:relational-storage-plus-migrations-plus-rls:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:relational-storage-plus-migrations-plus-rls:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:relational-storage-plus-migrations-plus-rls:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:relational-storage-plus-migrations-plus-rls:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:relational-storage-plus-migrations-plus-rls:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:runtime-secrets-management:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:runtime-secrets-management:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:runtime-secrets-management:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:runtime-secrets-management:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:runtime-secrets-management:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:runtime-secrets-management:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:scheduled-jobs-built-in-on-the-event-substrate:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:scheduled-jobs-built-in-on-the-event-substrate:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:scheduled-jobs-built-in-on-the-event-substrate:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:scheduled-jobs-built-in-on-the-event-substrate:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:scheduled-jobs-built-in-on-the-event-substrate:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:scheduled-jobs-built-in-on-the-event-substrate:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:search-plus-indexing-product-search:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:search-plus-indexing-product-search:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:search-plus-indexing-product-search:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:search-plus-indexing-product-search:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:search-plus-indexing-product-search:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:search-plus-indexing-product-search:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:service-catalog-plus-provider-integration-model:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:service-catalog-plus-provider-integration-model:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:service-catalog-plus-provider-integration-model:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:service-catalog-plus-provider-integration-model:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:service-catalog-plus-provider-integration-model:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:service-catalog-plus-provider-integration-model:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:sub-organisations:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:sub-organisations:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:sub-organisations:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:sub-organisations:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:sub-organisations:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:sub-organisations:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:subscriptions-invoices-payment-methods-dunning:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:subscriptions-invoices-payment-methods-dunning:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:subscriptions-invoices-payment-methods-dunning:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:subscriptions-invoices-payment-methods-dunning:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:subscriptions-invoices-payment-methods-dunning:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:subscriptions-invoices-payment-methods-dunning:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:support-mode-break-glass-access:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:support-mode-break-glass-access:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:support-mode-break-glass-access:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:support-mode-break-glass-access:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:support-mode-break-glass-access:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:support-mode-break-glass-access:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:support-tickets-customer-health-announcements:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:support-tickets-customer-health-announcements:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:support-tickets-customer-health-announcements:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:support-tickets-customer-health-announcements:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:support-tickets-customer-health-announcements:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:support-tickets-customer-health-announcements:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:tenant-canonical-domain-set-unset:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:tenant-canonical-domain-set-unset:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:tenant-canonical-domain-set-unset:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:tenant-canonical-domain-set-unset:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:tenant-canonical-domain-set-unset:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:tenant-canonical-domain-set-unset:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:tenant-custom-domain-auth-callback:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:tenant-custom-domain-auth-callback:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:tenant-custom-domain-auth-callback:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:tenant-custom-domain-auth-callback:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:tenant-custom-domain-auth-callback:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:tenant-custom-domain-auth-callback:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:tenant-data-import-export:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:tenant-data-import-export:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:tenant-data-import-export:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:tenant-data-import-export:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:tenant-data-import-export:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:tenant-data-import-export:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:tenant-domain-activation-auth-client:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:tenant-domain-activation-auth-client:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:tenant-domain-activation-auth-client:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:tenant-domain-activation-auth-client:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:tenant-domain-activation-auth-client:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:tenant-domain-activation-auth-client:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:tenant-groups:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:tenant-groups:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:tenant-groups:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:tenant-groups:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:tenant-groups:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:tenant-groups:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:tenant-host-identity-resolution:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:tenant-host-identity-resolution:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:tenant-host-identity-resolution:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:tenant-host-identity-resolution:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:tenant-host-identity-resolution:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:tenant-host-identity-resolution:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:tenant-identity-record-plus-fqdn:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:tenant-identity-record-plus-fqdn:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:tenant-identity-record-plus-fqdn:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:tenant-identity-record-plus-fqdn:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:tenant-identity-record-plus-fqdn:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:tenant-identity-record-plus-fqdn:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:tenant-isolation-proof:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:tenant-isolation-proof:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:tenant-isolation-proof:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:tenant-isolation-proof:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:tenant-isolation-proof:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:tenant-isolation-proof:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:tenant-lifecycle-provision-suspend-delete-export:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:tenant-lifecycle-provision-suspend-delete-export:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:tenant-lifecycle-provision-suspend-delete-export:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:tenant-lifecycle-provision-suspend-delete-export:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:tenant-lifecycle-provision-suspend-delete-export:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:tenant-lifecycle-provision-suspend-delete-export:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:tenant-service-clickthrough-policy:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:tenant-service-clickthrough-policy:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:tenant-service-clickthrough-policy:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:tenant-service-clickthrough-policy:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:tenant-service-clickthrough-policy:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:tenant-service-clickthrough-policy:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:universal-service-foundation-scope-plus-principles:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:universal-service-foundation-scope-plus-principles:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:universal-service-foundation-scope-plus-principles:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:universal-service-foundation-scope-plus-principles:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:universal-service-foundation-scope-plus-principles:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:universal-service-foundation-scope-plus-principles:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:usage-metering-plus-meter-event-ingestion:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:usage-metering-plus-meter-event-ingestion:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:usage-metering-plus-meter-event-ingestion:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:usage-metering-plus-meter-event-ingestion:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:usage-metering-plus-meter-event-ingestion:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:usage-metering-plus-meter-event-ingestion:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:user-identity-plus-tenant-membership:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:user-identity-plus-tenant-membership:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:user-identity-plus-tenant-membership:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:user-identity-plus-tenant-membership:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:user-identity-plus-tenant-membership:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:user-identity-plus-tenant-membership:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:webhooks-developer-facing:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:webhooks-developer-facing:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:webhooks-developer-facing:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:webhooks-developer-facing:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:webhooks-developer-facing:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:webhooks-developer-facing:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:workflow-engine-scheduled-jobs-approvals:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:workflow-engine-scheduled-jobs-approvals:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:workflow-engine-scheduled-jobs-approvals:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:workflow-engine-scheduled-jobs-approvals:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:workflow-engine-scheduled-jobs-approvals:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:workflow-engine-scheduled-jobs-approvals:traces",
+      "kind": "observability",
+      "label": "traces"
+    },
+    {
+      "id": "observability:write-only-secret-settings:alerts",
+      "kind": "observability",
+      "label": "alerts"
+    },
+    {
+      "id": "observability:write-only-secret-settings:audit",
+      "kind": "observability",
+      "label": "audit"
+    },
+    {
+      "id": "observability:write-only-secret-settings:logs",
+      "kind": "observability",
+      "label": "logs"
+    },
+    {
+      "id": "observability:write-only-secret-settings:metrics",
+      "kind": "observability",
+      "label": "metrics"
+    },
+    {
+      "id": "observability:write-only-secret-settings:routes",
+      "kind": "observability",
+      "label": "routes"
+    },
+    {
+      "id": "observability:write-only-secret-settings:traces",
+      "kind": "observability",
+      "label": "traces"
+    }
+  ],
+  "edges": [
+    {
+      "from": "capability:abac-policy-decision-point",
+      "to": "observability:abac-policy-decision-point:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:abac-policy-decision-point",
+      "to": "observability:abac-policy-decision-point:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:abac-policy-decision-point",
+      "to": "observability:abac-policy-decision-point:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:abac-policy-decision-point",
+      "to": "observability:abac-policy-decision-point:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:abac-policy-decision-point",
+      "to": "observability:abac-policy-decision-point:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:abac-policy-decision-point",
+      "to": "observability:abac-policy-decision-point:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:accessibility-a11y-gate",
+      "to": "observability:accessibility-a11y-gate:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:accessibility-a11y-gate",
+      "to": "observability:accessibility-a11y-gate:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:accessibility-a11y-gate",
+      "to": "observability:accessibility-a11y-gate:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:accessibility-a11y-gate",
+      "to": "observability:accessibility-a11y-gate:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:accessibility-a11y-gate",
+      "to": "observability:accessibility-a11y-gate:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:accessibility-a11y-gate",
+      "to": "observability:accessibility-a11y-gate:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "to": "observability:api-docs-developer-portal-sdks-rate-limits:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "to": "observability:api-docs-developer-portal-sdks-rate-limits:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "to": "observability:api-docs-developer-portal-sdks-rate-limits:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "to": "observability:api-docs-developer-portal-sdks-rate-limits:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "to": "observability:api-docs-developer-portal-sdks-rate-limits:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "to": "observability:api-docs-developer-portal-sdks-rate-limits:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:api-keys-personal-access-tokens",
+      "to": "observability:api-keys-personal-access-tokens:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:api-keys-personal-access-tokens",
+      "to": "observability:api-keys-personal-access-tokens:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:api-keys-personal-access-tokens",
+      "to": "observability:api-keys-personal-access-tokens:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:api-keys-personal-access-tokens",
+      "to": "observability:api-keys-personal-access-tokens:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:api-keys-personal-access-tokens",
+      "to": "observability:api-keys-personal-access-tokens:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:api-keys-personal-access-tokens",
+      "to": "observability:api-keys-personal-access-tokens:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:audit-of-privileged-access",
+      "to": "observability:audit-of-privileged-access:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:audit-of-privileged-access",
+      "to": "observability:audit-of-privileged-access:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:audit-of-privileged-access",
+      "to": "observability:audit-of-privileged-access:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:audit-of-privileged-access",
+      "to": "observability:audit-of-privileged-access:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:audit-of-privileged-access",
+      "to": "observability:audit-of-privileged-access:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:audit-of-privileged-access",
+      "to": "observability:audit-of-privileged-access:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:background-workers-job-runner",
+      "to": "observability:background-workers-job-runner:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:background-workers-job-runner",
+      "to": "observability:background-workers-job-runner:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:background-workers-job-runner",
+      "to": "observability:background-workers-job-runner:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:background-workers-job-runner",
+      "to": "observability:background-workers-job-runner:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:background-workers-job-runner",
+      "to": "observability:background-workers-job-runner:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:background-workers-job-runner",
+      "to": "observability:background-workers-job-runner:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:backup-plus-restore",
+      "to": "observability:backup-plus-restore:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:backup-plus-restore",
+      "to": "observability:backup-plus-restore:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:backup-plus-restore",
+      "to": "observability:backup-plus-restore:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:backup-plus-restore",
+      "to": "observability:backup-plus-restore:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:backup-plus-restore",
+      "to": "observability:backup-plus-restore:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:backup-plus-restore",
+      "to": "observability:backup-plus-restore:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:branding-plus-theming",
+      "to": "observability:branding-plus-theming:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:branding-plus-theming",
+      "to": "observability:branding-plus-theming:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:branding-plus-theming",
+      "to": "observability:branding-plus-theming:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:branding-plus-theming",
+      "to": "observability:branding-plus-theming:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:branding-plus-theming",
+      "to": "observability:branding-plus-theming:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:branding-plus-theming",
+      "to": "observability:branding-plus-theming:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "observability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "observability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "observability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "observability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "observability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "observability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:build-versus-compose-decision-framework",
+      "to": "observability:build-versus-compose-decision-framework:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:build-versus-compose-decision-framework",
+      "to": "observability:build-versus-compose-decision-framework:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:build-versus-compose-decision-framework",
+      "to": "observability:build-versus-compose-decision-framework:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:build-versus-compose-decision-framework",
+      "to": "observability:build-versus-compose-decision-framework:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:build-versus-compose-decision-framework",
+      "to": "observability:build-versus-compose-decision-framework:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:build-versus-compose-decision-framework",
+      "to": "observability:build-versus-compose-decision-framework:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:claim-mapping-plus-group-role-mapping",
+      "to": "observability:claim-mapping-plus-group-role-mapping:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:claim-mapping-plus-group-role-mapping",
+      "to": "observability:claim-mapping-plus-group-role-mapping:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:claim-mapping-plus-group-role-mapping",
+      "to": "observability:claim-mapping-plus-group-role-mapping:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:claim-mapping-plus-group-role-mapping",
+      "to": "observability:claim-mapping-plus-group-role-mapping:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:claim-mapping-plus-group-role-mapping",
+      "to": "observability:claim-mapping-plus-group-role-mapping:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:claim-mapping-plus-group-role-mapping",
+      "to": "observability:claim-mapping-plus-group-role-mapping:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "to": "observability:code-quality-plus-secret-plus-dependency-scanning:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "to": "observability:code-quality-plus-secret-plus-dependency-scanning:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "to": "observability:code-quality-plus-secret-plus-dependency-scanning:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "to": "observability:code-quality-plus-secret-plus-dependency-scanning:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "to": "observability:code-quality-plus-secret-plus-dependency-scanning:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "to": "observability:code-quality-plus-secret-plus-dependency-scanning:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:compliance-reports-access-reviews-evidence-packs",
+      "to": "observability:compliance-reports-access-reviews-evidence-packs:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:compliance-reports-access-reviews-evidence-packs",
+      "to": "observability:compliance-reports-access-reviews-evidence-packs:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:compliance-reports-access-reviews-evidence-packs",
+      "to": "observability:compliance-reports-access-reviews-evidence-packs:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:compliance-reports-access-reviews-evidence-packs",
+      "to": "observability:compliance-reports-access-reviews-evidence-packs:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:compliance-reports-access-reviews-evidence-packs",
+      "to": "observability:compliance-reports-access-reviews-evidence-packs:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:compliance-reports-access-reviews-evidence-packs",
+      "to": "observability:compliance-reports-access-reviews-evidence-packs:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:composed-provider-readiness-spine",
+      "to": "observability:composed-provider-readiness-spine:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:composed-provider-readiness-spine",
+      "to": "observability:composed-provider-readiness-spine:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:composed-provider-readiness-spine",
+      "to": "observability:composed-provider-readiness-spine:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:composed-provider-readiness-spine",
+      "to": "observability:composed-provider-readiness-spine:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:composed-provider-readiness-spine",
+      "to": "observability:composed-provider-readiness-spine:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:composed-provider-readiness-spine",
+      "to": "observability:composed-provider-readiness-spine:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:configuration-registry-plus-history",
+      "to": "observability:configuration-registry-plus-history:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:configuration-registry-plus-history",
+      "to": "observability:configuration-registry-plus-history:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:configuration-registry-plus-history",
+      "to": "observability:configuration-registry-plus-history:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:configuration-registry-plus-history",
+      "to": "observability:configuration-registry-plus-history:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:configuration-registry-plus-history",
+      "to": "observability:configuration-registry-plus-history:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:configuration-registry-plus-history",
+      "to": "observability:configuration-registry-plus-history:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:custom-domains-dns-ownership-tls-canonical",
+      "to": "observability:custom-domains-dns-ownership-tls-canonical:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:custom-domains-dns-ownership-tls-canonical",
+      "to": "observability:custom-domains-dns-ownership-tls-canonical:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:custom-domains-dns-ownership-tls-canonical",
+      "to": "observability:custom-domains-dns-ownership-tls-canonical:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:custom-domains-dns-ownership-tls-canonical",
+      "to": "observability:custom-domains-dns-ownership-tls-canonical:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:custom-domains-dns-ownership-tls-canonical",
+      "to": "observability:custom-domains-dns-ownership-tls-canonical:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:custom-domains-dns-ownership-tls-canonical",
+      "to": "observability:custom-domains-dns-ownership-tls-canonical:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "observability:data-governance-catalog-lineage-classification-pii-dsr-gdpr:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "observability:data-governance-catalog-lineage-classification-pii-dsr-gdpr:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "observability:data-governance-catalog-lineage-classification-pii-dsr-gdpr:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "observability:data-governance-catalog-lineage-classification-pii-dsr-gdpr:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "observability:data-governance-catalog-lineage-classification-pii-dsr-gdpr:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "observability:data-governance-catalog-lineage-classification-pii-dsr-gdpr:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "observability:delegated-administration-roles:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "observability:delegated-administration-roles:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "observability:delegated-administration-roles:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "observability:delegated-administration-roles:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "observability:delegated-administration-roles:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "observability:delegated-administration-roles:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:e2e-confidence-ladder-stage-aware",
+      "to": "observability:e2e-confidence-ladder-stage-aware:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:e2e-confidence-ladder-stage-aware",
+      "to": "observability:e2e-confidence-ladder-stage-aware:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:e2e-confidence-ladder-stage-aware",
+      "to": "observability:e2e-confidence-ladder-stage-aware:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:e2e-confidence-ladder-stage-aware",
+      "to": "observability:e2e-confidence-ladder-stage-aware:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:e2e-confidence-ladder-stage-aware",
+      "to": "observability:e2e-confidence-ladder-stage-aware:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:e2e-confidence-ladder-stage-aware",
+      "to": "observability:e2e-confidence-ladder-stage-aware:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:end-user-profile-plus-preferences-self-service",
+      "to": "observability:end-user-profile-plus-preferences-self-service:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:end-user-profile-plus-preferences-self-service",
+      "to": "observability:end-user-profile-plus-preferences-self-service:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:end-user-profile-plus-preferences-self-service",
+      "to": "observability:end-user-profile-plus-preferences-self-service:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:end-user-profile-plus-preferences-self-service",
+      "to": "observability:end-user-profile-plus-preferences-self-service:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:end-user-profile-plus-preferences-self-service",
+      "to": "observability:end-user-profile-plus-preferences-self-service:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:end-user-profile-plus-preferences-self-service",
+      "to": "observability:end-user-profile-plus-preferences-self-service:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "observability:entitlement-engine:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "observability:entitlement-engine:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "observability:entitlement-engine:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "observability:entitlement-engine:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "observability:entitlement-engine:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "observability:entitlement-engine:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:environment-registry-plus-bootstrap",
+      "to": "observability:environment-registry-plus-bootstrap:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:environment-registry-plus-bootstrap",
+      "to": "observability:environment-registry-plus-bootstrap:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:environment-registry-plus-bootstrap",
+      "to": "observability:environment-registry-plus-bootstrap:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:environment-registry-plus-bootstrap",
+      "to": "observability:environment-registry-plus-bootstrap:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:environment-registry-plus-bootstrap",
+      "to": "observability:environment-registry-plus-bootstrap:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:environment-registry-plus-bootstrap",
+      "to": "observability:environment-registry-plus-bootstrap:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:environment-specific-vs-shared-service-model",
+      "to": "observability:environment-specific-vs-shared-service-model:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:environment-specific-vs-shared-service-model",
+      "to": "observability:environment-specific-vs-shared-service-model:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:environment-specific-vs-shared-service-model",
+      "to": "observability:environment-specific-vs-shared-service-model:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:environment-specific-vs-shared-service-model",
+      "to": "observability:environment-specific-vs-shared-service-model:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:environment-specific-vs-shared-service-model",
+      "to": "observability:environment-specific-vs-shared-service-model:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:environment-specific-vs-shared-service-model",
+      "to": "observability:environment-specific-vs-shared-service-model:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "observability:event-bus-durable-queues-dlq-redrive:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "observability:event-bus-durable-queues-dlq-redrive:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "observability:event-bus-durable-queues-dlq-redrive:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "observability:event-bus-durable-queues-dlq-redrive:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "observability:event-bus-durable-queues-dlq-redrive:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "observability:event-bus-durable-queues-dlq-redrive:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:history-read-model-read-only-projection",
+      "to": "observability:history-read-model-read-only-projection:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:history-read-model-read-only-projection",
+      "to": "observability:history-read-model-read-only-projection:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:history-read-model-read-only-projection",
+      "to": "observability:history-read-model-read-only-projection:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:history-read-model-read-only-projection",
+      "to": "observability:history-read-model-read-only-projection:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:history-read-model-read-only-projection",
+      "to": "observability:history-read-model-read-only-projection:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:history-read-model-read-only-projection",
+      "to": "observability:history-read-model-read-only-projection:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:i18n-runtime-plus-validation",
+      "to": "observability:i18n-runtime-plus-validation:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:i18n-runtime-plus-validation",
+      "to": "observability:i18n-runtime-plus-validation:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:i18n-runtime-plus-validation",
+      "to": "observability:i18n-runtime-plus-validation:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:i18n-runtime-plus-validation",
+      "to": "observability:i18n-runtime-plus-validation:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:i18n-runtime-plus-validation",
+      "to": "observability:i18n-runtime-plus-validation:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:i18n-runtime-plus-validation",
+      "to": "observability:i18n-runtime-plus-validation:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:idp-brokering-plus-oidc-provider-management",
+      "to": "observability:idp-brokering-plus-oidc-provider-management:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:idp-brokering-plus-oidc-provider-management",
+      "to": "observability:idp-brokering-plus-oidc-provider-management:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:idp-brokering-plus-oidc-provider-management",
+      "to": "observability:idp-brokering-plus-oidc-provider-management:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:idp-brokering-plus-oidc-provider-management",
+      "to": "observability:idp-brokering-plus-oidc-provider-management:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:idp-brokering-plus-oidc-provider-management",
+      "to": "observability:idp-brokering-plus-oidc-provider-management:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:idp-brokering-plus-oidc-provider-management",
+      "to": "observability:idp-brokering-plus-oidc-provider-management:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "observability:internal-service-catalog-plus-readiness:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "observability:internal-service-catalog-plus-readiness:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "observability:internal-service-catalog-plus-readiness:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "observability:internal-service-catalog-plus-readiness:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "observability:internal-service-catalog-plus-readiness:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "observability:internal-service-catalog-plus-readiness:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "to": "observability:logs-aggregation-plus-tenant-scoped-search:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "to": "observability:logs-aggregation-plus-tenant-scoped-search:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "to": "observability:logs-aggregation-plus-tenant-scoped-search:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "to": "observability:logs-aggregation-plus-tenant-scoped-search:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "to": "observability:logs-aggregation-plus-tenant-scoped-search:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "to": "observability:logs-aggregation-plus-tenant-scoped-search:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:metrics-plus-traces",
+      "to": "observability:metrics-plus-traces:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:metrics-plus-traces",
+      "to": "observability:metrics-plus-traces:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:metrics-plus-traces",
+      "to": "observability:metrics-plus-traces:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:metrics-plus-traces",
+      "to": "observability:metrics-plus-traces:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:metrics-plus-traces",
+      "to": "observability:metrics-plus-traces:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:metrics-plus-traces",
+      "to": "observability:metrics-plus-traces:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:mfa-plus-session-policy-plus-lockout",
+      "to": "observability:mfa-plus-session-policy-plus-lockout:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:mfa-plus-session-policy-plus-lockout",
+      "to": "observability:mfa-plus-session-policy-plus-lockout:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:mfa-plus-session-policy-plus-lockout",
+      "to": "observability:mfa-plus-session-policy-plus-lockout:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:mfa-plus-session-policy-plus-lockout",
+      "to": "observability:mfa-plus-session-policy-plus-lockout:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:mfa-plus-session-policy-plus-lockout",
+      "to": "observability:mfa-plus-session-policy-plus-lockout:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:mfa-plus-session-policy-plus-lockout",
+      "to": "observability:mfa-plus-session-policy-plus-lockout:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:notification-delivery-plus-preferences-plus-channels",
+      "to": "observability:notification-delivery-plus-preferences-plus-channels:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:notification-delivery-plus-preferences-plus-channels",
+      "to": "observability:notification-delivery-plus-preferences-plus-channels:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:notification-delivery-plus-preferences-plus-channels",
+      "to": "observability:notification-delivery-plus-preferences-plus-channels:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:notification-delivery-plus-preferences-plus-channels",
+      "to": "observability:notification-delivery-plus-preferences-plus-channels:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:notification-delivery-plus-preferences-plus-channels",
+      "to": "observability:notification-delivery-plus-preferences-plus-channels:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:notification-delivery-plus-preferences-plus-channels",
+      "to": "observability:notification-delivery-plus-preferences-plus-channels:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "observability:object-storage-plus-tenant-prefixes-plus-signed-urls:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "observability:object-storage-plus-tenant-prefixes-plus-signed-urls:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "observability:object-storage-plus-tenant-prefixes-plus-signed-urls:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "observability:object-storage-plus-tenant-prefixes-plus-signed-urls:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "observability:object-storage-plus-tenant-prefixes-plus-signed-urls:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "observability:object-storage-plus-tenant-prefixes-plus-signed-urls:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:observability-built-in-alerting-plus-incidents",
+      "to": "observability:observability-built-in-alerting-plus-incidents:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:observability-built-in-alerting-plus-incidents",
+      "to": "observability:observability-built-in-alerting-plus-incidents:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:observability-built-in-alerting-plus-incidents",
+      "to": "observability:observability-built-in-alerting-plus-incidents:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:observability-built-in-alerting-plus-incidents",
+      "to": "observability:observability-built-in-alerting-plus-incidents:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:observability-built-in-alerting-plus-incidents",
+      "to": "observability:observability-built-in-alerting-plus-incidents:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:observability-built-in-alerting-plus-incidents",
+      "to": "observability:observability-built-in-alerting-plus-incidents:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:oidc-discovery-issuer-jwks-validation",
+      "to": "observability:oidc-discovery-issuer-jwks-validation:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:oidc-discovery-issuer-jwks-validation",
+      "to": "observability:oidc-discovery-issuer-jwks-validation:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:oidc-discovery-issuer-jwks-validation",
+      "to": "observability:oidc-discovery-issuer-jwks-validation:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:oidc-discovery-issuer-jwks-validation",
+      "to": "observability:oidc-discovery-issuer-jwks-validation:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:oidc-discovery-issuer-jwks-validation",
+      "to": "observability:oidc-discovery-issuer-jwks-validation:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:oidc-discovery-issuer-jwks-validation",
+      "to": "observability:oidc-discovery-issuer-jwks-validation:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:oidc-test-connection-plus-callback-display",
+      "to": "observability:oidc-test-connection-plus-callback-display:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:oidc-test-connection-plus-callback-display",
+      "to": "observability:oidc-test-connection-plus-callback-display:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:oidc-test-connection-plus-callback-display",
+      "to": "observability:oidc-test-connection-plus-callback-display:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:oidc-test-connection-plus-callback-display",
+      "to": "observability:oidc-test-connection-plus-callback-display:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:oidc-test-connection-plus-callback-display",
+      "to": "observability:oidc-test-connection-plus-callback-display:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:oidc-test-connection-plus-callback-display",
+      "to": "observability:oidc-test-connection-plus-callback-display:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:openapi-drift-hard-gate",
+      "to": "observability:openapi-drift-hard-gate:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:openapi-drift-hard-gate",
+      "to": "observability:openapi-drift-hard-gate:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:openapi-drift-hard-gate",
+      "to": "observability:openapi-drift-hard-gate:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:openapi-drift-hard-gate",
+      "to": "observability:openapi-drift-hard-gate:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:openapi-drift-hard-gate",
+      "to": "observability:openapi-drift-hard-gate:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:openapi-drift-hard-gate",
+      "to": "observability:openapi-drift-hard-gate:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:pitr-retention-legal-hold-data-residency",
+      "to": "observability:pitr-retention-legal-hold-data-residency:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:pitr-retention-legal-hold-data-residency",
+      "to": "observability:pitr-retention-legal-hold-data-residency:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:pitr-retention-legal-hold-data-residency",
+      "to": "observability:pitr-retention-legal-hold-data-residency:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:pitr-retention-legal-hold-data-residency",
+      "to": "observability:pitr-retention-legal-hold-data-residency:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:pitr-retention-legal-hold-data-residency",
+      "to": "observability:pitr-retention-legal-hold-data-residency:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:pitr-retention-legal-hold-data-residency",
+      "to": "observability:pitr-retention-legal-hold-data-residency:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:platform-login-plus-session",
+      "to": "observability:platform-login-plus-session:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:platform-login-plus-session",
+      "to": "observability:platform-login-plus-session:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:platform-login-plus-session",
+      "to": "observability:platform-login-plus-session:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:platform-login-plus-session",
+      "to": "observability:platform-login-plus-session:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:platform-login-plus-session",
+      "to": "observability:platform-login-plus-session:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:platform-login-plus-session",
+      "to": "observability:platform-login-plus-session:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "observability:product-catalog-plans-prices:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "observability:product-catalog-plans-prices:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "observability:product-catalog-plans-prices:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "observability:product-catalog-plans-prices:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "observability:product-catalog-plans-prices:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "observability:product-catalog-plans-prices:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "observability:provider-configuration-plane:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "observability:provider-configuration-plane:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "observability:provider-configuration-plane:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "observability:provider-configuration-plane:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "observability:provider-configuration-plane:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "observability:provider-configuration-plane:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:provider-environment-classification",
+      "to": "observability:provider-environment-classification:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:provider-environment-classification",
+      "to": "observability:provider-environment-classification:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:provider-environment-classification",
+      "to": "observability:provider-environment-classification:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:provider-environment-classification",
+      "to": "observability:provider-environment-classification:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:provider-environment-classification",
+      "to": "observability:provider-environment-classification:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:provider-environment-classification",
+      "to": "observability:provider-environment-classification:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "observability:quota-enforcement:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "observability:quota-enforcement:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "observability:quota-enforcement:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "observability:quota-enforcement:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "observability:quota-enforcement:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "observability:quota-enforcement:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:rate-limiting-api",
+      "to": "observability:rate-limiting-api:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:rate-limiting-api",
+      "to": "observability:rate-limiting-api:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:rate-limiting-api",
+      "to": "observability:rate-limiting-api:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:rate-limiting-api",
+      "to": "observability:rate-limiting-api:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:rate-limiting-api",
+      "to": "observability:rate-limiting-api:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:rate-limiting-api",
+      "to": "observability:rate-limiting-api:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:rbac-roles-plus-permissions",
+      "to": "observability:rbac-roles-plus-permissions:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:rbac-roles-plus-permissions",
+      "to": "observability:rbac-roles-plus-permissions:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:rbac-roles-plus-permissions",
+      "to": "observability:rbac-roles-plus-permissions:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:rbac-roles-plus-permissions",
+      "to": "observability:rbac-roles-plus-permissions:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:rbac-roles-plus-permissions",
+      "to": "observability:rbac-roles-plus-permissions:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:rbac-roles-plus-permissions",
+      "to": "observability:rbac-roles-plus-permissions:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:relational-storage-plus-migrations-plus-rls",
+      "to": "observability:relational-storage-plus-migrations-plus-rls:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:relational-storage-plus-migrations-plus-rls",
+      "to": "observability:relational-storage-plus-migrations-plus-rls:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:relational-storage-plus-migrations-plus-rls",
+      "to": "observability:relational-storage-plus-migrations-plus-rls:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:relational-storage-plus-migrations-plus-rls",
+      "to": "observability:relational-storage-plus-migrations-plus-rls:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:relational-storage-plus-migrations-plus-rls",
+      "to": "observability:relational-storage-plus-migrations-plus-rls:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:relational-storage-plus-migrations-plus-rls",
+      "to": "observability:relational-storage-plus-migrations-plus-rls:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "observability:runtime-secrets-management:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "observability:runtime-secrets-management:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "observability:runtime-secrets-management:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "observability:runtime-secrets-management:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "observability:runtime-secrets-management:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "observability:runtime-secrets-management:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "to": "observability:scheduled-jobs-built-in-on-the-event-substrate:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "to": "observability:scheduled-jobs-built-in-on-the-event-substrate:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "to": "observability:scheduled-jobs-built-in-on-the-event-substrate:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "to": "observability:scheduled-jobs-built-in-on-the-event-substrate:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "to": "observability:scheduled-jobs-built-in-on-the-event-substrate:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "to": "observability:scheduled-jobs-built-in-on-the-event-substrate:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:search-plus-indexing-product-search",
+      "to": "observability:search-plus-indexing-product-search:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:search-plus-indexing-product-search",
+      "to": "observability:search-plus-indexing-product-search:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:search-plus-indexing-product-search",
+      "to": "observability:search-plus-indexing-product-search:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:search-plus-indexing-product-search",
+      "to": "observability:search-plus-indexing-product-search:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:search-plus-indexing-product-search",
+      "to": "observability:search-plus-indexing-product-search:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:search-plus-indexing-product-search",
+      "to": "observability:search-plus-indexing-product-search:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:service-catalog-plus-provider-integration-model",
+      "to": "observability:service-catalog-plus-provider-integration-model:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:service-catalog-plus-provider-integration-model",
+      "to": "observability:service-catalog-plus-provider-integration-model:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:service-catalog-plus-provider-integration-model",
+      "to": "observability:service-catalog-plus-provider-integration-model:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:service-catalog-plus-provider-integration-model",
+      "to": "observability:service-catalog-plus-provider-integration-model:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:service-catalog-plus-provider-integration-model",
+      "to": "observability:service-catalog-plus-provider-integration-model:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:service-catalog-plus-provider-integration-model",
+      "to": "observability:service-catalog-plus-provider-integration-model:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:sub-organisations",
+      "to": "observability:sub-organisations:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:sub-organisations",
+      "to": "observability:sub-organisations:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:sub-organisations",
+      "to": "observability:sub-organisations:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:sub-organisations",
+      "to": "observability:sub-organisations:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:sub-organisations",
+      "to": "observability:sub-organisations:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:sub-organisations",
+      "to": "observability:sub-organisations:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:subscriptions-invoices-payment-methods-dunning",
+      "to": "observability:subscriptions-invoices-payment-methods-dunning:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:subscriptions-invoices-payment-methods-dunning",
+      "to": "observability:subscriptions-invoices-payment-methods-dunning:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:subscriptions-invoices-payment-methods-dunning",
+      "to": "observability:subscriptions-invoices-payment-methods-dunning:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:subscriptions-invoices-payment-methods-dunning",
+      "to": "observability:subscriptions-invoices-payment-methods-dunning:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:subscriptions-invoices-payment-methods-dunning",
+      "to": "observability:subscriptions-invoices-payment-methods-dunning:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:subscriptions-invoices-payment-methods-dunning",
+      "to": "observability:subscriptions-invoices-payment-methods-dunning:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "observability:support-mode-break-glass-access:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "observability:support-mode-break-glass-access:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "observability:support-mode-break-glass-access:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "observability:support-mode-break-glass-access:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "observability:support-mode-break-glass-access:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "observability:support-mode-break-glass-access:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:support-tickets-customer-health-announcements",
+      "to": "observability:support-tickets-customer-health-announcements:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:support-tickets-customer-health-announcements",
+      "to": "observability:support-tickets-customer-health-announcements:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:support-tickets-customer-health-announcements",
+      "to": "observability:support-tickets-customer-health-announcements:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:support-tickets-customer-health-announcements",
+      "to": "observability:support-tickets-customer-health-announcements:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:support-tickets-customer-health-announcements",
+      "to": "observability:support-tickets-customer-health-announcements:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:support-tickets-customer-health-announcements",
+      "to": "observability:support-tickets-customer-health-announcements:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-canonical-domain-set-unset",
+      "to": "observability:tenant-canonical-domain-set-unset:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-canonical-domain-set-unset",
+      "to": "observability:tenant-canonical-domain-set-unset:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-canonical-domain-set-unset",
+      "to": "observability:tenant-canonical-domain-set-unset:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-canonical-domain-set-unset",
+      "to": "observability:tenant-canonical-domain-set-unset:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-canonical-domain-set-unset",
+      "to": "observability:tenant-canonical-domain-set-unset:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-canonical-domain-set-unset",
+      "to": "observability:tenant-canonical-domain-set-unset:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-custom-domain-auth-callback",
+      "to": "observability:tenant-custom-domain-auth-callback:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-custom-domain-auth-callback",
+      "to": "observability:tenant-custom-domain-auth-callback:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-custom-domain-auth-callback",
+      "to": "observability:tenant-custom-domain-auth-callback:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-custom-domain-auth-callback",
+      "to": "observability:tenant-custom-domain-auth-callback:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-custom-domain-auth-callback",
+      "to": "observability:tenant-custom-domain-auth-callback:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-custom-domain-auth-callback",
+      "to": "observability:tenant-custom-domain-auth-callback:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-data-import-export",
+      "to": "observability:tenant-data-import-export:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-data-import-export",
+      "to": "observability:tenant-data-import-export:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-data-import-export",
+      "to": "observability:tenant-data-import-export:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-data-import-export",
+      "to": "observability:tenant-data-import-export:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-data-import-export",
+      "to": "observability:tenant-data-import-export:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-data-import-export",
+      "to": "observability:tenant-data-import-export:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-domain-activation-auth-client",
+      "to": "observability:tenant-domain-activation-auth-client:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-domain-activation-auth-client",
+      "to": "observability:tenant-domain-activation-auth-client:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-domain-activation-auth-client",
+      "to": "observability:tenant-domain-activation-auth-client:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-domain-activation-auth-client",
+      "to": "observability:tenant-domain-activation-auth-client:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-domain-activation-auth-client",
+      "to": "observability:tenant-domain-activation-auth-client:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-domain-activation-auth-client",
+      "to": "observability:tenant-domain-activation-auth-client:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-groups",
+      "to": "observability:tenant-groups:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-groups",
+      "to": "observability:tenant-groups:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-groups",
+      "to": "observability:tenant-groups:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-groups",
+      "to": "observability:tenant-groups:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-groups",
+      "to": "observability:tenant-groups:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-groups",
+      "to": "observability:tenant-groups:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-host-identity-resolution",
+      "to": "observability:tenant-host-identity-resolution:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-host-identity-resolution",
+      "to": "observability:tenant-host-identity-resolution:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-host-identity-resolution",
+      "to": "observability:tenant-host-identity-resolution:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-host-identity-resolution",
+      "to": "observability:tenant-host-identity-resolution:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-host-identity-resolution",
+      "to": "observability:tenant-host-identity-resolution:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-host-identity-resolution",
+      "to": "observability:tenant-host-identity-resolution:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "observability:tenant-identity-record-plus-fqdn:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "observability:tenant-identity-record-plus-fqdn:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "observability:tenant-identity-record-plus-fqdn:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "observability:tenant-identity-record-plus-fqdn:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "observability:tenant-identity-record-plus-fqdn:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "observability:tenant-identity-record-plus-fqdn:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-isolation-proof",
+      "to": "observability:tenant-isolation-proof:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-isolation-proof",
+      "to": "observability:tenant-isolation-proof:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-isolation-proof",
+      "to": "observability:tenant-isolation-proof:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-isolation-proof",
+      "to": "observability:tenant-isolation-proof:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-isolation-proof",
+      "to": "observability:tenant-isolation-proof:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-isolation-proof",
+      "to": "observability:tenant-isolation-proof:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "observability:tenant-lifecycle-provision-suspend-delete-export:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "observability:tenant-lifecycle-provision-suspend-delete-export:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "observability:tenant-lifecycle-provision-suspend-delete-export:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "observability:tenant-lifecycle-provision-suspend-delete-export:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "observability:tenant-lifecycle-provision-suspend-delete-export:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "observability:tenant-lifecycle-provision-suspend-delete-export:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-service-clickthrough-policy",
+      "to": "observability:tenant-service-clickthrough-policy:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-service-clickthrough-policy",
+      "to": "observability:tenant-service-clickthrough-policy:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-service-clickthrough-policy",
+      "to": "observability:tenant-service-clickthrough-policy:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-service-clickthrough-policy",
+      "to": "observability:tenant-service-clickthrough-policy:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-service-clickthrough-policy",
+      "to": "observability:tenant-service-clickthrough-policy:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:tenant-service-clickthrough-policy",
+      "to": "observability:tenant-service-clickthrough-policy:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:universal-service-foundation-scope-plus-principles",
+      "to": "observability:universal-service-foundation-scope-plus-principles:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:universal-service-foundation-scope-plus-principles",
+      "to": "observability:universal-service-foundation-scope-plus-principles:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:universal-service-foundation-scope-plus-principles",
+      "to": "observability:universal-service-foundation-scope-plus-principles:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:universal-service-foundation-scope-plus-principles",
+      "to": "observability:universal-service-foundation-scope-plus-principles:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:universal-service-foundation-scope-plus-principles",
+      "to": "observability:universal-service-foundation-scope-plus-principles:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:universal-service-foundation-scope-plus-principles",
+      "to": "observability:universal-service-foundation-scope-plus-principles:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "observability:usage-metering-plus-meter-event-ingestion:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "observability:usage-metering-plus-meter-event-ingestion:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "observability:usage-metering-plus-meter-event-ingestion:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "observability:usage-metering-plus-meter-event-ingestion:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "observability:usage-metering-plus-meter-event-ingestion:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "observability:usage-metering-plus-meter-event-ingestion:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:user-identity-plus-tenant-membership",
+      "to": "observability:user-identity-plus-tenant-membership:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:user-identity-plus-tenant-membership",
+      "to": "observability:user-identity-plus-tenant-membership:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:user-identity-plus-tenant-membership",
+      "to": "observability:user-identity-plus-tenant-membership:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:user-identity-plus-tenant-membership",
+      "to": "observability:user-identity-plus-tenant-membership:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:user-identity-plus-tenant-membership",
+      "to": "observability:user-identity-plus-tenant-membership:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:user-identity-plus-tenant-membership",
+      "to": "observability:user-identity-plus-tenant-membership:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:webhooks-developer-facing",
+      "to": "observability:webhooks-developer-facing:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:webhooks-developer-facing",
+      "to": "observability:webhooks-developer-facing:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:webhooks-developer-facing",
+      "to": "observability:webhooks-developer-facing:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:webhooks-developer-facing",
+      "to": "observability:webhooks-developer-facing:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:webhooks-developer-facing",
+      "to": "observability:webhooks-developer-facing:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:webhooks-developer-facing",
+      "to": "observability:webhooks-developer-facing:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "observability:workflow-engine-scheduled-jobs-approvals:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "observability:workflow-engine-scheduled-jobs-approvals:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "observability:workflow-engine-scheduled-jobs-approvals:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "observability:workflow-engine-scheduled-jobs-approvals:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "observability:workflow-engine-scheduled-jobs-approvals:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "observability:workflow-engine-scheduled-jobs-approvals:traces",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:write-only-secret-settings",
+      "to": "observability:write-only-secret-settings:alerts",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:write-only-secret-settings",
+      "to": "observability:write-only-secret-settings:audit",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:write-only-secret-settings",
+      "to": "observability:write-only-secret-settings:logs",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:write-only-secret-settings",
+      "to": "observability:write-only-secret-settings:metrics",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:write-only-secret-settings",
+      "to": "observability:write-only-secret-settings:routes",
+      "type": "has-observability"
+    },
+    {
+      "from": "capability:write-only-secret-settings",
+      "to": "observability:write-only-secret-settings:traces",
+      "type": "has-observability"
+    }
+  ]
+}

@@ -38,6 +38,17 @@ import r34 from "./rules/r34-constraint-satisfaction.mjs";
 import r35 from "./rules/r35-semantic-closure.mjs";
 import r36 from "./rules/r36-regeneration-sufficiency.mjs";
 import r37 from "./rules/r37-semantic-entropy.mjs";
+import r40 from "./rules/r40-operational-assurance.mjs";
+import r41 from "./rules/r41-observability-assurance.mjs";
+import r42 from "./rules/r42-security-assurance.mjs";
+import r43 from "./rules/r43-audit-assurance.mjs";
+import r44 from "./rules/r44-event-assurance.mjs";
+import r45 from "./rules/r45-environment-assurance.mjs";
+import r46 from "./rules/r46-data-assurance.mjs";
+import r47 from "./rules/r47-dependency-assurance.mjs";
+import r48 from "./rules/r48-reliability-assurance.mjs";
+import r49 from "./rules/r49-capability-coverage.mjs";
+import r50 from "./rules/r50-runtime-alignment.mjs";
 
 export const RULES = [
   r1,
@@ -77,6 +88,17 @@ export const RULES = [
   r35,
   r36,
   r37,
+  r40,
+  r41,
+  r42,
+  r43,
+  r44,
+  r45,
+  r46,
+  r47,
+  r48,
+  r49,
+  r50,
 ];
 
 export function runRules(ctx) {
@@ -115,6 +137,17 @@ const AUDIT_SURFACES = {
   "semantic-closure": "R35",
   "regeneration-sufficiency": "R36",
   "semantic-entropy": "R37",
+  "operational-assurance": "R40",
+  "observability-assurance": "R41",
+  "security-assurance": "R42",
+  "audit-assurance": "R43",
+  "event-assurance": "R44",
+  "environment-assurance": "R45",
+  "data-assurance": "R46",
+  "dependency-assurance": "R47",
+  "reliability-assurance": "R48",
+  "capability-coverage": "R49",
+  "runtime-alignment": "R50",
 };
 // Surface rules wired into RULES. Keep in sync with the imports above.
 const IMPLEMENTED_SURFACE_RULES = [
@@ -145,6 +178,17 @@ const IMPLEMENTED_SURFACE_RULES = [
   "R35",
   "R36",
   "R37",
+  "R40",
+  "R41",
+  "R42",
+  "R43",
+  "R44",
+  "R45",
+  "R46",
+  "R47",
+  "R48",
+  "R49",
+  "R50",
 ];
 
 export function summarize(

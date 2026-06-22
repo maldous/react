@@ -28,6 +28,27 @@
     "retireReason": "thin alias / duplicate of make all; collapse into the canonical command in V2"
   },
   {
+    "v1Name": "make full",
+    "v2Name": "make all",
+    "v2Location": "V2 Makefile (make/*.mk)",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make all; collapse into the canonical command in V2"
+  },
+  {
+    "v1Name": "make release-confidence",
+    "v2Name": "make all",
+    "v2Location": "V2 Makefile (make/*.mk)",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make all; collapse into the canonical command in V2"
+  },
+  {
+    "v1Name": "make promote",
+    "v2Name": "make all-promote",
+    "v2Location": "V2 Makefile (make/*.mk)",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make all-promote; collapse into the canonical command in V2"
+  },
+  {
     "v1Name": "make architecture",
     "v2Name": "make architecture",
     "v2Location": "V2 Makefile (make/*.mk)",
@@ -84,6 +105,34 @@
     "retireReason": null
   },
   {
+    "v1Name": "make prod-down",
+    "v2Name": "make compose-down",
+    "v2Location": "V2 Makefile (make/*.mk)",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make compose-down; collapse into the canonical command in V2"
+  },
+  {
+    "v1Name": "make staging-down",
+    "v2Name": "make compose-down",
+    "v2Location": "V2 Makefile (make/*.mk)",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make compose-down; collapse into the canonical command in V2"
+  },
+  {
+    "v1Name": "make test-down",
+    "v2Name": "make compose-down",
+    "v2Location": "V2 Makefile (make/*.mk)",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make compose-down; collapse into the canonical command in V2"
+  },
+  {
+    "v1Name": "npm compose:down",
+    "v2Name": "make compose-down",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make compose-down; collapse into the canonical command in V2"
+  },
+  {
     "v1Name": "make compose-down-reset",
     "v2Name": "make compose-down-reset",
     "v2Location": "V2 Makefile (make/*.mk)",
@@ -96,6 +145,13 @@
     "v2Location": "V2 Makefile (make/*.mk)",
     "disposition": "carry",
     "retireReason": null
+  },
+  {
+    "v1Name": "npm compose:down:volumes",
+    "v2Name": "make compose-down-volumes",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make compose-down-volumes; collapse into the canonical command in V2"
   },
   {
     "v1Name": "make compose-down-web",
@@ -112,6 +168,13 @@
     "retireReason": null
   },
   {
+    "v1Name": "npm compose:logs",
+    "v2Name": "make compose-logs",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make compose-logs; collapse into the canonical command in V2"
+  },
+  {
     "v1Name": "make compose-ps",
     "v2Name": "make compose-ps",
     "v2Location": "V2 Makefile (make/*.mk)",
@@ -119,11 +182,11 @@
     "retireReason": null
   },
   {
-    "v1Name": "make compose-up",
-    "v2Name": "make compose-up-default",
-    "v2Location": "V2 Makefile (make/*.mk)",
+    "v1Name": "npm compose:ps",
+    "v2Name": "make compose-ps",
+    "v2Location": "V2 package.json scripts",
     "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make compose-up-default; collapse into the canonical command in V2"
+    "retireReason": "thin alias / duplicate of make compose-ps; collapse into the canonical command in V2"
   },
   {
     "v1Name": "make compose-up-antivirus-provider",
@@ -140,11 +203,39 @@
     "retireReason": null
   },
   {
+    "v1Name": "npm compose:cloud",
+    "v2Name": "make compose-up-cloud",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make compose-up-cloud; collapse into the canonical command in V2"
+  },
+  {
+    "v1Name": "make compose-up",
+    "v2Name": "make compose-up-default",
+    "v2Location": "V2 Makefile (make/*.mk)",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make compose-up-default; collapse into the canonical command in V2"
+  },
+  {
     "v1Name": "make compose-up-default",
     "v2Name": "make compose-up-default",
     "v2Location": "V2 Makefile (make/*.mk)",
     "disposition": "carry",
     "retireReason": null
+  },
+  {
+    "v1Name": "npm compose:up",
+    "v2Name": "make compose-up-default",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make compose-up-default; collapse into the canonical command in V2"
+  },
+  {
+    "v1Name": "npm compose:up:default",
+    "v2Name": "make compose-up-default",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make compose-up-default; collapse into the canonical command in V2"
   },
   {
     "v1Name": "make compose-up-external-mocks",
@@ -154,11 +245,25 @@
     "retireReason": null
   },
   {
+    "v1Name": "npm compose:external-mocks",
+    "v2Name": "make compose-up-external-mocks",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make compose-up-external-mocks; collapse into the canonical command in V2"
+  },
+  {
     "v1Name": "make compose-up-identity",
     "v2Name": "make compose-up-identity",
     "v2Location": "V2 Makefile (make/*.mk)",
     "disposition": "carry",
     "retireReason": null
+  },
+  {
+    "v1Name": "npm compose:identity",
+    "v2Name": "make compose-up-identity",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make compose-up-identity; collapse into the canonical command in V2"
   },
   {
     "v1Name": "make compose-up-identity-mocks",
@@ -231,6 +336,13 @@
     "retireReason": null
   },
   {
+    "v1Name": "npm db:migrate",
+    "v2Name": "make db-migrate",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make db-migrate; collapse into the canonical command in V2"
+  },
+  {
     "v1Name": "make db-restore",
     "v2Name": "make db-restore",
     "v2Location": "V2 Makefile (make/*.mk)",
@@ -250,13 +362,6 @@
     "v2Location": "V2 Makefile (make/*.mk)",
     "disposition": "carry",
     "retireReason": null
-  },
-  {
-    "v1Name": "make dev-e2e",
-    "v2Name": "make e2e-external-smoke",
-    "v2Location": "V2 Makefile (make/*.mk)",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make e2e-external-smoke; collapse into the canonical command in V2"
   },
   {
     "v1Name": "make dev-e2e-auth",
@@ -280,11 +385,25 @@
     "retireReason": null
   },
   {
+    "v1Name": "npm e2e:accessibility",
+    "v2Name": "make e2e-accessibility",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make e2e-accessibility; collapse into the canonical command in V2"
+  },
+  {
     "v1Name": "make e2e-clickability",
     "v2Name": "make e2e-clickability",
     "v2Location": "V2 Makefile (make/*.mk)",
     "disposition": "carry",
     "retireReason": null
+  },
+  {
+    "v1Name": "npm e2e:ui:discover",
+    "v2Name": "make e2e-clickability",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make e2e-clickability; collapse into the canonical command in V2"
   },
   {
     "v1Name": "make e2e-coverage-validate",
@@ -294,11 +413,32 @@
     "retireReason": null
   },
   {
+    "v1Name": "npm e2e:coverage:validate",
+    "v2Name": "make e2e-coverage-validate",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make e2e-coverage-validate; collapse into the canonical command in V2"
+  },
+  {
+    "v1Name": "npm e2e:registry:validate",
+    "v2Name": "make e2e-coverage-validate",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make e2e-coverage-validate; collapse into the canonical command in V2"
+  },
+  {
     "v1Name": "make e2e-external",
     "v2Name": "make e2e-external",
     "v2Location": "V2 Makefile (make/*.mk)",
     "disposition": "carry",
     "retireReason": null
+  },
+  {
+    "v1Name": "npm test:e2e:external",
+    "v2Name": "make e2e-external",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make e2e-external; collapse into the canonical command in V2"
   },
   {
     "v1Name": "make e2e-external-auth",
@@ -308,11 +448,53 @@
     "retireReason": null
   },
   {
+    "v1Name": "make test-real-auth",
+    "v2Name": "make e2e-external-auth",
+    "v2Location": "V2 Makefile (make/*.mk)",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make e2e-external-auth; collapse into the canonical command in V2"
+  },
+  {
+    "v1Name": "make dev-e2e",
+    "v2Name": "make e2e-external-smoke",
+    "v2Location": "V2 Makefile (make/*.mk)",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make e2e-external-smoke; collapse into the canonical command in V2"
+  },
+  {
     "v1Name": "make e2e-external-smoke",
     "v2Name": "make e2e-external-smoke",
     "v2Location": "V2 Makefile (make/*.mk)",
     "disposition": "carry",
     "retireReason": null
+  },
+  {
+    "v1Name": "make prod-e2e",
+    "v2Name": "make e2e-external-smoke",
+    "v2Location": "V2 Makefile (make/*.mk)",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make e2e-external-smoke; collapse into the canonical command in V2"
+  },
+  {
+    "v1Name": "make run-stage-e2e",
+    "v2Name": "make e2e-external-smoke",
+    "v2Location": "V2 Makefile (make/*.mk)",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make e2e-external-smoke; collapse into the canonical command in V2"
+  },
+  {
+    "v1Name": "make staging-e2e",
+    "v2Name": "make e2e-external-smoke",
+    "v2Location": "V2 Makefile (make/*.mk)",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make e2e-external-smoke; collapse into the canonical command in V2"
+  },
+  {
+    "v1Name": "make test-e2e",
+    "v2Name": "make e2e-external-smoke",
+    "v2Location": "V2 Makefile (make/*.mk)",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make e2e-external-smoke; collapse into the canonical command in V2"
   },
   {
     "v1Name": "make e2e-failure-rootcause",
@@ -322,11 +504,25 @@
     "retireReason": null
   },
   {
+    "v1Name": "npm e2e:failure:rootcause",
+    "v2Name": "make e2e-failure-rootcause",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make e2e-failure-rootcause; collapse into the canonical command in V2"
+  },
+  {
     "v1Name": "make e2e-internal",
     "v2Name": "make e2e-internal",
     "v2Location": "V2 Makefile (make/*.mk)",
     "disposition": "carry",
     "retireReason": null
+  },
+  {
+    "v1Name": "npm test:e2e",
+    "v2Name": "make e2e-internal",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make e2e-internal; collapse into the canonical command in V2"
   },
   {
     "v1Name": "make e2e-internal-build",
@@ -336,6 +532,13 @@
     "retireReason": null
   },
   {
+    "v1Name": "npm test:e2e:build",
+    "v2Name": "make e2e-internal-build",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make e2e-internal-build; collapse into the canonical command in V2"
+  },
+  {
     "v1Name": "make e2e-observability-correlation",
     "v2Name": "make e2e-observability-correlation",
     "v2Location": "V2 Makefile (make/*.mk)",
@@ -343,11 +546,25 @@
     "retireReason": null
   },
   {
+    "v1Name": "npm e2e:observability:correlate",
+    "v2Name": "make e2e-observability-correlation",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make e2e-observability-correlation; collapse into the canonical command in V2"
+  },
+  {
     "v1Name": "make e2e-persona-authz",
     "v2Name": "make e2e-persona-authz",
     "v2Location": "V2 Makefile (make/*.mk)",
     "disposition": "carry",
     "retireReason": null
+  },
+  {
+    "v1Name": "npm e2e:persona:authz",
+    "v2Name": "make e2e-persona-authz",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make e2e-persona-authz; collapse into the canonical command in V2"
   },
   {
     "v1Name": "make e2e-persona-matrix",
@@ -362,6 +579,13 @@
     "v2Location": "V2 Makefile (make/*.mk)",
     "disposition": "carry",
     "retireReason": null
+  },
+  {
+    "v1Name": "npm e2e:sentry:assert",
+    "v2Name": "make e2e-sentry-assertion",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make e2e-sentry-assertion; collapse into the canonical command in V2"
   },
   {
     "v1Name": "make env-bootstrap",
@@ -413,6 +637,13 @@
     "retireReason": null
   },
   {
+    "v1Name": "make env-seed-config",
+    "v2Name": "make env-init",
+    "v2Location": "V2 Makefile (make/*.mk)",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make env-init; collapse into the canonical command in V2"
+  },
+  {
     "v1Name": "make env-print-admin",
     "v2Name": "make env-print-admin",
     "v2Location": "V2 Makefile (make/*.mk)",
@@ -453,13 +684,6 @@
     "v2Location": "V2 Makefile (make/*.mk)",
     "disposition": "carry",
     "retireReason": null
-  },
-  {
-    "v1Name": "make env-seed-config",
-    "v2Name": "make env-init",
-    "v2Location": "V2 Makefile (make/*.mk)",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make env-init; collapse into the canonical command in V2"
   },
   {
     "v1Name": "make env-seed-providers",
@@ -530,13 +754,6 @@
     "v2Location": "V2 Makefile (make/*.mk)",
     "disposition": "carry",
     "retireReason": null
-  },
-  {
-    "v1Name": "make full",
-    "v2Name": "make all",
-    "v2Location": "V2 Makefile (make/*.mk)",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make all; collapse into the canonical command in V2"
   },
   {
     "v1Name": "make generate",
@@ -616,32 +833,11 @@
     "retireReason": null
   },
   {
-    "v1Name": "make prod-down",
-    "v2Name": "make compose-down",
-    "v2Location": "V2 Makefile (make/*.mk)",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make compose-down; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "make prod-e2e",
-    "v2Name": "make e2e-external-smoke",
-    "v2Location": "V2 Makefile (make/*.mk)",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make e2e-external-smoke; collapse into the canonical command in V2"
-  },
-  {
     "v1Name": "make prod-up",
     "v2Name": "make prod-up",
     "v2Location": "V2 Makefile (make/*.mk)",
     "disposition": "carry",
     "retireReason": null
-  },
-  {
-    "v1Name": "make promote",
-    "v2Name": "make all-promote",
-    "v2Location": "V2 Makefile (make/*.mk)",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make all-promote; collapse into the canonical command in V2"
   },
   {
     "v1Name": "make quality",
@@ -665,13 +861,6 @@
     "retireReason": null
   },
   {
-    "v1Name": "make release-confidence",
-    "v2Name": "make all",
-    "v2Location": "V2 Makefile (make/*.mk)",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make all; collapse into the canonical command in V2"
-  },
-  {
     "v1Name": "make reset-local",
     "v2Name": "make reset-local",
     "v2Location": "V2 Makefile (make/*.mk)",
@@ -679,11 +868,11 @@
     "retireReason": null
   },
   {
-    "v1Name": "make run-stage-e2e",
-    "v2Name": "make e2e-external-smoke",
-    "v2Location": "V2 Makefile (make/*.mk)",
+    "v1Name": "npm db:reset",
+    "v2Name": "make reset-local",
+    "v2Location": "V2 package.json scripts",
     "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make e2e-external-smoke; collapse into the canonical command in V2"
+    "retireReason": "thin alias / duplicate of make reset-local; collapse into the canonical command in V2"
   },
   {
     "v1Name": "make run-stage-tests",
@@ -728,6 +917,13 @@
     "retireReason": null
   },
   {
+    "v1Name": "npm db:seed",
+    "v2Name": "make seed-demo",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make seed-demo; collapse into the canonical command in V2"
+  },
+  {
     "v1Name": "make seed-idps",
     "v2Name": "make seed-idps",
     "v2Location": "V2 Makefile (make/*.mk)",
@@ -742,6 +938,13 @@
     "retireReason": null
   },
   {
+    "v1Name": "npm semgrep:gate",
+    "v2Name": "make semgrep",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make semgrep; collapse into the canonical command in V2"
+  },
+  {
     "v1Name": "make sentry-down",
     "v2Name": "make sentry-down",
     "v2Location": "V2 Makefile (make/*.mk)",
@@ -754,6 +957,13 @@
     "v2Location": "V2 Makefile (make/*.mk)",
     "disposition": "carry",
     "retireReason": null
+  },
+  {
+    "v1Name": "npm compose:sentry",
+    "v2Name": "make sentry-up",
+    "v2Location": "V2 package.json scripts",
+    "disposition": "merge",
+    "retireReason": "thin alias / duplicate of make sentry-up; collapse into the canonical command in V2"
   },
   {
     "v1Name": "make sonar",
@@ -812,20 +1022,6 @@
     "retireReason": null
   },
   {
-    "v1Name": "make staging-down",
-    "v2Name": "make compose-down",
-    "v2Location": "V2 Makefile (make/*.mk)",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make compose-down; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "make staging-e2e",
-    "v2Name": "make e2e-external-smoke",
-    "v2Location": "V2 Makefile (make/*.mk)",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make e2e-external-smoke; collapse into the canonical command in V2"
-  },
-  {
     "v1Name": "make staging-up",
     "v2Name": "make staging-up",
     "v2Location": "V2 Makefile (make/*.mk)",
@@ -847,27 +1043,6 @@
     "retireReason": null
   },
   {
-    "v1Name": "make test-down",
-    "v2Name": "make compose-down",
-    "v2Location": "V2 Makefile (make/*.mk)",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make compose-down; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "make test-e2e",
-    "v2Name": "make e2e-external-smoke",
-    "v2Location": "V2 Makefile (make/*.mk)",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make e2e-external-smoke; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "make test-real-auth",
-    "v2Name": "make e2e-external-auth",
-    "v2Location": "V2 Makefile (make/*.mk)",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make e2e-external-auth; collapse into the canonical command in V2"
-  },
-  {
     "v1Name": "make test-security",
     "v2Name": "make test-security",
     "v2Location": "V2 Makefile (make/*.mk)",
@@ -885,6 +1060,13 @@
     "v1Name": "make typecheck",
     "v2Name": "make typecheck",
     "v2Location": "V2 Makefile (make/*.mk)",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "make v2-foundation-assurance",
+    "v2Name": "make v2-foundation-assurance",
+    "v2Location": "V2 Makefile targets",
     "disposition": "carry",
     "retireReason": null
   },
@@ -973,13 +1155,6 @@
     "retireReason": null
   },
   {
-    "v1Name": "npm compose:cloud",
-    "v2Name": "make compose-up-cloud",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make compose-up-cloud; collapse into the canonical command in V2"
-  },
-  {
     "v1Name": "npm compose:config",
     "v2Name": "npm compose:config",
     "v2Location": "V2 package.json scripts",
@@ -994,95 +1169,11 @@
     "retireReason": null
   },
   {
-    "v1Name": "npm compose:down",
-    "v2Name": "make compose-down",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make compose-down; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "npm compose:down:volumes",
-    "v2Name": "make compose-down-volumes",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make compose-down-volumes; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "npm compose:external-mocks",
-    "v2Name": "make compose-up-external-mocks",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make compose-up-external-mocks; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "npm compose:identity",
-    "v2Name": "make compose-up-identity",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make compose-up-identity; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "npm compose:logs",
-    "v2Name": "make compose-logs",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make compose-logs; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "npm compose:ps",
-    "v2Name": "make compose-ps",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make compose-ps; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "npm compose:sentry",
-    "v2Name": "make sentry-up",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make sentry-up; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "npm compose:up",
-    "v2Name": "make compose-up-default",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make compose-up-default; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "npm compose:up:default",
-    "v2Name": "make compose-up-default",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make compose-up-default; collapse into the canonical command in V2"
-  },
-  {
     "v1Name": "npm coverage:normalize",
     "v2Name": "npm coverage:normalize",
     "v2Location": "V2 package.json scripts",
     "disposition": "carry",
     "retireReason": null
-  },
-  {
-    "v1Name": "npm db:migrate",
-    "v2Name": "make db-migrate",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make db-migrate; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "npm db:reset",
-    "v2Name": "make reset-local",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make reset-local; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "npm db:seed",
-    "v2Name": "make seed-demo",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make seed-demo; collapse into the canonical command in V2"
   },
   {
     "v1Name": "npm depcruise",
@@ -1092,53 +1183,11 @@
     "retireReason": null
   },
   {
-    "v1Name": "npm e2e:accessibility",
-    "v2Name": "make e2e-accessibility",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make e2e-accessibility; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "npm e2e:coverage:validate",
-    "v2Name": "make e2e-coverage-validate",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make e2e-coverage-validate; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "npm e2e:failure:rootcause",
-    "v2Name": "make e2e-failure-rootcause",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make e2e-failure-rootcause; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "npm e2e:observability:correlate",
-    "v2Name": "make e2e-observability-correlation",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make e2e-observability-correlation; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "npm e2e:persona:authz",
-    "v2Name": "make e2e-persona-authz",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make e2e-persona-authz; collapse into the canonical command in V2"
-  },
-  {
     "v1Name": "npm e2e:personas:validate",
     "v2Name": "npm e2e:personas:validate",
     "v2Location": "V2 package.json scripts",
     "disposition": "carry",
     "retireReason": null
-  },
-  {
-    "v1Name": "npm e2e:registry:validate",
-    "v2Name": "make e2e-coverage-validate",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make e2e-coverage-validate; collapse into the canonical command in V2"
   },
   {
     "v1Name": "npm e2e:scenario:validate",
@@ -1148,25 +1197,11 @@
     "retireReason": null
   },
   {
-    "v1Name": "npm e2e:sentry:assert",
-    "v2Name": "make e2e-sentry-assertion",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make e2e-sentry-assertion; collapse into the canonical command in V2"
-  },
-  {
     "v1Name": "npm e2e:ui:contract:validate",
     "v2Name": "npm e2e:ui:contract:validate",
     "v2Location": "V2 package.json scripts",
     "disposition": "carry",
     "retireReason": null
-  },
-  {
-    "v1Name": "npm e2e:ui:discover",
-    "v2Name": "make e2e-clickability",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make e2e-clickability; collapse into the canonical command in V2"
   },
   {
     "v1Name": "npm format:check",
@@ -2030,13 +2065,6 @@
     "retireReason": null
   },
   {
-    "v1Name": "npm semgrep:gate",
-    "v2Name": "make semgrep",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make semgrep; collapse into the canonical command in V2"
-  },
-  {
     "v1Name": "npm semgrep:json",
     "v2Name": "npm semgrep:json",
     "v2Location": "V2 package.json scripts",
@@ -2072,25 +2100,11 @@
     "retireReason": null
   },
   {
-    "v1Name": "npm test:e2e",
-    "v2Name": "make e2e-internal",
+    "v1Name": "npm test:e2e:internal",
+    "v2Name": "npm test:e2e",
     "v2Location": "V2 package.json scripts",
     "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make e2e-internal; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "npm test:e2e:build",
-    "v2Name": "make e2e-internal-build",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make e2e-internal-build; collapse into the canonical command in V2"
-  },
-  {
-    "v1Name": "npm test:e2e:external",
-    "v2Name": "make e2e-external",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of make e2e-external; collapse into the canonical command in V2"
+    "retireReason": "thin alias / duplicate of npm test:e2e; collapse into the canonical command in V2"
   },
   {
     "v1Name": "npm test:e2e:identity",
@@ -2098,13 +2112,6 @@
     "v2Location": "V2 package.json scripts",
     "disposition": "carry",
     "retireReason": null
-  },
-  {
-    "v1Name": "npm test:e2e:internal",
-    "v2Name": "npm test:e2e",
-    "v2Location": "V2 package.json scripts",
-    "disposition": "merge",
-    "retireReason": "thin alias / duplicate of npm test:e2e; collapse into the canonical command in V2"
   },
   {
     "v1Name": "npm test:e2e:prod",
@@ -2233,6 +2240,13 @@
     "retireReason": null
   },
   {
+    "v1Name": "npm v2:formal-assurance",
+    "v2Name": "npm v2:formal-assurance",
+    "v2Location": "V2 root package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
     "v1Name": "npm v2:readiness",
     "v2Name": "npm v2:readiness",
     "v2Location": "V2 root package.json scripts",
@@ -2242,6 +2256,13 @@
   {
     "v1Name": "npm v2:readiness:json",
     "v2Name": "npm v2:readiness:json",
+    "v2Location": "V2 root package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm v2:usf-assurance",
+    "v2Name": "npm v2:usf-assurance",
     "v2Location": "V2 root package.json scripts",
     "disposition": "carry",
     "retireReason": null
@@ -2502,13 +2523,6 @@
     "v1Name": "scripts/tilt/up-dev.sh",
     "v2Name": "scripts/tilt/up-dev.sh",
     "v2Location": "V2 scripts/tilt/",
-    "disposition": "carry",
-    "retireReason": null
-  },
-  {
-    "v1Name": "npm v2:formal-assurance",
-    "v2Name": "npm v2:formal-assurance",
-    "v2Location": "V2 root package.json scripts",
     "disposition": "carry",
     "retireReason": null
   }

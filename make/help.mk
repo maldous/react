@@ -9,7 +9,7 @@ help:
 	@printf '$(BOLD)── DAILY WORKFLOW ───────────────────────────────────────────────────$(RESET)\n'
 	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
 	  check               'Fast local gate: format / lint / typecheck / architecture (no Sonar)' \
-	  all                 'AUTHORITATIVE full confidence: dev → test → staging → prod; Sonar gate runs at the test stage' \
+	  all                 'AUTHORITATIVE full confidence: V2 assurance + dev → test → staging → prod; Sonar gate runs at test' \
 	  release-confidence  'Alias for make all (the authoritative full-confidence run, incl. the Sonar gate)' \
 	  fix                 'Auto-fix Prettier formatting' \
 	  install             'Install all npm dependencies (root + governance tools)'
@@ -91,6 +91,7 @@ help:
 	@printf '$(BOLD)── QUALITY GATES ────────────────────────────────────────────────────$(RESET)\n'
 	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
 	  quality      'Full quality gate (format + lint + typecheck + audit + security + arch)' \
+	  v2-foundation-assurance 'Regenerate + verify V2 formal/USF assurance and readiness' \
 	  format       'Prettier — write then verify' \
 	  lint         'Markdown lint + ESLint flat config' \
 	  typecheck    'TypeScript strict (app + all packages)' \

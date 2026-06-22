@@ -1,0 +1,427 @@
+{
+  "artefact": "runtime-alignment-report",
+  "capabilities": [
+    {
+      "capability": "Tenant identity (record + FQDN)",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "User identity + tenant membership",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "End-user profile + preferences self-service",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "API keys / personal access tokens",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Tenant groups",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Sub-organisations",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "RBAC (roles + permissions)",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "ABAC / Policy Decision Point",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Delegated administration roles",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Entitlement engine",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Support-mode / break-glass access",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Audit of privileged access",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Platform login + session",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "IdP brokering + OIDC provider management",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Claim mapping + group/role mapping",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "MFA + session policy + lockout",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Configuration registry + history",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Branding + theming",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Custom domains, DNS ownership, TLS, canonical",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Write-only secret settings",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Product catalog, plans, prices",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Subscriptions, invoices, payment methods, dunning",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Usage metering + meter event ingestion",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Quota enforcement",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Relational storage + migrations + RLS",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Backup + restore",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "PITR, retention, legal hold, data residency",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Tenant data import / export",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Search + indexing (product search)",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Object storage + tenant prefixes + signed URLs",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Event bus, durable queues, DLQ, redrive",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Workflow engine, scheduled jobs, approvals",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Scheduled jobs (built-in, on the event substrate)",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Notification delivery + preferences + channels",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Background workers / job runner",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Runtime secrets management",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Logs (aggregation + tenant-scoped search)",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Metrics + traces",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Observability — built-in alerting + incidents",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Internal service catalog + readiness",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Code quality + secret + dependency scanning",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Compliance reports, access reviews, evidence packs",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Tenant isolation proof",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Webhooks (developer-facing)",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "API docs, developer portal, SDKs, rate limits",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Rate limiting (API)",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Tenant lifecycle: provision, suspend, delete, export",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Support tickets, customer health, announcements",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Universal Service Foundation scope + principles",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Build-versus-compose decision framework",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Service catalog + provider integration model",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Environment-specific vs shared service model",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Provider configuration plane",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Composed provider readiness spine",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "History read-model (read-only projection)",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "OIDC discovery / issuer / JWKS validation",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "OIDC test connection + callback display",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Tenant host identity resolution",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Tenant domain activation (auth-client)",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Tenant canonical domain set/unset",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Tenant custom-domain auth callback",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Tenant service clickthrough policy",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Environment registry + bootstrap",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Provider environment classification",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "E2E confidence ladder (stage-aware)",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "OpenAPI drift hard gate",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "i18n runtime + validation",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Accessibility (a11y) gate",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    },
+    {
+      "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "semanticDefinition": true,
+      "proof": true,
+      "runtimeEvidence": true
+    }
+  ],
+  "violations": [],
+  "pass": true
+}

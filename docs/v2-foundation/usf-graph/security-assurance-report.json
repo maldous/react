@@ -1,0 +1,642 @@
+{
+  "artefact": "security-assurance-report",
+  "globalControls": {
+    "rbac": true,
+    "abac": true,
+    "pdp": true
+  },
+  "capabilities": [
+    {
+      "capability": "Tenant identity (record + FQDN)",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "User identity + tenant membership",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "End-user profile + preferences self-service",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "API keys / personal access tokens",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Tenant groups",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Sub-organisations",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "RBAC (roles + permissions)",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "ABAC / Policy Decision Point",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Delegated administration roles",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Entitlement engine",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Support-mode / break-glass access",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Audit of privileged access",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Platform login + session",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "IdP brokering + OIDC provider management",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Claim mapping + group/role mapping",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "MFA + session policy + lockout",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Configuration registry + history",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Branding + theming",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Custom domains, DNS ownership, TLS, canonical",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Write-only secret settings",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Product catalog, plans, prices",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Subscriptions, invoices, payment methods, dunning",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Usage metering + meter event ingestion",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Quota enforcement",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Relational storage + migrations + RLS",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Backup + restore",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "PITR, retention, legal hold, data residency",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Tenant data import / export",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Search + indexing (product search)",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Object storage + tenant prefixes + signed URLs",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Event bus, durable queues, DLQ, redrive",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Workflow engine, scheduled jobs, approvals",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Scheduled jobs (built-in, on the event substrate)",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Notification delivery + preferences + channels",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Background workers / job runner",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Runtime secrets management",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Logs (aggregation + tenant-scoped search)",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Metrics + traces",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Observability — built-in alerting + incidents",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Internal service catalog + readiness",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Code quality + secret + dependency scanning",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Compliance reports, access reviews, evidence packs",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Tenant isolation proof",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Webhooks (developer-facing)",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "API docs, developer portal, SDKs, rate limits",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Rate limiting (API)",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Tenant lifecycle: provision, suspend, delete, export",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Support tickets, customer health, announcements",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Universal Service Foundation scope + principles",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Build-versus-compose decision framework",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Service catalog + provider integration model",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Environment-specific vs shared service model",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Provider configuration plane",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Composed provider readiness spine",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "History read-model (read-only projection)",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "OIDC discovery / issuer / JWKS validation",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "OIDC test connection + callback display",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Tenant host identity resolution",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Tenant domain activation (auth-client)",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Tenant canonical domain set/unset",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Tenant custom-domain auth callback",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Tenant service clickthrough policy",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Environment registry + bootstrap",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Provider environment classification",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "E2E confidence ladder (stage-aware)",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "OpenAPI drift hard gate",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "i18n runtime + validation",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Accessibility (a11y) gate",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    },
+    {
+      "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "permissions": true,
+      "policies": true,
+      "audit": true,
+      "secrets": true,
+      "dataClassification": true,
+      "securityRisk": true
+    }
+  ],
+  "violations": [],
+  "pass": true
+}

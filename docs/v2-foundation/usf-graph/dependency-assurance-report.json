@@ -1,0 +1,844 @@
+{
+  "artefact": "dependency-assurance-report",
+  "capabilityDependencies": [
+    {
+      "from": "Entitlement engine",
+      "to": "Subscriptions, invoices, payment methods, dunning",
+      "interaction": "entitlements-billing"
+    },
+    {
+      "from": "Usage metering + meter event ingestion",
+      "to": "Workflow engine, scheduled jobs, approvals",
+      "interaction": "billing-workflow"
+    },
+    {
+      "from": "Workflow engine, scheduled jobs, approvals",
+      "to": "Notification delivery + preferences + channels",
+      "interaction": "workflow-notifications"
+    },
+    {
+      "from": "Object storage + tenant prefixes + signed URLs",
+      "to": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "interaction": "storage-governance"
+    },
+    {
+      "from": "Tenant lifecycle: provision, suspend, delete, export",
+      "to": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "interaction": "governance-tenant-lifecycle"
+    },
+    {
+      "from": "Support-mode / break-glass access",
+      "to": "Audit of privileged access",
+      "interaction": "audit-privileged-access"
+    },
+    {
+      "from": "Internal service catalog + readiness",
+      "to": "Composed provider readiness spine",
+      "interaction": "catalog-provider-readiness"
+    },
+    {
+      "from": "Event bus, durable queues, DLQ, redrive",
+      "to": "Background workers / job runner",
+      "interaction": "events-workers-dlq"
+    },
+    {
+      "from": "Event bus, durable queues, DLQ, redrive",
+      "to": "Webhooks (developer-facing)",
+      "interaction": "webhooks-events"
+    },
+    {
+      "from": "Tenant identity (record + FQDN)",
+      "to": "User identity + tenant membership",
+      "interaction": "tenant-identity-access"
+    }
+  ],
+  "providerDependencies": [
+    {
+      "capability": "Tenant identity (record + FQDN)",
+      "provider": "production PostgresIdentityAdapter provider"
+    },
+    {
+      "capability": "User identity + tenant membership",
+      "provider": "production PostgresIdentityAdapter provider"
+    },
+    {
+      "capability": "End-user profile + preferences self-service",
+      "provider": "production PostgresProfileAdapter provider"
+    },
+    {
+      "capability": "API keys / personal access tokens",
+      "provider": "production n/a provider"
+    },
+    {
+      "capability": "Tenant groups",
+      "provider": "production PostgresIdentityAdapter provider"
+    },
+    {
+      "capability": "Sub-organisations",
+      "provider": "production PostgresIdentityAdapter provider"
+    },
+    {
+      "capability": "RBAC (roles + permissions)",
+      "provider": "production PostgresIdentityAdapter provider"
+    },
+    {
+      "capability": "ABAC / Policy Decision Point",
+      "provider": "production n/a provider"
+    },
+    {
+      "capability": "Delegated administration roles",
+      "provider": "production PostgresIdentityAdapter provider"
+    },
+    {
+      "capability": "Entitlement engine",
+      "provider": "production PostgresEntitlementAdapter provider"
+    },
+    {
+      "capability": "Support-mode / break-glass access",
+      "provider": "production n/a provider"
+    },
+    {
+      "capability": "Audit of privileged access",
+      "provider": "production PostgresAuditAdapter provider"
+    },
+    {
+      "capability": "Platform login + session",
+      "provider": "production KeycloakAdminAdapter provider"
+    },
+    {
+      "capability": "IdP brokering + OIDC provider management",
+      "provider": "production KeycloakAdminAdapter provider"
+    },
+    {
+      "capability": "Claim mapping + group/role mapping",
+      "provider": "production KeycloakAdminAdapter provider"
+    },
+    {
+      "capability": "MFA + session policy + lockout",
+      "provider": "production KeycloakAdminAdapter provider"
+    },
+    {
+      "capability": "Configuration registry + history",
+      "provider": "production PostgresConfigAdapter provider"
+    },
+    {
+      "capability": "Branding + theming",
+      "provider": "production PostgresConfigAdapter provider"
+    },
+    {
+      "capability": "Custom domains, DNS ownership, TLS, canonical",
+      "provider": "production KeycloakAuthClientAdapter / DnsChallengeAdapter provider"
+    },
+    {
+      "capability": "Write-only secret settings",
+      "provider": "production OpenBaoSecretAdapter / PostgresSecretAdapter provider"
+    },
+    {
+      "capability": "Product catalog, plans, prices",
+      "provider": "production PostgresBillingCatalogAdapter provider"
+    },
+    {
+      "capability": "Subscriptions, invoices, payment methods, dunning",
+      "provider": "production LagoBillingProviderAdapter / InMemoryPaymentProvider provider"
+    },
+    {
+      "capability": "Usage metering + meter event ingestion",
+      "provider": "production PostgresMeterAdapter provider"
+    },
+    {
+      "capability": "Quota enforcement",
+      "provider": "production PostgresQuotaAdapter provider"
+    },
+    {
+      "capability": "Relational storage + migrations + RLS",
+      "provider": "production MinioStorageAdapter provider"
+    },
+    {
+      "capability": "Backup + restore",
+      "provider": "production pg_dump/pg_restore scripts provider"
+    },
+    {
+      "capability": "PITR, retention, legal hold, data residency",
+      "provider": "production PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column provider"
+    },
+    {
+      "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "provider": "production PostgresDataGovernanceAdapter provider"
+    },
+    {
+      "capability": "Tenant data import / export",
+      "provider": "production encrypted tar.gz archive builder + Postgres portable import applier provider"
+    },
+    {
+      "capability": "Search + indexing (product search)",
+      "provider": "production PostgresFtsSearchAdapter provider"
+    },
+    {
+      "capability": "Object storage + tenant prefixes + signed URLs",
+      "provider": "production S3ObjectStorageAdapter + PostgresStorageObjectRepository provider"
+    },
+    {
+      "capability": "Event bus, durable queues, DLQ, redrive",
+      "provider": "production PostgresEventBusAdapter provider"
+    },
+    {
+      "capability": "Workflow engine, scheduled jobs, approvals",
+      "provider": "production TemporalWorkflowProviderAdapter / InMemoryWorkflowOrchestrator provider"
+    },
+    {
+      "capability": "Scheduled jobs (built-in, on the event substrate)",
+      "provider": "production PostgresEventBusAdapter provider"
+    },
+    {
+      "capability": "Notification delivery + preferences + channels",
+      "provider": "production EmailTransportAdapter / WebhookTransportAdapter provider"
+    },
+    {
+      "capability": "Background workers / job runner",
+      "provider": "production PostgresJobAdapter provider"
+    },
+    {
+      "capability": "Runtime secrets management",
+      "provider": "production OpenBaoSecretAdapter / PostgresSecretAdapter provider"
+    },
+    {
+      "capability": "Logs (aggregation + tenant-scoped search)",
+      "provider": "production PostgresFtsSearchAdapter provider"
+    },
+    {
+      "capability": "Metrics + traces",
+      "provider": "production LokiAdapter / OtelCollector provider"
+    },
+    {
+      "capability": "Observability — built-in alerting + incidents",
+      "provider": "production LokiAdapter / OtelCollector provider"
+    },
+    {
+      "capability": "Internal service catalog + readiness",
+      "provider": "production LokiAdapter / OtelCollector provider"
+    },
+    {
+      "capability": "Code quality + secret + dependency scanning",
+      "provider": "production OpenBaoSecretAdapter / PostgresSecretAdapter provider"
+    },
+    {
+      "capability": "Compliance reports, access reviews, evidence packs",
+      "provider": "production n/a provider"
+    },
+    {
+      "capability": "Tenant isolation proof",
+      "provider": "production n/a provider"
+    },
+    {
+      "capability": "Webhooks (developer-facing)",
+      "provider": "production PostgresWebhookAdapter + DeliveryWorker provider"
+    },
+    {
+      "capability": "API docs, developer portal, SDKs, rate limits",
+      "provider": "production RedisRateLimitAdapter / PostgresRateLimitAdapter provider"
+    },
+    {
+      "capability": "Rate limiting (API)",
+      "provider": "production RedisRateLimitAdapter / PostgresRateLimitAdapter provider"
+    },
+    {
+      "capability": "Tenant lifecycle: provision, suspend, delete, export",
+      "provider": "production Postgres lifecycle coordinator + portable export provider"
+    },
+    {
+      "capability": "Support tickets, customer health, announcements",
+      "provider": "production Postgres support tickets + customer-health read-model provider"
+    },
+    {
+      "capability": "Universal Service Foundation scope + principles",
+      "provider": "production n/a provider"
+    },
+    {
+      "capability": "Build-versus-compose decision framework",
+      "provider": "production n/a provider"
+    },
+    {
+      "capability": "Service catalog + provider integration model",
+      "provider": "production LokiAdapter / OtelCollector provider"
+    },
+    {
+      "capability": "Environment-specific vs shared service model",
+      "provider": "production n/a provider"
+    },
+    {
+      "capability": "Provider configuration plane",
+      "provider": "production HttpHealthProbeAdapter provider"
+    },
+    {
+      "capability": "Composed provider readiness spine",
+      "provider": "production HttpHealthProbeAdapter provider"
+    },
+    {
+      "capability": "History read-model (read-only projection)",
+      "provider": "production PostgresAuditAdapter provider"
+    },
+    {
+      "capability": "OIDC discovery / issuer / JWKS validation",
+      "provider": "production KeycloakAdminAdapter provider"
+    },
+    {
+      "capability": "OIDC test connection + callback display",
+      "provider": "production KeycloakAdminAdapter provider"
+    },
+    {
+      "capability": "Tenant host identity resolution",
+      "provider": "production SlugAndCustomDomainResolver provider"
+    },
+    {
+      "capability": "Tenant domain activation (auth-client)",
+      "provider": "production KeycloakAuthClientAdapter provider"
+    },
+    {
+      "capability": "Tenant canonical domain set/unset",
+      "provider": "production KeycloakAuthClientAdapter provider"
+    },
+    {
+      "capability": "Tenant custom-domain auth callback",
+      "provider": "production KeycloakAuthClientAdapter provider"
+    },
+    {
+      "capability": "Tenant service clickthrough policy",
+      "provider": "production CaddyfileReconciler provider"
+    },
+    {
+      "capability": "Environment registry + bootstrap",
+      "provider": "production ManifestEnvAdapter provider"
+    },
+    {
+      "capability": "Provider environment classification",
+      "provider": "production ManifestEnvAdapter provider"
+    },
+    {
+      "capability": "E2E confidence ladder (stage-aware)",
+      "provider": "production PlaywrightAdapter provider"
+    },
+    {
+      "capability": "OpenAPI drift hard gate",
+      "provider": "production validate-openapi-drift provider"
+    },
+    {
+      "capability": "i18n runtime + validation",
+      "provider": "production ReactI18nProvider provider"
+    },
+    {
+      "capability": "Accessibility (a11y) gate",
+      "provider": "production PlaywrightAxeAdapter provider"
+    },
+    {
+      "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "provider": "production Grafana Faro web SDK + OTEL TracingInstrumentation; Alloy faro.receiver -> otel-collector -> Tempo/Loki provider"
+    }
+  ],
+  "operationalDependencies": [
+    {
+      "capability": "Tenant identity (record + FQDN)",
+      "dependencies": [
+        "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
+        "apps/platform-api/src/server/tenant-resolver.ts",
+        "apps/platform-api/src/server/pipeline.ts",
+        "packages/domain-identity/tests/domain-identity.test.ts",
+        "apps/platform-api/src/adapters/PostgresIdentityAdapter.ts"
+      ]
+    },
+    {
+      "capability": "User identity + tenant membership",
+      "dependencies": [
+        "apps/platform-api/src/usecases/members.ts",
+        "apps/platform-api/tests/unit/members.test.ts",
+        "packages/domain-identity/src/index.ts",
+        "apps/platform-api/src/server/routes.ts",
+        "packages/domain-identity/tests/domain-identity.test.ts",
+        "apps/platform-api/src/adapters/PostgresIdentityAdapter.ts"
+      ]
+    },
+    {
+      "capability": "End-user profile + preferences self-service",
+      "dependencies": [
+        "apps/platform-api/src/ports/profile-repository.ts",
+        "apps/platform-api/src/server/routes.ts",
+        "docs/api/openapi.json",
+        "apps/platform-api/tests/unit/profile.test.ts",
+        "apps/platform-api/src/adapters/PostgresProfileAdapter.ts"
+      ]
+    },
+    {
+      "capability": "API keys / personal access tokens",
+      "dependencies": [
+        "apps/platform-api/tests/unit/api-keys.test.ts",
+        "apps/platform-api/src/ports/api-key-repository.ts",
+        "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+        "docs/api/openapi.json",
+        "apps/platform-api/scripts/api-keys-runtime-proof.ts",
+        "apps/platform-api/src/adapters/n/a.ts"
+      ]
+    },
+    {
+      "capability": "Tenant groups",
+      "dependencies": [
+        "apps/platform-api/src/usecases/groups.ts",
+        "apps/platform-api/tests/unit/groups.test.ts",
+        "apps/platform-api/src/server/routes.ts",
+        "apps/platform-api/src/adapters/PostgresIdentityAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Sub-organisations",
+      "dependencies": [
+        "apps/platform-api/src/usecases/sub-organisations.ts",
+        "apps/platform-api/src/server/routes.ts",
+        "apps/platform-api/tests/unit/sub-organisations.test.ts",
+        "apps/platform-api/src/adapters/PostgresIdentityAdapter.ts"
+      ]
+    },
+    {
+      "capability": "RBAC (roles + permissions)",
+      "dependencies": [
+        "packages/domain-identity/src/index.ts",
+        "packages/domain-identity/tests/domain-identity.test.ts",
+        "apps/platform-api/tests/unit/members.test.ts",
+        "apps/platform-api/tests/substrate/api-pipeline.test.ts",
+        "apps/platform-api/src/adapters/PostgresIdentityAdapter.ts"
+      ]
+    },
+    {
+      "capability": "ABAC / Policy Decision Point",
+      "dependencies": [
+        "apps/platform-api/src/server/authorize-resource.ts",
+        "apps/platform-api/tests/unit/resource-policies.test.ts",
+        "apps/platform-api/tests/unit/authorize-resource.test.ts",
+        "apps/platform-api/src/adapters/n/a.ts"
+      ]
+    },
+    {
+      "capability": "Delegated administration roles",
+      "dependencies": [
+        "apps/platform-api/src/ports/delegated-admin-roles.ts",
+        "apps/platform-api/tests/unit/delegations.test.ts",
+        "apps/platform-api/src/adapters/PostgresIdentityAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Entitlement engine",
+      "dependencies": [
+        "apps/platform-api/tests/unit/entitlements.test.ts",
+        "apps/platform-api/src/ports/entitlement-repository.ts",
+        "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+        "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
+        "docs/api/openapi.json",
+        "apps/platform-api/src/adapters/PostgresEntitlementAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Support-mode / break-glass access",
+      "dependencies": [
+        "apps/platform-api/src/usecases/support.ts",
+        "apps/platform-api/scripts/support-approval-runtime-proof.ts",
+        "apps/platform-api/tests/unit/support-mode.test.ts",
+        "apps/platform-api/src/adapters/n/a.ts"
+      ]
+    },
+    {
+      "capability": "Audit of privileged access",
+      "dependencies": [
+        "apps/platform-api/src/usecases/audit.ts",
+        "apps/platform-api/tests/unit/audit.test.ts",
+        "apps/platform-api/src/adapters/PostgresAuditAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Platform login + session",
+      "dependencies": [
+        "apps/platform-api/src/usecases/auth.ts",
+        "apps/platform-api/src/server/routes.ts",
+        "apps/platform-api/tests/substrate/auth-routes.test.ts",
+        "apps/platform-api/src/adapters/KeycloakAdminAdapter.ts"
+      ]
+    },
+    {
+      "capability": "IdP brokering + OIDC provider management",
+      "dependencies": [
+        "docs/api/openapi.json",
+        "apps/platform-api/src/adapters/KeycloakAdminAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Claim mapping + group/role mapping",
+      "dependencies": [
+        "tools/ui-reference-harness/playwright/claim-mapping.spec.ts",
+        "apps/platform-api/tests/unit/oidc-mapping.test.ts",
+        "apps/platform-api/src/adapters/KeycloakAdminAdapter.ts"
+      ]
+    },
+    {
+      "capability": "MFA + session policy + lockout",
+      "dependencies": ["apps/platform-api/src/adapters/KeycloakAdminAdapter.ts"]
+    },
+    {
+      "capability": "Configuration registry + history",
+      "dependencies": [
+        "apps/platform-api/src/config/registry.ts",
+        "apps/platform-api/tests/unit/platform-config.test.ts",
+        "apps/platform-api/src/adapters/PostgresConfigAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Branding + theming",
+      "dependencies": ["apps/platform-api/src/adapters/PostgresConfigAdapter.ts"]
+    },
+    {
+      "capability": "Custom domains, DNS ownership, TLS, canonical",
+      "dependencies": [
+        "apps/platform-api/src/ports/tenant-domain-registry.ts",
+        "apps/platform-api/src/usecases/tenant-domain-lifecycle.ts",
+        "docs/api/openapi.json",
+        "apps/platform-api/src/usecases/vanity-domain-challenge.ts",
+        "apps/platform-api/src/adapters/KeycloakAuthClientAdapter / DnsChallengeAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Write-only secret settings",
+      "dependencies": [
+        "apps/platform-api/src/adapters/OpenBaoSecretAdapter / PostgresSecretAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Product catalog, plans, prices",
+      "dependencies": [
+        "apps/platform-api/tests/unit/billing-catalog.test.ts",
+        "apps/platform-api/src/server/routes.ts",
+        "apps/platform-api/src/adapters/PostgresBillingCatalogAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Subscriptions, invoices, payment methods, dunning",
+      "dependencies": [
+        "apps/platform-api/src/ports/billing-provider.ts",
+        "apps/platform-api/src/adapters/LagoBillingProviderAdapter / InMemoryPaymentProvider.ts"
+      ]
+    },
+    {
+      "capability": "Usage metering + meter event ingestion",
+      "dependencies": [
+        "apps/platform-api/scripts/metering-runtime-proof.ts",
+        "apps/platform-api/src/adapters/PostgresMeterAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Quota enforcement",
+      "dependencies": ["apps/platform-api/src/adapters/PostgresQuotaAdapter.ts"]
+    },
+    {
+      "capability": "Relational storage + migrations + RLS",
+      "dependencies": [
+        "docs/v2-foundation/data-and-migration-plan.json",
+        "apps/platform-api/tests/unit/migrations.test.ts",
+        "apps/platform-api/src/adapters/MinioStorageAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Backup + restore",
+      "dependencies": [
+        "scripts/backup",
+        "scripts/backup/postgres-backup.sh",
+        "scripts/backup/postgres-restore.sh",
+        "apps/platform-api/src/adapters/pg_dump/pg_restore scripts.ts"
+      ]
+    },
+    {
+      "capability": "PITR, retention, legal hold, data residency",
+      "dependencies": [
+        "apps/platform-api/src/adapters/PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column.ts"
+      ]
+    },
+    {
+      "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "dependencies": [
+        "apps/platform-api/tests/unit/data-governance.test.ts",
+        "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+        "apps/platform-api/src/db/migrations/041-data-governance.sql",
+        "apps/platform-api/src/db/migrations/045-data-governance-fulfillment-evidence.sql",
+        "docs/api/openapi.json",
+        "apps/platform-api/src/ports/data-governance.ts",
+        "apps/platform-api/src/adapters/postgres-data-governance.ts",
+        "apps/platform-api/src/adapters/PostgresDataGovernanceAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Tenant data import / export",
+      "dependencies": [
+        "apps/platform-api/tests/unit/data-portability.test.ts",
+        "apps/platform-api/src/db/migrations/044-portable-import-progress.sql",
+        "apps/platform-api/src/usecases/data-portability.ts",
+        "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+        "docs/api/openapi.json",
+        "apps/platform-api/src/adapters/encrypted tar.gz archive builder + Postgres portable import applier.ts"
+      ]
+    },
+    {
+      "capability": "Search + indexing (product search)",
+      "dependencies": ["apps/platform-api/src/adapters/PostgresFtsSearchAdapter.ts"]
+    },
+    {
+      "capability": "Object storage + tenant prefixes + signed URLs",
+      "dependencies": [
+        "apps/platform-api/tests/unit/storage-objects.test.ts",
+        "apps/platform-api/src/adapters/S3ObjectStorageAdapter + PostgresStorageObjectRepository.ts"
+      ]
+    },
+    {
+      "capability": "Event bus, durable queues, DLQ, redrive",
+      "dependencies": ["apps/platform-api/src/adapters/PostgresEventBusAdapter.ts"]
+    },
+    {
+      "capability": "Workflow engine, scheduled jobs, approvals",
+      "dependencies": [
+        "apps/platform-api/src/adapters/TemporalWorkflowProviderAdapter / InMemoryWorkflowOrchestrator.ts"
+      ]
+    },
+    {
+      "capability": "Scheduled jobs (built-in, on the event substrate)",
+      "dependencies": ["apps/platform-api/src/adapters/PostgresEventBusAdapter.ts"]
+    },
+    {
+      "capability": "Notification delivery + preferences + channels",
+      "dependencies": [
+        "apps/platform-api/src/adapters/EmailTransportAdapter / WebhookTransportAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Background workers / job runner",
+      "dependencies": ["apps/platform-api/src/adapters/PostgresJobAdapter.ts"]
+    },
+    {
+      "capability": "Runtime secrets management",
+      "dependencies": [
+        "apps/platform-api/src/adapters/OpenBaoSecretAdapter / PostgresSecretAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Logs (aggregation + tenant-scoped search)",
+      "dependencies": ["apps/platform-api/src/adapters/PostgresFtsSearchAdapter.ts"]
+    },
+    {
+      "capability": "Metrics + traces",
+      "dependencies": ["apps/platform-api/src/adapters/LokiAdapter / OtelCollector.ts"]
+    },
+    {
+      "capability": "Observability — built-in alerting + incidents",
+      "dependencies": ["apps/platform-api/src/adapters/LokiAdapter / OtelCollector.ts"]
+    },
+    {
+      "capability": "Internal service catalog + readiness",
+      "dependencies": ["apps/platform-api/src/adapters/LokiAdapter / OtelCollector.ts"]
+    },
+    {
+      "capability": "Code quality + secret + dependency scanning",
+      "dependencies": [
+        "tools/security",
+        "tools/semgrep/rules.yml",
+        "apps/platform-api/src/adapters/OpenBaoSecretAdapter / PostgresSecretAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Compliance reports, access reviews, evidence packs",
+      "dependencies": ["apps/platform-api/src/adapters/n/a.ts"]
+    },
+    {
+      "capability": "Tenant isolation proof",
+      "dependencies": ["apps/platform-api/src/adapters/n/a.ts"]
+    },
+    {
+      "capability": "Webhooks (developer-facing)",
+      "dependencies": ["apps/platform-api/src/adapters/PostgresWebhookAdapter + DeliveryWorker.ts"]
+    },
+    {
+      "capability": "API docs, developer portal, SDKs, rate limits",
+      "dependencies": [
+        "docs/api/openapi.json",
+        "apps/platform-api/src/adapters/RedisRateLimitAdapter / PostgresRateLimitAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Rate limiting (API)",
+      "dependencies": [
+        "apps/platform-api/tests/unit/rate-limits.test.ts",
+        "apps/platform-api/src/ports/rate-limit-repository.ts",
+        "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+        "docs/api/openapi.json",
+        "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+        "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
+        "apps/platform-api/src/adapters/RedisRateLimitAdapter / PostgresRateLimitAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Tenant lifecycle: provision, suspend, delete, export",
+      "dependencies": [
+        "apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
+        "apps/platform-api/src/usecases/tenant-lifecycle.ts",
+        "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
+        "apps/platform-api/src/adapters/Postgres lifecycle coordinator + portable export.ts"
+      ]
+    },
+    {
+      "capability": "Support tickets, customer health, announcements",
+      "dependencies": [
+        "apps/platform-api/tests/unit/support-tickets.test.ts",
+        "apps/platform-api/src/adapters/Postgres support tickets + customer-health read-model.ts"
+      ]
+    },
+    {
+      "capability": "Universal Service Foundation scope + principles",
+      "dependencies": [
+        "docs/v2-foundation",
+        "tools/v2-readiness",
+        "docs/evidence/stages",
+        "apps/platform-api/src/adapters/n/a.ts"
+      ]
+    },
+    {
+      "capability": "Build-versus-compose decision framework",
+      "dependencies": [
+        "docs/architecture/build-versus-compose-decision-framework.md",
+        "apps/platform-api/src/adapters/n/a.ts"
+      ]
+    },
+    {
+      "capability": "Service catalog + provider integration model",
+      "dependencies": ["apps/platform-api/src/adapters/LokiAdapter / OtelCollector.ts"]
+    },
+    {
+      "capability": "Environment-specific vs shared service model",
+      "dependencies": ["apps/platform-api/src/adapters/n/a.ts"]
+    },
+    {
+      "capability": "Provider configuration plane",
+      "dependencies": ["apps/platform-api/src/adapters/HttpHealthProbeAdapter.ts"]
+    },
+    {
+      "capability": "Composed provider readiness spine",
+      "dependencies": ["apps/platform-api/src/adapters/HttpHealthProbeAdapter.ts"]
+    },
+    {
+      "capability": "History read-model (read-only projection)",
+      "dependencies": ["apps/platform-api/src/adapters/PostgresAuditAdapter.ts"]
+    },
+    {
+      "capability": "OIDC discovery / issuer / JWKS validation",
+      "dependencies": [
+        "apps/platform-api/tests/unit/oidc-discovery.test.ts",
+        "apps/platform-api/src/adapters/KeycloakAdminAdapter.ts"
+      ]
+    },
+    {
+      "capability": "OIDC test connection + callback display",
+      "dependencies": ["apps/platform-api/src/adapters/KeycloakAdminAdapter.ts"]
+    },
+    {
+      "capability": "Tenant host identity resolution",
+      "dependencies": [
+        "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
+        "apps/platform-api/src/server/tenant-resolver.ts",
+        "apps/platform-api/src/server/pipeline.ts",
+        "packages/domain-identity",
+        "apps/platform-api/src/adapters/SlugAndCustomDomainResolver.ts"
+      ]
+    },
+    {
+      "capability": "Tenant domain activation (auth-client)",
+      "dependencies": [
+        "apps/platform-api/src/usecases/tenant-domain-lifecycle.ts",
+        "apps/platform-api/tests/unit/tenant-domain-lifecycle.test.ts",
+        "apps/platform-api/src/adapters/KeycloakAuthClientAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Tenant canonical domain set/unset",
+      "dependencies": [
+        "apps/platform-api/src/usecases/tenant-domain-lifecycle.ts",
+        "apps/platform-api/src/adapters/KeycloakAuthClientAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Tenant custom-domain auth callback",
+      "dependencies": [
+        "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
+        "apps/platform-api/src/adapters/KeycloakAuthClientAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Tenant service clickthrough policy",
+      "dependencies": ["apps/platform-api/src/adapters/CaddyfileReconciler.ts"]
+    },
+    {
+      "capability": "Environment registry + bootstrap",
+      "dependencies": [
+        "scripts/env/bootstrap.mjs",
+        "apps/platform-api/src/adapters/ManifestEnvAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Provider environment classification",
+      "dependencies": [
+        "docs/evidence/platform/universal-service-foundation-registry.json",
+        "docs/evidence/platform/provider-environment-classification.md",
+        "apps/platform-api/src/adapters/ManifestEnvAdapter.ts"
+      ]
+    },
+    {
+      "capability": "E2E confidence ladder (stage-aware)",
+      "dependencies": [
+        "scripts/evidence",
+        "docs/evidence/stages/",
+        "scripts/evidence/tests",
+        "scripts/tests/tests",
+        "docs/evidence/stages",
+        "scripts/evidence/tests/verify-ladder.test.mjs",
+        "scripts/tests/tests/aggregate-confidence.test.mjs",
+        "apps/platform-api/src/adapters/PlaywrightAdapter.ts"
+      ]
+    },
+    {
+      "capability": "OpenAPI drift hard gate",
+      "dependencies": [
+        "docs/api/openapi.json",
+        "apps/platform-api/src/server/routes.ts",
+        "tools/architecture/validate-openapi-drift/tests/validate-openapi-drift.test.mjs",
+        "apps/platform-api/src/adapters/validate-openapi-drift.ts"
+      ]
+    },
+    {
+      "capability": "i18n runtime + validation",
+      "dependencies": [
+        "packages/i18n-runtime",
+        "packages/i18n-runtime/locales/en-GB.json",
+        "apps/platform-api/src/adapters/ReactI18nProvider.ts"
+      ]
+    },
+    {
+      "capability": "Accessibility (a11y) gate",
+      "dependencies": [
+        "docs/evidence/e2e",
+        "apps/platform-api/src/adapters/PlaywrightAxeAdapter.ts"
+      ]
+    },
+    {
+      "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "dependencies": [
+        "docs/evidence/e2e",
+        "tools/e2e/observability-correlation",
+        "docs/evidence/platform/browser-diagnostics-faro.md",
+        "apps/platform-api/src/adapters/Grafana Faro web SDK + OTEL TracingInstrumentation; Alloy faro.receiver -> otel-collector -> Tempo/Loki.ts"
+      ]
+    }
+  ],
+  "hiddenDependencies": [],
+  "cyclicCriticalDependencies": [],
+  "unownedProviders": [],
+  "violations": [],
+  "pass": true
+}
