@@ -1545,6 +1545,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.auth.settings.write",
     resource: "admin:auth",
     umaScope: "write" as const,
+    auditEvent: AuditAction.AuthSettingsIdpChanged,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const alias = req.params["alias"] ?? "";
@@ -1806,6 +1807,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.auth.settings.write",
     resource: "admin:auth",
     umaScope: "write" as const,
+    auditEvent: AuditAction.AuthSettingsMfaChanged,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -1875,6 +1877,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.auth.settings.write",
     resource: "admin:auth",
     umaScope: "write" as const,
+    auditEvent: AuditAction.AuthSettingsLockoutChanged,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -2628,6 +2631,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.auth.settings.write",
     resource: "admin:auth",
     umaScope: "write" as const,
+    auditEvent: AuditAction.VanityDomainAdded,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -2700,6 +2704,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.auth.settings.write",
     resource: "admin:auth",
     umaScope: "write" as const,
+    auditEvent: AuditAction.VanityDomainRemoved,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -3856,6 +3861,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.domains.write",
     resource: "admin:domains",
     umaScope: "write" as const,
+    auditEvent: AuditAction.VanityDomainChallengeCreated,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -3912,6 +3918,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.domains.write",
     resource: "admin:domains",
     umaScope: "write" as const,
+    auditEvent: AuditAction.VanityDomainVerified,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -3964,6 +3971,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.domains.write",
     resource: "admin:domains",
     umaScope: "write" as const,
+    auditEvent: AuditAction.TenantDomainDisabled,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -4008,6 +4016,24 @@ export const routes: Route[] = [
           return;
         }
       }
+      await createPostgresAuditEventPort(getApplicationPool()).emit(
+        createAuditEvent({
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          tenantId: tenantCtx.organisationId,
+          action: AuditAction.TenantDomainDisabled,
+          resource: "tenant_domain",
+          resourceId: domain,
+          metadata: {
+            domain,
+            authClientStatus: record?.authClientStatus ?? "unknown",
+            before: record?.disabledAt ? "disabled" : "enabled_or_unknown",
+            after: "disabled",
+          },
+          correlationId: req.requestId,
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+        })
+      );
       await registry.disable(tenantCtx.organisationId, domain);
       res.json(204, null);
     },
@@ -4027,6 +4053,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.domains.write",
     resource: "admin:domains",
     umaScope: "write" as const,
+    auditEvent: AuditAction.TenantDomainAuthClientActivated,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -4089,6 +4116,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.domains.write",
     resource: "admin:domains",
     umaScope: "write" as const,
+    auditEvent: AuditAction.TenantDomainAuthClientDeactivated,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -4136,6 +4164,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.domains.write",
     resource: "admin:domains",
     umaScope: "write" as const,
+    auditEvent: AuditAction.TenantDomainRoutingLocalProven,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -4179,6 +4208,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.domains.write",
     resource: "admin:domains",
     umaScope: "write" as const,
+    auditEvent: AuditAction.TenantDomainCanonicalSet,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -4227,6 +4257,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.domains.write",
     resource: "admin:domains",
     umaScope: "write" as const,
+    auditEvent: AuditAction.TenantDomainCanonicalUnset,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());

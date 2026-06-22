@@ -2062,24 +2062,6 @@
     },
     {
       "kind": "semantic-runtime-diff",
-      "subject": "POST /api/auth/settings/domains",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "DELETE /api/auth/settings/domains/:domain",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
       "subject": "POST /api/auth/settings/idps/oidc/discover",
       "message": "runtime audit requirement has no audit event mapping",
       "evidence": {
@@ -2090,78 +2072,6 @@
     {
       "kind": "semantic-runtime-diff",
       "subject": "POST /api/graphql",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/org/domains",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "DELETE /api/org/domains/:domain",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/org/domains/:domain/activate",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "DELETE /api/org/domains/:domain/canonical",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/org/domains/:domain/canonical",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/org/domains/:domain/deactivate",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/org/domains/:domain/probe-routing-local",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/org/domains/:domain/verify",
       "message": "runtime audit requirement has no audit event mapping",
       "evidence": {
         "source": "runtime-audit-inventory.json"

@@ -10,7 +10,7 @@
 
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import type { AuditEventPort } from "@platform/audit-events";
+import { AuditAction, type AuditEventPort } from "@platform/audit-events";
 import type {
   TenantDomainRecord,
   TenantDomainRegistryPort,
@@ -145,7 +145,7 @@ describe("activateDomainAuthClient (ADR-ACT-0232)", () => {
     );
     assert.equal(result.kind, "ok");
     assert.deepEqual(deps.calls, [
-      "audit:tenant_domains.auth_client.activated",
+      `audit:${AuditAction.TenantDomainAuthClientActivated}`,
       "kc:add",
       "markAuthClientActive",
     ]);
@@ -209,7 +209,7 @@ describe("deactivateDomainAuthClient (ADR-ACT-0232)", () => {
     );
     assert.equal(result.kind, "ok");
     assert.deepEqual(deps.calls, [
-      "audit:tenant_domains.auth_client.deactivated",
+      `audit:${AuditAction.TenantDomainAuthClientDeactivated}`,
       "kc:remove",
       "markAuthClientInactive",
     ]);
@@ -243,7 +243,7 @@ describe("probeDomainLocalRouting (ADR-ACT-0232 — no fake readiness)", () => {
     assert.ok(!("kind" in outcome));
     assert.equal(outcome.routing, "routing_local_active");
     assert.ok(deps.calls.includes("markRoutingLocalActive"));
-    assert.ok(deps.calls.includes("audit:tenant_domains.routing.local_proven"));
+    assert.ok(deps.calls.includes(`audit:${AuditAction.TenantDomainRoutingLocalProven}`));
   });
 
   it("an unreachable or mismatched probe records NOTHING", async () => {
@@ -287,6 +287,6 @@ describe("setCanonicalDomain (ADR-ACT-0232)", () => {
     assert.ok(
       result.kind === "ok" && result.record.redirectPolicy === "redirect_slug_to_canonical"
     );
-    assert.deepEqual(deps.calls, ["audit:tenant_domains.canonical.set", "setCanonical"]);
+    assert.deepEqual(deps.calls, [`audit:${AuditAction.TenantDomainCanonicalSet}`, "setCanonical"]);
   });
 });

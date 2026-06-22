@@ -20,7 +20,7 @@
  *     cutover proof once canonical is set
  */
 
-import { createAuditEvent, type AuditEventPort } from "@platform/audit-events";
+import { AuditAction, createAuditEvent, type AuditEventPort } from "@platform/audit-events";
 import type {
   TenantDomainRecord,
   TenantDomainRegistryPort,
@@ -99,10 +99,10 @@ export async function activateDomainAuthClient(
       actorId: input.actorId,
       actorRoles: input.actorRoles,
       tenantId: input.organisationId,
-      action: "tenant_domains.auth_client.activated",
+      action: AuditAction.TenantDomainAuthClientActivated,
       resource: "tenant_domain",
       resourceId: domain,
-      metadata: { domain },
+      metadata: { domain, before: record!.authClientStatus, after: "active" },
     })
   );
   // Keycloak mutation FIRST — the registry only records 'active' after the
@@ -129,10 +129,10 @@ export async function deactivateDomainAuthClient(
       actorId: input.actorId,
       actorRoles: input.actorRoles,
       tenantId: input.organisationId,
-      action: "tenant_domains.auth_client.deactivated",
+      action: AuditAction.TenantDomainAuthClientDeactivated,
       resource: "tenant_domain",
       resourceId: domain,
-      metadata: { domain, wasCanonical: record.canonical },
+      metadata: { domain, wasCanonical: record.canonical, before: "active", after: "inactive" },
     })
   );
   await deps.authClient.removeRedirectOrigin(domain);
@@ -169,10 +169,15 @@ export async function probeDomainLocalRouting(
         actorId: input.actorId,
         actorRoles: input.actorRoles,
         tenantId: input.organisationId,
-        action: "tenant_domains.routing.local_proven",
+        action: AuditAction.TenantDomainRoutingLocalProven,
         resource: "tenant_domain",
         resourceId: domain,
-        metadata: { domain, probe: "local" },
+        metadata: {
+          domain,
+          probe: "local",
+          before: record.routingStatus,
+          after: "routing_local_active",
+        },
       })
     );
     await deps.registry.markRoutingLocalActive(input.organisationId, domain);
@@ -206,10 +211,10 @@ export async function setCanonicalDomain(
       actorId: input.actorId,
       actorRoles: input.actorRoles,
       tenantId: input.organisationId,
-      action: "tenant_domains.canonical.set",
+      action: AuditAction.TenantDomainCanonicalSet,
       resource: "tenant_domain",
       resourceId: domain,
-      metadata: { domain, redirectPolicy: record!.redirectPolicy },
+      metadata: { domain, redirectPolicy: record!.redirectPolicy, before: false, after: true },
     })
   );
   await deps.registry.setCanonical(input.organisationId, domain);
@@ -230,10 +235,10 @@ export async function unsetCanonicalDomain(
       actorId: input.actorId,
       actorRoles: input.actorRoles,
       tenantId: input.organisationId,
-      action: "tenant_domains.canonical.unset",
+      action: AuditAction.TenantDomainCanonicalUnset,
       resource: "tenant_domain",
       resourceId: domain,
-      metadata: { domain },
+      metadata: { domain, before: record.canonical, after: false },
     })
   );
   await deps.registry.unsetCanonical(input.organisationId, domain);

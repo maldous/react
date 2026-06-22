@@ -1,4 +1,4 @@
-import { createAuditEvent, type AuditEventPort } from "@platform/audit-events";
+import { AuditAction, createAuditEvent, type AuditEventPort } from "@platform/audit-events";
 import type { KeycloakAdminConfig } from "@platform/adapters-keycloak";
 
 export interface VanityDomainInput {
@@ -29,10 +29,15 @@ export async function addVanityDomain(
       actorId: input.actorId,
       actorRoles: input.actorRoles,
       tenantId: input.organisationId,
-      action: "auth_settings.vanity_domain.added",
+      action: AuditAction.VanityDomainAdded,
       resource: "vanity_domain",
       resourceId: input.domain,
-      metadata: { domain: input.domain, realmName: input.realmName },
+      metadata: {
+        domain: input.domain,
+        realmName: input.realmName,
+        before: "absent",
+        after: "present",
+      },
     })
   );
   await mutateBffClientUris(input.realmName, input.domain, "add", deps.adminConfig);
@@ -51,10 +56,15 @@ export async function removeVanityDomain(
       actorId: input.actorId,
       actorRoles: input.actorRoles,
       tenantId: input.organisationId,
-      action: "auth_settings.vanity_domain.removed",
+      action: AuditAction.VanityDomainRemoved,
       resource: "vanity_domain",
       resourceId: input.domain,
-      metadata: { domain: input.domain, realmName: input.realmName },
+      metadata: {
+        domain: input.domain,
+        realmName: input.realmName,
+        before: "present",
+        after: "absent",
+      },
     })
   );
   await mutateBffClientUris(input.realmName, input.domain, "remove", deps.adminConfig);
