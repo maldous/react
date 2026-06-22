@@ -1531,6 +1531,17 @@
     "sourceFileRefs": ["apps/platform-api/scripts/tenant-observability-runtime-proof.ts"]
   },
   {
+    "proofId": "proof:apps-platform-api-scripts-tenant-secret-crypto-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts",
+    "level": 1,
+    "classification": "contract shape only",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": false,
+    "assertsFailureMode": true,
+    "assertsObservabilityOrAudit": false,
+    "sourceFileRefs": ["apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts"]
+  },
+  {
     "proofId": "proof:apps-platform-api-scripts-tenant-storage-objects-runtime-proof-ts",
     "file": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
     "level": 4,

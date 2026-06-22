@@ -4286,6 +4286,27 @@
         "apps/platform-api/tests/unit/notification-transports.test.ts"
       ],
       "decisionRefs": ["ADR-0068", "ADR-ACT-0273"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/tenant-secret-crypto.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit unit proof for tenant secret crypto provider reliability envelope",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/tenant-secret-crypto.test.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/tenant-secret-crypto.test.ts"],
+      "decisionRefs": ["ADR-0047", "ADR-0069"]
+    },
+    {
+      "path": "apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/secret-store-contract-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts",
+      "protectingTests": [
+        "apps/platform-api/scripts/secret-store-contract-runtime-proof.ts",
+        "apps/platform-api/tests/unit/tenant-secret-crypto.test.ts"
+      ],
+      "decisionRefs": ["ADR-0047", "ADR-0069"]
     }
   ],
   "deletions": [
@@ -4668,6 +4689,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 454,
+  "additionCount": 456,
   "deletionCount": 54
 }
