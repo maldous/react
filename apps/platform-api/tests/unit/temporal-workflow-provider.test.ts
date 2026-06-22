@@ -1,6 +1,9 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { TemporalWorkflowProviderAdapter } from "../../src/adapters/temporal-workflow-provider.ts";
+import {
+  getTemporalWorkflowProviderMetric,
+  TemporalWorkflowProviderAdapter,
+} from "../../src/adapters/temporal-workflow-provider.ts";
 
 describe("TemporalWorkflowProviderAdapter", () => {
   it("uses the injected SDK path for workflow lifecycle operations", async () => {
@@ -62,6 +65,11 @@ describe("TemporalWorkflowProviderAdapter", () => {
 
     assert.equal(started.workflowId, "wf-1");
     assert.equal(status.status, "running");
+    assert.equal(
+      adapter.getAuditEvents().some((event) => event.action === "workflow.cancelled"),
+      true
+    );
+    assert.equal(getTemporalWorkflowProviderMetric("start", "success") > 0, true);
     assert.deepEqual(calls, [
       "Connection.connect",
       "WorkflowClient.ctor",

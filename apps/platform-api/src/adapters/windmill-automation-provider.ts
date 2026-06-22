@@ -4,8 +4,48 @@ import type {
   AutomationRunnerPort,
 } from "../ports/automation-runner.ts";
 import type { FetchLike } from "./http-engine-provider.ts";
+import { createLogger } from "@platform/platform-logging";
+import { createTracer, withSpan } from "@platform/platform-observability";
 
 type WindmillClientModule = typeof import("windmill-client");
+type AutomationAuditRecord = {
+  runId: string;
+  action: string;
+  transition: string;
+  at: string;
+};
+
+const log = createLogger({
+  name: "windmill-automation-provider",
+  service: "platform-api",
+  boundedContext: "workflow",
+});
+const tracer = createTracer("windmill-automation-provider");
+const windmillAutomationMetrics = new Map<string, number>();
+
+function metric(operation: string, outcome: "success" | "error"): void {
+  const key = `${operation}:${outcome}`;
+  windmillAutomationMetrics.set(key, (windmillAutomationMetrics.get(key) ?? 0) + 1);
+}
+
+export function getWindmillAutomationProviderMetric(
+  operation: string,
+  outcome: "success" | "error"
+): number {
+  return windmillAutomationMetrics.get(`${operation}:${outcome}`) ?? 0;
+}
+
+export const windmillAutomationStateMachineEvidence = {
+  stateMachineDefinition:
+    "Windmill is provider-authoritative; adapter normalizes provider status to queued|running|succeeded|failed|cancelled",
+  allowedTransitions:
+    "allowed transition operations are runScript/runFlow, getRunStatus, and cancelRun; Windmill rejects invalid provider transitions",
+  forbiddenTransitions:
+    "forbidden transitions and unknown runs surface as non-OK provider errors instead of fabricated success",
+  idempotency:
+    "runScript and runFlow pass caller-supplied runId/jobId so Windmill operations are idempotency-keyed by run id",
+  audit: "adapter records local audit entries for run start, status observation, and cancellation",
+};
 
 export const windmillAutomationProviderReliabilityEvidence = {
   provider: "windmill-automation-provider",
@@ -57,6 +97,7 @@ export class WindmillAutomationProviderAdapter implements AutomationRunnerPort {
   private readonly timeoutMs: number;
   private clientPromise: Promise<WindmillClientModule | null> | null = null;
   private readonly workspaceByRunId = new Map<string, string>();
+  private readonly auditEvents: AutomationAuditRecord[] = [];
 
   constructor(
     baseUrl: string,
@@ -84,114 +125,134 @@ export class WindmillAutomationProviderAdapter implements AutomationRunnerPort {
   }
 
   async runScript(input: AutomationRunInput): Promise<{ runId: string }> {
-    const client = await this.loadClient();
-    if (client) {
-      const runId = await withTimeout(
-        "runScript",
-        this.timeoutMs,
-        client.JobService.runScriptByPath({
-          workspace: input.tenantId,
-          path: input.scriptKey,
-          requestBody: input.payload ?? {},
-          jobId: input.runId,
-        })
-      );
-      const id = String(runId);
-      this.workspaceByRunId.set(id, input.tenantId);
-      return { runId: id };
-    }
+    return this.withAutomationOperation("run-script", input.runId, async () => {
+      const client = await this.loadClient();
+      if (client) {
+        const runId = await withTimeout(
+          "runScript",
+          this.timeoutMs,
+          client.JobService.runScriptByPath({
+            workspace: input.tenantId,
+            path: input.scriptKey,
+            requestBody: input.payload ?? {},
+            jobId: input.runId,
+          })
+        );
+        const id = String(runId);
+        this.workspaceByRunId.set(id, input.tenantId);
+        this.recordAudit(id, "automation.script_started", "none->running");
+        return { runId: id };
+      }
 
-    const { json } = await import("./http-engine-provider.ts");
-    return json<{ runId: string }>(
-      this.fetchImpl,
-      `${this.baseUrl}/api/run-script`,
-      {
-        method: "POST",
-        body: JSON.stringify(input),
-      },
-      this.timeoutMs
-    );
+      const { json } = await import("./http-engine-provider.ts");
+      const result = await json<{ runId: string }>(
+        this.fetchImpl,
+        `${this.baseUrl}/api/run-script`,
+        {
+          method: "POST",
+          body: JSON.stringify(input),
+        },
+        this.timeoutMs
+      );
+      this.recordAudit(result.runId, "automation.script_started", "none->running");
+      return result;
+    });
   }
 
   async runFlow(input: AutomationRunInput): Promise<{ runId: string }> {
-    const client = await this.loadClient();
-    if (client) {
-      const runId = await withTimeout(
-        "runFlow",
-        this.timeoutMs,
-        client.JobService.runFlowByPath({
-          workspace: input.tenantId,
-          path: input.scriptKey,
-          requestBody: input.payload ?? {},
-          jobId: input.runId,
-        })
-      );
-      const id = String(runId);
-      this.workspaceByRunId.set(id, input.tenantId);
-      return { runId: id };
-    }
+    return this.withAutomationOperation("run-flow", input.runId, async () => {
+      const client = await this.loadClient();
+      if (client) {
+        const runId = await withTimeout(
+          "runFlow",
+          this.timeoutMs,
+          client.JobService.runFlowByPath({
+            workspace: input.tenantId,
+            path: input.scriptKey,
+            requestBody: input.payload ?? {},
+            jobId: input.runId,
+          })
+        );
+        const id = String(runId);
+        this.workspaceByRunId.set(id, input.tenantId);
+        this.recordAudit(id, "automation.flow_started", "none->running");
+        return { runId: id };
+      }
 
-    const { json } = await import("./http-engine-provider.ts");
-    return json<{ runId: string }>(
-      this.fetchImpl,
-      `${this.baseUrl}/api/run-flow`,
-      {
-        method: "POST",
-        body: JSON.stringify(input),
-      },
-      this.timeoutMs
-    );
+      const { json } = await import("./http-engine-provider.ts");
+      const result = await json<{ runId: string }>(
+        this.fetchImpl,
+        `${this.baseUrl}/api/run-flow`,
+        {
+          method: "POST",
+          body: JSON.stringify(input),
+        },
+        this.timeoutMs
+      );
+      this.recordAudit(result.runId, "automation.flow_started", "none->running");
+      return result;
+    });
   }
 
   async getRunStatus(runId: string): Promise<AutomationRunStatus> {
-    const client = await this.loadClient();
-    if (client) {
-      const job = await withTimeout(
-        "getRunStatus",
-        this.timeoutMs,
-        client.JobService.getJob({
-          workspace: this.workspaceByRunId.get(runId) ?? "default",
-          id: runId,
-        })
-      );
-      const status = String((job as { status?: string }).status ?? "unknown");
-      return { runId, status: this.normalizeStatus(status), detail: status };
-    }
+    return this.withAutomationOperation("status", runId, async () => {
+      const client = await this.loadClient();
+      if (client) {
+        const job = await withTimeout(
+          "getRunStatus",
+          this.timeoutMs,
+          client.JobService.getJob({
+            workspace: this.workspaceByRunId.get(runId) ?? "default",
+            id: runId,
+          })
+        );
+        const status = String((job as { status?: string }).status ?? "unknown");
+        const normalized = this.normalizeStatus(status);
+        this.recordAudit(runId, "automation.status_observed", `provider->${normalized}`);
+        return { runId, status: normalized, detail: status };
+      }
 
-    const { json } = await import("./http-engine-provider.ts");
-    return json<AutomationRunStatus>(
-      this.fetchImpl,
-      `${this.baseUrl}/api/runs/${encodeURIComponent(runId)}`,
-      undefined,
-      this.timeoutMs
-    );
+      const { json } = await import("./http-engine-provider.ts");
+      const status = await json<AutomationRunStatus>(
+        this.fetchImpl,
+        `${this.baseUrl}/api/runs/${encodeURIComponent(runId)}`,
+        undefined,
+        this.timeoutMs
+      );
+      this.recordAudit(runId, "automation.status_observed", `provider->${status.status}`);
+      return status;
+    });
   }
 
   async cancelRun(runId: string): Promise<void> {
-    const client = await this.loadClient();
-    if (client) {
-      await withTimeout(
-        "cancelRun",
-        this.timeoutMs,
-        client.JobService.cancelQueuedJob({
-          workspace: this.workspaceByRunId.get(runId) ?? "default",
-          id: runId,
-          requestBody: { reason: "canceled by platform-api" },
-        })
-      );
-      return;
-    }
+    return this.withAutomationOperation("cancel", runId, async () => {
+      const client = await this.loadClient();
+      if (client) {
+        await withTimeout(
+          "cancelRun",
+          this.timeoutMs,
+          client.JobService.cancelQueuedJob({
+            workspace: this.workspaceByRunId.get(runId) ?? "default",
+            id: runId,
+            requestBody: { reason: "canceled by platform-api" },
+          })
+        );
+        this.recordAudit(runId, "automation.cancelled", "provider-state->cancelled");
+        return;
+      }
 
-    const { json } = await import("./http-engine-provider.ts");
-    await json(
-      this.fetchImpl,
-      `${this.baseUrl}/api/runs/${encodeURIComponent(runId)}/cancel`,
-      {
-        method: "POST",
-        body: JSON.stringify({ runId }),
-      },
-      this.timeoutMs
-    );
+      const { json } = await import("./http-engine-provider.ts");
+      await json(
+        this.fetchImpl,
+        `${this.baseUrl}/api/runs/${encodeURIComponent(runId)}/cancel`,
+        {
+          method: "POST",
+          body: JSON.stringify({ runId }),
+        },
+        this.timeoutMs
+      );
+      this.recordAudit(runId, "automation.cancelled", "provider-state->cancelled");
+    });
   }
 
   async healthCheck(): Promise<{ status: "ready" | "degraded"; detail: string }> {
@@ -234,5 +295,37 @@ export class WindmillAutomationProviderAdapter implements AutomationRunnerPort {
       return "running";
     }
     return "queued";
+  }
+
+  getAuditEvents(): AutomationAuditRecord[] {
+    return [...this.auditEvents];
+  }
+
+  private recordAudit(runId: string, action: string, transition: string): void {
+    this.auditEvents.push({ runId, action, transition, at: new Date().toISOString() });
+  }
+
+  private async withAutomationOperation<T>(
+    operation: string,
+    runId: string,
+    run: () => Promise<T>
+  ): Promise<T> {
+    return withSpan(
+      tracer,
+      `windmill-automation-provider.${operation}`,
+      async () => {
+        try {
+          const result = await run();
+          metric(operation, "success");
+          log.info({ operation, runId }, "windmill_automation.operation.complete");
+          return result;
+        } catch (err) {
+          metric(operation, "error");
+          log.error({ err, operation, runId }, "windmill_automation.operation.failed");
+          throw err;
+        }
+      },
+      { "workflow.operation": operation, "automation.run_id": runId }
+    );
   }
 }

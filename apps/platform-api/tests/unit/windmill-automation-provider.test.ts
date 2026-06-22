@@ -1,6 +1,9 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { WindmillAutomationProviderAdapter } from "../../src/adapters/windmill-automation-provider.ts";
+import {
+  getWindmillAutomationProviderMetric,
+  WindmillAutomationProviderAdapter,
+} from "../../src/adapters/windmill-automation-provider.ts";
 
 describe("WindmillAutomationProviderAdapter", () => {
   it("uses the injected SDK path for run, status and cancel", async () => {
@@ -57,6 +60,11 @@ describe("WindmillAutomationProviderAdapter", () => {
 
     assert.equal(run.runId, "run-1");
     assert.equal(status.status, "running");
+    assert.equal(
+      adapter.getAuditEvents().some((event) => event.action === "automation.cancelled"),
+      true
+    );
+    assert.equal(getWindmillAutomationProviderMetric("run-script", "success") > 0, true);
     assert.deepEqual(calls, [
       "runScriptByPath:tenant-a:tenant.export:run-1",
       "getJob:tenant-a:run-1",
