@@ -1211,6 +1211,7 @@ export const routes: Route[] = [
     method: "POST",
     path: "/auth/logout",
     operationName: "auth.logout",
+    auditEvent: AuditAction.UserLoggedOut,
     handler: handleAuthLogout,
   },
   {
@@ -1588,6 +1589,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.auth.settings.write",
     resource: "admin:auth",
     umaScope: "write" as const,
+    auditEvent: AuditAction.AuthSettingsIdpDiscoveryRequested,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -1595,7 +1597,17 @@ export const routes: Route[] = [
         res.json(400, { code: "NO_TENANT", message: "No tenant context" });
         return;
       }
-      const result = await importOidcDiscovery(req.body, { fetcher: createOidcHttpFetcher() });
+      const result = await importOidcDiscovery(req.body, {
+        fetcher: createOidcHttpFetcher(),
+        audit: createPostgresAuditEventPort(getApplicationPool()),
+        actor: {
+          organisationId: tenantCtx.organisationId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          ipAddress: req.raw.socket.remoteAddress,
+        },
+      });
       if (result.kind === "invalid_body") {
         res.json(400, { code: "VALIDATION_ERROR", message: result.message });
         return;
@@ -5359,6 +5371,7 @@ export const routes: Route[] = [
     path: "/api/graphql",
     operationName: "graphql",
     requiresAuth: true,
+    auditEvent: AuditAction.GraphqlOperationExecuted,
     handler: handleGraphql,
   },
   // Operator log search (ADR-0035, ADR-ACT-0194). Global-host, system-admin only.
@@ -6064,6 +6077,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.search.read",
     resource: "organisation:search",
     umaScope: "read" as const,
+    auditEvent: AuditAction.SearchQueried,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -6087,7 +6101,12 @@ export const routes: Route[] = [
             tenantCtx.organisationId,
             parsed.data,
             req.actor!.permissions,
-            await buildSearchDeps()
+            await buildSearchDeps(),
+            {
+              actorId: req.actor!.userId,
+              actorRoles: req.actor!.roles,
+              sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+            }
           )
         );
       } catch (err) {

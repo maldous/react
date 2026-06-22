@@ -27,6 +27,11 @@ import { resolveTenantFromRequest } from "./tenant-resolver.ts";
 import { resolveProviderHint } from "./auth-providers.ts";
 import { getStoredTenantAuthProviders } from "../usecases/auth-provider-config.ts";
 import type { PipelineHandler } from "./pipeline.ts";
+import {
+  AuditAction,
+  createAuditEvent,
+  createPostgresAuditEventPort,
+} from "@platform/audit-events";
 
 function safeRelativeRedirect(raw: string): string {
   if (!raw.startsWith("/") || raw.startsWith("//")) return "/login";
@@ -524,7 +529,25 @@ export const handleAuthLogoutRedirect: PipelineHandler = async (req, res) => {
 export const handleAuthLogout: PipelineHandler = async (req, res) => {
   const sessionId = parseSessionCookie(req.raw.headers["cookie"]);
   if (sessionId) {
-    await destroySession(sessionId, { sessions: getSessionStore() }).catch(() => undefined);
+    const sessions = getSessionStore();
+    const record = await sessions.find(sessionId).catch(() => null);
+    if (record) {
+      await createPostgresAuditEventPort(getApplicationPool()).emit(
+        createAuditEvent({
+          actorId: record.userId,
+          actorRoles: record.roles,
+          tenantId: record.organisationId,
+          action: AuditAction.UserLoggedOut,
+          resource: "session",
+          resourceId: sessionId,
+          metadata: { before: "active", after: "destroy_requested" },
+          correlationId: req.requestId,
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          ipAddress: req.raw.socket.remoteAddress,
+        })
+      );
+    }
+    await destroySession(sessionId, { sessions }).catch(() => undefined);
   }
   res.raw.writeHead(204, { "Set-Cookie": buildClearCookieHeaders() });
   res.raw.end();

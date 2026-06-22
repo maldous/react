@@ -178,10 +178,18 @@ export type ImportDiscoveryResult =
   | { kind: "invalid_body"; message: string }
   | { kind: "ok"; response: OidcDiscoverResponse };
 
-/** `POST /api/auth/settings/idps/oidc/discover` — no mutation, no audit. */
+export interface ImportDiscoveryActor {
+  organisationId: string;
+  actorId: string;
+  actorRoles: string[];
+  sourceHost?: string;
+  ipAddress?: string;
+}
+
+/** `POST /api/auth/settings/idps/oidc/discover` — audited privileged provider probe. */
 export async function importOidcDiscovery(
   rawBody: unknown,
-  deps: { fetcher: OidcHttpFetcher }
+  deps: { fetcher: OidcHttpFetcher; audit?: AuditEventPort; actor?: ImportDiscoveryActor }
 ): Promise<ImportDiscoveryResult> {
   const parsed = OidcDiscoverRequestSchema.safeParse(rawBody);
   if (!parsed.success) {
@@ -189,6 +197,29 @@ export async function importOidcDiscovery(
   }
   const discoveryUrl = resolveDiscoveryUrl(parsed.data);
   if (!discoveryUrl) return { kind: "invalid_body", message: "issuer or discoveryUrl is required" };
+
+  if (deps.audit && deps.actor) {
+    await deps.audit.emit(
+      createAuditEvent({
+        actorId: deps.actor.actorId,
+        actorRoles: deps.actor.actorRoles,
+        tenantId: deps.actor.organisationId,
+        action: AuditAction.AuthSettingsIdpDiscoveryRequested,
+        resource: "auth_settings",
+        resourceId: "oidc_discovery",
+        metadata: {
+          issuerHost: parsed.data.issuer ? new URL(parsed.data.issuer).hostname : null,
+          discoveryHost: parsed.data.discoveryUrl
+            ? new URL(parsed.data.discoveryUrl).hostname
+            : null,
+          before: "not_probed",
+          after: "probe_requested",
+        },
+        sourceHost: deps.actor.sourceHost,
+        ipAddress: deps.actor.ipAddress,
+      })
+    );
+  }
 
   const { validation, metadata } = await probeOidcDiscovery(
     { discoveryUrl, expectedIssuer: parsed.data.issuer },

@@ -30,6 +30,11 @@ import {
 import type { PipelineHandler } from "./pipeline.ts";
 import { serverT } from "./i18n.ts";
 import { loadTenantResourcePolicies } from "./resource-policies.ts";
+import {
+  AuditAction,
+  createAuditEvent,
+  createPostgresAuditEventPort,
+} from "@platform/audit-events";
 
 const gqlLog = createLogger({ name: "graphql", service: "platform-api", boundedContext: "bff" });
 
@@ -269,6 +274,26 @@ export const handleGraphql: PipelineHandler = async (req, res) => {
       return;
     }
   }
+
+  await createPostgresAuditEventPort(getApplicationPool()).emit(
+    createAuditEvent({
+      actorId: actor.userId,
+      actorRoles: actor.roles,
+      tenantId: actor.organisationId,
+      action: AuditAction.GraphqlOperationExecuted,
+      resource: "graphql",
+      resourceId: operationName ?? fields.join(","),
+      metadata: {
+        operationName: operationName ?? null,
+        fields,
+        before: "not_executed",
+        after: "execution_requested",
+      },
+      correlationId: req.requestId,
+      sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+      ipAddress: req.raw.socket.remoteAddress,
+    })
+  );
 
   // Execute. Use-case errors (NotFound/Validation) surface as GraphQL errors;
   // translate i18n keys so the response does not leak raw message keys.

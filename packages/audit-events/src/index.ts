@@ -65,6 +65,8 @@ export const AuditAction = {
   QuotaRemoved: "quota.removed",
   RateLimitSet: "rate_limit.set",
   SearchReindexed: "search.reindexed",
+  SearchQueried: "search.queried",
+  AuthSettingsIdpDiscoveryRequested: "auth_settings.idp.discovery_requested",
   EventRedriven: "event.redriven",
   NotificationPreferencesChanged: "notification.preferences_changed",
   NotificationTested: "notification.tested",
@@ -104,6 +106,7 @@ export const AuditAction = {
   WorkflowStarted: "workflow.started",
   WorkflowSignaled: "workflow.signaled",
   WorkflowCancelled: "workflow.cancelled",
+  GraphqlOperationExecuted: "graphql.operation_executed",
   MeterEventRecorded: "meter_event.recorded",
   TenantImportApplied: "tenant_import.applied",
 } as const;

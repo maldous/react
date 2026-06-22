@@ -11,7 +11,7 @@ PASS is not allowed unless runtime/interface-level route, security, ownership, a
 | routes without tracing          |    28 |
 | routes without logging          |    28 |
 | routes without metrics          |    28 |
-| mutations without audit         |     4 |
+| mutations without audit         |     0 |
 | capabilities without ownership  |     0 |
 | semantic orphans                |     7 |
 | runtime orphans                 |     7 |
@@ -23,7 +23,7 @@ PASS is not allowed unless runtime/interface-level route, security, ownership, a
 | external-limited items          |     0 |
 | duplicate findings              |     0 |
 | obsolete-runtime-artifact items |     0 |
-| must-fix-in-v1 items            |   945 |
+| must-fix-in-v1 items            |   937 |
 
 ## Known Gaps Identified
 
@@ -165,115 +165,115 @@ PASS is not allowed unless runtime/interface-level route, security, ownership, a
 - USF-GAP-0136: workflow-control - runtime workflow has no semantic workflow/state-machine link
 - USF-GAP-0137: workflow-readiness - runtime workflow has no semantic workflow/state-machine link
 - USF-GAP-0138: in-memory-automation-runner - runtime workflow has no semantic workflow/state-machine link
-- USF-GAP-0139: POST /api/auth/settings/idps/oidc/discover - runtime audit requirement has no audit event mapping
-- USF-GAP-0140: POST /api/graphql - runtime audit requirement has no audit event mapping
-- USF-GAP-0141: POST /api/org/search - runtime audit requirement has no audit event mapping
-- USF-GAP-0142: POST /auth/logout - runtime audit requirement has no audit event mapping
-- USF-GAP-0143: GET / - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0144: GET /admin - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0145: GET /admin/account - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0146: GET /admin/auth - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0147: GET /admin/clickthrough - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0148: GET /admin/config - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0149: GET /admin/developer - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0150: GET /admin/domains - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0151: GET /admin/email - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0152: GET /admin/entitlements - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0153: GET /admin/events - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0154: GET /admin/features - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0155: GET /admin/logs - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0156: GET /admin/members - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0157: GET /admin/monitoring - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0158: GET /admin/observability - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0159: GET /admin/platform - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0160: GET /admin/readiness - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0161: GET /admin/scheduled-jobs - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0162: GET /admin/search - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0163: GET /admin/storage - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0164: GET /admin/usage - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0165: GET /admin/webhooks - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0166: GET /api/auth/providers - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0167: GET /api/session - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0168: GET /e2e-harness - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0169: GET /login - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0170: GET /organisation/profile - runtime observability surface lacks trace/log/metric mapping
-- USF-GAP-0171: GET / - route without trace span
-- USF-GAP-0172: GET / - route without structured complete/error logs
-- USF-GAP-0173: GET / - route without metric
-- USF-GAP-0174: GET / - route without correlation id evidence
-- USF-GAP-0175: GET / - route without executable proof reference
-- USF-GAP-0176: GET /admin - route without trace span
-- USF-GAP-0177: GET /admin - route without structured complete/error logs
-- USF-GAP-0178: GET /admin - route without metric
-- USF-GAP-0179: GET /admin - route without correlation id evidence
-- USF-GAP-0180: GET /admin - route without executable proof reference
-- USF-GAP-0181: GET /admin/account - route without trace span
-- USF-GAP-0182: GET /admin/account - route without structured complete/error logs
-- USF-GAP-0183: GET /admin/account - route without metric
-- USF-GAP-0184: GET /admin/account - route without correlation id evidence
-- USF-GAP-0185: GET /admin/account - route without executable proof reference
-- USF-GAP-0186: GET /admin/auth - route without trace span
-- USF-GAP-0187: GET /admin/auth - route without structured complete/error logs
-- USF-GAP-0188: GET /admin/auth - route without metric
-- USF-GAP-0189: GET /admin/auth - route without correlation id evidence
-- USF-GAP-0190: GET /admin/auth - route without executable proof reference
-- USF-GAP-0191: GET /admin/clickthrough - route without trace span
-- USF-GAP-0192: GET /admin/clickthrough - route without structured complete/error logs
-- USF-GAP-0193: GET /admin/clickthrough - route without metric
-- USF-GAP-0194: GET /admin/clickthrough - route without correlation id evidence
-- USF-GAP-0195: GET /admin/clickthrough - route without executable proof reference
-- USF-GAP-0196: GET /admin/config - route without trace span
-- USF-GAP-0197: GET /admin/config - route without structured complete/error logs
-- USF-GAP-0198: GET /admin/config - route without metric
-- USF-GAP-0199: GET /admin/config - route without correlation id evidence
-- USF-GAP-0200: GET /admin/config - route without executable proof reference
-- USF-GAP-0201: GET /admin/developer - route without trace span
-- USF-GAP-0202: GET /admin/developer - route without structured complete/error logs
-- USF-GAP-0203: GET /admin/developer - route without metric
-- USF-GAP-0204: GET /admin/developer - route without correlation id evidence
-- USF-GAP-0205: GET /admin/developer - route without executable proof reference
-- USF-GAP-0206: GET /admin/domains - route without trace span
-- USF-GAP-0207: GET /admin/domains - route without structured complete/error logs
-- USF-GAP-0208: GET /admin/domains - route without metric
-- USF-GAP-0209: GET /admin/domains - route without correlation id evidence
-- USF-GAP-0210: GET /admin/domains - route without executable proof reference
-- USF-GAP-0211: GET /admin/email - route without trace span
-- USF-GAP-0212: GET /admin/email - route without structured complete/error logs
-- USF-GAP-0213: GET /admin/email - route without metric
-- USF-GAP-0214: GET /admin/email - route without correlation id evidence
-- USF-GAP-0215: GET /admin/email - route without executable proof reference
-- USF-GAP-0216: GET /admin/entitlements - route without trace span
-- USF-GAP-0217: GET /admin/entitlements - route without structured complete/error logs
-- USF-GAP-0218: GET /admin/entitlements - route without metric
-- USF-GAP-0219: GET /admin/entitlements - route without correlation id evidence
-- USF-GAP-0220: GET /admin/entitlements - route without executable proof reference
-- USF-GAP-0221: GET /admin/events - route without trace span
-- USF-GAP-0222: GET /admin/events - route without structured complete/error logs
-- USF-GAP-0223: GET /admin/events - route without metric
-- USF-GAP-0224: GET /admin/events - route without correlation id evidence
-- USF-GAP-0225: GET /admin/events - route without executable proof reference
-- USF-GAP-0226: GET /admin/features - route without trace span
-- USF-GAP-0227: GET /admin/features - route without structured complete/error logs
-- USF-GAP-0228: GET /admin/features - route without metric
-- USF-GAP-0229: GET /admin/features - route without correlation id evidence
-- USF-GAP-0230: GET /admin/features - route without executable proof reference
-- USF-GAP-0231: GET /admin/logs - route without trace span
-- USF-GAP-0232: GET /admin/logs - route without structured complete/error logs
-- USF-GAP-0233: GET /admin/logs - route without metric
-- USF-GAP-0234: GET /admin/logs - route without correlation id evidence
-- USF-GAP-0235: GET /admin/logs - route without executable proof reference
-- USF-GAP-0236: GET /admin/members - route without trace span
-- USF-GAP-0237: GET /admin/members - route without structured complete/error logs
-- USF-GAP-0238: GET /admin/members - route without metric
-- USF-GAP-0239: GET /admin/members - route without correlation id evidence
-- USF-GAP-0240: GET /admin/members - route without executable proof reference
-- USF-GAP-0241: GET /admin/monitoring - route without trace span
-- USF-GAP-0242: GET /admin/monitoring - route without structured complete/error logs
-- USF-GAP-0243: GET /admin/monitoring - route without metric
-- USF-GAP-0244: GET /admin/monitoring - route without correlation id evidence
-- USF-GAP-0245: GET /admin/monitoring - route without executable proof reference
-- USF-GAP-0246: GET /admin/observability - route without trace span
-- USF-GAP-0247: GET /admin/observability - route without structured complete/error logs
-- USF-GAP-0248: GET /admin/observability - route without metric
-- USF-GAP-0249: GET /admin/observability - route without correlation id evidence
-- USF-GAP-0250: GET /admin/observability - route without executable proof reference
+- USF-GAP-0139: GET / - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0140: GET /admin - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0141: GET /admin/account - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0142: GET /admin/auth - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0143: GET /admin/clickthrough - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0144: GET /admin/config - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0145: GET /admin/developer - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0146: GET /admin/domains - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0147: GET /admin/email - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0148: GET /admin/entitlements - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0149: GET /admin/events - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0150: GET /admin/features - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0151: GET /admin/logs - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0152: GET /admin/members - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0153: GET /admin/monitoring - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0154: GET /admin/observability - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0155: GET /admin/platform - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0156: GET /admin/readiness - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0157: GET /admin/scheduled-jobs - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0158: GET /admin/search - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0159: GET /admin/storage - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0160: GET /admin/usage - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0161: GET /admin/webhooks - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0162: GET /api/auth/providers - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0163: GET /api/session - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0164: GET /e2e-harness - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0165: GET /login - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0166: GET /organisation/profile - runtime observability surface lacks trace/log/metric mapping
+- USF-GAP-0167: GET / - route without trace span
+- USF-GAP-0168: GET / - route without structured complete/error logs
+- USF-GAP-0169: GET / - route without metric
+- USF-GAP-0170: GET / - route without correlation id evidence
+- USF-GAP-0171: GET / - route without executable proof reference
+- USF-GAP-0172: GET /admin - route without trace span
+- USF-GAP-0173: GET /admin - route without structured complete/error logs
+- USF-GAP-0174: GET /admin - route without metric
+- USF-GAP-0175: GET /admin - route without correlation id evidence
+- USF-GAP-0176: GET /admin - route without executable proof reference
+- USF-GAP-0177: GET /admin/account - route without trace span
+- USF-GAP-0178: GET /admin/account - route without structured complete/error logs
+- USF-GAP-0179: GET /admin/account - route without metric
+- USF-GAP-0180: GET /admin/account - route without correlation id evidence
+- USF-GAP-0181: GET /admin/account - route without executable proof reference
+- USF-GAP-0182: GET /admin/auth - route without trace span
+- USF-GAP-0183: GET /admin/auth - route without structured complete/error logs
+- USF-GAP-0184: GET /admin/auth - route without metric
+- USF-GAP-0185: GET /admin/auth - route without correlation id evidence
+- USF-GAP-0186: GET /admin/auth - route without executable proof reference
+- USF-GAP-0187: GET /admin/clickthrough - route without trace span
+- USF-GAP-0188: GET /admin/clickthrough - route without structured complete/error logs
+- USF-GAP-0189: GET /admin/clickthrough - route without metric
+- USF-GAP-0190: GET /admin/clickthrough - route without correlation id evidence
+- USF-GAP-0191: GET /admin/clickthrough - route without executable proof reference
+- USF-GAP-0192: GET /admin/config - route without trace span
+- USF-GAP-0193: GET /admin/config - route without structured complete/error logs
+- USF-GAP-0194: GET /admin/config - route without metric
+- USF-GAP-0195: GET /admin/config - route without correlation id evidence
+- USF-GAP-0196: GET /admin/config - route without executable proof reference
+- USF-GAP-0197: GET /admin/developer - route without trace span
+- USF-GAP-0198: GET /admin/developer - route without structured complete/error logs
+- USF-GAP-0199: GET /admin/developer - route without metric
+- USF-GAP-0200: GET /admin/developer - route without correlation id evidence
+- USF-GAP-0201: GET /admin/developer - route without executable proof reference
+- USF-GAP-0202: GET /admin/domains - route without trace span
+- USF-GAP-0203: GET /admin/domains - route without structured complete/error logs
+- USF-GAP-0204: GET /admin/domains - route without metric
+- USF-GAP-0205: GET /admin/domains - route without correlation id evidence
+- USF-GAP-0206: GET /admin/domains - route without executable proof reference
+- USF-GAP-0207: GET /admin/email - route without trace span
+- USF-GAP-0208: GET /admin/email - route without structured complete/error logs
+- USF-GAP-0209: GET /admin/email - route without metric
+- USF-GAP-0210: GET /admin/email - route without correlation id evidence
+- USF-GAP-0211: GET /admin/email - route without executable proof reference
+- USF-GAP-0212: GET /admin/entitlements - route without trace span
+- USF-GAP-0213: GET /admin/entitlements - route without structured complete/error logs
+- USF-GAP-0214: GET /admin/entitlements - route without metric
+- USF-GAP-0215: GET /admin/entitlements - route without correlation id evidence
+- USF-GAP-0216: GET /admin/entitlements - route without executable proof reference
+- USF-GAP-0217: GET /admin/events - route without trace span
+- USF-GAP-0218: GET /admin/events - route without structured complete/error logs
+- USF-GAP-0219: GET /admin/events - route without metric
+- USF-GAP-0220: GET /admin/events - route without correlation id evidence
+- USF-GAP-0221: GET /admin/events - route without executable proof reference
+- USF-GAP-0222: GET /admin/features - route without trace span
+- USF-GAP-0223: GET /admin/features - route without structured complete/error logs
+- USF-GAP-0224: GET /admin/features - route without metric
+- USF-GAP-0225: GET /admin/features - route without correlation id evidence
+- USF-GAP-0226: GET /admin/features - route without executable proof reference
+- USF-GAP-0227: GET /admin/logs - route without trace span
+- USF-GAP-0228: GET /admin/logs - route without structured complete/error logs
+- USF-GAP-0229: GET /admin/logs - route without metric
+- USF-GAP-0230: GET /admin/logs - route without correlation id evidence
+- USF-GAP-0231: GET /admin/logs - route without executable proof reference
+- USF-GAP-0232: GET /admin/members - route without trace span
+- USF-GAP-0233: GET /admin/members - route without structured complete/error logs
+- USF-GAP-0234: GET /admin/members - route without metric
+- USF-GAP-0235: GET /admin/members - route without correlation id evidence
+- USF-GAP-0236: GET /admin/members - route without executable proof reference
+- USF-GAP-0237: GET /admin/monitoring - route without trace span
+- USF-GAP-0238: GET /admin/monitoring - route without structured complete/error logs
+- USF-GAP-0239: GET /admin/monitoring - route without metric
+- USF-GAP-0240: GET /admin/monitoring - route without correlation id evidence
+- USF-GAP-0241: GET /admin/monitoring - route without executable proof reference
+- USF-GAP-0242: GET /admin/observability - route without trace span
+- USF-GAP-0243: GET /admin/observability - route without structured complete/error logs
+- USF-GAP-0244: GET /admin/observability - route without metric
+- USF-GAP-0245: GET /admin/observability - route without correlation id evidence
+- USF-GAP-0246: GET /admin/observability - route without executable proof reference
+- USF-GAP-0247: GET /admin/platform - route without trace span
+- USF-GAP-0248: GET /admin/platform - route without structured complete/error logs
+- USF-GAP-0249: GET /admin/platform - route without metric
+- USF-GAP-0250: GET /admin/platform - route without correlation id evidence

@@ -73,11 +73,33 @@ export async function searchProducts(
     limit?: number;
   },
   permissions: string[],
-  deps: SearchDeps
+  deps: SearchDeps,
+  actor?: SearchActor
 ): Promise<SearchResponse> {
   const q = input.q.trim();
   if (q.length === 0) {
     throw new ValidationError("api.error.searchQueryRequired", {});
+  }
+  if (actor) {
+    await deps.audit.emit(
+      createAuditEvent({
+        actorId: actor.actorId,
+        actorRoles: actor.actorRoles,
+        tenantId: organisationId,
+        action: AuditAction.SearchQueried,
+        resource: "search",
+        resourceId: organisationId,
+        metadata: {
+          documentType: input.documentType ?? null,
+          queryLength: q.length,
+          page: input.page ?? null,
+          limit: input.limit ?? null,
+          before: "query_not_executed",
+          after: "query_requested",
+        },
+        sourceHost: actor.sourceHost,
+      })
+    );
   }
   const started = Date.now();
   const result = await deps.query.search(organisationId, {
