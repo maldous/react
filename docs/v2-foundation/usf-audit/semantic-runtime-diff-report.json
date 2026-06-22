@@ -10,33 +10,6 @@
         "source": "runtime-route-inventory.json"
       },
       "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "retention-tick",
-      "message": "runtime worker has no semantic worker/event link",
-      "evidence": {
-        "source": "runtime-worker-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "adapters-object-storage.test",
-      "message": "runtime storage operation has no semantic storage link",
-      "evidence": {
-        "source": "runtime-storage-operation-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "storage-runtime.test",
-      "message": "runtime storage operation has no semantic storage link",
-      "evidence": {
-        "source": "runtime-storage-operation-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
     }
   ]
 }
