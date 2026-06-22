@@ -19,6 +19,7 @@
  */
 
 import crypto from "node:crypto";
+import assert from "node:assert/strict";
 import { requireEnv } from "./lib/local-env.ts";
 import pg from "pg";
 import type { AuditEventPort } from "@platform/audit-events";
@@ -43,6 +44,7 @@ let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 
 async function main(): Promise<void> {

@@ -20,6 +20,7 @@
  */
 
 import { request as httpGet, type IncomingMessage } from "node:http";
+import assert from "node:assert/strict";
 import pg from "pg";
 import type { AuditEventPort } from "@platform/audit-events";
 import {
@@ -42,6 +43,7 @@ let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 
 async function caddyReachable(): Promise<boolean> {
