@@ -1,0 +1,3044 @@
+{
+  "artefact": "environment-capability-matrix",
+  "version": 1,
+  "mandatoryFoundationAsset": true,
+  "coverage": {
+    "source": "docs/v2-foundation/v1-capability-closure.json",
+    "statuses": ["delivered-and-proven"],
+    "enforcedBy": ["tools/v2-readiness/src/rules/r24-environment-semantics.mjs"]
+  },
+  "rule": "Dev/test prove semantics; staging proves production shape; prod proves current health only.",
+  "capabilities": [
+    {
+      "capability": "Tenant identity (record + FQDN)",
+      "category": "identity-access",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:domain-identity-matrix", "proof:tenant-custom-domain-resolution"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresIdentityAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:domain-identity-matrix", "proof:tenant-custom-domain-resolution"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresIdentityAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:domain-identity-matrix", "proof:tenant-custom-domain-resolution"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresIdentityAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "User identity + tenant membership",
+      "category": "identity-access",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["members unit + substrate tests"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresIdentityAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["members unit + substrate tests"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresIdentityAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["members unit + substrate tests"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresIdentityAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "End-user profile + preferences self-service",
+      "category": "identity-access",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:profile-self-service", "proof:notification-dispatch"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresProfileAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:profile-self-service", "proof:notification-dispatch"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresProfileAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:profile-self-service", "proof:notification-dispatch"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresProfileAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "API keys / personal access tokens",
+      "category": "identity-access",
+      "dev": {
+        "provider": "none",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:api-keys", "proof:api-key-routes"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "none",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:api-keys", "proof:api-key-routes"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "none",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:api-keys", "proof:api-key-routes"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "none",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Tenant groups",
+      "category": "identity-access",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:ui-semantic-groups (headless journey)", "groups unit tests"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresIdentityAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:ui-semantic-groups (headless journey)", "groups unit tests"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresIdentityAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:ui-semantic-groups (headless journey)", "groups unit tests"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresIdentityAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Sub-organisations",
+      "category": "identity-access",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": [
+          "proof:ui-semantic-sub-organisations (headless journey)",
+          "sub-organisations unit tests"
+        ],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresIdentityAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": [
+          "proof:ui-semantic-sub-organisations (headless journey)",
+          "sub-organisations unit tests"
+        ],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresIdentityAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": [
+          "proof:ui-semantic-sub-organisations (headless journey)",
+          "sub-organisations unit tests"
+        ],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresIdentityAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "RBAC (roles + permissions)",
+      "category": "identity-access",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["members tests"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresIdentityAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["members tests"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresIdentityAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["members tests"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresIdentityAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "ABAC / Policy Decision Point",
+      "category": "identity-access",
+      "dev": {
+        "provider": "none",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["authorize-resource unit tests", "proof:entitlement-policy-chain"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "none",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["authorize-resource unit tests", "proof:entitlement-policy-chain"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "none",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["authorize-resource unit tests", "proof:entitlement-policy-chain"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "none",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Delegated administration roles",
+      "category": "identity-access",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:delegated-admin"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresIdentityAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:delegated-admin"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresIdentityAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:delegated-admin"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresIdentityAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Entitlement engine",
+      "category": "identity-access",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": [
+          "proof:entitlements",
+          "proof:entitlement-policy-chain",
+          "proof:entitlements-postgres"
+        ],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresEntitlementAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": [
+          "proof:entitlements",
+          "proof:entitlement-policy-chain",
+          "proof:entitlements-postgres",
+          "proof:entitlements-routes"
+        ],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresEntitlementAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": [
+          "proof:entitlements",
+          "proof:entitlement-policy-chain",
+          "proof:entitlements-postgres",
+          "proof:entitlements-routes"
+        ],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresEntitlementAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Support-mode / break-glass access",
+      "category": "identity-access",
+      "dev": {
+        "provider": "none",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["support-mode unit tests", "proof:support-approval"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "none",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["support-mode unit tests", "proof:support-approval"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "none",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["support-mode unit tests", "proof:support-approval"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "none",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Audit of privileged access",
+      "category": "identity-access",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["audit unit tests"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresAuditAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["audit unit tests"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresAuditAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["audit unit tests"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresAuditAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Platform login + session",
+      "category": "authentication",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["auth-routes substrate tests", "proof:auth-settings"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["auth-routes substrate tests", "proof:auth-settings"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "KeycloakAdminAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["auth-routes substrate tests", "proof:auth-settings"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "KeycloakAdminAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "IdP brokering + OIDC provider management",
+      "category": "authentication",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:auth-idps", "proof:auth-oidc-enterprise"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:auth-idps", "proof:auth-oidc-enterprise"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "KeycloakAdminAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:auth-idps", "proof:auth-oidc-enterprise"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "KeycloakAdminAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Claim mapping + group/role mapping",
+      "category": "authentication",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": [
+          "proof:ui-semantic-claim-mapping (headless journey)",
+          "oidc-mapping unit tests"
+        ],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": [
+          "proof:ui-semantic-claim-mapping (headless journey)",
+          "oidc-mapping unit tests"
+        ],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "KeycloakAdminAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": [
+          "proof:ui-semantic-claim-mapping (headless journey)",
+          "oidc-mapping unit tests"
+        ],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "KeycloakAdminAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "MFA + session policy + lockout",
+      "category": "authentication",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": [
+          "proof:auth-settings",
+          "test:platform-api:unit-safe",
+          "test:frontend:run"
+        ],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": [
+          "proof:auth-settings",
+          "test:platform-api:unit-safe",
+          "test:frontend:run"
+        ],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "prod-like:KeycloakAdminAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": true,
+        "prodLikeProof": true,
+        "requiredProofs": [
+          "proof:auth-settings",
+          "test:platform-api:unit-safe",
+          "test:frontend:run"
+        ],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "live:KeycloakAdminAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": true,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Configuration registry + history",
+      "category": "configuration",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["platform-config + config-contracts tests"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresConfigAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["platform-config + config-contracts tests"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresConfigAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["platform-config + config-contracts tests"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresConfigAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Branding + theming",
+      "category": "configuration",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["theme + platform-config tests"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresConfigAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["theme + platform-config tests"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresConfigAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["theme + platform-config tests"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresConfigAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Custom domains, DNS ownership, TLS, canonical",
+      "category": "configuration",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": [
+          "proof:tenant-domains",
+          "proof:tenant-domain-canonical",
+          "proof:tenant-domain-claim-lifecycle"
+        ],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:KeycloakAuthClientAdapter / DnsChallengeAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": [
+          "proof:tenant-domains",
+          "proof:tenant-domain-canonical",
+          "proof:tenant-domain-claim-lifecycle",
+          "proof:tenant-domains-routing"
+        ],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "KeycloakAuthClientAdapter / DnsChallengeAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": [
+          "proof:tenant-domains",
+          "proof:tenant-domain-canonical",
+          "proof:tenant-domain-claim-lifecycle",
+          "proof:tenant-domains-routing"
+        ],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "KeycloakAuthClientAdapter / DnsChallengeAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Write-only secret settings",
+      "category": "configuration",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["token-crypto + auth-settings-audit tests"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:OpenBaoSecretAdapter / PostgresSecretAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["token-crypto + auth-settings-audit tests"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "OpenBaoSecretAdapter / PostgresSecretAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["token-crypto + auth-settings-audit tests"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "OpenBaoSecretAdapter / PostgresSecretAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Product catalog, plans, prices",
+      "category": "entitlements-billing",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:billing-catalog"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresBillingCatalogAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:billing-catalog"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "prod-like:PostgresBillingCatalogAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": true,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:billing-catalog"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "live:PostgresBillingCatalogAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": true,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Subscriptions, invoices, payment methods, dunning",
+      "category": "entitlements-billing",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:billing-provider", "proof:lago-billing-provider"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:billing-provider", "proof:lago-billing-provider"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "prod-like:LagoBillingProviderAdapter / InMemoryPaymentProvider",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": true,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:billing-provider", "proof:lago-billing-provider"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "live:LagoBillingProviderAdapter / InMemoryPaymentProvider",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": true,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Usage metering + meter event ingestion",
+      "category": "entitlements-billing",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:metering", "proof:metering-quota-routes"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresMeterAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:metering", "proof:metering-quota-routes"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresMeterAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:metering", "proof:metering-quota-routes"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresMeterAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Quota enforcement",
+      "category": "entitlements-billing",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:quota-enforcement", "proof:metering-quota-routes"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresQuotaAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:quota-enforcement", "proof:metering-quota-routes"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresQuotaAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:quota-enforcement", "proof:metering-quota-routes"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresQuotaAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Relational storage + migrations + RLS",
+      "category": "data-platform",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["postgres repository substrate tests"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:MinioStorageAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["postgres repository substrate tests"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "MinioStorageAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["postgres repository substrate tests"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "MinioStorageAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Backup + restore",
+      "category": "data-platform",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:backup-local"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:pg_dump/pg_restore scripts",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:backup-local"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "pg_dump/pg_restore scripts",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:backup-local"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "pg_dump/pg_restore scripts",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "PITR, retention, legal hold, data residency",
+      "category": "data-platform",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:pitr-restore-drill", "proof:retention", "proof:legal-hold"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": [
+          "proof:pitr-restore-drill",
+          "proof:retention",
+          "proof:legal-hold",
+          "proof:data-residency"
+        ],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": [
+          "proof:pitr-restore-drill",
+          "proof:retention",
+          "proof:legal-hold",
+          "proof:data-residency"
+        ],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "category": "data-platform",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": [
+          "proof:data-governance",
+          "apps/platform-api/tests/unit/data-governance.test.ts"
+        ],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresDataGovernanceAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": [
+          "proof:data-governance",
+          "apps/platform-api/tests/unit/data-governance.test.ts"
+        ],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresDataGovernanceAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": [
+          "proof:data-governance",
+          "apps/platform-api/tests/unit/data-governance.test.ts"
+        ],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresDataGovernanceAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Tenant data import / export",
+      "category": "data-platform",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:data-portability"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:encrypted tar.gz archive builder + Postgres portable import applier",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:data-portability"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "encrypted tar.gz archive builder + Postgres portable import applier",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:data-portability"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "encrypted tar.gz archive builder + Postgres portable import applier",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Search + indexing (product search)",
+      "category": "search",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:search", "proof:search-isolation", "proof:search-routes"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresFtsSearchAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:search", "proof:search-isolation", "proof:search-routes"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresFtsSearchAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:search", "proof:search-isolation", "proof:search-routes"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresFtsSearchAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Object storage + tenant prefixes + signed URLs",
+      "category": "storage",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:tenant-storage-objects"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:S3ObjectStorageAdapter + PostgresStorageObjectRepository",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:tenant-storage-objects"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "S3ObjectStorageAdapter + PostgresStorageObjectRepository",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:tenant-storage-objects"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "S3ObjectStorageAdapter + PostgresStorageObjectRepository",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Event bus, durable queues, DLQ, redrive",
+      "category": "events-workflow",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:event-bus", "proof:event-redrive"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresEventBusAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:event-bus", "proof:event-redrive"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresEventBusAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:event-bus", "proof:event-redrive"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresEventBusAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Workflow engine, scheduled jobs, approvals",
+      "category": "events-workflow",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:workflow-provider-live"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:workflow-provider-live"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "TemporalWorkflowProviderAdapter / InMemoryWorkflowOrchestrator",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:workflow-provider-live"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "TemporalWorkflowProviderAdapter / InMemoryWorkflowOrchestrator",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Scheduled jobs (built-in, on the event substrate)",
+      "category": "events-workflow",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:scheduled-jobs", "proof:scheduled-job-routes"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresEventBusAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:scheduled-jobs", "proof:scheduled-job-routes"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresEventBusAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:scheduled-jobs", "proof:scheduled-job-routes"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresEventBusAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Notification delivery + preferences + channels",
+      "category": "events-workflow",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": [
+          "proof:notification-preferences",
+          "proof:notification-dispatch",
+          "proof:notification-email-transport"
+        ],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": [
+          "proof:notification-preferences",
+          "proof:notification-dispatch",
+          "proof:notification-email-transport",
+          "proof:notification-webhook-transport"
+        ],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "EmailTransportAdapter / WebhookTransportAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": [
+          "proof:notification-preferences",
+          "proof:notification-dispatch",
+          "proof:notification-email-transport",
+          "proof:notification-webhook-transport"
+        ],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "EmailTransportAdapter / WebhookTransportAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Background workers / job runner",
+      "category": "compute-runtime",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:event-worker"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresJobAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:event-worker"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresJobAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:event-worker"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresJobAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Runtime secrets management",
+      "category": "compute-runtime",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": [
+          "proof:secret-store-contract",
+          "proof:secrets-openbao",
+          "proof:provider-secrets-readiness"
+        ],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:OpenBaoSecretAdapter / PostgresSecretAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": [
+          "proof:secret-store-contract",
+          "proof:secrets-openbao",
+          "proof:provider-secrets-readiness"
+        ],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "OpenBaoSecretAdapter / PostgresSecretAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": [
+          "proof:secret-store-contract",
+          "proof:secrets-openbao",
+          "proof:provider-secrets-readiness"
+        ],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "OpenBaoSecretAdapter / PostgresSecretAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Logs (aggregation + tenant-scoped search)",
+      "category": "observability-ops",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:tenant-observability", "logs-usecase tests"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresFtsSearchAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:tenant-observability", "logs-usecase tests"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresFtsSearchAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:tenant-observability", "logs-usecase tests"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresFtsSearchAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Metrics + traces",
+      "category": "observability-ops",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:metrics-prometheus", "proof:dashboards"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:metrics-prometheus", "proof:dashboards"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "prod-like:LokiAdapter / OtelCollector",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": true,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:metrics-prometheus", "proof:dashboards"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "live:LokiAdapter / OtelCollector",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": true,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Observability — built-in alerting + incidents",
+      "category": "observability-ops",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": [
+          "proof:observability-signals",
+          "proof:alerting",
+          "proof:incident-foundation"
+        ],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:LokiAdapter / OtelCollector",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": [
+          "proof:observability-signals",
+          "proof:alerting",
+          "proof:incident-foundation",
+          "proof:alert-notification-bridge"
+        ],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "LokiAdapter / OtelCollector",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": [
+          "proof:observability-signals",
+          "proof:alerting",
+          "proof:incident-foundation",
+          "proof:alert-notification-bridge"
+        ],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "LokiAdapter / OtelCollector",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Internal service catalog + readiness",
+      "category": "observability-ops",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:platform-services", "proof:service-clickthrough-policy"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:platform-services", "proof:service-clickthrough-policy"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "LokiAdapter / OtelCollector",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:platform-services", "proof:service-clickthrough-policy"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "LokiAdapter / OtelCollector",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Code quality + secret + dependency scanning",
+      "category": "security-governance",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["semgrep:gate", "npm audit", "OSV scan"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:OpenBaoSecretAdapter / PostgresSecretAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["semgrep:gate", "npm audit", "OSV scan"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "OpenBaoSecretAdapter / PostgresSecretAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["semgrep:gate", "npm audit", "OSV scan"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "OpenBaoSecretAdapter / PostgresSecretAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Compliance reports, access reviews, evidence packs",
+      "category": "security-governance",
+      "dev": {
+        "provider": "none",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:compliance-report"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "none",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:compliance-report"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "none",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:compliance-report"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "none",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Tenant isolation proof",
+      "category": "security-governance",
+      "dev": {
+        "provider": "none",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:domain-identity-matrix", "proof:tenant-storage isolation"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "none",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:domain-identity-matrix", "proof:tenant-storage isolation"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "none",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:domain-identity-matrix", "proof:tenant-storage isolation"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "none",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Webhooks (developer-facing)",
+      "category": "developer-platform",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:webhooks", "proof:webhook-redrive"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresWebhookAdapter + DeliveryWorker",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:webhooks", "proof:webhook-redrive"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresWebhookAdapter + DeliveryWorker",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:webhooks", "proof:webhook-redrive"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresWebhookAdapter + DeliveryWorker",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "API docs, developer portal, SDKs, rate limits",
+      "category": "developer-platform",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["openapi:drift (not complete)"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:RedisRateLimitAdapter / PostgresRateLimitAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["openapi:drift (not complete)"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "RedisRateLimitAdapter / PostgresRateLimitAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["openapi:drift (not complete)"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "RedisRateLimitAdapter / PostgresRateLimitAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Rate limiting (API)",
+      "category": "developer-platform",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:rate-limits", "proof:rate-limits-redis", "proof:api-key-routes"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:RedisRateLimitAdapter / PostgresRateLimitAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:rate-limits", "proof:rate-limits-redis", "proof:api-key-routes"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "RedisRateLimitAdapter / PostgresRateLimitAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:rate-limits", "proof:rate-limits-redis", "proof:api-key-routes"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "RedisRateLimitAdapter / PostgresRateLimitAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Tenant lifecycle: provision, suspend, delete, export",
+      "category": "support-admin",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": [
+          "proof:tenant-lifecycle",
+          "apps/platform-api/tests/unit/tenant-lifecycle.test.ts"
+        ],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:Postgres lifecycle coordinator + portable export",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": [
+          "proof:tenant-lifecycle",
+          "apps/platform-api/tests/unit/tenant-lifecycle.test.ts"
+        ],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "Postgres lifecycle coordinator + portable export",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": [
+          "proof:tenant-lifecycle",
+          "apps/platform-api/tests/unit/tenant-lifecycle.test.ts"
+        ],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "Postgres lifecycle coordinator + portable export",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Support tickets, customer health, announcements",
+      "category": "support-admin",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["support tickets / customer health tests"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:Postgres support tickets + customer-health read-model",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["support tickets / customer health tests"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "Postgres support tickets + customer-health read-model",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["support tickets / customer health tests"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "Postgres support tickets + customer-health read-model",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Universal Service Foundation scope + principles",
+      "category": "foundation",
+      "dev": {
+        "provider": "none",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["this matrix + registry + validation test"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "none",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["this matrix + registry + validation test"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "none",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["this matrix + registry + validation test"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "none",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Build-versus-compose decision framework",
+      "category": "foundation",
+      "dev": {
+        "provider": "none",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["docs/architecture/build-versus-compose-decision-framework.md"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "none",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["docs/architecture/build-versus-compose-decision-framework.md"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "none",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["docs/architecture/build-versus-compose-decision-framework.md"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "none",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Service catalog + provider integration model",
+      "category": "foundation",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": [
+          "proof:platform-services",
+          "proof:service-clickthrough-policy",
+          "proof:service-catalog-registry"
+        ],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": [
+          "proof:platform-services",
+          "proof:service-clickthrough-policy",
+          "proof:service-catalog-registry",
+          "proof:entitlements-routes"
+        ],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "LokiAdapter / OtelCollector",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": [
+          "proof:platform-services",
+          "proof:service-clickthrough-policy",
+          "proof:service-catalog-registry",
+          "proof:entitlements-routes"
+        ],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "LokiAdapter / OtelCollector",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Environment-specific vs shared service model",
+      "category": "foundation",
+      "dev": {
+        "provider": "none",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["docs/architecture/environment-service-classification.md"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "none",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["docs/architecture/environment-service-classification.md"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "none",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["docs/architecture/environment-service-classification.md"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "none",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Provider configuration plane",
+      "category": "foundation",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:provider-config", "proof:provider-readiness-contract"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:provider-config", "proof:provider-readiness-contract"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "HttpHealthProbeAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:provider-config", "proof:provider-readiness-contract"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "HttpHealthProbeAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Composed provider readiness spine",
+      "category": "foundation",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:composed-provider-readiness"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:composed-provider-readiness"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "HttpHealthProbeAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:composed-provider-readiness"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "HttpHealthProbeAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "History read-model (read-only projection)",
+      "category": "data-platform",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:history"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "compose:PostgresAuditAdapter",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:history"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PostgresAuditAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:history"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PostgresAuditAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "OIDC discovery / issuer / JWKS validation",
+      "category": "authentication",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:auth-oidc-enterprise"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:auth-oidc-enterprise"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "KeycloakAdminAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:auth-oidc-enterprise"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "KeycloakAdminAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "OIDC test connection + callback display",
+      "category": "authentication",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:auth-oidc-enterprise"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:auth-oidc-enterprise"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "KeycloakAdminAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:auth-oidc-enterprise"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "KeycloakAdminAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Tenant host identity resolution",
+      "category": "identity-access",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:domain-identity-matrix", "proof:tenant-custom-domain-resolution"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:domain-identity-matrix", "proof:tenant-custom-domain-resolution"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "SlugAndCustomDomainResolver",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:domain-identity-matrix", "proof:tenant-custom-domain-resolution"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "SlugAndCustomDomainResolver",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Tenant domain activation (auth-client)",
+      "category": "configuration",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:tenant-domain-canonical"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:tenant-domain-canonical"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "KeycloakAuthClientAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:tenant-domain-canonical"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "KeycloakAuthClientAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Tenant canonical domain set/unset",
+      "category": "configuration",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:tenant-domain-canonical (local routing only)"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:tenant-domain-canonical (local routing only)"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "KeycloakAuthClientAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:tenant-domain-canonical (local routing only)"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "KeycloakAuthClientAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Tenant custom-domain auth callback",
+      "category": "authentication",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:tenant-custom-domain-auth-origin"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:tenant-custom-domain-auth-origin"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "KeycloakAuthClientAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:tenant-custom-domain-auth-origin"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "KeycloakAuthClientAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Tenant service clickthrough policy",
+      "category": "observability-ops",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:service-clickthrough-policy", "proof:clickthrough"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:service-clickthrough-policy", "proof:clickthrough"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "CaddyfileReconciler",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:service-clickthrough-policy", "proof:clickthrough"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "CaddyfileReconciler",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Environment registry + bootstrap",
+      "category": "foundation",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": [
+          "proof:environment-registry",
+          "proof:environment-admin-bootstrap",
+          "proof:environment-operations"
+        ],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": [
+          "proof:environment-registry",
+          "proof:environment-admin-bootstrap",
+          "proof:environment-operations"
+        ],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "ManifestEnvAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": [
+          "proof:environment-registry",
+          "proof:environment-admin-bootstrap",
+          "proof:environment-operations"
+        ],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "ManifestEnvAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Provider environment classification",
+      "category": "foundation",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["proof:provider-environment-classification"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["proof:provider-environment-classification"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "ManifestEnvAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["proof:provider-environment-classification"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "ManifestEnvAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "E2E confidence ladder (stage-aware)",
+      "category": "foundation",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["make all (e2e gates)"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["make all (e2e gates)"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PlaywrightAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["make all (e2e gates)"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PlaywrightAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "OpenAPI drift hard gate",
+      "category": "developer-platform",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["validate-openapi-drift --strict"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["validate-openapi-drift --strict"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "validate-openapi-drift",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["validate-openapi-drift --strict"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "validate-openapi-drift",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "i18n runtime + validation",
+      "category": "foundation",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["validate-i18n", "packages/i18n-runtime/tests/react.test.tsx"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["validate-i18n", "packages/i18n-runtime/tests/react.test.tsx"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "ReactI18nProvider",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["validate-i18n", "packages/i18n-runtime/tests/react.test.tsx"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "ReactI18nProvider",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Accessibility (a11y) gate",
+      "category": "foundation",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["e2e accessibility spec"],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": ["e2e accessibility spec"],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "PlaywrightAxeAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": ["e2e accessibility spec"],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "PlaywrightAxeAdapter",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    },
+    {
+      "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "category": "observability-ops",
+      "dev": {
+        "provider": "local-or-hermetic",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "requiredProofs": [
+          "e2e/discovery/browser-bff-trace.spec.ts (react-enterprise-app + platform-api in one Tempo trace, force-flushed)",
+          "observability-correlation ladder (ADR-ACT-0285)"
+        ],
+        "promotionGate": "dev semantic/unit proofs pass"
+      },
+      "test": {
+        "provider": "hermetic-or-compose",
+        "mocksAllowed": true,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "paidLiveOnlyProvider": false,
+        "requiredProofs": [
+          "e2e/discovery/browser-bff-trace.spec.ts (react-enterprise-app + platform-api in one Tempo trace, force-flushed)",
+          "observability-correlation ladder (ADR-ACT-0285)"
+        ],
+        "promotionGate": "test runtime/integration proofs pass"
+      },
+      "staging": {
+        "provider": "Grafana Faro web SDK + OTEL TracingInstrumentation; Alloy faro.receiver -> otel-collector -> Tempo/Loki",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": true,
+        "liveProvidersRequired": false,
+        "prodLikeProof": true,
+        "requiredProofs": [
+          "e2e/discovery/browser-bff-trace.spec.ts (react-enterprise-app + platform-api in one Tempo trace, force-flushed)",
+          "observability-correlation ladder (ADR-ACT-0285)"
+        ],
+        "promotionGate": "staging prod-shape readiness and smoke proofs pass"
+      },
+      "prod": {
+        "provider": "Grafana Faro web SDK + OTEL TracingInstrumentation; Alloy faro.receiver -> otel-collector -> Tempo/Loki",
+        "mocksAllowed": false,
+        "sandboxProvidersAllowed": false,
+        "liveProvidersRequired": false,
+        "requiredProofs": ["current health/readiness only"],
+        "smokeReadinessChecksAllowed": true,
+        "destructiveProofsForbidden": true,
+        "destructiveProofProdSafe": false,
+        "promotionGate": "prod deploy requires prior staging gate and current health only"
+      }
+    }
+  ]
+}

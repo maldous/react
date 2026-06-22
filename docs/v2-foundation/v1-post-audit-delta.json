@@ -2774,6 +2774,149 @@
       "v2Target": "tools/v2-readiness/src/rules/r23-proof-classification.mjs",
       "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/environment-capability-matrix.json",
+      "introducingCommit": "pending",
+      "purpose": "system-level V2 semantic foundation artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/environment-capability-matrix.json",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/cross-capability-interactions.json",
+      "introducingCommit": "pending",
+      "purpose": "system-level V2 semantic foundation artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/cross-capability-interactions.json",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/event-semantics.json",
+      "introducingCommit": "pending",
+      "purpose": "system-level V2 semantic foundation artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/event-semantics.json",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/operational-semantics.json",
+      "introducingCommit": "pending",
+      "purpose": "system-level V2 semantic foundation artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/operational-semantics.json",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/semantic-source-of-truth-transition.json",
+      "introducingCommit": "pending",
+      "purpose": "system-level V2 semantic foundation artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/semantic-source-of-truth-transition.json",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/semantic-source-of-truth-transition.md",
+      "introducingCommit": "pending",
+      "purpose": "system-level V2 semantic foundation artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/semantic-source-of-truth-transition.md",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r24-environment-semantics.mjs",
+      "introducingCommit": "pending",
+      "purpose": "V2 readiness validator rule for system-level semantic closure",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r24-environment-semantics.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r25-cross-capability-semantics.mjs",
+      "introducingCommit": "pending",
+      "purpose": "V2 readiness validator rule for system-level semantic closure",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r25-cross-capability-semantics.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r26-event-semantics.mjs",
+      "introducingCommit": "pending",
+      "purpose": "V2 readiness validator rule for system-level semantic closure",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r26-event-semantics.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r27-operational-semantics.mjs",
+      "introducingCommit": "pending",
+      "purpose": "V2 readiness validator rule for system-level semantic closure",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r27-operational-semantics.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r28-semantic-source-transition.mjs",
+      "introducingCommit": "pending",
+      "purpose": "V2 readiness validator rule for system-level semantic closure",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r28-semantic-source-transition.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
     }
   ],
   "deletions": [
@@ -3156,6 +3299,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 297,
+  "additionCount": 308,
   "deletionCount": 54
 }

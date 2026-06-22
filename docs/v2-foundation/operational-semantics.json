@@ -1,0 +1,1694 @@
+{
+  "artefact": "operational-semantics",
+  "version": 1,
+  "mandatoryFoundationAsset": true,
+  "coverage": {
+    "source": "docs/v2-foundation/v1-capability-closure.json",
+    "statuses": ["delivered-and-proven"],
+    "enforcedBy": ["tools/v2-readiness/src/rules/r27-operational-semantics.mjs"]
+  },
+  "capabilities": [
+    {
+      "capability": "Tenant identity (record + FQDN)",
+      "category": "identity-access",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "identity-access.readiness",
+        "identity-access.errors",
+        "identity-access.audit"
+      ],
+      "alertConditions": [
+        "Tenant identity (record + FQDN) readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:domain-identity-matrix", "proof:tenant-custom-domain-resolution"]
+    },
+    {
+      "capability": "User identity + tenant membership",
+      "category": "identity-access",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "identity-access.readiness",
+        "identity-access.errors",
+        "identity-access.audit"
+      ],
+      "alertConditions": [
+        "User identity + tenant membership readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["members unit + substrate tests"]
+    },
+    {
+      "capability": "End-user profile + preferences self-service",
+      "category": "identity-access",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "identity-access.readiness",
+        "identity-access.errors",
+        "identity-access.audit"
+      ],
+      "alertConditions": [
+        "End-user profile + preferences self-service readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:profile-self-service", "proof:notification-dispatch"]
+    },
+    {
+      "capability": "API keys / personal access tokens",
+      "category": "identity-access",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "identity-access.readiness",
+        "identity-access.errors",
+        "identity-access.audit"
+      ],
+      "alertConditions": [
+        "API keys / personal access tokens readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:api-keys", "proof:api-key-routes"]
+    },
+    {
+      "capability": "Tenant groups",
+      "category": "identity-access",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "identity-access.readiness",
+        "identity-access.errors",
+        "identity-access.audit"
+      ],
+      "alertConditions": [
+        "Tenant groups readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:ui-semantic-groups (headless journey)", "groups unit tests"]
+    },
+    {
+      "capability": "Sub-organisations",
+      "category": "identity-access",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "identity-access.readiness",
+        "identity-access.errors",
+        "identity-access.audit"
+      ],
+      "alertConditions": [
+        "Sub-organisations readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": [
+        "proof:ui-semantic-sub-organisations (headless journey)",
+        "sub-organisations unit tests"
+      ]
+    },
+    {
+      "capability": "RBAC (roles + permissions)",
+      "category": "identity-access",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "identity-access.readiness",
+        "identity-access.errors",
+        "identity-access.audit"
+      ],
+      "alertConditions": [
+        "RBAC (roles + permissions) readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["members tests"]
+    },
+    {
+      "capability": "ABAC / Policy Decision Point",
+      "category": "identity-access",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": false,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "no tenant-data backup relationship required; operational evidence remains in proofs/readiness",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "identity-access.readiness",
+        "identity-access.errors",
+        "identity-access.audit"
+      ],
+      "alertConditions": [
+        "ABAC / Policy Decision Point readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["authorize-resource unit tests", "proof:entitlement-policy-chain"]
+    },
+    {
+      "capability": "Delegated administration roles",
+      "category": "identity-access",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "identity-access.readiness",
+        "identity-access.errors",
+        "identity-access.audit"
+      ],
+      "alertConditions": [
+        "Delegated administration roles readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:delegated-admin"]
+    },
+    {
+      "capability": "Entitlement engine",
+      "category": "identity-access",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "identity-access.readiness",
+        "identity-access.errors",
+        "identity-access.audit"
+      ],
+      "alertConditions": [
+        "Entitlement engine readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": [
+        "proof:entitlements",
+        "proof:entitlement-policy-chain",
+        "proof:entitlements-postgres",
+        "proof:entitlements-routes"
+      ]
+    },
+    {
+      "capability": "Support-mode / break-glass access",
+      "category": "identity-access",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "identity-access.readiness",
+        "identity-access.errors",
+        "identity-access.audit"
+      ],
+      "alertConditions": [
+        "Support-mode / break-glass access readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["support-mode unit tests", "proof:support-approval"]
+    },
+    {
+      "capability": "Audit of privileged access",
+      "category": "identity-access",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "identity-access.readiness",
+        "identity-access.errors",
+        "identity-access.audit"
+      ],
+      "alertConditions": [
+        "Audit of privileged access readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["audit unit tests"]
+    },
+    {
+      "capability": "Platform login + session",
+      "category": "authentication",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "authentication.readiness",
+        "authentication.errors",
+        "authentication.audit"
+      ],
+      "alertConditions": [
+        "Platform login + session readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["auth-routes substrate tests", "proof:auth-settings"]
+    },
+    {
+      "capability": "IdP brokering + OIDC provider management",
+      "category": "authentication",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "authentication.readiness",
+        "authentication.errors",
+        "authentication.audit"
+      ],
+      "alertConditions": [
+        "IdP brokering + OIDC provider management readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:auth-idps", "proof:auth-oidc-enterprise"]
+    },
+    {
+      "capability": "Claim mapping + group/role mapping",
+      "category": "authentication",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": false,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "no tenant-data backup relationship required; operational evidence remains in proofs/readiness",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "authentication.readiness",
+        "authentication.errors",
+        "authentication.audit"
+      ],
+      "alertConditions": [
+        "Claim mapping + group/role mapping readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": [
+        "proof:ui-semantic-claim-mapping (headless journey)",
+        "oidc-mapping unit tests"
+      ]
+    },
+    {
+      "capability": "MFA + session policy + lockout",
+      "category": "authentication",
+      "providerBacked": true,
+      "databaseBacked": false,
+      "tenantData": false,
+      "deployBehaviour": "deploy adapter/config first, then route/usecase; readiness must remain degraded until provider confirms ready",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "no tenant-data backup relationship required; operational evidence remains in proofs/readiness",
+      "partialFailureBehaviour": "partial provider failure reports degraded/unavailable and does not fake healthy state",
+      "degradedMode": "provider-backed degraded mode is explicit and user-visible through readiness/control surfaces",
+      "recoveryAction": "repair provider config/credentials, rerun readiness proof, then promote",
+      "observabilitySignals": [
+        "authentication.readiness",
+        "authentication.errors",
+        "authentication.audit"
+      ],
+      "alertConditions": [
+        "MFA + session policy + lockout readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:auth-settings", "test:platform-api:unit-safe", "test:frontend:run"]
+    },
+    {
+      "capability": "Configuration registry + history",
+      "category": "configuration",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "configuration.readiness",
+        "configuration.errors",
+        "configuration.audit"
+      ],
+      "alertConditions": [
+        "Configuration registry + history readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["platform-config + config-contracts tests"]
+    },
+    {
+      "capability": "Branding + theming",
+      "category": "configuration",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "configuration.readiness",
+        "configuration.errors",
+        "configuration.audit"
+      ],
+      "alertConditions": [
+        "Branding + theming readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["theme + platform-config tests"]
+    },
+    {
+      "capability": "Custom domains, DNS ownership, TLS, canonical",
+      "category": "configuration",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "configuration.readiness",
+        "configuration.errors",
+        "configuration.audit"
+      ],
+      "alertConditions": [
+        "Custom domains, DNS ownership, TLS, canonical readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": [
+        "proof:tenant-domains",
+        "proof:tenant-domain-canonical",
+        "proof:tenant-domain-claim-lifecycle",
+        "proof:tenant-domains-routing"
+      ]
+    },
+    {
+      "capability": "Write-only secret settings",
+      "category": "configuration",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "configuration.readiness",
+        "configuration.errors",
+        "configuration.audit"
+      ],
+      "alertConditions": [
+        "Write-only secret settings readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["token-crypto + auth-settings-audit tests"]
+    },
+    {
+      "capability": "Product catalog, plans, prices",
+      "category": "entitlements-billing",
+      "providerBacked": true,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy adapter/config first, then route/usecase; readiness must remain degraded until provider confirms ready",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial provider failure reports degraded/unavailable and does not fake healthy state",
+      "degradedMode": "provider-backed degraded mode is explicit and user-visible through readiness/control surfaces",
+      "recoveryAction": "repair provider config/credentials, rerun readiness proof, then promote",
+      "observabilitySignals": [
+        "entitlements-billing.readiness",
+        "entitlements-billing.errors",
+        "entitlements-billing.audit"
+      ],
+      "alertConditions": [
+        "Product catalog, plans, prices readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:billing-catalog"]
+    },
+    {
+      "capability": "Subscriptions, invoices, payment methods, dunning",
+      "category": "entitlements-billing",
+      "providerBacked": true,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy adapter/config first, then route/usecase; readiness must remain degraded until provider confirms ready",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial provider failure reports degraded/unavailable and does not fake healthy state",
+      "degradedMode": "provider-backed degraded mode is explicit and user-visible through readiness/control surfaces",
+      "recoveryAction": "repair provider config/credentials, rerun readiness proof, then promote",
+      "observabilitySignals": [
+        "entitlements-billing.readiness",
+        "entitlements-billing.errors",
+        "entitlements-billing.audit"
+      ],
+      "alertConditions": [
+        "Subscriptions, invoices, payment methods, dunning readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:billing-provider", "proof:lago-billing-provider"]
+    },
+    {
+      "capability": "Usage metering + meter event ingestion",
+      "category": "entitlements-billing",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "entitlements-billing.readiness",
+        "entitlements-billing.errors",
+        "entitlements-billing.audit"
+      ],
+      "alertConditions": [
+        "Usage metering + meter event ingestion readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:metering", "proof:metering-quota-routes"]
+    },
+    {
+      "capability": "Quota enforcement",
+      "category": "entitlements-billing",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "entitlements-billing.readiness",
+        "entitlements-billing.errors",
+        "entitlements-billing.audit"
+      ],
+      "alertConditions": [
+        "Quota enforcement readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:quota-enforcement", "proof:metering-quota-routes"]
+    },
+    {
+      "capability": "Relational storage + migrations + RLS",
+      "category": "data-platform",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "data-platform.readiness",
+        "data-platform.errors",
+        "data-platform.audit"
+      ],
+      "alertConditions": [
+        "Relational storage + migrations + RLS readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["postgres repository substrate tests"]
+    },
+    {
+      "capability": "Backup + restore",
+      "category": "data-platform",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "data-platform.readiness",
+        "data-platform.errors",
+        "data-platform.audit"
+      ],
+      "alertConditions": [
+        "Backup + restore readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:backup-local"]
+    },
+    {
+      "capability": "PITR, retention, legal hold, data residency",
+      "category": "data-platform",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "data-platform.readiness",
+        "data-platform.errors",
+        "data-platform.audit"
+      ],
+      "alertConditions": [
+        "PITR, retention, legal hold, data residency readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": [
+        "proof:pitr-restore-drill",
+        "proof:retention",
+        "proof:legal-hold",
+        "proof:data-residency"
+      ]
+    },
+    {
+      "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "category": "data-platform",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "data-platform.readiness",
+        "data-platform.errors",
+        "data-platform.audit"
+      ],
+      "alertConditions": [
+        "Data governance: catalog, lineage, classification, PII, DSR/GDPR readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": [
+        "proof:data-governance",
+        "apps/platform-api/tests/unit/data-governance.test.ts"
+      ]
+    },
+    {
+      "capability": "Tenant data import / export",
+      "category": "data-platform",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "data-platform.readiness",
+        "data-platform.errors",
+        "data-platform.audit"
+      ],
+      "alertConditions": [
+        "Tenant data import / export readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:data-portability"]
+    },
+    {
+      "capability": "Search + indexing (product search)",
+      "category": "search",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": ["search.readiness", "search.errors", "search.audit"],
+      "alertConditions": [
+        "Search + indexing (product search) readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:search", "proof:search-isolation", "proof:search-routes"]
+    },
+    {
+      "capability": "Object storage + tenant prefixes + signed URLs",
+      "category": "storage",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": ["storage.readiness", "storage.errors", "storage.audit"],
+      "alertConditions": [
+        "Object storage + tenant prefixes + signed URLs readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:tenant-storage-objects"]
+    },
+    {
+      "capability": "Event bus, durable queues, DLQ, redrive",
+      "category": "events-workflow",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "events-workflow.readiness",
+        "events-workflow.errors",
+        "events-workflow.audit"
+      ],
+      "alertConditions": [
+        "Event bus, durable queues, DLQ, redrive readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:event-bus", "proof:event-redrive"]
+    },
+    {
+      "capability": "Workflow engine, scheduled jobs, approvals",
+      "category": "events-workflow",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "events-workflow.readiness",
+        "events-workflow.errors",
+        "events-workflow.audit"
+      ],
+      "alertConditions": [
+        "Workflow engine, scheduled jobs, approvals readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:workflow-provider-live"]
+    },
+    {
+      "capability": "Scheduled jobs (built-in, on the event substrate)",
+      "category": "events-workflow",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "events-workflow.readiness",
+        "events-workflow.errors",
+        "events-workflow.audit"
+      ],
+      "alertConditions": [
+        "Scheduled jobs (built-in, on the event substrate) readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:scheduled-jobs", "proof:scheduled-job-routes"]
+    },
+    {
+      "capability": "Notification delivery + preferences + channels",
+      "category": "events-workflow",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "events-workflow.readiness",
+        "events-workflow.errors",
+        "events-workflow.audit"
+      ],
+      "alertConditions": [
+        "Notification delivery + preferences + channels readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": [
+        "proof:notification-preferences",
+        "proof:notification-dispatch",
+        "proof:notification-email-transport",
+        "proof:notification-webhook-transport",
+        "proof:notification-transport-routes"
+      ]
+    },
+    {
+      "capability": "Background workers / job runner",
+      "category": "compute-runtime",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": false,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "no tenant-data backup relationship required; operational evidence remains in proofs/readiness",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "compute-runtime.readiness",
+        "compute-runtime.errors",
+        "compute-runtime.audit"
+      ],
+      "alertConditions": [
+        "Background workers / job runner readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:event-worker"]
+    },
+    {
+      "capability": "Runtime secrets management",
+      "category": "compute-runtime",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "compute-runtime.readiness",
+        "compute-runtime.errors",
+        "compute-runtime.audit"
+      ],
+      "alertConditions": [
+        "Runtime secrets management readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": [
+        "proof:secret-store-contract",
+        "proof:secrets-openbao",
+        "proof:provider-secrets-readiness"
+      ]
+    },
+    {
+      "capability": "Logs (aggregation + tenant-scoped search)",
+      "category": "observability-ops",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "observability-ops.readiness",
+        "observability-ops.errors",
+        "observability-ops.audit"
+      ],
+      "alertConditions": [
+        "Logs (aggregation + tenant-scoped search) readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:tenant-observability", "logs-usecase tests"]
+    },
+    {
+      "capability": "Metrics + traces",
+      "category": "observability-ops",
+      "providerBacked": true,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy adapter/config first, then route/usecase; readiness must remain degraded until provider confirms ready",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial provider failure reports degraded/unavailable and does not fake healthy state",
+      "degradedMode": "provider-backed degraded mode is explicit and user-visible through readiness/control surfaces",
+      "recoveryAction": "repair provider config/credentials, rerun readiness proof, then promote",
+      "observabilitySignals": [
+        "observability-ops.readiness",
+        "observability-ops.errors",
+        "observability-ops.audit"
+      ],
+      "alertConditions": [
+        "Metrics + traces readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:metrics-prometheus", "proof:dashboards"]
+    },
+    {
+      "capability": "Observability — built-in alerting + incidents",
+      "category": "observability-ops",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "observability-ops.readiness",
+        "observability-ops.errors",
+        "observability-ops.audit"
+      ],
+      "alertConditions": [
+        "Observability — built-in alerting + incidents readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": [
+        "proof:observability-signals",
+        "proof:alerting",
+        "proof:incident-foundation",
+        "proof:alert-notification-bridge"
+      ]
+    },
+    {
+      "capability": "Internal service catalog + readiness",
+      "category": "observability-ops",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": false,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "no tenant-data backup relationship required; operational evidence remains in proofs/readiness",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "observability-ops.readiness",
+        "observability-ops.errors",
+        "observability-ops.audit"
+      ],
+      "alertConditions": [
+        "Internal service catalog + readiness readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:platform-services", "proof:service-clickthrough-policy"]
+    },
+    {
+      "capability": "Code quality + secret + dependency scanning",
+      "category": "security-governance",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "security-governance.readiness",
+        "security-governance.errors",
+        "security-governance.audit"
+      ],
+      "alertConditions": [
+        "Code quality + secret + dependency scanning readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["semgrep:gate", "npm audit", "OSV scan"]
+    },
+    {
+      "capability": "Compliance reports, access reviews, evidence packs",
+      "category": "security-governance",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "security-governance.readiness",
+        "security-governance.errors",
+        "security-governance.audit"
+      ],
+      "alertConditions": [
+        "Compliance reports, access reviews, evidence packs readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:compliance-report"]
+    },
+    {
+      "capability": "Tenant isolation proof",
+      "category": "security-governance",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "security-governance.readiness",
+        "security-governance.errors",
+        "security-governance.audit"
+      ],
+      "alertConditions": [
+        "Tenant isolation proof readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:domain-identity-matrix", "proof:tenant-storage isolation"]
+    },
+    {
+      "capability": "Webhooks (developer-facing)",
+      "category": "developer-platform",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": false,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "no tenant-data backup relationship required; operational evidence remains in proofs/readiness",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "developer-platform.readiness",
+        "developer-platform.errors",
+        "developer-platform.audit"
+      ],
+      "alertConditions": [
+        "Webhooks (developer-facing) readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:webhooks", "proof:webhook-redrive"]
+    },
+    {
+      "capability": "API docs, developer portal, SDKs, rate limits",
+      "category": "developer-platform",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "developer-platform.readiness",
+        "developer-platform.errors",
+        "developer-platform.audit"
+      ],
+      "alertConditions": [
+        "API docs, developer portal, SDKs, rate limits readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["openapi:drift (not complete)"]
+    },
+    {
+      "capability": "Rate limiting (API)",
+      "category": "developer-platform",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "developer-platform.readiness",
+        "developer-platform.errors",
+        "developer-platform.audit"
+      ],
+      "alertConditions": [
+        "Rate limiting (API) readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:rate-limits", "proof:rate-limits-redis", "proof:api-key-routes"]
+    },
+    {
+      "capability": "Tenant lifecycle: provision, suspend, delete, export",
+      "category": "support-admin",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "support-admin.readiness",
+        "support-admin.errors",
+        "support-admin.audit"
+      ],
+      "alertConditions": [
+        "Tenant lifecycle: provision, suspend, delete, export readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": [
+        "proof:tenant-lifecycle",
+        "apps/platform-api/tests/unit/tenant-lifecycle.test.ts"
+      ]
+    },
+    {
+      "capability": "Support tickets, customer health, announcements",
+      "category": "support-admin",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "support-admin.readiness",
+        "support-admin.errors",
+        "support-admin.audit"
+      ],
+      "alertConditions": [
+        "Support tickets, customer health, announcements readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["support tickets / customer health tests"]
+    },
+    {
+      "capability": "Universal Service Foundation scope + principles",
+      "category": "foundation",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": false,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "no tenant-data backup relationship required; operational evidence remains in proofs/readiness",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": ["foundation.readiness", "foundation.errors", "foundation.audit"],
+      "alertConditions": [
+        "Universal Service Foundation scope + principles readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["this matrix + registry + validation test"]
+    },
+    {
+      "capability": "Build-versus-compose decision framework",
+      "category": "foundation",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": false,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "no tenant-data backup relationship required; operational evidence remains in proofs/readiness",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": ["foundation.readiness", "foundation.errors", "foundation.audit"],
+      "alertConditions": [
+        "Build-versus-compose decision framework readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["docs/architecture/build-versus-compose-decision-framework.md"]
+    },
+    {
+      "capability": "Service catalog + provider integration model",
+      "category": "foundation",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": ["foundation.readiness", "foundation.errors", "foundation.audit"],
+      "alertConditions": [
+        "Service catalog + provider integration model readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": [
+        "proof:platform-services",
+        "proof:service-clickthrough-policy",
+        "proof:service-catalog-registry",
+        "proof:entitlements-routes"
+      ]
+    },
+    {
+      "capability": "Environment-specific vs shared service model",
+      "category": "foundation",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": ["foundation.readiness", "foundation.errors", "foundation.audit"],
+      "alertConditions": [
+        "Environment-specific vs shared service model readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["docs/architecture/environment-service-classification.md"]
+    },
+    {
+      "capability": "Provider configuration plane",
+      "category": "foundation",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": ["foundation.readiness", "foundation.errors", "foundation.audit"],
+      "alertConditions": [
+        "Provider configuration plane readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:provider-config", "proof:provider-readiness-contract"]
+    },
+    {
+      "capability": "Composed provider readiness spine",
+      "category": "foundation",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": false,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "no tenant-data backup relationship required; operational evidence remains in proofs/readiness",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": ["foundation.readiness", "foundation.errors", "foundation.audit"],
+      "alertConditions": [
+        "Composed provider readiness spine readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:composed-provider-readiness"]
+    },
+    {
+      "capability": "History read-model (read-only projection)",
+      "category": "data-platform",
+      "providerBacked": false,
+      "databaseBacked": true,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "schema changes must be ordered in apps/platform-api/src/db/migrations and listed in data-and-migration-plan.json",
+      "rollbackBehaviour": "rollback preserves tenant data; forward-fix or guarded restore path is documented through backup/restore and migration lineage",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "data-platform.readiness",
+        "data-platform.errors",
+        "data-platform.audit"
+      ],
+      "alertConditions": [
+        "History read-model (read-only projection) readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:history"]
+    },
+    {
+      "capability": "OIDC discovery / issuer / JWKS validation",
+      "category": "authentication",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": false,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "no tenant-data backup relationship required; operational evidence remains in proofs/readiness",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "authentication.readiness",
+        "authentication.errors",
+        "authentication.audit"
+      ],
+      "alertConditions": [
+        "OIDC discovery / issuer / JWKS validation readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:auth-oidc-enterprise"]
+    },
+    {
+      "capability": "OIDC test connection + callback display",
+      "category": "authentication",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "authentication.readiness",
+        "authentication.errors",
+        "authentication.audit"
+      ],
+      "alertConditions": [
+        "OIDC test connection + callback display readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:auth-oidc-enterprise"]
+    },
+    {
+      "capability": "Tenant host identity resolution",
+      "category": "identity-access",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "identity-access.readiness",
+        "identity-access.errors",
+        "identity-access.audit"
+      ],
+      "alertConditions": [
+        "Tenant host identity resolution readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:domain-identity-matrix", "proof:tenant-custom-domain-resolution"]
+    },
+    {
+      "capability": "Tenant domain activation (auth-client)",
+      "category": "configuration",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "configuration.readiness",
+        "configuration.errors",
+        "configuration.audit"
+      ],
+      "alertConditions": [
+        "Tenant domain activation (auth-client) readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:tenant-domain-canonical"]
+    },
+    {
+      "capability": "Tenant canonical domain set/unset",
+      "category": "configuration",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "configuration.readiness",
+        "configuration.errors",
+        "configuration.audit"
+      ],
+      "alertConditions": [
+        "Tenant canonical domain set/unset readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:tenant-domain-canonical (local routing only)"]
+    },
+    {
+      "capability": "Tenant custom-domain auth callback",
+      "category": "authentication",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "authentication.readiness",
+        "authentication.errors",
+        "authentication.audit"
+      ],
+      "alertConditions": [
+        "Tenant custom-domain auth callback readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:tenant-custom-domain-auth-origin"]
+    },
+    {
+      "capability": "Tenant service clickthrough policy",
+      "category": "observability-ops",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "observability-ops.readiness",
+        "observability-ops.errors",
+        "observability-ops.audit"
+      ],
+      "alertConditions": [
+        "Tenant service clickthrough policy readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:service-clickthrough-policy", "proof:clickthrough"]
+    },
+    {
+      "capability": "Environment registry + bootstrap",
+      "category": "foundation",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": ["foundation.readiness", "foundation.errors", "foundation.audit"],
+      "alertConditions": [
+        "Environment registry + bootstrap readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": [
+        "proof:environment-registry",
+        "proof:environment-admin-bootstrap",
+        "proof:environment-operations"
+      ]
+    },
+    {
+      "capability": "Provider environment classification",
+      "category": "foundation",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": false,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "no tenant-data backup relationship required; operational evidence remains in proofs/readiness",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": ["foundation.readiness", "foundation.errors", "foundation.audit"],
+      "alertConditions": [
+        "Provider environment classification readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["proof:provider-environment-classification"]
+    },
+    {
+      "capability": "E2E confidence ladder (stage-aware)",
+      "category": "foundation",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": false,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "no tenant-data backup relationship required; operational evidence remains in proofs/readiness",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": ["foundation.readiness", "foundation.errors", "foundation.audit"],
+      "alertConditions": [
+        "E2E confidence ladder (stage-aware) readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["make all (e2e gates)"]
+    },
+    {
+      "capability": "OpenAPI drift hard gate",
+      "category": "developer-platform",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": false,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "no tenant-data backup relationship required; operational evidence remains in proofs/readiness",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "developer-platform.readiness",
+        "developer-platform.errors",
+        "developer-platform.audit"
+      ],
+      "alertConditions": [
+        "OpenAPI drift hard gate readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["validate-openapi-drift --strict"]
+    },
+    {
+      "capability": "i18n runtime + validation",
+      "category": "foundation",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": true,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "tenant data is covered by backup/export/retention/legal-hold semantics; destructive changes require restore/export evidence",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": ["foundation.readiness", "foundation.errors", "foundation.audit"],
+      "alertConditions": [
+        "i18n runtime + validation readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["validate-i18n", "packages/i18n-runtime/tests/react.test.tsx"]
+    },
+    {
+      "capability": "Accessibility (a11y) gate",
+      "category": "foundation",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": false,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "no tenant-data backup relationship required; operational evidence remains in proofs/readiness",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": ["foundation.readiness", "foundation.errors", "foundation.audit"],
+      "alertConditions": [
+        "Accessibility (a11y) gate readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": ["e2e accessibility spec"]
+    },
+    {
+      "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "category": "observability-ops",
+      "providerBacked": false,
+      "databaseBacked": false,
+      "tenantData": false,
+      "deployBehaviour": "deploy source-defined code/config with invariant or local readiness checks",
+      "migrationBehaviour": "no database migration required unless future state model changes introduce persisted data",
+      "rollbackBehaviour": "rollback reverts code/config while preserving semantic contract or marks capability semantic-gap",
+      "backupRestoreRelationship": "no tenant-data backup relationship required; operational evidence remains in proofs/readiness",
+      "partialFailureBehaviour": "partial local failure returns typed error or readiness degraded state",
+      "degradedMode": "not_applicable or local degraded/error state as defined by readiness model",
+      "recoveryAction": "rerun proof/readiness after config/code fix; do not change UI semantics alone",
+      "observabilitySignals": [
+        "observability-ops.readiness",
+        "observability-ops.errors",
+        "observability-ops.audit"
+      ],
+      "alertConditions": [
+        "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) readiness blocked or unavailable",
+        "proof or smoke check fails during promotion"
+      ],
+      "proofReference": [
+        "e2e/discovery/browser-bff-trace.spec.ts (react-enterprise-app + platform-api in one Tempo trace, force-flushed)",
+        "observability-correlation ladder (ADR-ACT-0285)"
+      ]
+    }
+  ]
+}

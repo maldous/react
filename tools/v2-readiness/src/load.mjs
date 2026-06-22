@@ -78,6 +78,39 @@ function loadV1c17Observability(repoRoot) {
   };
 }
 
+function loadPlatformEventNames(repoRoot) {
+  const files = [
+    ...walkFiles(path.join(repoRoot, "apps/platform-api/src")),
+    ...walkFiles(path.join(repoRoot, "apps/platform-api/scripts")),
+    ...walkFiles(path.join(repoRoot, "apps/platform-api/tests")),
+  ].filter((file) => /\.(ts|tsx|mjs|js)$/.test(file));
+  const names = new Set();
+  const patterns = [
+    /eventType:\s*["']([^"']+)["']/g,
+    /emitWebhookEvent\(\s*[^,]+,\s*["']([^"']+)["']/g,
+    /eventTypes:\s*\[([^\]]+)\]/g,
+  ];
+  for (const file of files) {
+    const text = fs.readFileSync(file, "utf8");
+    for (const match of text.matchAll(patterns[0])) names.add(match[1]);
+    for (const match of text.matchAll(patterns[1])) names.add(match[1]);
+    for (const match of text.matchAll(patterns[2]))
+      for (const item of match[1].matchAll(/["']([^"']+)["']/g)) names.add(item[1]);
+  }
+  return [...names].sort();
+}
+
+function walkFiles(dir) {
+  if (!fs.existsSync(dir)) return [];
+  const out = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) out.push(...walkFiles(full));
+    else if (entry.isFile()) out.push(full);
+  }
+  return out;
+}
+
 // On-disk SQL migrations (sequence + filename + checksum).
 function loadMigrations(repoRoot) {
   const dir = path.join(repoRoot, "apps/platform-api/src/db/migrations");
@@ -274,6 +307,13 @@ export function loadContext({ repoRoot = process.cwd(), strict = false, pinned }
       "capability-errors.json": optional("capability-errors.json"),
       "capability-ui-contract.json": optional("capability-ui-contract.json"),
       "capability-proof-definition.json": optional("capability-proof-definition.json"),
+      "environment-capability-matrix.json": optional("environment-capability-matrix.json"),
+      "cross-capability-interactions.json": optional("cross-capability-interactions.json"),
+      "event-semantics.json": optional("event-semantics.json"),
+      "operational-semantics.json": optional("operational-semantics.json"),
+      "semantic-source-of-truth-transition.json": optional(
+        "semantic-source-of-truth-transition.json"
+      ),
     },
     // live repo facts
     gitTracked: loadGitTrackedAtCommit(repoRoot, AUDIT_BASE_COMMIT),
@@ -282,6 +322,7 @@ export function loadContext({ repoRoot = process.cwd(), strict = false, pinned }
     caddyfile: readText(path.join(repoRoot, "docker/caddy/Caddyfile")),
     migrations: loadMigrations(repoRoot),
     observabilityV1C17: loadV1c17Observability(repoRoot),
+    platformEventNames: loadPlatformEventNames(repoRoot),
     makeTargets: loadMakeTargets(repoRoot),
     adrIds: loadAdrIds(repoRoot),
     actionMentions: loadActionMentions(repoRoot),

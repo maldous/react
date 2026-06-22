@@ -65,8 +65,18 @@ decision. Until then it is RED, which is the honest cut-gate state (runbook §0)
   `v1-test-proof-inventory.json` and every proof inventory entry declares `proofLevel` 0-5 plus a
   rationale. Every `delivered-and-proven` capability semantic proof must also declare a proof level
   at or above the delivered floor of Level 3, with Level 4 required for live-provider proof tiers.
+- **R24 environment-semantics** — every delivered capability has dev/test/staging/prod provider
+  semantics, promotion gates, prod mock/destructive-proof prohibitions, and prod health-only checks.
+- **R25 cross-capability-semantics** — mandatory cross-capability interaction contracts define
+  ownership, failure, ordering, retry/idempotency, and proof semantics.
+- **R26 event-semantics** — emitted platform events are owned, schema-versioned, idempotent where
+  mutating, and define retry/DLQ, retention, audit, ordering, and proof semantics.
+- **R27 operational-semantics** — delivered capabilities define deploy, migration/rollback,
+  backup/restore, degraded, recovery, observability, and alert semantics.
+- **R28 semantic-source-transition** — V1-final becomes historical evidence after the cut and V2
+  semantic artefacts become the source of truth for code and behaviour changes.
 
-R1–R8 + R10–R23 are the consistency validation (must pass); R9 is the fail-closed cut gate.
+R1–R8 + R10–R28 are the consistency validation (must pass); R9 is the fail-closed cut gate.
 
 Tests: `node --test tools/v2-readiness/tests/*.test.mjs` (also run via the canonical `test:architecture`
 gate, ADR-ACT-0292).

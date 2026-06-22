@@ -24,6 +24,11 @@ import r20 from "./rules/r20-harness-semantics.mjs";
 import r21 from "./rules/r21-v1c17-observability.mjs";
 import r22 from "./rules/r22-semantic-completeness.mjs";
 import r23 from "./rules/r23-proof-classification.mjs";
+import r24 from "./rules/r24-environment-semantics.mjs";
+import r25 from "./rules/r25-cross-capability-semantics.mjs";
+import r26 from "./rules/r26-event-semantics.mjs";
+import r27 from "./rules/r27-operational-semantics.mjs";
+import r28 from "./rules/r28-semantic-source-transition.mjs";
 
 export const RULES = [
   r1,
@@ -49,6 +54,11 @@ export const RULES = [
   r21,
   r22,
   r23,
+  r24,
+  r25,
+  r26,
+  r27,
+  r28,
 ];
 
 export function runRules(ctx) {
@@ -73,6 +83,11 @@ const AUDIT_SURFACES = {
   "ui-semantic-harness": "R20",
   "capability-semantic-completeness": "R22",
   "proof-strength-classification": "R23",
+  "environment-semantics": "R24",
+  "cross-capability-semantics": "R25",
+  "event-semantics": "R26",
+  "operational-semantics": "R27",
+  "semantic-source-transition": "R28",
 };
 // Surface rules wired into RULES. Keep in sync with the imports above.
 const IMPLEMENTED_SURFACE_RULES = [
@@ -89,6 +104,11 @@ const IMPLEMENTED_SURFACE_RULES = [
   "R20",
   "R22",
   "R23",
+  "R24",
+  "R25",
+  "R26",
+  "R27",
+  "R28",
 ];
 
 export function summarize(

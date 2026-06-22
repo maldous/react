@@ -24,6 +24,11 @@ import r19 from "../src/rules/r19-executable-assets.mjs";
 import r20 from "../src/rules/r20-harness-semantics.mjs";
 import r22 from "../src/rules/r22-semantic-completeness.mjs";
 import r23 from "../src/rules/r23-proof-classification.mjs";
+import r24 from "../src/rules/r24-environment-semantics.mjs";
+import r25 from "../src/rules/r25-cross-capability-semantics.mjs";
+import r26 from "../src/rules/r26-event-semantics.mjs";
+import r27 from "../src/rules/r27-operational-semantics.mjs";
+import r28 from "../src/rules/r28-semantic-source-transition.mjs";
 
 const fires = (rule, ctx, ruleId) => {
   const f = rule(ctx);
@@ -515,4 +520,57 @@ test("R23 fires when a live-provider delivered capability proof level is below t
       message: "provider-backed delivered capability proof level 3 is below required minimum 4",
     },
   ]);
+});
+
+test("R24 fires when a delivered capability has no environment row", () => {
+  const a = clone(cleanCtx());
+  a.foundation["environment-capability-matrix.json"].capabilities = [];
+  fires(r24, a, "R24-environment-semantics");
+});
+
+test("R24 fires when prod allows mocks or staging lacks prod-like proof", () => {
+  const a = clone(cleanCtx());
+  a.foundation["environment-capability-matrix.json"].capabilities[0].prod.mocksAllowed = true;
+  fires(r24, a, "R24-environment-semantics");
+  const b = clone(cleanCtx());
+  b.foundation["environment-capability-matrix.json"].capabilities[0].staging.prodLikeProof = false;
+  fires(r24, b, "R24-environment-semantics");
+});
+
+test("R25 fires when a known interaction lacks failure semantics", () => {
+  const a = clone(cleanCtx());
+  delete a.foundation["cross-capability-interactions.json"].interactions[0].failureBehaviour;
+  fires(r25, a, "R25-cross-capability-semantics");
+});
+
+test("R26 fires when an emitted event is absent from event semantics", () => {
+  const a = clone(cleanCtx());
+  a.platformEventNames = ["missing.event"];
+  fires(r26, a, "R26-event-semantics");
+});
+
+test("R26 fires when a mutating event lacks idempotency semantics", () => {
+  const a = clone(cleanCtx());
+  delete a.foundation["event-semantics.json"].events[0].idempotencyKey;
+  fires(r26, a, "R26-event-semantics");
+});
+
+test("R27 fires when a provider-backed capability has no degraded mode", () => {
+  const a = clone(cleanCtx());
+  a.capabilities[0].proofTier = "live-composed-provider";
+  delete a.foundation["operational-semantics.json"].capabilities[0].degradedMode;
+  fires(r27, a, "R27-operational-semantics");
+});
+
+test("R28 fires when no post-V2 source-of-truth policy exists", () => {
+  const a = clone(cleanCtx());
+  a.foundation["semantic-source-of-truth-transition.json"] = null;
+  fires(r28, a, "R28-semantic-source-transition");
+});
+
+test("R28 fires when capability behaviour changes are not tied to semantic artefacts", () => {
+  const a = clone(cleanCtx());
+  a.foundation["semantic-source-of-truth-transition.json"].policies.changePolicy =
+    "update code eventually";
+  fires(r28, a, "R28-semantic-source-transition");
 });

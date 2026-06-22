@@ -1,0 +1,24 @@
+{
+  "artefact": "semantic-source-of-truth-transition",
+  "version": 1,
+  "mandatoryFoundationAsset": true,
+  "coverage": {
+    "source": "docs/v2-foundation/semantic-source-of-truth-transition.md",
+    "enforcedBy": ["tools/v2-readiness/src/rules/r28-semantic-source-transition.mjs"]
+  },
+  "policies": {
+    "v1Final": "historical evidence after V2 cut; not the live semantic authority",
+    "v2SourceOfTruth": "V2 semantic contracts, capability definitions, UI semantics, proofs, and validator rules are the canonical source after cut",
+    "driftPolicy": "V2 code must not drift from capability definitions or contracts; drift is a validator failure",
+    "changePolicy": "Any post-V2 behaviour change must update capability definitions, contracts, proofs, readiness, and UI semantics in the same change",
+    "v1ReopenPolicy": "V1 is not reopened except for evidence correction"
+  },
+  "requiredChangeSet": [
+    "capability definitions",
+    "contracts",
+    "proofs",
+    "readiness semantics",
+    "UI semantic definitions",
+    "validator rules when a new semantic class is introduced"
+  ]
+}

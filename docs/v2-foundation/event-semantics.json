@@ -1,0 +1,211 @@
+{
+  "artefact": "event-semantics",
+  "version": 1,
+  "mandatoryFoundationAsset": true,
+  "coverage": {
+    "source": "apps/platform-api/src/usecases/events.ts and webhook-worker.ts",
+    "enforcedBy": ["tools/v2-readiness/src/rules/r26-event-semantics.mjs"]
+  },
+  "events": [
+    {
+      "eventName": "thing.created",
+      "owner": "events-workflow",
+      "producer": "Event bus, durable queues, DLQ, redrive",
+      "consumers": ["event workers"],
+      "schema": {
+        "version": 1,
+        "type": "object",
+        "additionalProperties": true
+      },
+      "version": 1,
+      "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
+      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
+      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
+      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
+      "retention": "platform_events retained for history/readiness according to data retention policy",
+      "auditRelationship": "EventRedriven audit event for redrive; source mutation audit stays with producer capability",
+      "mutatingEvent": true,
+      "proof": "proof:event-bus; proof:event-worker; proof:event-redrive"
+    },
+    {
+      "eventName": "x",
+      "owner": "events-workflow",
+      "producer": "Event bus, durable queues, DLQ, redrive",
+      "consumers": ["event workers"],
+      "schema": {
+        "version": 1,
+        "type": "object",
+        "additionalProperties": true
+      },
+      "version": 1,
+      "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
+      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
+      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
+      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
+      "retention": "platform_events retained for history/readiness according to data retention policy",
+      "auditRelationship": "EventRedriven audit event for redrive; source mutation audit stays with producer capability",
+      "mutatingEvent": true,
+      "proof": "proof:event-bus; proof:event-worker; proof:event-redrive"
+    },
+    {
+      "eventName": "boom",
+      "owner": "events-workflow",
+      "producer": "Event bus, durable queues, DLQ, redrive",
+      "consumers": ["event workers"],
+      "schema": {
+        "version": 1,
+        "type": "object",
+        "additionalProperties": true
+      },
+      "version": 1,
+      "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
+      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
+      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
+      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
+      "retention": "platform_events retained for history/readiness according to data retention policy",
+      "auditRelationship": "EventRedriven audit event for redrive; source mutation audit stays with producer capability",
+      "mutatingEvent": true,
+      "proof": "proof:event-bus; proof:event-worker; proof:event-redrive"
+    },
+    {
+      "eventName": "no.handler",
+      "owner": "events-workflow",
+      "producer": "Event bus, durable queues, DLQ, redrive",
+      "consumers": ["event workers"],
+      "schema": {
+        "version": 1,
+        "type": "object",
+        "additionalProperties": true
+      },
+      "version": 1,
+      "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
+      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
+      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
+      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
+      "retention": "platform_events retained for history/readiness according to data retention policy",
+      "auditRelationship": "EventRedriven audit event for redrive; source mutation audit stays with producer capability",
+      "mutatingEvent": true,
+      "proof": "proof:event-bus; proof:event-worker; proof:event-redrive"
+    },
+    {
+      "eventName": "t",
+      "owner": "events-workflow",
+      "producer": "Event bus, durable queues, DLQ, redrive",
+      "consumers": ["event workers"],
+      "schema": {
+        "version": 1,
+        "type": "object",
+        "additionalProperties": true
+      },
+      "version": 1,
+      "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
+      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
+      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
+      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
+      "retention": "platform_events retained for history/readiness according to data retention policy",
+      "auditRelationship": "EventRedriven audit event for redrive; source mutation audit stays with producer capability",
+      "mutatingEvent": true,
+      "proof": "proof:event-bus; proof:event-worker; proof:event-redrive"
+    },
+    {
+      "eventName": "ok.event",
+      "owner": "events-workflow",
+      "producer": "Event bus, durable queues, DLQ, redrive",
+      "consumers": ["event workers"],
+      "schema": {
+        "version": 1,
+        "type": "object",
+        "additionalProperties": true
+      },
+      "version": 1,
+      "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
+      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
+      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
+      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
+      "retention": "platform_events retained for history/readiness according to data retention policy",
+      "auditRelationship": "EventRedriven audit event for redrive; source mutation audit stays with producer capability",
+      "mutatingEvent": true,
+      "proof": "proof:event-bus; proof:event-worker; proof:event-redrive"
+    },
+    {
+      "eventName": "boom.event",
+      "owner": "events-workflow",
+      "producer": "Event bus, durable queues, DLQ, redrive",
+      "consumers": ["event workers"],
+      "schema": {
+        "version": 1,
+        "type": "object",
+        "additionalProperties": true
+      },
+      "version": 1,
+      "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
+      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
+      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
+      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
+      "retention": "platform_events retained for history/readiness according to data retention policy",
+      "auditRelationship": "EventRedriven audit event for redrive; source mutation audit stays with producer capability",
+      "mutatingEvent": true,
+      "proof": "proof:event-bus; proof:event-worker; proof:event-redrive"
+    },
+    {
+      "eventName": "tenant.config.changed",
+      "owner": "configuration",
+      "producer": "Configuration registry + history",
+      "consumers": ["webhook subscriptions", "event workers"],
+      "schema": {
+        "version": 1,
+        "type": "object",
+        "additionalProperties": true
+      },
+      "version": 1,
+      "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
+      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
+      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
+      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
+      "retention": "platform_events retained for history/readiness according to data retention policy",
+      "auditRelationship": "EventRedriven audit event for redrive; source mutation audit stays with producer capability",
+      "mutatingEvent": true,
+      "proof": "proof:event-bus; proof:event-worker; proof:event-redrive"
+    },
+    {
+      "eventName": "platform.test",
+      "owner": "developer-platform",
+      "producer": "Webhooks (developer-facing)",
+      "consumers": ["webhook subscriptions"],
+      "schema": {
+        "version": 1,
+        "type": "object",
+        "additionalProperties": true
+      },
+      "version": 1,
+      "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
+      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
+      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
+      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
+      "retention": "platform_events retained for history/readiness according to data retention policy",
+      "auditRelationship": "WebhookTested audit event for operator test sends",
+      "mutatingEvent": false,
+      "proof": "proof:webhooks; proof:webhook-redrive"
+    },
+    {
+      "eventName": "report.run",
+      "owner": "events-workflow",
+      "producer": "Scheduled jobs (built-in, on the event substrate)",
+      "consumers": ["event workers"],
+      "schema": {
+        "version": 1,
+        "type": "object",
+        "additionalProperties": true
+      },
+      "version": 1,
+      "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
+      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
+      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
+      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
+      "retention": "platform_events retained for history/readiness according to data retention policy",
+      "auditRelationship": "EventRedriven audit event for redrive; source mutation audit stays with producer capability",
+      "mutatingEvent": true,
+      "proof": "proof:event-bus; proof:event-worker; proof:event-redrive"
+    }
+  ]
+}
