@@ -1,7 +1,10 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { AuditAction, type AuditEvent, type AuditEventPort } from "@platform/audit-events";
-import { PostgresQuotaRepository } from "../../src/adapters/postgres-quota-repository.ts";
+import {
+  getPostgresQuotaRepositoryMetric,
+  PostgresQuotaRepository,
+} from "../../src/adapters/postgres-quota-repository.ts";
 import { assertQuota, evaluateQuota, listQuotas, setQuota } from "../../src/usecases/quota.ts";
 import type { MeteringRepository } from "../../src/ports/metering-repository.ts";
 import type {
@@ -209,11 +212,26 @@ describe("quota usecase", () => {
 describe("PostgresQuotaRepository provider reliability", () => {
   function makeProviderPool(options: { failSelect?: boolean } = {}) {
     const queries: string[] = [];
+    const quotaRow = {
+      organisation_id: ORG,
+      quota_key: "storage.bytes",
+      entitlement_key: "storage",
+      meter_key: "storage.bytes",
+      limit_value: "100",
+      window_kind: "lifetime",
+      action: "deny",
+      updated_at: null,
+      updated_by: "op",
+    };
     const client = {
       async query(sql: string) {
         queries.push(sql);
         if (options.failSelect && sql.includes("information_schema.tables")) {
           throw new Error("db down");
+        }
+        if (sql.includes("INSERT INTO public.tenant_quotas")) return { rows: [quotaRow] };
+        if (sql.includes("SELECT") && sql.includes("public.tenant_quotas")) {
+          return { rows: [quotaRow] };
         }
         return { rows: [], rowCount: 0 };
       },
@@ -269,5 +287,46 @@ describe("PostgresQuotaRepository provider reliability", () => {
     );
     assert.equal(fixture.queries.filter((q) => q === "ROLLBACK").length, 2);
     assert.match(repo.recoveryAction(), /POSTGRES_APP_URL/);
+  });
+
+  it("emits audit and metric evidence around quota repository reads and writes", async () => {
+    const fixture = makeProviderPool();
+    const audit: string[] = [];
+    const before = getPostgresQuotaRepositoryMetric("postgres_quota_repository_total", {
+      operation: "upsert",
+      outcome: "success",
+    });
+    const repo = new PostgresQuotaRepository(fixture.pool, {
+      retryAttempts: 0,
+      auditEvent: async (event) => {
+        audit.push(`${event.action}:${event.quotaKey ?? "all"}`);
+      },
+    });
+
+    await repo.upsert({
+      organisationId: ORG,
+      quotaKey: "storage.bytes",
+      entitlementKey: "storage",
+      meterKey: "storage.bytes",
+      limit: 100,
+      window: "lifetime",
+      action: "deny",
+      updatedBy: "op",
+    });
+    await repo.listForTenantAsOperator(ORG);
+
+    assert.deepEqual(audit, ["quota.repository.upsert:storage.bytes", "quota.repository.read:all"]);
+    assert.equal(
+      getPostgresQuotaRepositoryMetric("postgres_quota_repository_total", {
+        operation: "upsert",
+        outcome: "success",
+      }),
+      before + 1
+    );
+    assert.ok(
+      repo
+        .recoveryAction()
+        .includes("storage quota-before-write policy before uploaded/quarantined/clean/rejected")
+    );
   });
 });
