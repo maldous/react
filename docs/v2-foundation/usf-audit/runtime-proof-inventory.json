@@ -283,7 +283,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get", "route:get-admin", "route:get-healthz", "route:get-readyz"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/dashboards-runtime-proof.ts"]
@@ -415,8 +415,8 @@
   {
     "proofId": "proof:apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof-ts",
     "file": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
-    "level": 0,
-    "classification": "route/file existence only",
+    "level": 2,
+    "classification": "isolated unit behaviour",
     "routeRefs": ["route:get"],
     "assertsSideEffects": false,
     "assertsFailureMode": true,
@@ -1630,7 +1630,7 @@
       "route:get-auth-login",
       "route:get-login"
     ],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": [

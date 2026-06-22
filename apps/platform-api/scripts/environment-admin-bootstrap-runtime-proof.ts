@@ -15,6 +15,7 @@
  */
 
 import { execFileSync } from "node:child_process";
+import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import process from "node:process";
@@ -23,6 +24,7 @@ let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 function run(args: string[]): string {
   return execFileSync("node", ["scripts/env/bootstrap.mjs", ...args], { encoding: "utf8" });

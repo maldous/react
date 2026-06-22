@@ -161,47 +161,13 @@
     },
     {
       "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
-      "message": "proof does not assert side effects",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-dashboards-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
-        "level": 4,
-        "classification": "live substrate behaviour",
-        "routeRefs": ["route:get", "route:get-admin", "route:get-healthz", "route:get-readyz"],
-        "assertsSideEffects": false,
-        "assertsFailureMode": true,
-        "assertsObservabilityOrAudit": true,
-        "sourceFileRefs": ["apps/platform-api/scripts/dashboards-runtime-proof.ts"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
-      "message": "proof only checks file/contract shape",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
-        "level": 0,
-        "classification": "route/file existence only",
-        "routeRefs": ["route:get"],
-        "assertsSideEffects": false,
-        "assertsFailureMode": true,
-        "assertsObservabilityOrAudit": true,
-        "sourceFileRefs": ["apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
       "message": "proof does not assert side effects",
       "evidence": {
         "proofId": "proof:apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof-ts",
         "file": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
-        "level": 0,
-        "classification": "route/file existence only",
+        "level": 2,
+        "classification": "isolated unit behaviour",
         "routeRefs": ["route:get"],
         "assertsSideEffects": false,
         "assertsFailureMode": true,
@@ -1721,30 +1687,6 @@
     },
     {
       "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
-      "message": "proof does not assert side effects",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
-        "level": 4,
-        "classification": "live substrate behaviour",
-        "routeRefs": [
-          "route:get",
-          "route:get-auth-callback",
-          "route:get-auth-login",
-          "route:get-login"
-        ],
-        "assertsSideEffects": false,
-        "assertsFailureMode": true,
-        "assertsObservabilityOrAudit": true,
-        "sourceFileRefs": [
-          "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts"
-        ]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts",
       "message": "proof does not assert side effects",
       "evidence": {
@@ -2099,7 +2041,7 @@
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get", "route:get-admin", "route:get-healthz", "route:get-readyz"],
-      "assertsSideEffects": false,
+      "assertsSideEffects": true,
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/dashboards-runtime-proof.ts"]
@@ -2231,8 +2173,8 @@
     {
       "proofId": "proof:apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof-ts",
       "file": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
-      "level": 0,
-      "classification": "route/file existence only",
+      "level": 2,
+      "classification": "isolated unit behaviour",
       "routeRefs": ["route:get"],
       "assertsSideEffects": false,
       "assertsFailureMode": true,
@@ -3464,7 +3406,7 @@
         "route:get-auth-login",
         "route:get-login"
       ],
-      "assertsSideEffects": false,
+      "assertsSideEffects": true,
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": [
