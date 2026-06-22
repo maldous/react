@@ -13,15 +13,6 @@
     },
     {
       "kind": "semantic-runtime-diff",
-      "subject": "POST /faro/collect",
-      "message": "semantic route claim has no runtime route implementation",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
       "subject": "npm run api:start",
       "message": "runtime command has no semantic catalogue link",
       "evidence": {

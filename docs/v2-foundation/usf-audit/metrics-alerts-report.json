@@ -1364,7 +1364,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "proof:api-keys; proof:api-key-routes",
+      "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2367", "docs/api/openapi.json"]
     },
     {
@@ -1379,7 +1379,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "proof:api-keys; proof:api-key-routes",
+      "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2443", "docs/api/openapi.json"]
     },
     {
@@ -1394,7 +1394,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "proof:api-keys; proof:api-key-routes",
+      "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2397", "docs/api/openapi.json"]
     },
     {
@@ -1454,7 +1454,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "proof:api-keys; proof:api-key-routes",
+      "proofRef": "proof:tenant-lifecycle; apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7794", "docs/api/openapi.json"]
     },
     {
@@ -1634,7 +1634,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "proof:api-keys; proof:api-key-routes",
+      "proofRef": "proof:tenant-lifecycle; apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7763", "docs/api/openapi.json"]
     },
     {
@@ -1934,7 +1934,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "proof:ui-semantic-claim-mapping (headless journey); oidc-mapping unit tests",
+      "proofRef": "proof:auth-oidc-enterprise",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1788", "docs/api/openapi.json"]
     },
     {
@@ -1979,7 +1979,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "proof:ui-semantic-claim-mapping (headless journey); oidc-mapping unit tests",
+      "proofRef": "proof:auth-oidc-enterprise",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1816", "docs/api/openapi.json"]
     },
     {
@@ -1994,7 +1994,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "proof:auth-idps; proof:auth-oidc-enterprise",
+      "proofRef": "proof:auth-oidc-enterprise",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1752", "docs/api/openapi.json"]
     },
     {
@@ -2474,7 +2474,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "proof:tenant-domains; proof:tenant-domain-canonical; proof:tenant-domain-claim-lifecycle; proof:tenant-domains-routing",
+      "proofRef": "proof:tenant-domain-canonical",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:4228", "docs/api/openapi.json"]
     },
     {
@@ -2489,7 +2489,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "proof:tenant-domains; proof:tenant-domain-canonical; proof:tenant-domain-claim-lifecycle; proof:tenant-domains-routing",
+      "proofRef": "proof:tenant-domain-canonical (local routing only)",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:4432", "docs/api/openapi.json"]
     },
     {
@@ -2504,7 +2504,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "proof:tenant-domains; proof:tenant-domain-canonical; proof:tenant-domain-claim-lifecycle; proof:tenant-domains-routing",
+      "proofRef": "proof:tenant-domain-canonical (local routing only)",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:4383", "docs/api/openapi.json"]
     },
     {
@@ -2519,7 +2519,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "proof:tenant-domains; proof:tenant-domain-canonical; proof:tenant-domain-claim-lifecycle; proof:tenant-domains-routing",
+      "proofRef": "proof:tenant-domain-canonical",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:4291", "docs/api/openapi.json"]
     },
     {
@@ -7614,7 +7614,7 @@
         "path": "/api/admin/tenants/:tenantId/auth-settings-credential/readiness",
         "handlerFile": "apps/platform-api/src/server/routes.ts",
         "handlerSymbol": "inline async handler",
-        "capability": "API keys / personal access tokens",
+        "capability": "Tenant identity (record + FQDN)",
         "isMutation": false,
         "authRequired": true,
         "permissionRequired": "platform.tenants.read",
@@ -7629,7 +7629,7 @@
         "metricName": "http_requests_total/http_request_duration_seconds",
         "alertRequired": true,
         "proofRequired": true,
-        "proofRef": "proof:api-keys; proof:api-key-routes",
+        "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
         "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2367", "docs/api/openapi.json"],
         "evidence": {
           "routeObject": "apps/platform-api/src/server/routes.ts:2367",
@@ -7653,7 +7653,7 @@
         "path": "/api/admin/tenants/:tenantId/auth-settings-credential/repair",
         "handlerFile": "apps/platform-api/src/server/routes.ts",
         "handlerSymbol": "inline async handler",
-        "capability": "API keys / personal access tokens",
+        "capability": "Tenant identity (record + FQDN)",
         "isMutation": true,
         "authRequired": true,
         "permissionRequired": "platform.tenants.create",
@@ -7668,7 +7668,7 @@
         "metricName": "http_requests_total/http_request_duration_seconds",
         "alertRequired": true,
         "proofRequired": true,
-        "proofRef": "proof:api-keys; proof:api-key-routes",
+        "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
         "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2443", "docs/api/openapi.json"],
         "evidence": {
           "routeObject": "apps/platform-api/src/server/routes.ts:2443",
@@ -7692,7 +7692,7 @@
         "path": "/api/admin/tenants/:tenantId/auth-settings-credential/rotate",
         "handlerFile": "apps/platform-api/src/server/routes.ts",
         "handlerSymbol": "inline async handler",
-        "capability": "API keys / personal access tokens",
+        "capability": "Tenant identity (record + FQDN)",
         "isMutation": true,
         "authRequired": true,
         "permissionRequired": "platform.tenants.create",
@@ -7707,7 +7707,7 @@
         "metricName": "http_requests_total/http_request_duration_seconds",
         "alertRequired": true,
         "proofRequired": true,
-        "proofRef": "proof:api-keys; proof:api-key-routes",
+        "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
         "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2397", "docs/api/openapi.json"],
         "evidence": {
           "routeObject": "apps/platform-api/src/server/routes.ts:2397",
@@ -7848,7 +7848,7 @@
         "path": "/api/admin/tenants/:tenantId/delete",
         "handlerFile": "apps/platform-api/src/server/routes.ts",
         "handlerSymbol": "inline async handler",
-        "capability": "API keys / personal access tokens",
+        "capability": "Tenant lifecycle: provision, suspend, delete, export",
         "isMutation": true,
         "authRequired": true,
         "permissionRequired": "platform.tenants.delete",
@@ -7863,7 +7863,7 @@
         "metricName": "http_requests_total/http_request_duration_seconds",
         "alertRequired": true,
         "proofRequired": true,
-        "proofRef": "proof:api-keys; proof:api-key-routes",
+        "proofRef": "proof:tenant-lifecycle; apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
         "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7794", "docs/api/openapi.json"],
         "evidence": {
           "routeObject": "apps/platform-api/src/server/routes.ts:7794",
@@ -7965,7 +7965,7 @@
         "path": "/api/admin/tenants/:tenantId/export",
         "handlerFile": "apps/platform-api/src/server/routes.ts",
         "handlerSymbol": "inline async handler",
-        "capability": "API keys / personal access tokens",
+        "capability": "Tenant lifecycle: provision, suspend, delete, export",
         "isMutation": false,
         "authRequired": true,
         "permissionRequired": "platform.audit.read_all",
@@ -8043,7 +8043,7 @@
         "path": "/api/admin/tenants/:tenantId/import",
         "handlerFile": "apps/platform-api/src/server/routes.ts",
         "handlerSymbol": "inline async handler",
-        "capability": "API keys / personal access tokens",
+        "capability": "Tenant lifecycle: provision, suspend, delete, export",
         "isMutation": true,
         "authRequired": true,
         "permissionRequired": "platform.audit.read_all",
@@ -8316,7 +8316,7 @@
         "path": "/api/admin/tenants/:tenantId/suspend",
         "handlerFile": "apps/platform-api/src/server/routes.ts",
         "handlerSymbol": "inline async handler",
-        "capability": "API keys / personal access tokens",
+        "capability": "Tenant lifecycle: provision, suspend, delete, export",
         "isMutation": true,
         "authRequired": true,
         "permissionRequired": "platform.tenants.delete",
@@ -8331,7 +8331,7 @@
         "metricName": "http_requests_total/http_request_duration_seconds",
         "alertRequired": true,
         "proofRequired": true,
-        "proofRef": "proof:api-keys; proof:api-key-routes",
+        "proofRef": "proof:tenant-lifecycle; apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
         "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7763", "docs/api/openapi.json"],
         "evidence": {
           "routeObject": "apps/platform-api/src/server/routes.ts:7763",
@@ -9096,7 +9096,7 @@
         "path": "/api/auth/settings/idps/:alias/callback-url",
         "handlerFile": "apps/platform-api/src/server/routes.ts",
         "handlerSymbol": "inline async handler",
-        "capability": "Claim mapping + group/role mapping",
+        "capability": "OIDC test connection + callback display",
         "isMutation": false,
         "authRequired": true,
         "permissionRequired": "tenant.auth.settings.read",
@@ -9111,7 +9111,7 @@
         "metricName": "http_requests_total/http_request_duration_seconds",
         "alertRequired": true,
         "proofRequired": true,
-        "proofRef": "proof:ui-semantic-claim-mapping (headless journey); oidc-mapping unit tests",
+        "proofRef": "proof:auth-oidc-enterprise",
         "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1788", "docs/api/openapi.json"],
         "evidence": {
           "routeObject": "apps/platform-api/src/server/routes.ts:1788",
@@ -9213,7 +9213,7 @@
         "path": "/api/auth/settings/idps/:alias/test-connection",
         "handlerFile": "apps/platform-api/src/server/routes.ts",
         "handlerSymbol": "inline async handler",
-        "capability": "Claim mapping + group/role mapping",
+        "capability": "OIDC test connection + callback display",
         "isMutation": true,
         "authRequired": true,
         "permissionRequired": "tenant.auth.settings.write",
@@ -9228,7 +9228,7 @@
         "metricName": "http_requests_total/http_request_duration_seconds",
         "alertRequired": true,
         "proofRequired": true,
-        "proofRef": "proof:ui-semantic-claim-mapping (headless journey); oidc-mapping unit tests",
+        "proofRef": "proof:auth-oidc-enterprise",
         "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1816", "docs/api/openapi.json"],
         "evidence": {
           "routeObject": "apps/platform-api/src/server/routes.ts:1816",
@@ -9252,7 +9252,7 @@
         "path": "/api/auth/settings/idps/oidc/discover",
         "handlerFile": "apps/platform-api/src/server/routes.ts",
         "handlerSymbol": "inline async handler",
-        "capability": "IdP brokering + OIDC provider management",
+        "capability": "OIDC discovery / issuer / JWKS validation",
         "isMutation": true,
         "authRequired": true,
         "permissionRequired": "tenant.auth.settings.write",
@@ -9267,7 +9267,7 @@
         "metricName": "http_requests_total/http_request_duration_seconds",
         "alertRequired": true,
         "proofRequired": true,
-        "proofRef": "proof:auth-idps; proof:auth-oidc-enterprise",
+        "proofRef": "proof:auth-oidc-enterprise",
         "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1752", "docs/api/openapi.json"],
         "evidence": {
           "routeObject": "apps/platform-api/src/server/routes.ts:1752",
@@ -9837,7 +9837,7 @@
         "path": "/api/host-identity",
         "handlerFile": "apps/platform-api/src/server/routes.ts",
         "handlerSymbol": "inline async handler",
-        "capability": "Tenant identity (record + FQDN)",
+        "capability": "Tenant host identity resolution",
         "isMutation": false,
         "authRequired": "unknown",
         "permissionRequired": "unknown",
@@ -10500,7 +10500,7 @@
         "path": "/api/org/domains/:domain/activate",
         "handlerFile": "apps/platform-api/src/server/routes.ts",
         "handlerSymbol": "inline async handler",
-        "capability": "Custom domains, DNS ownership, TLS, canonical",
+        "capability": "Tenant domain activation (auth-client)",
         "isMutation": true,
         "authRequired": true,
         "permissionRequired": "tenant.domains.write",
@@ -10515,7 +10515,7 @@
         "metricName": "http_requests_total/http_request_duration_seconds",
         "alertRequired": true,
         "proofRequired": true,
-        "proofRef": "proof:tenant-domains; proof:tenant-domain-canonical; proof:tenant-domain-claim-lifecycle; proof:tenant-domains-routing",
+        "proofRef": "proof:tenant-domain-canonical",
         "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:4228", "docs/api/openapi.json"],
         "evidence": {
           "routeObject": "apps/platform-api/src/server/routes.ts:4228",
@@ -10539,7 +10539,7 @@
         "path": "/api/org/domains/:domain/canonical",
         "handlerFile": "apps/platform-api/src/server/routes.ts",
         "handlerSymbol": "inline async handler",
-        "capability": "Custom domains, DNS ownership, TLS, canonical",
+        "capability": "Tenant canonical domain set/unset",
         "isMutation": true,
         "authRequired": true,
         "permissionRequired": "tenant.domains.write",
@@ -10554,7 +10554,7 @@
         "metricName": "http_requests_total/http_request_duration_seconds",
         "alertRequired": true,
         "proofRequired": true,
-        "proofRef": "proof:tenant-domains; proof:tenant-domain-canonical; proof:tenant-domain-claim-lifecycle; proof:tenant-domains-routing",
+        "proofRef": "proof:tenant-domain-canonical (local routing only)",
         "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:4432", "docs/api/openapi.json"],
         "evidence": {
           "routeObject": "apps/platform-api/src/server/routes.ts:4432",
@@ -10578,7 +10578,7 @@
         "path": "/api/org/domains/:domain/canonical",
         "handlerFile": "apps/platform-api/src/server/routes.ts",
         "handlerSymbol": "inline async handler",
-        "capability": "Custom domains, DNS ownership, TLS, canonical",
+        "capability": "Tenant canonical domain set/unset",
         "isMutation": true,
         "authRequired": true,
         "permissionRequired": "tenant.domains.write",
@@ -10593,7 +10593,7 @@
         "metricName": "http_requests_total/http_request_duration_seconds",
         "alertRequired": true,
         "proofRequired": true,
-        "proofRef": "proof:tenant-domains; proof:tenant-domain-canonical; proof:tenant-domain-claim-lifecycle; proof:tenant-domains-routing",
+        "proofRef": "proof:tenant-domain-canonical (local routing only)",
         "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:4383", "docs/api/openapi.json"],
         "evidence": {
           "routeObject": "apps/platform-api/src/server/routes.ts:4383",
@@ -10617,7 +10617,7 @@
         "path": "/api/org/domains/:domain/deactivate",
         "handlerFile": "apps/platform-api/src/server/routes.ts",
         "handlerSymbol": "inline async handler",
-        "capability": "Custom domains, DNS ownership, TLS, canonical",
+        "capability": "Tenant domain activation (auth-client)",
         "isMutation": true,
         "authRequired": true,
         "permissionRequired": "tenant.domains.write",
@@ -10632,7 +10632,7 @@
         "metricName": "http_requests_total/http_request_duration_seconds",
         "alertRequired": true,
         "proofRequired": true,
-        "proofRef": "proof:tenant-domains; proof:tenant-domain-canonical; proof:tenant-domain-claim-lifecycle; proof:tenant-domains-routing",
+        "proofRef": "proof:tenant-domain-canonical",
         "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:4291", "docs/api/openapi.json"],
         "evidence": {
           "routeObject": "apps/platform-api/src/server/routes.ts:4291",
