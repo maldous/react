@@ -2062,24 +2062,6 @@
     },
     {
       "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/alerts",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/alerts/:alertId/evaluate",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
       "subject": "POST /api/admin/billing/catalog/plans",
       "message": "runtime audit requirement has no audit event mapping",
       "evidence": {
@@ -2135,42 +2117,6 @@
     {
       "kind": "semantic-runtime-diff",
       "subject": "POST /api/admin/governance/dsr/:dsrId/fulfill",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "PATCH /api/admin/incidents/:incidentId",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/scheduled-jobs",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "PATCH /api/admin/scheduled-jobs/:jobId",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/scheduled-jobs/:jobId/run",
       "message": "runtime audit requirement has no audit event mapping",
       "evidence": {
         "source": "runtime-audit-inventory.json"
@@ -2252,15 +2198,6 @@
     {
       "kind": "semantic-runtime-diff",
       "subject": "POST /api/admin/tenants/:tenantId/meter-events",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "PATCH /api/admin/tenants/:tenantId/rate-limits",
       "message": "runtime audit requirement has no audit event mapping",
       "evidence": {
         "source": "runtime-audit-inventory.json"

@@ -5893,6 +5893,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.rate_limits.write",
     resource: "admin:rate_limits",
     umaScope: "write" as const,
+    auditEvent: AuditAction.RateLimitSet,
     scope: "global" as const,
     handler: async (req, res) => {
       const tenantId = req.params["tenantId"] ?? "";
@@ -6576,6 +6577,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.observability.write",
     resource: "admin:observability",
     umaScope: "write" as const,
+    auditEvent: AuditAction.AlertRuleSet,
     scope: "global" as const,
     handler: async (req, res) => {
       const parsed = CreateAlertRuleRequestSchema.safeParse(req.body);
@@ -6609,6 +6611,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.observability.write",
     resource: "admin:observability",
     umaScope: "write" as const,
+    auditEvent: AuditAction.IncidentOpened,
     scope: "global" as const,
     handler: async (req, res) => {
       const alertId = req.params["alertId"] ?? "";
@@ -6663,6 +6666,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.observability.write",
     resource: "admin:observability",
     umaScope: "write" as const,
+    auditEvent: AuditAction.IncidentUpdated,
     scope: "global" as const,
     handler: async (req, res) => {
       const incidentId = req.params["incidentId"] ?? "";
@@ -6794,6 +6798,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.jobs.write",
     resource: "admin:scheduled_jobs",
     umaScope: "write" as const,
+    auditEvent: AuditAction.ScheduledJobSet,
     scope: "global" as const,
     handler: async (req, res) => {
       const parsed = CreateScheduledJobRequestSchema.safeParse(req.body);
@@ -6827,6 +6832,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.jobs.write",
     resource: "admin:scheduled_jobs",
     umaScope: "write" as const,
+    auditEvent: AuditAction.ScheduledJobRun,
     scope: "global" as const,
     handler: async (req, res) => {
       const jobId = req.params["jobId"] ?? "";
@@ -6861,6 +6867,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.jobs.write",
     resource: "admin:scheduled_jobs",
     umaScope: "write" as const,
+    auditEvent: AuditAction.ScheduledJobSet,
     scope: "global" as const,
     handler: async (req, res) => {
       const jobId = req.params["jobId"] ?? "";

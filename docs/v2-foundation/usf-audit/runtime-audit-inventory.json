@@ -4,22 +4,22 @@
     "routeId": "route:post-api-admin-alerts",
     "method": "POST",
     "path": "/api/admin/alerts",
-    "auditEvent": "unknown",
-    "actor": "unknown",
-    "resource": "unknown",
+    "auditEvent": "route handler audit evidence",
+    "actor": "handler audit source",
+    "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6571", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6572", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-alerts-alertid-evaluate",
     "routeId": "route:post-api-admin-alerts-alertid-evaluate",
     "method": "POST",
     "path": "/api/admin/alerts/:alertId/evaluate",
-    "auditEvent": "unknown",
-    "actor": "unknown",
-    "resource": "unknown",
+    "auditEvent": "route handler audit evidence",
+    "actor": "handler audit source",
+    "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6604", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6606", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-billing-catalog-plans",
@@ -30,7 +30,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7939", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7946", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-billing-catalog-prices",
@@ -41,7 +41,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7986", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7993", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-billing-catalog-products",
@@ -52,7 +52,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7892", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7899", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-delete-api-admin-data-legal-holds",
@@ -63,7 +63,7 @@
     "actor": "handler audit source",
     "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7528", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7535", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-data-legal-holds",
@@ -74,7 +74,7 @@
     "actor": "handler audit source",
     "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7483", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7490", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-data-residency",
@@ -85,7 +85,7 @@
     "actor": "handler audit source",
     "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7766", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7773", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-delete-api-admin-data-retention-policies",
@@ -96,7 +96,7 @@
     "actor": "handler audit source",
     "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7656", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7663", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-data-retention-policies",
@@ -107,7 +107,7 @@
     "actor": "handler audit source",
     "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7606", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7613", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-events-eventid-redrive",
@@ -118,7 +118,7 @@
     "actor": "handler audit source",
     "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6073", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6074", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-governance-catalog",
@@ -129,7 +129,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8027", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8034", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-governance-catalog-classify",
@@ -140,7 +140,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8051", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8058", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-governance-dsr",
@@ -151,7 +151,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8096", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8103", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-governance-dsr-dsrid-fulfill",
@@ -162,18 +162,18 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8120", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8127", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-patch-api-admin-incidents-incidentid",
     "routeId": "route:patch-api-admin-incidents-incidentid",
     "method": "PATCH",
     "path": "/api/admin/incidents/:incidentId",
-    "auditEvent": "unknown",
-    "actor": "unknown",
-    "resource": "unknown",
+    "auditEvent": "route handler audit evidence",
+    "actor": "handler audit source",
+    "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6658", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6661", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-provider-configs",
@@ -184,7 +184,7 @@
     "actor": "handler audit source",
     "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7069", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7076", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-provider-configs-id-delete",
@@ -195,7 +195,7 @@
     "actor": "handler audit source",
     "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7147", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7154", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-provider-configs-id-lifecycle",
@@ -206,40 +206,40 @@
     "actor": "handler audit source",
     "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7103", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7110", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-scheduled-jobs",
     "routeId": "route:post-api-admin-scheduled-jobs",
     "method": "POST",
     "path": "/api/admin/scheduled-jobs",
-    "auditEvent": "unknown",
-    "actor": "unknown",
-    "resource": "unknown",
+    "auditEvent": "route handler audit evidence",
+    "actor": "handler audit source",
+    "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6789", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6793", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-patch-api-admin-scheduled-jobs-jobid",
     "routeId": "route:patch-api-admin-scheduled-jobs-jobid",
     "method": "PATCH",
     "path": "/api/admin/scheduled-jobs/:jobId",
-    "auditEvent": "unknown",
-    "actor": "unknown",
-    "resource": "unknown",
+    "auditEvent": "route handler audit evidence",
+    "actor": "handler audit source",
+    "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6856", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6862", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-scheduled-jobs-jobid-run",
     "routeId": "route:post-api-admin-scheduled-jobs-jobid-run",
     "method": "POST",
     "path": "/api/admin/scheduled-jobs/:jobId/run",
-    "auditEvent": "unknown",
-    "actor": "unknown",
-    "resource": "unknown",
+    "auditEvent": "route handler audit evidence",
+    "actor": "handler audit source",
+    "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6822", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6827", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-search-reindex",
@@ -250,7 +250,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5989", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5990", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-secrets",
@@ -261,7 +261,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6942", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6949", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-secrets-delete",
@@ -272,7 +272,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7012", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7019", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-secrets-revoke",
@@ -283,7 +283,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6977", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6984", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-sub-tenants",
@@ -338,7 +338,7 @@
     "actor": "handler audit source",
     "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6430", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6431", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-tenants",
@@ -360,7 +360,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6332", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6333", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-tenants-tenantid-auth-settings-credential-repair",
@@ -415,7 +415,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7448", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7455", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-patch-api-admin-tenants-tenantid-entitlements",
@@ -437,7 +437,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7351", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7358", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-tenants-tenantid-meter-events",
@@ -459,7 +459,7 @@
     "actor": "handler audit source",
     "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6291", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6292", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-patch-api-admin-tenants-tenantid-quotas",
@@ -477,9 +477,9 @@
     "routeId": "route:patch-api-admin-tenants-tenantid-rate-limits",
     "method": "PATCH",
     "path": "/api/admin/tenants/:tenantId/rate-limits",
-    "auditEvent": "unknown",
-    "actor": "unknown",
-    "resource": "unknown",
+    "auditEvent": "route handler audit evidence",
+    "actor": "handler audit source",
+    "resource": "handler audit source",
     "beforeAfter": "unknown",
     "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5888", "docs/api/openapi.json"]
   },
@@ -492,7 +492,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7418", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7425", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-tenants-auth-settings-credential",
@@ -514,7 +514,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8248", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8255", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-workflows-workflowid-signal",
@@ -525,7 +525,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8218", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8225", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-workflows-start",
@@ -536,7 +536,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8179", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8186", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-auth-settings-domains",
@@ -734,7 +734,7 @@
     "actor": "handler audit source",
     "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6234", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6235", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-patch-api-me-profile",
@@ -745,7 +745,7 @@
     "actor": "handler audit source",
     "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6158", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6159", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-org-api-keys",
@@ -1020,7 +1020,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5932", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5933", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-org-storage-objects",
