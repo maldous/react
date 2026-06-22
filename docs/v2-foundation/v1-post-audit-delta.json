@@ -4244,6 +4244,27 @@
         "apps/platform-api/tests/unit/postgres-runtime-repositories.test.ts"
       ],
       "decisionRefs": ["ADR-0060", "ADR-ACT-0258"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/postgres-observability-repository.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit unit proof for observability repository provider reliability envelope",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/postgres-observability-repository.test.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/postgres-observability-repository.test.ts"],
+      "decisionRefs": ["ADR-0062", "ADR-ACT-0261"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/observability-signals-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
+      "protectingTests": [
+        "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
+        "apps/platform-api/tests/unit/postgres-observability-repository.test.ts"
+      ],
+      "decisionRefs": ["ADR-0062", "ADR-ACT-0261"]
     }
   ],
   "deletions": [
@@ -4626,6 +4647,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 450,
+  "additionCount": 452,
   "deletionCount": 54
 }
